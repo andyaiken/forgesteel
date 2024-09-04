@@ -1,0 +1,40 @@
+.main {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+
+	.main-header {
+		flex: 0 0 auto;
+		padding: 20px 30px;
+		background-color: rgb(220, 220, 220);
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 20px;
+
+		.title {
+			font-size: 20px;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+		}
+	}
+
+	.main-content {
+		flex: 1 1 0;
+		padding: 20px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.main-footer {
+		flex: 0 0 auto;
+		padding: 15px 30px;
+		background-color: rgb(220, 220, 220);
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 20px;
+		font-size: 10px;
+	}
+}

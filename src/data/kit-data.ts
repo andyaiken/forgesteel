@@ -7,5 +7,5 @@ export class KitData {
 		// TODO: Add kits
 
 		return list;
-	}
+	};
 }

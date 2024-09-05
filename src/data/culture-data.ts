@@ -1,7 +1,7 @@
+import { FeatureLogic } from '../logic/feature-logic';
 import { SkillList } from '../enums/skill-list';
-import { FeatureLogic } from '../models/feature';
 
-export class CultureData {
+export class EnvironmentData {
 	static getEnvironments = () => {
 		return [
 			FeatureLogic.createSkillFeature({
@@ -50,8 +50,10 @@ export class CultureData {
 				]
 			})
 		];
-	}
+	};
+}
 
+export class OrganizationData {
 	static getOrganizations = () => {
 		return [
 			FeatureLogic.createSkillFeature({
@@ -82,8 +84,10 @@ export class CultureData {
 				]
 			})
 		];
-	}
+	};
+}
 
+export class UpbringingData {
 	static getUpbringings = () => {
 		return [
 			FeatureLogic.createSkillFeature({
@@ -151,6 +155,6 @@ export class CultureData {
 					SkillList.Interpersonal
 				]
 			})
-		]
-	}
+		];
+	};
 }

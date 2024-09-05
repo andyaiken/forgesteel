@@ -7,5 +7,5 @@ export class CareerData {
 		// TODO: Add careers
 
 		return list;
-	}
+	};
 }

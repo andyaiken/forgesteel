@@ -17,6 +17,7 @@ export class Factory {
 				recoveries: 0,
 				victories: 0,
 				heroicResource: 0,
+				heroTokens: 0,
 				renown: 0,
 				conditions: []
 			}

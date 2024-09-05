@@ -1,6 +1,6 @@
 import { Feature } from '../../../models/feature';
 
-import './feature-panel.scss'
+import './feature-panel.scss';
 
 interface Props {
 	feature: Feature
@@ -12,4 +12,4 @@ export const FeaturePanel = (props: Props) => {
 			{props.feature.name}
 		</div>
 	);
-}
+};

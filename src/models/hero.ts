@@ -1,9 +1,9 @@
-import { Condition } from '../enums/condition';
 import { Ancestry } from './ancestry';
 import { Career } from './career';
-import { HeroClass } from './class';
 import { Complication } from './complication';
+import { Condition } from '../enums/condition';
 import { Culture } from './culture';
+import { HeroClass } from './class';
 import { Kit } from './kit';
 
 export interface HeroState {
@@ -11,6 +11,7 @@ export interface HeroState {
 	recoveries: number;
 	victories: number;
 	heroicResource: number;
+	heroTokens: number;
 	renown: number;
 	conditions: Condition[];
 }

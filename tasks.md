@@ -18,7 +18,3 @@
 * Display character sheet
 * Export character sheet
 * Step-by-step character generation
-
-## Tech Debt
-
-* Decide on linting rules

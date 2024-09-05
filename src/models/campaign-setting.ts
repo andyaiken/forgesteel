@@ -1,5 +1,5 @@
-import { SkillList } from '../enums/skill-list';
 import { Culture } from './culture';
+import { SkillList } from '../enums/skill-list';
 
 export interface CampaignSetting {
 	id: string;

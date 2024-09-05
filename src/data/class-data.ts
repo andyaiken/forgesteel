@@ -7,5 +7,5 @@ export class ClassData {
 		// TODO: Add classes
 
 		return list;
-	}
+	};
 }

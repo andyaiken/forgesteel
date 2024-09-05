@@ -1,6 +1,6 @@
 import { Kit } from '../../../models/kit';
 
-import './kit-panel.scss'
+import './kit-panel.scss';
 
 interface Props {
 	kit: Kit
@@ -12,4 +12,4 @@ export const KitPanel = (props: Props) => {
 			{props.kit.name}
 		</div>
 	);
-}
+};

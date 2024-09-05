@@ -1,7 +1,7 @@
 import { Button, Divider, Flex } from 'antd';
 import { Hero } from '../../../models/hero';
 
-import './hero-list-page.scss'
+import './hero-list-page.scss';
 
 interface Props {
 	heroes: Hero[];
@@ -25,4 +25,4 @@ export const HeroListPage = (props: Props) => {
 			}
 		</div>
 	);
-}
+};

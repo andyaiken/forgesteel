@@ -1,3 +1,28 @@
 .hero-panel {
 	display: block;
+
+	.characteristics-row-container {
+		display: flex;
+		align-items: flex-start;
+		gap: 20px;
+
+		.characteristics-row {
+			flex: 1 1 0;
+			display: flex;
+			align-items: flex-start;
+			justify-content: space-between;
+			margin: 10px 0;
+			border: 1px solid rgb(230, 230, 230);
+			border-radius: 10px;
+			background-color: rgb(245, 245, 245);
+			padding: 10px;
+	
+			.characteristic {
+				flex: 1 1 0;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+		}
+	}
 }

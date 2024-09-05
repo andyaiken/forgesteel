@@ -1,6 +1,6 @@
 import { Ancestry } from '../../../models/ancestry';
 
-import './ancestry-panel.scss'
+import './ancestry-panel.scss';
 
 interface Props {
 	ancestry: Ancestry
@@ -12,4 +12,4 @@ export const AncestryPanel = (props: Props) => {
 			{props.ancestry.name}
 		</div>
 	);
-}
+};

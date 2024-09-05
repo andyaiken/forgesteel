@@ -32,6 +32,93 @@ export default tseslint.config(
 				'warn',
 				{ allowConstantExport: true },
 			],
-		},
-	},
+			'semi': [
+				'error',
+				'always'
+			],
+			'comma-dangle': [
+				'error',
+				'never'
+			],
+			'quotes': [
+				'error',
+				'single'
+			],
+			'object-curly-spacing': [
+				'error',
+				'always'
+			],
+			'indent': [
+				'error',
+				'tab',
+				{
+					'SwitchCase': 1
+				}
+			],
+			'no-tabs': [
+				'error',
+				{
+					'allowIndentationTabs': true
+				}
+			],
+			'@typescript-eslint/non-nullable-type-assertion-style': 'off',
+			'arrow-parens': [
+				'error',
+				'as-needed'
+			],
+			'no-trailing-spaces': [
+				'error'
+			],
+			'array-bracket-spacing': [
+				'error',
+				'always'
+			],
+			'array-element-newline': [
+				'error',
+				'consistent'
+			],
+			'array-bracket-newline': [
+				'error',
+				'consistent'
+			],
+			'jsx-quotes': [
+				'error',
+				'prefer-single'
+			],
+			'sort-imports': [
+				'warn',
+				{
+					'allowSeparatedGroups': true,
+					'memberSyntaxSortOrder': [
+						'all',
+						'multiple',
+						'single',
+						'none'
+					]
+				}
+			],
+			'no-warning-comments': 'warn',
+			'no-debugger': 'warn',
+			'no-console': [
+				'warn',
+				{
+					'allow': [
+						'warn',
+						'error'
+					]
+				}
+			],
+			'max-len': [
+				'warn',
+				{
+					'code': 200
+				}
+			],
+			'react/react-in-jsx-scope': 'off',
+			'@typescript-eslint/no-unsafe-call': 'off',
+			'@typescript-eslint/no-unsafe-member-access': 'off',
+			'@typescript-eslint/no-unsafe-member-argument': 'off',
+			'@typescript-eslint/no-unsafe-return': 'off'
+		}
+	}
 )

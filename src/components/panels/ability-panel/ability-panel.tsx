@@ -1,6 +1,6 @@
 import { Ability } from '../../../models/ability';
 
-import './ability-panel.scss'
+import './ability-panel.scss';
 
 interface Props {
 	ability: Ability
@@ -12,4 +12,4 @@ export const AbilityPanel = (props: Props) => {
 			{props.ability.name}
 		</div>
 	);
-}
+};

@@ -7,5 +7,5 @@ export class ComplicationData {
 		// TODO: Add complications
 
 		return list;
-	}
+	};
 }

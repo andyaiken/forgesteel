@@ -1,5 +1,5 @@
-import { FeatureLogic } from '../logic/feature-logic';
 import { Ancestry } from '../models/ancestry';
+import { FeatureLogic } from '../logic/feature-logic';
 
 export class AncestryData {
 	static human: Ancestry = {
@@ -28,11 +28,11 @@ export class AncestryData {
 				description: 'Your human anatomy allows you to fight, run, and stay awake longer than others. Increase your number of Recoveries by 2.'
 			})
 		]
-	}
+	};
 
 	static getAncestries = () => {
 		return [
 			this.human
 		];
-	}
+	};
 }

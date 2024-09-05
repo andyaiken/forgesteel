@@ -1,6 +1,6 @@
+import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { SkillList } from '../enums/skill-list';
-import { Feature } from '../models/feature';
 
 export class FeatureLogic {
 	static createFeature = (data: { id: string, name: string, description: string }) => {
@@ -12,7 +12,7 @@ export class FeatureLogic {
 			skill: null,
 			language: null
 		} as Feature;
-	}
+	};
 
 	static createSkillFeature = (data: { id: string, name: string, description: string, options?: string[], listOptions?: SkillList[] }) => {
 		return {
@@ -27,7 +27,7 @@ export class FeatureLogic {
 			},
 			language: null
 		} as Feature;
-	}
+	};
 
 	static createLanguageFeature = (data: { id: string, name: string, description: string, options?: string[] }) => {
 		return {
@@ -41,7 +41,7 @@ export class FeatureLogic {
 				selected: []
 			}
 		} as Feature;
-	}
+	};
 }
 
 // Grant an ability

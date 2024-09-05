@@ -1,6 +1,6 @@
 import { Culture } from '../../../models/culture';
 
-import './culture-panel.scss'
+import './culture-panel.scss';
 
 interface Props {
 	culture: Culture
@@ -12,4 +12,4 @@ export const CulturePanel = (props: Props) => {
 			{props.culture.name}
 		</div>
 	);
-}
+};

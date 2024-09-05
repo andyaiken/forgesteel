@@ -1,10 +1,10 @@
+import { Ability } from '../models/ability';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
-import { FeatureType } from '../enums/feature-type';
-import { Ability } from '../models/ability';
-import { Feature } from '../models/feature';
-import { Hero } from '../models/hero';
 import { Collections } from '../utils/collections';
+import { Feature } from '../models/feature';
+import { FeatureType } from '../enums/feature-type';
+import { Hero } from '../models/hero';
 
 export class HeroLogic {
 	static getFeatures = (hero: Hero) => {
@@ -76,11 +76,11 @@ export class HeroLogic {
 				target: '',
 				cost: 0,
 				powerRoll: null
-			})
+			});
 		}
 
 		return abilities;
-	}
+	};
 
 	static getCharacteristic = (hero: Hero, characteristic: Characteristic) => {
 		let value = 0;
@@ -93,7 +93,7 @@ export class HeroLogic {
 		}
 
 		return value;
-	}
+	};
 
 	static getLanguages = (hero: Hero) => {
 		const languages: string[] = [];
@@ -108,7 +108,7 @@ export class HeroLogic {
 			});
 
 		return Collections.sort(languages, l => l);
-	}
+	};
 
 	static getSkills = (hero: Hero) => {
 		const skills: string[] = [];
@@ -123,7 +123,7 @@ export class HeroLogic {
 			});
 
 		return Collections.sort(skills, s => s);
-	}
+	};
 
 	static getStamina = (hero: Hero) => {
 		let value = 0;
@@ -137,7 +137,7 @@ export class HeroLogic {
 		value += Collections.max(hero.kits.map(kit => kit.stamina), value => value) || 0;
 
 		return value;
-	}
+	};
 
 	static getRecoveryValue = (hero: Hero) => {
 		const value = Math.floor(this.getStamina(hero) / 3);
@@ -145,7 +145,7 @@ export class HeroLogic {
 		//
 
 		return value;
-	}
+	};
 
 	static getRecoveries = (hero: Hero) => {
 		let value = 0;
@@ -155,7 +155,7 @@ export class HeroLogic {
 		}
 
 		return value;
-	}
+	};
 
 	static getReach = (hero: Hero) => {
 		let value = 0;
@@ -164,7 +164,7 @@ export class HeroLogic {
 		value += Collections.max(hero.kits.map(kit => kit.reach), value => value) || 0;
 
 		return value;
-	}
+	};
 
 	static getSpeed = (hero: Hero) => {
 		let value = 0;
@@ -177,7 +177,7 @@ export class HeroLogic {
 		value += Collections.max(hero.kits.map(kit => kit.speed), value => value) || 0;
 
 		return value;
-	}
+	};
 
 	static getStability = (hero: Hero) => {
 		let value = 0;
@@ -186,7 +186,7 @@ export class HeroLogic {
 		value += Collections.max(hero.kits.map(kit => kit.stability), value => value) || 0;
 
 		return value;
-	}
+	};
 
 	static getMeleeDamageBonus = (hero: Hero) => {
 		let value1 = 0;
@@ -203,7 +203,7 @@ export class HeroLogic {
 			tier2: value2,
 			tier3: value3
 		};
-	}
+	};
 
 	static getRangedDamageBonus = (hero: Hero) => {
 		let value1 = 0;
@@ -220,7 +220,7 @@ export class HeroLogic {
 			tier2: value2,
 			tier3: value3
 		};
-	}
+	};
 
 	static getMagicalDamageBonus = (hero: Hero) => {
 		let value1 = 0;
@@ -237,7 +237,7 @@ export class HeroLogic {
 			tier2: value2,
 			tier3: value3
 		};
-	}
+	};
 
 	static getDistanceBonus = (hero: Hero) => {
 		let value = 0;
@@ -246,7 +246,7 @@ export class HeroLogic {
 		value += Collections.max(hero.kits.map(kit => kit.distance), value => value) || 0;
 
 		return value;
-	}
+	};
 
 	static getAreaBonus = (hero: Hero) => {
 		let value = 0;
@@ -255,5 +255,5 @@ export class HeroLogic {
 		value += Collections.max(hero.kits.map(kit => kit.area), value => value) || 0;
 
 		return value;
-	}
+	};
 }

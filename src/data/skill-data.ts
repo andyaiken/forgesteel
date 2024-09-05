@@ -1,6 +1,6 @@
-import { SkillList } from '../enums/skill-list';
 import { CampaignSetting } from '../models/campaign-setting';
 import { Collections } from '../utils/collections';
+import { SkillList } from '../enums/skill-list';
 
 export class SkillData {
 	static getSkills = (list: SkillList, campaignSetting: CampaignSetting) => {
@@ -90,5 +90,5 @@ export class SkillData {
 			});
 
 		return Collections.sort(skills, skill => skill.name);
-	}
+	};
 }

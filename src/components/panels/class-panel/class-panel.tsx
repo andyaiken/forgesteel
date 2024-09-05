@@ -1,6 +1,6 @@
 import { HeroClass } from '../../../models/class';
 
-import './class-panel.scss'
+import './class-panel.scss';
 
 interface Props {
 	heroClass: HeroClass
@@ -12,4 +12,4 @@ export const ClassPanel = (props: Props) => {
 			{props.heroClass.name}
 		</div>
 	);
-}
+};

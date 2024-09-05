@@ -1,6 +1,6 @@
 import { Career } from '../../../models/career';
 
-import './career-panel.scss'
+import './career-panel.scss';
 
 interface Props {
 	career: Career
@@ -12,4 +12,4 @@ export const CareerPanel = (props: Props) => {
 			{props.career.name}
 		</div>
 	);
-}
+};

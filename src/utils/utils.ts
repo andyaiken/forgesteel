@@ -41,7 +41,7 @@ export class Utils {
 
 	public static saveFile = (filename: string, data: unknown) => {
 		const json = JSON.stringify(data, null, '\t');
-		const blob = new Blob([json], { type: 'application/json' });
+		const blob = new Blob([ json ], { type: 'application/json' });
 
 		const a = document.createElement('a');
 		a.download = filename;

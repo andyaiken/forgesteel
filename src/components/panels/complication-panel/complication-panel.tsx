@@ -1,6 +1,6 @@
 import { Complication } from '../../../models/complication';
 
-import './complication-panel.scss'
+import './complication-panel.scss';
 
 interface Props {
 	complication: Complication
@@ -12,4 +12,4 @@ export const ComplicationPanel = (props: Props) => {
 			{props.complication.name}
 		</div>
 	);
-}
+};

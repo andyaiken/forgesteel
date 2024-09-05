@@ -37,3 +37,14 @@ body {
 	text-transform: uppercase;
 	letter-spacing: 1px;
 }
+
+.dimmed-text {
+	margin: 10px 0;
+	color: rgb(160, 160, 160);
+	font-size: 13px;
+	font-style: italic;
+}
+
+.ant-statistic .ant-statistic-content {
+    text-align: center;
+}

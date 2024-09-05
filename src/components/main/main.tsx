@@ -1,14 +1,14 @@
-import localforage from 'localforage';
-import { useState } from 'react';
 import { Breadcrumb } from 'antd';
-import { Hero } from '../../models/hero';
+import { Collections } from '../../utils/collections';
 import { Factory } from '../../utils/factory';
+import { Hero } from '../../models/hero';
+import { HeroEditPage } from '../pages/hero-edit/hero-edit-page';
 import { HeroListPage } from '../pages/hero-list/hero-list-page';
 import { HeroPage } from '../pages/hero-view/hero-view-page';
-import { HeroEditPage } from '../pages/hero-edit/hero-edit-page';
-import { Collections } from '../../utils/collections';
+import localforage from 'localforage';
+import { useState } from 'react';
 
-import './main.scss'
+import './main.scss';
 
 enum Page {
 	HeroList,
@@ -73,7 +73,7 @@ export const Main = (props: Props) => {
 			setPage(Page.HeroList);
 			setSelectedHero(null);
 		}
-	}
+	};
 
 	const saveEditSelectedHero = (hero: Hero) => {
 		if (selectedHero) {
@@ -157,4 +157,4 @@ export const Main = (props: Props) => {
 			</div>
 		</div>
 	);
-}
+};

@@ -1,6 +1,5 @@
 import { Button, Divider, Flex, Segmented } from 'antd';
 import { Feature, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
-import { ReactNode, useState } from 'react';
 import { Ancestry } from '../../../models/ancestry';
 import { AncestryData } from '../../../data/ancestry-data';
 import { AncestryPanel } from '../../panels/ancestry-panel/ancestry-panel';
@@ -23,6 +22,7 @@ import { Kit } from '../../../models/kit';
 import { KitData } from '../../../data/kit-data';
 import { KitPanel } from '../../panels/kit-panel/kit-panel';
 import { PanelMode } from '../../../enums/panel-mode';
+import { useState } from 'react';
 
 import './hero-edit-page.scss';
 
@@ -178,17 +178,29 @@ interface AncestrySectionProps {
 }
 
 const AncestrySection = (props: AncestrySectionProps) => {
+	const options = AncestryData.getAncestries().map(a => (
+		<SelectableCard key={a.id} onSelect={() => props.selectAncestry(a)}>
+			<AncestryPanel ancestry={a} />
+		</SelectableCard>
+	));
+
+	let choices: JSX.Element[] = [];
+	if (props.hero.ancestry) {
+		choices = props.hero.ancestry.features
+			.filter(f => f.choice)
+			.map(f => (
+				<SelectableCard key={f.id}>
+					<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
+				</SelectableCard>
+			));
+	}
+
 	return (
 		<div className='hero-edit-content'>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Ancestries</div>
-				{
-					AncestryData.getAncestries().map(a => (
-						<SelectableCard key={a.id} onSelect={() => props.selectAncestry(a)}>
-							<AncestryPanel ancestry={a} />
-						</SelectableCard>
-					))
-				}
+				{options}
+				{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
 			</div>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Selected</div>
@@ -197,22 +209,14 @@ const AncestrySection = (props: AncestrySectionProps) => {
 						<SelectableCard onUnselect={() => props.selectAncestry(null)}>
 							<AncestryPanel ancestry={props.hero.ancestry} mode={PanelMode.Full} />
 						</SelectableCard>
-						: null
+						:
+						<div className='dimmed-text centered-text'>Not selected</div>
 				}
 			</div>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Choices</div>
-				{
-					props.hero.ancestry ?
-						props.hero.ancestry.features
-							.filter(f => f.choice)
-							.map(f => (
-								<SelectableCard key={f.id}>
-									<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
-								</SelectableCard>
-							))
-						: null
-				}
+				{choices}
+				{choices.length === 0 ? <div className='dimmed-text centered-text'>No choices to be made</div> : null}
 			</div>
 		</div>
 	);
@@ -225,17 +229,29 @@ interface CultureSectionProps {
 }
 
 const CultureSection = (props: CultureSectionProps) => {
+	const options = CampaignSettingData.orden.cultures.map(c => (
+		<SelectableCard key={c.id} onSelect={() => props.selectCulture(c)}>
+			<CulturePanel culture={c} />
+		</SelectableCard>
+	));
+
+	let choices: JSX.Element[] = [];
+	if (props.hero.culture) {
+		choices = [ props.hero.culture.environment, props.hero.culture.organization, props.hero.culture.upbringing ]
+			.filter(f => f.choice)
+			.map(f => (
+				<SelectableCard key={f.id}>
+					<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
+				</SelectableCard>
+			));
+	}
+
 	return (
 		<div className='hero-edit-content'>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Cultures</div>
-				{
-					CampaignSettingData.orden.cultures.map(c => (
-						<SelectableCard key={c.id} onSelect={() => props.selectCulture(c)}>
-							<CulturePanel culture={c} />
-						</SelectableCard>
-					))
-				}
+				{options}
+				{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
 			</div>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Selected</div>
@@ -244,22 +260,14 @@ const CultureSection = (props: CultureSectionProps) => {
 						<SelectableCard onUnselect={() => props.selectCulture(null)}>
 							<CulturePanel culture={props.hero.culture} mode={PanelMode.Full} />
 						</SelectableCard>
-						: null
+						:
+						<div className='dimmed-text centered-text'>Not selected</div>
 				}
 			</div>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Choices</div>
-				{
-					props.hero.culture ?
-						[ props.hero.culture.environment, props.hero.culture.organization, props.hero.culture.upbringing ]
-							.filter(f => f.choice)
-							.map(f => (
-								<SelectableCard key={f.id}>
-									<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
-								</SelectableCard>
-							))
-						: null
-				}
+				{choices}
+				{choices.length === 0 ? <div className='dimmed-text centered-text'>No choices to be made</div> : null}
 			</div>
 		</div>
 	);
@@ -272,17 +280,29 @@ interface CareerSectionProps {
 }
 
 const CareerSection = (props: CareerSectionProps) => {
+	const options = CareerData.getCareers().map(c => (
+		<SelectableCard key={c.id} onSelect={() => props.selectCareer(c)}>
+			<CareerPanel career={c} />
+		</SelectableCard>
+	));
+
+	let choices: JSX.Element[] = [];
+	if (props.hero.career) {
+		choices = props.hero.career.features
+			.filter(f => f.choice)
+			.map(f => (
+				<SelectableCard key={f.id}>
+					<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
+				</SelectableCard>
+			));
+	}
+
 	return (
 		<div className='hero-edit-content'>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Careers</div>
-				{
-					CareerData.getCareers().map(c => (
-						<SelectableCard key={c.id} onSelect={() => props.selectCareer(c)}>
-							<CareerPanel career={c} />
-						</SelectableCard>
-					))
-				}
+				{options}
+				{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
 			</div>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Selected</div>
@@ -291,22 +311,14 @@ const CareerSection = (props: CareerSectionProps) => {
 						<SelectableCard onUnselect={() => props.selectCareer(null)}>
 							<CareerPanel career={props.hero.career} mode={PanelMode.Full} />
 						</SelectableCard>
-						: null
+						:
+						<div className='dimmed-text centered-text'>Not selected</div>
 				}
 			</div>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Choices</div>
-				{
-					props.hero.career ?
-						props.hero.career.features
-							.filter(f => f.choice)
-							.map(f => (
-								<SelectableCard key={f.id}>
-									<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
-								</SelectableCard>
-							))
-						: null
-				}
+				{choices}
+				{choices.length === 0 ? <div className='dimmed-text centered-text'>No choices to be made</div> : null}
 			</div>
 		</div>
 	);
@@ -319,17 +331,31 @@ interface ClassSectionProps {
 }
 
 const ClassSection = (props: ClassSectionProps) => {
+	const options = ClassData.getClasses().map(c => (
+		<SelectableCard key={c.id} onSelect={() => props.selectClass(c)}>
+			<ClassPanel heroClass={c} />
+		</SelectableCard>
+	));
+
+	let choices: JSX.Element[] = [];
+	if (props.hero.class) {
+		choices = props.hero.class.featuresByLevel
+			.filter(lvl => lvl.level <= (props.hero.class?.level || 1))
+			.flatMap(lvl => lvl.features)
+			.filter(f => f.choice)
+			.map(f => (
+				<SelectableCard key={f.id}>
+					<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
+				</SelectableCard>
+			));
+	}
+
 	return (
 		<div className='hero-edit-content'>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Classes</div>
-				{
-					ClassData.getClasses().map(c => (
-						<SelectableCard key={c.id} onSelect={() => props.selectClass(c)}>
-							<ClassPanel heroClass={c} />
-						</SelectableCard>
-					))
-				}
+				{options}
+				{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
 			</div>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Selected</div>
@@ -338,24 +364,14 @@ const ClassSection = (props: ClassSectionProps) => {
 						<SelectableCard onUnselect={() => props.selectClass(null)}>
 							<ClassPanel heroClass={props.hero.class} mode={PanelMode.Full} />
 						</SelectableCard>
-						: null
+						:
+						<div className='dimmed-text centered-text'>Not selected</div>
 				}
 			</div>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Choices</div>
-				{
-					props.hero.class ?
-						props.hero.class.featuresByLevel
-							.filter(lvl => lvl.level <= (props.hero.class?.level || 1))
-							.flatMap(lvl => lvl.features)
-							.filter(f => f.choice)
-							.map(f => (
-								<SelectableCard key={f.id}>
-									<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
-								</SelectableCard>
-							))
-						: null
-				}
+				{choices}
+				{choices.length === 0 ? <div className='dimmed-text centered-text'>No choices to be made</div> : null}
 			</div>
 		</div>
 	);
@@ -368,17 +384,29 @@ interface ComplicationSectionProps {
 }
 
 const ComplicationSection = (props: ComplicationSectionProps) => {
+	const options = ComplicationData.getComplications().map(c => (
+		<SelectableCard key={c.id} onSelect={() => props.selectComplication(c)}>
+			<ComplicationPanel complication={c} />
+		</SelectableCard>
+	));
+
+	let choices: JSX.Element[] = [];
+	if (props.hero.complication) {
+		choices = [ props.hero.complication.benefit, props.hero.complication.drawback ]
+			.filter(f => f.choice)
+			.map(f => (
+				<SelectableCard key={f.id}>
+					<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
+				</SelectableCard>
+			));
+	}
+
 	return (
 		<div className='hero-edit-content'>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Complications</div>
-				{
-					ComplicationData.getComplications().map(c => (
-						<SelectableCard key={c.id} onSelect={() => props.selectComplication(c)}>
-							<ComplicationPanel complication={c} />
-						</SelectableCard>
-					))
-				}
+				{options}
+				{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
 			</div>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Selected</div>
@@ -387,22 +415,14 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 						<SelectableCard onUnselect={() => props.selectComplication(null)}>
 							<ComplicationPanel complication={props.hero.complication} mode={PanelMode.Full} />
 						</SelectableCard>
-						: null
+						:
+						<div className='dimmed-text centered-text'>Not selected</div>
 				}
 			</div>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Choices</div>
-				{
-					props.hero.complication ?
-						[ props.hero.complication.benefit, props.hero.complication.drawback ]
-							.filter(f => f.choice)
-							.map(f => (
-								<SelectableCard key={f.id}>
-									<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
-								</SelectableCard>
-							))
-						: null
-				}
+				{choices}
+				{choices.length === 0 ? <div className='dimmed-text centered-text'>No choices to be made</div> : null}
 			</div>
 		</div>
 	);
@@ -416,17 +436,28 @@ interface KitSectionProps {
 }
 
 const KitSection = (props: KitSectionProps) => {
+	const options = KitData.getKits().map(k => (
+		<SelectableCard key={k.id} onSelect={() => props.addKit(k)}>
+			<KitPanel kit={k} />
+		</SelectableCard>
+	));
+
+	const choices = props.hero.kits
+		.filter(k => k.ward !== null)
+		.map(k => k.ward as Feature)
+		.filter(f => f.choice)
+		.map(f => (
+			<SelectableCard key={f.id}>
+				<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
+			</SelectableCard>
+		));
+
 	return (
 		<div className='hero-edit-content'>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Kits</div>
-				{
-					KitData.getKits().map(k => (
-						<SelectableCard key={k.id} onSelect={() => props.addKit(k)}>
-							<KitPanel kit={k} />
-						</SelectableCard>
-					))
-				}
+				{options}
+				{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
 			</div>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Selected</div>
@@ -437,20 +468,12 @@ const KitSection = (props: KitSectionProps) => {
 						</SelectableCard>
 					))
 				}
+				{props.hero.kits.length === 0 ? <div className='dimmed-text centered-text'>Not selected</div> : null}
 			</div>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Choices</div>
-				{
-					props.hero.kits
-						.filter(k => k.ward !== null)
-						.map(k => k.ward as Feature)
-						.filter(f => f.choice)
-						.map(f => (
-							<SelectableCard key={f.id}>
-								<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
-							</SelectableCard>
-						))
-				}
+				{choices}
+				{choices.length === 0 ? <div className='dimmed-text centered-text'>No choices to be made</div> : null}
 			</div>
 		</div>
 	);
@@ -472,7 +495,7 @@ const DetailsSection = (props: DetailsSectionProps) => {
 };
 
 interface SelectableCardProps {
-	children: ReactNode;
+	children: JSX.Element;
 	onSelect?: () => void;
 	onUnselect?: () => void;
 };

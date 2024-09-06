@@ -1,22 +1,26 @@
 import { FeatureType } from '../enums/feature-type';
 import { SkillList } from '../enums/skill-list';
 
+export interface FeatureSkillData {
+	options: string[];
+	listOptions: SkillList[];
+	count: number;
+	selected: string[];
+};
+
+export interface FeatureLanguageData {
+	options: string[];
+	count: number;
+	selected: string[];
+};
+
 export interface Feature {
 	id: string;
 	name: string;
 	description: string;
 
 	type: FeatureType;
+	choice: boolean;
 
-	skill: {
-		options: string[];
-		listOptions: SkillList[];
-		selected: string[];
-	} | null;
-
-	language: {
-		options: string[];
-		selected: string[];
-	} | null;
+	data: FeatureSkillData | FeatureLanguageData | null;
 }
-

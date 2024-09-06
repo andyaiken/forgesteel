@@ -1,4 +1,5 @@
 import { Breadcrumb } from 'antd';
+import { CampaignSettingData } from '../../data/campaign-setting-data';
 import { Collections } from '../../utils/collections';
 import { Factory } from '../../utils/factory';
 import { Hero } from '../../models/hero';
@@ -33,7 +34,7 @@ export const Main = (props: Props) => {
 	};
 
 	const addHero = () => {
-		const hero = Factory.createHero();
+		const hero = Factory.createHero(CampaignSettingData.orden.id);
 
 		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
 		copy.push(hero);

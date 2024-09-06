@@ -3,7 +3,7 @@ import { Collections } from '../utils/collections';
 import { SkillList } from '../enums/skill-list';
 
 export class SkillData {
-	static getSkills = (list: SkillList, campaignSetting: CampaignSetting) => {
+	static getSkills = (list: SkillList, setting?: CampaignSetting) => {
 		let skills: { name: string, description: string }[] = [];
 
 		switch (list) {
@@ -82,12 +82,14 @@ export class SkillData {
 				break;
 		}
 
-		// Add skills from campaign setting
-		campaignSetting.skills
-			.filter(skill => skill.list === list)
-			.forEach(skill => {
-				skills.push({ name: skill.name, description: skill.description });
-			});
+		if (setting) {
+			// Add skills from campaign setting
+			setting.skills
+				.filter(skill => skill.list === list)
+				.forEach(skill => {
+					skills.push({ name: skill.name, description: skill.description });
+				});
+		}
 
 		return Collections.sort(skills, skill => skill.name);
 	};

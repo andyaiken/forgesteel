@@ -1,8 +1,8 @@
+import { Feature, FeatureLanguageData, FeatureSkillData } from '../models/feature';
 import { Ability } from '../models/ability';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
-import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 
@@ -102,9 +102,8 @@ export class HeroLogic {
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Language)
 			.forEach(f => {
-				if (f.language) {
-					languages.push(...f.language.selected);
-				}
+				const data = f.data as FeatureLanguageData;
+				languages.push(...data.selected);
 			});
 
 		return Collections.sort(languages, l => l);
@@ -117,9 +116,8 @@ export class HeroLogic {
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Skill)
 			.forEach(f => {
-				if (f.skill) {
-					skills.push(...f.skill.selected);
-				}
+				const data = f.data as FeatureSkillData;
+				skills.push(...data.selected);
 			});
 
 		return Collections.sort(skills, s => s);

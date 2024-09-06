@@ -2,10 +2,11 @@ import { Hero } from '../models/hero';
 import { Utils } from './utils';
 
 export class Factory {
-	static createHero = () => {
+	static createHero = (settingID: string) => {
 		const hero: Hero = {
 			id: Utils.guid(),
 			name: '',
+			settingID: settingID,
 			ancestry: null,
 			culture: null,
 			class: null,

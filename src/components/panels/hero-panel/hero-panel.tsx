@@ -1,15 +1,18 @@
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Characteristic } from '../../../enums/characteristic';
 import { FeaturePanel } from '../feature-panel/feature-panel';
+import { FeatureType } from '../../../enums/feature-type';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { KitPanel } from '../kit-panel/kit-panel';
+import { PanelMode } from '../../../enums/panel-mode';
 import { Statistic } from 'antd';
 
 import './hero-panel.scss';
 
 interface Props {
 	hero: Hero;
+	mode?: PanelMode;
 }
 
 export const HeroPanel = (props: Props) => {
@@ -19,17 +22,17 @@ export const HeroPanel = (props: Props) => {
 			<div className='characteristics-row-container'>
 				{
 					props.hero.ancestry ?
-						<div>Ancestry: {props.hero.ancestry.name}</div>
+						<div className='ds-text'>Ancestry: {props.hero.ancestry.name}</div>
 						:
 						<div className='dimmed-text'>No ancestry chosen</div>
 				}
 				{
 					props.hero.culture ?
 						<div>
-							<div>Culture: {props.hero.culture.name}</div>
-							<div>Environment: {props.hero.culture.environment.name}</div>
-							<div>Organization: {props.hero.culture.organization.name}</div>
-							<div>Upbringing: {props.hero.culture.upbringing.name}</div>
+							<div className='ds-text'>Culture: {props.hero.culture.name}</div>
+							<div className='ds-text'>Environment: {props.hero.culture.environment.name}</div>
+							<div className='ds-text'>Organization: {props.hero.culture.organization.name}</div>
+							<div className='ds-text'>Upbringing: {props.hero.culture.upbringing.name}</div>
 						</div>
 						:
 						<div className='dimmed-text'>No culture chosen</div>
@@ -37,37 +40,37 @@ export const HeroPanel = (props: Props) => {
 				{
 					props.hero.class ?
 						<div>
-							<div>Class: {props.hero.class.name}</div>
-							<div>Level: {props.hero.class.level}</div>
+							<div className='ds-text'>Class: {props.hero.class.name}</div>
+							<div className='ds-text'>Level: {props.hero.class.level}</div>
 						</div>
 						:
 						<div className='dimmed-text'>No class chosen</div>
 				}
 				{
 					props.hero.career ?
-						<div>Career: {props.hero.career.name}</div>
+						<div className='ds-text'>Career: {props.hero.career.name}</div>
 						:
 						<div className='dimmed-text'>No career chosen</div>
 				}
 				{
 					props.hero.complication ?
-						<div>Complication: {props.hero.complication.name}</div>
+						<div className='ds-text'>Complication: {props.hero.complication.name}</div>
 						: null
 				}
 				{
 					props.hero.kits.length > 0 ?
 						<div>
-							<div>Kit: {props.hero.kits.map(k => k.name).join(', ')}</div>
-							<div>Armor: {props.hero.kits.map(k => k.armor).join(', ')}</div>
-							<div>Weapons: {props.hero.kits.map(k => k.weapon).join(', ')}</div>
-							<div>Implements: {props.hero.kits.map(k => k.implement).join(', ')}</div>
+							<div className='ds-text'>Kit: {props.hero.kits.map(k => k.name).join(', ')}</div>
+							<div className='ds-text'>Armor: {props.hero.kits.map(k => k.armor).join(', ')}</div>
+							<div className='ds-text'>Weapons: {props.hero.kits.map(k => k.weapon).join(', ')}</div>
+							<div className='ds-text'>Implements: {props.hero.kits.map(k => k.implement).join(', ')}</div>
 						</div>
 						:
 						<div className='dimmed-text'>No kit chosen</div>
 				}
 			</div>
-			<div>Languages: {HeroLogic.getLanguages(props.hero).join(', ') || 'None'}</div>
-			<div>Skills: {HeroLogic.getSkills(props.hero).join(', ') || 'None'}</div>
+			<div className='ds-text'>Languages: {HeroLogic.getLanguages(props.hero).join(', ') || 'None'}</div>
+			<div className='ds-text'>Skills: {HeroLogic.getSkills(props.hero).join(', ') || 'None'}</div>
 			<div className='characteristics-row-container'>
 				<div className='characteristics-row'>
 					<div className='characteristic'>
@@ -127,18 +130,21 @@ export const HeroPanel = (props: Props) => {
 			</div>
 			{
 				props.hero.kits.map(kit => (
-					<KitPanel kit={kit} />
+					<KitPanel key={kit.id} kit={kit} />
 				))
 			}
 			{
-				HeroLogic.getFeatures(props.hero).map(feature => (
-					<FeaturePanel feature={feature} />
-				))
+				HeroLogic.getFeatures(props.hero)
+					.filter(feature => feature.type === FeatureType.Text)
+					.map(feature => (
+						<FeaturePanel key={feature.id} feature={feature} settingID={props.hero.settingID} />
+					))
 			}
 			{
-				HeroLogic.getAbilities(props.hero).map(ability => (
-					<AbilityPanel ability={ability} />
-				))
+				HeroLogic.getAbilities(props.hero)
+					.map(ability => (
+						<AbilityPanel key={ability.id} ability={ability} />
+					))
 			}
 		</div>
 	);

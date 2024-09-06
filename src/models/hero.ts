@@ -20,6 +20,8 @@ export interface Hero {
 	id: string;
 	name: string;
 
+	settingID: string;
+
 	ancestry: Ancestry | null;
 	culture: Culture | null;
 	class: HeroClass | null;

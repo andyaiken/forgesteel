@@ -1,4 +1,5 @@
-import { Button, Card, Divider, Flex, Segmented } from 'antd';
+import { Button, Divider, Flex, Segmented } from 'antd';
+import { ReactNode, useState } from 'react';
 import { AncestryData } from '../../../data/ancestry-data';
 import { AncestryPanel } from '../../panels/ancestry-panel/ancestry-panel';
 import { CampaignSettingData } from '../../../data/campaign-setting-data';
@@ -13,7 +14,6 @@ import { Hero } from '../../../models/hero';
 import { KitData } from '../../../data/kit-data';
 import { KitPanel } from '../../panels/kit-panel/kit-panel';
 import { Utils } from '../../../utils/utils';
-import { useState } from 'react';
 
 import './hero-edit-page.scss';
 
@@ -119,9 +119,9 @@ const AncestrySection = () => {
 				<div className='header-text'>Ancestries</div>
 				{
 					AncestryData.getAncestries().map(a => (
-						<Card key={a.id}>
+						<Selectable key={a.id} onSelect={() => null}>
 							<AncestryPanel ancestry={a} />
-						</Card>
+						</Selectable>
 					))
 				}
 			</div>
@@ -144,9 +144,9 @@ const CultureSection = () => {
 				<div className='header-text'>Cultures</div>
 				{
 					CampaignSettingData.orden.cultures.map(c => (
-						<Card key={c.id}>
+						<Selectable key={c.id} onSelect={() => null}>
 							<CulturePanel culture={c} />
-						</Card>
+						</Selectable>
 					))
 				}
 			</div>
@@ -169,9 +169,9 @@ const CareerSection = () => {
 				<div className='header-text'>Careers</div>
 				{
 					CareerData.getCareers().map(c => (
-						<Card key={c.id}>
+						<Selectable key={c.id} onSelect={() => null}>
 							<CareerPanel career={c} />
-						</Card>
+						</Selectable>
 					))
 				}
 			</div>
@@ -194,9 +194,9 @@ const ClassSection = () => {
 				<div className='header-text'>Classes</div>
 				{
 					ClassData.getClasses().map(c => (
-						<Card key={c.id}>
+						<Selectable key={c.id} onSelect={() => null}>
 							<ClassPanel heroClass={c} />
-						</Card>
+						</Selectable>
 					))
 				}
 			</div>
@@ -219,9 +219,9 @@ const KitSection = () => {
 				<div className='header-text'>Kits</div>
 				{
 					KitData.getKits().map(k => (
-						<Card key={k.id}>
+						<Selectable key={k.id} onSelect={() => null}>
 							<KitPanel kit={k} />
-						</Card>
+						</Selectable>
 					))
 				}
 			</div>
@@ -244,9 +244,9 @@ const ComplicationSection = () => {
 				<div className='header-text'>Complications</div>
 				{
 					ComplicationData.getComplications().map(c => (
-						<Card key={c.id}>
+						<Selectable key={c.id} onSelect={() => null}>
 							<ComplicationPanel complication={c} />
-						</Card>
+						</Selectable>
 					))
 				}
 			</div>
@@ -269,6 +269,20 @@ const DetailsSection = () => {
 				<div className='header-text'>Details</div>
 				<div>NAME</div>
 			</div>
+		</div>
+	);
+};
+
+interface SelectableProps {
+	children: ReactNode;
+	onSelect: () => void;
+};
+
+const Selectable = (props: SelectableProps) => {
+	return (
+		<div className='selectable'>
+			{props.children}
+			<Button block={true} onClick={props.onSelect}>Select</Button>
 		</div>
 	);
 };

@@ -9,7 +9,8 @@ interface Props {
 export const ComplicationPanel = (props: Props) => {
 	return (
 		<div className='complication-panel'>
-			{props.complication.name}
+			<div className='header-text'>{props.complication.name}</div>
+			<div className='description-text'>{props.complication.description}</div>
 		</div>
 	);
 };

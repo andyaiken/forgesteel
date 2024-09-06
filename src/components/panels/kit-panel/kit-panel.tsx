@@ -9,7 +9,8 @@ interface Props {
 export const KitPanel = (props: Props) => {
 	return (
 		<div className='kit-panel'>
-			{props.kit.name}
+			<div className='header-text'>{props.kit.name}</div>
+			<div className='description-text'>{props.kit.description}</div>
 		</div>
 	);
 };

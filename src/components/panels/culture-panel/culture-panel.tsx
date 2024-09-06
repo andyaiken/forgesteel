@@ -9,7 +9,8 @@ interface Props {
 export const CulturePanel = (props: Props) => {
 	return (
 		<div className='culture-panel'>
-			{props.culture.name}
+			<div className='header-text'>{props.culture.name}</div>
+			<div className='description-text'>{props.culture.description}</div>
 		</div>
 	);
 };

@@ -157,6 +157,14 @@ export class HeroLogic {
 		return value;
 	};
 
+	static getSize = (hero: Hero) => {
+		if (hero.ancestry) {
+			return `${hero.ancestry.size.value}${hero.ancestry.size.mod}`;
+		}
+
+		return '1M';
+	};
+
 	static getReach = (hero: Hero) => {
 		let value = 0;
 

@@ -108,12 +108,6 @@ export default tseslint.config(
 					]
 				}
 			],
-			'max-len': [
-				'warn',
-				{
-					'code': 200
-				}
-			],
 			'react/react-in-jsx-scope': 'off',
 			'@typescript-eslint/no-unsafe-call': 'off',
 			'@typescript-eslint/no-unsafe-member-access': 'off',

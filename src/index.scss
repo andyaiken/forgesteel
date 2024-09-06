@@ -3,6 +3,7 @@ html {
 	overflow: hidden;
 
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-size: 14px;
 	font-weight: 400;
 
 	color-scheme: light dark;
@@ -36,6 +37,12 @@ body {
 	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 1px;
+}
+
+.description-text {
+	margin: 10px 0;
+	color: rgb(120, 120, 120);
+	font-size: 14px;
 }
 
 .dimmed-text {

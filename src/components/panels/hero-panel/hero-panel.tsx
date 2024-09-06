@@ -1,10 +1,5 @@
 import { AbilityPanel } from '../ability-panel/ability-panel';
-import { AncestryPanel } from '../ancestry-panel/ancestry-panel';
-import { CareerPanel } from '../career-panel/career-panel';
 import { Characteristic } from '../../../enums/characteristic';
-import { ClassPanel } from '../class-panel/class-panel';
-import { ComplicationPanel } from '../complication-panel/complication-panel';
-import { CulturePanel } from '../culture-panel/culture-panel';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
@@ -21,13 +16,58 @@ export const HeroPanel = (props: Props) => {
 	return (
 		<div className='hero-panel'>
 			<div className='header-text'>{props.hero.name || 'Unnamed Hero'}</div>
-			{props.hero.ancestry ? <AncestryPanel ancestry={props.hero.ancestry} /> : <div className='dimmed-text'>No ancestry chosen</div>}
-			{props.hero.culture ? <CulturePanel culture={props.hero.culture} /> : <div className='dimmed-text'>No culture chosen</div>}
-			{props.hero.class ? <ClassPanel heroClass={props.hero.class} /> : <div className='dimmed-text'>No class chosen</div>}
-			{props.hero.career ? <CareerPanel career={props.hero.career} /> : <div className='dimmed-text'>No career chosen</div>}
-			{props.hero.complication ? <ComplicationPanel complication={props.hero.complication} /> : null}
-			<div>Languages: {HeroLogic.getLanguages(props.hero).join(', ')}</div>
-			<div>Skills: {HeroLogic.getSkills(props.hero).join(', ')}</div>
+			<div className='characteristics-row-container'>
+				{
+					props.hero.ancestry ?
+						<div>Ancestry: {props.hero.ancestry.name}</div>
+						:
+						<div className='dimmed-text'>No ancestry chosen</div>
+				}
+				{
+					props.hero.culture ?
+						<div>
+							<div>Culture: {props.hero.culture.name}</div>
+							<div>Environment: {props.hero.culture.environment.name}</div>
+							<div>Organization: {props.hero.culture.organization.name}</div>
+							<div>Upbringing: {props.hero.culture.upbringing.name}</div>
+						</div>
+						:
+						<div className='dimmed-text'>No culture chosen</div>
+				}
+				{
+					props.hero.class ?
+						<div>
+							<div>Class: {props.hero.class.name}</div>
+							<div>Level: {props.hero.class.level}</div>
+						</div>
+						:
+						<div className='dimmed-text'>No class chosen</div>
+				}
+				{
+					props.hero.career ?
+						<div>Career: {props.hero.career.name}</div>
+						:
+						<div className='dimmed-text'>No career chosen</div>
+				}
+				{
+					props.hero.complication ?
+						<div>Complication: {props.hero.complication.name}</div>
+						: null
+				}
+				{
+					props.hero.kits.length > 0 ?
+						<div>
+							<div>Kit: {props.hero.kits.map(k => k.name).join(', ')}</div>
+							<div>Armor: {props.hero.kits.map(k => k.armor).join(', ')}</div>
+							<div>Weapons: {props.hero.kits.map(k => k.weapon).join(', ')}</div>
+							<div>Implements: {props.hero.kits.map(k => k.implement).join(', ')}</div>
+						</div>
+						:
+						<div className='dimmed-text'>No kit chosen</div>
+				}
+			</div>
+			<div>Languages: {HeroLogic.getLanguages(props.hero).join(', ') || 'None'}</div>
+			<div>Skills: {HeroLogic.getSkills(props.hero).join(', ') || 'None'}</div>
 			<div className='characteristics-row-container'>
 				<div className='characteristics-row'>
 					<div className='characteristic'>
@@ -44,6 +84,20 @@ export const HeroPanel = (props: Props) => {
 					</div>
 					<div className='characteristic'>
 						<Statistic title='Presence' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
+					</div>
+				</div>
+				<div className='characteristics-row'>
+					<div className='characteristic'>
+						<Statistic title='Size' value={HeroLogic.getSize(props.hero)} />
+					</div>
+					<div className='characteristic'>
+						<Statistic title='Reach' value={HeroLogic.getReach(props.hero)} />
+					</div>
+					<div className='characteristic'>
+						<Statistic title='Speed' value={HeroLogic.getSpeed(props.hero)} />
+					</div>
+					<div className='characteristic'>
+						<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />
 					</div>
 				</div>
 			</div>
@@ -68,17 +122,6 @@ export const HeroPanel = (props: Props) => {
 					</div>
 					<div className='characteristic'>
 						<Statistic title='Hero Tokens' value={props.hero.state.heroTokens} />
-					</div>
-				</div>
-				<div className='characteristics-row'>
-					<div className='characteristic'>
-						<Statistic title='Reach' value={HeroLogic.getReach(props.hero)} />
-					</div>
-					<div className='characteristic'>
-						<Statistic title='Speed' value={HeroLogic.getSpeed(props.hero)} />
-					</div>
-					<div className='characteristic'>
-						<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />
 					</div>
 				</div>
 			</div>

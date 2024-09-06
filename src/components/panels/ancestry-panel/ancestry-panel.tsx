@@ -9,7 +9,8 @@ interface Props {
 export const AncestryPanel = (props: Props) => {
 	return (
 		<div className='ancestry-panel'>
-			{props.ancestry.name}
+			<div className='header-text'>{props.ancestry.name}</div>
+			<div className='description-text'>{props.ancestry.description}</div>
 		</div>
 	);
 };

@@ -5,7 +5,7 @@ export class AncestryData {
 	static human: Ancestry = {
 		id: 'ancestry-human',
 		name: 'Human',
-		description: '',
+		description: '“Humans,” the dwarf said with a combination of exasperation and awe. “Their only virtue seems to be believing in impossible things.”',
 		size: {
 			value: 1,
 			mod: 'M'

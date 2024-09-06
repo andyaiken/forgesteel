@@ -1,6 +1,6 @@
 import { CampaignSetting } from '../models/campaign-setting';
-import { SkillList } from '../enums/skill-list';
 import { FeatureLogic } from '../logic/feature-logic';
+import { SkillList } from '../enums/skill-list';
 
 export class CampaignSettingData {
 	static orden: CampaignSetting = {
@@ -31,7 +31,7 @@ export class CampaignSettingData {
 			{
 				id: 'orden-capital',
 				name: 'Capital',
-				description: 'The greatest city of this or any age.',
+				description: 'The greatest city in this or any age.',
 				environment: FeatureLogic.createSkillFeature({
 					id: 'env-urban',
 					name: 'Urban',

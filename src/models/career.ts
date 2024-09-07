@@ -6,6 +6,6 @@ export interface Career {
 	description: string;
 
 	features: Feature[];
-	title: string;
+	title: Feature;
 	projectPoints: number;
 }

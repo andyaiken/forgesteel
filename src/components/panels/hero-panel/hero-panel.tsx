@@ -48,13 +48,20 @@ export const HeroPanel = (props: Props) => {
 				}
 				{
 					props.hero.career ?
-						<div className='ds-text'>Career: {props.hero.career.name}</div>
+						<div>
+							<div className='ds-text'>Career: {props.hero.career.name}</div>
+							<div className='ds-text'>Title: {props.hero.career.title.name}</div>
+						</div>
 						:
 						<div className='dimmed-text'>No career chosen</div>
 				}
 				{
 					props.hero.complication ?
-						<div className='ds-text'>Complication: {props.hero.complication.name}</div>
+						<div>
+							<div className='ds-text'>Complication: {props.hero.complication.name}</div>
+							<div className='ds-text'>Benefit: {props.hero.complication.benefit.name}</div>
+							<div className='ds-text'>Drawback: {props.hero.complication.drawback.name}</div>
+						</div>
 						: null
 				}
 				{
@@ -69,82 +76,88 @@ export const HeroPanel = (props: Props) => {
 						<div className='dimmed-text'>No kit chosen</div>
 				}
 			</div>
-			<div className='ds-text'>Languages: {HeroLogic.getLanguages(props.hero).join(', ') || 'None'}</div>
-			<div className='ds-text'>Skills: {HeroLogic.getSkills(props.hero).join(', ') || 'None'}</div>
-			<div className='characteristics-row-container'>
-				<div className='characteristics-row'>
-					<div className='characteristic'>
-						<Statistic title='Might' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
-					</div>
-					<div className='characteristic'>
-						<Statistic title='Agility' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
-					</div>
-					<div className='characteristic'>
-						<Statistic title='Reason' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
-					</div>
-					<div className='characteristic'>
-						<Statistic title='Intuition' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
-					</div>
-					<div className='characteristic'>
-						<Statistic title='Presence' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
-					</div>
-				</div>
-				<div className='characteristics-row'>
-					<div className='characteristic'>
-						<Statistic title='Size' value={HeroLogic.getSize(props.hero)} />
-					</div>
-					<div className='characteristic'>
-						<Statistic title='Reach' value={HeroLogic.getReach(props.hero)} />
-					</div>
-					<div className='characteristic'>
-						<Statistic title='Speed' value={HeroLogic.getSpeed(props.hero)} />
-					</div>
-					<div className='characteristic'>
-						<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />
-					</div>
-				</div>
-			</div>
-			<div className='characteristics-row-container'>
-				<div className='characteristics-row'>
-					<div className='characteristic'>
-						<Statistic title='Stamina' value={HeroLogic.getStamina(props.hero)} />
-					</div>
-					<div className='characteristic'>
-						<Statistic title='Recoveries' value={HeroLogic.getRecoveries(props.hero)} />
-					</div>
-					<div className='characteristic'>
-						<Statistic title='Recovery Value' value={HeroLogic.getRecoveryValue(props.hero)} />
-					</div>
-				</div>
-				<div className='characteristics-row'>
-					<div className='characteristic'>
-						<Statistic title={props.hero.class ? props.hero.class.heroicResource : 'Heroic Resource'} value={props.hero.state.heroicResource} />
-					</div>
-					<div className='characteristic'>
-						<Statistic title='Renown' value={props.hero.state.renown} />
-					</div>
-					<div className='characteristic'>
-						<Statistic title='Hero Tokens' value={props.hero.state.heroTokens} />
-					</div>
-				</div>
-			</div>
 			{
-				props.hero.kits.map(kit => (
-					<KitPanel key={kit.id} kit={kit} />
-				))
-			}
-			{
-				HeroLogic.getFeatures(props.hero)
-					.filter(feature => feature.type === FeatureType.Text)
-					.map(feature => (
-						<FeaturePanel key={feature.id} feature={feature} settingID={props.hero.settingID} />
-					))
-			}
-			{
-				HeroLogic.getAbilities(props.hero)
-					.map(ability => (
-						<AbilityPanel key={ability.id} ability={ability} />
-					))
+				props.mode === PanelMode.Full ?
+					<div>
+						<div className='ds-text'>Languages: {HeroLogic.getLanguages(props.hero).join(', ') || 'None'}</div>
+						<div className='ds-text'>Skills: {HeroLogic.getSkills(props.hero).join(', ') || 'None'}</div>
+						<div className='characteristics-row-container'>
+							<div className='characteristics-row'>
+								<div className='characteristic'>
+									<Statistic title='Might' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
+								</div>
+								<div className='characteristic'>
+									<Statistic title='Agility' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
+								</div>
+								<div className='characteristic'>
+									<Statistic title='Reason' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
+								</div>
+								<div className='characteristic'>
+									<Statistic title='Intuition' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
+								</div>
+								<div className='characteristic'>
+									<Statistic title='Presence' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
+								</div>
+							</div>
+							<div className='characteristics-row'>
+								<div className='characteristic'>
+									<Statistic title='Size' value={HeroLogic.getSize(props.hero)} />
+								</div>
+								<div className='characteristic'>
+									<Statistic title='Reach' value={HeroLogic.getReach(props.hero)} />
+								</div>
+								<div className='characteristic'>
+									<Statistic title='Speed' value={HeroLogic.getSpeed(props.hero)} />
+								</div>
+								<div className='characteristic'>
+									<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />
+								</div>
+							</div>
+						</div>
+						<div className='characteristics-row-container'>
+							<div className='characteristics-row'>
+								<div className='characteristic'>
+									<Statistic title='Stamina' value={HeroLogic.getStamina(props.hero)} />
+								</div>
+								<div className='characteristic'>
+									<Statistic title='Recoveries' value={HeroLogic.getRecoveries(props.hero)} />
+								</div>
+								<div className='characteristic'>
+									<Statistic title='Recovery Value' value={HeroLogic.getRecoveryValue(props.hero)} />
+								</div>
+							</div>
+							<div className='characteristics-row'>
+								<div className='characteristic'>
+									<Statistic title={props.hero.class ? props.hero.class.heroicResource : 'Heroic Resource'} value={props.hero.state.heroicResource} />
+								</div>
+								<div className='characteristic'>
+									<Statistic title='Renown' value={props.hero.state.renown} />
+								</div>
+								<div className='characteristic'>
+									<Statistic title='Hero Tokens' value={props.hero.state.heroTokens} />
+								</div>
+							</div>
+						</div>
+						{
+							props.hero.kits.map(kit => (
+								<KitPanel key={kit.id} kit={kit} />
+							))
+						}
+						{
+							HeroLogic.getFeatures(props.hero)
+								.filter(feature => feature.type === FeatureType.Text)
+								.map(feature => (
+									<FeaturePanel key={feature.id} feature={feature} settingID={props.hero.settingID} />
+								))
+						}
+						{
+							HeroLogic.getAbilities(props.hero)
+								.map(ability => (
+									<AbilityPanel key={ability.id} ability={ability} />
+								))
+						}
+					</div>
+					: null
 			}
 		</div>
 	);

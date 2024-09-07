@@ -1,5 +1,8 @@
 import { Button, Divider, Flex } from 'antd';
 import { Hero } from '../../../models/hero';
+import { HeroPanel } from '../../panels/hero-panel/hero-panel';
+import { PanelMode } from '../../../enums/panel-mode';
+import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 
 import './hero-list-page.scss';
 
@@ -18,9 +21,9 @@ export const HeroListPage = (props: Props) => {
 			<Divider />
 			{
 				props.heroes.map(hero => (
-					<Button key={hero.id} onClick={() => props.viewHero(hero.id)}>
-						{hero.name || 'Unnamed Hero'}
-					</Button>
+					<SelectablePanel key={hero.id} onSelect={() => props.viewHero(hero.id)}>
+						<HeroPanel hero={hero} mode={PanelMode.Short} />
+					</SelectablePanel>
 				))
 			}
 		</div>

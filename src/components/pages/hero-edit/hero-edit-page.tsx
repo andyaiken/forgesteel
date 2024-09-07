@@ -22,6 +22,7 @@ import { Kit } from '../../../models/kit';
 import { KitData } from '../../../data/kit-data';
 import { KitPanel } from '../../panels/kit-panel/kit-panel';
 import { PanelMode } from '../../../enums/panel-mode';
+import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { useState } from 'react';
 
 import './hero-edit-page.scss';
@@ -179,9 +180,9 @@ interface AncestrySectionProps {
 
 const AncestrySection = (props: AncestrySectionProps) => {
 	const options = AncestryData.getAncestries().map(a => (
-		<SelectableCard key={a.id} onSelect={() => props.selectAncestry(a)}>
+		<SelectablePanel key={a.id} onSelect={() => props.selectAncestry(a)}>
 			<AncestryPanel ancestry={a} />
-		</SelectableCard>
+		</SelectablePanel>
 	));
 
 	let choices: JSX.Element[] = [];
@@ -189,9 +190,9 @@ const AncestrySection = (props: AncestrySectionProps) => {
 		choices = props.hero.ancestry.features
 			.filter(f => f.choice)
 			.map(f => (
-				<SelectableCard key={f.id}>
+				<SelectablePanel key={f.id}>
 					<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
-				</SelectableCard>
+				</SelectablePanel>
 			));
 	}
 
@@ -206,9 +207,9 @@ const AncestrySection = (props: AncestrySectionProps) => {
 				<div className='header-text'>Selected</div>
 				{
 					props.hero.ancestry ?
-						<SelectableCard onUnselect={() => props.selectAncestry(null)}>
+						<SelectablePanel onUnselect={() => props.selectAncestry(null)}>
 							<AncestryPanel ancestry={props.hero.ancestry} mode={PanelMode.Full} />
-						</SelectableCard>
+						</SelectablePanel>
 						:
 						<div className='dimmed-text centered-text'>Not selected</div>
 				}
@@ -230,9 +231,9 @@ interface CultureSectionProps {
 
 const CultureSection = (props: CultureSectionProps) => {
 	const options = CampaignSettingData.orden.cultures.map(c => (
-		<SelectableCard key={c.id} onSelect={() => props.selectCulture(c)}>
+		<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
 			<CulturePanel culture={c} />
-		</SelectableCard>
+		</SelectablePanel>
 	));
 
 	let choices: JSX.Element[] = [];
@@ -240,9 +241,9 @@ const CultureSection = (props: CultureSectionProps) => {
 		choices = [ props.hero.culture.environment, props.hero.culture.organization, props.hero.culture.upbringing ]
 			.filter(f => f.choice)
 			.map(f => (
-				<SelectableCard key={f.id}>
+				<SelectablePanel key={f.id}>
 					<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
-				</SelectableCard>
+				</SelectablePanel>
 			));
 	}
 
@@ -257,9 +258,9 @@ const CultureSection = (props: CultureSectionProps) => {
 				<div className='header-text'>Selected</div>
 				{
 					props.hero.culture ?
-						<SelectableCard onUnselect={() => props.selectCulture(null)}>
+						<SelectablePanel onUnselect={() => props.selectCulture(null)}>
 							<CulturePanel culture={props.hero.culture} mode={PanelMode.Full} />
-						</SelectableCard>
+						</SelectablePanel>
 						:
 						<div className='dimmed-text centered-text'>Not selected</div>
 				}
@@ -281,9 +282,9 @@ interface CareerSectionProps {
 
 const CareerSection = (props: CareerSectionProps) => {
 	const options = CareerData.getCareers().map(c => (
-		<SelectableCard key={c.id} onSelect={() => props.selectCareer(c)}>
+		<SelectablePanel key={c.id} onSelect={() => props.selectCareer(c)}>
 			<CareerPanel career={c} />
-		</SelectableCard>
+		</SelectablePanel>
 	));
 
 	let choices: JSX.Element[] = [];
@@ -291,9 +292,9 @@ const CareerSection = (props: CareerSectionProps) => {
 		choices = props.hero.career.features
 			.filter(f => f.choice)
 			.map(f => (
-				<SelectableCard key={f.id}>
+				<SelectablePanel key={f.id}>
 					<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
-				</SelectableCard>
+				</SelectablePanel>
 			));
 	}
 
@@ -308,9 +309,9 @@ const CareerSection = (props: CareerSectionProps) => {
 				<div className='header-text'>Selected</div>
 				{
 					props.hero.career ?
-						<SelectableCard onUnselect={() => props.selectCareer(null)}>
+						<SelectablePanel onUnselect={() => props.selectCareer(null)}>
 							<CareerPanel career={props.hero.career} mode={PanelMode.Full} />
-						</SelectableCard>
+						</SelectablePanel>
 						:
 						<div className='dimmed-text centered-text'>Not selected</div>
 				}
@@ -332,9 +333,9 @@ interface ClassSectionProps {
 
 const ClassSection = (props: ClassSectionProps) => {
 	const options = ClassData.getClasses().map(c => (
-		<SelectableCard key={c.id} onSelect={() => props.selectClass(c)}>
+		<SelectablePanel key={c.id} onSelect={() => props.selectClass(c)}>
 			<ClassPanel heroClass={c} />
-		</SelectableCard>
+		</SelectablePanel>
 	));
 
 	let choices: JSX.Element[] = [];
@@ -344,9 +345,9 @@ const ClassSection = (props: ClassSectionProps) => {
 			.flatMap(lvl => lvl.features)
 			.filter(f => f.choice)
 			.map(f => (
-				<SelectableCard key={f.id}>
+				<SelectablePanel key={f.id}>
 					<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
-				</SelectableCard>
+				</SelectablePanel>
 			));
 	}
 
@@ -361,9 +362,9 @@ const ClassSection = (props: ClassSectionProps) => {
 				<div className='header-text'>Selected</div>
 				{
 					props.hero.class ?
-						<SelectableCard onUnselect={() => props.selectClass(null)}>
+						<SelectablePanel onUnselect={() => props.selectClass(null)}>
 							<ClassPanel heroClass={props.hero.class} mode={PanelMode.Full} />
-						</SelectableCard>
+						</SelectablePanel>
 						:
 						<div className='dimmed-text centered-text'>Not selected</div>
 				}
@@ -385,9 +386,9 @@ interface ComplicationSectionProps {
 
 const ComplicationSection = (props: ComplicationSectionProps) => {
 	const options = ComplicationData.getComplications().map(c => (
-		<SelectableCard key={c.id} onSelect={() => props.selectComplication(c)}>
+		<SelectablePanel key={c.id} onSelect={() => props.selectComplication(c)}>
 			<ComplicationPanel complication={c} />
-		</SelectableCard>
+		</SelectablePanel>
 	));
 
 	let choices: JSX.Element[] = [];
@@ -395,9 +396,9 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 		choices = [ props.hero.complication.benefit, props.hero.complication.drawback ]
 			.filter(f => f.choice)
 			.map(f => (
-				<SelectableCard key={f.id}>
+				<SelectablePanel key={f.id}>
 					<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
-				</SelectableCard>
+				</SelectablePanel>
 			));
 	}
 
@@ -412,9 +413,9 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 				<div className='header-text'>Selected</div>
 				{
 					props.hero.complication ?
-						<SelectableCard onUnselect={() => props.selectComplication(null)}>
+						<SelectablePanel onUnselect={() => props.selectComplication(null)}>
 							<ComplicationPanel complication={props.hero.complication} mode={PanelMode.Full} />
-						</SelectableCard>
+						</SelectablePanel>
 						:
 						<div className='dimmed-text centered-text'>Not selected</div>
 				}
@@ -437,9 +438,9 @@ interface KitSectionProps {
 
 const KitSection = (props: KitSectionProps) => {
 	const options = KitData.getKits().map(k => (
-		<SelectableCard key={k.id} onSelect={() => props.addKit(k)}>
+		<SelectablePanel key={k.id} onSelect={() => props.addKit(k)}>
 			<KitPanel kit={k} />
-		</SelectableCard>
+		</SelectablePanel>
 	));
 
 	const choices = props.hero.kits
@@ -447,9 +448,9 @@ const KitSection = (props: KitSectionProps) => {
 		.map(k => k.ward as Feature)
 		.filter(f => f.choice)
 		.map(f => (
-			<SelectableCard key={f.id}>
+			<SelectablePanel key={f.id}>
 				<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
-			</SelectableCard>
+			</SelectablePanel>
 		));
 
 	return (
@@ -463,9 +464,9 @@ const KitSection = (props: KitSectionProps) => {
 				<div className='header-text'>Selected</div>
 				{
 					props.hero.kits.map(kit => (
-						<SelectableCard key={kit.id} onUnselect={() => props.removeKit(kit.id)}>
+						<SelectablePanel key={kit.id} onUnselect={() => props.removeKit(kit.id)}>
 							<KitPanel kit={kit} mode={PanelMode.Full} />
-						</SelectableCard>
+						</SelectablePanel>
 					))
 				}
 				{props.hero.kits.length === 0 ? <div className='dimmed-text centered-text'>Not selected</div> : null}
@@ -490,22 +491,6 @@ const DetailsSection = (props: DetailsSectionProps) => {
 				<div className='header-text'>Details</div>
 				<div>NAME: {props.hero.name}</div>
 			</div>
-		</div>
-	);
-};
-
-interface SelectableCardProps {
-	children: JSX.Element;
-	onSelect?: () => void;
-	onUnselect?: () => void;
-};
-
-const SelectableCard = (props: SelectableCardProps) => {
-	return (
-		<div className='selectable'>
-			{props.children}
-			{props.onSelect ? <Button block={true} onClick={props.onSelect}>Select</Button> : null}
-			{props.onUnselect ? <Button block={true} onClick={props.onUnselect}>Unselect</Button> : null}
 		</div>
 	);
 };

@@ -8,9 +8,9 @@
 	"scripts": {
 		"update": "npx npm-check-updates --interactive --format group",
 		"dev": "vite",
-		"build": "tsc -b && vite build",
 		"lint": "eslint .",
 		"preview": "vite preview",
+		"predeploy": "tsc -b && vite build",
 		"deploy": "gh-pages -d dist"
 	},
 	"dependencies": {

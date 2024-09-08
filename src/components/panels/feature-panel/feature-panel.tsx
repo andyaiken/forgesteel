@@ -49,9 +49,10 @@ export const FeaturePanel = (props: Props) => {
 									props.setData(props.feature.id, dataCopy);
 								}
 							} else {
-								if (data.selected.length < data.count) {
+								const values = value as string[];
+								if (values.length <= data.count) {
 									const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureSkillData;
-									dataCopy.selected = value as string[];
+									dataCopy.selected = values;
 									if (props.setData) {
 										props.setData(props.feature.id, dataCopy);
 									}
@@ -72,6 +73,10 @@ export const FeaturePanel = (props: Props) => {
 				const data = props.feature.data as FeatureLanguageData;
 				const languages: string[] = [];
 				data.options.forEach(language => languages.push(language));
+				if (languages.length === 0) {
+					const setting = CampaignSettingData.getCampaignSettings().find(s => s.id === props.settingID);
+					setting?.languages.forEach(l => languages.push(l));
+				}
 				const distinctLanguages = Collections.distinct(languages, l => l);
 				const sortedLanguages = Collections.sort(distinctLanguages, l => l);
 
@@ -92,9 +97,10 @@ export const FeaturePanel = (props: Props) => {
 									props.setData(props.feature.id, dataCopy);
 								}
 							} else {
-								if (data.selected.length < data.count) {
+								const values = value as string[];
+								if (values.length <= data.count) {
 									const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureLanguageData;
-									dataCopy.selected = value as string[];
+									dataCopy.selected = values;
 									if (props.setData) {
 										props.setData(props.feature.id, dataCopy);
 									}

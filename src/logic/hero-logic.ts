@@ -22,6 +22,7 @@ export class HeroLogic {
 
 		if (hero.career) {
 			features.push(...hero.career.features);
+			features.push(hero.career.title);
 		}
 
 		if (hero.class) {

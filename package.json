@@ -1,10 +1,10 @@
 {
-	"name": "drawsteel",
+	"name": "forgesteel",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
-	"repository": "https://github.com/andyaiken/drawsteel.git",
-	"homepage": "https://andyaiken.github.io/drawsteel/",
+	"repository": "https://github.com/andyaiken/forgesteel.git",
+	"homepage": "https://andyaiken.github.io/forgesteel/",
 	"scripts": {
 		"update": "npx npm-check-updates --interactive --format group",
 		"dev": "vite",

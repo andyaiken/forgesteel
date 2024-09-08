@@ -27,7 +27,7 @@ export const Main = (props: Props) => {
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
 
 	const persistHeroes = (heroes: Hero[]) => {
-		localforage.setItem<Hero[]>('drawsteel-heroes', heroes)
+		localforage.setItem<Hero[]>('forgesteel-heroes', heroes)
 			.then(() => {
 				setHeroes(heroes);
 			});
@@ -146,14 +146,14 @@ export const Main = (props: Props) => {
 	return (
 		<div className='main'>
 			<div className='main-header'>
-				<div className='title'>Draw Steel</div>
+				<div className='title'>Forge Steel</div>
 				<Breadcrumb items={getBreadcrumbs()} />
 			</div>
 			<div className='main-content'>
 				{getContent()}
 			</div>
 			<div className='main-footer'>
-				<div>Content copyright MCDM Productions</div>
+				<div>FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC. DRAW STEEL © 2024 MCDM Productions, LLC.</div>
 				<div>App design by Andy Aiken</div>
 			</div>
 		</div>

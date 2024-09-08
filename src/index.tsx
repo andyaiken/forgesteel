@@ -7,7 +7,7 @@ import localforage from 'localforage';
 import './index.scss';
 
 localforage
-	.getItem<Hero[]>('drawsteel-heroes')
+	.getItem<Hero[]>('forgesteel-heroes')
 	.then(heroes => {
 		createRoot(document.getElementById('root')!).render(
 			<StrictMode>

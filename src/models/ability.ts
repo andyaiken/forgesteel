@@ -23,7 +23,7 @@ export interface Ability {
 	cost: number;
 
 	powerRoll: {
-		characteristic: Characteristic;
+		characteristic: Characteristic[];
 		tier1: Effect[];
 		tier2: Effect[];
 		tier3: Effect[];

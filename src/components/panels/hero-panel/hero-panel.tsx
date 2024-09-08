@@ -4,7 +4,6 @@ import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
-import { KitPanel } from '../kit-panel/kit-panel';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Statistic } from 'antd';
 
@@ -38,15 +37,6 @@ export const HeroPanel = (props: Props) => {
 						<div className='dimmed-text'>No culture chosen</div>
 				}
 				{
-					props.hero.class ?
-						<div>
-							<div className='ds-text'>Class: {props.hero.class.name}</div>
-							<div className='ds-text'>Level: {props.hero.class.level}</div>
-						</div>
-						:
-						<div className='dimmed-text'>No class chosen</div>
-				}
-				{
 					props.hero.career ?
 						<div>
 							<div className='ds-text'>Career: {props.hero.career.name}</div>
@@ -54,6 +44,15 @@ export const HeroPanel = (props: Props) => {
 						</div>
 						:
 						<div className='dimmed-text'>No career chosen</div>
+				}
+				{
+					props.hero.class ?
+						<div>
+							<div className='ds-text'>Class: {props.hero.class.name}</div>
+							<div className='ds-text'>Level: {props.hero.class.level}</div>
+						</div>
+						:
+						<div className='dimmed-text'>No class chosen</div>
 				}
 				{
 					props.hero.complication ?
@@ -138,11 +137,6 @@ export const HeroPanel = (props: Props) => {
 								</div>
 							</div>
 						</div>
-						{
-							props.hero.kits.map(kit => (
-								<KitPanel key={kit.id} kit={kit} />
-							))
-						}
 						{
 							HeroLogic.getFeatures(props.hero)
 								.filter(feature => feature.type === FeatureType.Text)

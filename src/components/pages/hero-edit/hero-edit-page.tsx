@@ -46,12 +46,14 @@ interface Props {
 export const HeroEditPage = (props: Props) => {
 	const [ page, setPage ] = useState<Page>(Page.Ancestry);
 	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(props.hero)) as Hero);
+	const [ dirty, setDirty ] = useState<boolean>(false);
 
 	const setAncestry = (ancestry: Ancestry | null) => {
 		const ancestryCopy = JSON.parse(JSON.stringify(ancestry)) as Ancestry | null;
 		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 		heroCopy.ancestry = ancestryCopy;
 		setHero(heroCopy);
+		setDirty(true);
 	};
 
 	const setCulture = (culture: Culture | null) => {
@@ -59,6 +61,7 @@ export const HeroEditPage = (props: Props) => {
 		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 		heroCopy.culture = cultureCopy;
 		setHero(heroCopy);
+		setDirty(true);
 	};
 
 	const setCareer = (career: Career | null) => {
@@ -66,6 +69,7 @@ export const HeroEditPage = (props: Props) => {
 		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 		heroCopy.career = careerCopy;
 		setHero(heroCopy);
+		setDirty(true);
 	};
 
 	const setClass = (heroClass: HeroClass | null) => {
@@ -73,6 +77,7 @@ export const HeroEditPage = (props: Props) => {
 		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 		heroCopy.class = classCopy;
 		setHero(heroCopy);
+		setDirty(true);
 	};
 
 	const setComplication = (complication: Complication | null) => {
@@ -80,6 +85,7 @@ export const HeroEditPage = (props: Props) => {
 		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 		heroCopy.complication = complicationCopy;
 		setHero(heroCopy);
+		setDirty(true);
 	};
 
 	const addKit = (kit: Kit) => {
@@ -87,12 +93,14 @@ export const HeroEditPage = (props: Props) => {
 		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 		heroCopy.kits.push(kitCopy);
 		setHero(heroCopy);
+		setDirty(true);
 	};
 
 	const removeKit = (kitID: string) => {
 		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 		heroCopy.kits = heroCopy.kits.filter(k => k.id !== kitID);
 		setHero(heroCopy);
+		setDirty(true);
 	};
 
 	const setFeatureData = (featureID: string, data: unknown) => {
@@ -102,10 +110,12 @@ export const HeroEditPage = (props: Props) => {
 			feature.data = data as FeatureSkillData | FeatureLanguageData;
 		}
 		setHero(heroCopy);
+		setDirty(true);
 	};
 
 	const saveChanges = () => {
 		props.saveChanges(hero);
+		setDirty(false);
 	};
 
 	const cancelChanges = () => {
@@ -148,7 +158,7 @@ export const HeroEditPage = (props: Props) => {
 	return (
 		<div className='hero-edit-page'>
 			<Flex gap='small'>
-				<Button onClick={saveChanges}>Save Changes</Button>
+				<Button type='primary' disabled={!dirty} onClick={saveChanges}>Save Changes</Button>
 				<Button onClick={cancelChanges}>Cancel</Button>
 			</Flex>
 			<Divider />

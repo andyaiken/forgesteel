@@ -42,7 +42,7 @@ export const Main = (props: Props) => {
 		Collections.sort(copy, h => h.name);
 
 		persistHeroes(copy);
-		setPage(Page.HeroView);
+		setPage(Page.HeroEdit);
 		setSelectedHero(hero);
 	};
 

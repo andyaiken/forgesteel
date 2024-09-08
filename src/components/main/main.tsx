@@ -9,6 +9,7 @@ import { HeroPage } from '../pages/hero-view/hero-view-page';
 import localforage from 'localforage';
 import { useState } from 'react';
 
+import pbds from '../../assets/powered-by-draw-steel.png';
 import './main.scss';
 
 enum Page {
@@ -153,8 +154,10 @@ export const Main = (props: Props) => {
 				{getContent()}
 			</div>
 			<div className='main-footer'>
-				<div>FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC. DRAW STEEL © 2024 MCDM Productions, LLC.</div>
-				<div>App design by Andy Aiken</div>
+				<img src={pbds} style={{ height: '30px' }} />
+				<div>FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC</div>
+				<a href='https://www.mcdmproductions.com/' target='_blank'>DRAW STEEL © 2024 MCDM Productions, LLC</a>
+				<a href='mailto:andy.aiken@live.co.uk'>App design by Andy Aiken</a>
 			</div>
 		</div>
 	);

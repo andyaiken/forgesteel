@@ -31,12 +31,23 @@
 
 	.main-footer {
 		flex: 0 0 auto;
-		padding: 15px 30px;
+		padding: 10px 20px;
 		background-color: rgb(220, 220, 220);
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		gap: 20px;
 		font-size: 10px;
+
+		a {
+			padding: 3px 5px;
+			border-radius: 5px;
+			color: initial;
+			text-decoration: initial;
+
+			&:hover {
+				background-color: rgb(200, 200, 200);
+			}
+		}
 	}
 }

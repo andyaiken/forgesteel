@@ -137,19 +137,25 @@ export const HeroPanel = (props: Props) => {
 								</div>
 							</div>
 						</div>
-						{
-							HeroLogic.getFeatures(props.hero)
-								.filter(feature => feature.type === FeatureType.Text)
-								.map(feature => (
-									<FeaturePanel key={feature.id} feature={feature} settingID={props.hero.settingID} />
-								))
-						}
-						{
-							HeroLogic.getAbilities(props.hero)
-								.map(ability => (
-									<AbilityPanel key={ability.id} ability={ability} />
-								))
-						}
+						<div className='features-and-actions'>
+							<div className='features-column'>
+								{
+									HeroLogic.getFeatures(props.hero)
+										.filter(feature => feature.type === FeatureType.Text)
+										.map(feature => (
+											<FeaturePanel key={feature.id} feature={feature} settingID={props.hero.settingID} mode={PanelMode.Full} />
+										))
+								}
+							</div>
+							<div className='actions-column'>
+								{
+									HeroLogic.getAbilities(props.hero)
+										.map(ability => (
+											<AbilityPanel key={ability.id} ability={ability} mode={PanelMode.Full} />
+										))
+								}
+							</div>
+						</div>
 					</div>
 					: null
 			}

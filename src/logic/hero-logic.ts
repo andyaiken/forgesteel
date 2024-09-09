@@ -1,5 +1,7 @@
-import { Feature, FeatureLanguageData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
 import { Ability } from '../models/ability';
+import { AbilityKeyword } from '../enums/ability-keyword';
+import { AbilityLogic } from './ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
@@ -32,6 +34,16 @@ export class HeroLogic {
 					features.push(...lvl.features);
 				}
 			});
+
+			const subclassID = hero.class.subclassID;
+			const subclass = hero.class.subclasses.find(s => s.id === subclassID);
+			if (subclass) {
+				subclass.featuresByLevel.forEach(lvl => {
+					if (lvl.level <= classLevel) {
+						features.push(...lvl.features);
+					}
+				});
+			}
 		}
 
 		if (hero.complication) {
@@ -51,9 +63,43 @@ export class HeroLogic {
 	static getAbilities = (hero: Hero) => {
 		const abilities: Ability[] = [];
 
-		// TODO: Include free strikes
+		abilities.push(AbilityLogic.createAbility({
+			id: 'free-melee',
+			name: 'Melee Free Strike',
+			description: '',
+			type: AbilityLogic.createAbilityType({ usage: AbilityUsage.Action, free: true }),
+			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+			distance: 'Reach 1',
+			target: '1 creature or object',
+			powerRoll: AbilityLogic.createPowerRoll({
+				characteristic: [ Characteristic.Might, Characteristic.Agility ],
+				tier1: '2 damage',
+				tier2: '6 damage',
+				tier3: '9 damage'
+			})
+		}));
+		abilities.push(AbilityLogic.createAbility({
+			id: 'free-ranged',
+			name: 'Ranged Free Strike',
+			description: '',
+			type: AbilityLogic.createAbilityType({ usage: AbilityUsage.Action, free: true }),
+			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+			distance: 'Ranged 5',
+			target: '1 creature or object',
+			powerRoll: AbilityLogic.createPowerRoll({
+				characteristic: [ Characteristic.Might, Characteristic.Agility ],
+				tier1: '2 damage',
+				tier2: '6 damage',
+				tier3: '9 damage'
+			})
+		}));
 
-		// TODO: Include class abilities
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.Ability)
+			.forEach(f => {
+				const data = f.data as FeatureAbilityData;
+				abilities.push(data.ability);
+			});
 
 		hero.kits.forEach(kit => {
 			if (kit.signatureAbility) {
@@ -62,22 +108,13 @@ export class HeroLogic {
 		});
 
 		if (hero.kits.some(kit => kit.mobility)) {
-			abilities.push({
+			abilities.push(AbilityLogic.createAbility({
 				id: 'mobility',
 				name: 'Mobility',
-				description: 'You shift up to 2 squares.',
-				keywords: [],
-				type: {
-					usage: AbilityUsage.Trigger,
-					free: true,
-					trigger: 'An enemy ends its turn adjacent to you.',
-					time: ''
-				},
-				distance: '',
-				target: '',
-				cost: 0,
-				powerRoll: null
-			});
+				description: '',
+				type: AbilityLogic.createAbilityType({ usage: AbilityUsage.Trigger, free: true, trigger: 'An enemy ends its turn adjacent to you.' }),
+				effect: 'You shift up to 2 squares.'
+			}));
 		}
 
 		return abilities;

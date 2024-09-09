@@ -1,3 +1,30 @@
 .ability-panel {
 	display: block;
+
+	.power-roll {
+		border: 2px solid rgb(220, 220, 220);
+		border-radius: 5px;
+		margin: 10px 0;
+
+		.power-roll-row {
+			display: flex;
+			gap: 10px;
+			margin: 5px 10px;
+
+			&.power-roll-header {
+				font-weight: 600;
+				padding-bottom: 5px;
+				border-bottom: 1px solid rgb(220, 220, 220);
+			}
+
+			.tier {
+				flex: 0 0 60px;
+				border-right: 1px solid rgb(220, 220, 220);
+			}
+
+			.effect {
+				flex: 1 1 0;
+			}
+		}
+	}
 }

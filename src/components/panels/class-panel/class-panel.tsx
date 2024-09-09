@@ -15,7 +15,13 @@ export const ClassPanel = (props: Props) => {
 			<div className='description-text'>{props.heroClass.description}</div>
 			{
 				props.mode === PanelMode.Full ?
-					<div className='ds-text'>DETAILS</div>
+					<div>
+						<div className='ds-text'>Stamina: {props.heroClass.startingStamina} / {props.heroClass.staminaPerLevel}</div>
+						<div className='ds-text'>Recoveries: {props.heroClass.recoveries}</div>
+						<div className='ds-text'>Primary Characteristics: {props.heroClass.primaryCharacteristics.join(', ')}</div>
+						<div className='ds-text'>Heroic Resource: {props.heroClass.heroicResource}</div>
+						<div className='ds-text'>Subclasses: {props.heroClass.subclasses.map(c => c.name).join(', ')}</div>
+					</div>
 					: null
 			}
 		</div>

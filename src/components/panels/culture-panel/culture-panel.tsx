@@ -1,4 +1,5 @@
 import { Culture } from '../../../models/culture';
+import { FeaturePanel } from '../feature-panel/feature-panel';
 import { PanelMode } from '../../../enums/panel-mode';
 
 import './culture-panel.scss';
@@ -15,7 +16,11 @@ export const CulturePanel = (props: Props) => {
 			<div className='description-text'>{props.culture.description}</div>
 			{
 				props.mode === PanelMode.Full ?
-					<div className='ds-text'>DETAILS</div>
+					<div>
+						<FeaturePanel feature={props.culture.environment} settingID='' />
+						<FeaturePanel feature={props.culture.organization} settingID='' />
+						<FeaturePanel feature={props.culture.upbringing} settingID='' />
+					</div>
 					: null
 			}
 		</div>

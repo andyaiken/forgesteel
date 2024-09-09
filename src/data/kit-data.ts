@@ -1,5 +1,6 @@
 import { KitArmor, KitWeapon } from '../enums/kit';
 import { AbilityKeyword } from '../enums/ability-keyword';
+import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
 import { Kit } from '../models/kit';
@@ -34,40 +35,22 @@ export class KitData {
 		reach: 0,
 		area: 0,
 		mobility: true,
-		signatureAbility: {
+		signatureAbility: AbilityLogic.createAbility({
 			id: 'kit-cloak-and-dagger-signature',
 			name: 'Fade',
 			description: 'A stab, and a few quick, careful steps back.',
-			type: {
-				usage: AbilityUsage.Action,
-				free: false,
-				trigger: '',
-				time: ''
-			},
+			type: AbilityLogic.createAbilityType({ usage: AbilityUsage.Action }),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: 'Reach 1 or Range 10',
 			target: '1 creature',
 			cost: 0,
-			powerRoll: {
+			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might, Characteristic.Agility ],
-				tier1: [
-					{
-						text: '4 damage; you shift 1 square'
-					}
-				],
-				tier2: [
-					{
-						text: '9 damage; you shift 2 squares'
-					}
-				],
-				tier3: [
-					{
-						text: '13 damage; you shift 3 squares'
-					}
-				],
-				additional: []
-			}
-		},
+				tier1: '4 damage; you shift 1 square',
+				tier2: '9 damage; you shift 2 squares',
+				tier3: '13 damage; you shift 3 squares'
+			})
+		}),
 		ward: null
 	};
 

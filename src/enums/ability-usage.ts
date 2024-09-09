@@ -1,6 +1,6 @@
 export enum AbilityUsage {
 	Action = 'Action',
 	Maneuver = 'Maneuver',
-	Trigger = 'Trigger',
+	Trigger = 'Triggered Action',
 	Other = 'Other'
 }

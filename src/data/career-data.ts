@@ -11,14 +11,12 @@ export class CareerData {
 			FeatureLogic.createSkillChoiceFeature({
 				id: 'artisan-feature-1',
 				name: 'Skills',
-				description: '',
 				listOptions: [ SkillList.Crafting ],
 				count: 2
 			}),
 			FeatureLogic.createLanguageChoiceFeature({
 				id: 'artisan-feature-2',
-				name: 'Languages',
-				description: ''
+				name: 'Languages'
 			})
 		],
 		projectPoints: 0,

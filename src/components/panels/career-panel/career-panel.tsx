@@ -1,4 +1,5 @@
 import { Career } from '../../../models/career';
+import { FeaturePanel } from '../feature-panel/feature-panel';
 import { PanelMode } from '../../../enums/panel-mode';
 
 import './career-panel.scss';
@@ -15,7 +16,11 @@ export const CareerPanel = (props: Props) => {
 			<div className='description-text'>{props.career.description}</div>
 			{
 				props.mode === PanelMode.Full ?
-					<div className='ds-text'>DETAILS</div>
+					<div>
+						{props.career.features.map(f => <FeaturePanel key={f.id} feature={f} settingID='' />)}
+						<FeaturePanel feature={props.career.title} settingID='' />
+						{props.career.projectPoints > 0 ? <div className='ds-text'>Project Points: {props.career.projectPoints}</div> : null}
+					</div>
 					: null
 			}
 		</div>

@@ -1,3 +1,5 @@
+import { AbilityLogic } from '../logic/ability-logic';
+import { AbilityUsage } from '../enums/ability-usage';
 import { Ancestry } from '../models/ancestry';
 import { FeatureLogic } from '../logic/feature-logic';
 
@@ -12,10 +14,16 @@ export class AncestryData {
 		},
 		speed: 5,
 		features: [
-			FeatureLogic.createFeature({
-				id: 'human-feat-1',
-				name: 'Detect the Supernatural',
-				description: 'As a maneuver, you open your awareness to detect supernatural creatures and phenomena. Until the end of your next turn, you know the location of any supernatural object, Undead, Construct, or creature from another plane of existence within 5 squares of you, even if you don’t have line of effect to them. You know if you’re detecting an item or a creature, and you know if a creature is Undead, a Construct, or from another plane of existence.'
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'human-feat-1',
+					name: 'Detect the Supernatural',
+					description: 'You open your awareness to detect supernatural creatures and phenomena.',
+					type: AbilityLogic.createAbilityType({
+						usage: AbilityUsage.Maneuver
+					}),
+					effect: 'Until the end of your next turn, you know the location of any supernatural object, Undead, Construct, or creature from another plane of existence within 5 squares of you, even if you don’t have line of effect to them. You know if you’re detecting an item or a creature, and you know if a creature is Undead, a Construct, or from another plane of existence.'
+				})
 			}),
 			FeatureLogic.createFeature({
 				id: 'human-feat-2',

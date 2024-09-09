@@ -1,5 +1,5 @@
-import { Button, Divider, Flex, Segmented } from 'antd';
-import { Feature, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
+import { Button, Divider, Flex, Segmented, Select } from 'antd';
+import { Feature, FeatureData, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
 import { Ancestry } from '../../../models/ancestry';
 import { AncestryData } from '../../../data/ancestry-data';
 import { AncestryPanel } from '../../panels/ancestry-panel/ancestry-panel';
@@ -74,8 +74,25 @@ export const HeroEditPage = (props: Props) => {
 
 	const setClass = (heroClass: HeroClass | null) => {
 		const classCopy = JSON.parse(JSON.stringify(heroClass)) as HeroClass | null;
+		if (classCopy) {
+			classCopy.primaryCharacteristics.forEach(ch => {
+				classCopy.characteristics.push({
+					characteristic: ch,
+					value: 2
+				});
+			});
+		}
 		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 		heroCopy.class = classCopy;
+		setHero(heroCopy);
+		setDirty(true);
+	};
+
+	const setSubclass = (subclassID: string | null) => {
+		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+		if (heroCopy.class) {
+			heroCopy.class.subclassID = subclassID;
+		}
 		setHero(heroCopy);
 		setDirty(true);
 	};
@@ -103,7 +120,7 @@ export const HeroEditPage = (props: Props) => {
 		setDirty(true);
 	};
 
-	const setFeatureData = (featureID: string, data: unknown) => {
+	const setFeatureData = (featureID: string, data: FeatureData) => {
 		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 		const feature = HeroLogic.getFeatures(heroCopy).find(f => f.id === featureID);
 		if (feature) {
@@ -138,7 +155,7 @@ export const HeroEditPage = (props: Props) => {
 				);
 			case Page.Class:
 				return (
-					<ClassSection hero={hero} selectClass={setClass} setFeatureData={setFeatureData} />
+					<ClassSection hero={hero} selectClass={setClass} selectSubclass={setSubclass} setFeatureData={setFeatureData} />
 				);
 			case Page.Complication:
 				return (
@@ -185,7 +202,7 @@ export const HeroEditPage = (props: Props) => {
 interface AncestrySectionProps {
 	hero: Hero;
 	selectAncestry: (ancestry: Ancestry | null) => void;
-	setFeatureData: (featureID: string, data: unknown) => void;
+	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const AncestrySection = (props: AncestrySectionProps) => {
@@ -201,7 +218,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 			.filter(f => f.choice)
 			.map(f => (
 				<SelectablePanel key={f.id}>
-					<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
+					<FeaturePanel feature={f} mode={PanelMode.Full} settingID={props.hero.settingID} setData={props.setFeatureData} />
 				</SelectablePanel>
 			));
 	}
@@ -236,7 +253,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 interface CultureSectionProps {
 	hero: Hero;
 	selectCulture: (culture: Culture | null) => void;
-	setFeatureData: (featureID: string, data: unknown) => void;
+	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const CultureSection = (props: CultureSectionProps) => {
@@ -252,7 +269,7 @@ const CultureSection = (props: CultureSectionProps) => {
 			.filter(f => f.choice)
 			.map(f => (
 				<SelectablePanel key={f.id}>
-					<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
+					<FeaturePanel feature={f} mode={PanelMode.Full} settingID={props.hero.settingID} setData={props.setFeatureData} />
 				</SelectablePanel>
 			));
 	}
@@ -287,7 +304,7 @@ const CultureSection = (props: CultureSectionProps) => {
 interface CareerSectionProps {
 	hero: Hero;
 	selectCareer: (career: Career | null) => void;
-	setFeatureData: (featureID: string, data: unknown) => void;
+	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const CareerSection = (props: CareerSectionProps) => {
@@ -303,7 +320,7 @@ const CareerSection = (props: CareerSectionProps) => {
 			.filter(f => f.choice)
 			.map(f => (
 				<SelectablePanel key={f.id}>
-					<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
+					<FeaturePanel feature={f} mode={PanelMode.Full} settingID={props.hero.settingID} setData={props.setFeatureData} />
 				</SelectablePanel>
 			));
 	}
@@ -338,7 +355,8 @@ const CareerSection = (props: CareerSectionProps) => {
 interface ClassSectionProps {
 	hero: Hero;
 	selectClass: (heroClass: HeroClass | null) => void;
-	setFeatureData: (featureID: string, data: unknown) => void;
+	selectSubclass: (subclassID: string | null) => void;
+	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const ClassSection = (props: ClassSectionProps) => {
@@ -356,9 +374,29 @@ const ClassSection = (props: ClassSectionProps) => {
 			.filter(f => f.choice)
 			.map(f => (
 				<SelectablePanel key={f.id}>
-					<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
+					<FeaturePanel feature={f} mode={PanelMode.Full} settingID={props.hero.settingID} setData={props.setFeatureData} />
 				</SelectablePanel>
 			));
+
+		// Choose subclass
+		if (props.hero.class.subclasses.length > 0) {
+			choices.unshift(
+				<SelectablePanel key='subclass'>
+					<Select
+						style={{ width: '100%' }}
+						allowClear={true}
+						placeholder='Select'
+						options={props.hero.class.subclasses.map(s => ({ value: s.id, text: s.name }))}
+						value={props.hero.class.subclassID}
+						onChange={props.selectSubclass}
+					/>
+				</SelectablePanel>
+			);
+		}
+
+		// TODO: Choose characteristics (2/-1/-1, 1,1,-1, 1,0,0)
+
+		// TODO: Level Up
 	}
 
 	return (
@@ -391,7 +429,7 @@ const ClassSection = (props: ClassSectionProps) => {
 interface ComplicationSectionProps {
 	hero: Hero;
 	selectComplication: (complication: Complication | null) => void;
-	setFeatureData: (featureID: string, data: unknown) => void;
+	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const ComplicationSection = (props: ComplicationSectionProps) => {
@@ -407,7 +445,7 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 			.filter(f => f.choice)
 			.map(f => (
 				<SelectablePanel key={f.id}>
-					<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
+					<FeaturePanel feature={f} mode={PanelMode.Full} settingID={props.hero.settingID} setData={props.setFeatureData} />
 				</SelectablePanel>
 			));
 	}
@@ -443,7 +481,7 @@ interface KitSectionProps {
 	hero: Hero;
 	addKit: (kit: Kit) => void;
 	removeKit: (kitID: string) => void;
-	setFeatureData: (featureID: string, data: unknown) => void;
+	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const KitSection = (props: KitSectionProps) => {
@@ -459,7 +497,7 @@ const KitSection = (props: KitSectionProps) => {
 		.filter(f => f.choice)
 		.map(f => (
 			<SelectablePanel key={f.id}>
-				<FeaturePanel feature={f} settingID={props.hero.settingID} setData={props.setFeatureData} />
+				<FeaturePanel feature={f} mode={PanelMode.Full} settingID={props.hero.settingID} setData={props.setFeatureData} />
 			</SelectablePanel>
 		));
 

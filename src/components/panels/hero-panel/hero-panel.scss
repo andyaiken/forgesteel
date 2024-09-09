@@ -21,4 +21,14 @@
 			}
 		}
 	}
+
+	.features-and-actions {
+		display: flex;
+		gap: 20px;
+
+		.features-column,
+		.actions-column {
+			flex: 1 1 0;
+		}
+	}
 }

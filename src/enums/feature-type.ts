@@ -1,5 +1,6 @@
 export enum FeatureType {
 	Text = 'Text',
-	Skill = 'Skill',
-	Language = 'Language'
+	Ability = 'Ability',
+	Language = 'Language',
+	Skill = 'Skill'
 }

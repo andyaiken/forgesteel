@@ -1,4 +1,5 @@
 import { Complication } from '../../../models/complication';
+import { FeaturePanel } from '../feature-panel/feature-panel';
 import { PanelMode } from '../../../enums/panel-mode';
 
 import './complication-panel.scss';
@@ -15,7 +16,10 @@ export const ComplicationPanel = (props: Props) => {
 			<div className='description-text'>{props.complication.description}</div>
 			{
 				props.mode === PanelMode.Full ?
-					<div className='ds-text'>DETAILS</div>
+					<div>
+						<FeaturePanel feature={props.complication.benefit} settingID='' />
+						<FeaturePanel feature={props.complication.drawback} settingID='' />
+					</div>
 					: null
 			}
 		</div>

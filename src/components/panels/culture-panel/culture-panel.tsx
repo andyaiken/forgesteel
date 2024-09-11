@@ -1,11 +1,13 @@
 import { Culture } from '../../../models/culture';
 import { FeaturePanel } from '../feature-panel/feature-panel';
+import { Hero } from '../../../models/hero';
 import { PanelMode } from '../../../enums/panel-mode';
 
 import './culture-panel.scss';
 
 interface Props {
 	culture: Culture;
+	hero?: Hero;
 	mode?: PanelMode;
 }
 
@@ -17,9 +19,9 @@ export const CulturePanel = (props: Props) => {
 			{
 				props.mode === PanelMode.Full ?
 					<div>
-						<FeaturePanel feature={props.culture.environment} settingID='' />
-						<FeaturePanel feature={props.culture.organization} settingID='' />
-						<FeaturePanel feature={props.culture.upbringing} settingID='' />
+						<FeaturePanel feature={props.culture.environment} hero={props.hero} />
+						<FeaturePanel feature={props.culture.organization} hero={props.hero} />
+						<FeaturePanel feature={props.culture.upbringing} hero={props.hero} />
 					</div>
 					: null
 			}

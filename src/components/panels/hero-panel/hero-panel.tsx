@@ -50,6 +50,7 @@ export const HeroPanel = (props: Props) => {
 						<div>
 							<div className='ds-text'>Class: {props.hero.class.name}</div>
 							<div className='ds-text'>Level: {props.hero.class.level}</div>
+							<div className='ds-text'>{props.hero.class.subclassName}: {props.hero.class.subclasses.find(sc => sc.id === props.hero.class?.subclassID)?.name || ''}</div>
 						</div>
 						:
 						<div className='dimmed-text'>No class chosen</div>
@@ -58,8 +59,6 @@ export const HeroPanel = (props: Props) => {
 					props.hero.complication ?
 						<div>
 							<div className='ds-text'>Complication: {props.hero.complication.name}</div>
-							<div className='ds-text'>Benefit: {props.hero.complication.benefit.name}</div>
-							<div className='ds-text'>Drawback: {props.hero.complication.drawback.name}</div>
 						</div>
 						: null
 				}
@@ -67,9 +66,9 @@ export const HeroPanel = (props: Props) => {
 					props.hero.kits.length > 0 ?
 						<div>
 							<div className='ds-text'>Kit: {props.hero.kits.map(k => k.name).join(', ')}</div>
-							<div className='ds-text'>Armor: {props.hero.kits.map(k => k.armor).join(', ')}</div>
-							<div className='ds-text'>Weapons: {props.hero.kits.map(k => k.weapon).join(', ')}</div>
-							<div className='ds-text'>Implements: {props.hero.kits.map(k => k.implement).join(', ')}</div>
+							<div className='ds-text'>Armor: {props.hero.kits.map(k => k.armor).join(', ') || 'None'}</div>
+							<div className='ds-text'>Weapons: {props.hero.kits.map(k => k.weapon).join(', ') || 'None'}</div>
+							<div className='ds-text'>Implements: {props.hero.kits.map(k => k.implement).join(', ') || 'None'}</div>
 						</div>
 						:
 						<div className='dimmed-text'>No kit chosen</div>
@@ -137,24 +136,22 @@ export const HeroPanel = (props: Props) => {
 								</div>
 							</div>
 						</div>
-						<div className='features-and-actions'>
-							<div className='features-column'>
-								{
-									HeroLogic.getFeatures(props.hero)
-										.filter(feature => feature.type === FeatureType.Text)
-										.map(feature => (
-											<FeaturePanel key={feature.id} feature={feature} settingID={props.hero.settingID} mode={PanelMode.Full} />
-										))
-								}
-							</div>
-							<div className='actions-column'>
-								{
-									HeroLogic.getAbilities(props.hero)
-										.map(ability => (
-											<AbilityPanel key={ability.id} ability={ability} mode={PanelMode.Full} />
-										))
-								}
-							</div>
+						<div className='features-column'>
+							{
+								HeroLogic.getFeatures(props.hero)
+									.filter(feature => feature.type === FeatureType.Text)
+									.map(feature => (
+										<FeaturePanel key={feature.id} feature={feature} hero={props.hero} mode={PanelMode.Full} />
+									))
+							}
+						</div>
+						<div className='actions-column'>
+							{
+								HeroLogic.getAbilities(props.hero)
+									.map(ability => (
+										<AbilityPanel key={ability.id} ability={ability} mode={PanelMode.Full} />
+									))
+							}
 						</div>
 					</div>
 					: null

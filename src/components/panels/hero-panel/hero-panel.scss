@@ -22,13 +22,11 @@
 		}
 	}
 
-	.features-and-actions {
+	.features-column,
+	.actions-column {
+		flex: 1 1 0;
 		display: flex;
-		gap: 20px;
-
-		.features-column,
-		.actions-column {
-			flex: 1 1 0;
-		}
+		flex-direction: column;
+		gap: 10px;
 	}
 }

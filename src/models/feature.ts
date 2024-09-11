@@ -9,6 +9,12 @@ export interface FeatureAbilityData extends FeatureData {
 	ability: Ability;
 };
 
+export interface FeatureClassAbilityData extends FeatureData {
+	cost: number;
+	count: number;
+	selectedIDs: string[];
+}
+
 export interface FeatureLanguageData extends FeatureData {
 	options: string[];
 	count: number;
@@ -21,9 +27,6 @@ export interface FeatureSkillData extends FeatureData {
 	count: number;
 	selected: string[];
 };
-
-// TODO: Add other feature types
-// Recoveries
 
 export interface Feature {
 	id: string;

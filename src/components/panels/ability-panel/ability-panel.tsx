@@ -46,7 +46,8 @@ export const AbilityPanel = (props: Props) => {
 						}
 						{props.ability.distance ? <div className='ds-text'>Distance: {props.ability.distance}</div> : null}
 						{props.ability.target ? <div className='ds-text'>Target: {props.ability.target}</div> : null}
-						{props.ability.cost > 0 ? <div className='ds-text'>Cost: {props.ability.target}</div> : null}
+						{props.ability.cost > 0 ? <div className='ds-text'>Cost: {props.ability.cost}</div> : null}
+						{props.ability.preEffect ? <div className='ds-text'>Effect: {props.ability.preEffect}</div> : null}
 						{
 							props.ability.powerRoll ?
 								<div className='power-roll'>
@@ -68,7 +69,12 @@ export const AbilityPanel = (props: Props) => {
 								</div>
 								: null
 						}
-						{props.ability.effect ? <div className='ds-text'>{props.ability.effect}</div> : null}
+						{props.ability.effect ? <div className='ds-text'>Effect: {props.ability.effect}</div> : null}
+						{
+							props.ability.spend.map((spend, n) => (
+								<div key={n} className='ds-text'>{spend.value ? `Spend ${spend.value}` : 'Spend'}: {spend.effect}</div>
+							))
+						}
 					</div>
 					: null
 			}

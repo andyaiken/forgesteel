@@ -16,6 +16,7 @@ export interface HeroClass {
 	description: string;
 
 	heroicResource: string;
+	subclassName: string;
 	primaryCharacteristics: Characteristic[];
 	startingStamina: number;
 	staminaPerLevel: number;

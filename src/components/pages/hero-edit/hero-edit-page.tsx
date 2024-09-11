@@ -1,4 +1,4 @@
-import { Button, Divider, Flex, Segmented, Select } from 'antd';
+import { Button, Divider, Flex, Input, Radio, Segmented, Select, Space } from 'antd';
 import { Feature, FeatureData, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
 import { Ancestry } from '../../../models/ancestry';
 import { AncestryData } from '../../../data/ancestry-data';
@@ -7,6 +7,7 @@ import { CampaignSettingData } from '../../../data/campaign-setting-data';
 import { Career } from '../../../models/career';
 import { CareerData } from '../../../data/career-data';
 import { CareerPanel } from '../../panels/career-panel/career-panel';
+import { Characteristic } from '../../../enums/characteristic';
 import { ClassData } from '../../../data/class-data';
 import { ClassPanel } from '../../panels/class-panel/class-panel';
 import { Complication } from '../../../models/complication';
@@ -74,16 +75,17 @@ export const HeroEditPage = (props: Props) => {
 
 	const setClass = (heroClass: HeroClass | null) => {
 		const classCopy = JSON.parse(JSON.stringify(heroClass)) as HeroClass | null;
-		if (classCopy) {
-			classCopy.primaryCharacteristics.forEach(ch => {
-				classCopy.characteristics.push({
-					characteristic: ch,
-					value: 2
-				});
-			});
-		}
 		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 		heroCopy.class = classCopy;
+		setHero(heroCopy);
+		setDirty(true);
+	};
+
+	const setCharacteristics = (array: { characteristic: Characteristic, value: number }[]) => {
+		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+		if (heroCopy.class) {
+			heroCopy.class.characteristics = array;
+		}
 		setHero(heroCopy);
 		setDirty(true);
 	};
@@ -130,6 +132,13 @@ export const HeroEditPage = (props: Props) => {
 		setDirty(true);
 	};
 
+	const setName = (value: string) => {
+		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+		heroCopy.name = value;
+		setHero(heroCopy);
+		setDirty(true);
+	};
+
 	const saveChanges = () => {
 		props.saveChanges(hero);
 		setDirty(false);
@@ -155,7 +164,7 @@ export const HeroEditPage = (props: Props) => {
 				);
 			case Page.Class:
 				return (
-					<ClassSection hero={hero} selectClass={setClass} selectSubclass={setSubclass} setFeatureData={setFeatureData} />
+					<ClassSection hero={hero} selectClass={setClass} selectCharacteristics={setCharacteristics} selectSubclass={setSubclass} setFeatureData={setFeatureData} />
 				);
 			case Page.Complication:
 				return (
@@ -167,7 +176,7 @@ export const HeroEditPage = (props: Props) => {
 				);
 			case Page.Details:
 				return (
-					<DetailsSection hero={hero} />
+					<DetailsSection hero={hero} setName={setName} />
 				);
 		}
 	};
@@ -218,7 +227,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 			.filter(f => f.choice)
 			.map(f => (
 				<SelectablePanel key={f.id}>
-					<FeaturePanel feature={f} mode={PanelMode.Full} settingID={props.hero.settingID} setData={props.setFeatureData} />
+					<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} setData={props.setFeatureData} />
 				</SelectablePanel>
 			));
 	}
@@ -269,7 +278,7 @@ const CultureSection = (props: CultureSectionProps) => {
 			.filter(f => f.choice)
 			.map(f => (
 				<SelectablePanel key={f.id}>
-					<FeaturePanel feature={f} mode={PanelMode.Full} settingID={props.hero.settingID} setData={props.setFeatureData} />
+					<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} setData={props.setFeatureData} />
 				</SelectablePanel>
 			));
 	}
@@ -320,7 +329,7 @@ const CareerSection = (props: CareerSectionProps) => {
 			.filter(f => f.choice)
 			.map(f => (
 				<SelectablePanel key={f.id}>
-					<FeaturePanel feature={f} mode={PanelMode.Full} settingID={props.hero.settingID} setData={props.setFeatureData} />
+					<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} setData={props.setFeatureData} />
 				</SelectablePanel>
 			));
 	}
@@ -355,6 +364,7 @@ const CareerSection = (props: CareerSectionProps) => {
 interface ClassSectionProps {
 	hero: Hero;
 	selectClass: (heroClass: HeroClass | null) => void;
+	selectCharacteristics: (array: { characteristic: Characteristic, value: number }[]) => void;
 	selectSubclass: (subclassID: string | null) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
@@ -374,7 +384,7 @@ const ClassSection = (props: ClassSectionProps) => {
 			.filter(f => f.choice)
 			.map(f => (
 				<SelectablePanel key={f.id}>
-					<FeaturePanel feature={f} mode={PanelMode.Full} settingID={props.hero.settingID} setData={props.setFeatureData} />
+					<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} setData={props.setFeatureData} />
 				</SelectablePanel>
 			));
 
@@ -382,11 +392,13 @@ const ClassSection = (props: ClassSectionProps) => {
 		if (props.hero.class.subclasses.length > 0) {
 			choices.unshift(
 				<SelectablePanel key='subclass'>
+					<div className='header-text'>{props.hero.class.subclassName}</div>
+					<div className='ds-text'>Choose a {props.hero.class.subclassName}.</div>
 					<Select
 						style={{ width: '100%' }}
 						allowClear={true}
 						placeholder='Select'
-						options={props.hero.class.subclasses.map(s => ({ value: s.id, text: s.name }))}
+						options={props.hero.class.subclasses.map(s => ({ value: s.id, label: s.name }))}
 						value={props.hero.class.subclassID}
 						onChange={props.selectSubclass}
 					/>
@@ -394,9 +406,39 @@ const ClassSection = (props: ClassSectionProps) => {
 			);
 		}
 
-		// TODO: Choose characteristics (2/-1/-1, 1,1,-1, 1,0,0)
-
-		// TODO: Level Up
+		const arrays = HeroLogic.calculateCharacteristicArrays(props.hero.class.primaryCharacteristics);
+		choices.unshift(
+			<SelectablePanel key='characteristics'>
+				<div className='header-text'>Characteristics</div>
+				<div className='characteristic-row' style={{ margin: '5px 15px', fontWeight: 600 }}>
+					<div className='characteristic-item'>MGT</div>
+					<div className='characteristic-item'>AGI</div>
+					<div className='characteristic-item'>RSN</div>
+					<div className='characteristic-item'>INT</div>
+					<div className='characteristic-item'>PRE</div>
+				</div>
+				<Radio.Group
+					style={{ width: '100%' }}
+					value={JSON.stringify(props.hero.class.characteristics)}
+					onChange={e => {
+						const array = JSON.parse(e.target.value) as { characteristic: Characteristic, value: number }[];
+						props.selectCharacteristics(array);
+					}}
+				>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							arrays.map((array, n1) => (
+								<Radio.Button key={n1} value={JSON.stringify(array)} style={{ width: '100%' }}>
+									<div className='characteristic-row'>
+										{array.map((ch, n2) => <div key={n2} className='characteristic-item'>{ch.value}</div>)}
+									</div>
+								</Radio.Button>
+							))
+						}
+					</Space>
+				</Radio.Group>
+			</SelectablePanel>
+		);
 	}
 
 	return (
@@ -445,7 +487,7 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 			.filter(f => f.choice)
 			.map(f => (
 				<SelectablePanel key={f.id}>
-					<FeaturePanel feature={f} mode={PanelMode.Full} settingID={props.hero.settingID} setData={props.setFeatureData} />
+					<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} setData={props.setFeatureData} />
 				</SelectablePanel>
 			));
 	}
@@ -497,7 +539,7 @@ const KitSection = (props: KitSectionProps) => {
 		.filter(f => f.choice)
 		.map(f => (
 			<SelectablePanel key={f.id}>
-				<FeaturePanel feature={f} mode={PanelMode.Full} settingID={props.hero.settingID} setData={props.setFeatureData} />
+				<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} setData={props.setFeatureData} />
 			</SelectablePanel>
 		));
 
@@ -530,6 +572,7 @@ const KitSection = (props: KitSectionProps) => {
 
 interface DetailsSectionProps {
 	hero: Hero;
+	setName: (value: string) => void;
 }
 
 const DetailsSection = (props: DetailsSectionProps) => {
@@ -537,7 +580,8 @@ const DetailsSection = (props: DetailsSectionProps) => {
 		<div className='hero-edit-content'>
 			<div className='hero-edit-content-column'>
 				<div className='header-text'>Details</div>
-				<div>NAME: {props.hero.name}</div>
+				<div>Name:</div>
+				<Input placeholder='Name' allowClear={true} value={props.hero.name} onChange={e => props.setName(e.target.value)} />
 			</div>
 		</div>
 	);

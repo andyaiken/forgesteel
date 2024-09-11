@@ -1,5 +1,6 @@
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { FeaturePanel } from '../feature-panel/feature-panel';
+import { Hero } from '../../../models/hero';
 import { Kit } from '../../../models/kit';
 import { PanelMode } from '../../../enums/panel-mode';
 
@@ -7,6 +8,7 @@ import './kit-panel.scss';
 
 interface Props {
 	kit: Kit;
+	hero?: Hero;
 	mode?: PanelMode;
 }
 
@@ -44,7 +46,7 @@ export const KitPanel = (props: Props) => {
 						}
 						{props.kit.mobility ? <div className='ds-text'>Mobility: Yes</div> : null}
 						<AbilityPanel ability={props.kit.signatureAbility} mode={PanelMode.Full} />
-						{props.kit.ward ? <FeaturePanel feature={props.kit.ward} settingID='' /> : null}
+						{props.kit.ward ? <FeaturePanel feature={props.kit.ward} hero={props.hero} /> : null}
 					</div>
 					: null
 			}

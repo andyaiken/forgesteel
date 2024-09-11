@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import './selectable-panel.scss';
 
 interface Props {
-	children: JSX.Element;
+	children: JSX.Element | JSX.Element[];
 	onSelect?: () => void;
 	onUnselect?: () => void;
 };

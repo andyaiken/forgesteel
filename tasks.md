@@ -14,7 +14,5 @@
 
 ## UI
 
-* Edit hero
-* Display character sheet
+* When you select a skill / language you've already got, the UI should display a warning
 * Export character sheet
-* Step-by-step character generation

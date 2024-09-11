@@ -26,7 +26,8 @@ export interface Ability {
 	distance: string; // Reach X, Ranged X, Reach X or Ranged X, [Aura X / Burst X / Cube X, XxX Line, Wall X, Special] [within X], Self
 	target: string; // Creature, Object, Enemy, Ally, Self, All
 	cost: number;
+	preEffect: string;
 	powerRoll: PowerRoll | null,
 	effect: string;
-	spend: { value: number, effect: string }[];
+	spend: { value?: number, effect: string }[];
 }

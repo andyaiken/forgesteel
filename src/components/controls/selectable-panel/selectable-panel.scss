@@ -3,4 +3,8 @@
 	background: rgb(255, 255, 255);
 	border-radius: 10px;
 	padding: 10px 20px 20px 20px;
+
+	&:hover {
+		border-color: rgb(200, 200, 200);
+	}
 }

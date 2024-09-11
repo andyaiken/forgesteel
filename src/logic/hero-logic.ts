@@ -1,14 +1,39 @@
-import { Feature, FeatureAbilityData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureClassAbilityData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
 import { Ability } from '../models/ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from './ability-logic';
-import { AbilityUsage } from '../enums/ability-usage';
+import { CampaignSettingData } from '../data/campaign-setting-data';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
+import { Utils } from '../utils/utils';
 
 export class HeroLogic {
+	static createHero = (settingID: string) => {
+		const hero: Hero = {
+			id: Utils.guid(),
+			name: '',
+			settingID: settingID,
+			ancestry: null,
+			culture: null,
+			class: null,
+			career: null,
+			complication: null,
+			kits: [],
+			state: {
+				stamina: 0,
+				recoveries: 0,
+				victories: 0,
+				heroicResource: 0,
+				heroTokens: 0,
+				renown: 0,
+				conditions: []
+			}
+		};
+		return hero;
+	};
+
 	static getFeatures = (hero: Hero) => {
 		const features: Feature[] = [];
 
@@ -67,7 +92,7 @@ export class HeroLogic {
 			id: 'free-melee',
 			name: 'Melee Free Strike',
 			description: '',
-			type: AbilityLogic.createAbilityType({ usage: AbilityUsage.Action, free: true }),
+			type: AbilityLogic.createTypeAction(true),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: 'Reach 1',
 			target: '1 creature or object',
@@ -82,7 +107,7 @@ export class HeroLogic {
 			id: 'free-ranged',
 			name: 'Ranged Free Strike',
 			description: '',
-			type: AbilityLogic.createAbilityType({ usage: AbilityUsage.Action, free: true }),
+			type: AbilityLogic.createTypeAction(true),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: 'Ranged 5',
 			target: '1 creature or object',
@@ -101,6 +126,18 @@ export class HeroLogic {
 				abilities.push(data.ability);
 			});
 
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.ClassAbility)
+			.forEach(f => {
+				const data = f.data as FeatureClassAbilityData;
+				data.selectedIDs.forEach(abilityID => {
+					const ability = hero.class?.abilities.find(a => a.id === abilityID);
+					if (ability) {
+						abilities.push(ability);
+					}
+				});
+			});
+
 		hero.kits.forEach(kit => {
 			if (kit.signatureAbility) {
 				abilities.push(kit.signatureAbility);
@@ -112,7 +149,7 @@ export class HeroLogic {
 				id: 'mobility',
 				name: 'Mobility',
 				description: '',
-				type: AbilityLogic.createAbilityType({ usage: AbilityUsage.Trigger, free: true, trigger: 'An enemy ends its turn adjacent to you.' }),
+				type: AbilityLogic.createTypeTrigger('An enemy ends its turn adjacent to you.', true),
 				effect: 'You shift up to 2 squares.'
 			}));
 		}
@@ -135,6 +172,11 @@ export class HeroLogic {
 
 	static getLanguages = (hero: Hero) => {
 		const languages: string[] = [];
+
+		const setting = CampaignSettingData.getCampaignSettings().find(cs => cs.id === hero.settingID);
+		if (setting) {
+			languages.push(...setting.defaultLanguages);
+		}
 
 		// Collate from features
 		this.getFeatures(hero)
@@ -299,5 +341,60 @@ export class HeroLogic {
 		value += Collections.max(hero.kits.map(kit => kit.area), value => value) || 0;
 
 		return value;
+	};
+
+	static calculateCharacteristicArrays = (primary: Characteristic[]) => {
+		const all = [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ];
+		const others = all.filter(c => !primary.includes(c));
+
+		const arrays: { characteristic: Characteristic, value: number }[][] = [];
+		others.forEach(single => {
+			arrays.push(all.map(ch => {
+				let value: number;
+				if (primary.includes(ch)) {
+					value = 2;
+				} else if (ch === single) {
+					value = 2;
+				} else {
+					value = -1;
+				}
+				return {
+					characteristic: ch,
+					value: value
+				};
+			}));
+
+			arrays.push(all.map(ch => {
+				let value: number;
+				if (primary.includes(ch)) {
+					value = 2;
+				} else if (ch === single) {
+					value = 1;
+				} else {
+					value = 0;
+				}
+				return {
+					characteristic: ch,
+					value: value
+				};
+			}));
+
+			arrays.push(all.map(ch => {
+				let value: number;
+				if (primary.includes(ch)) {
+					value = 2;
+				} else if (ch === single) {
+					value = -1;
+				} else {
+					value = 1;
+				}
+				return {
+					characteristic: ch,
+					value: value
+				};
+			}));
+		});
+
+		return arrays;
 	};
 }

@@ -1,10 +1,10 @@
 import { Breadcrumb } from 'antd';
 import { CampaignSettingData } from '../../data/campaign-setting-data';
 import { Collections } from '../../utils/collections';
-import { Factory } from '../../utils/factory';
 import { Hero } from '../../models/hero';
 import { HeroEditPage } from '../pages/hero-edit/hero-edit-page';
 import { HeroListPage } from '../pages/hero-list/hero-list-page';
+import { HeroLogic } from '../../logic/hero-logic';
 import { HeroPage } from '../pages/hero-view/hero-view-page';
 import localforage from 'localforage';
 import { useState } from 'react';
@@ -35,7 +35,7 @@ export const Main = (props: Props) => {
 	};
 
 	const addHero = () => {
-		const hero = Factory.createHero(CampaignSettingData.orden.id);
+		const hero = HeroLogic.createHero(CampaignSettingData.orden.id);
 
 		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
 		copy.push(hero);

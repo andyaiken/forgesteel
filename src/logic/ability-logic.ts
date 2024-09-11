@@ -4,12 +4,39 @@ import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
 
 export class AbilityLogic {
-	static createAbilityType = (data: { usage: AbilityUsage, free?: boolean, trigger?: string, time?: string }) => {
+	static createTypeAction = (free = false) => {
 		return {
-			usage: data.usage,
-			free: data.free || false,
-			trigger: data.trigger || '',
-			time: data.time || ''
+			usage: AbilityUsage.Action,
+			free: free,
+			trigger: '',
+			time: ''
+		} as AbilityType;
+	};
+
+	static createTypeManeuver = (free = false) => {
+		return {
+			usage: AbilityUsage.Maneuver,
+			free: free,
+			trigger: '',
+			time: ''
+		} as AbilityType;
+	};
+
+	static createTypeTrigger = (trigger: string, free = false) => {
+		return {
+			usage: AbilityUsage.Trigger,
+			free: free,
+			trigger: trigger,
+			time: ''
+		} as AbilityType;
+	};
+
+	static createTypeTime = (time: string) => {
+		return {
+			usage: AbilityUsage.Other,
+			free: false,
+			trigger: '',
+			time: time
 		} as AbilityType;
 	};
 
@@ -22,7 +49,7 @@ export class AbilityLogic {
 		} as PowerRoll;
 	};
 
-	static createAbility = (data: { id: string, name: string, description: string, type: AbilityType, keywords?: AbilityKeyword[], distance?: string, target?: string, cost?: number, powerRoll?: PowerRoll, effect?: string, spend?: { value: number, effect: string }[] }) => {
+	static createAbility = (data: { id: string, name: string, description: string, type: AbilityType, keywords?: AbilityKeyword[], distance?: string, target?: string, cost?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, spend?: { value?: number, effect: string }[] }) => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -32,6 +59,7 @@ export class AbilityLogic {
 			distance: data.distance || '',
 			target: data.target || '',
 			cost: data.cost || 0,
+			preEffect: data.preEffect || '',
 			powerRoll: data.powerRoll || null,
 			effect: data.effect || '',
 			spend: data.spend || []

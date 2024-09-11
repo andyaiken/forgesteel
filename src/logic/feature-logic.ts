@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureClassAbilityData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
 import { Ability } from '../models/ability';
 import { FeatureType } from '../enums/feature-type';
 import { SkillList } from '../enums/skill-list';
@@ -25,6 +25,22 @@ export class FeatureLogic {
 			data: {
 				ability: data.ability
 			} as FeatureAbilityData
+		} as Feature;
+	};
+
+	static createClassAbilityChoiceFeature = (data: { id: string, name: string, description?: string, cost: number, count?: number }) => {
+		const count = data.count || 1;
+		return {
+			id: data.id,
+			name: data.name,
+			description: data.description || (count > 1 ? `Choose ${count} abilities.` : 'Choose an ability.'),
+			type: FeatureType.ClassAbility,
+			choice: true,
+			data: {
+				cost: data.cost,
+				count: count,
+				selectedIDs: []
+			} as FeatureClassAbilityData
 		} as Feature;
 	};
 

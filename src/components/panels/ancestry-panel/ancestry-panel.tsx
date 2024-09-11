@@ -1,6 +1,7 @@
 import { Ancestry } from '../../../models/ancestry';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Hero } from '../../../models/hero';
+import { HeroLogic } from '../../../logic/hero-logic';
 import { PanelMode } from '../../../enums/panel-mode';
 
 import './ancestry-panel.scss';
@@ -19,7 +20,7 @@ export const AncestryPanel = (props: Props) => {
 			{
 				props.mode === PanelMode.Full ?
 					<div>
-						<div className='ds-text'>Size: {props.ancestry.size.value}{props.ancestry.size.mod}</div>
+						<div className='ds-text'>Size: {HeroLogic.getSize(props.ancestry.size)}</div>
 						<div className='ds-text'>Speed: {props.ancestry.speed}</div>
 						{props.ancestry.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} />)}
 					</div>

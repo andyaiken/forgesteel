@@ -99,7 +99,7 @@ export const HeroPanel = (props: Props) => {
 							</div>
 							<div className='characteristics-row'>
 								<div className='characteristic'>
-									<Statistic title='Size' value={HeroLogic.getSize(props.hero)} />
+									<Statistic title='Size' value={props.hero.ancestry ? HeroLogic.getSize(props.hero.ancestry.size) : '1'} />
 								</div>
 								<div className='characteristic'>
 									<Statistic title='Reach' value={HeroLogic.getReach(props.hero)} />

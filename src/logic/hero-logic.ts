@@ -7,6 +7,7 @@ import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
+import { Size } from '../models/ancestry';
 import { Utils } from '../utils/utils';
 
 export class HeroLogic {
@@ -235,12 +236,8 @@ export class HeroLogic {
 		return value;
 	};
 
-	static getSize = (hero: Hero) => {
-		if (hero.ancestry) {
-			return `${hero.ancestry.size.value}${hero.ancestry.size.mod}`;
-		}
-
-		return '1M';
+	static getSize = (size: Size) => {
+		return `${size.value}${size.mod}`;
 	};
 
 	static getReach = (hero: Hero) => {

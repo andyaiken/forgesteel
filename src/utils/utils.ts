@@ -32,10 +32,10 @@ export class Utils {
 		}
 	};
 
-	public static takeScreenshot = (elementID: string) => {
+	public static takeScreenshot = (elementID: string, name: string) => {
 		const element = document.getElementById(elementID);
 		if (element) {
-			html2canvas(element).then(canvas => Utils.saveImage('image.png', canvas));
+			html2canvas(element).then(canvas => Utils.saveImage(`${name}.png`, canvas));
 		}
 	};
 

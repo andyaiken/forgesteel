@@ -1,32 +1,17 @@
 .hero-panel {
-	display: block;
+	padding: 0 10px;
 
-	.characteristics-row-container {
+	.characteristics-row {
 		display: flex;
 		align-items: flex-start;
-		gap: 20px;
+		justify-content: space-evenly;
+		border: 1px solid rgb(230, 230, 230);
+		border-radius: 10px;
+		background-color: rgb(245, 245, 245);
+		padding: 10px;
 
-		.characteristics-row {
-			display: flex;
-			align-items: flex-start;
-			gap: 20px;
-			margin: 10px 0;
-			border: 1px solid rgb(230, 230, 230);
-			border-radius: 10px;
-			background-color: rgb(245, 245, 245);
-			padding: 10px;
-	
-			.characteristic {
-				display: block;
-			}
+		.characteristic {
+			flex: 1 1 0;
 		}
-	}
-
-	.features-column,
-	.actions-column {
-		flex: 1 1 0;
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
 	}
 }

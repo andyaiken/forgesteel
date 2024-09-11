@@ -1,3 +1,4 @@
+import { Field } from '../../controls/field/field';
 import { HeroClass } from '../../../models/class';
 import { PanelMode } from '../../../enums/panel-mode';
 
@@ -16,11 +17,11 @@ export const ClassPanel = (props: Props) => {
 			{
 				props.mode === PanelMode.Full ?
 					<div>
-						<div className='ds-text'>Stamina: {props.heroClass.startingStamina} / {props.heroClass.staminaPerLevel}</div>
-						<div className='ds-text'>Recoveries: {props.heroClass.recoveries}</div>
-						<div className='ds-text'>Primary Characteristics: {props.heroClass.primaryCharacteristics.join(', ')}</div>
-						<div className='ds-text'>Heroic Resource: {props.heroClass.heroicResource}</div>
-						<div className='ds-text'>{props.heroClass.subclassName}s: {props.heroClass.subclasses.map(c => c.name).join(', ')}</div>
+						<Field label='Stamina' value={`${props.heroClass.startingStamina} / ${props.heroClass.staminaPerLevel}`} />
+						<Field label='Recoveries' value={props.heroClass.recoveries} />
+						<Field label='Primary Characteristics' value={props.heroClass.primaryCharacteristics.join(', ')} />
+						<Field label='Heroic Resource' value={props.heroClass.heroicResource} />
+						<Field label={`${props.heroClass.subclassName}s`} value={props.heroClass.subclasses.map(c => c.name).join(', ')} />
 					</div>
 					: null
 			}

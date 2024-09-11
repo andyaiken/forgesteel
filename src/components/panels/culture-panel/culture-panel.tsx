@@ -18,7 +18,7 @@ export const CulturePanel = (props: Props) => {
 			<div className='description-text'>{props.culture.description}</div>
 			{
 				props.mode === PanelMode.Full ?
-					<div>
+					<div style={{ paddingTop: '10px' }}>
 						<FeaturePanel feature={props.culture.environment} hero={props.hero} />
 						<FeaturePanel feature={props.culture.organization} hero={props.hero} />
 						<FeaturePanel feature={props.culture.upbringing} hero={props.hero} />

@@ -8,6 +8,8 @@ export interface SubClass {
 	description: string;
 
 	featuresByLevel: { level: number, features: Feature[] }[];
+
+	selected: boolean;
 }
 
 export interface HeroClass {
@@ -17,6 +19,7 @@ export interface HeroClass {
 
 	heroicResource: string;
 	subclassName: string;
+	subclassCount: number;
 	primaryCharacteristics: Characteristic[];
 	startingStamina: number;
 	staminaPerLevel: number;
@@ -28,5 +31,4 @@ export interface HeroClass {
 
 	level: number;
 	characteristics: { characteristic: Characteristic, value: number }[];
-	subclassID: string | null;
 }

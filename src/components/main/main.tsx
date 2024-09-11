@@ -6,6 +6,7 @@ import { HeroEditPage } from '../pages/hero-edit/hero-edit-page';
 import { HeroListPage } from '../pages/hero-list/hero-list-page';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroPage } from '../pages/hero-view/hero-view-page';
+import { Utils } from '../../utils/utils';
 import localforage from 'localforage';
 import { useState } from 'react';
 
@@ -64,6 +65,12 @@ export const Main = (props: Props) => {
 	const editSelectedHero = () => {
 		if (selectedHero) {
 			setPage(Page.HeroEdit);
+		}
+	};
+
+	const exportSelectedHero = () => {
+		if (selectedHero) {
+			Utils.takeScreenshot(selectedHero.id, selectedHero.name || 'Unnamed Hero');
 		}
 	};
 
@@ -130,6 +137,7 @@ export const Main = (props: Props) => {
 						hero={selectedHero as Hero}
 						closeHero={closeSelectedHero}
 						editHero={editSelectedHero}
+						exportHero={exportSelectedHero}
 						deleteHero={deleteSelectedHero}
 					/>
 				);

@@ -1,5 +1,6 @@
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { FeaturePanel } from '../feature-panel/feature-panel';
+import { Field } from '../../controls/field/field';
 import { Hero } from '../../../models/hero';
 import { Kit } from '../../../models/kit';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -20,32 +21,33 @@ export const KitPanel = (props: Props) => {
 			{
 				props.mode === PanelMode.Full ?
 					<div>
-						{props.kit.armor.length > 0 ? <div className='ds-text'>Armor: {props.kit.armor.join(', ')}</div> : null}
-						{props.kit.weapon.length > 0 ? <div className='ds-text'>Weapon: {props.kit.weapon.join(', ')}</div> : null}
-						{props.kit.implement.length > 0 ? <div className='ds-text'>Implement: {props.kit.implement.join(', ')}</div> : null}
-						{props.kit.stamina > 0 ? <div className='ds-text'>Stamina: +{props.kit.stamina}</div> : null}
-						{props.kit.speed > 0 ? <div className='ds-text'>Speed: +{props.kit.speed}</div> : null}
-						{props.kit.stability > 0 ? <div className='ds-text'>Stability: +{props.kit.stability}</div> : null}
-						{props.kit.distance > 0 ? <div className='ds-text'>Distance: +{props.kit.distance}</div> : null}
-						{props.kit.reach > 0 ? <div className='ds-text'>Reach: +{props.kit.reach}</div> : null}
-						{props.kit.area > 0 ? <div className='ds-text'>Area: +{props.kit.area}</div> : null}
+						<Field label='Type' value={props.kit.type} />
+						{props.kit.armor.length > 0 ? <Field label='Armor' value={props.kit.armor.join(', ')} /> : null}
+						{props.kit.weapon.length > 0 ? <Field label='Weapon' value={props.kit.weapon.join(', ')} /> : null}
+						{props.kit.implement.length > 0 ? <Field label='Implement' value={props.kit.implement.join(', ')} /> : null}
+						{props.kit.stamina > 0 ? <Field label='Stamina' value={`+${props.kit.stamina}`} /> : null}
+						{props.kit.speed > 0 ? <Field label='Speed' value={`+${props.kit.speed}`} /> : null}
+						{props.kit.stability > 0 ? <Field label='Stability' value={`+${props.kit.stability}`} /> : null}
+						{props.kit.distance > 0 ? <Field label='Distance' value={`+${props.kit.distance}`} /> : null}
+						{props.kit.reach > 0 ? <Field label='Reach' value={`+${props.kit.reach}`} /> : null}
+						{props.kit.area > 0 ? <Field label='Area' value={`+${props.kit.area}`} /> : null}
 						{
 							props.kit.meleeDamage ?
-								<div>Melee Damage: +{props.kit.meleeDamage.tier1} / +{props.kit.meleeDamage.tier2} / +{props.kit.meleeDamage.tier3}</div>
+								<Field label='Melee Damage' value={`+${props.kit.meleeDamage.tier1} / +${props.kit.meleeDamage.tier2} / +${props.kit.meleeDamage.tier3}`} />
 								: null
 						}
 						{
 							props.kit.rangedDamage ?
-								<div>Ranged Damage: +{props.kit.rangedDamage.tier1} / +{props.kit.rangedDamage.tier2} / +{props.kit.rangedDamage.tier3}</div>
+								<Field label='Ranged Damage' value={`+${props.kit.rangedDamage.tier1} / +${props.kit.rangedDamage.tier2} / +${props.kit.rangedDamage.tier3}`} />
 								: null
 						}
 						{
 							props.kit.magicalDamage ?
-								<div>Magical Damage: +{props.kit.magicalDamage.tier1} / +{props.kit.magicalDamage.tier2} / +{props.kit.magicalDamage.tier3}</div>
+								<Field label='Magical Damage' value={`+${props.kit.magicalDamage.tier1} / +${props.kit.magicalDamage.tier2} / +${props.kit.magicalDamage.tier3}`} />
 								: null
 						}
-						{props.kit.mobility ? <div className='ds-text'>Mobility: Yes</div> : null}
-						<AbilityPanel ability={props.kit.signatureAbility} mode={PanelMode.Full} />
+						{props.kit.mobility ? <Field label='Mobility' value='Yes' /> : null}
+						<AbilityPanel ability={props.kit.signatureAbility} hero={props.hero} mode={PanelMode.Full} />
 						{props.kit.ward ? <FeaturePanel feature={props.kit.ward} hero={props.hero} /> : null}
 					</div>
 					: null

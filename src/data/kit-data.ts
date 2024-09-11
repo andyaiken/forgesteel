@@ -1,4 +1,5 @@
-import { KitArmor, KitWeapon } from '../enums/kit';
+import { KitArmor, KitType, KitWeapon } from '../enums/kit';
+import { AbilityDistanceType } from '../models/ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { Characteristic } from '../enums/characteristic';
@@ -9,6 +10,7 @@ export class KitData {
 		id: 'kit-cloak-and-dagger',
 		name: 'Cloak and Dagger',
 		description: 'Providing throwable light weapons and light armor easily concealed by a cloak to confuse your enemies, the Cloak and Dagger kit makes you more mobile while providing a boost to your effectiveness at range and to your damage. This kit is good for a hero who wants to be able to move all over the battlefield while keeping their options open for using short-range attacks.',
+		type: KitType.Martial,
 		armor: [ KitArmor.Light ],
 		weapon: [ KitWeapon.Light ],
 		implement: [],
@@ -40,7 +42,16 @@ export class KitData {
 			description: 'A stab, and a few quick, careful steps back.',
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-			distance: 'Reach 1 or Range 5',
+			distance: [
+				AbilityLogic.createDistance({
+					type: AbilityDistanceType.Reach,
+					value: 1
+				}),
+				AbilityLogic.createDistance({
+					type: AbilityDistanceType.Ranged,
+					value: 5
+				})
+			],
 			target: '1 creature',
 			cost: 0,
 			powerRoll: AbilityLogic.createPowerRoll({

@@ -1,5 +1,5 @@
 import { Button, Divider, Flex, Input, Radio, Segmented, Select, Space } from 'antd';
-import { Feature, FeatureData, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
+import { FeatureData, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
 import { Ancestry } from '../../../models/ancestry';
 import { AncestryData } from '../../../data/ancestry-data';
 import { AncestryPanel } from '../../panels/ancestry-panel/ancestry-panel';
@@ -90,10 +90,10 @@ export const HeroEditPage = (props: Props) => {
 		setDirty(true);
 	};
 
-	const setSubclass = (subclassID: string | null) => {
+	const setSubclasses = (subclassIDs: string[]) => {
 		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 		if (heroCopy.class) {
-			heroCopy.class.subclassID = subclassID;
+			heroCopy.class.subclasses.forEach(sc => sc.selected = subclassIDs.includes(sc.id));
 		}
 		setHero(heroCopy);
 		setDirty(true);
@@ -107,17 +107,10 @@ export const HeroEditPage = (props: Props) => {
 		setDirty(true);
 	};
 
-	const addKit = (kit: Kit) => {
-		const kitCopy = JSON.parse(JSON.stringify(kit)) as Kit;
+	const setKit = (kit: Kit | null) => {
+		const kitCopy = JSON.parse(JSON.stringify(kit)) as Kit | null;
 		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
-		heroCopy.kits.push(kitCopy);
-		setHero(heroCopy);
-		setDirty(true);
-	};
-
-	const removeKit = (kitID: string) => {
-		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
-		heroCopy.kits = heroCopy.kits.filter(k => k.id !== kitID);
+		heroCopy.kit = kitCopy;
 		setHero(heroCopy);
 		setDirty(true);
 	};
@@ -164,7 +157,7 @@ export const HeroEditPage = (props: Props) => {
 				);
 			case Page.Class:
 				return (
-					<ClassSection hero={hero} selectClass={setClass} selectCharacteristics={setCharacteristics} selectSubclass={setSubclass} setFeatureData={setFeatureData} />
+					<ClassSection hero={hero} selectClass={setClass} selectCharacteristics={setCharacteristics} selectSubclasses={setSubclasses} setFeatureData={setFeatureData} />
 				);
 			case Page.Complication:
 				return (
@@ -172,7 +165,7 @@ export const HeroEditPage = (props: Props) => {
 				);
 			case Page.Kit:
 				return (
-					<KitSection hero={hero} addKit={addKit} removeKit={removeKit} setFeatureData={setFeatureData} />
+					<KitSection hero={hero} selectKit={setKit} setFeatureData={setFeatureData} />
 				);
 			case Page.Details:
 				return (
@@ -234,27 +227,29 @@ const AncestrySection = (props: AncestrySectionProps) => {
 
 	return (
 		<div className='hero-edit-content'>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Ancestries</div>
-				{options}
-				{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
-			</div>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Selected</div>
-				{
-					props.hero.ancestry ?
+			{
+				props.hero.ancestry ?
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Selected</div>
 						<SelectablePanel onUnselect={() => props.selectAncestry(null)}>
 							<AncestryPanel ancestry={props.hero.ancestry} mode={PanelMode.Full} />
 						</SelectablePanel>
-						:
-						<div className='dimmed-text centered-text'>Not selected</div>
-				}
-			</div>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Choices</div>
-				{choices}
-				{choices.length === 0 ? <div className='dimmed-text centered-text'>No choices to be made</div> : null}
-			</div>
+					</div>
+					:
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Ancestries</div>
+						{options}
+						{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
+					</div>
+			}
+			{
+				choices.length > 0 ?
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Choices</div>
+						{choices}
+					</div>
+					: null
+			}
 		</div>
 	);
 };
@@ -285,27 +280,29 @@ const CultureSection = (props: CultureSectionProps) => {
 
 	return (
 		<div className='hero-edit-content'>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Cultures</div>
-				{options}
-				{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
-			</div>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Selected</div>
-				{
-					props.hero.culture ?
+			{
+				props.hero.culture ?
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Selected</div>
 						<SelectablePanel onUnselect={() => props.selectCulture(null)}>
 							<CulturePanel culture={props.hero.culture} mode={PanelMode.Full} />
 						</SelectablePanel>
-						:
-						<div className='dimmed-text centered-text'>Not selected</div>
-				}
-			</div>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Choices</div>
-				{choices}
-				{choices.length === 0 ? <div className='dimmed-text centered-text'>No choices to be made</div> : null}
-			</div>
+					</div>
+					:
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Cultures</div>
+						{options}
+						{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
+					</div>
+			}
+			{
+				choices.length > 0 ?
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Choices</div>
+						{choices}
+					</div>
+					: null
+			}
 		</div>
 	);
 };
@@ -336,27 +333,29 @@ const CareerSection = (props: CareerSectionProps) => {
 
 	return (
 		<div className='hero-edit-content'>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Careers</div>
-				{options}
-				{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
-			</div>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Selected</div>
-				{
-					props.hero.career ?
+			{
+				props.hero.career ?
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Selected</div>
 						<SelectablePanel onUnselect={() => props.selectCareer(null)}>
 							<CareerPanel career={props.hero.career} mode={PanelMode.Full} />
 						</SelectablePanel>
-						:
-						<div className='dimmed-text centered-text'>Not selected</div>
-				}
-			</div>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Choices</div>
-				{choices}
-				{choices.length === 0 ? <div className='dimmed-text centered-text'>No choices to be made</div> : null}
-			</div>
+					</div>
+					:
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Careers</div>
+						{options}
+						{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
+					</div>
+			}
+			{
+				choices.length > 0 ?
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Choices</div>
+						{choices}
+					</div>
+					: null
+			}
 		</div>
 	);
 };
@@ -365,7 +364,7 @@ interface ClassSectionProps {
 	hero: Hero;
 	selectClass: (heroClass: HeroClass | null) => void;
 	selectCharacteristics: (array: { characteristic: Characteristic, value: number }[]) => void;
-	selectSubclass: (subclassID: string | null) => void;
+	selectSubclasses: (subclassIDs: string[]) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
@@ -388,19 +387,21 @@ const ClassSection = (props: ClassSectionProps) => {
 				</SelectablePanel>
 			));
 
-		// Choose subclass
+		// Choose subclass(es)
 		if (props.hero.class.subclasses.length > 0) {
 			choices.unshift(
 				<SelectablePanel key='subclass'>
 					<div className='header-text'>{props.hero.class.subclassName}</div>
-					<div className='ds-text'>Choose a {props.hero.class.subclassName}.</div>
+					<div className='ds-text'>Choose {props.hero.class.subclassCount === 1 ? `a ${props.hero.class.subclassName}` : `${props.hero.class.subclassCount} ${props.hero.class.subclassName}s`}.</div>
 					<Select
 						style={{ width: '100%' }}
+						mode={props.hero.class.subclassCount === 1 ? undefined : 'multiple'}
+						maxCount={props.hero.class.subclassCount === 1 ? undefined : props.hero.class.subclassCount}
 						allowClear={true}
 						placeholder='Select'
 						options={props.hero.class.subclasses.map(s => ({ value: s.id, label: s.name }))}
-						value={props.hero.class.subclassID}
-						onChange={props.selectSubclass}
+						value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.id)}
+						onChange={props.selectSubclasses}
 					/>
 				</SelectablePanel>
 			);
@@ -443,27 +444,29 @@ const ClassSection = (props: ClassSectionProps) => {
 
 	return (
 		<div className='hero-edit-content'>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Classes</div>
-				{options}
-				{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
-			</div>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Selected</div>
-				{
-					props.hero.class ?
+			{
+				props.hero.class ?
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Selected</div>
 						<SelectablePanel onUnselect={() => props.selectClass(null)}>
 							<ClassPanel heroClass={props.hero.class} mode={PanelMode.Full} />
 						</SelectablePanel>
-						:
-						<div className='dimmed-text centered-text'>Not selected</div>
-				}
-			</div>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Choices</div>
-				{choices}
-				{choices.length === 0 ? <div className='dimmed-text centered-text'>No choices to be made</div> : null}
-			</div>
+					</div>
+					:
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Classes</div>
+						{options}
+						{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
+					</div>
+			}
+			{
+				props.hero.class ?
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Choices</div>
+						{choices}
+					</div>
+					: null
+			}
 		</div>
 	);
 };
@@ -494,78 +497,82 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 
 	return (
 		<div className='hero-edit-content'>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Complications</div>
-				{options}
-				{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
-			</div>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Selected</div>
-				{
-					props.hero.complication ?
+			{
+				props.hero.complication ?
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Selected</div>
 						<SelectablePanel onUnselect={() => props.selectComplication(null)}>
 							<ComplicationPanel complication={props.hero.complication} mode={PanelMode.Full} />
 						</SelectablePanel>
-						:
-						<div className='dimmed-text centered-text'>Not selected</div>
-				}
-			</div>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Choices</div>
-				{choices}
-				{choices.length === 0 ? <div className='dimmed-text centered-text'>No choices to be made</div> : null}
-			</div>
+					</div>
+					:
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Complications</div>
+						{options}
+						{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
+					</div>
+			}
+			{
+				choices.length > 0 ?
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Choices</div>
+						{choices}
+					</div>
+					: null
+			}
 		</div>
 	);
 };
 
 interface KitSectionProps {
 	hero: Hero;
-	addKit: (kit: Kit) => void;
-	removeKit: (kitID: string) => void;
+	selectKit: (kit: Kit | null) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const KitSection = (props: KitSectionProps) => {
 	const options = KitData.getKits().map(k => (
-		<SelectablePanel key={k.id} onSelect={() => props.addKit(k)}>
+		<SelectablePanel key={k.id} onSelect={() => props.selectKit(k)}>
 			<KitPanel kit={k} />
 		</SelectablePanel>
 	));
 
-	const choices = props.hero.kits
-		.filter(k => k.ward !== null)
-		.map(k => k.ward as Feature)
-		.filter(f => f.choice)
-		.map(f => (
-			<SelectablePanel key={f.id}>
-				<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} setData={props.setFeatureData} />
-			</SelectablePanel>
-		));
+	let choices: JSX.Element[] = [];
+	if (props.hero.kit && props.hero.kit.ward) {
+		choices = [ props.hero.kit.ward ]
+			.filter(f => f.choice)
+			.map(f => (
+				<SelectablePanel key={f.id}>
+					<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} setData={props.setFeatureData} />
+				</SelectablePanel>
+			));
+	}
 
 	return (
 		<div className='hero-edit-content'>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Kits</div>
-				{options}
-				{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
-			</div>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Selected</div>
-				{
-					props.hero.kits.map(kit => (
-						<SelectablePanel key={kit.id} onUnselect={() => props.removeKit(kit.id)}>
-							<KitPanel kit={kit} mode={PanelMode.Full} />
+			{
+				props.hero.kit ?
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Selected</div>
+						<SelectablePanel key={props.hero.kit.id} onUnselect={() => props.selectKit(null)}>
+							<KitPanel kit={props.hero.kit} mode={PanelMode.Full} />
 						</SelectablePanel>
-					))
-				}
-				{props.hero.kits.length === 0 ? <div className='dimmed-text centered-text'>Not selected</div> : null}
-			</div>
-			<div className='hero-edit-content-column'>
-				<div className='header-text'>Choices</div>
-				{choices}
-				{choices.length === 0 ? <div className='dimmed-text centered-text'>No choices to be made</div> : null}
-			</div>
+					</div>
+					:
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Kits</div>
+						{options}
+						{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
+					</div>
+			}
+			{
+				choices.length > 0 ?
+					<div className='hero-edit-content-column'>
+						<div className='header-text'>Choices</div>
+						{choices}
+					</div>
+					: null
+			}
 		</div>
 	);
 };

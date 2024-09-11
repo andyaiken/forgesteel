@@ -3,10 +3,30 @@ import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
 
 export interface AbilityType {
-		usage: AbilityUsage;
-		free: boolean;
-		trigger: string;
-		time: string;
+	usage: AbilityUsage;
+	free: boolean;
+	trigger: string;
+	time: string;
+}
+
+export enum AbilityDistanceType {
+	Self = 'Self',
+	Reach = 'Reach',
+	Ranged = 'Ranged',
+	Aura = 'Aura',
+	Burst = 'Burst',
+	Cube = 'Cube',
+	Line = 'Line',
+	Wall = 'Wall',
+	Special = 'Special'
+}
+
+export interface AbilityDistance {
+	type: AbilityDistanceType;
+	value: number;
+	value2: number;
+	within: number;
+	special: string;
 }
 
 export interface PowerRoll {
@@ -23,7 +43,7 @@ export interface Ability {
 
 	type: AbilityType;
 	keywords: AbilityKeyword[];
-	distance: string; // Reach X, Ranged X, Reach X or Ranged X, [Aura X / Burst X / Cube X, XxX Line, Wall X, Special] [within X], Self
+	distance: AbilityDistance[];
 	target: string; // Creature, Object, Enemy, Ally, Self, All
 	cost: number;
 	preEffect: string;

@@ -1,5 +1,16 @@
 # Forge Steel
 
+## UI
+
+* Character Generation:
+  * Indicate on hero edit screen which sections are empty / pending / complete
+  * Ability to have a custom culture
+* In Game:
+  * Edit heroic resource / renown / hero tokens
+  * Edit stamina
+  * Spend recovery
+* Click on skill to see details
+
 ## Data
 
 * Add ancestries
@@ -11,8 +22,3 @@
 ## Logic
 
 * Add different feature types to codify features
-
-## UI
-
-* When you select a skill / language you've already got, the UI should display a warning
-* Export character sheet

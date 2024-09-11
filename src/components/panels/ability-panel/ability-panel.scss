@@ -1,8 +1,14 @@
 .ability-panel {
-	display: block;
+	border: 1px solid rgb(240, 240, 240);
+    border-radius: 10px;
+    padding: 5px 10px 0 10px;
+
+	&:hover {
+		border-color: rgb(200, 200, 200);
+	}
 
 	.power-roll {
-		border: 2px solid rgb(220, 220, 220);
+		border: 1px solid rgb(220, 220, 220);
 		border-radius: 5px;
 		margin: 10px 0;
 
@@ -15,6 +21,11 @@
 				font-weight: 600;
 				padding-bottom: 5px;
 				border-bottom: 1px solid rgb(220, 220, 220);
+			}
+
+			&.power-roll-footer {
+				margin: 0 10px;
+				border-top: 1px solid rgb(220, 220, 220);
 			}
 
 			.tier {

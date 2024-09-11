@@ -39,17 +39,21 @@ body {
 	letter-spacing: 1px;
 }
 
+.bold-text {
+	margin: 10px 0;
+	color: rgb(0, 0, 0);
+	font-weight: 600;
+}
+
 p,
 .ds-text {
 	margin: 10px 0;
 	color: rgb(80, 80, 80);
-	font-size: 14px;
 }
 
 .description-text {
 	margin: 10px 0;
 	color: rgb(120, 120, 120);
-	font-size: 14px;
 }
 
 .dimmed-text {
@@ -59,10 +63,20 @@ p,
 	font-style: italic;
 }
 
+.warning-text {
+	margin: 10px 0;
+	color: rgb(80, 80, 80);
+	background-color: rgb(255, 230, 200);
+	border: 1px solid rgb(255, 140, 0);
+	border-radius: 5px;
+	padding: 5px 10px;
+}
+
 .centered-text {
 	text-align: center;
 }
 
+.ant-statistic .ant-statistic-title,
 .ant-statistic .ant-statistic-content {
     text-align: center;
 }

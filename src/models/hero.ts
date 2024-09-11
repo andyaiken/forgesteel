@@ -27,7 +27,7 @@ export interface Hero {
 	class: HeroClass | null;
 	career: Career | null;
 	complication: Complication | null;
-	kits: Kit[];
+	kit: Kit | null;
 
 	state: HeroState;
 }

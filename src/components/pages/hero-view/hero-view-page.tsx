@@ -9,6 +9,7 @@ interface Props {
 	hero: Hero;
 	closeHero: () => void;
 	editHero: () => void;
+	exportHero: () => void;
 	deleteHero: () => void;
 }
 
@@ -18,6 +19,7 @@ export const HeroPage = (props: Props) => {
 			<Flex gap='small'>
 				<Button onClick={props.closeHero}>Close</Button>
 				<Button onClick={props.editHero}>Edit</Button>
+				<Button onClick={props.exportHero}>Export</Button>
 				<Button onClick={props.deleteHero}>Delete</Button>
 			</Flex>
 			<Divider />

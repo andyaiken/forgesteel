@@ -1,3 +1,8 @@
+export enum KitType {
+	Martial = 'Martial',
+	Caster = 'Caster'
+};
+
 export enum KitArmor {
 	Light = 'Light Armor',
 	Medium = 'Medium Armor',

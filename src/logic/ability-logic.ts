@@ -1,7 +1,9 @@
-import { Ability, AbilityType, PowerRoll } from '../models/ability';
+import { Ability, AbilityDistance, AbilityDistanceType, AbilityType, PowerRoll } from '../models/ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
+import { Hero } from '../models/hero';
+import { HeroLogic } from './hero-logic';
 
 export class AbilityLogic {
 	static createTypeAction = (free = false) => {
@@ -40,6 +42,36 @@ export class AbilityLogic {
 		} as AbilityType;
 	};
 
+	static createDistance = (data: { type: AbilityDistanceType, value: number, value2?: number, within?: number }) => {
+		return {
+			type: data.type,
+			value: data.value,
+			value2: data.value2 || 0,
+			within: data.within || 0,
+			special: ''
+		} as AbilityDistance;
+	};
+
+	static createDistanceSelf = () => {
+		return {
+			type: AbilityDistanceType.Self,
+			value: 0,
+			value2: 0,
+			within: 0,
+			special: ''
+		} as AbilityDistance;
+	};
+
+	static createDistanceSpecial = (special: string) => {
+		return {
+			type: AbilityDistanceType.Special,
+			value: 0,
+			value2: 0,
+			within: 0,
+			special: special
+		} as AbilityDistance;
+	};
+
 	static createPowerRoll = (data: { characteristic: Characteristic[], tier1: string, tier2: string, tier3: string }) => {
 		return {
 			characteristic: data.characteristic,
@@ -49,14 +81,14 @@ export class AbilityLogic {
 		} as PowerRoll;
 	};
 
-	static createAbility = (data: { id: string, name: string, description: string, type: AbilityType, keywords?: AbilityKeyword[], distance?: string, target?: string, cost?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, spend?: { value?: number, effect: string }[] }) => {
+	static createAbility = (data: { id: string, name: string, description: string, type: AbilityType, keywords?: AbilityKeyword[], distance?: AbilityDistance[], target?: string, cost?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, spend?: { value?: number, effect: string }[] }) => {
 		return {
 			id: data.id,
 			name: data.name,
 			description: data.description,
 			type: data.type,
 			keywords: data.keywords || [],
-			distance: data.distance || '',
+			distance: data.distance || [],
 			target: data.target || '',
 			cost: data.cost || 0,
 			preEffect: data.preEffect || '',
@@ -64,5 +96,35 @@ export class AbilityLogic {
 			effect: data.effect || '',
 			spend: data.spend || []
 		} as Ability;
+	};
+
+	static getType = (type: AbilityType) => {
+		if (type.usage === AbilityUsage.Other) {
+			return type.time;
+		}
+
+		return `${type.free ? 'Free ' : ''}${type.usage}`;
+	};
+
+	static getDistance = (distance: AbilityDistance, hero?: Hero, ability?: Ability) => {
+		if (distance.type === AbilityDistanceType.Self) {
+			return 'Self';
+		}
+
+		if (distance.type === AbilityDistanceType.Special) {
+			return distance.special;
+		}
+
+		const bonus = (hero && ability) ? HeroLogic.getDistanceBonus(hero, ability, distance) : 0;
+
+		let result = `${distance.type} ${distance.value + bonus}`;
+		if (distance.type === AbilityDistanceType.Line) {
+			result += `x${distance.value2 + bonus}`;
+		}
+		if (distance.within > 0) {
+			result += ` within ${distance.within}`;
+		}
+
+		return result;
 	};
 }

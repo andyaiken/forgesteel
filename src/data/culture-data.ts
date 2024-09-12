@@ -1,3 +1,4 @@
+import { Culture } from '../models/culture';
 import { FeatureLogic } from '../logic/feature-logic';
 import { SkillList } from '../enums/skill-list';
 
@@ -183,6 +184,23 @@ export class UpbringingData {
 			this.labor,
 			this.martial,
 			this.noble
+		];
+	};
+}
+
+export class CultureData {
+	static bespoke: Culture = {
+		id: 'culture-bespoke',
+		name: 'Bespoke Culture',
+		description: 'Choose any Environment, Organization, and Upbringing.',
+		environment: null,
+		organization: null,
+		upbringing: null
+	};
+
+	static getCultures = () => {
+		return [
+			this.bespoke
 		];
 	};
 }

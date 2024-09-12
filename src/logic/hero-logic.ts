@@ -1,10 +1,12 @@
-import { Ability, AbilityDistance, AbilityDistanceType } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureClassAbilityData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
+import { Ability, AbilityDistance } from '../models/ability';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
+import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from './ability-logic';
 import { CampaignSettingData } from '../data/campaign-setting-data';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
+import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 import { Kit } from '../models/kit';
@@ -55,9 +57,15 @@ export class HeroLogic {
 		}
 
 		if (hero.culture) {
-			features.push(hero.culture.environment);
-			features.push(hero.culture.organization);
-			features.push(hero.culture.upbringing);
+			if (hero.culture.environment) {
+				features.push(hero.culture.environment);
+			}
+			if (hero.culture.organization) {
+				features.push(hero.culture.organization);
+			}
+			if (hero.culture.upbringing) {
+				features.push(hero.culture.upbringing);
+			}
 		}
 
 		if (hero.career) {
@@ -163,6 +171,8 @@ export class HeroLogic {
 				name: 'Mobility',
 				description: '',
 				type: AbilityLogic.createTypeTrigger('An enemy ends its turn adjacent to you.', true),
+				distance: [ AbilityLogic.createDistanceSelf() ],
+				target: 'Self',
 				effect: 'You shift up to 2 squares.'
 			}));
 		}
@@ -234,9 +244,15 @@ export class HeroLogic {
 	};
 
 	static getRecoveryValue = (hero: Hero) => {
-		const value = Math.floor(this.getStamina(hero) / 3);
+		let value = Math.floor(this.getStamina(hero) / 3);
 
-		//
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.Bonus)
+			.map(f => f.data as FeatureBonusData)
+			.filter(data => data.field === FeatureField.RecoveryValue)
+			.forEach(data => {
+				value += data.value;
+			});
 
 		return value;
 	};
@@ -247,6 +263,14 @@ export class HeroLogic {
 		if (hero.class) {
 			value += hero.class.recoveries;
 		}
+
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.Bonus)
+			.map(f => f.data as FeatureBonusData)
+			.filter(data => data.field === FeatureField.Recoveries)
+			.forEach(data => {
+				value += data.value;
+			});
 
 		return value;
 	};

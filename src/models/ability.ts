@@ -1,3 +1,4 @@
+import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
@@ -7,18 +8,6 @@ export interface AbilityType {
 	free: boolean;
 	trigger: string;
 	time: string;
-}
-
-export enum AbilityDistanceType {
-	Self = 'Self',
-	Reach = 'Reach',
-	Ranged = 'Ranged',
-	Aura = 'Aura',
-	Burst = 'Burst',
-	Cube = 'Cube',
-	Line = 'Line',
-	Wall = 'Wall',
-	Special = 'Special'
 }
 
 export interface AbilityDistance {

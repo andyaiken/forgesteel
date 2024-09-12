@@ -5,7 +5,7 @@ export interface Culture {
 	name: string;
 	description: string;
 
-	environment: Feature;
-	organization: Feature;
-	upbringing: Feature;
+	environment: Feature | null;
+	organization: Feature | null;
+	upbringing: Feature | null;
 }

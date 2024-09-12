@@ -1,5 +1,6 @@
-import { Feature, FeatureAbilityData, FeatureClassAbilityData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
 import { Ability } from '../models/ability';
+import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { SkillList } from '../enums/skill-list';
 
@@ -25,6 +26,20 @@ export class FeatureLogic {
 			data: {
 				ability: data.ability
 			} as FeatureAbilityData
+		} as Feature;
+	};
+
+	static createBonusFeature = (data: { id: string, name: string, description?: string, field: FeatureField, value: number }) => {
+		return {
+			id: data.id,
+			name: data.name,
+			description: data.description || '',
+			type: FeatureType.Bonus,
+			choice: false,
+			data: {
+				field: data.field,
+				value: data.value
+			} as FeatureBonusData
 		} as Feature;
 	};
 

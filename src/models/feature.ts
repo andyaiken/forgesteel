@@ -1,4 +1,5 @@
 import { Ability } from './ability';
+import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { SkillList } from '../enums/skill-list';
 
@@ -7,6 +8,11 @@ export interface FeatureData { }
 
 export interface FeatureAbilityData extends FeatureData {
 	ability: Ability;
+};
+
+export interface FeatureBonusData extends FeatureData {
+	field: FeatureField;
+	value: number;
 };
 
 export interface FeatureClassAbilityData extends FeatureData {

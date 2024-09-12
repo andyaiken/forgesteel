@@ -2,6 +2,7 @@ import { Col, Divider, Row, Statistic } from 'antd';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
 import { Characteristic } from '../../../enums/characteristic';
+import { CultureData } from '../../../data/culture-data';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
@@ -34,7 +35,7 @@ export const HeroPanel = (props: Props) => {
 		const implementNames = kits.map(k => k.implement).join(', ');
 
 		return (
-			<Row gutter={[ 20, 20 ]} style={{ margin: '20px 0' }}>
+			<Row gutter={[ 10, 10 ]} style={{ margin: '10px 0' }}>
 				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
 					{
 						props.hero.ancestry ?
@@ -47,10 +48,10 @@ export const HeroPanel = (props: Props) => {
 					{
 						props.hero.culture ?
 							<div>
-								<Field label='Culture' value={props.hero.culture.name} />
-								<Field label='Environment' value={props.hero.culture.environment.name} />
-								<Field label='Organization' value={props.hero.culture.organization.name} />
-								<Field label='Upbringing' value={props.hero.culture.upbringing.name} />
+								{props.hero.culture.id !== CultureData.bespoke.id ? <Field label='Culture' value={props.hero.culture.name} /> : null}
+								{props.hero.culture.environment ? <Field label='Environment' value={props.hero.culture.environment.name} /> : null}
+								{props.hero.culture.organization ? <Field label='Organization' value={props.hero.culture.organization.name} /> : null}
+								{props.hero.culture.upbringing ? <Field label='Upbringing' value={props.hero.culture.upbringing.name} /> : null}
 							</div>
 							:
 							<div className='dimmed-text'>No culture chosen</div>
@@ -59,10 +60,7 @@ export const HeroPanel = (props: Props) => {
 				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
 					{
 						props.hero.career ?
-							<div>
-								<Field label='Career' value={props.hero.career.name} />
-								<Field label='Title' value={props.hero.career.title.name} />
-							</div>
+							<Field label='Career' value={props.hero.career.name} />
 							:
 							<div className='dimmed-text'>No career chosen</div>
 					}

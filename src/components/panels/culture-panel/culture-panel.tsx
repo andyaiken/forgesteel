@@ -19,9 +19,9 @@ export const CulturePanel = (props: Props) => {
 			{
 				props.mode === PanelMode.Full ?
 					<div style={{ paddingTop: '10px' }}>
-						<FeaturePanel feature={props.culture.environment} hero={props.hero} />
-						<FeaturePanel feature={props.culture.organization} hero={props.hero} />
-						<FeaturePanel feature={props.culture.upbringing} hero={props.hero} />
+						{props.culture.environment ? <FeaturePanel feature={props.culture.environment} hero={props.hero} /> : null}
+						{props.culture.organization ? <FeaturePanel feature={props.culture.organization} hero={props.hero} /> : null}
+						{props.culture.upbringing ? <FeaturePanel feature={props.culture.upbringing} hero={props.hero} /> : null}
 					</div>
 					: null
 			}

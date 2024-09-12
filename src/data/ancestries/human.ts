@@ -1,5 +1,6 @@
 import { AbilityLogic } from '../../logic/ability-logic';
 import { Ancestry } from '../../models/ancestry';
+import { FeatureField } from '../../enums/feature-field';
 import { FeatureLogic } from '../../logic/feature-logic';
 
 export const human: Ancestry = {
@@ -18,6 +19,8 @@ export const human: Ancestry = {
 				name: 'Detect the Supernatural',
 				description: 'You open your awareness to detect supernatural creatures and phenomena.',
 				type: AbilityLogic.createTypeManeuver(),
+				distance: [ AbilityLogic.createDistanceSelf() ],
+				target: 'Self',
 				effect: 'Until the end of your next turn, you know the location of any supernatural object, Undead, Construct, or creature from another plane of existence within 5 squares of you, even if you don’t have line of effect to them. You know if you’re detecting an item or a creature, and you know if a creature is Undead, a Construct, or from another plane of existence.'
 			})
 		}),
@@ -26,10 +29,12 @@ export const human: Ancestry = {
 			name: 'Resist the Supernatural',
 			description: 'Your connection to the natural world protects you from supernatural forces. You have Magic immunity 2 and Psionic immunity 2. Each of these immunities increases by 1 each time you level up.'
 		}),
-		FeatureLogic.createFeature({
+		FeatureLogic.createBonusFeature({
 			id: 'human-feat-3',
 			name: 'Staying Power',
-			description: 'Your human anatomy allows you to fight, run, and stay awake longer than others. Increase your number of Recoveries by 2.'
+			description: 'Your human anatomy allows you to fight, run, and stay awake longer than others. Increase your number of Recoveries by 2.',
+			field: FeatureField.Recoveries,
+			value: 2
 		})
 	]
 };

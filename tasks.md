@@ -2,7 +2,7 @@
 
 ## Character Generation
 
-* Ability to have a custom culture
+Nothing
 
 ## Character Sheet
 
@@ -10,6 +10,8 @@
   * Edit heroic resource / renown / hero tokens
   * Edit stamina
   * Spend recovery
+  * Add / remove conditions
+
 * Click on skill to see details
 
 ## Data
@@ -17,8 +19,8 @@
 * Add ancestries
 * Add careers
 * Add classes
-* Add complications
 * Add kits
+* Add complications
 
 ## Logic
 

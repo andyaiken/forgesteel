@@ -1,4 +1,5 @@
-import { Ability, AbilityDistance, AbilityDistanceType, AbilityType, PowerRoll } from '../models/ability';
+import { Ability, AbilityDistance, AbilityType, PowerRoll } from '../models/ability';
+import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
@@ -81,7 +82,7 @@ export class AbilityLogic {
 		} as PowerRoll;
 	};
 
-	static createAbility = (data: { id: string, name: string, description: string, type: AbilityType, keywords?: AbilityKeyword[], distance?: AbilityDistance[], target?: string, cost?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, spend?: { value?: number, effect: string }[] }) => {
+	static createAbility = (data: { id: string, name: string, description: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, spend?: { value?: number, effect: string }[] }) => {
 		return {
 			id: data.id,
 			name: data.name,

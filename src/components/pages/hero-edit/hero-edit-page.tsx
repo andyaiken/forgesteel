@@ -1,5 +1,6 @@
 import { Button, Divider, Flex, Input, Radio, Segmented, Select, Space } from 'antd';
-import { FeatureData, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
+import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../data/culture-data';
+import { Feature, FeatureData, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
 import { Ancestry } from '../../../models/ancestry';
 import { AncestryData } from '../../../data/ancestry-data';
 import { AncestryPanel } from '../../panels/ancestry-panel/ancestry-panel';
@@ -118,6 +119,45 @@ export const HeroEditPage = (props: Props) => {
 		setDirty(true);
 	};
 
+	const setEnvironment = (id: string | null) => {
+		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+		if (heroCopy.culture) {
+			const env = EnvironmentData.getEnvironments().find(e => e.id === id);
+			if (env) {
+				const envCopy = JSON.parse(JSON.stringify(env)) as Feature;
+				heroCopy.culture.environment = envCopy;
+			}
+		}
+		setHero(heroCopy);
+		setDirty(true);
+	};
+
+	const setOrganization = (id: string | null) => {
+		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+		if (heroCopy.culture) {
+			const org = OrganizationData.getOrganizations().find(o => o.id === id);
+			if (org) {
+				const orgCopy = JSON.parse(JSON.stringify(org)) as Feature;
+				heroCopy.culture.organization = orgCopy;
+			}
+		}
+		setHero(heroCopy);
+		setDirty(true);
+	};
+
+	const setUpbringing = (id: string | null) => {
+		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+		if (heroCopy.culture) {
+			const ub = UpbringingData.getUpbringings().find(u => u.id === id);
+			if (ub) {
+				const ubCopy = JSON.parse(JSON.stringify(ub)) as Feature;
+				heroCopy.culture.upbringing = ubCopy;
+			}
+		}
+		setHero(heroCopy);
+		setDirty(true);
+	};
+
 	const setCareer = (career: Career | null) => {
 		const careerCopy = JSON.parse(JSON.stringify(career)) as Career | null;
 		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
@@ -202,7 +242,7 @@ export const HeroEditPage = (props: Props) => {
 				);
 			case Page.Culture:
 				return (
-					<CultureSection hero={hero} selectCulture={setCulture} setFeatureData={setFeatureData} />
+					<CultureSection hero={hero} selectCulture={setCulture} selectEnvironment={setEnvironment} selectOrganization={setOrganization} selectUpbringing={setUpbringing} setFeatureData={setFeatureData} />
 				);
 			case Page.Career:
 				return (
@@ -318,6 +358,9 @@ const AncestrySection = (props: AncestrySectionProps) => {
 interface CultureSectionProps {
 	hero: Hero;
 	selectCulture: (culture: Culture | null) => void;
+	selectEnvironment: (id: string | null) => void;
+	selectOrganization: (id: string | null) => void;
+	selectUpbringing: (id: string | null) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
@@ -330,13 +373,59 @@ const CultureSection = (props: CultureSectionProps) => {
 
 	let choices: JSX.Element[] = [];
 	if (props.hero.culture) {
-		choices = [ props.hero.culture.environment, props.hero.culture.organization, props.hero.culture.upbringing ]
+		const features: Feature[] = [];
+		if (props.hero.culture.environment) {
+			features.push(props.hero.culture.environment);
+		}
+		if (props.hero.culture.organization) {
+			features.push(props.hero.culture.organization);
+		}
+		if (props.hero.culture.upbringing) {
+			features.push(props.hero.culture.upbringing);
+		}
+		choices = features
 			.filter(f => f.choice)
 			.map(f => (
 				<SelectablePanel key={f.id}>
 					<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} setData={props.setFeatureData} />
 				</SelectablePanel>
 			));
+
+		if (props.hero.culture.id === CultureData.bespoke.id) {
+			choices.unshift(
+				<SelectablePanel key='bespoke'>
+					<div className='header-text'>Bespoke Culture</div>
+					<div className='ds-text'>Choose your Environment, Organization, and Upbringing.</div>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<Select
+							style={{ width: '100%' }}
+							allowClear={true}
+							placeholder='Select'
+							options={EnvironmentData.getEnvironments().map(s => ({ value: s.id, label: s.name }))}
+							value={props.hero.culture.environment ? props.hero.culture.environment.id : null}
+							onChange={props.selectEnvironment}
+						/>
+						<Select
+							style={{ width: '100%' }}
+							allowClear={true}
+							placeholder='Select'
+							options={OrganizationData.getOrganizations().map(s => ({ value: s.id, label: s.name }))}
+							value={props.hero.culture.organization ? props.hero.culture.organization.id : null}
+							onChange={props.selectOrganization}
+						/>
+						<Select
+							style={{ width: '100%' }}
+							allowClear={true}
+							placeholder='Select'
+							options={UpbringingData.getUpbringings().map(s => ({ value: s.id, label: s.name }))}
+							value={props.hero.culture.upbringing ? props.hero.culture.upbringing.id : null}
+							onChange={props.selectUpbringing}
+						/>
+					</Space>
+				</SelectablePanel>
+			);
+
+		}
 	}
 
 	return (
@@ -352,6 +441,9 @@ const CultureSection = (props: CultureSectionProps) => {
 					:
 					<div className='hero-edit-content-column'>
 						<div className='header-text'>Cultures</div>
+						<SelectablePanel onSelect={() => props.selectCulture(CultureData.bespoke)}>
+							<CulturePanel culture={CultureData.bespoke} />
+						</SelectablePanel>
 						{options}
 						{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
 					</div>

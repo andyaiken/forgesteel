@@ -1,10 +1,11 @@
 # Forge Steel
 
-## UI
+## Character Generation
 
-* Character Generation:
-  * Indicate on hero edit screen which sections are empty / pending / complete
-  * Ability to have a custom culture
+* Ability to have a custom culture
+
+## Character Sheet
+
 * In Game:
   * Edit heroic resource / renown / hero tokens
   * Edit stamina

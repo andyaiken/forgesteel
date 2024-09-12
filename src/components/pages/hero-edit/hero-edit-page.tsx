@@ -38,6 +38,12 @@ enum Page {
 	Details = 'Details'
 }
 
+enum PageState {
+	Optional = 'Optional',
+	NotStarted = 'Not Started',
+	Completed = 'Completed'
+}
+
 interface Props {
 	hero: Hero;
 	saveChanges: (hero: Hero) => void;
@@ -48,6 +54,53 @@ export const HeroEditPage = (props: Props) => {
 	const [ page, setPage ] = useState<Page>(Page.Ancestry);
 	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(props.hero)) as Hero);
 	const [ dirty, setDirty ] = useState<boolean>(false);
+
+	const getPageState = (page: Page) => {
+		switch (page) {
+			case Page.Ancestry:
+				if (props.hero.ancestry) {
+					return PageState.Completed;
+				} else {
+					return PageState.NotStarted;
+				}
+			case Page.Culture:
+				if (props.hero.culture) {
+					return PageState.Completed;
+				} else {
+					return PageState.NotStarted;
+				}
+			case Page.Career:
+				if (props.hero.career) {
+					return PageState.Completed;
+				} else {
+					return PageState.NotStarted;
+				}
+			case Page.Class:
+				if (props.hero.class) {
+					return PageState.Completed;
+				} else {
+					return PageState.NotStarted;
+				}
+			case Page.Complication:
+				if (props.hero.complication) {
+					return PageState.Completed;
+				} else {
+					return PageState.Optional;
+				}
+			case Page.Kit:
+				if (props.hero.kit) {
+					return PageState.Completed;
+				} else {
+					return PageState.NotStarted;
+				}
+			case Page.Details:
+				if (props.hero.name) {
+					return PageState.Completed;
+				} else {
+					return PageState.NotStarted;
+				}
+		}
+	};
 
 	const setAncestry = (ancestry: Ancestry | null) => {
 		const ancestryCopy = JSON.parse(JSON.stringify(ancestry)) as Ancestry | null;
@@ -190,7 +243,15 @@ export const HeroEditPage = (props: Props) => {
 					Page.Kit,
 					Page.Complication,
 					Page.Details
-				]}
+				].map(page => ({
+					value: page,
+					label: (
+						<div className='page-button'>
+							<div className='page-button-title'>{page}</div>
+							<div className='page-button-subtitle'>{getPageState(page)}</div>
+						</div>
+					)
+				}))}
 				block={true}
 				value={page}
 				onChange={setPage}

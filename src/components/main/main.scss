@@ -18,6 +18,12 @@
 			text-transform: uppercase;
 			letter-spacing: 2px;
 		}
+
+		.action-buttons {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
 	}
 
 	.main-content {
@@ -39,15 +45,10 @@
 		gap: 20px;
 		font-size: 10px;
 
-		a {
-			padding: 5px;
-			border-radius: 5px;
-			color: initial;
-			text-decoration: initial;
-
-			&:hover {
-				background-color: rgb(200, 200, 200);
-			}
+		.main-footer-section {
+			display: flex;
+			align-items: center;
+			gap: 10px;
 		}
 	}
 }

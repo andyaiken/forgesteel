@@ -2,7 +2,7 @@ import './field.scss';
 
 interface Props {
 	label: string;
-	value: string | number | JSX.Element;
+	value: string | number | JSX.Element | JSX.Element[];
 };
 
 export const Field = (props: Props) => {

@@ -1,6 +1,7 @@
 import { Ancestry } from '../../../models/ancestry';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../controls/field/field';
+import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -16,7 +17,7 @@ interface Props {
 export const AncestryPanel = (props: Props) => {
 	return (
 		<div className='ancestry-panel'>
-			<div className='header-text'>{props.ancestry.name}</div>
+			<HeaderText>{props.ancestry.name}</HeaderText>
 			<div className='description-text'>{props.ancestry.description}</div>
 			{
 				props.mode === PanelMode.Full ?
@@ -25,7 +26,8 @@ export const AncestryPanel = (props: Props) => {
 						<Field label='Speed' value={props.ancestry.speed} />
 						{props.ancestry.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} />)}
 					</div>
-					: null
+					:
+					<Field label='Features' value={props.ancestry.features.map(f => f.name).join(', ')} />
 			}
 		</div>
 	);

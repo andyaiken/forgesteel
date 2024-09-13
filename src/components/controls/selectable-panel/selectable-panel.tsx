@@ -9,10 +9,14 @@ interface Props {
 };
 
 export const SelectablePanel = (props: Props) => {
+	let className = 'selectable-panel';
+	if (props.onSelect) {
+		className += ' selectable';
+	}
+
 	return (
-		<div className='selectable-panel'>
+		<div className={className} onClick={props.onSelect}>
 			{props.children}
-			{props.onSelect ? <Button block={true} onClick={props.onSelect}>Select</Button> : null}
 			{props.onUnselect ? <Button block={true} onClick={props.onUnselect}>Unselect</Button> : null}
 		</div>
 	);

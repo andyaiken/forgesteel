@@ -1,4 +1,5 @@
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Button, Drawer, Space } from 'antd';
+import { AboutModal } from '../modals/about/about';
 import { CampaignSettingData } from '../../data/campaign-setting-data';
 import { Collections } from '../../utils/collections';
 import { Hero } from '../../models/hero';
@@ -6,6 +7,7 @@ import { HeroEditPage } from '../pages/hero-edit/hero-edit-page';
 import { HeroListPage } from '../pages/hero-list/hero-list-page';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroPage } from '../pages/hero-view/hero-view-page';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Utils } from '../../utils/utils';
 import localforage from 'localforage';
 import { useState } from 'react';
@@ -27,12 +29,23 @@ export const Main = (props: Props) => {
 	const [ page, setPage ] = useState<Page>(Page.HeroList);
 	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
+	const [ drawer, setDrawer ] = useState<JSX.Element | null>(null);
 
 	const persistHeroes = (heroes: Hero[]) => {
 		localforage.setItem<Hero[]>('forgesteel-heroes', heroes)
 			.then(() => {
 				setHeroes(heroes);
 			});
+	};
+
+	const mcdm = () => {
+		window.open('https://mcdmproductions.com/', '_blank');
+	};
+
+	const showAbout = () => {
+		setDrawer(
+			<AboutModal />
+		);
 	};
 
 	const addHero = () => {
@@ -157,16 +170,26 @@ export const Main = (props: Props) => {
 			<div className='main-header'>
 				<div className='title'>Forge Steel</div>
 				<Breadcrumb items={getBreadcrumbs()} />
+				<Space />
+				<div className='action-buttons'>
+					<QuestionCircleOutlined style={{ fontSize: '20px' }} onClick={showAbout} />
+					<QuestionCircleOutlined style={{ fontSize: '20px' }} onClick={showAbout} />
+				</div>
 			</div>
 			<div className='main-content'>
 				{getContent()}
 			</div>
 			<div className='main-footer'>
-				<img src={pbds} style={{ height: '30px' }} />
-				<div>FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC</div>
-				<a href='https://www.mcdmproductions.com/' target='_blank'>DRAW STEEL © 2024 MCDM Productions, LLC</a>
-				<a href='mailto:andy.aiken@live.co.uk'>App design by Andy Aiken</a>
+				<div className='main-footer-section'>
+					<img src={pbds} style={{ height: '30px' }} />
+					<div>FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC</div>
+				</div>
+				<Button type='text' onClick={mcdm}>DRAW STEEL © 2024 MCDM Productions, LLC</Button>
+				<Button type='text' onClick={showAbout}>App design by Andy Aiken</Button>
 			</div>
+			<Drawer open={drawer !== null} onClose={() => setDrawer(null)} closeIcon={null}>
+				{drawer}
+			</Drawer>
 		</div>
 	);
 };

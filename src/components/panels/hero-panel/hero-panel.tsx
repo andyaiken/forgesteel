@@ -2,10 +2,12 @@ import { Col, Divider, Row, Statistic } from 'antd';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
 import { Characteristic } from '../../../enums/characteristic';
+import { Collections } from '../../../utils/collections';
 import { CultureData } from '../../../data/culture-data';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
+import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -176,6 +178,11 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getFeaturesSection = () => {
+		const features = Collections.sort(HeroLogic.getFeatures(props.hero).filter(feature => feature.type === FeatureType.Text), f => f.name);
+		if (features.length === 0) {
+			return null;
+		}
+
 		const size = {
 			xs: 24,
 			sm: 12,
@@ -186,17 +193,18 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		return (
-			<Row gutter={[ 20, 20 ]} style={{ margin: '20px 0' }}>
-				{
-					HeroLogic.getFeatures(props.hero)
-						.filter(feature => feature.type === FeatureType.Text)
-						.map(feature => (
+			<div className='features-section'>
+				<Divider orientation='left'>Features</Divider>
+				<Row gutter={[ 20, 20 ]} style={{ margin: '20px 0' }}>
+					{
+						features.map(feature => (
 							<Col key={feature.id} xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
 								<FeaturePanel feature={feature} hero={props.hero} mode={PanelMode.Full} />
 							</Col>
 						))
-				}
-			</Row>
+					}
+				</Row>
+			</div>
 		);
 	};
 
@@ -210,24 +218,30 @@ export const HeroPanel = (props: Props) => {
 			xxl: 4
 		};
 
+		const abilities = HeroLogic.getAbilities(props.hero).filter(ability => ability.type.usage === type);
+		if (abilities.length === 0) {
+			return null;
+		}
+
 		return (
-			<Row gutter={[ 20, 20 ]} style={{ margin: '20px 0' }}>
-				{
-					HeroLogic.getAbilities(props.hero)
-						.filter(ability => ability.type.usage === type)
-						.map(ability => (
+			<div className='abilities-section'>
+				<Divider orientation='left'>{type}s</Divider>
+				<Row gutter={[ 20, 20 ]} style={{ margin: '20px 0' }}>
+					{
+						abilities.map(ability => (
 							<Col key={ability.id} xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
 								<AbilityPanel ability={ability} hero={props.hero} mode={PanelMode.Full} />
 							</Col>
 						))
-				}
-			</Row>
+					}
+				</Row>
+			</div>
 		);
 	};
 
 	return (
 		<div className='hero-panel' id={props.hero.id}>
-			<div className='header-text'>{props.hero.name || 'Unnamed Hero'}</div>
+			<HeaderText>{props.hero.name || 'Unnamed Hero'}</HeaderText>
 			{getTopSection()}
 			{
 				props.mode === PanelMode.Full ?
@@ -237,9 +251,7 @@ export const HeroPanel = (props: Props) => {
 						<Field label='Skills' value={HeroLogic.getSkills(props.hero).join(', ') || 'None'} />
 						<Divider />
 						{getStatsSection()}
-						<Divider />
 						{getFeaturesSection()}
-						<Divider />
 						{getAbilitiesSection(AbilityUsage.Action)}
 						{getAbilitiesSection(AbilityUsage.Maneuver)}
 						{getAbilitiesSection(AbilityUsage.Trigger)}

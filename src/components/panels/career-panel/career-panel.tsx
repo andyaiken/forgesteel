@@ -1,5 +1,6 @@
 import { Career } from '../../../models/career';
 import { FeaturePanel } from '../feature-panel/feature-panel';
+import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { PanelMode } from '../../../enums/panel-mode';
 
@@ -14,7 +15,7 @@ interface Props {
 export const CareerPanel = (props: Props) => {
 	return (
 		<div className='career-panel'>
-			<div className='header-text'>{props.career.name}</div>
+			<HeaderText>{props.career.name}</HeaderText>
 			<div className='description-text'>{props.career.description}</div>
 			{
 				props.mode === PanelMode.Full ?

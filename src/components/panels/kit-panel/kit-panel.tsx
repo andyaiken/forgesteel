@@ -1,6 +1,7 @@
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../controls/field/field';
+import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { Kit } from '../../../models/kit';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -16,7 +17,7 @@ interface Props {
 export const KitPanel = (props: Props) => {
 	return (
 		<div className='kit-panel'>
-			<div className='header-text'>{props.kit.name}</div>
+			<HeaderText tags={[ props.kit.type ]}>{props.kit.name}</HeaderText>
 			<div className='description-text'>{props.kit.description}</div>
 			{
 				props.mode === PanelMode.Full ?
@@ -50,7 +51,11 @@ export const KitPanel = (props: Props) => {
 						<AbilityPanel ability={props.kit.signatureAbility} hero={props.hero} mode={PanelMode.Full} />
 						{props.kit.ward ? <FeaturePanel feature={props.kit.ward} hero={props.hero} /> : null}
 					</div>
-					: null
+					:
+					<div>
+						<Field label='Type' value={props.kit.type} />
+						<Field label='Uses' value={[ ...props.kit.armor, ...props.kit.weapon, ...props.kit.implement ].join(', ')} />
+					</div>
 			}
 		</div>
 	);

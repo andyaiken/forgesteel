@@ -5,6 +5,7 @@ import { AbilityPanel } from '../ability-panel/ability-panel';
 import { CampaignSettingData } from '../../../data/campaign-setting-data';
 import { Collections } from '../../../utils/collections';
 import { FeatureType } from '../../../enums/feature-type';
+import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -224,7 +225,7 @@ export const FeaturePanel = (props: Props) => {
 
 	return (
 		<div className='feature-panel'>
-			<div className='header-text'>{props.feature.name}</div>
+			<HeaderText>{props.feature.name}</HeaderText>
 			<div className='description-text'>{props.feature.description}</div>
 			{props.mode === PanelMode.Full ? extra : null}
 		</div>

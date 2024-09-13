@@ -85,7 +85,7 @@ export class FeatureLogic {
 		return {
 			id: data.id,
 			name: data.name || 'Skill',
-			description: data.description || `You gain the ${data.skill} skill`,
+			description: data.description || `You gain the ${data.skill} skill.`,
 			type: FeatureType.Skill,
 			choice: false,
 			data: {

@@ -1,4 +1,4 @@
-import { Button, Divider, Flex } from 'antd';
+import { Button, Divider, Flex, Space } from 'antd';
 import { Hero } from '../../../models/hero';
 import { HeroPanel } from '../../panels/hero-panel/hero-panel';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -19,13 +19,15 @@ export const HeroListPage = (props: Props) => {
 				<Button type='primary' onClick={props.addHero}>Create A New Character</Button>
 			</Flex>
 			<Divider />
-			{
-				props.heroes.map(hero => (
-					<SelectablePanel key={hero.id} onSelect={() => props.viewHero(hero.id)}>
-						<HeroPanel hero={hero} mode={PanelMode.Short} />
-					</SelectablePanel>
-				))
-			}
+			<Space direction='vertical'>
+				{
+					props.heroes.map(hero => (
+						<SelectablePanel key={hero.id} onSelect={() => props.viewHero(hero.id)}>
+							<HeroPanel hero={hero} mode={PanelMode.Short} />
+						</SelectablePanel>
+					))
+				}
+			</Space>
 		</div>
 	);
 };

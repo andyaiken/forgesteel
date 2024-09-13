@@ -94,8 +94,7 @@ export class HeroLogic {
 		}
 
 		if (hero.complication) {
-			features.push(hero.complication.benefit);
-			features.push(hero.complication.drawback);
+			features.push(...hero.complication.features);
 		}
 
 		this.getKits(hero).forEach(kit => {

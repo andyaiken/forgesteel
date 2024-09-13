@@ -29,16 +29,6 @@ body {
 	flex-direction: column;
 }
 
-.header-text {
-	margin: 10px 0;
-	padding-bottom: 5px;
-	border-bottom: 1px solid rgb(230, 230, 230);
-	font-size: 16px;
-	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: 1px;
-}
-
 .bold-text {
 	margin: 10px 0;
 	color: rgb(0, 0, 0);
@@ -74,6 +64,12 @@ p,
 
 .centered-text {
 	text-align: center;
+}
+
+.ant-btn {
+	&.ant-btn-text {
+		font-size: unset;
+	}
 }
 
 .ant-statistic .ant-statistic-title,

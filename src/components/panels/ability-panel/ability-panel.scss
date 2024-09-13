@@ -1,14 +1,7 @@
 .ability-panel {
-	border: 1px solid rgb(240, 240, 240);
-    border-radius: 10px;
-    padding: 5px 10px 0 10px;
-
-	&:hover {
-		border-color: rgb(200, 200, 200);
-	}
 
 	.power-roll {
-		border: 1px solid rgb(220, 220, 220);
+		border: 1px solid rgba(5, 5, 5, 0.06);
 		border-radius: 5px;
 		margin: 10px 0;
 

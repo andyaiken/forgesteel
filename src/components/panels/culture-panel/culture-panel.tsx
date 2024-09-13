@@ -1,5 +1,6 @@
 import { Culture } from '../../../models/culture';
 import { FeaturePanel } from '../feature-panel/feature-panel';
+import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { PanelMode } from '../../../enums/panel-mode';
 
@@ -14,7 +15,7 @@ interface Props {
 export const CulturePanel = (props: Props) => {
 	return (
 		<div className='culture-panel'>
-			<div className='header-text'>{props.culture.name}</div>
+			<HeaderText>{props.culture.name}</HeaderText>
 			<div className='description-text'>{props.culture.description}</div>
 			{
 				props.mode === PanelMode.Full ?

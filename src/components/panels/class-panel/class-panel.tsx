@@ -1,4 +1,5 @@
 import { Field } from '../../controls/field/field';
+import { HeaderText } from '../../controls/header-text/header-text';
 import { HeroClass } from '../../../models/class';
 import { PanelMode } from '../../../enums/panel-mode';
 
@@ -12,7 +13,7 @@ interface Props {
 export const ClassPanel = (props: Props) => {
 	return (
 		<div className='class-panel'>
-			<div className='header-text'>{props.heroClass.name}</div>
+			<HeaderText>{props.heroClass.name}</HeaderText>
 			<div className='description-text'>{props.heroClass.description}</div>
 			{
 				props.mode === PanelMode.Full ?
@@ -23,7 +24,11 @@ export const ClassPanel = (props: Props) => {
 						<Field label='Heroic Resource' value={props.heroClass.heroicResource} />
 						<Field label={`${props.heroClass.subclassName}s`} value={props.heroClass.subclasses.map(c => c.name).join(', ')} />
 					</div>
-					: null
+					:
+					<div>
+						<Field label='Resource' value={props.heroClass.heroicResource} />
+						<Field label={`${props.heroClass.subclassName}s`} value={props.heroClass.subclasses.map(sc => sc.name).join(', ')} />
+					</div>
 			}
 		</div>
 	);

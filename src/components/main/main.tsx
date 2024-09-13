@@ -1,4 +1,4 @@
-import { Breadcrumb, Button, Drawer, Space } from 'antd';
+import { Button, Drawer } from 'antd';
 import { AboutModal } from '../modals/about/about';
 import { CampaignSettingData } from '../../data/campaign-setting-data';
 import { Collections } from '../../utils/collections';
@@ -114,26 +114,6 @@ export const Main = (props: Props) => {
 		}
 	};
 
-	const getBreadcrumbs = () => {
-		switch (page) {
-			case Page.HeroList:
-				return [
-					{ title: 'Heroes' }
-				];
-			case Page.HeroView:
-				return [
-					{ title: 'Heroes', href: '', onClick: closeSelectedHero },
-					{ title: selectedHero?.name || 'Unnamed Hero' }
-				];
-			case Page.HeroEdit:
-				return [
-					{ title: 'Heroes', href: '', onClick: closeSelectedHero },
-					{ title: selectedHero?.name || 'Unnamed Hero', href: '', onClick: cancelEditSelectedHero },
-					{ title: 'Edit' }
-				];
-		}
-	};
-
 	const getContent = () => {
 		switch (page) {
 			case Page.HeroList:
@@ -169,10 +149,7 @@ export const Main = (props: Props) => {
 		<div className='main'>
 			<div className='main-header'>
 				<div className='title'>Forge Steel</div>
-				<Breadcrumb items={getBreadcrumbs()} />
-				<Space />
 				<div className='action-buttons'>
-					<QuestionCircleOutlined style={{ fontSize: '20px' }} onClick={showAbout} />
 					<QuestionCircleOutlined style={{ fontSize: '20px' }} onClick={showAbout} />
 				</div>
 			</div>

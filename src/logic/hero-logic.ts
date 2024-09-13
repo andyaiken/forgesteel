@@ -33,6 +33,7 @@ export class HeroLogic {
 				heroicResource: 0,
 				heroTokens: 0,
 				renown: 0,
+				projectPoints: 0,
 				conditions: []
 			}
 		};
@@ -240,6 +241,17 @@ export class HeroLogic {
 		const kits = this.getKits(hero);
 		value += Collections.max(kits.map(kit => kit.stamina), value => value) || 0;
 
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.Bonus)
+			.map(f => f.data as FeatureBonusData)
+			.filter(data => data.field === FeatureField.Stamina)
+			.forEach(data => {
+				value += data.value;
+				if (hero.class) {
+					value += data.valuePerLevel * (hero.class.level - 1);
+				}
+			});
+
 		return value;
 	};
 
@@ -252,6 +264,9 @@ export class HeroLogic {
 			.filter(data => data.field === FeatureField.RecoveryValue)
 			.forEach(data => {
 				value += data.value;
+				if (hero.class) {
+					value += data.valuePerLevel * (hero.class.level - 1);
+				}
 			});
 
 		return value;
@@ -270,6 +285,9 @@ export class HeroLogic {
 			.filter(data => data.field === FeatureField.Recoveries)
 			.forEach(data => {
 				value += data.value;
+				if (hero.class) {
+					value += data.valuePerLevel * (hero.class.level - 1);
+				}
 			});
 
 		return value;
@@ -290,6 +308,17 @@ export class HeroLogic {
 		const kits = this.getKits(hero);
 		value += Collections.max(kits.map(kit => kit.speed), value => value) || 0;
 
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.Bonus)
+			.map(f => f.data as FeatureBonusData)
+			.filter(data => data.field === FeatureField.Speed)
+			.forEach(data => {
+				value += data.value;
+				if (hero.class) {
+					value += data.valuePerLevel * (hero.class.level - 1);
+				}
+			});
+
 		return value;
 	};
 
@@ -299,6 +328,17 @@ export class HeroLogic {
 		// Add maximum from kits
 		const kits = this.getKits(hero);
 		value += Collections.max(kits.map(kit => kit.stability), value => value) || 0;
+
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.Bonus)
+			.map(f => f.data as FeatureBonusData)
+			.filter(data => data.field === FeatureField.Stability)
+			.forEach(data => {
+				value += data.value;
+				if (hero.class) {
+					value += data.valuePerLevel * (hero.class.level - 1);
+				}
+			});
 
 		return value;
 	};

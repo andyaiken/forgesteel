@@ -13,6 +13,7 @@ export interface FeatureAbilityData extends FeatureData {
 export interface FeatureBonusData extends FeatureData {
 	field: FeatureField;
 	value: number;
+	valuePerLevel: number;
 };
 
 export interface FeatureClassAbilityData extends FeatureData {

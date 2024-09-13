@@ -281,7 +281,7 @@ export const shadow: HeroClass = {
 			distance: [ AbilityLogic.createDistanceSelf() ],
 			target: 'Self',
 			cost: 5,
-			effect: 'You make two signature attacks that each deal extra damage equal to twice you Agility.'
+			effect: 'You make two signature attacks that each deal extra damage equal to twice your Agility.'
 		})
 	],
 	subclasses: [

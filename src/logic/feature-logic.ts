@@ -29,25 +29,31 @@ export class FeatureLogic {
 		} as Feature;
 	};
 
-	static createBonusFeature = (data: { id: string, name: string, description?: string, field: FeatureField, value: number }) => {
+	static createBonusFeature = (data: { id: string, name?: string, description?: string, field: FeatureField, value: number, valuePerLevel?: number }) => {
+		let desc = `${data.field} +${data.value}`;
+		if (data.valuePerLevel !== 0) {
+			desc += `, +${data.valuePerLevel} per level after 1st`;
+		}
+
 		return {
 			id: data.id,
-			name: data.name,
-			description: data.description || '',
+			name: data.name || data.field.toString(),
+			description: data.description || desc,
 			type: FeatureType.Bonus,
 			choice: false,
 			data: {
 				field: data.field,
-				value: data.value
+				value: data.value,
+				valuePerLevel: data.value || 0
 			} as FeatureBonusData
 		} as Feature;
 	};
 
-	static createClassAbilityChoiceFeature = (data: { id: string, name: string, description?: string, cost: number, count?: number }) => {
+	static createClassAbilityChoiceFeature = (data: { id: string, name?: string, description?: string, cost: number, count?: number }) => {
 		const count = data.count || 1;
 		return {
 			id: data.id,
-			name: data.name,
+			name: data.name || 'Ability',
 			description: data.description || (count > 1 ? `Choose ${count} abilities.` : 'Choose an ability.'),
 			type: FeatureType.ClassAbility,
 			choice: true,
@@ -59,11 +65,11 @@ export class FeatureLogic {
 		} as Feature;
 	};
 
-	static createLanguageChoiceFeature = (data: { id: string, name: string, description?: string, options?: string[], count?: number }) => {
+	static createLanguageChoiceFeature = (data: { id: string, name?: string, description?: string, options?: string[], count?: number }) => {
 		const count = data.count || 1;
 		return {
 			id: data.id,
-			name: data.name,
+			name: data.name || 'Language',
 			description: data.description || (count > 1 ? `Choose ${count} languages.` : 'Choose a language.'),
 			type: FeatureType.Language,
 			choice: true,
@@ -75,10 +81,10 @@ export class FeatureLogic {
 		} as Feature;
 	};
 
-	static createSkillFeature = (data: { id: string, name: string, description?: string, skill: string }) => {
+	static createSkillFeature = (data: { id: string, name?: string, description?: string, skill: string }) => {
 		return {
 			id: data.id,
-			name: data.name,
+			name: data.name || 'Skill',
 			description: data.description || `You gain the ${data.skill} skill`,
 			type: FeatureType.Skill,
 			choice: false,
@@ -91,11 +97,11 @@ export class FeatureLogic {
 		} as Feature;
 	};
 
-	static createSkillChoiceFeature = (data: { id: string, name: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number }) => {
+	static createSkillChoiceFeature = (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number }) => {
 		const count = data.count || 1;
 		return {
 			id: data.id,
-			name: data.name,
+			name: data.name || (count > 1 ? 'Skills' : 'Skill'),
 			description: data.description || (count > 1 ? `Choose ${count} skills.` : 'Choose a skill.'),
 			type: FeatureType.Skill,
 			choice: true,

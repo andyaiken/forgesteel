@@ -30,11 +30,11 @@ export class CampaignSettingData {
 		cultures: [
 			{
 				id: 'orden-capital',
-				name: 'Capital',
-				description: 'The greatest city in this or any age.',
+				name: 'Capital Aristocrat',
+				description: 'A member of the upper classes from the greatest city in this, or any, age.',
 				environment: EnvironmentData.urban,
 				organization: OrganizationData.bureaucratic,
-				upbringing: UpbringingData.martial
+				upbringing: UpbringingData.noble
 			}
 		],
 		skills: [

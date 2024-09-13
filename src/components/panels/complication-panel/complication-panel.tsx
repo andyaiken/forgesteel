@@ -18,10 +18,9 @@ export const ComplicationPanel = (props: Props) => {
 			<div className='description-text'>{props.complication.description}</div>
 			{
 				props.mode === PanelMode.Full ?
-					<div>
-						<FeaturePanel feature={props.complication.benefit} hero={props.hero} />
-						<FeaturePanel feature={props.complication.drawback} hero={props.hero} />
-					</div>
+					props.complication.features.map(f => (
+						<FeaturePanel key={f.id} feature={f} hero={props.hero} />
+					))
 					: null
 			}
 		</div>

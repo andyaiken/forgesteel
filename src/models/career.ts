@@ -7,5 +7,4 @@ export interface Career {
 
 	features: Feature[];
 	title: Feature;
-	projectPoints: number;
 }

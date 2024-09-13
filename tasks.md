@@ -11,16 +11,20 @@ Nothing
   * Edit stamina
   * Spend recovery
   * Add / remove conditions
+  * Automatically roll tests / power rolls
 
-* Click on skill to see details
+* Option to list skills together / by lists
+
+* Click on things to see details
+  * Ancestry / culture / career / class / kit / complication
+  * Skill
+  * Ability
 
 ## Data
 
 * Add ancestries
-* Add careers
 * Add classes
 * Add kits
-* Add complications
 
 ## Logic
 

@@ -5,6 +5,5 @@ export interface Complication {
 	name: string;
 	description: string;
 
-	benefit: Feature;
-	drawback: Feature;
+	features: Feature[];
 }

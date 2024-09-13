@@ -13,6 +13,7 @@ export interface HeroState {
 	heroicResource: number;
 	heroTokens: number;
 	renown: number;
+	projectPoints: number;
 	conditions: Condition[];
 }
 

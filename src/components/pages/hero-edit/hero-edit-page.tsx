@@ -1,6 +1,6 @@
 import { Button, Divider, Flex, Input, Radio, Segmented, Select, Space } from 'antd';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../data/culture-data';
-import { Feature, FeatureData, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
+import { Feature, FeatureBonusData, FeatureData, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
 import { Ancestry } from '../../../models/ancestry';
 import { AncestryData } from '../../../data/ancestry-data';
 import { AncestryPanel } from '../../panels/ancestry-panel/ancestry-panel';
@@ -16,7 +16,9 @@ import { ComplicationData } from '../../../data/complication-data';
 import { ComplicationPanel } from '../../panels/complication-panel/complication-panel';
 import { Culture } from '../../../models/culture';
 import { CulturePanel } from '../../panels/culture-panel/culture-panel';
+import { FeatureField } from '../../../enums/feature-field';
 import { FeaturePanel } from '../../panels/feature-panel/feature-panel';
+import { FeatureType } from '../../../enums/feature-type';
 import { Hero } from '../../../models/hero';
 import { HeroClass } from '../../../models/class';
 import { HeroLogic } from '../../../logic/hero-logic';
@@ -59,43 +61,43 @@ export const HeroEditPage = (props: Props) => {
 	const getPageState = (page: Page) => {
 		switch (page) {
 			case Page.Ancestry:
-				if (props.hero.ancestry) {
+				if (hero.ancestry) {
 					return PageState.Completed;
 				} else {
 					return PageState.NotStarted;
 				}
 			case Page.Culture:
-				if (props.hero.culture) {
+				if (hero.culture) {
 					return PageState.Completed;
 				} else {
 					return PageState.NotStarted;
 				}
 			case Page.Career:
-				if (props.hero.career) {
+				if (hero.career) {
 					return PageState.Completed;
 				} else {
 					return PageState.NotStarted;
 				}
 			case Page.Class:
-				if (props.hero.class) {
+				if (hero.class) {
 					return PageState.Completed;
 				} else {
 					return PageState.NotStarted;
 				}
 			case Page.Complication:
-				if (props.hero.complication) {
+				if (hero.complication) {
 					return PageState.Completed;
 				} else {
 					return PageState.Optional;
 				}
 			case Page.Kit:
-				if (props.hero.kit) {
+				if (hero.kit) {
 					return PageState.Completed;
 				} else {
 					return PageState.NotStarted;
 				}
 			case Page.Details:
-				if (props.hero.name) {
+				if (hero.name) {
 					return PageState.Completed;
 				} else {
 					return PageState.NotStarted;
@@ -162,6 +164,21 @@ export const HeroEditPage = (props: Props) => {
 		const careerCopy = JSON.parse(JSON.stringify(career)) as Career | null;
 		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 		heroCopy.career = careerCopy;
+		if (careerCopy) {
+			heroCopy.state.projectPoints = 0;
+			heroCopy.state.renown = 0;
+			careerCopy.features.filter(f => f.type === FeatureType.Bonus).map(f => {
+				const data = f.data as FeatureBonusData;
+				switch (data.field) {
+					case FeatureField.ProjectPoints:
+						heroCopy.state.projectPoints += data.value;
+						break;
+					case FeatureField.Renown:
+						heroCopy.state.renown += data.value;
+						break;
+				}
+			});
+		}
 		setHero(heroCopy);
 		setDirty(true);
 	};
@@ -639,7 +656,7 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 
 	let choices: JSX.Element[] = [];
 	if (props.hero.complication) {
-		choices = [ props.hero.complication.benefit, props.hero.complication.drawback ]
+		choices = props.hero.complication.features
 			.filter(f => f.choice)
 			.map(f => (
 				<SelectablePanel key={f.id}>

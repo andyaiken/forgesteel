@@ -244,49 +244,53 @@ export const HeroPanel = (props: Props) => {
 		);
 	};
 
-	const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
-	const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
+	try {
+		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
+		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
-	return (
-		<div className='hero-panel' id={props.hero.id}>
-			<HeaderText>{props.hero.name || 'Unnamed Hero'}</HeaderText>
-			{getTopSection()}
-			{
-				props.mode === PanelMode.Full ?
-					<div>
-						<Divider />
-						<Field label='Languages' value={HeroLogic.getLanguages(props.hero).join(', ') || 'None'} />
-						{
-							props.showSkillsInGroups ?
-								[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map((list, n) => {
-									const skills = HeroLogic.getSkills(props.hero).filter(s => s.list === list);
-									return (
-										<Field key={n} label={list} value={skills.map(s => s.name).join(', ') || 'None'} />
-									);
-								})
-								:
-								<Field label='Skills' value={HeroLogic.getSkills(props.hero).map(s => s.name).join(', ') || 'None'} />
-						}
-						{
-							immunities.length > 0 ?
-								<Field label='Immune' value={immunities.map(dm => `${dm.type} ${dm.value}`).join(', ')} />
-								: null
-						}
-						{
-							weaknesses.length > 0 ?
-								<Field label='Weakness' value={weaknesses.map(dm => `${dm.type} ${dm.value}`).join(', ')} />
-								: null
-						}
-						<Divider />
-						{getStatsSection()}
-						{getFeaturesSection()}
-						{getAbilitiesSection(AbilityUsage.Action)}
-						{getAbilitiesSection(AbilityUsage.Maneuver)}
-						{getAbilitiesSection(AbilityUsage.Trigger)}
-						{getAbilitiesSection(AbilityUsage.Other)}
-					</div>
-					: null
-			}
-		</div>
-	);
+		return (
+			<div className='hero-panel' id={props.hero.id}>
+				<HeaderText>{props.hero.name || 'Unnamed Hero'}</HeaderText>
+				{getTopSection()}
+				{
+					props.mode === PanelMode.Full ?
+						<div>
+							<Divider />
+							<Field label='Languages' value={HeroLogic.getLanguages(props.hero).join(', ') || 'None'} />
+							{
+								props.showSkillsInGroups ?
+									[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map((list, n) => {
+										const skills = HeroLogic.getSkills(props.hero).filter(s => s.list === list);
+										return (
+											<Field key={n} label={list} value={skills.map(s => s.name).join(', ') || 'None'} />
+										);
+									})
+									:
+									<Field label='Skills' value={HeroLogic.getSkills(props.hero).map(s => s.name).join(', ') || 'None'} />
+							}
+							{
+								immunities.length > 0 ?
+									<Field label='Immune' value={immunities.map(dm => `${dm.type} ${dm.value}`).join(', ')} />
+									: null
+							}
+							{
+								weaknesses.length > 0 ?
+									<Field label='Weakness' value={weaknesses.map(dm => `${dm.type} ${dm.value}`).join(', ')} />
+									: null
+							}
+							<Divider />
+							{getStatsSection()}
+							{getFeaturesSection()}
+							{getAbilitiesSection(AbilityUsage.Action)}
+							{getAbilitiesSection(AbilityUsage.Maneuver)}
+							{getAbilitiesSection(AbilityUsage.Trigger)}
+							{getAbilitiesSection(AbilityUsage.Other)}
+						</div>
+						: null
+				}
+			</div>
+		);
+	} catch {
+		return null;
+	}
 };

@@ -70,39 +70,43 @@ export const AbilityPanel = (props: Props) => {
 		);
 	};
 
-	return (
-		<SelectablePanel>
-			<div className='ability-panel'>
-				<HeaderText ribbon={props.ability.cost > 0 ? `${props.ability.cost} pt` : ''}>{props.ability.name}</HeaderText>
-				<div className='description-text'>{props.ability.description}</div>
-				{
-					props.mode === PanelMode.Full ?
-						<div>
-							{
-								props.ability.keywords.length > 0 ?
-									<Field label='Keywords' value={props.ability.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} />
-									: null
-							}
-							<Field label='Type' value={AbilityLogic.getType(props.ability.type)} />
-							{props.ability.type.trigger ? <Field label='Trigger' value={props.ability.type.trigger} /> : null}
-							{
-								props.ability.distance.length > 0 ?
-									<Field label='Distance' value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.hero, props.ability)).join(' or ')} />
-									: null
-							}
-							{props.ability.target ? <Field label='Target' value={props.ability.target} /> : null}
-							{props.ability.preEffect ? <Field label='Effect' value={props.ability.preEffect} /> : null}
-							{getPowerRoll()}
-							{props.ability.effect ? <Field label='Effect' value={props.ability.effect} /> : null}
-							{
-								props.ability.spend.map((spend, n) => (
-									<Field key={n} label={spend.value ? `Spend ${spend.value}` : 'Spend'} value={spend.effect} />
-								))
-							}
-						</div>
-						: null
-				}
-			</div>
-		</SelectablePanel>
-	);
+	try {
+		return (
+			<SelectablePanel>
+				<div className='ability-panel'>
+					<HeaderText ribbon={props.ability.cost > 0 ? `${props.ability.cost} pt` : ''}>{props.ability.name}</HeaderText>
+					<div className='description-text'>{props.ability.description}</div>
+					{
+						props.mode === PanelMode.Full ?
+							<div>
+								{
+									props.ability.keywords.length > 0 ?
+										<Field label='Keywords' value={props.ability.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} />
+										: null
+								}
+								<Field label='Type' value={AbilityLogic.getType(props.ability.type)} />
+								{props.ability.type.trigger ? <Field label='Trigger' value={props.ability.type.trigger} /> : null}
+								{
+									props.ability.distance.length > 0 ?
+										<Field label='Distance' value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.hero, props.ability)).join(' or ')} />
+										: null
+								}
+								{props.ability.target ? <Field label='Target' value={props.ability.target} /> : null}
+								{props.ability.preEffect ? <Field label='Effect' value={props.ability.preEffect} /> : null}
+								{getPowerRoll()}
+								{props.ability.effect ? <Field label='Effect' value={props.ability.effect} /> : null}
+								{
+									props.ability.spend.map((spend, n) => (
+										<Field key={n} label={spend.value ? `Spend ${spend.value}` : 'Spend'} value={spend.effect} />
+									))
+								}
+							</div>
+							: null
+					}
+				</div>
+			</SelectablePanel>
+		);
+	} catch {
+		return null;
+	}
 };

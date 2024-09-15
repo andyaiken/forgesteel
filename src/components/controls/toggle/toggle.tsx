@@ -11,10 +11,14 @@ export const Toggle = (props: Props) => {
 		props.onChange(!props.value);
 	};
 
-	return (
-		<div className='toggle' style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px', cursor: 'pointer' }} onClick={onClick}>
-			<div className='ds-text'>{props.label}</div>
-			<Switch checked={props.value} />
-		</div>
-	);
+	try {
+		return (
+			<div className='toggle' style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px', cursor: 'pointer' }} onClick={onClick}>
+				<div className='ds-text'>{props.label}</div>
+				<Switch checked={props.value} />
+			</div>
+		);
+	} catch {
+		return null;
+	}
 };

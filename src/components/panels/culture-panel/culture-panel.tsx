@@ -13,19 +13,23 @@ interface Props {
 }
 
 export const CulturePanel = (props: Props) => {
-	return (
-		<div className='culture-panel'>
-			<HeaderText>{props.culture.name}</HeaderText>
-			<div className='description-text'>{props.culture.description}</div>
-			{
-				props.mode === PanelMode.Full ?
-					<div style={{ paddingTop: '10px' }}>
-						{props.culture.environment ? <FeaturePanel feature={props.culture.environment} hero={props.hero} /> : null}
-						{props.culture.organization ? <FeaturePanel feature={props.culture.organization} hero={props.hero} /> : null}
-						{props.culture.upbringing ? <FeaturePanel feature={props.culture.upbringing} hero={props.hero} /> : null}
-					</div>
-					: null
-			}
-		</div>
-	);
+	try {
+		return (
+			<div className='culture-panel'>
+				<HeaderText>{props.culture.name}</HeaderText>
+				<div className='description-text'>{props.culture.description}</div>
+				{
+					props.mode === PanelMode.Full ?
+						<div style={{ paddingTop: '10px' }}>
+							{props.culture.environment ? <FeaturePanel feature={props.culture.environment} hero={props.hero} /> : null}
+							{props.culture.organization ? <FeaturePanel feature={props.culture.organization} hero={props.hero} /> : null}
+							{props.culture.upbringing ? <FeaturePanel feature={props.culture.upbringing} hero={props.hero} /> : null}
+						</div>
+						: null
+				}
+			</div>
+		);
+	} catch {
+		return null;
+	}
 };

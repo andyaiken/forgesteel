@@ -6,10 +6,14 @@ interface Props {
 };
 
 export const Field = (props: Props) => {
-	return (
-		<div className='field'>
-			<span className='field-label'>{props.label}</span>
-			<span className='field-value'>{props.value}</span>
-		</div>
-	);
+	try {
+		return (
+			<div className='field'>
+				<span className='field-label'>{props.label}</span>
+				<span className='field-value'>{props.value}</span>
+			</div>
+		);
+	} catch {
+		return null;
+	}
 };

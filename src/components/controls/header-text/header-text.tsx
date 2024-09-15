@@ -9,21 +9,25 @@ interface Props {
 }
 
 export const HeaderText = (props: Props) => {
-	return (
-		<div className='header-text-panel'>
-			{
-				props.ribbon ?
-					<div className='header-ribbon'>{props.ribbon}</div>
-					: null
-			}
-			<div className='header-text'>{props.children}</div>
-			{
-				props.tags ?
-					<div className='header-keywords'>
-						{props.tags.map((t, n) => <Tag key={n}>{t}</Tag>)}
-					</div>
-					: null
-			}
-		</div>
-	);
+	try {
+		return (
+			<div className='header-text-panel'>
+				{
+					props.ribbon ?
+						<div className='header-ribbon'>{props.ribbon}</div>
+						: null
+				}
+				<div className='header-text'>{props.children}</div>
+				{
+					props.tags ?
+						<div className='header-keywords'>
+							{props.tags.map((t, n) => <Tag key={n}>{t}</Tag>)}
+						</div>
+						: null
+				}
+			</div>
+		);
+	} catch {
+		return null;
+	}
 };

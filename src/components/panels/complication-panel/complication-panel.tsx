@@ -13,17 +13,21 @@ interface Props {
 }
 
 export const ComplicationPanel = (props: Props) => {
-	return (
-		<div className='complication-panel'>
-			<HeaderText>{props.complication.name}</HeaderText>
-			<div className='description-text'>{props.complication.description}</div>
-			{
-				props.mode === PanelMode.Full ?
-					props.complication.features.map(f => (
-						<FeaturePanel key={f.id} feature={f} hero={props.hero} />
-					))
-					: null
-			}
-		</div>
-	);
+	try {
+		return (
+			<div className='complication-panel'>
+				<HeaderText>{props.complication.name}</HeaderText>
+				<div className='description-text'>{props.complication.description}</div>
+				{
+					props.mode === PanelMode.Full ?
+						props.complication.features.map(f => (
+							<FeaturePanel key={f.id} feature={f} hero={props.hero} />
+						))
+						: null
+				}
+			</div>
+		);
+	} catch {
+		return null;
+	}
 };

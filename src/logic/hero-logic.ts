@@ -205,6 +205,10 @@ export class HeroLogic {
 			languages.push(...setting.defaultLanguages);
 		}
 
+		if (hero.culture) {
+			languages.push(...hero.culture.languages);
+		}
+
 		// Collate from features
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Language)

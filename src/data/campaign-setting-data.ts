@@ -32,6 +32,7 @@ export class CampaignSettingData {
 				id: 'orden-capital',
 				name: 'Capital Aristocrat',
 				description: 'A member of the upper classes from the greatest city in this, or any, age.',
+				languages: [ 'Riojan' ],
 				environment: EnvironmentData.urban,
 				organization: OrganizationData.bureaucratic,
 				upbringing: UpbringingData.noble

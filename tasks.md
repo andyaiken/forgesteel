@@ -3,18 +3,23 @@
 ## Data
 
 * Add classes
+  * Conduit
+  * Elementalist
+  * Fury
+  * Tactician
 
-## UI
+## General UI
 
 * Add an icon
 * Implement dark mode (with automatic switching)
-* Export hero to PDF
 
 ## Character Generation
 
-* Culture should allow you to choose a language
+(nothing)
 
 ## Character Sheet
+
+* Export hero to PDF
 
 * Show immunities / weaknesses
 

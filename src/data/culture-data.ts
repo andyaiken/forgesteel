@@ -193,6 +193,7 @@ export class CultureData {
 		id: 'culture-bespoke',
 		name: 'Bespoke Culture',
 		description: 'Choose any Environment, Organization, and Upbringing.',
+		languages: [],
 		environment: null,
 		organization: null,
 		upbringing: null

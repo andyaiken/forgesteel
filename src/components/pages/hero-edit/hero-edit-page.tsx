@@ -11,6 +11,7 @@ import { CareerPanel } from '../../panels/career-panel/career-panel';
 import { Characteristic } from '../../../enums/characteristic';
 import { ClassData } from '../../../data/class-data';
 import { ClassPanel } from '../../panels/class-panel/class-panel';
+import { Collections } from '../../../utils/collections';
 import { Complication } from '../../../models/complication';
 import { ComplicationData } from '../../../data/complication-data';
 import { ComplicationPanel } from '../../panels/complication-panel/complication-panel';
@@ -118,6 +119,15 @@ export const HeroEditPage = (props: Props) => {
 		const cultureCopy = JSON.parse(JSON.stringify(culture)) as Culture | null;
 		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 		heroCopy.culture = cultureCopy;
+		setHero(heroCopy);
+		setDirty(true);
+	};
+
+	const setLanguages = (languages: string[]) => {
+		const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+		if (heroCopy.culture) {
+			heroCopy.culture.languages = languages;
+		}
 		setHero(heroCopy);
 		setDirty(true);
 	};
@@ -260,7 +270,7 @@ export const HeroEditPage = (props: Props) => {
 				);
 			case Page.Culture:
 				return (
-					<CultureSection hero={hero} selectCulture={setCulture} selectEnvironment={setEnvironment} selectOrganization={setOrganization} selectUpbringing={setUpbringing} setFeatureData={setFeatureData} />
+					<CultureSection hero={hero} selectCulture={setCulture} selectLanguages={setLanguages} selectEnvironment={setEnvironment} selectOrganization={setOrganization} selectUpbringing={setUpbringing} setFeatureData={setFeatureData} />
 				);
 			case Page.Career:
 				return (
@@ -375,6 +385,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 interface CultureSectionProps {
 	hero: Hero;
 	selectCulture: (culture: Culture | null) => void;
+	selectLanguages: (languages: string[]) => void;
 	selectEnvironment: (id: string | null) => void;
 	selectOrganization: (id: string | null) => void;
 	selectUpbringing: (id: string | null) => void;
@@ -409,9 +420,24 @@ const CultureSection = (props: CultureSectionProps) => {
 			));
 
 		if (props.hero.culture.id === CultureData.bespoke.id) {
+			let languages: string[] = [];
+			const setting = CampaignSettingData.getCampaignSettings().find(s => s.id === props.hero?.settingID);
+			if (setting) {
+				languages = Collections.sort(setting.languages, l => l);
+			}
+
 			choices.unshift(
 				<SelectablePanel key='bespoke'>
 					<HeaderText>Bespoke Culture</HeaderText>
+					<div className='ds-text'>Choose your language.</div>
+					<Select
+						style={{ width: '100%' }}
+						allowClear={true}
+						placeholder='Select'
+						options={languages.map(l => ({ label: l, value: l }))}
+						value={props.hero.culture.languages.length > 0 ? props.hero.culture.languages[0] : null}
+						onChange={value => props.selectLanguages([ value ])}
+					/>
 					<div className='ds-text'>Choose your Environment, Organization, and Upbringing.</div>
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<Select

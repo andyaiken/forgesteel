@@ -254,14 +254,14 @@ export const HeroPanel = (props: Props) => {
 						<Field label='Languages' value={HeroLogic.getLanguages(props.hero).join(', ') || 'None'} />
 						{
 							props.showSkillsInGroups ?
-								<Field label='Skills' value={HeroLogic.getSkills(props.hero).map(s => s.name).join(', ') || 'None'} />
-								:
 								[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map((list, n) => {
 									const skills = HeroLogic.getSkills(props.hero).filter(s => s.list === list);
 									return (
 										<Field key={n} label={list} value={skills.map(s => s.name).join(', ') || 'None'} />
 									);
 								})
+								:
+								<Field label='Skills' value={HeroLogic.getSkills(props.hero).map(s => s.name).join(', ') || 'None'} />
 						}
 						<Divider />
 						{getStatsSection()}

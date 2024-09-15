@@ -256,17 +256,17 @@ export const HeroPanel = (props: Props) => {
 					props.mode === PanelMode.Full ?
 						<div>
 							<Divider />
-							<Field label='Languages' value={HeroLogic.getLanguages(props.hero).join(', ') || 'None'} />
+							<Field label='Languages' value={HeroLogic.getLanguages(props.hero).join(', ') || <span className='dimmed-text'>None</span>} />
 							{
 								props.showSkillsInGroups ?
 									[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map((list, n) => {
 										const skills = HeroLogic.getSkills(props.hero).filter(s => s.list === list);
 										return (
-											<Field key={n} label={list} value={skills.map(s => s.name).join(', ') || 'None'} />
+											<Field key={n} label={list} value={skills.map(s => s.name).join(', ') || <span className='dimmed-text'>None</span>} />
 										);
 									})
 									:
-									<Field label='Skills' value={HeroLogic.getSkills(props.hero).map(s => s.name).join(', ') || 'None'} />
+									<Field label='Skills' value={HeroLogic.getSkills(props.hero).map(s => s.name).join(', ') || <span className='dimmed-text'>None</span>} />
 							}
 							{
 								immunities.length > 0 ?

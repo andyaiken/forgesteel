@@ -20,8 +20,6 @@
 
 * Export hero to PDF
 
-* Show immunities / weaknesses
-
 * In Game:
   * Edit heroic resource / renown / hero tokens
   * Edit stamina
@@ -30,9 +28,10 @@
   * Automatically roll tests / power rolls
 
 * Click on things to see details
+  * Characteristic (allows roll)
   * Ancestry / culture / career / class / kit / complication
-  * Skill
-  * Ability
+  * Skill (allows roll)
+  * Ability (allows roll if ability has power roll)
 
 ## Logic
 

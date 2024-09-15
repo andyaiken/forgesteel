@@ -8,6 +8,7 @@ import { HeroListPage } from '../pages/hero-list/hero-list-page';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroPage } from '../pages/hero-view/hero-view-page';
 import { Utils } from '../../utils/utils';
+import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
 import { useState } from 'react';
 
@@ -15,6 +16,7 @@ import pbds from '../../assets/powered-by-draw-steel.png';
 import './main.scss';
 
 enum Page {
+	Welcome,
 	HeroList,
 	HeroView,
 	HeroEdit
@@ -26,7 +28,7 @@ interface Props {
 
 export const Main = (props: Props) => {
 	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
-	const [ page, setPage ] = useState<Page>(Page.HeroList);
+	const [ page, setPage ] = useState<Page>(Page.Welcome);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
 	const [ drawer, setDrawer ] = useState<JSX.Element | null>(null);
 
@@ -41,6 +43,11 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<AboutModal />
 		);
+	};
+
+	const showHeroList = () => {
+		setPage(Page.HeroList);
+		setSelectedHero(null);
 	};
 
 	const addHero = () => {
@@ -111,6 +118,13 @@ export const Main = (props: Props) => {
 
 	const getContent = () => {
 		switch (page) {
+			case Page.Welcome:
+				return (
+					<WelcomePage
+						showHeroes={showHeroList}
+						showAbout={showAbout}
+					/>
+				);
 			case Page.HeroList:
 				return (
 					<HeroListPage

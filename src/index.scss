@@ -7,8 +7,8 @@ html {
 	font-weight: 400;
 
 	color-scheme: light dark;
-	color: #213547;
-	background-color: #ffffff;
+	color: rgba(0, 0, 0, 0.88);
+	background-color: rgb(255, 255, 255);
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -38,7 +38,7 @@ body {
 p,
 .ds-text {
 	margin: 10px 0;
-	color: rgb(80, 80, 80);
+	color: rgba(0, 0, 0, 0.88);
 }
 
 .description-text {
@@ -55,7 +55,6 @@ p,
 
 .warning-text {
 	margin: 10px 0;
-	color: rgb(80, 80, 80);
 	background-color: rgb(255, 230, 200);
 	border: 1px solid rgb(255, 140, 0);
 	border-radius: 5px;

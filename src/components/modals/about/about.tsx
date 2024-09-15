@@ -9,15 +9,15 @@ export const AboutModal = () => {
 				<b>FORGE STEEL</b> is a hero builder app for <b>DRAW STEEL</b>.
 			</div>
 			<Divider />
-			<div>
-				<b>FORGE STEEL</b> is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC
+			<div className='ds-text'>
+				<b>FORGE STEEL</b> is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC.
 			</div>
-			<div>
-				<b>DRAW STEEL</b> © 2024 <a href='https://mcdmproductions.com/' target='_blank'>MCDM Productions, LLC</a>
+			<div className='ds-text'>
+				<b>DRAW STEEL</b> © 2024 <a href='https://mcdmproductions.com/' target='_blank'>MCDM Productions, LLC.</a>
 			</div>
 			<Divider />
 			<div className='warning-text'>
-				This is still a work-in-progress.
+				This is a work-in-progress.
 			</div>
 			<div className='ds-text'>
 				Specifically, here are some pieces that haven't been added yet:

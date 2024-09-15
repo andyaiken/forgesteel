@@ -16,7 +16,7 @@ export const HeroListPage = (props: Props) => {
 	return (
 		<div className='hero-list-page'>
 			<Flex gap='small'>
-				<Button type='primary' onClick={props.addHero}>Create A New Character</Button>
+				<Button type='primary' onClick={props.addHero}>Create A New Hero</Button>
 			</Flex>
 			<Divider />
 			<Space direction='vertical'>

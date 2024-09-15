@@ -7,7 +7,6 @@ import { HeroEditPage } from '../pages/hero-edit/hero-edit-page';
 import { HeroListPage } from '../pages/hero-list/hero-list-page';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroPage } from '../pages/hero-view/hero-view-page';
-import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Utils } from '../../utils/utils';
 import localforage from 'localforage';
 import { useState } from 'react';
@@ -26,8 +25,8 @@ interface Props {
 }
 
 export const Main = (props: Props) => {
-	const [ page, setPage ] = useState<Page>(Page.HeroList);
 	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
+	const [ page, setPage ] = useState<Page>(Page.HeroList);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
 	const [ drawer, setDrawer ] = useState<JSX.Element | null>(null);
 
@@ -36,10 +35,6 @@ export const Main = (props: Props) => {
 			.then(() => {
 				setHeroes(heroes);
 			});
-	};
-
-	const mcdm = () => {
-		window.open('https://mcdmproductions.com/', '_blank');
 	};
 
 	const showAbout = () => {
@@ -150,7 +145,7 @@ export const Main = (props: Props) => {
 			<div className='main-header'>
 				<div className='title'>Forge Steel</div>
 				<div className='action-buttons'>
-					<QuestionCircleOutlined style={{ fontSize: '20px' }} onClick={showAbout} />
+					<Button type='text' onClick={showAbout}>About</Button>
 				</div>
 			</div>
 			<div className='main-content'>
@@ -161,8 +156,12 @@ export const Main = (props: Props) => {
 					<img src={pbds} style={{ height: '30px' }} />
 					<div>FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC</div>
 				</div>
-				<Button type='text' onClick={mcdm}>DRAW STEEL © 2024 MCDM Productions, LLC</Button>
-				<Button type='text' onClick={showAbout}>App design by Andy Aiken</Button>
+				<div className='main-footer-section'>
+					DRAW STEEL © 2024 MCDM Productions, LLC
+				</div>
+				<div className='main-footer-section'>
+					App design by Andy Aiken
+				</div>
 			</div>
 			<Drawer open={drawer !== null} onClose={() => setDrawer(null)} closeIcon={null}>
 				{drawer}

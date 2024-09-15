@@ -13,17 +13,17 @@
 			&.power-roll-header {
 				font-weight: 600;
 				padding-bottom: 5px;
-				border-bottom: 1px solid rgb(220, 220, 220);
+				border-bottom: 1px solid rgba(5, 5, 5, 0.06);
 			}
 
 			&.power-roll-footer {
 				margin: 0 10px;
-				border-top: 1px solid rgb(220, 220, 220);
+				border-top: 1px solid rgba(5, 5, 5, 0.06);
 			}
 
 			.tier {
 				flex: 0 0 60px;
-				border-right: 1px solid rgb(220, 220, 220);
+				border-right: 1px solid rgba(5, 5, 5, 0.06);
 			}
 
 			.effect {

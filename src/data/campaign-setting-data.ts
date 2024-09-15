@@ -39,9 +39,9 @@ export class CampaignSettingData {
 		],
 		skills: [
 			{
-				list: SkillList.Lore,
 				name: 'Timescape',
-				description: 'Knowing about the various planets of the timescape'
+				description: 'Knowing about the various planets of the timescape',
+				list: SkillList.Lore
 			}
 		]
 	};

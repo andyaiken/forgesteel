@@ -1,5 +1,5 @@
 import { Culture } from './culture';
-import { SkillList } from '../enums/skill-list';
+import { Skill } from './skill';
 
 export interface CampaignSetting {
 	id: string;
@@ -9,5 +9,5 @@ export interface CampaignSetting {
 	languages: string[];
 	defaultLanguages: string[];
 	cultures: Culture[];
-	skills: { list: SkillList, name: string, description: string }[];
+	skills: Skill[];
 }

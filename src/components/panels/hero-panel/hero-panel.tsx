@@ -11,12 +11,15 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { PanelMode } from '../../../enums/panel-mode';
+import { SkillList } from '../../../enums/skill-list';
 
 import './hero-panel.scss';
 
 interface Props {
 	hero: Hero;
 	mode?: PanelMode;
+	showSkillsInGroups?: boolean;
+	showFreeStrikes?: boolean;
 }
 
 export const HeroPanel = (props: Props) => {
@@ -218,7 +221,8 @@ export const HeroPanel = (props: Props) => {
 			xxl: 4
 		};
 
-		const abilities = HeroLogic.getAbilities(props.hero).filter(ability => ability.type.usage === type);
+		const abilities = HeroLogic.getAbilities(props.hero, props.showFreeStrikes || false)
+			.filter(ability => ability.type.usage === type);
 		if (abilities.length === 0) {
 			return null;
 		}
@@ -248,7 +252,17 @@ export const HeroPanel = (props: Props) => {
 					<div>
 						<Divider />
 						<Field label='Languages' value={HeroLogic.getLanguages(props.hero).join(', ') || 'None'} />
-						<Field label='Skills' value={HeroLogic.getSkills(props.hero).join(', ') || 'None'} />
+						{
+							props.showSkillsInGroups ?
+								<Field label='Skills' value={HeroLogic.getSkills(props.hero).map(s => s.name).join(', ') || 'None'} />
+								:
+								[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map((list, n) => {
+									const skills = HeroLogic.getSkills(props.hero).filter(s => s.list === list);
+									return (
+										<Field key={n} label={list} value={skills.map(s => s.name).join(', ') || 'None'} />
+									);
+								})
+						}
 						<Divider />
 						{getStatsSection()}
 						{getFeaturesSection()}

@@ -156,7 +156,7 @@ export const FeaturePanel = (props: Props) => {
 				data.options.forEach(skill => skills.push(skill));
 				data.listOptions.forEach(list => {
 					const setting = CampaignSettingData.getCampaignSettings().find(s => s.id === props.hero?.settingID);
-					SkillData.getSkills(list, setting).forEach(skill => {
+					SkillData.getSkillsFromList(list, setting).forEach(skill => {
 						skills.push(skill.name);
 					});
 				});

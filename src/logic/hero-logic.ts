@@ -12,6 +12,8 @@ import { Hero } from '../models/hero';
 import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit';
 import { Size } from '../models/ancestry';
+import { Skill } from '../models/skill';
+import { SkillLogic } from './skill-logic';
 import { Utils } from '../utils/utils';
 
 export class HeroLogic {
@@ -106,39 +108,41 @@ export class HeroLogic {
 		return features;
 	};
 
-	static getAbilities = (hero: Hero) => {
+	static getAbilities = (hero: Hero, includeFreeStrikes: boolean) => {
 		const abilities: Ability[] = [];
 
-		abilities.push(AbilityLogic.createAbility({
-			id: 'free-melee',
-			name: 'Melee Free Strike',
-			description: '',
-			type: AbilityLogic.createTypeAction(true),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-			target: '1 creature or object',
-			powerRoll: AbilityLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might, Characteristic.Agility ],
-				tier1: '2 damage',
-				tier2: '6 damage',
-				tier3: '9 damage'
-			})
-		}));
-		abilities.push(AbilityLogic.createAbility({
-			id: 'free-ranged',
-			name: 'Ranged Free Strike',
-			description: '',
-			type: AbilityLogic.createTypeAction(true),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
-			target: '1 creature or object',
-			powerRoll: AbilityLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might, Characteristic.Agility ],
-				tier1: '2 damage',
-				tier2: '6 damage',
-				tier3: '9 damage'
-			})
-		}));
+		if (includeFreeStrikes) {
+			abilities.push(AbilityLogic.createAbility({
+				id: 'free-melee',
+				name: 'Melee Free Strike',
+				description: '',
+				type: AbilityLogic.createTypeAction(true),
+				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+				target: '1 creature or object',
+				powerRoll: AbilityLogic.createPowerRoll({
+					characteristic: [ Characteristic.Might, Characteristic.Agility ],
+					tier1: '2 damage',
+					tier2: '6 damage',
+					tier3: '9 damage'
+				})
+			}));
+			abilities.push(AbilityLogic.createAbility({
+				id: 'free-ranged',
+				name: 'Ranged Free Strike',
+				description: '',
+				type: AbilityLogic.createTypeAction(true),
+				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+				target: '1 creature or object',
+				powerRoll: AbilityLogic.createPowerRoll({
+					characteristic: [ Characteristic.Might, Characteristic.Agility ],
+					tier1: '2 damage',
+					tier2: '6 damage',
+					tier3: '9 damage'
+				})
+			}));
+		}
 
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Ability)
@@ -213,17 +217,25 @@ export class HeroLogic {
 	};
 
 	static getSkills = (hero: Hero) => {
-		const skills: string[] = [];
+		const skillNames: string[] = [];
 
 		// Collate from features
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Skill)
 			.forEach(f => {
 				const data = f.data as FeatureSkillData;
-				skills.push(...data.selected);
+				skillNames.push(...data.selected);
 			});
 
-		return Collections.sort(skills, s => s);
+		const skills: Skill[] = [];
+		skillNames.forEach(name => {
+			const skill = SkillLogic.getSkill(name, hero.settingID);
+			if (skill) {
+				skills.push(skill);
+			}
+		});
+
+		return Collections.sort(skills, s => s.name);
 	};
 
 	///////////////////////////////////////////////////////////////////////////

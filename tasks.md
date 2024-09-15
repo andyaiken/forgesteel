@@ -7,10 +7,12 @@
 ## UI
 
 * Add an icon
+* Implement dark mode (with automatic switching)
+* Export hero to PDF
 
 ## Character Generation
 
-Nothing
+* Culture should allow you to choose a language
 
 ## Character Sheet
 
@@ -23,9 +25,6 @@ Nothing
   * Add / remove conditions
   * Automatically roll tests / power rolls
 
-* Option to list skills together / by lists
-* Option to show / hide free strikes
-
 * Click on things to see details
   * Ancestry / culture / career / class / kit / complication
   * Skill
@@ -34,3 +33,4 @@ Nothing
 ## Logic
 
 * Add different feature types to codify features
+  * Immunity / weakness

@@ -1,7 +1,10 @@
-import { Button, Divider, Flex } from 'antd';
+import { Button, Divider, Flex, Popover, Space } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 import { Hero } from '../../../models/hero';
 import { HeroPanel } from '../../panels/hero-panel/hero-panel';
 import { PanelMode } from '../../../enums/panel-mode';
+import { Toggle } from '../../controls/toggle/toggle';
+import { useState } from 'react';
 
 import './hero-view-page.scss';
 
@@ -14,16 +17,36 @@ interface Props {
 }
 
 export const HeroPage = (props: Props) => {
+	const [ showSkillsInGroups, setShowSkillsInGroups ] = useState<boolean>(true);
+	const [ showFreeStrikes, setShowFreeStrikes ] = useState<boolean>(false);
+
 	return (
 		<div className='hero-view-page'>
 			<Flex gap='small'>
 				<Button onClick={props.closeHero}>Close</Button>
 				<Button onClick={props.editHero}>Edit</Button>
 				<Button onClick={props.exportHero}>Export</Button>
-				<Button onClick={props.deleteHero}>Delete</Button>
+				<Popover
+					trigger='click'
+					placement='bottom'
+					content={(
+						<div>
+							<Toggle label='Show Skills In Groups' value={showSkillsInGroups} onChange={setShowSkillsInGroups} />
+							<Toggle label='Show Free Strikes' value={showFreeStrikes} onChange={setShowFreeStrikes} />
+						</div>
+					)}
+				>
+      				<Button>
+					  <Space>
+							Options
+							<DownOutlined />
+						</Space>
+					</Button>
+    			</Popover>
+				<Button danger={true} onClick={props.deleteHero}>Delete</Button>
 			</Flex>
 			<Divider />
-			<HeroPanel hero={props.hero} mode={PanelMode.Full} />
+			<HeroPanel hero={props.hero} mode={PanelMode.Full} showSkillsInGroups={showSkillsInGroups} showFreeStrikes={showFreeStrikes} />
 		</div>
 	);
 };

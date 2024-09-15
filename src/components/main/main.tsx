@@ -7,6 +7,7 @@ import { HeroEditPage } from '../pages/hero-edit/hero-edit-page';
 import { HeroListPage } from '../pages/hero-list/hero-list-page';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroPage } from '../pages/hero-view/hero-view-page';
+import { InProgressModal } from '../modals/in-progress/in-progress';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
@@ -42,6 +43,12 @@ export const Main = (props: Props) => {
 	const showAbout = () => {
 		setDrawer(
 			<AboutModal />
+		);
+	};
+
+	const showInProgress = () => {
+		setDrawer(
+			<InProgressModal />
 		);
 	};
 
@@ -122,7 +129,7 @@ export const Main = (props: Props) => {
 				return (
 					<WelcomePage
 						showHeroes={showHeroList}
-						showAbout={showAbout}
+						showInProgress={showInProgress}
 					/>
 				);
 			case Page.HeroList:
@@ -174,7 +181,7 @@ export const Main = (props: Props) => {
 					DRAW STEEL © 2024 MCDM Productions, LLC
 				</div>
 				<div className='main-footer-section'>
-					App design by Andy Aiken
+					Designed by Andy Aiken
 				</div>
 			</div>
 			<Drawer open={drawer !== null} onClose={() => setDrawer(null)} closeIcon={null}>

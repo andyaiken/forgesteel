@@ -6,7 +6,7 @@ import './welcome-page.scss';
 
 interface Props {
 	showHeroes: () => void;
-	showAbout: () => void;
+	showInProgress: () => void;
 }
 
 export const WelcomePage = (props: Props) => {
@@ -24,7 +24,7 @@ export const WelcomePage = (props: Props) => {
 				<Button type='primary' block={true} onClick={props.showHeroes}>Click here to start building heroes</Button>
 			</SelectablePanel>
 			<div className='warning-text'>
-				<Button type='text' onClick={props.showAbout}>This is a work-in-progress.</Button>
+				<Button type='text' onClick={props.showInProgress}>This is a work-in-progress.</Button>
 			</div>
 		</div>
 	);

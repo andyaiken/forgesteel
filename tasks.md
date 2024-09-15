@@ -10,7 +10,6 @@
 
 ## General UI
 
-* Add an icon
 * Implement dark mode (with automatic switching)
 
 ## Character Generation

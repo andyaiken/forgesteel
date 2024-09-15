@@ -3,6 +3,7 @@ export enum FeatureType {
 	Ability = 'Ability',
 	Bonus = 'Bonus',
 	ClassAbility = 'Class Ability',
+	DamageModifier = 'Damage Modifier',
 	Language = 'Language',
 	Skill = 'Skill'
 }

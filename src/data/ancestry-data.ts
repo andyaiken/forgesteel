@@ -3,6 +3,7 @@ import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { Ancestry } from '../models/ancestry';
 import { Characteristic } from '../enums/characteristic';
+import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from '../logic/feature-logic';
 
@@ -198,10 +199,23 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 					effect: 'Until the end of your next turn, you know the location of any supernatural object, Undead, Construct, or creature from another plane of existence within 5 squares of you, even if you don’t have line of effect to them. You know if you’re detecting an item or a creature, and you know if a creature is Undead, a Construct, or from another plane of existence.'
 				})
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.createDamageModifierFeature({
 				id: 'human-feature-2',
 				name: 'Resist the Supernatural',
-				description: 'Your connection to the natural world protects you from supernatural forces. You have Magic immunity 2 and Psionic immunity 2. Each of these immunities increases by 1 each time you level up.'
+				modifiers: [
+					{
+						damageType: 'Magic',
+						type: DamageModifierType.Immunity,
+						value: 2,
+						valuePerLevel: 1
+					},
+					{
+						damageType: 'Psionic',
+						type: DamageModifierType.Immunity,
+						value: 2,
+						valuePerLevel: 1
+					}
+				]
 			}),
 			FeatureLogic.createBonusFeature({
 				id: 'human-feature-3',
@@ -329,9 +343,44 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 				})
 			}),
 			FeatureLogic.createFeature({
-				id: 'revenant-feature-3',
+				id: 'revenant-feature-3a',
 				name: 'Tough But Withered',
-				description: 'Your undead body grants you cold, corruption, lightning immunity, and poison immunity equal to your level. You also have fire weakness 5. You can’t suffocate, and you don’t need to eat or drink to stay alive. Additionally, when your Stamina equals the negative of your winded value, you become inert instead of dying. You can continue to observe your surroundings, but you can’t speak, take actions, maneuvers, or triggered actions, or move and you fall prone. If you take any fire damage while in this state, your body is destroyed and you die. Otherwise, after 12 hours, you regain Stamina equal to your recovery value.'
+				description: 'You can’t suffocate, and you don’t need to eat or drink to stay alive. Additionally, when your Stamina equals the negative of your winded value, you become inert instead of dying. You can continue to observe your surroundings, but you can’t speak, take actions, maneuvers, or triggered actions, or move and you fall prone. If you take any fire damage while in this state, your body is destroyed and you die. Otherwise, after 12 hours, you regain Stamina equal to your recovery value.'
+			}),
+			FeatureLogic.createDamageModifierFeature({
+				id: 'revenant-feature-3b',
+				modifiers: [
+					{
+						damageType: 'Cold',
+						type: DamageModifierType.Immunity,
+						value: 1,
+						valuePerLevel: 1
+					},
+					{
+						damageType: 'Corruption',
+						type: DamageModifierType.Immunity,
+						value: 1,
+						valuePerLevel: 1
+					},
+					{
+						damageType: 'Lightning',
+						type: DamageModifierType.Immunity,
+						value: 1,
+						valuePerLevel: 1
+					},
+					{
+						damageType: 'Poison',
+						type: DamageModifierType.Immunity,
+						value: 1,
+						valuePerLevel: 1
+					},
+					{
+						damageType: 'Fire',
+						type: DamageModifierType.Weakness,
+						value: 5,
+						valuePerLevel: 0
+					}
+				]
 			}),
 			FeatureLogic.createFeature({
 				id: 'revenant-feature-4',
@@ -361,10 +410,17 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 				name: 'Four Arms',
 				description: 'Your multiple arms let you take on multiple tasks at the same time. Whenever you use the Grab or Knockback maneuver against an adjacent creature, you can target an additional adjacent creature, using the same power roll for both targets. You can grab up to two creatures at a time.'
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.createDamageModifierFeature({
 				id: 'time-raider-feature-3',
 				name: 'Psionic Gift',
-				description: 'Your mind is a formidable layer of defense, granting you psionic immunity 5.'
+				modifiers: [
+					{
+						damageType: 'Psionic',
+						type: DamageModifierType.Immunity,
+						value: 5,
+						valuePerLevel: 0
+					}
+				]
 			})
 		]
 	};

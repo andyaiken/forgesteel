@@ -4,6 +4,7 @@ import { AbilityUsage } from '../../../enums/ability-usage';
 import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
 import { CultureData } from '../../../data/culture-data';
+import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
@@ -243,6 +244,9 @@ export const HeroPanel = (props: Props) => {
 		);
 	};
 
+	const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
+	const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
+
 	return (
 		<div className='hero-panel' id={props.hero.id}>
 			<HeaderText>{props.hero.name || 'Unnamed Hero'}</HeaderText>
@@ -262,6 +266,16 @@ export const HeroPanel = (props: Props) => {
 								})
 								:
 								<Field label='Skills' value={HeroLogic.getSkills(props.hero).map(s => s.name).join(', ') || 'None'} />
+						}
+						{
+							immunities.length > 0 ?
+								<Field label='Immune' value={immunities.map(dm => `${dm.type} ${dm.value}`).join(', ')} />
+								: null
+						}
+						{
+							weaknesses.length > 0 ?
+								<Field label='Weakness' value={weaknesses.map(dm => `${dm.type} ${dm.value}`).join(', ')} />
+								: null
 						}
 						<Divider />
 						{getStatsSection()}

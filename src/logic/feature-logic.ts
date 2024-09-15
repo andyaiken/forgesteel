@@ -1,5 +1,7 @@
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
 import { Ability } from '../models/ability';
+import { DamageModifier } from '../models/damage-modifier';
+import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { SkillList } from '../enums/skill-list';
@@ -62,6 +64,30 @@ export class FeatureLogic {
 				count: count,
 				selectedIDs: []
 			} as FeatureClassAbilityData
+		} as Feature;
+	};
+
+	static createDamageModifierFeature = (data: { id: string, name?: string, description?: string, modifiers: DamageModifier[] }) => {
+		let name = 'Damage Modifier';
+		let description = 'Damage Modifier';
+		if (data.modifiers.every(dm => dm.type === DamageModifierType.Immunity)) {
+			name = 'Immunity';
+			description = 'Immunity';
+		}
+		if (data.modifiers.every(dm => dm.type === DamageModifierType.Weakness)) {
+			name = 'Weakness';
+			description = 'Weakness';
+		}
+
+		return {
+			id: data.id,
+			name: data.name || name,
+			description: data.description || description,
+			type: FeatureType.DamageModifier,
+			choice: false,
+			data: {
+				modifiers: data.modifiers
+			} as FeatureDamageModifierData
 		} as Feature;
 	};
 

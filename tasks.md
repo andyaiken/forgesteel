@@ -38,4 +38,3 @@
 ## Logic
 
 * Add different feature types to codify features
-  * Immunity / weakness

@@ -1,11 +1,12 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from './ability-logic';
 import { CampaignSettingData } from '../data/campaign-setting-data';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
+import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
@@ -240,6 +241,31 @@ export class HeroLogic {
 		});
 
 		return Collections.sort(skills, s => s.name);
+	};
+
+	static getDamageModifiers = (hero: Hero, type: DamageModifierType) => {
+		const immunities: { type: string, value: number }[] = [];
+
+		// Collate from features
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.DamageModifier)
+			.forEach(f => {
+				const data = f.data as FeatureDamageModifierData;
+				data.modifiers
+					.filter(dm => dm.type === type)
+					.forEach(dm => {
+						let value = dm.value;
+						if (hero.class) {
+							value += dm.valuePerLevel * (hero.class.level - 1);
+						}
+						immunities.push({
+							type: dm.damageType,
+							value: value
+						});
+					});
+			});
+
+		return Collections.sort(immunities, i => i.type);
 	};
 
 	///////////////////////////////////////////////////////////////////////////

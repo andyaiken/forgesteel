@@ -1,4 +1,5 @@
 import { Complication } from '../models/complication';
+import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from '../logic/feature-logic';
 import { SkillList } from '../enums/skill-list';
@@ -14,10 +15,16 @@ export class ComplicationData {
 				name: 'Cult Victim Benefit',
 				description: 'Once per turn, you can move through a solid mundane object no more than 1 square thick. If you end your turn inside the object, you take 5 damage and are shunted out into the space where you entered the object.'
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.createDamageModifierFeature({
 				id: 'comp-cult-victim-d',
-				name: 'Cult Victim Drawback',
-				description: 'Your body is more susceptible to negative energy. You have corruption weakness 5.'
+				modifiers: [
+					{
+						damageType: 'Corruption',
+						type: DamageModifierType.Weakness,
+						value: 5,
+						valuePerLevel: 0
+					}
+				]
 			})
 		]
 	};
@@ -65,15 +72,22 @@ export class ComplicationData {
 		name: 'Fire And Chaos',
 		description: 'A great monster who breathed fire burned your home to the ground. While everything around you was consumed, you somehow stood strong amid the inferno, your body adapting to ignore the effects of the flames.',
 		features: [
-			FeatureLogic.createFeature({
+			FeatureLogic.createDamageModifierFeature({
 				id: 'comp-fire-and-chaos-b',
-				name: 'Fire And Chaos Benefit',
-				description: 'You have fire immunity 5.'
-			}),
-			FeatureLogic.createFeature({
-				id: 'comp-fire-and-chaos-d',
-				name: 'Fire And Chaos Drawback',
-				description: 'You have cold weakness 5.'
+				modifiers: [
+					{
+						damageType: 'Fire',
+						type: DamageModifierType.Immunity,
+						value: 5,
+						valuePerLevel: 0
+					},
+					{
+						damageType: 'Cold',
+						type: DamageModifierType.Weakness,
+						value: 5,
+						valuePerLevel: 0
+					}
+				]
 			})
 		]
 	};
@@ -83,10 +97,22 @@ export class ComplicationData {
 		name: 'Primordial Sickness',
 		description: 'You once contracted a terrible illness for which no one could find a cure. You sought out a primordial swamp said to be either incredibly poisonous or miraculously salubrious. It turned out to be both, keeping your illness at bay while corrupting your body with its unnatural energy.',
 		features: [
-			FeatureLogic.createFeature({
+			FeatureLogic.createDamageModifierFeature({
 				id: 'comp-primordial-sickness-b',
-				name: 'Primordial Sickness Benefit',
-				description: 'You have poison immunity 5 and corruption immunity 5.'
+				modifiers: [
+					{
+						damageType: 'Poison',
+						type: DamageModifierType.Immunity,
+						value: 5,
+						valuePerLevel: 0
+					},
+					{
+						damageType: 'Corruption',
+						type: DamageModifierType.Immunity,
+						value: 5,
+						valuePerLevel: 0
+					}
+				]
 			}),
 			FeatureLogic.createBonusFeature({
 				id: 'comp-primordial-sickness-d',

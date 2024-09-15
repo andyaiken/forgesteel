@@ -1,4 +1,5 @@
 import { Ability } from './ability';
+import { DamageModifier } from './damage-modifier';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { SkillList } from '../enums/skill-list';
@@ -20,6 +21,10 @@ export interface FeatureClassAbilityData extends FeatureData {
 	cost: number;
 	count: number;
 	selectedIDs: string[];
+}
+
+export interface FeatureDamageModifierData extends FeatureData {
+	modifiers: DamageModifier[];
 }
 
 export interface FeatureLanguageData extends FeatureData {

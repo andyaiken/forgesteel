@@ -3,6 +3,22 @@
 	display: flex;
 	flex-direction: column;
 
+	.action-row {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		background-color: rgb(220, 220, 220);
+		margin-top: -20px;
+		margin-bottom: 20px;
+		margin-left: -20px;
+		margin-right: -20px;
+		padding: 10px 0;
+		position: sticky;
+		top: -20px;
+		z-index: 100;
+	}
+
 	.page-button {
 		margin: 5px 0;
 

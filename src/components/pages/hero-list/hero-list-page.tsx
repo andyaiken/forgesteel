@@ -1,4 +1,4 @@
-import { Button, Divider, Flex, Space } from 'antd';
+import { Button, Space } from 'antd';
 import { Hero } from '../../../models/hero';
 import { HeroPanel } from '../../panels/hero-panel/hero-panel';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -15,10 +15,9 @@ interface Props {
 export const HeroListPage = (props: Props) => {
 	return (
 		<div className='hero-list-page'>
-			<Flex gap='small'>
+			<div className='action-row'>
 				<Button type='primary' onClick={props.addHero}>Create A New Hero</Button>
-			</Flex>
-			<Divider />
+			</div>
 			<Space direction='vertical'>
 				{
 					props.heroes.map(hero => (

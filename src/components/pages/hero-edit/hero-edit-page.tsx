@@ -1,4 +1,4 @@
-import { Button, Divider, Flex, Input, Radio, Segmented, Select, Space } from 'antd';
+import { Button, Divider, Input, Radio, Segmented, Select, Space } from 'antd';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../data/culture-data';
 import { Feature, FeatureBonusData, FeatureData, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
 import { Ancestry } from '../../../models/ancestry';
@@ -287,11 +287,10 @@ export const HeroEditPage = (props: Props) => {
 
 	return (
 		<div className='hero-edit-page'>
-			<Flex gap='small'>
+			<div className='action-row'>
 				<Button type='primary' disabled={!dirty} onClick={saveChanges}>Save Changes</Button>
 				<Button onClick={cancelChanges}>Cancel</Button>
-			</Flex>
-			<Divider />
+			</div>
 			<Segmented<Page>
 				options={[
 					Page.Ancestry,

@@ -1,4 +1,4 @@
-import { Button, Divider, Flex, Popover, Space } from 'antd';
+import { Button, Popover, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { Hero } from '../../../models/hero';
 import { HeroPanel } from '../../panels/hero-panel/hero-panel';
@@ -17,12 +17,12 @@ interface Props {
 }
 
 export const HeroPage = (props: Props) => {
-	const [ showSkillsInGroups, setShowSkillsInGroups ] = useState<boolean>(true);
+	const [ showSkillsInGroups, setShowSkillsInGroups ] = useState<boolean>(false);
 	const [ showFreeStrikes, setShowFreeStrikes ] = useState<boolean>(false);
 
 	return (
 		<div className='hero-view-page'>
-			<Flex gap='small'>
+			<div className='action-row'>
 				<Button onClick={props.closeHero}>Close</Button>
 				<Button onClick={props.editHero}>Edit</Button>
 				<Button onClick={props.exportHero}>Export</Button>
@@ -44,8 +44,7 @@ export const HeroPage = (props: Props) => {
 					</Button>
     			</Popover>
 				<Button danger={true} onClick={props.deleteHero}>Delete</Button>
-			</Flex>
-			<Divider />
+			</div>
 			<HeroPanel hero={props.hero} mode={PanelMode.Full} showSkillsInGroups={showSkillsInGroups} showFreeStrikes={showFreeStrikes} />
 		</div>
 	);

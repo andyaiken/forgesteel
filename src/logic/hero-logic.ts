@@ -101,9 +101,7 @@ export class HeroLogic {
 		}
 
 		this.getKits(hero).forEach(kit => {
-			if (kit.ward) {
-				features.push(kit.ward);
-			}
+			features.push(...kit.features);
 		});
 
 		return features;
@@ -165,9 +163,7 @@ export class HeroLogic {
 			});
 
 		this.getKits(hero).forEach(kit => {
-			if (kit.signatureAbility) {
-				abilities.push(kit.signatureAbility);
-			}
+			abilities.push(...kit.abilities);
 		});
 
 		if (this.getKits(hero).some(kit => kit.mobility)) {

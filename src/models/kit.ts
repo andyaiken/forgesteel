@@ -31,6 +31,6 @@ export interface Kit {
 	area: number;
 
 	mobility: boolean;
-	signatureAbility: Ability;
-	ward: Feature | null;
+	abilities: Ability[];
+	features: Feature[];
 };

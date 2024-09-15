@@ -48,8 +48,12 @@ export const KitPanel = (props: Props) => {
 								: null
 						}
 						{props.kit.mobility ? <Field label='Mobility' value='Yes' /> : null}
-						<AbilityPanel ability={props.kit.signatureAbility} hero={props.hero} mode={PanelMode.Full} />
-						{props.kit.ward ? <FeaturePanel feature={props.kit.ward} hero={props.hero} /> : null}
+						{
+							props.kit.abilities.map(a => <AbilityPanel key={a.id} ability={a} hero={props.hero} mode={PanelMode.Full} />)
+						}
+						{
+							props.kit.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} />)
+						}
 					</div>
 					:
 					<Field label='Uses' value={[ ...props.kit.armor, ...props.kit.weapon, ...props.kit.implement ].join(', ')} />

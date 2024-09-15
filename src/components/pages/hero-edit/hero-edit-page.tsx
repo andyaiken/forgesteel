@@ -27,8 +27,10 @@ import { HeroLogic } from '../../../logic/hero-logic';
 import { Kit } from '../../../models/kit';
 import { KitData } from '../../../data/kit-data';
 import { KitPanel } from '../../panels/kit-panel/kit-panel';
+import { NameGenerator } from '../../../utils/name-generator';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
+import { ThunderboltOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 
 import './hero-edit-page.scss';
@@ -734,8 +736,8 @@ const KitSection = (props: KitSectionProps) => {
 	));
 
 	let choices: JSX.Element[] = [];
-	if (props.hero.kit && props.hero.kit.ward) {
-		choices = [ props.hero.kit.ward ]
+	if (props.hero.kit) {
+		choices = props.hero.kit.features
 			.filter(f => f.choice)
 			.map(f => (
 				<SelectablePanel key={f.id}>
@@ -784,7 +786,13 @@ const DetailsSection = (props: DetailsSectionProps) => {
 			<div className='hero-edit-content-column'>
 				<HeaderText>Details</HeaderText>
 				<div>Name:</div>
-				<Input placeholder='Name' allowClear={true} value={props.hero.name} onChange={e => props.setName(e.target.value)} />
+				<Input
+					placeholder='Name'
+					allowClear={true}
+					addonAfter={<ThunderboltOutlined onClick={() => props.setName(NameGenerator.generateName())} />}
+					value={props.hero.name}
+					onChange={e => props.setName(e.target.value)}
+				/>
 			</div>
 		</div>
 	);

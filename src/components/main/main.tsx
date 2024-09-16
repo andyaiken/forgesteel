@@ -1,13 +1,26 @@
 import { Button, Drawer } from 'antd';
 import { AboutModal } from '../modals/about/about';
+import { Ancestry } from '../../models/ancestry';
+import { AncestryPanel } from '../panels/ancestry-panel/ancestry-panel';
 import { CampaignSettingData } from '../../data/campaign-setting-data';
+import { Career } from '../../models/career';
+import { CareerPanel } from '../panels/career-panel/career-panel';
+import { ClassPanel } from '../panels/class-panel/class-panel';
 import { Collections } from '../../utils/collections';
+import { Complication } from '../../models/complication';
+import { ComplicationPanel } from '../panels/complication-panel/complication-panel';
+import { Culture } from '../../models/culture';
+import { CulturePanel } from '../panels/culture-panel/culture-panel';
 import { Hero } from '../../models/hero';
+import { HeroClass } from '../../models/class';
 import { HeroEditPage } from '../pages/hero-edit/hero-edit-page';
 import { HeroListPage } from '../pages/hero-list/hero-list-page';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroPage } from '../pages/hero-view/hero-view-page';
 import { InProgressModal } from '../modals/in-progress/in-progress';
+import { Kit } from '../../models/kit';
+import { KitPanel } from '../panels/kit-panel/kit-panel';
+import { PanelMode } from '../../enums/panel-mode';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
@@ -123,6 +136,42 @@ export const Main = (props: Props) => {
 		}
 	};
 
+	const onSelectAncestry = (ancestry: Ancestry) => {
+		setDrawer(
+			<AncestryPanel ancestry={ancestry} mode={PanelMode.Full} />
+		);
+	};
+
+	const onSelectCulture = (culture: Culture) => {
+		setDrawer(
+			<CulturePanel culture={culture} mode={PanelMode.Full} />
+		);
+	};
+
+	const onSelectCareer = (career: Career) => {
+		setDrawer(
+			<CareerPanel career={career} mode={PanelMode.Full} />
+		);
+	};
+
+	const onSelectClass = (heroClass: HeroClass) => {
+		setDrawer(
+			<ClassPanel heroClass={heroClass} mode={PanelMode.Full} />
+		);
+	};
+
+	const onSelectComplication = (complication: Complication) => {
+		setDrawer(
+			<ComplicationPanel complication={complication} mode={PanelMode.Full} />
+		);
+	};
+
+	const onSelectKit = (kit: Kit) => {
+		setDrawer(
+			<KitPanel kit={kit} mode={PanelMode.Full} />
+		);
+	};
+
 	const getContent = () => {
 		switch (page) {
 			case Page.Welcome:
@@ -148,6 +197,12 @@ export const Main = (props: Props) => {
 						editHero={editSelectedHero}
 						exportHero={exportSelectedHero}
 						deleteHero={deleteSelectedHero}
+						onSelectAncestry={onSelectAncestry}
+						onSelectCulture={onSelectCulture}
+						onSelectCareer={onSelectCareer}
+						onSelectClass={onSelectClass}
+						onSelectComplication={onSelectComplication}
+						onSelectKit={onSelectKit}
 					/>
 				);
 			case Page.HeroEdit:

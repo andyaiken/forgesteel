@@ -1,7 +1,13 @@
 import { Button, Popover, Space } from 'antd';
+import { Ancestry } from '../../../models/ancestry';
+import { Career } from '../../../models/career';
+import { Complication } from '../../../models/complication';
+import { Culture } from '../../../models/culture';
 import { DownOutlined } from '@ant-design/icons';
 import { Hero } from '../../../models/hero';
+import { HeroClass } from '../../../models/class';
 import { HeroPanel } from '../../panels/hero-panel/hero-panel';
+import { Kit } from '../../../models/kit';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Toggle } from '../../controls/toggle/toggle';
 import { useState } from 'react';
@@ -14,6 +20,12 @@ interface Props {
 	editHero: () => void;
 	exportHero: (format: 'image' | 'pdf') => void;
 	deleteHero: () => void;
+	onSelectAncestry: (ancestry: Ancestry) => void;
+	onSelectCulture: (culture: Culture) => void;
+	onSelectCareer: (career: Career) => void;
+	onSelectClass: (heroClass: HeroClass) => void;
+	onSelectComplication: (complication: Complication) => void;
+	onSelectKit: (kit: Kit) => void;
 }
 
 export const HeroPage = (props: Props) => {
@@ -61,7 +73,18 @@ export const HeroPage = (props: Props) => {
     			</Popover>
 				<Button danger={true} onClick={props.deleteHero}>Delete</Button>
 			</div>
-			<HeroPanel hero={props.hero} mode={PanelMode.Full} showSkillsInGroups={showSkillsInGroups} showFreeStrikes={showFreeStrikes} />
+			<HeroPanel
+				hero={props.hero}
+				mode={PanelMode.Full}
+				showSkillsInGroups={showSkillsInGroups}
+				showFreeStrikes={showFreeStrikes}
+				onSelectAncestry={props.onSelectAncestry}
+				onSelectCulture={props.onSelectCulture}
+				onSelectCareer={props.onSelectCareer}
+				onSelectClass={props.onSelectClass}
+				onSelectComplication={props.onSelectComplication}
+				onSelectKit={props.onSelectKit}
+			/>
 		</div>
 	);
 };

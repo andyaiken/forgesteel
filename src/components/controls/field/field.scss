@@ -1,6 +1,8 @@
 .field {
 	margin: 10px 0;
 	font-size: 14px;
+	overflow-wrap: break-word;
+	word-break: normal;
 
 	.field-label {
 		color: rgb(0, 0, 0);

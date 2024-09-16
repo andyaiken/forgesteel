@@ -1,15 +1,21 @@
-import { Col, Divider, Row, Statistic } from 'antd';
+import { Col, Divider, Flex, Row, Statistic } from 'antd';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
+import { Ancestry } from '../../../models/ancestry';
+import { Career } from '../../../models/career';
 import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
+import { Complication } from '../../../models/complication';
+import { Culture } from '../../../models/culture';
 import { CultureData } from '../../../data/culture-data';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
 import { Hero } from '../../../models/hero';
+import { HeroClass } from '../../../models/class';
 import { HeroLogic } from '../../../logic/hero-logic';
+import { Kit } from '../../../models/kit';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SkillList } from '../../../enums/skill-list';
 
@@ -20,15 +26,59 @@ interface Props {
 	mode?: PanelMode;
 	showSkillsInGroups?: boolean;
 	showFreeStrikes?: boolean;
+	onSelectAncestry?: (ancestry: Ancestry) => void;
+	onSelectCulture?: (culture: Culture) => void;
+	onSelectCareer?: (career: Career) => void;
+	onSelectClass?: (heroClass: HeroClass) => void;
+	onSelectComplication?: (complication: Complication) => void;
+	onSelectKit?: (kit: Kit) => void;
 }
 
 export const HeroPanel = (props: Props) => {
 	const getTopSection = () => {
+		/*
+		const onSelectAncestry = () => {
+			if (props.hero.ancestry && props.onSelectAncestry) {
+				props.onSelectAncestry(props.hero.ancestry);
+			}
+		};
+
+		const onSelectCulture = () => {
+			if (props.hero.culture && props.onSelectCulture) {
+				props.onSelectCulture(props.hero.culture);
+			}
+		};
+
+		const onSelectCareer = () => {
+			if (props.hero.career && props.onSelectCareer) {
+				props.onSelectCareer(props.hero.career);
+			}
+		};
+
+		const onSelectClass = () => {
+			if (props.hero.class && props.onSelectClass) {
+				props.onSelectClass(props.hero.class);
+			}
+		};
+
+		const onSelectComplication = () => {
+			if (props.hero.complication && props.onSelectComplication) {
+				props.onSelectComplication(props.hero.complication);
+			}
+		};
+
+		const onSelectKit = () => {
+			if (props.hero.kit && props.onSelectKit) {
+				props.onSelectKit(props.hero.kit);
+			}
+		};
+		*/
+
 		const size = {
 			xs: 24,
 			sm: 12,
 			md: 8,
-			lg: 4,
+			lg: 6,
 			xl: 4,
 			xxl: 4
 		};
@@ -38,6 +88,9 @@ export const HeroPanel = (props: Props) => {
 		const armorNames = kits.map(k => k.armor).join(', ');
 		const weaponNames = kits.map(k => k.weapon).join(', ');
 		const implementNames = kits.map(k => k.implement).join(', ');
+
+		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
+		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
 		return (
 			<Row gutter={[ 10, 10 ]} style={{ margin: '10px 0' }}>
@@ -102,6 +155,38 @@ export const HeroPanel = (props: Props) => {
 							<div className='ds-text dimmed-text'>No kit chosen</div>
 					}
 				</Col>
+				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+					<Field label='Languages' value={HeroLogic.getLanguages(props.hero).join(', ') || <span className='ds-text dimmed-text'>None</span>} />
+				</Col>
+				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+					{
+						props.showSkillsInGroups ?
+							[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map((list, n) => {
+								const skills = HeroLogic.getSkills(props.hero).filter(s => s.list === list);
+								return (
+									<Field key={n} label={list} value={skills.map(s => s.name).join(', ') || <span className='ds-text dimmed-text'>None</span>} />
+								);
+							})
+							:
+							<Field label='Skills' value={HeroLogic.getSkills(props.hero).map(s => s.name).join(', ') || <span className='ds-text dimmed-text'>None</span>} />
+					}
+				</Col>
+				{
+					(immunities.length > 0) || (weaknesses.length > 0) ?
+						<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+							{
+								immunities.length > 0 ?
+									<Field label='Immune' value={immunities.map(dm => `${dm.type} ${dm.value}`).join(', ')} />
+									: null
+							}
+							{
+								weaknesses.length > 0 ?
+									<Field label='Weakness' value={weaknesses.map(dm => `${dm.type} ${dm.value}`).join(', ')} />
+									: null
+							}
+						</Col>
+						: null
+				}
 			</Row>
 		);
 	};
@@ -244,49 +329,32 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	try {
-		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
-		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
+		if (props.mode !== PanelMode.Full) {
+			return (
+				<div className='hero-panel' id={props.hero.id}>
+					<div className='section-divider'>{props.hero.name || 'Unnamed Hero'}</div>
+					<Flex align='center' justify='space-between'>
+						<Field label='Ancestry' value={props.hero.ancestry?.name || 'None'} />
+						<Field label='Career' value={props.hero.career?.name || 'None'} />
+						<Field label='Class' value={props.hero.class?.name || 'None'} />
+						<Field label='Level' value={props.hero.class?.level || '-'} />
+						<Field label='Kit' value={props.hero.kit?.name || 'None'} />
+					</Flex>
+				</div>
+			);
+		}
 
 		return (
 			<div className='hero-panel' id={props.hero.id}>
 				<div className='section-divider'>{props.hero.name || 'Unnamed Hero'}</div>
 				{getTopSection()}
-				{
-					props.mode === PanelMode.Full ?
-						<div>
-							<Divider />
-							<Field label='Languages' value={HeroLogic.getLanguages(props.hero).join(', ') || <span className='ds-text dimmed-text'>None</span>} />
-							{
-								props.showSkillsInGroups ?
-									[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map((list, n) => {
-										const skills = HeroLogic.getSkills(props.hero).filter(s => s.list === list);
-										return (
-											<Field key={n} label={list} value={skills.map(s => s.name).join(', ') || <span className='ds-text dimmed-text'>None</span>} />
-										);
-									})
-									:
-									<Field label='Skills' value={HeroLogic.getSkills(props.hero).map(s => s.name).join(', ') || <span className='ds-text dimmed-text'>None</span>} />
-							}
-							{
-								immunities.length > 0 ?
-									<Field label='Immune' value={immunities.map(dm => `${dm.type} ${dm.value}`).join(', ')} />
-									: null
-							}
-							{
-								weaknesses.length > 0 ?
-									<Field label='Weakness' value={weaknesses.map(dm => `${dm.type} ${dm.value}`).join(', ')} />
-									: null
-							}
-							<Divider />
-							{getStatsSection()}
-							{getFeaturesSection()}
-							{getAbilitiesSection(AbilityUsage.Action)}
-							{getAbilitiesSection(AbilityUsage.Maneuver)}
-							{getAbilitiesSection(AbilityUsage.Trigger)}
-							{getAbilitiesSection(AbilityUsage.Other)}
-						</div>
-						: null
-				}
+				<Divider />
+				{getStatsSection()}
+				{getFeaturesSection()}
+				{getAbilitiesSection(AbilityUsage.Action)}
+				{getAbilitiesSection(AbilityUsage.Maneuver)}
+				{getAbilitiesSection(AbilityUsage.Trigger)}
+				{getAbilitiesSection(AbilityUsage.Other)}
 			</div>
 		);
 	} catch {

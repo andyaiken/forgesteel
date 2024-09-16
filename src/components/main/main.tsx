@@ -166,7 +166,7 @@ export const Main = (props: Props) => {
 			<div className='main-header'>
 				<div className='title'>Forge Steel</div>
 				<div className='action-buttons'>
-					<Button type='text' onClick={showAbout}>About</Button>
+					<Button onClick={showAbout}>About</Button>
 				</div>
 			</div>
 			<div className='main-content'>
@@ -174,7 +174,7 @@ export const Main = (props: Props) => {
 			</div>
 			<div className='main-footer'>
 				<div className='main-footer-section'>
-					<img src={pbds} style={{ height: '30px' }} />
+					<img className='ds-logo' src={pbds} />
 					<div>FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC</div>
 				</div>
 				<div className='main-footer-section'>

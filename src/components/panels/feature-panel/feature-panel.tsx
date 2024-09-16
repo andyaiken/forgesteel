@@ -123,7 +123,7 @@ export const FeaturePanel = (props: Props) => {
 								}}
 							/>
 							{
-								data.selected.map(l => {
+								data.selected.map((l, n) => {
 									if (props.hero) {
 										const features = HeroLogic.getFeatures(props.hero)
 											.filter(f => f.id !== props.feature.id)
@@ -134,7 +134,7 @@ export const FeaturePanel = (props: Props) => {
 											});
 										if (features.length > 0) {
 											return (
-												<div className='warning-text'>{l} is also granted by {features.map(f => f.name).join(', ')}</div>
+												<div key={n} className='ds-text warning-text'>{l} is also granted by {features.map(f => f.name).join(', ')}</div>
 											);
 										}
 									}
@@ -195,7 +195,7 @@ export const FeaturePanel = (props: Props) => {
 								}}
 							/>
 							{
-								data.selected.map(s => {
+								data.selected.map((s, n) => {
 									if (props.hero) {
 										const features = HeroLogic.getFeatures(props.hero)
 											.filter(f => f.id !== props.feature.id)
@@ -206,7 +206,7 @@ export const FeaturePanel = (props: Props) => {
 											});
 										if (features.length > 0) {
 											return (
-												<div className='warning-text'>{s} is also granted by {features.map(f => f.name).join(', ')}</div>
+												<div key={n} className='ds-text warning-text'>{s} is also granted by {features.map(f => f.name).join(', ')}</div>
 											);
 										}
 									}
@@ -227,7 +227,7 @@ export const FeaturePanel = (props: Props) => {
 		return (
 			<div className='feature-panel'>
 				<HeaderText>{props.feature.name}</HeaderText>
-				<div className='description-text'>{props.feature.description}</div>
+				<div className='ds-text description-text'>{props.feature.description}</div>
 				{props.mode === PanelMode.Full ? extra : null}
 			</div>
 		);

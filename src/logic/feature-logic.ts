@@ -72,11 +72,11 @@ export class FeatureLogic {
 		let description = 'Damage Modifier';
 		if (data.modifiers.every(dm => dm.type === DamageModifierType.Immunity)) {
 			name = 'Immunity';
-			description = 'Immunity';
+			description = 'Immunity ' + data.modifiers.map(dm => `${dm.damageType} ${dm.value}`).join(', ');
 		}
 		if (data.modifiers.every(dm => dm.type === DamageModifierType.Weakness)) {
 			name = 'Weakness';
-			description = 'Weakness';
+			description = 'Weakness ' + data.modifiers.map(dm => `${dm.damageType} ${dm.value}`).join(', ');
 		}
 
 		return {

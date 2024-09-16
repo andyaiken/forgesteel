@@ -19,7 +19,7 @@ export const AncestryPanel = (props: Props) => {
 		return (
 			<div className='ancestry-panel'>
 				<HeaderText>{props.ancestry.name}</HeaderText>
-				<div className='description-text'>{props.ancestry.description}</div>
+				<div className='ds-text description-text'>{props.ancestry.description}</div>
 				{
 					props.mode === PanelMode.Full ?
 						<div>

@@ -15,7 +15,7 @@ export const ClassPanel = (props: Props) => {
 		return (
 			<div className='class-panel'>
 				<HeaderText>{props.heroClass.name}</HeaderText>
-				<div className='description-text'>{props.heroClass.description}</div>
+				<div className='ds-text description-text'>{props.heroClass.description}</div>
 				{
 					props.mode === PanelMode.Full ?
 						<div>

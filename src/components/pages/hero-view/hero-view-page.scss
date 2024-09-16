@@ -18,3 +18,11 @@
 		z-index: 100;
 	}
 }
+
+@media (prefers-color-scheme: dark) {
+	.hero-view-page {
+		.action-row {
+			background-color: rgb(40, 40, 40);
+		}
+	}
+}

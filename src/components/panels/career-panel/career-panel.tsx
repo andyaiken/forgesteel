@@ -17,7 +17,7 @@ export const CareerPanel = (props: Props) => {
 		return (
 			<div className='career-panel'>
 				<HeaderText>{props.career.name}</HeaderText>
-				<div className='description-text'>{props.career.description}</div>
+				<div className='ds-text description-text'>{props.career.description}</div>
 				{
 					props.mode === PanelMode.Full ?
 						<div>

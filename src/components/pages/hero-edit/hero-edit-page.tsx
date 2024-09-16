@@ -369,7 +369,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 					<div className='hero-edit-content-column'>
 						<HeaderText>Ancestries</HeaderText>
 						{options}
-						{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
+						{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
 					</div>
 			}
 			{
@@ -490,7 +490,7 @@ const CultureSection = (props: CultureSectionProps) => {
 							<CulturePanel culture={CultureData.bespoke} />
 						</SelectablePanel>
 						{options}
-						{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
+						{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
 					</div>
 			}
 			{
@@ -543,7 +543,7 @@ const CareerSection = (props: CareerSectionProps) => {
 					<div className='hero-edit-content-column'>
 						<HeaderText>Careers</HeaderText>
 						{options}
-						{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
+						{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
 					</div>
 			}
 			{
@@ -654,7 +654,7 @@ const ClassSection = (props: ClassSectionProps) => {
 					<div className='hero-edit-content-column'>
 						<HeaderText>Classes</HeaderText>
 						{options}
-						{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
+						{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
 					</div>
 			}
 			{
@@ -707,7 +707,7 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 					<div className='hero-edit-content-column'>
 						<HeaderText>Complications</HeaderText>
 						{options}
-						{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
+						{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
 					</div>
 			}
 			{
@@ -760,7 +760,7 @@ const KitSection = (props: KitSectionProps) => {
 					<div className='hero-edit-content-column'>
 						<HeaderText>Kits</HeaderText>
 						{options}
-						{options.length === 0 ? <div className='dimmed-text centered-text'>None available</div> : null}
+						{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
 					</div>
 			}
 			{
@@ -789,7 +789,7 @@ const DetailsSection = (props: DetailsSectionProps) => {
 				<Input
 					placeholder='Name'
 					allowClear={true}
-					addonAfter={<ThunderboltOutlined onClick={() => props.setName(NameGenerator.generateName())} />}
+					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => props.setName(NameGenerator.generateName())} />}
 					value={props.hero.name}
 					onChange={e => props.setName(e.target.value)}
 				/>

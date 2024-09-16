@@ -29,38 +29,30 @@ body {
 	flex-direction: column;
 }
 
-.bold-text {
-	margin: 10px 0;
-	color: rgb(0, 0, 0);
-	font-weight: 600;
-}
-
 p,
 .ds-text {
 	margin: 10px 0;
 	color: rgba(0, 0, 0, 0.88);
-}
 
-.description-text {
-	margin: 10px 0;
-	color: rgb(120, 120, 120);
-}
+	&.dimmed-text {
+		opacity: 0.3;
+	}
 
-.dimmed-text {
-	margin: 10px 0;
-	color: rgb(160, 160, 160);
-}
+	&.description-text {
+		opacity: 0.6;
+	}
 
-.warning-text {
-	margin: 10px 0;
-	background-color: rgb(255, 230, 200);
-	border: 1px solid rgb(255, 140, 0);
-	border-radius: 5px;
-	padding: 5px 10px;
-}
+	&.warning-text {
+		border: 1px solid rgb(255, 140, 0);
+		border-radius: 5px;
+		color: rgba(0, 0, 0, 0.88);
+		background-color: rgb(255, 230, 200);
+		padding: 5px 10px;
+	}
 
-.centered-text {
-	text-align: center;
+	&.centered-text {
+		text-align: center;
+	}
 }
 
 .ant-btn {
@@ -72,4 +64,28 @@ p,
 .ant-statistic .ant-statistic-title,
 .ant-statistic .ant-statistic-content {
     text-align: center;
+}
+
+@media (prefers-color-scheme: dark) {
+	html {
+		color: rgba(255, 255, 255, 0.88);
+		background-color: rgb(55, 55, 55);
+	}
+
+	p,
+	.ds-text {
+		color: rgba(255, 255, 255, 0.88);
+	}
+
+	.ant-divider {
+		border-block-start: 1px solid rgba(250, 250, 250, 0.6);
+
+		.ant-divider-inner-text {
+			color: rgba(255, 255, 255, 0.88);
+		}
+	}
+
+	.ant-drawer-content {
+		background-color: rgb(55, 55, 55) !important;
+	}
 }

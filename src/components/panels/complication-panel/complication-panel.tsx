@@ -17,7 +17,7 @@ export const ComplicationPanel = (props: Props) => {
 		return (
 			<div className='complication-panel'>
 				<HeaderText>{props.complication.name}</HeaderText>
-				<div className='description-text'>{props.complication.description}</div>
+				<div className='ds-text description-text'>{props.complication.description}</div>
 				{
 					props.mode === PanelMode.Full ?
 						props.complication.features.map(f => (

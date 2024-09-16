@@ -4,7 +4,7 @@ export const InProgressModal = () => {
 	try {
 		return (
 			<div className='in-progress-modal'>
-				<div className='warning-text'>
+				<div className='ds-text warning-text'>
 					This is a work-in-progress.
 				</div>
 				<div className='ds-text'>

@@ -8,7 +8,6 @@ import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
-import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -47,7 +46,7 @@ export const HeroPanel = (props: Props) => {
 						props.hero.ancestry ?
 							<Field label='Ancestry' value={props.hero.ancestry.name} />
 							:
-							<div className='dimmed-text'>No ancestry chosen</div>
+							<div className='ds-text dimmed-text'>No ancestry chosen</div>
 					}
 				</Col>
 				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
@@ -60,7 +59,7 @@ export const HeroPanel = (props: Props) => {
 								{props.hero.culture.upbringing ? <Field label='Upbringing' value={props.hero.culture.upbringing.name} /> : null}
 							</div>
 							:
-							<div className='dimmed-text'>No culture chosen</div>
+							<div className='ds-text dimmed-text'>No culture chosen</div>
 					}
 				</Col>
 				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
@@ -68,7 +67,7 @@ export const HeroPanel = (props: Props) => {
 						props.hero.career ?
 							<Field label='Career' value={props.hero.career.name} />
 							:
-							<div className='dimmed-text'>No career chosen</div>
+							<div className='ds-text dimmed-text'>No career chosen</div>
 					}
 				</Col>
 				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
@@ -80,7 +79,7 @@ export const HeroPanel = (props: Props) => {
 								<Field label={props.hero.class.subclassName} value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(', ') || ''} />
 							</div>
 							:
-							<div className='dimmed-text'>No class chosen</div>
+							<div className='ds-text dimmed-text'>No class chosen</div>
 					}
 				</Col>
 				{
@@ -100,7 +99,7 @@ export const HeroPanel = (props: Props) => {
 								{implementNames ? <Field label='Implements' value={implementNames} /> : null}
 							</div>
 							:
-							<div className='dimmed-text'>No kit chosen</div>
+							<div className='ds-text dimmed-text'>No kit chosen</div>
 					}
 				</Col>
 			</Row>
@@ -198,7 +197,7 @@ export const HeroPanel = (props: Props) => {
 
 		return (
 			<div className='features-section'>
-				<Divider orientation='left'>Features</Divider>
+				<div className='section-divider'>Features</div>
 				<Row gutter={[ 20, 20 ]} style={{ margin: '20px 0' }}>
 					{
 						features.map(feature => (
@@ -230,7 +229,7 @@ export const HeroPanel = (props: Props) => {
 
 		return (
 			<div className='abilities-section'>
-				<Divider orientation='left'>{type}s</Divider>
+				<div className='section-divider'>{type}s</div>
 				<Row gutter={[ 20, 20 ]} style={{ margin: '20px 0' }}>
 					{
 						abilities.map(ability => (
@@ -250,23 +249,23 @@ export const HeroPanel = (props: Props) => {
 
 		return (
 			<div className='hero-panel' id={props.hero.id}>
-				<HeaderText>{props.hero.name || 'Unnamed Hero'}</HeaderText>
+				<div className='section-divider'>{props.hero.name || 'Unnamed Hero'}</div>
 				{getTopSection()}
 				{
 					props.mode === PanelMode.Full ?
 						<div>
 							<Divider />
-							<Field label='Languages' value={HeroLogic.getLanguages(props.hero).join(', ') || <span className='dimmed-text'>None</span>} />
+							<Field label='Languages' value={HeroLogic.getLanguages(props.hero).join(', ') || <span className='ds-text dimmed-text'>None</span>} />
 							{
 								props.showSkillsInGroups ?
 									[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map((list, n) => {
 										const skills = HeroLogic.getSkills(props.hero).filter(s => s.list === list);
 										return (
-											<Field key={n} label={list} value={skills.map(s => s.name).join(', ') || <span className='dimmed-text'>None</span>} />
+											<Field key={n} label={list} value={skills.map(s => s.name).join(', ') || <span className='ds-text dimmed-text'>None</span>} />
 										);
 									})
 									:
-									<Field label='Skills' value={HeroLogic.getSkills(props.hero).map(s => s.name).join(', ') || <span className='dimmed-text'>None</span>} />
+									<Field label='Skills' value={HeroLogic.getSkills(props.hero).map(s => s.name).join(', ') || <span className='ds-text dimmed-text'>None</span>} />
 							}
 							{
 								immunities.length > 0 ?

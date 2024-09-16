@@ -1,15 +1,26 @@
 .field {
 	margin: 10px 0;
+	font-size: 14px;
 
 	.field-label {
 		color: rgb(0, 0, 0);
 		font-weight: 600;
-		font-size: 14px;
 		padding-right: 5px;
 	}
 
 	.field-value {
-		color: rgb(80, 80, 80);
-		font-size: 14px;
+		color: rgba(0, 0, 0, 0.88);
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.field {
+		.field-label {
+			color: rgb(255, 255, 255);
+		}
+
+		.field-value {
+			color: rgba(255, 255, 255, 0.88);
+		}
 	}
 }

@@ -10,7 +10,7 @@
 
 ## General UI
 
-* Implement dark mode (with automatic switching)
+(nothing)
 
 ## Character Generation
 

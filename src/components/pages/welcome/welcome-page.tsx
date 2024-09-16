@@ -23,7 +23,7 @@ export const WelcomePage = (props: Props) => {
 				<Divider />
 				<Button type='primary' block={true} onClick={props.showHeroes}>Click here to start building heroes</Button>
 			</SelectablePanel>
-			<div className='warning-text'>
+			<div className='ds-text warning-text'>
 				<Button type='text' onClick={props.showInProgress}>This is a work-in-progress.</Button>
 			</div>
 		</div>

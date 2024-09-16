@@ -16,7 +16,7 @@ export const Toggle = (props: Props) => {
 	try {
 		return (
 			<div className='toggle' onClick={onClick}>
-				<div className='ds-text'>{props.label}</div>
+				<div>{props.label}</div>
 				<Switch checked={props.value} />
 			</div>
 		);

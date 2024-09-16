@@ -19,7 +19,7 @@ export const KitPanel = (props: Props) => {
 		return (
 			<div className='kit-panel'>
 				<HeaderText tags={[ props.kit.type ]}>{props.kit.name}</HeaderText>
-				<div className='description-text'>{props.kit.description}</div>
+				<div className='ds-text description-text'>{props.kit.description}</div>
 				{
 					props.mode === PanelMode.Full ?
 						<div>

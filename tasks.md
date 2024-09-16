@@ -18,8 +18,6 @@
 
 ## Character Sheet
 
-* Export hero to PDF
-
 * In Game:
   * Edit heroic resource / renown / hero tokens
   * Edit stamina
@@ -35,4 +33,4 @@
 
 ## Logic
 
-* Add different feature types to codify features
+* Add feature types to codify features

@@ -90,9 +90,9 @@ export const Main = (props: Props) => {
 		}
 	};
 
-	const exportSelectedHero = () => {
+	const exportSelectedHero = (format: 'image' | 'pdf') => {
 		if (selectedHero) {
-			Utils.takeScreenshot(selectedHero.id, selectedHero.name || 'Unnamed Hero');
+			Utils.takeScreenshot(selectedHero.id, selectedHero.name || 'Unnamed Hero', format);
 		}
 	};
 

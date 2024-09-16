@@ -1,6 +1,7 @@
 import html2canvas from 'html2canvas';
 
 import { Random } from './random';
+import jsPDF from 'jspdf';
 
 export class Utils {
 	static guid = (): string => {
@@ -13,6 +14,7 @@ export class Utils {
 		return id;
 	};
 
+	/*
 	static debounce = (func: () => void, delay = 500) => {
 		let timeout: number;
 		return () => {
@@ -20,6 +22,7 @@ export class Utils {
 			timeout = setTimeout(func, delay);
 		};
 	};
+	*/
 
 	static intersects = (light: { a: { x: number, y: number }, b: { x: number, y: number } }, wall: { a: { x: number, y: number }, b: { x: number, y: number } }) => {
 		const det = (light.b.x - light.a.x) * (wall.b.y - wall.a.y) - (wall.b.x - wall.a.x) * (light.b.y - light.a.y);
@@ -32,10 +35,20 @@ export class Utils {
 		}
 	};
 
-	public static takeScreenshot = (elementID: string, name: string) => {
+	public static takeScreenshot = (elementID: string, name: string, format: 'image' | 'pdf') => {
 		const element = document.getElementById(elementID);
 		if (element) {
-			html2canvas(element).then(canvas => Utils.saveImage(`${name}.png`, canvas));
+			html2canvas(element)
+				.then(canvas => {
+					switch (format) {
+						case 'image':
+							Utils.saveImage(`${name}.png`, canvas);
+							break;
+						case 'pdf':
+							Utils.savePDF(`${name}.pdf`, canvas);
+							break;
+					}
+				});
 		}
 	};
 
@@ -54,5 +67,11 @@ export class Utils {
 		a.download = filename;
 		a.href = canvas.toDataURL('image/png').replace(/^data:image\/png/, 'data:application/octet-stream');
 		a.click();
+	};
+
+	public static savePDF = (filename: string, canvas: HTMLCanvasElement) => {
+		const pdf = new jsPDF('p', 'pt', [ canvas.width, canvas.height ]);
+		pdf.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height);
+		pdf.save(filename);
 	};
 }

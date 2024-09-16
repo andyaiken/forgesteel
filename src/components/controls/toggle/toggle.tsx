@@ -1,5 +1,7 @@
 import { Switch } from 'antd';
 
+import './toggle.scss';
+
 interface Props {
 	label: string;
 	value: boolean;
@@ -13,7 +15,7 @@ export const Toggle = (props: Props) => {
 
 	try {
 		return (
-			<div className='toggle' style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px', cursor: 'pointer' }} onClick={onClick}>
+			<div className='toggle' onClick={onClick}>
 				<div className='ds-text'>{props.label}</div>
 				<Switch checked={props.value} />
 			</div>

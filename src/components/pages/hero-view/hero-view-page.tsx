@@ -12,7 +12,7 @@ interface Props {
 	hero: Hero;
 	closeHero: () => void;
 	editHero: () => void;
-	exportHero: () => void;
+	exportHero: (format: 'image' | 'pdf') => void;
 	deleteHero: () => void;
 }
 
@@ -25,12 +25,28 @@ export const HeroPage = (props: Props) => {
 			<div className='action-row'>
 				<Button onClick={props.closeHero}>Close</Button>
 				<Button onClick={props.editHero}>Edit</Button>
-				<Button onClick={props.exportHero}>Export</Button>
 				<Popover
 					trigger='click'
 					placement='bottom'
 					content={(
-						<div>
+						<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+							<Button type='text' onClick={() => props.exportHero('image')}>Export As Image</Button>
+							<Button type='text' onClick={() => props.exportHero('pdf')}>Export As PDF</Button>
+						</div>
+					)}
+				>
+      				<Button>
+					  <Space>
+							Export
+							<DownOutlined />
+						</Space>
+					</Button>
+    			</Popover>
+				<Popover
+					trigger='click'
+					placement='bottom'
+					content={(
+						<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 							<Toggle label='Show Skills In Groups' value={showSkillsInGroups} onChange={setShowSkillsInGroups} />
 							<Toggle label='Show Free Strikes' value={showFreeStrikes} onChange={setShowFreeStrikes} />
 						</div>

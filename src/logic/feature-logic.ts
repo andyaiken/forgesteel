@@ -1,9 +1,10 @@
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
 import { Ability } from '../models/ability';
 import { DamageModifier } from '../models/damage-modifier';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
+import { KitType } from '../enums/kit';
 import { SkillList } from '../enums/skill-list';
 
 export class FeatureLogic {
@@ -51,6 +52,22 @@ export class FeatureLogic {
 		} as Feature;
 	};
 
+	static createChoiceFeature = (data: { id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], count?: number }) => {
+		const count = data.count || 1;
+		return {
+			id: data.id,
+			name: data.name || 'Choice',
+			description: data.description || (count > 1 ? `Choose ${count} options.` : 'Choose an option.'),
+			type: FeatureType.Choice,
+			choice: true,
+			data: {
+				options: data.options,
+				count: count,
+				selected: []
+			} as FeatureChoiceData
+		} as Feature;
+	};
+
 	static createClassAbilityChoiceFeature = (data: { id: string, name?: string, description?: string, cost: number, count?: number }) => {
 		const count = data.count || 1;
 		return {
@@ -91,6 +108,22 @@ export class FeatureLogic {
 		} as Feature;
 	};
 
+	static createKitChoiceFeature = (data: { id: string, name?: string, description?: string, types?: KitType[], count?: number }) => {
+		const count = data.count || 1;
+		return {
+			id: data.id,
+			name: data.name || 'Kit',
+			description: data.description || (count > 1 ? `Choose ${count} kits.` : 'Choose a kit.'),
+			type: FeatureType.Kit,
+			choice: true,
+			data: {
+				types: data.types || [],
+				count: count,
+				selected: []
+			} as FeatureKitData
+		} as Feature;
+	};
+
 	static createLanguageChoiceFeature = (data: { id: string, name?: string, description?: string, options?: string[], count?: number }) => {
 		const count = data.count || 1;
 		return {
@@ -110,7 +143,7 @@ export class FeatureLogic {
 	static createSkillFeature = (data: { id: string, name?: string, description?: string, skill: string }) => {
 		return {
 			id: data.id,
-			name: data.name || 'Skill',
+			name: data.name || data.skill,
 			description: data.description || `You gain the ${data.skill} skill.`,
 			type: FeatureType.Skill,
 			choice: false,

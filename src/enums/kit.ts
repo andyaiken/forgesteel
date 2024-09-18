@@ -1,6 +1,7 @@
 export enum KitType {
 	Martial = 'Martial',
-	Caster = 'Caster'
+	Caster = 'Caster',
+	Stormwight = 'Stormwight'
 };
 
 export enum KitArmor {

@@ -36,7 +36,6 @@ interface Props {
 
 export const HeroPanel = (props: Props) => {
 	const getTopSection = () => {
-		/*
 		const onSelectAncestry = () => {
 			if (props.hero.ancestry && props.onSelectAncestry) {
 				props.onSelectAncestry(props.hero.ancestry);
@@ -72,7 +71,6 @@ export const HeroPanel = (props: Props) => {
 				props.onSelectKit(props.hero.kit);
 			}
 		};
-		*/
 
 		const size = {
 			xs: 24,
@@ -85,16 +83,16 @@ export const HeroPanel = (props: Props) => {
 
 		const kits = HeroLogic.getKits(props.hero);
 		const kitNames = kits.map(k => k.name).join(', ');
-		const armorNames = kits.map(k => k.armor).join(', ');
-		const weaponNames = kits.map(k => k.weapon).join(', ');
-		const implementNames = kits.map(k => k.implement).join(', ');
+		const armorNames = Collections.distinct(kits.flatMap(k => k.armor), a => a).join(', ');
+		const weaponNames = Collections.distinct(kits.flatMap(k => k.weapon), w => w).join(', ');
+		const implementNames = Collections.distinct(kits.flatMap(k => k.implement), i => i).join(', ');
 
 		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
 		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
 		return (
-			<Row gutter={[ 10, 10 ]} style={{ margin: '10px 0' }}>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+			<Row gutter={[ 20, 10 ]}>
+				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile clickable' onClick={onSelectAncestry}>
 					{
 						props.hero.ancestry ?
 							<Field label='Ancestry' value={props.hero.ancestry.name} />
@@ -102,7 +100,7 @@ export const HeroPanel = (props: Props) => {
 							<div className='ds-text dimmed-text'>No ancestry chosen</div>
 					}
 				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile clickable' onClick={onSelectCulture}>
 					{
 						props.hero.culture ?
 							<div>
@@ -115,7 +113,7 @@ export const HeroPanel = (props: Props) => {
 							<div className='ds-text dimmed-text'>No culture chosen</div>
 					}
 				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile clickable' onClick={onSelectCareer}>
 					{
 						props.hero.career ?
 							<Field label='Career' value={props.hero.career.name} />
@@ -123,7 +121,7 @@ export const HeroPanel = (props: Props) => {
 							<div className='ds-text dimmed-text'>No career chosen</div>
 					}
 				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile clickable' onClick={onSelectClass}>
 					{
 						props.hero.class ?
 							<div>
@@ -137,12 +135,12 @@ export const HeroPanel = (props: Props) => {
 				</Col>
 				{
 					props.hero.complication ?
-						<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+						<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile clickable' onClick={onSelectComplication}>
 							<Field label='Complication' value={props.hero.complication.name} />
 						</Col>
 						: null
 				}
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile clickable' onClick={onSelectKit}>
 					{
 						kits.length > 0 ?
 							<div>
@@ -155,10 +153,10 @@ export const HeroPanel = (props: Props) => {
 							<div className='ds-text dimmed-text'>No kit chosen</div>
 					}
 				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile'>
 					<Field label='Languages' value={HeroLogic.getLanguages(props.hero).join(', ') || <span className='ds-text dimmed-text'>None</span>} />
 				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile'>
 					{
 						props.showSkillsInGroups ?
 							[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map((list, n) => {
@@ -173,7 +171,7 @@ export const HeroPanel = (props: Props) => {
 				</Col>
 				{
 					(immunities.length > 0) || (weaknesses.length > 0) ?
-						<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+						<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile'>
 							{
 								immunities.length > 0 ?
 									<Field label='Immune' value={immunities.map(dm => `${dm.type} ${dm.value}`).join(', ')} />
@@ -202,7 +200,7 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		return (
-			<Row gutter={[ 20, 20 ]} style={{ margin: '20px 0' }}>
+			<Row gutter={[ 16, 16 ]}>
 				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
 					<div className='characteristics-row'>
 						<div className='characteristic'>
@@ -254,6 +252,9 @@ export const HeroPanel = (props: Props) => {
 							<Statistic title={props.hero.class ? props.hero.class.heroicResource : 'Heroic Resource'} value={props.hero.state.heroicResource} />
 						</div>
 						<div className='characteristic'>
+							<Statistic title='Victories' value={props.hero.state.victories} />
+						</div>
+						<div className='characteristic'>
 							<Statistic title='Renown' value={props.hero.state.renown} />
 						</div>
 						<div className='characteristic'>
@@ -283,7 +284,7 @@ export const HeroPanel = (props: Props) => {
 		return (
 			<div className='features-section'>
 				<div className='section-divider'>Features</div>
-				<Row gutter={[ 20, 20 ]} style={{ margin: '20px 0' }}>
+				<Row gutter={[ 16, 16 ]}>
 					{
 						features.map(feature => (
 							<Col key={feature.id} xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
@@ -315,7 +316,7 @@ export const HeroPanel = (props: Props) => {
 		return (
 			<div className='abilities-section'>
 				<div className='section-divider'>{type}s</div>
-				<Row gutter={[ 20, 20 ]} style={{ margin: '20px 0' }}>
+				<Row gutter={[ 16, 16 ]}>
 					{
 						abilities.map(ability => (
 							<Col key={ability.id} xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>

@@ -1,6 +1,7 @@
 import { Ability } from './ability';
 import { Characteristic } from '../enums/characteristic';
 import { Feature } from './feature';
+import { Kit } from './kit';
 
 export interface SubClass {
 	id: string;
@@ -8,6 +9,7 @@ export interface SubClass {
 	description: string;
 
 	featuresByLevel: { level: number, features: Feature[] }[];
+	kits: Kit[];
 
 	selected: boolean;
 }
@@ -27,6 +29,7 @@ export interface HeroClass {
 
 	featuresByLevel: { level: number, features: Feature[] }[];
 	abilities: Ability[];
+	kits: Kit[];
 	subclasses: SubClass[];
 
 	level: number;

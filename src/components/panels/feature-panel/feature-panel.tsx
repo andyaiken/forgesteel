@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityData, FeatureClassAbilityData, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
+import { Feature, FeatureAbilityData, FeatureChoiceData, FeatureClassAbilityData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
 import { Select, Space } from 'antd';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
@@ -8,6 +8,8 @@ import { FeatureType } from '../../../enums/feature-type';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
+import { KitData } from '../../../data/kit-data';
+import { KitPanel } from '../kit-panel/kit-panel';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SkillData } from '../../../data/skill-data';
 
@@ -17,17 +19,61 @@ interface Props {
 	feature: Feature;
 	hero?: Hero;
 	mode?: PanelMode;
-	setData?: (featureID: string, data: FeatureClassAbilityData | FeatureSkillData | FeatureLanguageData) => void;
+	setData?: (featureID: string, data: FeatureData) => void;
 }
 
 export const FeaturePanel = (props: Props) => {
 	try {
+		if (props.feature.type === FeatureType.Ability) {
+			const data = props.feature.data as FeatureAbilityData;
+			return (
+				<AbilityPanel ability={data.ability} hero={props.hero} />
+			);
+		}
+
 		let extra = null;
 		switch (props.feature.type) {
-			case FeatureType.Ability: {
-				const data = props.feature.data as FeatureAbilityData;
+			case FeatureType.Choice: {
+				const data = props.feature.data as FeatureChoiceData;
 				extra = (
-					<AbilityPanel ability={data.ability} hero={props.hero} />
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<Select
+							style={{ width: '100%' }}
+							mode={data.count === 1 ? undefined : 'multiple'}
+							maxCount={data.count === 1 ? undefined : data.count}
+							allowClear={true}
+							placeholder='Select'
+							options={data.options.map(o => ({ label: o.feature.name, value: o.feature.id }))}
+							value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
+							onChange={value => {
+								let ids: string[] = [];
+								if (data.count === 1) {
+									const val = value as string;
+									ids = [ val ];
+								} else {
+									ids = value as string[];
+								}
+								const features: Feature[] = [];
+								ids.forEach(id => {
+									const option = data.options.find(o => o.feature.id === id);
+									if (option) {
+										const featureCopy = JSON.parse(JSON.stringify(option.feature)) as Feature;
+										features.push(featureCopy);
+									}
+								});
+								const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
+								dataCopy.selected = features;
+								if (props.setData) {
+									props.setData(props.feature.id, dataCopy);
+								}
+							}}
+						/>
+						{
+							data.selected.map(f => (
+								<FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />
+							))
+						}
+					</Space>
 				);
 			}
 				break;
@@ -49,22 +95,17 @@ export const FeaturePanel = (props: Props) => {
 							options={sortedAbilities.map(a => ({ label: a.name, value: a.id }))}
 							value={data.count === 1 ? (data.selectedIDs.length > 0 ? data.selectedIDs[0] : null) : data.selectedIDs}
 							onChange={value => {
+								let ids: string[] = [];
 								if (data.count === 1) {
 									const val = value as string;
-									const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureClassAbilityData;
-									dataCopy.selectedIDs = val ? [ val ] : [];
-									if (props.setData) {
-										props.setData(props.feature.id, dataCopy);
-									}
+									ids = [ val ];
 								} else {
-									const values = value as string[];
-									if (values.length <= data.count) {
-										const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureClassAbilityData;
-										dataCopy.selectedIDs = values;
-										if (props.setData) {
-											props.setData(props.feature.id, dataCopy);
-										}
-									}
+									ids = value as string[];
+								}
+								const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureClassAbilityData;
+								dataCopy.selectedIDs = ids;
+								if (props.setData) {
+									props.setData(props.feature.id, dataCopy);
 								}
 							}}
 						/>
@@ -73,6 +114,54 @@ export const FeaturePanel = (props: Props) => {
 								const ability = abilities.find(a => a.id === id) as Ability;
 								return (
 									<AbilityPanel key={ability.id} ability={ability} mode={PanelMode.Full} />
+								);
+							})
+						}
+					</Space>
+				);
+			}
+				break;
+			case FeatureType.Kit: {
+				const data = props.feature.data as FeatureKitData;
+				const kits = KitData.getKits().filter(k => data.types.includes(k.type));
+
+				const sortedKits = Collections.sort(kits, k => k.name);
+
+				extra = (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<Select
+							style={{ width: '100%' }}
+							mode={data.count === 1 ? undefined : 'multiple'}
+							maxCount={data.count === 1 ? undefined : data.count}
+							allowClear={true}
+							placeholder='Select'
+							options={sortedKits.map(a => ({ label: a.name, value: a.id }))}
+							value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
+							onChange={value => {
+								let ids: string[] = [];
+								if (data.count === 1) {
+									const val = value as string;
+									ids = [ val ];
+								} else {
+									ids = value as string[];
+								}
+								const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureKitData;
+								dataCopy.selected = [];
+								ids.forEach(id => {
+									const kit = KitData.getKits().find(k => k.id === id);
+									if (kit) {
+										dataCopy.selected.push(kit);
+									}
+								});
+								if (props.setData) {
+									props.setData(props.feature.id, dataCopy);
+								}
+							}}
+						/>
+						{
+							data.selected.map(k => {
+								return (
+									<KitPanel key={k.id} kit={k} mode={PanelMode.Full} />
 								);
 							})
 						}
@@ -103,22 +192,17 @@ export const FeaturePanel = (props: Props) => {
 								options={sortedLanguages.map(l => ({ label: l, value: l }))}
 								value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
 								onChange={value => {
+									let ids: string[] = [];
 									if (data.count === 1) {
 										const val = value as string;
-										const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureLanguageData;
-										dataCopy.selected = val ? [ val ] : [];
-										if (props.setData) {
-											props.setData(props.feature.id, dataCopy);
-										}
+										ids = [ val ];
 									} else {
-										const values = value as string[];
-										if (values.length <= data.count) {
-											const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureLanguageData;
-											dataCopy.selected = values;
-											if (props.setData) {
-												props.setData(props.feature.id, dataCopy);
-											}
-										}
+										ids = value as string[];
+									}
+									const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureLanguageData;
+									dataCopy.selected = ids;
+									if (props.setData) {
+										props.setData(props.feature.id, dataCopy);
 									}
 								}}
 							/>
@@ -175,22 +259,17 @@ export const FeaturePanel = (props: Props) => {
 								options={sortedSkills.map(s => ({ label: s, value: s }))}
 								value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
 								onChange={value => {
+									let ids: string[] = [];
 									if (data.count === 1) {
 										const val = value as string;
-										const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureSkillData;
-										dataCopy.selected = val ? [ val ] : [];
-										if (props.setData) {
-											props.setData(props.feature.id, dataCopy);
-										}
+										ids = [ val ];
 									} else {
-										const values = value as string[];
-										if (values.length <= data.count) {
-											const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureSkillData;
-											dataCopy.selected = values;
-											if (props.setData) {
-												props.setData(props.feature.id, dataCopy);
-											}
-										}
+										ids = value as string[];
+									}
+									const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureSkillData;
+									dataCopy.selected = ids;
+									if (props.setData) {
+										props.setData(props.feature.id, dataCopy);
 									}
 								}}
 							/>

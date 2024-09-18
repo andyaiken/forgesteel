@@ -3,6 +3,7 @@ import { AbilityLogic } from '../../../logic/ability-logic';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
+import { HeroicResourceBadge } from '../../controls/heroic-resource-badge/heroic-resource-badge';
 import { PanelMode } from '../../../enums/panel-mode';
 import { PowerRollPanel } from '../power-roll-panel/power-roll-panel';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
@@ -21,7 +22,9 @@ export const AbilityPanel = (props: Props) => {
 		return (
 			<SelectablePanel>
 				<div className='ability-panel'>
-					<HeaderText ribbon={props.ability.cost > 0 ? `${props.ability.cost} pt` : ''}>{props.ability.name}</HeaderText>
+					<HeaderText ribbon={props.ability.cost > 0 ? <HeroicResourceBadge value={props.ability.cost} /> : undefined}>
+						{props.ability.name}
+					</HeaderText>
 					<div className='ds-text description-text'>{props.ability.description}</div>
 					{
 						props.mode === PanelMode.Full ?
@@ -42,9 +45,33 @@ export const AbilityPanel = (props: Props) => {
 								{props.ability.preEffect ? <Field label='Effect' value={props.ability.preEffect} /> : null}
 								{props.ability.powerRoll ? <PowerRollPanel ability={props.ability} hero={props.hero} /> : null}
 								{props.ability.effect ? <Field label='Effect' value={props.ability.effect} /> : null}
+								{props.ability.alternateEffects.map((effect, n) => <Field key={n} label='Alternate Effect' value={effect} />)}
 								{
 									props.ability.spend.map((spend, n) => (
-										<Field key={n} label={spend.value ? `Spend ${spend.value}` : 'Spend'} value={spend.effect} />
+										<Field
+											key={n}
+											label={(
+												<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
+													<span>Spend</span>
+													{spend.value ? <HeroicResourceBadge value={spend.value} /> : null}
+												</div>
+											)}
+											value={spend.effect}
+										/>
+									))
+								}
+								{
+									props.ability.persistence.map((persist, n) => (
+										<Field
+											key={n}
+											label={(
+												<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
+													<span>Persist</span>
+													{persist.value ? <HeroicResourceBadge value={persist.value} /> : null}
+												</div>
+											)}
+											value={persist.effect}
+										/>
 									))
 								}
 							</div>

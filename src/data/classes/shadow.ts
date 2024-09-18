@@ -11,7 +11,7 @@ export const shadow: HeroClass = {
 	name: 'Shadow',
 	description: 'Subtlety is your art, the tip of the blade your brush. You studied at a secret college, specializing in alchemy, illusion, or shadow-magics. Your training and knowledge places you among the elite assassins, spies, and commandos. But more powerful than any weapon or sorcery is your insight into your enemy’s weakness.',
 	heroicResource: 'Insight',
-	subclassName: 'College',
+	subclassName: 'Shadow College',
 	subclassCount: 1,
 	primaryCharacteristics: [ Characteristic.Agility, Characteristic.Presence ],
 	startingStamina: 18,
@@ -23,24 +23,26 @@ export const shadow: HeroClass = {
 			features: [
 				FeatureLogic.createSkillFeature({
 					id: 'shadow-1-1',
-					name: 'Skill',
 					skill: 'Hide'
 				}),
 				FeatureLogic.createSkillFeature({
 					id: 'shadow-1-2',
-					name: 'Skill',
 					skill: 'Sneak'
 				}),
 				FeatureLogic.createSkillChoiceFeature({
 					id: 'shadow-1-3',
-					name: 'Skill',
 					options: [ 'Criminal Underworld' ],
 					listOptions: [ SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue ],
 					count: 5
 				}),
+				FeatureLogic.createFeature({
+					id: 'shadow-1-4',
+					name: 'Insight',
+					description: 'Outside of combat and other dangerous situations tracked in turns and rounds, you have insight equal to your Victories. At the start of each of your turns during combat, you gain 2 insight. You gain 1 insight whenever you get a tier 3 result with an attack.'
+				}),
 				FeatureLogic.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
-						id: 'shadow-1-4',
+						id: 'shadow-1-5',
 						name: 'Hesitation Is Weakness',
 						description: 'Waiting for your enemies to act was never your style.',
 						type: AbilityLogic.createTypeTrigger('Another hero ends their turn.', true),
@@ -51,18 +53,15 @@ export const shadow: HeroClass = {
 					})
 				}),
 				FeatureLogic.createClassAbilityChoiceFeature({
-					id: 'shadow-1-5',
-					name: 'Ability',
+					id: 'shadow-1-6',
 					cost: 0
 				}),
 				FeatureLogic.createClassAbilityChoiceFeature({
-					id: 'shadow-1-6',
-					name: 'Ability',
+					id: 'shadow-1-7',
 					cost: 3
 				}),
 				FeatureLogic.createClassAbilityChoiceFeature({
-					id: 'shadow-1-7',
-					name: 'Ability',
+					id: 'shadow-1-8',
 					cost: 5
 				})
 			]
@@ -284,6 +283,7 @@ export const shadow: HeroClass = {
 			effect: 'You make two signature attacks that each deal extra damage equal to twice your Agility.'
 		})
 	],
+	kits: [],
 	subclasses: [
 		{
 			id: 'shadow-sub-1',
@@ -295,7 +295,6 @@ export const shadow: HeroClass = {
 					features: [
 						FeatureLogic.createSkillFeature({
 							id: 'shadow-sub-1-1-1',
-							name: 'Skill',
 							skill: 'Magic'
 						}),
 						FeatureLogic.createAbilityFeature({
@@ -330,6 +329,7 @@ export const shadow: HeroClass = {
 					]
 				}
 			],
+			kits: [],
 			selected: false
 		},
 		{
@@ -342,7 +342,6 @@ export const shadow: HeroClass = {
 					features: [
 						FeatureLogic.createSkillFeature({
 							id: 'shadow-sub-2-1-1',
-							name: 'Skill',
 							skill: 'Alchemy'
 						}),
 						FeatureLogic.createAbilityFeature({
@@ -380,6 +379,7 @@ export const shadow: HeroClass = {
 					]
 				}
 			],
+			kits: [],
 			selected: false
 		},
 		{
@@ -392,7 +392,6 @@ export const shadow: HeroClass = {
 					features: [
 						FeatureLogic.createSkillFeature({
 							id: 'shadow-sub-3-1-1',
-							name: 'Skill',
 							skill: 'Lie'
 						}),
 						FeatureLogic.createAbilityFeature({
@@ -423,6 +422,7 @@ export const shadow: HeroClass = {
 					]
 				}
 			],
+			kits: [],
 			selected: false
 		}
 	],

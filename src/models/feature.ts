@@ -2,6 +2,8 @@ import { Ability } from './ability';
 import { DamageModifier } from './damage-modifier';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
+import { Kit } from './kit';
+import { KitType } from '../enums/kit';
 import { SkillList } from '../enums/skill-list';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -17,6 +19,12 @@ export interface FeatureBonusData extends FeatureData {
 	valuePerLevel: number;
 };
 
+export interface FeatureChoiceData extends FeatureData {
+	options: { feature: Feature, value: number }[];
+	count: number;
+	selected: Feature[];
+}
+
 export interface FeatureClassAbilityData extends FeatureData {
 	cost: number;
 	count: number;
@@ -26,6 +34,12 @@ export interface FeatureClassAbilityData extends FeatureData {
 export interface FeatureDamageModifierData extends FeatureData {
 	modifiers: DamageModifier[];
 }
+
+export interface FeatureKitData extends FeatureData {
+	types: KitType[];
+	count: number;
+	selected: Kit[];
+};
 
 export interface FeatureLanguageData extends FeatureData {
 	options: string[];

@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from './ability-logic';
@@ -30,8 +30,8 @@ export class HeroLogic {
 			complication: null,
 			kit: null,
 			state: {
-				stamina: 0,
-				recoveries: 0,
+				staminaDamage: 0,
+				recoveriesUsed: 0,
 				victories: 0,
 				heroicResource: 0,
 				heroTokens: 0,
@@ -49,6 +49,14 @@ export class HeroLogic {
 		if (hero.kit) {
 			kits.push(hero.kit);
 		}
+
+		// Collate from features
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.Kit)
+			.forEach(f => {
+				const data = f.data as FeatureKitData;
+				kits.push(...data.selected);
+			});
 
 		return kits;
 	};
@@ -100,9 +108,21 @@ export class HeroLogic {
 			features.push(...hero.complication.features);
 		}
 
-		this.getKits(hero).forEach(kit => {
-			features.push(...kit.features);
-		});
+		if (hero.kit) {
+			features.push(...hero.kit.features);
+		}
+
+		// If any features grant kits, get the features from those kits
+		const featuresFromKits: Feature[] = [];
+		features
+			.filter(f => f.type === FeatureType.Kit)
+			.forEach(f => {
+				const data = f.data as FeatureKitData;
+				data.selected.forEach(kit => {
+					featuresFromKits.push(...kit.features);
+				});
+			});
+		features.push(...featuresFromKits);
 
 		return features;
 	};

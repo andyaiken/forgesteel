@@ -38,5 +38,7 @@ export interface Ability {
 	preEffect: string;
 	powerRoll: PowerRoll | null,
 	effect: string;
+	alternateEffects: string[];
 	spend: { value?: number, effect: string }[];
+	persistence: { value?: number, effect: string }[];
 }

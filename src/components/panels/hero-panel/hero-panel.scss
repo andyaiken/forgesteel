@@ -12,6 +12,19 @@
 		letter-spacing: 2px;
 	}
 
+	.top-tile {
+		padding: 0 10px;
+		border-radius: 10px;
+
+		&.clickable {
+			cursor: pointer;
+
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.06);
+			}
+		}
+	}
+
 	.characteristics-row {
 		display: flex;
 		align-items: flex-start;

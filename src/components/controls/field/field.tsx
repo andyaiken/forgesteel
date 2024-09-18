@@ -1,7 +1,7 @@
 import './field.scss';
 
 interface Props {
-	label: string;
+	label: string | number | JSX.Element | JSX.Element[];
 	value: string | number | JSX.Element | JSX.Element[];
 };
 

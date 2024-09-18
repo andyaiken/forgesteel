@@ -729,7 +729,16 @@ interface KitSectionProps {
 }
 
 const KitSection = (props: KitSectionProps) => {
-	const options = KitData.getKits().map(k => (
+	const kits = KitData.getKits();
+	if (props.hero.class) {
+		kits.push(...props.hero.class.kits);
+		props.hero.class.subclasses
+			.filter(sc => sc.selected)
+			.forEach(sc => {
+				kits.push(...sc.kits);
+			});
+	}
+	const options = Collections.sort(kits, k => k.name).map(k => (
 		<SelectablePanel key={k.id} onSelect={() => props.selectKit(k)}>
 			<KitPanel kit={k} />
 		</SelectablePanel>

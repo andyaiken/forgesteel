@@ -1,16 +1,9 @@
 # Forge Steel
 
-## Data
-
-* Add classes
-  * Conduit
-  * Elementalist
-  * Fury
-  * Tactician
-
 ## General UI
 
-(nothing)
+* Allow markdown in feature description text
+* Handle choice feature where some options have non-1 values
 
 ## Character Generation
 
@@ -27,10 +20,9 @@
 
 * Click on things to see details
   * Characteristic (allows roll)
-  * Ancestry / culture / career / class / kit / complication
   * Skill (allows roll)
   * Ability (allows roll if ability has power roll)
 
 ## Logic
 
-* Add feature types to codify features
+(nothing)

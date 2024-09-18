@@ -52,7 +52,7 @@
 
 			.ds-logo {
 				height: 30px;
-				background-color: rgb(255, 255, 255);
+				//background-color: rgb(255, 255, 255);
 				border-radius: 5px;
 			}
 		}
@@ -67,6 +67,12 @@
 
 		.main-footer {
 			background-color: rgb(0, 0, 0);	
+
+			.main-footer-section {
+				.ds-logo {
+					background-color: rgb(255, 255, 255);
+				}
+			}
 		}
 	}
 }

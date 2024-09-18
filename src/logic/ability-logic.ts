@@ -82,7 +82,7 @@ export class AbilityLogic {
 		} as PowerRoll;
 	};
 
-	static createAbility = (data: { id: string, name: string, description: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, spend?: { value?: number, effect: string }[] }) => {
+	static createAbility = (data: { id: string, name: string, description: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, alternateEffects?: string[], spend?: { value?: number, effect: string }[], persistence?: { value?: number, effect: string }[] }) => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -95,7 +95,9 @@ export class AbilityLogic {
 			preEffect: data.preEffect || '',
 			powerRoll: data.powerRoll || null,
 			effect: data.effect || '',
-			spend: data.spend || []
+			alternateEffects: data.alternateEffects || [],
+			spend: data.spend || [],
+			persistence: []
 		} as Ability;
 	};
 

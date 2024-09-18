@@ -7,8 +7,8 @@ import { HeroClass } from './class';
 import { Kit } from './kit';
 
 export interface HeroState {
-	stamina: number;
-	recoveries: number;
+	staminaDamage: number;
+	recoveriesUsed: number;
 	victories: number;
 	heroicResource: number;
 	heroTokens: number;

@@ -14,7 +14,6 @@ export const InProgressModal = () => {
 					<li>Devil: Fiendish Features</li>
 					<li>Dragon Knight: Knighthood</li>
 					<li>Revenant: Former Life</li>
-					<li>Conduit class</li>
 				</ul>
 				<div className='ds-text'>
 					You can help by submitting bug reports <a href='https://github.com/andyaiken/forgesteel/issues/' target='_blank'>here</a>.

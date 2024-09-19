@@ -18,7 +18,95 @@ export class AncestryData {
 		},
 		speed: 5,
 		features: [
-			// TODO: Fiendish Features
+			FeatureLogic.createChoiceFeature({
+				id: 'devil-feature-1',
+				name: 'Fiendish Features',
+				options: [
+					{
+						feature: FeatureLogic.createFeature({
+							id: 'devil-feature-1a',
+							name: 'Barbed Tail',
+							description: 'Your pointy tail allows you to punctuate all your actions. Once per round, you can deal 1 extra damage on a melee attack or free strike.'
+						}),
+						value: 1
+					},
+					{
+						feature: FeatureLogic.createBonusFeature({
+							id: 'devil-feature-1b',
+							name: 'Beast Legs',
+							description: 'Your powerful legs improve your speed by 1.',
+							field: FeatureField.Speed,
+							value: 1
+						}),
+						value: 2
+					},
+					{
+						feature: FeatureLogic.createDamageModifierFeature({
+							id: 'devil-feature-1c',
+							name: 'Exposed Skeleton',
+							description: 'Your bones are visible and hardened above your skin, granting you Weapon immunity 2.',
+							modifiers: [
+								{
+									type: DamageModifierType.Immunity,
+									damageType: 'Weapon',
+									value: 2,
+									valuePerLevel: 0
+								}
+							]
+						}),
+						value: 2
+					},
+					{
+						feature: FeatureLogic.createFeature({
+							id: 'devil-feature-1d',
+							name: 'Glowing Eyes',
+							description: 'Your eyes are a solid, vibrant color that flares to show your excitement or rage. Whenever you take damage from a creature, you can use a triggered action to curse that creature for daring to do you harm. The creature takes 1d10 psychic damage.'
+						}),
+						value: 1
+					},
+					{
+						feature: FeatureLogic.createFeature({
+							id: 'devil-feature-1e',
+							name: 'Hellsight',
+							description: 'Your eyes let you see through the dark, fog, and other types of concealment. You don’t take a bane on attacks against concealed, unhidden creatures.'
+						}),
+						value: 1
+					},
+					{
+						feature: FeatureLogic.createFeature({
+							id: 'devil-feature-1f',
+							name: 'Horns',
+							description: 'Your cherished horns are a hardened representation of your force of will, granting you an edge on Presence resistance rolls.'
+						}),
+						value: 1
+					},
+					{
+						feature: FeatureLogic.createFeature({
+							id: 'devil-feature-1g',
+							name: 'Prehensile Tail',
+							description: 'Your prehensile tail allows you to challenge foes on all sides. You can’t be flanked.'
+						}),
+						value: 1
+					},
+					{
+						feature: FeatureLogic.createFeature({
+							id: 'devil-feature-1h',
+							name: 'Wings',
+							description: 'You possess wings powerful enough to take you airborne. As a maneuver, you can switch between walking and flying when you are touching the ground, or vice versa when you are within 1 square of the ground. While flying, your stability drops to 0 and you have damage weakness 5. While using your wings to fly, you can stay aloft for a number of rounds equal to your Might (minimum of 1 round) before you fall prone.'
+						}),
+						value: 2
+					},
+					{
+						feature: FeatureLogic.createFeature({
+							id: 'devil-feature-1i',
+							name: 'Silver Tongue',
+							description: 'You can twist how your words are perceived to get a better read on people. You gain an edge when attempting to discover an NPC’s motivations and pitfalls during negotiations.'
+						}),
+						value: 1
+					}
+				],
+				count: 3
+			}),
 			FeatureLogic.createFeature({
 				id: 'devil-feature-2',
 				name: 'Silver Tongue',
@@ -42,7 +130,28 @@ export class AncestryData {
 				name: 'Wyrmplate',
 				description: 'Your hardened scales grant you immunity 5 to one of the following damage types: cold, corruption, fire, lightning, or poison. You can change your damage immunity type while out of combat (no action required).'
 			}),
-			// TODO: Knighthood
+			FeatureLogic.createChoiceFeature({
+				id: 'dragon-knight-feature-2',
+				name: 'Knighthood',
+				options: [
+					{
+						feature: FeatureLogic.createFeature({
+							id: 'dragon-knight-feature-2a',
+							name: 'Draconian Rush',
+							description: 'As a maneuver, you can fly in a straight line up to your speed. Until you reach level 6, you must end your turn on a solid surface or fall, then fall prone.'
+						}),
+						value: 1
+					},
+					{
+						feature: FeatureLogic.createFeature({
+							id: 'dragon-knight-feature-2b',
+							name: 'Draconian Guard',
+							description: 'When you or a creature adjacent to you is attacked, you can use a triggered action to swing your wings around and guard against the blow, reducing any damage from the attack by an amount equal to your level + your Victories.'
+						}),
+						value: 1
+					}
+				]
+			}),
 			FeatureLogic.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'dragon-knight-feature-3',

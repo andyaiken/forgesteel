@@ -4,6 +4,7 @@
 
 * Allow markdown in feature description text
 * Handle choice feature where some options have non-1 values
+  * Devil ancestry: Fieldish Features
 
 ## Character Generation
 

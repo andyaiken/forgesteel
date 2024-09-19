@@ -47,9 +47,17 @@
 			color: rgba(255, 255, 255, 0.88);
 		}
 
+		.top-tile {
+			&.clickable {
+				&:hover {
+					background-color: rgba(255, 255, 255, 0.06);
+				}
+			}
+		}
+
 		.characteristics-row {
 			border-color: rgb(50, 50, 50);
-			background-color: rgb(150, 150, 150);
+			background-color: rgb(200, 200, 200);
 		}
 	}
 }

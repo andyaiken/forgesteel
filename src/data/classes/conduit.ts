@@ -93,6 +93,7 @@ For each piety spent, you can choose one of the following enhancements:
 				}),
 				FeatureLogic.createChoiceFeature({
 					id: 'conduit-1-6',
+					name: 'Triggered Action',
 					options: [
 						{
 							feature: FeatureLogic.createAbilityFeature({

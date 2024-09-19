@@ -11,6 +11,16 @@ localforage
 	.then(heroes => {
 		if (heroes) {
 			heroes.forEach(hero => {
+				if (hero.class) {
+					if (hero.class.kits === undefined) {
+						hero.class.kits = [];
+					}
+					hero.class.subclasses.forEach(sc => {
+						if (sc.kits === undefined) {
+							sc.kits = [];
+						}
+					});
+				}
 				if (hero.kit) {
 					if (hero.kit.abilities === undefined) {
 						hero.kit.abilities = [];

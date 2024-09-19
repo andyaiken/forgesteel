@@ -11,8 +11,6 @@ export const InProgressModal = () => {
 					Specifically, here are some pieces that haven't been added yet:
 				</div>
 				<ul>
-					<li>Devil: Fiendish Features</li>
-					<li>Dragon Knight: Knighthood</li>
 					<li>Revenant: Former Life</li>
 				</ul>
 				<div className='ds-text'>

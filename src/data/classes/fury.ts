@@ -354,7 +354,7 @@ You are never surprised. Additionally, whenever you would push a target with for
 			selected: false
 		},
 		{
-			id: 'fury-sub-2',
+			id: 'fury-sub-3',
 			name: 'Stormwight',
 			description: 'You channel your rage into the form of animals and primordial storms.',
 			featuresByLevel: [

@@ -1,9 +1,9 @@
-import { Button, Popover, Space } from 'antd';
+import { Button, Popover } from 'antd';
 import { Ancestry } from '../../../models/ancestry';
+import { AppHeader } from '../../controls/app-header/app-header';
 import { Career } from '../../../models/career';
 import { Complication } from '../../../models/complication';
 import { Culture } from '../../../models/culture';
-import { DownOutlined } from '@ant-design/icons';
 import { Hero } from '../../../models/hero';
 import { HeroClass } from '../../../models/class';
 import { HeroPanel } from '../../panels/hero-panel/hero-panel';
@@ -16,6 +16,7 @@ import './hero-view-page.scss';
 
 interface Props {
 	hero: Hero;
+	showAbout: () => void;
 	closeHero: () => void;
 	editHero: () => void;
 	exportHero: (format: 'image' | 'pdf') => void;
@@ -34,9 +35,13 @@ export const HeroPage = (props: Props) => {
 
 	return (
 		<div className='hero-view-page'>
-			<div className='action-row'>
-				<Button onClick={props.closeHero}>Close</Button>
-				<Button onClick={props.editHero}>Edit</Button>
+			<AppHeader showAbout={props.showAbout}>
+				<Button onClick={props.closeHero}>
+					Close
+				</Button>
+				<Button onClick={props.editHero}>
+					Edit
+				</Button>
 				<Popover
 					trigger='click'
 					placement='bottom'
@@ -48,10 +53,7 @@ export const HeroPage = (props: Props) => {
 					)}
 				>
       				<Button>
-					  <Space>
-							Export
-							<DownOutlined />
-						</Space>
+						Export
 					</Button>
     			</Popover>
 				<Popover
@@ -65,26 +67,38 @@ export const HeroPage = (props: Props) => {
 					)}
 				>
       				<Button>
-					  <Space>
-							Options
-							<DownOutlined />
-						</Space>
+						Options
 					</Button>
     			</Popover>
-				<Button danger={true} onClick={props.deleteHero}>Delete</Button>
+				<Popover
+					trigger='click'
+					placement='bottom'
+					content={(
+						<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+							<div>This can't be undone; are you sure?</div>
+							<Button danger={true} onClick={props.deleteHero}>Delete</Button>
+						</div>
+					)}
+				>
+					<Button>
+						Delete
+					</Button>
+    			</Popover>
+			</AppHeader>
+			<div className='hero-view-page-content'>
+				<HeroPanel
+					hero={props.hero}
+					mode={PanelMode.Full}
+					showSkillsInGroups={showSkillsInGroups}
+					showFreeStrikes={showFreeStrikes}
+					onSelectAncestry={props.onSelectAncestry}
+					onSelectCulture={props.onSelectCulture}
+					onSelectCareer={props.onSelectCareer}
+					onSelectClass={props.onSelectClass}
+					onSelectComplication={props.onSelectComplication}
+					onSelectKit={props.onSelectKit}
+				/>
 			</div>
-			<HeroPanel
-				hero={props.hero}
-				mode={PanelMode.Full}
-				showSkillsInGroups={showSkillsInGroups}
-				showFreeStrikes={showFreeStrikes}
-				onSelectAncestry={props.onSelectAncestry}
-				onSelectCulture={props.onSelectCulture}
-				onSelectCareer={props.onSelectCareer}
-				onSelectClass={props.onSelectClass}
-				onSelectComplication={props.onSelectComplication}
-				onSelectKit={props.onSelectKit}
-			/>
 		</div>
 	);
 };

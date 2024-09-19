@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from './ability-logic';
@@ -111,6 +111,18 @@ export class HeroLogic {
 		if (hero.kit) {
 			features.push(...hero.kit.features);
 		}
+
+		// If any features grant feature choices, get the selected features
+		const featuresFromChoices: Feature[] = [];
+		features
+			.filter(f => f.type === FeatureType.Choice)
+			.forEach(f => {
+				const data = f.data as FeatureChoiceData;
+				data.selected.forEach(selected => {
+					featuresFromChoices.push(selected);
+				});
+			});
+		features.push(...featuresFromChoices);
 
 		// If any features grant kits, get the features from those kits
 		const featuresFromKits: Feature[] = [];

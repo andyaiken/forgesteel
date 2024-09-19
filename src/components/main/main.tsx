@@ -1,4 +1,3 @@
-import { Button, Drawer } from 'antd';
 import { AboutModal } from '../modals/about/about';
 import { Ancestry } from '../../models/ancestry';
 import { AncestryPanel } from '../panels/ancestry-panel/ancestry-panel';
@@ -11,6 +10,7 @@ import { Complication } from '../../models/complication';
 import { ComplicationPanel } from '../panels/complication-panel/complication-panel';
 import { Culture } from '../../models/culture';
 import { CulturePanel } from '../panels/culture-panel/culture-panel';
+import { Drawer } from 'antd';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
 import { HeroEditPage } from '../pages/hero-edit/hero-edit-page';
@@ -177,6 +177,7 @@ export const Main = (props: Props) => {
 			case Page.Welcome:
 				return (
 					<WelcomePage
+						showAbout={showAbout}
 						showHeroes={showHeroList}
 						showInProgress={showInProgress}
 					/>
@@ -185,6 +186,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroListPage
 						heroes={heroes}
+						showAbout={showAbout}
 						addHero={addHero}
 						viewHero={viewHero}
 					/>
@@ -193,6 +195,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroPage
 						hero={selectedHero as Hero}
+						showAbout={showAbout}
 						closeHero={closeSelectedHero}
 						editHero={editSelectedHero}
 						exportHero={exportSelectedHero}
@@ -209,6 +212,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroEditPage
 						hero={selectedHero as Hero}
+						showAbout={showAbout}
 						saveChanges={saveEditSelectedHero}
 						cancelChanges={cancelEditSelectedHero}
 					/>
@@ -218,12 +222,6 @@ export const Main = (props: Props) => {
 
 	return (
 		<div className='main'>
-			<div className='main-header'>
-				<div className='title'>Forge Steel</div>
-				<div className='action-buttons'>
-					<Button onClick={showAbout}>About</Button>
-				</div>
-			</div>
 			<div className='main-content'>
 				{getContent()}
 			</div>

@@ -1,9 +1,10 @@
-import { Button, Divider, Input, Radio, Segmented, Select, Space } from 'antd';
+import { Button, Input, Radio, Segmented, Select, Space } from 'antd';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../data/culture-data';
 import { Feature, FeatureBonusData, FeatureData, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
 import { Ancestry } from '../../../models/ancestry';
 import { AncestryData } from '../../../data/ancestry-data';
 import { AncestryPanel } from '../../panels/ancestry-panel/ancestry-panel';
+import { AppHeader } from '../../controls/app-header/app-header';
 import { CampaignSettingData } from '../../../data/campaign-setting-data';
 import { Career } from '../../../models/career';
 import { CareerData } from '../../../data/career-data';
@@ -53,6 +54,7 @@ enum PageState {
 
 interface Props {
 	hero: Hero;
+	showAbout: () => void;
 	saveChanges: (hero: Hero) => void;
 	cancelChanges: () => void;
 }
@@ -299,34 +301,41 @@ export const HeroEditPage = (props: Props) => {
 
 	return (
 		<div className='hero-edit-page'>
-			<div className='action-row'>
-				<Button type='primary' disabled={!dirty} onClick={saveChanges}>Save Changes</Button>
-				<Button onClick={cancelChanges}>Cancel</Button>
+			<AppHeader showAbout={props.showAbout}>
+				<Button type='primary' disabled={!dirty} onClick={saveChanges}>
+					Save Changes
+				</Button>
+				<Button onClick={cancelChanges}>
+					Cancel
+				</Button>
+			</AppHeader>
+			<div className='hero-edit-page-content'>
+				<div className='page-selector'>
+					<Segmented<Page>
+						options={[
+							Page.Ancestry,
+							Page.Culture,
+							Page.Career,
+							Page.Class,
+							Page.Kit,
+							Page.Complication,
+							Page.Details
+						].map(page => ({
+							value: page,
+							label: (
+								<div className='page-button'>
+									<div className='page-button-title'>{page}</div>
+									<div className='page-button-subtitle'>{getPageState(page)}</div>
+								</div>
+							)
+						}))}
+						block={true}
+						value={page}
+						onChange={setPage}
+					/>
+				</div>
+				{getContent()}
 			</div>
-			<Segmented<Page>
-				options={[
-					Page.Ancestry,
-					Page.Culture,
-					Page.Career,
-					Page.Class,
-					Page.Kit,
-					Page.Complication,
-					Page.Details
-				].map(page => ({
-					value: page,
-					label: (
-						<div className='page-button'>
-							<div className='page-button-title'>{page}</div>
-							<div className='page-button-subtitle'>{getPageState(page)}</div>
-						</div>
-					)
-				}))}
-				block={true}
-				value={page}
-				onChange={setPage}
-			/>
-			<Divider />
-			{getContent()}
 		</div>
 	);
 };

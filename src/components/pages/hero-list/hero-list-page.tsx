@@ -1,4 +1,5 @@
-import { Button, Space } from 'antd';
+import { AppHeader } from '../../controls/app-header/app-header';
+import { Button } from 'antd';
 import { Hero } from '../../../models/hero';
 import { HeroPanel } from '../../panels/hero-panel/hero-panel';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -8,6 +9,7 @@ import './hero-list-page.scss';
 
 interface Props {
 	heroes: Hero[];
+	showAbout: () => void;
 	addHero: () => void;
 	viewHero: (heroID: string) => void;
 }
@@ -15,10 +17,12 @@ interface Props {
 export const HeroListPage = (props: Props) => {
 	return (
 		<div className='hero-list-page'>
-			<div className='action-row'>
-				<Button type='primary' onClick={props.addHero}>Create A New Hero</Button>
-			</div>
-			<Space direction='vertical'>
+			<AppHeader showAbout={props.showAbout}>
+				<Button type='primary' onClick={props.addHero}>
+					Create A New Hero
+				</Button>
+			</AppHeader>
+			<div className='hero-list-page-content'>
 				{
 					props.heroes.map(hero => (
 						<SelectablePanel key={hero.id} onSelect={() => props.viewHero(hero.id)}>
@@ -26,7 +30,7 @@ export const HeroListPage = (props: Props) => {
 						</SelectablePanel>
 					))
 				}
-			</Space>
+			</div>
 		</div>
 	);
 };

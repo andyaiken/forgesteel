@@ -1,0 +1,43 @@
+.app-header {
+	padding: 10px 20px;
+	background-color: rgb(200, 200, 200);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 50px;
+
+	.title {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+
+		.title-logo {
+			height: 20px;
+		}
+
+		.title-text {
+			font-size: 24px;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+		}
+	}
+
+	.action-buttons {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+
+		.divider {
+			height: 20px;
+			width: 1px;
+			background-color: rgba(0, 0, 0, 0.2);
+		}
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.app-header {
+		background-color: rgb(0, 0, 0);	
+	}
+}

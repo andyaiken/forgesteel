@@ -32,6 +32,7 @@ interface Props {
 export const HeroPage = (props: Props) => {
 	const [ showSkillsInGroups, setShowSkillsInGroups ] = useState<boolean>(false);
 	const [ showFreeStrikes, setShowFreeStrikes ] = useState<boolean>(false);
+	const [ showStandardAbilities, setShowStandardAbilities ] = useState<boolean>(false);
 
 	return (
 		<div className='hero-view-page'>
@@ -63,6 +64,7 @@ export const HeroPage = (props: Props) => {
 						<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 							<Toggle label='Show Skills In Groups' value={showSkillsInGroups} onChange={setShowSkillsInGroups} />
 							<Toggle label='Show Free Strikes' value={showFreeStrikes} onChange={setShowFreeStrikes} />
+							<Toggle label='Show Standard Abilities' value={showStandardAbilities} onChange={setShowStandardAbilities} />
 						</div>
 					)}
 				>
@@ -91,6 +93,7 @@ export const HeroPage = (props: Props) => {
 					mode={PanelMode.Full}
 					showSkillsInGroups={showSkillsInGroups}
 					showFreeStrikes={showFreeStrikes}
+					showStandardAbilities={showStandardAbilities}
 					onSelectAncestry={props.onSelectAncestry}
 					onSelectCulture={props.onSelectCulture}
 					onSelectCareer={props.onSelectCareer}

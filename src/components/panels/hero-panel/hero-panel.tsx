@@ -26,6 +26,7 @@ interface Props {
 	mode?: PanelMode;
 	showSkillsInGroups?: boolean;
 	showFreeStrikes?: boolean;
+	showStandardAbilities?: boolean;
 	onSelectAncestry?: (ancestry: Ancestry) => void;
 	onSelectCulture?: (culture: Culture) => void;
 	onSelectCareer?: (career: Career) => void;
@@ -277,8 +278,8 @@ export const HeroPanel = (props: Props) => {
 			sm: 12,
 			md: 8,
 			lg: 8,
-			xl: 6,
-			xxl: 4
+			xl: 8,
+			xxl: 6
 		};
 
 		return (
@@ -303,11 +304,11 @@ export const HeroPanel = (props: Props) => {
 			sm: 12,
 			md: 8,
 			lg: 8,
-			xl: 6,
-			xxl: 4
+			xl: 8,
+			xxl: 6
 		};
 
-		const abilities = HeroLogic.getAbilities(props.hero, props.showFreeStrikes || false)
+		const abilities = HeroLogic.getAbilities(props.hero, props.showFreeStrikes || false, props.showStandardAbilities || false)
 			.filter(ability => ability.type.usage === type);
 		if (abilities.length === 0) {
 			return null;

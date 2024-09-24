@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { AbilityLogic } from '../../logic/ability-logic';
 import { Characteristic } from '../../enums/characteristic';
+import { FeatureField } from '../../enums/feature-field';
 import { FeatureLogic } from '../../logic/feature-logic';
 import { HeroClass } from '../../models/class';
 import { KitType } from '../../enums/kit';
@@ -15,13 +16,21 @@ export const tactician: HeroClass = {
 	subclassName: 'Tactical Doctrine',
 	subclassCount: 1,
 	primaryCharacteristics: [ Characteristic.Might, Characteristic.Reason ],
-	startingStamina: 21,
-	staminaPerLevel: 10,
-	recoveries: 12,
 	featuresByLevel: [
 		{
 			level: 1,
 			features: [
+				FeatureLogic.createBonusFeature({
+					id: 'tatician-stamina',
+					field: FeatureField.Stamina,
+					value: 21,
+					valuePerLevel: 10
+				}),
+				FeatureLogic.createBonusFeature({
+					id: 'tactician-recoveries',
+					field: FeatureField.Recoveries,
+					value: 12
+				}),
 				FeatureLogic.createSkillFeature({
 					id: 'tactician-1-1',
 					skill: 'Lead'

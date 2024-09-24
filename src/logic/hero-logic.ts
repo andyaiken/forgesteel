@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureSizeData, FeatureSkillData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from './ability-logic';
@@ -33,6 +33,7 @@ export class HeroLogic {
 				staminaDamage: 0,
 				recoveriesUsed: 0,
 				victories: 0,
+				xp: 0,
 				heroicResource: 0,
 				heroTokens: 0,
 				renown: 0,
@@ -475,11 +476,6 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 	static getStamina = (hero: Hero) => {
 		let value = 0;
 
-		if (hero.class) {
-			value += hero.class.startingStamina;
-			value += hero.class.staminaPerLevel * (hero.class.level - 1);
-		}
-
 		// Add maximum from kits
 		const kits = this.getKits(hero);
 		value += Collections.max(kits.map(kit => kit.stamina), value => value) || 0;
@@ -518,10 +514,6 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 	static getRecoveries = (hero: Hero) => {
 		let value = 0;
 
-		if (hero.class) {
-			value += hero.class.recoveries;
-		}
-
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data as FeatureBonusData)
@@ -536,16 +528,30 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 		return value;
 	};
 
-	static getSize = (size: Size) => {
+	static getSize = (hero: Hero) => {
+		const features = this.getFeatures(hero).filter(f => f.type === FeatureType.Size);
+		if (features.length > 0) {
+			const datas = features.map(f => f.data as FeatureSizeData);
+			const value = Collections.max(datas.map(d => d.size.value), v => v);
+			const mods = Collections.distinct(datas.map(d => d.size.mod), m => m);
+			return {
+				value: value,
+				mod: value === 1 ? mods[0] : ''
+			} as Size;
+		}
+
+		return {
+			value: 1,
+			mod: 'M'
+		} as Size;
+	};
+
+	static getSizeString = (size: Size) => {
 		return `${size.value}${size.mod}`;
 	};
 
 	static getSpeed = (hero: Hero) => {
 		let value = 0;
-
-		if (hero.ancestry) {
-			value += hero.ancestry.speed;
-		}
 
 		// Add maximum from kits
 		const kits = this.getKits(hero);

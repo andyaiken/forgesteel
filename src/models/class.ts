@@ -23,9 +23,6 @@ export interface HeroClass {
 	subclassName: string;
 	subclassCount: number;
 	primaryCharacteristics: Characteristic[];
-	startingStamina: number;
-	staminaPerLevel: number;
-	recoveries: number;
 
 	featuresByLevel: { level: number, features: Feature[] }[];
 	abilities: Ability[];

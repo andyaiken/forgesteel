@@ -9,6 +9,7 @@ import { HeroClass } from '../../../models/class';
 import { HeroPanel } from '../../panels/hero-panel/hero-panel';
 import { Kit } from '../../../models/kit';
 import { PanelMode } from '../../../enums/panel-mode';
+import { Skill } from '../../../models/skill';
 import { Toggle } from '../../controls/toggle/toggle';
 import { useState } from 'react';
 
@@ -27,6 +28,9 @@ interface Props {
 	onSelectClass: (heroClass: HeroClass) => void;
 	onSelectComplication: (complication: Complication) => void;
 	onSelectKit: (kit: Kit) => void;
+	onSelectSkill: (skill: Skill) => void;
+	onShowState: () => void;
+	onShowRecovery: () => void;
 }
 
 export const HeroPage = (props: Props) => {
@@ -100,6 +104,9 @@ export const HeroPage = (props: Props) => {
 					onSelectClass={props.onSelectClass}
 					onSelectComplication={props.onSelectComplication}
 					onSelectKit={props.onSelectKit}
+					onSelectSkill={props.onSelectSkill}
+					onShowState={props.onShowState}
+					onShowRecovery={props.onShowRecovery}
 				/>
 			</div>
 		</div>

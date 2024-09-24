@@ -29,6 +29,9 @@ localforage
 						hero.kit.features = [];
 					}
 				}
+				if (hero.state.xp === undefined) {
+					hero.state.xp = 0;
+				}
 			});
 		}
 

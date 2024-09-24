@@ -169,7 +169,11 @@ export class ComplicationData {
 			FeatureLogic.createFeature({
 				id: 'comp-vivid-dreams-b',
 				name: 'Vivid Dreams',
-				description: 'Whenever you take a respite, make a Reason power roll. On an 11 or lower, you receive a painful vision that is fractal and inscrutable. When the respite ends, you immediately lose 1 Recovery. On a 12 to 16, you experience a vision of an event currently happening in your world. The vision lasts for just a few seconds, but the information you glean is helpful to you. On a 17 or higher, you receive a full minute or more of the scene.'
+				description: `
+Whenever you take a respite, make a Reason power roll.
+* On an 11 or lower, you receive a painful vision that is fractal and inscrutable. When the respite ends, you immediately lose 1 Recovery.
+* On a 12 to 16, you experience a vision of an event currently happening in your world. The vision lasts for just a few seconds, but the information you glean is helpful to you.
+* On a 17 or higher, you receive a full minute or more of the scene.`
 			})
 		]
 	};

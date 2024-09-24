@@ -1,16 +1,34 @@
 .header-text-panel {
-	margin: 10px 0;
-	padding-bottom: 5px;
+	padding: 5px 0;
 	border-bottom: 1px solid rgba(5, 5, 5, 0.06);
 	display: flex;
 	align-items: center;
 	gap: 10px;
 
+	&.level-1 {
+		margin: 15px 0;
+		border-bottom-width: 5px;
+
+		.header-text {
+			font-size: 20px;
+			letter-spacing: 2px;
+		}
+	}
+
+	&.level-2 {
+		margin: 10px 0;
+		border-bottom-width: 1px;
+
+		.header-text {
+			font-size: 16px;
+			letter-spacing: 1px;
+		}
+	}
+
 	.header-text {
-		font-size: 16px;
+		color: rgba(0, 0, 0, 0.88);
 		font-weight: 600;
 		text-transform: uppercase;
-		letter-spacing: 1px;
 	}
 
 	.header-keywords {
@@ -20,10 +38,10 @@
 
 @media (prefers-color-scheme: dark) {
 	.header-text-panel {
-		border-bottom: 1px solid rgba(250, 250, 250, 0.6);
+		border-bottom-color: rgba(250, 250, 250, 0.6);
 
-		.header-ribbon {
-			color: rgba(0, 0, 0, 0.88);
+		.header-text {
+			color: rgba(255, 255, 255, 0.88);
 		}
 	}	
 }

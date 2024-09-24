@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { AbilityLogic } from '../../logic/ability-logic';
 import { Characteristic } from '../../enums/characteristic';
+import { FeatureField } from '../../enums/feature-field';
 import { FeatureLogic } from '../../logic/feature-logic';
 import { HeroClass } from '../../models/class';
 import { SkillList } from '../../enums/skill-list';
@@ -14,13 +15,21 @@ export const shadow: HeroClass = {
 	subclassName: 'Shadow College',
 	subclassCount: 1,
 	primaryCharacteristics: [ Characteristic.Agility, Characteristic.Presence ],
-	startingStamina: 18,
-	staminaPerLevel: 8,
-	recoveries: 10,
 	featuresByLevel: [
 		{
 			level: 1,
 			features: [
+				FeatureLogic.createBonusFeature({
+					id: 'conduit-stamina',
+					field: FeatureField.Stamina,
+					value: 18,
+					valuePerLevel: 8
+				}),
+				FeatureLogic.createBonusFeature({
+					id: 'conduit-recoveries',
+					field: FeatureField.Recoveries,
+					value: 10
+				}),
 				FeatureLogic.createSkillFeature({
 					id: 'shadow-1-1',
 					skill: 'Hide'

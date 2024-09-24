@@ -1,8 +1,14 @@
 .heroic-resource-badge {
-	border: 1px solid rgb(100, 170, 220);
+	border: 1px solid rgb(22, 119, 255);
 	border-radius: 10px;
-	background-color: rgb(170, 210, 255);
+	background-color: rgb(180, 220, 255);
 	padding: 2px 6px;
 	font-size: 10px;
 	font-weight: 600;
+}
+
+@media (prefers-color-scheme: dark) {
+	.heroic-resource-badge {
+		color: rgba(0, 0, 0, 0.88);
+	}
 }

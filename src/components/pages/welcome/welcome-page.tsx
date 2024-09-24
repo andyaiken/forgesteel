@@ -8,7 +8,6 @@ import './welcome-page.scss';
 interface Props {
 	showAbout: () => void;
 	showHeroes: () => void;
-	showInProgress: () => void;
 }
 
 export const WelcomePage = (props: Props) => {
@@ -17,7 +16,7 @@ export const WelcomePage = (props: Props) => {
 			<AppHeader showAbout={props.showAbout}/>
 			<div className='welcome-page-content'>
 				<SelectablePanel>
-					<HeaderText>Welcome to FORGE STEEL</HeaderText>
+					<HeaderText level={1}>Welcome to FORGE STEEL</HeaderText>
 					<div className='ds-text'>
 						<b>FORGE STEEL</b> is a hero builder app for <b>DRAW STEEL</b>.
 					</div>
@@ -30,9 +29,6 @@ export const WelcomePage = (props: Props) => {
 					<Divider />
 					<Button type='primary' block={true} onClick={props.showHeroes}>Click here to start building heroes</Button>
 				</SelectablePanel>
-				<div className='ds-text warning-text'>
-					<Button type='text' onClick={props.showInProgress}>This is a work-in-progress.</Button>
-				</div>
 			</div>
 		</div>
 	);

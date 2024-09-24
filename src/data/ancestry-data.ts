@@ -12,12 +12,17 @@ export class AncestryData {
 		id: 'ancestry-devil',
 		name: 'Devil',
 		description: 'The native ancestry of the Seven Cities of Hell, devils are humanoids with red or blue skin expressed in a wide variety of hues, from bright crimson to deep purple. Each devil is born with some hellmark—horns, a tail, cloven hooves, a forked tongue, fanged incisors, or even wings.',
-		size: {
-			value: 1,
-			mod: 'M'
-		},
-		speed: 5,
 		features: [
+			FeatureLogic.createSizeFeature({
+				id: 'devil-size',
+				sizeValue: 1,
+				sizeMod: 'M'
+			}),
+			FeatureLogic.createBonusFeature({
+				id: 'devil-speed',
+				field: FeatureField.Speed,
+				value: 5
+			}),
 			FeatureLogic.createChoiceFeature({
 				id: 'devil-feature-1',
 				name: 'Fiendish Features',
@@ -119,12 +124,17 @@ export class AncestryData {
 		id: 'ancestry-dragon-knight',
 		name: 'Dragon Knight',
 		description: 'The Ritual of Dracogenesis that grants the power to create a generation of dragon knights—also known as draconians or wyrmwights—is obscure and supremely difficult for even an experienced sorcerer to master.',
-		size: {
-			value: 1,
-			mod: 'M'
-		},
-		speed: 5,
 		features: [
+			FeatureLogic.createSizeFeature({
+				id: 'dragon-knight-size',
+				sizeValue: 1,
+				sizeMod: 'M'
+			}),
+			FeatureLogic.createBonusFeature({
+				id: 'dragon-knight-speed',
+				field: FeatureField.Speed,
+				value: 5
+			}),
 			FeatureLogic.createFeature({
 				id: 'dragon-knight-feature-1',
 				name: 'Wyrmplate',
@@ -177,12 +187,17 @@ export class AncestryData {
 		id: 'ancestry-dwarf',
 		name: 'Dwarf',
 		description: 'Possessed of a strength that belies their size, dwarves have flesh infused with stone—a silico-organic hybrid making them physically denser than other humanoids. They enjoy a reputation in Orden as savvy engineers and technologists thanks to the lore they inherited from their elder siblings, the long-extinct steel dwarves.',
-		size: {
-			value: 1,
-			mod: 'M'
-		},
-		speed: 5,
 		features: [
+			FeatureLogic.createSizeFeature({
+				id: 'dwarf-size',
+				sizeValue: 1,
+				sizeMod: 'M'
+			}),
+			FeatureLogic.createBonusFeature({
+				id: 'dwarf-speed',
+				field: FeatureField.Speed,
+				value: 5
+			}),
 			FeatureLogic.createBonusFeature({
 				id: 'dwarf-feature-1',
 				name: 'Grounded',
@@ -212,12 +227,17 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 		id: 'ancestry-wode-elf',
 		name: 'Elf (wode)',
 		description: 'Children of the sylvan celestials and masters of the elf-haunted forests called wodes, wode elves see all forests as their domain by birthright. They know and enjoy their reputation among humans for snatching children who wander too far into the woods. Humans should fear the trees.',
-		size: {
-			value: 1,
-			mod: 'M'
-		},
-		speed: 6,
 		features: [
+			FeatureLogic.createSizeFeature({
+				id: 'wode-elf-size',
+				sizeValue: 1,
+				sizeMod: 'M'
+			}),
+			FeatureLogic.createBonusFeature({
+				id: 'wode-elf-speed',
+				field: FeatureField.Speed,
+				value: 6
+			}),
 			FeatureLogic.createFeature({
 				id: 'wode-elf-feature-1',
 				name: 'Otherworldly Grace',
@@ -235,12 +255,17 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 		id: 'ancestry-high-elf',
 		name: 'Elf (high)',
 		description: 'Children of the solar celestials created to tend their libraries and attend to the true elves as heralds, the high elves remember a better age, before the coming of humans and war. A time when the celestials were still in the world, and all that mattered was art and beauty.',
-		size: {
-			value: 1,
-			mod: 'M'
-		},
-		speed: 5,
 		features: [
+			FeatureLogic.createSizeFeature({
+				id: 'high-elf-size',
+				sizeValue: 1,
+				sizeMod: 'M'
+			}),
+			FeatureLogic.createBonusFeature({
+				id: 'high-elf-speed',
+				field: FeatureField.Speed,
+				value: 5
+			}),
 			FeatureLogic.createFeature({
 				id: 'high-elf-feature-1',
 				name: 'High Elf Glamor',
@@ -263,12 +288,17 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 		id: 'ancestry-hakaan',
 		name: 'Hakaan',
 		description: 'In spite of their friendly, outgoing nature, the rare presence of a hakaan in human society is considered a harbinger—an omen of dark times. Descended from a tribe of giants in upper Vanigar, the original Haka’an tribe made a bargain with Holkatja the Vanigar trickster god. They traded some of their gigantic size and strength for the ability to see the future.',
-		size: {
-			value: 1,
-			mod: 'L'
-		},
-		speed: 5,
 		features: [
+			FeatureLogic.createSizeFeature({
+				id: 'hakaan-size',
+				sizeValue: 1,
+				sizeMod: 'L'
+			}),
+			FeatureLogic.createBonusFeature({
+				id: 'hakaan-speed',
+				field: FeatureField.Speed,
+				value: 5
+			}),
 			FeatureLogic.createFeature({
 				id: 'hakaan-feature-1',
 				name: 'Doomsight',
@@ -291,12 +321,17 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 		id: 'ancestry-human',
 		name: 'Human',
 		description: '“Humans,” the dwarf said with a combination of exasperation and awe. “Their only virtue seems to be believing in impossible things.”',
-		size: {
-			value: 1,
-			mod: 'M'
-		},
-		speed: 5,
 		features: [
+			FeatureLogic.createSizeFeature({
+				id: 'human-size',
+				sizeValue: 1,
+				sizeMod: 'M'
+			}),
+			FeatureLogic.createBonusFeature({
+				id: 'human-speed',
+				field: FeatureField.Speed,
+				value: 5
+			}),
 			FeatureLogic.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'human-feature-1',
@@ -340,12 +375,17 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 		id: 'ancestry-memonek',
 		name: 'Memonek',
 		description: 'The native denizens of Axiom, the Plane of Uttermost Law, memonek dwell in a land with lakes and trees and birds and flowers. But on this alien world, the lakes are seas of mercury, the birds glitter with wings of glass stretched gossamer thin, and the flowers’ petals are iridescent metal as flexible and fragile as any earthly rose.',
-		size: {
-			value: 1,
-			mod: 'M'
-		},
-		speed: 7,
 		features: [
+			FeatureLogic.createSizeFeature({
+				id: 'memonek-size',
+				sizeValue: 1,
+				sizeMod: 'M'
+			}),
+			FeatureLogic.createBonusFeature({
+				id: 'memonek-speed',
+				field: FeatureField.Speed,
+				value: 7
+			}),
 			FeatureLogic.createFeature({
 				id: 'memonek-feature-1a',
 				name: 'Lightweight',
@@ -368,12 +408,17 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 		id: 'ancestry-orc',
 		name: 'Orc',
 		description: 'An anger that cannot be hidden. A fury that drives them in battle. Orcs are famed throughout the world as consummate warriors—a reputation that the peace-loving orcs find distasteful.',
-		size: {
-			value: 1,
-			mod: 'M'
-		},
-		speed: 5,
 		features: [
+			FeatureLogic.createSizeFeature({
+				id: 'orc-size',
+				sizeValue: 1,
+				sizeMod: 'M'
+			}),
+			FeatureLogic.createBonusFeature({
+				id: 'orc-speed',
+				field: FeatureField.Speed,
+				value: 5
+			}),
 			FeatureLogic.createFeature({
 				id: 'orc-feature-1',
 				name: 'Bloodfire Rush',
@@ -391,12 +436,17 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 		id: 'ancestry-polder',
 		name: 'Polder',
 		description: 'After humans, polders are the most numerous and diverse ancestry in Orden. They are not humans, but they live in and among humans, sharing their gods and culture. Almost every human culture in Orden has a polder saint or a human saint venerated by polder.',
-		size: {
-			value: 1,
-			mod: 'S'
-		},
-		speed: 5,
 		features: [
+			FeatureLogic.createSizeFeature({
+				id: 'polder-size',
+				sizeValue: 1,
+				sizeMod: 'S'
+			}),
+			FeatureLogic.createBonusFeature({
+				id: 'polder-speed',
+				field: FeatureField.Speed,
+				value: 5
+			}),
 			FeatureLogic.createFeature({
 				id: 'polder-feature-1',
 				name: 'Polder Geist',
@@ -421,13 +471,42 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 		id: 'ancestry-revenant',
 		name: 'Revenant',
 		description: 'Unlike the necromantic rituals that produce wights and wraiths and zombies, revenants rise from the grave through a combination of an unjust death and a burning desire for vengeance. Creatures sustained on pure will, they have no need of food or water or air—and, unlike their zombified cousins, they retain all their memories and personality from life.',
-		size: {
-			value: 1,
-			mod: 'M'
-		},
-		speed: 5,
 		features: [
-			// TODO: Former Life
+			FeatureLogic.createBonusFeature({
+				id: 'revenant-speed',
+				field: FeatureField.Speed,
+				value: 5
+			}),
+			FeatureLogic.createChoiceFeature({
+				id: 'revenant-feature-1',
+				name: 'Former Life',
+				options: [
+					{
+						feature: FeatureLogic.createSizeFeature({
+							id: 'revenant-feature-1a',
+							sizeValue: 1,
+							sizeMod: 'S'
+						}),
+						value: 1
+					},
+					{
+						feature: FeatureLogic.createSizeFeature({
+							id: 'revenant-feature-1b',
+							sizeValue: 1,
+							sizeMod: 'M'
+						}),
+						value: 1
+					},
+					{
+						feature: FeatureLogic.createSizeFeature({
+							id: 'revenant-feature-1c',
+							sizeValue: 1,
+							sizeMod: 'L'
+						}),
+						value: 1
+					}
+				]
+			}),
 			FeatureLogic.createFeature({
 				id: 'revenant-feature-2a',
 				name: 'Vengeance Mark',
@@ -503,12 +582,17 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 		id: 'ancestry-time-raider',
 		name: 'Time Raider',
 		description: 'The original servitor species of the synliiroi—evil psions with near god-like power—the kuran’zoi liberated themselves during the First Psychic War. In the centuries since, they built their own culture and civilization as nomads of the timescape. The exonym “time raiders” was given to them by denizens of the lower worlds who, seeing the advanced technology they wield, concluded they must be from the future.',
-		size: {
-			value: 1,
-			mod: 'M'
-		},
-		speed: 5,
 		features: [
+			FeatureLogic.createSizeFeature({
+				id: 'time-raider-size',
+				sizeValue: 1,
+				sizeMod: 'M'
+			}),
+			FeatureLogic.createBonusFeature({
+				id: 'time-raider-speed',
+				field: FeatureField.Speed,
+				value: 5
+			}),
 			FeatureLogic.createFeature({
 				id: 'time-raider-feature-1',
 				name: 'Foresight',

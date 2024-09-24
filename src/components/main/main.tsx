@@ -11,16 +11,20 @@ import { ComplicationPanel } from '../panels/complication-panel/complication-pan
 import { Culture } from '../../models/culture';
 import { CulturePanel } from '../panels/culture-panel/culture-panel';
 import { Drawer } from 'antd';
+import { Field } from '../controls/field/field';
+import { HeaderText } from '../controls/header-text/header-text';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
 import { HeroEditPage } from '../pages/hero-edit/hero-edit-page';
 import { HeroListPage } from '../pages/hero-list/hero-list-page';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroPage } from '../pages/hero-view/hero-view-page';
-import { InProgressModal } from '../modals/in-progress/in-progress';
+import { HeroStateModal } from '../modals/hero-state/hero-state';
 import { Kit } from '../../models/kit';
 import { KitPanel } from '../panels/kit-panel/kit-panel';
 import { PanelMode } from '../../enums/panel-mode';
+import { RecoveryModal } from '../modals/recovery/recovery';
+import { Skill } from '../../models/skill';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
@@ -56,12 +60,6 @@ export const Main = (props: Props) => {
 	const showAbout = () => {
 		setDrawer(
 			<AboutModal />
-		);
-	};
-
-	const showInProgress = () => {
-		setDrawer(
-			<InProgressModal />
 		);
 	};
 
@@ -172,6 +170,50 @@ export const Main = (props: Props) => {
 		);
 	};
 
+	const onSelectSkill = (skill: Skill) => {
+		setDrawer(
+			<div>
+				<HeaderText>{skill.name}</HeaderText>
+				<Field label='Skill List' value={skill.list} />
+				<div className='ds-text description-text'>{skill.description}</div>
+			</div>
+		);
+	};
+
+	const onShowState = () => {
+		if (selectedHero) {
+			setDrawer(
+				<HeroStateModal
+					hero={selectedHero}
+					onChange={updatedHero => {
+						setSelectedHero(updatedHero);
+
+						const filtered = heroes.filter(h => h.id !== updatedHero.id);
+						filtered.push(updatedHero);
+						persistHeroes(filtered);
+					}}
+				/>
+			);
+		}
+	};
+
+	const onShowRecovery = () => {
+		if (selectedHero) {
+			setDrawer(
+				<RecoveryModal
+					hero={selectedHero}
+					onChange={updatedHero => {
+						setSelectedHero(updatedHero);
+
+						const filtered = heroes.filter(h => h.id !== updatedHero.id);
+						filtered.push(updatedHero);
+						persistHeroes(filtered);
+					}}
+				/>
+			);
+		}
+	};
+
 	const getContent = () => {
 		switch (page) {
 			case Page.Welcome:
@@ -179,7 +221,6 @@ export const Main = (props: Props) => {
 					<WelcomePage
 						showAbout={showAbout}
 						showHeroes={showHeroList}
-						showInProgress={showInProgress}
 					/>
 				);
 			case Page.HeroList:
@@ -206,6 +247,9 @@ export const Main = (props: Props) => {
 						onSelectClass={onSelectClass}
 						onSelectComplication={onSelectComplication}
 						onSelectKit={onSelectKit}
+						onSelectSkill={onSelectSkill}
+						onShowState={onShowState}
+						onShowRecovery={onShowRecovery}
 					/>
 				);
 			case Page.HeroEdit:

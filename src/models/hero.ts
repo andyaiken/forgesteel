@@ -10,6 +10,7 @@ export interface HeroState {
 	staminaDamage: number;
 	recoveriesUsed: number;
 	victories: number;
+	xp:number;
 	heroicResource: number;
 	heroTokens: number;
 	renown: number;

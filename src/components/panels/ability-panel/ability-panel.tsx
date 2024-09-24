@@ -8,6 +8,7 @@ import { PanelMode } from '../../../enums/panel-mode';
 import { PowerRollPanel } from '../power-roll-panel/power-roll-panel';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Tag } from 'antd';
+import { Utils } from '../../../utils/utils';
 
 import './ability-panel.scss';
 
@@ -42,10 +43,18 @@ export const AbilityPanel = (props: Props) => {
 										: null
 								}
 								{props.ability.target ? <Field label='Target' value={props.ability.target} /> : null}
-								{props.ability.preEffect ? <Field label='Effect' value={props.ability.preEffect} /> : null}
+								{props.ability.preEffect ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.preEffect) }} /> : null}
 								{props.ability.powerRoll ? <PowerRollPanel ability={props.ability} hero={props.hero} /> : null}
-								{props.ability.effect ? <Field label='Effect' value={props.ability.effect} /> : null}
-								{props.ability.alternateEffects.map((effect, n) => <Field key={n} label='Alternate Effect' value={effect} />)}
+								{props.ability.effect ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.effect) }} /> : null}
+								{
+									props.ability.alternateEffects.map((effect, n) => (
+										<Field
+											key={n}
+											label='Alternate Effect'
+											value={<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(effect) }} />}
+										/>
+									))
+								}
 								{
 									props.ability.spend.map((spend, n) => (
 										<Field
@@ -56,7 +65,7 @@ export const AbilityPanel = (props: Props) => {
 													{spend.value ? <HeroicResourceBadge value={spend.value} /> : null}
 												</div>
 											)}
-											value={spend.effect}
+											value={<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(spend.effect) }} />}
 										/>
 									))
 								}
@@ -70,7 +79,7 @@ export const AbilityPanel = (props: Props) => {
 													{persist.value ? <HeroicResourceBadge value={persist.value} /> : null}
 												</div>
 											)}
-											value={persist.effect}
+											value={<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(persist.effect) }} />}
 										/>
 									))
 								}

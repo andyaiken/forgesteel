@@ -1,9 +1,10 @@
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureSizeData, FeatureSkillData } from '../models/feature';
 import { Ability } from '../models/ability';
 import { DamageModifier } from '../models/damage-modifier';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
+import { HeroLogic } from './hero-logic';
 import { KitType } from '../enums/kit';
 import { SkillList } from '../enums/skill-list';
 
@@ -70,10 +71,11 @@ export class FeatureLogic {
 
 	static createClassAbilityChoiceFeature = (data: { id: string, name?: string, description?: string, cost: number, count?: number }) => {
 		const count = data.count || 1;
+		const type = data.cost === 0 ? 'signature' : `${data.cost}-point`;
 		return {
 			id: data.id,
 			name: data.name || 'Ability',
-			description: data.description || (count > 1 ? `Choose ${count} abilities.` : 'Choose an ability.'),
+			description: data.description || (count > 1 ? `Choose ${count} ${type} class abilities.` : `Choose a ${type} class ability.`),
 			type: FeatureType.ClassAbility,
 			choice: true,
 			data: {
@@ -137,6 +139,22 @@ export class FeatureLogic {
 				count: count,
 				selected: []
 			} as FeatureLanguageData
+		} as Feature;
+	};
+
+	static createSizeFeature = (data: { id: string, name?: string, description?: string, sizeValue: number, sizeMod: string; }) => {
+		return {
+			id: data.id,
+			name: data.name || 'Size',
+			description: data.description || `Size: ${HeroLogic.getSizeString({ value: data.sizeValue, mod: data.sizeMod })}`,
+			type: FeatureType.Size,
+			choice: false,
+			data: {
+				size: {
+					value: data.sizeValue,
+					mod: data.sizeMod
+				}
+			} as FeatureSizeData
 		} as Feature;
 	};
 

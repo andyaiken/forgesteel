@@ -18,7 +18,7 @@ export const KitPanel = (props: Props) => {
 	try {
 		return (
 			<div className='kit-panel'>
-				<HeaderText tags={[ props.kit.type ]}>{props.kit.name}</HeaderText>
+				<HeaderText level={1} tags={[ props.kit.type ]}>{props.kit.name}</HeaderText>
 				<div className='ds-text description-text'>{props.kit.description}</div>
 				{
 					props.mode === PanelMode.Full ?
@@ -53,7 +53,7 @@ export const KitPanel = (props: Props) => {
 								props.kit.abilities.map(a => <AbilityPanel key={a.id} ability={a} hero={props.hero} mode={PanelMode.Full} />)
 							}
 							{
-								props.kit.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} />)
+								props.kit.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />)
 							}
 						</div>
 						:

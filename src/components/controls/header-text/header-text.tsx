@@ -3,7 +3,8 @@ import { Tag } from 'antd';
 import './header-text.scss';
 
 interface Props {
-	children: string;
+	children: string | string[];
+	level?: number;
 	ribbon?: JSX.Element;
 	tags?: string[];
 }
@@ -11,7 +12,7 @@ interface Props {
 export const HeaderText = (props: Props) => {
 	try {
 		return (
-			<div className='header-text-panel'>
+			<div className={`header-text-panel level-${props.level || 2}`}>
 				{props.ribbon}
 				<div className='header-text'>{props.children}</div>
 				{

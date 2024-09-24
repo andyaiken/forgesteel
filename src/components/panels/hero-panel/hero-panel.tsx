@@ -12,11 +12,13 @@ import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
+import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroClass } from '../../../models/class';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { Kit } from '../../../models/kit';
 import { PanelMode } from '../../../enums/panel-mode';
+import { Skill } from '../../../models/skill';
 import { SkillList } from '../../../enums/skill-list';
 
 import './hero-panel.scss';
@@ -33,6 +35,9 @@ interface Props {
 	onSelectClass?: (heroClass: HeroClass) => void;
 	onSelectComplication?: (complication: Complication) => void;
 	onSelectKit?: (kit: Kit) => void;
+	onSelectSkill?: (skill: Skill) => void;
+	onShowState?: () => void;
+	onShowRecovery?: () => void;
 }
 
 export const HeroPanel = (props: Props) => {
@@ -71,6 +76,27 @@ export const HeroPanel = (props: Props) => {
 			if (props.hero.kit && props.onSelectKit) {
 				props.onSelectKit(props.hero.kit);
 			}
+		};
+
+		const onSelectSkill = (skill: Skill) => {
+			if (props.onSelectSkill) {
+				props.onSelectSkill(skill);
+			}
+		};
+
+		const getSkills = (label: string, skills: Skill[]) => {
+			return skills.length > 0 ?
+				<Field
+					key={label}
+					label={label}
+					value={skills.map(s => <span key={s.name} className='skill' onClick={() => onSelectSkill(s)}>{s.name}</span>)}
+				/>
+				:
+				<Field
+					key={label}
+					label={label}
+					value={<span className='ds-text dimmed-text'>None</span>}
+				/>;
 		};
 
 		const size = {
@@ -160,14 +186,10 @@ export const HeroPanel = (props: Props) => {
 				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile'>
 					{
 						props.showSkillsInGroups ?
-							[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map((list, n) => {
-								const skills = HeroLogic.getSkills(props.hero).filter(s => s.list === list);
-								return (
-									<Field key={n} label={list} value={skills.map(s => s.name).join(', ') || <span className='ds-text dimmed-text'>None</span>} />
-								);
-							})
+							[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+								.map(list => getSkills(list, HeroLogic.getSkills(props.hero).filter(s => s.list === list)))
 							:
-							<Field label='Skills' value={HeroLogic.getSkills(props.hero).map(s => s.name).join(', ') || <span className='ds-text dimmed-text'>None</span>} />
+							getSkills('Skills', HeroLogic.getSkills(props.hero))
 					}
 				</Col>
 				{
@@ -191,18 +213,47 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getStatsSection = () => {
-		const size = {
+		const sizeSmall = {
 			xs: 24,
 			sm: 24,
 			md: 24,
-			lg: 12,
-			xl: 12,
-			xxl: 12
+			lg: 9,
+			xl: 9,
+			xxl: 9
 		};
+
+		const sizeLarge = {
+			xs: 24,
+			sm: 24,
+			md: 24,
+			lg: 15,
+			xl: 15,
+			xxl: 15
+		};
+
+		const onShowState = () => {
+			if (props.onShowState) {
+				props.onShowState();
+			}
+		};
+
+		const onShowRecovery = () => {
+			if (props.onShowRecovery) {
+				props.onShowRecovery();
+			}
+		};
+
+		const maxStamina = HeroLogic.getStamina(props.hero);
+		const stamina = props.hero.state.staminaDamage === 0 ? maxStamina : maxStamina - props.hero.state.staminaDamage;
+		const staminaSuffix = props.hero.state.staminaDamage === 0 ? null : `/ ${maxStamina}`;
+
+		const maxRecoveries = HeroLogic.getRecoveries(props.hero);
+		const recoveries = props.hero.state.recoveriesUsed === 0 ? maxRecoveries : maxRecoveries - props.hero.state.recoveriesUsed;
+		const recoveriesSuffix = props.hero.state.recoveriesUsed === 0 ? null : `/ ${maxRecoveries}`;
 
 		return (
 			<Row gutter={[ 16, 16 ]}>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+				<Col xs={sizeLarge.xs} sm={sizeLarge.sm} md={sizeLarge.md} lg={sizeLarge.lg} xl={sizeLarge.xl} xxl={sizeLarge.xxl}>
 					<div className='characteristics-row'>
 						<div className='characteristic'>
 							<Statistic title='Might' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
@@ -221,23 +272,10 @@ export const HeroPanel = (props: Props) => {
 						</div>
 					</div>
 				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+				<Col xs={sizeSmall.xs} sm={sizeSmall.sm} md={sizeSmall.md} lg={sizeSmall.lg} xl={sizeSmall.xl} xxl={sizeSmall.xxl}>
 					<div className='characteristics-row'>
 						<div className='characteristic'>
-							<Statistic title='Stamina' value={HeroLogic.getStamina(props.hero)} />
-						</div>
-						<div className='characteristic'>
-							<Statistic title='Recoveries' value={HeroLogic.getRecoveries(props.hero)} />
-						</div>
-						<div className='characteristic'>
-							<Statistic title='Recovery Value' value={HeroLogic.getRecoveryValue(props.hero)} />
-						</div>
-					</div>
-				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
-					<div className='characteristics-row'>
-						<div className='characteristic'>
-							<Statistic title='Size' value={props.hero.ancestry ? HeroLogic.getSize(props.hero.ancestry.size) : '1'} />
+							<Statistic title='Size' value={HeroLogic.getSizeString(HeroLogic.getSize(props.hero))} />
 						</div>
 						<div className='characteristic'>
 							<Statistic title='Speed' value={HeroLogic.getSpeed(props.hero)} />
@@ -247,8 +285,8 @@ export const HeroPanel = (props: Props) => {
 						</div>
 					</div>
 				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
-					<div className='characteristics-row'>
+				<Col xs={sizeLarge.xs} sm={sizeLarge.sm} md={sizeLarge.md} lg={sizeLarge.lg} xl={sizeLarge.xl} xxl={sizeLarge.xxl}>
+					<div className='characteristics-row clickable' onClick={onShowState}>
 						<div className='characteristic'>
 							<Statistic title={props.hero.class ? props.hero.class.heroicResource : 'Heroic Resource'} value={props.hero.state.heroicResource} />
 						</div>
@@ -260,6 +298,22 @@ export const HeroPanel = (props: Props) => {
 						</div>
 						<div className='characteristic'>
 							<Statistic title='Hero Tokens' value={props.hero.state.heroTokens} />
+						</div>
+						<div className='characteristic'>
+							<Statistic title='Project Points' value={props.hero.state.projectPoints} />
+						</div>
+					</div>
+				</Col>
+				<Col xs={sizeSmall.xs} sm={sizeSmall.sm} md={sizeSmall.md} lg={sizeSmall.lg} xl={sizeSmall.xl} xxl={sizeSmall.xxl}>
+					<div className='characteristics-row clickable' onClick={onShowRecovery}>
+						<div className='characteristic'>
+							<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />
+						</div>
+						<div className='characteristic'>
+							<Statistic title='Recoveries' value={recoveries} suffix={recoveriesSuffix} />
+						</div>
+						<div className='characteristic'>
+							<Statistic title='Recovery Value' value={HeroLogic.getRecoveryValue(props.hero)} />
 						</div>
 					</div>
 				</Col>
@@ -284,7 +338,7 @@ export const HeroPanel = (props: Props) => {
 
 		return (
 			<div className='features-section'>
-				<div className='section-divider'>Features</div>
+				<HeaderText level={1}>Features</HeaderText>
 				<Row gutter={[ 16, 16 ]}>
 					{
 						features.map(feature => (
@@ -316,7 +370,7 @@ export const HeroPanel = (props: Props) => {
 
 		return (
 			<div className='abilities-section'>
-				<div className='section-divider'>{type}s</div>
+				<HeaderText level={1}>{type}s</HeaderText>
 				<Row gutter={[ 16, 16 ]}>
 					{
 						abilities.map(ability => (
@@ -334,7 +388,7 @@ export const HeroPanel = (props: Props) => {
 		if (props.mode !== PanelMode.Full) {
 			return (
 				<div className='hero-panel' id={props.hero.id}>
-					<div className='section-divider'>{props.hero.name || 'Unnamed Hero'}</div>
+					<HeaderText level={1}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
 					<Flex align='center' justify='space-between'>
 						<Field label='Ancestry' value={props.hero.ancestry?.name || 'None'} />
 						<Field label='Career' value={props.hero.career?.name || 'None'} />
@@ -348,7 +402,7 @@ export const HeroPanel = (props: Props) => {
 
 		return (
 			<div className='hero-panel' id={props.hero.id}>
-				<div className='section-divider'>{props.hero.name || 'Unnamed Hero'}</div>
+				<HeaderText level={1}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
 				{getTopSection()}
 				<Divider />
 				{getStatsSection()}

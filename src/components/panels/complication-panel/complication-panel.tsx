@@ -16,12 +16,12 @@ export const ComplicationPanel = (props: Props) => {
 	try {
 		return (
 			<div className='complication-panel'>
-				<HeaderText>{props.complication.name}</HeaderText>
+				<HeaderText level={1}>{props.complication.name}</HeaderText>
 				<div className='ds-text description-text'>{props.complication.description}</div>
 				{
 					props.mode === PanelMode.Full ?
 						props.complication.features.map(f => (
-							<FeaturePanel key={f.id} feature={f} hero={props.hero} />
+							<FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />
 						))
 						: null
 				}

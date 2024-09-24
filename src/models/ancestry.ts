@@ -10,7 +10,5 @@ export interface Ancestry {
 	name: string;
 	description: string;
 
-	size: Size;
-	speed: number;
 	features: Feature[];
 }

@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { AbilityLogic } from '../../logic/ability-logic';
 import { Characteristic } from '../../enums/characteristic';
+import { FeatureField } from '../../enums/feature-field';
 import { FeatureLogic } from '../../logic/feature-logic';
 import { HeroClass } from '../../models/class';
 import { SkillList } from '../../enums/skill-list';
@@ -14,13 +15,21 @@ export const elementalist: HeroClass = {
 	subclassName: 'Elemental Specialization',
 	subclassCount: 1,
 	primaryCharacteristics: [ Characteristic.Reason, Characteristic.Intuition ],
-	startingStamina: 15,
-	staminaPerLevel: 6,
-	recoveries: 8,
 	featuresByLevel: [
 		{
 			level: 1,
 			features: [
+				FeatureLogic.createBonusFeature({
+					id: 'elementalist-stamina',
+					field: FeatureField.Stamina,
+					value: 15,
+					valuePerLevel: 6
+				}),
+				FeatureLogic.createBonusFeature({
+					id: 'elementalist-recoveries',
+					field: FeatureField.Recoveries,
+					value: 8
+				}),
 				FeatureLogic.createSkillFeature({
 					id: 'elementalist-1-1',
 					skill: 'Magic'

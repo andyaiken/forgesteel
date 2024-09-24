@@ -3,6 +3,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { AbilityLogic } from '../../logic/ability-logic';
 import { Characteristic } from '../../enums/characteristic';
+import { FeatureField } from '../../enums/feature-field';
 import { FeatureLogic } from '../../logic/feature-logic';
 import { HeroClass } from '../../models/class';
 import { KitLogic } from '../../logic/kit-logic';
@@ -16,13 +17,21 @@ export const fury: HeroClass = {
 	subclassName: 'Primordial Aspect',
 	subclassCount: 1,
 	primaryCharacteristics: [ Characteristic.Might, Characteristic.Agility ],
-	startingStamina: 21,
-	staminaPerLevel: 10,
-	recoveries: 12,
 	featuresByLevel: [
 		{
 			level: 1,
 			features: [
+				FeatureLogic.createBonusFeature({
+					id: 'fury-stamina',
+					field: FeatureField.Stamina,
+					value: 21,
+					valuePerLevel: 10
+				}),
+				FeatureLogic.createBonusFeature({
+					id: 'fury-recoveries',
+					field: FeatureField.Recoveries,
+					value: 12
+				}),
 				FeatureLogic.createSkillFeature({
 					id: 'fury-1-1',
 					skill: 'Nature'

@@ -174,7 +174,7 @@ export const Main = (props: Props) => {
 	const onSelectSkill = (skill: Skill) => {
 		setDrawer(
 			<div>
-				<HeaderText>{skill.name}</HeaderText>
+				<HeaderText level={1}>{skill.name}</HeaderText>
 				<Field label='Skill List' value={skill.list} />
 				<div className='ds-text description-text'>{skill.description}</div>
 			</div>

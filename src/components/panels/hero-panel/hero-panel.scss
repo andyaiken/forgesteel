@@ -8,48 +8,67 @@
 		padding: unset;
 	}
 
-	.top-tile {
-		padding: 0 10px;
-		border-radius: 10px;
-
-		&.clickable {
-			cursor: pointer;
-
-			&:hover {
-				background-color: rgba(0, 0, 0, 0.06);
-			}
-		}
-
-		.skill {
-			padding: 1px 3px;
-			border-radius: 5px;
-			cursor: pointer;
-
-			&:hover {
-				background-color: rgba(0, 0, 0, 0.06);
-			}
-		}
-	}
-
-	.characteristics-row {
+	.hero-main-section {
 		display: flex;
-		align-items: flex-start;
-		justify-content: space-evenly;
-		border: 1px solid rgb(22, 119, 255);
-		border-radius: 10px;
-		background-color: rgb(180, 220, 255);
-		padding: 10px;
+		gap: 20px;
 
-		&.clickable {
-			cursor: pointer;
+		.hero-left-column {
+			flex: 0 0 180px;
+			padding-right: 20px;
+			border-right: 5px solid rgb(0, 0, 0, 0.06);
 
-			&:hover {
-				background-color: rgb(125, 180, 255);
+			.top-tile {
+				padding: 5px 10px;
+				border-radius: 10px;
+
+				&.clickable {
+					cursor: pointer;
+
+					&:hover {
+						background-color: rgba(0, 0, 0, 0.06);
+					}
+				}
+
+				.skill {
+					margin: 10px -5px;
+					padding: 5px;
+					border-radius: 5px;
+
+					&.clickable {
+						cursor: pointer;
+
+						&:hover {
+							background-color: rgba(0, 0, 0, 0.06);
+						}
+					}
+				}
 			}
 		}
 
-		.characteristic {
+		.hero-right-column {
 			flex: 1 1 0;
+
+			.characteristics-row {
+				display: flex;
+				align-items: flex-start;
+				justify-content: space-evenly;
+				border: 1px solid rgb(22, 119, 255);
+				border-radius: 10px;
+				background-color: rgb(180, 220, 255);
+				padding: 10px;
+
+				&.clickable {
+					cursor: pointer;
+
+					&:hover {
+						background-color: rgb(125, 180, 255);
+					}
+				}
+
+				.characteristic {
+					flex: 1 1 0;
+				}
+			}
 		}
 	}
 }
@@ -58,10 +77,24 @@
 	.hero-panel {
 		background-color: rgb(100, 100, 100);
 
-		.top-tile {
-			&.clickable {
-				&:hover {
-					background-color: rgba(255, 255, 255, 0.06);
+		.hero-main-section {
+			.hero-left-column {
+				border-right-color: rgba(250, 250, 250, 0.6);
+
+				.top-tile {
+					&.clickable {
+						&:hover {
+							background-color: rgba(255, 255, 255, 0.1);
+						}
+					}
+
+					.skill {
+						&.clickable {
+							&:hover {
+								background-color: rgba(255, 255, 255, 0.1);
+							}
+						}
+					}
 				}
 			}
 		}

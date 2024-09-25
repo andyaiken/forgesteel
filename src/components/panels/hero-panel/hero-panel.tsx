@@ -1,4 +1,4 @@
-import { Col, Divider, Row, Statistic } from 'antd';
+import { Col, Row, Statistic } from 'antd';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
@@ -42,7 +42,7 @@ interface Props {
 }
 
 export const HeroPanel = (props: Props) => {
-	const getTopSection = () => {
+	const getLeftSection = () => {
 		const onSelectAncestry = () => {
 			if (props.hero.ancestry && props.onSelectAncestry) {
 				props.onSelectAncestry(props.hero.ancestry);
@@ -87,26 +87,15 @@ export const HeroPanel = (props: Props) => {
 
 		const getSkills = (label: string, skills: Skill[]) => {
 			return skills.length > 0 ?
-				<Field
-					key={label}
-					label={label}
-					value={skills.map(s => <span key={s.name} className='skill' onClick={() => onSelectSkill(s)}>{s.name}</span>)}
-				/>
+				<div className='top-tile'>
+					<HeaderText>{label}</HeaderText>
+					{skills.map(s => <div key={s.name} className='skill clickable' onClick={() => onSelectSkill(s)}>{s.name}</div>)}
+				</div>
 				:
-				<Field
-					key={label}
-					label={label}
-					value={<span className='ds-text dimmed-text'>None</span>}
-				/>;
-		};
-
-		const size = {
-			xs: 24,
-			sm: 12,
-			md: 8,
-			lg: 6,
-			xl: 4,
-			xxl: 4
+				<div className='top-tile'>
+					<HeaderText>{label}</HeaderText>
+					<div className='ds-text dimmed-text'>None</div>
+				</div>;
 		};
 
 		const kits = HeroLogic.getKits(props.hero);
@@ -119,97 +108,114 @@ export const HeroPanel = (props: Props) => {
 		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
 		return (
-			<Row gutter={[ 20, 10 ]}>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile clickable' onClick={onSelectAncestry}>
-					{
-						props.hero.ancestry ?
-							<Field label='Ancestry' value={props.hero.ancestry.name} />
-							:
+			<div className='hero-left-column'>
+				{
+					props.hero.ancestry ?
+						<div className='top-tile clickable' onClick={onSelectAncestry}>
+							<HeaderText>Ancestry</HeaderText>
+							<div className='ds-text'>{props.hero.ancestry.name}</div>
+						</div>
+						:
+						<div className='top-tile'>
 							<div className='ds-text dimmed-text'>No ancestry chosen</div>
-					}
-				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile clickable' onClick={onSelectCulture}>
-					{
-						props.hero.culture ?
-							<div>
-								{props.hero.culture.id !== CultureData.bespoke.id ? <Field label='Culture' value={props.hero.culture.name} /> : null}
-								{props.hero.culture.environment ? <Field label='Environment' value={props.hero.culture.environment.name} /> : null}
-								{props.hero.culture.organization ? <Field label='Organization' value={props.hero.culture.organization.name} /> : null}
-								{props.hero.culture.upbringing ? <Field label='Upbringing' value={props.hero.culture.upbringing.name} /> : null}
-							</div>
-							:
+						</div>
+				}
+				{
+					props.hero.culture ?
+						<div className='top-tile clickable' onClick={onSelectCulture}>
+							<HeaderText>Culture</HeaderText>
+							{props.hero.culture.id !== CultureData.bespoke.id ? <div className='ds-text'>{props.hero.culture.name}</div> : null}
+							{props.hero.culture.environment ? <Field label='Environment' value={props.hero.culture.environment.name} /> : null}
+							{props.hero.culture.organization ? <Field label='Organization' value={props.hero.culture.organization.name} /> : null}
+							{props.hero.culture.upbringing ? <Field label='Upbringing' value={props.hero.culture.upbringing.name} /> : null}
+						</div>
+						:
+						<div className='top-tile'>
 							<div className='ds-text dimmed-text'>No culture chosen</div>
-					}
-				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile clickable' onClick={onSelectCareer}>
-					{
-						props.hero.career ?
-							<Field label='Career' value={props.hero.career.name} />
-							:
+						</div>
+				}
+				{
+					props.hero.career ?
+						<div className='top-tile clickable' onClick={onSelectCareer}>
+							<HeaderText>Career</HeaderText>
+							<div className='ds-text'>{props.hero.career.name}</div>
+						</div>
+						:
+						<div className='top-tile'>
 							<div className='ds-text dimmed-text'>No career chosen</div>
-					}
-				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile clickable' onClick={onSelectClass}>
-					{
-						props.hero.class ?
-							<div>
-								<Field label='Class' value={props.hero.class.name} />
-								<Field label='Level' value={props.hero.class.level} />
-								<Field label={props.hero.class.subclassName} value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(', ') || ''} />
-							</div>
-							:
+						</div>
+				}
+				{
+					props.hero.class ?
+						<div className='top-tile clickable' onClick={onSelectClass}>
+							<HeaderText>Class</HeaderText>
+							<div className='ds-text'>{props.hero.class.name}</div>
+							<Field label='Level' value={props.hero.class.level} />
+							<Field label={props.hero.class.subclassName} value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(', ') || ''} />
+						</div>
+						:
+						<div className='top-tile'>
 							<div className='ds-text dimmed-text'>No class chosen</div>
-					}
-				</Col>
+						</div>
+				}
 				{
 					props.hero.complication ?
-						<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile clickable' onClick={onSelectComplication}>
-							<Field label='Complication' value={props.hero.complication.name} />
-						</Col>
-						: null
+						<div className='top-tile clickable' onClick={onSelectComplication}>
+							<HeaderText>Complication</HeaderText>
+							<div className='ds-text'>{props.hero.complication.name}</div>
+						</div>
+						:
+						<div className='top-tile'>
+							<div className='ds-text dimmed-text'>No complication chosen</div>
+						</div>
 				}
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile clickable' onClick={onSelectKit}>
-					{
-						kits.length > 0 ?
-							<div>
-								<Field label='Kit' value={kitNames} />
-								{armorNames ? <Field label='Armor' value={armorNames} /> : null}
-								{weaponNames ? <Field label='Weapons' value={weaponNames} /> : null}
-								{implementNames ? <Field label='Implements' value={implementNames} /> : null}
-							</div>
-							:
-							<div className='ds-text dimmed-text'>No kit chosen</div>
-					}
-				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile'>
-					<Field label='Languages' value={HeroLogic.getLanguages(props.hero).join(', ') || <span className='ds-text dimmed-text'>None</span>} />
-				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile'>
-					{
-						props.showSkillsInGroups ?
-							[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
-								.map(list => getSkills(list, HeroLogic.getSkills(props.hero).filter(s => s.list === list)))
-							:
-							getSkills('Skills', HeroLogic.getSkills(props.hero))
-					}
-				</Col>
 				{
-					(immunities.length > 0) || (weaknesses.length > 0) ?
-						<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl} className='top-tile'>
-							{
-								immunities.length > 0 ?
-									<Field label='Immune' value={immunities.map(dm => `${dm.type} ${dm.value}`).join(', ')} />
-									: null
-							}
-							{
-								weaknesses.length > 0 ?
-									<Field label='Weakness' value={weaknesses.map(dm => `${dm.type} ${dm.value}`).join(', ')} />
-									: null
-							}
-						</Col>
+					kits.length > 0 ?
+						<div className='top-tile clickable' onClick={onSelectKit}>
+							<HeaderText>Kit</HeaderText>
+							<div className='ds-text'>{kitNames}</div>
+							{armorNames ? <Field label='Armor' value={armorNames} /> : null}
+							{weaponNames ? <Field label='Weapons' value={weaponNames} /> : null}
+							{implementNames ? <Field label='Implements' value={implementNames} /> : null}
+						</div>
+						:
+						<div className='top-tile'>
+							<div className='ds-text dimmed-text'>No kit chosen</div>
+						</div>
+				}
+				<div className='top-tile'>
+					<HeaderText>Languages</HeaderText>
+					{
+						HeroLogic.getLanguages(props.hero).length > 0 ?
+							HeroLogic.getLanguages(props.hero).map(l => <div key={l} className='skill'>{l}</div>)
+							:
+							<div className='ds-text dimmed-text'>None</div>
+					}
+				</div>
+				{
+					props.showSkillsInGroups ?
+						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero).filter(s => s.list === list)))
+						:
+						getSkills('Skills', HeroLogic.getSkills(props.hero))
+				}
+				{
+					immunities.length > 0 ?
+						<div className='top-tile'>
+							<HeaderText>Immunities</HeaderText>
+							<div className='ds-text'>{immunities.map(dm => `${dm.type} ${dm.value}`).join(', ')}</div>
+						</div>
 						: null
 				}
-			</Row>
+				{
+					weaknesses.length > 0 ?
+						<div className='top-tile'>
+							<HeaderText>Weaknesses</HeaderText>
+							<div className='ds-text'>{weaknesses.map(dm => `${dm.type} ${dm.value}`).join(', ')}</div>
+						</div>
+						: null
+				}
+			</div>
 		);
 	};
 
@@ -218,18 +224,18 @@ export const HeroPanel = (props: Props) => {
 			xs: 24,
 			sm: 24,
 			md: 24,
-			lg: 9,
-			xl: 9,
-			xxl: 9
+			lg: 10,
+			xl: 10,
+			xxl: 10
 		};
 
 		const sizeLarge = {
 			xs: 24,
 			sm: 24,
 			md: 24,
-			lg: 15,
-			xl: 15,
-			xxl: 15
+			lg: 14,
+			xl: 14,
+			xxl: 14
 		};
 
 		const onShowState = () => {
@@ -295,7 +301,7 @@ export const HeroPanel = (props: Props) => {
 							<Statistic title='Hero Tokens' value={props.hero.state.heroTokens} />
 						</div>
 						<div className='characteristic'>
-							<Statistic title='Project Points' value={props.hero.state.projectPoints} />
+							<Statistic title='Project' value={props.hero.state.projectPoints} />
 						</div>
 					</div>
 				</Col>
@@ -325,8 +331,8 @@ export const HeroPanel = (props: Props) => {
 		const size = {
 			xs: 24,
 			sm: 12,
-			md: 8,
-			lg: 8,
+			md: 12,
+			lg: 12,
 			xl: 8,
 			xxl: 6
 		};
@@ -351,8 +357,8 @@ export const HeroPanel = (props: Props) => {
 		const size = {
 			xs: 24,
 			sm: 12,
-			md: 8,
-			lg: 8,
+			md: 12,
+			lg: 12,
 			xl: 8,
 			xxl: 6
 		};
@@ -402,14 +408,17 @@ export const HeroPanel = (props: Props) => {
 		return (
 			<div className='hero-panel' id={props.hero.id}>
 				<HeaderText level={1}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
-				{getTopSection()}
-				<Divider />
-				{getStatsSection()}
-				{getFeaturesSection()}
-				{getAbilitiesSection(AbilityUsage.Action)}
-				{getAbilitiesSection(AbilityUsage.Maneuver)}
-				{getAbilitiesSection(AbilityUsage.Trigger)}
-				{getAbilitiesSection(AbilityUsage.Other)}
+				<div className='hero-main-section'>
+					{getLeftSection()}
+					<div className='hero-right-column'>
+						{getStatsSection()}
+						{getFeaturesSection()}
+						{getAbilitiesSection(AbilityUsage.Action)}
+						{getAbilitiesSection(AbilityUsage.Maneuver)}
+						{getAbilitiesSection(AbilityUsage.Trigger)}
+						{getAbilitiesSection(AbilityUsage.Other)}
+					</div>
+				</div>
 			</div>
 		);
 	} catch {

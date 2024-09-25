@@ -9,6 +9,7 @@ import './power-roll-panel.scss';
 interface Props {
 	ability: Ability;
 	hero?: Hero;
+	onRoll?: () => void;
 }
 
 export const PowerRollPanel = (props: Props) => {
@@ -43,7 +44,7 @@ export const PowerRollPanel = (props: Props) => {
 		}
 
 		return (
-			<div className='power-roll-panel'>
+			<div className={props.onRoll ? 'power-roll-panel clickable' : 'power-roll-panel'} onClick={props.onRoll}>
 				<div className='power-roll-row power-roll-header'>
 					Power Roll + {characteristic}
 				</div>

@@ -3,6 +3,11 @@
 	border-radius: 10px;
 	background-color: rgb(255, 255, 255);
 
+	&.compact {
+		margin-top: -10px;
+		padding: unset;
+	}
+
 	.top-tile {
 		padding: 0 10px;
 		border-radius: 10px;

@@ -2,7 +2,6 @@ import { AppHeader } from '../../controls/app-header/app-header';
 import { Button } from 'antd';
 import { Hero } from '../../../models/hero';
 import { HeroPanel } from '../../panels/hero-panel/hero-panel';
-import { PanelMode } from '../../../enums/panel-mode';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 
 import './hero-list-page.scss';
@@ -25,9 +24,11 @@ export const HeroListPage = (props: Props) => {
 			<div className='hero-list-page-content'>
 				{
 					props.heroes.map(hero => (
-						<SelectablePanel key={hero.id} onSelect={() => props.viewHero(hero.id)}>
-							<HeroPanel hero={hero} mode={PanelMode.Short} />
-						</SelectablePanel>
+						<div key={hero.id}>
+							<SelectablePanel onSelect={() => props.viewHero(hero.id)}>
+								<HeroPanel hero={hero} />
+							</SelectablePanel>
+						</div>
 					))
 				}
 			</div>

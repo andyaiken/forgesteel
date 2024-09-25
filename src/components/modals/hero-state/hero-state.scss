@@ -1,3 +1,12 @@
 .hero-state-modal {
 	display: block;
+
+	.tall-button {
+		height: 55px;
+
+		.subtext {
+			font-size: 12px;
+			opacity: 0.6;
+		}
+	}
 }

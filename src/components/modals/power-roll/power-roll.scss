@@ -1,0 +1,42 @@
+.power-roll-modal {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	.result-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-evenly;
+		gap: 10px;
+
+		.roll,
+		.bonus,
+		.result {
+			flex: 0 0 70px;
+			margin: 20px 0;
+			border: 2px solid transparent;
+			border-style: solid;
+			height: 70px;
+			line-height: 66px;
+			text-align: center;
+		}
+
+		.roll {
+			border-color: rgba(0, 0, 0, 0.06);
+			border-radius: 50%;
+			font-size: 20px;
+		}
+
+		.bonus {
+			font-size: 20px;
+		}
+
+		.result {
+			border-color: rgba(0, 0, 0, 0.1);
+			border-radius: 10px;
+			background-color: rgba(0, 0, 0, 0.06);
+			font-size: 30px;
+			font-weight: 600;
+		}
+	}
+}

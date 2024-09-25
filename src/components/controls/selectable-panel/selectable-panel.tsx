@@ -18,7 +18,7 @@ export const SelectablePanel = (props: Props) => {
 		return (
 			<div className={className} onClick={props.onSelect}>
 				{props.children}
-				{props.onUnselect ? <Button block={true} onClick={props.onUnselect}>Unselect</Button> : null}
+				{props.onUnselect ? <Button className='unselect-button' onClick={props.onUnselect}>Unselect</Button> : null}
 			</div>
 		);
 	} catch {

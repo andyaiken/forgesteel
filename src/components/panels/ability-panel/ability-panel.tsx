@@ -16,6 +16,7 @@ interface Props {
 	ability: Ability;
 	hero?: Hero;
 	mode?: PanelMode;
+	onRoll?: () => void;
 }
 
 export const AbilityPanel = (props: Props) => {
@@ -44,7 +45,15 @@ export const AbilityPanel = (props: Props) => {
 								}
 								{props.ability.target ? <Field label='Target' value={props.ability.target} /> : null}
 								{props.ability.preEffect ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.preEffect) }} /> : null}
-								{props.ability.powerRoll ? <PowerRollPanel ability={props.ability} hero={props.hero} /> : null}
+								{
+									props.ability.powerRoll ?
+										<PowerRollPanel
+											ability={props.ability}
+											hero={props.hero}
+											onRoll={props.onRoll}
+										/>
+										: null
+								}
 								{props.ability.effect ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.effect) }} /> : null}
 								{
 									props.ability.alternateEffects.map((effect, n) => (

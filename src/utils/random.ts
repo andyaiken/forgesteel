@@ -1,25 +1,6 @@
 export class Random {
-	static dice = (count: number, rng: () => number = Math.random) => {
-		const rolls = [];
-
-		while (rolls.length < Math.max(count, 1)) {
-			let result = 0;
-			let rollAgain = true;
-
-			while (rollAgain) {
-				const n = Random.randomNumber(10, rng) + 1;
-				result += n;
-				rollAgain = (n === 10);
-			}
-
-			if (count < 1) {
-				result = Math.floor(result / 2);
-			}
-
-			rolls.push(result);
-		}
-
-		return Math.max(...rolls);
+	static die = (sides: number, rng: () => number = Math.random) => {
+		return Random.randomNumber(sides, rng) + 1;
 	};
 
 	static randomNumber = (max: number, rng: () => number = Math.random) => {

@@ -4,6 +4,14 @@
 	border-radius: 5px;
 	background-color: rgb(250, 250, 250);
 
+	&.clickable {
+		cursor: pointer;
+
+		&:hover {
+			background-color: rgb(180, 220, 255);
+		}
+	}
+
 	.power-roll-row {
 		display: flex;
 		gap: 10px;

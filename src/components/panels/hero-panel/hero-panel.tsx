@@ -1,4 +1,5 @@
-import { Col, Divider, Flex, Row, Statistic } from 'antd';
+import { Col, Divider, Row, Statistic } from 'antd';
+import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
 import { Ancestry } from '../../../models/ancestry';
@@ -37,7 +38,7 @@ interface Props {
 	onSelectKit?: (kit: Kit) => void;
 	onSelectSkill?: (skill: Skill) => void;
 	onShowState?: () => void;
-	onShowRecovery?: () => void;
+	onPowerRoll?: (ability: Ability) => void;
 }
 
 export const HeroPanel = (props: Props) => {
@@ -237,12 +238,6 @@ export const HeroPanel = (props: Props) => {
 			}
 		};
 
-		const onShowRecovery = () => {
-			if (props.onShowRecovery) {
-				props.onShowRecovery();
-			}
-		};
-
 		const maxStamina = HeroLogic.getStamina(props.hero);
 		const stamina = props.hero.state.staminaDamage === 0 ? maxStamina : maxStamina - props.hero.state.staminaDamage;
 		const staminaSuffix = props.hero.state.staminaDamage === 0 ? null : `/ ${maxStamina}`;
@@ -305,7 +300,7 @@ export const HeroPanel = (props: Props) => {
 					</div>
 				</Col>
 				<Col xs={sizeSmall.xs} sm={sizeSmall.sm} md={sizeSmall.md} lg={sizeSmall.lg} xl={sizeSmall.xl} xxl={sizeSmall.xxl}>
-					<div className='characteristics-row clickable' onClick={onShowRecovery}>
+					<div className='characteristics-row clickable' onClick={onShowState}>
 						<div className='characteristic'>
 							<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />
 						</div>
@@ -368,6 +363,12 @@ export const HeroPanel = (props: Props) => {
 			return null;
 		}
 
+		const onPowerRoll = (ability: Ability) => {
+			if (props.onPowerRoll) {
+				props.onPowerRoll(ability);
+			}
+		};
+
 		return (
 			<div className='abilities-section'>
 				<HeaderText level={1}>{type}s</HeaderText>
@@ -375,7 +376,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						abilities.map(ability => (
 							<Col key={ability.id} xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
-								<AbilityPanel ability={ability} hero={props.hero} mode={PanelMode.Full} />
+								<AbilityPanel ability={ability} hero={props.hero} mode={PanelMode.Full} onRoll={() => onPowerRoll(ability)} />
 							</Col>
 						))
 					}
@@ -387,15 +388,13 @@ export const HeroPanel = (props: Props) => {
 	try {
 		if (props.mode !== PanelMode.Full) {
 			return (
-				<div className='hero-panel' id={props.hero.id}>
+				<div className='hero-panel compact' id={props.hero.id}>
 					<HeaderText level={1}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
-					<Flex align='center' justify='space-between'>
-						<Field label='Ancestry' value={props.hero.ancestry?.name || 'None'} />
-						<Field label='Career' value={props.hero.career?.name || 'None'} />
-						<Field label='Class' value={props.hero.class?.name || 'None'} />
-						<Field label='Level' value={props.hero.class?.level || '-'} />
-						<Field label='Kit' value={props.hero.kit?.name || 'None'} />
-					</Flex>
+					<Field label='Ancestry' value={props.hero.ancestry?.name || 'None'} />
+					<Field label='Career' value={props.hero.career?.name || 'None'} />
+					<Field label='Class' value={props.hero.class?.name || 'None'} />
+					<Field label='Level' value={props.hero.class?.level || '-'} />
+					<Field label='Kit' value={props.hero.kit?.name || 'None'} />
 				</div>
 			);
 		}

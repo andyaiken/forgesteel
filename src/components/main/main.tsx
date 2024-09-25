@@ -1,3 +1,4 @@
+import { Ability } from '../../models/ability';
 import { AboutModal } from '../modals/about/about';
 import { Ancestry } from '../../models/ancestry';
 import { AncestryPanel } from '../panels/ancestry-panel/ancestry-panel';
@@ -23,7 +24,7 @@ import { HeroStateModal } from '../modals/hero-state/hero-state';
 import { Kit } from '../../models/kit';
 import { KitPanel } from '../panels/kit-panel/kit-panel';
 import { PanelMode } from '../../enums/panel-mode';
-import { RecoveryModal } from '../modals/recovery/recovery';
+import { PowerRollModal } from '../modals/power-roll/power-roll';
 import { Skill } from '../../models/skill';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
@@ -197,21 +198,10 @@ export const Main = (props: Props) => {
 		}
 	};
 
-	const onShowRecovery = () => {
-		if (selectedHero) {
-			setDrawer(
-				<RecoveryModal
-					hero={selectedHero}
-					onChange={updatedHero => {
-						setSelectedHero(updatedHero);
-
-						const filtered = heroes.filter(h => h.id !== updatedHero.id);
-						filtered.push(updatedHero);
-						persistHeroes(filtered);
-					}}
-				/>
-			);
-		}
+	const onShowPowerRoll = (ability: Ability, hero: Hero) => {
+		setDrawer(
+			<PowerRollModal ability={ability} hero={hero} />
+		);
 	};
 
 	const getContent = () => {
@@ -249,7 +239,7 @@ export const Main = (props: Props) => {
 						onSelectKit={onSelectKit}
 						onSelectSkill={onSelectSkill}
 						onShowState={onShowState}
-						onShowRecovery={onShowRecovery}
+						onPowerRoll={onShowPowerRoll}
 					/>
 				);
 			case Page.HeroEdit:
@@ -281,7 +271,7 @@ export const Main = (props: Props) => {
 					Designed by Andy Aiken
 				</div>
 			</div>
-			<Drawer open={drawer !== null} onClose={() => setDrawer(null)} closeIcon={null}>
+			<Drawer open={drawer !== null} onClose={() => setDrawer(null)} closeIcon={null} width='450px'>
 				{drawer}
 			</Drawer>
 		</div>

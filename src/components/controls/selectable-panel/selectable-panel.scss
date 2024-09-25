@@ -1,4 +1,6 @@
 .selectable-panel {
+	position: relative;
+	width: 100%;
 	border: 1px solid rgba(5, 5, 5, 0.06);
 	background: rgb(255, 255, 255);
 	border-radius: 10px;
@@ -10,6 +12,12 @@
 		&:hover {
 			filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
 		}
+	}
+
+	.unselect-button {
+		position: absolute;
+		top: 25px;
+		right: 20px;
 	}
 }
 

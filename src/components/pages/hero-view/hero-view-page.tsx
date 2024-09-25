@@ -1,4 +1,5 @@
 import { Button, Popover } from 'antd';
+import { Ability } from '../../../models/ability';
 import { Ancestry } from '../../../models/ancestry';
 import { AppHeader } from '../../controls/app-header/app-header';
 import { Career } from '../../../models/career';
@@ -30,7 +31,7 @@ interface Props {
 	onSelectKit: (kit: Kit) => void;
 	onSelectSkill: (skill: Skill) => void;
 	onShowState: () => void;
-	onShowRecovery: () => void;
+	onPowerRoll: (ability: Ability, hero: Hero) => void;
 }
 
 export const HeroPage = (props: Props) => {
@@ -106,7 +107,7 @@ export const HeroPage = (props: Props) => {
 					onSelectKit={props.onSelectKit}
 					onSelectSkill={props.onSelectSkill}
 					onShowState={props.onShowState}
-					onShowRecovery={props.onShowRecovery}
+					onPowerRoll={ability => props.onPowerRoll(ability, props.hero)}
 				/>
 			</div>
 		</div>

@@ -159,26 +159,29 @@ export class AncestryData {
 							description: 'When you or a creature adjacent to you is attacked, you can use a triggered action to swing your wings around and guard against the blow, reducing any damage from the attack by an amount equal to your level + your Victories.'
 						}),
 						value: 1
+					},
+					{
+						feature: FeatureLogic.createAbilityFeature({
+							ability: AbilityLogic.createAbility({
+								id: 'dragon-knight-feature-2c',
+								name: 'Draconian Pride',
+								description: 'You let loose a mighty roar to repel your foes and shake their spirits.',
+								type: AbilityLogic.createTypeAction(),
+								keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Burst, value: 2 }) ],
+								target: 'All enemies',
+								powerRoll: AbilityLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Presence ],
+									tier1: '2 damage; push 1',
+									tier2: '4 damage; push 3',
+									tier3: '7 damage; push 5; frightened (EoT)'
+								}),
+								effect: 'You have a bane on the power roll for this ability when you use it in consecutive rounds of the same encounter.'
+							})
+						}),
+						value: 1
 					}
 				]
-			}),
-			FeatureLogic.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
-					id: 'dragon-knight-feature-3',
-					name: 'Draconian Pride',
-					description: 'You let loose a mighty roar to repel your foes and shake their spirits.',
-					type: AbilityLogic.createTypeAction(),
-					keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Burst, value: 2 }) ],
-					target: 'All enemies',
-					powerRoll: AbilityLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Presence ],
-						tier1: '2 damage; push 1',
-						tier2: '4 damage; push 3',
-						tier3: '7 damage; push 5; frightened (EoT)'
-					}),
-					effect: 'You have a bane on the power roll for this ability when you use it in consecutive rounds of the same encounter.'
-				})
 			})
 		]
 	};

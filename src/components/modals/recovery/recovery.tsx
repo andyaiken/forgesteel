@@ -34,7 +34,7 @@ export const RecoveryModal = (props: Props) => {
 		return (
 			<div className='recovery-modal'>
 				<NumberSpin
-					label='Stamina Damage'
+					label='Damage'
 					value={hero.state.staminaDamage}
 					min={0}
 					onChange={value => onChange('staminaDamage', value)}
@@ -52,7 +52,7 @@ export const RecoveryModal = (props: Props) => {
 					disabled={(hero.state.staminaDamage === 0) || (hero.state.recoveriesUsed >= HeroLogic.getRecoveries(hero))}
 					onClick={spendRecovery}
 				>
-					Spend a Recovery to regain Stamina
+					Spend a Recovery to regain {HeroLogic.getRecoveryValue(hero)} Stamina
 				</Button>
 			</div>
 		);

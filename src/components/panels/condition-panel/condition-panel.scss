@@ -1,0 +1,20 @@
+.condition-panel {
+    margin: 10px 0;
+    border-radius: 5px;
+	padding: 5px 10px;
+	display: flex;
+    align-items: center;
+    justify-content: space-between;
+	gap: 10px;
+
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.06);
+	}
+
+	.action-buttons {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+	}
+}

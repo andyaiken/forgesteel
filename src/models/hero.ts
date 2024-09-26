@@ -1,10 +1,18 @@
+import { ConditionEndType, ConditionType } from '../enums/condition-type';
 import { Ancestry } from './ancestry';
 import { Career } from './career';
+import { Characteristic } from '../enums/characteristic';
 import { Complication } from './complication';
-import { Condition } from '../enums/condition';
 import { Culture } from './culture';
 import { HeroClass } from './class';
 import { Kit } from './kit';
+
+export interface Condition {
+	id: string;
+	type: ConditionType;
+	ends: ConditionEndType;
+	resistCharacteristic: Characteristic;
+}
 
 export interface HeroState {
 	staminaDamage: number;

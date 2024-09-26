@@ -1,5 +1,5 @@
+import { Alert, Select, Space } from 'antd';
 import { Feature, FeatureAbilityData, FeatureChoiceData, FeatureClassAbilityData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
-import { Select, Space } from 'antd';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { CampaignSettingData } from '../../../data/campaign-setting-data';
@@ -205,7 +205,7 @@ export const FeaturePanel = (props: Props) => {
 								});
 							if (features.length > 0) {
 								return (
-									<div key={n} className='ds-text warning-text'>{l} is also granted by {features.map(f => f.name).join(', ')}</div>
+									<Alert key={n} message={`${l} is also granted by ${features.map(f => f.name).join(', ')}`} type='warning' showIcon={true} />
 								);
 							}
 						}
@@ -266,7 +266,7 @@ export const FeaturePanel = (props: Props) => {
 									});
 								if (features.length > 0) {
 									return (
-										<div key={n} className='ds-text warning-text'>{s} is also granted by {features.map(f => f.name).join(', ')}</div>
+										<Alert key={n} message={`${s} is also granted by ${features.map(f => f.name).join(', ')}`} type='warning' showIcon={true} />
 									);
 								}
 							}

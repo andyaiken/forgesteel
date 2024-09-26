@@ -2,7 +2,6 @@
 	box-sizing: border-box;
 	user-select: none;
 	transition:
-		color ease-in-out 0.2s,
 		background-color ease-in-out 0.2s,
 		background-image ease-in-out 0.2s,
 		border-color ease-in-out 0.2s,
@@ -49,14 +48,6 @@ p,
 
 	&.description-text {
 		opacity: 0.6;
-	}
-
-	&.warning-text {
-		border: 1px solid rgb(255, 140, 0);
-		border-radius: 5px;
-		color: rgba(0, 0, 0, 0.88);
-		background-color: rgb(255, 230, 200);
-		padding: 5px 10px;
 	}
 
 	&.centered-text {

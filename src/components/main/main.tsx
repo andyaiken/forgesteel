@@ -119,7 +119,6 @@ export const Main = (props: Props) => {
 		if (selectedHero) {
 			const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
 			persistHeroes(copy.filter(h => h.id !== selectedHero.id));
-
 			setPage(Page.HeroList);
 			setSelectedHero(null);
 		}
@@ -127,12 +126,14 @@ export const Main = (props: Props) => {
 
 	const saveEditSelectedHero = (hero: Hero) => {
 		if (selectedHero) {
-			const filtered = heroes.filter(h => h.id !== selectedHero.id);
-			filtered.push(hero);
-
-			persistHeroes(filtered);
-			setPage(Page.HeroView);
-			setSelectedHero(hero);
+			const list = JSON.parse(JSON.stringify(heroes)) as Hero[];
+			const index = list.findIndex(h => h.id === hero.id);
+			if (index !== -1) {
+				list[index] = hero;
+				persistHeroes(list);
+				setPage(Page.HeroView);
+				setSelectedHero(hero);
+			}
 		}
 	};
 
@@ -202,11 +203,13 @@ export const Main = (props: Props) => {
 				<HeroStateModal
 					hero={selectedHero}
 					onChange={updatedHero => {
-						setSelectedHero(updatedHero);
-
-						const filtered = heroes.filter(h => h.id !== updatedHero.id);
-						filtered.push(updatedHero);
-						persistHeroes(filtered);
+						const list = JSON.parse(JSON.stringify(heroes)) as Hero[];
+						const index = list.findIndex(h => h.id === updatedHero.id);
+						if (index !== -1) {
+							list[index] = updatedHero;
+							persistHeroes(list);
+							setSelectedHero(updatedHero);
+						}
 					}}
 				/>
 			);

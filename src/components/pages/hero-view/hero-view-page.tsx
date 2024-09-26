@@ -51,6 +51,9 @@ export const HeroPage = (props: Props) => {
 				<Button onClick={props.editHero}>
 					Edit
 				</Button>
+				<Button onClick={props.onShowState}>
+					State
+				</Button>
 				<Popover
 					trigger='click'
 					placement='bottom'

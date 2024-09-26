@@ -7,6 +7,7 @@ import { Career } from '../../../models/career';
 import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
 import { Complication } from '../../../models/complication';
+import { ConditionEndType } from '../../../enums/condition-type';
 import { Culture } from '../../../models/culture';
 import { CultureData } from '../../../data/culture-data';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
@@ -43,7 +44,7 @@ interface Props {
 }
 
 export const HeroPanel = (props: Props) => {
-	const getLeftSection = () => {
+	const getLeftSidebar = () => {
 		const onSelectAncestry = () => {
 			if (props.hero.ancestry && props.onSelectAncestry) {
 				props.onSelectAncestry(props.hero.ancestry);
@@ -105,11 +106,27 @@ export const HeroPanel = (props: Props) => {
 		const weaponNames = Collections.distinct(kits.flatMap(k => k.weapon), w => w).join(', ');
 		const implementNames = Collections.distinct(kits.flatMap(k => k.implement), i => i).join(', ');
 
+		const conditions = props.hero.state.conditions
+			.map(c => {
+				if (c.ends === ConditionEndType.ResistanceEnds) {
+					return `${c.type}: ${c.resistCharacteristic} resistance ends`;
+				}
+				return `${c.type}: ${c.ends}`;
+			})
+			.join(', ');
 		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
 		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
 		return (
 			<div className='hero-left-column'>
+				{
+					conditions ?
+						<div className='top-tile clickable' onClick={props.onShowState}>
+							<HeaderText>Conditions</HeaderText>
+							<div className='ds-text'>{conditions}</div>
+						</div>
+						: null
+				}
 				{
 					props.hero.ancestry ?
 						<div className='top-tile clickable' onClick={onSelectAncestry}>
@@ -416,7 +433,7 @@ export const HeroPanel = (props: Props) => {
 			<div className='hero-panel' id={props.hero.id}>
 				<HeaderText level={1}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
 				<div className='hero-main-section'>
-					{getLeftSection()}
+					{getLeftSidebar()}
 					<div className='hero-right-column'>
 						{getStatsSection()}
 						{getFeaturesSection()}

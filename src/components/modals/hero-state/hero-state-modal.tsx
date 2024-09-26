@@ -1,8 +1,13 @@
 import { Button, Divider, Flex } from 'antd';
+import { Condition, Hero } from '../../../models/hero';
+import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
+import { Characteristic } from '../../../enums/characteristic';
+import { ConditionPanel } from '../../panels/condition-panel/condition-panel';
 import { Expander } from '../../controls/expander/expander';
-import { Hero } from '../../../models/hero';
+import { HeaderText } from '../../controls/header-text/header-text';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
+import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
 import './hero-state-modal.scss';
@@ -13,7 +18,7 @@ interface Props {
 }
 
 export const HeroStateModal = (props: Props) => {
-	const [ hero, setHero ] = useState<Hero>(props.hero);
+	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(props.hero)));
 
 	const onChange = (field: string, value: number) => {
 		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
@@ -56,6 +61,35 @@ export const HeroStateModal = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const addCondition = () => {
+		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		copy.state.conditions.push({
+			id: Utils.guid(),
+			type: ConditionType.Bleeding,
+			ends: ConditionEndType.EndOfTurn,
+			resistCharacteristic: Characteristic.Might
+		});
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const editCondition = (condition: Condition) => {
+		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		const index = copy.state.conditions.findIndex(c => c.id === condition.id);
+		if (index !== -1) {
+			copy.state.conditions[index] = condition;
+			setHero(copy);
+			props.onChange(copy);
+		}
+	};
+
+	const deleteCondition = (condition: Condition) => {
+		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
+		setHero(copy);
+		props.onChange(copy);
+	};
+
 	try {
 		return (
 			<div className='hero-state-modal'>
@@ -71,7 +105,6 @@ export const HeroStateModal = (props: Props) => {
 					min={0}
 					onChange={value => onChange('heroicResource', value)}
 				/>
-				<Divider />
 				<Flex align='center' justify='space-between' gap='5px'>
 					<Button
 						className='tall-button'
@@ -114,7 +147,6 @@ export const HeroStateModal = (props: Props) => {
 					max={HeroLogic.getRecoveries(hero)}
 					onChange={value => onChange('recoveriesUsed', value)}
 				/>
-				<Divider />
 				<Flex align='center' justify='space-between' gap='5px'>
 					<Button
 						className='tall-button'
@@ -144,6 +176,19 @@ export const HeroStateModal = (props: Props) => {
 						</div>
 					</Button>
 				</Flex>
+				<Divider />
+				<HeaderText>Conditions</HeaderText>
+				{
+					hero.state.conditions.map(c => (
+						<ConditionPanel
+							key={c.id}
+							condition={c}
+							onChange={editCondition}
+							onDelete={deleteCondition}
+						/>
+					))
+				}
+				<Button block={true} onClick={addCondition}>Add Condition</Button>
 				<Divider />
 				<Expander title='Other Statistics'>
 					<NumberSpin

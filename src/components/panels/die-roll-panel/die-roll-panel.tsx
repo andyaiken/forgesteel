@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Alert, Button } from 'antd';
 import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
 import { Hero } from '../../../models/hero';
@@ -36,6 +36,11 @@ export const DieRollPanel = (props: Props) => {
 							<div className='bonus'>{characteristic >= 0 ? '+' : ''}{characteristic}</div>
 							<div className='result'>{Collections.sum([ ...results, characteristic ], r => r)}</div>
 						</div>
+						: null
+				}
+				{
+					Collections.sum(results, r => r) >= 19 ?
+						<Alert message='Critical hit!' type='success' showIcon={true} />
 						: null
 				}
 			</div>

@@ -76,7 +76,7 @@ export class Collections {
 
 	static max = <T>(collection: T[], callback: (item: T) => number): T | null => {
 		let item = null;
-		let max = Number.MIN_VALUE;
+		let max = -Number.MAX_VALUE;
 
 		collection.forEach(i => {
 			const value = callback(i);

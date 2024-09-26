@@ -1,12 +1,11 @@
 import { Button, Divider } from 'antd';
-import { AppHeader } from '../../controls/app-header/app-header';
+import { AppHeader } from '../../panels/app-header/app-header';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 
 import './welcome-page.scss';
 
 interface Props {
-	goHome: () => void;
 	showAbout: () => void;
 	showHeroes: () => void;
 }
@@ -14,7 +13,7 @@ interface Props {
 export const WelcomePage = (props: Props) => {
 	return (
 		<div className='welcome-page'>
-			<AppHeader goHome={props.goHome} showAbout={props.showAbout}/>
+			<AppHeader showAbout={props.showAbout}/>
 			<div className='welcome-page-content'>
 				<div className='welcome-column'>
 					<SelectablePanel>

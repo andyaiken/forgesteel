@@ -1,4 +1,4 @@
-import { AppHeader } from '../../controls/app-header/app-header';
+import { AppHeader } from '../../panels/app-header/app-header';
 import { Button } from 'antd';
 import { Hero } from '../../../models/hero';
 import { HeroPanel } from '../../panels/hero-panel/hero-panel';

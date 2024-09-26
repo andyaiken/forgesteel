@@ -67,6 +67,16 @@
 
 				.characteristic {
 					flex: 1 1 0;
+					border-radius: 10px;
+					padding: 5px 0;
+
+					&.clickable {
+						cursor: pointer;
+	
+						&:hover {
+							background-color: rgb(125, 180, 255);
+						}
+					}
 				}
 			}
 		}

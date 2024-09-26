@@ -37,8 +37,9 @@ interface Props {
 	onSelectComplication?: (complication: Complication) => void;
 	onSelectKit?: (kit: Kit) => void;
 	onSelectSkill?: (skill: Skill) => void;
+	onSelectCharacteristic?: (characteristic: Characteristic) => void;
+	onSelectAbility?: (ability: Ability) => void;
 	onShowState?: () => void;
-	onPowerRoll?: (ability: Ability) => void;
 }
 
 export const HeroPanel = (props: Props) => {
@@ -238,6 +239,12 @@ export const HeroPanel = (props: Props) => {
 			xxl: 14
 		};
 
+		const onSelectCharacteristic = (characteristic: Characteristic) => {
+			if (props.onSelectCharacteristic) {
+				props.onSelectCharacteristic(characteristic);
+			}
+		};
+
 		const onShowState = () => {
 			if (props.onShowState) {
 				props.onShowState();
@@ -256,19 +263,19 @@ export const HeroPanel = (props: Props) => {
 			<Row gutter={[ 16, 16 ]}>
 				<Col xs={sizeLarge.xs} sm={sizeLarge.sm} md={sizeLarge.md} lg={sizeLarge.lg} xl={sizeLarge.xl} xxl={sizeLarge.xxl}>
 					<div className='characteristics-row'>
-						<div className='characteristic'>
+						<div className='characteristic clickable' onClick={() => onSelectCharacteristic(Characteristic.Might)}>
 							<Statistic title='Might' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
 						</div>
-						<div className='characteristic'>
+						<div className='characteristic clickable' onClick={() => onSelectCharacteristic(Characteristic.Agility)}>
 							<Statistic title='Agility' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
 						</div>
-						<div className='characteristic'>
+						<div className='characteristic clickable' onClick={() => onSelectCharacteristic(Characteristic.Reason)}>
 							<Statistic title='Reason' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
 						</div>
-						<div className='characteristic'>
+						<div className='characteristic clickable' onClick={() => onSelectCharacteristic(Characteristic.Intuition)}>
 							<Statistic title='Intuition' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
 						</div>
-						<div className='characteristic'>
+						<div className='characteristic clickable' onClick={() => onSelectCharacteristic(Characteristic.Presence)}>
 							<Statistic title='Presence' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
 						</div>
 					</div>
@@ -369,9 +376,9 @@ export const HeroPanel = (props: Props) => {
 			return null;
 		}
 
-		const onPowerRoll = (ability: Ability) => {
-			if (props.onPowerRoll) {
-				props.onPowerRoll(ability);
+		const onSelectAbility = (ability: Ability) => {
+			if (props.onSelectAbility) {
+				props.onSelectAbility(ability);
 			}
 		};
 
@@ -382,7 +389,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						abilities.map(ability => (
 							<Col key={ability.id} xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
-								<AbilityPanel ability={ability} hero={props.hero} mode={PanelMode.Full} onRoll={() => onPowerRoll(ability)} />
+								<AbilityPanel ability={ability} hero={props.hero} mode={PanelMode.Full} onRoll={() => onSelectAbility(ability)} />
 							</Col>
 						))
 					}

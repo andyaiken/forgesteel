@@ -5,7 +5,7 @@ import { HeroLogic } from '../../../logic/hero-logic';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { useState } from 'react';
 
-import './hero-state.scss';
+import './hero-state-modal.scss';
 
 interface Props {
 	hero: Hero;

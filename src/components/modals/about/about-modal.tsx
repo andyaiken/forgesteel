@@ -2,7 +2,8 @@ import { Divider } from 'antd';
 import { Field } from '../../controls/field/field';
 
 import pkg from '../../../../package.json';
-import './about.scss';
+
+import './about-modal.scss';
 
 export const AboutModal = () => {
 	try {

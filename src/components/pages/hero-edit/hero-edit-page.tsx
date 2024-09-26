@@ -4,7 +4,7 @@ import { Feature, FeatureBonusData, FeatureData, FeatureLanguageData, FeatureSki
 import { Ancestry } from '../../../models/ancestry';
 import { AncestryData } from '../../../data/ancestry-data';
 import { AncestryPanel } from '../../panels/ancestry-panel/ancestry-panel';
-import { AppHeader } from '../../controls/app-header/app-header';
+import { AppHeader } from '../../panels/app-header/app-header';
 import { CampaignSettingData } from '../../../data/campaign-setting-data';
 import { Career } from '../../../models/career';
 import { CareerData } from '../../../data/career-data';

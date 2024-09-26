@@ -1,8 +1,9 @@
 import { Button, Popover } from 'antd';
 import { Ability } from '../../../models/ability';
 import { Ancestry } from '../../../models/ancestry';
-import { AppHeader } from '../../controls/app-header/app-header';
+import { AppHeader } from '../../panels/app-header/app-header';
 import { Career } from '../../../models/career';
+import { Characteristic } from '../../../enums/characteristic';
 import { Complication } from '../../../models/complication';
 import { Culture } from '../../../models/culture';
 import { Hero } from '../../../models/hero';
@@ -31,8 +32,9 @@ interface Props {
 	onSelectComplication: (complication: Complication) => void;
 	onSelectKit: (kit: Kit) => void;
 	onSelectSkill: (skill: Skill) => void;
+	onSelectCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
+	onSelectAbility: (ability: Ability, hero: Hero) => void;
 	onShowState: () => void;
-	onPowerRoll: (ability: Ability, hero: Hero) => void;
 }
 
 export const HeroPage = (props: Props) => {
@@ -107,8 +109,9 @@ export const HeroPage = (props: Props) => {
 					onSelectComplication={props.onSelectComplication}
 					onSelectKit={props.onSelectKit}
 					onSelectSkill={props.onSelectSkill}
+					onSelectCharacteristic={characteristic => props.onSelectCharacteristic(characteristic, props.hero)}
+					onSelectAbility={ability => props.onSelectAbility(ability, props.hero)}
 					onShowState={props.onShowState}
-					onPowerRoll={ability => props.onPowerRoll(ability, props.hero)}
 				/>
 			</div>
 		</div>

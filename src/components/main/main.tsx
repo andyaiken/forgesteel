@@ -1,10 +1,13 @@
 import { Ability } from '../../models/ability';
-import { AboutModal } from '../modals/about/about';
+import { AbilityModal } from '../modals/ability/ability-modal';
+import { AboutModal } from '../modals/about/about-modal';
 import { Ancestry } from '../../models/ancestry';
 import { AncestryPanel } from '../panels/ancestry-panel/ancestry-panel';
 import { CampaignSettingData } from '../../data/campaign-setting-data';
 import { Career } from '../../models/career';
 import { CareerPanel } from '../panels/career-panel/career-panel';
+import { Characteristic } from '../../enums/characteristic';
+import { CharacteristicModal } from '../modals/characteristic/characteristic-modal';
 import { ClassPanel } from '../panels/class-panel/class-panel';
 import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
@@ -12,26 +15,25 @@ import { ComplicationPanel } from '../panels/complication-panel/complication-pan
 import { Culture } from '../../models/culture';
 import { CulturePanel } from '../panels/culture-panel/culture-panel';
 import { Drawer } from 'antd';
-import { Field } from '../controls/field/field';
-import { HeaderText } from '../controls/header-text/header-text';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
 import { HeroEditPage } from '../pages/hero-edit/hero-edit-page';
 import { HeroListPage } from '../pages/hero-list/hero-list-page';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroPage } from '../pages/hero-view/hero-view-page';
-import { HeroStateModal } from '../modals/hero-state/hero-state';
+import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { Kit } from '../../models/kit';
 import { KitPanel } from '../panels/kit-panel/kit-panel';
 import { PanelMode } from '../../enums/panel-mode';
-import { PowerRollModal } from '../modals/power-roll/power-roll';
 import { Skill } from '../../models/skill';
+import { SkillModal } from '../modals/skill/skill-modal';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
 import { useState } from 'react';
 
 import pbds from '../../assets/powered-by-draw-steel.png';
+
 import './main.scss';
 
 enum Page {
@@ -178,11 +180,19 @@ export const Main = (props: Props) => {
 
 	const onSelectSkill = (skill: Skill) => {
 		setDrawer(
-			<div>
-				<HeaderText level={1}>{skill.name}</HeaderText>
-				<Field label='Skill List' value={skill.list} />
-				<div className='ds-text description-text'>{skill.description}</div>
-			</div>
+			<SkillModal skill={skill} />
+		);
+	};
+
+	const onSelectCharacteristic = (characteristic: Characteristic, hero: Hero) => {
+		setDrawer(
+			<CharacteristicModal characteristic={characteristic} hero={hero} />
+		);
+	};
+
+	const onSelectAbility = (ability: Ability, hero: Hero) => {
+		setDrawer(
+			<AbilityModal ability={ability} hero={hero} />
 		);
 	};
 
@@ -203,20 +213,13 @@ export const Main = (props: Props) => {
 		}
 	};
 
-	const onShowPowerRoll = (ability: Ability, hero: Hero) => {
-		setDrawer(
-			<PowerRollModal ability={ability} hero={hero} />
-		);
-	};
-
 	const getContent = () => {
 		switch (page) {
 			case Page.Welcome:
 				return (
 					<WelcomePage
-						goHome={goHome}
 						showAbout={showAbout}
-						showHeroes={showHeroList}
+						showHeroes={heroes.length === 0 ? addHero : showHeroList}
 					/>
 				);
 			case Page.HeroList:
@@ -246,8 +249,9 @@ export const Main = (props: Props) => {
 						onSelectComplication={onSelectComplication}
 						onSelectKit={onSelectKit}
 						onSelectSkill={onSelectSkill}
+						onSelectCharacteristic={onSelectCharacteristic}
+						onSelectAbility={onSelectAbility}
 						onShowState={onShowState}
-						onPowerRoll={onShowPowerRoll}
 					/>
 				);
 			case Page.HeroEdit:

@@ -8,6 +8,7 @@ import './hero-list-page.scss';
 
 interface Props {
 	heroes: Hero[];
+	goHome: () => void;
 	showAbout: () => void;
 	addHero: () => void;
 	viewHero: (heroID: string) => void;
@@ -16,7 +17,7 @@ interface Props {
 export const HeroListPage = (props: Props) => {
 	return (
 		<div className='hero-list-page'>
-			<AppHeader showAbout={props.showAbout}>
+			<AppHeader goHome={props.goHome} showAbout={props.showAbout}>
 				<Button type='primary' onClick={props.addHero}>
 					Create A New Hero
 				</Button>

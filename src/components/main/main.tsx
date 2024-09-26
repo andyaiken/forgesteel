@@ -69,6 +69,11 @@ export const Main = (props: Props) => {
 		setSelectedHero(null);
 	};
 
+	const goHome = () => {
+		setPage(Page.Welcome);
+		setSelectedHero(null);
+	};
+
 	const addHero = () => {
 		const hero = HeroLogic.createHero(CampaignSettingData.orden.id);
 
@@ -209,6 +214,7 @@ export const Main = (props: Props) => {
 			case Page.Welcome:
 				return (
 					<WelcomePage
+						goHome={goHome}
 						showAbout={showAbout}
 						showHeroes={showHeroList}
 					/>
@@ -217,6 +223,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroListPage
 						heroes={heroes}
+						goHome={goHome}
 						showAbout={showAbout}
 						addHero={addHero}
 						viewHero={viewHero}
@@ -226,6 +233,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroPage
 						hero={selectedHero as Hero}
+						goHome={goHome}
 						showAbout={showAbout}
 						closeHero={closeSelectedHero}
 						editHero={editSelectedHero}
@@ -246,6 +254,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroEditPage
 						hero={selectedHero as Hero}
+						goHome={goHome}
 						showAbout={showAbout}
 						saveChanges={saveEditSelectedHero}
 						cancelChanges={cancelEditSelectedHero}

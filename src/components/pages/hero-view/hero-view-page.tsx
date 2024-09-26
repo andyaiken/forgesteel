@@ -18,6 +18,7 @@ import './hero-view-page.scss';
 
 interface Props {
 	hero: Hero;
+	goHome: () => void;
 	showAbout: () => void;
 	closeHero: () => void;
 	editHero: () => void;
@@ -41,7 +42,7 @@ export const HeroPage = (props: Props) => {
 
 	return (
 		<div className='hero-view-page'>
-			<AppHeader showAbout={props.showAbout}>
+			<AppHeader goHome={props.goHome} showAbout={props.showAbout}>
 				<Button onClick={props.closeHero}>
 					Close
 				</Button>

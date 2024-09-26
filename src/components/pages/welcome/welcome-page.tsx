@@ -6,6 +6,7 @@ import { SelectablePanel } from '../../controls/selectable-panel/selectable-pane
 import './welcome-page.scss';
 
 interface Props {
+	goHome: () => void;
 	showAbout: () => void;
 	showHeroes: () => void;
 }
@@ -13,7 +14,7 @@ interface Props {
 export const WelcomePage = (props: Props) => {
 	return (
 		<div className='welcome-page'>
-			<AppHeader showAbout={props.showAbout}/>
+			<AppHeader goHome={props.goHome} showAbout={props.showAbout}/>
 			<div className='welcome-page-content'>
 				<div className='welcome-column'>
 					<SelectablePanel>

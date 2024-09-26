@@ -54,6 +54,7 @@ enum PageState {
 
 interface Props {
 	hero: Hero;
+	goHome: () => void;
 	showAbout: () => void;
 	saveChanges: (hero: Hero) => void;
 	cancelChanges: () => void;
@@ -301,7 +302,7 @@ export const HeroEditPage = (props: Props) => {
 
 	return (
 		<div className='hero-edit-page'>
-			<AppHeader showAbout={props.showAbout}>
+			<AppHeader goHome={props.goHome} showAbout={props.showAbout}>
 				<Button type='primary' disabled={!dirty} onClick={saveChanges}>
 					Save Changes
 				</Button>

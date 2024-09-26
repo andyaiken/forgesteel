@@ -47,7 +47,7 @@ export const shadow: HeroClass = {
 				FeatureLogic.createFeature({
 					id: 'shadow-1-4',
 					name: 'Insight',
-					description: 'Outside of combat and other dangerous situations tracked in turns and rounds, you have insight equal to your Victories. At the start of each of your turns during combat, you gain 2 insight. You gain 1 insight whenever you get a tier 3 result with an attack.'
+					description: 'At the start of each of your turns during combat, you gain 2 insight. You gain 1 insight whenever you get a tier 3 result with an attack.'
 				}),
 				FeatureLogic.createAbilityFeature({
 					ability: AbilityLogic.createAbility({

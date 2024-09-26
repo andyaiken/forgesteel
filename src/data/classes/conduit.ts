@@ -38,7 +38,7 @@ export const conduit: HeroClass = {
 				FeatureLogic.createFeature({
 					id: 'conduit-1-2',
 					name: 'Piety',
-					description: 'Outside of combat and other dangerous situations tracked in turns and rounds, you have piety equal to your Victories. At the start of each of your turns during combat, you gain 2 piety. You can also use the Prayer ability to gain additional piety.'
+					description: 'At the start of each of your turns during combat, you gain 2 piety.'
 				}),
 				FeatureLogic.createAbilityFeature({
 					ability: AbilityLogic.createAbility({

@@ -100,14 +100,6 @@ export class AncestryData {
 							description: 'You possess wings powerful enough to take you airborne. As a maneuver, you can switch between walking and flying when you are touching the ground, or vice versa when you are within 1 square of the ground. While flying, your stability drops to 0 and you have damage weakness 5. While using your wings to fly, you can stay aloft for a number of rounds equal to your Might (minimum of 1 round) before you fall prone.'
 						}),
 						value: 2
-					},
-					{
-						feature: FeatureLogic.createFeature({
-							id: 'devil-feature-1i',
-							name: 'Silver Tongue',
-							description: 'You can twist how your words are perceived to get a better read on people. You gain an edge when attempting to discover an NPC’s motivations and pitfalls during negotiations.'
-						}),
-						value: 1
 					}
 				],
 				count: 3

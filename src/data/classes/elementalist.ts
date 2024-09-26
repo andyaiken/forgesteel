@@ -42,7 +42,7 @@ export const elementalist: HeroClass = {
 				FeatureLogic.createFeature({
 					id: 'elementalist-1-3',
 					name: 'Essence',
-					description: 'Outside of combat and other dangerous situations tracked in turns and rounds, you have essence equal to your Victories. At the start of each of your turns during combat, you gain 2 essence.'
+					description: 'At the start of each of your turns during combat, you gain 2 essence.'
 				}),
 				FeatureLogic.createAbilityFeature({
 					ability: AbilityLogic.createAbility({

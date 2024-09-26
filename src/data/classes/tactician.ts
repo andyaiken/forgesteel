@@ -44,7 +44,7 @@ export const tactician: HeroClass = {
 				FeatureLogic.createFeature({
 					id: 'tactician-1-3',
 					name: 'Focus',
-					description: 'Outside of combat and other dangerous situations tracked in turns and rounds, you have focus equal to your Victories. At the start of each of your turns during combat, you gain 2 focus. If an ally gets a tier 3 result on an attack against a target you have marked, you gain 1 focus.'
+					description: 'At the start of each of your turns during combat, you gain 2 focus. If an ally gets a tier 3 result on an attack against a target you have marked, you gain 1 focus.'
 				}),
 				FeatureLogic.createAbilityFeature({
 					ability: AbilityLogic.createAbility({

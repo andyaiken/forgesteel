@@ -44,7 +44,7 @@ export const fury: HeroClass = {
 				FeatureLogic.createFeature({
 					id: 'fury-1-3',
 					name: 'Rage',
-					description: 'Outside of combat and other dangerous situations tracked in turns and rounds, you have rage equal to your Victories. At the start of each of your turns during combat, you gain 1d3 rage.'
+					description: 'At the start of each of your turns during combat, you gain 1d3 rage.'
 				}),
 				FeatureLogic.createFeature({
 					id: 'fury-1-4',

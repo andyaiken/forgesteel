@@ -72,6 +72,10 @@ ul {
 	&.ant-btn-text {
 		font-size: unset;
 	}
+
+	&:disabled {
+		color: rgb(120, 120, 120);
+	}
 }
 
 .ant-statistic {

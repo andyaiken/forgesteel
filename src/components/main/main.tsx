@@ -24,6 +24,7 @@ import { HeroPage } from '../pages/hero-view/hero-view-page';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { Kit } from '../../models/kit';
 import { KitPanel } from '../panels/kit-panel/kit-panel';
+import { Options } from '../../models/options';
 import { PanelMode } from '../../enums/panel-mode';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
@@ -43,10 +44,12 @@ enum Page {
 
 interface Props {
 	heroes: Hero[];
+	options: Options;
 }
 
 export const Main = (props: Props) => {
 	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
+	const [ options, setOptions ] = useState<Options>(props.options);
 	const [ page, setPage ] = useState<Page>(Page.Welcome);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
 	const [ drawer, setDrawer ] = useState<JSX.Element | null>(null);
@@ -55,6 +58,13 @@ export const Main = (props: Props) => {
 		localforage.setItem<Hero[]>('forgesteel-heroes', heroes)
 			.then(() => {
 				setHeroes(heroes);
+			});
+	};
+
+	const persistOptions = (options: Options) => {
+		localforage.setItem<Options>('forgesteel-options', options)
+			.then(() => {
+				setOptions(options);
 			});
 	};
 
@@ -231,6 +241,8 @@ export const Main = (props: Props) => {
 				return (
 					<HeroPage
 						hero={selectedHero as Hero}
+						options={options}
+						setOptions={persistOptions}
 						goHome={goHome}
 						showAbout={showAbout}
 						closeHero={closeSelectedHero}

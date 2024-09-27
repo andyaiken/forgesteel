@@ -34,9 +34,9 @@ export class FeatureLogic {
 	};
 
 	static createBonusFeature = (data: { id: string, name?: string, description?: string, field: FeatureField, value: number, valuePerLevel?: number }) => {
-		let desc = `${data.field} +${data.value}`;
+		let desc = `${data.field} ${data.value >= 0 ? '+' : ''}${data.value}`;
 		if (data.valuePerLevel) {
-			desc += `, +${data.valuePerLevel} per level after 1st`;
+			desc += `, ${data.valuePerLevel >= 0 ? '+' : ''}${data.valuePerLevel} per level after 1st`;
 		}
 
 		return {

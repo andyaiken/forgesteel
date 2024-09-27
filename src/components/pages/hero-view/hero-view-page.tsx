@@ -10,14 +10,16 @@ import { Hero } from '../../../models/hero';
 import { HeroClass } from '../../../models/class';
 import { HeroPanel } from '../../panels/hero-panel/hero-panel';
 import { Kit } from '../../../models/kit';
+import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Toggle } from '../../controls/toggle/toggle';
-import { useState } from 'react';
 
 import './hero-view-page.scss';
 
 interface Props {
 	hero: Hero;
+	options: Options;
+	setOptions: (options: Options) => void;
 	goHome: () => void;
 	showAbout: () => void;
 	closeHero: () => void;
@@ -36,9 +38,23 @@ interface Props {
 }
 
 export const HeroPage = (props: Props) => {
-	const [ showSkillsInGroups, setShowSkillsInGroups ] = useState<boolean>(false);
-	const [ showFreeStrikes, setShowFreeStrikes ] = useState<boolean>(false);
-	const [ showStandardAbilities, setShowStandardAbilities ] = useState<boolean>(false);
+	const setShowSkillsInGroups = (value: boolean) => {
+		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		copy.showSkillsInGroups = value;
+		props.setOptions(copy);
+	};
+
+	const setShowFreeStrikes = (value: boolean) => {
+		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		copy.showFreeStrikes = value;
+		props.setOptions(copy);
+	};
+
+	const setShowStandardAbilities = (value: boolean) => {
+		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		copy.showStandardAbilities = value;
+		props.setOptions(copy);
+	};
 
 	return (
 		<div className='hero-view-page'>
@@ -57,9 +73,9 @@ export const HeroPage = (props: Props) => {
 					placement='bottom'
 					content={(
 						<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-							<Toggle label='Show Skills In Groups' value={showSkillsInGroups} onChange={setShowSkillsInGroups} />
-							<Toggle label='Show Free Strikes' value={showFreeStrikes} onChange={setShowFreeStrikes} />
-							<Toggle label='Show Standard Abilities' value={showStandardAbilities} onChange={setShowStandardAbilities} />
+							<Toggle label='Show Skills In Groups' value={props.options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
+							<Toggle label='Show Free Strikes' value={props.options.showFreeStrikes} onChange={setShowFreeStrikes} />
+							<Toggle label='Show Standard Abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
 							<Button onClick={() => props.exportHero('image')}>Export As Image</Button>
 							<Button onClick={() => props.exportHero('pdf')}>Export As PDF</Button>
 						</div>
@@ -88,9 +104,9 @@ export const HeroPage = (props: Props) => {
 				<HeroPanel
 					hero={props.hero}
 					mode={PanelMode.Full}
-					showSkillsInGroups={showSkillsInGroups}
-					showFreeStrikes={showFreeStrikes}
-					showStandardAbilities={showStandardAbilities}
+					showSkillsInGroups={props.options.showSkillsInGroups}
+					showFreeStrikes={props.options.showFreeStrikes}
+					showStandardAbilities={props.options.showStandardAbilities}
 					onSelectAncestry={props.onSelectAncestry}
 					onSelectCulture={props.onSelectCulture}
 					onSelectCareer={props.onSelectCareer}

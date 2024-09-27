@@ -94,7 +94,7 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		const kits = HeroLogic.getKits(props.hero);
-		const kitNames = kits.map(k => k.name).join(', ');
+		const kitNames = Collections.sort(kits.map(k => k.name), k => k).join(', ');
 		const armorNames = Collections.distinct(kits.flatMap(k => k.armor), a => a).join(', ');
 		const weaponNames = Collections.distinct(kits.flatMap(k => k.weapon), w => w).join(', ');
 		const implementNames = Collections.distinct(kits.flatMap(k => k.implement), i => i).join(', ');
@@ -235,18 +235,18 @@ export const HeroPanel = (props: Props) => {
 			xs: 24,
 			sm: 24,
 			md: 24,
-			lg: 10,
-			xl: 10,
-			xxl: 10
+			lg: 9,
+			xl: 9,
+			xxl: 9
 		};
 
 		const sizeLarge = {
 			xs: 24,
 			sm: 24,
 			md: 24,
-			lg: 14,
-			xl: 14,
-			xxl: 14
+			lg: 15,
+			xl: 15,
+			xxl: 15
 		};
 
 		const onSelectCharacteristic = (characteristic: Characteristic) => {
@@ -340,14 +340,16 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getFeaturesSection = () => {
-		const features = Collections.sort(HeroLogic.getFeatures(props.hero).filter(feature => feature.type === FeatureType.Text), f => f.name);
+		const unsorted = HeroLogic.getFeatures(props.hero)
+			.filter(feature => feature.type === FeatureType.Text);
+		const features = Collections.sort(unsorted, f => f.name);
 		if (features.length === 0) {
 			return null;
 		}
 
 		const size = {
 			xs: 24,
-			sm: 12,
+			sm: 24,
 			md: 12,
 			lg: 12,
 			xl: 8,
@@ -371,20 +373,21 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getAbilitiesSection = (type: AbilityUsage) => {
+		const unsorted = HeroLogic.getAbilities(props.hero, props.showFreeStrikes || false, props.showStandardAbilities || false)
+			.filter(ability => ability.type.usage === type);
+		const abilities = Collections.sort(unsorted, a => a.name);
+		if (abilities.length === 0) {
+			return null;
+		}
+
 		const size = {
 			xs: 24,
-			sm: 12,
+			sm: 24,
 			md: 12,
 			lg: 12,
 			xl: 8,
 			xxl: 6
 		};
-
-		const abilities = HeroLogic.getAbilities(props.hero, props.showFreeStrikes || false, props.showStandardAbilities || false)
-			.filter(ability => ability.type.usage === type);
-		if (abilities.length === 0) {
-			return null;
-		}
 
 		const onSelectAbility = (ability: Ability) => {
 			if (props.onSelectAbility) {

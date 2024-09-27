@@ -60,7 +60,7 @@ export const AbilityPanel = (props: Props) => {
 										<Field
 											key={n}
 											label='Alternate Effect'
-											value={<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(effect) }} />}
+											value={<span dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(effect) }} />}
 										/>
 									))
 								}
@@ -74,7 +74,7 @@ export const AbilityPanel = (props: Props) => {
 													{spend.value ? <HeroicResourceBadge value={spend.value} /> : null}
 												</div>
 											)}
-											value={<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(spend.effect) }} />}
+											value={<span dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(spend.effect) }} />}
 										/>
 									))
 								}
@@ -88,7 +88,7 @@ export const AbilityPanel = (props: Props) => {
 													{persist.value ? <HeroicResourceBadge value={persist.value} /> : null}
 												</div>
 											)}
-											value={<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(persist.effect) }} />}
+											value={<span dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(persist.effect) }} />}
 										/>
 									))
 								}

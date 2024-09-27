@@ -40,7 +40,7 @@ export const DieRollPanel = (props: Props) => {
 				}
 				{
 					Collections.sum(results, r => r) >= 19 ?
-						<Alert message='Critical hit!' type='success' showIcon={true} />
+						<Alert type='success' showIcon={true} message='Critical hit!' />
 						: null
 				}
 			</div>

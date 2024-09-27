@@ -205,7 +205,7 @@ export const FeaturePanel = (props: Props) => {
 								});
 							if (features.length > 0) {
 								return (
-									<Alert key={n} message={`${l} is also granted by ${features.map(f => f.name).join(', ')}`} type='warning' showIcon={true} />
+									<Alert key={n} type='warning' showIcon={true} message={`${l} is also granted by ${features.map(f => f.name).join(', ')}`} />
 								);
 							}
 						}
@@ -266,7 +266,7 @@ export const FeaturePanel = (props: Props) => {
 									});
 								if (features.length > 0) {
 									return (
-										<Alert key={n} message={`${s} is also granted by ${features.map(f => f.name).join(', ')}`} type='warning' showIcon={true} />
+										<Alert key={n} type='warning' showIcon={true} message={`${s} is also granted by ${features.map(f => f.name).join(', ')}`} />
 									);
 								}
 							}

@@ -1,4 +1,4 @@
-import { Button, Divider, Flex } from 'antd';
+import { Alert, Button, Divider, Flex } from 'antd';
 import { Condition, Hero } from '../../../models/hero';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { Characteristic } from '../../../enums/characteristic';
@@ -147,6 +147,11 @@ export const HeroStateModal = (props: Props) => {
 					max={HeroLogic.getRecoveries(hero)}
 					onChange={value => onChange('recoveriesUsed', value)}
 				/>
+				{
+					hero.state.staminaDamage >= (HeroLogic.getStamina(hero) / 2) ?
+						<Alert style={{ margin: '10px 0' }} type='warning' showIcon={true} message='You are winded.' />
+						: null
+				}
 				<Flex align='center' justify='space-between' gap='5px'>
 					<Button
 						className='tall-button'

@@ -177,17 +177,6 @@ export const HeroPanel = (props: Props) => {
 						</div>
 				}
 				{
-					props.hero.complication ?
-						<div className='top-tile clickable' onClick={onSelectComplication}>
-							<HeaderText>Complication</HeaderText>
-							<div className='ds-text'>{props.hero.complication.name}</div>
-						</div>
-						:
-						<div className='top-tile'>
-							<div className='ds-text dimmed-text'>No complication chosen</div>
-						</div>
-				}
-				{
 					kits.length > 0 ?
 						<div className='top-tile clickable' onClick={onSelectKit}>
 							<HeaderText>Kit</HeaderText>
@@ -199,6 +188,17 @@ export const HeroPanel = (props: Props) => {
 						:
 						<div className='top-tile'>
 							<div className='ds-text dimmed-text'>No kit chosen</div>
+						</div>
+				}
+				{
+					props.hero.complication ?
+						<div className='top-tile clickable' onClick={onSelectComplication}>
+							<HeaderText>Complication</HeaderText>
+							<div className='ds-text'>{props.hero.complication.name}</div>
+						</div>
+						:
+						<div className='top-tile'>
+							<div className='ds-text dimmed-text'>No complication chosen</div>
 						</div>
 				}
 				<div className='top-tile'>

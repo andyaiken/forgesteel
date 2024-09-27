@@ -65,7 +65,7 @@ export const HeroPage = (props: Props) => {
 					)}
 				>
       				<Button>
-						Export
+						Share
 					</Button>
     			</Popover>
 				<Popover

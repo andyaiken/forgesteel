@@ -82,12 +82,12 @@ export const HeroPanel = (props: Props) => {
 
 		const getSkills = (label: string, skills: Skill[]) => {
 			return skills.length > 0 ?
-				<div className='top-tile'>
+				<div key={label} className='top-tile'>
 					<HeaderText>{label}</HeaderText>
 					{skills.map(s => <Field key={s.name} label={s.name} value={s.description}  />)}
 				</div>
 				:
-				<div className='top-tile'>
+				<div key={label} className='top-tile'>
 					<HeaderText>{label}</HeaderText>
 					<div className='ds-text dimmed-text'>None</div>
 				</div>;

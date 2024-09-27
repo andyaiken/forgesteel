@@ -94,8 +94,14 @@ ul {
 		color: rgba(255, 255, 255, 0.88);
 	}
 
-	.ant-collapse-header {
-		color: rgba(255, 255, 255, 0.88) !important;
+	.ant-collapse {
+		.ant-collapse-header {
+			color: rgba(255, 255, 255, 0.88) !important;
+		}
+
+		.ant-collapse-content {
+			background-color: unset;
+		}
 	}
 
 	.ant-divider {
@@ -109,5 +115,12 @@ ul {
 	.ant-drawer-content {
 		color: rgba(255, 255, 255, 0.88);
 		background-color: rgb(55, 55, 55) !important;
+	}
+
+	.ant-statistic {
+		.ant-statistic-title,
+		.ant-statistic-content {
+			color: rgba(255, 255, 255, 0.88);
+		}
 	}
 }

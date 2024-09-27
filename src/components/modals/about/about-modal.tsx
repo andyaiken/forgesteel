@@ -17,7 +17,7 @@ export const AboutModal = () => {
 					<b>FORGE STEEL</b> is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC.
 				</div>
 				<div className='ds-text'>
-					DRAW STEEL © 2024 <a href='https://mcdmproductions.com/' target='_blank'>MCDM Productions, LLC.</a>
+					<b>DRAW STEEL</b> © 2024 <a href='https://mcdmproductions.com/' target='_blank'>MCDM Productions, LLC.</a>
 				</div>
 				<Divider />
 				<div className='ds-text'>

@@ -95,21 +95,21 @@ export const ConditionPanel = (props: Props) => {
 				<div className='action-buttons'>
 					{
 						props.onChange && !isEditing ?
-							<Button type='text' title='Edit' onClick={() => setIsEditing(true)}>
+							<Button title='Edit' onClick={() => setIsEditing(true)}>
 								<EditOutlined />
 							</Button>
 							: null
 					}
 					{
 						props.onChange && isEditing ?
-							<Button type='text' title='Done' onClick={() => setIsEditing(false)}>
+							<Button title='Done' onClick={() => setIsEditing(false)}>
 								<CheckOutlined />
 							</Button>
 							: null
 					}
 					{
 						props.onDelete ?
-							<Button type='text' title='Delete' onClick={deleteCondition}>
+							<Button title='Delete' onClick={deleteCondition}>
 								<DeleteOutlined />
 							</Button>
 							: null

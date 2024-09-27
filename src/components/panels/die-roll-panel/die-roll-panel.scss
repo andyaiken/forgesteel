@@ -1,5 +1,7 @@
 .die-roll-panel {
-	display: block;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 
 	.result-row {
 		display: flex;
@@ -7,34 +9,28 @@
 		justify-content: space-evenly;
 		gap: 10px;
 
-		.roll,
-		.bonus,
-		.result {
-			flex: 0 0 70px;
-			margin: 20px 0;
-			border: 2px solid transparent;
-			border-style: solid;
-			height: 70px;
-			line-height: 66px;
-			text-align: center;
-		}
+		.ant-statistic {
+			flex: 1 1 0;
+			padding: 5px 0;
 
-		.roll {
-			border-color: rgba(0, 0, 0, 0.06);
-			border-radius: 50%;
-			font-size: 20px;
+			&.result {
+				font-weight: 600;
+				border: 2px solid rgb(120, 120, 120);
+				border-radius: 10px;
+				background-color: rgba(0, 0, 0, 0.1);
+			}
 		}
+	}
+}
 
-		.bonus {
-			font-size: 20px;
-		}
-
-		.result {
-			border-color: rgba(0, 0, 0, 0.1);
-			border-radius: 10px;
-			background-color: rgba(0, 0, 0, 0.06);
-			font-size: 30px;
-			font-weight: 600;
+@media (prefers-color-scheme: dark) {
+	.die-roll-panel {
+		.result-row {
+			.ant-statistic {
+				&.result {
+					background-color: rgba(255, 255, 255, 0.1);
+				}
+			}
 		}
 	}
 }

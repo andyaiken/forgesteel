@@ -11,7 +11,6 @@ import { HeroClass } from '../../../models/class';
 import { HeroPanel } from '../../panels/hero-panel/hero-panel';
 import { Kit } from '../../../models/kit';
 import { PanelMode } from '../../../enums/panel-mode';
-import { Skill } from '../../../models/skill';
 import { Toggle } from '../../controls/toggle/toggle';
 import { useState } from 'react';
 
@@ -31,7 +30,6 @@ interface Props {
 	onSelectClass: (heroClass: HeroClass) => void;
 	onSelectComplication: (complication: Complication) => void;
 	onSelectKit: (kit: Kit) => void;
-	onSelectSkill: (skill: Skill) => void;
 	onSelectCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	onSelectAbility: (ability: Ability, hero: Hero) => void;
 	onShowState: () => void;
@@ -59,23 +57,11 @@ export const HeroPage = (props: Props) => {
 					placement='bottom'
 					content={(
 						<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-							<Button type='text' onClick={() => props.exportHero('image')}>Export As Image</Button>
-							<Button type='text' onClick={() => props.exportHero('pdf')}>Export As PDF</Button>
-						</div>
-					)}
-				>
-      				<Button>
-						Share
-					</Button>
-    			</Popover>
-				<Popover
-					trigger='click'
-					placement='bottom'
-					content={(
-						<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 							<Toggle label='Show Skills In Groups' value={showSkillsInGroups} onChange={setShowSkillsInGroups} />
 							<Toggle label='Show Free Strikes' value={showFreeStrikes} onChange={setShowFreeStrikes} />
 							<Toggle label='Show Standard Abilities' value={showStandardAbilities} onChange={setShowStandardAbilities} />
+							<Button onClick={() => props.exportHero('image')}>Export As Image</Button>
+							<Button onClick={() => props.exportHero('pdf')}>Export As PDF</Button>
 						</div>
 					)}
 				>
@@ -111,7 +97,6 @@ export const HeroPage = (props: Props) => {
 					onSelectClass={props.onSelectClass}
 					onSelectComplication={props.onSelectComplication}
 					onSelectKit={props.onSelectKit}
-					onSelectSkill={props.onSelectSkill}
 					onSelectCharacteristic={characteristic => props.onSelectCharacteristic(characteristic, props.hero)}
 					onSelectAbility={ability => props.onSelectAbility(ability, props.hero)}
 					onShowState={props.onShowState}

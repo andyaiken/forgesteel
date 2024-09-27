@@ -25,8 +25,6 @@ import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { Kit } from '../../models/kit';
 import { KitPanel } from '../panels/kit-panel/kit-panel';
 import { PanelMode } from '../../enums/panel-mode';
-import { Skill } from '../../models/skill';
-import { SkillModal } from '../modals/skill/skill-modal';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
@@ -179,12 +177,6 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onSelectSkill = (skill: Skill) => {
-		setDrawer(
-			<SkillModal skill={skill} />
-		);
-	};
-
 	const onSelectCharacteristic = (characteristic: Characteristic, hero: Hero) => {
 		setDrawer(
 			<CharacteristicModal characteristic={characteristic} hero={hero} />
@@ -251,7 +243,6 @@ export const Main = (props: Props) => {
 						onSelectClass={onSelectClass}
 						onSelectComplication={onSelectComplication}
 						onSelectKit={onSelectKit}
-						onSelectSkill={onSelectSkill}
 						onSelectCharacteristic={onSelectCharacteristic}
 						onSelectAbility={onSelectAbility}
 						onShowState={onShowState}

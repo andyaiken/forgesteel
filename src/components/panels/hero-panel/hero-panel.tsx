@@ -37,7 +37,6 @@ interface Props {
 	onSelectClass?: (heroClass: HeroClass) => void;
 	onSelectComplication?: (complication: Complication) => void;
 	onSelectKit?: (kit: Kit) => void;
-	onSelectSkill?: (skill: Skill) => void;
 	onSelectCharacteristic?: (characteristic: Characteristic) => void;
 	onSelectAbility?: (ability: Ability) => void;
 	onShowState?: () => void;
@@ -81,17 +80,11 @@ export const HeroPanel = (props: Props) => {
 			}
 		};
 
-		const onSelectSkill = (skill: Skill) => {
-			if (props.onSelectSkill) {
-				props.onSelectSkill(skill);
-			}
-		};
-
 		const getSkills = (label: string, skills: Skill[]) => {
 			return skills.length > 0 ?
 				<div className='top-tile'>
 					<HeaderText>{label}</HeaderText>
-					{skills.map(s => <div key={s.name} className='skill clickable' onClick={() => onSelectSkill(s)}>{s.name}</div>)}
+					{skills.map(s => <Field key={s.name} label={s.name} value={s.description}  />)}
 				</div>
 				:
 				<div className='top-tile'>
@@ -322,7 +315,7 @@ export const HeroPanel = (props: Props) => {
 							<Statistic title='Renown' value={props.hero.state.renown} />
 						</div>
 						<div className='characteristic'>
-							<Statistic title='Hero Tokens' value={props.hero.state.heroTokens} />
+							<Statistic title='Hero' value={props.hero.state.heroTokens} />
 						</div>
 						<div className='characteristic'>
 							<Statistic title='Project' value={props.hero.state.projectPoints} />
@@ -338,7 +331,7 @@ export const HeroPanel = (props: Props) => {
 							<Statistic title='Recoveries' value={recoveries} suffix={recoveriesSuffix} />
 						</div>
 						<div className='characteristic'>
-							<Statistic title='Recovery Value' value={HeroLogic.getRecoveryValue(props.hero)} />
+							<Statistic title='Rec Value' value={HeroLogic.getRecoveryValue(props.hero)} />
 						</div>
 					</div>
 				</Col>

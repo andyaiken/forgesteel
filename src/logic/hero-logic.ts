@@ -329,16 +329,6 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				effect: 'You can use this maneuver to stand up if you are prone, ending that condition. Alternatively, you can use this maneuver to make an adjacent prone creature stand up.'
 			}));
 			abilities.push(AbilityLogic.createAbility({
-				id: 'search',
-				name: 'Search',
-				description: '',
-				type: AbilityLogic.createTypeManeuver(),
-				keywords: [],
-				distance: [ AbilityLogic.createDistanceSelf() ],
-				target: 'Self',
-				effect: 'You can use this maneuver to attempt to search for creatures hidden from you.'
-			}));
-			abilities.push(AbilityLogic.createAbility({
 				id: 'catch-breath',
 				name: 'Catch Breath',
 				description: '',

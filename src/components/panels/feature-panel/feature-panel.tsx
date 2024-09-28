@@ -34,7 +34,8 @@ export const FeaturePanel = (props: Props) => {
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder='Select'
-					options={data.options.map(o => ({ label: o.feature.name, value: o.feature.id }))}
+					options={data.options.map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
 					onChange={value => {
 						let ids: string[] = [];
@@ -82,13 +83,13 @@ export const FeaturePanel = (props: Props) => {
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder='Select'
-					options={sortedAbilities.map(a => ({ label: a.name, value: a.id }))}
+					options={sortedAbilities.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selectedIDs.length > 0 ? data.selectedIDs[0] : null) : data.selectedIDs}
 					onChange={value => {
 						let ids: string[] = [];
 						if (data.count === 1) {
-							const val = value as string;
-							ids = [ val ];
+							ids = value !== undefined ? [ value as string ] : [];
 						} else {
 							ids = value as string[];
 						}
@@ -124,13 +125,13 @@ export const FeaturePanel = (props: Props) => {
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder='Select'
-					options={sortedKits.map(a => ({ label: a.name, value: a.id }))}
+					options={sortedKits.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
 					onChange={value => {
 						let ids: string[] = [];
 						if (data.count === 1) {
-							const val = value as string;
-							ids = [ val ];
+							ids = value !== undefined ? [ value as string ] : [];
 						} else {
 							ids = value as string[];
 						}
@@ -181,8 +182,7 @@ export const FeaturePanel = (props: Props) => {
 					onChange={value => {
 						let ids: string[] = [];
 						if (data.count === 1) {
-							const val = value as string;
-							ids = [ val ];
+							ids = value !== undefined ? [ value as string ] : [];
 						} else {
 							ids = value as string[];
 						}
@@ -242,8 +242,7 @@ export const FeaturePanel = (props: Props) => {
 						onChange={value => {
 							let ids: string[] = [];
 							if (data.count === 1) {
-								const val = value as string;
-								ids = [ val ];
+								ids = value !== undefined ? [ value as string ] : [];
 							} else {
 								ids = value as string[];
 							}
@@ -380,7 +379,7 @@ export const FeaturePanel = (props: Props) => {
 		return (
 			<div className='feature-panel'>
 				<HeaderText>{props.feature.name}</HeaderText>
-				<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.feature.description) }} />
+				<div className='ds-text' dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.feature.description) }} />
 				{
 					props.mode === PanelMode.Full
 						? (props.setData ? getEditable() : getExtra())

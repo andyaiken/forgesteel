@@ -48,7 +48,7 @@ export const fury: HeroClass = {
 				}),
 				FeatureLogic.createFeature({
 					id: 'fury-1-4',
-					name: 'Might Leaps',
+					name: 'Mighty Leaps',
 					description: 'You always succeed on Might tests made to jump. You can still roll to see if you get a reward result.'
 				}),
 				FeatureLogic.createClassAbilityChoiceFeature({

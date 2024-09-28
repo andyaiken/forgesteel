@@ -87,6 +87,22 @@ ul {
 	}
 }
 
+.ant-select-dropdown {
+	.ant-select-item {
+		padding: 0 10px;
+
+		.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+			font-weight: unset;
+		}
+
+		.ant-select-item-option-content {
+			white-space: unset !important;
+			text-overflow: unset !important;
+		}
+	}
+}
+
+
 @media (prefers-color-scheme: dark) {
 	html {
 		color: rgba(255, 255, 255, 0.88);

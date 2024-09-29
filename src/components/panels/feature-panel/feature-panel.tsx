@@ -25,6 +25,8 @@ interface Props {
 }
 
 export const FeaturePanel = (props: Props) => {
+	// #region Editable
+
 	const getEditableChoice = (data: FeatureChoiceData) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -178,6 +180,7 @@ export const FeaturePanel = (props: Props) => {
 					allowClear={true}
 					placeholder='Select'
 					options={sortedLanguages.map(l => ({ label: l, value: l }))}
+					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
 					onChange={value => {
 						let ids: string[] = [];
@@ -218,16 +221,9 @@ export const FeaturePanel = (props: Props) => {
 
 	const getEditableSkill = (data: FeatureSkillData) => {
 		if (props.feature.choice) {
-			const skills: string[] = [];
-			data.options.forEach(skill => skills.push(skill));
-			data.listOptions.forEach(list => {
-				const setting = CampaignSettingData.getCampaignSettings().find(s => s.id === props.hero?.settingID);
-				SkillData.getSkillsFromList(list, setting).forEach(skill => {
-					skills.push(skill.name);
-				});
-			});
-			const distinctSkills = Collections.distinct(skills, s => s);
-			const sortedSkills = Collections.sort(distinctSkills, s => s);
+			const setting = CampaignSettingData.getCampaignSettings().find(s => s.id === props.hero?.settingID);
+			const skills = SkillData.getSkills(setting).filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
+			const sortedSkills = Collections.sort(skills, s => s.name);
 
 			return (
 				<div>
@@ -237,7 +233,8 @@ export const FeaturePanel = (props: Props) => {
 						maxCount={data.count === 1 ? undefined : data.count}
 						allowClear={true}
 						placeholder='Select'
-						options={sortedSkills.map(s => ({ label: s, value: s }))}
+						options={sortedSkills.map(s => ({ label: s.name, value: s.name, desc: s.description }))}
+						optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 						value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
 						onChange={value => {
 							let ids: string[] = [];
@@ -298,7 +295,15 @@ export const FeaturePanel = (props: Props) => {
 		return null;
 	};
 
+	// #endregion
+
+	// #region Extra
+
 	const getExtraChoice = (data: FeatureChoiceData) => {
+		if (data.selected.length === 0) {
+			return null;
+		}
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
@@ -309,6 +314,10 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getExtraClassAbility = (data: FeatureClassAbilityData) => {
+		if (data.selectedIDs.length === 0) {
+			return null;
+		}
+
 		const abilities = props.hero?.class?.abilities.filter(a => a.cost === data.cost) || [];
 
 		return (
@@ -326,6 +335,10 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getExtraKit = (data: FeatureKitData) => {
+		if (data.selected.length === 0) {
+			return null;
+		}
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
@@ -336,12 +349,20 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getExtraLanguage = (data: FeatureLanguageData) => {
+		if (data.selected.length === 0) {
+			return null;
+		}
+
 		return (
 			<Field label='Selected' value={data.selected.join(', ')} />
 		);
 	};
 
 	const getExtraSkill = (isChoice: boolean, data: FeatureSkillData) => {
+		if (data.selected.length === 0) {
+			return null;
+		}
+
 		if (!isChoice) {
 			return null;
 		}
@@ -367,6 +388,8 @@ export const FeaturePanel = (props: Props) => {
 
 		return null;
 	};
+
+	// #endregion
 
 	try {
 		if (props.feature.type === FeatureType.Ability) {

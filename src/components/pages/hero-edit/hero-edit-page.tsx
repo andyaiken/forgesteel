@@ -21,6 +21,7 @@ import { CulturePanel } from '../../panels/culture-panel/culture-panel';
 import { FeatureField } from '../../../enums/feature-field';
 import { FeaturePanel } from '../../panels/feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
+import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroClass } from '../../../models/class';
@@ -369,14 +370,14 @@ const AncestrySection = (props: AncestrySectionProps) => {
 		<div className='hero-edit-content'>
 			{
 				props.hero.ancestry ?
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='ancestry-selected'>
 						<HeaderText>Selected</HeaderText>
 						<SelectablePanel onUnselect={() => props.selectAncestry(null)}>
 							<AncestryPanel ancestry={props.hero.ancestry} mode={PanelMode.Full} />
 						</SelectablePanel>
 					</div>
 					:
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='ancestry-list'>
 						<HeaderText>Ancestries</HeaderText>
 						{options}
 						{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
@@ -384,7 +385,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 			}
 			{
 				choices.length > 0 ?
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='ancestry-choices'>
 						<HeaderText>Choices</HeaderText>
 						{choices}
 					</div>
@@ -447,6 +448,7 @@ const CultureSection = (props: CultureSectionProps) => {
 						allowClear={true}
 						placeholder='Select'
 						options={languages.map(l => ({ label: l, value: l }))}
+						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 						value={props.hero.culture.languages.length > 0 ? props.hero.culture.languages[0] : null}
 						onChange={value => props.selectLanguages([ value ])}
 					/>
@@ -457,6 +459,7 @@ const CultureSection = (props: CultureSectionProps) => {
 							allowClear={true}
 							placeholder='Select'
 							options={EnvironmentData.getEnvironments().map(s => ({ value: s.id, label: s.name }))}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 							value={props.hero.culture.environment ? props.hero.culture.environment.id : null}
 							onChange={props.selectEnvironment}
 						/>
@@ -465,6 +468,7 @@ const CultureSection = (props: CultureSectionProps) => {
 							allowClear={true}
 							placeholder='Select'
 							options={OrganizationData.getOrganizations().map(s => ({ value: s.id, label: s.name }))}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 							value={props.hero.culture.organization ? props.hero.culture.organization.id : null}
 							onChange={props.selectOrganization}
 						/>
@@ -473,6 +477,7 @@ const CultureSection = (props: CultureSectionProps) => {
 							allowClear={true}
 							placeholder='Select'
 							options={UpbringingData.getUpbringings().map(s => ({ value: s.id, label: s.name }))}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 							value={props.hero.culture.upbringing ? props.hero.culture.upbringing.id : null}
 							onChange={props.selectUpbringing}
 						/>
@@ -487,14 +492,14 @@ const CultureSection = (props: CultureSectionProps) => {
 		<div className='hero-edit-content'>
 			{
 				props.hero.culture ?
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='culture-selected'>
 						<HeaderText>Selected</HeaderText>
 						<SelectablePanel onUnselect={() => props.selectCulture(null)}>
 							<CulturePanel culture={props.hero.culture} mode={PanelMode.Full} />
 						</SelectablePanel>
 					</div>
 					:
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='culture-list'>
 						<HeaderText>Cultures</HeaderText>
 						<SelectablePanel onSelect={() => props.selectCulture(CultureData.bespoke)}>
 							<CulturePanel culture={CultureData.bespoke} />
@@ -505,7 +510,7 @@ const CultureSection = (props: CultureSectionProps) => {
 			}
 			{
 				choices.length > 0 ?
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='culture-choices'>
 						<HeaderText>Choices</HeaderText>
 						{choices}
 					</div>
@@ -543,14 +548,14 @@ const CareerSection = (props: CareerSectionProps) => {
 		<div className='hero-edit-content'>
 			{
 				props.hero.career ?
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='career-selected'>
 						<HeaderText>Selected</HeaderText>
 						<SelectablePanel onUnselect={() => props.selectCareer(null)}>
 							<CareerPanel career={props.hero.career} mode={PanelMode.Full} />
 						</SelectablePanel>
 					</div>
 					:
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='career-list'>
 						<HeaderText>Careers</HeaderText>
 						{options}
 						{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
@@ -558,7 +563,7 @@ const CareerSection = (props: CareerSectionProps) => {
 			}
 			{
 				choices.length > 0 ?
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='career-choices'>
 						<HeaderText>Choices</HeaderText>
 						{choices}
 					</div>
@@ -607,7 +612,8 @@ const ClassSection = (props: ClassSectionProps) => {
 						maxCount={props.hero.class.subclassCount === 1 ? undefined : props.hero.class.subclassCount}
 						allowClear={true}
 						placeholder='Select'
-						options={props.hero.class.subclasses.map(s => ({ value: s.id, label: s.name }))}
+						options={props.hero.class.subclasses.map(s => ({ value: s.id, label: s.name, desc: s.description }))}
+						optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 						value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.id)}
 						onChange={props.selectSubclasses}
 					/>
@@ -654,14 +660,14 @@ const ClassSection = (props: ClassSectionProps) => {
 		<div className='hero-edit-content'>
 			{
 				props.hero.class ?
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='class-selected'>
 						<HeaderText>Selected</HeaderText>
 						<SelectablePanel onUnselect={() => props.selectClass(null)}>
 							<ClassPanel heroClass={props.hero.class} mode={PanelMode.Full} />
 						</SelectablePanel>
 					</div>
 					:
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='class-list'>
 						<HeaderText>Classes</HeaderText>
 						{options}
 						{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
@@ -669,7 +675,7 @@ const ClassSection = (props: ClassSectionProps) => {
 			}
 			{
 				props.hero.class ?
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='class-choices'>
 						<HeaderText>Choices</HeaderText>
 						{choices}
 					</div>
@@ -707,14 +713,14 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 		<div className='hero-edit-content'>
 			{
 				props.hero.complication ?
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='complication-selected'>
 						<HeaderText>Selected</HeaderText>
 						<SelectablePanel onUnselect={() => props.selectComplication(null)}>
 							<ComplicationPanel complication={props.hero.complication} mode={PanelMode.Full} />
 						</SelectablePanel>
 					</div>
 					:
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='complication-list'>
 						<HeaderText>Complications</HeaderText>
 						{options}
 						{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
@@ -722,7 +728,7 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 			}
 			{
 				choices.length > 0 ?
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='complication-choices'>
 						<HeaderText>Choices</HeaderText>
 						{choices}
 					</div>
@@ -769,14 +775,14 @@ const KitSection = (props: KitSectionProps) => {
 		<div className='hero-edit-content'>
 			{
 				props.hero.kit ?
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='kit-selected'>
 						<HeaderText>Selected</HeaderText>
 						<SelectablePanel key={props.hero.kit.id} onUnselect={() => props.selectKit(null)}>
 							<KitPanel kit={props.hero.kit} mode={PanelMode.Full} />
 						</SelectablePanel>
 					</div>
 					:
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='kit-list'>
 						<HeaderText>Kits</HeaderText>
 						{options}
 						{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
@@ -784,7 +790,7 @@ const KitSection = (props: KitSectionProps) => {
 			}
 			{
 				choices.length > 0 ?
-					<div className='hero-edit-content-column'>
+					<div className='hero-edit-content-column' id='kit-choices'>
 						<HeaderText>Choices</HeaderText>
 						{choices}
 					</div>
@@ -802,7 +808,7 @@ interface DetailsSectionProps {
 const DetailsSection = (props: DetailsSectionProps) => {
 	return (
 		<div className='hero-edit-content'>
-			<div className='hero-edit-content-column'>
+			<div className='hero-edit-content-column' id='details-main'>
 				<HeaderText>Details</HeaderText>
 				<div>Name:</div>
 				<Input

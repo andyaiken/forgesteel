@@ -86,14 +86,14 @@ ul {
 		}
 	}
 }
-
 .ant-select-dropdown {
+
+	.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+		font-weight: unset;
+	}
+
 	.ant-select-item {
 		padding: 0 10px;
-
-		.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-			font-weight: unset;
-		}
 
 		.ant-select-item-option-content {
 			white-space: unset !important;

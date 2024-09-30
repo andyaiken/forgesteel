@@ -162,14 +162,9 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableLanguage = (data: FeatureLanguageData) => {
-		const languages: string[] = [];
-		data.options.forEach(language => languages.push(language));
-		if (languages.length === 0) {
-			const setting = CampaignSettingData.getCampaignSettings().find(s => s.id === props.hero?.settingID);
-			setting?.languages.forEach(l => languages.push(l));
-		}
-		const distinctLanguages = Collections.distinct(languages, l => l);
-		const sortedLanguages = Collections.sort(distinctLanguages, l => l);
+		const setting = CampaignSettingData.getCampaignSettings().find(s => s.id === props.hero?.settingID);
+		const languages = setting ? setting.languages.filter(l => data.options.includes(l.name)) : [];
+		const sortedLanguages = Collections.sort(languages, l => l.name);
 
 		return (
 			<div>
@@ -179,8 +174,8 @@ export const FeaturePanel = (props: Props) => {
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder='Select'
-					options={sortedLanguages.map(l => ({ label: l, value: l }))}
-					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+					options={sortedLanguages.map(l => ({ label: l.name, value: l.name, desc: l.description }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
 					onChange={value => {
 						let ids: string[] = [];
@@ -220,62 +215,56 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableSkill = (data: FeatureSkillData) => {
-		if (props.feature.choice) {
-			const setting = CampaignSettingData.getCampaignSettings().find(s => s.id === props.hero?.settingID);
-			const skills = SkillData.getSkills(setting).filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
-			const sortedSkills = Collections.sort(skills, s => s.name);
+		const setting = CampaignSettingData.getCampaignSettings().find(s => s.id === props.hero?.settingID);
+		const skills = SkillData.getSkills(setting).filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
+		const sortedSkills = Collections.sort(skills, s => s.name);
 
-			return (
-				<div>
-					<Select
-						style={{ width: '100%' }}
-						mode={data.count === 1 ? undefined : 'multiple'}
-						maxCount={data.count === 1 ? undefined : data.count}
-						allowClear={true}
-						placeholder='Select'
-						options={sortedSkills.map(s => ({ label: s.name, value: s.name, desc: s.description }))}
-						optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-						value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
-						onChange={value => {
-							let ids: string[] = [];
-							if (data.count === 1) {
-								ids = value !== undefined ? [ value as string ] : [];
-							} else {
-								ids = value as string[];
+		return (
+			<div>
+				<Select
+					style={{ width: '100%' }}
+					mode={data.count === 1 ? undefined : 'multiple'}
+					maxCount={data.count === 1 ? undefined : data.count}
+					allowClear={true}
+					placeholder='Select'
+					options={sortedSkills.map(s => ({ label: s.name, value: s.name, desc: s.description }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
+					onChange={value => {
+						let ids: string[] = [];
+						if (data.count === 1) {
+							ids = value !== undefined ? [ value as string ] : [];
+						} else {
+							ids = value as string[];
+						}
+						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureSkillData;
+						dataCopy.selected = ids;
+						if (props.setData) {
+							props.setData(props.feature.id, dataCopy);
+						}
+					}}
+				/>
+				{
+					data.selected.map((s, n) => {
+						if (props.hero) {
+							const features = HeroLogic.getFeatures(props.hero)
+								.filter(f => f.id !== props.feature.id)
+								.filter(f => f.type === FeatureType.Skill)
+								.filter(f => {
+									const data = f.data as FeatureSkillData;
+									return data.selected.includes(s);
+								});
+							if (features.length > 0) {
+								return (
+									<Alert key={n} type='warning' showIcon={true} message={`${s} is also granted by ${features.map(f => f.name).join(', ')}`} />
+								);
 							}
-							const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureSkillData;
-							dataCopy.selected = ids;
-							if (props.setData) {
-								props.setData(props.feature.id, dataCopy);
-							}
-						}}
-					/>
-					{
-						data.selected.map((s, n) => {
-							if (props.hero) {
-								const features = HeroLogic.getFeatures(props.hero)
-									.filter(f => f.id !== props.feature.id)
-									.filter(f => f.type === FeatureType.Skill)
-									.filter(f => {
-										const data = f.data as FeatureSkillData;
-										return data.selected.includes(s);
-									});
-								if (features.length > 0) {
-									return (
-										<Alert key={n} type='warning' showIcon={true} message={`${s} is also granted by ${features.map(f => f.name).join(', ')}`} />
-									);
-								}
-							}
-							return null;
-						})
-					}
-				</div>
-			);
-		} else {
-			return (
-				<div className='ds-text'>{data.selected.join(', ')}</div>
-			);
-		}
+						}
+						return null;
+					})
+				}
+			</div>
+		);
 	};
 
 	const getEditable = () => {

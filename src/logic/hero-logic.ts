@@ -12,6 +12,7 @@ import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit';
+import { Language } from '../models/language';
 import { Size } from '../models/ancestry';
 import { Skill } from '../models/skill';
 import { SkillLogic } from './skill-logic';
@@ -392,15 +393,19 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 	};
 
 	static getLanguages = (hero: Hero) => {
-		const languages: string[] = [];
-
 		const setting = CampaignSettingData.getCampaignSettings().find(cs => cs.id === hero.settingID);
+		if (!setting) {
+			return [];
+		}
+
+		const languageNames: string[] = [];
+
 		if (setting) {
-			languages.push(...setting.defaultLanguages);
+			languageNames.push(...setting.defaultLanguages);
 		}
 
 		if (hero.culture) {
-			languages.push(...hero.culture.languages);
+			languageNames.push(...hero.culture.languages);
 		}
 
 		// Collate from features
@@ -408,10 +413,18 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 			.filter(f => f.type === FeatureType.Language)
 			.forEach(f => {
 				const data = f.data as FeatureLanguageData;
-				languages.push(...data.selected);
+				languageNames.push(...data.selected);
 			});
 
-		return Collections.sort(languages, l => l);
+		const languages: Language[] = [];
+		languageNames.forEach(name => {
+			const language = setting.languages.find(l => l.name === name);
+			if (language) {
+				languages.push(language);
+			}
+		});
+
+		return Collections.sort(languages, l => l.name);
 	};
 
 	static getSkills = (hero: Hero) => {

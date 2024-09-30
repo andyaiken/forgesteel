@@ -198,7 +198,7 @@ export const HeroPanel = (props: Props) => {
 					<HeaderText>Languages</HeaderText>
 					{
 						HeroLogic.getLanguages(props.hero).length > 0 ?
-							HeroLogic.getLanguages(props.hero).map(l => <div key={l} className='ds-text'>{l}</div>)
+							HeroLogic.getLanguages(props.hero).map(l => <Field key={l.name} label={l.name} value={l.description}  />)
 							:
 							<div className='ds-text dimmed-text'>None</div>
 					}

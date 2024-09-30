@@ -1,4 +1,5 @@
 import { Culture } from './culture';
+import { Language } from './language';
 import { Skill } from './skill';
 
 export interface CampaignSetting {
@@ -6,7 +7,7 @@ export interface CampaignSetting {
 	name: string;
 	description: string;
 
-	languages: string[];
+	languages: Language[];
 	defaultLanguages: string[];
 	cultures: Culture[];
 	skills: Skill[];

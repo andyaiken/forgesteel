@@ -29,6 +29,7 @@ import { HeroLogic } from '../../../logic/hero-logic';
 import { Kit } from '../../../models/kit';
 import { KitData } from '../../../data/kit-data';
 import { KitPanel } from '../../panels/kit-panel/kit-panel';
+import { Language } from '../../../models/language';
 import { NameGenerator } from '../../../utils/name-generator';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
@@ -433,10 +434,10 @@ const CultureSection = (props: CultureSectionProps) => {
 			));
 
 		if (props.hero.culture.id === CultureData.bespoke.id) {
-			let languages: string[] = [];
+			let languages: Language[] = [];
 			const setting = CampaignSettingData.getCampaignSettings().find(s => s.id === props.hero?.settingID);
 			if (setting) {
-				languages = Collections.sort(setting.languages, l => l);
+				languages = Collections.sort(setting.languages, l => l.name);
 			}
 
 			choices.unshift(
@@ -447,8 +448,8 @@ const CultureSection = (props: CultureSectionProps) => {
 						style={{ width: '100%' }}
 						allowClear={true}
 						placeholder='Select'
-						options={languages.map(l => ({ label: l, value: l }))}
-						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+						options={languages.map(l => ({ label: l.name, value: l.name, desc: l.description }))}
+						optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 						value={props.hero.culture.languages.length > 0 ? props.hero.culture.languages[0] : null}
 						onChange={value => props.selectLanguages([ value ])}
 					/>

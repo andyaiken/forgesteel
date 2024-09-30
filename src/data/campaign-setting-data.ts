@@ -8,21 +8,66 @@ export class CampaignSettingData {
 		name: 'Orden',
 		description: 'The default setting for Draw Steel.',
 		languages: [
-			'Anjal',
-			'Caelian',
-			'Higaran',
-			'Hyrallic',
-			'Kalliak',
-			'Khemharic',
-			'Khoursirian',
-			'Oaxuatl',
-			'Phaedran',
-			'Riojan',
-			'Uvalic',
-			'Vaniric',
-			'Vaslorian',
-			'Yllyric',
-			'Zaliac'
+			{
+				name: 'Anjal',
+				description: 'Spoken in the Hells and used in legal documents.'
+			},
+			{
+				name: 'Caelian',
+				description: 'The language of the ancient Caelian Empire.'
+			},
+			{
+				name: 'Higaran',
+				description: 'Spoken in Higara.'
+			},
+			{
+				name: 'Hyrallic',
+				description: 'The primary language of the high elves in Orden.'
+			},
+			{
+				name: 'Kalliak',
+				description: 'Spoken by orcs; an offshoot of Zaliac.'
+			},
+			{
+				name: 'Khemharic',
+				description: 'Spoken in Khemhara.'
+			},
+			{
+				name: 'Khoursirian',
+				description: 'Spoken in Koursir.'
+			},
+			{
+				name: 'Oaxuatl',
+				description: 'Spoken in Ix.'
+			},
+			{
+				name: 'Phaedran',
+				description: 'Spoken in Phaedros.'
+			},
+			{
+				name: 'Riojan',
+				description: 'Spoken in Rioja.'
+			},
+			{
+				name: 'Uvalic',
+				description: 'Spoken by the Gol.'
+			},
+			{
+				name: 'Vaniric',
+				description: 'Spoken in Vanigar.'
+			},
+			{
+				name: 'Vaslorian',
+				description: 'Spoken in Vasloria.'
+			},
+			{
+				name: 'Yllyric',
+				description: 'The cultural language of wode elves, and also the common language among those who defend and protect the natural forests of Orden.'
+			},
+			{
+				name: 'Zaliac',
+				description: 'Spoken by dwarves and used in engineering.'
+			}
 		],
 		defaultLanguages: [
 			'Caelian'

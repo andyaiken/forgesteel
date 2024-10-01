@@ -1,0 +1,21 @@
+.sourcebook-list-page {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+
+	.sourcebook-list-page-content {
+		background-color: rgba(0, 0, 0, 0.1);
+		flex: 1 1 0;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		padding: 20px;
+		overflow-y: auto;
+
+		.sourcebook-section-row {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+			gap: 10px;	
+		}
+	}
+}

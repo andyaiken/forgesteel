@@ -3,6 +3,7 @@ import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { CampaignSetting } from '../models/campaign-setting';
+import { CampaignSettingData } from './campaign-setting-data';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { FeatureLogic } from '../logic/feature-logic';
@@ -1065,6 +1066,11 @@ Your armor is reinforced by a bright ward of holy energy, and grants you the fol
 
 		if (setting) {
 			list.push(...setting.kits);
+		} else {
+			CampaignSettingData.getCampaignSettings()
+				.forEach(s => {
+					list.push(...s.kits);
+				});
 		}
 
 		return Collections.sort(list, item => item.name);

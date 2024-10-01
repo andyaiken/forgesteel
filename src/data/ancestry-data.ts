@@ -3,6 +3,7 @@ import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { Ancestry } from '../models/ancestry';
 import { CampaignSetting } from '../models/campaign-setting';
+import { CampaignSettingData } from './campaign-setting-data';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { DamageModifierType } from '../enums/damage-modifier-type';
@@ -630,6 +631,11 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 
 		if (setting) {
 			list.push(...setting.ancestries);
+		} else {
+			CampaignSettingData.getCampaignSettings()
+				.forEach(s => {
+					list.push(...s.ancestries);
+				});
 		}
 
 		return Collections.sort(list, item => item.name);

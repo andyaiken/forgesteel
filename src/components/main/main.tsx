@@ -1,32 +1,40 @@
+import { Drawer, Radio } from 'antd';
 import { Ability } from '../../models/ability';
 import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
 import { Ancestry } from '../../models/ancestry';
+import { AncestryData } from '../../data/ancestry-data';
 import { AncestryPanel } from '../panels/ancestry-panel/ancestry-panel';
 import { CampaignSettingData } from '../../data/campaign-setting-data';
 import { Career } from '../../models/career';
+import { CareerData } from '../../data/career-data';
 import { CareerPanel } from '../panels/career-panel/career-panel';
 import { Characteristic } from '../../enums/characteristic';
 import { CharacteristicModal } from '../modals/characteristic/characteristic-modal';
+import { ClassData } from '../../data/class-data';
 import { ClassPanel } from '../panels/class-panel/class-panel';
 import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
+import { ComplicationData } from '../../data/complication-data';
 import { ComplicationPanel } from '../panels/complication-panel/complication-panel';
 import { Culture } from '../../models/culture';
+import { CultureData } from '../../data/culture-data';
 import { CulturePanel } from '../panels/culture-panel/culture-panel';
-import { Drawer } from 'antd';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
-import { HeroEditPage } from '../pages/hero-edit/hero-edit-page';
-import { HeroListPage } from '../pages/hero-list/hero-list-page';
+import { HeroEditPage } from '../pages/heroes/hero-edit/hero-edit-page';
+import { HeroListPage } from '../pages/heroes/hero-list/hero-list-page';
 import { HeroLogic } from '../../logic/hero-logic';
-import { HeroPage } from '../pages/hero-view/hero-view-page';
+import { HeroPage } from '../pages/heroes/hero-view/hero-view-page';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { ImportHeroModal } from '../modals/import-hero/import-hero-modal';
 import { Kit } from '../../models/kit';
+import { KitData } from '../../data/kit-data';
 import { KitPanel } from '../panels/kit-panel/kit-panel';
 import { Options } from '../../models/options';
 import { PanelMode } from '../../enums/panel-mode';
+import { Sourcebook } from '../../models/sourcebook';
+import { SourcebookListPage } from '../pages/sourcebook/sourcebook-list/sourcebook-list';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
@@ -40,16 +48,19 @@ enum Page {
 	Welcome,
 	HeroList,
 	HeroView,
-	HeroEdit
+	HeroEdit,
+	Sourcebook
 }
 
 interface Props {
 	heroes: Hero[];
+	homebrew: Sourcebook;
 	options: Options;
 }
 
 export const Main = (props: Props) => {
 	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
+	const [ homebrew /*, setHomebrew*/ ] = useState<Sourcebook>(props.homebrew);
 	const [ options, setOptions ] = useState<Options>(props.options);
 	const [ page, setPage ] = useState<Page>(Page.Welcome);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
@@ -61,6 +72,15 @@ export const Main = (props: Props) => {
 				setHeroes(heroes);
 			});
 	};
+
+	/*
+	const persistHomebrew = (homebrew: Sourcebook) => {
+		localforage.setItem<Sourcebook>('forgesteel-homebrew', homebrew)
+			.then(() => {
+				setHomebrew(homebrew);
+			});
+	};
+	*/
 
 	const persistOptions = (options: Options) => {
 		localforage.setItem<Options>('forgesteel-options', options)
@@ -75,15 +95,22 @@ export const Main = (props: Props) => {
 		);
 	};
 
+	const showWelcome = () => {
+		setPage(Page.Welcome);
+		setSelectedHero(null);
+	};
+
 	const showHeroList = () => {
 		setPage(Page.HeroList);
 		setSelectedHero(null);
 	};
 
-	const goHome = () => {
-		setPage(Page.Welcome);
+	const showSourcebook = () => {
+		setPage(Page.Sourcebook);
 		setSelectedHero(null);
 	};
+
+	//#region Heroes
 
 	const addHero = () => {
 		const hero = HeroLogic.createHero(CampaignSettingData.orden.id);
@@ -176,6 +203,22 @@ export const Main = (props: Props) => {
 		}
 	};
 
+	//#endregion
+
+	const getSourcebook = () => {
+		const sourcebook: Sourcebook = {
+			settings: [],
+			ancestries: Collections.sort(([] as Ancestry[]).concat(AncestryData.getAncestries()).concat(homebrew.ancestries), a => a.name),
+			cultures: Collections.sort(([] as Culture[]).concat(CultureData.getCultures()).concat(homebrew.cultures), a => a.name),
+			careers: Collections.sort(([] as Career[]).concat(CareerData.getCareers()).concat(homebrew.careers), a => a.name),
+			classes: Collections.sort(([] as HeroClass[]).concat(ClassData.getClasses()).concat(homebrew.classes), a => a.name),
+			kits: Collections.sort(([] as Kit[]).concat(KitData.getKits()).concat(homebrew.kits), a => a.name),
+			complications: Collections.sort(([] as Complication[]).concat(ComplicationData.getComplications()).concat(homebrew.complications), a => a.name)
+		};
+
+		return sourcebook;
+	};
+
 	const onSelectAncestry = (ancestry: Ancestry) => {
 		setDrawer(
 			<AncestryPanel ancestry={ancestry} mode={PanelMode.Full} />
@@ -200,15 +243,15 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onSelectComplication = (complication: Complication) => {
-		setDrawer(
-			<ComplicationPanel complication={complication} mode={PanelMode.Full} />
-		);
-	};
-
 	const onSelectKit = (kit: Kit) => {
 		setDrawer(
 			<KitPanel kit={kit} mode={PanelMode.Full} />
+		);
+	};
+
+	const onSelectComplication = (complication: Complication) => {
+		setDrawer(
+			<ComplicationPanel complication={complication} mode={PanelMode.Full} />
 		);
 	};
 
@@ -250,13 +293,14 @@ export const Main = (props: Props) => {
 					<WelcomePage
 						showAbout={showAbout}
 						showHeroes={heroes.length === 0 ? addHero : showHeroList}
+						showSourcebook={showSourcebook}
 					/>
 				);
 			case Page.HeroList:
 				return (
 					<HeroListPage
 						heroes={heroes}
-						goHome={goHome}
+						goHome={showWelcome}
 						showAbout={showAbout}
 						addHero={addHero}
 						importHero={importHero}
@@ -269,7 +313,7 @@ export const Main = (props: Props) => {
 						hero={selectedHero as Hero}
 						options={options}
 						setOptions={persistOptions}
-						goHome={goHome}
+						goHome={showWelcome}
 						showAbout={showAbout}
 						closeHero={closeSelectedHero}
 						editHero={editSelectedHero}
@@ -290,14 +334,40 @@ export const Main = (props: Props) => {
 				return (
 					<HeroEditPage
 						hero={selectedHero as Hero}
-						goHome={goHome}
+						goHome={showWelcome}
 						showAbout={showAbout}
 						saveChanges={saveEditSelectedHero}
 						cancelChanges={cancelEditSelectedHero}
 					/>
 				);
+			case Page.Sourcebook:
+				return (
+					<SourcebookListPage
+						sourcebook={getSourcebook()}
+						goHome={showWelcome}
+						showAbout={showAbout}
+						viewAncestry={onSelectAncestry}
+						viewCulture={onSelectCulture}
+						viewCareer={onSelectCareer}
+						viewClass={onSelectClass}
+						viewKit={onSelectKit}
+						viewComplication={onSelectComplication}
+					/>
+				);
 		}
 	};
+
+	let str = '';
+	switch (page) {
+		case Page.HeroList:
+		case Page.HeroView:
+		case Page.HeroEdit:
+			str = 'Heroes';
+			break;
+		case Page.Sourcebook:
+			str = 'Sourcebook';
+			break;
+	}
 
 	return (
 		<div className='main'>
@@ -306,8 +376,27 @@ export const Main = (props: Props) => {
 			</div>
 			<div className='main-footer'>
 				<div className='main-footer-section'>
+					<Radio.Group
+						options={[ 'Heroes', 'Sourcebook' ]}
+						optionType='button'
+						buttonStyle='solid'
+						block={true}
+						value={str}
+						onChange={x => {
+							switch (x.target.value) {
+								case 'Heroes':
+									showHeroList();
+									break;
+								case 'Sourcebook':
+									showSourcebook();
+									break;
+							}
+						}}
+					/>
+				</div>
+				<div className='main-footer-section'>
 					<img className='ds-logo' src={pbds} />
-					<div>FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC</div>
+					FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC
 				</div>
 				<div className='main-footer-section'>
 					DRAW STEEL © 2024 MCDM Productions, LLC

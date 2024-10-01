@@ -1,4 +1,3 @@
-import { EnvironmentData, OrganizationData, UpbringingData } from './culture-data';
 import { CampaignSetting } from '../models/campaign-setting';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureField } from '../enums/feature-field';
@@ -155,17 +154,7 @@ export class CampaignSettingData {
 				]
 			}
 		],
-		cultures: [
-			{
-				id: 'orden-capital',
-				name: 'Capital Aristocrat',
-				description: 'A member of the upper classes from the greatest city in this, or any, age.',
-				languages: [ 'Riojan' ],
-				environment: EnvironmentData.urban,
-				organization: OrganizationData.bureaucratic,
-				upbringing: UpbringingData.noble
-			}
-		],
+		cultures: [],
 		classes: [],
 		careers: [],
 		complications: [],

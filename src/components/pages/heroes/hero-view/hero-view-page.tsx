@@ -1,18 +1,18 @@
 import { Button, Popover } from 'antd';
-import { Ability } from '../../../models/ability';
-import { Ancestry } from '../../../models/ancestry';
-import { AppHeader } from '../../panels/app-header/app-header';
-import { Career } from '../../../models/career';
-import { Characteristic } from '../../../enums/characteristic';
-import { Complication } from '../../../models/complication';
-import { Culture } from '../../../models/culture';
-import { Hero } from '../../../models/hero';
-import { HeroClass } from '../../../models/class';
-import { HeroPanel } from '../../panels/hero-panel/hero-panel';
-import { Kit } from '../../../models/kit';
-import { Options } from '../../../models/options';
-import { PanelMode } from '../../../enums/panel-mode';
-import { Toggle } from '../../controls/toggle/toggle';
+import { Ability } from '../../../../models/ability';
+import { Ancestry } from '../../../../models/ancestry';
+import { AppHeader } from '../../../panels/app-header/app-header';
+import { Career } from '../../../../models/career';
+import { Characteristic } from '../../../../enums/characteristic';
+import { Complication } from '../../../../models/complication';
+import { Culture } from '../../../../models/culture';
+import { Hero } from '../../../../models/hero';
+import { HeroClass } from '../../../../models/class';
+import { HeroPanel } from '../../../panels/hero-panel/hero-panel';
+import { Kit } from '../../../../models/kit';
+import { Options } from '../../../../models/options';
+import { PanelMode } from '../../../../enums/panel-mode';
+import { Toggle } from '../../../controls/toggle/toggle';
 
 import './hero-view-page.scss';
 

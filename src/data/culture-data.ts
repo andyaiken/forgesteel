@@ -1,4 +1,5 @@
 import { CampaignSetting } from '../models/campaign-setting';
+import { CampaignSettingData } from './campaign-setting-data';
 import { Collections } from '../utils/collections';
 import { Culture } from '../models/culture';
 import { FeatureLogic } from '../logic/feature-logic';
@@ -206,6 +207,11 @@ export class CultureData {
 
 		if (setting) {
 			list.push(...setting.cultures);
+		} else {
+			CampaignSettingData.getCampaignSettings()
+				.forEach(s => {
+					list.push(...s.cultures);
+				});
 		}
 
 		return Collections.sort(list, item => item.name);

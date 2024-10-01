@@ -1,4 +1,5 @@
 import { CampaignSetting } from '../models/campaign-setting';
+import { CampaignSettingData } from './campaign-setting-data';
 import { Collections } from '../utils/collections';
 import { conduit } from './classes/conduit';
 import { elementalist } from './classes/elementalist';
@@ -18,6 +19,11 @@ export class ClassData {
 
 		if (setting) {
 			list.push(...setting.classes);
+		} else {
+			CampaignSettingData.getCampaignSettings()
+				.forEach(s => {
+					list.push(...s.classes);
+				});
 		}
 
 		return Collections.sort(list, item => item.name);

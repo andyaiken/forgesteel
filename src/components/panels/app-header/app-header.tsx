@@ -1,6 +1,7 @@
 import { Button } from 'antd';
 
 import shield from './../../../assets/shield.png';
+
 import './app-header.scss';
 
 interface Props {

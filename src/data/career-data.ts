@@ -1,6 +1,7 @@
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { CampaignSetting } from '../models/campaign-setting';
+import { CampaignSettingData } from './campaign-setting-data';
 import { Career } from '../models/career';
 import { Collections } from '../utils/collections';
 import { FeatureField } from '../enums/feature-field';
@@ -262,6 +263,11 @@ export class CareerData {
 
 		if (setting) {
 			list.push(...setting.careers);
+		} else {
+			CampaignSettingData.getCampaignSettings()
+				.forEach(s => {
+					list.push(...s.careers);
+				});
 		}
 
 		return Collections.sort(list, item => item.name);

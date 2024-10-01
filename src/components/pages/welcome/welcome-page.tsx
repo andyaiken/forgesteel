@@ -1,4 +1,4 @@
-import { Button, Divider } from 'antd';
+import { Button, Divider, Space } from 'antd';
 import { AppHeader } from '../../panels/app-header/app-header';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
@@ -8,6 +8,7 @@ import './welcome-page.scss';
 interface Props {
 	showAbout: () => void;
 	showHeroes: () => void;
+	showSourcebook: () => void;
 }
 
 export const WelcomePage = (props: Props) => {
@@ -29,7 +30,10 @@ export const WelcomePage = (props: Props) => {
 								You can export your heroes as PNG or PDF.
 							</div>
 							<Divider />
-							<Button type='primary' block={true} onClick={props.showHeroes}>Click here to start building heroes</Button>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								<Button type='primary' block={true} onClick={props.showHeroes}>Click here to start building heroes</Button>
+								<Button block={true} onClick={props.showSourcebook}>Click here to browse the sourcebook</Button>
+							</Space>
 						</SelectablePanel>
 					</div>
 				</div>

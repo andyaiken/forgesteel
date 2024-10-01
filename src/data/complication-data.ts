@@ -1,4 +1,5 @@
 import { CampaignSetting } from '../models/campaign-setting';
+import { CampaignSettingData } from './campaign-setting-data';
 import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { DamageModifierType } from '../enums/damage-modifier-type';
@@ -232,6 +233,11 @@ Whenever you take a respite, make a Reason power roll.
 
 		if (setting) {
 			list.push(...setting.complications);
+		} else {
+			CampaignSettingData.getCampaignSettings()
+				.forEach(s => {
+					list.push(...s.complications);
+				});
 		}
 
 		return Collections.sort(list, item => item.name);

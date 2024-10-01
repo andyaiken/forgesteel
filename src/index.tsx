@@ -2,6 +2,7 @@ import { Hero } from './models/hero.ts';
 import { HeroLogic } from './logic/hero-logic.ts';
 import { Main } from './components/main/main.tsx';
 import { Options } from './models/options.ts';
+import { Sourcebook } from './models/sourcebook.ts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import localforage from 'localforage';
@@ -20,20 +21,40 @@ localforage
 		});
 
 		localforage
-			.getItem<Options>('forgesteel-options')
-			.then(options => {
-				if (!options) {
-					options = {
-						showSkillsInGroups: false,
-						showFreeStrikes: false,
-						showStandardAbilities: false
+			.getItem<Sourcebook>('forgesteel-homebrew')
+			.then(homebrew => {
+				if (!homebrew) {
+					homebrew = {
+						settings: [],
+						ancestries: [],
+						cultures: [],
+						careers: [],
+						classes: [],
+						kits: [],
+						complications: []
 					};
 				}
 
-				createRoot(document.getElementById('root')!).render(
-					<StrictMode>
-						<Main heroes={heroes} options={options} />
-					</StrictMode>
-				);
+				localforage
+					.getItem<Options>('forgesteel-options')
+					.then(options => {
+						if (!options) {
+							options = {
+								showSkillsInGroups: false,
+								showFreeStrikes: false,
+								showStandardAbilities: false
+							};
+						}
+
+						createRoot(document.getElementById('root')!).render(
+							<StrictMode>
+								<Main
+									heroes={heroes}
+									homebrew={homebrew}
+									options={options}
+								/>
+							</StrictMode>
+						);
+					});
 			});
 	});

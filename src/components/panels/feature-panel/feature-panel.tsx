@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityData, FeatureChoiceData, FeatureClassAbilityData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureSkillData } from '../../../models/feature';
+import { Feature, FeatureAbilityData, FeatureChoiceData, FeatureClassAbilityData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSkillData, FeatureSubclassData } from '../../../models/feature';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { CampaignSettingData } from '../../../data/campaign-setting-data';
@@ -42,8 +42,7 @@ export const FeaturePanel = (props: Props) => {
 					onChange={value => {
 						let ids: string[] = [];
 						if (data.count === 1) {
-							const val = value as string;
-							ids = [ val ];
+							ids = value !== undefined ? [ value as string ] : [];
 						} else {
 							ids = value as string[];
 						}
@@ -163,7 +162,7 @@ export const FeaturePanel = (props: Props) => {
 
 	const getEditableLanguage = (data: FeatureLanguageData) => {
 		const setting = CampaignSettingData.getCampaignSettings().find(s => s.id === props.hero?.settingID);
-		const languages = setting ? setting.languages.filter(l => data.options.includes(l.name)) : [];
+		const languages = setting ? setting.languages : [];
 		const sortedLanguages = Collections.sort(languages, l => l.name);
 
 		return (
@@ -267,6 +266,65 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
+	const getEditableSubclassFeature = (data: FeatureSubclassData) => {
+		const options: Feature[] = [];
+		if (props.hero && props.hero.class) {
+			const heroClass = props.hero.class;
+			props.hero.class.subclasses
+				.filter(sc => sc.selected)
+				.forEach(sc => {
+					sc.featuresByLevel
+						.filter(lvl => lvl.level <= heroClass.level)
+						.forEach(lvl => {
+							lvl.optionalFeatures
+								.filter(f => f.category === data.category)
+								.forEach(f => options.push(...f.features));
+						});
+				});
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Select
+					style={{ width: '100%' }}
+					mode={data.count === 1 ? undefined : 'multiple'}
+					maxCount={data.count === 1 ? undefined : data.count}
+					allowClear={true}
+					placeholder='Select'
+					options={options.map(o => ({ label: o.name, value: o.id, desc: o.description }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
+					onChange={value => {
+						let ids: string[] = [];
+						if (data.count === 1) {
+							ids = value !== undefined ? [ value as string ] : [];
+						} else {
+							ids = value as string[];
+						}
+						const features: Feature[] = [];
+						ids.forEach(id => {
+							const option = options.find(o => o.id === id);
+							if (option) {
+								const featureCopy = JSON.parse(JSON.stringify(option)) as Feature;
+								features.push(featureCopy);
+							}
+						});
+						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
+						dataCopy.selected = features;
+						if (props.setData) {
+							props.setData(props.feature.id, dataCopy);
+						}
+					}}
+				/>
+				{
+					data.selected.map(f => (
+						<FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />
+					))
+				}
+			</Space>
+		);
+	};
+
 	const getEditable = () => {
 		switch (props.feature.type) {
 			case FeatureType.Choice:
@@ -279,6 +337,8 @@ export const FeaturePanel = (props: Props) => {
 				return getEditableLanguage(props.feature.data as FeatureLanguageData);
 			case FeatureType.Skill:
 				return getEditableSkill(props.feature.data as FeatureSkillData);
+			case FeatureType.SubclassFeature:
+				return getEditableSubclassFeature(props.feature.data as FeatureSubclassData);
 		}
 
 		return null;
@@ -307,7 +367,11 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
-		const abilities = props.hero?.class?.abilities.filter(a => a.cost === data.cost) || [];
+		if (!props.hero || !props.hero.class) {
+			return null;
+		}
+
+		const abilities = props.hero.class.abilities.filter(a => a.cost === data.cost) || [];
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -361,6 +425,20 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
+	const getExtraSubclassFeature = (data: FeatureSubclassData) => {
+		if (data.selected.length === 0) {
+			return null;
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					data.selected.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)
+				}
+			</Space>
+		);
+	};
+
 	const getExtra = () => {
 		switch (props.feature.type) {
 			case FeatureType.Choice:
@@ -373,6 +451,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraLanguage(props.feature.data as FeatureLanguageData);
 			case FeatureType.Skill:
 				return getExtraSkill(props.feature.choice, props.feature.data as FeatureSkillData);
+			case FeatureType.SubclassFeature:
+				return getExtraSubclassFeature(props.feature.data as FeatureSubclassData);
 		}
 
 		return null;
@@ -388,6 +468,17 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
+		if (props.feature.type === FeatureType.Multiple) {
+			const data = props.feature.data as FeatureMultipleData;
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					{
+						data.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />)
+					}
+				</Space>
+			);
+		}
+
 		return (
 			<div className='feature-panel'>
 				<HeaderText>{props.feature.name}</HeaderText>
@@ -399,7 +490,8 @@ export const FeaturePanel = (props: Props) => {
 				}
 			</div>
 		);
-	} catch {
+	} catch (ex) {
+		console.error(ex);
 		return null;
 	}
 };

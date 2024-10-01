@@ -13,7 +13,8 @@ export const Field = (props: Props) => {
 				<span className='field-value'>{props.value}</span>
 			</div>
 		);
-	} catch {
+	} catch (ex) {
+		console.error(ex);
 		return null;
 	}
 };

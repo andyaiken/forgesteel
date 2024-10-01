@@ -1,3 +1,5 @@
+import { CampaignSetting } from '../models/campaign-setting';
+import { Collections } from '../utils/collections';
 import { Culture } from '../models/culture';
 import { FeatureLogic } from '../logic/feature-logic';
 import { SkillList } from '../enums/skill-list';
@@ -199,9 +201,13 @@ export class CultureData {
 		upbringing: null
 	};
 
-	static getCultures = () => {
-		return [
-			this.bespoke
-		];
+	static getCultures = (setting?: CampaignSetting) => {
+		const list = [];
+
+		if (setting) {
+			list.push(...setting.cultures);
+		}
+
+		return Collections.sort(list, item => item.name);
 	};
 }

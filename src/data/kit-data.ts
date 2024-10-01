@@ -2,7 +2,9 @@ import { KitArmor, KitImplement, KitType, KitWeapon } from '../enums/kit';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
+import { CampaignSetting } from '../models/campaign-setting';
 import { Characteristic } from '../enums/characteristic';
+import { Collections } from '../utils/collections';
 import { FeatureLogic } from '../logic/feature-logic';
 import { Kit } from '../models/kit';
 import { KitLogic } from '../logic/kit-logic';
@@ -1033,8 +1035,8 @@ Your armor is reinforced by a bright ward of holy energy, and grants you the fol
 		]
 	};
 
-	static getKits = () => {
-		return [
+	static getKits = (setting?: CampaignSetting) => {
+		const list = [
 			this.bloodpact,
 			this.cloakAndDagger,
 			this.dancer,
@@ -1060,5 +1062,11 @@ Your armor is reinforced by a bright ward of holy energy, and grants you the fol
 			this.wardWeaver,
 			this.whirlwind
 		];
+
+		if (setting) {
+			list.push(...setting.kits);
+		}
+
+		return Collections.sort(list, item => item.name);
 	};
 }

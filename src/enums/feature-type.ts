@@ -7,6 +7,8 @@ export enum FeatureType {
 	DamageModifier = 'Damage Modifier',
 	Kit = 'Kit',
 	Language = 'Language',
+	Multiple = 'Multiple Features',
 	Size = 'Size',
-	Skill = 'Skill'
+	Skill = 'Skill',
+	SubclassFeature = 'Subclass Feature'
 }

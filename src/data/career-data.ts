@@ -1,6 +1,8 @@
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
+import { CampaignSetting } from '../models/campaign-setting';
 import { Career } from '../models/career';
+import { Collections } from '../utils/collections';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from '../logic/feature-logic';
 import { SkillList } from '../enums/skill-list';
@@ -246,8 +248,8 @@ export class CareerData {
 		})
 	};
 
-	static getCareers = () => {
-		return [
+	static getCareers = (setting?: CampaignSetting) => {
+		const list = [
 			this.artisan,
 			this.criminal,
 			this.gladiator,
@@ -257,5 +259,11 @@ export class CareerData {
 			this.sage,
 			this.soldier
 		];
+
+		if (setting) {
+			list.push(...setting.careers);
+		}
+
+		return Collections.sort(list, item => item.name);
 	};
 }

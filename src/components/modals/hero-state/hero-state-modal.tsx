@@ -224,7 +224,8 @@ export const HeroStateModal = (props: Props) => {
 				</Expander>
 			</div>
 		);
-	} catch {
+	} catch (ex) {
+		console.error(ex);
 		return null;
 	}
 };

@@ -8,7 +8,14 @@ export interface SubClass {
 	name: string;
 	description: string;
 
-	featuresByLevel: { level: number, features: Feature[] }[];
+	featuresByLevel: {
+		level: number;
+		features: Feature[];
+		optionalFeatures: {
+			category: string;
+			features: Feature[];
+		}[];
+	}[];
 	kits: Kit[];
 
 	selected: boolean;
@@ -24,11 +31,17 @@ export interface HeroClass {
 	subclassCount: number;
 	primaryCharacteristics: Characteristic[];
 
-	featuresByLevel: { level: number, features: Feature[] }[];
+	featuresByLevel: {
+		level: number;
+		features: Feature[];
+	}[];
 	abilities: Ability[];
 	kits: Kit[];
 	subclasses: SubClass[];
 
 	level: number;
-	characteristics: { characteristic: Characteristic, value: number }[];
+	characteristics: {
+		characteristic: Characteristic;
+		value: number;
+	}[];
 }

@@ -26,7 +26,8 @@ export const AboutModal = () => {
 				<Field label='Version' value={pkg.version} />
 			</div>
 		);
-	} catch {
+	} catch (ex) {
+		console.error(ex);
 		return null;
 	}
 };

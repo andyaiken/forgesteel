@@ -1,3 +1,5 @@
+import { CampaignSetting } from '../models/campaign-setting';
+import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureField } from '../enums/feature-field';
@@ -214,8 +216,8 @@ Whenever you take a respite, make a Reason power roll.
 		]
 	};
 
-	static getComplications = () => {
-		return [
+	static getComplications = (setting?: CampaignSetting) => {
+		const list = [
 			this.cultVictim,
 			this.devilDeal,
 			this.elementalAbsorption,
@@ -227,5 +229,11 @@ Whenever you take a respite, make a Reason power roll.
 			this.ward,
 			this.warOfTheGuilds
 		];
+
+		if (setting) {
+			list.push(...setting.complications);
+		}
+
+		return Collections.sort(list, item => item.name);
 	};
 }

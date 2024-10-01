@@ -22,6 +22,7 @@ import { HeroListPage } from '../pages/hero-list/hero-list-page';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroPage } from '../pages/hero-view/hero-view-page';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
+import { ImportHeroModal } from '../modals/import-hero/import-hero-modal';
 import { Kit } from '../../models/kit';
 import { KitPanel } from '../panels/kit-panel/kit-panel';
 import { Options } from '../../models/options';
@@ -96,6 +97,26 @@ export const Main = (props: Props) => {
 		setSelectedHero(hero);
 	};
 
+	const importHero = () => {
+		setDrawer(
+			<ImportHeroModal
+				accept={hero => {
+					hero.id = Utils.guid();
+					HeroLogic.updateHero(hero);
+
+					const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
+					copy.push(hero);
+					Collections.sort(copy, h => h.name);
+
+					persistHeroes(copy);
+					setPage(Page.HeroView);
+					setSelectedHero(hero);
+					setDrawer(null);
+				}}
+			/>
+		);
+	};
+
 	const viewHero = (heroID: string) => {
 		const hero = heroes.find(h => h.id === heroID);
 		if (hero) {
@@ -117,9 +138,13 @@ export const Main = (props: Props) => {
 		}
 	};
 
-	const exportSelectedHero = (format: 'image' | 'pdf') => {
+	const exportSelectedHero = (format: 'image' | 'pdf' | 'json') => {
 		if (selectedHero) {
-			Utils.takeScreenshot(selectedHero.id, selectedHero.name || 'Unnamed Hero', format);
+			if (format === 'json') {
+				Utils.saveFile(selectedHero, selectedHero.name || 'Unnamed Hero', 'hero');
+			} else {
+				Utils.takeScreenshot(selectedHero.id, selectedHero.name || 'Unnamed Hero', format);
+			}
 		}
 	};
 
@@ -234,6 +259,7 @@ export const Main = (props: Props) => {
 						goHome={goHome}
 						showAbout={showAbout}
 						addHero={addHero}
+						importHero={importHero}
 						viewHero={viewHero}
 					/>
 				);

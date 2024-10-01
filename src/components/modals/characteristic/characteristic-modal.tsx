@@ -19,7 +19,8 @@ export const CharacteristicModal = (props: Props) => {
 				<DieRollPanel hero={props.hero} characteristics={[ props.characteristic ]} />
 			</div>
 		);
-	} catch {
+	} catch (ex) {
+		console.error(ex);
 		return null;
 	}
 };

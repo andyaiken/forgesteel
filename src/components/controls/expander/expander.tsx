@@ -22,7 +22,8 @@ export const Expander = (props: Props) => {
 				expandIconPosition='end'
 			/>
 		);
-	} catch {
+	} catch (ex) {
+		console.error(ex);
 		return null;
 	}
 };

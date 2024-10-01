@@ -1,6 +1,7 @@
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
+import { Hero } from '../../../models/hero';
 import { HeroClass } from '../../../models/class';
 import { PanelMode } from '../../../enums/panel-mode';
 
@@ -8,6 +9,7 @@ import './class-panel.scss';
 
 interface Props {
 	heroClass: HeroClass;
+	hero?: Hero;
 	mode?: PanelMode;
 }
 
@@ -26,7 +28,7 @@ export const ClassPanel = (props: Props) => {
 							<div key={lvl.level} className='level-details'>
 								<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
 								{
-									lvl.features.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)
+									lvl.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />)
 								}
 							</div>
 						))
@@ -34,7 +36,8 @@ export const ClassPanel = (props: Props) => {
 				}
 			</div>
 		);
-	} catch {
+	} catch (ex) {
+		console.error(ex);
 		return null;
 	}
 };

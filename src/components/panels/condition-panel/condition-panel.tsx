@@ -117,7 +117,8 @@ export const ConditionPanel = (props: Props) => {
 				</div>
 			</div>
 		);
-	} catch {
+	} catch (ex) {
+		console.error(ex);
 		return null;
 	}
 };

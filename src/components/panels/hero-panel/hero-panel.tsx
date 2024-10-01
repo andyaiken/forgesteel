@@ -14,6 +14,7 @@ import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
+import { FormatLogic } from '../../../logic/format-logic';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroClass } from '../../../models/class';
@@ -293,7 +294,7 @@ export const HeroPanel = (props: Props) => {
 				<Col xs={sizeSmall.xs} sm={sizeSmall.sm} md={sizeSmall.md} lg={sizeSmall.lg} xl={sizeSmall.xl} xxl={sizeSmall.xxl}>
 					<div className='characteristics-row'>
 						<div className='characteristic'>
-							<Statistic title='Size' value={HeroLogic.getSizeString(HeroLogic.getSize(props.hero))} />
+							<Statistic title='Size' value={FormatLogic.getSize(HeroLogic.getSize(props.hero))} />
 						</div>
 						<div className='characteristic'>
 							<Statistic title='Speed' value={HeroLogic.getSpeed(props.hero)} />
@@ -441,7 +442,8 @@ export const HeroPanel = (props: Props) => {
 				</div>
 			</div>
 		);
-	} catch {
+	} catch (ex) {
+		console.error(ex);
 		return null;
 	}
 };

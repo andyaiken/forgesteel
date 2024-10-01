@@ -52,12 +52,12 @@ export class Utils {
 		}
 	};
 
-	static saveFile = (filename: string, data: unknown) => {
+	static saveFile = (data: unknown, name: string, type: string) => {
 		const json = JSON.stringify(data, null, '\t');
 		const blob = new Blob([ json ], { type: 'application/json' });
 
 		const a = document.createElement('a');
-		a.download = filename;
+		a.download = `${name}.drawsteel.${type}`;
 		a.href = window.URL.createObjectURL(blob);
 		a.click();
 	};

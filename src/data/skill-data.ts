@@ -5,7 +5,7 @@ import { SkillList } from '../enums/skill-list';
 
 export class SkillData {
 	static getSkills = (setting?: CampaignSetting) => {
-		const skills: Skill[] = [
+		const list: Skill[] = [
 			{ name: 'Alchemy', description: 'Make bombs and potions.', list: SkillList.Crafting },
 			{ name: 'Architecture', description: 'Create buildings and vehicles.', list: SkillList.Crafting },
 			{ name: 'Blacksmithing', description: 'Forge metal armor and weapons.', list: SkillList.Crafting },
@@ -62,11 +62,10 @@ export class SkillData {
 		];
 
 		if (setting) {
-			// Add skills from campaign setting
-			skills.push(...setting.skills);
+			list.push(...setting.skills);
 		}
 
-		return Collections.sort(skills, skill => skill.name);
+		return Collections.sort(list, item => item.name);
 	};
 
 	static getSkillsFromList = (list: SkillList, setting?: CampaignSetting) => {

@@ -98,7 +98,8 @@ export const AbilityPanel = (props: Props) => {
 				</div>
 			</SelectablePanel>
 		);
-	} catch {
+	} catch (ex) {
+		console.error(ex);
 		return null;
 	}
 };

@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureSizeData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureSizeData, FeatureSkillData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from './ability-logic';
@@ -8,12 +8,13 @@ import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureField } from '../enums/feature-field';
+import { FeatureLogic } from './feature-logic';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit';
 import { Language } from '../models/language';
-import { Size } from '../models/ancestry';
+import { Size } from '../models/size';
 import { Skill } from '../models/skill';
 import { SkillLogic } from './skill-logic';
 import { Utils } from '../utils/utils';
@@ -67,76 +68,28 @@ export class HeroLogic {
 		const features: Feature[] = [];
 
 		if (hero.ancestry) {
-			features.push(...hero.ancestry.features);
+			features.push(...FeatureLogic.getFeaturesFromAncestry(hero.ancestry));
 		}
 
 		if (hero.culture) {
-			if (hero.culture.environment) {
-				features.push(hero.culture.environment);
-			}
-			if (hero.culture.organization) {
-				features.push(hero.culture.organization);
-			}
-			if (hero.culture.upbringing) {
-				features.push(hero.culture.upbringing);
-			}
+			features.push(...FeatureLogic.getFeaturesFromCulture(hero.culture));
 		}
 
 		if (hero.career) {
-			features.push(...hero.career.features);
-			features.push(hero.career.title);
+			features.push(...FeatureLogic.getFeaturesFromCareer(hero.career));
 		}
 
 		if (hero.class) {
-			const classLevel = hero.class.level;
-			hero.class.featuresByLevel.forEach(lvl => {
-				if (lvl.level <= classLevel) {
-					features.push(...lvl.features);
-				}
-			});
-
-			hero.class.subclasses
-				.filter(sc => sc.selected)
-				.forEach(sc => {
-					sc.featuresByLevel.forEach(lvl => {
-						if (lvl.level <= classLevel) {
-							features.push(...lvl.features);
-						}
-					});
-				});
-		}
-
-		if (hero.complication) {
-			features.push(...hero.complication.features);
+			features.push(...FeatureLogic.getFeaturesFromClass(hero.class));
 		}
 
 		if (hero.kit) {
-			features.push(...hero.kit.features);
+			features.push(...FeatureLogic.getFeaturesFromKit(hero.kit));
 		}
 
-		// If any features grant feature choices, get the selected features
-		const featuresFromChoices: Feature[] = [];
-		features
-			.filter(f => f.type === FeatureType.Choice)
-			.forEach(f => {
-				const data = f.data as FeatureChoiceData;
-				data.selected.forEach(selected => {
-					featuresFromChoices.push(selected);
-				});
-			});
-		features.push(...featuresFromChoices);
-
-		// If any features grant kits, get the features from those kits
-		const featuresFromKits: Feature[] = [];
-		features
-			.filter(f => f.type === FeatureType.Kit)
-			.forEach(f => {
-				const data = f.data as FeatureKitData;
-				data.selected.forEach(kit => {
-					featuresFromKits.push(...kit.features);
-				});
-			});
-		features.push(...featuresFromKits);
+		if (hero.complication) {
+			features.push(...FeatureLogic.getFeaturesFromComplication(hero.complication));
+		}
 
 		return features;
 	};
@@ -549,10 +502,6 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 		} as Size;
 	};
 
-	static getSizeString = (size: Size) => {
-		return `${size.value}${size.mod}`;
-	};
-
 	static getSpeed = (hero: Hero) => {
 		let value = 0;
 
@@ -758,5 +707,36 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 		});
 
 		return arrays;
+	};
+
+	///////////////////////////////////////////////////////////////////////////
+
+	static updateHero = (hero: Hero) => {
+		if (hero.class) {
+			if (hero.class.kits === undefined) {
+				hero.class.kits = [];
+			}
+			hero.class.subclasses.forEach(sc => {
+				sc.featuresByLevel.forEach(lvl => {
+					if (lvl.optionalFeatures === undefined) {
+						lvl.optionalFeatures = [];
+					}
+				});
+				if (sc.kits === undefined) {
+					sc.kits = [];
+				}
+			});
+		}
+		if (hero.kit) {
+			if (hero.kit.abilities === undefined) {
+				hero.kit.abilities = [];
+			}
+			if (hero.kit.features === undefined) {
+				hero.kit.features = [];
+			}
+		}
+		if (hero.state.xp === undefined) {
+			hero.state.xp = 0;
+		}
 	};
 }

@@ -63,7 +63,8 @@ export const PowerRollPanel = (props: Props) => {
 				{bonus}
 			</div>
 		);
-	} catch {
+	} catch (ex) {
+		console.error(ex);
 		return null;
 	}
 };

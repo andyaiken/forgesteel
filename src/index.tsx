@@ -1,4 +1,5 @@
 import { Hero } from './models/hero.ts';
+import { HeroLogic } from './logic/hero-logic.ts';
 import { Main } from './components/main/main.tsx';
 import { Options } from './models/options.ts';
 import { StrictMode } from 'react';
@@ -15,27 +16,7 @@ localforage
 		}
 
 		heroes.forEach(hero => {
-			if (hero.class) {
-				if (hero.class.kits === undefined) {
-					hero.class.kits = [];
-				}
-				hero.class.subclasses.forEach(sc => {
-					if (sc.kits === undefined) {
-						sc.kits = [];
-					}
-				});
-			}
-			if (hero.kit) {
-				if (hero.kit.abilities === undefined) {
-					hero.kit.abilities = [];
-				}
-				if (hero.kit.features === undefined) {
-					hero.kit.features = [];
-				}
-			}
-			if (hero.state.xp === undefined) {
-				hero.state.xp = 0;
-			}
+			HeroLogic.updateHero(hero);
 		});
 
 		localforage

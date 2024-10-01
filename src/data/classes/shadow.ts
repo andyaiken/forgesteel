@@ -335,7 +335,8 @@ export const shadow: HeroClass = {
 								effect: 'You teleport up to 4 squares, halve the triggering damage, and don’t suffer any effect associated with the damage.'
 							})
 						})
-					]
+					],
+					optionalFeatures: []
 				}
 			],
 			kits: [],
@@ -385,7 +386,8 @@ export const shadow: HeroClass = {
 								effect: 'You shift up to 2 squares, halve the triggering damage, and don’t suffer any effect associated with the damage. If you end this movement with concealment or cover, you can use the Hide maneuver even if you are observed.'
 							})
 						})
-					]
+					],
+					optionalFeatures: []
 				}
 			],
 			kits: [],
@@ -428,7 +430,8 @@ export const shadow: HeroClass = {
 								effect: 'Choose an enemy within distance of the attack. The attack targets that enemy instead.'
 							})
 						})
-					]
+					],
+					optionalFeatures: []
 				}
 			],
 			kits: [],

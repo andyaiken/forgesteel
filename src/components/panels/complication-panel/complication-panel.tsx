@@ -27,7 +27,8 @@ export const ComplicationPanel = (props: Props) => {
 				}
 			</div>
 		);
-	} catch {
+	} catch (ex) {
+		console.error(ex);
 		return null;
 	}
 };

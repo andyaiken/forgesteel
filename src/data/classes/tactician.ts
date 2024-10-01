@@ -262,7 +262,8 @@ export const tactician: HeroClass = {
 								]
 							})
 						})
-					]
+					],
+					optionalFeatures: []
 				}
 			],
 			kits: [],
@@ -314,7 +315,8 @@ You can only make this test once for each encounter and negotiation.`
 								]
 							})
 						})
-					]
+					],
+					optionalFeatures: []
 				}
 			],
 			kits: [],
@@ -358,7 +360,8 @@ You can only make this test once for each encounter and negotiation.`
 								]
 							})
 						})
-					]
+					],
+					optionalFeatures: []
 				}
 			],
 			kits: [],

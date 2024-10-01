@@ -2,7 +2,9 @@ import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { Ancestry } from '../models/ancestry';
+import { CampaignSetting } from '../models/campaign-setting';
 import { Characteristic } from '../enums/characteristic';
+import { Collections } from '../utils/collections';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from '../logic/feature-logic';
@@ -127,10 +129,82 @@ export class AncestryData {
 				field: FeatureField.Speed,
 				value: 5
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.createChoiceFeature({
 				id: 'dragon-knight-feature-1',
 				name: 'Wyrmplate',
-				description: 'Your hardened scales grant you immunity 5 to one of the following damage types: cold, corruption, fire, lightning, or poison. You can change your damage immunity type while out of combat (no action required).'
+				description: 'Your hardened scales grant you immunity 5 to one of the following damage types: cold, corruption, fire, lightning, or poison. You can change your damage immunity type while out of combat (no action required).',
+				options: [
+					{
+						feature: FeatureLogic.createDamageModifierFeature({
+							id: 'dragon-knight-feature-1a',
+							modifiers: [
+								{
+									type: DamageModifierType.Immunity,
+									damageType: 'Cold',
+									value: 5,
+									valuePerLevel: 0
+								}
+							]
+						}),
+						value: 1
+					},
+					{
+						feature: FeatureLogic.createDamageModifierFeature({
+							id: 'dragon-knight-feature-1b',
+							modifiers: [
+								{
+									type: DamageModifierType.Immunity,
+									damageType: 'Corruption',
+									value: 5,
+									valuePerLevel: 0
+								}
+							]
+						}),
+						value: 1
+					},
+					{
+						feature: FeatureLogic.createDamageModifierFeature({
+							id: 'dragon-knight-feature-1c',
+							modifiers: [
+								{
+									type: DamageModifierType.Immunity,
+									damageType: 'Fire',
+									value: 5,
+									valuePerLevel: 0
+								}
+							]
+						}),
+						value: 1
+					},
+					{
+						feature: FeatureLogic.createDamageModifierFeature({
+							id: 'dragon-knight-feature-1d',
+							modifiers: [
+								{
+									type: DamageModifierType.Immunity,
+									damageType: 'Lightning',
+									value: 5,
+									valuePerLevel: 0
+								}
+							]
+						}),
+						value: 1
+					},
+					{
+						feature: FeatureLogic.createDamageModifierFeature({
+							id: 'dragon-knight-feature-1e',
+							modifiers: [
+								{
+									type: DamageModifierType.Immunity,
+									damageType: 'Poison',
+									value: 5,
+									valuePerLevel: 0
+								}
+							]
+						}),
+						value: 1
+					}
+				]
 			}),
 			FeatureLogic.createChoiceFeature({
 				id: 'dragon-knight-feature-2',
@@ -366,39 +440,6 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 		]
 	};
 
-	static memonek: Ancestry = {
-		id: 'ancestry-memonek',
-		name: 'Memonek',
-		description: 'The native denizens of Axiom, the Plane of Uttermost Law, memonek dwell in a land with lakes and trees and birds and flowers. But on this alien world, the lakes are seas of mercury, the birds glitter with wings of glass stretched gossamer thin, and the flowers’ petals are iridescent metal as flexible and fragile as any earthly rose.',
-		features: [
-			FeatureLogic.createSizeFeature({
-				id: 'memonek-size',
-				sizeValue: 1,
-				sizeMod: 'M'
-			}),
-			FeatureLogic.createBonusFeature({
-				id: 'memonek-speed',
-				field: FeatureField.Speed,
-				value: 7
-			}),
-			FeatureLogic.createFeature({
-				id: 'memonek-feature-1a',
-				name: 'Lightweight',
-				description: 'Your silicone body is aerodynamic and low in density. Whenever you fall, you reduce the distance of the fall by 2 squares. When you are force moved, you are force moved an additional 2 squares.'
-			}),
-			FeatureLogic.createBonusFeature({
-				id: 'memonek-feature-1b',
-				field: FeatureField.Stability,
-				value: -2
-			}),
-			FeatureLogic.createFeature({
-				id: 'memonek-feature-2',
-				name: 'Keeper of Order',
-				description: 'When you or a creature adjacent to you makes a power roll, you can remove an edge or a bane on the roll as a free triggered action. You can only use this benefit once per round.'
-			})
-		]
-	};
-
 	static orc: Ancestry = {
 		id: 'ancestry-orc',
 		name: 'Orc',
@@ -573,48 +614,8 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 		]
 	};
 
-	static timeRaider: Ancestry = {
-		id: 'ancestry-time-raider',
-		name: 'Time Raider',
-		description: 'The original servitor species of the synliiroi—evil psions with near god-like power—the kuran’zoi liberated themselves during the First Psychic War. In the centuries since, they built their own culture and civilization as nomads of the timescape. The exonym “time raiders” was given to them by denizens of the lower worlds who, seeing the advanced technology they wield, concluded they must be from the future.',
-		features: [
-			FeatureLogic.createSizeFeature({
-				id: 'time-raider-size',
-				sizeValue: 1,
-				sizeMod: 'M'
-			}),
-			FeatureLogic.createBonusFeature({
-				id: 'time-raider-speed',
-				field: FeatureField.Speed,
-				value: 5
-			}),
-			FeatureLogic.createFeature({
-				id: 'time-raider-feature-1',
-				name: 'Foresight',
-				description: 'Your senses extend past mundane obscuration and the veil of the future alike. You instinctively know the location of any concealed creatures who aren’t hidden from you, negating the usual bane on attacks against them. Additionally, whenever you are attacked, you can use a triggered action to impose a bane on the power roll.'
-			}),
-			FeatureLogic.createFeature({
-				id: 'time-raider-feature-2',
-				name: 'Four Arms',
-				description: 'Your multiple arms let you take on multiple tasks at the same time. Whenever you use the Grab or Knockback maneuver against an adjacent creature, you can target an additional adjacent creature, using the same power roll for both targets. You can grab up to two creatures at a time.'
-			}),
-			FeatureLogic.createDamageModifierFeature({
-				id: 'time-raider-feature-3',
-				name: 'Psionic Gift',
-				modifiers: [
-					{
-						damageType: 'Psionic',
-						type: DamageModifierType.Immunity,
-						value: 5,
-						valuePerLevel: 0
-					}
-				]
-			})
-		]
-	};
-
-	static getAncestries = () => {
-		return [
+	static getAncestries = (setting?: CampaignSetting) => {
+		const list = [
 			this.devil,
 			this.dragonKnight,
 			this.dwarf,
@@ -622,11 +623,15 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 			this.highElf,
 			this.hakaan,
 			this.human,
-			this.memonek,
 			this.orc,
 			this.polder,
-			this.revenant,
-			this.timeRaider
+			this.revenant
 		];
+
+		if (setting) {
+			list.push(...setting.ancestries);
+		}
+
+		return Collections.sort(list, item => item.name);
 	};
 }

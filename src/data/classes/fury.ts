@@ -310,7 +310,8 @@ When you damage an object with a weapon attack, it takes an additional 5 damage.
 								]
 							})
 						})
-					]
+					],
+					optionalFeatures: []
 				}
 			],
 			kits: [],
@@ -356,7 +357,8 @@ You are never surprised. Additionally, whenever you would push a target with for
 								]
 							})
 						})
-					]
+					],
+					optionalFeatures: []
 				}
 			],
 			kits: [],
@@ -415,7 +417,8 @@ You are never surprised. Additionally, whenever you would push a target with for
 								]
 							})
 						})
-					]
+					],
+					optionalFeatures: []
 				}
 			],
 			kits: [

@@ -4,7 +4,7 @@ import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Kit } from './kit';
 import { KitType } from '../enums/kit';
-import { Size } from './ancestry';
+import { Size } from './size';
 import { SkillList } from '../enums/skill-list';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -48,6 +48,10 @@ export interface FeatureLanguageData extends FeatureData {
 	selected: string[];
 };
 
+export interface FeatureMultipleData extends FeatureData {
+	features: Feature[];
+};
+
 export interface FeatureSizeData extends FeatureData {
 	size: Size;
 };
@@ -57,6 +61,12 @@ export interface FeatureSkillData extends FeatureData {
 	listOptions: SkillList[];
 	count: number;
 	selected: string[];
+};
+
+export interface FeatureSubclassData extends FeatureData {
+	category: string;
+	count: number;
+	selected: Feature[];
 };
 
 export interface Feature {

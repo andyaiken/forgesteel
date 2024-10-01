@@ -20,7 +20,8 @@ export const Toggle = (props: Props) => {
 				<Switch checked={props.value} />
 			</div>
 		);
-	} catch {
+	} catch (ex) {
+		console.error(ex);
 		return null;
 	}
 };

@@ -67,6 +67,7 @@ export const ConditionPanel = (props: Props) => {
 								style={{ width: '100%' }}
 								placeholder='Select'
 								options={[ ConditionType.Bleeding, ConditionType.Dazed, ConditionType.Frightened, ConditionType.Grabbed, ConditionType.Prone, ConditionType.Restrained, ConditionType.Slowed, ConditionType.Taunted, ConditionType.Weakened ].map(o => ({ label: o, value: o }))}
+								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 								value={condition.type}
 								onChange={setConditionType}
 							/>
@@ -74,6 +75,7 @@ export const ConditionPanel = (props: Props) => {
 								style={{ width: '100%' }}
 								placeholder='Select'
 								options={[ ConditionEndType.EndOfTurn, ConditionEndType.EndOfEncounter, ConditionEndType.ResistanceEnds ].map(o => ({ label: o, value: o }))}
+								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 								value={condition.ends}
 								onChange={setConditionEndType}
 							/>
@@ -82,6 +84,7 @@ export const ConditionPanel = (props: Props) => {
 								placeholder='Select'
 								disabled={condition.ends !== ConditionEndType.ResistanceEnds}
 								options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(o => ({ label: o, value: o }))}
+								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 								value={condition.resistCharacteristic}
 								onChange={setConditionResist}
 							/>

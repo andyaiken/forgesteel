@@ -375,35 +375,51 @@ export const Main = (props: Props) => {
 				{getContent()}
 			</div>
 			<div className='main-footer'>
-				<div className='main-footer-section'>
-					<Radio.Group
-						options={[ 'Heroes', 'Sourcebook' ]}
-						optionType='button'
-						buttonStyle='solid'
-						block={true}
-						value={str}
-						onChange={x => {
-							switch (x.target.value) {
-								case 'Heroes':
-									showHeroList();
-									break;
-								case 'Sourcebook':
-									showSourcebook();
-									break;
-							}
-						}}
-					/>
-				</div>
-				<div className='main-footer-section'>
-					<img className='ds-logo' src={pbds} />
-					FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC
-				</div>
-				<div className='main-footer-section'>
-					DRAW STEEL © 2024 MCDM Productions, LLC
-				</div>
-				<div className='main-footer-section'>
-					Designed by Andy Aiken
-				</div>
+				{
+					page === Page.Welcome ?
+						<div className='main-footer-section'>
+							<img className='ds-logo' src={pbds} />
+							FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC
+						</div>
+						: null
+				}
+				{
+					page === Page.Welcome ?
+						<div className='main-footer-section'>
+							DRAW STEEL © 2024 MCDM Productions, LLC
+						</div>
+						: null
+				}
+				{
+					page === Page.Welcome ?
+						<div className='main-footer-section'>
+							Designed by Andy Aiken
+						</div>
+						: null
+				}
+				{
+					page !== Page.Welcome ?
+						<div className='main-footer-section'>
+							<Radio.Group
+								options={[ 'Heroes', 'Sourcebook' ]}
+								optionType='button'
+								buttonStyle='solid'
+								block={true}
+								value={str}
+								onChange={x => {
+									switch (x.target.value) {
+										case 'Heroes':
+											showHeroList();
+											break;
+										case 'Sourcebook':
+											showSourcebook();
+											break;
+									}
+								}}
+							/>
+						</div>
+						: null
+				}
 			</div>
 			<Drawer open={drawer !== null} onClose={() => setDrawer(null)} closeIcon={null} width='450px'>
 				{drawer}

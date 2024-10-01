@@ -307,7 +307,7 @@ export const HeroPanel = (props: Props) => {
 				<Col xs={sizeLarge.xs} sm={sizeLarge.sm} md={sizeLarge.md} lg={sizeLarge.lg} xl={sizeLarge.xl} xxl={sizeLarge.xxl}>
 					<div className='characteristics-row clickable' onClick={onShowState}>
 						<div className='characteristic'>
-							<Statistic title={props.hero.class ? props.hero.class.heroicResource : 'Heroic Resource'} value={props.hero.state.heroicResource} />
+							<Statistic title={props.hero.class ? props.hero.class.heroicResource : 'Resource'} value={props.hero.state.heroicResource} />
 						</div>
 						<div className='characteristic'>
 							<Statistic title='Victories' value={props.hero.state.victories} />

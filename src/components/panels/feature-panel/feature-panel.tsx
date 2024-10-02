@@ -37,7 +37,7 @@ export const FeaturePanel = (props: Props) => {
 					allowClear={true}
 					placeholder='Select'
 					options={data.options.map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					optionRender={option => <Field className={`feature-field`} label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
 					onChange={value => {
 						let ids: string[] = [];
@@ -85,7 +85,7 @@ export const FeaturePanel = (props: Props) => {
 					allowClear={true}
 					placeholder='Select'
 					options={sortedAbilities.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					optionRender={option => <Field className='feature-field' label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selectedIDs.length > 0 ? data.selectedIDs[0] : null) : data.selectedIDs}
 					onChange={value => {
 						let ids: string[] = [];
@@ -127,7 +127,7 @@ export const FeaturePanel = (props: Props) => {
 					allowClear={true}
 					placeholder='Select'
 					options={sortedKits.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					optionRender={option => <Field className='feature-field' label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
 					onChange={value => {
 						let ids: string[] = [];
@@ -174,7 +174,7 @@ export const FeaturePanel = (props: Props) => {
 					allowClear={true}
 					placeholder='Select'
 					options={sortedLanguages.map(l => ({ label: l.name, value: l.name, desc: l.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					optionRender={option => <Field className='feature-field' label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
 					onChange={value => {
 						let ids: string[] = [];
@@ -227,7 +227,7 @@ export const FeaturePanel = (props: Props) => {
 					allowClear={true}
 					placeholder='Select'
 					options={sortedSkills.map(s => ({ label: s.name, value: s.name, desc: s.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					optionRender={option => <Field className='feature-field' label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
 					onChange={value => {
 						let ids: string[] = [];
@@ -292,7 +292,7 @@ export const FeaturePanel = (props: Props) => {
 					allowClear={true}
 					placeholder='Select'
 					options={options.map(o => ({ label: o.name, value: o.id, desc: o.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					optionRender={option => <Field className='feature-field' label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
 					onChange={value => {
 						let ids: string[] = [];
@@ -407,7 +407,7 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		return (
-			<Field label='Selected' value={data.selected.join(', ')} />
+			<Field className='feature-field' label='Selected' value={data.selected.join(', ')} />
 		);
 	};
 
@@ -421,7 +421,7 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		return (
-			<Field label='Selected' value={data.selected.join(', ')} />
+			<Field className='feature-field' label='Selected' value={data.selected.join(', ')} />
 		);
 	};
 

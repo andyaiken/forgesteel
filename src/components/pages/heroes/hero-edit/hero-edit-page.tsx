@@ -630,7 +630,7 @@ const ClassSection = (props: ClassSectionProps) => {
 							allowClear={true}
 							placeholder='Select'
 							options={props.hero.class.subclasses.map(s => ({ value: s.id, label: s.name, desc: s.description }))}
-							optionRender={option => <Field className={`feature-field`} label={option.data.label} value={option.data.desc} />}
+							optionRender={option => <Field className={`subclass-field`} label={option.data.label} value={option.data.desc} />}
 							value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.id)}
 							onChange={props.selectSubclasses}
 						/>

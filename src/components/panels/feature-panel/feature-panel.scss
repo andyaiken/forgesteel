@@ -1,13 +1,3 @@
 .feature-panel {
 	display: block;
 }
-@media (prefers-color-scheme: dark) {
-	.feature-field {
-		.field-label {
-			color: rgb(80, 80, 80);
-		}
-		.field-value {
-			color: rgb(80, 80, 80);
-		}
-	}
-}

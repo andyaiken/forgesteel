@@ -456,7 +456,7 @@ const CultureSection = (props: CultureSectionProps) => {
 							allowClear={true}
 							placeholder='Select'
 							options={languages.map(l => ({ label: l.name, value: l.name, desc: l.description }))}
-							optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+							optionRender={option => <Field className={`feature-field`} label={option.data.label} value={option.data.desc} />}
 							value={props.hero.culture.languages.length > 0 ? props.hero.culture.languages[0] : null}
 							onChange={value => props.selectLanguages([ value ])}
 						/>
@@ -466,8 +466,8 @@ const CultureSection = (props: CultureSectionProps) => {
 								style={{ width: '100%' }}
 								allowClear={true}
 								placeholder='Select'
-								options={EnvironmentData.getEnvironments().map(s => ({ value: s.id, label: s.name }))}
-								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+								options={EnvironmentData.getEnvironments().map(s => ({ value: s.id, label: s.name}))}
+								optionRender={option => <div className='ds-text culture'>{option.data.label}</div>}
 								value={props.hero.culture.environment ? props.hero.culture.environment.id : null}
 								onChange={props.selectEnvironment}
 							/>
@@ -475,8 +475,8 @@ const CultureSection = (props: CultureSectionProps) => {
 								style={{ width: '100%' }}
 								allowClear={true}
 								placeholder='Select'
-								options={OrganizationData.getOrganizations().map(s => ({ value: s.id, label: s.name }))}
-								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+								options={OrganizationData.getOrganizations().map(s => ({ value: s.id, label: s.name}))}
+								optionRender={option => <div className='ds-text culture'>{option.data.label}</div>}
 								value={props.hero.culture.organization ? props.hero.culture.organization.id : null}
 								onChange={props.selectOrganization}
 							/>
@@ -484,8 +484,8 @@ const CultureSection = (props: CultureSectionProps) => {
 								style={{ width: '100%' }}
 								allowClear={true}
 								placeholder='Select'
-								options={UpbringingData.getUpbringings().map(s => ({ value: s.id, label: s.name }))}
-								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+								options={UpbringingData.getUpbringings().map(s => ({ value: s.id, label: s.name}))}
+								optionRender={option => <div className='ds-text culture'>{option.data.label}</div>}
 								value={props.hero.culture.upbringing ? props.hero.culture.upbringing.id : null}
 								onChange={props.selectUpbringing}
 							/>
@@ -630,7 +630,7 @@ const ClassSection = (props: ClassSectionProps) => {
 							allowClear={true}
 							placeholder='Select'
 							options={props.hero.class.subclasses.map(s => ({ value: s.id, label: s.name, desc: s.description }))}
-							optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+							optionRender={option => <Field className={`feature-field`} label={option.data.label} value={option.data.desc} />}
 							value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.id)}
 							onChange={props.selectSubclasses}
 						/>

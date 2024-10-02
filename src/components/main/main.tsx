@@ -4,22 +4,22 @@ import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
 import { Ancestry } from '../../models/ancestry';
 import { AncestryData } from '../../data/ancestry-data';
-import { AncestryPanel } from '../panels/ancestry-panel/ancestry-panel';
+import { AncestryModal } from '../modals/ancestry/ancestry-modal';
 import { CampaignSettingData } from '../../data/campaign-setting-data';
 import { Career } from '../../models/career';
 import { CareerData } from '../../data/career-data';
-import { CareerPanel } from '../panels/career-panel/career-panel';
+import { CareerModal } from '../modals/career/career-modal';
 import { Characteristic } from '../../enums/characteristic';
 import { CharacteristicModal } from '../modals/characteristic/characteristic-modal';
 import { ClassData } from '../../data/class-data';
-import { ClassPanel } from '../panels/class-panel/class-panel';
+import { ClassModal } from '../modals/class/class-modal';
 import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
 import { ComplicationData } from '../../data/complication-data';
-import { ComplicationPanel } from '../panels/complication-panel/complication-panel';
+import { ComplicationModal } from '../modals/complication/complication-modal';
 import { Culture } from '../../models/culture';
 import { CultureData } from '../../data/culture-data';
-import { CulturePanel } from '../panels/culture-panel/culture-panel';
+import { CultureModal } from '../modals/culture/culture-modal';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
 import { HeroEditPage } from '../pages/heroes/hero-edit/hero-edit-page';
@@ -30,9 +30,8 @@ import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { ImportHeroModal } from '../modals/import-hero/import-hero-modal';
 import { Kit } from '../../models/kit';
 import { KitData } from '../../data/kit-data';
-import { KitPanel } from '../panels/kit-panel/kit-panel';
+import { KitModal } from '../modals/kit/kit-modal';
 import { Options } from '../../models/options';
-import { PanelMode } from '../../enums/panel-mode';
 import { Sourcebook } from '../../models/sourcebook';
 import { SourcebookListPage } from '../pages/sourcebook/sourcebook-list/sourcebook-list';
 import { Utils } from '../../utils/utils';
@@ -66,6 +65,8 @@ export const Main = (props: Props) => {
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
 	const [ drawer, setDrawer ] = useState<JSX.Element | null>(null);
 
+	//#region Persistence
+
 	const persistHeroes = (heroes: Hero[]) => {
 		localforage.setItem<Hero[]>('forgesteel-heroes', heroes)
 			.then(() => {
@@ -89,11 +90,9 @@ export const Main = (props: Props) => {
 			});
 	};
 
-	const showAbout = () => {
-		setDrawer(
-			<AboutModal />
-		);
-	};
+	//#endregion
+
+	//#region Pages
 
 	const showWelcome = () => {
 		setPage(Page.Welcome);
@@ -109,6 +108,8 @@ export const Main = (props: Props) => {
 		setPage(Page.Sourcebook);
 		setSelectedHero(null);
 	};
+
+	//#endregion
 
 	//#region Heroes
 
@@ -205,6 +206,8 @@ export const Main = (props: Props) => {
 
 	//#endregion
 
+	//#region Sourcebook
+
 	const getSourcebook = () => {
 		const sourcebook: Sourcebook = {
 			settings: [],
@@ -219,39 +222,49 @@ export const Main = (props: Props) => {
 		return sourcebook;
 	};
 
+	//#endregion
+
+	//#region Modals
+
+	const showAbout = () => {
+		setDrawer(
+			<AboutModal />
+		);
+	};
+
 	const onSelectAncestry = (ancestry: Ancestry) => {
 		setDrawer(
-			<AncestryPanel ancestry={ancestry} mode={PanelMode.Full} />
+			<AncestryModal ancestry={ancestry} />
 		);
 	};
 
 	const onSelectCulture = (culture: Culture) => {
 		setDrawer(
-			<CulturePanel culture={culture} mode={PanelMode.Full} />
+			<CultureModal culture={culture} />
 		);
 	};
 
 	const onSelectCareer = (career: Career) => {
 		setDrawer(
-			<CareerPanel career={career} mode={PanelMode.Full} />
+			<CareerModal career={career} />
 		);
 	};
 
 	const onSelectClass = (heroClass: HeroClass) => {
 		setDrawer(
-			<ClassPanel heroClass={heroClass} mode={PanelMode.Full} />
+			<ClassModal heroClass={heroClass} />
 		);
 	};
 
 	const onSelectKit = (kit: Kit) => {
 		setDrawer(
-			<KitPanel kit={kit} mode={PanelMode.Full} />
+			<KitModal kit={kit} />
 		);
 	};
 
 	const onSelectComplication = (complication: Complication) => {
 		setDrawer(
-			<ComplicationPanel complication={complication} mode={PanelMode.Full} />
+			<ComplicationModal complication={complication} />
 		);
 	};
 
@@ -285,6 +298,8 @@ export const Main = (props: Props) => {
 			);
 		}
 	};
+
+	//#endregion
 
 	const getContent = () => {
 		switch (page) {

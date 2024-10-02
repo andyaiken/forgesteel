@@ -415,7 +415,7 @@ export const HeroPanel = (props: Props) => {
 	try {
 		if (props.mode !== PanelMode.Full) {
 			return (
-				<div className='hero-panel compact' id={props.hero.id}>
+				<div className='hero-panel compact'>
 					<HeaderText level={1}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
 					<Field label='Ancestry' value={props.hero.ancestry?.name || 'None'} />
 					<Field label='Career' value={props.hero.career?.name || 'None'} />

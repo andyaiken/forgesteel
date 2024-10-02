@@ -15,7 +15,7 @@ interface Props {
 export const CulturePanel = (props: Props) => {
 	try {
 		return (
-			<div className='culture-panel'>
+			<div className='culture-panel' id={props.mode === PanelMode.Full ? props.culture.id : undefined}>
 				<HeaderText level={1}>{props.culture.name}</HeaderText>
 				<div className='ds-text description-text'>{props.culture.description}</div>
 				{

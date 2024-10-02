@@ -168,11 +168,7 @@ export const Main = (props: Props) => {
 
 	const exportSelectedHero = (format: 'image' | 'pdf' | 'json') => {
 		if (selectedHero) {
-			if (format === 'json') {
-				Utils.saveFile(selectedHero, selectedHero.name || 'Unnamed Hero', 'hero');
-			} else {
-				Utils.takeScreenshot(selectedHero.id, selectedHero.name || 'Unnamed Hero', format);
-			}
+			Utils.export(selectedHero.id, selectedHero.name || 'Unnamed Hero', selectedHero, 'hero', format);
 		}
 	};
 
@@ -234,37 +230,55 @@ export const Main = (props: Props) => {
 
 	const onSelectAncestry = (ancestry: Ancestry) => {
 		setDrawer(
-			<AncestryModal ancestry={ancestry} />
+			<AncestryModal
+				ancestry={ancestry}
+				export={format => Utils.export(ancestry.id, ancestry.name || 'Ancestry', ancestry, 'ancestry', format)}
+			/>
 		);
 	};
 
 	const onSelectCulture = (culture: Culture) => {
 		setDrawer(
-			<CultureModal culture={culture} />
+			<CultureModal
+				culture={culture}
+				export={format => Utils.export(culture.id, culture.name || 'Culture', culture, 'culture', format)}
+			/>
 		);
 	};
 
 	const onSelectCareer = (career: Career) => {
 		setDrawer(
-			<CareerModal career={career} />
+			<CareerModal
+				career={career}
+				export={format => Utils.export(career.id, career.name || 'Career', career, 'career', format)}
+			/>
 		);
 	};
 
 	const onSelectClass = (heroClass: HeroClass) => {
 		setDrawer(
-			<ClassModal heroClass={heroClass} />
+			<ClassModal
+				heroClass={heroClass}
+				export={format => Utils.export(heroClass.id, heroClass.name || 'Class', heroClass, 'class', format)}
+			/>
 		);
 	};
 
 	const onSelectKit = (kit: Kit) => {
 		setDrawer(
-			<KitModal kit={kit} />
+			<KitModal
+				kit={kit}
+				export={format => Utils.export(kit.id, kit.name || 'Kit', kit, 'kit', format)}
+			/>
 		);
 	};
 
 	const onSelectComplication = (complication: Complication) => {
 		setDrawer(
-			<ComplicationModal complication={complication} />
+			<ComplicationModal
+				complication={complication}
+				export={format => Utils.export(complication.id, complication.name || 'Complication', complication, 'complication', format)}
+			/>
 		);
 	};
 

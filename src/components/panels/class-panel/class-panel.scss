@@ -1,5 +1,10 @@
 .class-panel {
-	display: block;
+	padding: 0 20px 20px 20px;
+
+	&.compact {
+		margin-top: -10px;
+		padding: unset;
+	}
 
 	.level-details {
 		margin: 10px 0;

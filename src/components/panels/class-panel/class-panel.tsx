@@ -16,7 +16,7 @@ interface Props {
 export const ClassPanel = (props: Props) => {
 	try {
 		return (
-			<div className='class-panel'>
+			<div className='class-panel' id={props.mode === PanelMode.Full ? props.heroClass.id : undefined}>
 				<HeaderText level={1}>{props.heroClass.name}</HeaderText>
 				<div className='ds-text description-text'>{props.heroClass.description}</div>
 				<Field label='Heroic Resource' value={props.heroClass.heroicResource} />

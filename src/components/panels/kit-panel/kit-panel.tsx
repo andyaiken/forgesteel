@@ -17,7 +17,7 @@ interface Props {
 export const KitPanel = (props: Props) => {
 	try {
 		return (
-			<div className='kit-panel'>
+			<div className='kit-panel' id={props.mode === PanelMode.Full ? props.kit.id : undefined}>
 				<HeaderText level={1} tags={[ props.kit.type ]}>{props.kit.name}</HeaderText>
 				<div className='ds-text description-text'>{props.kit.description}</div>
 				{

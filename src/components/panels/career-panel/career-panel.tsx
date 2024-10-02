@@ -15,7 +15,7 @@ interface Props {
 export const CareerPanel = (props: Props) => {
 	try {
 		return (
-			<div className='career-panel'>
+			<div className='career-panel' id={props.mode === PanelMode.Full ? props.career.id : undefined}>
 				<HeaderText level={1}>{props.career.name}</HeaderText>
 				<div className='ds-text description-text'>{props.career.description}</div>
 				{

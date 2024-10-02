@@ -480,7 +480,7 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		return (
-			<div className='feature-panel'>
+			<div className='feature-panel' id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
 				<HeaderText>{props.feature.name}</HeaderText>
 				<div className='ds-text' dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.feature.description) }} />
 				{

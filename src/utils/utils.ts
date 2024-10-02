@@ -35,6 +35,18 @@ export class Utils {
 		}
 	};
 
+	static export = (id: string, name: string, obj: unknown, ext: string, format: 'image' | 'pdf' | 'json') => {
+		switch (format) {
+			case 'json':
+				Utils.saveFile(obj, name, ext);
+				break;
+			case 'image':
+			case 'pdf':
+				Utils.takeScreenshot(id, name, format);
+				break;
+		}
+	};
+
 	static takeScreenshot = (elementID: string, name: string, format: 'image' | 'pdf') => {
 		const element = document.getElementById(elementID);
 		if (element) {

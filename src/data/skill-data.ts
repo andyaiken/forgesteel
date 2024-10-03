@@ -4,8 +4,8 @@ import { Skill } from '../models/skill';
 import { SkillList } from '../enums/skill-list';
 
 export class SkillData {
-	static getSkills = (setting?: CampaignSetting) => {
-		const list: Skill[] = [
+	static getCoreSkills = () => {
+		return [
 			{ name: 'Alchemy', description: 'Make bombs and potions.', list: SkillList.Crafting },
 			{ name: 'Architecture', description: 'Create buildings and vehicles.', list: SkillList.Crafting },
 			{ name: 'Blacksmithing', description: 'Forge metal armor and weapons.', list: SkillList.Crafting },
@@ -59,17 +59,16 @@ export class SkillData {
 			{ name: 'Religion', description: 'Knowing about religious mythology, practices, and rituals.', list: SkillList.Lore },
 			{ name: 'Rumors', description: 'Knowing gossip, legends, and uncertain truths.', list: SkillList.Lore },
 			{ name: 'Society', description: 'Knowing noble etiquette and the leadership and power dynamics of noble families.', list: SkillList.Lore }
-		];
-
-		if (setting) {
-			list.push(...setting.skills);
-		}
-
-		return Collections.sort(list, item => item.name);
+		] as Skill[];
 	};
 
-	static getSkillsFromList = (list: SkillList, setting?: CampaignSetting) => {
-		const skills = this.getSkills(setting).filter(s => s.list === list);
-		return Collections.sort(skills, skill => skill.name);
+	static getSkills = (settings: CampaignSetting[]) => {
+		const list: Skill[] = [];
+
+		settings.forEach(setting => {
+			list.push(...setting.skills);
+		});
+
+		return Collections.sort(list, item => item.name);
 	};
 }

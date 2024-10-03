@@ -1,3 +1,4 @@
+import { CampaignSetting } from '../../../models/campaign-setting';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
@@ -10,6 +11,7 @@ import './class-panel.scss';
 interface Props {
 	heroClass: HeroClass;
 	hero?: Hero;
+	campaignSettings?: CampaignSetting[];
 	mode?: PanelMode;
 }
 
@@ -28,7 +30,7 @@ export const ClassPanel = (props: Props) => {
 							<div key={lvl.level} className='level-details'>
 								<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
 								{
-									lvl.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />)
+									lvl.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)
 								}
 							</div>
 						))

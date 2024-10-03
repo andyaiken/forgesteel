@@ -1,8 +1,8 @@
+import { CampaignSetting } from './models/campaign-setting.ts';
 import { Hero } from './models/hero.ts';
 import { HeroLogic } from './logic/hero-logic.ts';
 import { Main } from './components/main/main.tsx';
 import { Options } from './models/options.ts';
-import { Sourcebook } from './models/sourcebook.ts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import localforage from 'localforage';
@@ -21,18 +21,10 @@ localforage
 		});
 
 		localforage
-			.getItem<Sourcebook>('forgesteel-homebrew')
-			.then(homebrew => {
-				if (!homebrew) {
-					homebrew = {
-						settings: [],
-						ancestries: [],
-						cultures: [],
-						careers: [],
-						classes: [],
-						kits: [],
-						complications: []
-					};
+			.getItem<CampaignSetting[]>('forgesteel-homebrew-settings')
+			.then(homebrewSettings => {
+				if (!homebrewSettings) {
+					homebrewSettings = [];
 				}
 
 				localforage
@@ -50,7 +42,7 @@ localforage
 							<StrictMode>
 								<Main
 									heroes={heroes}
-									homebrew={homebrew}
+									homebrewSettings={homebrewSettings}
 									options={options}
 								/>
 							</StrictMode>

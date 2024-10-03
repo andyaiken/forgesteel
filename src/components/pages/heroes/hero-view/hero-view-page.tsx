@@ -2,6 +2,7 @@ import { Button, Popover } from 'antd';
 import { Ability } from '../../../../models/ability';
 import { Ancestry } from '../../../../models/ancestry';
 import { AppHeader } from '../../../panels/app-header/app-header';
+import { CampaignSetting } from '../../../../models/campaign-setting';
 import { Career } from '../../../../models/career';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Complication } from '../../../../models/complication';
@@ -18,6 +19,7 @@ import './hero-view-page.scss';
 
 interface Props {
 	hero: Hero;
+	campaignSettings: CampaignSetting[];
 	options: Options;
 	setOptions: (options: Options) => void;
 	goHome: () => void;
@@ -105,6 +107,7 @@ export const HeroPage = (props: Props) => {
 				<div className='hero-view-page-content'>
 					<HeroPanel
 						hero={props.hero}
+						campaignSettings={props.campaignSettings}
 						mode={PanelMode.Full}
 						showSkillsInGroups={props.options.showSkillsInGroups}
 						showFreeStrikes={props.options.showFreeStrikes}

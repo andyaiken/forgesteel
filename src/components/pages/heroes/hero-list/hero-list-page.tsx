@@ -1,5 +1,6 @@
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Button } from 'antd';
+import { CampaignSetting } from '../../../../models/campaign-setting';
 import { Hero } from '../../../../models/hero';
 import { HeroPanel } from '../../../panels/hero-panel/hero-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
@@ -8,6 +9,7 @@ import './hero-list-page.scss';
 
 interface Props {
 	heroes: Hero[];
+	campaignSettings: CampaignSetting[];
 	goHome: () => void;
 	showAbout: () => void;
 	addHero: () => void;
@@ -32,7 +34,7 @@ export const HeroListPage = (props: Props) => {
 						props.heroes.map(hero => (
 							<div key={hero.id}>
 								<SelectablePanel onSelect={() => props.viewHero(hero.id)}>
-									<HeroPanel hero={hero} />
+									<HeroPanel hero={hero} campaignSettings={props.campaignSettings} />
 								</SelectablePanel>
 							</div>
 						))

@@ -8,7 +8,7 @@ import './welcome-page.scss';
 interface Props {
 	showAbout: () => void;
 	showHeroes: () => void;
-	showSourcebook: () => void;
+	showSourcebooks: () => void;
 }
 
 export const WelcomePage = (props: Props) => {
@@ -32,7 +32,7 @@ export const WelcomePage = (props: Props) => {
 							<Divider />
 							<Space direction='vertical' style={{ width: '100%' }}>
 								<Button type='primary' block={true} onClick={props.showHeroes}>Click here to start building heroes</Button>
-								<Button block={true} onClick={props.showSourcebook}>Click here to browse the sourcebook</Button>
+								<Button block={true} onClick={props.showSourcebooks}>Click here to browse the sourcebooks</Button>
 							</Space>
 						</SelectablePanel>
 					</div>

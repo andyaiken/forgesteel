@@ -3,6 +3,7 @@ import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
 import { Ancestry } from '../../../models/ancestry';
+import { CampaignSetting } from '../../../models/campaign-setting';
 import { Career } from '../../../models/career';
 import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
@@ -28,6 +29,7 @@ import './hero-panel.scss';
 
 interface Props {
 	hero: Hero;
+	campaignSettings: CampaignSetting[];
 	mode?: PanelMode;
 	showSkillsInGroups?: boolean;
 	showFreeStrikes?: boolean;
@@ -93,6 +95,8 @@ export const HeroPanel = (props: Props) => {
 					<div className='ds-text dimmed-text'>None</div>
 				</div>;
 		};
+
+		const setting = props.campaignSettings.find(cs => cs.id === props.hero.settingID) as CampaignSetting;
 
 		const kits = HeroLogic.getKits(props.hero);
 		const kitNames = Collections.sort(kits.map(k => k.name), k => k).join(', ');
@@ -198,8 +202,8 @@ export const HeroPanel = (props: Props) => {
 				<div className='top-tile'>
 					<HeaderText>Languages</HeaderText>
 					{
-						HeroLogic.getLanguages(props.hero).length > 0 ?
-							HeroLogic.getLanguages(props.hero).map(l => <Field key={l.name} label={l.name} value={l.description}  />)
+						HeroLogic.getLanguages(props.hero, setting).length > 0 ?
+							HeroLogic.getLanguages(props.hero, setting).map(l => <Field key={l.name} label={l.name} value={l.description}  />)
 							:
 							<div className='ds-text dimmed-text'>None</div>
 					}
@@ -207,9 +211,9 @@ export const HeroPanel = (props: Props) => {
 				{
 					props.showSkillsInGroups ?
 						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
-							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero).filter(s => s.list === list)))
+							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, setting).filter(s => s.list === list)))
 						:
-						getSkills('Skills', HeroLogic.getSkills(props.hero))
+						getSkills('Skills', HeroLogic.getSkills(props.hero, setting))
 				}
 				{
 					immunities.length > 0 ?
@@ -364,7 +368,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						features.map(feature => (
 							<Col key={feature.id} xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
-								<FeaturePanel feature={feature} hero={props.hero} mode={PanelMode.Full} />
+								<FeaturePanel feature={feature} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />
 							</Col>
 						))
 					}

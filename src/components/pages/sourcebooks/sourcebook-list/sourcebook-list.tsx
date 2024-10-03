@@ -1,24 +1,30 @@
 import { Ancestry } from '../../../../models/ancestry';
+import { AncestryData } from '../../../../data/ancestry-data';
 import { AncestryPanel } from '../../../panels/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
+import { CampaignSetting } from '../../../../models/campaign-setting';
 import { Career } from '../../../../models/career';
+import { CareerData } from '../../../../data/career-data';
 import { CareerPanel } from '../../../panels/career-panel/career-panel';
+import { ClassData } from '../../../../data/class-data';
 import { ClassPanel } from '../../../panels/class-panel/class-panel';
 import { Complication } from '../../../../models/complication';
+import { ComplicationData } from '../../../../data/complication-data';
 import { ComplicationPanel } from '../../../panels/complication-panel/complication-panel';
 import { Culture } from '../../../../models/culture';
+import { CultureData } from '../../../../data/culture-data';
 import { CulturePanel } from '../../../panels/culture-panel/culture-panel';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
 import { Kit } from '../../../../models/kit';
+import { KitData } from '../../../../data/kit-data';
 import { KitPanel } from '../../../panels/kit-panel/kit-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
 
 import './sourcebook-list.scss';
 
 interface Props {
-	sourcebook: Sourcebook;
+	campaignSettings: CampaignSetting[];
 	goHome: () => void;
 	showAbout: () => void;
 	viewAncestry: (ancestry: Ancestry) => void;
@@ -38,10 +44,10 @@ export const SourcebookListPage = (props: Props) => {
 					<div>
 						<HeaderText level={1}>Ancestries</HeaderText>
 						{
-							props.sourcebook.ancestries.length > 0 ?
+							AncestryData.getAncestries(props.campaignSettings).length > 0 ?
 								<div className='sourcebook-section-row'>
 									{
-										props.sourcebook.ancestries.map(a => (
+										AncestryData.getAncestries(props.campaignSettings).map(a => (
 											<div key={a.id}>
 												<SelectablePanel onSelect={() => props.viewAncestry(a)}>
 													<AncestryPanel key={a.id} ancestry={a} />
@@ -57,10 +63,10 @@ export const SourcebookListPage = (props: Props) => {
 					<div>
 						<HeaderText level={1}>Cultures</HeaderText>
 						{
-							props.sourcebook.cultures.length > 0 ?
+							CultureData.getCultures(props.campaignSettings).length > 0 ?
 								<div className='sourcebook-section-row'>
 									{
-										props.sourcebook.cultures.map(c => (
+										CultureData.getCultures(props.campaignSettings).map(c => (
 											<div key={c.id}>
 												<SelectablePanel onSelect={() => props.viewCulture(c)}>
 													<CulturePanel key={c.id} culture={c} />
@@ -76,10 +82,10 @@ export const SourcebookListPage = (props: Props) => {
 					<div>
 						<HeaderText level={1}>Careers</HeaderText>
 						{
-							props.sourcebook.careers.length > 0 ?
+							CareerData.getCareers(props.campaignSettings).length > 0 ?
 								<div className='sourcebook-section-row'>
 									{
-										props.sourcebook.careers.map(c => (
+										CareerData.getCareers(props.campaignSettings).map(c => (
 											<div key={c.id}>
 												<SelectablePanel onSelect={() => props.viewCareer(c)}>
 													<CareerPanel key={c.id} career={c} />
@@ -95,10 +101,10 @@ export const SourcebookListPage = (props: Props) => {
 					<div>
 						<HeaderText level={1}>Classes</HeaderText>
 						{
-							props.sourcebook.classes.length > 0 ?
+							ClassData.getClasses(props.campaignSettings).length > 0 ?
 								<div className='sourcebook-section-row'>
 									{
-										props.sourcebook.classes.map(c => (
+										ClassData.getClasses(props.campaignSettings).map(c => (
 											<div key={c.id}>
 												<SelectablePanel onSelect={() => props.viewClass(c)}>
 													<ClassPanel key={c.id} heroClass={c} />
@@ -114,10 +120,10 @@ export const SourcebookListPage = (props: Props) => {
 					<div>
 						<HeaderText level={1}>Kits</HeaderText>
 						{
-							props.sourcebook.kits.length > 0 ?
+							KitData.getKits(props.campaignSettings).length > 0 ?
 								<div className='sourcebook-section-row'>
 									{
-										props.sourcebook.kits.map(k => (
+										KitData.getKits(props.campaignSettings).map(k => (
 											<div key={k.id}>
 												<SelectablePanel onSelect={() => props.viewKit(k)}>
 													<KitPanel key={k.id} kit={k} />
@@ -133,10 +139,10 @@ export const SourcebookListPage = (props: Props) => {
 					<div>
 						<HeaderText level={1}>Complications</HeaderText>
 						{
-							props.sourcebook.complications.length > 0 ?
+							ComplicationData.getComplications(props.campaignSettings).length > 0 ?
 								<div className='sourcebook-section-row'>
 									{
-										props.sourcebook.complications.map(c => (
+										ComplicationData.getComplications(props.campaignSettings).map(c => (
 											<div key={c.id}>
 												<SelectablePanel onSelect={() => props.viewComplication(c)}>
 													<ComplicationPanel key={c.id} complication={c} />

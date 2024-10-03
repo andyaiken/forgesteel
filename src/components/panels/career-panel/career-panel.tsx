@@ -1,3 +1,4 @@
+import { CampaignSetting } from '../../../models/campaign-setting';
 import { Career } from '../../../models/career';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { HeaderText } from '../../controls/header-text/header-text';
@@ -9,6 +10,7 @@ import './career-panel.scss';
 interface Props {
 	career: Career;
 	hero?: Hero;
+	campaignSettings?: CampaignSetting[];
 	mode?: PanelMode;
 }
 
@@ -21,8 +23,8 @@ export const CareerPanel = (props: Props) => {
 				{
 					props.mode === PanelMode.Full ?
 						<div>
-							{props.career.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />)}
-							<FeaturePanel feature={props.career.title} hero={props.hero} mode={PanelMode.Full} />
+							{props.career.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)}
+							<FeaturePanel feature={props.career.title} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />
 						</div>
 						: null
 				}

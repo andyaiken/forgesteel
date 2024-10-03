@@ -1,4 +1,5 @@
 import { AbilityPanel } from '../ability-panel/ability-panel';
+import { CampaignSetting } from '../../../models/campaign-setting';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
@@ -11,6 +12,7 @@ import './kit-panel.scss';
 interface Props {
 	kit: Kit;
 	hero?: Hero;
+	campaignSettings?: CampaignSetting[];
 	mode?: PanelMode;
 }
 
@@ -53,7 +55,7 @@ export const KitPanel = (props: Props) => {
 								props.kit.abilities.map(a => <AbilityPanel key={a.id} ability={a} hero={props.hero} mode={PanelMode.Full} />)
 							}
 							{
-								props.kit.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />)
+								props.kit.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)
 							}
 						</div>
 						:

@@ -1,14 +1,115 @@
+import { AncestryData } from './ancestry-data';
 import { CampaignSetting } from '../models/campaign-setting';
-import { DamageModifierType } from '../enums/damage-modifier-type';
-import { FeatureField } from '../enums/feature-field';
-import { FeatureLogic } from '../logic/feature-logic';
+import { CareerData } from './career-data';
+import { Collections } from '../utils/collections';
+import { ComplicationData } from './complication-data';
+import { KitData } from './kit-data';
+import { SkillData } from './skill-data';
 import { SkillList } from '../enums/skill-list';
+import { conduit } from './classes/conduit';
+import { elementalist } from './classes/elementalist';
+import { fury } from './classes/fury';
+import { shadow } from './classes/shadow';
+import { tactician } from './classes/tactician';
 
 export class CampaignSettingData {
+	static core: CampaignSetting = {
+		id: '',
+		name: '',
+		description: '',
+		ancestries: [
+			AncestryData.devil,
+			AncestryData.dragonKnight,
+			AncestryData.dwarf,
+			AncestryData.wodeElf,
+			AncestryData.highElf,
+			AncestryData.hakaan,
+			AncestryData.human,
+			AncestryData.orc,
+			AncestryData.polder,
+			AncestryData.revenant
+		],
+		cultures: [],
+		careers: [
+			CareerData.artisan,
+			CareerData.criminal,
+			CareerData.gladiator,
+			CareerData.laborer,
+			CareerData.magesApprentice,
+			CareerData.performer,
+			CareerData.sage,
+			CareerData.soldier
+		],
+		classes: [
+			conduit,
+			elementalist,
+			fury,
+			shadow,
+			tactician
+		],
+		kits: [
+			KitData.bloodpact,
+			KitData.cloakAndDagger,
+			KitData.dancer,
+			KitData.frigid,
+			KitData.guisarmier,
+			KitData.martialArtist,
+			KitData.meditator,
+			KitData.missile,
+			KitData.mountain,
+			KitData.natureCalling,
+			KitData.panther,
+			KitData.pugilist,
+			KitData.raider,
+			KitData.ranger,
+			KitData.rapidFire,
+			KitData.retiarius,
+			KitData.rook,
+			KitData.shiningArmor,
+			KitData.sniper,
+			KitData.spellslinger,
+			KitData.stickAndRobe,
+			KitData.swashbuckler,
+			KitData.wardWeaver,
+			KitData.whirlwind
+		],
+		complications: [
+			ComplicationData.cultVictim,
+			ComplicationData.devilDeal,
+			ComplicationData.elementalAbsorption,
+			ComplicationData.fireAndChaos,
+			ComplicationData.primordialSickness,
+			ComplicationData.punishmentCurse,
+			ComplicationData.shipwrecked,
+			ComplicationData.vividDreams,
+			ComplicationData.ward,
+			ComplicationData.warOfTheGuilds
+		],
+		skills: SkillData.getCoreSkills(),
+		languages: [],
+		defaultLanguages: []
+	};
+
 	static orden: CampaignSetting = {
 		id: 'orden',
 		name: 'Orden',
 		description: 'The default setting for Draw Steel.',
+		ancestries: [
+			AncestryData.memonek,
+			AncestryData.timeRaider
+		],
+		cultures: [],
+		careers: [],
+		classes: [],
+		kits: [],
+		complications: [],
+		skills: [
+			{
+				name: 'Timescape',
+				description: 'Knowing about the various planets of the timescape',
+				list: SkillList.Lore
+			}
+		],
 		languages: [
 			{
 				name: 'Anjal',
@@ -73,97 +174,17 @@ export class CampaignSettingData {
 		],
 		defaultLanguages: [
 			'Caelian'
-		],
-		skills: [
-			{
-				name: 'Timescape',
-				description: 'Knowing about the various planets of the timescape',
-				list: SkillList.Lore
-			}
-		],
-		ancestries: [
-			{
-				id: 'ancestry-memonek',
-				name: 'Memonek',
-				description: 'The native denizens of Axiom, the Plane of Uttermost Law, memonek dwell in a land with lakes and trees and birds and flowers. But on this alien world, the lakes are seas of mercury, the birds glitter with wings of glass stretched gossamer thin, and the flowers’ petals are iridescent metal as flexible and fragile as any earthly rose.',
-				features: [
-					FeatureLogic.createSizeFeature({
-						id: 'memonek-size',
-						sizeValue: 1,
-						sizeMod: 'M'
-					}),
-					FeatureLogic.createBonusFeature({
-						id: 'memonek-speed',
-						field: FeatureField.Speed,
-						value: 7
-					}),
-					FeatureLogic.createFeature({
-						id: 'memonek-feature-1a',
-						name: 'Lightweight',
-						description: 'Your silicone body is aerodynamic and low in density. Whenever you fall, you reduce the distance of the fall by 2 squares. When you are force moved, you are force moved an additional 2 squares.'
-					}),
-					FeatureLogic.createBonusFeature({
-						id: 'memonek-feature-1b',
-						field: FeatureField.Stability,
-						value: -2
-					}),
-					FeatureLogic.createFeature({
-						id: 'memonek-feature-2',
-						name: 'Keeper of Order',
-						description: 'When you or a creature adjacent to you makes a power roll, you can remove an edge or a bane on the roll as a free triggered action. You can only use this benefit once per round.'
-					})
-				]
-			},
-			{
-				id: 'ancestry-time-raider',
-				name: 'Time Raider',
-				description: 'The original servitor species of the synliiroi—evil psions with near god-like power—the kuran’zoi liberated themselves during the First Psychic War. In the centuries since, they built their own culture and civilization as nomads of the timescape. The exonym “time raiders” was given to them by denizens of the lower worlds who, seeing the advanced technology they wield, concluded they must be from the future.',
-				features: [
-					FeatureLogic.createSizeFeature({
-						id: 'time-raider-size',
-						sizeValue: 1,
-						sizeMod: 'M'
-					}),
-					FeatureLogic.createBonusFeature({
-						id: 'time-raider-speed',
-						field: FeatureField.Speed,
-						value: 5
-					}),
-					FeatureLogic.createFeature({
-						id: 'time-raider-feature-1',
-						name: 'Foresight',
-						description: 'Your senses extend past mundane obscuration and the veil of the future alike. You instinctively know the location of any concealed creatures who aren’t hidden from you, negating the usual bane on attacks against them. Additionally, whenever you are attacked, you can use a triggered action to impose a bane on the power roll.'
-					}),
-					FeatureLogic.createFeature({
-						id: 'time-raider-feature-2',
-						name: 'Four Arms',
-						description: 'Your multiple arms let you take on multiple tasks at the same time. Whenever you use the Grab or Knockback maneuver against an adjacent creature, you can target an additional adjacent creature, using the same power roll for both targets. You can grab up to two creatures at a time.'
-					}),
-					FeatureLogic.createDamageModifierFeature({
-						id: 'time-raider-feature-3',
-						name: 'Psionic Gift',
-						modifiers: [
-							{
-								damageType: 'Psionic',
-								type: DamageModifierType.Immunity,
-								value: 5,
-								valuePerLevel: 0
-							}
-						]
-					})
-				]
-			}
-		],
-		cultures: [],
-		classes: [],
-		careers: [],
-		complications: [],
-		kits: []
+		]
 	};
 
-	static getCampaignSettings = () => {
-		return [
+	static getCampaignSettings = (homebrew: CampaignSetting[]) => {
+		const list: CampaignSetting[] = [
+			this.core,
 			this.orden
 		];
+
+		list.push(...homebrew);
+
+		return Collections.sort(list, cs => cs.name);
 	};
 }

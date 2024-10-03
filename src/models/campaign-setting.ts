@@ -12,14 +12,13 @@ export interface CampaignSetting {
 	name: string;
 	description: string;
 
-	languages: Language[];
-	defaultLanguages: string[];
-	skills: Skill[];
-
 	ancestries: Ancestry[];
 	cultures: Culture[];
-	classes: HeroClass[];
 	careers: Career[];
-	complications: Complication[];
+	classes: HeroClass[];
 	kits: Kit[];
+	complications: Complication[];
+	skills: Skill[];
+	languages: Language[];
+	defaultLanguages: string[];
 }

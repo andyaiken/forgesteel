@@ -3,7 +3,7 @@ import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData,
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from './ability-logic';
-import { CampaignSettingData } from '../data/campaign-setting-data';
+import { CampaignSetting } from '../models/campaign-setting';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { DamageModifierType } from '../enums/damage-modifier-type';
@@ -345,12 +345,7 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 		return value;
 	};
 
-	static getLanguages = (hero: Hero) => {
-		const setting = CampaignSettingData.getCampaignSettings().find(cs => cs.id === hero.settingID);
-		if (!setting) {
-			return [];
-		}
-
+	static getLanguages = (hero: Hero, setting: CampaignSetting) => {
 		const languageNames: string[] = [];
 
 		if (setting) {
@@ -380,7 +375,7 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 		return Collections.sort(languages, l => l.name);
 	};
 
-	static getSkills = (hero: Hero) => {
+	static getSkills = (hero: Hero, setting: CampaignSetting) => {
 		const skillNames: string[] = [];
 
 		// Collate from features
@@ -393,7 +388,7 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 
 		const skills: Skill[] = [];
 		skillNames.forEach(name => {
-			const skill = SkillLogic.getSkill(name, hero.settingID);
+			const skill = SkillLogic.getSkill(name, [ setting ]);
 			if (skill) {
 				skills.push(skill);
 			}

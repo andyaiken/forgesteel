@@ -1,3 +1,4 @@
+import { CampaignSetting } from '../../../models/campaign-setting';
 import { Culture } from '../../../models/culture';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { HeaderText } from '../../controls/header-text/header-text';
@@ -9,6 +10,7 @@ import './culture-panel.scss';
 interface Props {
 	culture: Culture;
 	hero?: Hero;
+	campaignSettings?: CampaignSetting[];
 	mode?: PanelMode;
 }
 
@@ -21,9 +23,9 @@ export const CulturePanel = (props: Props) => {
 				{
 					props.mode === PanelMode.Full ?
 						<div style={{ paddingTop: '10px' }}>
-							{props.culture.environment ? <FeaturePanel feature={props.culture.environment} hero={props.hero} /> : null}
-							{props.culture.organization ? <FeaturePanel feature={props.culture.organization} hero={props.hero} /> : null}
-							{props.culture.upbringing ? <FeaturePanel feature={props.culture.upbringing} hero={props.hero} /> : null}
+							{props.culture.environment ? <FeaturePanel feature={props.culture.environment} hero={props.hero} campaignSettings={props.campaignSettings} /> : null}
+							{props.culture.organization ? <FeaturePanel feature={props.culture.organization} hero={props.hero} campaignSettings={props.campaignSettings} /> : null}
+							{props.culture.upbringing ? <FeaturePanel feature={props.culture.upbringing} hero={props.hero} campaignSettings={props.campaignSettings} /> : null}
 						</div>
 						: null
 				}

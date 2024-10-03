@@ -2,7 +2,7 @@ import { Alert, Select, Space } from 'antd';
 import { Feature, FeatureAbilityData, FeatureChoiceData, FeatureClassAbilityData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSkillData, FeatureSubclassData } from '../../../models/feature';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
-import { CampaignSettingData } from '../../../data/campaign-setting-data';
+import { CampaignSetting } from '../../../models/campaign-setting';
 import { Collections } from '../../../utils/collections';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
@@ -11,6 +11,7 @@ import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { KitData } from '../../../data/kit-data';
 import { KitPanel } from '../kit-panel/kit-panel';
+import { LanguageData } from '../../../data/language-data';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SkillData } from '../../../data/skill-data';
 import { Utils } from '../../../utils/utils';
@@ -20,6 +21,7 @@ import './feature-panel.scss';
 interface Props {
 	feature: Feature;
 	hero?: Hero;
+	campaignSettings?: CampaignSetting[];
 	mode?: PanelMode;
 	setData?: (featureID: string, data: FeatureData) => void;
 }
@@ -63,7 +65,7 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected.map(f => (
-						<FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />
+						<FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />
 					))
 				}
 			</Space>
@@ -114,7 +116,8 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableKit = (data: FeatureKitData) => {
-		const kits = KitData.getKits().filter(k => data.types.includes(k.type));
+		const kits = KitData.getKits(props.campaignSettings as CampaignSetting[])
+			.filter(k => data.types.includes(k.type));
 
 		const sortedKits = Collections.sort(kits, k => k.name);
 
@@ -139,7 +142,7 @@ export const FeaturePanel = (props: Props) => {
 						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureKitData;
 						dataCopy.selected = [];
 						ids.forEach(id => {
-							const kit = KitData.getKits().find(k => k.id === id);
+							const kit = kits.find(k => k.id === id);
 							if (kit) {
 								dataCopy.selected.push(kit);
 							}
@@ -161,8 +164,7 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableLanguage = (data: FeatureLanguageData) => {
-		const setting = CampaignSettingData.getCampaignSettings().find(s => s.id === props.hero?.settingID);
-		const languages = setting ? setting.languages : [];
+		const languages = LanguageData.getLanguages(props.campaignSettings as CampaignSetting[]);
 		const sortedLanguages = Collections.sort(languages, l => l.name);
 
 		return (
@@ -214,8 +216,8 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableSkill = (data: FeatureSkillData) => {
-		const setting = CampaignSettingData.getCampaignSettings().find(s => s.id === props.hero?.settingID);
-		const skills = SkillData.getSkills(setting).filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
+		const skills = SkillData.getSkills(props.campaignSettings as CampaignSetting[])
+			.filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
 		const sortedSkills = Collections.sort(skills, s => s.name);
 
 		return (
@@ -318,7 +320,7 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected.map(f => (
-						<FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />
+						<FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />
 					))
 				}
 			</Space>
@@ -473,7 +475,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />)
+						data.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)
 					}
 				</Space>
 			);

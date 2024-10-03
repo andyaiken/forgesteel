@@ -3,22 +3,18 @@ import { Ability } from '../../models/ability';
 import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
 import { Ancestry } from '../../models/ancestry';
-import { AncestryData } from '../../data/ancestry-data';
 import { AncestryModal } from '../modals/ancestry/ancestry-modal';
+import { CampaignSetting } from '../../models/campaign-setting';
 import { CampaignSettingData } from '../../data/campaign-setting-data';
 import { Career } from '../../models/career';
-import { CareerData } from '../../data/career-data';
 import { CareerModal } from '../modals/career/career-modal';
 import { Characteristic } from '../../enums/characteristic';
 import { CharacteristicModal } from '../modals/characteristic/characteristic-modal';
-import { ClassData } from '../../data/class-data';
 import { ClassModal } from '../modals/class/class-modal';
 import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
-import { ComplicationData } from '../../data/complication-data';
 import { ComplicationModal } from '../modals/complication/complication-modal';
 import { Culture } from '../../models/culture';
-import { CultureData } from '../../data/culture-data';
 import { CultureModal } from '../modals/culture/culture-modal';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
@@ -29,11 +25,9 @@ import { HeroPage } from '../pages/heroes/hero-view/hero-view-page';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { ImportHeroModal } from '../modals/import-hero/import-hero-modal';
 import { Kit } from '../../models/kit';
-import { KitData } from '../../data/kit-data';
 import { KitModal } from '../modals/kit/kit-modal';
 import { Options } from '../../models/options';
-import { Sourcebook } from '../../models/sourcebook';
-import { SourcebookListPage } from '../pages/sourcebook/sourcebook-list/sourcebook-list';
+import { SourcebookListPage } from '../pages/sourcebooks/sourcebook-list/sourcebook-list';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
@@ -48,18 +42,18 @@ enum Page {
 	HeroList,
 	HeroView,
 	HeroEdit,
-	Sourcebook
+	SourcebookList
 }
 
 interface Props {
 	heroes: Hero[];
-	homebrew: Sourcebook;
+	homebrewSettings: CampaignSetting[];
 	options: Options;
 }
 
 export const Main = (props: Props) => {
 	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
-	const [ homebrew /*, setHomebrew*/ ] = useState<Sourcebook>(props.homebrew);
+	const [ homebrewSettings /*, setHomebrewSettings*/ ] = useState<CampaignSetting[]>(props.homebrewSettings);
 	const [ options, setOptions ] = useState<Options>(props.options);
 	const [ page, setPage ] = useState<Page>(Page.Welcome);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
@@ -104,8 +98,8 @@ export const Main = (props: Props) => {
 		setSelectedHero(null);
 	};
 
-	const showSourcebook = () => {
-		setPage(Page.Sourcebook);
+	const showSourcebookList = () => {
+		setPage(Page.SourcebookList);
 		setSelectedHero(null);
 	};
 
@@ -198,24 +192,6 @@ export const Main = (props: Props) => {
 		if (selectedHero) {
 			setPage(Page.HeroView);
 		}
-	};
-
-	//#endregion
-
-	//#region Sourcebook
-
-	const getSourcebook = () => {
-		const sourcebook: Sourcebook = {
-			settings: [],
-			ancestries: Collections.sort(([] as Ancestry[]).concat(AncestryData.getAncestries()).concat(homebrew.ancestries), a => a.name),
-			cultures: Collections.sort(([] as Culture[]).concat(CultureData.getCultures()).concat(homebrew.cultures), a => a.name),
-			careers: Collections.sort(([] as Career[]).concat(CareerData.getCareers()).concat(homebrew.careers), a => a.name),
-			classes: Collections.sort(([] as HeroClass[]).concat(ClassData.getClasses()).concat(homebrew.classes), a => a.name),
-			kits: Collections.sort(([] as Kit[]).concat(KitData.getKits()).concat(homebrew.kits), a => a.name),
-			complications: Collections.sort(([] as Complication[]).concat(ComplicationData.getComplications()).concat(homebrew.complications), a => a.name)
-		};
-
-		return sourcebook;
 	};
 
 	//#endregion
@@ -322,13 +298,14 @@ export const Main = (props: Props) => {
 					<WelcomePage
 						showAbout={showAbout}
 						showHeroes={heroes.length === 0 ? addHero : showHeroList}
-						showSourcebook={showSourcebook}
+						showSourcebooks={showSourcebookList}
 					/>
 				);
 			case Page.HeroList:
 				return (
 					<HeroListPage
 						heroes={heroes}
+						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings)}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						addHero={addHero}
@@ -340,6 +317,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroPage
 						hero={selectedHero as Hero}
+						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings).filter(cs => (cs.id === '') || (cs.id === (selectedHero as Hero).settingID))}
 						options={options}
 						setOptions={persistOptions}
 						goHome={showWelcome}
@@ -363,16 +341,17 @@ export const Main = (props: Props) => {
 				return (
 					<HeroEditPage
 						hero={selectedHero as Hero}
+						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings).filter(cs => (cs.id === '') || (cs.id === (selectedHero as Hero).settingID))}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						saveChanges={saveEditSelectedHero}
 						cancelChanges={cancelEditSelectedHero}
 					/>
 				);
-			case Page.Sourcebook:
+			case Page.SourcebookList:
 				return (
 					<SourcebookListPage
-						sourcebook={getSourcebook()}
+						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings)}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						viewAncestry={onSelectAncestry}
@@ -393,8 +372,8 @@ export const Main = (props: Props) => {
 		case Page.HeroEdit:
 			str = 'Heroes';
 			break;
-		case Page.Sourcebook:
-			str = 'Sourcebook';
+		case Page.SourcebookList:
+			str = 'Sourcebooks';
 			break;
 	}
 
@@ -430,7 +409,7 @@ export const Main = (props: Props) => {
 					page !== Page.Welcome ?
 						<div className='main-footer-section'>
 							<Radio.Group
-								options={[ 'Heroes', 'Sourcebook' ]}
+								options={[ 'Heroes', 'Sourcebooks' ]}
 								optionType='button'
 								buttonStyle='solid'
 								block={true}
@@ -440,8 +419,8 @@ export const Main = (props: Props) => {
 										case 'Heroes':
 											showHeroList();
 											break;
-										case 'Sourcebook':
-											showSourcebook();
+										case 'Sourcebooks':
+											showSourcebookList();
 											break;
 									}
 								}}

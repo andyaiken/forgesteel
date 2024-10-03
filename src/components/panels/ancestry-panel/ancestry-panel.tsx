@@ -1,4 +1,5 @@
 import { Ancestry } from '../../../models/ancestry';
+import { CampaignSetting } from '../../../models/campaign-setting';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
@@ -10,6 +11,7 @@ import './ancestry-panel.scss';
 interface Props {
 	ancestry: Ancestry;
 	hero?: Hero;
+	campaignSettings?: CampaignSetting[];
 	mode?: PanelMode;
 }
 
@@ -21,7 +23,7 @@ export const AncestryPanel = (props: Props) => {
 				<div className='ds-text description-text'>{props.ancestry.description}</div>
 				{
 					props.mode === PanelMode.Full ?
-						props.ancestry.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />)
+						props.ancestry.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)
 						:
 						<Field label='Features' value={props.ancestry.features.map(f => f.name).join(', ')} />
 				}

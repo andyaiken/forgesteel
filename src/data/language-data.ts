@@ -1,13 +1,13 @@
 import { CampaignSetting } from '../models/campaign-setting';
 import { Collections } from '../utils/collections';
-import { HeroClass } from '../models/class';
+import { Language } from '../models/language';
 
-export class ClassData {
-	static getClasses = (settings: CampaignSetting[]) => {
-		const list: HeroClass[] = [];
+export class LanguageData {
+	static getLanguages = (settings: CampaignSetting[]) => {
+		const list: Language[] = [];
 
 		settings.forEach(setting => {
-			list.push(...setting.classes);
+			list.push(...setting.languages);
 		});
 
 		return Collections.sort(list, item => item.name);

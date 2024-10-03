@@ -4,6 +4,7 @@ import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from './ability-logic';
 import { CampaignSetting } from '../models/campaign-setting';
+import { CampaignSettingData } from '../data/campaign-setting-data';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { DamageModifierType } from '../enums/damage-modifier-type';
@@ -388,7 +389,7 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 
 		const skills: Skill[] = [];
 		skillNames.forEach(name => {
-			const skill = SkillLogic.getSkill(name, [ setting ]);
+			const skill = SkillLogic.getSkill(name, [ CampaignSettingData.core, setting ]);
 			if (skill) {
 				skills.push(skill);
 			}

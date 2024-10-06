@@ -12,6 +12,7 @@ export interface CampaignSetting {
 	name: string;
 	description: string;
 
+	isHomebrew: boolean;
 	ancestries: Ancestry[];
 	cultures: Culture[];
 	careers: Career[];

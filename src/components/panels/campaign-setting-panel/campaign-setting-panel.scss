@@ -1,0 +1,26 @@
+.campaign-setting-panel {
+    border-radius: 5px;
+	padding: 5px 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.06);
+	}
+
+	.action-buttons {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.campaign-setting-panel {
+		.ds-text {
+			color: rgba(0, 0, 0, 0.88);
+		}
+	}
+}

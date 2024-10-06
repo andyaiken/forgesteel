@@ -15,8 +15,9 @@ import { tactician } from './classes/tactician';
 export class CampaignSettingData {
 	static core: CampaignSetting = {
 		id: '',
-		name: '',
+		name: 'Core',
 		description: '',
+		isHomebrew: false,
 		ancestries: [
 			AncestryData.devil,
 			AncestryData.dragonKnight,
@@ -94,6 +95,7 @@ export class CampaignSettingData {
 		id: 'orden',
 		name: 'Orden',
 		description: 'The default setting for Draw Steel.',
+		isHomebrew: false,
 		ancestries: [
 			AncestryData.memonek,
 			AncestryData.timeRaider

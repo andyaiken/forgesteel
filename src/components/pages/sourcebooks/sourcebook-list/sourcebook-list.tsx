@@ -1,8 +1,11 @@
+import { Badge, Button, Popover } from 'antd';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryData } from '../../../../data/ancestry-data';
 import { AncestryPanel } from '../../../panels/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { CampaignSetting } from '../../../../models/campaign-setting';
+import { CampaignSettingLogic } from '../../../../logic/campaign-setting-logic';
+import { CampaignSettingPanel } from '../../../panels/campaign-setting-panel/campaign-setting-panel';
 import { Career } from '../../../../models/career';
 import { CareerData } from '../../../../data/career-data';
 import { CareerPanel } from '../../../panels/career-panel/career-panel';
@@ -33,127 +36,301 @@ interface Props {
 	viewClass: (heroClass: HeroClass) => void;
 	viewKit: (kit: Kit) => void;
 	viewComplication: (complication: Complication) => void;
+	onSettingChange: (setting: CampaignSetting) => void;
+	onSettingDelete: (setting: CampaignSetting) => void;
 }
 
 export const SourcebookListPage = (props: Props) => {
+	const getAncestries = () => {
+		const list = AncestryData.getAncestries(props.campaignSettings);
+		if (list.length === 0) {
+			return (
+				<div className='ds-text dimmed-text'>None</div>
+			);
+		}
+
+		return (
+			<div className='sourcebook-section-row'>
+				{
+					list.map(a => {
+						const item = (
+							<SelectablePanel onSelect={() => props.viewAncestry(a)}>
+								<AncestryPanel key={a.id} ancestry={a} />
+							</SelectablePanel>
+						);
+
+						const setting = CampaignSettingLogic.getAncestrySetting(props.campaignSettings, a);
+						if (setting && setting.id) {
+							return (
+								<div key={a.id}>
+									<Badge.Ribbon text={setting.name || 'Unnamed Setting'}>
+										{item}
+									</Badge.Ribbon>
+								</div>
+							);
+						}
+
+						return (
+							<div key={a.id}>
+								{item}
+							</div>
+						);
+					})
+				}
+			</div>
+		);
+	};
+
+	const getCultures = () => {
+		const list = CultureData.getCultures(props.campaignSettings);
+		if (list.length === 0) {
+			return (
+				<div className='ds-text dimmed-text'>None</div>
+			);
+		}
+
+		return (
+			<div className='sourcebook-section-row'>
+				{
+					list.map(c => {
+						const item = (
+							<SelectablePanel onSelect={() => props.viewCulture(c)}>
+								<CulturePanel key={c.id} culture={c} />
+							</SelectablePanel>
+						);
+
+						const setting = CampaignSettingLogic.getCultureSetting(props.campaignSettings, c);
+						if (setting && setting.id) {
+							return (
+								<div key={c.id}>
+									<Badge.Ribbon text={setting.name || 'Unnamed Setting'}>
+										{item}
+									</Badge.Ribbon>
+								</div>
+							);
+						}
+
+						return (
+							<div key={c.id}>
+								{item}
+							</div>
+						);
+					})
+				}
+			</div>
+		);
+	};
+
+	const getCareers = () => {
+		const list = CareerData.getCareers(props.campaignSettings);
+		if (list.length === 0) {
+			return (
+				<div className='ds-text dimmed-text'>None</div>
+			);
+		}
+
+		return (
+			<div className='sourcebook-section-row'>
+				{
+					list.map(c => {
+						const item = (
+							<SelectablePanel onSelect={() => props.viewCareer(c)}>
+								<CareerPanel key={c.id} career={c} />
+							</SelectablePanel>
+						);
+						const setting = CampaignSettingLogic.getCareerSetting(props.campaignSettings, c);
+						if (setting && setting.id) {
+							return (
+								<div key={c.id}>
+									<Badge.Ribbon text={setting.name || 'Unnamed Setting'}>
+										{item}
+									</Badge.Ribbon>
+								</div>
+							);
+						}
+
+						return (
+							<div key={c.id}>
+								{item}
+							</div>
+						);
+					})
+				}
+			</div>
+		);
+	};
+
+	const getClasses = () => {
+		const list = ClassData.getClasses(props.campaignSettings);
+		if (list.length === 0) {
+			return (
+				<div className='ds-text dimmed-text'>None</div>
+			);
+		}
+
+		return (
+			<div className='sourcebook-section-row'>
+				{
+					list.map(c => {
+
+						const item = (
+							<SelectablePanel onSelect={() => props.viewClass(c)}>
+								<ClassPanel key={c.id} heroClass={c} />
+							</SelectablePanel>
+						);
+						const setting = CampaignSettingLogic.getClassSetting(props.campaignSettings, c);
+						if (setting && setting.id) {
+							return (
+								<div key={c.id}>
+									<Badge.Ribbon text={setting.name || 'Unnamed Setting'}>
+										{item}
+									</Badge.Ribbon>
+								</div>
+							);
+						}
+
+						return (
+							<div key={c.id}>
+								{item}
+							</div>
+						);
+					})
+				}
+			</div>
+		);
+	};
+
+	const getKits = () => {
+		const list = KitData.getKits(props.campaignSettings);
+		if (list.length === 0) {
+			return (
+				<div className='ds-text dimmed-text'>None</div>
+			);
+		}
+
+		return (
+			<div className='sourcebook-section-row'>
+				{
+					list.map(k => {
+						const item = (
+							<SelectablePanel onSelect={() => props.viewKit(k)}>
+								<KitPanel key={k.id} kit={k} />
+							</SelectablePanel>
+						);
+
+						const setting = CampaignSettingLogic.getKitSetting(props.campaignSettings, k);
+						if (setting && setting.id) {
+							return (
+								<div key={k.id}>
+									<Badge.Ribbon text={setting.name || 'Unnamed Setting'}>
+										{item}
+									</Badge.Ribbon>
+								</div>
+							);
+						}
+
+						return (
+							<div key={k.id}>
+								{item}
+							</div>
+						);
+					})
+				}
+			</div>
+		);
+	};
+
+	const getComplications = () => {
+		const list = ComplicationData.getComplications(props.campaignSettings);
+		if (list.length === 0) {
+			return (
+				<div className='ds-text dimmed-text'>None</div>
+			);
+		}
+
+		return (
+			<div className='sourcebook-section-row'>
+				{
+					list.map(c => {
+						const item = (
+							<SelectablePanel onSelect={() => props.viewComplication(c)}>
+								<ComplicationPanel key={c.id} complication={c} />
+							</SelectablePanel>
+						);
+
+						const setting = CampaignSettingLogic.getComplicationSetting(props.campaignSettings, c);
+						if (setting && setting.id) {
+							return (
+								<div key={c.id}>
+									<Badge.Ribbon text={setting.name || 'Unnamed Setting'}>
+										{item}
+									</Badge.Ribbon>
+								</div>
+							);
+						}
+
+						return (
+							<div key={c.id}>
+								{item}
+							</div>
+						);
+					})
+				}
+			</div>
+		);
+	};
+
 	try {
 		return (
 			<div className='sourcebook-list-page'>
-				<AppHeader goHome={props.goHome} showAbout={props.showAbout} />
+				<AppHeader goHome={props.goHome} showAbout={props.showAbout}>
+					<Popover
+						trigger='click'
+						placement='bottom'
+						content={(
+							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								{
+									props.campaignSettings.map(cs => (
+										<CampaignSettingPanel
+											key={cs.id}
+											setting={cs}
+											onChange={props.onSettingChange}
+											onDelete={props.onSettingDelete}
+										/>
+									))
+								}
+							</div>
+						)}
+					>
+						<Button>
+							Campaign Settings
+						</Button>
+					</Popover>
+				</AppHeader>
 				<div className='sourcebook-list-page-content'>
 					<div>
 						<HeaderText level={1}>Ancestries</HeaderText>
-						{
-							AncestryData.getAncestries(props.campaignSettings).length > 0 ?
-								<div className='sourcebook-section-row'>
-									{
-										AncestryData.getAncestries(props.campaignSettings).map(a => (
-											<div key={a.id}>
-												<SelectablePanel onSelect={() => props.viewAncestry(a)}>
-													<AncestryPanel key={a.id} ancestry={a} />
-												</SelectablePanel>
-											</div>
-										))
-									}
-								</div>
-								:
-								<div className='ds-text dimmed-text'>None</div>
-						}
+						{getAncestries()}
 					</div>
 					<div>
 						<HeaderText level={1}>Cultures</HeaderText>
-						{
-							CultureData.getCultures(props.campaignSettings).length > 0 ?
-								<div className='sourcebook-section-row'>
-									{
-										CultureData.getCultures(props.campaignSettings).map(c => (
-											<div key={c.id}>
-												<SelectablePanel onSelect={() => props.viewCulture(c)}>
-													<CulturePanel key={c.id} culture={c} />
-												</SelectablePanel>
-											</div>
-										))
-									}
-								</div>
-								:
-								<div className='ds-text dimmed-text'>None</div>
-						}
+						{getCultures()}
 					</div>
 					<div>
 						<HeaderText level={1}>Careers</HeaderText>
-						{
-							CareerData.getCareers(props.campaignSettings).length > 0 ?
-								<div className='sourcebook-section-row'>
-									{
-										CareerData.getCareers(props.campaignSettings).map(c => (
-											<div key={c.id}>
-												<SelectablePanel onSelect={() => props.viewCareer(c)}>
-													<CareerPanel key={c.id} career={c} />
-												</SelectablePanel>
-											</div>
-										))
-									}
-								</div>
-								:
-								<div className='ds-text dimmed-text'>None</div>
-						}
+						{getCareers()}
 					</div>
 					<div>
 						<HeaderText level={1}>Classes</HeaderText>
-						{
-							ClassData.getClasses(props.campaignSettings).length > 0 ?
-								<div className='sourcebook-section-row'>
-									{
-										ClassData.getClasses(props.campaignSettings).map(c => (
-											<div key={c.id}>
-												<SelectablePanel onSelect={() => props.viewClass(c)}>
-													<ClassPanel key={c.id} heroClass={c} />
-												</SelectablePanel>
-											</div>
-										))
-									}
-								</div>
-								:
-								<div className='ds-text dimmed-text'>None</div>
-						}
+						{getClasses()}
 					</div>
 					<div>
 						<HeaderText level={1}>Kits</HeaderText>
-						{
-							KitData.getKits(props.campaignSettings).length > 0 ?
-								<div className='sourcebook-section-row'>
-									{
-										KitData.getKits(props.campaignSettings).map(k => (
-											<div key={k.id}>
-												<SelectablePanel onSelect={() => props.viewKit(k)}>
-													<KitPanel key={k.id} kit={k} />
-												</SelectablePanel>
-											</div>
-										))
-									}
-								</div>
-								:
-								<div className='ds-text dimmed-text'>None</div>
-						}
+						{getKits()}
 					</div>
 					<div>
 						<HeaderText level={1}>Complications</HeaderText>
-						{
-							ComplicationData.getComplications(props.campaignSettings).length > 0 ?
-								<div className='sourcebook-section-row'>
-									{
-										ComplicationData.getComplications(props.campaignSettings).map(c => (
-											<div key={c.id}>
-												<SelectablePanel onSelect={() => props.viewComplication(c)}>
-													<ComplicationPanel key={c.id} complication={c} />
-												</SelectablePanel>
-											</div>
-										))
-									}
-								</div>
-								:
-								<div className='ds-text dimmed-text'>None</div>
-						}
+						{getComplications()}
 					</div>
 				</div>
 			</div>

@@ -1,4 +1,5 @@
 import { Button, Popover } from 'antd';
+import { CampaignSetting } from '../../../models/campaign-setting';
 import { ClassPanel } from '../../panels/class-panel/class-panel';
 import { HeroClass } from '../../../models/class';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -7,7 +8,11 @@ import './class-modal.scss';
 
 interface Props {
 	heroClass: HeroClass;
+	homebrewSettings: CampaignSetting[];
+	isHomebrew: boolean;
+	createHomebrew: (setting: CampaignSetting | null) => void;
 	export: (format: 'image' | 'pdf' | 'json') => void;
+	delete: () => void;
 }
 
 export const ClassModal = (props: Props) => {
@@ -15,6 +20,27 @@ export const ClassModal = (props: Props) => {
 		return (
 			<div className='class-modal'>
 				<div className='toolbar'>
+					{
+						props.isHomebrew ?
+							null
+							:
+							<Popover
+								trigger='click'
+								placement='bottom'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										{
+											props.homebrewSettings.map(cs => <Button key={cs.id} onClick={() => props.createHomebrew(cs)}>In {cs.name || 'Unnamed Setting'}</Button>)
+										}
+										<Button onClick={() => props.createHomebrew(null)}>In a new campaign setting</Button>
+									</div>
+								)}
+							>
+								<Button>
+									Create Homebrew Version
+								</Button>
+							</Popover>
+					}
 					<Popover
 						trigger='click'
 						placement='bottom'
@@ -30,6 +56,24 @@ export const ClassModal = (props: Props) => {
 							Export
 						</Button>
 					</Popover>
+					{
+						props.isHomebrew ?
+							<Popover
+								trigger='click'
+								placement='bottom'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										<div>This can't be undone; are you sure?</div>
+										<Button danger={true} onClick={props.delete}>Delete</Button>
+									</div>
+								)}
+							>
+								<Button>
+									Delete
+								</Button>
+							</Popover>
+							: null
+					}
 				</div>
 				<ClassPanel heroClass={props.heroClass} mode={PanelMode.Full} />
 			</div>

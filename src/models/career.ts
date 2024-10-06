@@ -6,5 +6,5 @@ export interface Career {
 	description: string;
 
 	features: Feature[];
-	title: Feature;
+	title: Feature | null;
 }

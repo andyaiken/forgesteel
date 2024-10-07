@@ -23,6 +23,7 @@ import { Kit } from '../../../../models/kit';
 import { KitData } from '../../../../data/kit-data';
 import { KitPanel } from '../../../panels/kit-panel/kit-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { useState } from 'react';
 
 import './sourcebook-list.scss';
 
@@ -41,8 +42,14 @@ interface Props {
 }
 
 export const SourcebookListPage = (props: Props) => {
+	const [ hiddenSettingIDs, setHiddenSettingIDs ] = useState<string[]>([]);
+
+	const getSettings = () => {
+		return props.campaignSettings.filter(cs => !hiddenSettingIDs.includes(cs.id));
+	};
+
 	const getAncestries = () => {
-		const list = AncestryData.getAncestries(props.campaignSettings);
+		const list = AncestryData.getAncestries(getSettings());
 		if (list.length === 0) {
 			return (
 				<div className='ds-text dimmed-text'>None</div>
@@ -82,7 +89,7 @@ export const SourcebookListPage = (props: Props) => {
 	};
 
 	const getCultures = () => {
-		const list = CultureData.getCultures(props.campaignSettings);
+		const list = CultureData.getCultures(getSettings());
 		if (list.length === 0) {
 			return (
 				<div className='ds-text dimmed-text'>None</div>
@@ -122,7 +129,7 @@ export const SourcebookListPage = (props: Props) => {
 	};
 
 	const getCareers = () => {
-		const list = CareerData.getCareers(props.campaignSettings);
+		const list = CareerData.getCareers(getSettings());
 		if (list.length === 0) {
 			return (
 				<div className='ds-text dimmed-text'>None</div>
@@ -161,7 +168,7 @@ export const SourcebookListPage = (props: Props) => {
 	};
 
 	const getClasses = () => {
-		const list = ClassData.getClasses(props.campaignSettings);
+		const list = ClassData.getClasses(getSettings());
 		if (list.length === 0) {
 			return (
 				<div className='ds-text dimmed-text'>None</div>
@@ -201,7 +208,7 @@ export const SourcebookListPage = (props: Props) => {
 	};
 
 	const getKits = () => {
-		const list = KitData.getKits(props.campaignSettings);
+		const list = KitData.getKits(getSettings());
 		if (list.length === 0) {
 			return (
 				<div className='ds-text dimmed-text'>None</div>
@@ -241,7 +248,7 @@ export const SourcebookListPage = (props: Props) => {
 	};
 
 	const getComplications = () => {
-		const list = ComplicationData.getComplications(props.campaignSettings);
+		const list = ComplicationData.getComplications(getSettings());
 		if (list.length === 0) {
 			return (
 				<div className='ds-text dimmed-text'>None</div>
@@ -294,6 +301,17 @@ export const SourcebookListPage = (props: Props) => {
 										<CampaignSettingPanel
 											key={cs.id}
 											setting={cs}
+											visible={!hiddenSettingIDs.includes(cs.id)}
+											onSetVisible={(setting, visible) => {
+												if (visible) {
+													const copy = JSON.parse(JSON.stringify(hiddenSettingIDs.filter(id => id !== setting.id))) as string[];
+													setHiddenSettingIDs(copy);
+												} else {
+													const copy = JSON.parse(JSON.stringify(hiddenSettingIDs)) as string[];
+													copy.push(setting.id);
+													setHiddenSettingIDs(copy);
+												}
+											}}
 											onChange={props.onSettingChange}
 											onDelete={props.onSettingDelete}
 										/>

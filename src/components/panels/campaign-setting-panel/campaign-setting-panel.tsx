@@ -1,5 +1,5 @@
 import { Button, Input, Popover } from 'antd';
-import { DeleteOutlined, EditOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CampaignSetting } from '../../../models/campaign-setting';
 import { NameGenerator } from '../../../utils/name-generator';
 import { useState } from 'react';
@@ -8,6 +8,8 @@ import './campaign-setting-panel.scss';
 
 interface Props {
 	setting: CampaignSetting;
+	visible: boolean;
+	onSetVisible: (setting: CampaignSetting, visible: boolean) => void;
 	onChange: (setting: CampaignSetting) => void;
 	onDelete: (setting: CampaignSetting) => void;
 }
@@ -68,6 +70,7 @@ export const CampaignSettingPanel = (props: Props) => {
 							</Popover>
 							: null
 					}
+					<Button type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(setting, !props.visible)} />
 				</div>
 			</div>
 		);

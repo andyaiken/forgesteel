@@ -30,7 +30,7 @@ export interface Hero {
 	id: string;
 	name: string;
 
-	settingID: string;
+	settingIDs: string[];
 
 	ancestry: Ancestry | null;
 	culture: Culture | null;

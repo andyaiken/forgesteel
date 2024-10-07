@@ -21,11 +21,11 @@ import { SkillLogic } from './skill-logic';
 import { Utils } from '../utils/utils';
 
 export class HeroLogic {
-	static createHero = (settingID: string) => {
+	static createHero = (settingIDs: string[]) => {
 		const hero: Hero = {
 			id: Utils.guid(),
 			name: '',
-			settingID: settingID,
+			settingIDs: settingIDs,
 			ancestry: null,
 			culture: null,
 			class: null,
@@ -346,12 +346,12 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 		return value;
 	};
 
-	static getLanguages = (hero: Hero, setting: CampaignSetting) => {
+	static getLanguages = (hero: Hero, settings: CampaignSetting[]) => {
 		const languageNames: string[] = [];
 
-		if (setting) {
-			languageNames.push(...setting.defaultLanguages);
-		}
+		settings.forEach(cs => {
+			languageNames.push(...cs.defaultLanguages);
+		});
 
 		if (hero.culture) {
 			languageNames.push(...hero.culture.languages);
@@ -365,9 +365,11 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 				languageNames.push(...data.selected);
 			});
 
+		const allLanguages = settings.flatMap(cs => cs.languages);
+
 		const languages: Language[] = [];
 		languageNames.forEach(name => {
-			const language = setting.languages.find(l => l.name === name);
+			const language = allLanguages.find(l => l.name === name);
 			if (language) {
 				languages.push(language);
 			}
@@ -376,7 +378,7 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 		return Collections.sort(languages, l => l.name);
 	};
 
-	static getSkills = (hero: Hero, setting: CampaignSetting) => {
+	static getSkills = (hero: Hero, settings: CampaignSetting[]) => {
 		const skillNames: string[] = [];
 
 		// Collate from features
@@ -389,7 +391,7 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 
 		const skills: Skill[] = [];
 		skillNames.forEach(name => {
-			const skill = SkillLogic.getSkill(name, [ CampaignSettingData.core, setting ]);
+			const skill = SkillLogic.getSkill(name, settings);
 			if (skill) {
 				skills.push(skill);
 			}
@@ -708,6 +710,10 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 	///////////////////////////////////////////////////////////////////////////
 
 	static updateHero = (hero: Hero) => {
+		if (hero.settingIDs === undefined) {
+			hero.settingIDs = [ CampaignSettingData.core.id, CampaignSettingData.orden.id ];
+		}
+
 		if (hero.class) {
 			if (hero.class.kits === undefined) {
 				hero.class.kits = [];

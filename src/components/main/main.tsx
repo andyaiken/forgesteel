@@ -108,7 +108,7 @@ export const Main = (props: Props) => {
 	//#region Heroes
 
 	const addHero = () => {
-		const hero = HeroLogic.createHero(CampaignSettingData.orden.id);
+		const hero = HeroLogic.createHero([ CampaignSettingData.core.id, CampaignSettingData.orden.id ]);
 
 		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
 		copy.push(hero);
@@ -591,7 +591,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroPage
 						hero={selectedHero as Hero}
-						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings).filter(cs => (cs.id === '') || (cs.id === (selectedHero as Hero).settingID))}
+						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings).filter(cs => (selectedHero as Hero).settingIDs.includes(cs.id))}
 						options={options}
 						setOptions={persistOptions}
 						goHome={showWelcome}
@@ -615,7 +615,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroEditPage
 						hero={selectedHero as Hero}
-						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings).filter(cs => (cs.id === '') || (cs.id === (selectedHero as Hero).settingID))}
+						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings).filter(cs => (selectedHero as Hero).settingIDs.includes(cs.id))}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						saveChanges={saveEditSelectedHero}

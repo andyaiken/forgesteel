@@ -5,10 +5,8 @@ import { Career } from '../models/career';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { DamageModifier } from '../models/damage-modifier';
-import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
-import { FormatLogic } from './format-logic';
 import { HeroClass } from '../models/class';
 import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit';
@@ -38,20 +36,15 @@ export class FeatureLogic {
 	};
 
 	static createBonusFeature = (data: { id: string, name?: string, description?: string, field: FeatureField, value: number, valuePerLevel?: number }) => {
-		let desc = `${data.field} ${data.value >= 0 ? '+' : ''}${data.value}`;
-		if (data.valuePerLevel) {
-			desc += `, ${data.valuePerLevel >= 0 ? '+' : ''}${data.valuePerLevel} per level after 1st`;
-		}
-
 		return {
 			id: data.id,
 			name: data.name || data.field.toString(),
-			description: data.description || desc,
+			description: data.description || '',
 			type: FeatureType.Bonus,
 			data: {
 				field: data.field,
 				value: data.value,
-				valuePerLevel: data.value || 0
+				valuePerLevel: data.valuePerLevel || 0
 			} as FeatureBonusData
 		} as Feature;
 	};
@@ -88,21 +81,10 @@ export class FeatureLogic {
 	};
 
 	static createDamageModifierFeature = (data: { id: string, name?: string, description?: string, modifiers: DamageModifier[] }) => {
-		let name = 'Damage Modifier';
-		let description = 'Damage Modifier';
-		if (data.modifiers.every(dm => dm.type === DamageModifierType.Immunity)) {
-			name = 'Immunity';
-			description = data.modifiers.map(dm => `${dm.damageType} ${dm.value}`).join(', ');
-		}
-		if (data.modifiers.every(dm => dm.type === DamageModifierType.Weakness)) {
-			name = 'Weakness';
-			description = data.modifiers.map(dm => `${dm.damageType} ${dm.value}`).join(', ');
-		}
-
 		return {
 			id: data.id,
 			name: data.name || name,
-			description: data.description || description,
+			description: data.description || '',
 			type: FeatureType.DamageModifier,
 			data: {
 				modifiers: data.modifiers
@@ -144,7 +126,7 @@ export class FeatureLogic {
 		return {
 			id: data.id,
 			name: data.name || 'Multiple Features',
-			description: data.description || data.features.map(f => f.name).join(', '),
+			description: data.description || '',
 			type: FeatureType.Multiple,
 			data: {
 				features: data.features
@@ -156,7 +138,7 @@ export class FeatureLogic {
 		return {
 			id: data.id,
 			name: data.name || 'Size',
-			description: data.description || `Size: ${FormatLogic.getSize({ value: data.sizeValue, mod: data.sizeMod })}`,
+			description: data.description || '',
 			type: FeatureType.Size,
 			data: {
 				size: {
@@ -171,7 +153,7 @@ export class FeatureLogic {
 		return {
 			id: data.id,
 			name: data.name || data.skill,
-			description: data.description || `You gain the ${data.skill} skill.`,
+			description: data.description || '',
 			type: FeatureType.Skill,
 			data: {
 				skill: data.skill

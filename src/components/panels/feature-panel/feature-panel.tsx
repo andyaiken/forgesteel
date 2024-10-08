@@ -1,11 +1,12 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityData, FeatureChoiceData, FeatureClassAbilityData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSkillChoiceData, FeatureSubclassData } from '../../../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../../../models/feature';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { CampaignSetting } from '../../../models/campaign-setting';
 import { Collections } from '../../../utils/collections';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
+import { FormatLogic } from '../../../logic/format-logic';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
@@ -350,6 +351,17 @@ export const FeaturePanel = (props: Props) => {
 
 	// #region Extra
 
+	const getExtraBonus = (data: FeatureBonusData) => {
+		let desc = `${data.field} ${data.value >= 0 ? '+' : ''}${data.value}`;
+		if (data.valuePerLevel) {
+			desc += `, ${data.valuePerLevel >= 0 ? '+' : ''}${data.valuePerLevel} per level after 1st`;
+		}
+
+		return (
+			<div className='ds-text'>{desc}</div>
+		);
+	};
+
 	const getExtraChoice = (data: FeatureChoiceData) => {
 		if (data.selected.length === 0) {
 			return null;
@@ -389,6 +401,14 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
+	const getExtraDamageModifier = (data: FeatureDamageModifierData) => {
+		return (
+			<div className='ds-text'>
+				{data.modifiers.map(FormatLogic.getDamageModifier).join(', ')}
+			</div>
+		);
+	};
+
 	const getExtraKit = (data: FeatureKitData) => {
 		if (data.selected.length === 0) {
 			return null;
@@ -410,6 +430,18 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<Field label='Selected' value={data.selected.join(', ')} />
+		);
+	};
+
+	const getExtraSize = (data: FeatureSizeData) => {
+		return (
+			<Field label='Size' value={FormatLogic.getSize(data.size)} />
+		);
+	};
+
+	const getExtraSkill = (data: FeatureSkillData) => {
+		return (
+			<div className='ds-text'>{data.skill}</div>
 		);
 	};
 
@@ -439,14 +471,22 @@ export const FeaturePanel = (props: Props) => {
 
 	const getExtra = () => {
 		switch (props.feature.type) {
+			case FeatureType.Bonus:
+				return getExtraBonus(props.feature.data as FeatureBonusData);
 			case FeatureType.Choice:
 				return getExtraChoice(props.feature.data as FeatureChoiceData);
 			case FeatureType.ClassAbility:
 				return getExtraClassAbility(props.feature.data as FeatureClassAbilityData);
+			case FeatureType.DamageModifier:
+				return getExtraDamageModifier(props.feature.data as FeatureDamageModifierData);
 			case FeatureType.Kit:
 				return getExtraKit(props.feature.data as FeatureKitData);
 			case FeatureType.Language:
 				return getExtraLanguage(props.feature.data as FeatureLanguageData);
+			case FeatureType.Size:
+				return getExtraSize(props.feature.data as FeatureSizeData);
+			case FeatureType.Skill:
+				return getExtraSkill(props.feature.data as FeatureSkillData);
 			case FeatureType.SkillChoice:
 				return getExtraSkillChoice(props.feature.data as FeatureSkillChoiceData);
 			case FeatureType.SubclassFeature:

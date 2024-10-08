@@ -1273,13 +1273,12 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 			case FeatureType.Ability: {
 				const data = feature.data as FeatureAbilityData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Ability</HeaderText>
+					<Expander title={data.ability.name || 'Unnamed Ability'}>
 						<AbilityEditPanel
 							ability={data.ability}
 							onChange={setAbility}
 						/>
-					</Space>
+					</Expander>
 				);
 			}
 			case FeatureType.Bonus: {
@@ -1309,7 +1308,7 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 						<HeaderText>Options</HeaderText>
 						{
 							data.options.map((option, n) => (
-								<Space key={n} direction='vertical' style={{ width: '100%' }}>
+								<Expander key={n} title={option.feature.name || 'Unnamed Feature'}>
 									<FeatureEditPanel
 										feature={option.feature}
 										campaignSettings={props.campaignSettings}
@@ -1317,7 +1316,7 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 										onDelete={() => deleteChoice(data, n)}
 									/>
 									<NumberSpin min={1} value={option.value} onChange={value => setChoiceValue(data, n, value)} />
-								</Space>
+								</Expander>
 							))
 						}
 						<Button block={true} onClick={() => addChoice(data)}>Add an option</Button>
@@ -1344,7 +1343,7 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 						<HeaderText>Modifiers</HeaderText>
 						{
 							data.modifiers.map((mod, n) => (
-								<Space key={n} direction='vertical' style={{ width: '100%' }}>
+								<Expander key={n} title='Damage Modifier'>
 									<Input
 										placeholder='Damage type'
 										allowClear={true}
@@ -1362,7 +1361,7 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 									<NumberSpin min={0} value={mod.value} onChange={value => setDamageModifierValue(data, n, value)} />
 									<NumberSpin min={0} value={mod.valuePerLevel} onChange={value => setDamageModifierValuePerLevel(data, n, value)} />
 									<Button block={true} danger={true} onClick={() => deleteDamageModifier(data, n)}>Delete</Button>
-								</Space>
+								</Expander>
 							))
 						}
 						<Button block={true} onClick={() => addDamageModifier(data)}>Add a modifier</Button>
@@ -1413,7 +1412,6 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 				const data = feature.data as FeatureMultipleData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Features</HeaderText>
 						{
 							data.features.map((feature, n) => (
 								<Expander key={feature.id} title={feature.name}>
@@ -1436,16 +1434,24 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Size</HeaderText>
 						<NumberSpin min={1} value={data.size.value} onChange={setSizeValue} />
-						<HeaderText>Modifier</HeaderText>
-						<Select
-							style={{ width: '100%' }}
-							placeholder='Modifier'
-							allowClear={true}
-							options={[ 'T', 'S', 'M', 'L' ].map(option => ({ value: option }))}
-							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							value={data.size.mod}
-							onChange={setSizeMod}
-						/>
+						{
+							data.size.value === 1 ?
+								<HeaderText>Modifier</HeaderText>
+								: null
+						}
+						{
+							data.size.value === 1 ?
+								<Select
+									style={{ width: '100%' }}
+									placeholder='Modifier'
+									allowClear={true}
+									options={[ 'T', 'S', 'M', 'L' ].map(option => ({ value: option }))}
+									optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+									value={data.size.mod}
+									onChange={setSizeMod}
+								/>
+								: null
+						}
 					</Space>
 				);
 			}

@@ -440,24 +440,24 @@ You are never surprised. Additionally, whenever you would push a target with for
 					reach: 0,
 					area: 0,
 					mobility: false,
-					abilities: [
-						AbilityLogic.createAbility({
-							id: 'kit-boren-signature',
-							name: 'Bear Claws',
-							description: 'Attacks with your sharp and deadly claws send your foes staggering back.',
-							type: AbilityLogic.createTypeAction(),
-							keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-							distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-							target: '2 creatures or objects',
-							powerRoll: AbilityLogic.createPowerRoll({
-								characteristic: [ Characteristic.Might ],
-								tier1: '2 damage; push 1',
-								tier2: '3 damage; push 2',
-								tier3: '8 damage; push 3'
-							})
-						})
-					],
 					features: [
+						FeatureLogic.createAbilityFeature({
+							ability: AbilityLogic.createAbility({
+								id: 'kit-boren-signature',
+								name: 'Bear Claws',
+								description: 'Attacks with your sharp and deadly claws send your foes staggering back.',
+								type: AbilityLogic.createTypeAction(),
+								keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+								target: '2 creatures or objects',
+								powerRoll: AbilityLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might ],
+									tier1: '2 damage; push 1',
+									tier2: '3 damage; push 2',
+									tier3: '8 damage; push 3'
+								})
+							})
+						}),
 						FeatureLogic.createFeature({
 							id: 'kit-boren-feature-1',
 							name: 'Aspect Benefits',
@@ -498,25 +498,25 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 					reach: 0,
 					area: 0,
 					mobility: true,
-					abilities: [
-						AbilityLogic.createAbility({
-							id: 'kit-corven-signature',
-							name: 'Wing Buffet',
-							description: 'Foes who try to close around you do so at their peril.',
-							type: AbilityLogic.createTypeAction(),
-							keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-							distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-							target: '3 creatures or objects',
-							powerRoll: AbilityLogic.createPowerRoll({
-								characteristic: [ Characteristic.Might ],
-								tier1: '4 damage',
-								tier2: '5 damage',
-								tier3: '7 damage'
-							}),
-							effect: 'Resolve each attack individually using one power roll. You can shift 1 square after resolving damage for each target, then choose your next target from your new location.'
-						})
-					],
 					features: [
+						FeatureLogic.createAbilityFeature({
+							ability: AbilityLogic.createAbility({
+								id: 'kit-corven-signature',
+								name: 'Wing Buffet',
+								description: 'Foes who try to close around you do so at their peril.',
+								type: AbilityLogic.createTypeAction(),
+								keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+								target: '3 creatures or objects',
+								powerRoll: AbilityLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might ],
+									tier1: '4 damage',
+									tier2: '5 damage',
+									tier3: '7 damage'
+								}),
+								effect: 'Resolve each attack individually using one power roll. You can shift 1 square after resolving damage for each target, then choose your next target from your new location.'
+							})
+						}),
 						FeatureLogic.createFeature({
 							id: 'kit-boren-feature-1',
 							name: 'Aspect Benefits',
@@ -561,25 +561,25 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					reach: 0,
 					area: 0,
 					mobility: true,
-					abilities: [
-						AbilityLogic.createAbility({
-							id: 'kit-raden-signature',
-							name: 'Driving Pounce',
-							description: 'Your enemies try in vain to fall back from your pouncing attack.',
-							type: AbilityLogic.createTypeAction(),
-							keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-							distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-							target: '2 creatures or objects',
-							powerRoll: AbilityLogic.createPowerRoll({
-								characteristic: [ Characteristic.Might ],
-								tier1: '4 damage',
-								tier2: '5 damage; push 1',
-								tier3: '6 damage; push 2'
-							}),
-							effect: 'Resolve each attack one at a time. After each attack, you can shift the same number of squares that you pushed the target. You select your second target from the square where you end your shift, which can be the first target again.'
-						})
-					],
 					features: [
+						FeatureLogic.createAbilityFeature({
+							ability: AbilityLogic.createAbility({
+								id: 'kit-raden-signature',
+								name: 'Driving Pounce',
+								description: 'Your enemies try in vain to fall back from your pouncing attack.',
+								type: AbilityLogic.createTypeAction(),
+								keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+								target: '2 creatures or objects',
+								powerRoll: AbilityLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might ],
+									tier1: '4 damage',
+									tier2: '5 damage; push 1',
+									tier3: '6 damage; push 2'
+								}),
+								effect: 'Resolve each attack one at a time. After each attack, you can shift the same number of squares that you pushed the target. You select your second target from the square where you end your shift, which can be the first target again.'
+							})
+						}),
 						FeatureLogic.createFeature({
 							id: 'kit-boren-feature-1',
 							name: 'Aspect Benefits',
@@ -623,25 +623,25 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					reach: 0,
 					area: 0,
 					mobility: true,
-					abilities: [
-						AbilityLogic.createAbility({
-							id: 'kit-vuken-signature',
-							name: 'Probing Attack',
-							description: 'A savage assault forces your foes back.',
-							type: AbilityLogic.createTypeAction(),
-							keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-							distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-							target: '1 creature or object',
-							powerRoll: AbilityLogic.createPowerRoll({
-								characteristic: [ Characteristic.Might ],
-								tier1: '5 damage',
-								tier2: '9 damage; push 1',
-								tier3: '12 damage; push 2; prone if the target is your size or smaller'
-							}),
-							effect: 'You can shift up to 2 squares as long as you end the shift adjacent to the target.'
-						})
-					],
 					features: [
+						FeatureLogic.createAbilityFeature({
+							ability: AbilityLogic.createAbility({
+								id: 'kit-vuken-signature',
+								name: 'Probing Attack',
+								description: 'A savage assault forces your foes back.',
+								type: AbilityLogic.createTypeAction(),
+								keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+								target: '1 creature or object',
+								powerRoll: AbilityLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might ],
+									tier1: '5 damage',
+									tier2: '9 damage; push 1',
+									tier3: '12 damage; push 2; prone if the target is your size or smaller'
+								}),
+								effect: 'You can shift up to 2 squares as long as you end the shift adjacent to the target.'
+							})
+						}),
 						FeatureLogic.createFeature({
 							id: 'kit-boren-feature-1',
 							name: 'Aspect Benefits',

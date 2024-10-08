@@ -1,4 +1,3 @@
-import { AbilityPanel } from '../ability-panel/ability-panel';
 import { CampaignSetting } from '../../../models/campaign-setting';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../controls/field/field';
@@ -20,7 +19,7 @@ export const KitPanel = (props: Props) => {
 	try {
 		return (
 			<div className='kit-panel' id={props.mode === PanelMode.Full ? props.kit.id : undefined}>
-				<HeaderText level={1} tags={[ props.kit.type ]}>{props.kit.name}</HeaderText>
+				<HeaderText level={1} tags={[ props.kit.type ]}>{props.kit.name || 'Unnamed Kit'}</HeaderText>
 				<div className='ds-text description-text'>{props.kit.description}</div>
 				{
 					props.mode === PanelMode.Full ?
@@ -51,9 +50,6 @@ export const KitPanel = (props: Props) => {
 									: null
 							}
 							{props.kit.mobility ? <Field label='Mobility' value='Yes' /> : null}
-							{
-								props.kit.abilities.map(a => <AbilityPanel key={a.id} ability={a} hero={props.hero} mode={PanelMode.Full} />)
-							}
 							{
 								props.kit.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)
 							}

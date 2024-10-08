@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityData, FeatureChoiceData, FeatureClassAbilityData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSkillData, FeatureSubclassData } from '../../../models/feature';
+import { Feature, FeatureAbilityData, FeatureChoiceData, FeatureClassAbilityData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSkillChoiceData, FeatureSubclassData } from '../../../models/feature';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { CampaignSetting } from '../../../models/campaign-setting';
@@ -215,7 +215,7 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
-	const getEditableSkill = (data: FeatureSkillData) => {
+	const getEditableSkill = (data: FeatureSkillChoiceData) => {
 		const skills = SkillData.getSkills(props.campaignSettings as CampaignSetting[])
 			.filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
 		const sortedSkills = Collections.sort(skills, s => s.name);
@@ -238,7 +238,7 @@ export const FeaturePanel = (props: Props) => {
 						} else {
 							ids = value as string[];
 						}
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureSkillData;
+						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureSkillChoiceData;
 						dataCopy.selected = ids;
 						if (props.setData) {
 							props.setData(props.feature.id, dataCopy);
@@ -250,9 +250,9 @@ export const FeaturePanel = (props: Props) => {
 						if (props.hero) {
 							const features = HeroLogic.getFeatures(props.hero)
 								.filter(f => f.id !== props.feature.id)
-								.filter(f => f.type === FeatureType.Skill)
+								.filter(f => f.type === FeatureType.SkillChoice)
 								.filter(f => {
-									const data = f.data as FeatureSkillData;
+									const data = f.data as FeatureSkillChoiceData;
 									return data.selected.includes(s);
 								});
 							if (features.length > 0) {
@@ -337,8 +337,8 @@ export const FeaturePanel = (props: Props) => {
 				return getEditableKit(props.feature.data as FeatureKitData);
 			case FeatureType.Language:
 				return getEditableLanguage(props.feature.data as FeatureLanguageData);
-			case FeatureType.Skill:
-				return getEditableSkill(props.feature.data as FeatureSkillData);
+			case FeatureType.SkillChoice:
+				return getEditableSkill(props.feature.data as FeatureSkillChoiceData);
 			case FeatureType.SubclassFeature:
 				return getEditableSubclassFeature(props.feature.data as FeatureSubclassData);
 		}
@@ -413,12 +413,8 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
-	const getExtraSkill = (isChoice: boolean, data: FeatureSkillData) => {
+	const getExtraSkillChoice = (data: FeatureSkillChoiceData) => {
 		if (data.selected.length === 0) {
-			return null;
-		}
-
-		if (!isChoice) {
 			return null;
 		}
 
@@ -451,8 +447,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraKit(props.feature.data as FeatureKitData);
 			case FeatureType.Language:
 				return getExtraLanguage(props.feature.data as FeatureLanguageData);
-			case FeatureType.Skill:
-				return getExtraSkill(props.feature.choice, props.feature.data as FeatureSkillData);
+			case FeatureType.SkillChoice:
+				return getExtraSkillChoice(props.feature.data as FeatureSkillChoiceData);
 			case FeatureType.SubclassFeature:
 				return getExtraSubclassFeature(props.feature.data as FeatureSubclassData);
 		}
@@ -483,7 +479,7 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<div className='feature-panel' id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
-				<HeaderText>{props.feature.name}</HeaderText>
+				<HeaderText>{props.feature.name || 'Unnamed Feature'}</HeaderText>
 				<div className='ds-text' dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.feature.description) }} />
 				{
 					props.mode === PanelMode.Full

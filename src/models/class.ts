@@ -1,5 +1,6 @@
 import { Ability } from './ability';
 import { Characteristic } from '../enums/characteristic';
+import { Element } from './element';
 import { Feature } from './feature';
 import { Kit } from './kit';
 
@@ -21,11 +22,7 @@ export interface SubClass {
 	selected: boolean;
 }
 
-export interface HeroClass {
-	id: string;
-	name: string;
-	description: string;
-
+export interface HeroClass extends Element {
 	heroicResource: string;
 	subclassName: string;
 	subclassCount: number;

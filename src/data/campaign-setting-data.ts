@@ -185,8 +185,8 @@ export class CampaignSettingData {
 			this.orden
 		];
 
-		list.push(...homebrew);
+		list.push(...Collections.sort(homebrew, cs => cs.name));
 
-		return Collections.sort(list, cs => cs.name);
+		return list;
 	};
 }

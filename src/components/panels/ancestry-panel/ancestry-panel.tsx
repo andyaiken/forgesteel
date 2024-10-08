@@ -19,13 +19,13 @@ export const AncestryPanel = (props: Props) => {
 	try {
 		return (
 			<div className='ancestry-panel' id={props.mode === PanelMode.Full ? props.ancestry.id : undefined}>
-				<HeaderText level={1}>{props.ancestry.name}</HeaderText>
+				<HeaderText level={1}>{props.ancestry.name || 'Unnamed Ancestry'}</HeaderText>
 				<div className='ds-text description-text'>{props.ancestry.description}</div>
 				{
 					props.mode === PanelMode.Full ?
 						props.ancestry.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)
 						:
-						<Field label='Features' value={props.ancestry.features.map(f => f.name).join(', ')} />
+						(props.ancestry.features.length > 0 ? <Field label='Features' value={props.ancestry.features.map(f => f.name).join(', ')} /> : null)
 				}
 			</div>
 		);

@@ -4,7 +4,8 @@ import { Statistic } from 'antd';
 import './number-spin.scss';
 
 interface Props {
-	label: string;
+	disabled?: boolean;
+	label?: string;
 	value: number;
 	step?: number;
 	min?: number;
@@ -36,7 +37,7 @@ export const NumberSpin = (props: Props) => {
 
 	try {
 		return (
-			<div className='number-spin'>
+			<div className={props.disabled ? 'number-spin disabled' : 'number-spin'}>
 				<MinusCircleOutlined
 					className={canDown ? 'spin-button' : 'spin-button disabled'}
 					onClick={() => onChange(-1)}

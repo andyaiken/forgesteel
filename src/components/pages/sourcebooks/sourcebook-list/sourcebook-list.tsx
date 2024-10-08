@@ -1,4 +1,4 @@
-import { Badge, Button, Popover } from 'antd';
+import { Badge, Button, Popover, Select } from 'antd';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryData } from '../../../../data/ancestry-data';
 import { AncestryPanel } from '../../../panels/ancestry-panel/ancestry-panel';
@@ -39,13 +39,31 @@ interface Props {
 	viewComplication: (complication: Complication) => void;
 	onSettingChange: (setting: CampaignSetting) => void;
 	onSettingDelete: (setting: CampaignSetting) => void;
+	onCreateHomebrew: (element: string, settingID: string) => void;
 }
 
 export const SourcebookListPage = (props: Props) => {
+	const [ element, setElement ] = useState<string>('Ancestry');
+	const [ settingID, setSettingID ] = useState<string>(props.campaignSettings.filter(cs => cs.isHomebrew).length > 0 ? props.campaignSettings.filter(cs => cs.isHomebrew)[0].id : '');
 	const [ hiddenSettingIDs, setHiddenSettingIDs ] = useState<string[]>([]);
+
+	const setVisibility = (setting: CampaignSetting, visible: boolean) => {
+		if (visible) {
+			const copy = JSON.parse(JSON.stringify(hiddenSettingIDs.filter(id => id !== setting.id))) as string[];
+			setHiddenSettingIDs(copy);
+		} else {
+			const copy = JSON.parse(JSON.stringify(hiddenSettingIDs)) as string[];
+			copy.push(setting.id);
+			setHiddenSettingIDs(copy);
+		}
+	};
 
 	const getSettings = () => {
 		return props.campaignSettings.filter(cs => !hiddenSettingIDs.includes(cs.id));
+	};
+
+	const createHomebrew = () => {
+		props.onCreateHomebrew(element, settingID);
 	};
 
 	const getAncestries = () => {
@@ -288,9 +306,42 @@ export const SourcebookListPage = (props: Props) => {
 	};
 
 	try {
+		const elementOptions = [ 'Ancestry', 'Culture', 'Career', 'Class', 'Kit', 'Complication' ].map(e => ({ label: e, value: e }));
+		const settingOptions = props.campaignSettings.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Setting', value: cs.id }));
+		settingOptions.push({ label: 'A new campaign setting', value: '' });
+
 		return (
 			<div className='sourcebook-list-page'>
 				<AppHeader goHome={props.goHome} showAbout={props.showAbout}>
+					<Popover
+						trigger='click'
+						placement='bottom'
+						content={(
+							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								<Select
+									style={{ width: '100%' }}
+									placeholder='Select'
+									options={elementOptions}
+									optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+									value={element}
+									onChange={setElement}
+								/>
+								<Select
+									style={{ width: '100%' }}
+									placeholder='Select'
+									options={settingOptions}
+									optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+									value={settingID}
+									onChange={setSettingID}
+								/>
+								<Button onClick={createHomebrew}>Create</Button>
+							</div>
+						)}
+					>
+						<Button>
+							Create Homebrew
+						</Button>
+					</Popover>
 					<Popover
 						trigger='click'
 						placement='bottom'
@@ -302,16 +353,7 @@ export const SourcebookListPage = (props: Props) => {
 											key={cs.id}
 											setting={cs}
 											visible={!hiddenSettingIDs.includes(cs.id)}
-											onSetVisible={(setting, visible) => {
-												if (visible) {
-													const copy = JSON.parse(JSON.stringify(hiddenSettingIDs.filter(id => id !== setting.id))) as string[];
-													setHiddenSettingIDs(copy);
-												} else {
-													const copy = JSON.parse(JSON.stringify(hiddenSettingIDs)) as string[];
-													copy.push(setting.id);
-													setHiddenSettingIDs(copy);
-												}
-											}}
+											onSetVisible={setVisibility}
 											onChange={props.onSettingChange}
 											onDelete={props.onSettingDelete}
 										/>

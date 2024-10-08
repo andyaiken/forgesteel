@@ -1,5 +1,6 @@
 import { Ability } from './ability';
 import { DamageModifier } from './damage-modifier';
+import { Element } from './element';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Kit } from './kit';
@@ -57,6 +58,10 @@ export interface FeatureSizeData extends FeatureData {
 };
 
 export interface FeatureSkillData extends FeatureData {
+	skill: string;
+};
+
+export interface FeatureSkillChoiceData extends FeatureData {
 	options: string[];
 	listOptions: SkillList[];
 	count: number;
@@ -69,13 +74,7 @@ export interface FeatureSubclassData extends FeatureData {
 	selected: Feature[];
 };
 
-export interface Feature {
-	id: string;
-	name: string;
-	description: string;
-
+export interface Feature extends Element {
 	type: FeatureType;
-	choice: boolean;
-
 	data: FeatureData | null;
 }

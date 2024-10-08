@@ -369,7 +369,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 		let choices: JSX.Element[] = [];
 		if (props.hero.ancestry) {
 			choices = FeatureLogic.getFeaturesFromAncestry(props.hero.ancestry)
-				.filter(f => f.choice)
+				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
 						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} campaignSettings={props.campaignSettings} setData={props.setFeatureData} />
@@ -434,7 +434,7 @@ const CultureSection = (props: CultureSectionProps) => {
 		let choices: JSX.Element[] = [];
 		if (props.hero.culture) {
 			choices = FeatureLogic.getFeaturesFromCulture(props.hero.culture)
-				.filter(f => f.choice)
+				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
 						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} campaignSettings={props.campaignSettings} setData={props.setFeatureData} />
@@ -455,7 +455,7 @@ const CultureSection = (props: CultureSectionProps) => {
 							options={languages.map(l => ({ label: l.name, value: l.name, desc: l.description }))}
 							optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 							value={props.hero.culture.languages.length > 0 ? props.hero.culture.languages[0] : null}
-							onChange={value => props.selectLanguages([ value ])}
+							onChange={value => props.selectLanguages(value ? [ value ] : [])}
 						/>
 						<div className='ds-text'>Choose your Environment, Organization, and Upbringing.</div>
 						<Space direction='vertical' style={{ width: '100%' }}>
@@ -545,7 +545,7 @@ const CareerSection = (props: CareerSectionProps) => {
 		let choices: JSX.Element[] = [];
 		if (props.hero.career) {
 			choices = FeatureLogic.getFeaturesFromCareer(props.hero.career)
-				.filter(f => f.choice)
+				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
 						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} campaignSettings={props.campaignSettings} setData={props.setFeatureData} />
@@ -607,7 +607,7 @@ const ClassSection = (props: ClassSectionProps) => {
 		let choices: JSX.Element[] = [];
 		if (props.hero.class) {
 			choices = FeatureLogic.getFeaturesFromClass(props.hero.class)
-				.filter(f => f.choice)
+				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
 						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} campaignSettings={props.campaignSettings} setData={props.setFeatureData} />
@@ -643,7 +643,7 @@ const ClassSection = (props: ClassSectionProps) => {
 						<div className='characteristic-item'>MGT</div>
 						<div className='characteristic-item'>AGI</div>
 						<div className='characteristic-item'>RSN</div>
-						<div className='characteristic-item'>INT</div>
+						<div className='characteristic-item'>INU</div>
 						<div className='characteristic-item'>PRE</div>
 					</div>
 					<Radio.Group
@@ -730,7 +730,7 @@ const KitSection = (props: KitSectionProps) => {
 		let choices: JSX.Element[] = [];
 		if (props.hero.kit) {
 			choices = FeatureLogic.getFeaturesFromKit(props.hero.kit)
-				.filter(f => f.choice)
+				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
 						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} campaignSettings={props.campaignSettings} setData={props.setFeatureData} />
@@ -790,7 +790,7 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 		let choices: JSX.Element[] = [];
 		if (props.hero.complication) {
 			choices = FeatureLogic.getFeaturesFromComplication(props.hero.complication)
-				.filter(f => f.choice)
+				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
 						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} campaignSettings={props.campaignSettings} setData={props.setFeatureData} />

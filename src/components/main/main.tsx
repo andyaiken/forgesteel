@@ -6,7 +6,6 @@ import { Ancestry } from '../../models/ancestry';
 import { AncestryModal } from '../modals/ancestry/ancestry-modal';
 import { CampaignSetting } from '../../models/campaign-setting';
 import { CampaignSettingData } from '../../data/campaign-setting-data';
-import { CampaignSettingLogic } from '../../logic/campaign-setting-logic';
 import { Career } from '../../models/career';
 import { CareerModal } from '../modals/career/career-modal';
 import { Characteristic } from '../../enums/characteristic';
@@ -17,6 +16,9 @@ import { Complication } from '../../models/complication';
 import { ComplicationModal } from '../modals/complication/complication-modal';
 import { Culture } from '../../models/culture';
 import { CultureModal } from '../modals/culture/culture-modal';
+import { Element } from '../../models/element';
+import { ElementEditPage } from '../pages/sourcebooks/element-edit/element-edit';
+import { FactoryLogic } from '../../logic/factory-logic';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
 import { HeroEditPage } from '../pages/heroes/hero-edit/hero-edit-page';
@@ -27,7 +29,6 @@ import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { ImportHeroModal } from '../modals/import-hero/import-hero-modal';
 import { Kit } from '../../models/kit';
 import { KitModal } from '../modals/kit/kit-modal';
-import { KitType } from '../../enums/kit';
 import { Options } from '../../models/options';
 import { SourcebookListPage } from '../pages/sourcebooks/sourcebook-list/sourcebook-list';
 import { Utils } from '../../utils/utils';
@@ -44,7 +45,8 @@ enum Page {
 	HeroList,
 	HeroView,
 	HeroEdit,
-	SourcebookList
+	SourcebookList,
+	ElementEdit
 }
 
 interface Props {
@@ -59,6 +61,9 @@ export const Main = (props: Props) => {
 	const [ options, setOptions ] = useState<Options>(props.options);
 	const [ page, setPage ] = useState<Page>(Page.Welcome);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
+	const [ selectedElement, setSelectedElement ] = useState<Ancestry | Culture | Career | HeroClass | Kit | Complication | null>(null);
+	const [ selectedElementSetting, setSelectedElementSetting ] = useState<CampaignSetting | null>(null);
+	const [ selectedElementType, setSelectedElementType ] = useState<string>('');
 	const [ drawer, setDrawer ] = useState<JSX.Element | null>(null);
 
 	//#region Persistence
@@ -91,16 +96,25 @@ export const Main = (props: Props) => {
 	const showWelcome = () => {
 		setPage(Page.Welcome);
 		setSelectedHero(null);
+		setSelectedElement(null);
+		setSelectedElementSetting(null);
+		setSelectedElementType('');
 	};
 
 	const showHeroList = () => {
 		setPage(Page.HeroList);
 		setSelectedHero(null);
+		setSelectedElement(null);
+		setSelectedElementSetting(null);
+		setSelectedElementType('');
 	};
 
 	const showSourcebookList = () => {
 		setPage(Page.SourcebookList);
 		setSelectedHero(null);
+		setSelectedElement(null);
+		setSelectedElementSetting(null);
+		setSelectedElementType('');
 	};
 
 	//#endregion
@@ -108,7 +122,7 @@ export const Main = (props: Props) => {
 	//#region Heroes
 
 	const addHero = () => {
-		const hero = HeroLogic.createHero([ CampaignSettingData.core.id, CampaignSettingData.orden.id ]);
+		const hero = FactoryLogic.createHero([ CampaignSettingData.core.id, CampaignSettingData.orden.id ]);
 
 		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
 		copy.push(hero);
@@ -198,11 +212,38 @@ export const Main = (props: Props) => {
 
 	//#region Sourcebooks
 
+	const createHomebrew = (element: string, settingID: string) => {
+		const setting = homebrewSettings.find(cs => cs.id === settingID) || null;
+		switch (element) {
+			case 'Ancestry':
+				createAncestry(null, setting);
+				break;
+			case 'Culture':
+				createCulture(null, setting);
+				break;
+			case 'Career':
+				createCareer(null, setting);
+				break;
+			case 'Class':
+				createClass(null, setting);
+				break;
+			case 'Kit':
+				createKit(null, setting);
+				break;
+			case 'Complication':
+				createComplication(null, setting);
+				break;
+		}
+	};
+
 	const createAncestry = (original: Ancestry | null, setting: CampaignSetting | null) => {
 		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
 		if (!setting) {
-			setting = CampaignSettingLogic.createCampaignSetting();
+			setting = FactoryLogic.createCampaignSetting();
 			settings.push(setting);
+		} else {
+			const id = setting.id;
+			setting = settings.find(cs => cs.id === id) as CampaignSetting;
 		}
 
 		let ancestry: Ancestry;
@@ -210,24 +251,26 @@ export const Main = (props: Props) => {
 			ancestry = JSON.parse(JSON.stringify(original)) as Ancestry;
 			ancestry.id = Utils.guid();
 		} else {
-			ancestry = {
-				id: Utils.guid(),
-				name: '',
-				description: '',
-				features: []
-			};
+			ancestry = FactoryLogic.createAncestry();
 		}
 
 		setting.ancestries.push(ancestry);
 		persistHomebrewSettings(settings);
-		onSelectAncestry(ancestry);
+		if (drawer) {
+			onSelectAncestry(ancestry);
+		} else {
+			editAncestry(ancestry, setting);
+		}
 	};
 
 	const createCulture = (original: Culture | null, setting: CampaignSetting | null) => {
 		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
 		if (!setting) {
-			setting = CampaignSettingLogic.createCampaignSetting();
+			setting = FactoryLogic.createCampaignSetting();
 			settings.push(setting);
+		} else {
+			const id = setting.id;
+			setting = settings.find(cs => cs.id === id) as CampaignSetting;
 		}
 
 		let culture: Culture;
@@ -235,27 +278,26 @@ export const Main = (props: Props) => {
 			culture = JSON.parse(JSON.stringify(original)) as Culture;
 			culture.id = Utils.guid();
 		} else {
-			culture = {
-				id: Utils.guid(),
-				name: '',
-				description: '',
-				languages: [],
-				environment: null,
-				organization: null,
-				upbringing: null
-			};
+			culture = FactoryLogic.createCulture();
 		}
 
 		setting.cultures.push(culture);
 		persistHomebrewSettings(settings);
-		onSelectCulture(culture);
+		if (drawer) {
+			onSelectCulture(culture);
+		} else {
+			editCulture(culture, setting);
+		}
 	};
 
 	const createCareer = (original: Career | null, setting: CampaignSetting | null) => {
 		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
 		if (!setting) {
-			setting = CampaignSettingLogic.createCampaignSetting();
+			setting = FactoryLogic.createCampaignSetting();
 			settings.push(setting);
+		} else {
+			const id = setting.id;
+			setting = settings.find(cs => cs.id === id) as CampaignSetting;
 		}
 
 		let career: Career;
@@ -263,25 +305,26 @@ export const Main = (props: Props) => {
 			career = JSON.parse(JSON.stringify(original)) as Career;
 			career.id = Utils.guid();
 		} else {
-			career = {
-				id: Utils.guid(),
-				name: '',
-				description: '',
-				features: [],
-				title: null
-			};
+			career = FactoryLogic.createCareer();
 		}
 
 		setting.careers.push(career);
 		persistHomebrewSettings(settings);
-		onSelectCareer(career);
+		if (drawer) {
+			onSelectCareer(career);
+		} else {
+			editCareer(career, setting);
+		}
 	};
 
 	const createClass = (original: HeroClass | null, setting: CampaignSetting | null) => {
 		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
 		if (!setting) {
-			setting = CampaignSettingLogic.createCampaignSetting();
+			setting = FactoryLogic.createCampaignSetting();
 			settings.push(setting);
+		} else {
+			const id = setting.id;
+			setting = settings.find(cs => cs.id === id) as CampaignSetting;
 		}
 
 		let heroClass: HeroClass;
@@ -289,33 +332,26 @@ export const Main = (props: Props) => {
 			heroClass = JSON.parse(JSON.stringify(original)) as HeroClass;
 			heroClass.id = Utils.guid();
 		} else {
-			heroClass = {
-				id: Utils.guid(),
-				name: '',
-				description: '',
-				heroicResource: '',
-				subclassName: '',
-				subclassCount: 1,
-				primaryCharacteristics: [],
-				featuresByLevel: [],
-				abilities: [],
-				kits: [],
-				subclasses: [],
-				level: 1,
-				characteristics: []
-			};
+			heroClass = FactoryLogic.createClass();
 		}
 
 		setting.classes.push(heroClass);
 		persistHomebrewSettings(settings);
-		onSelectClass(heroClass);
+		if (drawer) {
+			onSelectClass(heroClass);
+		} else {
+			editClass(heroClass, setting);
+		}
 	};
 
 	const createKit = (original: Kit | null, setting: CampaignSetting | null) => {
 		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
 		if (!setting) {
-			setting = CampaignSettingLogic.createCampaignSetting();
+			setting = FactoryLogic.createCampaignSetting();
 			settings.push(setting);
+		} else {
+			const id = setting.id;
+			setting = settings.find(cs => cs.id === id) as CampaignSetting;
 		}
 
 		let kit: Kit;
@@ -323,39 +359,26 @@ export const Main = (props: Props) => {
 			kit = JSON.parse(JSON.stringify(original)) as Kit;
 			kit.id = Utils.guid();
 		} else {
-			kit = {
-				id: Utils.guid(),
-				name: '',
-				description: '',
-				type: KitType.Martial,
-				armor: [],
-				weapon: [],
-				implement: [],
-				stamina: 0,
-				speed: 0,
-				stability: 0,
-				meleeDamage: null,
-				rangedDamage: null,
-				magicalDamage: null,
-				distance: 0,
-				reach: 0,
-				area: 0,
-				mobility: false,
-				abilities: [],
-				features: []
-			};
+			kit = FactoryLogic.createKit();
 		}
 
 		setting.kits.push(kit);
 		persistHomebrewSettings(settings);
-		onSelectKit(kit);
+		if (drawer) {
+			onSelectKit(kit);
+		} else {
+			editKit(kit, setting);
+		}
 	};
 
 	const createComplication = (original: Complication | null, setting: CampaignSetting | null) => {
 		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
 		if (!setting) {
-			setting = CampaignSettingLogic.createCampaignSetting();
+			setting = FactoryLogic.createCampaignSetting();
 			settings.push(setting);
+		} else {
+			const id = setting.id;
+			setting = settings.find(cs => cs.id === id) as CampaignSetting;
 		}
 
 		let complication: Complication;
@@ -363,17 +386,64 @@ export const Main = (props: Props) => {
 			complication = JSON.parse(JSON.stringify(original)) as Complication;
 			complication.id = Utils.guid();
 		} else {
-			complication = {
-				id: Utils.guid(),
-				name: '',
-				description: '',
-				features: []
-			};
+			complication = FactoryLogic.createComplication();
 		}
 
 		setting.complications.push(complication);
 		persistHomebrewSettings(settings);
-		onSelectComplication(complication);
+		if (drawer) {
+			onSelectComplication(complication);
+		} else {
+			editComplication(complication, setting);
+		}
+	};
+
+	const editAncestry = (ancestry: Ancestry, setting: CampaignSetting) => {
+		setSelectedElement(ancestry);
+		setSelectedElementSetting(setting);
+		setSelectedElementType('Ancestry');
+		setPage(Page.ElementEdit);
+		setDrawer(null);
+	};
+
+	const editCulture = (culture: Culture, setting: CampaignSetting) => {
+		setSelectedElement(culture);
+		setSelectedElementSetting(setting);
+		setSelectedElementType('Culture');
+		setPage(Page.ElementEdit);
+		setDrawer(null);
+	};
+
+	const editCareer = (career: Career, setting: CampaignSetting) => {
+		setSelectedElement(career);
+		setSelectedElementSetting(setting);
+		setSelectedElementType('Career');
+		setPage(Page.ElementEdit);
+		setDrawer(null);
+	};
+
+	const editClass = (heroClass: HeroClass, setting: CampaignSetting) => {
+		setSelectedElement(heroClass);
+		setSelectedElementSetting(setting);
+		setSelectedElementType('Class');
+		setPage(Page.ElementEdit);
+		setDrawer(null);
+	};
+
+	const editKit = (kit: Kit, setting: CampaignSetting) => {
+		setSelectedElement(kit);
+		setSelectedElementSetting(setting);
+		setSelectedElementType('Kit');
+		setPage(Page.ElementEdit);
+		setDrawer(null);
+	};
+
+	const editComplication = (complication: Complication, setting: CampaignSetting) => {
+		setSelectedElement(complication);
+		setSelectedElementSetting(setting);
+		setSelectedElementType('Complication');
+		setPage(Page.ElementEdit);
+		setDrawer(null);
 	};
 
 	const deleteAncestry = (ancestry: Ancestry) => {
@@ -444,6 +514,71 @@ export const Main = (props: Props) => {
 		persistHomebrewSettings(copy.filter(cs => cs.id !== setting.id));
 	};
 
+	const saveEditSelectedElement = (element: Element) => {
+		if (selectedElement) {
+			const list = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+			const setting = list.find(cs => cs.id === (selectedElementSetting as CampaignSetting).id);
+			if (setting) {
+				switch (selectedElementType) {
+					case 'Ancestry': {
+						const ancestryIndex = setting.ancestries.findIndex(a => a.id === element.id);
+						if (ancestryIndex !== -1) {
+							setting.ancestries[ancestryIndex] = element as unknown as Ancestry;
+						}
+					}
+						break;
+					case 'Culture': {
+						const cultureIndex = setting.cultures.findIndex(c => c.id === element.id);
+						if (cultureIndex !== -1) {
+							setting.cultures[cultureIndex] = element as unknown as Culture;
+						}
+					}
+						break;
+					case 'Career': {
+						const careerIndex = setting.careers.findIndex(c => c.id === element.id);
+						if (careerIndex !== -1) {
+							setting.careers[careerIndex] = element as unknown as Career;
+						}
+					}
+						break;
+					case 'Class': {
+						const classIndex = setting.classes.findIndex(c => c.id === element.id);
+						if (classIndex !== -1) {
+							setting.classes[classIndex] = element as unknown as HeroClass;
+						}
+					}
+						break;
+					case 'Kit': {
+						const kitIndex = setting.kits.findIndex(k => k.id === element.id);
+						if (kitIndex !== -1) {
+							setting.kits[kitIndex] = element as unknown as Kit;
+						}
+					}
+						break;
+					case 'Complication': {
+						const complicationIndex = setting.complications.findIndex(c => c.id === element.id);
+						if (complicationIndex !== -1) {
+							setting.complications[complicationIndex] = element as unknown as Complication;
+						}
+					}
+						break;
+				}
+			};
+
+			persistHomebrewSettings(list);
+			setPage(Page.SourcebookList);
+			setSelectedElement(null);
+			setSelectedElementSetting(null);
+			setSelectedElementType('');
+		}
+	};
+
+	const cancelEditSelectedElement = () => {
+		if (selectedElement) {
+			setPage(Page.SourcebookList);
+		}
+	};
+
 	//#endregion
 
 	//#region Modals
@@ -455,6 +590,10 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectAncestry = (ancestry: Ancestry) => {
+		const container = CampaignSettingData
+			.getCampaignSettings(homebrewSettings)
+			.find(cs => cs.ancestries.find(a => a.id === ancestry.id));
+
 		setDrawer(
 			<AncestryModal
 				ancestry={ancestry}
@@ -462,12 +601,17 @@ export const Main = (props: Props) => {
 				isHomebrew={!!homebrewSettings.flatMap(cs => cs.ancestries).find(a => a.id === ancestry.id)}
 				createHomebrew={setting => createAncestry(ancestry, setting)}
 				export={format => Utils.export(ancestry.id, ancestry.name || 'Ancestry', ancestry, 'ancestry', format)}
+				edit={() => editAncestry(ancestry, container as CampaignSetting)}
 				delete={() => deleteAncestry(ancestry)}
 			/>
 		);
 	};
 
 	const onSelectCulture = (culture: Culture) => {
+		const container = CampaignSettingData
+			.getCampaignSettings(homebrewSettings)
+			.find(cs => cs.cultures.find(c => c.id === culture.id));
+
 		setDrawer(
 			<CultureModal
 				culture={culture}
@@ -475,12 +619,17 @@ export const Main = (props: Props) => {
 				isHomebrew={!!homebrewSettings.flatMap(cs => cs.cultures).find(c => c.id === culture.id)}
 				createHomebrew={setting => createCulture(culture, setting)}
 				export={format => Utils.export(culture.id, culture.name || 'Culture', culture, 'culture', format)}
+				edit={() => editCulture(culture, container as CampaignSetting)}
 				delete={() => deleteCulture(culture)}
 			/>
 		);
 	};
 
 	const onSelectCareer = (career: Career) => {
+		const container = CampaignSettingData
+			.getCampaignSettings(homebrewSettings)
+			.find(cs => cs.careers.find(c => c.id === career.id));
+
 		setDrawer(
 			<CareerModal
 				career={career}
@@ -488,12 +637,17 @@ export const Main = (props: Props) => {
 				isHomebrew={!!homebrewSettings.flatMap(cs => cs.careers).find(c => c.id === career.id)}
 				createHomebrew={setting => createCareer(career, setting)}
 				export={format => Utils.export(career.id, career.name || 'Career', career, 'career', format)}
+				edit={() => editCareer(career, container as CampaignSetting)}
 				delete={() => deleteCareer(career)}
 			/>
 		);
 	};
 
 	const onSelectClass = (heroClass: HeroClass) => {
+		const container = CampaignSettingData
+			.getCampaignSettings(homebrewSettings)
+			.find(cs => cs.classes.find(c => c.id === heroClass.id));
+
 		setDrawer(
 			<ClassModal
 				heroClass={heroClass}
@@ -501,12 +655,17 @@ export const Main = (props: Props) => {
 				isHomebrew={!!homebrewSettings.flatMap(cs => cs.classes).find(c => c.id === heroClass.id)}
 				createHomebrew={setting => createClass(heroClass, setting)}
 				export={format => Utils.export(heroClass.id, heroClass.name || 'Class', heroClass, 'class', format)}
+				edit={() => editClass(heroClass, container as CampaignSetting)}
 				delete={() => deleteClass(heroClass)}
 			/>
 		);
 	};
 
 	const onSelectKit = (kit: Kit) => {
+		const container = CampaignSettingData
+			.getCampaignSettings(homebrewSettings)
+			.find(cs => cs.kits.find(k => k.id === kit.id));
+
 		setDrawer(
 			<KitModal
 				kit={kit}
@@ -514,12 +673,17 @@ export const Main = (props: Props) => {
 				isHomebrew={!!homebrewSettings.flatMap(cs => cs.kits).find(k => k.id === kit.id)}
 				createHomebrew={setting => createKit(kit, setting)}
 				export={format => Utils.export(kit.id, kit.name || 'Kit', kit, 'kit', format)}
+				edit={() => editKit(kit, container as CampaignSetting)}
 				delete={() => deleteKit(kit)}
 			/>
 		);
 	};
 
 	const onSelectComplication = (complication: Complication) => {
+		const container = CampaignSettingData
+			.getCampaignSettings(homebrewSettings)
+			.find(cs => cs.complications.find(c => c.id === complication.id));
+
 		setDrawer(
 			<ComplicationModal
 				complication={complication}
@@ -527,6 +691,7 @@ export const Main = (props: Props) => {
 				isHomebrew={!!homebrewSettings.flatMap(cs => cs.complications).find(c => c.id === complication.id)}
 				createHomebrew={setting => createComplication(complication, setting)}
 				export={format => Utils.export(complication.id, complication.name || 'Complication', complication, 'complication', format)}
+				edit={() => editComplication(complication, container as CampaignSetting)}
 				delete={() => deleteComplication(complication)}
 			/>
 		);
@@ -636,6 +801,19 @@ export const Main = (props: Props) => {
 						viewComplication={onSelectComplication}
 						onSettingChange={changeCampaignSetting}
 						onSettingDelete={deleteCampaignSetting}
+						onCreateHomebrew={createHomebrew}
+					/>
+				);
+			case Page.ElementEdit:
+				return (
+					<ElementEditPage
+						element={selectedElement as Ancestry | Culture | Career | HeroClass | Kit | Complication}
+						elementType={selectedElementType}
+						campaignSettings={[ CampaignSettingData.core, CampaignSettingData.orden, selectedElementSetting as CampaignSetting ]}
+						goHome={showWelcome}
+						showAbout={showAbout}
+						saveChanges={saveEditSelectedElement}
+						cancelChanges={cancelEditSelectedElement}
 					/>
 				);
 		}
@@ -649,6 +827,7 @@ export const Main = (props: Props) => {
 			str = 'Heroes';
 			break;
 		case Page.SourcebookList:
+		case Page.ElementEdit:
 			str = 'Sourcebooks';
 			break;
 	}

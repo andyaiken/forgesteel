@@ -28,34 +28,35 @@ export class KitData {
 		reach: 0,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-cloak-and-dagger-signature',
-				name: 'Fade',
-				description: 'A stab, and a few quick, careful steps back.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-				distance: [
-					AbilityLogic.createDistance({
-						type: AbilityDistanceType.Reach,
-						value: 1
-					}),
-					AbilityLogic.createDistance({
-						type: AbilityDistanceType.Ranged,
-						value: 5
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-cloak-and-dagger-signature',
+					name: 'Fade',
+					description: 'A stab, and a few quick, careful steps back.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+					distance: [
+						AbilityLogic.createDistance({
+							type: AbilityDistanceType.Reach,
+							value: 1
+						}),
+						AbilityLogic.createDistance({
+							type: AbilityDistanceType.Ranged,
+							value: 5
+						})
+					],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '3 damage; you shift 1 square',
+						tier2: '8 damage; you shift 2 squares',
+						tier3: '12 damage; you shift 3 squares'
 					})
-				],
-				target: '1 creature',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '3 damage; you shift 1 square',
-					tier2: '8 damage; you shift 2 squares',
-					tier3: '12 damage; you shift 3 squares'
 				})
 			})
-		],
-		features: []
+		]
 	};
 
 	static guisarmier: Kit = {
@@ -76,25 +77,26 @@ export class KitData {
 		reach: 1,
 		area: 0,
 		mobility: false,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-guisarmier-signature',
-				name: 'Forward Thrust, Backward Smash',
-				description: 'In your hands, the haft is as good as the head.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-				target: '2 creatures or objects',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '2 damage',
-					tier2: '4 damage',
-					tier3: '6 damage'
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-guisarmier-signature',
+					name: 'Forward Thrust, Backward Smash',
+					description: 'In your hands, the haft is as good as the head.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					target: '2 creatures or objects',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '2 damage',
+						tier2: '4 damage',
+						tier3: '6 damage'
+					})
 				})
 			})
-		],
-		features: []
+		]
 	};
 
 	static martialArtist: Kit = {
@@ -115,26 +117,27 @@ export class KitData {
 		reach: 0,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-martial-artist-signature',
-				name: 'Battle Grace',
-				description: 'You feint to move your enemies into perfect position.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-				target: '1 creature',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '3 damage',
-					tier2: '7 damage; you swap places with the target',
-					tier3: '10 damage; you swap places with the target, then slide the target two squares'
-				}),
-				effect: 'If you roll a 12 or better and can’t swap places with the target because one or both of you is too big to fit into the swapped space, you both remain in your original spaces and the target takes 2 extra damage.'
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-martial-artist-signature',
+					name: 'Battle Grace',
+					description: 'You feint to move your enemies into perfect position.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '3 damage',
+						tier2: '7 damage; you swap places with the target',
+						tier3: '10 damage; you swap places with the target, then slide the target two squares'
+					}),
+					effect: 'If you roll a 12 or better and can’t swap places with the target because one or both of you is too big to fit into the swapped space, you both remain in your original spaces and the target takes 2 extra damage.'
+				})
 			})
-		],
-		features: []
+		]
 	};
 
 	static mountain: Kit = {
@@ -155,26 +158,27 @@ export class KitData {
 		reach: 0,
 		area: 0,
 		mobility: false,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-mountain-signature',
-				name: 'Pain For Pain',
-				description: 'An enemy who tagged you will pay for that.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-				target: '1 creature',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '3 damage',
-					tier2: '8 damage',
-					tier3: '12 damage'
-				}),
-				effect: 'If the target dealt damage to you since the end of your last turn, this attack gains an edge.'
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-mountain-signature',
+					name: 'Pain For Pain',
+					description: 'An enemy who tagged you will pay for that.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '3 damage',
+						tier2: '8 damage',
+						tier3: '12 damage'
+					}),
+					effect: 'If the target dealt damage to you since the end of your last turn, this attack gains an edge.'
+				})
 			})
-		],
-		features: []
+		]
 	};
 
 	static panther: Kit = {
@@ -195,26 +199,27 @@ export class KitData {
 		reach: 0,
 		area: 0,
 		mobility: false,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-panther-signature',
-				name: 'Devastating Rush',
-				description: 'The faster you move, the harder you hit.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-				target: '1 creature or object',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '3 damage',
-					tier2: '8 damage',
-					tier3: '12 damage'
-				}),
-				effect: 'You can move up to 3 squares straight toward the target before this attack. You deal extra damage equal to the distance moved this way.'
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-panther-signature',
+					name: 'Devastating Rush',
+					description: 'The faster you move, the harder you hit.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					target: '1 creature or object',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '3 damage',
+						tier2: '8 damage',
+						tier3: '12 damage'
+					}),
+					effect: 'You can move up to 3 squares straight toward the target before this attack. You deal extra damage equal to the distance moved this way.'
+				})
 			})
-		],
-		features: []
+		]
 	};
 
 	static pugilist: Kit = {
@@ -235,26 +240,27 @@ export class KitData {
 		reach: 0,
 		area: 0,
 		mobility: false,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-pugilist-signature',
-				name: 'Let’s Dance',
-				description: 'Keeping your enemies stumbling around the battlefield is second nature to you.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-				target: '1 creature',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '3 damage',
-					tier2: '8 damage; slide 1',
-					tier3: '12 damage; slide 2'
-				}),
-				effect: 'You can shift into any square your target leaves after you slide them.'
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-pugilist-signature',
+					name: 'Let’s Dance',
+					description: 'Keeping your enemies stumbling around the battlefield is second nature to you.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '3 damage',
+						tier2: '8 damage; slide 1',
+						tier3: '12 damage; slide 2'
+					}),
+					effect: 'You can shift into any square your target leaves after you slide them.'
+				})
 			})
-		],
-		features: []
+		]
 	};
 
 	static raider: Kit = {
@@ -275,25 +281,26 @@ export class KitData {
 		reach: 0,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-raider-signature',
-				name: 'Shield Bash',
-				description: 'In your hands, a shield isn’t just for protection.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-				target: '1 creature',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '3 damage; push 1',
-					tier2: '7 damage; push 2',
-					tier3: '10 damage; push 3; prone if the target is your size or smaller'
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-raider-signature',
+					name: 'Shield Bash',
+					description: 'In your hands, a shield isn’t just for protection.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '3 damage; push 1',
+						tier2: '7 damage; push 2',
+						tier3: '10 damage; push 3; prone if the target is your size or smaller'
+					})
 				})
 			})
-		],
-		features: []
+		]
 	};
 
 	static ranger: Kit = {
@@ -314,25 +321,26 @@ export class KitData {
 		reach: 0,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-ranger-signature',
-				name: 'Hamstring Shot',
-				description: 'A well-placed shot leaves your enemy struggling to move.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
-				target: '1 creature',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '2 damage',
-					tier2: '6 damage; slowed (EoT)',
-					tier3: '9 damage; slowed (EoE)'
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-ranger-signature',
+					name: 'Hamstring Shot',
+					description: 'A well-placed shot leaves your enemy struggling to move.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '2 damage',
+						tier2: '6 damage; slowed (EoT)',
+						tier3: '9 damage; slowed (EoE)'
+					})
 				})
 			})
-		],
-		features: []
+		]
 	};
 
 	static rapidFire: Kit = {
@@ -353,25 +361,26 @@ export class KitData {
 		reach: 0,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-rapid-fire-signature',
-				name: 'Two Shot',
-				description: 'When you fire two arrows back to back, both hit their mark.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
-				target: '2 creatures or objects',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '2 damage',
-					tier2: '4 damage',
-					tier3: '5 damage'
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-rapid-fire-signature',
+					name: 'Two Shot',
+					description: 'When you fire two arrows back to back, both hit their mark.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					target: '2 creatures or objects',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '2 damage',
+						tier2: '4 damage',
+						tier3: '5 damage'
+					})
 				})
 			})
-		],
-		features: []
+		]
 	};
 
 	static retiarius: Kit = {
@@ -392,25 +401,26 @@ export class KitData {
 		reach: 1,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-retiarius-signature',
-				name: 'Net And Stab',
-				description: 'The well-thrown net that follows your main attack leaves your foes right where you want them.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-				target: '1 creature',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '2 damage',
-					tier2: '5 damage; slowed (EoT)',
-					tier3: '8 damage; restrained (EoT)'
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-retiarius-signature',
+					name: 'Net And Stab',
+					description: 'The well-thrown net that follows your main attack leaves your foes right where you want them.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '2 damage',
+						tier2: '5 damage; slowed (EoT)',
+						tier3: '8 damage; restrained (EoT)'
+					})
 				})
 			})
-		],
-		features: []
+		]
 	};
 
 	static shiningArmor: Kit = {
@@ -431,25 +441,26 @@ export class KitData {
 		reach: 0,
 		area: 0,
 		mobility: false,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-shining-armor-signature',
-				name: 'Protective Attack',
-				description: 'The strength of your assault makes it impossible for your foe to ignore you.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-				target: '1 creature',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '3 damage; taunted (EoT)',
-					tier2: '7 damage; taunted (EoT)',
-					tier3: '10 damage; taunted (EoT)'
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-shining-armor-signature',
+					name: 'Protective Attack',
+					description: 'The strength of your assault makes it impossible for your foe to ignore you.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '3 damage; taunted (EoT)',
+						tier2: '7 damage; taunted (EoT)',
+						tier3: '10 damage; taunted (EoT)'
+					})
 				})
 			})
-		],
-		features: []
+		]
 	};
 
 	static sniper: Kit = {
@@ -470,26 +481,27 @@ export class KitData {
 		reach: 0,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-sniper-signature',
-				name: 'Patient Shot',
-				description: 'Breathe … aim … wait… then strike!',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
-				target: '1 creature',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '3 damage',
-					tier2: '7 damage',
-					tier3: '10 damage'
-				}),
-				effect: 'If you don’t take a move action this turn, you gain an edge on this attack.'
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-sniper-signature',
+					name: 'Patient Shot',
+					description: 'Breathe … aim … wait… then strike!',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '3 damage',
+						tier2: '7 damage',
+						tier3: '10 damage'
+					}),
+					effect: 'If you don’t take a move action this turn, you gain an edge on this attack.'
+				})
 			})
-		],
-		features: []
+		]
 	};
 
 	static stickAndRobe: Kit = {
@@ -510,25 +522,26 @@ export class KitData {
 		reach: 1,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-stick-and-robe-signature',
-				name: 'Where I Want You',
-				description: 'When your stick speaks, your enemy moves.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-				target: '1 creature',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '3 damage',
-					tier2: '7 damage; slide 1',
-					tier3: '10 damage; slide 3'
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-stick-and-robe-signature',
+					name: 'Where I Want You',
+					description: 'When your stick speaks, your enemy moves.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '3 damage',
+						tier2: '7 damage; slide 1',
+						tier3: '10 damage; slide 3'
+					})
 				})
 			})
-		],
-		features: []
+		]
 	};
 
 	static swashbuckler: Kit = {
@@ -549,26 +562,27 @@ export class KitData {
 		reach: 0,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-swashbuckler-signature',
-				name: 'Fancy Footwork',
-				description: 'All combat is a dance—and you’ll be the one leading.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-				target: '1 creature',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '3 damage',
-					tier2: '8 damage; push 1',
-					tier3: '12 damage; push 2'
-				}),
-				effect: 'You can shift into any square your target leaves after you force move them with this ability.'
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-swashbuckler-signature',
+					name: 'Fancy Footwork',
+					description: 'All combat is a dance—and you’ll be the one leading.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '3 damage',
+						tier2: '8 damage; push 1',
+						tier3: '12 damage; push 2'
+					}),
+					effect: 'You can shift into any square your target leaves after you force move them with this ability.'
+				})
 			})
-		],
-		features: []
+		]
 	};
 
 	static whirlwind: Kit = {
@@ -589,25 +603,26 @@ export class KitData {
 		reach: 1,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-whirlwind-signature',
-				name: 'Extension Of My Arm',
-				description: 'When you draw your whip back after an attack, your enemy comes ever closer.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 2 }) ],
-				target: '1 creature',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '3 damage',
-					tier2: '7 damage; pull 1',
-					tier3: '10 damage; pull 2'
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-whirlwind-signature',
+					name: 'Extension Of My Arm',
+					description: 'When you draw your whip back after an attack, your enemy comes ever closer.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 2 }) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '3 damage',
+						tier2: '7 damage; pull 1',
+						tier3: '10 damage; pull 2'
+					})
 				})
 			})
-		],
-		features: []
+		]
 	};
 
 	static bloodpact: Kit = {
@@ -628,25 +643,25 @@ export class KitData {
 		reach: 0,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-bloodpact-signature',
-				name: 'Drain',
-				description: 'You drain the energy from your target and revitalize your senses.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
-				target: '1 creature',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-					tier1: '3 corruption damage',
-					tier2: '8 corruption damage',
-					tier3: '12 corruption damage; you can spend 1 Recovery to regain Stamina'
-				})
-			})
-		],
 		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-bloodpact-signature',
+					name: 'Drain',
+					description: 'You drain the energy from your target and revitalize your senses.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Melee ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+						tier1: '3 corruption damage',
+						tier2: '8 corruption damage',
+						tier3: '12 corruption damage; you can spend 1 Recovery to regain Stamina'
+					})
+				})
+			}),
 			FeatureLogic.createFeature({
 				id: 'kit-bloodpact-ward',
 				name: 'Blood Ward',
@@ -673,26 +688,26 @@ export class KitData {
 		reach: 0,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-dancer-signature',
-				name: 'Tarantella Volley',
-				description: 'Visible energy sparks off you to wash across a nearby foe, who you invite to dance with you.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 2 }) ],
-				target: '1 creature or object',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Agility, Characteristic.Intuition, Characteristic.Presence ],
-					tier1: '2 damage',
-					tier2: '6 damage; you swap places with the target',
-					tier3: '9 damage; you swap places with the target, and a hero within distance can shift up to 2 squares'
-				}),
-				effect: 'If you roll a 12 or better and can’t swap places with the target because one or both of you is too big to fit into the swapped space, you both remain in your original spaces and the target takes 2 extra damage.'
-			})
-		],
 		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-dancer-signature',
+					name: 'Tarantella Volley',
+					description: 'Visible energy sparks off you to wash across a nearby foe, who you invite to dance with you.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Melee ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 2 }) ],
+					target: '1 creature or object',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility, Characteristic.Intuition, Characteristic.Presence ],
+						tier1: '2 damage',
+						tier2: '6 damage; you swap places with the target',
+						tier3: '9 damage; you swap places with the target, and a hero within distance can shift up to 2 squares'
+					}),
+					effect: 'If you roll a 12 or better and can’t swap places with the target because one or both of you is too big to fit into the swapped space, you both remain in your original spaces and the target takes 2 extra damage.'
+				})
+			}),
 			FeatureLogic.createFeature({
 				id: 'kit-dancer-ward',
 				name: 'Walzing Ward',
@@ -722,25 +737,25 @@ Your ward surrounds you with a soft, enchanting melody whose volume you control,
 		reach: 0,
 		area: 1,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-frigid-signature',
-				name: 'Frozen Explosion',
-				description: 'You unleash a blast of frigid air to freeze and hinder your foes.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Cube, value: 2, within: 5 }) ],
-				target: 'All enemies',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-					tier1: '2 cold damage',
-					tier2: '3 cold damage; slowed (EoT)',
-					tier3: '4 cold damage; slowed (EoE)'
-				})
-			})
-		],
 		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-frigid-signature',
+					name: 'Frozen Explosion',
+					description: 'You unleash a blast of frigid air to freeze and hinder your foes.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Cube, value: 2, within: 5 }) ],
+					target: 'All enemies',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+						tier1: '2 cold damage',
+						tier2: '3 cold damage; slowed (EoT)',
+						tier3: '4 cold damage; slowed (EoE)'
+					})
+				})
+			}),
 			FeatureLogic.createFeature({
 				id: 'kit-frigid-ward',
 				name: 'Ice Armor',
@@ -770,25 +785,25 @@ Your ward covers your body in ice, and grants you the following benefits:
 		reach: 0,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-meditator-signature',
-				name: 'Bountiful Decay',
-				description: 'Your curse causes a foe’s flesh to rot off as spores that aid your allies.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
-				target: '1 creature',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-					tier1: '2 corruption damage; a hero within distance can make a resistance roll to end an effect',
-					tier2: '6 corruption damage; a hero within distance can make a resistance roll to end an effect',
-					tier3: '9 corruption damage; a hero within distance who is affected by an “(EoT)” or “(resistance ends)” effect has the effect end'
-				})
-			})
-		],
 		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-meditator-signature',
+					name: 'Bountiful Decay',
+					description: 'Your curse causes a foe’s flesh to rot off as spores that aid your allies.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+						tier1: '2 corruption damage; a hero within distance can make a resistance roll to end an effect',
+						tier2: '6 corruption damage; a hero within distance can make a resistance roll to end an effect',
+						tier3: '9 corruption damage; a hero within distance who is affected by an “(EoT)” or “(resistance ends)” effect has the effect end'
+					})
+				})
+			}),
 			FeatureLogic.createFeature({
 				id: 'kit-meditator-ward',
 				name: 'Spirit Ward',
@@ -818,26 +833,26 @@ Your spirit overflows and warms the area around you. It grants you the following
 		reach: 0,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-missile-signature',
-				name: 'Spike!',
-				description: 'You lob your implement at high speed toward your opponent, unleashing a chaotic flare of magic.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
-				target: '1 creature or object',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-					tier1: '2 fire damage',
-					tier2: '7 cold damage',
-					tier3: '9 lightning damage'
-				}),
-				effect: 'If your Magic Eye Ward is locked onto the target, you can target them with this ability regardless of the distance as long as you have line of effect to them, and this ability deals additional damage equal to your highest characteristic.'
-			})
-		],
 		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-missile-signature',
+					name: 'Spike!',
+					description: 'You lob your implement at high speed toward your opponent, unleashing a chaotic flare of magic.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					target: '1 creature or object',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+						tier1: '2 fire damage',
+						tier2: '7 cold damage',
+						tier3: '9 lightning damage'
+					}),
+					effect: 'If your Magic Eye Ward is locked onto the target, you can target them with this ability regardless of the distance as long as you have line of effect to them, and this ability deals additional damage equal to your highest characteristic.'
+				})
+			}),
 			FeatureLogic.createFeature({
 				id: 'kit-missile-ward',
 				name: 'Magic Eye Ward',
@@ -867,25 +882,25 @@ Your ward wraps itself around your head and shields your eyes, granting you the 
 		reach: 0,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-nature-calling-signature',
-				name: 'Lightning Spark',
-				description: 'You call forth a small bolt of lightning, then hurl it at your foe.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
-				target: '1 creature or object',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-					tier1: '2 lightning damage',
-					tier2: '6 damage; the target takes a bane on their next power roll',
-					tier3: '9 damage; the target has a double bane on their next power roll'
-				})
-			})
-		],
 		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-nature-calling-signature',
+					name: 'Lightning Spark',
+					description: 'You call forth a small bolt of lightning, then hurl it at your foe.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					target: '1 creature or object',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+						tier1: '2 lightning damage',
+						tier2: '6 damage; the target takes a bane on their next power roll',
+						tier3: '9 damage; the target has a double bane on their next power roll'
+					})
+				})
+			}),
 			FeatureLogic.createFeature({
 				id: 'kit-nature-calling-ward',
 				name: 'Vine Ward',
@@ -915,25 +930,25 @@ Your ward surrounds you with protective animal spirits, and grants you the follo
 		reach: 0,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-rook-signature',
-				name: 'Blessed Light',
-				description: 'Burning radiance falls upon your foe, outlining them with a holy glow.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
-				target: '1 creature or object',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-					tier1: '2 holy damage; the next attack against the target has an edge',
-					tier2: '6 holy damage; the next attack against the target has an edge',
-					tier3: '9 holy damage; the next attack against the target has a double edge'
-				})
-			})
-		],
 		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-rook-signature',
+					name: 'Blessed Light',
+					description: 'Burning radiance falls upon your foe, outlining them with a holy glow.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					target: '1 creature or object',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+						tier1: '2 holy damage; the next attack against the target has an edge',
+						tier2: '6 holy damage; the next attack against the target has an edge',
+						tier3: '9 holy damage; the next attack against the target has a double edge'
+					})
+				})
+			}),
 			FeatureLogic.createFeature({
 				id: 'kit-rook-ward',
 				name: 'Castle Guard',
@@ -963,25 +978,25 @@ Your armor is reinforced by a bright ward of holy energy, and grants you the fol
 		reach: 0,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-spellslinger-signature',
-				name: 'Split Beam',
-				description: 'Two beams of supernatural force lance out at your command.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
-				target: '2 creatures or objects',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-					tier1: '2 damage',
-					tier2: '4 damage',
-					tier3: '5 damage'
-				})
-			})
-		],
 		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-spellslinger-signature',
+					name: 'Split Beam',
+					description: 'Two beams of supernatural force lance out at your command.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					target: '2 creatures or objects',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+						tier1: '2 damage',
+						tier2: '4 damage',
+						tier3: '5 damage'
+					})
+				})
+			}),
 			FeatureLogic.createFeature({
 				id: 'kit-spellslinger-ward',
 				name: 'Invigorating Ward',
@@ -1008,25 +1023,25 @@ Your armor is reinforced by a bright ward of holy energy, and grants you the fol
 		reach: 0,
 		area: 0,
 		mobility: true,
-		abilities: [
-			AbilityLogic.createAbility({
-				id: 'kit-ward-weaver-signature',
-				name: 'Energy Siphon',
-				description: 'Absorbing psychic energy from another creature lets you shield yourself within it.',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
-				target: '1 creature',
-				cost: 0,
-				powerRoll: AbilityLogic.createPowerRoll({
-					characteristic: [ Characteristic.Intuition ],
-					tier1: '2 psychic damage; you gain damage immunity 1 until the end of your next turn',
-					tier2: '6 psychic damage; you gain damage immunity 3 until the end of your next turn',
-					tier3: '9 psychic damage; you gain damage immunity 5 until the end of your next turn'
-				})
-			})
-		],
 		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-ward-weaver-signature',
+					name: 'Energy Siphon',
+					description: 'Absorbing psychic energy from another creature lets you shield yourself within it.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Intuition ],
+						tier1: '2 psychic damage; you gain damage immunity 1 until the end of your next turn',
+						tier2: '6 psychic damage; you gain damage immunity 3 until the end of your next turn',
+						tier3: '9 psychic damage; you gain damage immunity 5 until the end of your next turn'
+					})
+				})
+			}),
 			FeatureLogic.createFeature({
 				id: 'kit-ward-weaver-ward',
 				name: 'Repulsive Ward',

@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureSizeData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from './ability-logic';
@@ -18,35 +18,8 @@ import { Language } from '../models/language';
 import { Size } from '../models/size';
 import { Skill } from '../models/skill';
 import { SkillLogic } from './skill-logic';
-import { Utils } from '../utils/utils';
 
 export class HeroLogic {
-	static createHero = (settingIDs: string[]) => {
-		const hero: Hero = {
-			id: Utils.guid(),
-			name: '',
-			settingIDs: settingIDs,
-			ancestry: null,
-			culture: null,
-			class: null,
-			career: null,
-			complication: null,
-			kit: null,
-			state: {
-				staminaDamage: 0,
-				recoveriesUsed: 0,
-				victories: 0,
-				xp: 0,
-				heroicResource: 0,
-				heroTokens: 0,
-				renown: 0,
-				projectPoints: 0,
-				conditions: []
-			}
-		};
-		return hero;
-	};
-
 	static getKits = (hero: Hero) => {
 		const kits: Kit[] = [];
 
@@ -149,10 +122,6 @@ export class HeroLogic {
 					}
 				});
 			});
-
-		this.getKits(hero).forEach(kit => {
-			abilities.push(...kit.abilities);
-		});
 
 		if (this.getKits(hero).some(kit => kit.mobility)) {
 			abilities.push(AbilityLogic.createAbility({
@@ -386,6 +355,12 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 			.filter(f => f.type === FeatureType.Skill)
 			.forEach(f => {
 				const data = f.data as FeatureSkillData;
+				skillNames.push(data.skill);
+			});
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.SkillChoice)
+			.forEach(f => {
+				const data = f.data as FeatureSkillChoiceData;
 				skillNames.push(...data.selected);
 			});
 
@@ -730,9 +705,6 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 			});
 		}
 		if (hero.kit) {
-			if (hero.kit.abilities === undefined) {
-				hero.kit.abilities = [];
-			}
 			if (hero.kit.features === undefined) {
 				hero.kit.features = [];
 			}

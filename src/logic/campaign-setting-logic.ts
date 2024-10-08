@@ -5,28 +5,8 @@ import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { HeroClass } from '../models/class';
 import { Kit } from '../models/kit';
-import { Utils } from '../utils/utils';
 
 export class CampaignSettingLogic {
-	static createCampaignSetting = () => {
-		const setting: CampaignSetting = {
-			id: Utils.guid(),
-			name: '',
-			description: '',
-			isHomebrew: true,
-			ancestries: [],
-			cultures: [],
-			careers: [],
-			classes: [],
-			kits: [],
-			complications: [],
-			skills: [],
-			languages: [],
-			defaultLanguages: []
-		};
-		return setting;
-	};
-
 	static getAncestrySetting = (settings: CampaignSetting[], ancestry: Ancestry) => {
 		return settings.find(cs => cs.ancestries.find(a => a.id === ancestry.id));
 	};

@@ -3,6 +3,7 @@ import { Switch } from 'antd';
 import './toggle.scss';
 
 interface Props {
+	disabled?: boolean;
 	label: string;
 	value: boolean;
 	onChange: (value: boolean) => void;
@@ -15,7 +16,7 @@ export const Toggle = (props: Props) => {
 
 	try {
 		return (
-			<div className='toggle' onClick={onClick}>
+			<div className={props.disabled ? 'toggle disabled' : 'toggle'} onClick={onClick}>
 				<div>{props.label}</div>
 				<Switch checked={props.value} />
 			</div>

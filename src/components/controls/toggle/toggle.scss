@@ -3,9 +3,14 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 10px;
-	border-radius: 5px;
+	border-radius: 6px;
 	padding: 5px 10px;
 	cursor: pointer;
+
+	&.disabled {
+		opacity: 0.5;
+		pointer-events: none;
+	}
 
 	&:hover {
 		background-color: rgba(0, 0, 0, 0.06);

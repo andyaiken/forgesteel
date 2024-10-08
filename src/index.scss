@@ -73,6 +73,12 @@ ul {
 	}
 }
 
+.ant-collapse-content-box {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
 .ant-drawer {
 	.ant-drawer-content {
 		.ant-drawer-body {

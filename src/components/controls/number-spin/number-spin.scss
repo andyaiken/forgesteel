@@ -3,17 +3,22 @@
     align-items: center;
     justify-content: space-between;
     margin: 10px 0;
-	border-radius: 5px;
+	border-radius: 6px;
+
+	&.disabled {
+		opacity: 0.5;
+		pointer-events: none;
+	}
 
 	&:hover {
 		background-color: rgba(0, 0, 0, 0.06);
 	}
 
 	.spin-button {
-		border-radius: 10px;
-		margin: 10px;
+		border-radius: 6px;
+		margin: 5px;
 		padding: 10px;
-		font-size: 24px;
+		font-size: 20px;
 
 		&.disabled {
 			pointer-events: none;

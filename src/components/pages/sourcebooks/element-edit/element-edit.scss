@@ -1,0 +1,53 @@
+.element-edit-page {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+
+	.element-edit-page-content {
+		background-color: rgba(0, 0, 0, 0.1);
+		flex: 1 1 0;
+		display: flex;
+		gap: 20px;
+		padding: 20px;
+		overflow: hidden;
+
+		.edit-column {
+			flex: 1 1 0;
+			overflow-x: hidden;
+			overflow-y: auto;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		.preview-column {
+			flex: 1 1 0;
+			overflow-x: hidden;
+			overflow-y: auto;
+		}
+	}
+
+	.feature-edit-panel {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.ability-edit-panel {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.element-edit-page {
+		.element-edit-page-content {
+			.edit-column {
+				.random-btn {
+					color: rgba(255, 255, 255, 0.88);
+				}
+			}
+		}
+	}
+}

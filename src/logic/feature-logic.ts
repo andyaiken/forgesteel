@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillData, FeatureSubclassData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../models/feature';
 import { Ability } from '../models/ability';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
@@ -21,7 +21,6 @@ export class FeatureLogic {
 			name: data.name,
 			description: data.description,
 			type: FeatureType.Text,
-			choice: false,
 			data: null
 		} as Feature;
 	};
@@ -32,7 +31,6 @@ export class FeatureLogic {
 			name: data.ability.name,
 			description: data.ability.description,
 			type: FeatureType.Ability,
-			choice: false,
 			data: {
 				ability: data.ability
 			} as FeatureAbilityData
@@ -50,7 +48,6 @@ export class FeatureLogic {
 			name: data.name || data.field.toString(),
 			description: data.description || desc,
 			type: FeatureType.Bonus,
-			choice: false,
 			data: {
 				field: data.field,
 				value: data.value,
@@ -66,7 +63,6 @@ export class FeatureLogic {
 			name: data.name || 'Choice',
 			description: data.description || (count > 1 ? `Choose ${count} options.` : 'Choose an option.'),
 			type: FeatureType.Choice,
-			choice: true,
 			data: {
 				options: data.options,
 				count: count,
@@ -83,7 +79,6 @@ export class FeatureLogic {
 			name: data.name || 'Ability',
 			description: data.description || (count > 1 ? `Choose ${count} ${type} class abilities.` : `Choose a ${type} class ability.`),
 			type: FeatureType.ClassAbility,
-			choice: true,
 			data: {
 				cost: data.cost,
 				count: count,
@@ -109,7 +104,6 @@ export class FeatureLogic {
 			name: data.name || name,
 			description: data.description || description,
 			type: FeatureType.DamageModifier,
-			choice: false,
 			data: {
 				modifiers: data.modifiers
 			} as FeatureDamageModifierData
@@ -123,7 +117,6 @@ export class FeatureLogic {
 			name: data.name || 'Kit',
 			description: data.description || (count > 1 ? `Choose ${count} kits.` : 'Choose a kit.'),
 			type: FeatureType.Kit,
-			choice: true,
 			data: {
 				types: data.types || [],
 				count: count,
@@ -139,7 +132,6 @@ export class FeatureLogic {
 			name: data.name || 'Language',
 			description: data.description || (count > 1 ? `Choose ${count} languages.` : 'Choose a language.'),
 			type: FeatureType.Language,
-			choice: true,
 			data: {
 				options: data.options || [],
 				count: count,
@@ -154,7 +146,6 @@ export class FeatureLogic {
 			name: data.name || 'Multiple Features',
 			description: data.description || data.features.map(f => f.name).join(', '),
 			type: FeatureType.Multiple,
-			choice: false,
 			data: {
 				features: data.features
 			} as FeatureMultipleData
@@ -167,7 +158,6 @@ export class FeatureLogic {
 			name: data.name || 'Size',
 			description: data.description || `Size: ${FormatLogic.getSize({ value: data.sizeValue, mod: data.sizeMod })}`,
 			type: FeatureType.Size,
-			choice: false,
 			data: {
 				size: {
 					value: data.sizeValue,
@@ -183,12 +173,8 @@ export class FeatureLogic {
 			name: data.name || data.skill,
 			description: data.description || `You gain the ${data.skill} skill.`,
 			type: FeatureType.Skill,
-			choice: false,
 			data: {
-				options: [],
-				listOptions: [],
-				count: 1,
-				selected: [ data.skill ]
+				skill: data.skill
 			} as FeatureSkillData
 		} as Feature;
 	};
@@ -200,14 +186,13 @@ export class FeatureLogic {
 			id: data.id,
 			name: data.name || (count > 1 ? 'Skills' : 'Skill'),
 			description: data.description || (count > 1 ? `Choose ${count} skills from ${names}.` : `Choose a skill from ${names}.`),
-			type: FeatureType.Skill,
-			choice: true,
+			type: FeatureType.SkillChoice,
 			data: {
 				options: data.options || [],
 				listOptions: data.listOptions || [],
 				count: count,
 				selected: []
-			} as FeatureSkillData
+			} as FeatureSkillChoiceData
 		} as Feature;
 	};
 
@@ -218,7 +203,6 @@ export class FeatureLogic {
 			name: data.name || 'Subclass Feature Choice',
 			description: data.description || (count > 1 ? `Choose ${count} options.` : 'Choose an option.'),
 			type: FeatureType.SubclassFeature,
-			choice: true,
 			data: {
 				category: data.category,
 				count: count,
@@ -346,5 +330,21 @@ export class FeatureLogic {
 		features.push(...featuresFromMultiple);
 
 		return features;
+	};
+
+	///////////////////////////////////////////////////////////////////////////
+
+	static isChoice = (feature: Feature) => {
+		switch (feature.type) {
+			case FeatureType.Choice:
+			case FeatureType.ClassAbility:
+			case FeatureType.Kit:
+			case FeatureType.Language:
+			case FeatureType.SkillChoice:
+			case FeatureType.SubclassFeature:
+				return true;
+		};
+
+		return false;
 	};
 }

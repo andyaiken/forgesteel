@@ -1,10 +1,7 @@
+import { Element } from './element';
 import { Feature } from './feature';
 
-export interface Career {
-	id: string;
-	name: string;
-	description: string;
-
+export interface Career extends Element {
 	features: Feature[];
-	title: Feature | null;
+	title: Feature;
 }

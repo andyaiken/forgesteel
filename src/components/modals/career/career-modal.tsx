@@ -12,6 +12,7 @@ interface Props {
 	isHomebrew: boolean;
 	createHomebrew: (setting: CampaignSetting | null) => void;
 	export: (format: 'image' | 'pdf' | 'json') => void;
+	edit: () => void;
 	delete: () => void;
 }
 
@@ -22,7 +23,7 @@ export const CareerModal = (props: Props) => {
 				<div className='toolbar'>
 					{
 						props.isHomebrew ?
-							null
+							<Button onClick={props.edit}>Edit</Button>
 							:
 							<Popover
 								trigger='click'

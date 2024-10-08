@@ -10,5 +10,6 @@ export enum FeatureType {
 	Multiple = 'Multiple Features',
 	Size = 'Size',
 	Skill = 'Skill',
+	SkillChoice = 'Skill Choice',
 	SubclassFeature = 'Subclass Feature'
 }

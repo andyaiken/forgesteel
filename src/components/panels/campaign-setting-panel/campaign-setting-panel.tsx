@@ -70,7 +70,7 @@ export const CampaignSettingPanel = (props: Props) => {
 							</Popover>
 							: null
 					}
-					<Button type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(setting, !props.visible)} />
+					{!isEditing ? <Button type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(setting, !props.visible)} /> : null}
 				</div>
 			</div>
 		);

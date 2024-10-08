@@ -1,9 +1,6 @@
+import { Element } from './element';
 import { Feature } from './feature';
 
-export interface Complication {
-	id: string;
-	name: string;
-	description: string;
-
+export interface Complication extends Element {
 	features: Feature[];
 }

@@ -18,7 +18,7 @@ export const CulturePanel = (props: Props) => {
 	try {
 		return (
 			<div className='culture-panel' id={props.mode === PanelMode.Full ? props.culture.id : undefined}>
-				<HeaderText level={1}>{props.culture.name}</HeaderText>
+				<HeaderText level={1}>{props.culture.name || 'Unnamed Culture'}</HeaderText>
 				<div className='ds-text description-text'>{props.culture.description}</div>
 				{
 					props.mode === PanelMode.Full ?

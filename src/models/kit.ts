@@ -1,5 +1,5 @@
 import { KitArmor, KitImplement, KitType, KitWeapon } from '../enums/kit';
-import { Ability } from './ability';
+import { Element } from './element';
 import { Feature } from './feature';
 
 export interface KitDamageBonus {
@@ -8,11 +8,7 @@ export interface KitDamageBonus {
 	tier3: number;
 };
 
-export interface Kit {
-	id: string;
-	name: string;
-	description: string;
-
+export interface Kit extends Element {
 	type: KitType;
 	armor: KitArmor[];
 	weapon: KitWeapon[];
@@ -31,6 +27,5 @@ export interface Kit {
 	area: number;
 
 	mobility: boolean;
-	abilities: Ability[];
 	features: Feature[];
 };

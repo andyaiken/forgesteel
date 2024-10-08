@@ -1,3 +1,4 @@
+import { AbilityPanel } from '../ability-panel/ability-panel';
 import { CampaignSetting } from '../../../models/campaign-setting';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../controls/field/field';
@@ -19,7 +20,7 @@ export const ClassPanel = (props: Props) => {
 	try {
 		return (
 			<div className='class-panel' id={props.mode === PanelMode.Full ? props.heroClass.id : undefined}>
-				<HeaderText level={1}>{props.heroClass.name}</HeaderText>
+				<HeaderText level={1}>{props.heroClass.name || 'Unnamed Class'}</HeaderText>
 				<div className='ds-text description-text'>{props.heroClass.description}</div>
 				<Field label='Heroic Resource' value={props.heroClass.heroicResource} />
 				<Field label={`${props.heroClass.subclassName}s`} value={props.heroClass.subclasses.map(c => c.name).join(', ')} />
@@ -34,6 +35,14 @@ export const ClassPanel = (props: Props) => {
 								}
 							</div>
 						))
+						: null
+				}
+				{
+					props.mode === PanelMode.Full ?
+						<div>
+							<HeaderText level={1}>Abilities</HeaderText>
+							{props.heroClass.abilities.map(a => <AbilityPanel key={a.id} ability={a} hero={props.hero} mode={PanelMode.Full} />)}
+						</div>
 						: null
 				}
 			</div>

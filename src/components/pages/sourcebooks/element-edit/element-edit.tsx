@@ -1,6 +1,6 @@
 import { Alert, Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../../../../models/feature';
 import { KitArmor, KitImplement, KitType, KitWeapon } from '../../../../enums/kit';
 import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
@@ -992,6 +992,12 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 					})
 				};
 				break;
+			case FeatureType.AbilityCost:
+				data = {
+					keywords: [],
+					modifier: -1
+				};
+				break;
 			case FeatureType.Bonus:
 				data = {
 					field: FeatureField.Recoveries,
@@ -1175,6 +1181,18 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 			setData(copy);
 		};
 
+		const setKeywords = (value: AbilityKeyword[]) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureAbilityCostData;
+			copy.keywords = value;
+			setData(copy);
+		};
+
+		const setModifier = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureAbilityCostData;
+			copy.modifier = value;
+			setData(copy);
+		};
+
 		const addChoice = (data: FeatureChoiceData) => {
 			const copy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
 			copy.options.push({
@@ -1279,6 +1297,26 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 							onChange={setAbility}
 						/>
 					</Expander>
+				);
+			}
+			case FeatureType.AbilityCost: {
+				const data = feature.data as FeatureAbilityCostData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Field</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select keywords'
+							mode='multiple'
+							allowClear={true}
+							options={[ AbilityKeyword.Animal, AbilityKeyword.Area, AbilityKeyword.Attack, AbilityKeyword.Charge, AbilityKeyword.Earth, AbilityKeyword.Fire, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Persistent, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Resistance, AbilityKeyword.Void, AbilityKeyword.Weapon ].map(o => ({ value: o }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={data.keywords}
+							onChange={setKeywords}
+						/>
+						<HeaderText>Modifier</HeaderText>
+						<NumberSpin value={data.modifier} onChange={setModifier} />
+					</Space>
 				);
 			}
 			case FeatureType.Bonus: {
@@ -1441,12 +1479,9 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 						}
 						{
 							data.size.value === 1 ?
-								<Select
-									style={{ width: '100%' }}
-									placeholder='Modifier'
-									allowClear={true}
-									options={[ 'T', 'S', 'M', 'L' ].map(option => ({ value: option }))}
-									optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+								<Segmented
+									block={true}
+									options={[ 'T', 'S', 'M', 'L' ]}
 									value={data.size.mod}
 									onChange={setSizeMod}
 								/>

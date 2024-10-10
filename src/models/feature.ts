@@ -1,4 +1,5 @@
 import { Ability } from './ability';
+import { AbilityKeyword } from '../enums/ability-keyword';
 import { DamageModifier } from './damage-modifier';
 import { Element } from './element';
 import { FeatureField } from '../enums/feature-field';
@@ -13,6 +14,11 @@ export interface FeatureData { }
 
 export interface FeatureAbilityData extends FeatureData {
 	ability: Ability;
+};
+
+export interface FeatureAbilityCostData extends FeatureData {
+	keywords: AbilityKeyword[];
+	modifier: number;
 };
 
 export interface FeatureBonusData extends FeatureData {

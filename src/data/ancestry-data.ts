@@ -433,7 +433,7 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 			FeatureLogic.createBonusFeature({
 				id: 'human-feature-3',
 				name: 'Staying Power',
-				description: 'Your human anatomy allows you to fight, run, and stay awake longer than others. Increase your number of Recoveries by 2.',
+				description: 'Your human anatomy allows you to fight, run, and stay awake longer than others.',
 				field: FeatureField.Recoveries,
 				value: 2
 			})

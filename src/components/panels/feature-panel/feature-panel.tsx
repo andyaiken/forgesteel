@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../../../models/feature';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { CampaignSetting } from '../../../models/campaign-setting';
@@ -351,53 +351,54 @@ export const FeaturePanel = (props: Props) => {
 
 	// #region Extra
 
+	const getExtraAbilityCost = (data: FeatureAbilityCostData) => {
+		return (
+			<Field label={data.keywords.join(', ')} value={`Heroic resource cost ${data.modifier >= 0 ? '+' : ''}${data.modifier}`} />
+		);
+	};
+
 	const getExtraBonus = (data: FeatureBonusData) => {
-		let desc = `${data.field} ${data.value >= 0 ? '+' : ''}${data.value}`;
+		let desc = `${data.value >= 0 ? '+' : ''}${data.value}`;
 		if (data.valuePerLevel) {
 			desc += `, ${data.valuePerLevel >= 0 ? '+' : ''}${data.valuePerLevel} per level after 1st`;
 		}
 
 		return (
-			<div className='ds-text'>{desc}</div>
+			<Field label={data.field} value={desc} />
 		);
 	};
 
 	const getExtraChoice = (data: FeatureChoiceData) => {
-		if (data.selected.length === 0) {
-			return null;
-		}
+		const list = data.selected.length > 0 ? data.selected : data.options.map(o => o.feature);
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
-					data.selected.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)
+					list.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)
 				}
 			</Space>
 		);
 	};
 
 	const getExtraClassAbility = (data: FeatureClassAbilityData) => {
-		if (data.selectedIDs.length === 0) {
-			return null;
+		if ((data.selectedIDs.length > 0) && props.hero && props.hero.class) {
+			const abilities = props.hero.class.abilities.filter(a => a.cost === data.cost) || [];
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					{
+						data.selectedIDs.map(id => {
+							const ability = abilities.find(a => a.id === id) as Ability;
+							return (
+								<AbilityPanel key={ability.id} ability={ability} mode={PanelMode.Full} />
+							);
+						})
+					}
+				</Space>
+			);
 		}
-
-		if (!props.hero || !props.hero.class) {
-			return null;
-		}
-
-		const abilities = props.hero.class.abilities.filter(a => a.cost === data.cost) || [];
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					data.selectedIDs.map(id => {
-						const ability = abilities.find(a => a.id === id) as Ability;
-						return (
-							<AbilityPanel key={ability.id} ability={ability} mode={PanelMode.Full} />
-						);
-					})
-				}
-			</Space>
+			<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.cost > 0 ? `${data.cost}pt` : 'signature'} {data.count > 1 ? 'abilities' : 'ability'}.</div>
 		);
 	};
 
@@ -410,26 +411,30 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getExtraKit = (data: FeatureKitData) => {
-		if (data.selected.length === 0) {
-			return null;
+		if (data.selected.length > 0) {
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					{
+						data.selected.map(k => <KitPanel key={k.id} kit={k} mode={PanelMode.Full} />)
+					}
+				</Space>
+			);
 		}
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					data.selected.map(k => <KitPanel key={k.id} kit={k} mode={PanelMode.Full} />)
-				}
-			</Space>
+			<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.types.join(', ')} {data.count > 1 ? 'kit' : 'kits'}.</div>
 		);
 	};
 
 	const getExtraLanguage = (data: FeatureLanguageData) => {
-		if (data.selected.length === 0) {
-			return null;
+		if (data.selected.length > 0) {
+			return (
+				<Field label='Selected' value={data.selected.join(', ')} />
+			);
 		}
 
 		return (
-			<Field label='Selected' value={data.selected.join(', ')} />
+			<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'languages' : 'language'}.</div>
 		);
 	};
 
@@ -446,12 +451,18 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getExtraSkillChoice = (data: FeatureSkillChoiceData) => {
-		if (data.selected.length === 0) {
-			return null;
+		if (data.selected.length > 0) {
+			return (
+				<Field label='Selected' value={data.selected.join(', ')} />
+			);
 		}
 
+		const count = data.count || 1;
+		const names = (Collections.sort(data.options, o => o) || []).concat((Collections.sort(data.listOptions, o => o) || []).map(l => `the ${l} list`)).join(', ');
+		const str = (count > 1 ? `Choose ${count} skills from ${names}.` : `Choose a skill from ${names}.`);
+
 		return (
-			<Field label='Selected' value={data.selected.join(', ')} />
+			<div className='ds-text'>{str}</div>
 		);
 	};
 
@@ -471,6 +482,8 @@ export const FeaturePanel = (props: Props) => {
 
 	const getExtra = () => {
 		switch (props.feature.type) {
+			case FeatureType.AbilityCost:
+				return getExtraAbilityCost(props.feature.data as FeatureAbilityCostData);
 			case FeatureType.Bonus:
 				return getExtraBonus(props.feature.data as FeatureBonusData);
 			case FeatureType.Choice:

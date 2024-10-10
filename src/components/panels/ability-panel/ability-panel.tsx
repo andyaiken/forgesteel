@@ -1,8 +1,11 @@
 import { Ability } from '../../../models/ability';
 import { AbilityLogic } from '../../../logic/ability-logic';
+import { FeatureAbilityCostData } from '../../../models/feature';
+import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
+import { HeroLogic } from '../../../logic/hero-logic';
 import { HeroicResourceBadge } from '../../controls/heroic-resource-badge/heroic-resource-badge';
 import { PanelMode } from '../../../enums/panel-mode';
 import { PowerRollPanel } from '../power-roll-panel/power-roll-panel';
@@ -21,10 +24,22 @@ interface Props {
 
 export const AbilityPanel = (props: Props) => {
 	try {
+		let cost = props.ability.cost;
+		if ((cost > 0) && props.hero) {
+			HeroLogic.getFeatures(props.hero).filter(f => f.type === FeatureType.AbilityCost).forEach(f => {
+				const data = f.data as FeatureAbilityCostData;
+				if (data.keywords.every(k => props.ability.keywords.includes(k))) {
+					cost += data.modifier;
+				}
+			});
+
+			cost = Math.max(cost, 1);
+		}
+
 		return (
 			<SelectablePanel>
 				<div className='ability-panel' id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
-					<HeaderText ribbon={props.ability.cost > 0 ? <HeroicResourceBadge value={props.ability.cost} /> : undefined}>
+					<HeaderText ribbon={cost > 0 ? <HeroicResourceBadge value={cost} /> : undefined}>
 						{props.ability.name || 'Unnamed Ability'}
 					</HeaderText>
 					<div className='ds-text description-text'>{props.ability.description}</div>

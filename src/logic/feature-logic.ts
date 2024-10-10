@@ -1,5 +1,6 @@
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../models/feature';
 import { Ability } from '../models/ability';
+import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
 import { Complication } from '../models/complication';
@@ -7,6 +8,7 @@ import { Culture } from '../models/culture';
 import { DamageModifier } from '../models/damage-modifier';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
+import { FormatLogic } from './format-logic';
 import { HeroClass } from '../models/class';
 import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit';
@@ -32,6 +34,19 @@ export class FeatureLogic {
 			data: {
 				ability: data.ability
 			} as FeatureAbilityData
+		} as Feature;
+	};
+
+	static createAbilityCostFeature = (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number }) => {
+		return {
+			id: data.id,
+			name: data.name || `${data.keywords.join(', ')} cost modifier`,
+			description: data.description || '',
+			type: FeatureType.AbilityCost,
+			data: {
+				keywords: data.keywords,
+				modifier: data.modifier
+			} as FeatureAbilityCostData
 		} as Feature;
 	};
 
@@ -66,11 +81,10 @@ export class FeatureLogic {
 
 	static createClassAbilityChoiceFeature = (data: { id: string, name?: string, description?: string, cost: number, count?: number }) => {
 		const count = data.count || 1;
-		const type = data.cost === 0 ? 'signature' : `${data.cost}-point`;
 		return {
 			id: data.id,
 			name: data.name || 'Ability',
-			description: data.description || (count > 1 ? `Choose ${count} ${type} class abilities.` : `Choose a ${type} class ability.`),
+			description: data.description || '',
 			type: FeatureType.ClassAbility,
 			data: {
 				cost: data.cost,
@@ -83,8 +97,8 @@ export class FeatureLogic {
 	static createDamageModifierFeature = (data: { id: string, name?: string, description?: string, modifiers: DamageModifier[] }) => {
 		return {
 			id: data.id,
-			name: data.name || name,
-			description: data.description || '',
+			name: data.name || 'Damage Modifier',
+			description: data.description || data.modifiers.map(FormatLogic.getDamageModifier).join(', '),
 			type: FeatureType.DamageModifier,
 			data: {
 				modifiers: data.modifiers
@@ -163,11 +177,10 @@ export class FeatureLogic {
 
 	static createSkillChoiceFeature = (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number }) => {
 		const count = data.count || 1;
-		const names = (data.options || []).concat((data.listOptions || []).map(l => `the ${l} list`)).join(', ');
 		return {
 			id: data.id,
 			name: data.name || (count > 1 ? 'Skills' : 'Skill'),
-			description: data.description || (count > 1 ? `Choose ${count} skills from ${names}.` : `Choose a skill from ${names}.`),
+			description: data.description || '',
 			type: FeatureType.SkillChoice,
 			data: {
 				options: data.options || [],

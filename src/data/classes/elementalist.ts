@@ -332,6 +332,11 @@ Choose one of the following effects:
 				{
 					level: 1,
 					features: [
+						FeatureLogic.createAbilityCostFeature({
+							id: 'elementalist-sub-1-1-0',
+							keywords: [ AbilityKeyword.Earth ],
+							modifier: -1
+						}),
 						FeatureLogic.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'elementalist-sub-1-1-1',
@@ -341,7 +346,7 @@ Choose one of the following effects:
 								keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
 								target: 'Special',
-								cost: 2,
+								cost: 3,
 								effect: 'You touch a square containing mundane dirt, stone, or metal and create a 5 wall of the same material, which rises up out of the ground and must include the square you touched.',
 								alternateEffects: [
 									'You touch a structure of mundane dirt, stone, or metal that takes up at least 2 squares. You can open a 1-square opening in the structure where you touched it.',
@@ -388,6 +393,11 @@ Choose one of the following effects:
 				{
 					level: 1,
 					features: [
+						FeatureLogic.createAbilityCostFeature({
+							id: 'elementalist-sub-2-1-0',
+							keywords: [ AbilityKeyword.Fire ],
+							modifier: -1
+						}),
 						FeatureLogic.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'elementalist-sub-2-1-1',
@@ -397,7 +407,7 @@ Choose one of the following effects:
 								keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
 								target: '1 mundane object',
-								cost: 2,
+								cost: 3,
 								effect: 'You heat the target and cause it to combust and melt. If the object is larger than 1 square, then only the square of the object that you touch is destroyed.',
 								spend: [
 									{
@@ -416,7 +426,7 @@ Choose one of the following effects:
 								keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
 								target: 'Self or 1 ally',
-								effect: 'Effect: The distance of the forced movement is increased by a number of squares equal to your Reason score.',
+								effect: 'The distance of the forced movement is increased by a number of squares equal to your Reason score.',
 								spend: [
 									{
 										value: 1,
@@ -440,6 +450,11 @@ Choose one of the following effects:
 				{
 					level: 1,
 					features: [
+						FeatureLogic.createAbilityCostFeature({
+							id: 'elementalist-sub-3-1-0',
+							keywords: [ AbilityKeyword.Green ],
+							modifier: -1
+						}),
 						FeatureLogic.createFeature({
 							id: 'elementalist-sub-3-1-1',
 							name: 'Speech Of The Wild',
@@ -474,6 +489,11 @@ Additionally, when you touch a living plant object, you can communicate with it 
 				{
 					level: 1,
 					features: [
+						FeatureLogic.createAbilityCostFeature({
+							id: 'elementalist-sub-4-1-0',
+							keywords: [ AbilityKeyword.Void ],
+							modifier: -1
+						}),
 						FeatureLogic.createFeature({
 							id: 'elementalist-sub-4-1-1',
 							name: 'Void Sense',
@@ -488,7 +508,7 @@ Additionally, when you touch a living plant object, you can communicate with it 
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
 								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
 								target: '1 creature',
-								cost: 1,
+								cost: 2,
 								effect: 'The target gains the benefit of your Void Sense feature until the end of your next turn, but doesn’t gain the use of Shared Void Sense.',
 								spend: [
 									{

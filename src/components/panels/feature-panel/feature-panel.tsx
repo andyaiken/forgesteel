@@ -251,10 +251,19 @@ export const FeaturePanel = (props: Props) => {
 						if (props.hero) {
 							const features = HeroLogic.getFeatures(props.hero)
 								.filter(f => f.id !== props.feature.id)
-								.filter(f => f.type === FeatureType.SkillChoice)
 								.filter(f => {
-									const data = f.data as FeatureSkillChoiceData;
-									return data.selected.includes(s);
+									switch (f.type) {
+										case FeatureType.Skill: {
+											const data = f.data as FeatureSkillData;
+											return data.skill === s;
+										}
+										case FeatureType.SkillChoice: {
+											const data = f.data as FeatureSkillChoiceData;
+											return data.selected.includes(s);
+										}
+									}
+
+									return false;
 								});
 							if (features.length > 0) {
 								return (

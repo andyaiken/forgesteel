@@ -1,4 +1,5 @@
-import { Badge, Button, Popover, Select } from 'antd';
+import { Badge, Button, Popover, Select, Space, Upload } from 'antd';
+import { DownloadOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryData } from '../../../../data/ancestry-data';
 import { AncestryPanel } from '../../../panels/ancestry-panel/ancestry-panel';
@@ -17,6 +18,7 @@ import { ComplicationPanel } from '../../../panels/complication-panel/complicati
 import { Culture } from '../../../../models/culture';
 import { CultureData } from '../../../../data/culture-data';
 import { CulturePanel } from '../../../panels/culture-panel/culture-panel';
+import { Element } from '../../../../models/element';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
 import { Kit } from '../../../../models/kit';
@@ -39,7 +41,8 @@ interface Props {
 	viewComplication: (complication: Complication) => void;
 	onSettingChange: (setting: CampaignSetting) => void;
 	onSettingDelete: (setting: CampaignSetting) => void;
-	onCreateHomebrew: (element: string, settingID: string) => void;
+	onCreateHomebrew: (type: string, settingID: string) => void;
+	onImportHomebrew: (type: string, settingID: string, element: Element) => void;
 }
 
 export const SourcebookListPage = (props: Props) => {
@@ -334,7 +337,25 @@ export const SourcebookListPage = (props: Props) => {
 									value={settingID}
 									onChange={setSettingID}
 								/>
-								<Button onClick={createHomebrew}>Create</Button>
+								<Space>
+									<Button type='primary' icon={<PlusCircleOutlined />} onClick={createHomebrew}>Create</Button>
+									<Upload
+										style={{ width: '100%' }}
+										accept={`.drawsteel-${element.toLowerCase()}`}
+										showUploadList={false}
+										beforeUpload={file => {
+											file
+												.text()
+												.then(json => {
+													const e = (JSON.parse(json) as Element);
+													props.onImportHomebrew(element, settingID, e);
+												});
+											return false;
+										}}
+									>
+										<Button block={true} icon={<DownloadOutlined />}>Import</Button>
+									</Upload>
+								</Space>
 							</div>
 						)}
 					>

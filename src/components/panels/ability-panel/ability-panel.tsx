@@ -25,6 +25,7 @@ interface Props {
 export const AbilityPanel = (props: Props) => {
 	try {
 		let cost = props.ability.cost;
+		let disabled = false;
 		if ((cost > 0) && props.hero) {
 			HeroLogic.getFeatures(props.hero).filter(f => f.type === FeatureType.AbilityCost).forEach(f => {
 				const data = f.data as FeatureAbilityCostData;
@@ -34,10 +35,11 @@ export const AbilityPanel = (props: Props) => {
 			});
 
 			cost = Math.max(cost, 1);
+			disabled = cost > props.hero.state.heroicResource;
 		}
 
 		return (
-			<SelectablePanel>
+			<SelectablePanel disabled={disabled}>
 				<div className='ability-panel' id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
 					<HeaderText ribbon={cost > 0 ? <HeroicResourceBadge value={cost} /> : undefined}>
 						{props.ability.name || 'Unnamed Ability'}
@@ -83,6 +85,7 @@ export const AbilityPanel = (props: Props) => {
 									props.ability.spend.map((spend, n) => (
 										<Field
 											key={n}
+											disabled={props.hero && (spend.value > props.hero.state.heroicResource)}
 											label={(
 												<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
 													<span>Spend</span>

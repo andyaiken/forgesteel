@@ -1,4 +1,4 @@
-import { Button, Input, Radio, Segmented, Select, Space } from 'antd';
+import { Button, Divider, Input, Radio, Segmented, Select, Space } from 'antd';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureBonusData, FeatureData, FeatureLanguageData, FeatureSkillData } from '../../../../models/feature';
 import { Ancestry } from '../../../../models/ancestry';
@@ -263,6 +263,13 @@ export const HeroEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const setSettingIDs = (settingIDs: string[]) => {
+			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			heroCopy.settingIDs = settingIDs;
+			setHero(heroCopy);
+			setDirty(true);
+		};
+
 		const saveChanges = () => {
 			props.saveChanges(hero);
 			setDirty(false);
@@ -276,31 +283,72 @@ export const HeroEditPage = (props: Props) => {
 			switch (page) {
 				case Page.Ancestry:
 					return (
-						<AncestrySection hero={hero} campaignSettings={props.campaignSettings} selectAncestry={setAncestry} setFeatureData={setFeatureData} />
+						<AncestrySection
+							hero={hero}
+							campaignSettings={props.campaignSettings.filter(cs => hero.settingIDs.includes(cs.id))}
+							selectAncestry={setAncestry}
+							setFeatureData={setFeatureData}
+						/>
 					);
 				case Page.Culture:
 					return (
-						<CultureSection hero={hero} campaignSettings={props.campaignSettings} selectCulture={setCulture} selectLanguages={setLanguages} selectEnvironment={setEnvironment} selectOrganization={setOrganization} selectUpbringing={setUpbringing} setFeatureData={setFeatureData} />
+						<CultureSection
+							hero={hero}
+							campaignSettings={props.campaignSettings.filter(cs => hero.settingIDs.includes(cs.id))}
+							selectCulture={setCulture}
+							selectLanguages={setLanguages}
+							selectEnvironment={setEnvironment}
+							selectOrganization={setOrganization}
+							selectUpbringing={setUpbringing}
+							setFeatureData={setFeatureData}
+						/>
 					);
 				case Page.Career:
 					return (
-						<CareerSection hero={hero} campaignSettings={props.campaignSettings} selectCareer={setCareer} setFeatureData={setFeatureData} />
+						<CareerSection
+							hero={hero}
+							campaignSettings={props.campaignSettings.filter(cs => hero.settingIDs.includes(cs.id))}
+							selectCareer={setCareer}
+							setFeatureData={setFeatureData}
+						/>
 					);
 				case Page.Class:
 					return (
-						<ClassSection hero={hero} campaignSettings={props.campaignSettings} selectClass={setClass} selectCharacteristics={setCharacteristics} selectSubclasses={setSubclasses} setFeatureData={setFeatureData} />
+						<ClassSection
+							hero={hero}
+							campaignSettings={props.campaignSettings.filter(cs => hero.settingIDs.includes(cs.id))}
+							selectClass={setClass}
+							selectCharacteristics={setCharacteristics}
+							selectSubclasses={setSubclasses}
+							setFeatureData={setFeatureData}
+						/>
 					);
 				case Page.Complication:
 					return (
-						<ComplicationSection hero={hero} campaignSettings={props.campaignSettings} selectComplication={setComplication} setFeatureData={setFeatureData} />
+						<ComplicationSection
+							hero={hero}
+							campaignSettings={props.campaignSettings.filter(cs => hero.settingIDs.includes(cs.id))}
+							selectComplication={setComplication}
+							setFeatureData={setFeatureData}
+						/>
 					);
 				case Page.Kit:
 					return (
-						<KitSection hero={hero} campaignSettings={props.campaignSettings} selectKit={setKit} setFeatureData={setFeatureData} />
+						<KitSection
+							hero={hero}
+							campaignSettings={props.campaignSettings.filter(cs => hero.settingIDs.includes(cs.id))}
+							selectKit={setKit}
+							setFeatureData={setFeatureData}
+						/>
 					);
 				case Page.Details:
 					return (
-						<DetailsSection hero={hero} setName={setName} />
+						<DetailsSection
+							hero={hero}
+							campaignSettings={props.campaignSettings}
+							setName={setName}
+							setSettingIDs={setSettingIDs}
+						/>
 					);
 			}
 		};
@@ -833,7 +881,9 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 
 interface DetailsSectionProps {
 	hero: Hero;
+	campaignSettings: CampaignSetting[];
 	setName: (value: string) => void;
+	setSettingIDs: (settingIDs: string[]) => void;
 }
 
 const DetailsSection = (props: DetailsSectionProps) => {
@@ -849,6 +899,17 @@ const DetailsSection = (props: DetailsSectionProps) => {
 						addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => props.setName(NameGenerator.generateName())} />}
 						value={props.hero.name}
 						onChange={e => props.setName(e.target.value)}
+					/>
+					<Divider />
+					<HeaderText>Campaign Settings</HeaderText>
+					<Select
+						style={{ width: '100%' }}
+						placeholder='Select'
+						mode='multiple'
+						options={props.campaignSettings.map(cs => ({ value: cs.id, label: cs.name }))}
+						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+						value={props.hero.settingIDs}
+						onChange={props.setSettingIDs}
 					/>
 				</div>
 			</div>

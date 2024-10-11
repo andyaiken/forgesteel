@@ -4,6 +4,11 @@
 	overflow-wrap: break-word;
 	word-break: normal;
 
+	&.disabled {
+		opacity: 0.6;
+		pointer-events: none;
+	}
+
 	.field-label {
 		color: rgb(0, 0, 0);
 		font-weight: 600;

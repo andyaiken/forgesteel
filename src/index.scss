@@ -116,6 +116,14 @@ ul {
 	}
 }
 
+.ant-upload-wrapper {
+	.ant-upload {
+		&.ant-upload-select {
+			display: block;
+		}
+	}
+}
+
 @media (prefers-color-scheme: dark) {
 	html {
 		color: rgba(255, 255, 255, 0.88);

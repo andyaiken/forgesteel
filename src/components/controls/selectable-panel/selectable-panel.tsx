@@ -4,6 +4,7 @@ import './selectable-panel.scss';
 
 interface Props {
 	children: JSX.Element | JSX.Element[];
+	disabled?: boolean;
 	onSelect?: () => void;
 	onUnselect?: () => void;
 };
@@ -11,6 +12,9 @@ interface Props {
 export const SelectablePanel = (props: Props) => {
 	try {
 		let className = 'selectable-panel';
+		if (props.disabled) {
+			className += ' disabled';
+		}
 		if (props.onSelect) {
 			className += ' selectable';
 		}

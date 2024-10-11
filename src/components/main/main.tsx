@@ -26,7 +26,6 @@ import { HeroListPage } from '../pages/heroes/hero-list/hero-list-page';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroPage } from '../pages/heroes/hero-view/hero-view-page';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
-import { ImportHeroModal } from '../modals/import-hero/import-hero-modal';
 import { Kit } from '../../models/kit';
 import { KitModal } from '../modals/kit/kit-modal';
 import { Options } from '../../models/options';
@@ -122,7 +121,7 @@ export const Main = (props: Props) => {
 	//#region Heroes
 
 	const addHero = () => {
-		const hero = FactoryLogic.createHero([ CampaignSettingData.core.id, CampaignSettingData.orden.id ]);
+		const hero = FactoryLogic.createHero([ CampaignSettingData.core.id ]);
 
 		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
 		copy.push(hero);
@@ -133,24 +132,18 @@ export const Main = (props: Props) => {
 		setSelectedHero(hero);
 	};
 
-	const importHero = () => {
-		setDrawer(
-			<ImportHeroModal
-				accept={hero => {
-					hero.id = Utils.guid();
-					HeroLogic.updateHero(hero);
+	const importHero = (hero: Hero) => {
+		hero.id = Utils.guid();
+		HeroLogic.updateHero(hero);
 
-					const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
-					copy.push(hero);
-					Collections.sort(copy, h => h.name);
+		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
+		copy.push(hero);
+		Collections.sort(copy, h => h.name);
 
-					persistHeroes(copy);
-					setPage(Page.HeroView);
-					setSelectedHero(hero);
-					setDrawer(null);
-				}}
-			/>
-		);
+		persistHeroes(copy);
+		setPage(Page.HeroView);
+		setSelectedHero(hero);
+		setDrawer(null);
 	};
 
 	const viewHero = (heroID: string) => {
@@ -212,9 +205,9 @@ export const Main = (props: Props) => {
 
 	//#region Sourcebooks
 
-	const createHomebrew = (element: string, settingID: string) => {
+	const createHomebrew = (type: string, settingID: string) => {
 		const setting = homebrewSettings.find(cs => cs.id === settingID) || null;
-		switch (element) {
+		switch (type) {
 			case 'Ancestry':
 				createAncestry(null, setting);
 				break;
@@ -579,6 +572,45 @@ export const Main = (props: Props) => {
 		}
 	};
 
+	const importHomebrew = (type: string, settingID: string, element: Element) => {
+		element.id = Utils.guid();
+
+		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		const setting = copy.find(cs => cs.id === settingID);
+		if (setting) {
+			switch(type) {
+				case 'Ancestry':
+					setting.ancestries.push(element as unknown as Ancestry);
+					Collections.sort(setting.ancestries, item => item.name);
+					break;
+				case 'Culture':
+					setting.cultures.push(element as unknown as Culture);
+					Collections.sort(setting.cultures, item => item.name);
+					break;
+				case 'Career':
+					setting.careers.push(element as unknown as Career);
+					Collections.sort(setting.careers, item => item.name);
+					break;
+				case 'Class':
+					setting.classes.push(element as unknown as HeroClass);
+					Collections.sort(setting.classes, item => item.name);
+					break;
+				case 'Kit':
+					setting.kits.push(element as unknown as Kit);
+					Collections.sort(setting.kits, item => item.name);
+					break;
+				case 'Complication':
+					setting.complications.push(element as unknown as Complication);
+					Collections.sort(setting.complications, item => item.name);
+					break;
+			}
+		}
+
+		persistHomebrewSettings(copy);
+		setPage(Page.SourcebookList);
+		setDrawer(null);
+	};
+
 	//#endregion
 
 	//#region Modals
@@ -756,7 +788,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroPage
 						hero={selectedHero as Hero}
-						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings).filter(cs => (selectedHero as Hero).settingIDs.includes(cs.id))}
+						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings)}
 						options={options}
 						setOptions={persistOptions}
 						goHome={showWelcome}
@@ -780,7 +812,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroEditPage
 						hero={selectedHero as Hero}
-						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings).filter(cs => (selectedHero as Hero).settingIDs.includes(cs.id))}
+						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings)}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						saveChanges={saveEditSelectedHero}
@@ -802,6 +834,7 @@ export const Main = (props: Props) => {
 						onSettingChange={changeCampaignSetting}
 						onSettingDelete={deleteCampaignSetting}
 						onCreateHomebrew={createHomebrew}
+						onImportHomebrew={importHomebrew}
 					/>
 				);
 			case Page.ElementEdit:

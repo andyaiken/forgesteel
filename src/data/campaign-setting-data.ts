@@ -24,7 +24,6 @@ export class CampaignSettingData {
 			AncestryData.dwarf,
 			AncestryData.wodeElf,
 			AncestryData.highElf,
-			AncestryData.hakaan,
 			AncestryData.human,
 			AncestryData.orc,
 			AncestryData.polder,
@@ -97,6 +96,7 @@ export class CampaignSettingData {
 		description: 'The default setting for Draw Steel.',
 		isHomebrew: false,
 		ancestries: [
+			AncestryData.hakaan,
 			AncestryData.memonek,
 			AncestryData.timeRaider
 		],

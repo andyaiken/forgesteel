@@ -68,24 +68,21 @@ export const Main = (props: Props) => {
 	//#region Persistence
 
 	const persistHeroes = (heroes: Hero[]) => {
-		localforage.setItem<Hero[]>('forgesteel-heroes', heroes)
-			.then(() => {
-				setHeroes(heroes);
-			});
+		localforage
+			.setItem<Hero[]>('forgesteel-heroes', Collections.sort(heroes, h => h.name))
+			.then(setHeroes);
 	};
 
 	const persistHomebrewSettings = (homebrew: CampaignSetting[]) => {
-		localforage.setItem<CampaignSetting[]>('forgesteel-homebrew-settings', homebrew)
-			.then(() => {
-				setHomebrewSettings(homebrew);
-			});
+		localforage
+			.setItem<CampaignSetting[]>('forgesteel-homebrew-settings', homebrew)
+			.then(setHomebrewSettings);
 	};
 
 	const persistOptions = (options: Options) => {
-		localforage.setItem<Options>('forgesteel-options', options)
-			.then(() => {
-				setOptions(options);
-			});
+		localforage
+			.setItem<Options>('forgesteel-options', options)
+			.then(setOptions);
 	};
 
 	//#endregion
@@ -121,7 +118,7 @@ export const Main = (props: Props) => {
 	//#region Heroes
 
 	const addHero = () => {
-		const hero = FactoryLogic.createHero([ CampaignSettingData.core.id ]);
+		const hero = FactoryLogic.createHero([ CampaignSettingData.core.id, CampaignSettingData.orden.id ]);
 
 		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
 		copy.push(hero);

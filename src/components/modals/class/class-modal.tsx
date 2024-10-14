@@ -49,7 +49,7 @@ export const ClassModal = (props: Props) => {
 							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 								<Button onClick={() => props.export('image')}>Export As Image</Button>
 								<Button onClick={() => props.export('pdf')}>Export As PDF</Button>
-								<Button onClick={() => props.export('json')}>Export As JSON</Button>
+								<Button onClick={() => props.export('json')}>Export as Data</Button>
 							</div>
 						)}
 					>

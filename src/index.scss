@@ -87,6 +87,10 @@ ul {
 	}
 }
 
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):first-child {
+    font-weight: 600;
+}
+
 .ant-statistic {
 	.ant-statistic-title,
 	.ant-statistic-content {

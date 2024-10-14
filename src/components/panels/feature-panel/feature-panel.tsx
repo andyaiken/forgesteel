@@ -196,16 +196,28 @@ export const FeaturePanel = (props: Props) => {
 				{
 					data.selected.map((l, n) => {
 						if (props.hero) {
-							const features = HeroLogic.getFeatures(props.hero)
+							const languages: string[] = [];
+							if (props.hero.culture) {
+								languages.push(...props.hero.culture.languages);
+							}
+							props.hero.settingIDs.forEach(settingID => {
+								if (props.campaignSettings) {
+									const setting = props.campaignSettings.find(cs => cs.id === settingID);
+									if (setting) {
+										languages.push(...setting.defaultLanguages);
+									}
+								}
+							});
+							HeroLogic.getFeatures(props.hero)
 								.filter(f => f.id !== props.feature.id)
 								.filter(f => f.type === FeatureType.Language)
-								.filter(f => {
+								.forEach(f => {
 									const data = f.data as FeatureLanguageData;
-									return data.selected.includes(l);
+									languages.push(...data.selected);
 								});
-							if (features.length > 0) {
+							if (languages.includes(l)) {
 								return (
-									<Alert key={n} type='warning' showIcon={true} message={`${l} is also granted by ${features.map(f => f.name).join(', ')}`} />
+									<Alert key={n} type='warning' showIcon={true} message={`You have already chosen ${l}.`} />
 								);
 							}
 						}
@@ -249,9 +261,9 @@ export const FeaturePanel = (props: Props) => {
 				{
 					data.selected.map((s, n) => {
 						if (props.hero) {
-							const features = HeroLogic.getFeatures(props.hero)
+							const selected = HeroLogic.getFeatures(props.hero)
 								.filter(f => f.id !== props.feature.id)
-								.filter(f => {
+								.some(f => {
 									switch (f.type) {
 										case FeatureType.Skill: {
 											const data = f.data as FeatureSkillData;
@@ -265,9 +277,9 @@ export const FeaturePanel = (props: Props) => {
 
 									return false;
 								});
-							if (features.length > 0) {
+							if (selected) {
 								return (
-									<Alert key={n} type='warning' showIcon={true} message={`${s} is also granted by ${features.map(f => f.name).join(', ')}`} />
+									<Alert key={n} type='warning' showIcon={true} message={`You have already chosen ${s}.`} />
 								);
 							}
 						}

@@ -239,7 +239,7 @@ export const fury: HeroClass = {
 				characteristic: [ Characteristic.Might ],
 				tier1: '9 damage',
 				tier2: '13 damage',
-				tier3: '23 damage'
+				tier3: '21 damage'
 			}),
 			spend: [
 				{

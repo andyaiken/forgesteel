@@ -888,6 +888,17 @@ interface DetailsSectionProps {
 
 const DetailsSection = (props: DetailsSectionProps) => {
 	try {
+		const getSetting = (settingID: string) => {
+			const setting = props.campaignSettings.find(cs => cs.id === settingID);
+			if (setting) {
+				return (
+					<Field key={setting.id} label={setting.name} value={setting.defaultLanguages.join(', ') || 'None'} />
+				);
+			}
+
+			return null;
+		};
+
 		return (
 			<div className='hero-edit-content'>
 				<div className='hero-edit-content-column' id='details-main'>
@@ -911,6 +922,9 @@ const DetailsSection = (props: DetailsSectionProps) => {
 						value={props.hero.settingIDs}
 						onChange={props.setSettingIDs}
 					/>
+					<Divider />
+					<HeaderText>Default Languages</HeaderText>
+					{props.hero.settingIDs.map(getSetting)}
 				</div>
 			</div>
 		);

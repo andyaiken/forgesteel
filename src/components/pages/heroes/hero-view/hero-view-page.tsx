@@ -81,7 +81,7 @@ export const HeroPage = (props: Props) => {
 								<Toggle label='Show Standard Abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
 								<Button onClick={() => props.exportHero('image')}>Export As Image</Button>
 								<Button onClick={() => props.exportHero('pdf')}>Export As PDF</Button>
-								<Button onClick={() => props.exportHero('json')}>Export As JSON</Button>
+								<Button onClick={() => props.exportHero('json')}>Export as Data</Button>
 							</div>
 						)}
 					>

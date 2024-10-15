@@ -153,8 +153,8 @@ export class CareerData {
 				keywords: [ AbilityKeyword.Magic ],
 				distance: [ AbilityLogic.createDistanceSelf() ],
 				target: 'Self',
-				effect:
-`Choose one of the following effects:
+				effect: `
+Choose one of the following effects:
 • You teleport an unattended size 1T or 1S object within 1 square of you to an unoccupied space within 1 square of you.
 • Until the start of your next turn, a part of your body shoots a shower of harmless noisy sparks that give off light within 1 square of you.
 • You ignite or snuff out (your choice) every mundane light source within 1 square of you.

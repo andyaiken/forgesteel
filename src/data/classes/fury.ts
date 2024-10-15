@@ -284,10 +284,10 @@ export const fury: HeroClass = {
 							name: 'Primordial Strength',
 							description: `
 When you damage an object with a weapon attack, it takes an additional 5 damage. Additionally, whenever you push another creature, you can make it a vertical push.
-* Rage 2: You gain an edge on Might tests and resistance rolls.
-* Rage 2: You gain a bonus to weapon damage equal to your Might score if you are at least 2 squares from where you started your turn when you attack.
-* Rage 4: You gain a bonus to weapon damage equal to twice your Might score, instead of once your Might score, if you are at least two squares from where you started your turn when you attack.
-* Rage 6: You have a double edge on Might tests and resistance rolls.`
+* **Rage 2**: You gain an edge on Might tests and resistance rolls.
+* **Rage 2**: You gain a bonus to weapon damage equal to your Might score if you are at least 2 squares from where you started your turn when you attack.
+* **Rage 4**: You gain a bonus to weapon damage equal to twice your Might score, instead of once your Might score, if you are at least two squares from where you started your turn when you attack.
+* **Rage 6**: You have a double edge on Might tests and resistance rolls.`
 						}),
 						FeatureLogic.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
@@ -334,10 +334,10 @@ When you damage an object with a weapon attack, it takes an additional 5 damage.
 							name: 'Primordial Cunning',
 							description: `
 You are never surprised. Additionally, whenever you would push a target with forced movement, you can slide them instead.
-* Rage 2: You gain an edge on Agility tests and resistance rolls.
-* Rage 2: Once per turn, when you slide a target or when you move adjacent to a target during a shift, you can deal weapon damage to the target equal to your Agility score.
-* Rage 4: Once per turn, when you slide a target or when you move adjacent to a target during a shift, you can deal weapon damage to the target equal to twice your Agility score, instead of once your Agility score.
-* Rage 6: You have a double edge on Agility tests and resistance rolls.`
+* **Rage 2**: You gain an edge on Agility tests and resistance rolls.
+* **Rage 2**: Once per turn, when you slide a target or when you move adjacent to a target during a shift, you can deal weapon damage to the target equal to your Agility score.
+* **Rage 4**: Once per turn, when you slide a target or when you move adjacent to a target during a shift, you can deal weapon damage to the target equal to twice your Agility score, instead of once your Agility score.
+* **Rage 6**: You have a double edge on Agility tests and resistance rolls.`
 						}),
 						FeatureLogic.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
@@ -463,10 +463,10 @@ You are never surprised. Additionally, whenever you would push a target with for
 							name: 'Aspect Benefits',
 							description: `
 Whenever you use forced movement to push a creature, you can pull that creature instead. Whenever an attack pulls a creature adjacent to you, you can attempt to grab that creature as a free triggered action.
-* Rage 2: You gain an edge on Might tests, resistance rolls, and power rolls made to grab.
-* Rage 2: While in bear form, your attacks deal extra damage equal to your Might score, and any target you have grabbed at the start of your turn takes damage equal to your Might score.
-* Rage 4: While in bear form, you can use all your abilities, your attacks deal extra damage equal to twice your Might score, instead of once your Might score, and any target you have grabbed at the start of your turn takes damage equal to twice your Might score, instead of once your Might score.
-* Rage 6: You have a double edge on Might tests, resistance rolls, and power rolls made with the Grab ability.`
+* **Rage 2**: You gain an edge on Might tests, resistance rolls, and power rolls made to grab.
+* **Rage 2**: While in bear form, your attacks deal extra damage equal to your Might score, and any target you have grabbed at the start of your turn takes damage equal to your Might score.
+* **Rage 4**: While in bear form, you can use all your abilities, your attacks deal extra damage equal to twice your Might score, instead of once your Might score, and any target you have grabbed at the start of your turn takes damage equal to twice your Might score, instead of once your Might score.
+* **Rage 6**: You have a double edge on Might tests, resistance rolls, and power rolls made with the Grab ability.`
 						}),
 						FeatureLogic.createFeature({
 							id: 'kit-boren-feature-2',
@@ -522,12 +522,12 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 							name: 'Aspect Benefits',
 							description: `
 You gain an edge on tests made to hide and sneak. Whenever you are falling, you can use your Animal Form ability as a free triggered action.
-* Rage 2: You can shift 1 square as a free maneuver once per turn.
-* Rage 2: While in crow form, your attacks deal extra damage equal to your Agility score.
-* Rage 2: Once per turn while in crow form, when you move away from an enemy, that enemy takes damage equal to your Agility score.
-* Rage 4: While in crow or hybrid crow form, you can use all your abilities, and your attacks deal extra damage equal to twice your Agility score, instead of once your Agility score.
-* Rage 4: Once per turn while in crow or hybrid crow form, when you move away from an enemy, that enemy takes damage equal to twice your Agility score, instead of once your Agility score.
-* Rage 6: You can shift up to 2 squares as a free maneuver once per turn.`
+* **Rage 2**: You can shift 1 square as a free maneuver once per turn.
+* **Rage 2**: While in crow form, your attacks deal extra damage equal to your Agility score.
+* **Rage 2**: Once per turn while in crow form, when you move away from an enemy, that enemy takes damage equal to your Agility score.
+* **Rage 4**: While in crow or hybrid crow form, you can use all your abilities, and your attacks deal extra damage equal to twice your Agility score, instead of once your Agility score.
+* **Rage 4**: Once per turn while in crow or hybrid crow form, when you move away from an enemy, that enemy takes damage equal to twice your Agility score, instead of once your Agility score.
+* **Rage 6**: You can shift up to 2 squares as a free maneuver once per turn.`
 						}),
 						FeatureLogic.createFeature({
 							id: 'kit-boren-feature-2',
@@ -585,11 +585,11 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 							name: 'Aspect Benefits',
 							description: `
 You gain an edge on tests made to hide and sneak. Additionally, you ignore difficult terrain, and you gain an edge on tests made to climb other creatures. If you are hidden, you automatically achieve a tier 3 result on attempts to climb and remain hidden.
-* Rage 2: You have Weapon immunity 2.
-* Rage 2: While in rat form, your attacks deal extra damage equal to your Agility score.
-* Rage 2: While in rat form, if you attack a creature you are climbing, that creature is bleeding (EoT).
-* Rage 4: While in rat or hybrid rat form, you can use all your abilities, and your attacks deal extra damage equal to twice your Agility score, instead of once your Agility score.
-* Rage 6: You have Weapon immunity 2. Any damage you ignore because of this immunity is dealt to each enemy adjacent to you when you are attacked.`
+* **Rage 2**: You have Weapon immunity 2.
+* **Rage 2**: While in rat form, your attacks deal extra damage equal to your Agility score.
+* **Rage 2**: While in rat form, if you attack a creature you are climbing, that creature is bleeding (EoT).
+* **Rage 4**: While in rat or hybrid rat form, you can use all your abilities, and your attacks deal extra damage equal to twice your Agility score, instead of once your Agility score.
+* **Rage 6**: You have Weapon immunity 2. Any damage you ignore because of this immunity is dealt to each enemy adjacent to you when you are attacked.`
 						}),
 						FeatureLogic.createFeature({
 							id: 'kit-boren-feature-2',
@@ -647,12 +647,12 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 							name: 'Aspect Benefits',
 							description: `
 You and an ally gain the benefits of flanking whenever you are both adjacent to a target. If you and at least two other allies are all adjacent to a target, each of you has a double edge for flanking.
-* Rage 2: You gain an edge on Agility tests and resistance rolls.
-* Rage 2: While in wolf form, your attacks deal extra damage equal to your Agility score.
-* Rage 2: When you attack a target while in wolf form, the next ally to damage that target before the start of your next turn deals extra damage equal to your Agility score.
-* Rage 4: While in wolf or hybrid wolf form, you can use all your abilities, and your attacks deal extra damage equal to twice your Agility score, instead of once your Agility score.
-* Rage 4: When you attack a target while in wolf or hybrid wolf form, the next ally to damage that target before the start of your next turn deals extra damage equal to twice your Agility score, instead of once your Agility score.
-* Rage 6: You have a double edge on Agility tests and resistance rolls.`
+* **Rage 2**: You gain an edge on Agility tests and resistance rolls.
+* **Rage 2**: While in wolf form, your attacks deal extra damage equal to your Agility score.
+* **Rage 2**: When you attack a target while in wolf form, the next ally to damage that target before the start of your next turn deals extra damage equal to your Agility score.
+* **Rage 4**: While in wolf or hybrid wolf form, you can use all your abilities, and your attacks deal extra damage equal to twice your Agility score, instead of once your Agility score.
+* **Rage 4**: When you attack a target while in wolf or hybrid wolf form, the next ally to damage that target before the start of your next turn deals extra damage equal to twice your Agility score, instead of once your Agility score.
+* **Rage 6**: You have a double edge on Agility tests and resistance rolls.`
 						}),
 						FeatureLogic.createFeature({
 							id: 'kit-boren-feature-2',

@@ -170,6 +170,7 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<div>
+				<div className='ds-text'>{data.count === 1 ? 'Select a language:' : `Select ${data.count} languages:`}</div>
 				<Select
 					style={{ width: '100%' }}
 					mode={data.count == 1 ? undefined : 'multiple'}
@@ -228,13 +229,14 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
-	const getEditableSkill = (data: FeatureSkillChoiceData) => {
+	const getEditableSkillChoice = (data: FeatureSkillChoiceData) => {
 		const skills = SkillData.getSkills(props.campaignSettings as CampaignSetting[])
 			.filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
 		const sortedSkills = Collections.sort(skills, s => s.name);
 
 		return (
 			<div>
+				<div className='ds-text'>{data.count === 1 ? 'Select a skill:' : `Select ${data.count} skills:`}</div>
 				<Select
 					style={{ width: '100%' }}
 					mode={data.count === 1 ? undefined : 'multiple'}
@@ -360,7 +362,7 @@ export const FeaturePanel = (props: Props) => {
 			case FeatureType.Language:
 				return getEditableLanguage(props.feature.data as FeatureLanguageData);
 			case FeatureType.SkillChoice:
-				return getEditableSkill(props.feature.data as FeatureSkillChoiceData);
+				return getEditableSkillChoice(props.feature.data as FeatureSkillChoiceData);
 			case FeatureType.SubclassFeature:
 				return getEditableSubclassFeature(props.feature.data as FeatureSubclassData);
 		}

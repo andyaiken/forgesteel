@@ -55,12 +55,29 @@ p,
 	}
 }
 
-p {
-	display: inline;
-}
-
 ul {
 	padding-inline-start: 15px;
+}
+
+table {
+	margin: 10px 0;
+	border-collapse: collapse;
+	background-color: rgb(250, 250, 250);
+}
+
+th {
+	font-weight: 600;
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(5, 5, 5, 0.06);
+}
+
+th,
+td {
+	padding: 5px;
 }
 
 .ant-btn {
@@ -137,6 +154,11 @@ ul {
 	p,
 	.ds-text {
 		color: rgba(255, 255, 255, 0.88);
+	}
+
+	table {
+		border: 1px solid rgba(250, 250, 250, 0.6);
+		background-color: rgb(50, 50, 50);
 	}
 
 	.ant-collapse {

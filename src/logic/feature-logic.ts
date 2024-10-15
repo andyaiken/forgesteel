@@ -126,7 +126,7 @@ export class FeatureLogic {
 		return {
 			id: data.id,
 			name: data.name || 'Language',
-			description: data.description || (count > 1 ? `Choose ${count} languages.` : 'Choose a language.'),
+			description: data.description || '',
 			type: FeatureType.Language,
 			data: {
 				options: data.options || [],

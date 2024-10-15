@@ -22,7 +22,7 @@ export class Utils {
 		};
 	};
 
-	static showdownConverter = new Converter({ simpleLineBreaks: true });
+	static showdownConverter = new Converter({ simpleLineBreaks: true, tables: true });
 
 	static intersects = (light: { a: { x: number, y: number }, b: { x: number, y: number } }, wall: { a: { x: number, y: number }, b: { x: number, y: number } }) => {
 		const det = (light.b.x - light.a.x) * (wall.b.y - wall.a.y) - (wall.b.x - wall.a.x) * (light.b.y - light.a.y);

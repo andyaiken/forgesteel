@@ -94,16 +94,16 @@ export const HeroStateModal = (props: Props) => {
 		return (
 			<div className='hero-state-modal'>
 				<NumberSpin
-					label='Victories'
-					value={hero.state.victories}
-					min={0}
-					onChange={value => onChange('victories', value)}
-				/>
-				<NumberSpin
 					label={hero.class ? hero.class.heroicResource : 'Heroic Resource'}
 					value={hero.state.heroicResource}
 					min={0}
 					onChange={value => onChange('heroicResource', value)}
+				/>
+				<NumberSpin
+					label='Victories'
+					value={hero.state.victories}
+					min={0}
+					onChange={value => onChange('victories', value)}
 				/>
 				<Flex align='center' justify='space-between' gap='5px'>
 					<Button

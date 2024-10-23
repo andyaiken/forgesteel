@@ -689,6 +689,15 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 			hero.settingIDs = [ CampaignSettingData.core.id, CampaignSettingData.orden.id ];
 		}
 
+		if (hero.career) {
+			if (hero.career.incitingIncidents === undefined) {
+				hero.career.incitingIncidents = {
+					options: [],
+					selectedID: null
+				};
+			}
+		}
+
 		if (hero.class) {
 			if (hero.class.kits === undefined) {
 				hero.class.kits = [];

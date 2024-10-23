@@ -31,7 +31,27 @@ export class CareerData {
 			id: 'artisan-title',
 			name: 'Expert Artisan',
 			description: 'Whenever you make a test as part of a research or crafting project that uses a skill you have from the crafting skill group, you can roll the test twice and use either roll.'
-		})
+		}),
+		incitingIncidents: {
+			options: [
+				{
+					id: 'artisan-ii-1',
+					name: 'Continue the Work',
+					description: 'A great hero was a fan of the things you created, and gave you a generous commission to create your best work for them. While working on this commission, you and the hero became close friends. The day you finished the work was the same day they disappeared. To honor their legacy, you took up the mantle of a hero with the intent of finishing your friend’s work.'
+				},
+				{
+					id: 'artisan-ii-2',
+					name: 'Inspired',
+					description: 'As you traveled the road selling your wares, troll bandits attacked you. One of the bandits claimed an item belonging to someone precious to you—or perhaps claimed that person’s life—but the rest were driven off or slain by a group of heroes. Seeing the quick work these heroes made of the bandits inspired you to follow in their footsteps.'
+				},
+				{
+					id: 'artisan-ii-3',
+					name: 'Robbery',
+					description: 'A criminal gang stole your goods and harmed a number of people who worked for you. You became a hero to prevent such indignities from being visited upon others, to seek revenge for the assault, or to find the thieves and get your stuff back.'
+				}
+			],
+			selectedID: null
+		}
 	};
 
 	static criminal: Career = {
@@ -61,7 +81,27 @@ export class CareerData {
 			id: 'criminal-title',
 			name: 'Lucky Dog',
 			description: 'When you fail a test using any skill from the intrigue skill group, you can roll a d6. You lose Stamina equal to the roll and improve the result of your test by one tier. You can make this roll only once per test.'
-		})
+		}),
+		incitingIncidents: {
+			options: [
+				{
+					id: 'criminal-ii-1',
+					name: 'Atonement',
+					description: 'The last criminal job you pulled led to the death of someone or the destruction of something you love. In order to make up for the loss you caused, you left your criminal ways behind and became a hero.'
+				},
+				{
+					id: 'criminal-ii-2',
+					name: 'Friendly Priest',
+					description: 'You went to prison for your crimes and eventually escaped. An elderly priest took you in and shielded you from the law, convinced that your soul wasn’t corrupt. They never judged you for your past, speaking only of the future. Eventually, the priest died, imparting final words that inspired you to become a hero.'
+				},
+				{
+					id: 'criminal-ii-3',
+					name: 'Stand Against Tyranny',
+					description: 'When a tyrant rose to power in your homeland, they began cracking down on all criminals with deadly raids and public executions. The nature of the crime didn’t matter—pickpockets and beggars were made to kneel before the axe alongside murderers. After losing enough friends, you stood up and joined the resistance—not just against this tyrant, but against authoritarians anywhere.'
+				}
+			],
+			selectedID: null
+		}
 	};
 
 	static gladiator: Career = {
@@ -87,7 +127,27 @@ export class CareerData {
 			id: 'gladiator-title',
 			name: 'Monologue Champion',
 			description: 'When you are not in combat, you can shout to get the attention of all creatures within 10 squares of you. Each creature who is not hostile toward you listens to what you have to say for at least the next minute, or until they sense danger or any form of imminent harm. While creatures are listening to you, your allies gain an edge on tests made to avoid being noticed by those creatures.'
-		})
+		}),
+		incitingIncidents: {
+			options: [
+				{
+					id: 'gladiator-ii-1',
+					name: 'Betrayed',
+					description: 'A local crime lord offered you money to throw your last bout, promising that you’d live through the ordeal and get a cut of all the wagers placed on the match. You held up your end of the deal—which made the knife in your back after the loss so surprising. You woke in a shallow grave, barely alive, and ready to mete out justice.'
+				},
+				{
+					id: 'gladiator-ii-2',
+					name: 'Heckler',
+					description: 'As you stood victorious on the arena sands, a voice cried out among the cheering. “This violence is just for show. You should be ashamed. There are people who need you—who need your skills!” Why did that voice ring so clear? And why did it sound so familiar? You never saw the face of the person who uttered the words, but they weighed heavy on you. The next day, you fled the arena to begin a hero’s life.'
+				},
+				{
+					id: 'gladiator-ii-3',
+					name: 'New Challenges',
+					description: 'You earned every title you could. You beat every opponent willing to face you in the arena. Your final battle with your rival ended with you victorious—and yet you were unsatisfied. There are other, greater foes out there, and you mean to find them.'
+				}
+			],
+			selectedID: null
+		}
 	};
 
 	static laborer: Career = {
@@ -118,7 +178,27 @@ export class CareerData {
 			id: 'laborer-title',
 			name: 'Team Backbone',
 			description: 'When you take your first turn during a montage test, you can both make a test and assist another hero’s test.'
-		})
+		}),
+		incitingIncidents: {
+			options: [
+				{
+					id: 'laborer-ii-1',
+					name: 'Disaster',
+					description: 'A disaster, such as a cave-in, wildfire, or tidal wave, hit your crew while you were working. You saved as many folks as you could, but the ones you couldn’t save weigh heavily on your mind. You took up the life of a hero to save as many people as possible, vowing that what happened to you won’t happen again.'
+				},
+				{
+					id: 'laborer-ii-2',
+					name: 'Embarrassment',
+					description: 'A noble you worked for admonished you publicly for work done poorly—more than once. Finally, you had enough. You vowed to take up a new path and show this noble that you are far more than what they make you out to be.'
+				},
+				{
+					id: 'laborer-ii-3',
+					name: 'Live the Dream',
+					description: 'You worked with a good friend, and on the job you’d always fantasize about what it’d be like to hit the road as adventuring heroes—someday. You didn’t count on your friend falling ill and passing away. Now it’s time to live out that dream for both of you.'
+				}
+			],
+			selectedID: null
+		}
 	};
 
 	static magesApprentice: Career = {
@@ -163,7 +243,27 @@ Choose one of the following effects:
 • You place a small magical inscription on the surface of a mundane object you can touch, or remove an inscription that was made by you or by another creature using Arcane Trick.
 • You cover a size 1T object that you touch with an illusion that makes it look like another object. A creature who handles the object can see through the illusion. The illusion ends when you stop touching the object.`
 			})
-		})
+		}),
+		incitingIncidents: {
+			options: [
+				{
+					id: 'mages-apprentice-ii-1',
+					name: 'Oops',
+					description: 'While studying magic, you accidentally sent yourself from your original world to this one. Now you’re stranded here, hoping to get back home by finding ancient texts or powerful magical treasures that might transport you there. A life of adventure it is!'
+				},
+				{
+					id: 'mages-apprentice-ii-2',
+					name: 'Ultimate Power',
+					description: 'The mage you worked for was a kindly old soul, but the basic magic they taught you always seemed like a small part of something bigger. It wasn’t until you met an adventuring elementalist that you realized hitting the road as a hero was the only way to truly improve and hone your skills. You resigned your apprenticeship and found yourself walking the path of a hero the next day.'
+				},
+				{
+					id: 'mages-apprentice-ii-3',
+					name: 'Missing Mage',
+					description: 'One day you woke up and the mage you worked for was just gone. They didn’t take any of their belongings, and there was no sign of any foul play—just the scent of sulfur in their bedchamber. You set out on your heroic journey in the aftermath, and have been looking for them ever since.'
+				}
+			],
+			selectedID: null
+		}
 	};
 
 	static performer: Career = {
@@ -190,7 +290,27 @@ Choose one of the following effects:
 			id: 'performer-title',
 			name: 'Dazzler',
 			description: 'When a creature watches you perform a song, dance, or role (as an actor, not in disguise) for at least 1 minute, you gain an edge on tests made to influence that creature for 1 hour after the performance ends.'
-		})
+		}),
+		incitingIncidents: {
+			options: [
+				{
+					id: 'performer-ii-1',
+					name: 'Cursed Audience',
+					description: 'During a performance, you watched in horror as the audience was suddenly overcome by a curse that caused them to disintegrate before your eyes. You’re not sure what happened, but seeking that answer quickly led you to places where only heroes dare to go.'
+				},
+				{
+					id: 'performer-ii-2',
+					name: 'Fame and Fortune',
+					description: 'You thought you were famous—then that hero came to your show. Suddenly, all eyes were on the dragon-slaying brute instead of the stage where they belonged. The audience even gave them a standing ovation when they entered the room. All you got was polite applause. Fine. If people want a hero, then a hero you shall be.'
+				},
+				{
+					id: 'performer-ii-3',
+					name: 'Tragic Lesson',
+					description: 'When a producer who once shortchanged you shouted out on the street for you to stop a thief who had picked their pocket, your spite toward the producer inspired you to let the thief run right on by. But that decision led to tragedy when the thief later harmed someone you loved. From that moment on, you decided to make it your responsibility to protect others.'
+				}
+			],
+			selectedID: null
+		}
 	};
 
 	static sage: Career = {
@@ -216,7 +336,27 @@ Choose one of the following effects:
 			id: 'sage-title',
 			name: 'Expert Sage',
 			description: 'Whenever you make a test as part of a research or crafting project that uses a skill you have from the lore skill group, you can roll the test twice and use either roll.'
-		})
+		}),
+		incitingIncidents: {
+			options: [
+				{
+					id: 'sage-ii-1',
+					name: 'Bookish Ideas',
+					description: 'You were always content to live a peaceful life in your library, until you found that one book—the one that told the tale of heroes who had saved the timescape. They didn’t spend their days behind a desk. They made a real difference. It was time for you to do the same.'
+				},
+				{
+					id: 'sage-ii-2',
+					name: 'Cure the Curse',
+					description: 'You used to think knowledge could fix everything. You were wrong. When someone you loved fell under a curse, the means to cure them couldn’t be found in any of the books you owned. But that wasn’t going to stop you. The answers are out there, and you’ll find them even if you need to face down death to do so.'
+				},
+				{
+					id: 'sage-ii-3',
+					name: 'Lost Library',
+					description: 'An evil mage took all your books for themself, cackling at your impotence as they raided your shelves. Now you’re off to search through ancient ruins and secret libraries to rebuild your collection of rare tomes—and to find the mage who stole from you.'
+				}
+			],
+			selectedID: null
+		}
 	};
 
 	static soldier: Career = {
@@ -245,7 +385,27 @@ Choose one of the following effects:
 			id: 'soldier-title',
 			name: 'Drill Sergeant',
 			description: 'At the start of a group test or montage test, you can spend a hope token. If you do, all participants make tests as if they also had your exploration skills.'
-		})
+		}),
+		incitingIncidents: {
+			options: [
+				{
+					id: 'soldier-ii-1',
+					name: 'Dishonorable Discharge',
+					description: 'You enlisted in the military to protect others, but your commander ordered you to beat and kill civilians. When you refused, things got violent. You barely escaped the brawl that ensued, but now you vow to help people on your own terms.'
+				},
+				{
+					id: 'soldier-ii-2',
+					name: 'Out of Retirement',
+					description: 'You had a long and storied career as a soldier before deciding to retire to a simpler life. But when you returned to your old home, you found that your enemies had laid waste to it. Now the skills you earned on the battlefield are helping you as you become a different kind of warrior, seeking to save others from the fate you suffered.'
+				},
+				{
+					id: 'soldier-ii-3',
+					name: 'Sole Survivor',
+					description: 'You were the last surviving member of your unit after an arduous battle or monstrous assault, surviving only because of your luck. You turned away from the life of a soldier then, seeking to become a hero who could stand against such threats.'
+				}
+			],
+			selectedID: null
+		}
 	};
 
 	static getCareers = (settings: CampaignSetting[]) => {

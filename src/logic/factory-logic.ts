@@ -89,7 +89,11 @@ export class FactoryLogic {
 				id: Utils.guid(),
 				name: '',
 				description: ''
-			})
+			}),
+			incitingIncidents: {
+				options: [],
+				selectedID: null
+			}
 		};
 		return career;
 	};

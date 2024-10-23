@@ -168,6 +168,14 @@ export const ElementEditPage = (props: Props) => {
 		);
 	};
 
+	const getIncitingIncidentsSection = () => {
+		// TODO: Inciting incidents
+
+		return (
+			<Alert type='warning' message='Not yet implemented' />
+		);
+	};
+
 	const getCultureEditSection = () => {
 		const culture = element as Culture;
 
@@ -811,6 +819,11 @@ export const ElementEditPage = (props: Props) => {
 								key: '3',
 								label: 'Title',
 								children: getTitleEditSection()
+							},
+							{
+								key: '4',
+								label: 'Inciting Incidents',
+								children: getIncitingIncidentsSection()
 							}
 						]}
 					/>

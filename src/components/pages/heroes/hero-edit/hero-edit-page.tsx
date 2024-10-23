@@ -204,6 +204,15 @@ export const HeroEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const setIncitingIncident = (id: string | null) => {
+			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			if (heroCopy.career) {
+				heroCopy.career.incitingIncidents.selectedID = id;
+			}
+			setHero(heroCopy);
+			setDirty(true);
+		};
+
 		const setClass = (heroClass: HeroClass | null) => {
 			const classCopy = JSON.parse(JSON.stringify(heroClass)) as HeroClass | null;
 			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
@@ -309,6 +318,7 @@ export const HeroEditPage = (props: Props) => {
 							hero={hero}
 							campaignSettings={props.campaignSettings.filter(cs => hero.settingIDs.includes(cs.id))}
 							selectCareer={setCareer}
+							selectIncitingIncident={setIncitingIncident}
 							setFeatureData={setFeatureData}
 						/>
 					);
@@ -578,6 +588,7 @@ interface CareerSectionProps {
 	hero: Hero;
 	campaignSettings: CampaignSetting[];
 	selectCareer: (career: Career | null) => void;
+	selectIncitingIncident: (id: string | null) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
@@ -599,6 +610,22 @@ const CareerSection = (props: CareerSectionProps) => {
 						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} campaignSettings={props.campaignSettings} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
+
+			choices.push(
+				<SelectablePanel key='inciting-incident'>
+					<HeaderText>Inciting Incident</HeaderText>
+					<div className='ds-text'>Choose an inciting incident.</div>
+					<Select
+						style={{ width: '100%' }}
+						allowClear={true}
+						placeholder='Select'
+						options={props.hero.career.incitingIncidents.options.map(s => ({ value: s.id, label: s.name, desc: s.description }))}
+						optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+						value={props.hero.career.incitingIncidents.selectedID}
+						onChange={props.selectIncitingIncident}
+					/>
+				</SelectablePanel>
+			);
 		}
 
 		return (

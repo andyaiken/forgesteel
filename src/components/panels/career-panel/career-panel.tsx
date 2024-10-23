@@ -1,6 +1,7 @@
 import { CampaignSetting } from '../../../models/campaign-setting';
 import { Career } from '../../../models/career';
 import { FeaturePanel } from '../feature-panel/feature-panel';
+import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -15,6 +16,29 @@ interface Props {
 }
 
 export const CareerPanel = (props: Props) => {
+	const getIncitingIncident = () => {
+		const option = props.career.incitingIncidents.options.find(o => o.id === props.career.incitingIncidents.selectedID);
+		if (!option) {
+			return null;
+		}
+
+		return (
+			<div>
+				<HeaderText>Inciting Incident</HeaderText>
+				<Field key={option.id} label={option.name} value={option.description} />
+			</div>
+		);
+	};
+
+	const getIncitingIndicentsTable = () => {
+		return (
+			<div>
+				<HeaderText>Inciting Incidents</HeaderText>
+				{props.career.incitingIncidents.options.map(option => <Field key={option.id} label={option.name} value={option.description} />)}
+			</div>
+		);
+	};
+
 	try {
 		return (
 			<div className='career-panel' id={props.mode === PanelMode.Full ? props.career.id : undefined}>
@@ -25,6 +49,7 @@ export const CareerPanel = (props: Props) => {
 						<div>
 							{props.career.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)}
 							{props.career.title ? <FeaturePanel feature={props.career.title} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} /> : null}
+							{props.hero ? getIncitingIncident() : getIncitingIndicentsTable()}
 						</div>
 						: null
 				}

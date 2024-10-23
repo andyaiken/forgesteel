@@ -50,14 +50,20 @@ export class Utils {
 	static takeScreenshot = (elementID: string, name: string, format: 'image' | 'pdf') => {
 		const element = document.getElementById(elementID);
 		if (element) {
+			const originalBackgroundColor = element.style.backgroundColor;
+			if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				element.style.backgroundColor = 'rgb(55, 55, 55)';
+			}
 			html2canvas(element)
 				.then(canvas => {
 					switch (format) {
 						case 'image':
 							Utils.saveImage(`${name}.png`, canvas);
+							element.style.backgroundColor = originalBackgroundColor;
 							break;
 						case 'pdf':
 							Utils.savePDF(`${name}.pdf`, canvas);
+							element.style.backgroundColor = originalBackgroundColor;
 							break;
 					}
 				});
@@ -82,7 +88,7 @@ export class Utils {
 	};
 
 	static savePDF = (filename: string, canvas: HTMLCanvasElement) => {
-		const pdf = new jsPDF('p', 'pt', [ canvas.width, canvas.height ]);
+		const pdf = new jsPDF('portrait', 'pt', [ canvas.width, canvas.height ]);
 		pdf.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height);
 		pdf.save(filename);
 	};

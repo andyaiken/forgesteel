@@ -12,6 +12,7 @@ import { ConditionEndType } from '../../../enums/condition-type';
 import { Culture } from '../../../models/culture';
 import { CultureData } from '../../../data/culture-data';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
+import { Element } from '../../../models/element';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
@@ -98,6 +99,11 @@ export const HeroPanel = (props: Props) => {
 
 		const settings = props.campaignSettings.filter(cs => props.hero.settingIDs.includes(cs.id));
 
+		let incitingIncident: Element | null = null;
+		if (props.hero.career && props.hero.career.incitingIncidents.selectedID) {
+			incitingIncident = props.hero.career.incitingIncidents.options.find(o => o.id === props.hero.career?.incitingIncidents.selectedID) || null;
+		}
+
 		const kits = HeroLogic.getKits(props.hero);
 		const kitNames = Collections.sort(kits.map(k => k.name), k => k).join(', ');
 		const armorNames = Collections.distinct(kits.flatMap(k => k.armor), a => a).join(', ');
@@ -155,6 +161,7 @@ export const HeroPanel = (props: Props) => {
 						<div className='top-tile clickable' onClick={onSelectCareer}>
 							<HeaderText>Career</HeaderText>
 							<div className='ds-text'>{props.hero.career.name}</div>
+							{incitingIncident ? <Field label='Inciting Incident' value={incitingIncident.name} /> : null}
 						</div>
 						:
 						<div className='top-tile'>

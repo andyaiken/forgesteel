@@ -169,10 +169,56 @@ export const ElementEditPage = (props: Props) => {
 	};
 
 	const getIncitingIncidentsSection = () => {
-		// TODO: Inciting incidents
+		const career = element as Career;
+
+		const addIncident = () => {
+			const careerCopy = JSON.parse(JSON.stringify(element)) as Career;
+			careerCopy.incitingIncidents.options.push(FeatureLogic.createFeature({
+				id: Utils.guid(),
+				name: '',
+				description: ''
+			}));
+			setElement(careerCopy);
+			setDirty(true);
+		};
+
+		const changeIncident = (e: Element) => {
+			const careerCopy = JSON.parse(JSON.stringify(element)) as Career;
+			const index = careerCopy.incitingIncidents.options.findIndex(o => o.id === e.id);
+			if (index !== -1) {
+				careerCopy.incitingIncidents.options[index] = e;
+			}
+			setElement(careerCopy);
+			setDirty(true);
+		};
+
+		const deleteIncident = (e: Element) => {
+			const careerCopy = JSON.parse(JSON.stringify(element)) as Career;
+			careerCopy.incitingIncidents.options = careerCopy.incitingIncidents.options.filter(o => o.id !== e.id);
+			setElement(careerCopy);
+			setDirty(true);
+		};
 
 		return (
-			<Alert type='warning' message='Not yet implemented' />
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					career.incitingIncidents.options.map(o => (
+						<Expander key={o.id} title={o.name || 'Unnamed Incident'}>
+							<ElementEditPanel
+								element={o}
+								onChange={changeIncident}
+								onDelete={deleteIncident}
+							/>
+						</Expander>
+					))
+				}
+				{
+					career.incitingIncidents.options.length === 0 ?
+						<div className='ds-text dimmed-text'>None</div>
+						: null
+				}
+				<Button block={true} onClick={addIncident}>Add a new incident</Button>
+			</Space>
 		);
 	};
 
@@ -957,6 +1003,63 @@ export const ElementEditPage = (props: Props) => {
 						{getPreview()}
 					</div>
 				</div>
+			</div>
+		);
+	} catch (ex) {
+		console.error(ex);
+		return null;
+	}
+};
+
+interface ElementEditPanelProps {
+	element: Element;
+	onChange: (element: Element) => void;
+	onDelete?: (element: Element) => void;
+}
+
+const ElementEditPanel = (props: ElementEditPanelProps) => {
+	const [ element, setElement ] = useState<Element>(props.element);
+
+	const setName = (value: string) => {
+		const copy = JSON.parse(JSON.stringify(element)) as Feature;
+		copy.name = value;
+		setElement(copy);
+		props.onChange(copy);
+	};
+
+	const setDescription = (value: string) => {
+		const copy = JSON.parse(JSON.stringify(element)) as Feature;
+		copy.description = value;
+		setElement(copy);
+		props.onChange(copy);
+	};
+
+	const deleteElement = () => {
+		if (props.onDelete) {
+			props.onDelete(element);
+		}
+	};
+
+	try {
+		return (
+			<div className='element-edit-panel'>
+				<HeaderText>Name</HeaderText>
+				<Input
+					placeholder='Name'
+					allowClear={true}
+					value={element.name}
+					onChange={e => setName(e.target.value)}
+				/>
+				<HeaderText>Description</HeaderText>
+				<Input.TextArea
+					placeholder='Description'
+					allowClear={true}
+					rows={6}
+					value={element.description}
+					onChange={e => setDescription(e.target.value)}
+				/>
+				<Divider />
+				{props.onDelete ? <Button block={true} danger={true} onClick={deleteElement}>Delete</Button> : null}
 			</div>
 		);
 	} catch (ex) {

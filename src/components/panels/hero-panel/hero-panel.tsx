@@ -135,7 +135,7 @@ export const HeroPanel = (props: Props) => {
 					props.hero.ancestry ?
 						<div className='top-tile clickable' onClick={onSelectAncestry}>
 							<HeaderText>Ancestry</HeaderText>
-							<div className='ds-text'>{props.hero.ancestry.name}</div>
+							<Field label='Ancestry' value={props.hero.ancestry.name} />
 						</div>
 						:
 						<div className='top-tile'>
@@ -160,7 +160,7 @@ export const HeroPanel = (props: Props) => {
 					props.hero.career ?
 						<div className='top-tile clickable' onClick={onSelectCareer}>
 							<HeaderText>Career</HeaderText>
-							<div className='ds-text'>{props.hero.career.name}</div>
+							<Field label='Career' value={props.hero.career.name} />
 							{incitingIncident ? <Field label='Inciting Incident' value={incitingIncident.name} /> : null}
 						</div>
 						:
@@ -172,7 +172,7 @@ export const HeroPanel = (props: Props) => {
 					props.hero.class ?
 						<div className='top-tile clickable' onClick={onSelectClass}>
 							<HeaderText>Class</HeaderText>
-							<div className='ds-text'>{props.hero.class.name}</div>
+							<Field label='Class' value={props.hero.class.name} />
 							<Field label='Level' value={props.hero.class.level} />
 							<Field label={props.hero.class.subclassName} value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(', ') || ''} />
 						</div>
@@ -185,7 +185,7 @@ export const HeroPanel = (props: Props) => {
 					kits.length > 0 ?
 						<div className='top-tile clickable' onClick={onSelectKit}>
 							<HeaderText>Kit</HeaderText>
-							<div className='ds-text'>{kitNames}</div>
+							<Field label='Kit' value={kitNames} />
 							{armorNames ? <Field label='Armor' value={armorNames} /> : null}
 							{weaponNames ? <Field label='Weapons' value={weaponNames} /> : null}
 							{implementNames ? <Field label='Implements' value={implementNames} /> : null}
@@ -199,7 +199,7 @@ export const HeroPanel = (props: Props) => {
 					props.hero.complication ?
 						<div className='top-tile clickable' onClick={onSelectComplication}>
 							<HeaderText>Complication</HeaderText>
-							<div className='ds-text'>{props.hero.complication.name}</div>
+							<Field label='Complication' value={props.hero.complication.name} />
 						</div>
 						:
 						<div className='top-tile'>

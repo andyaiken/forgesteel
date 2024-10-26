@@ -90,10 +90,19 @@ td {
 	}
 }
 
-.ant-collapse-content-box {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
+.ant-collapse {
+	&:hover {
+		background-color: rgb(180, 220, 255);
+		border-color: rgb(64, 150, 255);
+	}
+
+	.ant-collapse-item {
+		.ant-collapse-content-box {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+	}
 }
 
 .ant-drawer {
@@ -162,12 +171,14 @@ td {
 	}
 
 	.ant-collapse {
-		.ant-collapse-header {
-			color: rgba(255, 255, 255, 0.88) !important;
-		}
+		.ant-collapse-item {
+			.ant-collapse-header {
+				color: rgba(255, 255, 255, 0.88) !important;
+			}
 
-		.ant-collapse-content {
-			background-color: unset;
+			.ant-collapse-content {
+				background-color: unset;
+			}
 		}
 	}
 

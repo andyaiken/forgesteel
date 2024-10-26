@@ -10,6 +10,7 @@ import { FormatLogic } from '../../../logic/format-logic';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
+import { HeroicResourceBadge } from '../../controls/heroic-resource-badge/heroic-resource-badge';
 import { KitData } from '../../../data/kit-data';
 import { KitPanel } from '../kit-panel/kit-panel';
 import { LanguageData } from '../../../data/language-data';
@@ -31,6 +32,14 @@ export const FeaturePanel = (props: Props) => {
 	// #region Editable
 
 	const getEditableChoice = (data: FeatureChoiceData) => {
+		const selectedIDs = data.selected.map(f => f.id);
+
+		const pointsUsed = Collections.sum(selectedIDs, id => {
+			const original = data.options.find(o => o.feature.id === id);
+			return original ? original.value : 0;
+		});
+		const pointsLeft = data.count - pointsUsed;
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Select
@@ -39,8 +48,18 @@ export const FeaturePanel = (props: Props) => {
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder='Select'
-					options={data.options.map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					options={data.options.filter(o => selectedIDs.includes(o.feature.id) || (o.value <= pointsLeft)).map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description, cost: o.value }))}
+					optionRender={option => (
+						<Field
+							label={(
+								<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
+									<span>{option.data.label}</span>
+									{option.data.cost > 1 ? <HeroicResourceBadge value={option.data.cost} /> : null}
+								</div>
+							)}
+							value={option.data.desc}
+						/>
+					)}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
 					onChange={value => {
 						let ids: string[] = [];
@@ -452,7 +471,7 @@ export const FeaturePanel = (props: Props) => {
 	const getExtraLanguage = (data: FeatureLanguageData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Field label='Selected' value={data.selected.join(', ')} />
+				<Field label='Language' value={data.selected.join(', ')} />
 			);
 		}
 
@@ -469,14 +488,14 @@ export const FeaturePanel = (props: Props) => {
 
 	const getExtraSkill = (data: FeatureSkillData) => {
 		return (
-			<div className='ds-text'>{data.skill}</div>
+			<Field label='Skill' value={data.skill} />
 		);
 	};
 
 	const getExtraSkillChoice = (data: FeatureSkillChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Field label='Selected' value={data.selected.join(', ')} />
+				<Field label='Skill' value={data.selected.join(', ')} />
 			);
 		}
 

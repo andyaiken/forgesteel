@@ -84,7 +84,7 @@ export class FeatureLogic {
 		return {
 			id: data.id,
 			name: data.name || 'Ability',
-			description: data.description || '',
+			description: data.description || `Choose a ${data.cost === 0 ? 'signature' : `${data.cost}pt`} ability.`,
 			type: FeatureType.ClassAbility,
 			data: {
 				cost: data.cost,

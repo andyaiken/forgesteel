@@ -4,7 +4,7 @@ import './expander.scss';
 
 interface Props {
 	title: string;
-	children: string | JSX.Element | null | (string | JSX.Element | null)[];
+	children: string | JSX.Element | null | (string | JSX.Element| JSX.Element[] | null)[];
 }
 
 export const Expander = (props: Props) => {

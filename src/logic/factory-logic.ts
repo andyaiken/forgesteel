@@ -1,3 +1,4 @@
+import { HeroClass, SubClass } from '../models/class';
 import { Ancestry } from '../models/ancestry';
 import { CampaignSetting } from '../models/campaign-setting';
 import { Career } from '../models/career';
@@ -5,7 +6,6 @@ import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { FeatureLogic } from './feature-logic';
 import { Hero } from '../models/hero';
-import { HeroClass } from '../models/class';
 import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit';
 import { Utils } from '../utils/utils';
@@ -115,6 +115,18 @@ export class FactoryLogic {
 			characteristics: []
 		};
 		return heroClass;
+	};
+
+	static createSubclass = () => {
+		const sc: SubClass = {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			featuresByLevel: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(n => ({ level: n, features: [], optionalFeatures: [] })),
+			kits: [],
+			selected: false
+		};
+		return sc;
 	};
 
 	static createKit = () => {

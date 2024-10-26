@@ -74,7 +74,7 @@ export class HeroLogic {
 		if (includeFreeStrikes) {
 			abilities.push(AbilityLogic.createAbility({
 				id: 'free-melee',
-				name: 'Melee Free Strike',
+				name: 'Free Strike (melee)',
 				description: '',
 				type: AbilityLogic.createTypeAction(true),
 				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
@@ -89,7 +89,7 @@ export class HeroLogic {
 			}));
 			abilities.push(AbilityLogic.createAbility({
 				id: 'free-ranged',
-				name: 'Ranged Free Strike',
+				name: 'Free Strike (ranged)',
 				description: '',
 				type: AbilityLogic.createTypeAction(true),
 				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],

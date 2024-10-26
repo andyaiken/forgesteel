@@ -1,6 +1,7 @@
 import { Alert, Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../../../../models/feature';
+import { HeroClass, SubClass } from '../../../../models/class';
 import { KitArmor, KitImplement, KitType, KitWeapon } from '../../../../enums/kit';
 import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
@@ -22,12 +23,12 @@ import { CulturePanel } from '../../../panels/culture-panel/culture-panel';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { Element } from '../../../../models/element';
 import { Expander } from '../../../controls/expander/expander';
+import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeatureField } from '../../../../enums/feature-field';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
-import { HeroClass } from '../../../../models/class';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/kit-panel/kit-panel';
 import { LanguageData } from '../../../../data/language-data';
@@ -173,11 +174,11 @@ export const ElementEditPage = (props: Props) => {
 
 		const addIncident = () => {
 			const careerCopy = JSON.parse(JSON.stringify(element)) as Career;
-			careerCopy.incitingIncidents.options.push(FeatureLogic.createFeature({
+			careerCopy.incitingIncidents.options.push({
 				id: Utils.guid(),
 				name: '',
 				description: ''
-			}));
+			});
 			setElement(careerCopy);
 			setDirty(true);
 		};
@@ -503,11 +504,158 @@ export const ElementEditPage = (props: Props) => {
 	};
 
 	const getClassSubclassesEditSection = () => {
-		// TODO: Class subclasses
+		const heroClass = element as HeroClass;
+
+		const setName = (subclass: SubClass, value: string) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
+			if (index !== -1) {
+				const sc = elementCopy.subclasses[index];
+				sc.name = value;
+			}
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		const setDescription = (subclass: SubClass, value: string) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
+			if (index !== -1) {
+				const sc = elementCopy.subclasses[index];
+				sc.description = value;
+			}
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		const addFeature = (subclass: SubClass, level: number) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
+			if (index !== -1) {
+				const sc = elementCopy.subclasses[index];
+				sc.featuresByLevel
+					.filter(lvl => lvl.level === level)
+					.forEach(lvl => {
+						lvl.features.push(FeatureLogic.createFeature({
+							id: Utils.guid(),
+							name: '',
+							description: ''
+						}));
+					});
+			}
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		const changeFeature = (subclass: SubClass, level: number, feature: Feature) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
+			if (index !== -1) {
+				const sc = elementCopy.subclasses[index];
+				sc.featuresByLevel
+					.filter(lvl => lvl.level === level)
+					.forEach(lvl => {
+						const index = lvl.features.findIndex(f => f.id === feature.id);
+						if (index !== -1) {
+							lvl.features[index] = feature;
+						}
+					});
+			}
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		const deleteFeature = (subclass: SubClass, level: number, feature: Feature) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
+			if (index !== -1) {
+				const sc = elementCopy.subclasses[index];
+				sc.featuresByLevel
+					.filter(lvl => lvl.level === level)
+					.forEach(lvl => {
+						lvl.features = lvl.features.filter(f => f.id !== feature.id);
+					});
+			}
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		const addSubclass = () => {
+			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			classCopy.subclasses.push(FactoryLogic.createSubclass());
+			setElement(classCopy);
+			setDirty(true);
+		};
+
+		const deleteSubclass = (e: SubClass) => {
+			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			classCopy.subclasses = classCopy.subclasses.filter(o => o.id !== e.id);
+			setElement(classCopy);
+			setDirty(true);
+		};
+
+		const getSubclassLevels = (subclass: SubClass) => {
+			// TODO: Subclass level optional features
+
+			return subclass.featuresByLevel.map(lvl => (
+				<div key={lvl.level}>
+					<HeaderText>Level {lvl.level.toString()}</HeaderText>
+					{
+						lvl.features.map(f => (
+							<Expander key={f.id} title={f.name || 'Unnamed Feature'}>
+								<FeatureEditPanel
+									feature={f}
+									campaignSettings={props.campaignSettings}
+									onChange={feature => changeFeature(subclass, lvl.level, feature)}
+									onDelete={feature => deleteFeature(subclass, lvl.level, feature)}
+								/>
+							</Expander>
+						))
+					}
+					<Button block={true} onClick={() => addFeature(subclass, lvl.level)}>Add a new level {lvl.level} feature</Button>
+				</div>
+			));
+		};
 
 		return (
-			<Alert type='warning' message='Not yet implemented' />
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					heroClass.subclasses.map(sc => (
+						<Expander key={sc.id} title={sc.name || 'Unnamed Subclass'}>
+							<HeaderText>Name</HeaderText>
+							<Input
+								placeholder='Name'
+								allowClear={true}
+								value={sc.name}
+								onChange={e => setName(sc, e.target.value)}
+							/>
+							<HeaderText>Description</HeaderText>
+							<Input.TextArea
+								placeholder='Description'
+								allowClear={true}
+								rows={6}
+								value={sc.description}
+								onChange={e => setDescription(sc, e.target.value)}
+							/>
+							{getSubclassLevels(sc)}
+							<Divider />
+							<HeaderText>Kits</HeaderText>
+							<Alert type='warning' message='Not yet implemented' />
+							<Divider />
+							<Button block={true} danger={true} onClick={() => deleteSubclass(sc)}>Delete</Button>
+						</Expander>
+					))
+				}
+				{
+					heroClass.subclasses.length === 0 ?
+						<div className='ds-text dimmed-text'>None</div>
+						: null
+				}
+				<Button block={true} onClick={addSubclass}>Add a new subclass</Button>
+			</Space>
 		);
+
+		// TODO: Subclass kits
 	};
 
 	const getKitEditSection = () => {

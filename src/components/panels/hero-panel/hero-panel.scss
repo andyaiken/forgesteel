@@ -50,6 +50,13 @@
 
 					&:hover {
 						background-color: rgb(180, 220, 255);
+
+						.ant-statistic {
+							.ant-statistic-title,
+							.ant-statistic-content {
+								color: rgba(0, 0, 0, 0.88);
+							}
+						}
 					}
 				}
 
@@ -63,6 +70,13 @@
 	
 						&:hover {
 							background-color: rgb(180, 220, 255);
+
+							.ant-statistic {
+								.ant-statistic-title,
+								.ant-statistic-content {
+									color: rgba(0, 0, 0, 0.88);
+								}
+							}
 						}
 					}
 				}

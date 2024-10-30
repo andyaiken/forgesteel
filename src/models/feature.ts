@@ -49,6 +49,10 @@ export interface FeatureKitData extends FeatureData {
 	selected: Kit[];
 };
 
+export interface FeatureKitTypeData extends FeatureData {
+	types: KitType[];
+};
+
 export interface FeatureLanguageData extends FeatureData {
 	options: string[];
 	count: number;

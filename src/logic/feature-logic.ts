@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureKitTypeData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../models/feature';
 import { Ability } from '../models/ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from '../models/ancestry';
@@ -118,6 +118,18 @@ export class FeatureLogic {
 				count: count,
 				selected: []
 			} as FeatureKitData
+		} as Feature;
+	};
+
+	static createKitTypeFeature = (data: { id: string, name?: string, description?: string, types: KitType[] }) => {
+		return {
+			id: data.id,
+			name: data.name || 'Kit Type',
+			description: data.description || `Allow ${data.types.join(', ')} kits.`,
+			type: FeatureType.KitType,
+			data: {
+				types: data.types || []
+			} as FeatureKitTypeData
 		} as Feature;
 	};
 

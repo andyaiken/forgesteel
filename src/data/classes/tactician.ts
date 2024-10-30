@@ -83,7 +83,10 @@ export const tactician: HeroClass = {
 					})
 				}),
 				FeatureLogic.createKitChoiceFeature({
-					id: 'tactician-1-6',
+					id: 'tactician-1-6a'
+				}),
+				FeatureLogic.createKitChoiceFeature({
+					id: 'tactician-1-6b',
 					name: 'Field Arsenal',
 					types: [ KitType.Martial ]
 				}),
@@ -222,7 +225,6 @@ export const tactician: HeroClass = {
 			effect: 'Each target who hasn’t acted yet this round can take their turn in any order immediately after yours.'
 		})
 	],
-	kits: [],
 	subclasses: [
 		{
 			id: 'tactician-sub-1',
@@ -266,7 +268,6 @@ export const tactician: HeroClass = {
 					optionalFeatures: []
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -329,7 +330,6 @@ You can only make this test once for each encounter and negotiation.`
 					optionalFeatures: []
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -374,7 +374,6 @@ You can only make this test once for each encounter and negotiation.`
 					optionalFeatures: []
 				}
 			],
-			kits: [],
 			selected: false
 		}
 	],

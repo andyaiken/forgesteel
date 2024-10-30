@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "1.5.13",
+	"version": "1.5.14",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -23,7 +23,7 @@
 		"localforage": "^1.10.0",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
-		"sass": "^1.80.4",
+		"sass": "^1.80.5",
 		"showdown": "^2.1.0"
 	},
 	"devDependencies": {
@@ -36,7 +36,7 @@
 		"eslint-plugin-react-refresh": "^0.4.14",
 		"globals": "^15.11.0",
 		"typescript": "^5.6.3",
-		"typescript-eslint": "^8.12.0",
+		"typescript-eslint": "^8.12.2",
 		"vite": "^5.4.10"
 	}
 }

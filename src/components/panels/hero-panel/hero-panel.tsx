@@ -78,9 +78,9 @@ export const HeroPanel = (props: Props) => {
 			}
 		};
 
-		const onSelectKit = () => {
-			if (props.hero.kit && props.onSelectKit) {
-				props.onSelectKit(props.hero.kit);
+		const onSelectKit = (kit: Kit) => {
+			if (props.onSelectKit) {
+				props.onSelectKit(kit);
 			}
 		};
 
@@ -103,12 +103,6 @@ export const HeroPanel = (props: Props) => {
 		if (props.hero.career && props.hero.career.incitingIncidents.selectedID) {
 			incitingIncident = props.hero.career.incitingIncidents.options.find(o => o.id === props.hero.career?.incitingIncidents.selectedID) || null;
 		}
-
-		const kits = HeroLogic.getKits(props.hero);
-		const kitNames = Collections.sort(kits.map(k => k.name), k => k).join(', ');
-		const armorNames = Collections.distinct(kits.flatMap(k => k.armor), a => a).join(', ');
-		const weaponNames = Collections.distinct(kits.flatMap(k => k.weapon), w => w).join(', ');
-		const implementNames = Collections.distinct(kits.flatMap(k => k.implement), i => i).join(', ');
 
 		const conditions = props.hero.state.conditions
 			.map(c => {
@@ -182,14 +176,16 @@ export const HeroPanel = (props: Props) => {
 						</div>
 				}
 				{
-					kits.length > 0 ?
-						<div className='top-tile clickable' onClick={onSelectKit}>
-							<HeaderText>Kit</HeaderText>
-							<Field label='Kit' value={kitNames} />
-							{armorNames ? <Field label='Armor' value={armorNames} /> : null}
-							{weaponNames ? <Field label='Weapons' value={weaponNames} /> : null}
-							{implementNames ? <Field label='Implements' value={implementNames} /> : null}
-						</div>
+					HeroLogic.getKits(props.hero).length > 0 ?
+						HeroLogic.getKits(props.hero).map(kit => (
+							<div key={kit.id} className='top-tile clickable' onClick={() => onSelectKit(kit)}>
+								<HeaderText>Kit</HeaderText>
+								<Field label='Kit' value={kit.name} />
+								{kit.armor.length > 0 ? <Field label='Armor' value={kit.armor.join(', ')} /> : null}
+								{kit.weapon.length > 0 ? <Field label='Weapons' value={kit.weapon.join(', ')} /> : null}
+								{kit.implement.length > 0 ? <Field label='Implements' value={kit.implement.join(', ')} /> : null}
+							</div>
+						))
 						:
 						<div className='top-tile'>
 							<div className='ds-text dimmed-text'>No kit chosen</div>
@@ -432,7 +428,7 @@ export const HeroPanel = (props: Props) => {
 					<Field label='Career' value={props.hero.career?.name || 'None'} />
 					<Field label='Class' value={props.hero.class?.name || 'None'} />
 					<Field label='Level' value={props.hero.class?.level || '-'} />
-					<Field label='Kit' value={props.hero.kit?.name || 'None'} />
+					<Field label='Kit' value={HeroLogic.getKits(props.hero).map(k => k.name).join(', ') || 'None'} />
 				</div>
 			);
 		}

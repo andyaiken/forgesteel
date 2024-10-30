@@ -61,6 +61,9 @@ export const shadow: HeroClass = {
 						effect: 'You take your turn immediately.'
 					})
 				}),
+				FeatureLogic.createKitChoiceFeature({
+					id: 'shadow-1-5.5'
+				}),
 				FeatureLogic.createClassAbilityChoiceFeature({
 					id: 'shadow-1-6',
 					cost: 0
@@ -292,7 +295,6 @@ export const shadow: HeroClass = {
 			effect: 'You make two signature attacks that each deal extra damage equal to twice your Agility.'
 		})
 	],
-	kits: [],
 	subclasses: [
 		{
 			id: 'shadow-sub-1',
@@ -339,7 +341,6 @@ export const shadow: HeroClass = {
 					optionalFeatures: []
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -397,7 +398,6 @@ export const shadow: HeroClass = {
 					optionalFeatures: []
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -441,7 +441,6 @@ export const shadow: HeroClass = {
 					optionalFeatures: []
 				}
 			],
-			kits: [],
 			selected: false
 		}
 	],

@@ -150,7 +150,10 @@ For each piety spent, you can choose one of the following enhancements:
 				}),
 				FeatureLogic.createSubclassFeature({
 					id: 'conduit-1-6.5',
-					category: 'Level 1'
+					category: 'Domain Feature and Skill'
+				}),
+				FeatureLogic.createKitChoiceFeature({
+					id: 'conduit-1-6.6'
 				}),
 				FeatureLogic.createClassAbilityChoiceFeature({
 					id: 'conduit-1-7',
@@ -351,7 +354,6 @@ For each piety spent, you can choose one of the following enhancements:
 			effect: 'Each target can spend one or two Recoveries, and end one effect that has a duration of EoT or is ended by a resistance roll.'
 		})
 	],
-	kits: [],
 	subclasses: [
 		{
 			id: 'conduit-sub-1',
@@ -369,7 +371,7 @@ For each piety spent, you can choose one of the following enhancements:
 					],
 					optionalFeatures: [
 						{
-							category: 'Level 1',
+							category: 'Domain Feature and Skill',
 							features: [
 								FeatureLogic.createMultipleFeature({
 									id: 'conduit-sub-1-1-optional-1',
@@ -397,7 +399,6 @@ For each piety spent, you can choose one of the following enhancements:
 					]
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -416,7 +417,7 @@ For each piety spent, you can choose one of the following enhancements:
 					],
 					optionalFeatures: [
 						{
-							category: 'Level 1',
+							category: 'Domain Feature and Skill',
 							features: [
 								FeatureLogic.createMultipleFeature({
 									id: 'conduit-sub-2-1-optional-1',
@@ -444,7 +445,6 @@ For each piety spent, you can choose one of the following enhancements:
 					]
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -463,7 +463,7 @@ For each piety spent, you can choose one of the following enhancements:
 					],
 					optionalFeatures: [
 						{
-							category: 'Level 1',
+							category: 'Domain Feature and Skill',
 							features: [
 								FeatureLogic.createMultipleFeature({
 									id: 'conduit-sub-3-1-optional-1',
@@ -484,7 +484,6 @@ For each piety spent, you can choose one of the following enhancements:
 					]
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -503,7 +502,7 @@ For each piety spent, you can choose one of the following enhancements:
 					],
 					optionalFeatures: [
 						{
-							category: 'Level 1',
+							category: 'Domain Feature and Skill',
 							features: [
 								FeatureLogic.createMultipleFeature({
 									id: 'conduit-sub-4-1-optional-1',
@@ -524,7 +523,6 @@ For each piety spent, you can choose one of the following enhancements:
 					]
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -543,7 +541,7 @@ For each piety spent, you can choose one of the following enhancements:
 					],
 					optionalFeatures: [
 						{
-							category: 'Level 1',
+							category: 'Domain Feature and Skill',
 							features: [
 								FeatureLogic.createMultipleFeature({
 									id: 'conduit-sub-5-1-optional-1',
@@ -564,7 +562,6 @@ For each piety spent, you can choose one of the following enhancements:
 					]
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -583,7 +580,7 @@ For each piety spent, you can choose one of the following enhancements:
 					],
 					optionalFeatures: [
 						{
-							category: 'Level 1',
+							category: 'Domain Feature and Skill',
 							features: [
 								FeatureLogic.createMultipleFeature({
 									id: 'conduit-sub-6-1-optional-1',
@@ -606,7 +603,6 @@ Additionally, when you are present at the start of a negotiation, the NPC’s pa
 					]
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -625,7 +621,7 @@ Additionally, when you are present at the start of a negotiation, the NPC’s pa
 					],
 					optionalFeatures: [
 						{
-							category: 'Level 1',
+							category: 'Domain Feature and Skill',
 							features: [
 								FeatureLogic.createMultipleFeature({
 									id: 'conduit-sub-7-1-optional-1',
@@ -646,7 +642,6 @@ Additionally, when you are present at the start of a negotiation, the NPC’s pa
 					]
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -665,7 +660,7 @@ Additionally, when you are present at the start of a negotiation, the NPC’s pa
 					],
 					optionalFeatures: [
 						{
-							category: 'Level 1',
+							category: 'Domain Feature and Skill',
 							features: [
 								FeatureLogic.createMultipleFeature({
 									id: 'conduit-sub-8-1-optional-1',
@@ -686,7 +681,6 @@ Additionally, when you are present at the start of a negotiation, the NPC’s pa
 					]
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -705,7 +699,7 @@ Additionally, when you are present at the start of a negotiation, the NPC’s pa
 					],
 					optionalFeatures: [
 						{
-							category: 'Level 1',
+							category: 'Domain Feature and Skill',
 							features: [
 								FeatureLogic.createMultipleFeature({
 									id: 'conduit-sub-9-1-optional-1',
@@ -732,7 +726,6 @@ Choose one of the following types of weather:
 					]
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -751,7 +744,7 @@ Choose one of the following types of weather:
 					],
 					optionalFeatures: [
 						{
-							category: 'Level 1',
+							category: 'Domain Feature and Skill',
 							features: [
 								FeatureLogic.createMultipleFeature({
 									id: 'conduit-sub-10-1-optional-1',
@@ -772,7 +765,6 @@ Choose one of the following types of weather:
 					]
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -791,7 +783,7 @@ Choose one of the following types of weather:
 					],
 					optionalFeatures: [
 						{
-							category: 'Level 1',
+							category: 'Domain Feature and Skill',
 							features: [
 								FeatureLogic.createMultipleFeature({
 									id: 'conduit-sub-11-1-optional-1',
@@ -812,7 +804,6 @@ Choose one of the following types of weather:
 					]
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -831,7 +822,7 @@ Choose one of the following types of weather:
 					],
 					optionalFeatures: [
 						{
-							category: 'Level 1',
+							category: 'Domain Feature and Skill',
 							features: [
 								FeatureLogic.createMultipleFeature({
 									id: 'conduit-sub-12-1-optional-1',
@@ -852,7 +843,6 @@ Choose one of the following types of weather:
 					]
 				}
 			],
-			kits: [],
 			selected: false
 		}
 	],

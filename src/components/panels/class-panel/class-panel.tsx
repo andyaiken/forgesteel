@@ -6,6 +6,8 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroClass } from '../../../models/class';
 import { PanelMode } from '../../../enums/panel-mode';
+import { Space } from 'antd';
+import { SubclassPanel } from '../subclass-panel/subclass-panel';
 
 import './class-panel.scss';
 
@@ -28,21 +30,27 @@ export const ClassPanel = (props: Props) => {
 				{
 					props.mode === PanelMode.Full ?
 						props.heroClass.featuresByLevel.map(lvl => (
-							<div key={lvl.level} className='level-details'>
+							<Space key={lvl.level} direction='vertical'>
 								<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
-								{
-									lvl.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)
-								}
-							</div>
+								{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)}
+							</Space>
 						))
 						: null
 				}
 				{
 					props.mode === PanelMode.Full ?
-						<div>
+						<Space direction='vertical'>
 							<HeaderText level={1}>Abilities</HeaderText>
-							{props.heroClass.abilities.map(a => <AbilityPanel key={a.id} ability={a} hero={props.hero} mode={PanelMode.Full} />)}
-						</div>
+							{...props.heroClass.abilities.map(a => <AbilityPanel key={a.id} ability={a} hero={props.hero} mode={PanelMode.Full} />)}
+						</Space>
+						: null
+				}
+				{
+					props.mode === PanelMode.Full ?
+						<Space direction='vertical'>
+							<HeaderText level={1}>Subclasses</HeaderText>
+							{...props.heroClass.subclasses.map(sc => <SubclassPanel key={sc.id} subclass={sc} hero={props.hero} mode={PanelMode.Full} />)}
+						</Space>
 						: null
 				}
 			</div>

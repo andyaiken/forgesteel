@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureLanguageData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureKitTypeData, FeatureLanguageData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from './ability-logic';
@@ -20,12 +20,22 @@ import { Skill } from '../models/skill';
 import { SkillLogic } from './skill-logic';
 
 export class HeroLogic {
+	static getKitTypes = (hero: Hero) => {
+		const types = [ KitType.Martial, KitType.Caster ];
+
+		// Collate from features
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.KitType)
+			.forEach(f => {
+				const data = f.data as FeatureKitTypeData;
+				types.push(...data.types);
+			});
+
+		return types;
+	};
+
 	static getKits = (hero: Hero) => {
 		const kits: Kit[] = [];
-
-		if (hero.kit) {
-			kits.push(hero.kit);
-		}
 
 		// Collate from features
 		this.getFeatures(hero)
@@ -55,10 +65,6 @@ export class HeroLogic {
 
 		if (hero.class) {
 			features.push(...FeatureLogic.getFeaturesFromClass(hero.class));
-		}
-
-		if (hero.kit) {
-			features.push(...FeatureLogic.getFeaturesFromKit(hero.kit));
 		}
 
 		if (hero.complication) {
@@ -699,24 +705,13 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 		}
 
 		if (hero.class) {
-			if (hero.class.kits === undefined) {
-				hero.class.kits = [];
-			}
 			hero.class.subclasses.forEach(sc => {
 				sc.featuresByLevel.forEach(lvl => {
 					if (lvl.optionalFeatures === undefined) {
 						lvl.optionalFeatures = [];
 					}
 				});
-				if (sc.kits === undefined) {
-					sc.kits = [];
-				}
 			});
-		}
-		if (hero.kit) {
-			if (hero.kit.features === undefined) {
-				hero.kit.features = [];
-			}
 		}
 		if (hero.state.xp === undefined) {
 			hero.state.xp = 0;

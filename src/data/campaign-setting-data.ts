@@ -71,7 +71,11 @@ export class CampaignSettingData {
 			KitData.stickAndRobe,
 			KitData.swashbuckler,
 			KitData.wardWeaver,
-			KitData.whirlwind
+			KitData.whirlwind,
+			KitData.boren,
+			KitData.corven,
+			KitData.raden,
+			KitData.vuken
 		],
 		complications: [
 			ComplicationData.cultVictim,

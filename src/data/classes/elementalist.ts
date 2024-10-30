@@ -83,6 +83,9 @@ Choose one of the following effects:
 • You teleport a number of squares equal to your Reason score.`
 					})
 				}),
+				FeatureLogic.createKitChoiceFeature({
+					id: 'elementalist-1-6.5'
+				}),
 				FeatureLogic.createClassAbilityChoiceFeature({
 					id: 'elementalist-1-7',
 					cost: 0
@@ -322,7 +325,6 @@ Choose one of the following effects:
 			]
 		})
 	],
-	kits: [],
 	subclasses: [
 		{
 			id: 'elementalist-sub-1',
@@ -382,7 +384,6 @@ Choose one of the following effects:
 					optionalFeatures: []
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -439,7 +440,6 @@ Choose one of the following effects:
 					optionalFeatures: []
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -478,7 +478,6 @@ Additionally, when you touch a living plant object, you can communicate with it 
 					optionalFeatures: []
 				}
 			],
-			kits: [],
 			selected: false
 		},
 		{
@@ -542,7 +541,6 @@ Additionally, when you touch a living plant object, you can communicate with it 
 					optionalFeatures: []
 				}
 			],
-			kits: [],
 			selected: false
 		}
 	],

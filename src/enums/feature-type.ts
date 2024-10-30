@@ -7,6 +7,7 @@ export enum FeatureType {
 	ClassAbility = 'Class Ability',
 	DamageModifier = 'Damage Modifier',
 	Kit = 'Kit',
+	KitType = 'Kit Type',
 	Language = 'Language',
 	Multiple = 'Multiple Features',
 	Size = 'Size',

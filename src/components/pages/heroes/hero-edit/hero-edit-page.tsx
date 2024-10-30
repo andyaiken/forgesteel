@@ -12,7 +12,6 @@ import { CareerPanel } from '../../../panels/career-panel/career-panel';
 import { Characteristic } from '../../../../enums/characteristic';
 import { ClassData } from '../../../../data/class-data';
 import { ClassPanel } from '../../../panels/class-panel/class-panel';
-import { Collections } from '../../../../utils/collections';
 import { Complication } from '../../../../models/complication';
 import { ComplicationData } from '../../../../data/complication-data';
 import { ComplicationPanel } from '../../../panels/complication-panel/complication-panel';
@@ -27,9 +26,6 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
-import { Kit } from '../../../../models/kit';
-import { KitData } from '../../../../data/kit-data';
-import { KitPanel } from '../../../panels/kit-panel/kit-panel';
 import { LanguageData } from '../../../../data/language-data';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { PanelMode } from '../../../../enums/panel-mode';
@@ -45,7 +41,6 @@ enum Page {
 	Career = 'Career',
 	Class = 'Class',
 	Complication = 'Complication',
-	Kit = 'Kit',
 	Details = 'Details'
 }
 
@@ -101,12 +96,6 @@ export const HeroEditPage = (props: Props) => {
 						return PageState.Completed;
 					} else {
 						return PageState.Optional;
-					}
-				case Page.Kit:
-					if (hero.kit) {
-						return PageState.Completed;
-					} else {
-						return PageState.NotStarted;
 					}
 				case Page.Details:
 					if (hero.name) {
@@ -247,14 +236,6 @@ export const HeroEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const setKit = (kit: Kit | null) => {
-			const kitCopy = JSON.parse(JSON.stringify(kit)) as Kit | null;
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
-			heroCopy.kit = kitCopy;
-			setHero(heroCopy);
-			setDirty(true);
-		};
-
 		const setFeatureData = (featureID: string, data: FeatureData) => {
 			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 			const feature = HeroLogic.getFeatures(heroCopy).find(f => f.id === featureID);
@@ -342,15 +323,6 @@ export const HeroEditPage = (props: Props) => {
 							setFeatureData={setFeatureData}
 						/>
 					);
-				case Page.Kit:
-					return (
-						<KitSection
-							hero={hero}
-							campaignSettings={props.campaignSettings.filter(cs => hero.settingIDs.includes(cs.id))}
-							selectKit={setKit}
-							setFeatureData={setFeatureData}
-						/>
-					);
 				case Page.Details:
 					return (
 						<DetailsSection
@@ -381,7 +353,6 @@ export const HeroEditPage = (props: Props) => {
 								Page.Culture,
 								Page.Career,
 								Page.Class,
-								Page.Kit,
 								Page.Complication,
 								Page.Details
 							].map(page => ({
@@ -765,74 +736,6 @@ const ClassSection = (props: ClassSectionProps) => {
 				{
 					choices.length > 0 ?
 						<div className='hero-edit-content-column' id='class-choices'>
-							<HeaderText>Choices</HeaderText>
-							{choices}
-						</div>
-						: null
-				}
-			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
-};
-
-interface KitSectionProps {
-	hero: Hero;
-	campaignSettings: CampaignSetting[];
-	selectKit: (kit: Kit | null) => void;
-	setFeatureData: (featureID: string, data: FeatureData) => void;
-}
-
-const KitSection = (props: KitSectionProps) => {
-	try {
-		const kits = KitData.getKits(props.campaignSettings);
-		if (props.hero.class) {
-			kits.push(...props.hero.class.kits);
-			props.hero.class.subclasses
-				.filter(sc => sc.selected)
-				.forEach(sc => {
-					kits.push(...sc.kits);
-				});
-		}
-		const options = Collections.sort(kits, k => k.name).map(k => (
-			<SelectablePanel key={k.id} onSelect={() => props.selectKit(k)}>
-				<KitPanel kit={k} />
-			</SelectablePanel>
-		));
-
-		let choices: JSX.Element[] = [];
-		if (props.hero.kit) {
-			choices = FeatureLogic.getFeaturesFromKit(props.hero.kit)
-				.filter(f => FeatureLogic.isChoice(f))
-				.map(f => (
-					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} campaignSettings={props.campaignSettings} setData={props.setFeatureData} />
-					</SelectablePanel>
-				));
-		}
-
-		return (
-			<div className='hero-edit-content'>
-				{
-					props.hero.kit ?
-						<div className='hero-edit-content-column' id='kit-selected'>
-							<HeaderText>Selected</HeaderText>
-							<SelectablePanel key={props.hero.kit.id} onUnselect={() => props.selectKit(null)}>
-								<KitPanel kit={props.hero.kit} mode={PanelMode.Full} />
-							</SelectablePanel>
-						</div>
-						:
-						<div className='hero-edit-content-column' id='kit-list'>
-							<HeaderText>Kits</HeaderText>
-							{options}
-							{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
-						</div>
-				}
-				{
-					choices.length > 0 ?
-						<div className='hero-edit-content-column' id='kit-choices'>
 							<HeaderText>Choices</HeaderText>
 							{choices}
 						</div>

@@ -21,7 +21,6 @@ export class FactoryLogic {
 			class: null,
 			career: null,
 			complication: null,
-			kit: null,
 			state: {
 				staminaDamage: 0,
 				recoveriesUsed: 0,
@@ -109,7 +108,6 @@ export class FactoryLogic {
 			primaryCharacteristics: [],
 			featuresByLevel: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(n => ({ level: n, features: [] })),
 			abilities: [],
-			kits: [],
 			subclasses: [],
 			level: 1,
 			characteristics: []
@@ -123,7 +121,6 @@ export class FactoryLogic {
 			name: '',
 			description: '',
 			featuresByLevel: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(n => ({ level: n, features: [], optionalFeatures: [] })),
-			kits: [],
 			selected: false
 		};
 		return sc;

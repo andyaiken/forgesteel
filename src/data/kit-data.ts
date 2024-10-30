@@ -1050,6 +1050,256 @@ Your armor is reinforced by a bright ward of holy energy, and grants you the fol
 		]
 	};
 
+	static boren: Kit = {
+		id: 'kit-boren',
+		name: 'Boren',
+		description: 'With this stormwight kit, you channel your primordial rage into the form of a bear, becoming large, durable, and imposing. Boren are tied to the craggy, rocky north, and this aspect is associated with the blizzard’s bitter cold.',
+		type: KitType.Stormwight,
+		armor: [],
+		weapon: [ KitWeapon.Unarmed ],
+		implement: [],
+		stamina: 9,
+		speed: 0,
+		stability: 2,
+		meleeDamage: KitLogic.createDamageBonus(0, 0, 4),
+		rangedDamage: null,
+		magicalDamage: null,
+		distance: 0,
+		reach: 0,
+		area: 0,
+		mobility: false,
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-boren-signature',
+					name: 'Bear Claws',
+					description: 'Attacks with your sharp and deadly claws send your foes staggering back.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					target: '2 creatures or objects',
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '2 damage; push 1',
+						tier2: '3 damage; push 2',
+						tier3: '8 damage; push 3'
+					})
+				})
+			}),
+			FeatureLogic.createFeature({
+				id: 'kit-boren-feature-1',
+				name: 'Aspect Benefits',
+				description: `
+Whenever you use forced movement to push a creature, you can pull that creature instead. Whenever an attack pulls a creature adjacent to you, you can attempt to grab that creature as a free triggered action.
+* **Rage 2**: You gain an edge on Might tests, resistance rolls, and power rolls made to grab.
+* **Rage 2**: While in bear form, your attacks deal extra damage equal to your Might score, and any target you have grabbed at the start of your turn takes damage equal to your Might score.
+* **Rage 4**: While in bear form, you can use all your abilities, your attacks deal extra damage equal to twice your Might score, instead of once your Might score, and any target you have grabbed at the start of your turn takes damage equal to twice your Might score, instead of once your Might score.
+* **Rage 6**: You have a double edge on Might tests, resistance rolls, and power rolls made with the Grab ability.`
+			}),
+			FeatureLogic.createFeature({
+				id: 'kit-boren-feature-2',
+				name: 'Animal Form: Bear',
+				description: 'When you are in your bear form, your speed increases by 2, your size becomes 2, and you have a +1 reach bonus with melee attacks. You gain 10 temporary Stamina the first time you shapeshift into bear form during an encounter.'
+			}),
+			FeatureLogic.createFeature({
+				id: 'kit-boren-feature-3',
+				name: 'Primordial Storm: Blizzard',
+				description: 'Your primordial damage type is cold.'
+			})
+		]
+	};
+
+	static corven: Kit = {
+		id: 'kit-corven',
+		name: 'Corven',
+		description: 'With this stormwight kit, you channel your primordial rage into the form of a crow. Corven are tied to the mountain passes and the hot winds that flow through them. This aspect is associated with the katabatic wind.',
+		type: KitType.Stormwight,
+		armor: [],
+		weapon: [ KitWeapon.Unarmed ],
+		implement: [],
+		stamina: 3,
+		speed: 3,
+		stability: 2,
+		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		rangedDamage: null,
+		magicalDamage: null,
+		distance: 0,
+		reach: 0,
+		area: 0,
+		mobility: true,
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-corven-signature',
+					name: 'Wing Buffet',
+					description: 'Foes who try to close around you do so at their peril.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					target: '3 creatures or objects',
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '4 damage',
+						tier2: '5 damage',
+						tier3: '7 damage'
+					}),
+					effect: 'Resolve each attack individually using one power roll. You can shift 1 square after resolving damage for each target, then choose your next target from your new location.'
+				})
+			}),
+			FeatureLogic.createFeature({
+				id: 'kit-boren-feature-1',
+				name: 'Aspect Benefits',
+				description: `
+You gain an edge on tests made to hide and sneak. Whenever you are falling, you can use your Animal Form ability as a free triggered action.
+* **Rage 2**: You can shift 1 square as a free maneuver once per turn.
+* **Rage 2**: While in crow form, your attacks deal extra damage equal to your Agility score.
+* **Rage 2**: Once per turn while in crow form, when you move away from an enemy, that enemy takes damage equal to your Agility score.
+* **Rage 4**: While in crow or hybrid crow form, you can use all your abilities, and your attacks deal extra damage equal to twice your Agility score, instead of once your Agility score.
+* **Rage 4**: Once per turn while in crow or hybrid crow form, when you move away from an enemy, that enemy takes damage equal to twice your Agility score, instead of once your Agility score.
+* **Rage 6**: You can shift up to 2 squares as a free maneuver once per turn.`
+			}),
+			FeatureLogic.createFeature({
+				id: 'kit-boren-feature-2',
+				name: 'Animal Form: Crow',
+				description: `
+When you are in your crow form, your movement gains the Fly keyword, and your size becomes 1T. You can use the Hide maneuver as a free maneuver, and you can use your allies as cover when you hide.
+Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal crow of your true form’s size. You gain 10 temporary Stamina the first time you shapeshift into hybrid crow form during an encounter.`
+			}),
+			FeatureLogic.createFeature({
+				id: 'kit-boren-feature-3',
+				name: 'Primordial Storm: Katabatic Wind',
+				description: 'Your primordial damage type is fire.'
+			})
+		]
+	};
+
+	static raden: Kit = {
+		id: 'kit-raden',
+		name: 'Raden',
+		description: 'With this stormwight kit, you channel your primordial rage into the form of a rat. Raden are associated with the true nature of the rat, before cities became their habitat. Rats are avatars of the balance between green and rot, and this aspect is associated with the rat flood.',
+		type: KitType.Stormwight,
+		armor: [],
+		weapon: [ KitWeapon.Unarmed ],
+		implement: [],
+		stamina: 3,
+		speed: 3,
+		stability: 0,
+		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		rangedDamage: null,
+		magicalDamage: null,
+		distance: 0,
+		reach: 0,
+		area: 0,
+		mobility: true,
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-raden-signature',
+					name: 'Driving Pounce',
+					description: 'Your enemies try in vain to fall back from your pouncing attack.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					target: '2 creatures or objects',
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '4 damage',
+						tier2: '5 damage; push 1',
+						tier3: '6 damage; push 2'
+					}),
+					effect: 'Resolve each attack one at a time. After each attack, you can shift the same number of squares that you pushed the target. You select your second target from the square where you end your shift, which can be the first target again.'
+				})
+			}),
+			FeatureLogic.createFeature({
+				id: 'kit-boren-feature-1',
+				name: 'Aspect Benefits',
+				description: `
+You gain an edge on tests made to hide and sneak. Additionally, you ignore difficult terrain, and you gain an edge on tests made to climb other creatures. If you are hidden, you automatically achieve a tier 3 result on attempts to climb and remain hidden.
+* **Rage 2**: You have Weapon immunity 2.
+* **Rage 2**: While in rat form, your attacks deal extra damage equal to your Agility score.
+* **Rage 2**: While in rat form, if you attack a creature you are climbing, that creature is bleeding (EoT).
+* **Rage 4**: While in rat or hybrid rat form, you can use all your abilities, and your attacks deal extra damage equal to twice your Agility score, instead of once your Agility score.
+* **Rage 6**: You have Weapon immunity 2. Any damage you ignore because of this immunity is dealt to each enemy adjacent to you when you are attacked.`
+			}),
+			FeatureLogic.createFeature({
+				id: 'kit-boren-feature-2',
+				name: 'Animal Form: Rat',
+				description: `
+When you are in your rat form, your movement gains the Climb keyword, and your size becomes 1T. You can use the Hide maneuver as a free maneuver, and you can use your allies as cover when hiding. You can stay hidden while moving through squares occupied by a creature.
+Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal rat of your true form’s size. You gain 10 temporary Stamina the first time you shapeshift into hybrid rat form during an encounter.`
+			}),
+			FeatureLogic.createFeature({
+				id: 'kit-boren-feature-3',
+				name: 'Primordial Storm: Rat Flood',
+				description: 'Your primordial damage type is corruption.'
+			})
+		]
+	};
+
+	static vuken: Kit = {
+		id: 'kit-vuken',
+		name: 'Vuken',
+		description: 'With this stormwight kit, you channel your primordial rage into the form of a wolf. Vuken are tied to forests and open steppes, and this aspect is associated with the thunderstorm.',
+		type: KitType.Stormwight,
+		armor: [],
+		weapon: [ KitWeapon.Unarmed ],
+		implement: [],
+		stamina: 9,
+		speed: 2,
+		stability: 0,
+		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		rangedDamage: null,
+		magicalDamage: null,
+		distance: 0,
+		reach: 0,
+		area: 0,
+		mobility: true,
+		features: [
+			FeatureLogic.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-vuken-signature',
+					name: 'Probing Attack',
+					description: 'A savage assault forces your foes back.',
+					type: AbilityLogic.createTypeAction(),
+					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					target: '1 creature or object',
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '5 damage',
+						tier2: '9 damage; push 1',
+						tier3: '12 damage; push 2; prone if the target is your size or smaller'
+					}),
+					effect: 'You can shift up to 2 squares as long as you end the shift adjacent to the target.'
+				})
+			}),
+			FeatureLogic.createFeature({
+				id: 'kit-boren-feature-1',
+				name: 'Aspect Benefits',
+				description: `
+You and an ally gain the benefits of flanking whenever you are both adjacent to a target. If you and at least two other allies are all adjacent to a target, each of you has a double edge for flanking.
+* **Rage 2**: You gain an edge on Agility tests and resistance rolls.
+* **Rage 2**: While in wolf form, your attacks deal extra damage equal to your Agility score.
+* **Rage 2**: When you attack a target while in wolf form, the next ally to damage that target before the start of your next turn deals extra damage equal to your Agility score.
+* **Rage 4**: While in wolf or hybrid wolf form, you can use all your abilities, and your attacks deal extra damage equal to twice your Agility score, instead of once your Agility score.
+* **Rage 4**: When you attack a target while in wolf or hybrid wolf form, the next ally to damage that target before the start of your next turn deals extra damage equal to twice your Agility score, instead of once your Agility score.
+* **Rage 6**: You have a double edge on Agility tests and resistance rolls.`
+			}),
+			FeatureLogic.createFeature({
+				id: 'kit-boren-feature-2',
+				name: 'Animal Form: Wolf',
+				description: `
+When you are in your wolf form, your speed increases by 2, you ignore difficult terrain, and your size becomes 1M.
+Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal wolf of your true form’s size. You gain 10 temporary Stamina the first time you shapeshift into hybrid wolf form during an encounter.`
+			}),
+			FeatureLogic.createFeature({
+				id: 'kit-boren-feature-3',
+				name: 'Primordial Storm: Lightning Storm',
+				description: 'Your primordial damage type is lightning.'
+			})
+		]
+	};
+
 	static getKits = (settings: CampaignSetting[]) => {
 		const list: Kit[] = [];
 

@@ -5,7 +5,6 @@ import { Characteristic } from '../enums/characteristic';
 import { Complication } from './complication';
 import { Culture } from './culture';
 import { HeroClass } from './class';
-import { Kit } from './kit';
 
 export interface Condition {
 	id: string;
@@ -37,7 +36,6 @@ export interface Hero {
 	class: HeroClass | null;
 	career: Career | null;
 	complication: Complication | null;
-	kit: Kit | null;
 
 	state: HeroState;
 }

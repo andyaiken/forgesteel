@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../../../../models/feature';
 import { HeroClass, SubClass } from '../../../../models/class';
@@ -495,14 +495,6 @@ export const ElementEditPage = (props: Props) => {
 		);
 	};
 
-	const getClassKitsEditSection = () => {
-		// TODO: Class kits
-
-		return (
-			<Alert type='warning' message='Not yet implemented' />
-		);
-	};
-
 	const getClassSubclassesEditSection = () => {
 		const heroClass = element as HeroClass;
 
@@ -580,6 +572,81 @@ export const ElementEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const addOptionalFeature = (subclass: SubClass, level: number) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
+			if (index !== -1) {
+				const sc = elementCopy.subclasses[index];
+				sc.featuresByLevel
+					.filter(lvl => lvl.level === level)
+					.forEach(lvl => {
+						lvl.optionalFeatures.push({
+							category: '',
+							features: []
+						});
+					});
+			}
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		const setOptionalFeatureCategory = (subclass: SubClass, level: number, category: string, value: string) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
+			if (index !== -1) {
+				const sc = elementCopy.subclasses[index];
+				sc.featuresByLevel
+					.filter(lvl => lvl.level === level)
+					.forEach(lvl => {
+						const opt = lvl.optionalFeatures.find(f => f.category === category);
+						if (opt) {
+							opt.category = value;
+						}
+					});
+			}
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		const changeOptionalFeature = (subclass: SubClass, level: number, category: string, feature: Feature) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
+			if (index !== -1) {
+				const sc = elementCopy.subclasses[index];
+				sc.featuresByLevel
+					.filter(lvl => lvl.level === level)
+					.forEach(lvl => {
+						const opt = lvl.optionalFeatures.find(f => f.category === category);
+						if (opt) {
+							const index = opt.features.findIndex(f => f.id === feature.id);
+							if (index !== -1) {
+								opt.features[index] = feature;
+							}
+						}
+					});
+			}
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		const deleteOptionalFeature = (subclass: SubClass, level: number, category: string, feature: Feature) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
+			if (index !== -1) {
+				const sc = elementCopy.subclasses[index];
+				sc.featuresByLevel
+					.filter(lvl => lvl.level === level)
+					.forEach(lvl => {
+						const opt = lvl.optionalFeatures.find(f => f.category === category);
+						if (opt) {
+							opt.features = opt.features.filter(f => f.id !== feature.id);
+						}
+					});
+			}
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
 		const addSubclass = () => {
 			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
 			classCopy.subclasses.push(FactoryLogic.createSubclass());
@@ -595,8 +662,6 @@ export const ElementEditPage = (props: Props) => {
 		};
 
 		const getSubclassLevels = (subclass: SubClass) => {
-			// TODO: Subclass level optional features
-
 			return subclass.featuresByLevel.map(lvl => (
 				<div key={lvl.level}>
 					<HeaderText>Level {lvl.level.toString()}</HeaderText>
@@ -613,6 +678,32 @@ export const ElementEditPage = (props: Props) => {
 						))
 					}
 					<Button block={true} onClick={() => addFeature(subclass, lvl.level)}>Add a new level {lvl.level} feature</Button>
+					{
+						lvl.optionalFeatures.map((opt, n) => (
+							<Expander key={n} title='Optional Features'>
+								<HeaderText>Category</HeaderText>
+								<Input
+									placeholder='Category'
+									allowClear={true}
+									value={opt.category}
+									onChange={e => setOptionalFeatureCategory(subclass, lvl.level, opt.category, e.target.value)}
+								/>
+								{
+									opt.features.map(f => (
+										<Expander key={f.id} title={f.name || 'Unnamed Feature'}>
+											<FeatureEditPanel
+												feature={f}
+												campaignSettings={props.campaignSettings}
+												onChange={feature => changeOptionalFeature(subclass, lvl.level, opt.category, feature)}
+												onDelete={feature => deleteOptionalFeature(subclass, lvl.level, opt.category, feature)}
+											/>
+										</Expander>
+									))
+								}
+							</Expander>
+						))
+					}
+					<Button block={true} onClick={() => addOptionalFeature(subclass, lvl.level)}>Add a new level {lvl.level} optional feature</Button>
 				</div>
 			));
 		};
@@ -639,9 +730,6 @@ export const ElementEditPage = (props: Props) => {
 							/>
 							{getSubclassLevels(sc)}
 							<Divider />
-							<HeaderText>Kits</HeaderText>
-							<Alert type='warning' message='Not yet implemented' />
-							<Divider />
 							<Button block={true} danger={true} onClick={() => deleteSubclass(sc)}>Delete</Button>
 						</Expander>
 					))
@@ -654,8 +742,6 @@ export const ElementEditPage = (props: Props) => {
 				<Button block={true} onClick={addSubclass}>Add a new subclass</Button>
 			</Space>
 		);
-
-		// TODO: Subclass kits
 	};
 
 	const getKitEditSection = () => {
@@ -1050,11 +1136,6 @@ export const ElementEditPage = (props: Props) => {
 								key: '5',
 								label: 'Subclasses',
 								children: getClassSubclassesEditSection()
-							},
-							{
-								key: '6',
-								label: 'Kits',
-								children: getClassKitsEditSection()
 							}
 						]}
 					/>
@@ -1293,6 +1374,11 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 					types: [],
 					count: 1,
 					selected: []
+				};
+				break;
+			case FeatureType.KitType:
+				data = {
+					types: []
 				};
 				break;
 			case FeatureType.Language:

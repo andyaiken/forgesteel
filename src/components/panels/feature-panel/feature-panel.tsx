@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../../../models/feature';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { CampaignSetting } from '../../../models/campaign-setting';
@@ -136,8 +136,13 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableKit = (data: FeatureKitData) => {
+		if (!props.hero) {
+			return null;
+		}
+
+		const kitTypes = data.types.length > 0 ? data.types : HeroLogic.getKitTypes(props.hero);
 		const kits = KitData.getKits(props.campaignSettings as CampaignSetting[])
-			.filter(k => data.types.includes(k.type));
+			.filter(k => kitTypes.includes(k.type));
 
 		const sortedKits = Collections.sort(kits, k => k.name);
 
@@ -468,6 +473,12 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
+	const getExtraKitType = (data: FeatureKitTypeData) => {
+		return (
+			<div className='ds-text'>Allow {data.types.join(', ')} kits.</div>
+		);
+	};
+
 	const getExtraLanguage = (data: FeatureLanguageData) => {
 		if (data.selected.length > 0) {
 			return (
@@ -536,6 +547,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraDamageModifier(props.feature.data as FeatureDamageModifierData);
 			case FeatureType.Kit:
 				return getExtraKit(props.feature.data as FeatureKitData);
+			case FeatureType.KitType:
+				return getExtraKitType(props.feature.data as FeatureKitTypeData);
 			case FeatureType.Language:
 				return getExtraLanguage(props.feature.data as FeatureLanguageData);
 			case FeatureType.Size:

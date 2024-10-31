@@ -3,6 +3,7 @@ import { Collections } from '../../../utils/collections';
 import { Field } from '../../controls/field/field';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
+import { ReactNode } from 'react';
 
 import './power-roll-panel.scss';
 
@@ -18,7 +19,7 @@ export const PowerRollPanel = (props: Props) => {
 			return null;
 		}
 
-		let bonus: JSX.Element | null = null;
+		let bonus: ReactNode = null;
 		if (props.hero) {
 			const dmgMelee = HeroLogic.getMeleeDamageBonus(props.hero, props.ability);
 			const dmgRanged = HeroLogic.getRangedDamageBonus(props.hero, props.ability);

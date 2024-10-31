@@ -1,5 +1,5 @@
-import { Badge, Button, Popover, Select, Space, Upload } from 'antd';
-import { DownloadOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
+import { DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryData } from '../../../../data/ancestry-data';
 import { AncestryPanel } from '../../../panels/ancestry-panel/ancestry-panel';
@@ -19,15 +19,15 @@ import { Culture } from '../../../../models/culture';
 import { CultureData } from '../../../../data/culture-data';
 import { CulturePanel } from '../../../panels/culture-panel/culture-panel';
 import { Element } from '../../../../models/element';
-import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
 import { Kit } from '../../../../models/kit';
 import { KitData } from '../../../../data/kit-data';
 import { KitPanel } from '../../../panels/kit-panel/kit-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
-import './sourcebook-list.scss';
+import './element-list.scss';
 
 interface Props {
 	campaignSettings: CampaignSetting[];
@@ -39,15 +39,17 @@ interface Props {
 	viewClass: (heroClass: HeroClass) => void;
 	viewKit: (kit: Kit) => void;
 	viewComplication: (complication: Complication) => void;
+	onSettingCreate: () => CampaignSetting;
 	onSettingChange: (setting: CampaignSetting) => void;
 	onSettingDelete: (setting: CampaignSetting) => void;
-	onCreateHomebrew: (type: string, settingID: string) => void;
-	onImportHomebrew: (type: string, settingID: string, element: Element) => void;
+	onCreateHomebrew: (type: string, settingID: string | null) => void;
+	onImportHomebrew: (type: string, settingID: string | null, element: Element) => void;
 }
 
-export const SourcebookListPage = (props: Props) => {
+export const ElementListPage = (props: Props) => {
+	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ element, setElement ] = useState<string>('Ancestry');
-	const [ settingID, setSettingID ] = useState<string>(props.campaignSettings.filter(cs => cs.isHomebrew).length > 0 ? props.campaignSettings.filter(cs => cs.isHomebrew)[0].id : '');
+	const [ settingID, setSettingID ] = useState<string | null>(props.campaignSettings.filter(cs => cs.isHomebrew).length > 0 ? props.campaignSettings.filter(cs => cs.isHomebrew)[0].id : null);
 	const [ hiddenSettingIDs, setHiddenSettingIDs ] = useState<string[]>([]);
 
 	const setVisibility = (setting: CampaignSetting, visible: boolean) => {
@@ -65,12 +67,59 @@ export const SourcebookListPage = (props: Props) => {
 		return props.campaignSettings.filter(cs => !hiddenSettingIDs.includes(cs.id));
 	};
 
+	const createSetting = () => {
+		const setting = props.onSettingCreate();
+		setSettingID(setting.id);
+	};
+
+	const deleteSetting = (setting: CampaignSetting) => {
+		props.onSettingDelete(setting);
+		if (settingID === setting.id) {
+			setSettingID(null);
+		}
+	};
+
 	const createHomebrew = () => {
 		props.onCreateHomebrew(element, settingID);
 	};
 
 	const getAncestries = () => {
-		const list = AncestryData.getAncestries(getSettings());
+		return AncestryData
+			.getAncestries(getSettings())
+			.filter(item => Utils.textMatches(item.name, searchTerm));
+	};
+
+	const getCultures = () => {
+		return CultureData
+			.getCultures(getSettings())
+			.filter(item => Utils.textMatches(item.name, searchTerm));
+	};
+
+	const getCareers = () => {
+		return CareerData
+			.getCareers(getSettings())
+			.filter(item => Utils.textMatches(item.name, searchTerm));
+	};
+
+	const getClasses = () => {
+		return ClassData
+			.getClasses(getSettings())
+			.filter(item => Utils.textMatches(item.name, searchTerm));
+	};
+
+	const getKits = () => {
+		return KitData
+			.getKits(getSettings())
+			.filter(item => Utils.textMatches(item.name, searchTerm));
+	};
+
+	const getComplications = () => {
+		return ComplicationData
+			.getComplications(getSettings())
+			.filter(item => Utils.textMatches(item.name, searchTerm));
+	};
+
+	const getAncestriesSection = (list: Ancestry[]) => {
 		if (list.length === 0) {
 			return (
 				<div className='ds-text dimmed-text'>None</div>
@@ -78,7 +127,7 @@ export const SourcebookListPage = (props: Props) => {
 		}
 
 		return (
-			<div className='sourcebook-section-row'>
+			<div className='element-section-row'>
 				{
 					list.map(a => {
 						const item = (
@@ -109,8 +158,7 @@ export const SourcebookListPage = (props: Props) => {
 		);
 	};
 
-	const getCultures = () => {
-		const list = CultureData.getCultures(getSettings());
+	const getCulturesSection = (list: Culture[]) => {
 		if (list.length === 0) {
 			return (
 				<div className='ds-text dimmed-text'>None</div>
@@ -118,7 +166,7 @@ export const SourcebookListPage = (props: Props) => {
 		}
 
 		return (
-			<div className='sourcebook-section-row'>
+			<div className='element-section-row'>
 				{
 					list.map(c => {
 						const item = (
@@ -149,8 +197,7 @@ export const SourcebookListPage = (props: Props) => {
 		);
 	};
 
-	const getCareers = () => {
-		const list = CareerData.getCareers(getSettings());
+	const getCareersSection = (list: Career[]) => {
 		if (list.length === 0) {
 			return (
 				<div className='ds-text dimmed-text'>None</div>
@@ -158,7 +205,7 @@ export const SourcebookListPage = (props: Props) => {
 		}
 
 		return (
-			<div className='sourcebook-section-row'>
+			<div className='element-section-row'>
 				{
 					list.map(c => {
 						const item = (
@@ -188,8 +235,7 @@ export const SourcebookListPage = (props: Props) => {
 		);
 	};
 
-	const getClasses = () => {
-		const list = ClassData.getClasses(getSettings());
+	const getClassesSection = (list: HeroClass[]) => {
 		if (list.length === 0) {
 			return (
 				<div className='ds-text dimmed-text'>None</div>
@@ -197,7 +243,7 @@ export const SourcebookListPage = (props: Props) => {
 		}
 
 		return (
-			<div className='sourcebook-section-row'>
+			<div className='element-section-row'>
 				{
 					list.map(c => {
 
@@ -228,8 +274,7 @@ export const SourcebookListPage = (props: Props) => {
 		);
 	};
 
-	const getKits = () => {
-		const list = KitData.getKits(getSettings());
+	const getKitsSection = (list: Kit[]) => {
 		if (list.length === 0) {
 			return (
 				<div className='ds-text dimmed-text'>None</div>
@@ -237,7 +282,7 @@ export const SourcebookListPage = (props: Props) => {
 		}
 
 		return (
-			<div className='sourcebook-section-row'>
+			<div className='element-section-row'>
 				{
 					list.map(k => {
 						const item = (
@@ -268,8 +313,7 @@ export const SourcebookListPage = (props: Props) => {
 		);
 	};
 
-	const getComplications = () => {
-		const list = ComplicationData.getComplications(getSettings());
+	const getComplicationsSection = (list: Complication[]) => {
 		if (list.length === 0) {
 			return (
 				<div className='ds-text dimmed-text'>None</div>
@@ -277,7 +321,7 @@ export const SourcebookListPage = (props: Props) => {
 		}
 
 		return (
-			<div className='sourcebook-section-row'>
+			<div className='element-section-row'>
 				{
 					list.map(c => {
 						const item = (
@@ -311,34 +355,59 @@ export const SourcebookListPage = (props: Props) => {
 	try {
 		const elementOptions = [ 'Ancestry', 'Culture', 'Career', 'Class', 'Kit', 'Complication' ].map(e => ({ label: e, value: e }));
 		const settingOptions = props.campaignSettings.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Setting', value: cs.id }));
-		settingOptions.push({ label: 'A new campaign setting', value: '' });
+
+		const ancestries = getAncestries();
+		const cultures = getCultures();
+		const careers = getCareers();
+		const classes = getClasses();
+		const kits = getKits();
+		const complications = getComplications();
 
 		return (
-			<div className='sourcebook-list-page'>
+			<div className='element-list-page'>
 				<AppHeader goHome={props.goHome} showAbout={props.showAbout}>
+					<Input
+						placeholder='Search'
+						allowClear={true}
+						value={searchTerm}
+						suffix={<SearchOutlined />}
+						onChange={e => setSearchTerm(e.target.value)}
+					/>
 					<Popover
 						trigger='click'
 						placement='bottom'
 						content={(
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Select
-									style={{ width: '100%' }}
-									placeholder='Select'
-									options={elementOptions}
-									optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-									value={element}
-									onChange={setElement}
-								/>
-								<Select
-									style={{ width: '100%' }}
-									placeholder='Select'
-									options={settingOptions}
-									optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-									value={settingID}
-									onChange={setSettingID}
-								/>
+							<div style={{ display: 'flex', flexDirection: 'column' }}>
+								<div>
+									<div className='ds-text'>What do you want to add?</div>
+									<Select
+										style={{ width: '100%' }}
+										placeholder='Select'
+										options={elementOptions}
+										optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+										value={element}
+										onChange={setElement}
+									/>
+								</div>
+								{
+									settingOptions.length > 1 ?
+										<div>
+											<div className='ds-text'>Where do you want it to live?</div>
+											<Select
+												style={{ width: '100%' }}
+												placeholder='Select'
+												options={settingOptions}
+												optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+												value={settingID}
+												onChange={setSettingID}
+											/>
+										</div>
+										: null
+								}
+								<Divider />
 								<Space>
-									<Button type='primary' icon={<PlusCircleOutlined />} onClick={createHomebrew}>Create</Button>
+									<Button block={true} icon={<PlusCircleOutlined />} onClick={createHomebrew}>Create</Button>
+									<div className='ds-text'>or</div>
 									<Upload
 										style={{ width: '100%' }}
 										accept={`.drawsteel-${element.toLowerCase()}`}
@@ -360,14 +429,14 @@ export const SourcebookListPage = (props: Props) => {
 						)}
 					>
 						<Button>
-							Create Homebrew
+							Create Homebrew Element
 						</Button>
 					</Popover>
 					<Popover
 						trigger='click'
 						placement='bottom'
 						content={(
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+							<div style={{ display: 'flex', flexDirection: 'column' }}>
 								{
 									props.campaignSettings.map(cs => (
 										<CampaignSettingPanel
@@ -376,10 +445,12 @@ export const SourcebookListPage = (props: Props) => {
 											visible={!hiddenSettingIDs.includes(cs.id)}
 											onSetVisible={setVisibility}
 											onChange={props.onSettingChange}
-											onDelete={props.onSettingDelete}
+											onDelete={deleteSetting}
 										/>
 									))
 								}
+								<Divider />
+								<Button block={true} onClick={createSetting}>Create a new setting</Button>
 							</div>
 						)}
 					>
@@ -388,31 +459,41 @@ export const SourcebookListPage = (props: Props) => {
 						</Button>
 					</Popover>
 				</AppHeader>
-				<div className='sourcebook-list-page-content'>
-					<div>
-						<HeaderText level={1}>Ancestries</HeaderText>
-						{getAncestries()}
-					</div>
-					<div>
-						<HeaderText level={1}>Cultures</HeaderText>
-						{getCultures()}
-					</div>
-					<div>
-						<HeaderText level={1}>Careers</HeaderText>
-						{getCareers()}
-					</div>
-					<div>
-						<HeaderText level={1}>Classes</HeaderText>
-						{getClasses()}
-					</div>
-					<div>
-						<HeaderText level={1}>Kits</HeaderText>
-						{getKits()}
-					</div>
-					<div>
-						<HeaderText level={1}>Complications</HeaderText>
-						{getComplications()}
-					</div>
+				<div className='element-list-page-content'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: `Ancestries (${ancestries.length})`,
+								children: getAncestriesSection(ancestries)
+							},
+							{
+								key: '2',
+								label: `Cultures (${cultures.length})`,
+								children: getCulturesSection(cultures)
+							},
+							{
+								key: '3',
+								label: `Careers (${careers.length})`,
+								children: getCareersSection(careers)
+							},
+							{
+								key: '4',
+								label: `Classes (${classes.length})`,
+								children: getClassesSection(classes)
+							},
+							{
+								key: '5',
+								label: `Kits (${kits.length})`,
+								children: getKitsSection(kits)
+							},
+							{
+								key: '6',
+								label: `Complications (${complications.length})`,
+								children: getComplicationsSection(complications)
+							}
+						]}
+					/>
 				</div>
 			</div>
 		);

@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { Tag } from 'antd';
 
 import './header-text.scss';
@@ -5,7 +6,7 @@ import './header-text.scss';
 interface Props {
 	children: string | string[];
 	level?: number;
-	ribbon?: JSX.Element;
+	ribbon?: ReactNode;
 	tags?: string[];
 }
 

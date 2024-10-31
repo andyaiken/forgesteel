@@ -15,6 +15,7 @@ import { KitData } from '../../../data/kit-data';
 import { KitPanel } from '../kit-panel/kit-panel';
 import { LanguageData } from '../../../data/language-data';
 import { PanelMode } from '../../../enums/panel-mode';
+import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { SkillData } from '../../../data/skill-data';
 import { Utils } from '../../../utils/utils';
 
@@ -419,11 +420,13 @@ export const FeaturePanel = (props: Props) => {
 		const list = data.selected.length > 0 ? data.selected : data.options.map(o => o.feature);
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					list.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)
-				}
-			</Space>
+			<SelectablePanel>
+				<Space direction='vertical' style={{ width: '100%' }}>
+					{
+						list.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)
+					}
+				</Space>
+			</SelectablePanel>
 		);
 	};
 

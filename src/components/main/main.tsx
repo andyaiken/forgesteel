@@ -1,4 +1,5 @@
 import { Drawer, Radio } from 'antd';
+import { ReactNode, useState } from 'react';
 import { Ability } from '../../models/ability';
 import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
@@ -17,7 +18,8 @@ import { ComplicationModal } from '../modals/complication/complication-modal';
 import { Culture } from '../../models/culture';
 import { CultureModal } from '../modals/culture/culture-modal';
 import { Element } from '../../models/element';
-import { ElementEditPage } from '../pages/sourcebooks/element-edit/element-edit';
+import { ElementEditPage } from '../pages/elements/element-edit/element-edit';
+import { ElementListPage } from '../pages/elements/element-list/element-list';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
@@ -29,11 +31,9 @@ import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { Kit } from '../../models/kit';
 import { KitModal } from '../modals/kit/kit-modal';
 import { Options } from '../../models/options';
-import { SourcebookListPage } from '../pages/sourcebooks/sourcebook-list/sourcebook-list';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
-import { useState } from 'react';
 
 import pbds from '../../assets/powered-by-draw-steel.png';
 
@@ -44,7 +44,7 @@ enum Page {
 	HeroList,
 	HeroView,
 	HeroEdit,
-	SourcebookList,
+	ElementList,
 	ElementEdit
 }
 
@@ -63,7 +63,7 @@ export const Main = (props: Props) => {
 	const [ selectedElement, setSelectedElement ] = useState<Ancestry | Culture | Career | HeroClass | Kit | Complication | null>(null);
 	const [ selectedElementSetting, setSelectedElementSetting ] = useState<CampaignSetting | null>(null);
 	const [ selectedElementType, setSelectedElementType ] = useState<string>('');
-	const [ drawer, setDrawer ] = useState<JSX.Element | null>(null);
+	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 
 	//#region Persistence
 
@@ -105,8 +105,8 @@ export const Main = (props: Props) => {
 		setSelectedElementType('');
 	};
 
-	const showSourcebookList = () => {
-		setPage(Page.SourcebookList);
+	const showElementList = () => {
+		setPage(Page.ElementList);
 		setSelectedHero(null);
 		setSelectedElement(null);
 		setSelectedElementSetting(null);
@@ -200,9 +200,9 @@ export const Main = (props: Props) => {
 
 	//#endregion
 
-	//#region Sourcebooks
+	//#region Elements
 
-	const createHomebrew = (type: string, settingID: string) => {
+	const createHomebrew = (type: string, settingID: string | null) => {
 		const setting = homebrewSettings.find(cs => cs.id === settingID) || null;
 		switch (type) {
 			case 'Ancestry':
@@ -490,6 +490,14 @@ export const Main = (props: Props) => {
 		setDrawer(null);
 	};
 
+	const createCampaignSetting = () => {
+		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		const setting = FactoryLogic.createCampaignSetting();
+		settings.push(setting);
+		persistHomebrewSettings(settings);
+		return setting;
+	};
+
 	const changeCampaignSetting = (setting: CampaignSetting) => {
 		const list = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
 		const index = list.findIndex(cs => cs.id === setting.id);
@@ -556,7 +564,7 @@ export const Main = (props: Props) => {
 			};
 
 			persistHomebrewSettings(list);
-			setPage(Page.SourcebookList);
+			setPage(Page.ElementList);
 			setSelectedElement(null);
 			setSelectedElementSetting(null);
 			setSelectedElementType('');
@@ -565,15 +573,19 @@ export const Main = (props: Props) => {
 
 	const cancelEditSelectedElement = () => {
 		if (selectedElement) {
-			setPage(Page.SourcebookList);
+			setPage(Page.ElementList);
 		}
 	};
 
-	const importHomebrew = (type: string, settingID: string, element: Element) => {
+	const importHomebrew = (type: string, settingID: string | null, element: Element) => {
 		element.id = Utils.guid();
 
-		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		const setting = copy.find(cs => cs.id === settingID);
+		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		let setting = settings.find(cs => cs.id === settingID);
+		if (!setting) {
+			setting = FactoryLogic.createCampaignSetting();
+			settings.push(setting);
+		}
 		if (setting) {
 			switch(type) {
 				case 'Ancestry':
@@ -603,8 +615,8 @@ export const Main = (props: Props) => {
 			}
 		}
 
-		persistHomebrewSettings(copy);
-		setPage(Page.SourcebookList);
+		persistHomebrewSettings(settings);
+		setPage(Page.ElementList);
 		setDrawer(null);
 	};
 
@@ -766,7 +778,7 @@ export const Main = (props: Props) => {
 					<WelcomePage
 						showAbout={showAbout}
 						showHeroes={heroes.length === 0 ? addHero : showHeroList}
-						showSourcebooks={showSourcebookList}
+						showElements={showElementList}
 					/>
 				);
 			case Page.HeroList:
@@ -816,9 +828,9 @@ export const Main = (props: Props) => {
 						cancelChanges={cancelEditSelectedHero}
 					/>
 				);
-			case Page.SourcebookList:
+			case Page.ElementList:
 				return (
-					<SourcebookListPage
+					<ElementListPage
 						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings)}
 						goHome={showWelcome}
 						showAbout={showAbout}
@@ -828,6 +840,7 @@ export const Main = (props: Props) => {
 						viewClass={onSelectClass}
 						viewKit={onSelectKit}
 						viewComplication={onSelectComplication}
+						onSettingCreate={createCampaignSetting}
 						onSettingChange={changeCampaignSetting}
 						onSettingDelete={deleteCampaignSetting}
 						onCreateHomebrew={createHomebrew}
@@ -856,9 +869,9 @@ export const Main = (props: Props) => {
 		case Page.HeroEdit:
 			str = 'Heroes';
 			break;
-		case Page.SourcebookList:
+		case Page.ElementList:
 		case Page.ElementEdit:
-			str = 'Sourcebooks';
+			str = 'Elements';
 			break;
 	}
 
@@ -894,7 +907,7 @@ export const Main = (props: Props) => {
 					page !== Page.Welcome ?
 						<div className='main-footer-section'>
 							<Radio.Group
-								options={[ 'Heroes', 'Sourcebooks' ]}
+								options={[ 'Heroes', 'Elements' ]}
 								optionType='button'
 								buttonStyle='solid'
 								block={true}
@@ -904,8 +917,8 @@ export const Main = (props: Props) => {
 										case 'Heroes':
 											showHeroList();
 											break;
-										case 'Sourcebooks':
-											showSourcebookList();
+										case 'Elements':
+											showElementList();
 											break;
 									}
 								}}

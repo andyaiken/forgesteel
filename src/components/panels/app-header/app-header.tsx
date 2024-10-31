@@ -1,11 +1,12 @@
 import { Button } from 'antd';
+import { ReactNode } from 'react';
 
 import shield from './../../../assets/shield.png';
 
 import './app-header.scss';
 
 interface Props {
-	children?: string | JSX.Element | JSX.Element[];
+	children?: ReactNode;
 	goHome?: () => void;
 	showAbout: () => void;
 }

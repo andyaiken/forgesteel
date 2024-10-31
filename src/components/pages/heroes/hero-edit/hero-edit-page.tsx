@@ -1,6 +1,7 @@
 import { Button, Divider, Input, Radio, Segmented, Select, Space } from 'antd';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureBonusData, FeatureData, FeatureLanguageData, FeatureSkillData } from '../../../../models/feature';
+import { ReactNode, useState } from 'react';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryData } from '../../../../data/ancestry-data';
 import { AncestryPanel } from '../../../panels/ancestry-panel/ancestry-panel';
@@ -31,7 +32,6 @@ import { NameGenerator } from '../../../../utils/name-generator';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { ThunderboltOutlined } from '@ant-design/icons';
-import { useState } from 'react';
 
 import './hero-edit-page.scss';
 
@@ -395,7 +395,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 			</SelectablePanel>
 		));
 
-		let choices: JSX.Element[] = [];
+		let choices: ReactNode[] = [];
 		if (props.hero.ancestry) {
 			choices = FeatureLogic.getFeaturesFromAncestry(props.hero.ancestry)
 				.filter(f => FeatureLogic.isChoice(f))
@@ -460,7 +460,7 @@ const CultureSection = (props: CultureSectionProps) => {
 			</SelectablePanel>
 		));
 
-		let choices: JSX.Element[] = [];
+		let choices: ReactNode[] = [];
 		if (props.hero.culture) {
 			choices = FeatureLogic.getFeaturesFromCulture(props.hero.culture)
 				.filter(f => FeatureLogic.isChoice(f))
@@ -572,7 +572,7 @@ const CareerSection = (props: CareerSectionProps) => {
 			</SelectablePanel>
 		));
 
-		let choices: JSX.Element[] = [];
+		let choices: ReactNode[] = [];
 		if (props.hero.career) {
 			choices = FeatureLogic.getFeaturesFromCareer(props.hero.career)
 				.filter(f => FeatureLogic.isChoice(f))
@@ -650,7 +650,7 @@ const ClassSection = (props: ClassSectionProps) => {
 			</SelectablePanel>
 		));
 
-		let choices: JSX.Element[] = [];
+		let choices: ReactNode[] = [];
 		if (props.hero.class) {
 			choices = FeatureLogic.getFeaturesFromClass(props.hero.class)
 				.filter(f => FeatureLogic.isChoice(f))
@@ -765,7 +765,7 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 			</SelectablePanel>
 		));
 
-		let choices: JSX.Element[] = [];
+		let choices: ReactNode[] = [];
 		if (props.hero.complication) {
 			choices = FeatureLogic.getFeaturesFromComplication(props.hero.complication)
 				.filter(f => FeatureLogic.isChoice(f))

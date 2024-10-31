@@ -1,10 +1,11 @@
 import { Collapse } from 'antd';
+import { ReactNode } from 'react';
 
 import './expander.scss';
 
 interface Props {
 	title: string;
-	children: string | JSX.Element | null | (string | JSX.Element| JSX.Element[] | null)[];
+	children: ReactNode;
 }
 
 export const Expander = (props: Props) => {

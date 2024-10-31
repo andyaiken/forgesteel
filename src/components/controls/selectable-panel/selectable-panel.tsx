@@ -1,9 +1,10 @@
 import { Button } from 'antd';
+import { ReactNode } from 'react';
 
 import './selectable-panel.scss';
 
 interface Props {
-	children: JSX.Element | JSX.Element[];
+	children: ReactNode;
 	disabled?: boolean;
 	onSelect?: () => void;
 	onUnselect?: () => void;

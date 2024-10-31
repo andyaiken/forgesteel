@@ -4,6 +4,8 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 export class Utils {
+	static showdownConverter = new Converter({ simpleLineBreaks: true, tables: true });
+
 	static guid = (): string => {
 		const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
 		let id = '';
@@ -22,7 +24,16 @@ export class Utils {
 		};
 	};
 
-	static showdownConverter = new Converter({ simpleLineBreaks: true, tables: true });
+	static textMatches = (text: string, searchTerm: string) => {
+		if (!searchTerm) {
+			return true;
+		}
+
+		return searchTerm
+			.toLowerCase()
+			.split(' ')
+			.every(token => text.toLowerCase().includes(token));
+	};
 
 	static intersects = (light: { a: { x: number, y: number }, b: { x: number, y: number } }, wall: { a: { x: number, y: number }, b: { x: number, y: number } }) => {
 		const det = (light.b.x - light.a.x) * (wall.b.y - wall.a.y) - (wall.b.x - wall.a.x) * (light.b.y - light.a.y);

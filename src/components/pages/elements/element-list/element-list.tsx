@@ -86,37 +86,56 @@ export const ElementListPage = (props: Props) => {
 	const getAncestries = () => {
 		return AncestryData
 			.getAncestries(getSettings())
-			.filter(item => Utils.textMatches(item.name, searchTerm));
+			.filter(item => Utils.textMatches([
+				item.name,
+				...item.features.map(f => f.name)
+			], searchTerm));
 	};
 
 	const getCultures = () => {
 		return CultureData
 			.getCultures(getSettings())
-			.filter(item => Utils.textMatches(item.name, searchTerm));
+			.filter(item => Utils.textMatches([
+				item.name
+			], searchTerm));
 	};
 
 	const getCareers = () => {
 		return CareerData
 			.getCareers(getSettings())
-			.filter(item => Utils.textMatches(item.name, searchTerm));
+			.filter(item => Utils.textMatches([
+				item.name,
+				...item.features.map(f => f.name)
+			], searchTerm));
 	};
 
 	const getClasses = () => {
 		return ClassData
 			.getClasses(getSettings())
-			.filter(item => Utils.textMatches(item.name, searchTerm));
+			.filter(item => Utils.textMatches([
+				item.name,
+				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name)),
+				...item.abilities.flatMap(a => a.name),
+				...item.subclasses.map(sc => sc.name),
+				...item.subclasses.flatMap(sc => sc.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name)))
+			], searchTerm));
 	};
 
 	const getKits = () => {
 		return KitData
 			.getKits(getSettings())
-			.filter(item => Utils.textMatches(item.name, searchTerm));
+			.filter(item => Utils.textMatches([
+				item.name,
+				...item.features.map(f => f.name)
+			], searchTerm));
 	};
 
 	const getComplications = () => {
 		return ComplicationData
 			.getComplications(getSettings())
-			.filter(item => Utils.textMatches(item.name, searchTerm));
+			.filter(item => Utils.textMatches([
+				item.name
+			], searchTerm));
 	};
 
 	const getAncestriesSection = (list: Ancestry[]) => {

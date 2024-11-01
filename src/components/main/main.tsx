@@ -1,4 +1,3 @@
-import { Drawer, Radio } from 'antd';
 import { ReactNode, useState } from 'react';
 import { Ability } from '../../models/ability';
 import { AbilityModal } from '../modals/ability/ability-modal';
@@ -17,6 +16,7 @@ import { Complication } from '../../models/complication';
 import { ComplicationModal } from '../modals/complication/complication-modal';
 import { Culture } from '../../models/culture';
 import { CultureModal } from '../modals/culture/culture-modal';
+import { Drawer } from 'antd';
 import { Element } from '../../models/element';
 import { ElementEditPage } from '../pages/elements/element-edit/element-edit';
 import { ElementListPage } from '../pages/elements/element-list/element-list';
@@ -862,70 +862,22 @@ export const Main = (props: Props) => {
 		}
 	};
 
-	let str = '';
-	switch (page) {
-		case Page.HeroList:
-		case Page.HeroView:
-		case Page.HeroEdit:
-			str = 'Heroes';
-			break;
-		case Page.ElementList:
-		case Page.ElementEdit:
-			str = 'Elements';
-			break;
-	}
-
 	return (
 		<div className='main'>
 			<div className='main-content'>
 				{getContent()}
 			</div>
 			<div className='main-footer'>
-				{
-					page === Page.Welcome ?
-						<div className='main-footer-section'>
-							<img className='ds-logo' src={pbds} />
-							FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC
-						</div>
-						: null
-				}
-				{
-					page === Page.Welcome ?
-						<div className='main-footer-section'>
-							DRAW STEEL © 2024 MCDM Productions, LLC
-						</div>
-						: null
-				}
-				{
-					page === Page.Welcome ?
-						<div className='main-footer-section'>
-							Designed by Andy Aiken
-						</div>
-						: null
-				}
-				{
-					page !== Page.Welcome ?
-						<div className='main-footer-section'>
-							<Radio.Group
-								options={[ 'Heroes', 'Elements' ]}
-								optionType='button'
-								buttonStyle='solid'
-								block={true}
-								value={str}
-								onChange={x => {
-									switch (x.target.value) {
-										case 'Heroes':
-											showHeroList();
-											break;
-										case 'Elements':
-											showElementList();
-											break;
-									}
-								}}
-							/>
-						</div>
-						: null
-				}
+				<div className='main-footer-section'>
+					<img className='ds-logo' src={pbds} />
+					FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC
+				</div>
+				<div className='main-footer-section'>
+					DRAW STEEL © 2024 MCDM Productions, LLC
+				</div>
+				<div className='main-footer-section'>
+					Designed by Andy Aiken
+				</div>
 			</div>
 			<Drawer open={drawer !== null} onClose={() => setDrawer(null)} closeIcon={null} width='450px'>
 				{drawer}

@@ -24,15 +24,16 @@ export class Utils {
 		};
 	};
 
-	static textMatches = (text: string, searchTerm: string) => {
+	static textMatches = (sources: string[], searchTerm: string) => {
 		if (!searchTerm) {
 			return true;
 		}
 
-		return searchTerm
+		const tokens = searchTerm
 			.toLowerCase()
-			.split(' ')
-			.every(token => text.toLowerCase().includes(token));
+			.split(' ');
+
+		return sources.some(text => tokens.every(token => text.toLowerCase().includes(token)));
 	};
 
 	static intersects = (light: { a: { x: number, y: number }, b: { x: number, y: number } }, wall: { a: { x: number, y: number }, b: { x: number, y: number } }) => {

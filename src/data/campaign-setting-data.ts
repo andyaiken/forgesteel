@@ -21,7 +21,7 @@ export class CampaignSettingData {
 	static core: CampaignSetting = {
 		id: '',
 		name: 'Core',
-		description: '',
+		description: 'Core game elements.',
 		isHomebrew: false,
 		ancestries: [
 			AncestryData.devil,
@@ -117,7 +117,7 @@ export class CampaignSettingData {
 	static coreUnreleased: CampaignSetting = {
 		id: 'core-unreleased',
 		name: 'Core: Unreleased',
-		description: '',
+		description: 'Unreleased game elements.',
 		isHomebrew: false,
 		ancestries: [],
 		cultures: [],

@@ -57,6 +57,7 @@ export const conduit: HeroClass = {
 						}),
 						effect: `
 The first time you use this ability during an encounter, it has a double edge. The second time you use it, it takes an edge. The third time you use it, it takes a bane. The fourth and each subsequent time you use this ability during an encounter, it has a double bane.
+
 Whenever you get the tier 3 result of the Prayer ability, you can choose one of your domain’s effects to immediately take effect:
 * **Creation**: You create a 5 wall of stone within 10 squares of you.
 * **Death**: Two enemies of your choice within 10 squares of you take corruption damage equal to 5 + your conduit level.

@@ -1,7 +1,8 @@
-import { Button, Input, Popover } from 'antd';
+import { Button, Input, Popover, Space } from 'antd';
 import { CheckCircleOutlined, DeleteOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
 import { CampaignSetting } from '../../../models/campaign-setting';
 import { CampaignSettingLogic } from '../../../logic/campaign-setting-logic';
+import { HeaderText } from '../../controls/header-text/header-text';
 import { NameGenerator } from '../../../utils/name-generator';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
@@ -32,19 +33,26 @@ export const CampaignSettingPanel = (props: Props) => {
 		props.onDelete(setting);
 	};
 
-	const setName = (name: string) => {
+	const setName = (value: string) => {
 		const copy = JSON.parse(JSON.stringify(setting)) as CampaignSetting;
-		copy.name = name;
+		copy.name = value;
+		setSetting(copy);
+		props.onChange(copy);
+	};
+
+	const setDescription = (value: string) => {
+		const copy = JSON.parse(JSON.stringify(setting)) as CampaignSetting;
+		copy.description = value;
 		setSetting(copy);
 		props.onChange(copy);
 	};
 
 	try {
 		return (
-			<div className='campaign-setting-panel' id={setting.id}>
+			<div className={isEditing ? 'campaign-setting-panel editing' : 'campaign-setting-panel'} id={setting.id}>
 				{
 					isEditing ?
-						<div>
+						<Space direction='vertical' style={{ width: '100%' }}>
 							<Input
 								placeholder='Name'
 								allowClear={true}
@@ -52,12 +60,18 @@ export const CampaignSettingPanel = (props: Props) => {
 								value={setting.name}
 								onChange={e => setName(e.target.value)}
 							/>
-						</div>
+							<Input
+								placeholder='Description'
+								allowClear={true}
+								value={setting.description}
+								onChange={e => setDescription(e.target.value)}
+							/>
+						</Space>
 						:
-						<div>
-							<div className='ds-text bold-text'>{setting.name || 'Unnamed Collection'}</div>
+						<div style={{ width: '100%' }}>
+							<HeaderText tags={setting.isHomebrew ? [ 'Homebrew' ] : []}>{setting.name || 'Unnamed Collection'}</HeaderText>
+							<div className='ds-text description-text'>{setting.description}</div>
 							<div className='ds-text description-text'>{CampaignSettingLogic.getElementCount(setting)} elements</div>
-							{setting.isHomebrew ? <div className='ds-text description-text'>Homebrew</div> : null}
 						</div>
 				}
 				<div className='action-buttons'>

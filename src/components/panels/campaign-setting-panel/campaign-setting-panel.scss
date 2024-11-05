@@ -1,18 +1,24 @@
 .campaign-setting-panel {
     border-radius: 5px;
-	padding: 5px 10px;
+	padding: 0 10px 5px 10px;
 	display: flex;
-	align-items: center;
-	justify-content: space-between;
 	gap: 10px;
+
+	&.editing {
+		padding: 10px;
+
+		.action-buttons {
+			padding-top: unset;
+		}
+	}
 
 	&:hover {
 		background-color: rgba(0, 0, 0, 0.06);
 	}
 
 	.action-buttons {
+		padding-top: 11px;
 		display: flex;
 		flex-direction: column;
-		align-items: center;
 	}
 }

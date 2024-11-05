@@ -17,7 +17,6 @@ import { KitData } from '../../../data/kit-data';
 import { KitPanel } from '../kit-panel/kit-panel';
 import { LanguageData } from '../../../data/language-data';
 import { PanelMode } from '../../../enums/panel-mode';
-import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { SkillData } from '../../../data/skill-data';
 import { Utils } from '../../../utils/utils';
 
@@ -505,15 +504,16 @@ export const FeaturePanel = (props: Props) => {
 
 	const getExtraChoice = (data: FeatureChoiceData) => {
 		const list = data.selected.length > 0 ? data.selected : data.options.map(o => o.feature);
+		if (list.length === 0) {
+			return null;
+		}
 
 		return (
-			<SelectablePanel>
-				<Space direction='vertical' style={{ width: '100%' }}>
-					{
-						list.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)
-					}
-				</Space>
-			</SelectablePanel>
+			<Space direction='vertical' style={{ width: '100%', padding: '0 20px' }}>
+				{
+					list.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)
+				}
+			</Space>
 		);
 	};
 
@@ -534,17 +534,25 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
-		return (
-			<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.cost > 0 ? `${data.cost}pt` : 'signature'} {data.count > 1 ? 'abilities' : 'ability'}.</div>
-		);
+		if (!props.feature.description) {
+			return (
+				<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.cost > 0 ? `${data.cost}pt` : 'signature'} {data.count > 1 ? 'abilities' : 'ability'}.</div>
+			);
+		}
+
+		return null;
 	};
 
 	const getExtraDamageModifier = (data: FeatureDamageModifierData) => {
-		return (
-			<div className='ds-text'>
-				{data.modifiers.map(FormatLogic.getDamageModifier).join(', ')}
-			</div>
-		);
+		if (!props.feature.description) {
+			return (
+				<div className='ds-text'>
+					{data.modifiers.map(FormatLogic.getDamageModifier).join(', ')}
+				</div>
+			);
+		}
+
+		return null;
 	};
 
 	const getExtraDomain = (data: FeatureDomainData) => {
@@ -558,9 +566,13 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
-		return (
-			<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'domains' : 'domain'}.</div>
-		);
+		if (!props.feature.description) {
+			return (
+				<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'domains' : 'domain'}.</div>
+			);
+		}
+
+		return null;
 	};
 
 	const getExtraDomainFeature = (data: FeatureDomainFeatureData) => {
@@ -568,13 +580,17 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					data.selected.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)
-				}
-			</Space>
-		);
+		if (!props.feature.description) {
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					{
+						data.selected.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)
+					}
+				</Space>
+			);
+		}
+
+		return null;
 	};
 
 	const getExtraKit = (data: FeatureKitData) => {
@@ -588,15 +604,23 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
-		return (
-			<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.types.join(', ')} {data.count > 1 ? 'kits' : 'kit'}.</div>
-		);
+		if (!props.feature.description) {
+			return (
+				<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.types.join(', ')} {data.count > 1 ? 'kits' : 'kit'}.</div>
+			);
+		}
+
+		return null;
 	};
 
 	const getExtraKitType = (data: FeatureKitTypeData) => {
-		return (
-			<div className='ds-text'>Allow {data.types.join(', ')} kits.</div>
-		);
+		if (!props.feature.description) {
+			return (
+				<div className='ds-text'>Allow {data.types.join(', ')} kits.</div>
+			);
+		}
+
+		return null;
 	};
 
 	const getExtraLanguage = (data: FeatureLanguageData) => {
@@ -606,21 +630,33 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
-		return (
-			<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'languages' : 'language'}.</div>
-		);
+		if (!props.feature.description) {
+			return (
+				<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'languages' : 'language'}.</div>
+			);
+		}
+
+		return null;
 	};
 
 	const getExtraSize = (data: FeatureSizeData) => {
-		return (
-			<Field label='Size' value={FormatLogic.getSize(data.size)} />
-		);
+		if (!props.feature.description) {
+			return (
+				<Field label='Size' value={FormatLogic.getSize(data.size)} />
+			);
+		}
+
+		return null;
 	};
 
 	const getExtraSkill = (data: FeatureSkillData) => {
-		return (
-			<Field label='Skill' value={data.skill} />
-		);
+		if (!props.feature.description) {
+			return (
+				<Field label='Skill' value={data.skill} />
+			);
+		}
+
+		return null;
 	};
 
 	const getExtraSkillChoice = (data: FeatureSkillChoiceData) => {
@@ -630,13 +666,17 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
-		const count = data.count || 1;
-		const names = (Collections.sort(data.options, o => o) || []).concat((Collections.sort(data.listOptions, o => o) || []).map(l => `the ${l} list`)).join(', ');
-		const str = (count > 1 ? `Choose ${count} skills from ${names}.` : `Choose a skill from ${names}.`);
+		if (!props.feature.description) {
+			const count = data.count || 1;
+			const names = (Collections.sort(data.options, o => o) || []).concat((Collections.sort(data.listOptions, o => o) || []).map(l => `the ${l} list`)).join(', ');
+			const str = (count > 1 ? `Choose ${count} skills from ${names}.` : `Choose a skill from ${names}.`);
 
-		return (
-			<div className='ds-text'>{str}</div>
-		);
+			return (
+				<div className='ds-text'>{str}</div>
+			);
+		}
+
+		return null;
 	};
 
 	const getExtra = () => {

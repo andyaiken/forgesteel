@@ -117,6 +117,12 @@ td {
 	}
 }
 
+.ant-popover {
+	.ant-divider {
+		margin: 15px 0;
+	}
+}
+
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):first-child {
     font-weight: 600;
 }

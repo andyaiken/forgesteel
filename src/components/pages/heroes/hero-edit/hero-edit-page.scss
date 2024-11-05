@@ -23,13 +23,20 @@
 				}
 
 				.page-button-title {
-					color: rgb(80, 80, 80);
 					font-weight: 600;
 				}
 
 				.page-button-subtitle {
-					color: rgb(160, 160, 160);
 					font-size: 10px;
+					opacity: 0.6;
+				}
+
+				&.not-started {
+					color: rgb(160, 0, 0);
+				}
+
+				&.in-progress {
+					color: rgb(255, 160, 0);
 				}
 			}
 		}

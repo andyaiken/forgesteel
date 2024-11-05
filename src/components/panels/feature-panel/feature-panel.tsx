@@ -6,6 +6,7 @@ import { CampaignSetting } from '../../../models/campaign-setting';
 import { Collections } from '../../../utils/collections';
 import { DomainData } from '../../../data/domains';
 import { DomainPanel } from '../domain-panel/domain-panel';
+import { FeatureLogic } from '../../../logic/feature-logic';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
 import { FormatLogic } from '../../../logic/format-logic';
@@ -58,7 +59,7 @@ export const FeaturePanel = (props: Props) => {
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
-					placeholder='Select'
+					placeholder={data.count === 1 ? 'Select an option' : 'Select options'}
 					options={sortedOptions.map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description, cost: o.value }))}
 					optionRender={option => (
 						<Field
@@ -122,7 +123,7 @@ export const FeaturePanel = (props: Props) => {
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
-					placeholder='Select'
+					placeholder={data.count === 1 ? 'Select an ability' : 'Select abilities'}
 					options={sortedAbilities.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selectedIDs.length > 0 ? data.selectedIDs[0] : null) : data.selectedIDs}
@@ -173,7 +174,7 @@ export const FeaturePanel = (props: Props) => {
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
-					placeholder='Select'
+					placeholder={data.count === 1 ? 'Select a domain' : 'Select domains'}
 					options={sortedDomains.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
@@ -226,7 +227,7 @@ export const FeaturePanel = (props: Props) => {
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
-					placeholder='Select'
+					placeholder={data.count === 1 ? 'Select an option' : 'Select options'}
 					options={options.map(o => ({ label: o.name, value: o.id, desc: o.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
@@ -285,7 +286,7 @@ export const FeaturePanel = (props: Props) => {
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
-					placeholder='Select'
+					placeholder={data.count === 1 ? 'Select a kit' : 'Select kits'}
 					options={sortedKits.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
@@ -338,7 +339,7 @@ export const FeaturePanel = (props: Props) => {
 					mode={data.count == 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
-					placeholder='Select'
+					placeholder={data.count === 1 ? 'Select a language' : 'Select languages'}
 					options={sortedLanguages.map(l => ({ label: l.name, value: l.name, desc: l.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
@@ -410,7 +411,7 @@ export const FeaturePanel = (props: Props) => {
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
-					placeholder='Select'
+					placeholder={data.count === 1 ? 'Select a skill' : 'Select skills'}
 					options={sortedSkills.map(s => ({ label: s.name, value: s.name, desc: s.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
@@ -714,6 +715,10 @@ export const FeaturePanel = (props: Props) => {
 
 	// #endregion
 
+	const requiresChoice = () => {
+		return props.setData && FeatureLogic.isChoice(props.feature) && !FeatureLogic.isChosen(props.feature);
+	};
+
 	try {
 		if (props.feature.type === FeatureType.Ability) {
 			const data = props.feature.data as FeatureAbilityData;
@@ -733,8 +738,13 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
+		let className = 'feature-panel';
+		if (requiresChoice()) {
+			className += ' not-chosen';
+		}
+
 		return (
-			<div className='feature-panel' id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
+			<div className={className} id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
 				<HeaderText>{props.feature.name || 'Unnamed Feature'}</HeaderText>
 				<div className='ds-text' dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.feature.description) }} />
 				{

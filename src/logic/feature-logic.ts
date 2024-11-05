@@ -369,4 +369,39 @@ export class FeatureLogic {
 
 		return false;
 	};
+
+	static isChosen = (feature: Feature) => {
+		switch (feature.type) {
+			case FeatureType.Choice: {
+				const data = feature.data as FeatureChoiceData;
+				return data.selected.length >= data.count;
+			}
+			case FeatureType.ClassAbility: {
+				const data = feature.data as FeatureClassAbilityData;
+				return data.selectedIDs.length >= data.count;
+			}
+			case FeatureType.Domain:{
+				const data = feature.data as FeatureDomainData;
+				return data.selected.length >= data.count;
+			}
+			case FeatureType.DomainFeature:{
+				const data = feature.data as FeatureDomainFeatureData;
+				return data.selected.length >= data.count;
+			}
+			case FeatureType.Kit:{
+				const data = feature.data as FeatureKitData;
+				return data.selected.length >= data.count;
+			}
+			case FeatureType.Language:{
+				const data = feature.data as FeatureLanguageData;
+				return data.selected.length >= data.count;
+			}
+			case FeatureType.SkillChoice:{
+				const data = feature.data as FeatureSkillChoiceData;
+				return data.selected.length >= data.count;
+			}
+		};
+
+		return true;
+	};
 }

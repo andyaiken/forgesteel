@@ -47,6 +47,7 @@ enum Page {
 enum PageState {
 	Optional = 'Optional',
 	NotStarted = 'Not Started',
+	InProgress = 'In Progress',
 	Completed = 'Completed'
 }
 
@@ -69,31 +70,68 @@ export const HeroEditPage = (props: Props) => {
 			switch (page) {
 				case Page.Ancestry:
 					if (hero.ancestry) {
-						return PageState.Completed;
+						const features = hero.ancestry.features;
+						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
 				case Page.Culture:
 					if (hero.culture) {
-						return PageState.Completed;
+						if (hero.culture.languages.length === 0) {
+							return PageState.InProgress;
+						}
+						if (!hero.culture.environment || !hero.culture.organization || !hero.culture.upbringing) {
+							return PageState.InProgress;
+						}
+						const features: Feature[] = [];
+						if (hero.culture.environment) {
+							features.push(hero.culture.environment);
+						}
+						if (hero.culture.organization) {
+							features.push(hero.culture.organization);
+						}
+						if (hero.culture.upbringing) {
+							features.push(hero.culture.upbringing);
+						}
+						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
 				case Page.Career:
 					if (hero.career) {
-						return PageState.Completed;
+						const features = hero.career.features;
+						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
 				case Page.Class:
 					if (hero.class) {
-						return PageState.Completed;
+						if (hero.class.characteristics.every(ch => ch.value === 0)) {
+							return PageState.InProgress;
+						}
+						if (hero.class.subclasses.filter(sc => sc.selected).length < hero.class.subclassCount) {
+							return PageState.InProgress;
+						}
+						const level = hero.class.level;
+						const features: Feature[] = [];
+						hero.class.featuresByLevel
+							.filter(lvl => lvl.level <= level)
+							.forEach(lvl => features.push(...lvl.features));
+						hero.class.subclasses
+							.filter(sc => sc.selected)
+							.forEach(sc => {
+								sc.featuresByLevel
+									.filter(lvl => lvl.level <= level)
+									.forEach(lvl => features.push(...lvl.features));
+							});
+						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
 				case Page.Complication:
 					if (hero.complication) {
-						return PageState.Completed;
+						const features = hero.complication.features;
+						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.Optional;
 					}
@@ -138,6 +176,8 @@ export const HeroEditPage = (props: Props) => {
 				if (env) {
 					const envCopy = JSON.parse(JSON.stringify(env)) as Feature;
 					heroCopy.culture.environment = envCopy;
+				} else {
+					heroCopy.culture.environment = null;
 				}
 			}
 			setHero(heroCopy);
@@ -151,6 +191,8 @@ export const HeroEditPage = (props: Props) => {
 				if (org) {
 					const orgCopy = JSON.parse(JSON.stringify(org)) as Feature;
 					heroCopy.culture.organization = orgCopy;
+				} else {
+					heroCopy.culture.organization = null;
 				}
 			}
 			setHero(heroCopy);
@@ -164,6 +206,8 @@ export const HeroEditPage = (props: Props) => {
 				if (ub) {
 					const ubCopy = JSON.parse(JSON.stringify(ub)) as Feature;
 					heroCopy.culture.upbringing = ubCopy;
+				} else {
+					heroCopy.culture.upbringing = null;
 				}
 			}
 			setHero(heroCopy);
@@ -358,11 +402,12 @@ export const HeroEditPage = (props: Props) => {
 							].map(page => ({
 								value: page,
 								label: (
-									<div className='page-button'>
+									<div className={`page-button ${getPageState(page).toLowerCase().replace(' ', '-')}`}>
 										<div className='page-button-title'>{page}</div>
 										<div className='page-button-subtitle'>{getPageState(page)}</div>
 									</div>
-								)
+								),
+								title: page
 							}))}
 							block={true}
 							value={page}

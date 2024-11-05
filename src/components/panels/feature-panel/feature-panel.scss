@@ -1,3 +1,10 @@
 .feature-panel {
-	display: block;
+	&.not-chosen {
+		.ant-select-outlined {
+			.ant-select-selector {
+				border-color: rgb(255, 160, 0);
+				background-color: rgba(255, 160, 0, 0.2);
+			}
+		}
+	}
 }

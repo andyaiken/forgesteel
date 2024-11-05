@@ -3,14 +3,19 @@ import { CampaignSetting } from '../models/campaign-setting';
 import { CareerData } from './career-data';
 import { Collections } from '../utils/collections';
 import { ComplicationData } from './complication-data';
+import { DomainData } from './domains';
 import { KitData } from './kit-data';
 import { SkillData } from './skill-data';
 import { SkillList } from '../enums/skill-list';
+import { censor } from './classes/censor';
 import { conduit } from './classes/conduit';
 import { elementalist } from './classes/elementalist';
 import { fury } from './classes/fury';
+import { nullClass } from './classes/null';
 import { shadow } from './classes/shadow';
 import { tactician } from './classes/tactician';
+import { talent } from './classes/talent';
+import { troubadour } from './classes/troubadour';
 
 export class CampaignSettingData {
 	static core: CampaignSetting = {
@@ -46,6 +51,20 @@ export class CampaignSettingData {
 			fury,
 			shadow,
 			tactician
+		],
+		domains: [
+			DomainData.creation,
+			DomainData.death,
+			DomainData.fate,
+			DomainData.knowledge,
+			DomainData.life,
+			DomainData.love,
+			DomainData.nature,
+			DomainData.protection,
+			DomainData.storm,
+			DomainData.sun,
+			DomainData.trickery,
+			DomainData.war
 		],
 		kits: [
 			KitData.bloodpact,
@@ -89,7 +108,31 @@ export class CampaignSettingData {
 			ComplicationData.ward,
 			ComplicationData.warOfTheGuilds
 		],
+		perks: [],
 		skills: SkillData.getCoreSkills(),
+		languages: [],
+		defaultLanguages: []
+	};
+
+	static coreUnreleased: CampaignSetting = {
+		id: 'core-unreleased',
+		name: 'Core: Unreleased',
+		description: '',
+		isHomebrew: false,
+		ancestries: [],
+		cultures: [],
+		careers: [],
+		classes: [
+			censor,
+			nullClass,
+			talent,
+			troubadour
+		],
+		domains: [],
+		kits: [],
+		complications: [],
+		perks: [],
+		skills: [],
 		languages: [],
 		defaultLanguages: []
 	};
@@ -107,8 +150,10 @@ export class CampaignSettingData {
 		cultures: [],
 		careers: [],
 		classes: [],
+		domains: [],
 		kits: [],
 		complications: [],
+		perks: [],
 		skills: [
 			{
 				name: 'Timescape',
@@ -186,6 +231,7 @@ export class CampaignSettingData {
 	static getCampaignSettings = (homebrew: CampaignSetting[]) => {
 		const list: CampaignSetting[] = [
 			this.core,
+			// this.coreUnreleased,
 			this.orden
 		];
 

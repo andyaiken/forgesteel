@@ -42,6 +42,10 @@ p,
 	margin: 10px 0;
 	color: rgba(0, 0, 0, 0.88);
 
+	&.bold-text {
+		font-weight: 600;
+	}
+
 	&.dimmed-text {
 		opacity: 0.3;
 	}
@@ -193,6 +197,13 @@ td {
 	.ant-drawer-content {
 		color: rgba(255, 255, 255, 0.88);
 		background-color: rgb(55, 55, 55) !important;
+	}
+
+	.ant-popover {
+		.ant-popover-arrow:after,
+		.ant-popover-inner {
+			background-color: rgb(120, 120, 120);
+		}
 	}
 
 	.ant-statistic {

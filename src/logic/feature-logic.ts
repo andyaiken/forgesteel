@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureKitTypeData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
 import { Ability } from '../models/ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from '../models/ancestry';
@@ -106,6 +106,35 @@ export class FeatureLogic {
 		} as Feature;
 	};
 
+	static createDomainChoiceFeature = (data: { id: string, name?: string, description?: string, count?: number }) => {
+		const count = data.count || 1;
+		return {
+			id: data.id,
+			name: data.name || 'Domain',
+			description: data.description || (count > 1 ? `Choose ${count} domains.` : 'Choose a domain.'),
+			type: FeatureType.Domain,
+			data: {
+				count: count,
+				selected: []
+			} as FeatureDomainData
+		} as Feature;
+	};
+
+	static createDomainFeatureFeature = (data: { id: string, name?: string, description?: string, level: number, count?: number }) => {
+		const count = data.count || 1;
+		return {
+			id: data.id,
+			name: data.name || 'Domain Feature Choice',
+			description: data.description || (count > 1 ? `Choose ${count} options.` : 'Choose an option.'),
+			type: FeatureType.DomainFeature,
+			data: {
+				level: data.level,
+				count: count,
+				selected: []
+			} as FeatureDomainFeatureData
+		} as Feature;
+	};
+
 	static createKitChoiceFeature = (data: { id: string, name?: string, description?: string, types?: KitType[], count?: number }) => {
 		const count = data.count || 1;
 		return {
@@ -200,21 +229,6 @@ export class FeatureLogic {
 				count: count,
 				selected: []
 			} as FeatureSkillChoiceData
-		} as Feature;
-	};
-
-	static createSubclassFeature = (data: { id: string, name?: string, description?: string, category: string, count?: number }) => {
-		const count = data.count || 1;
-		return {
-			id: data.id,
-			name: data.name || 'Subclass Feature Choice',
-			description: data.description || (count > 1 ? `Choose ${count} options.` : 'Choose an option.'),
-			type: FeatureType.SubclassFeature,
-			data: {
-				category: data.category,
-				count: count,
-				selected: []
-			} as FeatureSubclassData
 		} as Feature;
 	};
 
@@ -319,9 +333,9 @@ export class FeatureLogic {
 				});
 			});
 		features
-			.filter(f => f.type === FeatureType.SubclassFeature)
+			.filter(f => f.type === FeatureType.DomainFeature)
 			.forEach(f => {
-				const data = f.data as FeatureSubclassData;
+				const data = f.data as FeatureDomainFeatureData;
 				featuresFromChoices.push(...data.selected);
 			});
 		features.push(...featuresFromChoices);
@@ -345,10 +359,11 @@ export class FeatureLogic {
 		switch (feature.type) {
 			case FeatureType.Choice:
 			case FeatureType.ClassAbility:
+			case FeatureType.Domain:
+			case FeatureType.DomainFeature:
 			case FeatureType.Kit:
 			case FeatureType.Language:
 			case FeatureType.SkillChoice:
-			case FeatureType.SubclassFeature:
 				return true;
 		};
 

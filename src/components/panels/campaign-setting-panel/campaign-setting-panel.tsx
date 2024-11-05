@@ -1,7 +1,9 @@
 import { Button, Input, Popover } from 'antd';
-import { DeleteOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, DeleteOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
 import { CampaignSetting } from '../../../models/campaign-setting';
+import { CampaignSettingLogic } from '../../../logic/campaign-setting-logic';
 import { NameGenerator } from '../../../utils/name-generator';
+import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
 import './campaign-setting-panel.scss';
@@ -22,6 +24,10 @@ export const CampaignSettingPanel = (props: Props) => {
 		setIsEditing(!isEditing);
 	};
 
+	const onExport = () => {
+		Utils.export(setting.id, setting.name || 'Unnamed Collection', setting, 'setting', 'json');
+	};
+
 	const onDelete = () => {
 		props.onDelete(setting);
 	};
@@ -38,20 +44,41 @@ export const CampaignSettingPanel = (props: Props) => {
 			<div className='campaign-setting-panel' id={setting.id}>
 				{
 					isEditing ?
-						<Input
-							placeholder='Name'
-							allowClear={true}
-							addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-							value={setting.name}
-							onChange={e => setName(e.target.value)}
-						/>
+						<div>
+							<Input
+								placeholder='Name'
+								allowClear={true}
+								addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
+								value={setting.name}
+								onChange={e => setName(e.target.value)}
+							/>
+						</div>
 						:
-						<div className='ds-text'>{props.setting.name || 'Unnamed Setting'}</div>
+						<div>
+							<div className='ds-text bold-text'>{setting.name || 'Unnamed Collection'}</div>
+							<div className='ds-text description-text'>{CampaignSettingLogic.getElementCount(setting)} elements</div>
+							{setting.isHomebrew ? <div className='ds-text description-text'>Homebrew</div> : null}
+						</div>
 				}
 				<div className='action-buttons'>
 					{
-						setting.isHomebrew ?
+						!isEditing ?
+							<Button type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(setting, !props.visible)} />
+							: null
+					}
+					{
+						setting.isHomebrew && !isEditing ?
 							<Button type='text' title='Edit' icon={<EditOutlined />} onClick={toggleEditing} />
+							: null
+					}
+					{
+						setting.isHomebrew && isEditing ?
+							<Button type='text' title='OK' icon={<CheckCircleOutlined />} onClick={toggleEditing} />
+							: null
+					}
+					{
+						setting.isHomebrew && !isEditing ?
+							<Button type='text' title='Export' icon={<UploadOutlined />} onClick={onExport} />
 							: null
 					}
 					{
@@ -70,7 +97,6 @@ export const CampaignSettingPanel = (props: Props) => {
 							</Popover>
 							: null
 					}
-					{!isEditing ? <Button type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(setting, !props.visible)} /> : null}
 				</div>
 			</div>
 		);

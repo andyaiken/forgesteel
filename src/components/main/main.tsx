@@ -16,6 +16,8 @@ import { Complication } from '../../models/complication';
 import { ComplicationModal } from '../modals/complication/complication-modal';
 import { Culture } from '../../models/culture';
 import { CultureModal } from '../modals/culture/culture-modal';
+import { Domain } from '../../models/domain';
+import { DomainModal } from '../modals/domain/domain-modal';
 import { Drawer } from 'antd';
 import { Element } from '../../models/element';
 import { ElementEditPage } from '../pages/elements/element-edit/element-edit';
@@ -60,7 +62,7 @@ export const Main = (props: Props) => {
 	const [ options, setOptions ] = useState<Options>(props.options);
 	const [ page, setPage ] = useState<Page>(Page.Welcome);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
-	const [ selectedElement, setSelectedElement ] = useState<Ancestry | Culture | Career | HeroClass | Kit | Complication | null>(null);
+	const [ selectedElement, setSelectedElement ] = useState<Ancestry | Culture | Career | HeroClass | Domain | Kit | Complication | null>(null);
 	const [ selectedElementSetting, setSelectedElementSetting ] = useState<CampaignSetting | null>(null);
 	const [ selectedElementType, setSelectedElementType ] = useState<string>('');
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
@@ -118,7 +120,10 @@ export const Main = (props: Props) => {
 	//#region Heroes
 
 	const addHero = () => {
-		const hero = FactoryLogic.createHero([ CampaignSettingData.core.id, CampaignSettingData.orden.id ]);
+		const hero = FactoryLogic.createHero([
+			CampaignSettingData.core.id,
+			CampaignSettingData.orden.id
+		]);
 
 		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
 		copy.push(hero);
@@ -334,6 +339,33 @@ export const Main = (props: Props) => {
 		}
 	};
 
+	const createDomain = (original: Domain | null, setting: CampaignSetting | null) => {
+		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		if (!setting) {
+			setting = FactoryLogic.createCampaignSetting();
+			settings.push(setting);
+		} else {
+			const id = setting.id;
+			setting = settings.find(cs => cs.id === id) as CampaignSetting;
+		}
+
+		let domain: Domain;
+		if (original) {
+			domain = JSON.parse(JSON.stringify(original)) as Domain;
+			domain.id = Utils.guid();
+		} else {
+			domain = FactoryLogic.createDomain();
+		}
+
+		setting.domains.push(domain);
+		persistHomebrewSettings(settings);
+		if (drawer) {
+			onSelectDomain(domain);
+		} else {
+			editDomain(domain, setting);
+		}
+	};
+
 	const createKit = (original: Kit | null, setting: CampaignSetting | null) => {
 		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
 		if (!setting) {
@@ -420,6 +452,14 @@ export const Main = (props: Props) => {
 		setDrawer(null);
 	};
 
+	const editDomain = (domain: Domain, setting: CampaignSetting) => {
+		setSelectedElement(domain);
+		setSelectedElementSetting(setting);
+		setSelectedElementType('Domain');
+		setPage(Page.ElementEdit);
+		setDrawer(null);
+	};
+
 	const editKit = (kit: Kit, setting: CampaignSetting) => {
 		setSelectedElement(kit);
 		setSelectedElementSetting(setting);
@@ -472,6 +512,15 @@ export const Main = (props: Props) => {
 		setDrawer(null);
 	};
 
+	const deleteDomain = (domain: Domain) => {
+		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		copy.forEach(cs => {
+			cs.domains = cs.domains.filter(d => d.id !== domain.id);
+		});
+		persistHomebrewSettings(copy);
+		setDrawer(null);
+	};
+
 	const deleteKit = (kit: Kit) => {
 		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
 		copy.forEach(cs => {
@@ -496,6 +545,12 @@ export const Main = (props: Props) => {
 		settings.push(setting);
 		persistHomebrewSettings(settings);
 		return setting;
+	};
+
+	const importCampaignSetting = (setting: CampaignSetting) => {
+		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		settings.push(setting);
+		persistHomebrewSettings(settings);
 	};
 
 	const changeCampaignSetting = (setting: CampaignSetting) => {
@@ -543,6 +598,13 @@ export const Main = (props: Props) => {
 						const classIndex = setting.classes.findIndex(c => c.id === element.id);
 						if (classIndex !== -1) {
 							setting.classes[classIndex] = element as unknown as HeroClass;
+						}
+					}
+						break;
+					case 'Domain': {
+						const domainIndex = setting.domains.findIndex(d => d.id === element.id);
+						if (domainIndex !== -1) {
+							setting.domains[domainIndex] = element as unknown as Domain;
 						}
 					}
 						break;
@@ -603,6 +665,10 @@ export const Main = (props: Props) => {
 				case 'Class':
 					setting.classes.push(element as unknown as HeroClass);
 					Collections.sort(setting.classes, item => item.name);
+					break;
+				case 'Domain':
+					setting.domains.push(element as unknown as Domain);
+					Collections.sort(setting.domains, item => item.name);
 					break;
 				case 'Kit':
 					setting.kits.push(element as unknown as Kit);
@@ -698,6 +764,24 @@ export const Main = (props: Props) => {
 				export={format => Utils.export(heroClass.id, heroClass.name || 'Class', heroClass, 'class', format)}
 				edit={() => editClass(heroClass, container as CampaignSetting)}
 				delete={() => deleteClass(heroClass)}
+			/>
+		);
+	};
+
+	const onSelectDomain = (domain: Domain) => {
+		const container = CampaignSettingData
+			.getCampaignSettings(homebrewSettings)
+			.find(cs => cs.domains.find(d => d.id === domain.id));
+
+		setDrawer(
+			<DomainModal
+				domain={domain}
+				homebrewSettings={homebrewSettings}
+				isHomebrew={!!homebrewSettings.flatMap(cs => cs.domains).find(d => d.id === domain.id)}
+				createHomebrew={setting => createDomain(domain, setting)}
+				export={format => Utils.export(domain.id, domain.name || 'Domain', domain, 'domain', format)}
+				edit={() => editDomain(domain, container as CampaignSetting)}
+				delete={() => deleteDomain(domain)}
 			/>
 		);
 	};
@@ -811,6 +895,7 @@ export const Main = (props: Props) => {
 						onSelectCareer={onSelectCareer}
 						onSelectClass={onSelectClass}
 						onSelectComplication={onSelectComplication}
+						onSelectDomain={onSelectDomain}
 						onSelectKit={onSelectKit}
 						onSelectCharacteristic={onSelectCharacteristic}
 						onSelectAbility={onSelectAbility}
@@ -838,6 +923,7 @@ export const Main = (props: Props) => {
 						viewCulture={onSelectCulture}
 						viewCareer={onSelectCareer}
 						viewClass={onSelectClass}
+						viewDomain={onSelectDomain}
 						viewKit={onSelectKit}
 						viewComplication={onSelectComplication}
 						onSettingCreate={createCampaignSetting}
@@ -845,6 +931,7 @@ export const Main = (props: Props) => {
 						onSettingDelete={deleteCampaignSetting}
 						onCreateHomebrew={createHomebrew}
 						onImportHomebrew={importHomebrew}
+						onImportSetting={importCampaignSetting}
 					/>
 				);
 			case Page.ElementEdit:

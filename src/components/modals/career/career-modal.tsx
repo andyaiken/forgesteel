@@ -31,9 +31,9 @@ export const CareerModal = (props: Props) => {
 								content={(
 									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 										{
-											props.homebrewSettings.map(cs => <Button key={cs.id} onClick={() => props.createHomebrew(cs)}>In {cs.name || 'Unnamed Setting'}</Button>)
+											props.homebrewSettings.map(cs => <Button key={cs.id} onClick={() => props.createHomebrew(cs)}>In {cs.name || 'Unnamed Collection'}</Button>)
 										}
-										<Button onClick={() => props.createHomebrew(null)}>In a new campaign setting</Button>
+										<Button onClick={() => props.createHomebrew(null)}>In a new collection</Button>
 									</div>
 								)}
 							>

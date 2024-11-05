@@ -20,13 +20,13 @@ export const shadow: HeroClass = {
 			level: 1,
 			features: [
 				FeatureLogic.createBonusFeature({
-					id: 'conduit-stamina',
+					id: 'shadow-stamina',
 					field: FeatureField.Stamina,
 					value: 18,
 					valuePerLevel: 8
 				}),
 				FeatureLogic.createBonusFeature({
-					id: 'conduit-recoveries',
+					id: 'shadow-recoveries',
 					field: FeatureField.Recoveries,
 					value: 10
 				}),
@@ -337,8 +337,7 @@ export const shadow: HeroClass = {
 								effect: 'You teleport up to 4 squares, halve the triggering damage, and don’t suffer any effect associated with the damage.'
 							})
 						})
-					],
-					optionalFeatures: []
+					]
 				}
 			],
 			selected: false
@@ -394,8 +393,7 @@ export const shadow: HeroClass = {
 
 							})
 						})
-					],
-					optionalFeatures: []
+					]
 				}
 			],
 			selected: false
@@ -437,8 +435,7 @@ export const shadow: HeroClass = {
 								effect: 'Choose an enemy within distance of the attack. The attack targets that enemy instead.'
 							})
 						})
-					],
-					optionalFeatures: []
+					]
 				}
 			],
 			selected: false

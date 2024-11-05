@@ -822,7 +822,7 @@ const DetailsSection = (props: DetailsSectionProps) => {
 			const setting = props.campaignSettings.find(cs => cs.id === settingID);
 			if (setting) {
 				return (
-					<Field key={setting.id} label={setting.name} value={setting.defaultLanguages.join(', ') || 'None'} />
+					<Field key={setting.id} label={setting.name || 'Unnamed Collection'} value={setting.defaultLanguages.join(', ') || 'None'} />
 				);
 			}
 
@@ -842,13 +842,13 @@ const DetailsSection = (props: DetailsSectionProps) => {
 						onChange={e => props.setName(e.target.value)}
 					/>
 					<Divider />
-					<HeaderText>Campaign Settings</HeaderText>
+					<HeaderText>Collections</HeaderText>
 					<Select
 						style={{ width: '100%' }}
 						placeholder='Select'
 						mode='multiple'
 						options={props.campaignSettings.map(cs => ({ value: cs.id, label: cs.name }))}
-						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+						optionRender={option => <div className='ds-text'>{option.data.label || 'Unnamed Collection'}</div>}
 						value={props.hero.settingIDs}
 						onChange={props.setSettingIDs}
 					/>

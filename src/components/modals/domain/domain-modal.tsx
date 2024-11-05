@@ -1,13 +1,13 @@
 import { Button, Popover } from 'antd';
 import { CampaignSetting } from '../../../models/campaign-setting';
-import { Culture } from '../../../models/culture';
-import { CulturePanel } from '../../panels/culture-panel/culture-panel';
+import { Domain } from '../../../models/domain';
+import { DomainPanel } from '../../panels/domain-panel/domain-panel';
 import { PanelMode } from '../../../enums/panel-mode';
 
-import './culture-modal.scss';
+import './domain-modal.scss';
 
 interface Props {
-	culture: Culture;
+	domain: Domain;
 	homebrewSettings: CampaignSetting[];
 	isHomebrew: boolean;
 	createHomebrew: (setting: CampaignSetting | null) => void;
@@ -16,10 +16,10 @@ interface Props {
 	delete: () => void;
 }
 
-export const CultureModal = (props: Props) => {
+export const DomainModal = (props: Props) => {
 	try {
 		return (
-			<div className='culture-modal'>
+			<div className='domain-modal'>
 				<div className='toolbar'>
 					{
 						props.isHomebrew ?
@@ -76,7 +76,7 @@ export const CultureModal = (props: Props) => {
 							: null
 					}
 				</div>
-				<CulturePanel culture={props.culture} mode={PanelMode.Full} />
+				<DomainPanel domain={props.domain} mode={PanelMode.Full} />
 			</div>
 		);
 	} catch (ex) {

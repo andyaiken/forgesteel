@@ -7,6 +7,7 @@ import { Career } from '../../../../models/career';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Complication } from '../../../../models/complication';
 import { Culture } from '../../../../models/culture';
+import { Domain } from '../../../../models/domain';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroPanel } from '../../../panels/hero-panel/hero-panel';
@@ -33,6 +34,7 @@ interface Props {
 	onSelectCareer: (career: Career) => void;
 	onSelectClass: (heroClass: HeroClass) => void;
 	onSelectComplication: (complication: Complication) => void;
+	onSelectDomain: (domain: Domain) => void;
 	onSelectKit: (kit: Kit) => void;
 	onSelectCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	onSelectAbility: (ability: Ability, hero: Hero) => void;
@@ -117,6 +119,7 @@ export const HeroPage = (props: Props) => {
 						onSelectCareer={props.onSelectCareer}
 						onSelectClass={props.onSelectClass}
 						onSelectComplication={props.onSelectComplication}
+						onSelectDomain={props.onSelectDomain}
 						onSelectKit={props.onSelectKit}
 						onSelectCharacteristic={characteristic => props.onSelectCharacteristic(characteristic, props.hero)}
 						onSelectAbility={ability => props.onSelectAbility(ability, props.hero)}

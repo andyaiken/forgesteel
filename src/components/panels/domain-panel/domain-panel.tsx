@@ -1,29 +1,29 @@
 import { CampaignSetting } from '../../../models/campaign-setting';
+import { Domain } from '../../../models/domain';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Space } from 'antd';
-import { SubClass } from '../../../models/subclass';
 
-import './subclass-panel.scss';
+import './domain-panel.scss';
 
 interface Props {
-	subclass: SubClass;
+	domain: Domain;
 	hero?: Hero;
 	campaignSettings?: CampaignSetting[];
 	mode?: PanelMode;
 }
 
-export const SubclassPanel = (props: Props) => {
+export const DomainPanel = (props: Props) => {
 	try {
 		return (
-			<div className='subclass-panel' id={props.mode === PanelMode.Full ? props.subclass.id : undefined}>
-				<HeaderText level={1}>{props.subclass.name || 'Unnamed Subclass'}</HeaderText>
-				<div className='ds-text description-text'>{props.subclass.description}</div>
+			<div className='domain-panel' id={props.mode === PanelMode.Full ? props.domain.id : undefined}>
+				<HeaderText level={1}>{props.domain.name || 'Unnamed Domain'}</HeaderText>
+				<div className='ds-text description-text'>{props.domain.description}</div>
 				{
 					props.mode === PanelMode.Full ?
-						props.subclass.featuresByLevel.map(lvl => (
+						props.domain.featuresByLevel.map(lvl => (
 							<Space key={lvl.level} direction='vertical'>
 								<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
 								{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)}

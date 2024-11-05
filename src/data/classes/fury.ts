@@ -311,8 +311,7 @@ When you damage an object with a weapon attack, it takes an additional 5 damage.
 								]
 							})
 						})
-					],
-					optionalFeatures: []
+					]
 				}
 			],
 			selected: false
@@ -357,8 +356,7 @@ You are never surprised. Additionally, whenever you would push a target with for
 								]
 							})
 						})
-					],
-					optionalFeatures: []
+					]
 				}
 			],
 			selected: false
@@ -420,8 +418,7 @@ You are never surprised. Additionally, whenever you would push a target with for
 							id: 'fury-sub-3-1-5',
 							types: [ KitType.Stormwight ]
 						})
-					],
-					optionalFeatures: []
+					]
 				}
 			],
 			selected: false

@@ -12,6 +12,7 @@ import { ConditionEndType } from '../../../enums/condition-type';
 import { Culture } from '../../../models/culture';
 import { CultureData } from '../../../data/culture-data';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
+import { Domain } from '../../../models/domain';
 import { Element } from '../../../models/element';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
@@ -40,6 +41,7 @@ interface Props {
 	onSelectCareer?: (career: Career) => void;
 	onSelectClass?: (heroClass: HeroClass) => void;
 	onSelectComplication?: (complication: Complication) => void;
+	onSelectDomain?: (domain: Domain) => void;
 	onSelectKit?: (kit: Kit) => void;
 	onSelectCharacteristic?: (characteristic: Characteristic) => void;
 	onSelectAbility?: (ability: Ability) => void;
@@ -75,6 +77,12 @@ export const HeroPanel = (props: Props) => {
 		const onSelectComplication = () => {
 			if (props.hero.complication && props.onSelectComplication) {
 				props.onSelectComplication(props.hero.complication);
+			}
+		};
+
+		const onSelectDomain = (domain: Domain) => {
+			if (props.onSelectDomain) {
+				props.onSelectDomain(domain);
 			}
 		};
 
@@ -176,6 +184,17 @@ export const HeroPanel = (props: Props) => {
 						</div>
 				}
 				{
+					HeroLogic.getDomains(props.hero).length > 0 ?
+						HeroLogic.getDomains(props.hero).map(domain => (
+							<div key={domain.id} className='top-tile clickable' onClick={() => onSelectDomain(domain)}>
+								<HeaderText>Domain</HeaderText>
+								<Field label='Domain' value={domain.name} />
+							</div>
+						))
+						:
+						null
+				}
+				{
 					HeroLogic.getKits(props.hero).length > 0 ?
 						HeroLogic.getKits(props.hero).map(kit => (
 							<div key={kit.id} className='top-tile clickable' onClick={() => onSelectKit(kit)}>
@@ -187,9 +206,7 @@ export const HeroPanel = (props: Props) => {
 							</div>
 						))
 						:
-						<div className='top-tile'>
-							<div className='ds-text dimmed-text'>No kit chosen</div>
-						</div>
+						null
 				}
 				{
 					props.hero.complication ?
@@ -198,9 +215,7 @@ export const HeroPanel = (props: Props) => {
 							<Field label='Complication' value={props.hero.complication.name} />
 						</div>
 						:
-						<div className='top-tile'>
-							<div className='ds-text dimmed-text'>No complication chosen</div>
-						</div>
+						null
 				}
 				<div className='top-tile'>
 					<HeaderText>Languages</HeaderText>
@@ -421,14 +436,20 @@ export const HeroPanel = (props: Props) => {
 
 	try {
 		if (props.mode !== PanelMode.Full) {
+			const subclasses = props.hero.class?.subclasses.filter(sc => sc.selected);
+			const domains = HeroLogic.getDomains(props.hero);
+			const kits = HeroLogic.getKits(props.hero);
+
 			return (
 				<div className='hero-panel compact'>
 					<HeaderText level={1}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
 					<Field label='Ancestry' value={props.hero.ancestry?.name || 'None'} />
 					<Field label='Career' value={props.hero.career?.name || 'None'} />
 					<Field label='Class' value={props.hero.class?.name || 'None'} />
+					{subclasses ? <Field label={props.hero.class?.subclassName || 'Subclass'} value={subclasses.map(sc => sc.name).join(', ')} /> : null}
 					<Field label='Level' value={props.hero.class?.level || '-'} />
-					<Field label='Kit' value={HeroLogic.getKits(props.hero).map(k => k.name).join(', ') || 'None'} />
+					{domains.length > 0 ? <Field label='Domain' value={domains.map(d => d.name).join(', ')} /> : null}
+					{kits.length > 0 ? <Field label='Kit' value={kits.map(k => k.name).join(', ')} /> : null}
 				</div>
 			);
 		}

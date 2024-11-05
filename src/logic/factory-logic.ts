@@ -1,13 +1,15 @@
-import { HeroClass, SubClass } from '../models/class';
 import { Ancestry } from '../models/ancestry';
 import { CampaignSetting } from '../models/campaign-setting';
 import { Career } from '../models/career';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
+import { Domain } from '../models/domain';
 import { FeatureLogic } from './feature-logic';
 import { Hero } from '../models/hero';
+import { HeroClass } from '../models/class';
 import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit';
+import { SubClass } from '../models/subclass';
 import { Utils } from '../utils/utils';
 
 export class FactoryLogic {
@@ -46,8 +48,10 @@ export class FactoryLogic {
 			cultures: [],
 			careers: [],
 			classes: [],
+			domains: [],
 			kits: [],
 			complications: [],
+			perks: [],
 			skills: [],
 			languages: [],
 			defaultLanguages: []
@@ -124,6 +128,16 @@ export class FactoryLogic {
 			selected: false
 		};
 		return sc;
+	};
+
+	static createDomain = () => {
+		const d: Domain = {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			featuresByLevel: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(n => ({ level: n, features: [], optionalFeatures: [] }))
+		};
+		return d;
 	};
 
 	static createKit = () => {

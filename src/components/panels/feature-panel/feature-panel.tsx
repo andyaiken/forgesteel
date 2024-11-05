@@ -1,9 +1,11 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../../../models/feature';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { CampaignSetting } from '../../../models/campaign-setting';
 import { Collections } from '../../../utils/collections';
+import { DomainData } from '../../../data/domains';
+import { DomainPanel } from '../domain-panel/domain-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
 import { FormatLogic } from '../../../logic/format-logic';
@@ -41,6 +43,15 @@ export const FeaturePanel = (props: Props) => {
 		});
 		const pointsLeft = data.count - pointsUsed;
 
+		const availableOptions = data.options.filter(o => selectedIDs.includes(o.feature.id) || (o.value <= pointsLeft));
+		const sortedOptions = Collections.sort(availableOptions, opt => opt.feature.name);
+
+		if (sortedOptions.length === 0) {
+			return (
+				<Alert type='info' showIcon={true} message='There are no options to choose for this feature.' />
+			);
+		}
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Select
@@ -49,7 +60,7 @@ export const FeaturePanel = (props: Props) => {
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder='Select'
-					options={data.options.filter(o => selectedIDs.includes(o.feature.id) || (o.value <= pointsLeft)).map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description, cost: o.value }))}
+					options={sortedOptions.map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description, cost: o.value }))}
 					optionRender={option => (
 						<Field
 							label={(
@@ -99,6 +110,12 @@ export const FeaturePanel = (props: Props) => {
 		const distinctAbilities = Collections.distinct(abilities, a => a.name);
 		const sortedAbilities = Collections.sort(distinctAbilities, a => a.name);
 
+		if (sortedAbilities.length === 0) {
+			return (
+				<Alert type='info' showIcon={true} message='There are no options to choose for this feature.' />
+			);
+		}
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Select
@@ -136,6 +153,115 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
+	const getEditableDomain = (data: FeatureDomainData) => {
+		if (!props.hero) {
+			return null;
+		}
+
+		const domains = DomainData.getDomains(props.campaignSettings as CampaignSetting[]);
+		const sortedDomains = Collections.sort(domains, d => d.name);
+
+		if (sortedDomains.length === 0) {
+			return (
+				<Alert type='info' showIcon={true} message='There are no options to choose for this feature.' />
+			);
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Select
+					style={{ width: '100%' }}
+					mode={data.count === 1 ? undefined : 'multiple'}
+					maxCount={data.count === 1 ? undefined : data.count}
+					allowClear={true}
+					placeholder='Select'
+					options={sortedDomains.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
+					onChange={value => {
+						let ids: string[] = [];
+						if (data.count === 1) {
+							ids = value !== undefined ? [ value as string ] : [];
+						} else {
+							ids = value as string[];
+						}
+						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureDomainData;
+						dataCopy.selected = [];
+						ids.forEach(id => {
+							const domain = domains.find(k => k.id === id);
+							if (domain) {
+								dataCopy.selected.push(domain);
+							}
+						});
+						if (props.setData) {
+							props.setData(props.feature.id, dataCopy);
+						}
+					}}
+				/>
+			</Space>
+		);
+	};
+
+	const getEditableDomainFeature = (data: FeatureDomainFeatureData) => {
+		if (!props.hero) {
+			return null;
+		}
+
+		const options: Feature[] = [];
+		HeroLogic.getDomains(props.hero).forEach(d => {
+			d.featuresByLevel
+				.filter(lvl => lvl.level === data.level)
+				.forEach(lvl => options.push(...lvl.features));
+		});
+
+		if (options.length === 0) {
+			return (
+				<Alert type='info' showIcon={true} message='Choose a domain to enable this feature.' />
+			);
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Select
+					style={{ width: '100%' }}
+					mode={data.count === 1 ? undefined : 'multiple'}
+					maxCount={data.count === 1 ? undefined : data.count}
+					allowClear={true}
+					placeholder='Select'
+					options={options.map(o => ({ label: o.name, value: o.id, desc: o.description }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
+					onChange={value => {
+						let ids: string[] = [];
+						if (data.count === 1) {
+							ids = value !== undefined ? [ value as string ] : [];
+						} else {
+							ids = value as string[];
+						}
+						const features: Feature[] = [];
+						ids.forEach(id => {
+							const option = options.find(o => o.id === id);
+							if (option) {
+								const featureCopy = JSON.parse(JSON.stringify(option)) as Feature;
+								features.push(featureCopy);
+							}
+						});
+						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
+						dataCopy.selected = features;
+						if (props.setData) {
+							props.setData(props.feature.id, dataCopy);
+						}
+					}}
+				/>
+				{
+					data.selected.map(f => (
+						<FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />
+					))
+				}
+			</Space>
+		);
+	};
+
 	const getEditableKit = (data: FeatureKitData) => {
 		if (!props.hero) {
 			return null;
@@ -146,6 +272,12 @@ export const FeaturePanel = (props: Props) => {
 			.filter(k => kitTypes.includes(k.type));
 
 		const sortedKits = Collections.sort(kits, k => k.name);
+
+		if (sortedKits.length === 0) {
+			return (
+				<Alert type='info' showIcon={true} message='There are no options to choose for this feature.' />
+			);
+		}
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -192,6 +324,12 @@ export const FeaturePanel = (props: Props) => {
 	const getEditableLanguage = (data: FeatureLanguageData) => {
 		const languages = LanguageData.getLanguages(props.campaignSettings as CampaignSetting[]);
 		const sortedLanguages = Collections.sort(languages, l => l.name);
+
+		if (sortedLanguages.length === 0) {
+			return (
+				<Alert type='info' showIcon={true} message='There are no options to choose for this feature.' />
+			);
+		}
 
 		return (
 			<div>
@@ -259,6 +397,12 @@ export const FeaturePanel = (props: Props) => {
 			.filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
 		const sortedSkills = Collections.sort(skills, s => s.name);
 
+		if (sortedSkills.length === 0) {
+			return (
+				<Alert type='info' showIcon={true} message='There are no options to choose for this feature.' />
+			);
+		}
+
 		return (
 			<div>
 				<div className='ds-text'>{data.count === 1 ? 'Select a skill:' : `Select ${data.count} skills:`}</div>
@@ -317,79 +461,22 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
-	const getEditableSubclassFeature = (data: FeatureSubclassData) => {
-		const options: Feature[] = [];
-		if (props.hero && props.hero.class) {
-			const heroClass = props.hero.class;
-			props.hero.class.subclasses
-				.filter(sc => sc.selected)
-				.forEach(sc => {
-					sc.featuresByLevel
-						.filter(lvl => lvl.level <= heroClass.level)
-						.forEach(lvl => {
-							lvl.optionalFeatures
-								.filter(f => f.category === data.category)
-								.forEach(f => options.push(...f.features));
-						});
-				});
-		}
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				<Select
-					style={{ width: '100%' }}
-					mode={data.count === 1 ? undefined : 'multiple'}
-					maxCount={data.count === 1 ? undefined : data.count}
-					allowClear={true}
-					placeholder='Select'
-					options={options.map(o => ({ label: o.name, value: o.id, desc: o.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
-					onChange={value => {
-						let ids: string[] = [];
-						if (data.count === 1) {
-							ids = value !== undefined ? [ value as string ] : [];
-						} else {
-							ids = value as string[];
-						}
-						const features: Feature[] = [];
-						ids.forEach(id => {
-							const option = options.find(o => o.id === id);
-							if (option) {
-								const featureCopy = JSON.parse(JSON.stringify(option)) as Feature;
-								features.push(featureCopy);
-							}
-						});
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
-						dataCopy.selected = features;
-						if (props.setData) {
-							props.setData(props.feature.id, dataCopy);
-						}
-					}}
-				/>
-				{
-					data.selected.map(f => (
-						<FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />
-					))
-				}
-			</Space>
-		);
-	};
-
 	const getEditable = () => {
 		switch (props.feature.type) {
 			case FeatureType.Choice:
 				return getEditableChoice(props.feature.data as FeatureChoiceData);
 			case FeatureType.ClassAbility:
 				return getEditableClassAbility(props.feature.data as FeatureClassAbilityData);
+			case FeatureType.Domain:
+				return getEditableDomain(props.feature.data as FeatureDomainData);
+			case FeatureType.DomainFeature:
+				return getEditableDomainFeature(props.feature.data as FeatureDomainFeatureData);
 			case FeatureType.Kit:
 				return getEditableKit(props.feature.data as FeatureKitData);
 			case FeatureType.Language:
 				return getEditableLanguage(props.feature.data as FeatureLanguageData);
 			case FeatureType.SkillChoice:
 				return getEditableSkillChoice(props.feature.data as FeatureSkillChoiceData);
-			case FeatureType.SubclassFeature:
-				return getEditableSubclassFeature(props.feature.data as FeatureSubclassData);
 		}
 
 		return null;
@@ -460,6 +547,36 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
+	const getExtraDomain = (data: FeatureDomainData) => {
+		if (data.selected.length > 0) {
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					{
+						data.selected.map(d => <DomainPanel key={d.id} domain={d} mode={PanelMode.Full} />)
+					}
+				</Space>
+			);
+		}
+
+		return (
+			<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'domains' : 'domain'}.</div>
+		);
+	};
+
+	const getExtraDomainFeature = (data: FeatureDomainFeatureData) => {
+		if (data.selected.length === 0) {
+			return null;
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					data.selected.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)
+				}
+			</Space>
+		);
+	};
+
 	const getExtraKit = (data: FeatureKitData) => {
 		if (data.selected.length > 0) {
 			return (
@@ -472,7 +589,7 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		return (
-			<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.types.join(', ')} {data.count > 1 ? 'kit' : 'kits'}.</div>
+			<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.types.join(', ')} {data.count > 1 ? 'kits' : 'kit'}.</div>
 		);
 	};
 
@@ -522,20 +639,6 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
-	const getExtraSubclassFeature = (data: FeatureSubclassData) => {
-		if (data.selected.length === 0) {
-			return null;
-		}
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					data.selected.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)
-				}
-			</Space>
-		);
-	};
-
 	const getExtra = () => {
 		switch (props.feature.type) {
 			case FeatureType.AbilityCost:
@@ -548,6 +651,10 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraClassAbility(props.feature.data as FeatureClassAbilityData);
 			case FeatureType.DamageModifier:
 				return getExtraDamageModifier(props.feature.data as FeatureDamageModifierData);
+			case FeatureType.Domain:
+				return getExtraDomain(props.feature.data as FeatureDomainData);
+			case FeatureType.DomainFeature:
+				return getExtraDomainFeature(props.feature.data as FeatureDomainFeatureData);
 			case FeatureType.Kit:
 				return getExtraKit(props.feature.data as FeatureKitData);
 			case FeatureType.KitType:
@@ -560,8 +667,6 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraSkill(props.feature.data as FeatureSkillData);
 			case FeatureType.SkillChoice:
 				return getExtraSkillChoice(props.feature.data as FeatureSkillChoiceData);
-			case FeatureType.SubclassFeature:
-				return getExtraSubclassFeature(props.feature.data as FeatureSubclassData);
 		}
 
 		return null;

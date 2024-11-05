@@ -380,8 +380,7 @@ Choose one of the following effects:
 								]
 							})
 						})
-					],
-					optionalFeatures: []
+					]
 				}
 			],
 			selected: false
@@ -436,8 +435,7 @@ Choose one of the following effects:
 								]
 							})
 						})
-					],
-					optionalFeatures: []
+					]
 				}
 			],
 			selected: false
@@ -474,8 +472,7 @@ Additionally, when you touch a living plant object, you can communicate with it 
 								effect: 'The target can spend a Recovery.'
 							})
 						})
-					],
-					optionalFeatures: []
+					]
 				}
 			],
 			selected: false
@@ -537,8 +534,7 @@ Additionally, when you touch a living plant object, you can communicate with it 
 								]
 							})
 						})
-					],
-					optionalFeatures: []
+					]
 				}
 			],
 			selected: false

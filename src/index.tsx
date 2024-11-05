@@ -27,6 +27,15 @@ localforage
 					homebrewSettings = [];
 				}
 
+				homebrewSettings.forEach(setting => {
+					if (setting.domains === undefined) {
+						setting.domains = [];
+					}
+					if (setting.perks === undefined) {
+						setting.perks = [];
+					}
+				});
+
 				localforage
 					.getItem<Options>('forgesteel-options')
 					.then(options => {

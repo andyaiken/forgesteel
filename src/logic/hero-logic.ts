@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureKitData, FeatureKitTypeData, FeatureLanguageData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureKitData, FeatureKitTypeData, FeatureLanguageData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from './ability-logic';
@@ -8,6 +8,7 @@ import { CampaignSettingData } from '../data/campaign-setting-data';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { DamageModifierType } from '../enums/damage-modifier-type';
+import { Domain } from '../models/domain';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from './feature-logic';
 import { FeatureType } from '../enums/feature-type';
@@ -46,6 +47,20 @@ export class HeroLogic {
 			});
 
 		return kits;
+	};
+
+	static getDomains = (hero: Hero) => {
+		const domains: Domain[] = [];
+
+		// Collate from features
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.Domain)
+			.forEach(f => {
+				const data = f.data as FeatureDomainData;
+				domains.push(...data.selected);
+			});
+
+		return domains;
 	};
 
 	static getFeatures = (hero: Hero) => {
@@ -704,15 +719,6 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 			}
 		}
 
-		if (hero.class) {
-			hero.class.subclasses.forEach(sc => {
-				sc.featuresByLevel.forEach(lvl => {
-					if (lvl.optionalFeatures === undefined) {
-						lvl.optionalFeatures = [];
-					}
-				});
-			});
-		}
 		if (hero.state.xp === undefined) {
 			hero.state.xp = 0;
 		}

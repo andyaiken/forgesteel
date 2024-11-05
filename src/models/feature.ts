@@ -1,6 +1,7 @@
 import { Ability } from './ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { DamageModifier } from './damage-modifier';
+import { Domain } from './domain';
 import { Element } from './element';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
@@ -43,6 +44,17 @@ export interface FeatureDamageModifierData extends FeatureData {
 	modifiers: DamageModifier[];
 }
 
+export interface FeatureDomainData extends FeatureData {
+	count: number;
+	selected: Domain[];
+};
+
+export interface FeatureDomainFeatureData extends FeatureData {
+	level: number;
+	count: number;
+	selected: Feature[];
+};
+
 export interface FeatureKitData extends FeatureData {
 	types: KitType[];
 	count: number;
@@ -76,12 +88,6 @@ export interface FeatureSkillChoiceData extends FeatureData {
 	listOptions: SkillList[];
 	count: number;
 	selected: string[];
-};
-
-export interface FeatureSubclassData extends FeatureData {
-	category: string;
-	count: number;
-	selected: Feature[];
 };
 
 export interface Feature extends Element {

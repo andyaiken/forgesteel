@@ -18,6 +18,9 @@ import { ComplicationPanel } from '../../../panels/complication-panel/complicati
 import { Culture } from '../../../../models/culture';
 import { CultureData } from '../../../../data/culture-data';
 import { CulturePanel } from '../../../panels/culture-panel/culture-panel';
+import { Domain } from '../../../../models/domain';
+import { DomainData } from '../../../../data/domains';
+import { DomainPanel } from '../../../panels/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
 import { HeroClass } from '../../../../models/class';
 import { Kit } from '../../../../models/kit';
@@ -37,6 +40,7 @@ interface Props {
 	viewCulture: (cultiure: Culture) => void;
 	viewCareer: (career: Career) => void;
 	viewClass: (heroClass: HeroClass) => void;
+	viewDomain: (domain: Domain) => void;
 	viewKit: (kit: Kit) => void;
 	viewComplication: (complication: Complication) => void;
 	onSettingCreate: () => CampaignSetting;
@@ -44,6 +48,7 @@ interface Props {
 	onSettingDelete: (setting: CampaignSetting) => void;
 	onCreateHomebrew: (type: string, settingID: string | null) => void;
 	onImportHomebrew: (type: string, settingID: string | null, element: Element) => void;
+	onImportSetting: (setting: CampaignSetting) => void;
 }
 
 export const ElementListPage = (props: Props) => {
@@ -121,6 +126,15 @@ export const ElementListPage = (props: Props) => {
 			], searchTerm));
 	};
 
+	const getDomains = () => {
+		return DomainData
+			.getDomains(getSettings())
+			.filter(item => Utils.textMatches([
+				item.name,
+				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
+			], searchTerm));
+	};
+
 	const getKits = () => {
 		return KitData
 			.getKits(getSettings())
@@ -159,7 +173,7 @@ export const ElementListPage = (props: Props) => {
 						if (setting && setting.id) {
 							return (
 								<div key={a.id}>
-									<Badge.Ribbon text={setting.name || 'Unnamed Setting'}>
+									<Badge.Ribbon text={setting.name || 'Unnamed Collection'}>
 										{item}
 									</Badge.Ribbon>
 								</div>
@@ -198,7 +212,7 @@ export const ElementListPage = (props: Props) => {
 						if (setting && setting.id) {
 							return (
 								<div key={c.id}>
-									<Badge.Ribbon text={setting.name || 'Unnamed Setting'}>
+									<Badge.Ribbon text={setting.name || 'Unnamed Collection'}>
 										{item}
 									</Badge.Ribbon>
 								</div>
@@ -236,7 +250,7 @@ export const ElementListPage = (props: Props) => {
 						if (setting && setting.id) {
 							return (
 								<div key={c.id}>
-									<Badge.Ribbon text={setting.name || 'Unnamed Setting'}>
+									<Badge.Ribbon text={setting.name || 'Unnamed Collection'}>
 										{item}
 									</Badge.Ribbon>
 								</div>
@@ -275,7 +289,7 @@ export const ElementListPage = (props: Props) => {
 						if (setting && setting.id) {
 							return (
 								<div key={c.id}>
-									<Badge.Ribbon text={setting.name || 'Unnamed Setting'}>
+									<Badge.Ribbon text={setting.name || 'Unnamed Collection'}>
 										{item}
 									</Badge.Ribbon>
 								</div>
@@ -284,6 +298,45 @@ export const ElementListPage = (props: Props) => {
 
 						return (
 							<div key={c.id}>
+								{item}
+							</div>
+						);
+					})
+				}
+			</div>
+		);
+	};
+
+	const getDomainsSection = (list: Domain[]) => {
+		if (list.length === 0) {
+			return (
+				<div className='ds-text dimmed-text'>None</div>
+			);
+		}
+
+		return (
+			<div className='element-section-row'>
+				{
+					list.map(d => {
+						const item = (
+							<SelectablePanel onSelect={() => props.viewDomain(d)}>
+								<DomainPanel key={d.id} domain={d} />
+							</SelectablePanel>
+						);
+
+						const setting = CampaignSettingLogic.getDomainSetting(props.campaignSettings, d);
+						if (setting && setting.id) {
+							return (
+								<div key={d.id}>
+									<Badge.Ribbon text={setting.name || 'Unnamed Collection'}>
+										{item}
+									</Badge.Ribbon>
+								</div>
+							);
+						}
+
+						return (
+							<div key={d.id}>
 								{item}
 							</div>
 						);
@@ -314,7 +367,7 @@ export const ElementListPage = (props: Props) => {
 						if (setting && setting.id) {
 							return (
 								<div key={k.id}>
-									<Badge.Ribbon text={setting.name || 'Unnamed Setting'}>
+									<Badge.Ribbon text={setting.name || 'Unnamed Collection'}>
 										{item}
 									</Badge.Ribbon>
 								</div>
@@ -353,7 +406,7 @@ export const ElementListPage = (props: Props) => {
 						if (setting && setting.id) {
 							return (
 								<div key={c.id}>
-									<Badge.Ribbon text={setting.name || 'Unnamed Setting'}>
+									<Badge.Ribbon text={setting.name || 'Unnamed Collection'}>
 										{item}
 									</Badge.Ribbon>
 								</div>
@@ -372,13 +425,14 @@ export const ElementListPage = (props: Props) => {
 	};
 
 	try {
-		const elementOptions = [ 'Ancestry', 'Culture', 'Career', 'Class', 'Kit', 'Complication' ].map(e => ({ label: e, value: e }));
-		const settingOptions = props.campaignSettings.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Setting', value: cs.id }));
+		const elementOptions = [ 'Ancestry', 'Culture', 'Career', 'Class', 'Domain', 'Kit', 'Complication' ].map(e => ({ label: e, value: e }));
+		const settingOptions = props.campaignSettings.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Collection', value: cs.id }));
 
 		const ancestries = getAncestries();
 		const cultures = getCultures();
 		const careers = getCareers();
 		const classes = getClasses();
+		const domains = getDomains();
 		const kits = getKits();
 		const complications = getComplications();
 
@@ -469,12 +523,30 @@ export const ElementListPage = (props: Props) => {
 									))
 								}
 								<Divider />
-								<Button block={true} onClick={createSetting}>Create a new setting</Button>
+								<Space direction='vertical'>
+									<Button block={true} onClick={createSetting}>Create a new collection</Button>
+									<Upload
+										style={{ width: '100%' }}
+										accept='.drawsteel-collection'
+										showUploadList={false}
+										beforeUpload={file => {
+											file
+												.text()
+												.then(json => {
+													const setting = (JSON.parse(json) as CampaignSetting);
+													props.onImportSetting(setting);
+												});
+											return false;
+										}}
+									>
+										<Button block={true} icon={<DownloadOutlined />}>Import a collection</Button>
+									</Upload>
+								</Space>
 							</div>
 						)}
 					>
 						<Button>
-							Campaign Settings
+							Collections
 						</Button>
 					</Popover>
 				</AppHeader>
@@ -503,13 +575,18 @@ export const ElementListPage = (props: Props) => {
 							},
 							{
 								key: '5',
+								label: `Complications (${complications.length})`,
+								children: getComplicationsSection(complications)
+							},
+							{
+								key: '6',
 								label: `Kits (${kits.length})`,
 								children: getKitsSection(kits)
 							},
 							{
-								key: '6',
-								label: `Complications (${complications.length})`,
-								children: getComplicationsSection(complications)
+								key: '7',
+								label: `Domains (${domains.length})`,
+								children: getDomainsSection(domains)
 							}
 						]}
 					/>

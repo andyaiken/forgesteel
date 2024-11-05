@@ -1,7 +1,6 @@
 import { Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSubclassData } from '../../../../models/feature';
-import { HeroClass, SubClass } from '../../../../models/class';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../../../../models/feature';
 import { KitArmor, KitImplement, KitType, KitWeapon } from '../../../../enums/kit';
 import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
@@ -21,6 +20,8 @@ import { ComplicationPanel } from '../../../panels/complication-panel/complicati
 import { Culture } from '../../../../models/culture';
 import { CulturePanel } from '../../../panels/culture-panel/culture-panel';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
+import { Domain } from '../../../../models/domain';
+import { DomainPanel } from '../../../panels/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
@@ -29,6 +30,7 @@ import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
+import { HeroClass } from '../../../../models/class';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/kit-panel/kit-panel';
 import { LanguageData } from '../../../../data/language-data';
@@ -37,6 +39,7 @@ import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SkillData } from '../../../../data/skill-data';
 import { SkillList } from '../../../../enums/skill-list';
+import { SubClass } from '../../../../models/subclass';
 import { ThunderboltOutlined } from '@ant-design/icons';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
@@ -572,81 +575,6 @@ export const ElementEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const addOptionalFeature = (subclass: SubClass, level: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
-			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
-			if (index !== -1) {
-				const sc = elementCopy.subclasses[index];
-				sc.featuresByLevel
-					.filter(lvl => lvl.level === level)
-					.forEach(lvl => {
-						lvl.optionalFeatures.push({
-							category: '',
-							features: []
-						});
-					});
-			}
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
-		const setOptionalFeatureCategory = (subclass: SubClass, level: number, category: string, value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
-			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
-			if (index !== -1) {
-				const sc = elementCopy.subclasses[index];
-				sc.featuresByLevel
-					.filter(lvl => lvl.level === level)
-					.forEach(lvl => {
-						const opt = lvl.optionalFeatures.find(f => f.category === category);
-						if (opt) {
-							opt.category = value;
-						}
-					});
-			}
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
-		const changeOptionalFeature = (subclass: SubClass, level: number, category: string, feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
-			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
-			if (index !== -1) {
-				const sc = elementCopy.subclasses[index];
-				sc.featuresByLevel
-					.filter(lvl => lvl.level === level)
-					.forEach(lvl => {
-						const opt = lvl.optionalFeatures.find(f => f.category === category);
-						if (opt) {
-							const index = opt.features.findIndex(f => f.id === feature.id);
-							if (index !== -1) {
-								opt.features[index] = feature;
-							}
-						}
-					});
-			}
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
-		const deleteOptionalFeature = (subclass: SubClass, level: number, category: string, feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
-			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
-			if (index !== -1) {
-				const sc = elementCopy.subclasses[index];
-				sc.featuresByLevel
-					.filter(lvl => lvl.level === level)
-					.forEach(lvl => {
-						const opt = lvl.optionalFeatures.find(f => f.category === category);
-						if (opt) {
-							opt.features = opt.features.filter(f => f.id !== feature.id);
-						}
-					});
-			}
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
 		const addSubclass = () => {
 			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
 			classCopy.subclasses.push(FactoryLogic.createSubclass());
@@ -678,32 +606,6 @@ export const ElementEditPage = (props: Props) => {
 						))
 					}
 					<Button block={true} onClick={() => addFeature(subclass, lvl.level)}>Add a new level {lvl.level} feature</Button>
-					{
-						lvl.optionalFeatures.map((opt, n) => (
-							<Expander key={n} title='Optional Features'>
-								<HeaderText>Category</HeaderText>
-								<Input
-									placeholder='Category'
-									allowClear={true}
-									value={opt.category}
-									onChange={e => setOptionalFeatureCategory(subclass, lvl.level, opt.category, e.target.value)}
-								/>
-								{
-									opt.features.map(f => (
-										<Expander key={f.id} title={f.name || 'Unnamed Feature'}>
-											<FeatureEditPanel
-												feature={f}
-												campaignSettings={props.campaignSettings}
-												onChange={feature => changeOptionalFeature(subclass, lvl.level, opt.category, feature)}
-												onDelete={feature => deleteOptionalFeature(subclass, lvl.level, opt.category, feature)}
-											/>
-										</Expander>
-									))
-								}
-							</Expander>
-						))
-					}
-					<Button block={true} onClick={() => addOptionalFeature(subclass, lvl.level)}>Add a new level {lvl.level} optional feature</Button>
 				</div>
 			));
 		};
@@ -1140,6 +1042,23 @@ export const ElementEditPage = (props: Props) => {
 						]}
 					/>
 				);
+			case 'Domain':
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Element',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Levels',
+								children: getClassLevelsEditSection()
+							}
+						]}
+					/>
+				);
 			case 'Kit':
 				return (
 					<Tabs
@@ -1204,6 +1123,8 @@ export const ElementEditPage = (props: Props) => {
 				return <CareerPanel career={element as Career} mode={PanelMode.Full} />;
 			case 'Class':
 				return <ClassPanel heroClass={element as HeroClass} mode={PanelMode.Full} />;
+			case 'Domain':
+				return <DomainPanel domain={element as Domain} mode={PanelMode.Full} />;
 			case 'Kit':
 				return <KitPanel kit={element as Kit} mode={PanelMode.Full} />;
 			case 'Complication':
@@ -1369,6 +1290,19 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 					modifiers: []
 				};
 				break;
+			case FeatureType.Domain:
+				data = {
+					count: 1,
+					selected: []
+				};
+				break;
+			case FeatureType.DomainFeature:
+				data = {
+					level: 1,
+					count: 1,
+					selected: []
+				};
+				break;
 			case FeatureType.Kit:
 				data = {
 					types: [],
@@ -1414,13 +1348,6 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 					selected: []
 				};
 				break;
-			case FeatureType.SubclassFeature:
-				data = {
-					category: '',
-					count: 1,
-					selected: []
-				};
-				break;
 			case FeatureType.Text:
 				data = null;
 				break;
@@ -1448,8 +1375,14 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 
 	const getDataSection = () => {
 		const setCount = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureChoiceData | FeatureClassAbilityData | FeatureKitData | FeatureLanguageData | FeatureSkillChoiceData | FeatureSubclassData;
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureKitData | FeatureLanguageData | FeatureSkillChoiceData;
 			copy.count = value;
+			setData(copy);
+		};
+
+		const setLevel = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureDomainFeatureData;
+			copy.level = value;
 			setData(copy);
 		};
 
@@ -1486,12 +1419,6 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 		const setField = (value: FeatureField) => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
 			copy.field = value;
-			setData(copy);
-		};
-
-		const setCategory = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureSubclassData;
-			copy.category = value;
 			setData(copy);
 		};
 
@@ -1756,6 +1683,26 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 					</Space>
 				);
 			}
+			case FeatureType.DomainFeature: {
+				const data = feature.data as FeatureDomainFeatureData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Level</HeaderText>
+						<NumberSpin min={1} value={data.level} onChange={setLevel} />
+						<HeaderText>Count</HeaderText>
+						<NumberSpin min={1} value={data.count} onChange={setCount} />
+					</Space>
+				);
+			}
+			case FeatureType.Domain: {
+				const data = feature.data as FeatureDomainData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Count</HeaderText>
+						<NumberSpin min={1} value={data.count} onChange={setCount} />
+					</Space>
+				);
+			}
 			case FeatureType.Kit: {
 				const data = feature.data as FeatureKitData;
 				return (
@@ -1888,22 +1835,6 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 					</Space>
 				);
 			}
-			case FeatureType.SubclassFeature: {
-				const data = feature.data as FeatureSubclassData;
-				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Category</HeaderText>
-						<Input
-							placeholder='Category'
-							allowClear={true}
-							value={data.category}
-							onChange={e => setCategory(e.target.value)}
-						/>
-						<HeaderText>Count</HeaderText>
-						<NumberSpin min={1} value={data.count} onChange={setCount} />
-					</Space>
-				);
-			}
 			case FeatureType.Text:
 				return null;
 		}
@@ -1931,7 +1862,7 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 				<Select
 					style={{ width: '100%' }}
 					placeholder='Select type'
-					options={[ FeatureType.Ability, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.SubclassFeature, FeatureType.Text ].map(o => ({ value: o }))}
+					options={[ FeatureType.Ability, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Text ].map(o => ({ value: o }))}
 					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 					value={feature.type}
 					onChange={setType}

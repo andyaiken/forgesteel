@@ -7,6 +7,7 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { HeroicResourceBadge } from '../../controls/heroic-resource-badge/heroic-resource-badge';
+import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { PowerRollPanel } from '../power-roll-panel/power-roll-panel';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
@@ -18,6 +19,7 @@ import './ability-panel.scss';
 interface Props {
 	ability: Ability;
 	hero?: Hero;
+	options?: Options;
 	mode?: PanelMode;
 	onRoll?: () => void;
 }
@@ -35,7 +37,10 @@ export const AbilityPanel = (props: Props) => {
 			});
 
 			cost = Math.max(cost, 1);
-			disabled = cost > props.hero.state.heroicResource;
+
+			if (props.options?.dimUnavailableAbilities || false) {
+				disabled = cost > props.hero.state.heroicResource;
+			}
 		}
 
 		return (
@@ -85,7 +90,7 @@ export const AbilityPanel = (props: Props) => {
 									props.ability.spend.map((spend, n) => (
 										<Field
 											key={n}
-											disabled={props.hero && (spend.value > props.hero.state.heroicResource)}
+											disabled={props.hero && (props.options?.dimUnavailableAbilities || false) && (spend.value > props.hero.state.heroicResource)}
 											label={(
 												<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
 													<span>Spend</span>

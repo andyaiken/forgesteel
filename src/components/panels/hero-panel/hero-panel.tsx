@@ -23,6 +23,7 @@ import { Hero } from '../../../models/hero';
 import { HeroClass } from '../../../models/class';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { Kit } from '../../../models/kit';
+import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Skill } from '../../../models/skill';
 import { SkillList } from '../../../enums/skill-list';
@@ -32,10 +33,8 @@ import './hero-panel.scss';
 interface Props {
 	hero: Hero;
 	campaignSettings: CampaignSetting[];
+	options?: Options;
 	mode?: PanelMode;
-	showSkillsInGroups?: boolean;
-	showFreeStrikes?: boolean;
-	showStandardAbilities?: boolean;
 	onSelectAncestry?: (ancestry: Ancestry) => void;
 	onSelectCulture?: (culture: Culture) => void;
 	onSelectCareer?: (career: Career) => void;
@@ -227,7 +226,7 @@ export const HeroPanel = (props: Props) => {
 					}
 				</div>
 				{
-					props.showSkillsInGroups ?
+					(props.options?.showSkillsInGroups || false) ?
 						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
 							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, settings).filter(s => s.list === list)))
 						:
@@ -396,7 +395,7 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getAbilitiesSection = (type: AbilityUsage) => {
-		const unsorted = HeroLogic.getAbilities(props.hero, props.showFreeStrikes || false, props.showStandardAbilities || false)
+		const unsorted = HeroLogic.getAbilities(props.hero, props.options?.showFreeStrikes || false, props.options?.showStandardAbilities || false)
 			.filter(ability => ability.type.usage === type);
 		const abilities = Collections.sort(unsorted, a => a.name);
 		if (abilities.length === 0) {
@@ -425,7 +424,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						abilities.map(ability => (
 							<Col key={ability.id} xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
-								<AbilityPanel ability={ability} hero={props.hero} mode={PanelMode.Full} onRoll={() => onSelectAbility(ability)} />
+								<AbilityPanel ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} onRoll={() => onSelectAbility(ability)} />
 							</Col>
 						))
 					}

@@ -15,7 +15,7 @@
 		cursor: pointer;
 
 		&:hover {
-			filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
+			background-color: rgb(180, 220, 255);
 		}
 	}
 
@@ -33,7 +33,7 @@
 	
 		&.selectable {
 			&:hover {
-				filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+				background-color: rgb(60, 60, 60);
 			}
 		}
 	}

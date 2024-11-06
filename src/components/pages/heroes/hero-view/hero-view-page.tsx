@@ -61,6 +61,12 @@ export const HeroPage = (props: Props) => {
 			props.setOptions(copy);
 		};
 
+		const setDimUnavailableAbilities = (value: boolean) => {
+			const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+			copy.dimUnavailableAbilities = value;
+			props.setOptions(copy);
+		};
+
 		return (
 			<div className='hero-view-page'>
 				<AppHeader goHome={props.goHome} showAbout={props.showAbout}>
@@ -78,9 +84,10 @@ export const HeroPage = (props: Props) => {
 						placement='bottom'
 						content={(
 							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Toggle label='Show Skills In Groups' value={props.options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
-								<Toggle label='Show Free Strikes' value={props.options.showFreeStrikes} onChange={setShowFreeStrikes} />
-								<Toggle label='Show Standard Abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
+								<Toggle label='Show skills in groups' value={props.options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
+								<Toggle label='Show free strikes' value={props.options.showFreeStrikes} onChange={setShowFreeStrikes} />
+								<Toggle label='Show standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
+								<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
 								<Button onClick={() => props.exportHero('image')}>Export As Image</Button>
 								<Button onClick={() => props.exportHero('pdf')}>Export As PDF</Button>
 								<Button onClick={() => props.exportHero('json')}>Export as Data</Button>
@@ -110,10 +117,8 @@ export const HeroPage = (props: Props) => {
 					<HeroPanel
 						hero={props.hero}
 						campaignSettings={props.campaignSettings}
+						options={props.options}
 						mode={PanelMode.Full}
-						showSkillsInGroups={props.options.showSkillsInGroups}
-						showFreeStrikes={props.options.showFreeStrikes}
-						showStandardAbilities={props.options.showStandardAbilities}
 						onSelectAncestry={props.onSelectAncestry}
 						onSelectCulture={props.onSelectCulture}
 						onSelectCareer={props.onSelectCareer}

@@ -29,6 +29,9 @@ export const WelcomePage = (props: Props) => {
 							<div className='ds-text'>
 								You can export your heroes as PNG or PDF.
 							</div>
+							<div className='ds-text'>
+								You can also create homebrew ancestries, classes, kits and more.
+							</div>
 							<Divider />
 							<Space direction='vertical' style={{ width: '100%' }}>
 								<Button type='primary' block={true} onClick={props.showHeroes}>Click here to start building heroes</Button>

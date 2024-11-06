@@ -43,7 +43,8 @@ localforage
 							options = {
 								showSkillsInGroups: false,
 								showFreeStrikes: false,
-								showStandardAbilities: false
+								showStandardAbilities: false,
+								dimUnavailableAbilities: false
 							};
 						}
 

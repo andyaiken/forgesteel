@@ -271,7 +271,7 @@ export const tactician: HeroClass = {
 		},
 		{
 			id: 'tactician-sub-2',
-			name: 'Matermind',
+			name: 'Mastermind',
 			description: 'You have an encyclopedic knowledge of warfare, viewing the battlefield as a game board, and seeking victory by thinking multiple steps ahead of your opponents.',
 			featuresByLevel: [
 				{

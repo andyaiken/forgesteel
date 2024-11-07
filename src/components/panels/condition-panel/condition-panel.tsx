@@ -1,5 +1,5 @@
 import { Button, Select, Space } from 'antd';
-import { CheckOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { Characteristic } from '../../../enums/characteristic';
 import { Condition } from '../../../models/hero';
@@ -98,17 +98,17 @@ export const ConditionPanel = (props: Props) => {
 				<div className='action-buttons'>
 					{
 						props.onChange && !isEditing ?
-							<Button title='Edit' icon={<EditOutlined />} onClick={() => setIsEditing(true)} />
+							<Button type='text' title='Edit' icon={<EditOutlined />} onClick={() => setIsEditing(true)} />
+							: null
+					}
+					{
+						props.onDelete && !isEditing ?
+							<Button type='text' title='Delete' icon={<DeleteOutlined />} onClick={deleteCondition} />
 							: null
 					}
 					{
 						props.onChange && isEditing ?
-							<Button title='Done' icon={<CheckOutlined />} onClick={() => setIsEditing(false)} />
-							: null
-					}
-					{
-						props.onDelete ?
-							<Button title='Delete' icon={<DeleteOutlined />} onClick={deleteCondition} />
+							<Button type='text' title='Done' icon={<CheckCircleOutlined />} onClick={() => setIsEditing(false)} />
 							: null
 					}
 				</div>

@@ -1,10 +1,9 @@
-import { Alert, Button, Divider, Flex } from 'antd';
+import { Alert, Button, Divider, Flex, Tabs } from 'antd';
 import { Condition, Hero } from '../../../models/hero';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { Characteristic } from '../../../enums/characteristic';
 import { ConditionPanel } from '../../panels/condition-panel/condition-panel';
-import { Expander } from '../../controls/expander/expander';
-import { HeaderText } from '../../controls/header-text/header-text';
+import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Utils } from '../../../utils/utils';
@@ -61,11 +60,11 @@ export const HeroStateModal = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const addCondition = () => {
+	const addCondition = (type: ConditionType) => {
 		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
 		copy.state.conditions.push({
 			id: Utils.guid(),
-			type: ConditionType.Bleeding,
+			type: type,
 			ends: ConditionEndType.EndOfTurn,
 			resistCharacteristic: Characteristic.Might
 		});
@@ -90,9 +89,9 @@ export const HeroStateModal = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	try {
+	const getHeroSection = () => {
 		return (
-			<div className='hero-state-modal'>
+			<div>
 				<NumberSpin
 					label={hero.class ? hero.class.heroicResource : 'Heroic Resource'}
 					value={hero.state.heroicResource}
@@ -181,8 +180,45 @@ export const HeroStateModal = (props: Props) => {
 						</div>
 					</Button>
 				</Flex>
-				<Divider />
-				<HeaderText>Conditions</HeaderText>
+			</div>
+		);
+	};
+
+	const getStatisticsSection = () => {
+		return (
+			<div>
+				<NumberSpin
+					label='XP'
+					value={hero.state.xp}
+					min={0}
+					onChange={value => onChange('xp', value)}
+				/>
+				<NumberSpin
+					label='Renown'
+					value={hero.state.renown}
+					min={0}
+					onChange={value => onChange('renown', value)}
+				/>
+				<NumberSpin
+					label='Hero Tokens'
+					value={hero.state.heroTokens}
+					min={0}
+					onChange={value => onChange('heroTokens', value)}
+				/>
+				<NumberSpin
+					label='Project Points'
+					value={hero.state.projectPoints}
+					min={0}
+					step={5}
+					onChange={value => onChange('projectPoints', value)}
+				/>
+			</div>
+		);
+	};
+
+	const getConditionsSection = () => {
+		return (
+			<div>
 				{
 					hero.state.conditions.map(c => (
 						<ConditionPanel
@@ -193,35 +229,47 @@ export const HeroStateModal = (props: Props) => {
 						/>
 					))
 				}
-				<Button block={true} onClick={addCondition}>Add Condition</Button>
-				<Divider />
-				<Expander title='Other Statistics'>
-					<NumberSpin
-						label='XP'
-						value={hero.state.xp}
-						min={0}
-						onChange={value => onChange('xp', value)}
-					/>
-					<NumberSpin
-						label='Renown'
-						value={hero.state.renown}
-						min={0}
-						onChange={value => onChange('renown', value)}
-					/>
-					<NumberSpin
-						label='Hero Tokens'
-						value={hero.state.heroTokens}
-						min={0}
-						onChange={value => onChange('heroTokens', value)}
-					/>
-					<NumberSpin
-						label='Project Points'
-						value={hero.state.projectPoints}
-						min={0}
-						step={5}
-						onChange={value => onChange('projectPoints', value)}
-					/>
-				</Expander>
+				<DropdownButton
+					label='Add a new condition'
+					items={[
+						ConditionType.Bleeding,
+						ConditionType.Dazed,
+						ConditionType.Frightened,
+						ConditionType.Grabbed,
+						ConditionType.Prone,
+						ConditionType.Restrained,
+						ConditionType.Slowed,
+						ConditionType.Taunted,
+						ConditionType.Weakened
+					].map(ct => ({ key: ct, label: ct }))}
+					onClick={key => addCondition(key as ConditionType)}
+				/>
+			</div>
+		);
+	};
+
+	try {
+		return (
+			<div className='hero-state-modal'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Hero',
+							children: getHeroSection()
+						},
+						{
+							key: '2',
+							label: 'Statistics',
+							children: getStatisticsSection()
+						},
+						{
+							key: '3',
+							label: 'Conditions',
+							children: getConditionsSection()
+						}
+					]}
+				/>
 			</div>
 		);
 	} catch (ex) {

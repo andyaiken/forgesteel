@@ -157,6 +157,15 @@ td {
 	}
 }
 
+.ant-tabs {
+	&.ant-tabs-top >.ant-tabs-nav::before,
+	&.ant-tabs-bottom >.ant-tabs-nav::before,
+	&.ant-tabs-top >div>.ant-tabs-nav::before,
+	&.ant-tabs-bottom >div>.ant-tabs-nav::before {
+		border-color: rgba(5, 5, 5, 0.06);
+	}
+}
+
 .ant-upload-wrapper {
 	.ant-upload {
 		&.ant-upload-select {
@@ -233,6 +242,13 @@ td {
 	}
 
 	.ant-tabs {
+		&.ant-tabs-top >.ant-tabs-nav::before,
+		&.ant-tabs-bottom >.ant-tabs-nav::before,
+		&.ant-tabs-top >div>.ant-tabs-nav::before,
+		&.ant-tabs-bottom >div>.ant-tabs-nav::before {
+			border-color: rgba(250, 250, 250, 0.6);
+		}
+	
 		.ant-tabs-tab {
 			color: rgba(255, 255, 255, 0.88);
 		}

@@ -104,6 +104,12 @@ export const HeroStateModal = (props: Props) => {
 					min={0}
 					onChange={value => onChange('victories', value)}
 				/>
+				<NumberSpin
+					label='XP'
+					value={hero.state.xp}
+					min={0}
+					onChange={value => onChange('xp', value)}
+				/>
 				<Flex align='center' justify='space-between' gap='5px'>
 					<Button
 						className='tall-button'
@@ -188,22 +194,16 @@ export const HeroStateModal = (props: Props) => {
 		return (
 			<div>
 				<NumberSpin
-					label='XP'
-					value={hero.state.xp}
+					label='Hero Tokens'
+					value={hero.state.heroTokens}
 					min={0}
-					onChange={value => onChange('xp', value)}
+					onChange={value => onChange('heroTokens', value)}
 				/>
 				<NumberSpin
 					label='Renown'
 					value={hero.state.renown}
 					min={0}
 					onChange={value => onChange('renown', value)}
-				/>
-				<NumberSpin
-					label='Hero Tokens'
-					value={hero.state.heroTokens}
-					min={0}
-					onChange={value => onChange('heroTokens', value)}
 				/>
 				<NumberSpin
 					label='Project Points'

@@ -18,7 +18,7 @@
 			flex-direction: column;
 			gap: 10px;
 
-			.top-tile {
+			.overview-tile {
 				padding: 0 10px 5px 10px;
 				border-radius: 10px;
 
@@ -35,13 +35,13 @@
 		.hero-right-column {
 			flex: 1 1 0;
 
-			.characteristics-row {
+			.characteristics-box {
 				display: flex;
 				align-items: flex-start;
 				justify-content: space-evenly;
 				gap: 5px;
 				border: 1px solid rgb(200, 200, 200);
-				border-radius: 10px;
+				border-radius: 20px;
 				background-color: rgb(255, 255, 255);
 				padding: 10px;
 
@@ -67,7 +67,7 @@
 
 					&.clickable {
 						cursor: pointer;
-	
+
 						&:hover {
 							background-color: rgb(180, 220, 255);
 
@@ -93,9 +93,33 @@
 			}
 
 			.hero-right-column {
-				.characteristics-row {
+				.characteristics-box {
 					border-color: rgb(200, 200, 200);
 					background-color: rgb(0, 0, 0);
+
+					&.clickable {
+						&:hover {
+							.ant-statistic {
+								.ant-statistic-title,
+								.ant-statistic-content {
+									color: rgba(0, 0, 0, 0.88);
+								}
+							}
+						}
+					}
+	
+					.characteristic {
+						&.clickable {
+							&:hover {
+								.ant-statistic {
+									.ant-statistic-title,
+									.ant-statistic-content {
+										color: rgba(0, 0, 0, 0.88);
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}

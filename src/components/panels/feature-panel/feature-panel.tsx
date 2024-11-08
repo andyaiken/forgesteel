@@ -43,7 +43,7 @@ export const FeaturePanel = (props: Props) => {
 		});
 		const pointsLeft = data.count - pointsUsed;
 
-		const availableOptions = data.options.filter(o => selectedIDs.includes(o.feature.id) || (o.value <= pointsLeft));
+		const availableOptions = data.options.filter(o => data.options.every(o => o.value === 1) || selectedIDs.includes(o.feature.id) || (o.value <= pointsLeft));
 		const sortedOptions = Collections.sort(availableOptions, opt => opt.feature.name);
 
 		if (sortedOptions.length === 0) {

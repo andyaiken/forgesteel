@@ -553,6 +553,7 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 					{
 						feature: FeatureLogic.createSizeFeature({
 							id: 'revenant-feature-1a',
+							description: '1S',
 							sizeValue: 1,
 							sizeMod: 'S'
 						}),
@@ -561,6 +562,7 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 					{
 						feature: FeatureLogic.createSizeFeature({
 							id: 'revenant-feature-1b',
+							description: '1M',
 							sizeValue: 1,
 							sizeMod: 'M'
 						}),
@@ -569,6 +571,7 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 					{
 						feature: FeatureLogic.createSizeFeature({
 							id: 'revenant-feature-1c',
+							description: '1L',
 							sizeValue: 1,
 							sizeMod: 'L'
 						}),

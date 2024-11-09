@@ -46,11 +46,9 @@ export const HeroListPage = (props: Props) => {
 				<div className='hero-list-page-content'>
 					{
 						props.heroes.map(hero => (
-							<div key={hero.id}>
-								<SelectablePanel onSelect={() => props.viewHero(hero.id)}>
-									<HeroPanel hero={hero} campaignSettings={props.campaignSettings} />
-								</SelectablePanel>
-							</div>
+							<SelectablePanel key={hero.id} onSelect={() => props.viewHero(hero.id)}>
+								<HeroPanel hero={hero} campaignSettings={props.campaignSettings} />
+							</SelectablePanel>
 						))
 					}
 				</div>

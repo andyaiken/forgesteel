@@ -97,7 +97,7 @@ export class AbilityLogic {
 			effect: data.effect || '',
 			alternateEffects: data.alternateEffects || [],
 			spend: data.spend || [],
-			persistence: []
+			persistence: data.persistence || []
 		} as Ability;
 	};
 

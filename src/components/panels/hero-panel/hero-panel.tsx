@@ -175,7 +175,11 @@ export const HeroPanel = (props: Props) => {
 							<HeaderText>Class</HeaderText>
 							<Field label='Class' value={props.hero.class.name} />
 							<Field label='Level' value={props.hero.class.level} />
-							<Field label={props.hero.class.subclassName} value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(', ') || ''} />
+							{
+								props.hero.class.subclasses.filter(sc => sc.selected).length > 0 ?
+									<Field label={props.hero.class.subclassName} value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(', ') || ''} />
+									: null
+							}
 						</div>
 						:
 						<div className='overview-tile'>

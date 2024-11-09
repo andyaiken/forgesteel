@@ -23,6 +23,13 @@ export const AboutModal = () => {
 				<div className='ds-text'>
 					Designed by <a href='mailto:andy.aiken@live.co.uk'>Andy Aiken</a>.
 				</div>
+				<div className='ds-text'>
+					To suggest a new feature or improvement, or to report a bug, go <a href='https://github.com/andyaiken/forgesteel/issues' target='_blank'>here</a>.
+				</div>
+				<div className='ds-text'>
+					If you would like to contribute to this project, you can find the repository <a href='https://github.com/andyaiken/forgesteel' target='_blank'>here</a>.
+				</div>
+				<Divider />
 				<Field label='Version' value={pkg.version} />
 			</div>
 		);

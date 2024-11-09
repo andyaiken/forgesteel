@@ -164,27 +164,21 @@ export const ElementListPage = (props: Props) => {
 				{
 					list.map(a => {
 						const item = (
-							<SelectablePanel onSelect={() => props.viewAncestry(a)}>
-								<AncestryPanel key={a.id} ancestry={a} />
+							<SelectablePanel key={a.id} onSelect={() => props.viewAncestry(a)}>
+								<AncestryPanel ancestry={a} />
 							</SelectablePanel>
 						);
 
 						const setting = CampaignSettingLogic.getAncestrySetting(props.campaignSettings, a);
 						if (setting && setting.id) {
 							return (
-								<div key={a.id}>
-									<Badge.Ribbon text={setting.name || 'Unnamed Collection'}>
-										{item}
-									</Badge.Ribbon>
-								</div>
+								<Badge.Ribbon key={a.id} text={setting.name || 'Unnamed Collection'}>
+									{item}
+								</Badge.Ribbon>
 							);
 						}
 
-						return (
-							<div key={a.id}>
-								{item}
-							</div>
-						);
+						return item;
 					})
 				}
 			</div>
@@ -203,27 +197,21 @@ export const ElementListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel onSelect={() => props.viewCulture(c)}>
-								<CulturePanel key={c.id} culture={c} />
+							<SelectablePanel key={c.id} onSelect={() => props.viewCulture(c)}>
+								<CulturePanel culture={c} />
 							</SelectablePanel>
 						);
 
 						const setting = CampaignSettingLogic.getCultureSetting(props.campaignSettings, c);
 						if (setting && setting.id) {
 							return (
-								<div key={c.id}>
-									<Badge.Ribbon text={setting.name || 'Unnamed Collection'}>
-										{item}
-									</Badge.Ribbon>
-								</div>
+								<Badge.Ribbon key={c.id} text={setting.name || 'Unnamed Collection'}>
+									{item}
+								</Badge.Ribbon>
 							);
 						}
 
-						return (
-							<div key={c.id}>
-								{item}
-							</div>
-						);
+						return item;
 					})
 				}
 			</div>
@@ -242,26 +230,21 @@ export const ElementListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel onSelect={() => props.viewCareer(c)}>
-								<CareerPanel key={c.id} career={c} />
+							<SelectablePanel key={c.id} onSelect={() => props.viewCareer(c)}>
+								<CareerPanel career={c} />
 							</SelectablePanel>
 						);
+
 						const setting = CampaignSettingLogic.getCareerSetting(props.campaignSettings, c);
 						if (setting && setting.id) {
 							return (
-								<div key={c.id}>
-									<Badge.Ribbon text={setting.name || 'Unnamed Collection'}>
-										{item}
-									</Badge.Ribbon>
-								</div>
+								<Badge.Ribbon key={c.id} text={setting.name || 'Unnamed Collection'}>
+									{item}
+								</Badge.Ribbon>
 							);
 						}
 
-						return (
-							<div key={c.id}>
-								{item}
-							</div>
-						);
+						return item;
 					})
 				}
 			</div>
@@ -281,26 +264,21 @@ export const ElementListPage = (props: Props) => {
 					list.map(c => {
 
 						const item = (
-							<SelectablePanel onSelect={() => props.viewClass(c)}>
-								<ClassPanel key={c.id} heroClass={c} />
+							<SelectablePanel key={c.id} onSelect={() => props.viewClass(c)}>
+								<ClassPanel heroClass={c} />
 							</SelectablePanel>
 						);
+
 						const setting = CampaignSettingLogic.getClassSetting(props.campaignSettings, c);
 						if (setting && setting.id) {
 							return (
-								<div key={c.id}>
-									<Badge.Ribbon text={setting.name || 'Unnamed Collection'}>
-										{item}
-									</Badge.Ribbon>
-								</div>
+								<Badge.Ribbon key={c.id} text={setting.name || 'Unnamed Collection'}>
+									{item}
+								</Badge.Ribbon>
 							);
 						}
 
-						return (
-							<div key={c.id}>
-								{item}
-							</div>
-						);
+						return item;
 					})
 				}
 			</div>
@@ -319,27 +297,21 @@ export const ElementListPage = (props: Props) => {
 				{
 					list.map(d => {
 						const item = (
-							<SelectablePanel onSelect={() => props.viewDomain(d)}>
-								<DomainPanel key={d.id} domain={d} />
+							<SelectablePanel key={d.id} onSelect={() => props.viewDomain(d)}>
+								<DomainPanel domain={d} />
 							</SelectablePanel>
 						);
 
 						const setting = CampaignSettingLogic.getDomainSetting(props.campaignSettings, d);
 						if (setting && setting.id) {
 							return (
-								<div key={d.id}>
-									<Badge.Ribbon text={setting.name || 'Unnamed Collection'}>
-										{item}
-									</Badge.Ribbon>
-								</div>
+								<Badge.Ribbon key={d.id} text={setting.name || 'Unnamed Collection'}>
+									{item}
+								</Badge.Ribbon>
 							);
 						}
 
-						return (
-							<div key={d.id}>
-								{item}
-							</div>
-						);
+						return item;
 					})
 				}
 			</div>
@@ -358,27 +330,21 @@ export const ElementListPage = (props: Props) => {
 				{
 					list.map(k => {
 						const item = (
-							<SelectablePanel onSelect={() => props.viewKit(k)}>
-								<KitPanel key={k.id} kit={k} />
+							<SelectablePanel key={k.id} onSelect={() => props.viewKit(k)}>
+								<KitPanel kit={k} />
 							</SelectablePanel>
 						);
 
 						const setting = CampaignSettingLogic.getKitSetting(props.campaignSettings, k);
 						if (setting && setting.id) {
 							return (
-								<div key={k.id}>
-									<Badge.Ribbon text={setting.name || 'Unnamed Collection'}>
-										{item}
-									</Badge.Ribbon>
-								</div>
+								<Badge.Ribbon key={k.id} text={setting.name || 'Unnamed Collection'}>
+									{item}
+								</Badge.Ribbon>
 							);
 						}
 
-						return (
-							<div key={k.id}>
-								{item}
-							</div>
-						);
+						return item;
 					})
 				}
 			</div>
@@ -397,27 +363,21 @@ export const ElementListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel onSelect={() => props.viewComplication(c)}>
-								<ComplicationPanel key={c.id} complication={c} />
+							<SelectablePanel key={c.id} onSelect={() => props.viewComplication(c)}>
+								<ComplicationPanel complication={c} />
 							</SelectablePanel>
 						);
 
 						const setting = CampaignSettingLogic.getComplicationSetting(props.campaignSettings, c);
 						if (setting && setting.id) {
 							return (
-								<div key={c.id}>
-									<Badge.Ribbon text={setting.name || 'Unnamed Collection'}>
-										{item}
-									</Badge.Ribbon>
-								</div>
+								<Badge.Ribbon key={c.id} text={setting.name || 'Unnamed Collection'}>
+									{item}
+								</Badge.Ribbon>
 							);
 						}
 
-						return (
-							<div key={c.id}>
-								{item}
-							</div>
-						);
+						return item;
 					})
 				}
 			</div>

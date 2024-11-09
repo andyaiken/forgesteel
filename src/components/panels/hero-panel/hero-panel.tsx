@@ -371,27 +371,16 @@ export const HeroPanel = (props: Props) => {
 			return null;
 		}
 
-		const size = {
-			xs: 24,
-			sm: 24,
-			md: 12,
-			lg: 12,
-			xl: 8,
-			xxl: 6
-		};
-
 		return (
 			<div className='features-section'>
 				<HeaderText level={1}>Features</HeaderText>
-				<Row gutter={[ 16, 16 ]}>
+				<div className='features-grid'>
 					{
 						features.map(feature => (
-							<Col key={feature.id} xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
-								<FeaturePanel feature={feature} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />
-							</Col>
+							<FeaturePanel key={feature.id} feature={feature} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />
 						))
 					}
-				</Row>
+				</div>
 			</div>
 		);
 	};
@@ -404,15 +393,6 @@ export const HeroPanel = (props: Props) => {
 			return null;
 		}
 
-		const size = {
-			xs: 24,
-			sm: 24,
-			md: 12,
-			lg: 12,
-			xl: 8,
-			xxl: 6
-		};
-
 		const onSelectAbility = (ability: Ability) => {
 			if (props.onSelectAbility) {
 				props.onSelectAbility(ability);
@@ -422,15 +402,13 @@ export const HeroPanel = (props: Props) => {
 		return (
 			<div className='abilities-section'>
 				<HeaderText level={1}>{type}s</HeaderText>
-				<Row gutter={[ 16, 16 ]}>
+				<div className='abilities-grid'>
 					{
 						abilities.map(ability => (
-							<Col key={ability.id} xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
-								<AbilityPanel ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} onRoll={() => onSelectAbility(ability)} />
-							</Col>
+							<AbilityPanel key={ability.id} ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} onRoll={() => onSelectAbility(ability)} />
 						))
 					}
-				</Row>
+				</div>
 			</div>
 		);
 	};

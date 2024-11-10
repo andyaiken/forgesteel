@@ -129,6 +129,12 @@ td {
 }
 
 .ant-statistic {
+	.ant-statistic-title {
+		min-height: 24px;
+		line-height: 12px;
+		text-align: center;
+	}
+
 	.ant-statistic-title,
 	.ant-statistic-content {
 		display: flex;

@@ -1,3 +1,4 @@
+import { Collections } from './collections';
 import { Converter } from 'showdown';
 import { Random } from './random';
 import html2canvas from 'html2canvas';
@@ -47,39 +48,48 @@ export class Utils {
 		}
 	};
 
-	static export = (id: string, name: string, obj: unknown, ext: string, format: 'image' | 'pdf' | 'json') => {
+	static export = (elementIDs: string[], name: string, obj: unknown, ext: string, format: 'image' | 'pdf' | 'json') => {
 		switch (format) {
 			case 'json':
 				Utils.saveFile(obj, name, ext);
 				break;
 			case 'image':
 			case 'pdf':
-				Utils.takeScreenshot(id, name, format);
+				Utils.takeScreenshot(elementIDs, name, format);
 				break;
 		}
 	};
 
-	static takeScreenshot = (elementID: string, name: string, format: 'image' | 'pdf') => {
-		const element = document.getElementById(elementID);
-		if (element) {
-			const originalBackgroundColor = element.style.backgroundColor;
+	static takeScreenshot = (elementIDs: string[], name: string, format: 'image' | 'pdf') => {
+		const elements = elementIDs
+			.map(id => document.getElementById(id))
+			.filter(element => !!element);
+
+		const originalBackgroundColors: { [id: string]: string; } = {};
+		elements.forEach(element => {
+			originalBackgroundColors[element.id] = element.style.backgroundColor;
 			if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
 				element.style.backgroundColor = 'rgb(55, 55, 55)';
 			}
-			html2canvas(element)
-				.then(canvas => {
-					switch (format) {
-						case 'image':
-							Utils.saveImage(`${name}.png`, canvas);
-							element.style.backgroundColor = originalBackgroundColor;
-							break;
-						case 'pdf':
-							Utils.savePDF(`${name}.pdf`, canvas);
-							element.style.backgroundColor = originalBackgroundColor;
-							break;
-					}
-				});
+		});
+
+		switch (format) {
+			case 'image':
+				html2canvas(elements[0])
+					.then(canvas => {
+						Utils.saveImage(`${name}.png`, canvas);
+						elements[0].style.backgroundColor = originalBackgroundColors[elements[0].id];
+					});
+				break;
+			case 'pdf':
+				Promise.all(elements.map(element => html2canvas(element)))
+					.then(canvases => {
+						Utils.savePDF(`${name}.pdf`, canvases);
+						elements.forEach(element => element.style.backgroundColor = originalBackgroundColors[element.id]);
+					});
+				break;
 		}
+
 	};
 
 	static saveFile = (data: unknown, name: string, type: string) => {
@@ -99,9 +109,18 @@ export class Utils {
 		a.click();
 	};
 
-	static savePDF = (filename: string, canvas: HTMLCanvasElement) => {
-		const pdf = new jsPDF('portrait', 'pt', [ canvas.width, canvas.height ]);
-		pdf.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height);
+	static savePDF = (filename: string, canvases: HTMLCanvasElement[]) => {
+		const width = Collections.max(canvases.map(c => c.width), c => c) || 0;
+		const height = Collections.max(canvases.map(c => c.height), c => c) || 0;
+
+		const orientation = (height >= width) ? 'portrait' : 'landscape';
+
+		const pdf = new jsPDF(orientation, 'pt', [ width, height ]);
+		canvases.forEach((canvas, n) => {
+			const page = (n === 0) ? pdf : pdf.addPage([ width, height ], orientation);
+			page.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height);
+		});
+
 		pdf.save(filename);
 	};
 }

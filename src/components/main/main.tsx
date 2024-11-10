@@ -171,7 +171,8 @@ export const Main = (props: Props) => {
 
 	const exportSelectedHero = (format: 'image' | 'pdf' | 'json') => {
 		if (selectedHero) {
-			Utils.export(selectedHero.id, selectedHero.name || 'Unnamed Hero', selectedHero, 'hero', format);
+			const ids = (format === 'pdf') ? [ 'stats', 'actions', 'maneuvers', 'triggers', 'others' ] : [ selectedHero.id ];
+			Utils.export(ids, selectedHero.name || 'Unnamed Hero', selectedHero, 'hero', format);
 		}
 	};
 
@@ -707,7 +708,7 @@ export const Main = (props: Props) => {
 				homebrewSettings={homebrewSettings}
 				isHomebrew={!!homebrewSettings.flatMap(cs => cs.ancestries).find(a => a.id === ancestry.id)}
 				createHomebrew={setting => createAncestry(ancestry, setting)}
-				export={format => Utils.export(ancestry.id, ancestry.name || 'Ancestry', ancestry, 'ancestry', format)}
+				export={format => Utils.export([ ancestry.id ], ancestry.name || 'Ancestry', ancestry, 'ancestry', format)}
 				edit={() => editAncestry(ancestry, container as CampaignSetting)}
 				delete={() => deleteAncestry(ancestry)}
 			/>
@@ -725,7 +726,7 @@ export const Main = (props: Props) => {
 				homebrewSettings={homebrewSettings}
 				isHomebrew={!!homebrewSettings.flatMap(cs => cs.cultures).find(c => c.id === culture.id)}
 				createHomebrew={setting => createCulture(culture, setting)}
-				export={format => Utils.export(culture.id, culture.name || 'Culture', culture, 'culture', format)}
+				export={format => Utils.export([ culture.id ], culture.name || 'Culture', culture, 'culture', format)}
 				edit={() => editCulture(culture, container as CampaignSetting)}
 				delete={() => deleteCulture(culture)}
 			/>
@@ -743,7 +744,7 @@ export const Main = (props: Props) => {
 				homebrewSettings={homebrewSettings}
 				isHomebrew={!!homebrewSettings.flatMap(cs => cs.careers).find(c => c.id === career.id)}
 				createHomebrew={setting => createCareer(career, setting)}
-				export={format => Utils.export(career.id, career.name || 'Career', career, 'career', format)}
+				export={format => Utils.export([ career.id ], career.name || 'Career', career, 'career', format)}
 				edit={() => editCareer(career, container as CampaignSetting)}
 				delete={() => deleteCareer(career)}
 			/>
@@ -761,7 +762,7 @@ export const Main = (props: Props) => {
 				homebrewSettings={homebrewSettings}
 				isHomebrew={!!homebrewSettings.flatMap(cs => cs.classes).find(c => c.id === heroClass.id)}
 				createHomebrew={setting => createClass(heroClass, setting)}
-				export={format => Utils.export(heroClass.id, heroClass.name || 'Class', heroClass, 'class', format)}
+				export={format => Utils.export([ heroClass.id ], heroClass.name || 'Class', heroClass, 'class', format)}
 				edit={() => editClass(heroClass, container as CampaignSetting)}
 				delete={() => deleteClass(heroClass)}
 			/>
@@ -779,7 +780,7 @@ export const Main = (props: Props) => {
 				homebrewSettings={homebrewSettings}
 				isHomebrew={!!homebrewSettings.flatMap(cs => cs.domains).find(d => d.id === domain.id)}
 				createHomebrew={setting => createDomain(domain, setting)}
-				export={format => Utils.export(domain.id, domain.name || 'Domain', domain, 'domain', format)}
+				export={format => Utils.export([ domain.id ], domain.name || 'Domain', domain, 'domain', format)}
 				edit={() => editDomain(domain, container as CampaignSetting)}
 				delete={() => deleteDomain(domain)}
 			/>
@@ -797,7 +798,7 @@ export const Main = (props: Props) => {
 				homebrewSettings={homebrewSettings}
 				isHomebrew={!!homebrewSettings.flatMap(cs => cs.kits).find(k => k.id === kit.id)}
 				createHomebrew={setting => createKit(kit, setting)}
-				export={format => Utils.export(kit.id, kit.name || 'Kit', kit, 'kit', format)}
+				export={format => Utils.export([ kit.id ], kit.name || 'Kit', kit, 'kit', format)}
 				edit={() => editKit(kit, container as CampaignSetting)}
 				delete={() => deleteKit(kit)}
 			/>
@@ -815,7 +816,7 @@ export const Main = (props: Props) => {
 				homebrewSettings={homebrewSettings}
 				isHomebrew={!!homebrewSettings.flatMap(cs => cs.complications).find(c => c.id === complication.id)}
 				createHomebrew={setting => createComplication(complication, setting)}
-				export={format => Utils.export(complication.id, complication.name || 'Complication', complication, 'complication', format)}
+				export={format => Utils.export([ complication.id ], complication.name || 'Complication', complication, 'complication', format)}
 				edit={() => editComplication(complication, container as CampaignSetting)}
 				delete={() => deleteComplication(complication)}
 			/>

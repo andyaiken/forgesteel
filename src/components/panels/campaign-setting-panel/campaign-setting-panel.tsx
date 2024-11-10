@@ -26,7 +26,7 @@ export const CampaignSettingPanel = (props: Props) => {
 	};
 
 	const onExport = () => {
-		Utils.export(setting.id, setting.name || 'Unnamed Collection', setting, 'setting', 'json');
+		Utils.export([ setting.id ], setting.name || 'Unnamed Collection', setting, 'setting', 'json');
 	};
 
 	const onDelete = () => {

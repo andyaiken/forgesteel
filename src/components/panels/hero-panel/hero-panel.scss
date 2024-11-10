@@ -1,22 +1,20 @@
 .hero-panel {
-	padding: 0 20px 20px 20px;
 
 	&.compact {
 		margin-top: -10px;
+		padding: 0 20px 20px 20px;
 		padding: unset;
 	}
 
 	.hero-main-section {
+		padding: 20px;
 		display: flex;
 		gap: 20px;
 
-		.hero-left-column {
-			flex: 0 0 200px;
-			padding-right: 20px;
-			border-right: 5px solid rgb(0, 0, 0, 0.06);
+		.hero-left-column,
+		.hero-right-column {
 			display: flex;
 			flex-direction: column;
-			gap: 10px;
 
 			.overview-tile {
 				padding: 0 10px 5px 10px;
@@ -32,7 +30,13 @@
 			}
 		}
 
-		.hero-right-column {
+		.hero-left-column {
+			flex: 0 0 200px;
+			padding-right: 20px;
+			border-right: 5px solid rgb(0, 0, 0, 0.06);
+		}
+
+		.hero-main-column {
 			flex: 1 1 0;
 
 			.characteristics-box {
@@ -82,12 +86,27 @@
 				}
 			}
 
-			.features-grid,
+			.features-section {
+				margin-top: 20px;
+			}
+
+			.features-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+				gap: 0 20px;	
+			}
+
 			.abilities-grid {
 				display: grid;
 				grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 				gap: 20px;	
 			}
+		}
+
+		.hero-right-column {
+			flex: 0 0 300px;
+			padding-left: 20px;
+			border-left: 5px solid rgb(0, 0, 0, 0.06);
 		}
 	}
 }

@@ -91,47 +91,13 @@ export const HeroPanel = (props: Props) => {
 			}
 		};
 
-		const getSkills = (label: string, skills: Skill[]) => {
-			return skills.length > 0 ?
-				<div key={label} className='overview-tile'>
-					<HeaderText>{label}</HeaderText>
-					{skills.map(s => <Field key={s.name} label={s.name} value={s.description}  />)}
-				</div>
-				:
-				<div key={label} className='overview-tile'>
-					<HeaderText>{label}</HeaderText>
-					<div className='ds-text dimmed-text'>None</div>
-				</div>;
-		};
-
-		const settings = props.campaignSettings.filter(cs => props.hero.settingIDs.includes(cs.id));
-
 		let incitingIncident: Element | null = null;
 		if (props.hero.career && props.hero.career.incitingIncidents.selectedID) {
 			incitingIncident = props.hero.career.incitingIncidents.options.find(o => o.id === props.hero.career?.incitingIncidents.selectedID) || null;
 		}
 
-		const conditions = props.hero.state.conditions
-			.map(c => {
-				if (c.ends === ConditionEndType.ResistanceEnds) {
-					return `${c.type}: ${c.resistCharacteristic} resistance ends`;
-				}
-				return `${c.type}: ${c.ends}`;
-			})
-			.join(', ');
-		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
-		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
-
 		return (
 			<div className='hero-left-column'>
-				{
-					conditions ?
-						<div className='overview-tile clickable' onClick={props.onShowState}>
-							<HeaderText>Conditions</HeaderText>
-							<div className='ds-text'>{conditions}</div>
-						</div>
-						: null
-				}
 				{
 					props.hero.ancestry ?
 						<div className='overview-tile clickable' onClick={onSelectAncestry}>
@@ -220,21 +186,47 @@ export const HeroPanel = (props: Props) => {
 						:
 						null
 				}
-				<div className='overview-tile'>
-					<HeaderText>Languages</HeaderText>
-					{
-						HeroLogic.getLanguages(props.hero, settings).length > 0 ?
-							HeroLogic.getLanguages(props.hero, settings).map(l => <Field key={l.name} label={l.name} value={l.description}  />)
-							:
-							<div className='ds-text dimmed-text'>None</div>
-					}
+			</div>
+		);
+	};
+
+	const getRightColumn = () => {
+		const getSkills = (label: string, skills: Skill[]) => {
+			return skills.length > 0 ?
+				<div key={label} className='overview-tile'>
+					<HeaderText>{label}</HeaderText>
+					{skills.map(s => <Field key={s.name} label={s.name} value={s.description}  />)}
 				</div>
+				:
+				<div key={label} className='overview-tile'>
+					<HeaderText>{label}</HeaderText>
+					<div className='ds-text dimmed-text'>None</div>
+				</div>;
+		};
+
+		const settings = props.campaignSettings.filter(cs => props.hero.settingIDs.includes(cs.id));
+
+		const conditions = props.hero.state.conditions
+			.map(c => {
+				if (c.ends === ConditionEndType.ResistanceEnds) {
+					return `${c.type}: ${c.resistCharacteristic} resistance ends`;
+				}
+				return `${c.type}: ${c.ends}`;
+			})
+			.join(', ');
+
+		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
+		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
+
+		return (
+			<div className='hero-right-column'>
 				{
-					(props.options?.showSkillsInGroups || false) ?
-						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
-							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, settings).filter(s => s.list === list)))
-						:
-						getSkills('Skills', HeroLogic.getSkills(props.hero, settings))
+					conditions ?
+						<div className='overview-tile clickable' onClick={props.onShowState}>
+							<HeaderText>Conditions</HeaderText>
+							<div className='ds-text'>{conditions}</div>
+						</div>
+						: null
 				}
 				{
 					immunities.length > 0 ?
@@ -251,6 +243,22 @@ export const HeroPanel = (props: Props) => {
 							<div className='ds-text'>{weaknesses.map(dm => `${dm.type} ${dm.value}`).join(', ')}</div>
 						</div>
 						: null
+				}
+				<div className='overview-tile'>
+					<HeaderText>Languages</HeaderText>
+					{
+						HeroLogic.getLanguages(props.hero, settings).length > 0 ?
+							HeroLogic.getLanguages(props.hero, settings).map(l => <Field key={l.name} label={l.name} value={l.description}  />)
+							:
+							<div className='ds-text dimmed-text'>None</div>
+					}
+				</div>
+				{
+					(props.options?.showSkillsInGroups || false) ?
+						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, settings).filter(s => s.list === list)))
+						:
+						getSkills('Skills', HeroLogic.getSkills(props.hero, settings))
 				}
 			</div>
 		);
@@ -310,13 +318,13 @@ export const HeroPanel = (props: Props) => {
 				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
 					<div className='characteristics-box clickable' onClick={onShowState}>
 						<div className='characteristic'>
-							<Statistic title='Hero' value={props.hero.state.heroTokens} />
+							<Statistic title='Hero Tokens' value={props.hero.state.heroTokens} />
 						</div>
 						<div className='characteristic'>
 							<Statistic title='Renown' value={props.hero.state.renown} />
 						</div>
 						<div className='characteristic'>
-							<Statistic title='Project' value={props.hero.state.projectPoints} />
+							<Statistic title='Project Points' value={props.hero.state.projectPoints} />
 						</div>
 					</div>
 				</Col>
@@ -355,7 +363,7 @@ export const HeroPanel = (props: Props) => {
 							<Statistic title='Recoveries' value={recoveries} suffix={recoveriesSuffix} />
 						</div>
 						<div className='characteristic'>
-							<Statistic title='Rec Value' value={HeroLogic.getRecoveryValue(props.hero)} />
+							<Statistic title='Recov Value' value={HeroLogic.getRecoveryValue(props.hero)} />
 						</div>
 					</div>
 				</Col>
@@ -377,7 +385,13 @@ export const HeroPanel = (props: Props) => {
 				<div className='features-grid'>
 					{
 						features.map(feature => (
-							<FeaturePanel key={feature.id} feature={feature} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />
+							<FeaturePanel
+								key={feature.id}
+								feature={feature}
+								hero={props.hero}
+								campaignSettings={props.campaignSettings}
+								mode={PanelMode.Full}
+							/>
 						))
 					}
 				</div>
@@ -435,15 +449,32 @@ export const HeroPanel = (props: Props) => {
 
 		return (
 			<div className='hero-panel' id={props.hero.id}>
-				<HeaderText level={1}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
-				<div className='hero-main-section'>
+				<div className='hero-main-section' id='stats'>
 					{getLeftColumn()}
-					<div className='hero-right-column'>
+					<div className='hero-main-column'>
+						<HeaderText level={1}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
 						{getStatsSection()}
 						{getFeaturesSection()}
+					</div>
+					{getRightColumn()}
+				</div>
+				<div className='hero-main-section' id='actions'>
+					<div className='hero-main-column'>
 						{getAbilitiesSection(AbilityUsage.Action)}
+					</div>
+				</div>
+				<div className='hero-main-section' id='maneuvers'>
+					<div className='hero-main-column'>
 						{getAbilitiesSection(AbilityUsage.Maneuver)}
+					</div>
+				</div>
+				<div className='hero-main-section' id='triggers'>
+					<div className='hero-main-column'>
 						{getAbilitiesSection(AbilityUsage.Trigger)}
+					</div>
+				</div>
+				<div className='hero-main-section' id='others'>
+					<div className='hero-main-column'>
 						{getAbilitiesSection(AbilityUsage.Other)}
 					</div>
 				</div>

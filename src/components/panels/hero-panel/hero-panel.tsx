@@ -192,11 +192,16 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getRightColumn = () => {
+		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
+		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
+
+		const settings = props.campaignSettings.filter(cs => props.hero.settingIDs.includes(cs.id));
+
 		const getSkills = (label: string, skills: Skill[]) => {
 			return skills.length > 0 ?
 				<div key={label} className='overview-tile'>
 					<HeaderText>{label}</HeaderText>
-					{skills.map(s => <Field key={s.name} label={s.name} value={s.description}  />)}
+					{skills.map(s => <div key={s.name} className='ds-text'>{s.name}</div>)}
 				</div>
 				:
 				<div key={label} className='overview-tile'>
@@ -205,18 +210,13 @@ export const HeroPanel = (props: Props) => {
 				</div>;
 		};
 
-		const settings = props.campaignSettings.filter(cs => props.hero.settingIDs.includes(cs.id));
-
-		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
-		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
-
 		return (
 			<div className='hero-right-column'>
 				{
 					immunities.length > 0 ?
 						<div className='overview-tile'>
 							<HeaderText>Immunities</HeaderText>
-							<div className='ds-text'>{immunities.map(dm => `${dm.type} ${dm.value}`).join(', ')}</div>
+							{immunities.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{dm.type}</span><span>{dm.value}</span></div>)}
 						</div>
 						: null
 				}
@@ -224,7 +224,7 @@ export const HeroPanel = (props: Props) => {
 					weaknesses.length > 0 ?
 						<div className='overview-tile'>
 							<HeaderText>Weaknesses</HeaderText>
-							<div className='ds-text'>{weaknesses.map(dm => `${dm.type} ${dm.value}`).join(', ')}</div>
+							{weaknesses.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{dm.type}</span><span>{dm.value}</span></div>)}
 						</div>
 						: null
 				}
@@ -232,7 +232,7 @@ export const HeroPanel = (props: Props) => {
 					<HeaderText>Languages</HeaderText>
 					{
 						HeroLogic.getLanguages(props.hero, settings).length > 0 ?
-							HeroLogic.getLanguages(props.hero, settings).map(l => <Field key={l.name} label={l.name} value={l.description}  />)
+							HeroLogic.getLanguages(props.hero, settings).map(l => <div key={l.name} className='ds-text'>{l.name}</div>)
 							:
 							<div className='ds-text dimmed-text'>None</div>
 					}

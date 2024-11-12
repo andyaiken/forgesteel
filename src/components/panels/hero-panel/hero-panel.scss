@@ -32,7 +32,7 @@
 
 		.hero-left-column {
 			flex: 0 0 200px;
-			padding-right: 20px;
+			padding-right: 10px;
 			border-right: 5px solid rgb(0, 0, 0, 0.06);
 		}
 
@@ -119,9 +119,14 @@
 		}
 
 		.hero-right-column {
-			flex: 0 0 300px;
-			padding-left: 20px;
+			flex: 0 0 200px;
+			padding-left: 10px;
 			border-left: 5px solid rgb(0, 0, 0, 0.06);
+
+			.damage-modifier {
+				display: flex;
+				justify-content: space-between;
+			}
 		}
 	}
 }

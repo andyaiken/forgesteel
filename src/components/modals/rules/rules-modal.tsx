@@ -2,12 +2,14 @@ import { Space, Tabs } from 'antd';
 import { AbilityPanel } from '../../panels/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
 import { CampaignSetting } from '../../../models/campaign-setting';
+import { Collections } from '../../../utils/collections';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { ConditionType } from '../../../enums/condition-type';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
+import { LanguageData } from '../../../data/language-data';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SkillData } from '../../../data/skill-data';
 import { SkillList } from '../../../enums/skill-list';
@@ -100,6 +102,17 @@ export const RulesModal = (props: Props) => {
 			);
 		};
 
+		const getLanguagesSection = () => {
+			const settings = props.hero.settingIDs.map(id => props.settings.find(s => s.id === id)).filter(s => !!s);
+			const languages = LanguageData.getLanguages(settings);
+
+			return (
+				<div>
+					{Collections.sort(languages, l => l.name).map(l => <Field key={l.name} label={l.name} value={l.description} />)}
+				</div>
+			);
+		};
+
 		return (
 			<div className='rules-modal'>
 				<Tabs
@@ -123,6 +136,11 @@ export const RulesModal = (props: Props) => {
 							key: '4',
 							label: 'Maneuvers',
 							children: getManeuversSection()
+						},
+						{
+							key: '5',
+							label: 'Languages',
+							children: getLanguagesSection()
 						}
 					]}
 				/>

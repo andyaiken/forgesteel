@@ -981,7 +981,7 @@ export const Main = (props: Props) => {
 					Designed by Andy Aiken
 				</div>
 			</div>
-			<Drawer open={drawer !== null} onClose={() => setDrawer(null)} closeIcon={null} width='450px'>
+			<Drawer open={drawer !== null} onClose={() => setDrawer(null)} closeIcon={null} width='500px'>
 				{drawer}
 			</Drawer>
 		</div>

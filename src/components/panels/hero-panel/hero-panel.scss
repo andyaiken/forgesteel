@@ -87,20 +87,34 @@
 				}
 			}
 
-			.features-section {
-				margin-top: 20px;
+			.conditions-grid {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+
+				.condition-tile {
+					border: 1px solid rgb(200, 200, 200);
+					border-radius: 20px;
+					background-color: rgb(255, 255, 255);
+					padding: 5px 20px 10px 20px;
+					cursor: pointer;
+
+					&:hover {
+						background-color: rgb(180, 220, 255);
+					}
+				}
 			}
 
 			.features-grid {
 				display: grid;
 				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-				gap: 0 20px;	
+				gap: 0 20px;
 			}
 
 			.abilities-grid {
 				display: grid;
 				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-				gap: 20px;	
+				gap: 20px;
 			}
 		}
 
@@ -120,6 +134,10 @@
 			}
 
 			.hero-right-column {
+				border-left-color: rgba(250, 250, 250, 0.6);
+			}
+
+			.hero-main-column {
 				.characteristics-box {
 					border-color: rgb(200, 200, 200);
 					background-color: rgb(0, 0, 0);
@@ -144,6 +162,25 @@
 										color: rgba(0, 0, 0, 0.88);
 									}
 								}
+							}
+						}
+					}
+				}
+
+				.conditions-grid {
+					.condition-tile {
+						border-color: rgb(200, 200, 200);
+						background-color: rgb(0, 0, 0);
+	
+						&:hover {
+							.header-text-panel {
+								.header-text {
+									color: rgba(0, 0, 0, 0.88);
+								}
+							}
+
+							.ds-text {
+								color: rgba(0, 0, 0, 0.88);
 							}
 						}
 					}

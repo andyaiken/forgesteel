@@ -9,6 +9,7 @@ import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
 import { Complication } from '../../../models/complication';
 import { ConditionEndType } from '../../../enums/condition-type';
+import { ConditionLogic } from '../../../logic/condition-logic';
 import { Culture } from '../../../models/culture';
 import { CultureData } from '../../../data/culture-data';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
@@ -44,7 +45,7 @@ interface Props {
 	onSelectKit?: (kit: Kit) => void;
 	onSelectCharacteristic?: (characteristic: Characteristic) => void;
 	onSelectAbility?: (ability: Ability) => void;
-	onShowState?: () => void;
+	onShowState?: (page: 'hero' | 'stats' | 'conditions') => void;
 }
 
 export const HeroPanel = (props: Props) => {
@@ -206,28 +207,11 @@ export const HeroPanel = (props: Props) => {
 
 		const settings = props.campaignSettings.filter(cs => props.hero.settingIDs.includes(cs.id));
 
-		const conditions = props.hero.state.conditions
-			.map(c => {
-				if (c.ends === ConditionEndType.ResistanceEnds) {
-					return `${c.type}: ${c.resistCharacteristic} resistance ends`;
-				}
-				return `${c.type}: ${c.ends}`;
-			})
-			.join(', ');
-
 		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
 		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
 		return (
 			<div className='hero-right-column'>
-				{
-					conditions ?
-						<div className='overview-tile clickable' onClick={props.onShowState}>
-							<HeaderText>Conditions</HeaderText>
-							<div className='ds-text'>{conditions}</div>
-						</div>
-						: null
-				}
 				{
 					immunities.length > 0 ?
 						<div className='overview-tile'>
@@ -280,9 +264,15 @@ export const HeroPanel = (props: Props) => {
 			}
 		};
 
-		const onShowState = () => {
+		const onShowHero = () => {
 			if (props.onShowState) {
-				props.onShowState();
+				props.onShowState('hero');
+			}
+		};
+
+		const onShowStats = () => {
+			if (props.onShowState) {
+				props.onShowState('stats');
 			}
 		};
 
@@ -316,7 +306,7 @@ export const HeroPanel = (props: Props) => {
 					</div>
 				</Col>
 				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
-					<div className='characteristics-box clickable' onClick={onShowState}>
+					<div className='characteristics-box clickable' onClick={onShowStats}>
 						<div className='characteristic'>
 							<Statistic title='Hero Tokens' value={props.hero.state.heroTokens} />
 						</div>
@@ -342,7 +332,7 @@ export const HeroPanel = (props: Props) => {
 					</div>
 				</Col>
 				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
-					<div className='characteristics-box clickable' onClick={onShowState}>
+					<div className='characteristics-box clickable' onClick={onShowHero}>
 						<div className='characteristic'>
 							<Statistic title={props.hero.class ? props.hero.class.heroicResource : 'Resource'} value={props.hero.state.heroicResource} />
 						</div>
@@ -355,7 +345,7 @@ export const HeroPanel = (props: Props) => {
 					</div>
 				</Col>
 				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
-					<div className='characteristics-box clickable' onClick={onShowState}>
+					<div className='characteristics-box clickable' onClick={onShowHero}>
 						<div className='characteristic'>
 							<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />
 						</div>
@@ -368,6 +358,41 @@ export const HeroPanel = (props: Props) => {
 					</div>
 				</Col>
 			</Row>
+		);
+	};
+
+	const getConditionsSection = () => {
+		if (props.hero.state.conditions.length === 0) {
+			return null;
+		}
+
+		const openConditions = () => {
+			if (props.onShowState) {
+				props.onShowState('conditions');
+			}
+		};
+
+		return (
+			<div className='conditions-section'>
+				<HeaderText level={1}>Conditions</HeaderText>
+				<div className='conditions-grid'>
+					{
+						props.hero.state.conditions.map(c => (
+							<div key={c.id} className='condition-tile' onClick={openConditions}>
+								<HeaderText>
+									{
+										(c.ends === ConditionEndType.ResistanceEnds) ?
+											`${c.type}: ${c.resistCharacteristic} resistance ends`
+											:
+											`${c.type}: ${c.ends}`
+									}
+								</HeaderText>
+								<div className='ds-text'>{ConditionLogic.getDescription(c.type)}</div>
+							</div>
+						))
+					}
+				</div>
+			</div>
 		);
 	};
 
@@ -454,6 +479,7 @@ export const HeroPanel = (props: Props) => {
 					<div className='hero-main-column'>
 						<HeaderText level={1}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
 						{getStatsSection()}
+						{getConditionsSection()}
 						{getFeaturesSection()}
 					</div>
 					{getRightColumn()}

@@ -62,7 +62,7 @@ export const ConditionPanel = (props: Props) => {
 			<div className='condition-panel'>
 				{
 					isEditing ?
-						<Space direction='vertical' style={{ width: '100%' }}>
+						<Space direction='vertical' style={{ width: '100%', margin: '5px 0' }}>
 							<Select
 								style={{ width: '100%' }}
 								placeholder='Select'

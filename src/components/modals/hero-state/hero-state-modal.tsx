@@ -13,6 +13,7 @@ import './hero-state-modal.scss';
 
 interface Props {
 	hero: Hero;
+	startPage: 'hero' | 'stats' | 'conditions';
 	onChange: (hero: Hero) => void;
 }
 
@@ -254,21 +255,22 @@ export const HeroStateModal = (props: Props) => {
 				<Tabs
 					items={[
 						{
-							key: '1',
+							key: 'hero',
 							label: 'Hero',
 							children: getHeroSection()
 						},
 						{
-							key: '2',
+							key: 'stats',
 							label: 'Statistics',
 							children: getStatisticsSection()
 						},
 						{
-							key: '3',
+							key: 'conditions',
 							label: 'Conditions',
 							children: getConditionsSection()
 						}
 					]}
+					defaultActiveKey={props.startPage}
 				/>
 			</div>
 		);

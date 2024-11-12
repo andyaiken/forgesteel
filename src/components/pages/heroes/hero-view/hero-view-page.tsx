@@ -40,7 +40,7 @@ interface Props {
 	onSelectKit: (kit: Kit) => void;
 	onSelectCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	onSelectAbility: (ability: Ability, hero: Hero) => void;
-	onShowHeroState: () => void;
+	onShowHeroState: (page: 'hero' | 'stats' | 'conditions') => void;
 	onShowRules: () => void;
 }
 
@@ -76,7 +76,7 @@ export const HeroPage = (props: Props) => {
 					<Button onClick={props.closeHero}>
 						Close
 					</Button>
-					<Button onClick={props.onShowHeroState}>
+					<Button onClick={() => props.onShowHeroState('hero')}>
 						State
 					</Button>
 					<Button onClick={props.onShowRules}>

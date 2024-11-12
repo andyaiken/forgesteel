@@ -836,11 +836,12 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onShowHeroState = () => {
+	const onShowHeroState = (page: 'hero' | 'stats' | 'conditions') => {
 		if (selectedHero) {
 			setDrawer(
 				<HeroStateModal
 					hero={selectedHero}
+					startPage={page}
 					onChange={updatedHero => {
 						const list = JSON.parse(JSON.stringify(heroes)) as Hero[];
 						const index = list.findIndex(h => h.id === updatedHero.id);

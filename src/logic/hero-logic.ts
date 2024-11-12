@@ -89,8 +89,41 @@ export class HeroLogic {
 		return features;
 	};
 
-	static getAbilities = (hero: Hero, includeFreeStrikes: boolean, includeStandard: boolean) => {
+	static getAbilities = (hero: Hero, includeChoices: boolean, includeFreeStrikes: boolean, includeStandard: boolean) => {
 		const abilities: Ability[] = [];
+
+		if (includeChoices) {
+			this.getFeatures(hero)
+				.filter(f => f.type === FeatureType.Ability)
+				.forEach(f => {
+					const data = f.data as FeatureAbilityData;
+					abilities.push(data.ability);
+				});
+
+			this.getFeatures(hero)
+				.filter(f => f.type === FeatureType.ClassAbility)
+				.forEach(f => {
+					const data = f.data as FeatureClassAbilityData;
+					data.selectedIDs.forEach(abilityID => {
+						const ability = hero.class?.abilities.find(a => a.id === abilityID);
+						if (ability) {
+							abilities.push(ability);
+						}
+					});
+				});
+
+			if (this.getKits(hero).some(kit => kit.mobility)) {
+				abilities.push(AbilityLogic.createAbility({
+					id: 'mobility',
+					name: 'Mobility',
+					description: '',
+					type: AbilityLogic.createTypeTrigger('An enemy ends its turn adjacent to you.', true),
+					distance: [ AbilityLogic.createDistanceSelf() ],
+					target: 'Self',
+					effect: 'You shift up to 2 squares.'
+				}));
+			}
+		}
 
 		if (includeFreeStrikes) {
 			abilities.push(AbilityLogic.createAbility({
@@ -122,37 +155,6 @@ export class HeroLogic {
 					tier2: '6 damage',
 					tier3: '9 damage'
 				})
-			}));
-		}
-
-		this.getFeatures(hero)
-			.filter(f => f.type === FeatureType.Ability)
-			.forEach(f => {
-				const data = f.data as FeatureAbilityData;
-				abilities.push(data.ability);
-			});
-
-		this.getFeatures(hero)
-			.filter(f => f.type === FeatureType.ClassAbility)
-			.forEach(f => {
-				const data = f.data as FeatureClassAbilityData;
-				data.selectedIDs.forEach(abilityID => {
-					const ability = hero.class?.abilities.find(a => a.id === abilityID);
-					if (ability) {
-						abilities.push(ability);
-					}
-				});
-			});
-
-		if (this.getKits(hero).some(kit => kit.mobility)) {
-			abilities.push(AbilityLogic.createAbility({
-				id: 'mobility',
-				name: 'Mobility',
-				description: '',
-				type: AbilityLogic.createTypeTrigger('An enemy ends its turn adjacent to you.', true),
-				distance: [ AbilityLogic.createDistanceSelf() ],
-				target: 'Self',
-				effect: 'You shift up to 2 squares.'
 			}));
 		}
 

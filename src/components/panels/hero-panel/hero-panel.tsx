@@ -400,7 +400,7 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getAbilitiesSection = (type: AbilityUsage) => {
-		const unsorted = HeroLogic.getAbilities(props.hero, props.options?.showFreeStrikes || false, props.options?.showStandardAbilities || false)
+		const unsorted = HeroLogic.getAbilities(props.hero, true, props.options?.showFreeStrikes || false, props.options?.showStandardAbilities || false)
 			.filter(ability => ability.type.usage === type);
 		const abilities = Collections.sort(unsorted, a => a.name);
 		if (abilities.length === 0) {

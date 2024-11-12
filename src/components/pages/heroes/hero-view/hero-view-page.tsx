@@ -1,4 +1,5 @@
-import { Button, Popover } from 'antd';
+import { Button, Divider, Popover } from 'antd';
+import { DeleteOutlined, DownOutlined, EditOutlined } from '@ant-design/icons';
 import { Ability } from '../../../../models/ability';
 import { Ancestry } from '../../../../models/ancestry';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -8,6 +9,7 @@ import { Characteristic } from '../../../../enums/characteristic';
 import { Complication } from '../../../../models/complication';
 import { Culture } from '../../../../models/culture';
 import { Domain } from '../../../../models/domain';
+import { DropdownButton } from '../../../controls/dropdown-button/dropdown-button';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroPanel } from '../../../panels/hero-panel/hero-panel';
@@ -38,7 +40,8 @@ interface Props {
 	onSelectKit: (kit: Kit) => void;
 	onSelectCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	onSelectAbility: (ability: Ability, hero: Hero) => void;
-	onShowState: () => void;
+	onShowHeroState: () => void;
+	onShowRules: () => void;
 }
 
 export const HeroPage = (props: Props) => {
@@ -73,11 +76,11 @@ export const HeroPage = (props: Props) => {
 					<Button onClick={props.closeHero}>
 						Close
 					</Button>
-					<Button onClick={props.editHero}>
-						Edit
-					</Button>
-					<Button onClick={props.onShowState}>
+					<Button onClick={props.onShowHeroState}>
 						State
+					</Button>
+					<Button onClick={props.onShowRules}>
+						Rules
 					</Button>
 					<Popover
 						trigger='click'
@@ -88,28 +91,44 @@ export const HeroPage = (props: Props) => {
 								<Toggle label='Show free strikes' value={props.options.showFreeStrikes} onChange={setShowFreeStrikes} />
 								<Toggle label='Show standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
 								<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
-								<Button onClick={() => props.exportHero('image')}>Export As Image</Button>
-								<Button onClick={() => props.exportHero('pdf')}>Export As PDF</Button>
-								<Button onClick={() => props.exportHero('json')}>Export as Data</Button>
+								<Divider />
+								<DropdownButton
+									label='Export'
+									items={[
+										{
+											key: 'image',
+											label: 'Export As Image'
+										},
+										{
+											key: 'pdf',
+											label: 'Export As PDF'
+										},
+										{
+											key: 'json',
+											label: 'Export As Data'
+										}
+									]}
+									onClick={key => props.exportHero(key as 'image' | 'pdf' | 'json')}
+								/>
+								<Button icon={<EditOutlined />} onClick={props.editHero}>Edit</Button>
+								<Popover
+									trigger='click'
+									placement='bottom'
+									content={(
+										<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+											<div>This can't be undone; are you sure?</div>
+											<Button danger={true} onClick={props.deleteHero}>Delete</Button>
+										</div>
+									)}
+								>
+									<Button icon={<DeleteOutlined />}>Delete</Button>
+								</Popover>
 							</div>
 						)}
 					>
 						<Button>
 							Options
-						</Button>
-					</Popover>
-					<Popover
-						trigger='click'
-						placement='bottom'
-						content={(
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<div>This can't be undone; are you sure?</div>
-								<Button danger={true} onClick={props.deleteHero}>Delete</Button>
-							</div>
-						)}
-					>
-						<Button>
-							Delete
+							<DownOutlined />
 						</Button>
 					</Popover>
 				</AppHeader>
@@ -128,7 +147,7 @@ export const HeroPage = (props: Props) => {
 						onSelectKit={props.onSelectKit}
 						onSelectCharacteristic={characteristic => props.onSelectCharacteristic(characteristic, props.hero)}
 						onSelectAbility={ability => props.onSelectAbility(ability, props.hero)}
-						onShowState={props.onShowState}
+						onShowState={props.onShowHeroState}
 					/>
 				</div>
 			</div>

@@ -21,7 +21,7 @@ export const DropdownButton = (props: Props) => {
 					}}
 					trigger={[ 'click' ]}
 				>
-					<Button block={true} style={{ justifyContent: 'space-between' }}>
+					<Button block={true}>
 						{props.label}
 						<DownOutlined />
 					</Button>

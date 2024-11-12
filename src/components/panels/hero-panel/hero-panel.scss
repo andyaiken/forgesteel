@@ -37,6 +37,7 @@
 		}
 
 		.hero-main-column {
+			margin-top: -15px;
 			flex: 1 1 0;
 
 			.characteristics-box {
@@ -92,13 +93,13 @@
 
 			.features-grid {
 				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 				gap: 0 20px;	
 			}
 
 			.abilities-grid {
 				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 				gap: 20px;	
 			}
 		}

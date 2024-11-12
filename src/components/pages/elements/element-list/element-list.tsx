@@ -1,5 +1,5 @@
 import { Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
-import { DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
+import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryData } from '../../../../data/ancestry-data';
 import { AncestryPanel } from '../../../panels/ancestry-panel/ancestry-panel';
@@ -463,6 +463,7 @@ export const ElementListPage = (props: Props) => {
 					>
 						<Button>
 							Create Homebrew Element
+							<DownOutlined />
 						</Button>
 					</Popover>
 					<Popover
@@ -507,6 +508,7 @@ export const ElementListPage = (props: Props) => {
 					>
 						<Button>
 							Collections
+							<DownOutlined />
 						</Button>
 					</Popover>
 				</AppHeader>

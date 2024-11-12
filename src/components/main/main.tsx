@@ -33,6 +33,7 @@ import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { Kit } from '../../models/kit';
 import { KitModal } from '../modals/kit/kit-modal';
 import { Options } from '../../models/options';
+import { RulesModal } from '../modals/rules/rules-modal';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
@@ -835,7 +836,7 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onShowState = () => {
+	const onShowHeroState = () => {
 		if (selectedHero) {
 			setDrawer(
 				<HeroStateModal
@@ -849,6 +850,17 @@ export const Main = (props: Props) => {
 							setSelectedHero(updatedHero);
 						}
 					}}
+				/>
+			);
+		}
+	};
+
+	const onShowRules = () => {
+		if (selectedHero) {
+			setDrawer(
+				<RulesModal
+					hero={selectedHero}
+					settings={[ CampaignSettingData.core, CampaignSettingData.orden, ...homebrewSettings ]}
 				/>
 			);
 		}
@@ -900,7 +912,8 @@ export const Main = (props: Props) => {
 						onSelectKit={onSelectKit}
 						onSelectCharacteristic={onSelectCharacteristic}
 						onSelectAbility={onSelectAbility}
-						onShowState={onShowState}
+						onShowHeroState={onShowHeroState}
+						onShowRules={onShowRules}
 					/>
 				);
 			case Page.HeroEdit:

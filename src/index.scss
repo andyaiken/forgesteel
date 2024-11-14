@@ -96,8 +96,22 @@ td {
 
 .ant-collapse {
 	&:hover {
-		background-color: rgb(180, 220, 255);
-		border-color: rgb(64, 150, 255);
+		.ant-collapse-item {
+			.ant-collapse-header {
+				background-color: rgb(180, 220, 255);
+				border-color: rgb(64, 150, 255);
+				border-radius: 6px;
+			}
+
+			&.ant-collapse-item-active {
+				.ant-collapse-header {
+					border-bottom-left-radius: 0;
+					border-bottom-right-radius: 0;
+					border-top-left-radius: 6px;
+					border-top-right-radius: 6px;
+				}
+			}
+		}
 	}
 
 	.ant-collapse-item {
@@ -113,6 +127,24 @@ td {
 	.ant-drawer-content {
 		.ant-drawer-body {
 			padding: 0;
+		}
+	}
+}
+
+.ant-input-affix-wrapper {
+	&.input-empty {
+		border-color: rgb(255, 160, 0);
+		background-color:
+		rgba(255, 160, 0, 0.2);
+	}
+}
+
+.ant-input-group-wrapper {
+	&.input-empty {
+		.ant-input-outlined {
+			border-color: rgb(255, 160, 0);
+			background-color:
+			rgba(255, 160, 0, 0.2);
 		}
 	}
 }
@@ -163,6 +195,15 @@ td {
 	}
 }
 
+.ant-select-outlined {
+	&.selection-empty {
+		.ant-select-selector {
+			border-color: rgb(255, 160, 0);
+			background-color: rgba(255, 160, 0, 0.2);
+		}
+	}
+}
+
 .ant-tabs {
 	&.ant-tabs-top >.ant-tabs-nav::before,
 	&.ant-tabs-bottom >.ant-tabs-nav::before,
@@ -204,6 +245,14 @@ td {
 
 			.ant-collapse-content {
 				background-color: unset;
+			}
+		}
+
+		&:hover {
+			.ant-collapse-item {
+				.ant-collapse-header {
+					color: rgba(0, 0, 0, 0.88) !important;
+				}
 			}
 		}
 	}

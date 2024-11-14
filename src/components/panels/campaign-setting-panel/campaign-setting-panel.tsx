@@ -54,6 +54,7 @@ export const CampaignSettingPanel = (props: Props) => {
 					isEditing ?
 						<Space direction='vertical' style={{ width: '100%' }}>
 							<Input
+								className={setting.name === '' ? 'input-empty' : ''}
 								placeholder='Name'
 								allowClear={true}
 								addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}

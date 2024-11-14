@@ -6,7 +6,6 @@ import { CampaignSetting } from '../../../models/campaign-setting';
 import { Collections } from '../../../utils/collections';
 import { DomainData } from '../../../data/domains';
 import { DomainPanel } from '../domain-panel/domain-panel';
-import { FeatureLogic } from '../../../logic/feature-logic';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
 import { FormatLogic } from '../../../logic/format-logic';
@@ -56,6 +55,7 @@ export const FeaturePanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Select
 					style={{ width: '100%' }}
+					className={data.selected.length === 0 ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -120,6 +120,7 @@ export const FeaturePanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Select
 					style={{ width: '100%' }}
+					className={data.selectedIDs.length === 0 ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -171,6 +172,7 @@ export const FeaturePanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Select
 					style={{ width: '100%' }}
+					className={data.selected.length === 0 ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -224,6 +226,7 @@ export const FeaturePanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Select
 					style={{ width: '100%' }}
+					className={data.selected.length === 0 ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -283,6 +286,7 @@ export const FeaturePanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Select
 					style={{ width: '100%' }}
+					className={data.selected.length === 0 ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -336,6 +340,7 @@ export const FeaturePanel = (props: Props) => {
 				<div className='ds-text'>{data.count === 1 ? 'Select a language:' : `Select ${data.count} languages:`}</div>
 				<Select
 					style={{ width: '100%' }}
+					className={data.selected.length === 0 ? 'selection-empty' : ''}
 					mode={data.count == 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -408,6 +413,7 @@ export const FeaturePanel = (props: Props) => {
 				<div className='ds-text'>{data.count === 1 ? 'Select a skill:' : `Select ${data.count} skills:`}</div>
 				<Select
 					style={{ width: '100%' }}
+					className={data.selected.length === 0 ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -715,10 +721,6 @@ export const FeaturePanel = (props: Props) => {
 
 	// #endregion
 
-	const requiresChoice = () => {
-		return props.setData && FeatureLogic.isChoice(props.feature) && !FeatureLogic.isChosen(props.feature);
-	};
-
 	try {
 		if (props.feature.type === FeatureType.Ability) {
 			const data = props.feature.data as FeatureAbilityData;
@@ -738,13 +740,8 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
-		let className = 'feature-panel';
-		if (requiresChoice()) {
-			className += ' not-chosen';
-		}
-
 		return (
-			<div className={className} id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
+			<div className='feature-panel' id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
 				<HeaderText>{props.feature.name || 'Unnamed Feature'}</HeaderText>
 				<div className='ds-text' dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.feature.description) }} />
 				{

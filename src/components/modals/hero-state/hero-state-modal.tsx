@@ -242,7 +242,7 @@ export const HeroStateModal = (props: Props) => {
 						ConditionType.Slowed,
 						ConditionType.Taunted,
 						ConditionType.Weakened
-					].map(ct => ({ key: ct, label: ct }))}
+					].map(ct => ({ key: ct, label: <div className='ds-text centered-text'>{ct}</div> }))}
 					onClick={key => addCondition(key as ConditionType)}
 				/>
 			</div>

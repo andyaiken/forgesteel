@@ -97,15 +97,15 @@ export const HeroPage = (props: Props) => {
 									items={[
 										{
 											key: 'image',
-											label: 'Export As Image'
+											label: <div className='ds-text centered-text'>Export As Image</div>
 										},
 										{
 											key: 'pdf',
-											label: 'Export As PDF'
+											label: <div className='ds-text centered-text'>Export As PDF</div>
 										},
 										{
 											key: 'json',
-											label: 'Export As Data'
+											label: <div className='ds-text centered-text'>Export As Data</div>
 										}
 									]}
 									onClick={key => props.exportHero(key as 'image' | 'pdf' | 'json')}

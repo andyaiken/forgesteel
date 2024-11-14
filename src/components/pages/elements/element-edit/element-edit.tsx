@@ -80,6 +80,7 @@ export const ElementEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Input
+					className={element.name === '' ? 'input-empty' : ''}
 					placeholder='Name'
 					allowClear={true}
 					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
@@ -233,6 +234,7 @@ export const ElementEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Select
 					style={{ width: '100%' }}
+					className={culture.languages.length === 0 ? 'selection-empty' : ''}
 					allowClear={true}
 					placeholder='Select language'
 					options={LanguageData.getLanguages(props.campaignSettings).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
@@ -247,6 +249,7 @@ export const ElementEditPage = (props: Props) => {
 				/>
 				<Select
 					style={{ width: '100%' }}
+					className={culture.environment === null ? 'selection-empty' : ''}
 					allowClear={true}
 					placeholder='Select environment'
 					options={EnvironmentData.getEnvironments().map(s => ({ value: s.id, label: s.name }))}
@@ -265,6 +268,7 @@ export const ElementEditPage = (props: Props) => {
 				/>
 				<Select
 					style={{ width: '100%' }}
+					className={culture.organization === null ? 'selection-empty' : ''}
 					allowClear={true}
 					placeholder='Select organization'
 					options={OrganizationData.getOrganizations().map(s => ({ value: s.id, label: s.name }))}
@@ -283,6 +287,7 @@ export const ElementEditPage = (props: Props) => {
 				/>
 				<Select
 					style={{ width: '100%' }}
+					className={culture.upbringing === null ? 'selection-empty' : ''}
 					allowClear={true}
 					placeholder='Select upbringing'
 					options={UpbringingData.getUpbringings().map(s => ({ value: s.id, label: s.name }))}
@@ -338,6 +343,7 @@ export const ElementEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Heroic Resource</HeaderText>
 				<Input
+					className={heroClass.heroicResource === '' ? 'input-empty' : ''}
 					placeholder='Heroic resource'
 					allowClear={true}
 					value={heroClass.heroicResource}
@@ -345,6 +351,7 @@ export const ElementEditPage = (props: Props) => {
 				/>
 				<HeaderText>Subclass Name</HeaderText>
 				<Input
+					className={heroClass.subclassName === '' ? 'input-empty' : ''}
 					placeholder='Subclass name'
 					allowClear={true}
 					value={heroClass.subclassName}
@@ -359,6 +366,7 @@ export const ElementEditPage = (props: Props) => {
 				<HeaderText>Primary Characteristics</HeaderText>
 				<Select
 					style={{ width: '100%' }}
+					className={heroClass.primaryCharacteristics.length < 2 ? 'selection-empty' : ''}
 					mode='multiple'
 					maxCount={2}
 					placeholder='Select primary characteristics'
@@ -617,6 +625,7 @@ export const ElementEditPage = (props: Props) => {
 						<Expander key={sc.id} title={sc.name || 'Unnamed Subclass'}>
 							<HeaderText>Name</HeaderText>
 							<Input
+								className={sc.name === '' ? 'input-empty' : ''}
 								placeholder='Name'
 								allowClear={true}
 								value={sc.name}
@@ -698,6 +707,7 @@ export const ElementEditPage = (props: Props) => {
 				<HeaderText>Armor</HeaderText>
 				<Select
 					style={{ width: '100%' }}
+					className={kit.armor.length === 0 ? 'selection-empty' : ''}
 					mode='multiple'
 					allowClear={true}
 					placeholder='Select armor'
@@ -709,6 +719,7 @@ export const ElementEditPage = (props: Props) => {
 				<HeaderText>Weapons</HeaderText>
 				<Select
 					style={{ width: '100%' }}
+					className={kit.weapon.length === 0 ? 'selection-empty' : ''}
 					mode='multiple'
 					allowClear={true}
 					placeholder='Select weapon'
@@ -720,6 +731,7 @@ export const ElementEditPage = (props: Props) => {
 				<HeaderText>Implements</HeaderText>
 				<Select
 					style={{ width: '100%' }}
+					className={kit.implement.length === 0 ? 'selection-empty' : ''}
 					mode='multiple'
 					allowClear={true}
 					placeholder='Select implement'
@@ -1195,6 +1207,7 @@ const ElementEditPanel = (props: ElementEditPanelProps) => {
 			<div className='element-edit-panel'>
 				<HeaderText>Name</HeaderText>
 				<Input
+					className={element.name === '' ? 'input-empty' : ''}
 					placeholder='Name'
 					allowClear={true}
 					value={element.name}
@@ -1660,6 +1673,7 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 							data.modifiers.map((mod, n) => (
 								<Expander key={n} title='Damage Modifier'>
 									<Input
+										className={mod.damageType === '' ? 'input-empty' : ''}
 										placeholder='Damage type'
 										allowClear={true}
 										value={mod.damageType}
@@ -1710,6 +1724,7 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 						<HeaderText>Types</HeaderText>
 						<Select
 							style={{ width: '100%' }}
+							className={data.types.length === 0 ? 'selection-empty' : ''}
 							placeholder='Kit types'
 							mode='multiple'
 							allowClear={true}
@@ -1730,6 +1745,7 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 						<HeaderText>Options</HeaderText>
 						<Select
 							style={{ width: '100%' }}
+							className={data.options.length === 0 ? 'selection-empty' : ''}
 							placeholder='Options'
 							mode='multiple'
 							allowClear={true}
@@ -1794,11 +1810,12 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 						<HeaderText>Skill</HeaderText>
 						<Select
 							style={{ width: '100%' }}
+							className={data.skill === '' ? 'selection-empty' : ''}
 							placeholder='Skill'
 							allowClear={true}
 							options={SkillData.getSkills(props.campaignSettings).map(option => ({ value: option.name, description: option.description }))}
 							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
-							value={data.skill}
+							value={data.skill || ''}
 							onChange={setSkill}
 						/>
 					</Space>
@@ -1845,6 +1862,7 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 			<div className='feature-edit-panel'>
 				<HeaderText>Name</HeaderText>
 				<Input
+					className={feature.name === '' ? 'input-empty' : ''}
 					placeholder='Name'
 					allowClear={true}
 					value={feature.name}
@@ -2194,6 +2212,7 @@ const AbilityEditPanel = (props: AbilityEditPanelProps) => {
 			<div className='ability-edit-panel'>
 				<HeaderText>Name</HeaderText>
 				<Input
+					className={ability.name === '' ? 'input-empty' : ''}
 					placeholder='Name'
 					allowClear={true}
 					value={ability.name}
@@ -2219,6 +2238,7 @@ const AbilityEditPanel = (props: AbilityEditPanelProps) => {
 					/>
 					<Toggle label='Free' value={ability.type.free} onChange={setTypeFree} />
 					<Input
+						className={(ability.type.usage === AbilityUsage.Trigger) && (ability.type.trigger === '') ? 'input-empty' : ''}
 						placeholder='Trigger'
 						allowClear={true}
 						disabled={ability.type.usage !== AbilityUsage.Trigger}
@@ -2226,6 +2246,7 @@ const AbilityEditPanel = (props: AbilityEditPanelProps) => {
 						onChange={e => setTypeTrigger(e.target.value)}
 					/>
 					<Input
+						className={(ability.type.usage === AbilityUsage.Other) && (ability.type.time === '') ? 'input-empty' : ''}
 						placeholder='Other'
 						allowClear={true}
 						disabled={ability.type.usage !== AbilityUsage.Other}
@@ -2310,6 +2331,7 @@ const AbilityEditPanel = (props: AbilityEditPanelProps) => {
 							{
 								getDistanceMainType(n) === 'Special' ?
 									<Input
+										className={distance.special === '' ? 'input-empty' : ''}
 										placeholder='Special'
 										allowClear={true}
 										value={distance.special}
@@ -2324,6 +2346,7 @@ const AbilityEditPanel = (props: AbilityEditPanelProps) => {
 				<Button block={true} onClick={addDistance}>Add a new distance</Button>
 				<HeaderText>Target</HeaderText>
 				<Input
+					className={ability.target === '' ? 'input-empty' : ''}
 					placeholder='Target'
 					allowClear={true}
 					value={ability.target}
@@ -2346,6 +2369,7 @@ const AbilityEditPanel = (props: AbilityEditPanelProps) => {
 						ability.powerRoll ?
 							<Select
 								style={{ width: '100%' }}
+								className={ability.powerRoll.characteristic.length === 0 ? 'selection-empty' : ''}
 								placeholder='Characteristics'
 								mode='multiple'
 								allowClear={true}
@@ -2359,6 +2383,7 @@ const AbilityEditPanel = (props: AbilityEditPanelProps) => {
 					{
 						ability.powerRoll ?
 							<Input
+								className={ability.powerRoll.tier1 === '' ? 'input-empty' : ''}
 								placeholder='Tier 1'
 								allowClear={true}
 								value={ability.powerRoll.tier1}
@@ -2369,6 +2394,7 @@ const AbilityEditPanel = (props: AbilityEditPanelProps) => {
 					{
 						ability.powerRoll ?
 							<Input
+								className={ability.powerRoll.tier2 === '' ? 'input-empty' : ''}
 								placeholder='Tier 2'
 								allowClear={true}
 								value={ability.powerRoll.tier2}
@@ -2379,6 +2405,7 @@ const AbilityEditPanel = (props: AbilityEditPanelProps) => {
 					{
 						ability.powerRoll ?
 							<Input
+								className={ability.powerRoll.tier3 === '' ? 'input-empty' : ''}
 								placeholder='Tier 3'
 								allowClear={true}
 								value={ability.powerRoll.tier3}
@@ -2400,6 +2427,7 @@ const AbilityEditPanel = (props: AbilityEditPanelProps) => {
 					ability.alternateEffects.map((effect, n) => (
 						<Space key={n} direction='vertical' style={{ width: '100%' }}>
 							<Input
+								className={effect === '' ? 'input-empty' : ''}
 								placeholder='Alternate Effect'
 								allowClear={true}
 								value={effect}
@@ -2415,6 +2443,7 @@ const AbilityEditPanel = (props: AbilityEditPanelProps) => {
 					ability.spend.map((spend, n) => (
 						<Space key={n} direction='vertical' style={{ width: '100%' }}>
 							<Input
+								className={spend.effect === '' ? 'input-empty' : ''}
 								placeholder='Spend effect'
 								allowClear={true}
 								value={spend.effect}
@@ -2431,6 +2460,7 @@ const AbilityEditPanel = (props: AbilityEditPanelProps) => {
 					ability.persistence.map((persist, n) => (
 						<Space key={n} direction='vertical' style={{ width: '100%' }}>
 							<Input
+								className={persist.effect === '' ? 'input-empty' : ''}
 								placeholder='Persistence Effect'
 								allowClear={true}
 								value={persist.effect}

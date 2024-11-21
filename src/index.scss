@@ -57,6 +57,10 @@ p,
 	&.centered-text {
 		text-align: center;
 	}
+
+	&.small-text {
+		font-size: 10px;
+	}
 }
 
 ul {

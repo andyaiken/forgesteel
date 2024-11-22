@@ -1,4 +1,4 @@
-import { Collapse } from 'antd';
+import { Button, Collapse } from 'antd';
 import { ReactNode } from 'react';
 
 import './expander.scss';
@@ -6,10 +6,25 @@ import './expander.scss';
 interface Props {
 	title: string;
 	children: ReactNode;
+	extra?: {
+		title: string;
+		icon: ReactNode;
+		onClick: () => void;
+	}[];
 }
 
 export const Expander = (props: Props) => {
 	try {
+		let extra = null;
+		if (props.extra) {
+			extra = props.extra.map((item, n) => (
+				<Button key={n} type='text' icon={item.icon} onClick={e => {
+					e.stopPropagation();
+					item.onClick();
+				}} />
+			));
+		}
+
 		return (
 			<Collapse
 				className='expander'
@@ -17,7 +32,8 @@ export const Expander = (props: Props) => {
 					{
 						key: '1',
 						label: props.title,
-						children: props.children
+						children: props.children,
+						extra: extra
 					}
 				]}
 				expandIconPosition='end'

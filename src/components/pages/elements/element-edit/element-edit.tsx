@@ -1,4 +1,5 @@
 import { Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../../../../models/feature';
 import { KitArmor, KitImplement, KitType, KitWeapon } from '../../../../enums/kit';
@@ -15,6 +16,7 @@ import { Career } from '../../../../models/career';
 import { CareerPanel } from '../../../panels/career-panel/career-panel';
 import { Characteristic } from '../../../../enums/characteristic';
 import { ClassPanel } from '../../../panels/class-panel/class-panel';
+import { Collections } from '../../../../utils/collections';
 import { Complication } from '../../../../models/complication';
 import { ComplicationPanel } from '../../../panels/complication-panel/complication-panel';
 import { Culture } from '../../../../models/culture';
@@ -40,7 +42,6 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { SkillData } from '../../../../data/skill-data';
 import { SkillList } from '../../../../enums/skill-list';
 import { SubClass } from '../../../../models/subclass';
-import { ThunderboltOutlined } from '@ant-design/icons';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
@@ -123,6 +124,14 @@ export const ElementEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const moveFeature = (feature: Feature, direction: 'up' | 'down') => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Kit | Complication;
+			const index = elementCopy.features.findIndex(f => f.id === feature.id);
+			elementCopy.features = Collections.move(elementCopy.features, index, direction);
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
 		const deleteFeature = (feature: Feature) => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Kit | Complication;
 			elementCopy.features = elementCopy.features.filter(f => f.id !== feature.id);
@@ -134,7 +143,22 @@ export const ElementEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
 					el.features.map(f => (
-						<Expander key={f.id} title={f.name || 'Unnamed Feature'}>
+						<Expander
+							key={f.id}
+							title={f.name || 'Unnamed Feature'}
+							extra={[
+								{
+									title: 'Move Up',
+									icon: <CaretUpOutlined />,
+									onClick: () => moveFeature(f, 'up')
+								},
+								{
+									title: 'Move Down',
+									icon: <CaretDownOutlined />,
+									onClick: () => moveFeature(f, 'down')
+								}
+							]}
+						>
 							<FeatureEditPanel
 								feature={f}
 								campaignSettings={props.campaignSettings}
@@ -411,6 +435,18 @@ export const ElementEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const moveFeature = (level: number, feature: Feature, direction: 'up' | 'down') => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			elementCopy.featuresByLevel
+				.filter(lvl => lvl.level === level)
+				.forEach(lvl => {
+					const index = lvl.features.findIndex(f => f.id === feature.id);
+					lvl.features = Collections.move(lvl.features, index, direction);
+				});
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
 		const deleteFeature = (level: number, feature: Feature) => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
 			elementCopy.featuresByLevel
@@ -430,7 +466,22 @@ export const ElementEditPage = (props: Props) => {
 							<HeaderText>Level {lvl.level.toString()}</HeaderText>
 							{
 								lvl.features.map(f => (
-									<Expander key={f.id} title={f.name || 'Unnamed Feature'}>
+									<Expander
+										key={f.id}
+										title={f.name || 'Unnamed Feature'}
+										extra={[
+											{
+												title: 'Move Up',
+												icon: <CaretUpOutlined />,
+												onClick: () => moveFeature(lvl.level, f, 'up')
+											},
+											{
+												title: 'Move Down',
+												icon: <CaretDownOutlined />,
+												onClick: () => moveFeature(lvl.level, f, 'down')
+											}
+										]}
+									>
 										<FeatureEditPanel
 											feature={f}
 											campaignSettings={props.campaignSettings}
@@ -568,6 +619,22 @@ export const ElementEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const moveFeature = (subclass: SubClass, level: number, feature: Feature, direction: 'up' | 'down') => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
+			if (index !== -1) {
+				const sc = elementCopy.subclasses[index];
+				sc.featuresByLevel
+					.filter(lvl => lvl.level === level)
+					.forEach(lvl => {
+						const index = lvl.features.findIndex(f => f.id === feature.id);
+						lvl.features = Collections.move(lvl.features, index, direction);
+					});
+			}
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
 		const deleteFeature = (subclass: SubClass, level: number, feature: Feature) => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
 			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
@@ -603,7 +670,22 @@ export const ElementEditPage = (props: Props) => {
 					<HeaderText>Level {lvl.level.toString()}</HeaderText>
 					{
 						lvl.features.map(f => (
-							<Expander key={f.id} title={f.name || 'Unnamed Feature'}>
+							<Expander
+								key={f.id}
+								title={f.name || 'Unnamed Feature'}
+								extra={[
+									{
+										title: 'Move Up',
+										icon: <CaretUpOutlined />,
+										onClick: () => moveFeature(subclass, lvl.level, f, 'up')
+									},
+									{
+										title: 'Move Down',
+										icon: <CaretDownOutlined />,
+										onClick: () => moveFeature(subclass, lvl.level, f, 'down')
+									}
+								]}
+							>
 								<FeatureEditPanel
 									feature={f}
 									campaignSettings={props.campaignSettings}
@@ -623,23 +705,39 @@ export const ElementEditPage = (props: Props) => {
 				{
 					heroClass.subclasses.map(sc => (
 						<Expander key={sc.id} title={sc.name || 'Unnamed Subclass'}>
-							<HeaderText>Name</HeaderText>
-							<Input
-								className={sc.name === '' ? 'input-empty' : ''}
-								placeholder='Name'
-								allowClear={true}
-								value={sc.name}
-								onChange={e => setName(sc, e.target.value)}
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Element',
+										children: (
+											<div>
+												<HeaderText>Name</HeaderText>
+												<Input
+													className={sc.name === '' ? 'input-empty' : ''}
+													placeholder='Name'
+													allowClear={true}
+													value={sc.name}
+													onChange={e => setName(sc, e.target.value)}
+												/>
+												<HeaderText>Description</HeaderText>
+												<Input.TextArea
+													placeholder='Description'
+													allowClear={true}
+													rows={6}
+													value={sc.description}
+													onChange={e => setDescription(sc, e.target.value)}
+												/>
+											</div>
+										)
+									},
+									{
+										key: '2',
+										label: 'Levels',
+										children: getSubclassLevels(sc)
+									}
+								]}
 							/>
-							<HeaderText>Description</HeaderText>
-							<Input.TextArea
-								placeholder='Description'
-								allowClear={true}
-								rows={6}
-								value={sc.description}
-								onChange={e => setDescription(sc, e.target.value)}
-							/>
-							{getSubclassLevels(sc)}
 							<Divider />
 							<Button block={true} danger={true} onClick={() => deleteSubclass(sc)}>Delete</Button>
 						</Expander>
@@ -1496,6 +1594,12 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 			setData(copy);
 		};
 
+		const moveChoice = (data: FeatureChoiceData, index: number, direction: 'up' | 'down') => {
+			const copy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
+			copy.options = Collections.move(copy.options, index, direction);
+			setData(copy);
+		};
+
 		const deleteChoice = (data: FeatureChoiceData, index: number) => {
 			const copy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
 			copy.options.splice(index);
@@ -1562,6 +1666,12 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 				name: '',
 				description: ''
 			}));
+			setData(copy);
+		};
+
+		const moveMultipleFeature = (data: FeatureMultipleData, index: number, direction: 'up' | 'down') => {
+			const copy = JSON.parse(JSON.stringify(data)) as FeatureMultipleData;
+			copy.features = Collections.move(copy.features, index, direction);
 			setData(copy);
 		};
 
@@ -1636,7 +1746,22 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 						<HeaderText>Options</HeaderText>
 						{
 							data.options.map((option, n) => (
-								<Expander key={n} title={option.feature.name || 'Unnamed Feature'}>
+								<Expander
+									key={n}
+									title={option.feature.name || 'Unnamed Feature'}
+									extra={[
+										{
+											title: 'Move Up',
+											icon: <CaretUpOutlined />,
+											onClick: () => moveChoice(data, n, 'up')
+										},
+										{
+											title: 'Move Down',
+											icon: <CaretDownOutlined />,
+											onClick: () => moveChoice(data, n, 'down')
+										}
+									]}
+								>
 									<FeatureEditPanel
 										feature={option.feature}
 										campaignSettings={props.campaignSettings}
@@ -1765,7 +1890,22 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						{
 							data.features.map((feature, n) => (
-								<Expander key={feature.id} title={feature.name}>
+								<Expander
+									key={feature.id}
+									title={feature.name}
+									extra={[
+										{
+											title: 'Move Up',
+											icon: <CaretUpOutlined />,
+											onClick: () => moveMultipleFeature(data, n, 'up')
+										},
+										{
+											title: 'Move Down',
+											icon: <CaretDownOutlined />,
+											onClick: () => moveMultipleFeature(data, n, 'down')
+										}
+									]}
+								>
 									<FeatureEditPanel
 										feature={feature}
 										campaignSettings={props.campaignSettings}
@@ -1860,32 +2000,52 @@ const FeatureEditPanel = (props: FeatureEditPanelProps) => {
 	try {
 		return (
 			<div className='feature-edit-panel'>
-				<HeaderText>Name</HeaderText>
-				<Input
-					className={feature.name === '' ? 'input-empty' : ''}
-					placeholder='Name'
-					allowClear={true}
-					value={feature.name}
-					onChange={e => setName(e.target.value)}
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Element',
+							children: (
+								<div>
+									<HeaderText>Name</HeaderText>
+									<Input
+										className={feature.name === '' ? 'input-empty' : ''}
+										placeholder='Name'
+										allowClear={true}
+										value={feature.name}
+										onChange={e => setName(e.target.value)}
+									/>
+									<HeaderText>Description</HeaderText>
+									<Input.TextArea
+										placeholder='Description'
+										allowClear={true}
+										rows={6}
+										value={feature.description}
+										onChange={e => setDescription(e.target.value)}
+									/>
+								</div>
+							)
+						},
+						{
+							key: '2',
+							label: 'Feature',
+							children: (
+								<div>
+									<HeaderText>Type</HeaderText>
+									<Select
+										style={{ width: '100%' }}
+										placeholder='Select type'
+										options={[ FeatureType.Ability, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Text ].map(o => ({ value: o }))}
+										optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+										value={feature.type}
+										onChange={setType}
+									/>
+									{getDataSection()}
+								</div>
+							)
+						}
+					]}
 				/>
-				<HeaderText>Description</HeaderText>
-				<Input.TextArea
-					placeholder='Description'
-					allowClear={true}
-					rows={6}
-					value={feature.description}
-					onChange={e => setDescription(e.target.value)}
-				/>
-				<HeaderText>Type</HeaderText>
-				<Select
-					style={{ width: '100%' }}
-					placeholder='Select type'
-					options={[ FeatureType.Ability, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Text ].map(o => ({ value: o }))}
-					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					value={feature.type}
-					onChange={setType}
-				/>
-				{getDataSection()}
 				<Divider />
 				{props.onDelete ? <Button block={true} danger={true} onClick={deleteFeature}>Delete</Button> : null}
 			</div>
@@ -2210,268 +2370,316 @@ const AbilityEditPanel = (props: AbilityEditPanelProps) => {
 	try {
 		return (
 			<div className='ability-edit-panel'>
-				<HeaderText>Name</HeaderText>
-				<Input
-					className={ability.name === '' ? 'input-empty' : ''}
-					placeholder='Name'
-					allowClear={true}
-					value={ability.name}
-					onChange={e => setName(e.target.value)}
-				/>
-				<HeaderText>Description</HeaderText>
-				<Input.TextArea
-					placeholder='Description'
-					allowClear={true}
-					rows={6}
-					value={ability.description}
-					onChange={e => setDescription(e.target.value)}
-				/>
-				<HeaderText>Usage</HeaderText>
-				<Expander title='Usage'>
-					<Select
-						style={{ width: '100%' }}
-						placeholder='Select usage'
-						options={[ AbilityUsage.Action, AbilityUsage.Maneuver, AbilityUsage.Trigger, AbilityUsage.Other ].map(option => ({ value: option }))}
-						optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-						value={ability.type.usage}
-						onChange={setTypeUsage}
-					/>
-					<Toggle label='Free' value={ability.type.free} onChange={setTypeFree} />
-					<Input
-						className={(ability.type.usage === AbilityUsage.Trigger) && (ability.type.trigger === '') ? 'input-empty' : ''}
-						placeholder='Trigger'
-						allowClear={true}
-						disabled={ability.type.usage !== AbilityUsage.Trigger}
-						value={ability.type.trigger}
-						onChange={e => setTypeTrigger(e.target.value)}
-					/>
-					<Input
-						className={(ability.type.usage === AbilityUsage.Other) && (ability.type.time === '') ? 'input-empty' : ''}
-						placeholder='Other'
-						allowClear={true}
-						disabled={ability.type.usage !== AbilityUsage.Other}
-						value={ability.type.time}
-						onChange={e => setTypeTime(e.target.value)}
-					/>
-				</Expander>
-				<HeaderText>Keywords</HeaderText>
-				<Select
-					style={{ width: '100%' }}
-					placeholder='Keywords'
-					mode='multiple'
-					allowClear={true}
-					options={[ AbilityKeyword.Animal, AbilityKeyword.Area, AbilityKeyword.Attack, AbilityKeyword.Charge, AbilityKeyword.Earth, AbilityKeyword.Fire, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Persistent, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Resistance, AbilityKeyword.Void, AbilityKeyword.Weapon ].map(option => ({ value: option }))}
-					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					value={ability.keywords}
-					onChange={setKeywords}
-				/>
-				<HeaderText>Distance</HeaderText>
-				{
-					ability.distance.map((distance, n) => (
-						<Expander key={n} title='Distance'>
-							<Segmented
-								block={true}
-								options={[ 'Self', 'Reach', 'Ranged', 'Area', 'Line', 'Special' ]}
-								value={getDistanceMainType(n)}
-								onChange={value => setDistanceMainType(n, value)}
-							/>
-							{
-								getDistanceMainType(n) === 'Area' ?
-									<HeaderText>Area Type</HeaderText>
-									: null
-							}
-							{
-								getDistanceMainType(n) === 'Area' ?
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Element',
+							children: (
+								<div>
+									<HeaderText>Name</HeaderText>
+									<Input
+										className={ability.name === '' ? 'input-empty' : ''}
+										placeholder='Name'
+										allowClear={true}
+										value={ability.name}
+										onChange={e => setName(e.target.value)}
+									/>
+									<HeaderText>Description</HeaderText>
+									<Input.TextArea
+										placeholder='Description'
+										allowClear={true}
+										rows={6}
+										value={ability.description}
+										onChange={e => setDescription(e.target.value)}
+									/>
+								</div>
+							)
+						},
+						{
+							key: '2',
+							label: 'Stats',
+							children: (
+								<div>
+									<HeaderText>Usage</HeaderText>
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<Select
+											style={{ width: '100%' }}
+											placeholder='Select usage'
+											options={[ AbilityUsage.Action, AbilityUsage.Maneuver, AbilityUsage.Trigger, AbilityUsage.Other ].map(option => ({ value: option }))}
+											optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+											value={ability.type.usage}
+											onChange={setTypeUsage}
+										/>
+										<Toggle label='Free' value={ability.type.free} onChange={setTypeFree} />
+										{
+											ability.type.usage === AbilityUsage.Trigger ?
+												<Input
+													className={ability.type.trigger === '' ? 'input-empty' : ''}
+													placeholder='Trigger'
+													allowClear={true}
+													value={ability.type.trigger}
+													onChange={e => setTypeTrigger(e.target.value)}
+												/>
+												: null
+										}
+										{
+											ability.type.usage === AbilityUsage.Other ?
+												<Input
+													className={ability.type.time === '' ? 'input-empty' : ''}
+													placeholder='Other'
+													allowClear={true}
+													value={ability.type.time}
+													onChange={e => setTypeTime(e.target.value)}
+												/>
+												: null
+										}
+									</Space>
+									<HeaderText>Keywords</HeaderText>
 									<Select
 										style={{ width: '100%' }}
-										disabled={getDistanceMainType(n) !== 'Area'}
-										placeholder='Area type'
-										options={[ AbilityDistanceType.Aura, AbilityDistanceType.Burst, AbilityDistanceType.Cube, AbilityDistanceType.Wall ].map(option => ({ value: option }))}
-										optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-										value={distance.type}
-										onChange={value => setDistanceType(n, value)}
-									/>
-									: null
-							}
-							{
-								(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Special') ?
-									<HeaderText>Value</HeaderText>
-									: null
-							}
-							{
-								(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Special') ?
-									<NumberSpin min={1} value={distance.value} onChange={value => setDistanceValue(n, value)} />
-									: null
-							}
-							{
-								getDistanceMainType(n) === 'Line' ?
-									<HeaderText>Value 2</HeaderText>
-									: null
-							}
-							{
-								getDistanceMainType(n) === 'Line' ?
-									<NumberSpin min={1} value={distance.value2} onChange={value => setDistanceValue2(n, value)} />
-									: null
-							}
-							{
-								(getDistanceMainType(n) === 'Area' ) || (getDistanceMainType(n) === 'Line') ?
-									<HeaderText>Within</HeaderText>
-									: null
-							}
-							{
-								(getDistanceMainType(n) === 'Area' ) || (getDistanceMainType(n) === 'Line') ?
-									<NumberSpin min={1} value={distance.within} onChange={value => setDistanceWithin(n, value)} />
-									: null
-							}
-							{
-								getDistanceMainType(n) === 'Special' ?
-									<HeaderText>Special</HeaderText>
-									: null
-							}
-							{
-								getDistanceMainType(n) === 'Special' ?
-									<Input
-										className={distance.special === '' ? 'input-empty' : ''}
-										placeholder='Special'
+										placeholder='Keywords'
+										mode='multiple'
 										allowClear={true}
-										value={distance.special}
-										onChange={e => setDistanceSpecial(n, e.target.value)}
+										options={[ AbilityKeyword.Animal, AbilityKeyword.Area, AbilityKeyword.Attack, AbilityKeyword.Charge, AbilityKeyword.Earth, AbilityKeyword.Fire, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Persistent, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Resistance, AbilityKeyword.Void, AbilityKeyword.Weapon ].map(option => ({ value: option }))}
+										optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+										value={ability.keywords}
+										onChange={setKeywords}
 									/>
-									: null
-							}
-							<Button block={true} danger={true} onClick={() => deleteDistance(n)}>Delete</Button>
-						</Expander>
-					))
-				}
-				<Button block={true} onClick={addDistance}>Add a new distance</Button>
-				<HeaderText>Target</HeaderText>
-				<Input
-					className={ability.target === '' ? 'input-empty' : ''}
-					placeholder='Target'
-					allowClear={true}
-					value={ability.target}
-					onChange={e => setTarget(e.target.value)}
+									<HeaderText>Distance</HeaderText>
+									{
+										ability.distance.map((distance, n) => (
+											<Expander key={n} title={AbilityLogic.getDistance(distance)}>
+												<Segmented
+													block={true}
+													options={[ 'Self', 'Reach', 'Ranged', 'Area', 'Line', 'Special' ]}
+													value={getDistanceMainType(n)}
+													onChange={value => setDistanceMainType(n, value)}
+												/>
+												{
+													getDistanceMainType(n) === 'Area' ?
+														<HeaderText>Area Type</HeaderText>
+														: null
+												}
+												{
+													getDistanceMainType(n) === 'Area' ?
+														<Select
+															style={{ width: '100%' }}
+															disabled={getDistanceMainType(n) !== 'Area'}
+															placeholder='Area type'
+															options={[ AbilityDistanceType.Aura, AbilityDistanceType.Burst, AbilityDistanceType.Cube, AbilityDistanceType.Wall ].map(option => ({ value: option }))}
+															optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+															value={distance.type}
+															onChange={value => setDistanceType(n, value)}
+														/>
+														: null
+												}
+												{
+													(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Special') ?
+														<HeaderText>Value</HeaderText>
+														: null
+												}
+												{
+													(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Special') ?
+														<NumberSpin min={1} value={distance.value} onChange={value => setDistanceValue(n, value)} />
+														: null
+												}
+												{
+													getDistanceMainType(n) === 'Line' ?
+														<HeaderText>Value 2</HeaderText>
+														: null
+												}
+												{
+													getDistanceMainType(n) === 'Line' ?
+														<NumberSpin min={1} value={distance.value2} onChange={value => setDistanceValue2(n, value)} />
+														: null
+												}
+												{
+													(getDistanceMainType(n) === 'Area' ) || (getDistanceMainType(n) === 'Line') ?
+														<HeaderText>Within</HeaderText>
+														: null
+												}
+												{
+													(getDistanceMainType(n) === 'Area' ) || (getDistanceMainType(n) === 'Line') ?
+														<NumberSpin min={1} value={distance.within} onChange={value => setDistanceWithin(n, value)} />
+														: null
+												}
+												{
+													getDistanceMainType(n) === 'Special' ?
+														<HeaderText>Special</HeaderText>
+														: null
+												}
+												{
+													getDistanceMainType(n) === 'Special' ?
+														<Input
+															className={distance.special === '' ? 'input-empty' : ''}
+															placeholder='Special'
+															allowClear={true}
+															value={distance.special}
+															onChange={e => setDistanceSpecial(n, e.target.value)}
+														/>
+														: null
+												}
+												<Button block={true} danger={true} onClick={() => deleteDistance(n)}>Delete</Button>
+											</Expander>
+										))
+									}
+									<Button block={true} onClick={addDistance}>Add a new distance</Button>
+									<HeaderText>Target</HeaderText>
+									<Input
+										className={ability.target === '' ? 'input-empty' : ''}
+										placeholder='Target'
+										allowClear={true}
+										value={ability.target}
+										onChange={e => setTarget(e.target.value)}
+									/>
+									<HeaderText>Cost</HeaderText>
+									<NumberSpin min={0} value={ability.cost} onChange={setCost} />
+								</div>
+							)
+						},
+						{
+							key: '3',
+							label: 'Info',
+							children: (
+								<div>
+									<HeaderText>Pre-Roll Effect</HeaderText>
+									<Input.TextArea
+										placeholder='Effect'
+										allowClear={true}
+										rows={6}
+										value={ability.preEffect}
+										onChange={e => setPreEffect(e.target.value)}
+									/>
+									<HeaderText>Power Roll</HeaderText>
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<Toggle label='Has Power Roll' value={!!ability.powerRoll} onChange={setPowerRoll} />
+										{
+											ability.powerRoll ?
+												<Select
+													style={{ width: '100%' }}
+													className={ability.powerRoll.characteristic.length === 0 ? 'selection-empty' : ''}
+													placeholder='Characteristics'
+													mode='multiple'
+													allowClear={true}
+													options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
+													optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+													value={ability.powerRoll.characteristic}
+													onChange={setPowerRollCharacteristics}
+												/>
+												: null
+										}
+										{
+											ability.powerRoll ?
+												<Input
+													className={ability.powerRoll.tier1 === '' ? 'input-empty' : ''}
+													placeholder='Tier 1'
+													allowClear={true}
+													value={ability.powerRoll.tier1}
+													onChange={e => setPowerRoll1(e.target.value)}
+												/>
+												: null
+										}
+										{
+											ability.powerRoll ?
+												<Input
+													className={ability.powerRoll.tier2 === '' ? 'input-empty' : ''}
+													placeholder='Tier 2'
+													allowClear={true}
+													value={ability.powerRoll.tier2}
+													onChange={e => setPowerRoll2(e.target.value)}
+												/>
+												: null
+										}
+										{
+											ability.powerRoll ?
+												<Input
+													className={ability.powerRoll.tier3 === '' ? 'input-empty' : ''}
+													placeholder='Tier 3'
+													allowClear={true}
+													value={ability.powerRoll.tier3}
+													onChange={e => setPowerRoll3(e.target.value)}
+												/>
+												: null
+										}
+									</Space>
+									<HeaderText>Effect</HeaderText>
+									<Input.TextArea
+										placeholder='Effect'
+										allowClear={true}
+										rows={6}
+										value={ability.effect}
+										onChange={e => setEffect(e.target.value)}
+									/>
+								</div>
+							)
+						},
+						{
+							key: '4',
+							label: 'Extra',
+							children: (
+								<div>
+									<HeaderText>Alternate Effects</HeaderText>
+									<Space direction='vertical' style={{ width: '100%' }}>
+										{
+											ability.alternateEffects.map((effect, n) => (
+												<Space key={n} direction='vertical' style={{ width: '100%' }}>
+													<Input
+														className={effect === '' ? 'input-empty' : ''}
+														placeholder='Alternate Effect'
+														allowClear={true}
+														value={effect}
+														onChange={e => setAlternateEffect(n, e.target.value)}
+													/>
+													<Button block={true} danger={true} onClick={() => deleteAlternateEffect(n)}>Delete</Button>
+												</Space>
+											))
+										}
+										<Button block={true} onClick={addAlternateEffect}>Add an alternate effect</Button>
+									</Space>
+									<HeaderText>Spend</HeaderText>
+									<Space direction='vertical' style={{ width: '100%' }}>
+										{
+											ability.spend.map((spend, n) => (
+												<Space key={n} direction='vertical' style={{ width: '100%' }}>
+													<Input
+														className={spend.effect === '' ? 'input-empty' : ''}
+														placeholder='Spend effect'
+														allowClear={true}
+														value={spend.effect}
+														onChange={e => setSpendEffect(n, e.target.value)}
+													/>
+													<NumberSpin min={0} value={spend.value} onChange={value => setSpendValue(n, value)} />
+													<Button block={true} danger={true} onClick={() => deleteSpend(n)}>Delete</Button>
+												</Space>
+											))
+										}
+										<Button block={true} onClick={addSpend}>Add a spend effect</Button>
+									</Space>
+									<HeaderText>Persistence</HeaderText>
+									<Space direction='vertical' style={{ width: '100%' }}>
+										{
+											ability.persistence.map((persist, n) => (
+												<Space key={n} direction='vertical' style={{ width: '100%' }}>
+													<Input
+														className={persist.effect === '' ? 'input-empty' : ''}
+														placeholder='Persistence Effect'
+														allowClear={true}
+														value={persist.effect}
+														onChange={e => setPersistenceEffect(n, e.target.value)}
+													/>
+													<NumberSpin min={0} value={persist.value} onChange={value => setPersistenceValue(n, value)} />
+													<Button block={true} danger={true} onClick={() => deletePersistence(n)}>Delete</Button>
+												</Space>
+											))
+										}
+										<Button block={true} onClick={addPersistence}>Add a persistence effect</Button>
+									</Space>
+								</div>
+							)
+						}
+					]}
 				/>
-				<HeaderText>Cost</HeaderText>
-				<NumberSpin min={0} value={ability.cost} onChange={setCost} />
-				<HeaderText>Pre Effect</HeaderText>
-				<Input.TextArea
-					placeholder='Effect'
-					allowClear={true}
-					rows={6}
-					value={ability.preEffect}
-					onChange={e => setPreEffect(e.target.value)}
-				/>
-				<HeaderText>Power Roll</HeaderText>
-				<Expander title='Power Roll'>
-					<Toggle label='Power Roll' value={!!ability.powerRoll} onChange={setPowerRoll} />
-					{
-						ability.powerRoll ?
-							<Select
-								style={{ width: '100%' }}
-								className={ability.powerRoll.characteristic.length === 0 ? 'selection-empty' : ''}
-								placeholder='Characteristics'
-								mode='multiple'
-								allowClear={true}
-								options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
-								optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-								value={ability.powerRoll.characteristic}
-								onChange={setPowerRollCharacteristics}
-							/>
-							: null
-					}
-					{
-						ability.powerRoll ?
-							<Input
-								className={ability.powerRoll.tier1 === '' ? 'input-empty' : ''}
-								placeholder='Tier 1'
-								allowClear={true}
-								value={ability.powerRoll.tier1}
-								onChange={e => setPowerRoll1(e.target.value)}
-							/>
-							: null
-					}
-					{
-						ability.powerRoll ?
-							<Input
-								className={ability.powerRoll.tier2 === '' ? 'input-empty' : ''}
-								placeholder='Tier 2'
-								allowClear={true}
-								value={ability.powerRoll.tier2}
-								onChange={e => setPowerRoll2(e.target.value)}
-							/>
-							: null
-					}
-					{
-						ability.powerRoll ?
-							<Input
-								className={ability.powerRoll.tier3 === '' ? 'input-empty' : ''}
-								placeholder='Tier 3'
-								allowClear={true}
-								value={ability.powerRoll.tier3}
-								onChange={e => setPowerRoll3(e.target.value)}
-							/>
-							: null
-					}
-				</Expander>
-				<HeaderText>Effect</HeaderText>
-				<Input.TextArea
-					placeholder='Effect'
-					allowClear={true}
-					rows={6}
-					value={ability.effect}
-					onChange={e => setEffect(e.target.value)}
-				/>
-				<HeaderText>Alternate Effects</HeaderText>
-				{
-					ability.alternateEffects.map((effect, n) => (
-						<Space key={n} direction='vertical' style={{ width: '100%' }}>
-							<Input
-								className={effect === '' ? 'input-empty' : ''}
-								placeholder='Alternate Effect'
-								allowClear={true}
-								value={effect}
-								onChange={e => setAlternateEffect(n, e.target.value)}
-							/>
-							<Button block={true} danger={true} onClick={() => deleteAlternateEffect(n)}>Delete</Button>
-						</Space>
-					))
-				}
-				<Button block={true} onClick={addAlternateEffect}>Add an alternate effect</Button>
-				<HeaderText>Spend</HeaderText>
-				{
-					ability.spend.map((spend, n) => (
-						<Space key={n} direction='vertical' style={{ width: '100%' }}>
-							<Input
-								className={spend.effect === '' ? 'input-empty' : ''}
-								placeholder='Spend effect'
-								allowClear={true}
-								value={spend.effect}
-								onChange={e => setSpendEffect(n, e.target.value)}
-							/>
-							<NumberSpin min={0} value={spend.value} onChange={value => setSpendValue(n, value)} />
-							<Button block={true} danger={true} onClick={() => deleteSpend(n)}>Delete</Button>
-						</Space>
-					))
-				}
-				<Button block={true} onClick={addSpend}>Add a spend effect</Button>
-				<HeaderText>Persistence</HeaderText>
-				{
-					ability.persistence.map((persist, n) => (
-						<Space key={n} direction='vertical' style={{ width: '100%' }}>
-							<Input
-								className={persist.effect === '' ? 'input-empty' : ''}
-								placeholder='Persistence Effect'
-								allowClear={true}
-								value={persist.effect}
-								onChange={e => setPersistenceEffect(n, e.target.value)}
-							/>
-							<NumberSpin min={0} value={persist.value} onChange={value => setPersistenceValue(n, value)} />
-							<Button block={true} danger={true} onClick={() => deletePersistence(n)}>Delete</Button>
-						</Space>
-					))
-				}
-				<Button block={true} onClick={addPersistence}>Add a persistence effect</Button>
 				<Divider />
 				{props.onDelete ? <Button block={true} danger={true} onClick={deleteAbility}>Delete</Button> : null}
 			</div>

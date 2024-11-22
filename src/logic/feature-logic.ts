@@ -3,6 +3,7 @@ import { Ability } from '../models/ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
+import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { DamageModifier } from '../models/damage-modifier';
@@ -374,7 +375,10 @@ export class FeatureLogic {
 		switch (feature.type) {
 			case FeatureType.Choice: {
 				const data = feature.data as FeatureChoiceData;
-				return data.selected.length >= data.count;
+				const selected = data.selected
+					.map(f => data.options.find(opt => opt.feature.id === f.id))
+					.filter(opt => !!opt);
+				return Collections.sum(selected, i => i.value) >= data.count;
 			}
 			case FeatureType.ClassAbility: {
 				const data = feature.data as FeatureClassAbilityData;

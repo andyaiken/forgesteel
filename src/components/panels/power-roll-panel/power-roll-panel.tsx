@@ -39,15 +39,17 @@ export const PowerRollPanel = (props: Props) => {
 		}
 
 		let characteristic: string | number = props.ability.powerRoll.characteristic.join(' or ');
+		let sign = '+';
 		if (props.hero) {
 			const values = props.ability.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero as Hero, ch));
 			characteristic = Collections.max(values, v => v) || 0;
+			sign = characteristic >= 0 ? '+' : '';
 		}
 
 		return (
 			<div className={props.onRoll ? 'power-roll-panel clickable' : 'power-roll-panel'} onClick={props.onRoll}>
 				<div className='power-roll-row power-roll-header'>
-					Power Roll + {characteristic}
+					Power Roll {sign}{characteristic}
 				</div>
 				<div className='power-roll-row'>
 					<div className='tier'>11 -</div>

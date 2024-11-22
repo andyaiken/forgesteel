@@ -44,6 +44,7 @@ p,
 
 	&.bold-text {
 		font-weight: 600;
+		letter-spacing: 0.5px;
 	}
 
 	&.dimmed-text {
@@ -61,6 +62,11 @@ p,
 	&.small-text {
 		font-size: 10px;
 	}
+}
+
+b {
+	font-weight: 600;
+	letter-spacing: 0.5px;
 }
 
 ul {
@@ -99,16 +105,22 @@ td {
 }
 
 .ant-collapse {
+	>.ant-collapse-item {
+		>.ant-collapse-header {
+			align-items: center;
+		}
+	}
+
 	&:hover {
-		.ant-collapse-item {
-			.ant-collapse-header {
+		>.ant-collapse-item {
+			>.ant-collapse-header {
 				background-color: rgb(180, 220, 255);
 				border-color: rgb(64, 150, 255);
 				border-radius: 6px;
 			}
 
 			&.ant-collapse-item-active {
-				.ant-collapse-header {
+				>.ant-collapse-header {
 					border-bottom-left-radius: 0;
 					border-bottom-right-radius: 0;
 					border-top-left-radius: 6px;
@@ -118,8 +130,8 @@ td {
 		}
 	}
 
-	.ant-collapse-item {
-		.ant-collapse-content-box {
+	>.ant-collapse-item {
+		>.ant-collapse-content-box {
 			display: flex;
 			flex-direction: column;
 			gap: 10px;

@@ -37,26 +37,36 @@ localforage
 				});
 
 				localforage
-					.getItem<Options>('forgesteel-options')
-					.then(options => {
-						if (!options) {
-							options = {
-								showSkillsInGroups: false,
-								showFreeStrikes: false,
-								showStandardAbilities: false,
-								dimUnavailableAbilities: false
-							};
+					.getItem<string[]>('forgesteel-hidden-setting-ids')
+					.then(hiddenSettingIDs => {
+						if (!hiddenSettingIDs) {
+							hiddenSettingIDs = [];
 						}
 
-						createRoot(document.getElementById('root')!).render(
-							<StrictMode>
-								<Main
-									heroes={heroes}
-									homebrewSettings={homebrewSettings}
-									options={options}
-								/>
-							</StrictMode>
-						);
+						localforage
+							.getItem<Options>('forgesteel-options')
+							.then(options => {
+								if (!options) {
+									options = {
+										showSkillsInGroups: false,
+										showFreeStrikes: false,
+										showStandardAbilities: false,
+										dimUnavailableAbilities: false
+									};
+								}
+
+								createRoot(document.getElementById('root')!).render(
+									<StrictMode>
+										<Main
+											heroes={heroes}
+											homebrewSettings={homebrewSettings}
+											hiddenSettingIDs={hiddenSettingIDs}
+											options={options}
+										/>
+									</StrictMode>
+								);
+							});
 					});
+
 			});
 	});

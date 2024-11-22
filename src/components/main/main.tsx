@@ -54,12 +54,14 @@ enum Page {
 interface Props {
 	heroes: Hero[];
 	homebrewSettings: CampaignSetting[];
+	hiddenSettingIDs: string[];
 	options: Options;
 }
 
 export const Main = (props: Props) => {
 	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
 	const [ homebrewSettings, setHomebrewSettings ] = useState<CampaignSetting[]>(props.homebrewSettings);
+	const [ hiddenSettingIDs, setHiddenSettingIDs ] = useState<string[]>(props.hiddenSettingIDs);
 	const [ options, setOptions ] = useState<Options>(props.options);
 	const [ page, setPage ] = useState<Page>(Page.Welcome);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
@@ -80,6 +82,12 @@ export const Main = (props: Props) => {
 		localforage
 			.setItem<CampaignSetting[]>('forgesteel-homebrew-settings', homebrew)
 			.then(setHomebrewSettings);
+	};
+
+	const persistHiddenSettingIDs = (ids: string[]) => {
+		localforage
+			.setItem<string[]>('forgesteel-hidden-setting-ids', ids)
+			.then(setHiddenSettingIDs);
 	};
 
 	const persistOptions = (options: Options) => {
@@ -932,6 +940,7 @@ export const Main = (props: Props) => {
 				return (
 					<ElementListPage
 						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings)}
+						hiddenSettingIDs={hiddenSettingIDs}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						viewAncestry={onSelectAncestry}
@@ -947,6 +956,7 @@ export const Main = (props: Props) => {
 						onCreateHomebrew={createHomebrew}
 						onImportHomebrew={importHomebrew}
 						onImportSetting={importCampaignSetting}
+						setHiddenSettingIDs={persistHiddenSettingIDs}
 					/>
 				);
 			case Page.ElementEdit:

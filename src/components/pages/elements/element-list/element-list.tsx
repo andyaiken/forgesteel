@@ -34,6 +34,7 @@ import './element-list.scss';
 
 interface Props {
 	campaignSettings: CampaignSetting[];
+	hiddenSettingIDs: string[];
 	goHome: () => void;
 	showAbout: () => void;
 	viewAncestry: (ancestry: Ancestry) => void;
@@ -49,27 +50,27 @@ interface Props {
 	onCreateHomebrew: (type: string, settingID: string | null) => void;
 	onImportHomebrew: (type: string, settingID: string | null, element: Element) => void;
 	onImportSetting: (setting: CampaignSetting) => void;
+	setHiddenSettingIDs: (ids: string[]) => void;
 }
 
 export const ElementListPage = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ element, setElement ] = useState<string>('Ancestry');
 	const [ settingID, setSettingID ] = useState<string | null>(props.campaignSettings.filter(cs => cs.isHomebrew).length > 0 ? props.campaignSettings.filter(cs => cs.isHomebrew)[0].id : null);
-	const [ hiddenSettingIDs, setHiddenSettingIDs ] = useState<string[]>([]);
 
 	const setVisibility = (setting: CampaignSetting, visible: boolean) => {
 		if (visible) {
-			const copy = JSON.parse(JSON.stringify(hiddenSettingIDs.filter(id => id !== setting.id))) as string[];
-			setHiddenSettingIDs(copy);
+			const copy = JSON.parse(JSON.stringify(props.hiddenSettingIDs.filter(id => id !== setting.id))) as string[];
+			props.setHiddenSettingIDs(copy);
 		} else {
-			const copy = JSON.parse(JSON.stringify(hiddenSettingIDs)) as string[];
+			const copy = JSON.parse(JSON.stringify(props.hiddenSettingIDs)) as string[];
 			copy.push(setting.id);
-			setHiddenSettingIDs(copy);
+			props.setHiddenSettingIDs(copy);
 		}
 	};
 
 	const getSettings = () => {
-		return props.campaignSettings.filter(cs => !hiddenSettingIDs.includes(cs.id));
+		return props.campaignSettings.filter(cs => !props.hiddenSettingIDs.includes(cs.id));
 	};
 
 	const createSetting = () => {
@@ -476,7 +477,7 @@ export const ElementListPage = (props: Props) => {
 										<CampaignSettingPanel
 											key={cs.id}
 											setting={cs}
-											visible={!hiddenSettingIDs.includes(cs.id)}
+											visible={!props.hiddenSettingIDs.includes(cs.id)}
 											onSetVisible={setVisibility}
 											onChange={props.onSettingChange}
 											onDelete={deleteSetting}

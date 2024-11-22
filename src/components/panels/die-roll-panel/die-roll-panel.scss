@@ -13,7 +13,7 @@
 			flex: 1 1 0;
 			padding: 5px 0;
 
-			&.result {
+			&.total {
 				font-weight: 600;
 				border: 2px solid rgb(120, 120, 120);
 				border-radius: 10px;
@@ -27,7 +27,7 @@
 	.die-roll-panel {
 		.result-row {
 			.ant-statistic {
-				&.result {
+				&.total {
 					background-color: rgba(255, 255, 255, 0.1);
 				}
 			}

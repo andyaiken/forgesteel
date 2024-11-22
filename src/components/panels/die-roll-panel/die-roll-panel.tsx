@@ -1,4 +1,5 @@
-import { Alert, Button, Statistic } from 'antd';
+import { Alert, Button, Slider, Statistic } from 'antd';
+import { ReactNode, useState } from 'react';
 import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
 import { Expander } from '../../controls/expander/expander';
@@ -6,7 +7,6 @@ import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Random } from '../../../utils/random';
-import { useState } from 'react';
 
 import './die-roll-panel.scss';
 
@@ -25,9 +25,6 @@ export const DieRollPanel = (props: Props) => {
 	};
 
 	try {
-		const values = props.characteristics.map(ch => HeroLogic.getCharacteristic(props.hero as Hero, ch));
-		const modifier = Collections.max(values, v => v) ?? 0;
-
 		let bonus = 0;
 		let tierMessage = null;
 
@@ -64,6 +61,17 @@ export const DieRollPanel = (props: Props) => {
 				break;
 		}
 
+		const values = props.characteristics.map(ch => HeroLogic.getCharacteristic(props.hero as Hero, ch));
+		const modifier = Collections.max(values, v => v) ?? 0;
+		const total = Collections.sum([ ...results, modifier, bonus ], r => r);
+
+		const marks: Record<string | number, ReactNode> = {};
+		marks[1] = <div className='ds-text dimmed-text small-text'>1</div>;
+		marks[12] = <div className='ds-text dimmed-text small-text'>12</div>;
+		marks[17] = <div className='ds-text dimmed-text small-text'>17</div>;
+		marks[20] = <div className='ds-text dimmed-text small-text'>20</div>;
+		// marks[total] = <div className='ds-text bold-text'>{total}</div>;
+
 		return (
 			<div className='die-roll-panel'>
 				<Expander title='Edges and Banes'>
@@ -91,8 +99,25 @@ export const DieRollPanel = (props: Props) => {
 							}
 							<Statistic title='Modifier' value={`${modifier >= 0 ? '+' : ''}${modifier}`} />
 							{bonus ? <Statistic title={bonus > 0 ? 'Edge' : 'Bane'} value={`${bonus >= 0 ? '+' : ''}${bonus}`} /> : null}
-							<Statistic className='result' title='Result' value={Collections.sum([ ...results, modifier, bonus ], r => r)} />
+							<Statistic className='total' title='Total' value={total} />
 						</div>
+						: null
+				}
+				{
+					results.length > 0 ?
+						<Slider
+							range={true}
+							marks={marks}
+							min={Math.min(1, total)}
+							max={Math.max(20, total)}
+							value={[ total ]}
+							styles={{
+								track: {
+									background: 'transparent'
+								}
+							}}
+							tooltip={{ open: false }}
+						/>
 						: null
 				}
 				{tierMessage ? <Alert type='warning' showIcon={true} message={tierMessage} /> : null}

@@ -23,9 +23,15 @@ import { DomainData } from '../../../../data/domains';
 import { DomainPanel } from '../../../panels/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
 import { HeroClass } from '../../../../models/class';
+import { Item } from '../../../../models/item';
+import { ItemData } from '../../../../data/item-data';
+import { ItemPanel } from '../../../panels/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitData } from '../../../../data/kit-data';
 import { KitPanel } from '../../../panels/kit-panel/kit-panel';
+import { Perk } from '../../../../models/perk';
+import { PerkData } from '../../../../data/perk-data';
+import { PerkPanel } from '../../../panels/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
@@ -41,9 +47,11 @@ interface Props {
 	viewCulture: (cultiure: Culture) => void;
 	viewCareer: (career: Career) => void;
 	viewClass: (heroClass: HeroClass) => void;
+	viewComplication: (complication: Complication) => void;
 	viewDomain: (domain: Domain) => void;
 	viewKit: (kit: Kit) => void;
-	viewComplication: (complication: Complication) => void;
+	viewPerk: (perk: Perk) => void;
+	viewItem: (item: Item) => void;
 	onSettingCreate: () => CampaignSetting;
 	onSettingChange: (setting: CampaignSetting) => void;
 	onSettingDelete: (setting: CampaignSetting) => void;
@@ -127,6 +135,14 @@ export const ElementListPage = (props: Props) => {
 			], searchTerm));
 	};
 
+	const getComplications = () => {
+		return ComplicationData
+			.getComplications(getSettings())
+			.filter(item => Utils.textMatches([
+				item.name
+			], searchTerm));
+	};
+
 	const getDomains = () => {
 		return DomainData
 			.getDomains(getSettings())
@@ -145,11 +161,21 @@ export const ElementListPage = (props: Props) => {
 			], searchTerm));
 	};
 
-	const getComplications = () => {
-		return ComplicationData
-			.getComplications(getSettings())
+	const getPerks = () => {
+		return PerkData
+			.getPerks(getSettings())
 			.filter(item => Utils.textMatches([
-				item.name
+				item.name,
+				...item.features.map(f => f.name)
+			], searchTerm));
+	};
+
+	const getItems = () => {
+		return ItemData
+			.getItems(getSettings())
+			.filter(item => Utils.textMatches([
+				item.name,
+				...item.features.map(f => f.name)
 			], searchTerm));
 	};
 
@@ -286,6 +312,39 @@ export const ElementListPage = (props: Props) => {
 		);
 	};
 
+	const getComplicationsSection = (list: Complication[]) => {
+		if (list.length === 0) {
+			return (
+				<div className='ds-text dimmed-text'>None</div>
+			);
+		}
+
+		return (
+			<div className='element-section-row'>
+				{
+					list.map(c => {
+						const item = (
+							<SelectablePanel key={c.id} onSelect={() => props.viewComplication(c)}>
+								<ComplicationPanel complication={c} />
+							</SelectablePanel>
+						);
+
+						const setting = CampaignSettingLogic.getComplicationSetting(props.campaignSettings, c);
+						if (setting && setting.id) {
+							return (
+								<Badge.Ribbon key={c.id} text={setting.name || 'Unnamed Collection'}>
+									{item}
+								</Badge.Ribbon>
+							);
+						}
+
+						return item;
+					})
+				}
+			</div>
+		);
+	};
+
 	const getDomainsSection = (list: Domain[]) => {
 		if (list.length === 0) {
 			return (
@@ -352,7 +411,7 @@ export const ElementListPage = (props: Props) => {
 		);
 	};
 
-	const getComplicationsSection = (list: Complication[]) => {
+	const getPerksSection = (list: Perk[]) => {
 		if (list.length === 0) {
 			return (
 				<div className='ds-text dimmed-text'>None</div>
@@ -362,17 +421,50 @@ export const ElementListPage = (props: Props) => {
 		return (
 			<div className='element-section-row'>
 				{
-					list.map(c => {
+					list.map(p => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.viewComplication(c)}>
-								<ComplicationPanel complication={c} />
+							<SelectablePanel key={p.id} onSelect={() => props.viewPerk(p)}>
+								<PerkPanel perk={p} />
 							</SelectablePanel>
 						);
 
-						const setting = CampaignSettingLogic.getComplicationSetting(props.campaignSettings, c);
+						const setting = CampaignSettingLogic.getPerkSetting(props.campaignSettings, p);
 						if (setting && setting.id) {
 							return (
-								<Badge.Ribbon key={c.id} text={setting.name || 'Unnamed Collection'}>
+								<Badge.Ribbon key={p.id} text={setting.name || 'Unnamed Collection'}>
+									{item}
+								</Badge.Ribbon>
+							);
+						}
+
+						return item;
+					})
+				}
+			</div>
+		);
+	};
+
+	const getItemsSection = (list: Item[]) => {
+		if (list.length === 0) {
+			return (
+				<div className='ds-text dimmed-text'>None</div>
+			);
+		}
+
+		return (
+			<div className='element-section-row'>
+				{
+					list.map(i => {
+						const item = (
+							<SelectablePanel key={i.id} onSelect={() => props.viewItem(i)}>
+								<ItemPanel item={i} />
+							</SelectablePanel>
+						);
+
+						const setting = CampaignSettingLogic.getItemSetting(props.campaignSettings, i);
+						if (setting && setting.id) {
+							return (
+								<Badge.Ribbon key={i.id} text={setting.name || 'Unnamed Collection'}>
 									{item}
 								</Badge.Ribbon>
 							);
@@ -386,16 +478,18 @@ export const ElementListPage = (props: Props) => {
 	};
 
 	try {
-		const elementOptions = [ 'Ancestry', 'Culture', 'Career', 'Class', 'Domain', 'Kit', 'Complication' ].map(e => ({ label: e, value: e }));
+		const elementOptions = [ 'Ancestry', 'Culture', 'Career', 'Class', 'Complication', 'Domain', 'Kit', 'Perk', 'Item' ].map(e => ({ label: e, value: e }));
 		const settingOptions = props.campaignSettings.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Collection', value: cs.id }));
 
 		const ancestries = getAncestries();
 		const cultures = getCultures();
 		const careers = getCareers();
 		const classes = getClasses();
+		const complications = getComplications();
 		const domains = getDomains();
 		const kits = getKits();
-		const complications = getComplications();
+		const perks = getPerks();
+		const items = getItems();
 
 		return (
 			<div className='element-list-page'>
@@ -550,6 +644,16 @@ export const ElementListPage = (props: Props) => {
 								key: '7',
 								label: `Domains (${domains.length})`,
 								children: getDomainsSection(domains)
+							},
+							{
+								key: '8',
+								label: `Perks (${perks.length})`,
+								children: getPerksSection(perks)
+							},
+							{
+								key: '9',
+								label: `Items (${items.length})`,
+								children: getItemsSection(items)
 							}
 						]}
 					/>

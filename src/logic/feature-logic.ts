@@ -11,8 +11,10 @@ import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { FormatLogic } from './format-logic';
 import { HeroClass } from '../models/class';
+import { Item } from '../models/item';
 import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit';
+import { Perk } from '../models/perk';
 import { SkillList } from '../enums/skill-list';
 
 export class FeatureLogic {
@@ -294,6 +296,14 @@ export class FeatureLogic {
 		return FeatureLogic.simplifyFeatures(features);
 	};
 
+	static getFeaturesFromComplication = (complication: Complication) => {
+		const features: Feature[] = [];
+
+		features.push(...complication.features);
+
+		return FeatureLogic.simplifyFeatures(features);
+	};
+
 	static getFeaturesFromKit = (kit: Kit) => {
 		const features: Feature[] = [];
 
@@ -302,10 +312,18 @@ export class FeatureLogic {
 		return FeatureLogic.simplifyFeatures(features);
 	};
 
-	static getFeaturesFromComplication = (complication: Complication) => {
+	static getFeaturesFromPerk = (perk: Perk) => {
 		const features: Feature[] = [];
 
-		features.push(...complication.features);
+		features.push(...perk.features);
+
+		return FeatureLogic.simplifyFeatures(features);
+	};
+
+	static getFeaturesFromItem = (item: Item) => {
+		const features: Feature[] = [];
+
+		features.push(...item.features);
 
 		return FeatureLogic.simplifyFeatures(features);
 	};

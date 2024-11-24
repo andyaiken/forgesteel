@@ -5,6 +5,7 @@ import { Characteristic } from '../enums/characteristic';
 import { Complication } from './complication';
 import { Culture } from './culture';
 import { HeroClass } from './class';
+import { Item } from './item';
 
 export interface Condition {
 	id: string;
@@ -23,6 +24,7 @@ export interface HeroState {
 	renown: number;
 	projectPoints: number;
 	conditions: Condition[];
+	inventory: Item[];
 }
 
 export interface Hero {

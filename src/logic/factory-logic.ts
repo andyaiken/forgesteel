@@ -8,8 +8,11 @@ import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from './feature-logic';
 import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
+import { Item } from '../models/item';
 import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit';
+import { Perk } from '../models/perk';
+import { PerkType } from '../enums/perk-type';
 import { SubClass } from '../models/subclass';
 import { Utils } from '../utils/utils';
 
@@ -33,7 +36,8 @@ export class FactoryLogic {
 				heroTokens: 0,
 				renown: 0,
 				projectPoints: 0,
-				conditions: []
+				conditions: [],
+				inventory: []
 			}
 		};
 		return hero;
@@ -53,6 +57,7 @@ export class FactoryLogic {
 			kits: [],
 			complications: [],
 			perks: [],
+			items: [],
 			skills: [],
 			languages: [],
 			defaultLanguages: []
@@ -142,6 +147,16 @@ export class FactoryLogic {
 		return sc;
 	};
 
+	static createComplication = () => {
+		const complication: Complication = {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			features: []
+		};
+		return complication;
+	};
+
 	static createDomain = () => {
 		const d: Domain = {
 			id: Utils.guid(),
@@ -176,13 +191,25 @@ export class FactoryLogic {
 		return kit;
 	};
 
-	static createComplication = () => {
-		const complication: Complication = {
+	static createPerk = () => {
+		const p: Perk = {
 			id: Utils.guid(),
 			name: '',
 			description: '',
+			type: PerkType.Crafting,
 			features: []
 		};
-		return complication;
+		return p;
+	};
+
+	static createItem = () => {
+		const i: Item = {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			features: [],
+			count: 1
+		};
+		return i;
 	};
 }

@@ -52,6 +52,18 @@ export class CampaignSettingData {
 			shadow,
 			tactician
 		],
+		complications: [
+			ComplicationData.cultVictim,
+			ComplicationData.devilDeal,
+			ComplicationData.elementalAbsorption,
+			ComplicationData.fireAndChaos,
+			ComplicationData.primordialSickness,
+			ComplicationData.punishmentCurse,
+			ComplicationData.shipwrecked,
+			ComplicationData.vividDreams,
+			ComplicationData.ward,
+			ComplicationData.warOfTheGuilds
+		],
 		domains: [
 			DomainData.creation,
 			DomainData.death,
@@ -96,19 +108,8 @@ export class CampaignSettingData {
 			KitData.raden,
 			KitData.vuken
 		],
-		complications: [
-			ComplicationData.cultVictim,
-			ComplicationData.devilDeal,
-			ComplicationData.elementalAbsorption,
-			ComplicationData.fireAndChaos,
-			ComplicationData.primordialSickness,
-			ComplicationData.punishmentCurse,
-			ComplicationData.shipwrecked,
-			ComplicationData.vividDreams,
-			ComplicationData.ward,
-			ComplicationData.warOfTheGuilds
-		],
 		perks: [],
+		items: [],
 		skills: SkillData.getCoreSkills(),
 		languages: [],
 		defaultLanguages: []
@@ -128,10 +129,11 @@ export class CampaignSettingData {
 			talent,
 			troubadour
 		],
+		complications: [],
 		domains: [],
 		kits: [],
-		complications: [],
 		perks: [],
+		items: [],
 		skills: [],
 		languages: [],
 		defaultLanguages: []
@@ -150,10 +152,11 @@ export class CampaignSettingData {
 		cultures: [],
 		careers: [],
 		classes: [],
+		complications: [],
 		domains: [],
 		kits: [],
-		complications: [],
 		perks: [],
+		items: [],
 		skills: [
 			{
 				name: 'Timescape',

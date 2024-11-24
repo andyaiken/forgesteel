@@ -30,9 +30,13 @@ import { HeroListPage } from '../pages/heroes/hero-list/hero-list-page';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroPage } from '../pages/heroes/hero-view/hero-view-page';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
+import { Item } from '../../models/item';
+import { ItemModal } from '../modals/item/item-modal';
 import { Kit } from '../../models/kit';
 import { KitModal } from '../modals/kit/kit-modal';
 import { Options } from '../../models/options';
+import { Perk } from '../../models/perk';
+import { PerkModal } from '../modals/perk/perk-modal';
 import { RulesModal } from '../modals/rules/rules-modal';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
@@ -232,11 +236,17 @@ export const Main = (props: Props) => {
 			case 'Class':
 				createClass(null, setting);
 				break;
+			case 'Complication':
+				createComplication(null, setting);
+				break;
 			case 'Kit':
 				createKit(null, setting);
 				break;
-			case 'Complication':
-				createComplication(null, setting);
+			case 'Perk':
+				createPerk(null, setting);
+				break;
+			case 'Item':
+				createItem(null, setting);
 				break;
 		}
 	};
@@ -349,6 +359,33 @@ export const Main = (props: Props) => {
 		}
 	};
 
+	const createComplication = (original: Complication | null, setting: CampaignSetting | null) => {
+		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		if (!setting) {
+			setting = FactoryLogic.createCampaignSetting();
+			settings.push(setting);
+		} else {
+			const id = setting.id;
+			setting = settings.find(cs => cs.id === id) as CampaignSetting;
+		}
+
+		let complication: Complication;
+		if (original) {
+			complication = JSON.parse(JSON.stringify(original)) as Complication;
+			complication.id = Utils.guid();
+		} else {
+			complication = FactoryLogic.createComplication();
+		}
+
+		setting.complications.push(complication);
+		persistHomebrewSettings(settings);
+		if (drawer) {
+			onSelectComplication(complication);
+		} else {
+			editComplication(complication, setting);
+		}
+	};
+
 	const createDomain = (original: Domain | null, setting: CampaignSetting | null) => {
 		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
 		if (!setting) {
@@ -403,7 +440,7 @@ export const Main = (props: Props) => {
 		}
 	};
 
-	const createComplication = (original: Complication | null, setting: CampaignSetting | null) => {
+	const createPerk = (original: Perk | null, setting: CampaignSetting | null) => {
 		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
 		if (!setting) {
 			setting = FactoryLogic.createCampaignSetting();
@@ -413,20 +450,47 @@ export const Main = (props: Props) => {
 			setting = settings.find(cs => cs.id === id) as CampaignSetting;
 		}
 
-		let complication: Complication;
+		let perk: Perk;
 		if (original) {
-			complication = JSON.parse(JSON.stringify(original)) as Complication;
-			complication.id = Utils.guid();
+			perk = JSON.parse(JSON.stringify(original)) as Perk;
+			perk.id = Utils.guid();
 		} else {
-			complication = FactoryLogic.createComplication();
+			perk = FactoryLogic.createPerk();
 		}
 
-		setting.complications.push(complication);
+		setting.perks.push(perk);
 		persistHomebrewSettings(settings);
 		if (drawer) {
-			onSelectComplication(complication);
+			onSelectPerk(perk);
 		} else {
-			editComplication(complication, setting);
+			editPerk(perk, setting);
+		}
+	};
+
+	const createItem = (original: Item | null, setting: CampaignSetting | null) => {
+		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		if (!setting) {
+			setting = FactoryLogic.createCampaignSetting();
+			settings.push(setting);
+		} else {
+			const id = setting.id;
+			setting = settings.find(cs => cs.id === id) as CampaignSetting;
+		}
+
+		let item: Item;
+		if (original) {
+			item = JSON.parse(JSON.stringify(original)) as Item;
+			item.id = Utils.guid();
+		} else {
+			item = FactoryLogic.createItem();
+		}
+
+		setting.items.push(item);
+		persistHomebrewSettings(settings);
+		if (drawer) {
+			onSelectItem(item);
+		} else {
+			editItem(item, setting);
 		}
 	};
 
@@ -462,6 +526,14 @@ export const Main = (props: Props) => {
 		setDrawer(null);
 	};
 
+	const editComplication = (complication: Complication, setting: CampaignSetting) => {
+		setSelectedElement(complication);
+		setSelectedElementSetting(setting);
+		setSelectedElementType('Complication');
+		setPage(Page.ElementEdit);
+		setDrawer(null);
+	};
+
 	const editDomain = (domain: Domain, setting: CampaignSetting) => {
 		setSelectedElement(domain);
 		setSelectedElementSetting(setting);
@@ -478,10 +550,18 @@ export const Main = (props: Props) => {
 		setDrawer(null);
 	};
 
-	const editComplication = (complication: Complication, setting: CampaignSetting) => {
-		setSelectedElement(complication);
+	const editPerk = (perk: Perk, setting: CampaignSetting) => {
+		setSelectedElement(perk);
 		setSelectedElementSetting(setting);
-		setSelectedElementType('Complication');
+		setSelectedElementType('Perk');
+		setPage(Page.ElementEdit);
+		setDrawer(null);
+	};
+
+	const editItem = (item: Item, setting: CampaignSetting) => {
+		setSelectedElement(item);
+		setSelectedElementSetting(setting);
+		setSelectedElementType('Item');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
 	};
@@ -522,6 +602,15 @@ export const Main = (props: Props) => {
 		setDrawer(null);
 	};
 
+	const deleteComplication = (complication: Complication) => {
+		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		copy.forEach(cs => {
+			cs.complications = cs.complications.filter(c => c.id !== complication.id);
+		});
+		persistHomebrewSettings(copy);
+		setDrawer(null);
+	};
+
 	const deleteDomain = (domain: Domain) => {
 		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
 		copy.forEach(cs => {
@@ -540,10 +629,19 @@ export const Main = (props: Props) => {
 		setDrawer(null);
 	};
 
-	const deleteComplication = (complication: Complication) => {
+	const deletePerk = (perk: Perk) => {
 		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
 		copy.forEach(cs => {
-			cs.complications = cs.complications.filter(c => c.id !== complication.id);
+			cs.perks = cs.perks.filter(p => p.id !== perk.id);
+		});
+		persistHomebrewSettings(copy);
+		setDrawer(null);
+	};
+
+	const deleteItem = (item: Item) => {
+		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		copy.forEach(cs => {
+			cs.items = cs.items.filter(i => i.id !== item.id);
 		});
 		persistHomebrewSettings(copy);
 		setDrawer(null);
@@ -611,6 +709,13 @@ export const Main = (props: Props) => {
 						}
 					}
 						break;
+					case 'Complication': {
+						const complicationIndex = setting.complications.findIndex(c => c.id === element.id);
+						if (complicationIndex !== -1) {
+							setting.complications[complicationIndex] = element as unknown as Complication;
+						}
+					}
+						break;
 					case 'Domain': {
 						const domainIndex = setting.domains.findIndex(d => d.id === element.id);
 						if (domainIndex !== -1) {
@@ -625,10 +730,17 @@ export const Main = (props: Props) => {
 						}
 					}
 						break;
-					case 'Complication': {
-						const complicationIndex = setting.complications.findIndex(c => c.id === element.id);
-						if (complicationIndex !== -1) {
-							setting.complications[complicationIndex] = element as unknown as Complication;
+					case 'Perk': {
+						const perkIndex = setting.perks.findIndex(p => p.id === element.id);
+						if (perkIndex !== -1) {
+							setting.perks[perkIndex] = element as unknown as Perk;
+						}
+					}
+						break;
+					case 'Item': {
+						const itemIndex = setting.items.findIndex(i => i.id === element.id);
+						if (itemIndex !== -1) {
+							setting.items[itemIndex] = element as unknown as Item;
 						}
 					}
 						break;
@@ -676,6 +788,10 @@ export const Main = (props: Props) => {
 					setting.classes.push(element as unknown as HeroClass);
 					Collections.sort(setting.classes, item => item.name);
 					break;
+				case 'Complication':
+					setting.complications.push(element as unknown as Complication);
+					Collections.sort(setting.complications, item => item.name);
+					break;
 				case 'Domain':
 					setting.domains.push(element as unknown as Domain);
 					Collections.sort(setting.domains, item => item.name);
@@ -684,9 +800,13 @@ export const Main = (props: Props) => {
 					setting.kits.push(element as unknown as Kit);
 					Collections.sort(setting.kits, item => item.name);
 					break;
-				case 'Complication':
-					setting.complications.push(element as unknown as Complication);
-					Collections.sort(setting.complications, item => item.name);
+				case 'Perk':
+					setting.perks.push(element as unknown as Perk);
+					Collections.sort(setting.perks, item => item.name);
+					break;
+				case 'Item':
+					setting.items.push(element as unknown as Item);
+					Collections.sort(setting.kits, item => item.name);
 					break;
 			}
 		}
@@ -778,6 +898,24 @@ export const Main = (props: Props) => {
 		);
 	};
 
+	const onSelectComplication = (complication: Complication) => {
+		const container = CampaignSettingData
+			.getCampaignSettings(homebrewSettings)
+			.find(cs => cs.complications.find(c => c.id === complication.id));
+
+		setDrawer(
+			<ComplicationModal
+				complication={complication}
+				homebrewSettings={homebrewSettings}
+				isHomebrew={!!homebrewSettings.flatMap(cs => cs.complications).find(c => c.id === complication.id)}
+				createHomebrew={setting => createComplication(complication, setting)}
+				export={format => Utils.export([ complication.id ], complication.name || 'Complication', complication, 'complication', format)}
+				edit={() => editComplication(complication, container as CampaignSetting)}
+				delete={() => deleteComplication(complication)}
+			/>
+		);
+	};
+
 	const onSelectDomain = (domain: Domain) => {
 		const container = CampaignSettingData
 			.getCampaignSettings(homebrewSettings)
@@ -814,20 +952,38 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onSelectComplication = (complication: Complication) => {
+	const onSelectPerk = (perk: Perk) => {
 		const container = CampaignSettingData
 			.getCampaignSettings(homebrewSettings)
-			.find(cs => cs.complications.find(c => c.id === complication.id));
+			.find(cs => cs.perks.find(p => p.id === perk.id));
 
 		setDrawer(
-			<ComplicationModal
-				complication={complication}
+			<PerkModal
+				perk={perk}
 				homebrewSettings={homebrewSettings}
-				isHomebrew={!!homebrewSettings.flatMap(cs => cs.complications).find(c => c.id === complication.id)}
-				createHomebrew={setting => createComplication(complication, setting)}
-				export={format => Utils.export([ complication.id ], complication.name || 'Complication', complication, 'complication', format)}
-				edit={() => editComplication(complication, container as CampaignSetting)}
-				delete={() => deleteComplication(complication)}
+				isHomebrew={!!homebrewSettings.flatMap(cs => cs.perks).find(p => p.id === perk.id)}
+				createHomebrew={setting => createPerk(perk, setting)}
+				export={format => Utils.export([ perk.id ], perk.name || 'Perk', perk, 'perk', format)}
+				edit={() => editPerk(perk, container as CampaignSetting)}
+				delete={() => deletePerk(perk)}
+			/>
+		);
+	};
+
+	const onSelectItem = (item: Item) => {
+		const container = CampaignSettingData
+			.getCampaignSettings(homebrewSettings)
+			.find(cs => cs.items.find(i => i.id === item.id));
+
+		setDrawer(
+			<ItemModal
+				item={item}
+				homebrewSettings={homebrewSettings}
+				isHomebrew={!!homebrewSettings.flatMap(cs => cs.items).find(i => i.id === item.id)}
+				createHomebrew={setting => createItem(item, setting)}
+				export={format => Utils.export([ item.id ], item.name || 'Item', item, 'item', format)}
+				edit={() => editItem(item, container as CampaignSetting)}
+				delete={() => deleteItem(item)}
 			/>
 		);
 	};
@@ -960,9 +1116,11 @@ export const Main = (props: Props) => {
 						viewCulture={onSelectCulture}
 						viewCareer={onSelectCareer}
 						viewClass={onSelectClass}
+						viewComplication={onSelectComplication}
 						viewDomain={onSelectDomain}
 						viewKit={onSelectKit}
-						viewComplication={onSelectComplication}
+						viewPerk={onSelectPerk}
+						viewItem={onSelectItem}
 						onSettingCreate={createCampaignSetting}
 						onSettingChange={changeCampaignSetting}
 						onSettingDelete={deleteCampaignSetting}

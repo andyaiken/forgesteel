@@ -5,6 +5,7 @@ import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { Domain } from '../models/domain';
 import { HeroClass } from '../models/class';
+import { Item } from '../models/item';
 import { Kit } from '../models/kit';
 import { Perk } from '../models/perk';
 
@@ -20,6 +21,7 @@ export class CampaignSettingLogic {
 		count += setting.kits.length;
 		count += setting.domains.length;
 		count += setting.perks.length;
+		count += setting.items.length;
 
 		return count;
 	};
@@ -54,5 +56,9 @@ export class CampaignSettingLogic {
 
 	static getPerkSetting = (settings: CampaignSetting[], perk: Perk) => {
 		return settings.find(cs => cs.perks.find(p => p.id === perk.id));
+	};
+
+	static getItemSetting = (settings: CampaignSetting[], item: Item) => {
+		return settings.find(cs => cs.items.find(i => i.id === item.id));
 	};
 }

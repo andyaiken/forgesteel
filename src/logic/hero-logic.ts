@@ -86,6 +86,10 @@ export class HeroLogic {
 			features.push(...FeatureLogic.getFeaturesFromComplication(hero.complication));
 		}
 
+		hero.state.inventory.forEach(item => {
+			features.push(...FeatureLogic.getFeaturesFromItem(item));
+		});
+
 		return features;
 	};
 
@@ -757,6 +761,10 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 
 		if (hero.state.xp === undefined) {
 			hero.state.xp = 0;
+		}
+
+		if (hero.state.inventory === undefined) {
+			hero.state.inventory = [];
 		}
 	};
 }

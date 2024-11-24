@@ -33,12 +33,17 @@ import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
+import { Item } from '../../../../models/item';
+import { ItemPanel } from '../../../panels/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/kit-panel/kit-panel';
 import { LanguageData } from '../../../../data/language-data';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { Perk } from '../../../../models/perk';
+import { PerkPanel } from '../../../panels/perk-panel/perk-panel';
+import { PerkType } from '../../../../enums/perk-type';
 import { SkillData } from '../../../../data/skill-data';
 import { SkillList } from '../../../../enums/skill-list';
 import { SubClass } from '../../../../models/subclass';
@@ -101,10 +106,10 @@ export const ElementEditPage = (props: Props) => {
 	};
 
 	const getFeaturesEditSection = () => {
-		const el = element as Ancestry | Career | Kit | Complication;
+		const el = element as Ancestry | Career | Complication | Kit | Perk | Item;
 
 		const addFeature = () => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Kit | Complication;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Perk | Item;
 			elementCopy.features.push(FeatureLogic.createFeature({
 				id: Utils.guid(),
 				name: '',
@@ -115,7 +120,7 @@ export const ElementEditPage = (props: Props) => {
 		};
 
 		const changeFeature = (feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Kit | Complication;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Perk | Item;
 			const index = elementCopy.features.findIndex(f => f.id === feature.id);
 			if (index !== -1) {
 				elementCopy.features[index] = feature;
@@ -125,7 +130,7 @@ export const ElementEditPage = (props: Props) => {
 		};
 
 		const moveFeature = (feature: Feature, direction: 'up' | 'down') => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Kit | Complication;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Perk | Item;
 			const index = elementCopy.features.findIndex(f => f.id === feature.id);
 			elementCopy.features = Collections.move(elementCopy.features, index, direction);
 			setElement(elementCopy);
@@ -133,7 +138,7 @@ export const ElementEditPage = (props: Props) => {
 		};
 
 		const deleteFeature = (feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Kit | Complication;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Perk | Item;
 			elementCopy.features = elementCopy.features.filter(f => f.id !== feature.id);
 			setElement(elementCopy);
 			setDirty(true);
@@ -1057,6 +1062,31 @@ export const ElementEditPage = (props: Props) => {
 		);
 	};
 
+	const getPerkEditSection = () => {
+		const perk = element as Perk;
+
+		const setType = (value: PerkType) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Perk;
+			elementCopy.type = value;
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Type</HeaderText>
+				<Select
+					style={{ width: '100%' }}
+					placeholder='Select type'
+					options={[ PerkType.Crafting, PerkType.Exploration, PerkType.Interpersonal, PerkType.Intrigue, PerkType.Lore, PerkType.Supernatural ].map(l => ({ value: l }))}
+					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+					value={perk.type}
+					onChange={setType}
+				/>
+			</Space>
+		);
+	};
+
 	const getEditSection = () => {
 		switch (props.elementType) {
 			case 'Ancestry':
@@ -1152,6 +1182,23 @@ export const ElementEditPage = (props: Props) => {
 						]}
 					/>
 				);
+			case 'Complication':
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Element',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Features',
+								children: getFeaturesEditSection()
+							}
+						]}
+					/>
+				);
 			case 'Domain':
 				return (
 					<Tabs
@@ -1201,7 +1248,29 @@ export const ElementEditPage = (props: Props) => {
 						]}
 					/>
 				);
-			case 'Complication':
+			case 'Perk':
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Element',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Perk',
+								children: getPerkEditSection()
+							},
+							{
+								key: '3',
+								label: 'Features',
+								children: getFeaturesEditSection()
+							}
+						]}
+					/>
+				);
+			case 'Item':
 				return (
 					<Tabs
 						items={[
@@ -1233,12 +1302,16 @@ export const ElementEditPage = (props: Props) => {
 				return <CareerPanel career={element as Career} mode={PanelMode.Full} />;
 			case 'Class':
 				return <ClassPanel heroClass={element as HeroClass} mode={PanelMode.Full} />;
+			case 'Complication':
+				return <ComplicationPanel complication={element as Complication} mode={PanelMode.Full} />;
 			case 'Domain':
 				return <DomainPanel domain={element as Domain} mode={PanelMode.Full} />;
 			case 'Kit':
 				return <KitPanel kit={element as Kit} mode={PanelMode.Full} />;
-			case 'Complication':
-				return <ComplicationPanel complication={element as Complication} mode={PanelMode.Full} />;
+			case 'Perk':
+				return <PerkPanel perk={element as Perk} mode={PanelMode.Full} />;
+			case 'Item':
+				return <ItemPanel item={element as Item} mode={PanelMode.Full} />;
 		}
 
 		return null;

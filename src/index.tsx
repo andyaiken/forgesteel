@@ -31,6 +31,9 @@ localforage
 					if (setting.domains === undefined) {
 						setting.domains = [];
 					}
+					if (setting.items === undefined) {
+						setting.items = [];
+					}
 					if (setting.perks === undefined) {
 						setting.perks = [];
 					}

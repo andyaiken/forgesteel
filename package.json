@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "3.9.0",
+	"version": "3.10.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -10,6 +10,7 @@
 		"dev": "vite",
 		"lint": "tsc -b && eslint .",
 		"preview": "vite preview",
+		"build": "vite build",
 		"predeploy": "tsc -b && vite build",
 		"deploy": "gh-pages -d dist"
 	},

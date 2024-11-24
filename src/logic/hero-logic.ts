@@ -705,6 +705,40 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 		return arrays;
 	};
 
+	static getMinXP = (level: number) => {
+		switch (level) {
+			case 1:
+				return 0;
+			case 2:
+				return 10;
+			case 3:
+				return 25;
+			case 4:
+				return 40;
+			case 5:
+				return 55;
+			case 6:
+				return 70;
+			case 7:
+				return 85;
+			case 8:
+				return 100;
+			case 9:
+				return 115;
+			case 10:
+			default:
+				return 130;
+		}
+	};
+
+	static canLevelUp = (hero: Hero) => {
+		if (!hero.class) {
+			return false;
+		}
+
+		return hero.state.xp >= this.getMinXP(hero.class.level + 1);
+	};
+
 	///////////////////////////////////////////////////////////////////////////
 
 	static updateHero = (hero: Hero) => {

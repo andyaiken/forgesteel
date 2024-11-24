@@ -859,6 +859,19 @@ export const Main = (props: Props) => {
 							setSelectedHero(updatedHero);
 						}
 					}}
+					onLevelUp={() => {
+						if (selectedHero && selectedHero.class) {
+							selectedHero.class.level += 1;
+							const list = JSON.parse(JSON.stringify(heroes)) as Hero[];
+							const index = list.findIndex(h => h.id === selectedHero.id);
+							if (index !== -1) {
+								list[index] = selectedHero;
+								persistHeroes(list);
+								setPage(Page.HeroEdit);
+								setDrawer(null);
+							}
+						}
+					}}
 				/>
 			);
 		}

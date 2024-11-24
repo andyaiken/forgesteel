@@ -29,6 +29,7 @@ import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { LanguageData } from '../../../../data/language-data';
 import { NameGenerator } from '../../../../utils/name-generator';
+import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { ThunderboltOutlined } from '@ant-design/icons';
@@ -254,6 +255,16 @@ export const HeroEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const setLevel = (level: number) => {
+			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			if (heroCopy.class) {
+				heroCopy.class.level = level;
+				heroCopy.state.xp = HeroLogic.getMinXP(level);
+			}
+			setHero(heroCopy);
+			setDirty(true);
+		};
+
 		const setCharacteristics = (array: { characteristic: Characteristic, value: number }[]) => {
 			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 			if (heroCopy.class) {
@@ -353,6 +364,7 @@ export const HeroEditPage = (props: Props) => {
 							hero={hero}
 							campaignSettings={props.campaignSettings.filter(cs => hero.settingIDs.includes(cs.id))}
 							selectClass={setClass}
+							setLevel={setLevel}
 							selectCharacteristics={setCharacteristics}
 							selectSubclasses={setSubclasses}
 							setFeatureData={setFeatureData}
@@ -686,6 +698,7 @@ interface ClassSectionProps {
 	hero: Hero;
 	campaignSettings: CampaignSetting[];
 	selectClass: (heroClass: HeroClass | null) => void;
+	setLevel: (level: number) => void;
 	selectCharacteristics: (array: { characteristic: Characteristic, value: number }[]) => void;
 	selectSubclasses: (subclassIDs: string[]) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
@@ -763,6 +776,19 @@ const ClassSection = (props: ClassSectionProps) => {
 							}
 						</Space>
 					</Radio.Group>
+				</SelectablePanel>
+			);
+
+			choices.unshift(
+				<SelectablePanel key='class-level'>
+					<HeaderText>Level</HeaderText>
+					<NumberSpin
+						value={props.hero.class.level}
+						min={1}
+						max={10}
+						onChange={value => props.setLevel(value)}
+					/>
+					<Field label='XP' value={props.hero.state.xp} />
 				</SelectablePanel>
 			);
 		}

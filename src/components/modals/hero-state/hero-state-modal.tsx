@@ -1,6 +1,7 @@
 import { Alert, Button, Divider, Flex, Tabs } from 'antd';
 import { Condition, Hero } from '../../../models/hero';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
+import { ArrowUpOutlined } from '@ant-design/icons';
 import { Characteristic } from '../../../enums/characteristic';
 import { ConditionPanel } from '../../panels/condition-panel/condition-panel';
 import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
@@ -15,6 +16,7 @@ interface Props {
 	hero: Hero;
 	startPage: 'hero' | 'stats' | 'conditions';
 	onChange: (hero: Hero) => void;
+	onLevelUp: () => void;
 }
 
 export const HeroStateModal = (props: Props) => {
@@ -111,6 +113,11 @@ export const HeroStateModal = (props: Props) => {
 					min={0}
 					onChange={value => onChange('xp', value)}
 				/>
+				{
+					HeroLogic.canLevelUp(hero) ?
+						<Alert style={{ margin: '10px 0' }} type='info' showIcon={true} message='You have enough XP to level up.' action={<Button title='Level Up' type='text' icon={<ArrowUpOutlined />} onClick={props.onLevelUp} />} />
+						: null
+				}
 				<Flex align='center' justify='space-between' gap='5px'>
 					<Button
 						className='tall-button'

@@ -19,7 +19,7 @@ import { Culture } from '../../../../models/culture';
 import { CultureData } from '../../../../data/culture-data';
 import { CulturePanel } from '../../../panels/culture-panel/culture-panel';
 import { Domain } from '../../../../models/domain';
-import { DomainData } from '../../../../data/domains';
+import { DomainData } from '../../../../data/domain-data';
 import { DomainPanel } from '../../../panels/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
 import { HeroClass } from '../../../../models/class';
@@ -29,6 +29,9 @@ import { ItemPanel } from '../../../panels/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitData } from '../../../../data/kit-data';
 import { KitPanel } from '../../../panels/kit-panel/kit-panel';
+import { MonsterGroup } from '../../../../models/monster';
+import { MonsterGroupData } from '../../../../data/monster-group-data';
+import { MonsterGroupPanel } from '../../../panels/monster-group-panel/monster-group-panel';
 import { Perk } from '../../../../models/perk';
 import { PerkData } from '../../../../data/perk-data';
 import { PerkPanel } from '../../../panels/perk-panel/perk-panel';
@@ -52,6 +55,7 @@ interface Props {
 	viewKit: (kit: Kit) => void;
 	viewPerk: (perk: Perk) => void;
 	viewItem: (item: Item) => void;
+	viewMonsterGroup: (monsterGroup: MonsterGroup) => void;
 	onSettingCreate: () => CampaignSetting;
 	onSettingChange: (setting: CampaignSetting) => void;
 	onSettingDelete: (setting: CampaignSetting) => void;
@@ -176,6 +180,16 @@ export const ElementListPage = (props: Props) => {
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.features.map(f => f.name)
+			], searchTerm));
+	};
+
+	const getMonsterGroups = () => {
+		return MonsterGroupData
+			.getMonsterGroups(getSettings())
+			.filter(item => Utils.textMatches([
+				item.name,
+				...item.information.map(f => f.name),
+				...item.monsters.map(m => m.name)
 			], searchTerm));
 	};
 
@@ -477,8 +491,41 @@ export const ElementListPage = (props: Props) => {
 		);
 	};
 
+	const getMonsterGroupsSection = (list: MonsterGroup[]) => {
+		if (list.length === 0) {
+			return (
+				<div className='ds-text dimmed-text'>None</div>
+			);
+		}
+
+		return (
+			<div className='element-section-row'>
+				{
+					list.map(mg => {
+						const item = (
+							<SelectablePanel key={mg.id} onSelect={() => props.viewMonsterGroup(mg)}>
+								<MonsterGroupPanel monsterGroup={mg} />
+							</SelectablePanel>
+						);
+
+						const setting = CampaignSettingLogic.getMonsterGroupSetting(props.campaignSettings, mg);
+						if (setting && setting.id) {
+							return (
+								<Badge.Ribbon key={mg.id} text={setting.name || 'Unnamed Collection'}>
+									{item}
+								</Badge.Ribbon>
+							);
+						}
+
+						return item;
+					})
+				}
+			</div>
+		);
+	};
+
 	try {
-		const elementOptions = [ 'Ancestry', 'Culture', 'Career', 'Class', 'Complication', 'Domain', 'Kit', 'Perk', 'Item' ].map(e => ({ label: e, value: e }));
+		const elementOptions = [ 'Ancestry', 'Culture', 'Career', 'Class', 'Complication', 'Domain', 'Kit', 'Perk', 'Item', 'Monster Group' ].map(e => ({ label: e, value: e }));
 		const settingOptions = props.campaignSettings.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Collection', value: cs.id }));
 
 		const ancestries = getAncestries();
@@ -490,6 +537,7 @@ export const ElementListPage = (props: Props) => {
 		const kits = getKits();
 		const perks = getPerks();
 		const items = getItems();
+		const monsterGroups = getMonsterGroups();
 
 		return (
 			<div className='element-list-page'>
@@ -654,6 +702,11 @@ export const ElementListPage = (props: Props) => {
 								key: '9',
 								label: `Items (${items.length})`,
 								children: getItemsSection(items)
+							},
+							{
+								key: '10',
+								label: `Monsters (${monsterGroups.length})`,
+								children: getMonsterGroupsSection(monsterGroups)
 							}
 						]}
 					/>

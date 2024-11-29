@@ -1,6 +1,8 @@
+import { Monster, MonsterGroup } from '../models/monster';
 import { Ancestry } from '../models/ancestry';
 import { CampaignSetting } from '../models/campaign-setting';
 import { Career } from '../models/career';
+import { Characteristic } from '../enums/characteristic';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { Domain } from '../models/domain';
@@ -11,6 +13,7 @@ import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit';
+import { MonsterRoleType } from '../enums/monster-role-type';
 import { Perk } from '../models/perk';
 import { PerkType } from '../enums/perk-type';
 import { SubClass } from '../models/subclass';
@@ -58,6 +61,7 @@ export class FactoryLogic {
 			complications: [],
 			perks: [],
 			items: [],
+			monsterGroups: [],
 			skills: [],
 			languages: [],
 			defaultLanguages: []
@@ -211,5 +215,68 @@ export class FactoryLogic {
 			count: 1
 		};
 		return i;
+	};
+
+	static createMonsterGroup = () => {
+		const mg: MonsterGroup = {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			information: [],
+			malice: [],
+			monsters: []
+		};
+		return mg;
+	};
+
+	static createMonster = () => {
+		const m: Monster = {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			level: 1,
+			role: {
+				type: MonsterRoleType.Ambusher,
+				isMinion: false
+			},
+			keywords: [],
+			encounterValue: 0,
+			size: {
+				value: 1,
+				mod: 'M'
+			},
+			speed: {
+				value: 5,
+				modes: ''
+			},
+			stamina: 5,
+			stability: 0,
+			freeStrikeDamage: 2,
+			characteristics: [
+				{
+					characteristic: Characteristic.Might,
+					value: 0
+				},
+				{
+					characteristic: Characteristic.Agility,
+					value: 0
+				},
+				{
+					characteristic: Characteristic.Reason,
+					value: 0
+				},
+				{
+					characteristic: Characteristic.Intuition,
+					value: 0
+				},
+				{
+					characteristic: Characteristic.Presence,
+					value: 0
+				}
+			],
+			features: [],
+			villainActions: []
+		};
+		return m;
 	};
 }

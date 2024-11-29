@@ -8,6 +8,7 @@ import { HeroClass } from './class';
 import { Item } from './item';
 import { Kit } from './kit';
 import { Language } from './language';
+import { MonsterGroup } from './monster';
 import { Perk } from './perk';
 import { Skill } from './skill';
 
@@ -22,6 +23,7 @@ export interface CampaignSetting extends Element {
 	kits: Kit[];
 	perks: Perk[];
 	items: Item[];
+	monsterGroups: MonsterGroup[];
 	skills: Skill[];
 	languages: Language[];
 	defaultLanguages: string[];

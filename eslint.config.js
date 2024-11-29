@@ -119,14 +119,7 @@ export default tseslint.config(
 			'react-refresh/only-export-components': [
 				'warn',
 				{ allowConstantExport: true },
-			],
-			// Turned off
-			'react/react-in-jsx-scope': 'off',
-			'@typescript-eslint/no-unsafe-call': 'off',
-			'@typescript-eslint/no-unsafe-member-access': 'off',
-			'@typescript-eslint/no-unsafe-member-argument': 'off',
-			'@typescript-eslint/no-unsafe-return': 'off',
-			'@typescript-eslint/non-nullable-type-assertion-style': 'off'
+			]
 		}
 	}
 )

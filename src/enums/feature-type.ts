@@ -1,7 +1,7 @@
 export enum FeatureType {
 	Text = 'Text',
 	Ability = 'Ability',
-	AbilityCost = 'Abiliyy Cost',
+	AbilityCost = 'Ability Cost',
 	Bonus = 'Bonus',
 	Choice = 'Choice',
 	ClassAbility = 'Class Ability',

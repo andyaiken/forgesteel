@@ -1,4 +1,5 @@
 import { DamageModifier } from '../models/damage-modifier';
+import { MonsterRole } from '../models/monster';
 import { Size } from '../models/size';
 
 export class FormatLogic {
@@ -8,6 +9,14 @@ export class FormatLogic {
 		}
 
 		return `1${size.mod}`;
+	};
+
+	static getRole = (role: MonsterRole) => {
+		if (role.isMinion) {
+			return `${role.type} Minion`;
+		}
+
+		return role.type;
 	};
 
 	static getDamageModifier = (mod: DamageModifier) => {

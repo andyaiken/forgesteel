@@ -7,6 +7,7 @@ import { Domain } from '../models/domain';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 import { Kit } from '../models/kit';
+import { MonsterGroup } from '../models/monster';
 import { Perk } from '../models/perk';
 
 export class CampaignSettingLogic {
@@ -22,6 +23,7 @@ export class CampaignSettingLogic {
 		count += setting.domains.length;
 		count += setting.perks.length;
 		count += setting.items.length;
+		count += setting.monsterGroups.length;
 
 		return count;
 	};
@@ -60,5 +62,9 @@ export class CampaignSettingLogic {
 
 	static getItemSetting = (settings: CampaignSetting[], item: Item) => {
 		return settings.find(cs => cs.items.find(i => i.id === item.id));
+	};
+
+	static getMonsterGroupSetting = (settings: CampaignSetting[], monsterGroup: MonsterGroup) => {
+		return settings.find(cs => cs.monsterGroups.find(mg => mg.id === monsterGroup.id));
 	};
 }

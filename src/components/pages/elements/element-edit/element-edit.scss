@@ -27,12 +27,9 @@
 		}
 	}
 
-	.feature-edit-panel {
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-	}
-
+	.element-edit-panel,
+	.feature-edit-panel,
+	.monster-edit-panel,
 	.ability-edit-panel {
 		display: flex;
 		flex-direction: column;

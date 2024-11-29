@@ -1,0 +1,12 @@
+.monster-group-panel {
+	padding: 0 20px 20px 20px;
+
+	&.compact {
+		margin-top: -10px;
+		padding: unset;
+	}
+
+	>.monster-panel {
+		padding: 0;
+	}
+}

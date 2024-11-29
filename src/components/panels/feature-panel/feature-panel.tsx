@@ -4,7 +4,7 @@ import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { CampaignSetting } from '../../../models/campaign-setting';
 import { Collections } from '../../../utils/collections';
-import { DomainData } from '../../../data/domains';
+import { DomainData } from '../../../data/domain-data';
 import { DomainPanel } from '../domain-panel/domain-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';

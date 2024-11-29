@@ -3,7 +3,7 @@ import { CampaignSetting } from '../models/campaign-setting';
 import { CareerData } from './career-data';
 import { Collections } from '../utils/collections';
 import { ComplicationData } from './complication-data';
-import { DomainData } from './domains';
+import { DomainData } from './domain-data';
 import { KitData } from './kit-data';
 import { SkillData } from './skill-data';
 import { SkillList } from '../enums/skill-list';
@@ -110,6 +110,7 @@ export class CampaignSettingData {
 		],
 		perks: [],
 		items: [],
+		monsterGroups: [],
 		skills: SkillData.getCoreSkills(),
 		languages: [],
 		defaultLanguages: []
@@ -134,6 +135,7 @@ export class CampaignSettingData {
 		kits: [],
 		perks: [],
 		items: [],
+		monsterGroups: [],
 		skills: [],
 		languages: [],
 		defaultLanguages: []
@@ -157,6 +159,7 @@ export class CampaignSettingData {
 		kits: [],
 		perks: [],
 		items: [],
+		monsterGroups: [],
 		skills: [
 			{
 				name: 'Timescape',

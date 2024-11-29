@@ -34,6 +34,8 @@ import { Item } from '../../models/item';
 import { ItemModal } from '../modals/item/item-modal';
 import { Kit } from '../../models/kit';
 import { KitModal } from '../modals/kit/kit-modal';
+import { MonsterGroup } from '../../models/monster';
+import { MonsterGroupModal } from '../modals/monster-group/monster-group-modal';
 import { Options } from '../../models/options';
 import { Perk } from '../../models/perk';
 import { PerkModal } from '../modals/perk/perk-modal';
@@ -69,7 +71,7 @@ export const Main = (props: Props) => {
 	const [ options, setOptions ] = useState<Options>(props.options);
 	const [ page, setPage ] = useState<Page>(Page.Welcome);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
-	const [ selectedElement, setSelectedElement ] = useState<Ancestry | Culture | Career | HeroClass | Domain | Kit | Complication | null>(null);
+	const [ selectedElement, setSelectedElement ] = useState<Element | null>(null);
 	const [ selectedElementSetting, setSelectedElementSetting ] = useState<CampaignSetting | null>(null);
 	const [ selectedElementType, setSelectedElementType ] = useState<string>('');
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
@@ -247,6 +249,9 @@ export const Main = (props: Props) => {
 				break;
 			case 'Item':
 				createItem(null, setting);
+				break;
+			case 'Monster Group':
+				createMonsterGroup(null, setting);
 				break;
 		}
 	};
@@ -494,6 +499,33 @@ export const Main = (props: Props) => {
 		}
 	};
 
+	const createMonsterGroup = (original: MonsterGroup | null, setting: CampaignSetting | null) => {
+		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		if (!setting) {
+			setting = FactoryLogic.createCampaignSetting();
+			settings.push(setting);
+		} else {
+			const id = setting.id;
+			setting = settings.find(cs => cs.id === id) as CampaignSetting;
+		}
+
+		let monsterGroup: MonsterGroup;
+		if (original) {
+			monsterGroup = JSON.parse(JSON.stringify(original)) as MonsterGroup;
+			monsterGroup.id = Utils.guid();
+		} else {
+			monsterGroup = FactoryLogic.createMonsterGroup();
+		}
+
+		setting.monsterGroups.push(monsterGroup);
+		persistHomebrewSettings(settings);
+		if (drawer) {
+			onSelectMonsterGroup(monsterGroup);
+		} else {
+			editMonsterGroup(monsterGroup, setting);
+		}
+	};
+
 	const editAncestry = (ancestry: Ancestry, setting: CampaignSetting) => {
 		setSelectedElement(ancestry);
 		setSelectedElementSetting(setting);
@@ -562,6 +594,14 @@ export const Main = (props: Props) => {
 		setSelectedElement(item);
 		setSelectedElementSetting(setting);
 		setSelectedElementType('Item');
+		setPage(Page.ElementEdit);
+		setDrawer(null);
+	};
+
+	const editMonsterGroup = (monsterGroup: MonsterGroup, setting: CampaignSetting) => {
+		setSelectedElement(monsterGroup);
+		setSelectedElementSetting(setting);
+		setSelectedElementType('Monster Group');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
 	};
@@ -642,6 +682,15 @@ export const Main = (props: Props) => {
 		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
 		copy.forEach(cs => {
 			cs.items = cs.items.filter(i => i.id !== item.id);
+		});
+		persistHomebrewSettings(copy);
+		setDrawer(null);
+	};
+
+	const deleteMonsterGroup = (monsterGroup: MonsterGroup) => {
+		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		copy.forEach(cs => {
+			cs.monsterGroups = cs.monsterGroups.filter(mg => mg.id !== monsterGroup.id);
 		});
 		persistHomebrewSettings(copy);
 		setDrawer(null);
@@ -744,6 +793,13 @@ export const Main = (props: Props) => {
 						}
 					}
 						break;
+					case 'Monster Group': {
+						const monsterGroupIndex = setting.monsterGroups.findIndex(mg => mg.id === element.id);
+						if (monsterGroupIndex !== -1) {
+							setting.monsterGroups[monsterGroupIndex] = element as unknown as MonsterGroup;
+						}
+					}
+						break;
 				}
 			};
 
@@ -806,7 +862,11 @@ export const Main = (props: Props) => {
 					break;
 				case 'Item':
 					setting.items.push(element as unknown as Item);
-					Collections.sort(setting.kits, item => item.name);
+					Collections.sort(setting.items, item => item.name);
+					break;
+				case 'Monster Group':
+					setting.monsterGroups.push(element as unknown as MonsterGroup);
+					Collections.sort(setting.monsterGroups, item => item.name);
 					break;
 			}
 		}
@@ -988,6 +1048,24 @@ export const Main = (props: Props) => {
 		);
 	};
 
+	const onSelectMonsterGroup = (monsterGroup: MonsterGroup) => {
+		const container = CampaignSettingData
+			.getCampaignSettings(homebrewSettings)
+			.find(cs => cs.monsterGroups.find(mg => mg.id === monsterGroup.id));
+
+		setDrawer(
+			<MonsterGroupModal
+				monsterGroup={monsterGroup}
+				homebrewSettings={homebrewSettings}
+				isHomebrew={!!homebrewSettings.flatMap(cs => cs.monsterGroups).find(mg => mg.id === monsterGroup.id)}
+				createHomebrew={setting => createMonsterGroup(monsterGroup, setting)}
+				export={format => Utils.export([ monsterGroup.id ], monsterGroup.name || 'Monster Group', monsterGroup, 'monster-group', format)}
+				edit={() => editMonsterGroup(monsterGroup, container as CampaignSetting)}
+				delete={() => deleteMonsterGroup(monsterGroup)}
+			/>
+		);
+	};
+
 	const onSelectCharacteristic = (characteristic: Characteristic, hero: Hero) => {
 		setDrawer(
 			<CharacteristicModal characteristic={characteristic} hero={hero} />
@@ -1121,6 +1199,7 @@ export const Main = (props: Props) => {
 						viewKit={onSelectKit}
 						viewPerk={onSelectPerk}
 						viewItem={onSelectItem}
+						viewMonsterGroup={onSelectMonsterGroup}
 						onSettingCreate={createCampaignSetting}
 						onSettingChange={changeCampaignSetting}
 						onSettingDelete={deleteCampaignSetting}

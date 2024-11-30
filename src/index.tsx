@@ -37,6 +37,9 @@ localforage
 					if (setting.perks === undefined) {
 						setting.perks = [];
 					}
+					if (setting.monsterGroups === undefined) {
+						setting.monsterGroups = [];
+					}
 				});
 
 				localforage

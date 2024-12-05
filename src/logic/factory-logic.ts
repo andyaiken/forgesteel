@@ -20,8 +20,8 @@ import { SubClass } from '../models/subclass';
 import { Utils } from '../utils/utils';
 
 export class FactoryLogic {
-	static createHero = (settingIDs: string[]) => {
-		const hero: Hero = {
+	static createHero = (settingIDs: string[]): Hero => {
+		return {
 			id: Utils.guid(),
 			name: '',
 			settingIDs: settingIDs,
@@ -43,11 +43,10 @@ export class FactoryLogic {
 				inventory: []
 			}
 		};
-		return hero;
 	};
 
-	static createCampaignSetting = () => {
-		const setting: CampaignSetting = {
+	static createCampaignSetting = (): CampaignSetting => {
+		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
@@ -66,11 +65,10 @@ export class FactoryLogic {
 			languages: [],
 			defaultLanguages: []
 		};
-		return setting;
 	};
 
-	static createAncestry = () => {
-		const ancestry: Ancestry = {
+	static createAncestry = (): Ancestry => {
+		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
@@ -87,11 +85,10 @@ export class FactoryLogic {
 				})
 			]
 		};
-		return ancestry;
 	};
 
-	static createCulture = () => {
-		const culture: Culture = {
+	static createCulture = (): Culture => {
+		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
@@ -100,11 +97,10 @@ export class FactoryLogic {
 			organization: null,
 			upbringing: null
 		};
-		return culture;
 	};
 
-	static createCareer = () => {
-		const career: Career = {
+	static createCareer = (): Career => {
+		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
@@ -119,11 +115,10 @@ export class FactoryLogic {
 				selectedID: null
 			}
 		};
-		return career;
 	};
 
-	static createClass = () => {
-		const heroClass: HeroClass = {
+	static createClass = (): HeroClass => {
+		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
@@ -137,42 +132,38 @@ export class FactoryLogic {
 			level: 1,
 			characteristics: []
 		};
-		return heroClass;
 	};
 
-	static createSubclass = () => {
-		const sc: SubClass = {
+	static createSubclass = (): SubClass => {
+		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
 			featuresByLevel: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(n => ({ level: n, features: [], optionalFeatures: [] })),
 			selected: false
 		};
-		return sc;
 	};
 
-	static createComplication = () => {
-		const complication: Complication = {
+	static createComplication = (): Complication => {
+		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
 			features: []
 		};
-		return complication;
 	};
 
-	static createDomain = () => {
-		const d: Domain = {
+	static createDomain = (): Domain => {
+		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
 			featuresByLevel: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(n => ({ level: n, features: [], optionalFeatures: [] }))
 		};
-		return d;
 	};
 
-	static createKit = () => {
-		const kit: Kit = {
+	static createKit = (): Kit => {
+		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
@@ -192,33 +183,30 @@ export class FactoryLogic {
 			mobility: false,
 			features: []
 		};
-		return kit;
 	};
 
-	static createPerk = () => {
-		const p: Perk = {
+	static createPerk = (): Perk => {
+		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
 			type: PerkType.Crafting,
 			features: []
 		};
-		return p;
 	};
 
-	static createItem = () => {
-		const i: Item = {
+	static createItem = (): Item => {
+		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
 			features: [],
 			count: 1
 		};
-		return i;
 	};
 
-	static createMonsterGroup = () => {
-		const mg: MonsterGroup = {
+	static createMonsterGroup = (): MonsterGroup => {
+		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
@@ -226,13 +214,12 @@ export class FactoryLogic {
 			malice: [],
 			monsters: []
 		};
-		return mg;
 	};
 
-	static createMonster = () => {
-		const m: Monster = {
+	static createMonster = (monsterGroup: MonsterGroup): Monster => {
+		return {
 			id: Utils.guid(),
-			name: '',
+			name: monsterGroup.name || '',
 			description: '',
 			level: 1,
 			role: {
@@ -277,6 +264,5 @@ export class FactoryLogic {
 			features: [],
 			villainActions: []
 		};
-		return m;
 	};
 }

@@ -1251,7 +1251,7 @@ export const ElementEditPage = (props: Props) => {
 
 		const addMonster = () => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as MonsterGroup;
-			elementCopy.monsters.push(FactoryLogic.createMonster());
+			elementCopy.monsters.push(FactoryLogic.createMonster(elementCopy));
 			setElement(elementCopy);
 			setDirty(true);
 		};

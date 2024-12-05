@@ -39,8 +39,8 @@ export class Collections {
 		return collection[index];
 	};
 
-	static distinct = <T>(collection: T[], key: (item: T) => string) => {
-		const seen = new Set();
+	static distinct = <T, U>(collection: T[], key: (item: T) => U) => {
+		const seen = new Set<U>();
 		return collection.filter(item => {
 			const k = key(item);
 			return seen.has(k) ? false : seen.add(k);

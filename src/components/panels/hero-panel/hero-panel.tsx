@@ -6,7 +6,6 @@ import { Ancestry } from '../../../models/ancestry';
 import { CampaignSetting } from '../../../models/campaign-setting';
 import { Career } from '../../../models/career';
 import { Characteristic } from '../../../enums/characteristic';
-import { Collections } from '../../../utils/collections';
 import { Complication } from '../../../models/complication';
 import { ConditionEndType } from '../../../enums/condition-type';
 import { ConditionLogic } from '../../../logic/condition-logic';
@@ -397,9 +396,8 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getFeaturesSection = () => {
-		const unsorted = HeroLogic.getFeatures(props.hero)
+		const features = HeroLogic.getFeatures(props.hero)
 			.filter(feature => feature.type === FeatureType.Text);
-		const features = Collections.sort(unsorted, f => f.name);
 		if (features.length === 0) {
 			return null;
 		}
@@ -425,9 +423,8 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getAbilitiesSection = (type: AbilityUsage) => {
-		const unsorted = HeroLogic.getAbilities(props.hero, true, props.options?.showFreeStrikes || false, props.options?.showStandardAbilities || false)
+		const abilities = HeroLogic.getAbilities(props.hero, true, props.options?.showFreeStrikes || false, props.options?.showStandardAbilities || false)
 			.filter(ability => ability.type.usage === type);
-		const abilities = Collections.sort(unsorted, a => a.name);
 		if (abilities.length === 0) {
 			return null;
 		}

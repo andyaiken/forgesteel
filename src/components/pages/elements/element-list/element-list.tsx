@@ -6,7 +6,6 @@ import { AncestryPanel } from '../../../panels/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { CampaignSetting } from '../../../../models/campaign-setting';
 import { CampaignSettingLogic } from '../../../../logic/campaign-setting-logic';
-import { CampaignSettingPanel } from '../../../panels/campaign-setting-panel/campaign-setting-panel';
 import { Career } from '../../../../models/career';
 import { CareerData } from '../../../../data/career-data';
 import { CareerPanel } from '../../../panels/career-panel/career-panel';
@@ -43,6 +42,7 @@ interface Props {
 	hiddenSettingIDs: string[];
 	goHome: () => void;
 	showAbout: () => void;
+	showCollections: () => void;
 	viewAncestry: (ancestry: Ancestry) => void;
 	viewCulture: (cultiure: Culture) => void;
 	viewCareer: (career: Career) => void;
@@ -52,13 +52,8 @@ interface Props {
 	viewKit: (kit: Kit) => void;
 	viewPerk: (perk: Perk) => void;
 	viewItem: (item: Item) => void;
-	onSettingCreate: () => CampaignSetting;
-	onSettingChange: (setting: CampaignSetting) => void;
-	onSettingDelete: (setting: CampaignSetting) => void;
 	onCreateHomebrew: (type: string, settingID: string | null) => void;
 	onImportHomebrew: (type: string, settingID: string | null, element: Element) => void;
-	onImportSetting: (setting: CampaignSetting) => void;
-	setHiddenSettingIDs: (ids: string[]) => void;
 }
 
 export const ElementListPage = (props: Props) => {
@@ -66,31 +61,8 @@ export const ElementListPage = (props: Props) => {
 	const [ element, setElement ] = useState<string>('Ancestry');
 	const [ settingID, setSettingID ] = useState<string | null>(props.campaignSettings.filter(cs => cs.isHomebrew).length > 0 ? props.campaignSettings.filter(cs => cs.isHomebrew)[0].id : null);
 
-	const setVisibility = (setting: CampaignSetting, visible: boolean) => {
-		if (visible) {
-			const copy = JSON.parse(JSON.stringify(props.hiddenSettingIDs.filter(id => id !== setting.id))) as string[];
-			props.setHiddenSettingIDs(copy);
-		} else {
-			const copy = JSON.parse(JSON.stringify(props.hiddenSettingIDs)) as string[];
-			copy.push(setting.id);
-			props.setHiddenSettingIDs(copy);
-		}
-	};
-
 	const getSettings = () => {
 		return props.campaignSettings.filter(cs => !props.hiddenSettingIDs.includes(cs.id));
-	};
-
-	const createSetting = () => {
-		const setting = props.onSettingCreate();
-		setSettingID(setting.id);
-	};
-
-	const deleteSetting = (setting: CampaignSetting) => {
-		props.onSettingDelete(setting);
-		if (settingID === setting.id) {
-			setSettingID(null);
-		}
 	};
 
 	const createHomebrew = () => {
@@ -493,7 +465,7 @@ export const ElementListPage = (props: Props) => {
 
 		return (
 			<div className='element-list-page'>
-				<AppHeader goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader subtitle='Elements' goHome={props.goHome} showAbout={props.showAbout}>
 					<Input
 						placeholder='Search'
 						allowClear={true}
@@ -561,52 +533,9 @@ export const ElementListPage = (props: Props) => {
 							<DownOutlined />
 						</Button>
 					</Popover>
-					<Popover
-						trigger='click'
-						placement='bottom'
-						content={(
-							<div style={{ display: 'flex', flexDirection: 'column' }}>
-								{
-									props.campaignSettings.map(cs => (
-										<CampaignSettingPanel
-											key={cs.id}
-											setting={cs}
-											mode='elements'
-											visible={!props.hiddenSettingIDs.includes(cs.id)}
-											onSetVisible={setVisibility}
-											onChange={props.onSettingChange}
-											onDelete={deleteSetting}
-										/>
-									))
-								}
-								<Divider />
-								<Space direction='vertical'>
-									<Button block={true} onClick={createSetting}>Create a new collection</Button>
-									<Upload
-										style={{ width: '100%' }}
-										accept='.drawsteel-collection'
-										showUploadList={false}
-										beforeUpload={file => {
-											file
-												.text()
-												.then(json => {
-													const setting = (JSON.parse(json) as CampaignSetting);
-													props.onImportSetting(setting);
-												});
-											return false;
-										}}
-									>
-										<Button block={true} icon={<DownloadOutlined />}>Import a collection</Button>
-									</Upload>
-								</Space>
-							</div>
-						)}
-					>
-						<Button>
-							Collections
-							<DownOutlined />
-						</Button>
-					</Popover>
+					<Button onClick={props.showCollections}>
+						Collections
+					</Button>
 				</AppHeader>
 				<div className='element-list-page-content'>
 					<Tabs

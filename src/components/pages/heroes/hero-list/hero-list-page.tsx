@@ -22,7 +22,7 @@ export const HeroListPage = (props: Props) => {
 	try {
 		return (
 			<div className='hero-list-page'>
-				<AppHeader goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader subtitle='Heroes' goHome={props.goHome} showAbout={props.showAbout}>
 					<Button type='primary' icon={<PlusCircleOutlined />} onClick={props.addHero}>
 						Create A New Hero
 					</Button>

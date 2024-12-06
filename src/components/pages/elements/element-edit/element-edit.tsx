@@ -1316,7 +1316,7 @@ export const ElementEditPage = (props: Props) => {
 	try {
 		return (
 			<div className='element-edit-page'>
-				<AppHeader goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader subtitle='Elements' goHome={props.goHome} showAbout={props.showAbout}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(element)}>
 						Save Changes
 					</Button>

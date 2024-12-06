@@ -12,6 +12,7 @@ import { Characteristic } from '../../enums/characteristic';
 import { CharacteristicModal } from '../modals/characteristic/characteristic-modal';
 import { ClassModal } from '../modals/class/class-modal';
 import { Collections } from '../../utils/collections';
+import { CollectionsModal } from '../modals/collections/collections-modal';
 import { Complication } from '../../models/complication';
 import { ComplicationModal } from '../modals/complication/complication-modal';
 import { Culture } from '../../models/culture';
@@ -712,34 +713,6 @@ export const Main = (props: Props) => {
 		setDrawer(null);
 	};
 
-	const createCampaignSetting = () => {
-		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		const setting = FactoryLogic.createCampaignSetting();
-		settings.push(setting);
-		persistHomebrewSettings(settings);
-		return setting;
-	};
-
-	const importCampaignSetting = (setting: CampaignSetting) => {
-		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		settings.push(setting);
-		persistHomebrewSettings(settings);
-	};
-
-	const changeCampaignSetting = (setting: CampaignSetting) => {
-		const list = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		const index = list.findIndex(cs => cs.id === setting.id);
-		if (index !== -1) {
-			list[index] = setting;
-			persistHomebrewSettings(list);
-		}
-	};
-
-	const deleteCampaignSetting = (setting: CampaignSetting) => {
-		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		persistHomebrewSettings(copy.filter(cs => cs.id !== setting.id));
-	};
-
 	const saveEditSelectedElement = (element: Element) => {
 		if (selectedElement) {
 			const list = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
@@ -1158,6 +1131,18 @@ export const Main = (props: Props) => {
 		}
 	};
 
+	const showCollections = () => {
+		setDrawer(
+			<CollectionsModal
+				officialSettings={[ CampaignSettingData.core, CampaignSettingData.orden ]}
+				homebrewSettings={homebrewSettings}
+				hiddenSettingIDs={hiddenSettingIDs}
+				onSettingsChange={persistHomebrewSettings}
+				setHiddenSettingIDs={persistHiddenSettingIDs}
+			/>
+		);
+	};
+
 	//#endregion
 
 	const getContent = () => {
@@ -1227,6 +1212,7 @@ export const Main = (props: Props) => {
 						hiddenSettingIDs={hiddenSettingIDs}
 						goHome={showWelcome}
 						showAbout={showAbout}
+						showCollections={showCollections}
 						viewAncestry={onSelectAncestry}
 						viewCulture={onSelectCulture}
 						viewCareer={onSelectCareer}
@@ -1236,13 +1222,8 @@ export const Main = (props: Props) => {
 						viewKit={onSelectKit}
 						viewPerk={onSelectPerk}
 						viewItem={onSelectItem}
-						onSettingCreate={createCampaignSetting}
-						onSettingChange={changeCampaignSetting}
-						onSettingDelete={deleteCampaignSetting}
 						onCreateHomebrew={createHomebrew}
 						onImportHomebrew={importHomebrew}
-						onImportSetting={importCampaignSetting}
-						setHiddenSettingIDs={persistHiddenSettingIDs}
 					/>
 				);
 			case Page.ElementEdit:
@@ -1264,14 +1245,10 @@ export const Main = (props: Props) => {
 						hiddenSettingIDs={hiddenSettingIDs}
 						goHome={showWelcome}
 						showAbout={showAbout}
+						showCollections={showCollections}
 						viewMonsterGroup={onSelectMonsterGroup}
-						onSettingCreate={createCampaignSetting}
-						onSettingChange={changeCampaignSetting}
-						onSettingDelete={deleteCampaignSetting}
 						onCreateHomebrew={createHomebrew}
 						onImportHomebrew={importHomebrew}
-						onImportSetting={importCampaignSetting}
-						setHiddenSettingIDs={persistHiddenSettingIDs}
 					/>
 				);
 			case Page.MonsterEdit:

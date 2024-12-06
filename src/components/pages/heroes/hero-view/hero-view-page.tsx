@@ -72,7 +72,7 @@ export const HeroPage = (props: Props) => {
 
 		return (
 			<div className='hero-view-page'>
-				<AppHeader goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader subtitle='Heroes' goHome={props.goHome} showAbout={props.showAbout}>
 					<Button onClick={props.closeHero}>
 						Close
 					</Button>

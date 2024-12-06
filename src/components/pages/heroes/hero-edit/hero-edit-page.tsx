@@ -393,7 +393,7 @@ export const HeroEditPage = (props: Props) => {
 
 		return (
 			<div className='hero-edit-page'>
-				<AppHeader goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader subtitle='Heroes' goHome={props.goHome} showAbout={props.showAbout}>
 					<Button type='primary' disabled={!dirty} onClick={saveChanges}>
 						Save Changes
 					</Button>

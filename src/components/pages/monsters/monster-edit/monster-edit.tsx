@@ -331,7 +331,7 @@ export const MonsterEditPage = (props: Props) => {
 	try {
 		return (
 			<div className='monster-edit-page'>
-				<AppHeader goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader subtitle='Monsters' goHome={props.goHome} showAbout={props.showAbout}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(monsterGroup)}>
 						Save Changes
 					</Button>

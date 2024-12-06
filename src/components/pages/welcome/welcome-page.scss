@@ -9,8 +9,8 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: space-evenly;
-		gap: 20px;
+		justify-content: space-around;
 		overflow-y: auto;
+		padding: 20px;
 	}
 }

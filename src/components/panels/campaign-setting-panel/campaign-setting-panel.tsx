@@ -11,6 +11,7 @@ import './campaign-setting-panel.scss';
 
 interface Props {
 	setting: CampaignSetting;
+	mode: 'elements' | 'monsters';
 	visible: boolean;
 	onSetVisible: (setting: CampaignSetting, visible: boolean) => void;
 	onChange: (setting: CampaignSetting) => void;
@@ -47,6 +48,13 @@ export const CampaignSettingPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const getCount = () => {
+		switch (props.mode) {
+			case 'elements': return `${CampaignSettingLogic.getElementCount(setting)} element(s)`;
+			case 'monsters': return `${CampaignSettingLogic.getMonsterCount(setting)} monster(s)`;
+		}
+	};
+
 	try {
 		return (
 			<div className={isEditing ? 'campaign-setting-panel editing' : 'campaign-setting-panel'} id={setting.id}>
@@ -72,7 +80,7 @@ export const CampaignSettingPanel = (props: Props) => {
 						<div style={{ width: '100%' }}>
 							<HeaderText tags={setting.isHomebrew ? [ 'Homebrew' ] : []}>{setting.name || 'Unnamed Collection'}</HeaderText>
 							<div className='ds-text description-text'>{setting.description}</div>
-							<div className='ds-text description-text'>{CampaignSettingLogic.getElementCount(setting)} elements</div>
+							<div className='ds-text description-text'>{getCount()}</div>
 						</div>
 				}
 				<div className='action-buttons'>

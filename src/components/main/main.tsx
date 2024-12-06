@@ -34,8 +34,10 @@ import { Item } from '../../models/item';
 import { ItemModal } from '../modals/item/item-modal';
 import { Kit } from '../../models/kit';
 import { KitModal } from '../modals/kit/kit-modal';
+import { MonsterEditPage } from '../pages/monsters/monster-edit/monster-edit';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterGroupModal } from '../modals/monster-group/monster-group-modal';
+import { MonsterListPage } from '../pages/monsters/monster-list/monster-list';
 import { Options } from '../../models/options';
 import { Perk } from '../../models/perk';
 import { PerkModal } from '../modals/perk/perk-modal';
@@ -54,7 +56,9 @@ enum Page {
 	HeroView,
 	HeroEdit,
 	ElementList,
-	ElementEdit
+	ElementEdit,
+	MonsterList,
+	MonsterEdit
 }
 
 interface Props {
@@ -71,9 +75,10 @@ export const Main = (props: Props) => {
 	const [ options, setOptions ] = useState<Options>(props.options);
 	const [ page, setPage ] = useState<Page>(Page.Welcome);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
+	const [ selectedSetting, setSelectedSetting ] = useState<CampaignSetting | null>(null);
 	const [ selectedElement, setSelectedElement ] = useState<Element | null>(null);
-	const [ selectedElementSetting, setSelectedElementSetting ] = useState<CampaignSetting | null>(null);
 	const [ selectedElementType, setSelectedElementType ] = useState<string>('');
+	const [ selectedMonsterGroup, setSelectedMonsterGroup ] = useState<MonsterGroup | null>(null);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 
 	//#region Persistence
@@ -109,25 +114,37 @@ export const Main = (props: Props) => {
 	const showWelcome = () => {
 		setPage(Page.Welcome);
 		setSelectedHero(null);
+		setSelectedSetting(null);
 		setSelectedElement(null);
-		setSelectedElementSetting(null);
 		setSelectedElementType('');
+		setSelectedMonsterGroup(null);
 	};
 
 	const showHeroList = () => {
 		setPage(Page.HeroList);
 		setSelectedHero(null);
+		setSelectedSetting(null);
 		setSelectedElement(null);
-		setSelectedElementSetting(null);
 		setSelectedElementType('');
+		setSelectedMonsterGroup(null);
 	};
 
 	const showElementList = () => {
 		setPage(Page.ElementList);
 		setSelectedHero(null);
+		setSelectedSetting(null);
 		setSelectedElement(null);
-		setSelectedElementSetting(null);
 		setSelectedElementType('');
+		setSelectedMonsterGroup(null);
+	};
+
+	const showMonsterList = () => {
+		setPage(Page.MonsterList);
+		setSelectedHero(null);
+		setSelectedSetting(null);
+		setSelectedElement(null);
+		setSelectedElementType('');
+		setSelectedMonsterGroup(null);
 	};
 
 	//#endregion
@@ -528,7 +545,7 @@ export const Main = (props: Props) => {
 
 	const editAncestry = (ancestry: Ancestry, setting: CampaignSetting) => {
 		setSelectedElement(ancestry);
-		setSelectedElementSetting(setting);
+		setSelectedSetting(setting);
 		setSelectedElementType('Ancestry');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
@@ -536,7 +553,7 @@ export const Main = (props: Props) => {
 
 	const editCulture = (culture: Culture, setting: CampaignSetting) => {
 		setSelectedElement(culture);
-		setSelectedElementSetting(setting);
+		setSelectedSetting(setting);
 		setSelectedElementType('Culture');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
@@ -544,7 +561,7 @@ export const Main = (props: Props) => {
 
 	const editCareer = (career: Career, setting: CampaignSetting) => {
 		setSelectedElement(career);
-		setSelectedElementSetting(setting);
+		setSelectedSetting(setting);
 		setSelectedElementType('Career');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
@@ -552,7 +569,7 @@ export const Main = (props: Props) => {
 
 	const editClass = (heroClass: HeroClass, setting: CampaignSetting) => {
 		setSelectedElement(heroClass);
-		setSelectedElementSetting(setting);
+		setSelectedSetting(setting);
 		setSelectedElementType('Class');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
@@ -560,7 +577,7 @@ export const Main = (props: Props) => {
 
 	const editComplication = (complication: Complication, setting: CampaignSetting) => {
 		setSelectedElement(complication);
-		setSelectedElementSetting(setting);
+		setSelectedSetting(setting);
 		setSelectedElementType('Complication');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
@@ -568,7 +585,7 @@ export const Main = (props: Props) => {
 
 	const editDomain = (domain: Domain, setting: CampaignSetting) => {
 		setSelectedElement(domain);
-		setSelectedElementSetting(setting);
+		setSelectedSetting(setting);
 		setSelectedElementType('Domain');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
@@ -576,7 +593,7 @@ export const Main = (props: Props) => {
 
 	const editKit = (kit: Kit, setting: CampaignSetting) => {
 		setSelectedElement(kit);
-		setSelectedElementSetting(setting);
+		setSelectedSetting(setting);
 		setSelectedElementType('Kit');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
@@ -584,7 +601,7 @@ export const Main = (props: Props) => {
 
 	const editPerk = (perk: Perk, setting: CampaignSetting) => {
 		setSelectedElement(perk);
-		setSelectedElementSetting(setting);
+		setSelectedSetting(setting);
 		setSelectedElementType('Perk');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
@@ -592,17 +609,16 @@ export const Main = (props: Props) => {
 
 	const editItem = (item: Item, setting: CampaignSetting) => {
 		setSelectedElement(item);
-		setSelectedElementSetting(setting);
+		setSelectedSetting(setting);
 		setSelectedElementType('Item');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
 	};
 
 	const editMonsterGroup = (monsterGroup: MonsterGroup, setting: CampaignSetting) => {
-		setSelectedElement(monsterGroup);
-		setSelectedElementSetting(setting);
-		setSelectedElementType('Monster Group');
-		setPage(Page.ElementEdit);
+		setSelectedMonsterGroup(monsterGroup);
+		setSelectedSetting(setting);
+		setPage(Page.MonsterEdit);
 		setDrawer(null);
 	};
 
@@ -727,7 +743,7 @@ export const Main = (props: Props) => {
 	const saveEditSelectedElement = (element: Element) => {
 		if (selectedElement) {
 			const list = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-			const setting = list.find(cs => cs.id === (selectedElementSetting as CampaignSetting).id);
+			const setting = list.find(cs => cs.id === (selectedSetting as CampaignSetting).id);
 			if (setting) {
 				switch (selectedElementType) {
 					case 'Ancestry': {
@@ -793,27 +809,47 @@ export const Main = (props: Props) => {
 						}
 					}
 						break;
-					case 'Monster Group': {
-						const monsterGroupIndex = setting.monsterGroups.findIndex(mg => mg.id === element.id);
-						if (monsterGroupIndex !== -1) {
-							setting.monsterGroups[monsterGroupIndex] = element as unknown as MonsterGroup;
-						}
-					}
-						break;
 				}
 			};
 
 			persistHomebrewSettings(list);
 			setPage(Page.ElementList);
+			setSelectedSetting(null);
 			setSelectedElement(null);
-			setSelectedElementSetting(null);
 			setSelectedElementType('');
+			setSelectedMonsterGroup(null);
 		}
 	};
 
 	const cancelEditSelectedElement = () => {
 		if (selectedElement) {
 			setPage(Page.ElementList);
+		}
+	};
+
+	const saveEditSelectedMonster = (monsterGroup: MonsterGroup) => {
+		if (selectedMonsterGroup) {
+			const list = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+			const setting = list.find(cs => cs.id === (selectedSetting as CampaignSetting).id);
+			if (setting) {
+				const monsterGroupIndex = setting.monsterGroups.findIndex(mg => mg.id === monsterGroup.id);
+				if (monsterGroupIndex !== -1) {
+					setting.monsterGroups[monsterGroupIndex] = monsterGroup;
+				}
+			};
+
+			persistHomebrewSettings(list);
+			setPage(Page.MonsterList);
+			setSelectedSetting(null);
+			setSelectedElement(null);
+			setSelectedElementType('');
+			setSelectedMonsterGroup(null);
+		}
+	};
+
+	const cancelEditSelectedMonster = () => {
+		if (selectedMonsterGroup) {
+			setPage(Page.MonsterList);
 		}
 	};
 
@@ -1132,6 +1168,7 @@ export const Main = (props: Props) => {
 						showAbout={showAbout}
 						showHeroes={heroes.length === 0 ? addHero : showHeroList}
 						showElements={showElementList}
+						showMonsters={showMonsterList}
 					/>
 				);
 			case Page.HeroList:
@@ -1199,7 +1236,6 @@ export const Main = (props: Props) => {
 						viewKit={onSelectKit}
 						viewPerk={onSelectPerk}
 						viewItem={onSelectItem}
-						viewMonsterGroup={onSelectMonsterGroup}
 						onSettingCreate={createCampaignSetting}
 						onSettingChange={changeCampaignSetting}
 						onSettingDelete={deleteCampaignSetting}
@@ -1214,11 +1250,39 @@ export const Main = (props: Props) => {
 					<ElementEditPage
 						element={selectedElement as Ancestry | Culture | Career | HeroClass | Kit | Complication}
 						elementType={selectedElementType}
-						campaignSettings={[ CampaignSettingData.core, CampaignSettingData.orden, selectedElementSetting as CampaignSetting ]}
+						campaignSettings={[ CampaignSettingData.core, CampaignSettingData.orden, selectedSetting as CampaignSetting ]}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						saveChanges={saveEditSelectedElement}
 						cancelChanges={cancelEditSelectedElement}
+					/>
+				);
+			case Page.MonsterList:
+				return (
+					<MonsterListPage
+						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings)}
+						hiddenSettingIDs={hiddenSettingIDs}
+						goHome={showWelcome}
+						showAbout={showAbout}
+						viewMonsterGroup={onSelectMonsterGroup}
+						onSettingCreate={createCampaignSetting}
+						onSettingChange={changeCampaignSetting}
+						onSettingDelete={deleteCampaignSetting}
+						onCreateHomebrew={createHomebrew}
+						onImportHomebrew={importHomebrew}
+						onImportSetting={importCampaignSetting}
+						setHiddenSettingIDs={persistHiddenSettingIDs}
+					/>
+				);
+			case Page.MonsterEdit:
+				return (
+					<MonsterEditPage
+						monsterGroup={selectedMonsterGroup as MonsterGroup}
+						campaignSettings={[ CampaignSettingData.core, CampaignSettingData.orden, selectedSetting as CampaignSetting ]}
+						goHome={showWelcome}
+						showAbout={showAbout}
+						saveChanges={saveEditSelectedMonster}
+						cancelChanges={cancelEditSelectedMonster}
 					/>
 				);
 		}

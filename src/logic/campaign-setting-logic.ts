@@ -1,6 +1,7 @@
 import { Ancestry } from '../models/ancestry';
 import { CampaignSetting } from '../models/campaign-setting';
 import { Career } from '../models/career';
+import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { Domain } from '../models/domain';
@@ -23,9 +24,12 @@ export class CampaignSettingLogic {
 		count += setting.domains.length;
 		count += setting.perks.length;
 		count += setting.items.length;
-		count += setting.monsterGroups.length;
 
 		return count;
+	};
+
+	static getMonsterCount = (setting: CampaignSetting) => {
+		return Collections.sum(setting.monsterGroups, mg => mg.monsters.length);
 	};
 
 	static getAncestrySetting = (settings: CampaignSetting[], ancestry: Ancestry) => {

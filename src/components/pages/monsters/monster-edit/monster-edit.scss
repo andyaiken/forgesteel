@@ -1,9 +1,9 @@
-.element-edit-page {
+.monster-edit-page {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 
-	.element-edit-page-content {
+	.monster-edit-page-content {
 		background-color: rgba(0, 0, 0, 0.1);
 		flex: 1 1 0;
 		display: flex;
@@ -29,8 +29,8 @@
 }
 
 @media (prefers-color-scheme: dark) {
-	.element-edit-page {
-		.element-edit-page-content {
+	.monster-edit-page {
+		.monster-edit-page-content {
 			.edit-column {
 				.random-btn {
 					color: rgba(255, 255, 255, 0.88);

@@ -46,7 +46,7 @@ export const AbilityPanel = (props: Props) => {
 		return (
 			<SelectablePanel disabled={disabled}>
 				<div className='ability-panel' id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
-					<HeaderText ribbon={cost > 0 ? <HeroicResourceBadge value={cost} /> : undefined}>
+					<HeaderText ribbon={cost > 0 ? <HeroicResourceBadge value={cost} /> : null}>
 						{props.ability.name || 'Unnamed Ability'}
 					</HeaderText>
 					<div className='ds-text description-text'>{props.ability.description}</div>

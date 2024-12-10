@@ -24,6 +24,7 @@ import './feature-panel.scss';
 
 interface Props {
 	feature: Feature;
+	cost?: number;
 	hero?: Hero;
 	campaignSettings?: CampaignSetting[];
 	mode?: PanelMode;
@@ -510,16 +511,21 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getExtraChoice = (data: FeatureChoiceData) => {
-		const list = data.selected.length > 0 ? data.selected : data.options.map(o => o.feature);
-		if (list.length === 0) {
+		if (data.selected.length > 0) {
+			return (
+				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
+					{data.selected.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
+				</Space>
+			);
+		}
+
+		if (data.options.length === 0) {
 			return null;
 		}
 
 		return (
-			<Space direction='vertical' style={{ width: '100%', padding: '0 20px' }}>
-				{
-					list.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)
-				}
+			<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
+				{data.options.map(o => <FeaturePanel key={o.feature.id} feature={o.feature} cost={o.value} mode={PanelMode.Full} />)}
 			</Space>
 		);
 	};
@@ -742,7 +748,9 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<div className='feature-panel' id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
-				<HeaderText>{props.feature.name || 'Unnamed Feature'}</HeaderText>
+				<HeaderText ribbon={props.cost ? <HeroicResourceBadge value={props.cost} /> : null}>
+					{props.feature.name || 'Unnamed Feature'}
+				</HeaderText>
 				<div className='ds-text' dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.feature.description) }} />
 				{
 					props.mode === PanelMode.Full

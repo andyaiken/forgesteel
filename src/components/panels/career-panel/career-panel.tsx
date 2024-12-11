@@ -5,6 +5,7 @@ import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { PanelMode } from '../../../enums/panel-mode';
+import { Utils } from '../../../utils/utils';
 
 import './career-panel.scss';
 
@@ -39,7 +40,7 @@ export const CareerPanel = (props: Props) => {
 		return (
 			<div className='career-panel' id={props.mode === PanelMode.Full ? props.career.id : undefined}>
 				<HeaderText level={1}>{props.career.name || 'Unnamed Career'}</HeaderText>
-				<div className='ds-text description-text'>{props.career.description}</div>
+				{props.career.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.career.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full ?
 						<div>

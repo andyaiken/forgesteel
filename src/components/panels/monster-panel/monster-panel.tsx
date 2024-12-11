@@ -10,6 +10,7 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { Monster } from '../../../models/monster';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { PanelMode } from '../../../enums/panel-mode';
+import { Utils } from '../../../utils/utils';
 
 import './monster-panel.scss';
 
@@ -30,7 +31,7 @@ export const MonsterPanel = (props: Props) => {
 		return (
 			<div className='monster-panel' id={props.mode === PanelMode.Full ? props.monster.id : undefined}>
 				<HeaderText level={1}>{props.monster.name || 'Unnamed Monster'}</HeaderText>
-				<div className='ds-text description-text'>{props.monster.description}</div>
+				{props.monster.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.monster.description) }} /> : null}
 				<Flex justify='space-between'>
 					<div className='ds-text'>
 						Level {props.monster.level} {FormatLogic.getRole(props.monster.role)} {props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}

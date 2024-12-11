@@ -17,6 +17,7 @@ import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { KitType } from '../../../enums/kit';
 import { LanguageData } from '../../../data/language-data';
+import { MultiLine } from '../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { SkillData } from '../../../data/skill-data';
 import { SkillList } from '../../../enums/skill-list';
@@ -713,13 +714,7 @@ export const FeatureEditPanel = (props: Props) => {
 										onChange={e => setName(e.target.value)}
 									/>
 									<HeaderText>Description</HeaderText>
-									<Input.TextArea
-										placeholder='Description'
-										allowClear={true}
-										rows={6}
-										value={feature.description}
-										onChange={e => setDescription(e.target.value)}
-									/>
+									<MultiLine label='Description' value={feature.description} onChange={setDescription} />
 								</div>
 							)
 						},
@@ -728,12 +723,12 @@ export const FeatureEditPanel = (props: Props) => {
 							label: 'Feature',
 							children: (
 								<div>
-									<HeaderText>Type</HeaderText>
+									<HeaderText>Feature Type</HeaderText>
 									<Select
 										style={{ width: '100%' }}
 										placeholder='Select type'
 										options={(props.allowedTypes || [ FeatureType.Ability, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Text ]).map(o => ({ value: o }))}
-										optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+										optionRender={option => <Field label={option.data.value} value={FeatureLogic.getFeatureTypeDescription(option.data.value)} />}
 										value={feature.type}
 										onChange={setType}
 									/>

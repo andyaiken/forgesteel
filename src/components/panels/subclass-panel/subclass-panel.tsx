@@ -5,6 +5,7 @@ import { Hero } from '../../../models/hero';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Space } from 'antd';
 import { SubClass } from '../../../models/subclass';
+import { Utils } from '../../../utils/utils';
 
 import './subclass-panel.scss';
 
@@ -20,7 +21,7 @@ export const SubclassPanel = (props: Props) => {
 		return (
 			<div className='subclass-panel' id={props.mode === PanelMode.Full ? props.subclass.id : undefined}>
 				<HeaderText level={1}>{props.subclass.name || 'Unnamed Subclass'}</HeaderText>
-				<div className='ds-text description-text'>{props.subclass.description}</div>
+				{props.subclass.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.subclass.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full ?
 						props.subclass.featuresByLevel.map(lvl => (

@@ -1,6 +1,7 @@
 import { Button, Divider, Input } from 'antd';
 import { Element } from '../../../models/element';
 import { HeaderText } from '../../controls/header-text/header-text';
+import { MultiLine } from '../../controls/multi-line/multi-line';
 import { useState } from 'react';
 
 import './element-edit-panel.scss';
@@ -46,13 +47,7 @@ export const ElementEditPanel = (props: Props) => {
 					onChange={e => setName(e.target.value)}
 				/>
 				<HeaderText>Description</HeaderText>
-				<Input.TextArea
-					placeholder='Description'
-					allowClear={true}
-					rows={6}
-					value={element.description}
-					onChange={e => setDescription(e.target.value)}
-				/>
+				<MultiLine label='Description' value={element.description} onChange={setDescription} />
 				<Divider />
 				{props.onDelete ? <Button block={true} danger={true} onClick={deleteElement}>Delete</Button> : null}
 			</div>

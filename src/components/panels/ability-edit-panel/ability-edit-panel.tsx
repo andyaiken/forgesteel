@@ -7,6 +7,7 @@ import { AbilityUsage } from '../../../enums/ability-usage';
 import { Characteristic } from '../../../enums/characteristic';
 import { Expander } from '../../controls/expander/expander';
 import { HeaderText } from '../../controls/header-text/header-text';
+import { MultiLine } from '../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Toggle } from '../../controls/toggle/toggle';
 import { useState } from 'react';
@@ -343,13 +344,7 @@ export const AbilityEditPanel = (props: Props) => {
 										onChange={e => setName(e.target.value)}
 									/>
 									<HeaderText>Description</HeaderText>
-									<Input.TextArea
-										placeholder='Description'
-										allowClear={true}
-										rows={6}
-										value={ability.description}
-										onChange={e => setDescription(e.target.value)}
-									/>
+									<MultiLine label='Description' value={ability.description} onChange={setDescription} />
 								</div>
 							)
 						},
@@ -501,13 +496,7 @@ export const AbilityEditPanel = (props: Props) => {
 							children: (
 								<div>
 									<HeaderText>Pre-Roll Effect</HeaderText>
-									<Input.TextArea
-										placeholder='Effect'
-										allowClear={true}
-										rows={6}
-										value={ability.preEffect}
-										onChange={e => setPreEffect(e.target.value)}
-									/>
+									<MultiLine label='Effect' value={ability.preEffect} onChange={setPreEffect} />
 									<HeaderText>Power Roll</HeaderText>
 									<Space direction='vertical' style={{ width: '100%' }}>
 										<Toggle label='Has Power Roll' value={!!ability.powerRoll} onChange={setPowerRoll} />
@@ -561,13 +550,7 @@ export const AbilityEditPanel = (props: Props) => {
 										}
 									</Space>
 									<HeaderText>Effect</HeaderText>
-									<Input.TextArea
-										placeholder='Effect'
-										allowClear={true}
-										rows={6}
-										value={ability.effect}
-										onChange={e => setEffect(e.target.value)}
-									/>
+									<MultiLine label='Effect' value={ability.effect} onChange={setEffect} />
 								</div>
 							)
 						},

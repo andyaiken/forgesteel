@@ -49,7 +49,7 @@ export const AbilityPanel = (props: Props) => {
 					<HeaderText ribbon={cost > 0 ? <HeroicResourceBadge value={cost} /> : null}>
 						{props.ability.name || 'Unnamed Ability'}
 					</HeaderText>
-					<div className='ds-text description-text'>{props.ability.description}</div>
+					{props.ability.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.description) }} /> : null}
 					{
 						props.mode === PanelMode.Full ?
 							<div>
@@ -66,7 +66,7 @@ export const AbilityPanel = (props: Props) => {
 										: null
 								}
 								{props.ability.target ? <Field label='Target' value={props.ability.target} /> : null}
-								{props.ability.preEffect ? <div className='ds-text' dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.preEffect) }} /> : null}
+								{props.ability.preEffect ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.preEffect) }} /> : null}
 								{
 									props.ability.powerRoll ?
 										<PowerRollPanel
@@ -76,7 +76,7 @@ export const AbilityPanel = (props: Props) => {
 										/>
 										: null
 								}
-								{props.ability.effect ? <div className='ds-text' dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.effect) }} /> : null}
+								{props.ability.effect ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.effect) }} /> : null}
 								{
 									props.ability.alternateEffects.map((effect, n) => (
 										<Field

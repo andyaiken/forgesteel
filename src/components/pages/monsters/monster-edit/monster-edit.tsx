@@ -14,6 +14,7 @@ import { FeatureLogic } from '../../../../logic/feature-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { MonsterEditPanel } from '../../../panels/monster-edit-panel/monster-edit-panel';
 import { MonsterGroupPanel } from '../../../panels/monster-group-panel/monster-group-panel';
+import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Utils } from '../../../../utils/utils';
@@ -61,13 +62,7 @@ export const MonsterEditPage = (props: Props) => {
 					onChange={e => setName(e.target.value)}
 				/>
 				<HeaderText>Description</HeaderText>
-				<Input.TextArea
-					placeholder='Description'
-					allowClear={true}
-					rows={6}
-					value={monsterGroup.description}
-					onChange={e => setDescription(e.target.value)}
-				/>
+				<MultiLine label='Description' value={monsterGroup.description} onChange={setDescription} />
 			</Space>
 		);
 	};

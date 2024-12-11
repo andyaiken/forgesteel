@@ -426,4 +426,43 @@ export class FeatureLogic {
 
 		return true;
 	};
+
+	///////////////////////////////////////////////////////////////////////////
+
+	static getFeatureTypeDescription = (type: FeatureType) => {
+		switch (type) {
+			case FeatureType.Ability:
+				return 'This feature grants you an ability.';
+			case FeatureType.AbilityCost:
+				return 'This feature modifies the cost to use an ability.';
+			case FeatureType.Bonus:
+				return 'This feature modifies a statistic.';
+			case FeatureType.Choice:
+				return 'This feature allows you to choose from a collection of features.';
+			case FeatureType.ClassAbility:
+				return 'This feature allows you to choose an ability from your class.';
+			case FeatureType.DamageModifier:
+				return 'This feature grants you an immunity or a weakness.';
+			case FeatureType.Domain:
+				return 'This feature allows you to choose a domain.';
+			case FeatureType.DomainFeature:
+				return 'This feature allows you to choose a feature from your domain.';
+			case FeatureType.Kit:
+				return 'This feature allows you to choose a kit.';
+			case FeatureType.KitType:
+				return 'This feature changes the types of kit you can select.';
+			case FeatureType.Language:
+				return 'This feature allows you to choose a language.';
+			case FeatureType.Multiple:
+				return 'This feature grants you a collection of features.';
+			case FeatureType.Size:
+				return 'This feature sets your size.';
+			case FeatureType.Skill:
+				return 'This feature grants you a skill.';
+			case FeatureType.SkillChoice:
+				return 'This feature allows you to choose a skill.';
+			case FeatureType.Text:
+				return 'This feature has no special properties.';
+		}
+	};
 }

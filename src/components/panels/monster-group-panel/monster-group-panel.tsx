@@ -6,6 +6,7 @@ import { MonsterGroup } from '../../../models/monster';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
+import { Utils } from '../../../utils/utils';
 
 import './monster-group-panel.scss';
 
@@ -20,7 +21,7 @@ export const MonsterGroupPanel = (props: Props) => {
 		return (
 			<div className='monster-group-panel' id={props.mode === PanelMode.Full ? props.monsterGroup.id : undefined}>
 				<HeaderText level={1}>{props.monsterGroup.name || 'Unnamed Monster Group'}</HeaderText>
-				<div className='ds-text description-text'>{props.monsterGroup.description}</div>
+				{props.monsterGroup.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.monsterGroup.description) }} /> : null}
 				{
 					props.mode !== PanelMode.Full ?
 						<Field label='Monsters' value={props.monsterGroup.monsters.map(m => m.name || 'Unnamed Monster').join(', ')} />
@@ -31,7 +32,7 @@ export const MonsterGroupPanel = (props: Props) => {
 						props.monsterGroup.information.map(i => (
 							<div key={i.id}>
 								<HeaderText>{i.name || 'Unnamed Information'}</HeaderText>
-								<div className='ds-text description-text'>{i.description}</div>
+								{i.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(i.description) }} /> : null}
 							</div>
 						))
 						: null

@@ -36,6 +36,7 @@ import { ItemPanel } from '../../../panels/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/kit-panel/kit-panel';
 import { LanguageData } from '../../../../data/language-data';
+import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
@@ -90,13 +91,7 @@ export const ElementEditPage = (props: Props) => {
 					onChange={e => setName(e.target.value)}
 				/>
 				<HeaderText>Description</HeaderText>
-				<Input.TextArea
-					placeholder='Description'
-					allowClear={true}
-					rows={6}
-					value={element.description}
-					onChange={e => setDescription(e.target.value)}
-				/>
+				<MultiLine label='Description' value={element.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -722,13 +717,7 @@ export const ElementEditPage = (props: Props) => {
 													onChange={e => setName(sc, e.target.value)}
 												/>
 												<HeaderText>Description</HeaderText>
-												<Input.TextArea
-													placeholder='Description'
-													allowClear={true}
-													rows={6}
-													value={sc.description}
-													onChange={e => setDescription(sc, e.target.value)}
-												/>
+												<MultiLine label='Description' value={sc.description} onChange={value => setDescription(sc, value)} />
 											</div>
 										)
 									},

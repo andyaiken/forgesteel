@@ -1,4 +1,6 @@
 .kit-panel {
+	display: flex;
+	flex-direction: column;
 	padding: 0 20px 20px 20px;
 
 	&.compact {

@@ -4,6 +4,7 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { Item } from '../../../models/item';
 import { PanelMode } from '../../../enums/panel-mode';
+import { Utils } from '../../../utils/utils';
 
 import './item-panel.scss';
 
@@ -19,7 +20,7 @@ export const ItemPanel = (props: Props) => {
 		return (
 			<div className='item-panel' id={props.mode === PanelMode.Full ? props.item.id : undefined}>
 				<HeaderText level={1}>{props.item.name || 'Unnamed Item'}</HeaderText>
-				<div className='ds-text description-text'>{props.item.description}</div>
+				{props.item.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.item.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full ?
 						props.item.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)

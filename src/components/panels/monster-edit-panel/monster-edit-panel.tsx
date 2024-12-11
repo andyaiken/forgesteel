@@ -13,6 +13,7 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { Monster } from '../../../models/monster';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
+import { MultiLine } from '../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../utils/name-generator';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Toggle } from '../../controls/toggle/toggle';
@@ -236,13 +237,7 @@ export const MonsterEditPanel = (props: Props) => {
 										onChange={e => setName(e.target.value)}
 									/>
 									<HeaderText>Description</HeaderText>
-									<Input.TextArea
-										placeholder='Description'
-										allowClear={true}
-										rows={6}
-										value={monster.description}
-										onChange={e => setDescription(e.target.value)}
-									/>
+									<MultiLine label='Description' value={monster.description} onChange={setDescription} />
 								</div>
 							)
 						},

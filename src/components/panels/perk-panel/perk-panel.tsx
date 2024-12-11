@@ -4,6 +4,7 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Perk } from '../../../models/perk';
+import { Utils } from '../../../utils/utils';
 
 import './perk-panel.scss';
 
@@ -19,7 +20,7 @@ export const PerkPanel = (props: Props) => {
 		return (
 			<div className='perk-panel' id={props.mode === PanelMode.Full ? props.perk.id : undefined}>
 				<HeaderText level={1} tags={[ props.perk.type ]}>{props.perk.name || 'Unnamed Perk'}</HeaderText>
-				<div className='ds-text description-text'>{props.perk.description}</div>
+				{props.perk.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.perk.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full ?
 						props.perk.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)

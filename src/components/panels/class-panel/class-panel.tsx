@@ -8,6 +8,7 @@ import { HeroClass } from '../../../models/class';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Space } from 'antd';
 import { SubclassPanel } from '../subclass-panel/subclass-panel';
+import { Utils } from '../../../utils/utils';
 
 import './class-panel.scss';
 
@@ -23,7 +24,7 @@ export const ClassPanel = (props: Props) => {
 		return (
 			<div className='class-panel' id={props.mode === PanelMode.Full ? props.heroClass.id : undefined}>
 				<HeaderText level={1}>{props.heroClass.name || 'Unnamed Class'}</HeaderText>
-				<div className='ds-text description-text'>{props.heroClass.description}</div>
+				{props.heroClass.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.heroClass.description) }} /> : null}
 				<Field label='Heroic Resource' value={props.heroClass.heroicResource} />
 				{props.heroClass.subclasses.length > 0 ? <Field label={`${props.heroClass.subclassName}s`} value={props.heroClass.subclasses.map(c => c.name).join(', ')} /> : null}
 				<Field label='Primary Characteristics' value={props.heroClass.primaryCharacteristics.join(', ')} />

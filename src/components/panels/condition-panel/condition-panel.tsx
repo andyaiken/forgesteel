@@ -92,7 +92,7 @@ export const ConditionPanel = (props: Props) => {
 						:
 						<div>
 							<div className='ds-text'>{condition.type} ({ends})</div>
-							<div className='ds-text description-text' dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(ConditionLogic.getDescription(condition.type)) }} />
+							<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(ConditionLogic.getDescription(condition.type)) }} />
 						</div>
 				}
 				<div className='action-buttons'>

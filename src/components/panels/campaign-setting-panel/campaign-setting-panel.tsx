@@ -71,9 +71,9 @@ export const CampaignSettingPanel = (props: Props) => {
 						:
 						<div style={{ width: '100%' }}>
 							<HeaderText tags={setting.isHomebrew ? [ 'Homebrew' ] : []}>{setting.name || 'Unnamed Collection'}</HeaderText>
-							<div className='ds-text description-text'>{setting.description}</div>
-							<div className='ds-text description-text'>{CampaignSettingLogic.getElementCount(setting)} elements</div>
-							<div className='ds-text description-text'>{CampaignSettingLogic.getMonsterCount(setting)} monsters</div>
+							<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(setting.description) }} />
+							<div className='ds-text'>{CampaignSettingLogic.getElementCount(setting)} elements</div>
+							<div className='ds-text'>{CampaignSettingLogic.getMonsterCount(setting)} monsters</div>
 						</div>
 				}
 				<div className='action-buttons'>

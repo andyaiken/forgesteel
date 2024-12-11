@@ -5,6 +5,7 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { Kit } from '../../../models/kit';
 import { PanelMode } from '../../../enums/panel-mode';
+import { Utils } from '../../../utils/utils';
 
 import './kit-panel.scss';
 
@@ -20,7 +21,7 @@ export const KitPanel = (props: Props) => {
 		return (
 			<div className='kit-panel' id={props.mode === PanelMode.Full ? props.kit.id : undefined}>
 				<HeaderText level={1} tags={[ props.kit.type ]}>{props.kit.name || 'Unnamed Kit'}</HeaderText>
-				<div className='ds-text description-text'>{props.kit.description}</div>
+				{props.kit.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.kit.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full ?
 						<div>

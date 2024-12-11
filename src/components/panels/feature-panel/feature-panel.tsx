@@ -523,10 +523,21 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
+		const showCosts = data.options.some(o => o.value > 1);
 		return (
-			<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
-				{data.options.map(o => <FeaturePanel key={o.feature.id} feature={o.feature} cost={o.value} mode={PanelMode.Full} />)}
-			</Space>
+			<div>
+				<div className='ds-text'>
+					{
+						showCosts ?
+							`You have ${data.count} points to spend on the following options:`
+							:
+							`Choose ${data.count} of the following options:`
+					}
+				</div>
+				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
+					{data.options.map(o => <FeaturePanel key={o.feature.id} feature={o.feature} cost={showCosts ? o.value : undefined} mode={PanelMode.Full} />)}
+				</Space>
+			</div>
 		);
 	};
 
@@ -739,9 +750,7 @@ export const FeaturePanel = (props: Props) => {
 			const data = props.feature.data as FeatureMultipleData;
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
-					{
-						data.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)
-					}
+					{data.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)}
 				</Space>
 			);
 		}
@@ -751,7 +760,7 @@ export const FeaturePanel = (props: Props) => {
 				<HeaderText ribbon={props.cost ? <HeroicResourceBadge value={props.cost} /> : null}>
 					{props.feature.name || 'Unnamed Feature'}
 				</HeaderText>
-				<div className='ds-text' dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.feature.description) }} />
+				{props.feature.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.feature.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full
 						? (props.setData ? getEditable() : getExtra())

@@ -1,5 +1,5 @@
 import { Button, Divider, Popover } from 'antd';
-import { DeleteOutlined, DownOutlined, EditOutlined } from '@ant-design/icons';
+import { DownOutlined, EditOutlined } from '@ant-design/icons';
 import { Ability } from '../../../../models/ability';
 import { Ancestry } from '../../../../models/ancestry';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -8,6 +8,7 @@ import { Career } from '../../../../models/career';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Complication } from '../../../../models/complication';
 import { Culture } from '../../../../models/culture';
+import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { DropdownButton } from '../../../controls/dropdown-button/dropdown-button';
 import { Hero } from '../../../../models/hero';
@@ -111,18 +112,7 @@ export const HeroPage = (props: Props) => {
 									onClick={key => props.exportHero(key as 'image' | 'pdf' | 'json')}
 								/>
 								<Button icon={<EditOutlined />} onClick={props.editHero}>Edit</Button>
-								<Popover
-									trigger='click'
-									placement='bottom'
-									content={(
-										<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-											<div>This can't be undone; are you sure?</div>
-											<Button danger={true} onClick={props.deleteHero}>Delete</Button>
-										</div>
-									)}
-								>
-									<Button icon={<DeleteOutlined />}>Delete</Button>
-								</Popover>
+								<DangerButton onConfirm={props.deleteHero} />
 							</div>
 						)}
 					>

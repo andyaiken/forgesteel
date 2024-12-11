@@ -2,6 +2,7 @@ import { Button, Popover } from 'antd';
 import { CampaignSetting } from '../../../models/campaign-setting';
 import { Culture } from '../../../models/culture';
 import { CulturePanel } from '../../panels/culture-panel/culture-panel';
+import { DangerButton } from '../../controls/danger-button/danger-button';
 import { PanelMode } from '../../../enums/panel-mode';
 
 import './culture-modal.scss';
@@ -57,24 +58,7 @@ export const CultureModal = (props: Props) => {
 							Export
 						</Button>
 					</Popover>
-					{
-						props.isHomebrew ?
-							<Popover
-								trigger='click'
-								placement='bottom'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										<div>This can't be undone; are you sure?</div>
-										<Button danger={true} onClick={props.delete}>Delete</Button>
-									</div>
-								)}
-							>
-								<Button>
-									Delete
-								</Button>
-							</Popover>
-							: null
-					}
+					{props.isHomebrew ? <DangerButton onConfirm={props.delete} /> : null}
 				</div>
 				<CulturePanel culture={props.culture} mode={PanelMode.Full} />
 			</div>

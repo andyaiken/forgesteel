@@ -1,7 +1,8 @@
-import { Button, Input, Popover, Space } from 'antd';
-import { CheckCircleOutlined, DeleteOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Input, Space } from 'antd';
+import { CheckCircleOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
 import { CampaignSetting } from '../../../models/campaign-setting';
 import { CampaignSettingLogic } from '../../../logic/campaign-setting-logic';
+import { DangerButton } from '../../controls/danger-button/danger-button';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { NameGenerator } from '../../../utils/name-generator';
 import { Utils } from '../../../utils/utils';
@@ -99,18 +100,7 @@ export const CampaignSettingPanel = (props: Props) => {
 					}
 					{
 						setting.isHomebrew && isEditing ?
-							<Popover
-								trigger='click'
-								placement='bottom'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										<div>This can't be undone; are you sure?</div>
-										<Button danger={true} onClick={onDelete}>Delete</Button>
-									</div>
-								)}
-							>
-								<Button type='text' title='Delete' icon={<DeleteOutlined />} />
-							</Popover>
+							<DangerButton onConfirm={onDelete} />
 							: null
 					}
 				</div>

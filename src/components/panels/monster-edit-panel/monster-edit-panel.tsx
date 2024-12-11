@@ -1,8 +1,9 @@
-import { Alert, Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CampaignSetting } from '../../../models/campaign-setting';
 import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
+import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Expander } from '../../controls/expander/expander';
 import { Feature } from '../../../models/feature';
 import { FeatureEditPanel } from '../feature-edit-panel/feature-edit-panel';
@@ -26,7 +27,6 @@ interface Props {
 	monster: Monster;
 	campaignSettings: CampaignSetting[];
 	onChange: (monster: Monster) => void;
-	onDelete?: (monster: Monster) => void;
 }
 
 export const MonsterEditPanel = (props: Props) => {
@@ -44,12 +44,6 @@ export const MonsterEditPanel = (props: Props) => {
 		copy.description = value;
 		setMonster(copy);
 		props.onChange(copy);
-	};
-
-	const deleteMonster = () => {
-		if (props.onDelete) {
-			props.onDelete(monster);
-		}
 	};
 
 	const setKeywords = (value: string) => {
@@ -338,22 +332,29 @@ export const MonsterEditPanel = (props: Props) => {
 														title: 'Move Down',
 														icon: <CaretDownOutlined />,
 														onClick: () => moveFeature(f, 'down')
+													},
+													{
+														title: 'Delete',
+														icon: <DangerButton mode='icon' onConfirm={() => deleteFeature(f)} />
 													}
 												]}
 											>
 												<FeatureEditPanel
 													feature={f}
 													campaignSettings={props.campaignSettings}
-													allowedTypes={[ FeatureType.Text, FeatureType.DamageModifier, FeatureType.Ability ]}
+													allowedTypes={[ FeatureType.Ability, FeatureType.DamageModifier, FeatureType.Text ]}
 													onChange={changeFeature}
-													onDelete={deleteFeature}
 												/>
 											</Expander>
 										))
 									}
 									{
 										monster.features.length === 0 ?
-											<div className='ds-text dimmed-text'>None</div>
+											<Alert
+												type='warning'
+												showIcon={true}
+												message='No features'
+											/>
 											: null
 									}
 									<Button block={true} onClick={addFeature}>Add a new feature</Button>
@@ -366,7 +367,6 @@ export const MonsterEditPanel = (props: Props) => {
 							children: (
 								<Space direction='vertical' style={{ width: '100%' }}>
 									<Alert
-										style={{ margin: '10px 0' }}
 										type='info'
 										showIcon={true}
 										message='Leader and Solo monsters should have 3 villain actions; other monsters should generally not have any.'
@@ -386,22 +386,29 @@ export const MonsterEditPanel = (props: Props) => {
 														title: 'Move Down',
 														icon: <CaretDownOutlined />,
 														onClick: () => moveVillainAction(va, 'down')
+													},
+													{
+														title: 'Delete',
+														icon: <DangerButton mode='icon' onConfirm={() => deleteVillainAction(va)} />
 													}
 												]}
 											>
 												<FeatureEditPanel
 													feature={va}
 													campaignSettings={props.campaignSettings}
-													allowedTypes={[ FeatureType.Text, FeatureType.Ability ]}
+													allowedTypes={[ FeatureType.Ability, FeatureType.Text ]}
 													onChange={changeVillainAction}
-													onDelete={deleteVillainAction}
 												/>
 											</Expander>
 										))
 									}
 									{
 										monster.villainActions.length === 0 ?
-											<div className='ds-text dimmed-text'>None</div>
+											<Alert
+												type='warning'
+												showIcon={true}
+												message='No villain actions'
+											/>
 											: null
 									}
 									<Button block={true} onClick={addVillainAction}>Add a new villain action</Button>
@@ -410,8 +417,6 @@ export const MonsterEditPanel = (props: Props) => {
 						}
 					]}
 				/>
-				<Divider />
-				{props.onDelete ? <Button block={true} danger={true} onClick={deleteMonster}>Delete</Button> : null}
 			</div>
 		);
 	} catch (ex) {

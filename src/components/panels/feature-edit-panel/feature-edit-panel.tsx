@@ -1,4 +1,4 @@
-import { Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../../../models/feature';
 import { Ability } from '../../../models/ability';
@@ -9,6 +9,7 @@ import { AbilityLogic } from '../../../logic/ability-logic';
 import { CampaignSetting } from '../../../models/campaign-setting';
 import { Collections } from '../../../utils/collections';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
+import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Expander } from '../../controls/expander/expander';
 import { FeatureField } from '../../../enums/feature-field';
 import { FeatureLogic } from '../../../logic/feature-logic';
@@ -31,7 +32,6 @@ interface Props {
 	allowedTypes?: FeatureType[];
 	campaignSettings: CampaignSetting[];
 	onChange: (feature: Feature) => void;
-	onDelete?: (feature: Feature) => void;
 }
 
 export const FeatureEditPanel = (props: Props) => {
@@ -174,12 +174,6 @@ export const FeatureEditPanel = (props: Props) => {
 		copy.data = value;
 		setFeature(copy);
 		props.onChange(copy);
-	};
-
-	const deleteFeature = () => {
-		if (props.onDelete) {
-			props.onDelete(feature);
-		}
 	};
 
 	const getDataSection = () => {
@@ -389,12 +383,14 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.Ability: {
 				const data = feature.data as FeatureAbilityData;
 				return (
-					<Expander title={data.ability.name || 'Unnamed Ability'}>
-						<AbilityEditPanel
-							ability={data.ability}
-							onChange={setAbility}
-						/>
-					</Expander>
+					<div style={{ margin: '10px 0' }}>
+						<Expander title={data.ability.name || 'Unnamed Ability'}>
+							<AbilityEditPanel
+								ability={data.ability}
+								onChange={setAbility}
+							/>
+						</Expander>
+					</div>
 				);
 			}
 			case FeatureType.AbilityCost: {
@@ -457,6 +453,10 @@ export const FeatureEditPanel = (props: Props) => {
 											title: 'Move Down',
 											icon: <CaretDownOutlined />,
 											onClick: () => moveChoice(data, n, 'down')
+										},
+										{
+											title: 'Delete',
+											icon: <DangerButton mode='icon' onConfirm={() => deleteChoice(data, n)} />
 										}
 									]}
 								>
@@ -464,11 +464,19 @@ export const FeatureEditPanel = (props: Props) => {
 										feature={option.feature}
 										campaignSettings={props.campaignSettings}
 										onChange={f => setChoiceFeature(data, n, f)}
-										onDelete={() => deleteChoice(data, n)}
 									/>
 									<NumberSpin min={1} value={option.value} onChange={value => setChoiceValue(data, n, value)} />
 								</Expander>
 							))
+						}
+						{
+							data.options.length === 0 ?
+								<Alert
+									type='warning'
+									showIcon={true}
+									message='No options'
+								/>
+								: null
 						}
 						<Button block={true} onClick={() => addChoice(data)}>Add an option</Button>
 						<HeaderText>Count</HeaderText>
@@ -512,9 +520,18 @@ export const FeatureEditPanel = (props: Props) => {
 									/>
 									<NumberSpin min={0} value={mod.value} onChange={value => setDamageModifierValue(data, n, value)} />
 									<NumberSpin min={0} value={mod.valuePerLevel} onChange={value => setDamageModifierValuePerLevel(data, n, value)} />
-									<Button block={true} danger={true} onClick={() => deleteDamageModifier(data, n)}>Delete</Button>
+									<DangerButton onConfirm={() => deleteDamageModifier(data, n)} />
 								</Expander>
 							))
+						}
+						{
+							data.modifiers.length === 0 ?
+								<Alert
+									type='warning'
+									showIcon={true}
+									message='No modifiers'
+								/>
+								: null
 						}
 						<Button block={true} onClick={() => addDamageModifier(data)}>Add a modifier</Button>
 					</Space>
@@ -586,6 +603,7 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureMultipleData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Features</HeaderText>
 						{
 							data.features.map((feature, n) => (
 								<Expander
@@ -601,6 +619,10 @@ export const FeatureEditPanel = (props: Props) => {
 											title: 'Move Down',
 											icon: <CaretDownOutlined />,
 											onClick: () => moveMultipleFeature(data, n, 'down')
+										},
+										{
+											title: 'Delete',
+											icon: <DangerButton mode='icon' onConfirm={() => deleteMultipleFeature(data, n)} />
 										}
 									]}
 								>
@@ -608,10 +630,18 @@ export const FeatureEditPanel = (props: Props) => {
 										feature={feature}
 										campaignSettings={props.campaignSettings}
 										onChange={f => setMultipleFeature(data, n, f)}
-										onDelete={() => deleteMultipleFeature(data, n)}
 									/>
 								</Expander>
 							))
+						}
+						{
+							data.features.length === 0 ?
+								<Alert
+									type='warning'
+									showIcon={true}
+									message='No features'
+								/>
+								: null
 						}
 						<Button block={true} onClick={() => addMultipleFeature(data)}>Add a feature</Button>
 					</Space>
@@ -738,8 +768,6 @@ export const FeatureEditPanel = (props: Props) => {
 						}
 					]}
 				/>
-				<Divider />
-				{props.onDelete ? <Button block={true} danger={true} onClick={deleteFeature}>Delete</Button> : null}
 			</div>
 		);
 	} catch (ex) {

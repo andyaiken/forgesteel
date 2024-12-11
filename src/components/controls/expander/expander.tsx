@@ -9,7 +9,7 @@ interface Props {
 	extra?: {
 		title: string;
 		icon: ReactNode;
-		onClick: () => void;
+		onClick?: () => void;
 	}[];
 }
 
@@ -20,7 +20,9 @@ export const Expander = (props: Props) => {
 			extra = props.extra.map((item, n) => (
 				<Button key={n} type='text' icon={item.icon} onClick={e => {
 					e.stopPropagation();
-					item.onClick();
+					if (item.onClick) {
+						item.onClick();
+					}
 				}} />
 			));
 		}

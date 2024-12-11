@@ -48,7 +48,11 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedOptions.length === 0) {
 			return (
-				<Alert type='info' showIcon={true} message='There are no options to choose for this feature.' />
+				<Alert
+					type='info'
+					showIcon={true}
+					message='There are no options to choose for this feature.'
+				/>
 			);
 		}
 
@@ -113,7 +117,11 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedAbilities.length === 0) {
 			return (
-				<Alert type='info' showIcon={true} message='There are no options to choose for this feature.' />
+				<Alert
+					type='info'
+					showIcon={true}
+					message='There are no options to choose for this feature.'
+				/>
 			);
 		}
 
@@ -165,7 +173,11 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedDomains.length === 0) {
 			return (
-				<Alert type='info' showIcon={true} message='There are no options to choose for this feature.' />
+				<Alert
+					type='info'
+					showIcon={true}
+					message='There are no options to choose for this feature.'
+				/>
 			);
 		}
 
@@ -219,7 +231,11 @@ export const FeaturePanel = (props: Props) => {
 
 		if (options.length === 0) {
 			return (
-				<Alert type='info' showIcon={true} message='Choose a domain to enable this feature.' />
+				<Alert
+					type='info'
+					showIcon={true}
+					message='Choose a domain to enable this feature.'
+				/>
 			);
 		}
 
@@ -279,7 +295,11 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedKits.length === 0) {
 			return (
-				<Alert type='info' showIcon={true} message='There are no options to choose for this feature.' />
+				<Alert
+					type='info'
+					showIcon={true}
+					message='There are no options to choose for this feature.'
+				/>
 			);
 		}
 
@@ -332,7 +352,11 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedLanguages.length === 0) {
 			return (
-				<Alert type='info' showIcon={true} message='There are no options to choose for this feature.' />
+				<Alert
+					type='info'
+					showIcon={true}
+					message='There are no options to choose for this feature.'
+				/>
 			);
 		}
 
@@ -387,7 +411,12 @@ export const FeaturePanel = (props: Props) => {
 								});
 							if (languages.includes(l)) {
 								return (
-									<Alert key={n} type='warning' showIcon={true} message={`You have already chosen ${l}.`} />
+									<Alert
+										key={n}
+										type='warning'
+										showIcon={true}
+										message={`You have already chosen ${l}.`}
+									/>
 								);
 							}
 						}
@@ -405,7 +434,11 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedSkills.length === 0) {
 			return (
-				<Alert type='info' showIcon={true} message='There are no options to choose for this feature.' />
+				<Alert
+					type='info'
+					showIcon={true}
+					message='There are no options to choose for this feature.'
+				/>
 			);
 		}
 
@@ -457,7 +490,12 @@ export const FeaturePanel = (props: Props) => {
 								});
 							if (selected) {
 								return (
-									<Alert key={n} type='warning' showIcon={true} message={`You have already chosen ${s}.`} />
+									<Alert
+										key={n}
+										type='warning'
+										showIcon={true}
+										message={`You have already chosen ${s}.`}
+									/>
 								);
 							}
 						}

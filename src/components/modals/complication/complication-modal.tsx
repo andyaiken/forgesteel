@@ -2,6 +2,7 @@ import { Button, Popover } from 'antd';
 import { CampaignSetting } from '../../../models/campaign-setting';
 import { Complication } from '../../../models/complication';
 import { ComplicationPanel } from '../../panels/complication-panel/complication-panel';
+import { DangerButton } from '../../controls/danger-button/danger-button';
 import { PanelMode } from '../../../enums/panel-mode';
 
 import './complication-modal.scss';
@@ -57,24 +58,7 @@ export const ComplicationModal = (props: Props) => {
 							Export
 						</Button>
 					</Popover>
-					{
-						props.isHomebrew ?
-							<Popover
-								trigger='click'
-								placement='bottom'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										<div>This can't be undone; are you sure?</div>
-										<Button danger={true} onClick={props.delete}>Delete</Button>
-									</div>
-								)}
-							>
-								<Button>
-									Delete
-								</Button>
-							</Popover>
-							: null
-					}
+					{props.isHomebrew ? <DangerButton onConfirm={props.delete} /> : null}
 				</div>
 				<ComplicationPanel complication={props.complication} mode={PanelMode.Full} />
 			</div>

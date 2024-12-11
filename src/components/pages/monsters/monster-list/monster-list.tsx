@@ -1,4 +1,4 @@
-import { Badge, Button, Divider, Input, Popover, Select, Space, Upload } from 'antd';
+import { Alert, Badge, Button, Divider, Input, Popover, Select, Space, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { CampaignSetting } from '../../../../models/campaign-setting';
@@ -48,7 +48,11 @@ export const MonsterListPage = (props: Props) => {
 	const getMonsterGroupsSection = (list: MonsterGroup[]) => {
 		if (list.length === 0) {
 			return (
-				<div className='ds-text dimmed-text'>None</div>
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No monsters'
+				/>
 			);
 		}
 

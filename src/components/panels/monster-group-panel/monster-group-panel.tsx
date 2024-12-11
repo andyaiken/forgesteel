@@ -6,6 +6,7 @@ import { MonsterGroup } from '../../../models/monster';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
+import { Space } from 'antd';
 import { Utils } from '../../../utils/utils';
 
 import './monster-group-panel.scss';
@@ -23,7 +24,7 @@ export const MonsterGroupPanel = (props: Props) => {
 				<HeaderText level={1}>{props.monsterGroup.name || 'Unnamed Monster Group'}</HeaderText>
 				{props.monsterGroup.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.monsterGroup.description) }} /> : null}
 				{
-					props.mode !== PanelMode.Full ?
+					(props.mode !== PanelMode.Full) && (props.monsterGroup.monsters.length > 0) ?
 						<Field label='Monsters' value={props.monsterGroup.monsters.map(m => m.name || 'Unnamed Monster').join(', ')} />
 						: null
 				}
@@ -47,7 +48,9 @@ export const MonsterGroupPanel = (props: Props) => {
 				}
 				{
 					(props.mode === PanelMode.Full) && (props.monsterGroup.monsters.length > 0) ?
-						props.monsterGroup.monsters.map(m => <SelectablePanel key={m.id}><MonsterPanel monster={m} mode={PanelMode.Full} /></SelectablePanel>)
+						<Space direction='vertical' style={{ width: '100%' }}>
+							{props.monsterGroup.monsters.map(m => <SelectablePanel key={m.id}><MonsterPanel monster={m} mode={PanelMode.Full} /></SelectablePanel>)}
+						</Space>
 						: null
 				}
 			</div>

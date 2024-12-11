@@ -70,7 +70,6 @@ export const DieRollPanel = (props: Props) => {
 		marks[12] = <div className='ds-text dimmed-text small-text'>12</div>;
 		marks[17] = <div className='ds-text dimmed-text small-text'>17</div>;
 		marks[20] = <div className='ds-text dimmed-text small-text'>20</div>;
-		// marks[total] = <div className='ds-text bold-text'>{total}</div>;
 
 		return (
 			<div className='die-roll-panel'>
@@ -120,10 +119,22 @@ export const DieRollPanel = (props: Props) => {
 						/>
 						: null
 				}
-				{tierMessage ? <Alert type='warning' showIcon={true} message={tierMessage} /> : null}
+				{
+					tierMessage ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message={tierMessage}
+						/>
+						: null
+				}
 				{
 					Collections.sum(results, r => r) >= 19 ?
-						<Alert type='success' showIcon={true} message='Critical hit!' />
+						<Alert
+							type='success'
+							showIcon={true}
+							message='Critical hit!'
+						/>
 						: null
 				}
 			</div>

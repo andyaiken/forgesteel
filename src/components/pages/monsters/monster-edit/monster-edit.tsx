@@ -1,9 +1,10 @@
-import { Button, Input, Space, Tabs } from 'antd';
+import { Alert, Button, Input, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { CampaignSetting } from '../../../../models/campaign-setting';
 import { Collections } from '../../../../utils/collections';
+import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Element } from '../../../../models/element';
 import { ElementEditPanel } from '../../../panels/element-edit-panel/element-edit-panel';
 import { Expander } from '../../../controls/expander/expander';
@@ -17,6 +18,7 @@ import { MonsterGroupPanel } from '../../../panels/monster-group-panel/monster-g
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -121,20 +123,27 @@ export const MonsterEditPage = (props: Props) => {
 									title: 'Move Down',
 									icon: <CaretDownOutlined />,
 									onClick: () => moveInformation(i, 'down')
+								},
+								{
+									title: 'Delete',
+									icon: <DangerButton mode='icon' onConfirm={() => deleteInformation(i)} />
 								}
 							]}
 						>
 							<ElementEditPanel
 								element={i}
 								onChange={changeInformation}
-								onDelete={deleteInformation}
 							/>
 						</Expander>
 					))
 				}
 				{
 					monsterGroup.information.length === 0 ?
-						<div className='ds-text dimmed-text'>None</div>
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No information pieces'
+						/>
 						: null
 				}
 				<Button block={true} onClick={addInformation}>Add a new information piece</Button>
@@ -196,6 +205,10 @@ export const MonsterEditPage = (props: Props) => {
 									title: 'Move Down',
 									icon: <CaretDownOutlined />,
 									onClick: () => moveFeature(f, 'down')
+								},
+								{
+									title: 'Delete',
+									icon: <DangerButton mode='icon' onConfirm={() => deleteFeature(f)} />
 								}
 							]}
 						>
@@ -203,14 +216,17 @@ export const MonsterEditPage = (props: Props) => {
 								feature={f}
 								campaignSettings={props.campaignSettings}
 								onChange={changeFeature}
-								onDelete={deleteFeature}
 							/>
 						</Expander>
 					))
 				}
 				{
 					monsterGroup.malice.length === 0 ?
-						<div className='ds-text dimmed-text'>None</div>
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No malice features'
+						/>
 						: null
 				}
 				<Button block={true} onClick={addFeature}>Add a new malice feature</Button>
@@ -268,6 +284,10 @@ export const MonsterEditPage = (props: Props) => {
 									title: 'Move Down',
 									icon: <CaretDownOutlined />,
 									onClick: () => moveMonster(m, 'down')
+								},
+								{
+									title: 'Delete',
+									icon: <DangerButton mode='icon' onConfirm={() => deleteMonster(m)} />
 								}
 							]}
 						>
@@ -275,14 +295,17 @@ export const MonsterEditPage = (props: Props) => {
 								monster={m}
 								campaignSettings={props.campaignSettings}
 								onChange={changeMonster}
-								onDelete={deleteMonster}
 							/>
 						</Expander>
 					))
 				}
 				{
 					monsterGroup.monsters.length === 0 ?
-						<div className='ds-text dimmed-text'>None</div>
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No monsters'
+						/>
 						: null
 				}
 				<Button block={true} onClick={addMonster}>Add a new monster</Button>
@@ -339,7 +362,9 @@ export const MonsterEditPage = (props: Props) => {
 						{getEditSection()}
 					</div>
 					<div className='preview-column'>
-						{getPreview()}
+						<SelectablePanel>
+							{getPreview()}
+						</SelectablePanel>
 					</div>
 				</div>
 			</div>

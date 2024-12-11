@@ -1,6 +1,7 @@
 import { Button, Popover } from 'antd';
 import { CampaignSetting } from '../../../models/campaign-setting';
 import { ClassPanel } from '../../panels/class-panel/class-panel';
+import { DangerButton } from '../../controls/danger-button/danger-button';
 import { HeroClass } from '../../../models/class';
 import { PanelMode } from '../../../enums/panel-mode';
 
@@ -57,24 +58,7 @@ export const ClassModal = (props: Props) => {
 							Export
 						</Button>
 					</Popover>
-					{
-						props.isHomebrew ?
-							<Popover
-								trigger='click'
-								placement='bottom'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										<div>This can't be undone; are you sure?</div>
-										<Button danger={true} onClick={props.delete}>Delete</Button>
-									</div>
-								)}
-							>
-								<Button>
-									Delete
-								</Button>
-							</Popover>
-							: null
-					}
+					{props.isHomebrew ? <DangerButton onConfirm={props.delete} /> : null}
 				</div>
 				<ClassPanel heroClass={props.heroClass} mode={PanelMode.Full} />
 			</div>

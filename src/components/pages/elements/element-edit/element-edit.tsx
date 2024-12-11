@@ -1,4 +1,4 @@
-import { Button, Divider, Input, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Divider, Input, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { KitArmor, KitImplement, KitType, KitWeapon } from '../../../../enums/kit';
@@ -19,6 +19,7 @@ import { Complication } from '../../../../models/complication';
 import { ComplicationPanel } from '../../../panels/complication-panel/complication-panel';
 import { Culture } from '../../../../models/culture';
 import { CulturePanel } from '../../../panels/culture-panel/culture-panel';
+import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../../../panels/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
@@ -43,6 +44,7 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/perk-panel/perk-panel';
 import { PerkType } from '../../../../enums/perk-type';
+import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SubClass } from '../../../../models/subclass';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
@@ -152,6 +154,10 @@ export const ElementEditPage = (props: Props) => {
 									title: 'Move Down',
 									icon: <CaretDownOutlined />,
 									onClick: () => moveFeature(f, 'down')
+								},
+								{
+									title: 'Delete',
+									icon: <DangerButton mode='icon' onConfirm={() => deleteFeature(f)} />
 								}
 							]}
 						>
@@ -159,14 +165,17 @@ export const ElementEditPage = (props: Props) => {
 								feature={f}
 								campaignSettings={props.campaignSettings}
 								onChange={changeFeature}
-								onDelete={deleteFeature}
 							/>
 						</Expander>
 					))
 				}
 				{
 					el.features.length === 0 ?
-						<div className='ds-text dimmed-text'>None</div>
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No features'
+						/>
 						: null
 				}
 				<Button block={true} onClick={addFeature}>Add a new feature</Button>
@@ -217,6 +226,14 @@ export const ElementEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const moveIncident = (e: Element, direction: 'up' | 'down') => {
+			const careerCopy = JSON.parse(JSON.stringify(element)) as Career;
+			const index = careerCopy.incitingIncidents.options.findIndex(o => o.id ===  e.id);
+			careerCopy.incitingIncidents.options = Collections.move(careerCopy.incitingIncidents.options, index, direction);
+			setElement(careerCopy);
+			setDirty(true);
+		};
+
 		const deleteIncident = (e: Element) => {
 			const careerCopy = JSON.parse(JSON.stringify(element)) as Career;
 			careerCopy.incitingIncidents.options = careerCopy.incitingIncidents.options.filter(o => o.id !== e.id);
@@ -228,21 +245,43 @@ export const ElementEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
 					career.incitingIncidents.options.map(o => (
-						<Expander key={o.id} title={o.name || 'Unnamed Incident'}>
+						<Expander
+							key={o.id}
+							title={o.name || 'Unnamed Incident'}
+							extra={[
+								{
+									title: 'Move Up',
+									icon: <CaretUpOutlined />,
+									onClick: () => moveIncident(o, 'up')
+								},
+								{
+									title: 'Move Down',
+									icon: <CaretDownOutlined />,
+									onClick: () => moveIncident(o, 'down')
+								},
+								{
+									title: 'Delete',
+									icon: <DangerButton mode='icon' onConfirm={() => deleteIncident(o)} />
+								}
+							]}
+						>
 							<ElementEditPanel
 								element={o}
 								onChange={changeIncident}
-								onDelete={deleteIncident}
 							/>
 						</Expander>
 					))
 				}
 				{
 					career.incitingIncidents.options.length === 0 ?
-						<div className='ds-text dimmed-text'>None</div>
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No inciting incidents'
+						/>
 						: null
 				}
-				<Button block={true} onClick={addIncident}>Add a new incident</Button>
+				<Button block={true} onClick={addIncident}>Add a new inciting incident</Button>
 			</Space>
 		);
 	};
@@ -475,6 +514,10 @@ export const ElementEditPage = (props: Props) => {
 												title: 'Move Down',
 												icon: <CaretDownOutlined />,
 												onClick: () => moveFeature(lvl.level, f, 'down')
+											},
+											{
+												title: 'Delete',
+												icon: <DangerButton mode='icon' onConfirm={() => deleteFeature(lvl.level, f)} />
 											}
 										]}
 									>
@@ -482,10 +525,18 @@ export const ElementEditPage = (props: Props) => {
 											feature={f}
 											campaignSettings={props.campaignSettings}
 											onChange={feature => changeFeature(lvl.level, feature)}
-											onDelete={feature => deleteFeature(lvl.level, feature)}
 										/>
 									</Expander>
 								))
+							}
+							{
+								lvl.features.length === 0 ?
+									<Alert
+										type='warning'
+										showIcon={true}
+										message='No features'
+									/>
+									: null
 							}
 							<Button block={true} onClick={() => addFeature(lvl.level)}>Add a new level {lvl.level} feature</Button>
 						</div>
@@ -523,6 +574,14 @@ export const ElementEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const moveAbility = (ability: Ability, direction: 'up' | 'down') => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const index = elementCopy.abilities.findIndex(a => a.id === ability.id);
+			elementCopy.abilities = Collections.move(elementCopy.abilities, index, direction);
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
 		const deleteAbility = (ability: Ability) => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
 			elementCopy.abilities = elementCopy.abilities.filter(a => a.id !== ability.id);
@@ -534,18 +593,40 @@ export const ElementEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
 					heroClass.abilities.map(a => (
-						<Expander key={a.id} title={a.name || 'Unnamed Ability'}>
+						<Expander
+							key={a.id}
+							title={a.name || 'Unnamed Ability'}
+							extra={[
+								{
+									title: 'Move Up',
+									icon: <CaretUpOutlined />,
+									onClick: () => moveAbility(a, 'up')
+								},
+								{
+									title: 'Move Down',
+									icon: <CaretDownOutlined />,
+									onClick: () => moveAbility(a, 'down')
+								},
+								{
+									title: 'Delete',
+									icon: <DangerButton mode='icon' onConfirm={() => deleteAbility(a)} />
+								}
+							]}
+						>
 							<AbilityEditPanel
 								ability={a}
 								onChange={changeAbility}
-								onDelete={deleteAbility}
 							/>
 						</Expander>
 					))
 				}
 				{
 					heroClass.abilities.length === 0 ?
-						<div className='ds-text dimmed-text'>None</div>
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No abilities'
+						/>
 						: null
 				}
 				<Button block={true} onClick={addAbility}>Add a new ability</Button>
@@ -679,6 +760,10 @@ export const ElementEditPage = (props: Props) => {
 										title: 'Move Down',
 										icon: <CaretDownOutlined />,
 										onClick: () => moveFeature(subclass, lvl.level, f, 'down')
+									},
+									{
+										title: 'Delete',
+										icon: <DangerButton mode='icon' onConfirm={() => deleteFeature(subclass, lvl.level, f)} />
 									}
 								]}
 							>
@@ -686,10 +771,18 @@ export const ElementEditPage = (props: Props) => {
 									feature={f}
 									campaignSettings={props.campaignSettings}
 									onChange={feature => changeFeature(subclass, lvl.level, feature)}
-									onDelete={feature => deleteFeature(subclass, lvl.level, feature)}
 								/>
 							</Expander>
 						))
+					}
+					{
+						lvl.features.length === 0 ?
+							<Alert
+								type='warning'
+								showIcon={true}
+								message='No features'
+							/>
+							: null
 					}
 					<Button block={true} onClick={() => addFeature(subclass, lvl.level)}>Add a new level {lvl.level} feature</Button>
 				</div>
@@ -729,13 +822,17 @@ export const ElementEditPage = (props: Props) => {
 								]}
 							/>
 							<Divider />
-							<Button block={true} danger={true} onClick={() => deleteSubclass(sc)}>Delete</Button>
+							<DangerButton onConfirm={() => deleteSubclass(sc)} />
 						</Expander>
 					))
 				}
 				{
 					heroClass.subclasses.length === 0 ?
-						<div className='ds-text dimmed-text'>None</div>
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No subclasses'
+						/>
 						: null
 				}
 				<Button block={true} onClick={addSubclass}>Add a new subclass</Button>
@@ -1318,7 +1415,9 @@ export const ElementEditPage = (props: Props) => {
 						{getEditSection()}
 					</div>
 					<div className='preview-column'>
-						{getPreview()}
+						<SelectablePanel>
+							{getPreview()}
+						</SelectablePanel>
 					</div>
 				</div>
 			</div>

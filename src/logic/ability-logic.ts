@@ -115,7 +115,7 @@ export class AbilityLogic {
 		}
 
 		if (distance.type === AbilityDistanceType.Special) {
-			return distance.special;
+			return distance.special || 'Special';
 		}
 
 		const bonus = (hero && ability) ? HeroLogic.getDistanceBonus(hero, ability, distance) : 0;

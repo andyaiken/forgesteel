@@ -115,7 +115,13 @@ export const HeroStateModal = (props: Props) => {
 				/>
 				{
 					HeroLogic.canLevelUp(hero) ?
-						<Alert style={{ margin: '10px 0' }} type='info' showIcon={true} message='You have enough XP to level up.' action={<Button title='Level Up' type='text' icon={<ArrowUpOutlined />} onClick={props.onLevelUp} />} />
+						<Alert
+							style={{ margin: '10px 0' }}
+							type='info'
+							showIcon={true}
+							message='You have enough XP to level up.'
+							action={<Button title='Level Up' type='text' icon={<ArrowUpOutlined />} onClick={props.onLevelUp} />}
+						/>
 						: null
 				}
 				<Flex align='center' justify='space-between' gap='5px'>
@@ -162,7 +168,12 @@ export const HeroStateModal = (props: Props) => {
 				/>
 				{
 					hero.state.staminaDamage >= (HeroLogic.getStamina(hero) / 2) ?
-						<Alert style={{ margin: '10px 0' }} type='warning' showIcon={true} message='You are winded.' />
+						<Alert
+							style={{ margin: '10px 0' }}
+							type='warning'
+							showIcon={true}
+							message='You are winded.'
+						/>
 						: null
 				}
 				<Flex align='center' justify='space-between' gap='5px'>

@@ -1,10 +1,13 @@
-import { Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Ability } from '../../../models/ability';
 import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../logic/ability-logic';
 import { AbilityUsage } from '../../../enums/ability-usage';
 import { Characteristic } from '../../../enums/characteristic';
+import { Collections } from '../../../utils/collections';
+import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Expander } from '../../controls/expander/expander';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { MultiLine } from '../../controls/multi-line/multi-line';
@@ -17,7 +20,6 @@ import './ability-edit-panel.scss';
 interface Props {
 	ability: Ability;
 	onChange: (ability: Ability) => void;
-	onDelete?: (ability: Ability) => void;
 }
 
 export const AbilityEditPanel = (props: Props) => {
@@ -164,6 +166,13 @@ export const AbilityEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const moveDistance = (index: number, direction: 'up' | 'down') => {
+		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		copy.distance = Collections.move(copy.distance, index, direction);
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
 	const deleteDistance = (index: number) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
 		copy.distance.splice(index, 1);
@@ -256,6 +265,13 @@ export const AbilityEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const moveAlternateEffect = (index: number, direction: 'up' | 'down') => {
+		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		copy.alternateEffects = Collections.move(copy.alternateEffects, index, direction);
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
 	const deleteAlternateEffect = (index: number) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
 		copy.alternateEffects.splice(index, 1);
@@ -280,6 +296,13 @@ export const AbilityEditPanel = (props: Props) => {
 	const setSpendEffect = (index: number, value: string) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
 		copy.spend[index].effect = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const moveSpend = (index: number, direction: 'up' | 'down') => {
+		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		copy.spend = Collections.move(copy.spend, index, direction);
 		setAbility(copy);
 		props.onChange(copy);
 	};
@@ -312,17 +335,18 @@ export const AbilityEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const movePersistence = (index: number, direction: 'up' | 'down') => {
+		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		copy.persistence = Collections.move(copy.persistence, index, direction);
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
 	const deletePersistence = (index: number) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
 		copy.persistence.splice(index, 1);
 		setAbility(copy);
 		props.onChange(copy);
-	};
-
-	const deleteAbility = () => {
-		if (props.onDelete) {
-			props.onDelete(ability);
-		}
 	};
 
 	try {
@@ -399,84 +423,116 @@ export const AbilityEditPanel = (props: Props) => {
 										onChange={setKeywords}
 									/>
 									<HeaderText>Distance</HeaderText>
-									{
-										ability.distance.map((distance, n) => (
-											<Expander key={n} title={AbilityLogic.getDistance(distance)}>
-												<Segmented
-													block={true}
-													options={[ 'Self', 'Reach', 'Ranged', 'Area', 'Line', 'Special' ]}
-													value={getDistanceMainType(n)}
-													onChange={value => setDistanceMainType(n, value)}
+									<Space direction='vertical' style={{ width: '100%' }}>
+										{
+											ability.distance.map((distance, n) => (
+												<Expander
+													key={n}
+													title={AbilityLogic.getDistance(distance)}
+													extra={[
+														{
+															title: 'Move Up',
+															icon: <CaretUpOutlined />,
+															onClick: () => moveDistance(n, 'up')
+														},
+														{
+															title: 'Move Down',
+															icon: <CaretDownOutlined />,
+															onClick: () => moveDistance(n, 'down')
+														},
+														{
+															title: 'Delete',
+															icon: <DangerButton mode='icon' onConfirm={() => deleteDistance(n)} />
+														}
+													]}
+												>
+													<Space direction='vertical' style={{ width: '100%' }}>
+														<HeaderText>Distance Type</HeaderText>
+														<Segmented
+															block={true}
+															options={[ 'Self', 'Reach', 'Ranged', 'Area', 'Line', 'Special' ]}
+															value={getDistanceMainType(n)}
+															onChange={value => setDistanceMainType(n, value)}
+														/>
+														{
+															getDistanceMainType(n) === 'Area' ?
+																<HeaderText>Area Type</HeaderText>
+																: null
+														}
+														{
+															getDistanceMainType(n) === 'Area' ?
+																<Select
+																	style={{ width: '100%' }}
+																	disabled={getDistanceMainType(n) !== 'Area'}
+																	placeholder='Area type'
+																	options={[ AbilityDistanceType.Aura, AbilityDistanceType.Burst, AbilityDistanceType.Cube, AbilityDistanceType.Wall ].map(option => ({ value: option }))}
+																	optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+																	value={distance.type}
+																	onChange={value => setDistanceType(n, value)}
+																/>
+																: null
+														}
+														{
+															(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Special') ?
+																<HeaderText>Value</HeaderText>
+																: null
+														}
+														{
+															(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Special') ?
+																<NumberSpin min={1} value={distance.value} onChange={value => setDistanceValue(n, value)} />
+																: null
+														}
+														{
+															getDistanceMainType(n) === 'Line' ?
+																<HeaderText>Value 2</HeaderText>
+																: null
+														}
+														{
+															getDistanceMainType(n) === 'Line' ?
+																<NumberSpin min={1} value={distance.value2} onChange={value => setDistanceValue2(n, value)} />
+																: null
+														}
+														{
+															(getDistanceMainType(n) === 'Area' ) || (getDistanceMainType(n) === 'Line') ?
+																<HeaderText>Within</HeaderText>
+																: null
+														}
+														{
+															(getDistanceMainType(n) === 'Area' ) || (getDistanceMainType(n) === 'Line') ?
+																<NumberSpin min={1} value={distance.within} onChange={value => setDistanceWithin(n, value)} />
+																: null
+														}
+														{
+															getDistanceMainType(n) === 'Special' ?
+																<HeaderText>Special</HeaderText>
+																: null
+														}
+														{
+															getDistanceMainType(n) === 'Special' ?
+																<Input
+																	className={distance.special === '' ? 'input-empty' : ''}
+																	placeholder='Special'
+																	allowClear={true}
+																	value={distance.special}
+																	onChange={e => setDistanceSpecial(n, e.target.value)}
+																/>
+																: null
+														}
+													</Space>
+												</Expander>
+											))
+										}
+										{
+											ability.distance.length === 0 ?
+												<Alert
+													type='warning'
+													showIcon={true}
+													message='No distances'
 												/>
-												{
-													getDistanceMainType(n) === 'Area' ?
-														<HeaderText>Area Type</HeaderText>
-														: null
-												}
-												{
-													getDistanceMainType(n) === 'Area' ?
-														<Select
-															style={{ width: '100%' }}
-															disabled={getDistanceMainType(n) !== 'Area'}
-															placeholder='Area type'
-															options={[ AbilityDistanceType.Aura, AbilityDistanceType.Burst, AbilityDistanceType.Cube, AbilityDistanceType.Wall ].map(option => ({ value: option }))}
-															optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-															value={distance.type}
-															onChange={value => setDistanceType(n, value)}
-														/>
-														: null
-												}
-												{
-													(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Special') ?
-														<HeaderText>Value</HeaderText>
-														: null
-												}
-												{
-													(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Special') ?
-														<NumberSpin min={1} value={distance.value} onChange={value => setDistanceValue(n, value)} />
-														: null
-												}
-												{
-													getDistanceMainType(n) === 'Line' ?
-														<HeaderText>Value 2</HeaderText>
-														: null
-												}
-												{
-													getDistanceMainType(n) === 'Line' ?
-														<NumberSpin min={1} value={distance.value2} onChange={value => setDistanceValue2(n, value)} />
-														: null
-												}
-												{
-													(getDistanceMainType(n) === 'Area' ) || (getDistanceMainType(n) === 'Line') ?
-														<HeaderText>Within</HeaderText>
-														: null
-												}
-												{
-													(getDistanceMainType(n) === 'Area' ) || (getDistanceMainType(n) === 'Line') ?
-														<NumberSpin min={1} value={distance.within} onChange={value => setDistanceWithin(n, value)} />
-														: null
-												}
-												{
-													getDistanceMainType(n) === 'Special' ?
-														<HeaderText>Special</HeaderText>
-														: null
-												}
-												{
-													getDistanceMainType(n) === 'Special' ?
-														<Input
-															className={distance.special === '' ? 'input-empty' : ''}
-															placeholder='Special'
-															allowClear={true}
-															value={distance.special}
-															onChange={e => setDistanceSpecial(n, e.target.value)}
-														/>
-														: null
-												}
-												<Button block={true} danger={true} onClick={() => deleteDistance(n)}>Delete</Button>
-											</Expander>
-										))
-									}
-									<Button block={true} onClick={addDistance}>Add a new distance</Button>
+												: null
+										}
+										<Button block={true} onClick={addDistance}>Add a new distance</Button>
+									</Space>
 									<HeaderText>Target</HeaderText>
 									<Input
 										className={ability.target === '' ? 'input-empty' : ''}
@@ -507,7 +563,6 @@ export const AbilityEditPanel = (props: Props) => {
 													className={ability.powerRoll.characteristic.length === 0 ? 'selection-empty' : ''}
 													placeholder='Characteristics'
 													mode='multiple'
-													allowClear={true}
 													options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
 													optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 													value={ability.powerRoll.characteristic}
@@ -563,7 +618,26 @@ export const AbilityEditPanel = (props: Props) => {
 									<Space direction='vertical' style={{ width: '100%' }}>
 										{
 											ability.alternateEffects.map((effect, n) => (
-												<Space key={n} direction='vertical' style={{ width: '100%' }}>
+												<Expander
+													key={n}
+													title='Alternate Effect'
+													extra={[
+														{
+															title: 'Move Up',
+															icon: <CaretUpOutlined />,
+															onClick: () => moveAlternateEffect(n, 'up')
+														},
+														{
+															title: 'Move Down',
+															icon: <CaretDownOutlined />,
+															onClick: () => moveAlternateEffect(n, 'down')
+														},
+														{
+															title: 'Delete',
+															icon: <DangerButton mode='icon' onConfirm={() => deleteAlternateEffect(n)} />
+														}
+													]}
+												>
 													<Input
 														className={effect === '' ? 'input-empty' : ''}
 														placeholder='Alternate Effect'
@@ -571,9 +645,17 @@ export const AbilityEditPanel = (props: Props) => {
 														value={effect}
 														onChange={e => setAlternateEffect(n, e.target.value)}
 													/>
-													<Button block={true} danger={true} onClick={() => deleteAlternateEffect(n)}>Delete</Button>
-												</Space>
+												</Expander>
 											))
+										}
+										{
+											ability.alternateEffects.length === 0 ?
+												<Alert
+													type='warning'
+													showIcon={true}
+													message='No alternate effects'
+												/>
+												: null
 										}
 										<Button block={true} onClick={addAlternateEffect}>Add an alternate effect</Button>
 									</Space>
@@ -581,18 +663,47 @@ export const AbilityEditPanel = (props: Props) => {
 									<Space direction='vertical' style={{ width: '100%' }}>
 										{
 											ability.spend.map((spend, n) => (
-												<Space key={n} direction='vertical' style={{ width: '100%' }}>
-													<Input
-														className={spend.effect === '' ? 'input-empty' : ''}
-														placeholder='Spend effect'
-														allowClear={true}
-														value={spend.effect}
-														onChange={e => setSpendEffect(n, e.target.value)}
-													/>
-													<NumberSpin min={0} value={spend.value} onChange={value => setSpendValue(n, value)} />
-													<Button block={true} danger={true} onClick={() => deleteSpend(n)}>Delete</Button>
-												</Space>
+												<Expander
+													key={n}
+													title='Spend Effect'
+													extra={[
+														{
+															title: 'Move Up',
+															icon: <CaretUpOutlined />,
+															onClick: () => moveSpend(n, 'up')
+														},
+														{
+															title: 'Move Down',
+															icon: <CaretDownOutlined />,
+															onClick: () => moveSpend(n, 'down')
+														},
+														{
+															title: 'Delete',
+															icon: <DangerButton mode='icon' onConfirm={() => deleteSpend(n)} />
+														}
+													]}
+												>
+													<Space direction='vertical' style={{ width: '100%' }}>
+														<Input
+															className={spend.effect === '' ? 'input-empty' : ''}
+															placeholder='Spend effect'
+															allowClear={true}
+															value={spend.effect}
+															onChange={e => setSpendEffect(n, e.target.value)}
+														/>
+														<NumberSpin min={0} value={spend.value} onChange={value => setSpendValue(n, value)} />
+													</Space>
+												</Expander>
 											))
+										}
+										{
+											ability.spend.length === 0 ?
+												<Alert
+													type='warning'
+													showIcon={true}
+													message='No spend effects'
+												/>
+												: null
 										}
 										<Button block={true} onClick={addSpend}>Add a spend effect</Button>
 									</Space>
@@ -600,18 +711,47 @@ export const AbilityEditPanel = (props: Props) => {
 									<Space direction='vertical' style={{ width: '100%' }}>
 										{
 											ability.persistence.map((persist, n) => (
-												<Space key={n} direction='vertical' style={{ width: '100%' }}>
-													<Input
-														className={persist.effect === '' ? 'input-empty' : ''}
-														placeholder='Persistence Effect'
-														allowClear={true}
-														value={persist.effect}
-														onChange={e => setPersistenceEffect(n, e.target.value)}
-													/>
-													<NumberSpin min={0} value={persist.value} onChange={value => setPersistenceValue(n, value)} />
-													<Button block={true} danger={true} onClick={() => deletePersistence(n)}>Delete</Button>
-												</Space>
+												<Expander
+													key={n}
+													title='Persistence Effect'
+													extra={[
+														{
+															title: 'Move Up',
+															icon: <CaretUpOutlined />,
+															onClick: () => movePersistence(n, 'up')
+														},
+														{
+															title: 'Move Down',
+															icon: <CaretDownOutlined />,
+															onClick: () => movePersistence(n, 'down')
+														},
+														{
+															title: 'Delete',
+															icon: <DangerButton mode='icon' onConfirm={() => deletePersistence(n)} />
+														}
+													]}
+												>
+													<Space direction='vertical' style={{ width: '100%' }}>
+														<Input
+															className={persist.effect === '' ? 'input-empty' : ''}
+															placeholder='Persistence Effect'
+															allowClear={true}
+															value={persist.effect}
+															onChange={e => setPersistenceEffect(n, e.target.value)}
+														/>
+														<NumberSpin min={0} value={persist.value} onChange={value => setPersistenceValue(n, value)} />
+													</Space>
+												</Expander>
 											))
+										}
+										{
+											ability.persistence.length === 0 ?
+												<Alert
+													type='warning'
+													showIcon={true}
+													message='No persistence effects'
+												/>
+												: null
 										}
 										<Button block={true} onClick={addPersistence}>Add a persistence effect</Button>
 									</Space>
@@ -620,8 +760,6 @@ export const AbilityEditPanel = (props: Props) => {
 						}
 					]}
 				/>
-				<Divider />
-				{props.onDelete ? <Button block={true} danger={true} onClick={deleteAbility}>Delete</Button> : null}
 			</div>
 		);
 	} catch (ex) {

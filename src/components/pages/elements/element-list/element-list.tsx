@@ -1,4 +1,4 @@
-import { Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
+import { Alert, Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryData } from '../../../../data/ancestry-data';
@@ -154,7 +154,11 @@ export const ElementListPage = (props: Props) => {
 	const getAncestriesSection = (list: Ancestry[]) => {
 		if (list.length === 0) {
 			return (
-				<div className='ds-text dimmed-text'>None</div>
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No ancestries'
+				/>
 			);
 		}
 
@@ -187,7 +191,11 @@ export const ElementListPage = (props: Props) => {
 	const getCulturesSection = (list: Culture[]) => {
 		if (list.length === 0) {
 			return (
-				<div className='ds-text dimmed-text'>None</div>
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No cultures'
+				/>
 			);
 		}
 
@@ -220,7 +228,11 @@ export const ElementListPage = (props: Props) => {
 	const getCareersSection = (list: Career[]) => {
 		if (list.length === 0) {
 			return (
-				<div className='ds-text dimmed-text'>None</div>
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No careers'
+				/>
 			);
 		}
 
@@ -253,7 +265,11 @@ export const ElementListPage = (props: Props) => {
 	const getClassesSection = (list: HeroClass[]) => {
 		if (list.length === 0) {
 			return (
-				<div className='ds-text dimmed-text'>None</div>
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No classes'
+				/>
 			);
 		}
 
@@ -287,7 +303,11 @@ export const ElementListPage = (props: Props) => {
 	const getComplicationsSection = (list: Complication[]) => {
 		if (list.length === 0) {
 			return (
-				<div className='ds-text dimmed-text'>None</div>
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No complications'
+				/>
 			);
 		}
 
@@ -320,7 +340,11 @@ export const ElementListPage = (props: Props) => {
 	const getDomainsSection = (list: Domain[]) => {
 		if (list.length === 0) {
 			return (
-				<div className='ds-text dimmed-text'>None</div>
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No domains'
+				/>
 			);
 		}
 
@@ -353,7 +377,11 @@ export const ElementListPage = (props: Props) => {
 	const getKitsSection = (list: Kit[]) => {
 		if (list.length === 0) {
 			return (
-				<div className='ds-text dimmed-text'>None</div>
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No kits'
+				/>
 			);
 		}
 
@@ -386,7 +414,11 @@ export const ElementListPage = (props: Props) => {
 	const getPerksSection = (list: Perk[]) => {
 		if (list.length === 0) {
 			return (
-				<div className='ds-text dimmed-text'>None</div>
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No perks'
+				/>
 			);
 		}
 
@@ -419,7 +451,11 @@ export const ElementListPage = (props: Props) => {
 	const getItemsSection = (list: Item[]) => {
 		if (list.length === 0) {
 			return (
-				<div className='ds-text dimmed-text'>None</div>
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No items'
+				/>
 			);
 		}
 

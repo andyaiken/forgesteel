@@ -899,7 +899,7 @@ const DetailsSection = (props: DetailsSectionProps) => {
 			const setting = props.campaignSettings.find(cs => cs.id === settingID);
 			if (setting) {
 				return (
-					<Field key={setting.id} label={setting.name || 'Unnamed Collection'} value={setting.defaultLanguages.join(', ') || 'None'} />
+					<Field key={setting.id} label={setting.name || 'Unnamed Collection'} value={setting.defaultLanguages.join(', ') || 'No default language'} />
 				);
 			}
 

@@ -4,6 +4,30 @@
 	overflow-wrap: break-word;
 	word-break: normal;
 
+	&.horizontal {
+		.field-label {
+			padding-right: 5px;
+			font-weight: 600;
+		}	
+	}
+
+	&.vertical {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 5px;
+
+		.field-label {
+			font-size: 12px;
+			text-align: center;
+		}
+
+		.field-value {
+			font-size: 18px;
+			font-weight: 600;
+		}
+	}
+
 	&.disabled {
 		opacity: 0.6;
 		pointer-events: none;
@@ -11,8 +35,6 @@
 
 	.field-label {
 		color: rgb(0, 0, 0);
-		font-weight: 600;
-		padding-right: 5px;
 	}
 
 	.field-value {

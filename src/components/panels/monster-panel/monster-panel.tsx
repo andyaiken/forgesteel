@@ -38,16 +38,19 @@ export const MonsterPanel = (props: Props) => {
 					</div>
 					<Field label='EV' value={props.monster.encounterValue} />
 				</Flex>
-				<Flex justify='space-between'>
-					<Field label='Speed' value={speed} />
-					<Field label='Size' value={FormatLogic.getSize(props.monster.size)} />
-					<Field label='Stamina' value={props.monster.stamina} />
-					<Field label='Stability' value={props.monster.stability} />
-					<Field label='Free Strike' value={props.monster.freeStrikeDamage} />
-				</Flex>
-				<Flex justify='space-between'>
-					{[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(ch => <Field key={ch} label={ch} value={MonsterLogic.getCharacteristic(props.monster, ch)} />)}
-				</Flex>
+				<div className='stats'>
+					<Field orientation='vertical' label='Speed' value={speed} />
+					<Field orientation='vertical' label='Size' value={FormatLogic.getSize(props.monster.size)} />
+					<Field orientation='vertical' label='Stamina' value={props.monster.stamina} />
+					<Field orientation='vertical' label='Stability' value={props.monster.stability} />
+					<Field orientation='vertical' label='Free Strike' value={props.monster.freeStrikeDamage} />
+				</div>
+				<div className='stats'>
+					{
+						[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
+							.map(ch => <Field key={ch} orientation='vertical' label={ch} value={MonsterLogic.getCharacteristic(props.monster, ch)} />)
+					}
+				</div>
 				{immunities.length > 0 ? <Field label='Immunities' value={immunities.join(', ')} /> : null}
 				{weaknesses.length > 0 ? <Field label='Weaknesses' value={weaknesses.join(', ')} /> : null}
 				{

@@ -11,6 +11,7 @@ import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { LanguageData } from '../../../data/language-data';
 import { PanelMode } from '../../../enums/panel-mode';
+import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { SkillData } from '../../../data/skill-data';
 import { SkillList } from '../../../enums/skill-list';
 import { Utils } from '../../../utils/utils';
@@ -84,7 +85,7 @@ export const RulesModal = (props: Props) => {
 					{
 						HeroLogic.getAbilities(props.hero, false, true, true)
 							.filter(a => a.type.usage === AbilityUsage.Action)
-							.map(a => <AbilityPanel key={a.id} ability={a} hero={props.hero} mode={PanelMode.Full} />)
+							.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} /></SelectablePanel>)
 					}
 				</Space>
 			);
@@ -96,7 +97,7 @@ export const RulesModal = (props: Props) => {
 					{
 						HeroLogic.getAbilities(props.hero, false, true, true)
 							.filter(a => a.type.usage === AbilityUsage.Maneuver)
-							.map(a => <AbilityPanel key={a.id} ability={a} hero={props.hero} mode={PanelMode.Full} />)
+							.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} /></SelectablePanel>)
 					}
 				</Space>
 			);

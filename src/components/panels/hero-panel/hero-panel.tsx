@@ -25,6 +25,7 @@ import { HeroLogic } from '../../../logic/hero-logic';
 import { Kit } from '../../../models/kit';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
+import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Skill } from '../../../models/skill';
 import { SkillList } from '../../../enums/skill-list';
 
@@ -441,7 +442,9 @@ export const HeroPanel = (props: Props) => {
 				<div className='abilities-grid'>
 					{
 						abilities.map(ability => (
-							<AbilityPanel key={ability.id} ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} onRoll={() => onSelectAbility(ability)} />
+							<SelectablePanel key={ability.id}>
+								<AbilityPanel ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} onRoll={() => onSelectAbility(ability)} />
+							</SelectablePanel>
 						))
 					}
 				</div>

@@ -6,6 +6,7 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroClass } from '../../../models/class';
 import { PanelMode } from '../../../enums/panel-mode';
+import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Space } from 'antd';
 import { SubclassPanel } from '../subclass-panel/subclass-panel';
 import { Utils } from '../../../utils/utils';
@@ -42,7 +43,7 @@ export const ClassPanel = (props: Props) => {
 					(props.mode === PanelMode.Full) && (props.heroClass.abilities.length > 0) ?
 						<Space direction='vertical'>
 							<HeaderText level={1}>Abilities</HeaderText>
-							{...props.heroClass.abilities.map(a => <AbilityPanel key={a.id} ability={a} hero={props.hero} mode={PanelMode.Full} />)}
+							{...props.heroClass.abilities.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} /></SelectablePanel>)}
 						</Space>
 						: null
 				}

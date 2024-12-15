@@ -3,4 +3,9 @@
 	flex-direction: column;
 	padding: 0 10px 10px 10px;
 	overflow: hidden;
+
+	&.disabled {
+		opacity: 0.6;
+		pointer-events: none;
+	}
 }

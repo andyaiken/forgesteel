@@ -10,7 +10,6 @@ import { HeroicResourceBadge } from '../../controls/heroic-resource-badge/heroic
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { PowerRollPanel } from '../power-roll-panel/power-roll-panel';
-import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Tag } from 'antd';
 import { Utils } from '../../../utils/utils';
 
@@ -43,83 +42,86 @@ export const AbilityPanel = (props: Props) => {
 			}
 		}
 
+		let className = 'ability-panel';
+		if (disabled) {
+			className += ' disabled';
+		}
+
 		return (
-			<SelectablePanel disabled={disabled}>
-				<div className='ability-panel' id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
-					<HeaderText ribbon={cost > 0 ? <HeroicResourceBadge value={cost} /> : null}>
-						{props.ability.name || 'Unnamed Ability'}
-					</HeaderText>
-					{props.ability.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.description) }} /> : null}
-					{
-						props.mode === PanelMode.Full ?
-							<div>
-								{
-									props.ability.keywords.length > 0 ?
-										<Field label='Keywords' value={props.ability.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} />
-										: null
-								}
-								<Field label='Type' value={AbilityLogic.getType(props.ability.type)} />
-								{props.ability.type.trigger ? <Field label='Trigger' value={props.ability.type.trigger} /> : null}
-								{
-									props.ability.distance.length > 0 ?
-										<Field label='Distance' value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.hero, props.ability)).join(' or ')} />
-										: null
-								}
-								{props.ability.target ? <Field label='Target' value={props.ability.target} /> : null}
-								{props.ability.preEffect ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.preEffect) }} /> : null}
-								{
-									props.ability.powerRoll ?
-										<PowerRollPanel
-											ability={props.ability}
-											hero={props.hero}
-											onRoll={props.onRoll}
-										/>
-										: null
-								}
-								{props.ability.effect ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.effect) }} /> : null}
-								{
-									props.ability.alternateEffects.map((effect, n) => (
-										<Field
-											key={n}
-											label='Alternate Effect'
-											value={<span dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(effect) }} />}
-										/>
-									))
-								}
-								{
-									props.ability.spend.map((spend, n) => (
-										<Field
-											key={n}
-											disabled={props.hero && (props.options?.dimUnavailableAbilities || false) && (spend.value > props.hero.state.heroicResource)}
-											label={(
-												<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
-													<span>Spend</span>
-													{spend.value ? <HeroicResourceBadge value={spend.value} /> : null}
-												</div>
-											)}
-											value={<span dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(spend.effect) }} />}
-										/>
-									))
-								}
-								{
-									props.ability.persistence.map((persist, n) => (
-										<Field
-											key={n}
-											label={(
-												<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
-													<span>Persist</span>
-													{persist.value ? <HeroicResourceBadge value={persist.value} /> : null}
-												</div>
-											)}
-											value={<span dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(persist.effect) }} />}
-										/>
-									))
-								}
-							</div>
-							: null
-					}
-				</div>
-			</SelectablePanel>
+			<div className={className} id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
+				<HeaderText ribbon={cost > 0 ? <HeroicResourceBadge value={cost} /> : null}>
+					{props.ability.name || 'Unnamed Ability'}
+				</HeaderText>
+				{props.ability.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.description) }} /> : null}
+				{
+					props.mode === PanelMode.Full ?
+						<div>
+							{
+								props.ability.keywords.length > 0 ?
+									<Field label='Keywords' value={props.ability.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} />
+									: null
+							}
+							<Field label='Type' value={AbilityLogic.getType(props.ability.type)} />
+							{props.ability.type.trigger ? <Field label='Trigger' value={props.ability.type.trigger} /> : null}
+							{
+								props.ability.distance.length > 0 ?
+									<Field label='Distance' value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.hero, props.ability)).join(' or ')} />
+									: null
+							}
+							{props.ability.target ? <Field label='Target' value={props.ability.target} /> : null}
+							{props.ability.preEffect ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.preEffect) }} /> : null}
+							{
+								props.ability.powerRoll ?
+									<PowerRollPanel
+										ability={props.ability}
+										hero={props.hero}
+										onRoll={props.onRoll}
+									/>
+									: null
+							}
+							{props.ability.effect ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.effect) }} /> : null}
+							{
+								props.ability.alternateEffects.map((effect, n) => (
+									<Field
+										key={n}
+										label='Alternate Effect'
+										value={<span dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(effect) }} />}
+									/>
+								))
+							}
+							{
+								props.ability.spend.map((spend, n) => (
+									<Field
+										key={n}
+										disabled={props.hero && (props.options?.dimUnavailableAbilities || false) && (spend.value > props.hero.state.heroicResource)}
+										label={(
+											<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
+												<span>Spend</span>
+												{spend.value ? <HeroicResourceBadge value={spend.value} /> : null}
+											</div>
+										)}
+										value={<span dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(spend.effect) }} />}
+									/>
+								))
+							}
+							{
+								props.ability.persistence.map((persist, n) => (
+									<Field
+										key={n}
+										label={(
+											<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
+												<span>Persist</span>
+												{persist.value ? <HeroicResourceBadge value={persist.value} /> : null}
+											</div>
+										)}
+										value={<span dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(persist.effect) }} />}
+									/>
+								))
+							}
+						</div>
+						: null
+				}
+			</div>
 		);
 	} catch (ex) {
 		console.error(ex);

@@ -48,7 +48,7 @@ export const MonsterGroupPanel = (props: Props) => {
 				}
 				{
 					(props.mode === PanelMode.Full) && (props.monsterGroup.monsters.length > 0) ?
-						<Space direction='vertical' style={{ width: '100%' }}>
+						<Space direction='vertical' style={{ width: '100%', marginTop: '25px' }}>
 							{props.monsterGroup.monsters.map(m => <SelectablePanel key={m.id}><MonsterPanel monster={m} mode={PanelMode.Full} /></SelectablePanel>)}
 						</Space>
 						: null

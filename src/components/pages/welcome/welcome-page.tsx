@@ -34,13 +34,13 @@ export const WelcomePage = (props: Props) => {
 								You can develop homebrew ancestries, classes, kits and more - anything you need to build a hero.
 							</div>
 							<div className='ds-text'>
-								You can also create homebrew monsters for your heroes to battle.
+								You can also design homebrew monsters for your heroes to battle.
 							</div>
 							<Divider />
 							<Space direction='vertical' style={{ width: '100%' }}>
 								<Button type='primary' block={true} onClick={props.showHeroes}>Start building heroes</Button>
 								<Button block={true} onClick={props.showElements}>Browse hero-building elements</Button>
-								<Button block={true} onClick={props.showMonsters}>Create homebrew monsters</Button>
+								<Button block={true} onClick={props.showMonsters}>Design homebrew monsters</Button>
 							</Space>
 						</SelectablePanel>
 					</div>

@@ -19,8 +19,8 @@ interface Props {
 	showAbout: () => void;
 	showCollections: () => void;
 	viewMonsterGroup: (monsterGroup: MonsterGroup) => void;
-	onCreateHomebrew: (type: string, settingID: string | null) => void;
-	onImportHomebrew: (type: string, settingID: string | null, monsterGroup: MonsterGroup) => void;
+	onCreateHomebrew: (settingID: string | null) => void;
+	onImportHomebrew: (settingID: string | null, monsterGroup: MonsterGroup) => void;
 }
 
 export const MonsterListPage = (props: Props) => {
@@ -32,7 +32,7 @@ export const MonsterListPage = (props: Props) => {
 	};
 
 	const createHomebrew = () => {
-		props.onCreateHomebrew('Monster Group', settingID);
+		props.onCreateHomebrew(settingID);
 	};
 
 	const getMonsterGroups = () => {
@@ -130,7 +130,7 @@ export const MonsterListPage = (props: Props) => {
 												.text()
 												.then(json => {
 													const mg = (JSON.parse(json) as MonsterGroup);
-													props.onImportHomebrew('Monster Group', settingID, mg);
+													props.onImportHomebrew(settingID, mg);
 												});
 											return false;
 										}}

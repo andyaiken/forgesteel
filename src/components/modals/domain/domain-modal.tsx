@@ -1,17 +1,17 @@
 import { Button, Popover } from 'antd';
-import { CampaignSetting } from '../../../models/campaign-setting';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Domain } from '../../../models/domain';
 import { DomainPanel } from '../../panels/domain-panel/domain-panel';
 import { PanelMode } from '../../../enums/panel-mode';
+import { Sourcebook } from '../../../models/sourcebook';
 
 import './domain-modal.scss';
 
 interface Props {
 	domain: Domain;
-	homebrewSettings: CampaignSetting[];
+	homebrewSourcebooks: Sourcebook[];
 	isHomebrew: boolean;
-	createHomebrew: (setting: CampaignSetting | null) => void;
+	createHomebrew: (sourcebook: Sourcebook | null) => void;
 	export: (format: 'image' | 'pdf' | 'json') => void;
 	edit: () => void;
 	delete: () => void;
@@ -32,7 +32,7 @@ export const DomainModal = (props: Props) => {
 								content={(
 									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 										{
-											props.homebrewSettings.map(cs => <Button key={cs.id} onClick={() => props.createHomebrew(cs)}>In {cs.name || 'Unnamed Collection'}</Button>)
+											props.homebrewSourcebooks.map(cs => <Button key={cs.id} onClick={() => props.createHomebrew(cs)}>In {cs.name || 'Unnamed Collection'}</Button>)
 										}
 										<Button onClick={() => props.createHomebrew(null)}>In a new collection</Button>
 									</div>

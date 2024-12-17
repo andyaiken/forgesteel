@@ -1,25 +1,25 @@
 import { Button, Input, Space } from 'antd';
 import { CheckCircleOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
-import { CampaignSetting } from '../../../models/campaign-setting';
-import { CampaignSettingLogic } from '../../../logic/campaign-setting-logic';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { NameGenerator } from '../../../utils/name-generator';
+import { Sourcebook } from '../../../models/sourcebook';
+import { SourcebookLogic } from '../../../logic/sourcebook-logic';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
-import './campaign-setting-panel.scss';
+import './sourcebook-panel.scss';
 
 interface Props {
-	setting: CampaignSetting;
+	sourcebook: Sourcebook;
 	visible: boolean;
-	onSetVisible: (setting: CampaignSetting, visible: boolean) => void;
-	onChange: (setting: CampaignSetting) => void;
-	onDelete: (setting: CampaignSetting) => void;
+	onSetVisible: (sourcebook: Sourcebook, visible: boolean) => void;
+	onChange: (sourcebook: Sourcebook) => void;
+	onDelete: (sourcebook: Sourcebook) => void;
 }
 
-export const CampaignSettingPanel = (props: Props) => {
-	const [ setting, setSetting ] = useState<CampaignSetting>(JSON.parse(JSON.stringify(props.setting)));
+export const SourcebookPanel = (props: Props) => {
+	const [ sourcebook, setSourcebook ] = useState<Sourcebook>(JSON.parse(JSON.stringify(props.sourcebook)));
 	const [ isEditing, setIsEditing ] = useState<boolean>(false);
 
 	const toggleEditing = () => {
@@ -27,79 +27,78 @@ export const CampaignSettingPanel = (props: Props) => {
 	};
 
 	const onExport = () => {
-		Utils.export([ setting.id ], setting.name || 'Unnamed Collection', setting, 'collection', 'json');
+		Utils.export([ sourcebook.id ], sourcebook.name || 'Unnamed Collection', sourcebook, 'collection', 'json');
 	};
 
 	const onDelete = () => {
-		props.onDelete(setting);
+		props.onDelete(sourcebook);
 	};
 
 	const setName = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(setting)) as CampaignSetting;
+		const copy = JSON.parse(JSON.stringify(sourcebook)) as Sourcebook;
 		copy.name = value;
-		setSetting(copy);
+		setSourcebook(copy);
 		props.onChange(copy);
 	};
 
 	const setDescription = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(setting)) as CampaignSetting;
+		const copy = JSON.parse(JSON.stringify(sourcebook)) as Sourcebook;
 		copy.description = value;
-		setSetting(copy);
+		setSourcebook(copy);
 		props.onChange(copy);
 	};
 
 	try {
 		return (
-			<div className={isEditing ? 'campaign-setting-panel editing' : 'campaign-setting-panel'} id={setting.id}>
+			<div className={isEditing ? 'sourcebook-panel editing' : 'sourcebook-panel'} id={sourcebook.id}>
 				{
 					isEditing ?
 						<Space direction='vertical' style={{ width: '100%' }}>
 							<Input
-								className={setting.name === '' ? 'input-empty' : ''}
+								className={sourcebook.name === '' ? 'input-empty' : ''}
 								placeholder='Name'
 								allowClear={true}
 								addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-								value={setting.name}
+								value={sourcebook.name}
 								onChange={e => setName(e.target.value)}
 							/>
 							<Input
 								placeholder='Description'
 								allowClear={true}
-								value={setting.description}
+								value={sourcebook.description}
 								onChange={e => setDescription(e.target.value)}
 							/>
 						</Space>
 						:
 						<div style={{ width: '100%' }}>
-							<HeaderText tags={setting.isHomebrew ? [ 'Homebrew' ] : []}>{setting.name || 'Unnamed Collection'}</HeaderText>
-							<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(setting.description) }} />
-							<div className='ds-text'>{CampaignSettingLogic.getElementCount(setting)} elements</div>
-							<div className='ds-text'>{CampaignSettingLogic.getMonsterCount(setting)} monsters</div>
+							<HeaderText tags={sourcebook.isHomebrew ? [ 'Homebrew' ] : []}>{sourcebook.name || 'Unnamed Collection'}</HeaderText>
+							<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(sourcebook.description) }} />
+							<div className='ds-text'>{SourcebookLogic.getElementCount(sourcebook)} elements</div>
 						</div>
 				}
 				<div className='action-buttons'>
 					{
 						!isEditing ?
-							<Button type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(setting, !props.visible)} />
+							<Button type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(sourcebook, !props.visible)} />
 							: null
 					}
 					{
-						setting.isHomebrew && !isEditing ?
+						sourcebook.isHomebrew && !isEditing ?
 							<Button type='text' title='Edit' icon={<EditOutlined />} onClick={toggleEditing} />
 							: null
 					}
 					{
-						setting.isHomebrew && isEditing ?
+						sourcebook.isHomebrew && isEditing ?
 							<Button type='text' title='OK' icon={<CheckCircleOutlined />} onClick={toggleEditing} />
 							: null
 					}
 					{
-						setting.isHomebrew && !isEditing ?
+						sourcebook.isHomebrew && !isEditing ?
 							<Button type='text' title='Export' icon={<UploadOutlined />} onClick={onExport} />
 							: null
 					}
 					{
-						setting.isHomebrew && isEditing ?
+						sourcebook.isHomebrew && isEditing ?
 							<DangerButton onConfirm={onDelete} />
 							: null
 					}

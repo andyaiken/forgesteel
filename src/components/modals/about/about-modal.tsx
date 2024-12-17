@@ -10,10 +10,6 @@ export const AboutModal = () => {
 		return (
 			<div className='about-modal'>
 				<div className='ds-text'>
-					<b>FORGE STEEL</b> is a hero builder app for <b>DRAW STEEL</b>.
-				</div>
-				<Divider />
-				<div className='ds-text'>
 					<b>FORGE STEEL</b> is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC.
 				</div>
 				<div className='ds-text'>

@@ -1,6 +1,5 @@
 import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { CampaignSetting } from '../../../models/campaign-setting';
 import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
 import { DangerButton } from '../../controls/danger-button/danger-button';
@@ -17,6 +16,7 @@ import { MonsterRoleType } from '../../../enums/monster-role-type';
 import { MultiLine } from '../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../utils/name-generator';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
+import { Sourcebook } from '../../../models/sourcebook';
 import { Toggle } from '../../controls/toggle/toggle';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
@@ -25,7 +25,7 @@ import './monster-edit-panel.scss';
 
 interface Props {
 	monster: Monster;
-	campaignSettings: CampaignSetting[];
+	sourcebooks: Sourcebook[];
 	onChange: (monster: Monster) => void;
 }
 
@@ -341,7 +341,7 @@ export const MonsterEditPanel = (props: Props) => {
 											>
 												<FeatureEditPanel
 													feature={f}
-													campaignSettings={props.campaignSettings}
+													sourcebooks={props.sourcebooks}
 													allowedTypes={[ FeatureType.Ability, FeatureType.DamageModifier, FeatureType.Text ]}
 													onChange={changeFeature}
 												/>
@@ -395,7 +395,7 @@ export const MonsterEditPanel = (props: Props) => {
 											>
 												<FeatureEditPanel
 													feature={va}
-													campaignSettings={props.campaignSettings}
+													sourcebooks={props.sourcebooks}
 													allowedTypes={[ FeatureType.Ability, FeatureType.Text ]}
 													onChange={changeVillainAction}
 												/>

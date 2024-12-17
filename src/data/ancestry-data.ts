@@ -2,12 +2,12 @@ import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { Ancestry } from '../models/ancestry';
-import { CampaignSetting } from '../models/campaign-setting';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from '../logic/feature-logic';
+import { Sourcebook } from '../models/sourcebook';
 
 export class AncestryData {
 	static devil: Ancestry = {
@@ -690,11 +690,11 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 		]
 	};
 
-	static getAncestries = (settings: CampaignSetting[]) => {
+	static getAncestries = (sourcebooks: Sourcebook[]) => {
 		const list: Ancestry[] = [];
 
-		settings.forEach(setting => {
-			list.push(...setting.ancestries);
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.ancestries);
 		});
 
 		return Collections.sort(list, item => item.name);

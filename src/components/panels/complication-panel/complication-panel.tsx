@@ -1,9 +1,9 @@
-import { CampaignSetting } from '../../../models/campaign-setting';
 import { Complication } from '../../../models/complication';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { PanelMode } from '../../../enums/panel-mode';
+import { Sourcebook } from '../../../models/sourcebook';
 import { Utils } from '../../../utils/utils';
 
 import './complication-panel.scss';
@@ -11,7 +11,7 @@ import './complication-panel.scss';
 interface Props {
 	complication: Complication;
 	hero?: Hero;
-	campaignSettings?: CampaignSetting[];
+	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 
@@ -24,7 +24,7 @@ export const ComplicationPanel = (props: Props) => {
 				{
 					props.mode === PanelMode.Full ?
 						props.complication.features.map(f => (
-							<FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />
+							<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 						))
 						: null
 				}

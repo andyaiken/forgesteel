@@ -1,13 +1,13 @@
-import { CampaignSetting } from '../models/campaign-setting';
 import { Collections } from '../utils/collections';
 import { Item } from '../models/item';
+import { Sourcebook } from '../models/sourcebook';
 
 export class ItemData {
-	static getItems = (settings: CampaignSetting[]) => {
+	static getItems = (sourcebooks: Sourcebook[]) => {
 		const list: Item[] = [];
 
-		settings.forEach(setting => {
-			list.push(...setting.items);
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.items);
 		});
 
 		return Collections.sort(list, item => item.name);

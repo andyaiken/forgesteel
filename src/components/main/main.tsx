@@ -4,8 +4,6 @@ import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
 import { Ancestry } from '../../models/ancestry';
 import { AncestryModal } from '../modals/ancestry/ancestry-modal';
-import { CampaignSetting } from '../../models/campaign-setting';
-import { CampaignSettingData } from '../../data/campaign-setting-data';
 import { Career } from '../../models/career';
 import { CareerModal } from '../modals/career/career-modal';
 import { Characteristic } from '../../enums/characteristic';
@@ -42,7 +40,10 @@ import { MonsterListPage } from '../pages/monsters/monster-list/monster-list';
 import { Options } from '../../models/options';
 import { Perk } from '../../models/perk';
 import { PerkModal } from '../modals/perk/perk-modal';
+import { Playbook } from '../../models/playbook';
 import { RulesModal } from '../modals/rules/rules-modal';
+import { Sourcebook } from '../../models/sourcebook';
+import { SourcebookData } from '../../data/sourcebook-data';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
@@ -64,19 +65,21 @@ enum Page {
 
 interface Props {
 	heroes: Hero[];
-	homebrewSettings: CampaignSetting[];
-	hiddenSettingIDs: string[];
+	playbook: Playbook;
+	homebrewSourcebooks: Sourcebook[];
+	hiddenSourcebookIDs: string[];
 	options: Options;
 }
 
 export const Main = (props: Props) => {
 	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
-	const [ homebrewSettings, setHomebrewSettings ] = useState<CampaignSetting[]>(props.homebrewSettings);
-	const [ hiddenSettingIDs, setHiddenSettingIDs ] = useState<string[]>(props.hiddenSettingIDs);
+	const [ playbook, setPlaybook ] = useState<Playbook>(props.playbook);
+	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
+	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(props.hiddenSourcebookIDs);
 	const [ options, setOptions ] = useState<Options>(props.options);
 	const [ page, setPage ] = useState<Page>(Page.Welcome);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
-	const [ selectedSetting, setSelectedSetting ] = useState<CampaignSetting | null>(null);
+	const [ selectedSourcebook, setSelectedSourcebook ] = useState<Sourcebook | null>(null);
 	const [ selectedElement, setSelectedElement ] = useState<Element | null>(null);
 	const [ selectedElementType, setSelectedElementType ] = useState<string>('');
 	const [ selectedMonsterGroup, setSelectedMonsterGroup ] = useState<MonsterGroup | null>(null);
@@ -90,16 +93,22 @@ export const Main = (props: Props) => {
 			.then(setHeroes);
 	};
 
-	const persistHomebrewSettings = (homebrew: CampaignSetting[]) => {
+	const persistPlaybook = (playbook: Playbook) => {
 		localforage
-			.setItem<CampaignSetting[]>('forgesteel-homebrew-settings', homebrew)
-			.then(setHomebrewSettings);
+			.setItem<Playbook>('forgesteel-playbook', playbook)
+			.then(setPlaybook);
 	};
 
-	const persistHiddenSettingIDs = (ids: string[]) => {
+	const persistHomebrewSourcebooks = (homebrew: Sourcebook[]) => {
+		localforage
+			.setItem<Sourcebook[]>('forgesteel-homebrew-settings', homebrew)
+			.then(setHomebrewSourcebooks);
+	};
+
+	const persistHiddenSourcebookIDs = (ids: string[]) => {
 		localforage
 			.setItem<string[]>('forgesteel-hidden-setting-ids', ids)
-			.then(setHiddenSettingIDs);
+			.then(setHiddenSourcebookIDs);
 	};
 
 	const persistOptions = (options: Options) => {
@@ -115,7 +124,7 @@ export const Main = (props: Props) => {
 	const showWelcome = () => {
 		setPage(Page.Welcome);
 		setSelectedHero(null);
-		setSelectedSetting(null);
+		setSelectedSourcebook(null);
 		setSelectedElement(null);
 		setSelectedElementType('');
 		setSelectedMonsterGroup(null);
@@ -124,7 +133,7 @@ export const Main = (props: Props) => {
 	const showHeroList = () => {
 		setPage(Page.HeroList);
 		setSelectedHero(null);
-		setSelectedSetting(null);
+		setSelectedSourcebook(null);
 		setSelectedElement(null);
 		setSelectedElementType('');
 		setSelectedMonsterGroup(null);
@@ -133,7 +142,7 @@ export const Main = (props: Props) => {
 	const showElementList = () => {
 		setPage(Page.ElementList);
 		setSelectedHero(null);
-		setSelectedSetting(null);
+		setSelectedSourcebook(null);
 		setSelectedElement(null);
 		setSelectedElementType('');
 		setSelectedMonsterGroup(null);
@@ -142,7 +151,7 @@ export const Main = (props: Props) => {
 	const showMonsterList = () => {
 		setPage(Page.MonsterList);
 		setSelectedHero(null);
-		setSelectedSetting(null);
+		setSelectedSourcebook(null);
 		setSelectedElement(null);
 		setSelectedElementType('');
 		setSelectedMonsterGroup(null);
@@ -154,8 +163,8 @@ export const Main = (props: Props) => {
 
 	const addHero = () => {
 		const hero = FactoryLogic.createHero([
-			CampaignSettingData.core.id,
-			CampaignSettingData.orden.id
+			SourcebookData.core.id,
+			SourcebookData.orden.id
 		]);
 
 		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
@@ -241,99 +250,99 @@ export const Main = (props: Props) => {
 
 	//#region Elements
 
-	const createHomebrewElement = (type: string, settingID: string | null) => {
-		const setting = homebrewSettings.find(cs => cs.id === settingID) || null;
+	const createHomebrewElement = (type: string, sourcebookID: string | null) => {
+		const sourcebook = homebrewSourcebooks.find(cs => cs.id === sourcebookID) || null;
 		switch (type) {
 			case 'Ancestry':
-				createAncestry(null, setting);
+				createAncestry(null, sourcebook);
 				break;
 			case 'Culture':
-				createCulture(null, setting);
+				createCulture(null, sourcebook);
 				break;
 			case 'Career':
-				createCareer(null, setting);
+				createCareer(null, sourcebook);
 				break;
 			case 'Class':
-				createClass(null, setting);
+				createClass(null, sourcebook);
 				break;
 			case 'Complication':
-				createComplication(null, setting);
+				createComplication(null, sourcebook);
 				break;
 			case 'Kit':
-				createKit(null, setting);
+				createKit(null, sourcebook);
 				break;
 			case 'Perk':
-				createPerk(null, setting);
+				createPerk(null, sourcebook);
 				break;
 			case 'Item':
-				createItem(null, setting);
+				createItem(null, sourcebook);
 				break;
 		}
 	};
 
-	const importHomebrewElement = (type: string, settingID: string | null, element: Element) => {
+	const importHomebrewElement = (type: string, sourcebookID: string | null, element: Element) => {
 		element.id = Utils.guid();
 
-		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		let setting = settings.find(cs => cs.id === settingID);
-		if (!setting) {
-			setting = FactoryLogic.createCampaignSetting();
-			settings.push(setting);
+		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		let sourcebook = sourcebooks.find(cs => cs.id === sourcebookID);
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
 		}
-		if (setting) {
+		if (sourcebook) {
 			switch(type) {
 				case 'Ancestry':
-					setting.ancestries.push(element as unknown as Ancestry);
-					Collections.sort(setting.ancestries, item => item.name);
+					sourcebook.ancestries.push(element as unknown as Ancestry);
+					Collections.sort(sourcebook.ancestries, item => item.name);
 					break;
 				case 'Culture':
-					setting.cultures.push(element as unknown as Culture);
-					Collections.sort(setting.cultures, item => item.name);
+					sourcebook.cultures.push(element as unknown as Culture);
+					Collections.sort(sourcebook.cultures, item => item.name);
 					break;
 				case 'Career':
-					setting.careers.push(element as unknown as Career);
-					Collections.sort(setting.careers, item => item.name);
+					sourcebook.careers.push(element as unknown as Career);
+					Collections.sort(sourcebook.careers, item => item.name);
 					break;
 				case 'Class':
-					setting.classes.push(element as unknown as HeroClass);
-					Collections.sort(setting.classes, item => item.name);
+					sourcebook.classes.push(element as unknown as HeroClass);
+					Collections.sort(sourcebook.classes, item => item.name);
 					break;
 				case 'Complication':
-					setting.complications.push(element as unknown as Complication);
-					Collections.sort(setting.complications, item => item.name);
+					sourcebook.complications.push(element as unknown as Complication);
+					Collections.sort(sourcebook.complications, item => item.name);
 					break;
 				case 'Domain':
-					setting.domains.push(element as unknown as Domain);
-					Collections.sort(setting.domains, item => item.name);
+					sourcebook.domains.push(element as unknown as Domain);
+					Collections.sort(sourcebook.domains, item => item.name);
 					break;
 				case 'Kit':
-					setting.kits.push(element as unknown as Kit);
-					Collections.sort(setting.kits, item => item.name);
+					sourcebook.kits.push(element as unknown as Kit);
+					Collections.sort(sourcebook.kits, item => item.name);
 					break;
 				case 'Perk':
-					setting.perks.push(element as unknown as Perk);
-					Collections.sort(setting.perks, item => item.name);
+					sourcebook.perks.push(element as unknown as Perk);
+					Collections.sort(sourcebook.perks, item => item.name);
 					break;
 				case 'Item':
-					setting.items.push(element as unknown as Item);
-					Collections.sort(setting.items, item => item.name);
+					sourcebook.items.push(element as unknown as Item);
+					Collections.sort(sourcebook.items, item => item.name);
 					break;
 			}
 		}
 
-		persistHomebrewSettings(settings);
+		persistHomebrewSourcebooks(sourcebooks);
 		setPage(Page.ElementList);
 		setDrawer(null);
 	};
 
-	const createAncestry = (original: Ancestry | null, setting: CampaignSetting | null) => {
-		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		if (!setting) {
-			setting = FactoryLogic.createCampaignSetting();
-			settings.push(setting);
+	const createAncestry = (original: Ancestry | null, sourcebook: Sourcebook | null) => {
+		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
 		} else {
-			const id = setting.id;
-			setting = settings.find(cs => cs.id === id) as CampaignSetting;
+			const id = sourcebook.id;
+			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
 		}
 
 		let ancestry: Ancestry;
@@ -344,23 +353,23 @@ export const Main = (props: Props) => {
 			ancestry = FactoryLogic.createAncestry();
 		}
 
-		setting.ancestries.push(ancestry);
-		persistHomebrewSettings(settings);
+		sourcebook.ancestries.push(ancestry);
+		persistHomebrewSourcebooks(sourcebooks);
 		if (drawer) {
 			onSelectAncestry(ancestry);
 		} else {
-			editAncestry(ancestry, setting);
+			editAncestry(ancestry, sourcebook);
 		}
 	};
 
-	const createCulture = (original: Culture | null, setting: CampaignSetting | null) => {
-		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		if (!setting) {
-			setting = FactoryLogic.createCampaignSetting();
-			settings.push(setting);
+	const createCulture = (original: Culture | null, sourcebook: Sourcebook | null) => {
+		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
 		} else {
-			const id = setting.id;
-			setting = settings.find(cs => cs.id === id) as CampaignSetting;
+			const id = sourcebook.id;
+			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
 		}
 
 		let culture: Culture;
@@ -371,23 +380,23 @@ export const Main = (props: Props) => {
 			culture = FactoryLogic.createCulture();
 		}
 
-		setting.cultures.push(culture);
-		persistHomebrewSettings(settings);
+		sourcebook.cultures.push(culture);
+		persistHomebrewSourcebooks(sourcebooks);
 		if (drawer) {
 			onSelectCulture(culture);
 		} else {
-			editCulture(culture, setting);
+			editCulture(culture, sourcebook);
 		}
 	};
 
-	const createCareer = (original: Career | null, setting: CampaignSetting | null) => {
-		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		if (!setting) {
-			setting = FactoryLogic.createCampaignSetting();
-			settings.push(setting);
+	const createCareer = (original: Career | null, sourcebook: Sourcebook | null) => {
+		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
 		} else {
-			const id = setting.id;
-			setting = settings.find(cs => cs.id === id) as CampaignSetting;
+			const id = sourcebook.id;
+			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
 		}
 
 		let career: Career;
@@ -398,23 +407,23 @@ export const Main = (props: Props) => {
 			career = FactoryLogic.createCareer();
 		}
 
-		setting.careers.push(career);
-		persistHomebrewSettings(settings);
+		sourcebook.careers.push(career);
+		persistHomebrewSourcebooks(sourcebooks);
 		if (drawer) {
 			onSelectCareer(career);
 		} else {
-			editCareer(career, setting);
+			editCareer(career, sourcebook);
 		}
 	};
 
-	const createClass = (original: HeroClass | null, setting: CampaignSetting | null) => {
-		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		if (!setting) {
-			setting = FactoryLogic.createCampaignSetting();
-			settings.push(setting);
+	const createClass = (original: HeroClass | null, sourcebook: Sourcebook | null) => {
+		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
 		} else {
-			const id = setting.id;
-			setting = settings.find(cs => cs.id === id) as CampaignSetting;
+			const id = sourcebook.id;
+			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
 		}
 
 		let heroClass: HeroClass;
@@ -425,23 +434,23 @@ export const Main = (props: Props) => {
 			heroClass = FactoryLogic.createClass();
 		}
 
-		setting.classes.push(heroClass);
-		persistHomebrewSettings(settings);
+		sourcebook.classes.push(heroClass);
+		persistHomebrewSourcebooks(sourcebooks);
 		if (drawer) {
 			onSelectClass(heroClass);
 		} else {
-			editClass(heroClass, setting);
+			editClass(heroClass, sourcebook);
 		}
 	};
 
-	const createComplication = (original: Complication | null, setting: CampaignSetting | null) => {
-		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		if (!setting) {
-			setting = FactoryLogic.createCampaignSetting();
-			settings.push(setting);
+	const createComplication = (original: Complication | null, sourcebook: Sourcebook | null) => {
+		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
 		} else {
-			const id = setting.id;
-			setting = settings.find(cs => cs.id === id) as CampaignSetting;
+			const id = sourcebook.id;
+			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
 		}
 
 		let complication: Complication;
@@ -452,23 +461,23 @@ export const Main = (props: Props) => {
 			complication = FactoryLogic.createComplication();
 		}
 
-		setting.complications.push(complication);
-		persistHomebrewSettings(settings);
+		sourcebook.complications.push(complication);
+		persistHomebrewSourcebooks(sourcebooks);
 		if (drawer) {
 			onSelectComplication(complication);
 		} else {
-			editComplication(complication, setting);
+			editComplication(complication, sourcebook);
 		}
 	};
 
-	const createDomain = (original: Domain | null, setting: CampaignSetting | null) => {
-		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		if (!setting) {
-			setting = FactoryLogic.createCampaignSetting();
-			settings.push(setting);
+	const createDomain = (original: Domain | null, sourcebook: Sourcebook | null) => {
+		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
 		} else {
-			const id = setting.id;
-			setting = settings.find(cs => cs.id === id) as CampaignSetting;
+			const id = sourcebook.id;
+			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
 		}
 
 		let domain: Domain;
@@ -479,23 +488,23 @@ export const Main = (props: Props) => {
 			domain = FactoryLogic.createDomain();
 		}
 
-		setting.domains.push(domain);
-		persistHomebrewSettings(settings);
+		sourcebook.domains.push(domain);
+		persistHomebrewSourcebooks(sourcebooks);
 		if (drawer) {
 			onSelectDomain(domain);
 		} else {
-			editDomain(domain, setting);
+			editDomain(domain, sourcebook);
 		}
 	};
 
-	const createKit = (original: Kit | null, setting: CampaignSetting | null) => {
-		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		if (!setting) {
-			setting = FactoryLogic.createCampaignSetting();
-			settings.push(setting);
+	const createKit = (original: Kit | null, sourcebook: Sourcebook | null) => {
+		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
 		} else {
-			const id = setting.id;
-			setting = settings.find(cs => cs.id === id) as CampaignSetting;
+			const id = sourcebook.id;
+			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
 		}
 
 		let kit: Kit;
@@ -506,23 +515,23 @@ export const Main = (props: Props) => {
 			kit = FactoryLogic.createKit();
 		}
 
-		setting.kits.push(kit);
-		persistHomebrewSettings(settings);
+		sourcebook.kits.push(kit);
+		persistHomebrewSourcebooks(sourcebooks);
 		if (drawer) {
 			onSelectKit(kit);
 		} else {
-			editKit(kit, setting);
+			editKit(kit, sourcebook);
 		}
 	};
 
-	const createPerk = (original: Perk | null, setting: CampaignSetting | null) => {
-		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		if (!setting) {
-			setting = FactoryLogic.createCampaignSetting();
-			settings.push(setting);
+	const createPerk = (original: Perk | null, sourcebook: Sourcebook | null) => {
+		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
 		} else {
-			const id = setting.id;
-			setting = settings.find(cs => cs.id === id) as CampaignSetting;
+			const id = sourcebook.id;
+			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
 		}
 
 		let perk: Perk;
@@ -533,23 +542,23 @@ export const Main = (props: Props) => {
 			perk = FactoryLogic.createPerk();
 		}
 
-		setting.perks.push(perk);
-		persistHomebrewSettings(settings);
+		sourcebook.perks.push(perk);
+		persistHomebrewSourcebooks(sourcebooks);
 		if (drawer) {
 			onSelectPerk(perk);
 		} else {
-			editPerk(perk, setting);
+			editPerk(perk, sourcebook);
 		}
 	};
 
-	const createItem = (original: Item | null, setting: CampaignSetting | null) => {
-		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		if (!setting) {
-			setting = FactoryLogic.createCampaignSetting();
-			settings.push(setting);
+	const createItem = (original: Item | null, sourcebook: Sourcebook | null) => {
+		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
 		} else {
-			const id = setting.id;
-			setting = settings.find(cs => cs.id === id) as CampaignSetting;
+			const id = sourcebook.id;
+			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
 		}
 
 		let item: Item;
@@ -560,243 +569,243 @@ export const Main = (props: Props) => {
 			item = FactoryLogic.createItem();
 		}
 
-		setting.items.push(item);
-		persistHomebrewSettings(settings);
+		sourcebook.items.push(item);
+		persistHomebrewSourcebooks(sourcebooks);
 		if (drawer) {
 			onSelectItem(item);
 		} else {
-			editItem(item, setting);
+			editItem(item, sourcebook);
 		}
 	};
 
-	const editAncestry = (ancestry: Ancestry, setting: CampaignSetting) => {
+	const editAncestry = (ancestry: Ancestry, sourcebook: Sourcebook) => {
 		setSelectedElement(ancestry);
-		setSelectedSetting(setting);
+		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Ancestry');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
 	};
 
-	const editCulture = (culture: Culture, setting: CampaignSetting) => {
+	const editCulture = (culture: Culture, sourcebook: Sourcebook) => {
 		setSelectedElement(culture);
-		setSelectedSetting(setting);
+		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Culture');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
 	};
 
-	const editCareer = (career: Career, setting: CampaignSetting) => {
+	const editCareer = (career: Career, sourcebook: Sourcebook) => {
 		setSelectedElement(career);
-		setSelectedSetting(setting);
+		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Career');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
 	};
 
-	const editClass = (heroClass: HeroClass, setting: CampaignSetting) => {
+	const editClass = (heroClass: HeroClass, sourcebook: Sourcebook) => {
 		setSelectedElement(heroClass);
-		setSelectedSetting(setting);
+		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Class');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
 	};
 
-	const editComplication = (complication: Complication, setting: CampaignSetting) => {
+	const editComplication = (complication: Complication, sourcebook: Sourcebook) => {
 		setSelectedElement(complication);
-		setSelectedSetting(setting);
+		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Complication');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
 	};
 
-	const editDomain = (domain: Domain, setting: CampaignSetting) => {
+	const editDomain = (domain: Domain, sourcebook: Sourcebook) => {
 		setSelectedElement(domain);
-		setSelectedSetting(setting);
+		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Domain');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
 	};
 
-	const editKit = (kit: Kit, setting: CampaignSetting) => {
+	const editKit = (kit: Kit, sourcebook: Sourcebook) => {
 		setSelectedElement(kit);
-		setSelectedSetting(setting);
+		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Kit');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
 	};
 
-	const editPerk = (perk: Perk, setting: CampaignSetting) => {
+	const editPerk = (perk: Perk, sourcebook: Sourcebook) => {
 		setSelectedElement(perk);
-		setSelectedSetting(setting);
+		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Perk');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
 	};
 
-	const editItem = (item: Item, setting: CampaignSetting) => {
+	const editItem = (item: Item, sourcebook: Sourcebook) => {
 		setSelectedElement(item);
-		setSelectedSetting(setting);
+		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Item');
 		setPage(Page.ElementEdit);
 		setDrawer(null);
 	};
 
 	const deleteAncestry = (ancestry: Ancestry) => {
-		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		copy.forEach(cs => {
 			cs.ancestries = cs.ancestries.filter(a => a.id !== ancestry.id);
 		});
-		persistHomebrewSettings(copy);
+		persistHomebrewSourcebooks(copy);
 		setDrawer(null);
 	};
 
 	const deleteCulture = (culture: Culture) => {
-		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		copy.forEach(cs => {
 			cs.cultures = cs.cultures.filter(c => c.id !== culture.id);
 		});
-		persistHomebrewSettings(copy);
+		persistHomebrewSourcebooks(copy);
 		setDrawer(null);
 	};
 
 	const deleteCareer = (career: Career) => {
-		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		copy.forEach(cs => {
 			cs.careers = cs.careers.filter(c => c.id !== career.id);
 		});
-		persistHomebrewSettings(copy);
+		persistHomebrewSourcebooks(copy);
 		setDrawer(null);
 	};
 
 	const deleteClass = (heroClass: HeroClass) => {
-		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		copy.forEach(cs => {
 			cs.classes = cs.classes.filter(c => c.id !== heroClass.id);
 		});
-		persistHomebrewSettings(copy);
+		persistHomebrewSourcebooks(copy);
 		setDrawer(null);
 	};
 
 	const deleteComplication = (complication: Complication) => {
-		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		copy.forEach(cs => {
 			cs.complications = cs.complications.filter(c => c.id !== complication.id);
 		});
-		persistHomebrewSettings(copy);
+		persistHomebrewSourcebooks(copy);
 		setDrawer(null);
 	};
 
 	const deleteDomain = (domain: Domain) => {
-		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		copy.forEach(cs => {
 			cs.domains = cs.domains.filter(d => d.id !== domain.id);
 		});
-		persistHomebrewSettings(copy);
+		persistHomebrewSourcebooks(copy);
 		setDrawer(null);
 	};
 
 	const deleteKit = (kit: Kit) => {
-		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		copy.forEach(cs => {
 			cs.kits = cs.kits.filter(k => k.id !== kit.id);
 		});
-		persistHomebrewSettings(copy);
+		persistHomebrewSourcebooks(copy);
 		setDrawer(null);
 	};
 
 	const deletePerk = (perk: Perk) => {
-		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		copy.forEach(cs => {
 			cs.perks = cs.perks.filter(p => p.id !== perk.id);
 		});
-		persistHomebrewSettings(copy);
+		persistHomebrewSourcebooks(copy);
 		setDrawer(null);
 	};
 
 	const deleteItem = (item: Item) => {
-		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
+		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		copy.forEach(cs => {
 			cs.items = cs.items.filter(i => i.id !== item.id);
 		});
-		persistHomebrewSettings(copy);
+		persistHomebrewSourcebooks(copy);
 		setDrawer(null);
 	};
 
 	const saveEditSelectedElement = (element: Element) => {
 		if (selectedElement) {
-			const list = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-			const setting = list.find(cs => cs.id === (selectedSetting as CampaignSetting).id);
-			if (setting) {
+			const list = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+			const sourcebook = list.find(cs => cs.id === (selectedSourcebook as Sourcebook).id);
+			if (sourcebook) {
 				switch (selectedElementType) {
 					case 'Ancestry': {
-						const ancestryIndex = setting.ancestries.findIndex(a => a.id === element.id);
+						const ancestryIndex = sourcebook.ancestries.findIndex(a => a.id === element.id);
 						if (ancestryIndex !== -1) {
-							setting.ancestries[ancestryIndex] = element as unknown as Ancestry;
+							sourcebook.ancestries[ancestryIndex] = element as unknown as Ancestry;
 						}
 					}
 						break;
 					case 'Culture': {
-						const cultureIndex = setting.cultures.findIndex(c => c.id === element.id);
+						const cultureIndex = sourcebook.cultures.findIndex(c => c.id === element.id);
 						if (cultureIndex !== -1) {
-							setting.cultures[cultureIndex] = element as unknown as Culture;
+							sourcebook.cultures[cultureIndex] = element as unknown as Culture;
 						}
 					}
 						break;
 					case 'Career': {
-						const careerIndex = setting.careers.findIndex(c => c.id === element.id);
+						const careerIndex = sourcebook.careers.findIndex(c => c.id === element.id);
 						if (careerIndex !== -1) {
-							setting.careers[careerIndex] = element as unknown as Career;
+							sourcebook.careers[careerIndex] = element as unknown as Career;
 						}
 					}
 						break;
 					case 'Class': {
-						const classIndex = setting.classes.findIndex(c => c.id === element.id);
+						const classIndex = sourcebook.classes.findIndex(c => c.id === element.id);
 						if (classIndex !== -1) {
-							setting.classes[classIndex] = element as unknown as HeroClass;
+							sourcebook.classes[classIndex] = element as unknown as HeroClass;
 						}
 					}
 						break;
 					case 'Complication': {
-						const complicationIndex = setting.complications.findIndex(c => c.id === element.id);
+						const complicationIndex = sourcebook.complications.findIndex(c => c.id === element.id);
 						if (complicationIndex !== -1) {
-							setting.complications[complicationIndex] = element as unknown as Complication;
+							sourcebook.complications[complicationIndex] = element as unknown as Complication;
 						}
 					}
 						break;
 					case 'Domain': {
-						const domainIndex = setting.domains.findIndex(d => d.id === element.id);
+						const domainIndex = sourcebook.domains.findIndex(d => d.id === element.id);
 						if (domainIndex !== -1) {
-							setting.domains[domainIndex] = element as unknown as Domain;
+							sourcebook.domains[domainIndex] = element as unknown as Domain;
 						}
 					}
 						break;
 					case 'Kit': {
-						const kitIndex = setting.kits.findIndex(k => k.id === element.id);
+						const kitIndex = sourcebook.kits.findIndex(k => k.id === element.id);
 						if (kitIndex !== -1) {
-							setting.kits[kitIndex] = element as unknown as Kit;
+							sourcebook.kits[kitIndex] = element as unknown as Kit;
 						}
 					}
 						break;
 					case 'Perk': {
-						const perkIndex = setting.perks.findIndex(p => p.id === element.id);
+						const perkIndex = sourcebook.perks.findIndex(p => p.id === element.id);
 						if (perkIndex !== -1) {
-							setting.perks[perkIndex] = element as unknown as Perk;
+							sourcebook.perks[perkIndex] = element as unknown as Perk;
 						}
 					}
 						break;
 					case 'Item': {
-						const itemIndex = setting.items.findIndex(i => i.id === element.id);
+						const itemIndex = sourcebook.items.findIndex(i => i.id === element.id);
 						if (itemIndex !== -1) {
-							setting.items[itemIndex] = element as unknown as Item;
+							sourcebook.items[itemIndex] = element as unknown as Item;
 						}
 					}
 						break;
 				}
 			};
 
-			persistHomebrewSettings(list);
+			persistHomebrewSourcebooks(list);
 			setPage(Page.ElementList);
-			setSelectedSetting(null);
+			setSelectedSourcebook(null);
 			setSelectedElement(null);
 			setSelectedElementType('');
 			setSelectedMonsterGroup(null);
@@ -813,39 +822,8 @@ export const Main = (props: Props) => {
 
 	//#region Monsters
 
-	const createHomebrewMonsterGroup = (settingID: string | null) => {
-		const setting = homebrewSettings.find(cs => cs.id === settingID) || null;
-		createMonsterGroup(null, setting);
-	};
-
-	const importHomebrewMonsterGroup = (settingID: string | null, element: Element) => {
-		element.id = Utils.guid();
-
-		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		let setting = settings.find(cs => cs.id === settingID);
-		if (!setting) {
-			setting = FactoryLogic.createCampaignSetting();
-			settings.push(setting);
-		}
-		if (setting) {
-			setting.monsterGroups.push(element as unknown as MonsterGroup);
-			Collections.sort(setting.monsterGroups, item => item.name);
-		}
-
-		persistHomebrewSettings(settings);
-		setPage(Page.MonsterList);
-		setDrawer(null);
-	};
-
-	const createMonsterGroup = (original: MonsterGroup | null, setting: CampaignSetting | null) => {
-		const settings = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		if (!setting) {
-			setting = FactoryLogic.createCampaignSetting();
-			settings.push(setting);
-		} else {
-			const id = setting.id;
-			setting = settings.find(cs => cs.id === id) as CampaignSetting;
-		}
+	const createMonsterGroup = (original: MonsterGroup | null) => {
+		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
 
 		let monsterGroup: MonsterGroup;
 		if (original) {
@@ -855,52 +833,56 @@ export const Main = (props: Props) => {
 			monsterGroup = FactoryLogic.createMonsterGroup();
 		}
 
-		setting.monsterGroups.push(monsterGroup);
-		persistHomebrewSettings(settings);
+		copy.monsterGroups.push(monsterGroup);
+		persistPlaybook(copy);
 		if (drawer) {
 			onSelectMonsterGroup(monsterGroup);
 		} else {
-			editMonsterGroup(monsterGroup, setting);
+			editMonsterGroup(monsterGroup);
 		}
 	};
 
-	const editMonsterGroup = (monsterGroup: MonsterGroup, setting: CampaignSetting) => {
+	const importMonsterGroup = (monsterGroup: MonsterGroup) => {
+		monsterGroup.id = Utils.guid();
+
+		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
+		copy.monsterGroups.push(monsterGroup);
+		Collections.sort(copy.monsterGroups, item => item.name);
+
+		persistPlaybook(copy);
+		setPage(Page.MonsterList);
+		setDrawer(null);
+	};
+
+	const editMonsterGroup = (monsterGroup: MonsterGroup) => {
 		setSelectedMonsterGroup(monsterGroup);
-		setSelectedSetting(setting);
 		setPage(Page.MonsterEdit);
 		setDrawer(null);
 	};
 
 	const deleteMonsterGroup = (monsterGroup: MonsterGroup) => {
-		const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-		copy.forEach(cs => {
-			cs.monsterGroups = cs.monsterGroups.filter(mg => mg.id !== monsterGroup.id);
-		});
-		persistHomebrewSettings(copy);
+		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
+		copy.monsterGroups = copy.monsterGroups.filter(mg => mg.id !== monsterGroup.id);
+
+		persistPlaybook(copy);
 		setDrawer(null);
 	};
 
-	const saveEditSelectedMonster = (monsterGroup: MonsterGroup) => {
+	const saveEditSelectedMonsterGroup = (monsterGroup: MonsterGroup) => {
 		if (selectedMonsterGroup) {
-			const list = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-			const setting = list.find(cs => cs.id === (selectedSetting as CampaignSetting).id);
-			if (setting) {
-				const monsterGroupIndex = setting.monsterGroups.findIndex(mg => mg.id === monsterGroup.id);
-				if (monsterGroupIndex !== -1) {
-					setting.monsterGroups[monsterGroupIndex] = monsterGroup;
-				}
-			};
+			const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
+			const monsterGroupIndex = copy.monsterGroups.findIndex(mg => mg.id === monsterGroup.id);
+			if (monsterGroupIndex !== -1) {
+				copy.monsterGroups[monsterGroupIndex] = monsterGroup;
+			}
 
-			persistHomebrewSettings(list);
-			setPage(Page.MonsterList);
-			setSelectedSetting(null);
-			setSelectedElement(null);
-			setSelectedElementType('');
+			persistPlaybook(copy);
 			setSelectedMonsterGroup(null);
+			setPage(Page.MonsterList);
 		}
 	};
 
-	const cancelEditSelectedMonster = () => {
+	const cancelEditSelectedMonsterGroup = () => {
 		if (selectedMonsterGroup) {
 			setPage(Page.MonsterList);
 		}
@@ -917,180 +899,173 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectAncestry = (ancestry: Ancestry) => {
-		const container = CampaignSettingData
-			.getCampaignSettings(homebrewSettings)
+		const container = SourcebookData
+			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.ancestries.find(a => a.id === ancestry.id));
 
 		setDrawer(
 			<AncestryModal
 				ancestry={ancestry}
-				homebrewSettings={homebrewSettings}
-				isHomebrew={!!homebrewSettings.flatMap(cs => cs.ancestries).find(a => a.id === ancestry.id)}
-				createHomebrew={setting => createAncestry(ancestry, setting)}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.ancestries).find(a => a.id === ancestry.id)}
+				createHomebrew={sourcebook => createAncestry(ancestry, sourcebook)}
 				export={format => Utils.export([ ancestry.id ], ancestry.name || 'Ancestry', ancestry, 'ancestry', format)}
-				edit={() => editAncestry(ancestry, container as CampaignSetting)}
+				edit={() => editAncestry(ancestry, container as Sourcebook)}
 				delete={() => deleteAncestry(ancestry)}
 			/>
 		);
 	};
 
 	const onSelectCulture = (culture: Culture) => {
-		const container = CampaignSettingData
-			.getCampaignSettings(homebrewSettings)
+		const container = SourcebookData
+			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.cultures.find(c => c.id === culture.id));
 
 		setDrawer(
 			<CultureModal
 				culture={culture}
-				homebrewSettings={homebrewSettings}
-				isHomebrew={!!homebrewSettings.flatMap(cs => cs.cultures).find(c => c.id === culture.id)}
-				createHomebrew={setting => createCulture(culture, setting)}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.cultures).find(c => c.id === culture.id)}
+				createHomebrew={sourcebook => createCulture(culture, sourcebook)}
 				export={format => Utils.export([ culture.id ], culture.name || 'Culture', culture, 'culture', format)}
-				edit={() => editCulture(culture, container as CampaignSetting)}
+				edit={() => editCulture(culture, container as Sourcebook)}
 				delete={() => deleteCulture(culture)}
 			/>
 		);
 	};
 
 	const onSelectCareer = (career: Career) => {
-		const container = CampaignSettingData
-			.getCampaignSettings(homebrewSettings)
+		const container = SourcebookData
+			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.careers.find(c => c.id === career.id));
 
 		setDrawer(
 			<CareerModal
 				career={career}
-				homebrewSettings={homebrewSettings}
-				isHomebrew={!!homebrewSettings.flatMap(cs => cs.careers).find(c => c.id === career.id)}
-				createHomebrew={setting => createCareer(career, setting)}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.careers).find(c => c.id === career.id)}
+				createHomebrew={sourcebook => createCareer(career, sourcebook)}
 				export={format => Utils.export([ career.id ], career.name || 'Career', career, 'career', format)}
-				edit={() => editCareer(career, container as CampaignSetting)}
+				edit={() => editCareer(career, container as Sourcebook)}
 				delete={() => deleteCareer(career)}
 			/>
 		);
 	};
 
 	const onSelectClass = (heroClass: HeroClass) => {
-		const container = CampaignSettingData
-			.getCampaignSettings(homebrewSettings)
+		const container = SourcebookData
+			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.classes.find(c => c.id === heroClass.id));
 
 		setDrawer(
 			<ClassModal
 				heroClass={heroClass}
-				homebrewSettings={homebrewSettings}
-				isHomebrew={!!homebrewSettings.flatMap(cs => cs.classes).find(c => c.id === heroClass.id)}
-				createHomebrew={setting => createClass(heroClass, setting)}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.classes).find(c => c.id === heroClass.id)}
+				createHomebrew={sourcebook => createClass(heroClass, sourcebook)}
 				export={format => Utils.export([ heroClass.id ], heroClass.name || 'Class', heroClass, 'class', format)}
-				edit={() => editClass(heroClass, container as CampaignSetting)}
+				edit={() => editClass(heroClass, container as Sourcebook)}
 				delete={() => deleteClass(heroClass)}
 			/>
 		);
 	};
 
 	const onSelectComplication = (complication: Complication) => {
-		const container = CampaignSettingData
-			.getCampaignSettings(homebrewSettings)
+		const container = SourcebookData
+			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.complications.find(c => c.id === complication.id));
 
 		setDrawer(
 			<ComplicationModal
 				complication={complication}
-				homebrewSettings={homebrewSettings}
-				isHomebrew={!!homebrewSettings.flatMap(cs => cs.complications).find(c => c.id === complication.id)}
-				createHomebrew={setting => createComplication(complication, setting)}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.complications).find(c => c.id === complication.id)}
+				createHomebrew={sourcebook => createComplication(complication, sourcebook)}
 				export={format => Utils.export([ complication.id ], complication.name || 'Complication', complication, 'complication', format)}
-				edit={() => editComplication(complication, container as CampaignSetting)}
+				edit={() => editComplication(complication, container as Sourcebook)}
 				delete={() => deleteComplication(complication)}
 			/>
 		);
 	};
 
 	const onSelectDomain = (domain: Domain) => {
-		const container = CampaignSettingData
-			.getCampaignSettings(homebrewSettings)
+		const container = SourcebookData
+			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.domains.find(d => d.id === domain.id));
 
 		setDrawer(
 			<DomainModal
 				domain={domain}
-				homebrewSettings={homebrewSettings}
-				isHomebrew={!!homebrewSettings.flatMap(cs => cs.domains).find(d => d.id === domain.id)}
-				createHomebrew={setting => createDomain(domain, setting)}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.domains).find(d => d.id === domain.id)}
+				createHomebrew={sourcebook => createDomain(domain, sourcebook)}
 				export={format => Utils.export([ domain.id ], domain.name || 'Domain', domain, 'domain', format)}
-				edit={() => editDomain(domain, container as CampaignSetting)}
+				edit={() => editDomain(domain, container as Sourcebook)}
 				delete={() => deleteDomain(domain)}
 			/>
 		);
 	};
 
 	const onSelectKit = (kit: Kit) => {
-		const container = CampaignSettingData
-			.getCampaignSettings(homebrewSettings)
+		const container = SourcebookData
+			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.kits.find(k => k.id === kit.id));
 
 		setDrawer(
 			<KitModal
 				kit={kit}
-				homebrewSettings={homebrewSettings}
-				isHomebrew={!!homebrewSettings.flatMap(cs => cs.kits).find(k => k.id === kit.id)}
-				createHomebrew={setting => createKit(kit, setting)}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.kits).find(k => k.id === kit.id)}
+				createHomebrew={sourcebook => createKit(kit, sourcebook)}
 				export={format => Utils.export([ kit.id ], kit.name || 'Kit', kit, 'kit', format)}
-				edit={() => editKit(kit, container as CampaignSetting)}
+				edit={() => editKit(kit, container as Sourcebook)}
 				delete={() => deleteKit(kit)}
 			/>
 		);
 	};
 
 	const onSelectPerk = (perk: Perk) => {
-		const container = CampaignSettingData
-			.getCampaignSettings(homebrewSettings)
+		const container = SourcebookData
+			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.perks.find(p => p.id === perk.id));
 
 		setDrawer(
 			<PerkModal
 				perk={perk}
-				homebrewSettings={homebrewSettings}
-				isHomebrew={!!homebrewSettings.flatMap(cs => cs.perks).find(p => p.id === perk.id)}
-				createHomebrew={setting => createPerk(perk, setting)}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.perks).find(p => p.id === perk.id)}
+				createHomebrew={sourcebook => createPerk(perk, sourcebook)}
 				export={format => Utils.export([ perk.id ], perk.name || 'Perk', perk, 'perk', format)}
-				edit={() => editPerk(perk, container as CampaignSetting)}
+				edit={() => editPerk(perk, container as Sourcebook)}
 				delete={() => deletePerk(perk)}
 			/>
 		);
 	};
 
 	const onSelectItem = (item: Item) => {
-		const container = CampaignSettingData
-			.getCampaignSettings(homebrewSettings)
+		const container = SourcebookData
+			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.items.find(i => i.id === item.id));
 
 		setDrawer(
 			<ItemModal
 				item={item}
-				homebrewSettings={homebrewSettings}
-				isHomebrew={!!homebrewSettings.flatMap(cs => cs.items).find(i => i.id === item.id)}
-				createHomebrew={setting => createItem(item, setting)}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.items).find(i => i.id === item.id)}
+				createHomebrew={sourcebook => createItem(item, sourcebook)}
 				export={format => Utils.export([ item.id ], item.name || 'Item', item, 'item', format)}
-				edit={() => editItem(item, container as CampaignSetting)}
+				edit={() => editItem(item, container as Sourcebook)}
 				delete={() => deleteItem(item)}
 			/>
 		);
 	};
 
 	const onSelectMonsterGroup = (monsterGroup: MonsterGroup) => {
-		const container = CampaignSettingData
-			.getCampaignSettings(homebrewSettings)
-			.find(cs => cs.monsterGroups.find(mg => mg.id === monsterGroup.id));
-
 		setDrawer(
 			<MonsterGroupModal
 				monsterGroup={monsterGroup}
-				homebrewSettings={homebrewSettings}
-				isHomebrew={!!homebrewSettings.flatMap(cs => cs.monsterGroups).find(mg => mg.id === monsterGroup.id)}
-				createHomebrew={setting => createMonsterGroup(monsterGroup, setting)}
 				export={format => Utils.export([ monsterGroup.id ], monsterGroup.name || 'Monster Group', monsterGroup, 'monster-group', format)}
-				edit={() => editMonsterGroup(monsterGroup, container as CampaignSetting)}
+				edit={() => editMonsterGroup(monsterGroup)}
 				delete={() => deleteMonsterGroup(monsterGroup)}
 			/>
 		);
@@ -1146,7 +1121,7 @@ export const Main = (props: Props) => {
 			setDrawer(
 				<RulesModal
 					hero={selectedHero}
-					settings={[ CampaignSettingData.core, CampaignSettingData.orden, ...homebrewSettings ]}
+					sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
 				/>
 			);
 		}
@@ -1155,11 +1130,11 @@ export const Main = (props: Props) => {
 	const showCollections = () => {
 		setDrawer(
 			<CollectionsModal
-				officialSettings={[ CampaignSettingData.core, CampaignSettingData.orden ]}
-				homebrewSettings={homebrewSettings}
-				hiddenSettingIDs={hiddenSettingIDs}
-				onSettingsChange={persistHomebrewSettings}
-				setHiddenSettingIDs={persistHiddenSettingIDs}
+				officialSourcebooks={[ SourcebookData.core, SourcebookData.orden ]}
+				homebrewSourcebooks={homebrewSourcebooks}
+				hiddenSourcebookIDs={hiddenSourcebookIDs}
+				onHomebrewSourcebookChange={persistHomebrewSourcebooks}
+				onHiddenSourcebookIDsChange={persistHiddenSourcebookIDs}
 			/>
 		);
 	};
@@ -1181,7 +1156,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroListPage
 						heroes={heroes}
-						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings)}
+						sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						addHero={addHero}
@@ -1193,7 +1168,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroPage
 						hero={selectedHero as Hero}
-						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings)}
+						sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
 						options={options}
 						setOptions={persistOptions}
 						goHome={showWelcome}
@@ -1219,7 +1194,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroEditPage
 						hero={selectedHero as Hero}
-						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings)}
+						sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						saveChanges={saveEditSelectedHero}
@@ -1229,8 +1204,8 @@ export const Main = (props: Props) => {
 			case Page.ElementList:
 				return (
 					<ElementListPage
-						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings)}
-						hiddenSettingIDs={hiddenSettingIDs}
+						sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
+						hiddenSourcebookIDs={hiddenSourcebookIDs}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						showCollections={showCollections}
@@ -1252,7 +1227,7 @@ export const Main = (props: Props) => {
 					<ElementEditPage
 						element={selectedElement as Ancestry | Culture | Career | HeroClass | Kit | Complication}
 						elementType={selectedElementType}
-						campaignSettings={[ CampaignSettingData.core, CampaignSettingData.orden, selectedSetting as CampaignSetting ]}
+						sourcebooks={[ SourcebookData.core, SourcebookData.orden, selectedSourcebook as Sourcebook ]}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						saveChanges={saveEditSelectedElement}
@@ -1262,25 +1237,23 @@ export const Main = (props: Props) => {
 			case Page.MonsterList:
 				return (
 					<MonsterListPage
-						campaignSettings={CampaignSettingData.getCampaignSettings(homebrewSettings)}
-						hiddenSettingIDs={hiddenSettingIDs}
+						playbook={playbook}
 						goHome={showWelcome}
 						showAbout={showAbout}
-						showCollections={showCollections}
 						viewMonsterGroup={onSelectMonsterGroup}
-						onCreateHomebrew={createHomebrewMonsterGroup}
-						onImportHomebrew={importHomebrewMonsterGroup}
+						onCreateMonster={() => createMonsterGroup(null)}
+						onImportMonster={importMonsterGroup}
 					/>
 				);
 			case Page.MonsterEdit:
 				return (
 					<MonsterEditPage
 						monsterGroup={selectedMonsterGroup as MonsterGroup}
-						campaignSettings={[ CampaignSettingData.core, CampaignSettingData.orden, selectedSetting as CampaignSetting ]}
+						sourcebooks={[ SourcebookData.core, SourcebookData.orden, selectedSourcebook as Sourcebook ]}
 						goHome={showWelcome}
 						showAbout={showAbout}
-						saveChanges={saveEditSelectedMonster}
-						cancelChanges={cancelEditSelectedMonster}
+						saveChanges={saveEditSelectedMonsterGroup}
+						cancelChanges={cancelEditSelectedMonsterGroup}
 					/>
 				);
 		}

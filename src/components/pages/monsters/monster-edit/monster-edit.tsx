@@ -2,7 +2,6 @@ import { Alert, Button, Input, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { AppHeader } from '../../../panels/app-header/app-header';
-import { CampaignSetting } from '../../../../models/campaign-setting';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Element } from '../../../../models/element';
@@ -19,6 +18,7 @@ import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '../../../../models/sourcebook';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -26,7 +26,7 @@ import './monster-edit.scss';
 
 interface Props {
 	monsterGroup: MonsterGroup;
-	campaignSettings: CampaignSetting[];
+	sourcebooks: Sourcebook[];
 	goHome: () => void;
 	showAbout: () => void;
 	saveChanges: (monsterGroup: MonsterGroup) => void;
@@ -214,7 +214,7 @@ export const MonsterEditPage = (props: Props) => {
 						>
 							<FeatureEditPanel
 								feature={f}
-								campaignSettings={props.campaignSettings}
+								sourcebooks={props.sourcebooks}
 								onChange={changeFeature}
 							/>
 						</Expander>
@@ -293,7 +293,7 @@ export const MonsterEditPage = (props: Props) => {
 						>
 							<MonsterEditPanel
 								monster={m}
-								campaignSettings={props.campaignSettings}
+								sourcebooks={props.sourcebooks}
 								onChange={changeMonster}
 							/>
 						</Expander>

@@ -1,8 +1,9 @@
-import { CampaignSetting } from './models/campaign-setting.ts';
 import { Hero } from './models/hero.ts';
 import { HeroLogic } from './logic/hero-logic.ts';
 import { Main } from './components/main/main.tsx';
 import { Options } from './models/options.ts';
+import { Playbook } from './models/playbook.ts';
+import { Sourcebook } from './models/sourcebook.ts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import localforage from 'localforage';
@@ -11,8 +12,9 @@ import './index.scss';
 
 const promises = [
 	localforage.getItem<Hero[]>('forgesteel-heroes'),
-	localforage.getItem<CampaignSetting[]>('forgesteel-homebrew-settings'),
+	localforage.getItem<Sourcebook[]>('forgesteel-homebrew-settings'),
 	localforage.getItem<string[]>('forgesteel-hidden-setting-ids'),
+	localforage.getItem<Playbook>('forgesteel-playbook'),
 	localforage.getItem<Options[]>('forgesteel-options')
 ];
 
@@ -26,32 +28,37 @@ Promise.all(promises).then(results => {
 		HeroLogic.updateHero(hero);
 	});
 
-	let homebrewSettings = results[1] as CampaignSetting[] | null;
-	if (!homebrewSettings) {
-		homebrewSettings = [];
+	let sourcebooks = results[1] as Sourcebook[] | null;
+	if (!sourcebooks) {
+		sourcebooks = [];
 	}
 
-	homebrewSettings.forEach(setting => {
-		if (setting.domains === undefined) {
-			setting.domains = [];
+	sourcebooks.forEach(sourcebook => {
+		if (sourcebook.domains === undefined) {
+			sourcebook.domains = [];
 		}
-		if (setting.items === undefined) {
-			setting.items = [];
+		if (sourcebook.items === undefined) {
+			sourcebook.items = [];
 		}
-		if (setting.perks === undefined) {
-			setting.perks = [];
-		}
-		if (setting.monsterGroups === undefined) {
-			setting.monsterGroups = [];
+		if (sourcebook.perks === undefined) {
+			sourcebook.perks = [];
 		}
 	});
 
-	let hiddenSettingIDs = results[2] as string[] | null;
-	if (!hiddenSettingIDs) {
-		hiddenSettingIDs = [];
+	let hiddenSourcebookIDs = results[2] as string[] | null;
+	if (!hiddenSourcebookIDs) {
+		hiddenSourcebookIDs = [];
 	}
 
-	let options = results[3] as Options | null;
+	let playbook = results[3] as Playbook | null;
+	if (!playbook) {
+		playbook = {
+			monsterGroups: [],
+			encounters: []
+		};
+	}
+
+	let options = results[4] as Options | null;
 	if (!options) {
 		options = {
 			showSkillsInGroups: false,
@@ -65,8 +72,9 @@ Promise.all(promises).then(results => {
 		<StrictMode>
 			<Main
 				heroes={heroes}
-				homebrewSettings={homebrewSettings}
-				hiddenSettingIDs={hiddenSettingIDs}
+				homebrewSourcebooks={sourcebooks}
+				hiddenSourcebookIDs={hiddenSourcebookIDs}
+				playbook={playbook}
 				options={options}
 			/>
 		</StrictMode>

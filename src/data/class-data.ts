@@ -1,13 +1,13 @@
-import { CampaignSetting } from '../models/campaign-setting';
 import { Collections } from '../utils/collections';
 import { HeroClass } from '../models/class';
+import { Sourcebook } from '../models/sourcebook';
 
 export class ClassData {
-	static getClasses = (settings: CampaignSetting[]) => {
+	static getClasses = (sourcebooks: Sourcebook[]) => {
 		const list: HeroClass[] = [];
 
-		settings.forEach(setting => {
-			list.push(...setting.classes);
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.classes);
 		});
 
 		return Collections.sort(list, item => item.name);

@@ -1,4 +1,3 @@
-import { CampaignSetting } from '../../../models/campaign-setting';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
@@ -6,6 +5,7 @@ import { MonsterGroup } from '../../../models/monster';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '../../../models/sourcebook';
 import { Space } from 'antd';
 import { Utils } from '../../../utils/utils';
 
@@ -13,7 +13,7 @@ import './monster-group-panel.scss';
 
 interface Props {
 	monsterGroup: MonsterGroup;
-	campaignSettings?: CampaignSetting[];
+	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 

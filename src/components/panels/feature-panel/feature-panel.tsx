@@ -2,7 +2,6 @@ import { Alert, Select, Space } from 'antd';
 import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../../../models/feature';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
-import { CampaignSetting } from '../../../models/campaign-setting';
 import { Collections } from '../../../utils/collections';
 import { DomainData } from '../../../data/domain-data';
 import { DomainPanel } from '../domain-panel/domain-panel';
@@ -18,6 +17,7 @@ import { KitPanel } from '../kit-panel/kit-panel';
 import { LanguageData } from '../../../data/language-data';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SkillData } from '../../../data/skill-data';
+import { Sourcebook } from '../../../models/sourcebook';
 import { Utils } from '../../../utils/utils';
 
 import './feature-panel.scss';
@@ -26,7 +26,7 @@ interface Props {
 	feature: Feature;
 	cost?: number;
 	hero?: Hero;
-	campaignSettings?: CampaignSetting[];
+	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 	setData?: (featureID: string, data: FeatureData) => void;
 }
@@ -102,7 +102,7 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected.map(f => (
-						<FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />
+						<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 					))
 				}
 			</Space>
@@ -168,7 +168,7 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
-		const domains = DomainData.getDomains(props.campaignSettings as CampaignSetting[]);
+		const domains = DomainData.getDomains(props.sourcebooks as Sourcebook[]);
 		const sortedDomains = Collections.sort(domains, d => d.name);
 
 		if (sortedDomains.length === 0) {
@@ -275,7 +275,7 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected.map(f => (
-						<FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />
+						<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 					))
 				}
 			</Space>
@@ -288,7 +288,7 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		const kitTypes = data.types.length > 0 ? data.types : HeroLogic.getKitTypes(props.hero);
-		const kits = KitData.getKits(props.campaignSettings as CampaignSetting[])
+		const kits = KitData.getKits(props.sourcebooks as Sourcebook[])
 			.filter(k => kitTypes.includes(k.type));
 
 		const sortedKits = Collections.sort(kits, k => k.name);
@@ -347,7 +347,7 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableLanguage = (data: FeatureLanguageData) => {
-		const languages = LanguageData.getLanguages(props.campaignSettings as CampaignSetting[]);
+		const languages = LanguageData.getLanguages(props.sourcebooks as Sourcebook[]);
 		const sortedLanguages = Collections.sort(languages, l => l.name);
 
 		if (sortedLanguages.length === 0) {
@@ -394,11 +394,11 @@ export const FeaturePanel = (props: Props) => {
 							if (props.hero.culture) {
 								languages.push(...props.hero.culture.languages);
 							}
-							props.hero.settingIDs.forEach(settingID => {
-								if (props.campaignSettings) {
-									const setting = props.campaignSettings.find(cs => cs.id === settingID);
-									if (setting) {
-										languages.push(...setting.defaultLanguages);
+							props.hero.settingIDs.forEach(sourcebookID => {
+								if (props.sourcebooks) {
+									const sourcebook = props.sourcebooks.find(cs => cs.id === sourcebookID);
+									if (sourcebook) {
+										languages.push(...sourcebook.defaultLanguages);
 									}
 								}
 							});
@@ -428,7 +428,7 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableSkillChoice = (data: FeatureSkillChoiceData) => {
-		const skills = SkillData.getSkills(props.campaignSettings as CampaignSetting[])
+		const skills = SkillData.getSkills(props.sourcebooks as Sourcebook[])
 			.filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
 		const sortedSkills = Collections.sort(skills, s => s.name);
 
@@ -788,7 +788,7 @@ export const FeaturePanel = (props: Props) => {
 			const data = props.feature.data as FeatureMultipleData;
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
-					{data.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)}
+					{data.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
 				</Space>
 			);
 		}

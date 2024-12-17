@@ -1,5 +1,4 @@
 import { Button, Popover } from 'antd';
-import { CampaignSetting } from '../../../models/campaign-setting';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { MonsterGroup } from '../../../models/monster';
 import { MonsterGroupPanel } from '../../panels/monster-group-panel/monster-group-panel';
@@ -9,9 +8,6 @@ import './monster-group-modal.scss';
 
 interface Props {
 	monsterGroup: MonsterGroup;
-	homebrewSettings: CampaignSetting[];
-	isHomebrew: boolean;
-	createHomebrew: (setting: CampaignSetting | null) => void;
 	export: (format: 'image' | 'pdf' | 'json') => void;
 	edit: () => void;
 	delete: () => void;
@@ -22,27 +18,7 @@ export const MonsterGroupModal = (props: Props) => {
 		return (
 			<div className='monster-group-modal'>
 				<div className='toolbar'>
-					{
-						props.isHomebrew ?
-							<Button onClick={props.edit}>Edit</Button>
-							:
-							<Popover
-								trigger='click'
-								placement='bottom'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										{
-											props.homebrewSettings.map(cs => <Button key={cs.id} onClick={() => props.createHomebrew(cs)}>In {cs.name || 'Unnamed Collection'}</Button>)
-										}
-										<Button onClick={() => props.createHomebrew(null)}>In a new collection</Button>
-									</div>
-								)}
-							>
-								<Button>
-									Create Homebrew Version
-								</Button>
-							</Popover>
-					}
+					<Button onClick={props.edit}>Edit</Button>
 					<Popover
 						trigger='click'
 						placement='bottom'
@@ -58,7 +34,7 @@ export const MonsterGroupModal = (props: Props) => {
 							Export
 						</Button>
 					</Popover>
-					{props.isHomebrew ? <DangerButton onConfirm={props.delete} /> : null}
+					<DangerButton onConfirm={props.delete} />
 				</div>
 				<MonsterGroupPanel monsterGroup={props.monsterGroup} mode={PanelMode.Full} />
 			</div>

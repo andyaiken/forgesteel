@@ -1,10 +1,10 @@
-import { CampaignSetting } from '../../../models/campaign-setting';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { Kit } from '../../../models/kit';
 import { PanelMode } from '../../../enums/panel-mode';
+import { Sourcebook } from '../../../models/sourcebook';
 import { Utils } from '../../../utils/utils';
 
 import './kit-panel.scss';
@@ -12,7 +12,7 @@ import './kit-panel.scss';
 interface Props {
 	kit: Kit;
 	hero?: Hero;
-	campaignSettings?: CampaignSetting[];
+	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 
@@ -52,7 +52,7 @@ export const KitPanel = (props: Props) => {
 							}
 							{props.kit.mobility ? <Field label='Mobility' value='Yes' /> : null}
 							{
-								props.kit.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)
+								props.kit.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)
 							}
 						</div>
 						:

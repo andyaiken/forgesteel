@@ -1,7 +1,6 @@
 import { Space, Tabs } from 'antd';
 import { AbilityPanel } from '../../panels/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
-import { CampaignSetting } from '../../../models/campaign-setting';
 import { Collections } from '../../../utils/collections';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { ConditionType } from '../../../enums/condition-type';
@@ -14,13 +13,14 @@ import { PanelMode } from '../../../enums/panel-mode';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { SkillData } from '../../../data/skill-data';
 import { SkillList } from '../../../enums/skill-list';
+import { Sourcebook } from '../../../models/sourcebook';
 import { Utils } from '../../../utils/utils';
 
 import './rules-modal.scss';
 
 interface Props {
 	hero: Hero;
-	settings: CampaignSetting[];
+	sourcebooks: Sourcebook[];
 }
 
 export const RulesModal = (props: Props) => {
@@ -51,7 +51,7 @@ export const RulesModal = (props: Props) => {
 		};
 
 		const getSkillsSection = () => {
-			const settings = props.hero.settingIDs.map(id => props.settings.find(s => s.id === id)).filter(s => !!s);
+			const sourcebooks = props.hero.settingIDs.map(id => props.sourcebooks.find(s => s.id === id)).filter(s => !!s);
 
 			return (
 				<div>
@@ -66,7 +66,7 @@ export const RulesModal = (props: Props) => {
 							<div key={sl}>
 								<HeaderText>{sl}</HeaderText>
 								{
-									SkillData.getSkills(settings)
+									SkillData.getSkills(sourcebooks)
 										.filter(s => s.list === sl)
 										.map(s => (
 											<Field key={s.name} label={s.name} value={s.description} />
@@ -104,8 +104,8 @@ export const RulesModal = (props: Props) => {
 		};
 
 		const getLanguagesSection = () => {
-			const settings = props.hero.settingIDs.map(id => props.settings.find(s => s.id === id)).filter(s => !!s);
-			const languages = LanguageData.getLanguages(settings);
+			const sourcebooks = props.hero.settingIDs.map(id => props.sourcebooks.find(s => s.id === id)).filter(s => !!s);
+			const languages = LanguageData.getLanguages(sourcebooks);
 
 			return (
 				<div>

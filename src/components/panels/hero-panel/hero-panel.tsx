@@ -1,9 +1,9 @@
 import { Col, Row, Statistic } from 'antd';
 import { Ability } from '../../../models/ability';
+import { AbilityLogic } from '../../../logic/ability-logic';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
 import { Ancestry } from '../../../models/ancestry';
-import { CampaignSetting } from '../../../models/campaign-setting';
 import { Career } from '../../../models/career';
 import { Characteristic } from '../../../enums/characteristic';
 import { Complication } from '../../../models/complication';
@@ -28,12 +28,13 @@ import { PanelMode } from '../../../enums/panel-mode';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Skill } from '../../../models/skill';
 import { SkillList } from '../../../enums/skill-list';
+import { Sourcebook } from '../../../models/sourcebook';
 
 import './hero-panel.scss';
 
 interface Props {
 	hero: Hero;
-	campaignSettings: CampaignSetting[];
+	sourcebooks: Sourcebook[];
 	options?: Options;
 	mode?: PanelMode;
 	onSelectAncestry?: (ancestry: Ancestry) => void;
@@ -195,7 +196,7 @@ export const HeroPanel = (props: Props) => {
 		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
 		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
-		const settings = props.campaignSettings.filter(cs => props.hero.settingIDs.includes(cs.id));
+		const sourcebooks = props.sourcebooks.filter(cs => props.hero.settingIDs.includes(cs.id));
 
 		const getSkills = (label: string, skills: Skill[]) => {
 			return skills.length > 0 ?
@@ -231,8 +232,8 @@ export const HeroPanel = (props: Props) => {
 				<div className='overview-tile'>
 					<HeaderText>Languages</HeaderText>
 					{
-						HeroLogic.getLanguages(props.hero, settings).length > 0 ?
-							HeroLogic.getLanguages(props.hero, settings).map(l => <div key={l.name} className='ds-text'>{l.name}</div>)
+						HeroLogic.getLanguages(props.hero, sourcebooks).length > 0 ?
+							HeroLogic.getLanguages(props.hero, sourcebooks).map(l => <div key={l.name} className='ds-text'>{l.name}</div>)
 							:
 							<div className='ds-text dimmed-text'>None</div>
 					}
@@ -240,9 +241,9 @@ export const HeroPanel = (props: Props) => {
 				{
 					(props.options?.showSkillsInGroups || false) ?
 						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
-							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, settings).filter(s => s.list === list)))
+							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, sourcebooks).filter(s => s.list === list)))
 						:
-						getSkills('Skills', HeroLogic.getSkills(props.hero, settings))
+						getSkills('Skills', HeroLogic.getSkills(props.hero, sourcebooks))
 				}
 			</div>
 		);
@@ -413,7 +414,7 @@ export const HeroPanel = (props: Props) => {
 								key={feature.id}
 								feature={feature}
 								hero={props.hero}
-								campaignSettings={props.campaignSettings}
+								sourcebooks={props.sourcebooks}
 								mode={PanelMode.Full}
 							/>
 						))
@@ -442,7 +443,7 @@ export const HeroPanel = (props: Props) => {
 				<div className='abilities-grid'>
 					{
 						abilities.map(ability => (
-							<SelectablePanel key={ability.id}>
+							<SelectablePanel key={ability.id} style={{ gridColumn: `span ${AbilityLogic.panelWidth(ability)}` }}>
 								<AbilityPanel ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} onRoll={() => onSelectAbility(ability)} />
 							</SelectablePanel>
 						))

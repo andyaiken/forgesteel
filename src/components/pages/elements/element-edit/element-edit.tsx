@@ -9,7 +9,6 @@ import { AbilityLogic } from '../../../../logic/ability-logic';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
-import { CampaignSetting } from '../../../../models/campaign-setting';
 import { Career } from '../../../../models/career';
 import { CareerPanel } from '../../../panels/career-panel/career-panel';
 import { Characteristic } from '../../../../enums/characteristic';
@@ -45,6 +44,7 @@ import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/perk-panel/perk-panel';
 import { PerkType } from '../../../../enums/perk-type';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '../../../../models/sourcebook';
 import { SubClass } from '../../../../models/subclass';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
@@ -55,7 +55,7 @@ import './element-edit.scss';
 interface Props {
 	element: Element;
 	elementType: string;
-	campaignSettings: CampaignSetting[];
+	sourcebooks: Sourcebook[];
 	goHome: () => void;
 	showAbout: () => void;
 	saveChanges: (element: Element) => void;
@@ -163,7 +163,7 @@ export const ElementEditPage = (props: Props) => {
 						>
 							<FeatureEditPanel
 								feature={f}
-								campaignSettings={props.campaignSettings}
+								sourcebooks={props.sourcebooks}
 								onChange={changeFeature}
 							/>
 						</Expander>
@@ -196,7 +196,7 @@ export const ElementEditPage = (props: Props) => {
 		return (
 			<FeatureEditPanel
 				feature={career.title}
-				campaignSettings={props.campaignSettings}
+				sourcebooks={props.sourcebooks}
 				onChange={changeFeature}
 			/>
 		);
@@ -296,7 +296,7 @@ export const ElementEditPage = (props: Props) => {
 					className={culture.languages.length === 0 ? 'selection-empty' : ''}
 					allowClear={true}
 					placeholder='Select language'
-					options={LanguageData.getLanguages(props.campaignSettings).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
+					options={LanguageData.getLanguages(props.sourcebooks).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={culture.languages.length > 0 ? culture.languages[0] : null}
 					onChange={value => {
@@ -523,7 +523,7 @@ export const ElementEditPage = (props: Props) => {
 									>
 										<FeatureEditPanel
 											feature={f}
-											campaignSettings={props.campaignSettings}
+											sourcebooks={props.sourcebooks}
 											onChange={feature => changeFeature(lvl.level, feature)}
 										/>
 									</Expander>
@@ -769,7 +769,7 @@ export const ElementEditPage = (props: Props) => {
 							>
 								<FeatureEditPanel
 									feature={f}
-									campaignSettings={props.campaignSettings}
+									sourcebooks={props.sourcebooks}
 									onChange={feature => changeFeature(subclass, lvl.level, feature)}
 								/>
 							</Expander>

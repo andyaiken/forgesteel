@@ -3,7 +3,6 @@ import { DownOutlined, EditOutlined } from '@ant-design/icons';
 import { Ability } from '../../../../models/ability';
 import { Ancestry } from '../../../../models/ancestry';
 import { AppHeader } from '../../../panels/app-header/app-header';
-import { CampaignSetting } from '../../../../models/campaign-setting';
 import { Career } from '../../../../models/career';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Complication } from '../../../../models/complication';
@@ -17,13 +16,14 @@ import { HeroPanel } from '../../../panels/hero-panel/hero-panel';
 import { Kit } from '../../../../models/kit';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { Sourcebook } from '../../../../models/sourcebook';
 import { Toggle } from '../../../controls/toggle/toggle';
 
 import './hero-view-page.scss';
 
 interface Props {
 	hero: Hero;
-	campaignSettings: CampaignSetting[];
+	sourcebooks: Sourcebook[];
 	options: Options;
 	setOptions: (options: Options) => void;
 	goHome: () => void;
@@ -125,7 +125,7 @@ export const HeroPage = (props: Props) => {
 				<div className='hero-view-page-content'>
 					<HeroPanel
 						hero={props.hero}
-						campaignSettings={props.campaignSettings}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 						onSelectAncestry={props.onSelectAncestry}

@@ -1,9 +1,9 @@
-import { CampaignSetting } from '../../../models/campaign-setting';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Perk } from '../../../models/perk';
+import { Sourcebook } from '../../../models/sourcebook';
 import { Utils } from '../../../utils/utils';
 
 import './perk-panel.scss';
@@ -11,7 +11,7 @@ import './perk-panel.scss';
 interface Props {
 	perk: Perk;
 	hero?: Hero;
-	campaignSettings?: CampaignSetting[];
+	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 
@@ -23,7 +23,7 @@ export const PerkPanel = (props: Props) => {
 				{props.perk.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.perk.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full ?
-						props.perk.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} campaignSettings={props.campaignSettings} mode={PanelMode.Full} />)
+						props.perk.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)
 						: null
 				}
 			</div>

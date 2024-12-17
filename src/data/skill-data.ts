@@ -1,7 +1,7 @@
-import { CampaignSetting } from '../models/campaign-setting';
 import { Collections } from '../utils/collections';
 import { Skill } from '../models/skill';
 import { SkillList } from '../enums/skill-list';
+import { Sourcebook } from '../models/sourcebook';
 
 export class SkillData {
 	static getCoreSkills = () => {
@@ -62,11 +62,11 @@ export class SkillData {
 		] as Skill[];
 	};
 
-	static getSkills = (settings: CampaignSetting[]) => {
+	static getSkills = (sourcebooks: Sourcebook[]) => {
 		const list: Skill[] = [];
 
-		settings.forEach(setting => {
-			list.push(...setting.skills);
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.skills);
 		});
 
 		return Collections.sort(list, item => item.name);

@@ -1,86 +1,86 @@
 import { Button, Divider, Space, Upload } from 'antd';
-import { CampaignSetting } from '../../../models/campaign-setting';
-import { CampaignSettingPanel } from '../../panels/campaign-setting-panel/campaign-setting-panel';
 import { DownloadOutlined } from '@ant-design/icons';
 import { FactoryLogic } from '../../../logic/factory-logic';
+import { Sourcebook } from '../../../models/sourcebook';
+import { SourcebookPanel } from '../../panels/sourcebook-panel/sourcebook-panel';
 import { useState } from 'react';
 
 import './collections-modal.scss';
 
 interface Props {
-	officialSettings: CampaignSetting[];
-	homebrewSettings: CampaignSetting[];
-	hiddenSettingIDs: string[];
-	onSettingsChange: (campaignSettings: CampaignSetting[]) => void;
-	setHiddenSettingIDs: (ids: string[]) => void;
+	officialSourcebooks: Sourcebook[];
+	homebrewSourcebooks: Sourcebook[];
+	hiddenSourcebookIDs: string[];
+	onHomebrewSourcebookChange: (Sourcebooks: Sourcebook[]) => void;
+	onHiddenSourcebookIDsChange: (ids: string[]) => void;
 }
 
 export const CollectionsModal = (props: Props) => {
-	const [ homebrewSettings, setHomebrewSettings ] = useState<CampaignSetting[]>(JSON.parse(JSON.stringify(props.homebrewSettings)) as CampaignSetting[]);
-	const [ hiddenSettingIDs, setHiddenSettingIDs ] = useState<string[]>(JSON.parse(JSON.stringify(props.hiddenSettingIDs)) as string[]);
+	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(JSON.parse(JSON.stringify(props.homebrewSourcebooks)) as Sourcebook[]);
+	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(JSON.parse(JSON.stringify(props.hiddenSourcebookIDs)) as string[]);
 
 	try {
-		const createSetting = () => {
-			const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-			const setting = FactoryLogic.createCampaignSetting();
-			copy.push(setting);
-			setHomebrewSettings(copy);
-			props.onSettingsChange(copy);
+		const createSourcebook = () => {
+			const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+			const sourcebook = FactoryLogic.createSourcebook();
+			copy.push(sourcebook);
+			setHomebrewSourcebooks(copy);
+			props.onHomebrewSourcebookChange(copy);
 		};
 
-		const changeSetting = (setting: CampaignSetting) => {
-			const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-			const index = copy.findIndex(cs => cs.id === setting.id);
+		const changeSourcebook = (sourcebook: Sourcebook) => {
+			const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+			const index = copy.findIndex(s => s.id === sourcebook.id);
 			if (index !== -1) {
-				copy[index] = setting;
-				setHomebrewSettings(copy);
-				props.onSettingsChange(copy);
+				copy[index] = sourcebook;
+				setHomebrewSourcebooks(copy);
+				props.onHomebrewSourcebookChange(copy);
 			}
 		};
 
-		const deleteSetting = (setting: CampaignSetting) => {
-			const copy = JSON.parse(JSON.stringify(homebrewSettings.filter(cs => cs.id !== setting.id))) as CampaignSetting[];
-			setHomebrewSettings(copy);
-			props.onSettingsChange(copy);
+		const deleteSourcebook = (sourcebook: Sourcebook) => {
+			const copy = JSON.parse(JSON.stringify(homebrewSourcebooks.filter(s => s.id !== sourcebook.id))) as Sourcebook[];
+			setHomebrewSourcebooks(copy);
+			props.onHomebrewSourcebookChange(copy);
 		};
 
-		const importSetting = (setting: CampaignSetting) => {
-			const copy = JSON.parse(JSON.stringify(homebrewSettings)) as CampaignSetting[];
-			copy.push(setting);
-			setHomebrewSettings(copy);
-			props.onSettingsChange(copy);
+		const importSourcebook = (sourcebook: Sourcebook) => {
+			const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+			copy.push(sourcebook);
+			setHomebrewSourcebooks(copy);
+			props.onHomebrewSourcebookChange(copy);
 		};
 
-		const setVisibility = (setting: CampaignSetting, visible: boolean) => {
+		const setVisibility = (sourcebook: Sourcebook, visible: boolean) => {
 			if (visible) {
-				const copy = JSON.parse(JSON.stringify(hiddenSettingIDs.filter(id => id !== setting.id))) as string[];
-				setHiddenSettingIDs(copy);
-				props.setHiddenSettingIDs(copy);
+				const copy = JSON.parse(JSON.stringify(hiddenSourcebookIDs.filter(id => id !== sourcebook.id))) as string[];
+				setHiddenSourcebookIDs(copy);
+				props.onHiddenSourcebookIDsChange(copy);
 			} else {
-				const copy = JSON.parse(JSON.stringify(hiddenSettingIDs)) as string[];
-				copy.push(setting.id);
-				setHiddenSettingIDs(copy);
-				props.setHiddenSettingIDs(copy);
+				const copy = JSON.parse(JSON.stringify(hiddenSourcebookIDs)) as string[];
+				copy.push(sourcebook.id);
+				setHiddenSourcebookIDs(copy);
+				props.onHiddenSourcebookIDsChange(copy);
 			}
 		};
 
 		return (
 			<div className='collections-modal'>
 				{
-					[ ...props.officialSettings, ...homebrewSettings ].map(cs => (
-						<CampaignSettingPanel
-							key={cs.id}
-							setting={cs}
-							visible={!hiddenSettingIDs.includes(cs.id)}
+					[ ...props.officialSourcebooks, ...homebrewSourcebooks ].map(s => (
+						<SourcebookPanel
+							key={s.id}
+							sourcebook={s}
+							visible={!hiddenSourcebookIDs.includes(s.id)}
 							onSetVisible={setVisibility}
-							onChange={changeSetting}
-							onDelete={deleteSetting}
+							onChange={changeSourcebook}
+							onDelete={deleteSourcebook}
 						/>
 					))
 				}
 				<Divider />
 				<Space direction='vertical'>
-					<Button block={true} onClick={createSetting}>Create a new collection</Button>
+					<Button block={true} onClick={createSourcebook}>Create a new collection</Button>
 					<Upload
 						style={{ width: '100%' }}
 						accept='.drawsteel-collection'
@@ -89,8 +89,8 @@ export const CollectionsModal = (props: Props) => {
 							file
 								.text()
 								.then(json => {
-									const setting = (JSON.parse(json) as CampaignSetting);
-									importSetting(setting);
+									const sourcebook = (JSON.parse(json) as Sourcebook);
+									importSourcebook(sourcebook);
 								});
 							return false;
 						}}

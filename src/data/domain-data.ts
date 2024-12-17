@@ -1,11 +1,11 @@
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
-import { CampaignSetting } from '../models/campaign-setting';
 import { Collections } from '../utils/collections';
 import { Domain } from '../models/domain';
 import { FeatureLogic } from '../logic/feature-logic';
 import { SkillList } from '../enums/skill-list';
+import { Sourcebook } from '../models/sourcebook';
 
 export class DomainData {
 	static creation: Domain = {
@@ -354,11 +354,11 @@ Choose one of the following types of weather:
 		]
 	};
 
-	static getDomains = (settings: CampaignSetting[]) => {
+	static getDomains = (sourcebooks: Sourcebook[]) => {
 		const list: Domain[] = [];
 
-		settings.forEach(setting => {
-			list.push(...setting.domains);
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.domains);
 		});
 
 		return Collections.sort(list, item => item.name);

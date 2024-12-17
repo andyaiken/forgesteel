@@ -1,10 +1,10 @@
-import { CampaignSetting } from '../models/campaign-setting';
 import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from '../logic/feature-logic';
 import { SkillList } from '../enums/skill-list';
+import { Sourcebook } from '../models/sourcebook';
 
 export class ComplicationData {
 	static cultVictim: Complication = {
@@ -219,11 +219,11 @@ Whenever you take a respite, make a Reason power roll.
 		]
 	};
 
-	static getComplications = (settings: CampaignSetting[]) => {
+	static getComplications = (sourcebooks: Sourcebook[]) => {
 		const list: Complication[] = [];
 
-		settings.forEach(setting => {
-			list.push(...setting.complications);
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.complications);
 		});
 
 		return Collections.sort(list, item => item.name);

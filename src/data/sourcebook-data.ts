@@ -1,5 +1,4 @@
 import { AncestryData } from './ancestry-data';
-import { CampaignSetting } from '../models/campaign-setting';
 import { CareerData } from './career-data';
 import { Collections } from '../utils/collections';
 import { ComplicationData } from './complication-data';
@@ -7,6 +6,7 @@ import { DomainData } from './domain-data';
 import { KitData } from './kit-data';
 import { SkillData } from './skill-data';
 import { SkillList } from '../enums/skill-list';
+import { Sourcebook } from '../models/sourcebook';
 import { censor } from './classes/censor';
 import { conduit } from './classes/conduit';
 import { elementalist } from './classes/elementalist';
@@ -17,8 +17,8 @@ import { tactician } from './classes/tactician';
 import { talent } from './classes/talent';
 import { troubadour } from './classes/troubadour';
 
-export class CampaignSettingData {
-	static core: CampaignSetting = {
+export class SourcebookData {
+	static core: Sourcebook = {
 		id: '',
 		name: 'Core',
 		description: 'Core game elements.',
@@ -110,13 +110,12 @@ export class CampaignSettingData {
 		],
 		perks: [],
 		items: [],
-		monsterGroups: [],
 		skills: SkillData.getCoreSkills(),
 		languages: [],
 		defaultLanguages: []
 	};
 
-	static coreUnreleased: CampaignSetting = {
+	static coreUnreleased: Sourcebook = {
 		id: 'core-unreleased',
 		name: 'Core: Unreleased',
 		description: 'Unreleased game elements.',
@@ -135,13 +134,12 @@ export class CampaignSettingData {
 		kits: [],
 		perks: [],
 		items: [],
-		monsterGroups: [],
 		skills: [],
 		languages: [],
 		defaultLanguages: []
 	};
 
-	static orden: CampaignSetting = {
+	static orden: Sourcebook = {
 		id: 'orden',
 		name: 'Orden',
 		description: 'The default setting for Draw Steel.',
@@ -159,7 +157,6 @@ export class CampaignSettingData {
 		kits: [],
 		perks: [],
 		items: [],
-		monsterGroups: [],
 		skills: [
 			{
 				name: 'Timescape',
@@ -234,8 +231,8 @@ export class CampaignSettingData {
 		]
 	};
 
-	static getCampaignSettings = (homebrew: CampaignSetting[]) => {
-		const list: CampaignSetting[] = [
+	static getSourcebooks = (homebrew: Sourcebook[]) => {
+		const list: Sourcebook[] = [
 			this.core,
 			// this.coreUnreleased,
 			this.orden

@@ -1,6 +1,5 @@
 import { Monster, MonsterGroup } from '../models/monster';
 import { Ancestry } from '../models/ancestry';
-import { CampaignSetting } from '../models/campaign-setting';
 import { Career } from '../models/career';
 import { Characteristic } from '../enums/characteristic';
 import { Complication } from '../models/complication';
@@ -16,15 +15,16 @@ import { KitType } from '../enums/kit';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Perk } from '../models/perk';
 import { PerkType } from '../enums/perk-type';
+import { Sourcebook } from '../models/sourcebook';
 import { SubClass } from '../models/subclass';
 import { Utils } from '../utils/utils';
 
 export class FactoryLogic {
-	static createHero = (settingIDs: string[]): Hero => {
+	static createHero = (sourcebookIDs: string[]): Hero => {
 		return {
 			id: Utils.guid(),
 			name: '',
-			settingIDs: settingIDs,
+			settingIDs: sourcebookIDs,
 			ancestry: null,
 			culture: null,
 			class: null,
@@ -45,7 +45,7 @@ export class FactoryLogic {
 		};
 	};
 
-	static createCampaignSetting = (): CampaignSetting => {
+	static createSourcebook = (): Sourcebook => {
 		return {
 			id: Utils.guid(),
 			name: '',
@@ -60,7 +60,6 @@ export class FactoryLogic {
 			complications: [],
 			perks: [],
 			items: [],
-			monsterGroups: [],
 			skills: [],
 			languages: [],
 			defaultLanguages: []

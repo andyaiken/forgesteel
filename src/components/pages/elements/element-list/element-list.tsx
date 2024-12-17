@@ -4,8 +4,6 @@ import { Ancestry } from '../../../../models/ancestry';
 import { AncestryData } from '../../../../data/ancestry-data';
 import { AncestryPanel } from '../../../panels/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
-import { CampaignSetting } from '../../../../models/campaign-setting';
-import { CampaignSettingLogic } from '../../../../logic/campaign-setting-logic';
 import { Career } from '../../../../models/career';
 import { CareerData } from '../../../../data/career-data';
 import { CareerPanel } from '../../../panels/career-panel/career-panel';
@@ -32,14 +30,16 @@ import { Perk } from '../../../../models/perk';
 import { PerkData } from '../../../../data/perk-data';
 import { PerkPanel } from '../../../panels/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '../../../../models/sourcebook';
+import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
 import './element-list.scss';
 
 interface Props {
-	campaignSettings: CampaignSetting[];
-	hiddenSettingIDs: string[];
+	sourcebooks: Sourcebook[];
+	hiddenSourcebookIDs: string[];
 	goHome: () => void;
 	showAbout: () => void;
 	showCollections: () => void;
@@ -52,26 +52,26 @@ interface Props {
 	viewKit: (kit: Kit) => void;
 	viewPerk: (perk: Perk) => void;
 	viewItem: (item: Item) => void;
-	onCreateHomebrew: (type: string, settingID: string | null) => void;
-	onImportHomebrew: (type: string, settingID: string | null, element: Element) => void;
+	onCreateHomebrew: (type: string, sourcebookID: string | null) => void;
+	onImportHomebrew: (type: string, sourcebookID: string | null, element: Element) => void;
 }
 
 export const ElementListPage = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ element, setElement ] = useState<string>('Ancestry');
-	const [ settingID, setSettingID ] = useState<string | null>(props.campaignSettings.filter(cs => cs.isHomebrew).length > 0 ? props.campaignSettings.filter(cs => cs.isHomebrew)[0].id : null);
+	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? props.sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
 
-	const getSettings = () => {
-		return props.campaignSettings.filter(cs => !props.hiddenSettingIDs.includes(cs.id));
+	const getSourcebooks = () => {
+		return props.sourcebooks.filter(cs => !props.hiddenSourcebookIDs.includes(cs.id));
 	};
 
 	const createHomebrew = () => {
-		props.onCreateHomebrew(element, settingID);
+		props.onCreateHomebrew(element, sourcebookID);
 	};
 
 	const getAncestries = () => {
 		return AncestryData
-			.getAncestries(getSettings())
+			.getAncestries(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.features.map(f => f.name)
@@ -80,7 +80,7 @@ export const ElementListPage = (props: Props) => {
 
 	const getCultures = () => {
 		return CultureData
-			.getCultures(getSettings())
+			.getCultures(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name
 			], searchTerm));
@@ -88,7 +88,7 @@ export const ElementListPage = (props: Props) => {
 
 	const getCareers = () => {
 		return CareerData
-			.getCareers(getSettings())
+			.getCareers(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.features.map(f => f.name)
@@ -97,7 +97,7 @@ export const ElementListPage = (props: Props) => {
 
 	const getClasses = () => {
 		return ClassData
-			.getClasses(getSettings())
+			.getClasses(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name)),
@@ -109,7 +109,7 @@ export const ElementListPage = (props: Props) => {
 
 	const getComplications = () => {
 		return ComplicationData
-			.getComplications(getSettings())
+			.getComplications(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name
 			], searchTerm));
@@ -117,7 +117,7 @@ export const ElementListPage = (props: Props) => {
 
 	const getDomains = () => {
 		return DomainData
-			.getDomains(getSettings())
+			.getDomains(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
@@ -126,7 +126,7 @@ export const ElementListPage = (props: Props) => {
 
 	const getKits = () => {
 		return KitData
-			.getKits(getSettings())
+			.getKits(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.features.map(f => f.name)
@@ -135,7 +135,7 @@ export const ElementListPage = (props: Props) => {
 
 	const getPerks = () => {
 		return PerkData
-			.getPerks(getSettings())
+			.getPerks(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.features.map(f => f.name)
@@ -144,7 +144,7 @@ export const ElementListPage = (props: Props) => {
 
 	const getItems = () => {
 		return ItemData
-			.getItems(getSettings())
+			.getItems(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.features.map(f => f.name)
@@ -172,10 +172,10 @@ export const ElementListPage = (props: Props) => {
 							</SelectablePanel>
 						);
 
-						const setting = CampaignSettingLogic.getAncestrySetting(props.campaignSettings, a);
-						if (setting && setting.id) {
+						const sourcebook = SourcebookLogic.getAncestrySourcebook(props.sourcebooks, a);
+						if (sourcebook && sourcebook.id) {
 							return (
-								<Badge.Ribbon key={a.id} text={setting.name || 'Unnamed Collection'}>
+								<Badge.Ribbon key={a.id} text={sourcebook.name || 'Unnamed Collection'}>
 									{item}
 								</Badge.Ribbon>
 							);
@@ -209,10 +209,10 @@ export const ElementListPage = (props: Props) => {
 							</SelectablePanel>
 						);
 
-						const setting = CampaignSettingLogic.getCultureSetting(props.campaignSettings, c);
-						if (setting && setting.id) {
+						const sourcebook = SourcebookLogic.getCultureSourcebook(props.sourcebooks, c);
+						if (sourcebook && sourcebook.id) {
 							return (
-								<Badge.Ribbon key={c.id} text={setting.name || 'Unnamed Collection'}>
+								<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Collection'}>
 									{item}
 								</Badge.Ribbon>
 							);
@@ -246,10 +246,10 @@ export const ElementListPage = (props: Props) => {
 							</SelectablePanel>
 						);
 
-						const setting = CampaignSettingLogic.getCareerSetting(props.campaignSettings, c);
-						if (setting && setting.id) {
+						const sourcebook = SourcebookLogic.getCareerSourcebook(props.sourcebooks, c);
+						if (sourcebook && sourcebook.id) {
 							return (
-								<Badge.Ribbon key={c.id} text={setting.name || 'Unnamed Collection'}>
+								<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Collection'}>
 									{item}
 								</Badge.Ribbon>
 							);
@@ -284,10 +284,10 @@ export const ElementListPage = (props: Props) => {
 							</SelectablePanel>
 						);
 
-						const setting = CampaignSettingLogic.getClassSetting(props.campaignSettings, c);
-						if (setting && setting.id) {
+						const sourcebook = SourcebookLogic.getClassSourcebook(props.sourcebooks, c);
+						if (sourcebook && sourcebook.id) {
 							return (
-								<Badge.Ribbon key={c.id} text={setting.name || 'Unnamed Collection'}>
+								<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Collection'}>
 									{item}
 								</Badge.Ribbon>
 							);
@@ -321,10 +321,10 @@ export const ElementListPage = (props: Props) => {
 							</SelectablePanel>
 						);
 
-						const setting = CampaignSettingLogic.getComplicationSetting(props.campaignSettings, c);
-						if (setting && setting.id) {
+						const sourcebook = SourcebookLogic.getComplicationSourcebook(props.sourcebooks, c);
+						if (sourcebook && sourcebook.id) {
 							return (
-								<Badge.Ribbon key={c.id} text={setting.name || 'Unnamed Collection'}>
+								<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Collection'}>
 									{item}
 								</Badge.Ribbon>
 							);
@@ -358,10 +358,10 @@ export const ElementListPage = (props: Props) => {
 							</SelectablePanel>
 						);
 
-						const setting = CampaignSettingLogic.getDomainSetting(props.campaignSettings, d);
-						if (setting && setting.id) {
+						const sourcebook = SourcebookLogic.getDomainSourcebook(props.sourcebooks, d);
+						if (sourcebook && sourcebook.id) {
 							return (
-								<Badge.Ribbon key={d.id} text={setting.name || 'Unnamed Collection'}>
+								<Badge.Ribbon key={d.id} text={sourcebook.name || 'Unnamed Collection'}>
 									{item}
 								</Badge.Ribbon>
 							);
@@ -395,10 +395,10 @@ export const ElementListPage = (props: Props) => {
 							</SelectablePanel>
 						);
 
-						const setting = CampaignSettingLogic.getKitSetting(props.campaignSettings, k);
-						if (setting && setting.id) {
+						const sourcebook = SourcebookLogic.getKitSourcebook(props.sourcebooks, k);
+						if (sourcebook && sourcebook.id) {
 							return (
-								<Badge.Ribbon key={k.id} text={setting.name || 'Unnamed Collection'}>
+								<Badge.Ribbon key={k.id} text={sourcebook.name || 'Unnamed Collection'}>
 									{item}
 								</Badge.Ribbon>
 							);
@@ -432,10 +432,10 @@ export const ElementListPage = (props: Props) => {
 							</SelectablePanel>
 						);
 
-						const setting = CampaignSettingLogic.getPerkSetting(props.campaignSettings, p);
-						if (setting && setting.id) {
+						const sourcebook = SourcebookLogic.getPerkSourcebook(props.sourcebooks, p);
+						if (sourcebook && sourcebook.id) {
 							return (
-								<Badge.Ribbon key={p.id} text={setting.name || 'Unnamed Collection'}>
+								<Badge.Ribbon key={p.id} text={sourcebook.name || 'Unnamed Collection'}>
 									{item}
 								</Badge.Ribbon>
 							);
@@ -469,10 +469,10 @@ export const ElementListPage = (props: Props) => {
 							</SelectablePanel>
 						);
 
-						const setting = CampaignSettingLogic.getItemSetting(props.campaignSettings, i);
-						if (setting && setting.id) {
+						const sourcebook = SourcebookLogic.getItemSourcebook(props.sourcebooks, i);
+						if (sourcebook && sourcebook.id) {
 							return (
-								<Badge.Ribbon key={i.id} text={setting.name || 'Unnamed Collection'}>
+								<Badge.Ribbon key={i.id} text={sourcebook.name || 'Unnamed Collection'}>
 									{item}
 								</Badge.Ribbon>
 							);
@@ -487,7 +487,7 @@ export const ElementListPage = (props: Props) => {
 
 	try {
 		const elementOptions = [ 'Ancestry', 'Culture', 'Career', 'Class', 'Complication', 'Domain', 'Kit', 'Perk', 'Item' ].map(e => ({ label: e, value: e }));
-		const settingOptions = props.campaignSettings.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Collection', value: cs.id }));
+		const sourcebookOptions = props.sourcebooks.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Collection', value: cs.id }));
 
 		const ancestries = getAncestries();
 		const cultures = getCultures();
@@ -526,16 +526,16 @@ export const ElementListPage = (props: Props) => {
 									/>
 								</div>
 								{
-									settingOptions.length > 1 ?
+									sourcebookOptions.length > 1 ?
 										<div>
 											<div className='ds-text'>Where do you want it to live?</div>
 											<Select
 												style={{ width: '100%' }}
 												placeholder='Select'
-												options={settingOptions}
+												options={sourcebookOptions}
 												optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-												value={settingID}
-												onChange={setSettingID}
+												value={sourcebookID}
+												onChange={setSourcebookID}
 											/>
 										</div>
 										: null
@@ -553,7 +553,7 @@ export const ElementListPage = (props: Props) => {
 												.text()
 												.then(json => {
 													const e = (JSON.parse(json) as Element);
-													props.onImportHomebrew(element, settingID, e);
+													props.onImportHomebrew(element, sourcebookID, e);
 												});
 											return false;
 										}}

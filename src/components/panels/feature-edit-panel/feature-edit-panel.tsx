@@ -6,7 +6,6 @@ import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../logic/ability-logic';
-import { CampaignSetting } from '../../../models/campaign-setting';
 import { Collections } from '../../../utils/collections';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { DangerButton } from '../../controls/danger-button/danger-button';
@@ -22,6 +21,7 @@ import { MultiLine } from '../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { SkillData } from '../../../data/skill-data';
 import { SkillList } from '../../../enums/skill-list';
+import { Sourcebook } from '../../../models/sourcebook';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
@@ -30,7 +30,7 @@ import './feature-edit-panel.scss';
 interface Props {
 	feature: Feature;
 	allowedTypes?: FeatureType[];
-	campaignSettings: CampaignSetting[];
+	sourcebooks: Sourcebook[];
 	onChange: (feature: Feature) => void;
 }
 
@@ -462,7 +462,7 @@ export const FeatureEditPanel = (props: Props) => {
 								>
 									<FeatureEditPanel
 										feature={option.feature}
-										campaignSettings={props.campaignSettings}
+										sourcebooks={props.sourcebooks}
 										onChange={f => setChoiceFeature(data, n, f)}
 									/>
 									<NumberSpin min={1} value={option.value} onChange={value => setChoiceValue(data, n, value)} />
@@ -589,7 +589,7 @@ export const FeatureEditPanel = (props: Props) => {
 							placeholder='Options'
 							mode='multiple'
 							allowClear={true}
-							options={LanguageData.getLanguages(props.campaignSettings).map(option => ({ value: option.name, description: option.description }))}
+							options={LanguageData.getLanguages(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
 							value={data.options}
 							onChange={setLanguageOptions}
@@ -628,7 +628,7 @@ export const FeatureEditPanel = (props: Props) => {
 								>
 									<FeatureEditPanel
 										feature={feature}
-										campaignSettings={props.campaignSettings}
+										sourcebooks={props.sourcebooks}
 										onChange={f => setMultipleFeature(data, n, f)}
 									/>
 								</Expander>
@@ -681,7 +681,7 @@ export const FeatureEditPanel = (props: Props) => {
 							className={data.skill === '' ? 'selection-empty' : ''}
 							placeholder='Skill'
 							allowClear={true}
-							options={SkillData.getSkills(props.campaignSettings).map(option => ({ value: option.name, description: option.description }))}
+							options={SkillData.getSkills(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
 							value={data.skill || ''}
 							onChange={setSkill}
@@ -699,7 +699,7 @@ export const FeatureEditPanel = (props: Props) => {
 							placeholder='Skills'
 							allowClear={true}
 							mode='multiple'
-							options={SkillData.getSkills(props.campaignSettings).map(option => ({ value: option.name, description: option.description }))}
+							options={SkillData.getSkills(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
 							value={data.options}
 							onChange={setSkillOptions}

@@ -1,13 +1,13 @@
-import { CampaignSetting } from '../models/campaign-setting';
 import { Collections } from '../utils/collections';
 import { Perk } from '../models/perk';
+import { Sourcebook } from '../models/sourcebook';
 
 export class PerkData {
-	static getPerks = (settings: CampaignSetting[]) => {
+	static getPerks = (sourcebooks: Sourcebook[]) => {
 		const list: Perk[] = [];
 
-		settings.forEach(setting => {
-			list.push(...setting.perks);
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.perks);
 		});
 
 		return Collections.sort(list, item => item.name);

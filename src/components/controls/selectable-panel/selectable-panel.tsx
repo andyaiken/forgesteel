@@ -1,10 +1,11 @@
+import { CSSProperties, ReactNode } from 'react';
 import { Button } from 'antd';
-import { ReactNode } from 'react';
 
 import './selectable-panel.scss';
 
 interface Props {
 	children: ReactNode;
+	style?: CSSProperties;
 	onSelect?: () => void;
 	onUnselect?: () => void;
 };
@@ -17,7 +18,7 @@ export const SelectablePanel = (props: Props) => {
 		}
 
 		return (
-			<div className={className} onClick={props.onSelect}>
+			<div className={className} style={props.style} onClick={props.onSelect}>
 				{props.children}
 				{props.onUnselect ? <Button className='unselect-button' onClick={props.onUnselect}>Unselect</Button> : null}
 			</div>

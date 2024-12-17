@@ -1,11 +1,11 @@
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
-import { CampaignSetting } from '../models/campaign-setting';
 import { Career } from '../models/career';
 import { Collections } from '../utils/collections';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from '../logic/feature-logic';
 import { SkillList } from '../enums/skill-list';
+import { Sourcebook } from '../models/sourcebook';
 
 export class CareerData {
 	static artisan: Career = {
@@ -408,11 +408,11 @@ Choose one of the following effects:
 		}
 	};
 
-	static getCareers = (settings: CampaignSetting[]) => {
+	static getCareers = (sourcebooks: Sourcebook[]) => {
 		const list: Career[] = [];
 
-		settings.forEach(setting => {
-			list.push(...setting.careers);
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.careers);
 		});
 
 		return Collections.sort(list, item => item.name);

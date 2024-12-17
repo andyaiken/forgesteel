@@ -1,5 +1,4 @@
 import { Flex, Space, Tag } from 'antd';
-import { CampaignSetting } from '../../../models/campaign-setting';
 import { Characteristic } from '../../../enums/characteristic';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { FeaturePanel } from '../feature-panel/feature-panel';
@@ -10,13 +9,14 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { Monster } from '../../../models/monster';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { PanelMode } from '../../../enums/panel-mode';
+import { Sourcebook } from '../../../models/sourcebook';
 import { Utils } from '../../../utils/utils';
 
 import './monster-panel.scss';
 
 interface Props {
 	monster: Monster;
-	campaignSettings?: CampaignSetting[];
+	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 

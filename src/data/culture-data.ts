@@ -1,8 +1,8 @@
-import { CampaignSetting } from '../models/campaign-setting';
 import { Collections } from '../utils/collections';
 import { Culture } from '../models/culture';
 import { FeatureLogic } from '../logic/feature-logic';
 import { SkillList } from '../enums/skill-list';
+import { Sourcebook } from '../models/sourcebook';
 
 export class EnvironmentData {
 	static nomadic = FeatureLogic.createSkillChoiceFeature({
@@ -201,11 +201,11 @@ export class CultureData {
 		upbringing: null
 	};
 
-	static getCultures = (settings: CampaignSetting[]) => {
+	static getCultures = (sourcebooks: Sourcebook[]) => {
 		const list: Culture[] = [];
 
-		settings.forEach(setting => {
-			list.push(...setting.cultures);
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.cultures);
 		});
 
 		return Collections.sort(list, item => item.name);

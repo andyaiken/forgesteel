@@ -6,7 +6,6 @@ import { Ancestry } from '../../../../models/ancestry';
 import { AncestryData } from '../../../../data/ancestry-data';
 import { AncestryPanel } from '../../../panels/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
-import { CampaignSetting } from '../../../../models/campaign-setting';
 import { Career } from '../../../../models/career';
 import { CareerData } from '../../../../data/career-data';
 import { CareerPanel } from '../../../panels/career-panel/career-panel';
@@ -32,6 +31,7 @@ import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '../../../../models/sourcebook';
 import { ThunderboltOutlined } from '@ant-design/icons';
 
 import './hero-edit-page.scss';
@@ -54,7 +54,7 @@ enum PageState {
 
 interface Props {
 	hero: Hero;
-	campaignSettings: CampaignSetting[];
+	sourcebooks: Sourcebook[];
 	goHome: () => void;
 	showAbout: () => void;
 	saveChanges: (hero: Hero) => void;
@@ -330,7 +330,7 @@ export const HeroEditPage = (props: Props) => {
 					return (
 						<AncestrySection
 							hero={hero}
-							campaignSettings={props.campaignSettings.filter(cs => hero.settingIDs.includes(cs.id))}
+							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
 							selectAncestry={setAncestry}
 							setFeatureData={setFeatureData}
 						/>
@@ -339,7 +339,7 @@ export const HeroEditPage = (props: Props) => {
 					return (
 						<CultureSection
 							hero={hero}
-							campaignSettings={props.campaignSettings.filter(cs => hero.settingIDs.includes(cs.id))}
+							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
 							selectCulture={setCulture}
 							selectLanguages={setLanguages}
 							selectEnvironment={setEnvironment}
@@ -352,7 +352,7 @@ export const HeroEditPage = (props: Props) => {
 					return (
 						<CareerSection
 							hero={hero}
-							campaignSettings={props.campaignSettings.filter(cs => hero.settingIDs.includes(cs.id))}
+							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
 							selectCareer={setCareer}
 							selectIncitingIncident={setIncitingIncident}
 							setFeatureData={setFeatureData}
@@ -362,7 +362,7 @@ export const HeroEditPage = (props: Props) => {
 					return (
 						<ClassSection
 							hero={hero}
-							campaignSettings={props.campaignSettings.filter(cs => hero.settingIDs.includes(cs.id))}
+							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
 							selectClass={setClass}
 							setLevel={setLevel}
 							selectCharacteristics={setCharacteristics}
@@ -374,7 +374,7 @@ export const HeroEditPage = (props: Props) => {
 					return (
 						<ComplicationSection
 							hero={hero}
-							campaignSettings={props.campaignSettings.filter(cs => hero.settingIDs.includes(cs.id))}
+							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
 							selectComplication={setComplication}
 							setFeatureData={setFeatureData}
 						/>
@@ -383,7 +383,7 @@ export const HeroEditPage = (props: Props) => {
 					return (
 						<DetailsSection
 							hero={hero}
-							campaignSettings={props.campaignSettings}
+							sourcebooks={props.sourcebooks}
 							setName={setName}
 							setSettingIDs={setSettingIDs}
 						/>
@@ -438,14 +438,14 @@ export const HeroEditPage = (props: Props) => {
 
 interface AncestrySectionProps {
 	hero: Hero;
-	campaignSettings: CampaignSetting[];
+	sourcebooks: Sourcebook[];
 	selectAncestry: (ancestry: Ancestry | null) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const AncestrySection = (props: AncestrySectionProps) => {
 	try {
-		const ancestries = AncestryData.getAncestries(props.campaignSettings);
+		const ancestries = AncestryData.getAncestries(props.sourcebooks);
 		const options = ancestries.map(a => (
 			<SelectablePanel key={a.id} onSelect={() => props.selectAncestry(a)}>
 				<AncestryPanel ancestry={a} />
@@ -458,7 +458,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} campaignSettings={props.campaignSettings} setData={props.setFeatureData} />
+						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 		}
@@ -498,7 +498,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 
 interface CultureSectionProps {
 	hero: Hero;
-	campaignSettings: CampaignSetting[];
+	sourcebooks: Sourcebook[];
 	selectCulture: (culture: Culture | null) => void;
 	selectLanguages: (languages: string[]) => void;
 	selectEnvironment: (id: string | null) => void;
@@ -509,7 +509,7 @@ interface CultureSectionProps {
 
 const CultureSection = (props: CultureSectionProps) => {
 	try {
-		const cultures = CultureData.getCultures(props.campaignSettings);
+		const cultures = CultureData.getCultures(props.sourcebooks);
 		cultures.unshift(CultureData.bespoke);
 		const options = cultures.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
@@ -523,12 +523,12 @@ const CultureSection = (props: CultureSectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} campaignSettings={props.campaignSettings} setData={props.setFeatureData} />
+						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 
 			if (props.hero.culture.id === CultureData.bespoke.id) {
-				const languages = LanguageData.getLanguages(props.campaignSettings);
+				const languages = LanguageData.getLanguages(props.sourcebooks);
 
 				choices.unshift(
 					<SelectablePanel key='bespoke'>
@@ -618,7 +618,7 @@ const CultureSection = (props: CultureSectionProps) => {
 
 interface CareerSectionProps {
 	hero: Hero;
-	campaignSettings: CampaignSetting[];
+	sourcebooks: Sourcebook[];
 	selectCareer: (career: Career | null) => void;
 	selectIncitingIncident: (id: string | null) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
@@ -626,7 +626,7 @@ interface CareerSectionProps {
 
 const CareerSection = (props: CareerSectionProps) => {
 	try {
-		const careers = CareerData.getCareers(props.campaignSettings);
+		const careers = CareerData.getCareers(props.sourcebooks);
 		const options = careers.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectCareer(c)}>
 				<CareerPanel career={c} />
@@ -639,7 +639,7 @@ const CareerSection = (props: CareerSectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} campaignSettings={props.campaignSettings} setData={props.setFeatureData} />
+						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 
@@ -696,7 +696,7 @@ const CareerSection = (props: CareerSectionProps) => {
 
 interface ClassSectionProps {
 	hero: Hero;
-	campaignSettings: CampaignSetting[];
+	sourcebooks: Sourcebook[];
 	selectClass: (heroClass: HeroClass | null) => void;
 	setLevel: (level: number) => void;
 	selectCharacteristics: (array: { characteristic: Characteristic, value: number }[]) => void;
@@ -706,7 +706,7 @@ interface ClassSectionProps {
 
 const ClassSection = (props: ClassSectionProps) => {
 	try {
-		const classes = ClassData.getClasses(props.campaignSettings);
+		const classes = ClassData.getClasses(props.sourcebooks);
 		const options = classes.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectClass(c)}>
 				<ClassPanel heroClass={c} />
@@ -719,7 +719,7 @@ const ClassSection = (props: ClassSectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} campaignSettings={props.campaignSettings} setData={props.setFeatureData} />
+						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 
@@ -828,14 +828,14 @@ const ClassSection = (props: ClassSectionProps) => {
 
 interface ComplicationSectionProps {
 	hero: Hero;
-	campaignSettings: CampaignSetting[];
+	sourcebooks: Sourcebook[];
 	selectComplication: (complication: Complication | null) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const ComplicationSection = (props: ComplicationSectionProps) => {
 	try {
-		const complications = ComplicationData.getComplications(props.campaignSettings);
+		const complications = ComplicationData.getComplications(props.sourcebooks);
 		const options = complications.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectComplication(c)}>
 				<ComplicationPanel complication={c} />
@@ -848,7 +848,7 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} campaignSettings={props.campaignSettings} setData={props.setFeatureData} />
+						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 		}
@@ -888,18 +888,18 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 
 interface DetailsSectionProps {
 	hero: Hero;
-	campaignSettings: CampaignSetting[];
+	sourcebooks: Sourcebook[];
 	setName: (value: string) => void;
 	setSettingIDs: (settingIDs: string[]) => void;
 }
 
 const DetailsSection = (props: DetailsSectionProps) => {
 	try {
-		const getSetting = (settingID: string) => {
-			const setting = props.campaignSettings.find(cs => cs.id === settingID);
-			if (setting) {
+		const getSourcebook = (sourcebookID: string) => {
+			const sourcebook = props.sourcebooks.find(cs => cs.id === sourcebookID);
+			if (sourcebook) {
 				return (
-					<Field key={setting.id} label={setting.name || 'Unnamed Collection'} value={setting.defaultLanguages.join(', ') || 'No default language'} />
+					<Field key={sourcebook.id} label={sourcebook.name || 'Unnamed Collection'} value={sourcebook.defaultLanguages.join(', ') || 'No default language'} />
 				);
 			}
 
@@ -925,14 +925,14 @@ const DetailsSection = (props: DetailsSectionProps) => {
 						style={{ width: '100%' }}
 						placeholder='Select'
 						mode='multiple'
-						options={props.campaignSettings.map(cs => ({ value: cs.id, label: cs.name }))}
+						options={props.sourcebooks.map(cs => ({ value: cs.id, label: cs.name }))}
 						optionRender={option => <div className='ds-text'>{option.data.label || 'Unnamed Collection'}</div>}
 						value={props.hero.settingIDs}
 						onChange={props.setSettingIDs}
 					/>
 					<Divider />
 					<HeaderText>Default Languages</HeaderText>
-					{props.hero.settingIDs.map(getSetting)}
+					{props.hero.settingIDs.map(getSourcebook)}
 				</div>
 			</div>
 		);

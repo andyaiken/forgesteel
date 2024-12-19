@@ -14,6 +14,7 @@ import { Hero } from '../models/hero';
 import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit';
 import { Language } from '../models/language';
+import { PowerRollType } from '../enums/power-roll-type';
 import { Size } from '../models/size';
 import { Skill } from '../models/skill';
 import { SkillLogic } from './skill-logic';
@@ -772,5 +773,11 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 		if (hero.state.inventory === undefined) {
 			hero.state.inventory = [];
 		}
+
+		this.getAbilities(hero, true, true, true).forEach(a => {
+			if (a.powerRoll && (a.powerRoll.type === undefined)) {
+				a.powerRoll.type = PowerRollType.PowerRoll;
+			}
+		});
 	};
 }

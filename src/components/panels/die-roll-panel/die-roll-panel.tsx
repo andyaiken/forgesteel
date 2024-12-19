@@ -1,4 +1,4 @@
-import { Alert, Button, Slider, Statistic } from 'antd';
+import { Alert, Button, Slider, Space, Statistic } from 'antd';
 import { ReactNode, useState } from 'react';
 import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
@@ -74,20 +74,22 @@ export const DieRollPanel = (props: Props) => {
 		return (
 			<div className='die-roll-panel'>
 				<Expander title='Edges and Banes'>
-					<NumberSpin
-						label='Edges'
-						value={edges}
-						min={0}
-						max={2}
-						onChange={setEdges}
-					/>
-					<NumberSpin
-						label='Banes'
-						value={banes}
-						min={0}
-						max={2}
-						onChange={setBanes}
-					/>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<NumberSpin
+							label='Edges'
+							value={edges}
+							min={0}
+							max={2}
+							onChange={setEdges}
+						/>
+						<NumberSpin
+							label='Banes'
+							value={banes}
+							min={0}
+							max={2}
+							onChange={setBanes}
+						/>
+					</Space>
 				</Expander>
 				<Button type='primary' block={true} onClick={roll}>Roll</Button>
 				{

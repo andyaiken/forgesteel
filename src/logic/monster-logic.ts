@@ -1,12 +1,66 @@
+import { Monster, MonsterGroup } from '../models/monster';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureDamageModifierData } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
-import { Monster } from '../models/monster';
+import { MonsterFilter } from '../models/monster-filter';
 import { MonsterRoleType } from '../enums/monster-role-type';
 
 export class MonsterLogic {
+	static getMonsterName = (monster: Monster, group: MonsterGroup) => {
+		if (monster.name) {
+			return monster.name;
+		}
+
+		if (group.name) {
+			return `${group.name} ${monster.role.type}`;
+		}
+
+		return 'Unnamed Monster';
+	};
+
+	static matches = (monster: Monster, monsterGroup: MonsterGroup, filter: MonsterFilter) => {
+		if (filter.name) {
+			const tokens = filter.name.toLowerCase().split(' ');
+			const monsterName = MonsterLogic.getMonsterName(monster, monsterGroup);
+			if (!tokens.every(token => monsterName.toLowerCase().includes(token))) {
+				return false;
+			}
+		}
+
+		if (filter.roles.length > 0) {
+			return filter.roles.includes(monster.role.type);
+		}
+
+		switch (filter.isMinion) {
+			case 'yes':
+				if (!monster.role.isMinion) {
+					return false;
+				}
+				break;
+			case 'no':
+				if (monster.role.isMinion) {
+					return false;
+				}
+				break;
+		}
+
+		const minLevel = Math.min(...filter.level);
+		const maxLevel = Math.max(...filter.level);
+		if ((monster.level < minLevel) || (monster.level > maxLevel)) {
+			return false;
+		}
+
+		const minEV = Math.min(...filter.ev);
+		const maxEV = Math.max(...filter.ev);
+		if ((monster.encounterValue < minEV) || (monster.encounterValue > maxEV)) {
+			return false;
+		}
+
+		return true;
+	};
+
 	static getCharacteristic = (monster: Monster, characteristic: Characteristic) => {
 		const ch = monster.characteristics.find(ch => ch.characteristic === characteristic);
 		if (ch) {

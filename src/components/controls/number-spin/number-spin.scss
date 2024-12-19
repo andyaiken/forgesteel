@@ -2,9 +2,8 @@
 	display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 10px 0;
+	gap: 10px;
 	border-radius: 6px;
-	padding: 10px 0 5px 0;
 
 	&.disabled {
 		opacity: 0.6;
@@ -15,19 +14,22 @@
 		background-color: rgba(0, 0, 0, 0.06);
 	}
 
-	.spin-button {
-		border-radius: 6px;
+	.spin-buttons {
 		margin: 5px;
-		padding: 10px;
-		font-size: 20px;
 
-		&.disabled {
-			pointer-events: none;
-			opacity: 0.3;
-		}
+		.spin-button {
+			border-radius: 6px;
+			padding: 5px;
+			font-size: 20px;
 
-		&:hover {
-			background-color: rgba(0, 0, 0, 0.06);
+			&.disabled {
+				pointer-events: none;
+				opacity: 0.3;
+			}
+
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.06);
+			}
 		}
 	}
 }
@@ -40,9 +42,11 @@
 			background-color: rgba(250, 250, 250, 0.3);
 		}
 
-		.spin-button {
-			&:hover {
-				background-color: rgba(250, 250, 250, 0.3);
+		.spin-buttons {
+			.spin-button {
+				&:hover {
+					background-color: rgba(250, 250, 250, 0.3);
+				}
 			}
 		}
 

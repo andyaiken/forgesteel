@@ -798,7 +798,7 @@ export const ElementEditPage = (props: Props) => {
 								items={[
 									{
 										key: '1',
-										label: 'Element',
+										label: 'Subclass',
 										children: (
 											<div>
 												<HeaderText>Name</HeaderText>
@@ -1177,7 +1177,7 @@ export const ElementEditPage = (props: Props) => {
 						items={[
 							{
 								key: '1',
-								label: 'Element',
+								label: 'Ancestry',
 								children: getNameAndDescriptionSection()
 							},
 							{
@@ -1194,12 +1194,12 @@ export const ElementEditPage = (props: Props) => {
 						items={[
 							{
 								key: '1',
-								label: 'Element',
+								label: 'Culture',
 								children: getNameAndDescriptionSection()
 							},
 							{
 								key: '2',
-								label: 'Culture',
+								label: 'Details',
 								children: getCultureEditSection()
 							}
 						]}
@@ -1211,7 +1211,7 @@ export const ElementEditPage = (props: Props) => {
 						items={[
 							{
 								key: '1',
-								label: 'Element',
+								label: 'Career',
 								children: getNameAndDescriptionSection()
 							},
 							{
@@ -1238,12 +1238,12 @@ export const ElementEditPage = (props: Props) => {
 						items={[
 							{
 								key: '1',
-								label: 'Element',
+								label: 'Class',
 								children: getNameAndDescriptionSection()
 							},
 							{
 								key: '2',
-								label: 'Class',
+								label: 'Details',
 								children: getClassEditSection()
 							},
 							{
@@ -1270,7 +1270,7 @@ export const ElementEditPage = (props: Props) => {
 						items={[
 							{
 								key: '1',
-								label: 'Element',
+								label: 'Complication',
 								children: getNameAndDescriptionSection()
 							},
 							{
@@ -1287,7 +1287,7 @@ export const ElementEditPage = (props: Props) => {
 						items={[
 							{
 								key: '1',
-								label: 'Element',
+								label: 'Domain',
 								children: getNameAndDescriptionSection()
 							},
 							{
@@ -1304,12 +1304,12 @@ export const ElementEditPage = (props: Props) => {
 						items={[
 							{
 								key: '1',
-								label: 'Element',
+								label: 'Kit',
 								children: getNameAndDescriptionSection()
 							},
 							{
 								key: '2',
-								label: 'Kit',
+								label: 'Details',
 								children: getKitEditSection()
 							},
 							{
@@ -1336,12 +1336,12 @@ export const ElementEditPage = (props: Props) => {
 						items={[
 							{
 								key: '1',
-								label: 'Element',
+								label: 'Perk',
 								children: getNameAndDescriptionSection()
 							},
 							{
 								key: '2',
-								label: 'Perk',
+								label: 'Details',
 								children: getPerkEditSection()
 							},
 							{
@@ -1358,7 +1358,7 @@ export const ElementEditPage = (props: Props) => {
 						items={[
 							{
 								key: '1',
-								label: 'Element',
+								label: 'Item',
 								children: getNameAndDescriptionSection()
 							},
 							{

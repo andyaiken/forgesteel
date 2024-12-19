@@ -3,6 +3,7 @@ import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
 import { Element } from './element';
+import { PowerRollType } from '../enums/power-roll-type';
 
 export interface AbilityType {
 	usage: AbilityUsage;
@@ -20,6 +21,7 @@ export interface AbilityDistance {
 }
 
 export interface PowerRoll {
+	type: PowerRollType;
 	characteristic: Characteristic[];
 	tier1: string;
 	tier2: string;

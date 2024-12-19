@@ -218,7 +218,7 @@ export const MonsterEditPanel = (props: Props) => {
 					items={[
 						{
 							key: '1',
-							label: 'Element',
+							label: 'Monster',
 							children: (
 								<div>
 									<HeaderText>Name</HeaderText>
@@ -237,7 +237,7 @@ export const MonsterEditPanel = (props: Props) => {
 						},
 						{
 							key: '2',
-							label: 'Monster',
+							label: 'Stats',
 							children: (
 								<div>
 									<HeaderText>Keywords</HeaderText>
@@ -262,33 +262,37 @@ export const MonsterEditPanel = (props: Props) => {
 										<Toggle label='Minion' value={monster.role.isMinion} onChange={setIsMinion} />
 									</Space>
 									<HeaderText>Encounter Value</HeaderText>
-									<NumberSpin min={1} value={monster.encounterValue} onChange={setEncounterValue} />
+									<NumberSpin min={1} value={monster.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />
 									<HeaderText>Size</HeaderText>
-									<NumberSpin min={1} value={monster.size.value} onChange={setSizeValue} />
-									{
-										monster.size.value === 1 ?
-											<Segmented
-												block={true}
-												options={[ 'T', 'S', 'M', 'L' ]}
-												value={monster.size.mod}
-												onChange={setSizeMod}
-											/>
-											: null
-									}
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<NumberSpin min={1} value={monster.size.value} onChange={setSizeValue} />
+										{
+											monster.size.value === 1 ?
+												<Segmented
+													block={true}
+													options={[ 'T', 'S', 'M', 'L' ]}
+													value={monster.size.mod}
+													onChange={setSizeMod}
+												/>
+												: null
+										}
+									</Space>
 									<HeaderText>Speed</HeaderText>
-									<NumberSpin min={0} value={monster.speed.value} onChange={setSpeed} />
-									<Input
-										placeholder='Movement mode'
-										allowClear={true}
-										value={monster.speed.modes}
-										onChange={e => setMovementMode(e.target.value)}
-									/>
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<NumberSpin min={0} value={monster.speed.value} onChange={setSpeed} />
+										<Input
+											placeholder='Movement mode'
+											allowClear={true}
+											value={monster.speed.modes}
+											onChange={e => setMovementMode(e.target.value)}
+										/>
+									</Space>
 									<HeaderText>Stamina</HeaderText>
-									<NumberSpin min={0} value={monster.stamina} onChange={setStamina} />
+									<NumberSpin min={0} value={monster.stamina} steps={[ 1, 10 ]} onChange={setStamina} />
 									<HeaderText>Stability</HeaderText>
 									<NumberSpin min={0} value={monster.stability} onChange={setStability} />
 									<HeaderText>Free Strike Damage</HeaderText>
-									<NumberSpin min={0} value={monster.freeStrikeDamage} onChange={setFreeStrikeDamage} />
+									<NumberSpin min={0} value={monster.freeStrikeDamage} steps={[ 1, 10 ]} onChange={setFreeStrikeDamage} />
 								</div>
 							)
 						},
@@ -296,20 +300,24 @@ export const MonsterEditPanel = (props: Props) => {
 							key: '3',
 							label: 'Characteristics',
 							children: (
-								[
-									Characteristic.Might,
-									Characteristic.Agility,
-									Characteristic.Reason,
-									Characteristic.Intuition,
-									Characteristic.Presence
-								].map(ch => (
-									<NumberSpin
-										key={ch}
-										label={ch}
-										value={MonsterLogic.getCharacteristic(monster, ch)}
-										onChange={value => setCharacteristic(ch, value)}
-									/>
-								))
+								<Space direction='vertical' style={{ width: '100%' }}>
+									{
+										[
+											Characteristic.Might,
+											Characteristic.Agility,
+											Characteristic.Reason,
+											Characteristic.Intuition,
+											Characteristic.Presence
+										].map(ch => (
+											<NumberSpin
+												key={ch}
+												label={ch}
+												value={MonsterLogic.getCharacteristic(monster, ch)}
+												onChange={value => setCharacteristic(ch, value)}
+											/>
+										))
+									}
+								</Space>
 							)
 						},
 						{

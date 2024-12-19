@@ -7,15 +7,15 @@ interface Props {
 	disabled?: boolean;
 	label?: string;
 	value: number;
-	step?: number;
+	steps?: number[];
 	min?: number;
 	max?: number;
 	onChange: (value: number) => void;
 }
 
 export const NumberSpin = (props: Props) => {
-	const onChange = (delta: number) => {
-		const change = (props.step ?? 1) * delta;
+	const onChange = (step: number, delta: number) => {
+		const change = step * delta;
 		let value = props.value + change;
 		if (props.min !== undefined) {
 			value = Math.max(value, props.min);
@@ -35,22 +35,42 @@ export const NumberSpin = (props: Props) => {
 		canUp = props.value < props.max;
 	}
 
+	const steps = props.steps || [ 1 ];
+	const ascending = (JSON.parse(JSON.stringify(steps)) as number[]).sort((a, b) => a - b);
+	const descending = (JSON.parse(JSON.stringify(steps)) as number[]).sort((a, b) => b - a);
+
 	try {
 		return (
 			<div className={props.disabled ? 'number-spin disabled' : 'number-spin'}>
-				<MinusCircleOutlined
-					className={canDown ? 'spin-button' : 'spin-button disabled'}
-					onClick={() => onChange(-1)}
-				/>
+				<div className='spin-buttons'>
+					{
+						descending.map((step, n) => (
+							<MinusCircleOutlined
+								key={n}
+								className={canDown ? 'spin-button' : 'spin-button disabled'}
+								title={`-${step}`}
+								onClick={() => onChange(step, -1)}
+							/>
+						))
+					}
+				</div>
 				<Statistic
 					className='spin-middle'
 					title={props.label}
 					value={props.value}
 				/>
-				<PlusCircleOutlined
-					className={canUp ? 'spin-button' : 'spin-button disabled'}
-					onClick={() => onChange(+1)}
-				/>
+				<div className='spin-buttons'>
+					{
+						ascending.map((step, n) => (
+							<PlusCircleOutlined
+								key={n}
+								className={canUp ? 'spin-button' : 'spin-button disabled'}
+								title={`+${step}`}
+								onClick={() => onChange(step, +1)}
+							/>
+						))
+					}
+				</div>
 			</div>
 		);
 	} catch (ex) {

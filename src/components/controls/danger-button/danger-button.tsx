@@ -6,6 +6,8 @@ import './danger-button.scss';
 
 interface Props {
 	mode?: 'default' | 'icon';
+	block?: boolean;
+	disabled?: boolean;
 	label?: ReactNode;
 	message?: ReactNode;
 	onConfirm: () => void;
@@ -29,9 +31,9 @@ export const DangerButton = (props: Props) => {
 			>
 				{
 					props.mode === 'icon' ?
-						<DeleteOutlined style={{ color: '#ff4d4f' }} />
+						<DeleteOutlined disabled={props.disabled || false} style={{ color: '#ff4d4f' }} />
 						:
-						<Button danger={true}>
+						<Button block={props.block || false} disabled={props.disabled || false} danger={true}>
 							{props.label || 'Delete'}
 						</Button>
 				}

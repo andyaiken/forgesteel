@@ -418,8 +418,7 @@ export const HeroEditPage = (props: Props) => {
 										<div className='page-button-title'>{page}</div>
 										<div className='page-button-subtitle'>{getPageState(page)}</div>
 									</div>
-								),
-								title: page
+								)
 							}))}
 							block={true}
 							value={page}

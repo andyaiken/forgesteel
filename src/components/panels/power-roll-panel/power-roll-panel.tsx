@@ -3,6 +3,7 @@ import { Collections } from '../../../utils/collections';
 import { Field } from '../../controls/field/field';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
+import { PowerRollType } from '../../../enums/power-roll-type';
 import { ReactNode } from 'react';
 
 import './power-roll-panel.scss';
@@ -38,18 +39,27 @@ export const PowerRollPanel = (props: Props) => {
 			}
 		}
 
-		let characteristic: string | number = props.ability.powerRoll.characteristic.join(' or ');
-		let sign = '+';
-		if (props.hero) {
-			const values = props.ability.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero as Hero, ch));
-			characteristic = Collections.max(values, v => v) || 0;
-			sign = characteristic >= 0 ? '+' : '';
+		let header: string;
+		switch (props.ability.powerRoll.type) {
+			case PowerRollType.PowerRoll:
+				if (props.hero) {
+					const values = props.ability.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero as Hero, ch));
+					const characteristic = Collections.max(values, v => v) || 0;
+					const sign = characteristic >= 0 ? '+' : '';
+					header = `Power Roll ${sign}${characteristic}`;
+				} else {
+					header = `Power Roll + ${props.ability.powerRoll.characteristic.join(' or ')}`;
+				}
+				break;
+			case PowerRollType.Resistance:
+				header = `${props.ability.powerRoll.characteristic.join(' or ')} Resistance Roll`;
+				break;
 		}
 
 		return (
 			<div className={props.onRoll ? 'power-roll-panel clickable' : 'power-roll-panel'} onClick={props.onRoll}>
 				<div className='power-roll-row power-roll-header'>
-					Power Roll {sign}{characteristic}
+					{header}
 				</div>
 				<div className='power-roll-row'>
 					<div className='tier'>11 -</div>

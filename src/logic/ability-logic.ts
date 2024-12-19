@@ -6,6 +6,7 @@ import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { Hero } from '../models/hero';
 import { HeroLogic } from './hero-logic';
+import { PowerRollType } from '../enums/power-roll-type';
 
 export class AbilityLogic {
 	static createTypeAction = (free = false) => {
@@ -74,8 +75,9 @@ export class AbilityLogic {
 		} as AbilityDistance;
 	};
 
-	static createPowerRoll = (data: { characteristic: Characteristic[], tier1: string, tier2: string, tier3: string }) => {
+	static createPowerRoll = (data: { type?: PowerRollType, characteristic: Characteristic[], tier1: string, tier2: string, tier3: string }) => {
 		return {
+			type: data.type || PowerRollType.PowerRoll,
 			characteristic: data.characteristic,
 			tier1: data.tier1,
 			tier2: data.tier2,

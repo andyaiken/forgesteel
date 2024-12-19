@@ -12,6 +12,7 @@ import { Expander } from '../../controls/expander/expander';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { MultiLine } from '../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
+import { PowerRollType } from '../../../enums/power-roll-type';
 import { Toggle } from '../../controls/toggle/toggle';
 import { useState } from 'react';
 
@@ -208,10 +209,10 @@ export const AbilityEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setPowerRoll1 = (value: string) => {
+	const setPowerRollType = (value: PowerRollType) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
 		if (copy.powerRoll) {
-			copy.powerRoll.tier1 = value;
+			copy.powerRoll.type = value;
 		}
 		setAbility(copy);
 		props.onChange(copy);
@@ -221,6 +222,15 @@ export const AbilityEditPanel = (props: Props) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
 		if (copy.powerRoll) {
 			copy.powerRoll.characteristic = value;
+		}
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const setPowerRoll1 = (value: string) => {
+		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		if (copy.powerRoll) {
+			copy.powerRoll.tier1 = value;
 		}
 		setAbility(copy);
 		props.onChange(copy);
@@ -356,7 +366,7 @@ export const AbilityEditPanel = (props: Props) => {
 					items={[
 						{
 							key: '1',
-							label: 'Element',
+							label: 'Ability',
 							children: (
 								<div>
 									<HeaderText>Name</HeaderText>
@@ -374,14 +384,14 @@ export const AbilityEditPanel = (props: Props) => {
 						},
 						{
 							key: '2',
-							label: 'Stats',
+							label: 'Usage',
 							children: (
 								<div>
-									<HeaderText>Usage</HeaderText>
+									<HeaderText>Type</HeaderText>
 									<Space direction='vertical' style={{ width: '100%' }}>
 										<Select
 											style={{ width: '100%' }}
-											placeholder='Select usage'
+											placeholder='Select usage type'
 											options={[ AbilityUsage.Action, AbilityUsage.Maneuver, AbilityUsage.Trigger, AbilityUsage.Other ].map(option => ({ value: option }))}
 											optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 											value={ability.type.usage}
@@ -556,6 +566,16 @@ export const AbilityEditPanel = (props: Props) => {
 									<HeaderText>Power Roll</HeaderText>
 									<Space direction='vertical' style={{ width: '100%' }}>
 										<Toggle label='Has Power Roll' value={!!ability.powerRoll} onChange={setPowerRoll} />
+										{
+											ability.powerRoll ?
+												<Segmented
+													block={true}
+													options={[ PowerRollType.PowerRoll, PowerRollType.Resistance ].map(i => ({ label: i, value: i }))}
+													value={ability.powerRoll.type}
+													onChange={setPowerRollType}
+												/>
+												: null
+										}
 										{
 											ability.powerRoll ?
 												<Select

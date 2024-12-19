@@ -1,53 +1,51 @@
 import { Alert, Button, Input, Popover, Space, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
 import { AppHeader } from '../../../panels/app-header/app-header';
-import { MonsterGroup } from '../../../../models/monster';
-import { MonsterGroupPanel } from '../../../panels/monster-group-panel/monster-group-panel';
+import { Encounter } from '../../../../models/encounter';
+import { EncounterPanel } from '../../../panels/encounter-panel/encounter-panel';
 import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
-import './monster-list.scss';
+import './encounter-list.scss';
 
 interface Props {
 	playbook: Playbook;
 	goHome: () => void;
 	showAbout: () => void;
-	viewMonsterGroup: (monsterGroup: MonsterGroup) => void;
-	onCreateMonster: () => void;
-	onImportMonster: (monsterGroup: MonsterGroup) => void;
+	viewEncounter: (encounter: Encounter) => void;
+	onCreateEncounter: () => void;
+	onImportEncounter: (encounter: Encounter) => void;
 }
 
-export const MonsterListPage = (props: Props) => {
+export const EncounterListPage = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
-	const getMonsterGroups = () => {
-		return props.playbook.monsterGroups
+	const getEncounters = () => {
+		return props.playbook.encounters
 			.filter(item => Utils.textMatches([
-				item.name,
-				...item.information.map(f => f.name),
-				...item.monsters.map(m => m.name)
+				item.name
 			], searchTerm));
 	};
 
-	const getMonsterGroupsSection = (list: MonsterGroup[]) => {
+	const getEncountersSection = (list: Encounter[]) => {
 		if (list.length === 0) {
 			return (
 				<Alert
 					type='warning'
 					showIcon={true}
-					message='No monsters'
+					message='No encounters'
 				/>
 			);
 		}
 
 		return (
-			<div className='monster-section-row'>
+			<div className='encounter-section-row'>
 				{
-					list.map(mg => (
-						<SelectablePanel key={mg.id} onSelect={() => props.viewMonsterGroup(mg)}>
-							<MonsterGroupPanel monsterGroup={mg} />
+					list.map(enc => (
+						<SelectablePanel key={enc.id} onSelect={() => props.viewEncounter(enc)}>
+							<EncounterPanel encounter={enc} playbook={props.playbook} />
 						</SelectablePanel>
 					))
 				}
@@ -56,11 +54,11 @@ export const MonsterListPage = (props: Props) => {
 	};
 
 	try {
-		const monsterGroups = getMonsterGroups();
+		const encounters = getEncounters();
 
 		return (
-			<div className='monster-list-page'>
-				<AppHeader subtitle='Monsters' goHome={props.goHome} showAbout={props.showAbout}>
+			<div className='encounter-list-page'>
+				<AppHeader subtitle='Encounters' goHome={props.goHome} showAbout={props.showAbout}>
 					<Input
 						placeholder='Search'
 						allowClear={true}
@@ -73,18 +71,18 @@ export const MonsterListPage = (props: Props) => {
 						placement='bottom'
 						content={(
 							<Space>
-								<Button block={true} icon={<PlusCircleOutlined />} onClick={props.onCreateMonster}>Create</Button>
+								<Button block={true} icon={<PlusCircleOutlined />} onClick={props.onCreateEncounter}>Create</Button>
 								<div className='ds-text'>or</div>
 								<Upload
 									style={{ width: '100%' }}
-									accept='.drawsteel-monster-group'
+									accept='.drawsteel-encounter'
 									showUploadList={false}
 									beforeUpload={file => {
 										file
 											.text()
 											.then(json => {
-												const mg = (JSON.parse(json) as MonsterGroup);
-												props.onImportMonster(mg);
+												const enc = (JSON.parse(json) as Encounter);
+												props.onImportEncounter(enc);
 											});
 										return false;
 									}}
@@ -100,8 +98,8 @@ export const MonsterListPage = (props: Props) => {
 						</Button>
 					</Popover>
 				</AppHeader>
-				<div className='monster-list-page-content'>
-					{getMonsterGroupsSection(monsterGroups)}
+				<div className='encounter-list-page-content'>
+					{getEncountersSection(encounters)}
 				</div>
 			</div>
 		);

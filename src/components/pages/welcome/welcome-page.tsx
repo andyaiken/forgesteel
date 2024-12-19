@@ -1,4 +1,4 @@
-import { Button, Divider, Space } from 'antd';
+import { Button, Space } from 'antd';
 import { AppHeader } from '../../panels/app-header/app-header';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
@@ -10,6 +10,7 @@ interface Props {
 	showHeroes: () => void;
 	showElements: () => void;
 	showMonsters: () => void;
+	showEncounters: () => void;
 }
 
 export const WelcomePage = (props: Props) => {
@@ -21,26 +22,37 @@ export const WelcomePage = (props: Props) => {
 					<div className='welcome-column'>
 						<SelectablePanel>
 							<HeaderText level={1}>Welcome to FORGE STEEL</HeaderText>
-							<div className='ds-text'>
-								<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b>.
-							</div>
-							<div className='ds-text'>
-								With this app you can create heroes using the DRAW STEEL backer packet.
-							</div>
-							<div className='ds-text'>
-								You can export your heroes as PNG or PDF.
-							</div>
-							<div className='ds-text'>
-								You can develop homebrew ancestries, classes, kits and more - anything you need to build a hero.
-							</div>
-							<div className='ds-text'>
-								You can also design homebrew monsters for your heroes to battle.
-							</div>
-							<Divider />
-							<Space direction='vertical' style={{ width: '100%' }}>
-								<Button type='primary' block={true} onClick={props.showHeroes}>Start building heroes</Button>
-								<Button block={true} onClick={props.showElements}>Browse hero-building elements</Button>
-								<Button block={true} onClick={props.showMonsters}>Design homebrew monsters</Button>
+							<Space direction='vertical'>
+								<div className='ds-text'>
+									<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players and directors.
+								</div>
+								<div>
+									<HeaderText>For Players</HeaderText>
+									<div className='ds-text'>
+										With this app you can create heroes using the DRAW STEEL backer packet.
+									</div>
+									<div className='ds-text'>
+										You can export your heroes as PNG or PDF.
+									</div>
+									<Button type='primary' block={true} onClick={props.showHeroes}>Start building heroes</Button>
+								</div>
+								<div>
+									<HeaderText>For Directors</HeaderText>
+									<div className='ds-text'>
+										You can develop homebrew ancestries, classes, kits and more - any of the elements you need to build a hero.
+									</div>
+									<div className='ds-text'>
+										You can design homebrew monsters for your heroes to battle.
+									</div>
+									<div className='ds-text'>
+										You can build encounters, ensuring that they're perfectly balanced.
+									</div>
+									<div className='button-row'>
+										<Button block={true} onClick={props.showElements}>Elements</Button>
+										<Button block={true} onClick={props.showMonsters}>Monsters</Button>
+										<Button block={true} onClick={props.showEncounters}>Encounters</Button>
+									</div>
+								</div>
 							</Space>
 						</SelectablePanel>
 					</div>

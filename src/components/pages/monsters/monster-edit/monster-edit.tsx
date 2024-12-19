@@ -14,6 +14,7 @@ import { FeatureLogic } from '../../../../logic/feature-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { MonsterEditPanel } from '../../../panels/monster-edit-panel/monster-edit-panel';
 import { MonsterGroupPanel } from '../../../panels/monster-group-panel/monster-group-panel';
+import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { PanelMode } from '../../../../enums/panel-mode';
@@ -237,7 +238,7 @@ export const MonsterEditPage = (props: Props) => {
 	const getMonstersEditSection = () => {
 		const addMonster = () => {
 			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
-			copy.monsters.push(FactoryLogic.createMonster(copy));
+			copy.monsters.push(FactoryLogic.createMonster());
 			setMonsterGroup(copy);
 			setDirty(true);
 		};
@@ -273,7 +274,7 @@ export const MonsterEditPage = (props: Props) => {
 					monsterGroup.monsters.map(m => (
 						<Expander
 							key={m.id}
-							title={m.name || 'Unnamed Monster'}
+							title={MonsterLogic.getMonsterName(m, monsterGroup)}
 							extra={[
 								{
 									title: 'Move Up',
@@ -319,7 +320,7 @@ export const MonsterEditPage = (props: Props) => {
 				items={[
 					{
 						key: '1',
-						label: 'Element',
+						label: 'Monster Group',
 						children: getNameAndDescriptionSection()
 					},
 					{

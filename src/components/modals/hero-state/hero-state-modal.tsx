@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Flex, Tabs } from 'antd';
+import { Alert, Button, Divider, Flex, Space, Tabs } from 'antd';
 import { Condition, Hero } from '../../../models/hero';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { ArrowUpOutlined } from '@ant-design/icons';
@@ -94,7 +94,7 @@ export const HeroStateModal = (props: Props) => {
 
 	const getHeroSection = () => {
 		return (
-			<div>
+			<Space direction='vertical' style={{ width: '100%' }}>
 				<NumberSpin
 					label={hero.class ? hero.class.heroicResource : 'Heroic Resource'}
 					value={hero.state.heroicResource}
@@ -205,13 +205,13 @@ export const HeroStateModal = (props: Props) => {
 						</div>
 					</Button>
 				</Flex>
-			</div>
+			</Space>
 		);
 	};
 
 	const getStatisticsSection = () => {
 		return (
-			<div>
+			<Space direction='vertical' style={{ width: '100%' }}>
 				<NumberSpin
 					label='Hero Tokens'
 					value={hero.state.heroTokens}
@@ -228,10 +228,10 @@ export const HeroStateModal = (props: Props) => {
 					label='Project Points'
 					value={hero.state.projectPoints}
 					min={0}
-					step={5}
+					steps={[ 5 ]}
 					onChange={value => onChange('projectPoints', value)}
 				/>
-			</div>
+			</Space>
 		);
 	};
 

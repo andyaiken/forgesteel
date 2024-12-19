@@ -21,6 +21,10 @@ import { Drawer } from 'antd';
 import { Element } from '../../models/element';
 import { ElementEditPage } from '../pages/elements/element-edit/element-edit';
 import { ElementListPage } from '../pages/elements/element-list/element-list';
+import { Encounter } from '../../models/encounter';
+import { EncounterEditPage } from '../pages/encounters/encounter-edit/encounter-edit';
+import { EncounterListPage } from '../pages/encounters/encounter-list/encounter-list';
+import { EncounterModal } from '../modals/encounter/encounter-modal';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
@@ -37,10 +41,12 @@ import { MonsterEditPage } from '../pages/monsters/monster-edit/monster-edit';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterGroupModal } from '../modals/monster-group/monster-group-modal';
 import { MonsterListPage } from '../pages/monsters/monster-list/monster-list';
+import { MonsterModal } from '../modals/monster/monster-modal';
 import { Options } from '../../models/options';
 import { Perk } from '../../models/perk';
 import { PerkModal } from '../modals/perk/perk-modal';
 import { Playbook } from '../../models/playbook';
+import { PlaybookLogic } from '../../logic/playbook-logic';
 import { RulesModal } from '../modals/rules/rules-modal';
 import { Sourcebook } from '../../models/sourcebook';
 import { SourcebookData } from '../../data/sourcebook-data';
@@ -60,7 +66,9 @@ enum Page {
 	ElementList,
 	ElementEdit,
 	MonsterList,
-	MonsterEdit
+	MonsterEdit,
+	EncounterList,
+	EncounterEdit
 }
 
 interface Props {
@@ -83,6 +91,7 @@ export const Main = (props: Props) => {
 	const [ selectedElement, setSelectedElement ] = useState<Element | null>(null);
 	const [ selectedElementType, setSelectedElementType ] = useState<string>('');
 	const [ selectedMonsterGroup, setSelectedMonsterGroup ] = useState<MonsterGroup | null>(null);
+	const [ selectedEncounter, setSelectedEncounter ] = useState<Encounter | null>(null);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 
 	//#region Persistence
@@ -128,6 +137,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(null);
 		setSelectedElementType('');
 		setSelectedMonsterGroup(null);
+		setSelectedEncounter(null);
 	};
 
 	const showHeroList = () => {
@@ -137,6 +147,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(null);
 		setSelectedElementType('');
 		setSelectedMonsterGroup(null);
+		setSelectedEncounter(null);
 	};
 
 	const showElementList = () => {
@@ -146,6 +157,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(null);
 		setSelectedElementType('');
 		setSelectedMonsterGroup(null);
+		setSelectedEncounter(null);
 	};
 
 	const showMonsterList = () => {
@@ -155,6 +167,17 @@ export const Main = (props: Props) => {
 		setSelectedElement(null);
 		setSelectedElementType('');
 		setSelectedMonsterGroup(null);
+		setSelectedEncounter(null);
+	};
+
+	const showEncounterList = () => {
+		setPage(Page.EncounterList);
+		setSelectedHero(null);
+		setSelectedSourcebook(null);
+		setSelectedElement(null);
+		setSelectedElementType('');
+		setSelectedMonsterGroup(null);
+		setSelectedEncounter(null);
 	};
 
 	//#endregion
@@ -890,6 +913,76 @@ export const Main = (props: Props) => {
 
 	//#endregion
 
+	//#region Encounters
+
+	const createEncounter = (original: Encounter | null) => {
+		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
+
+		let encounter: Encounter;
+		if (original) {
+			encounter = JSON.parse(JSON.stringify(original)) as Encounter;
+			encounter.id = Utils.guid();
+		} else {
+			encounter = FactoryLogic.createEncounter();
+		}
+
+		copy.encounters.push(encounter);
+		persistPlaybook(copy);
+		if (drawer) {
+			onSelectEncounter(encounter);
+		} else {
+			editEncounter(encounter);
+		}
+	};
+
+	const importEncounter = (encounter: Encounter) => {
+		encounter.id = Utils.guid();
+
+		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
+		copy.encounters.push(encounter);
+		Collections.sort(copy.encounters, item => item.name);
+
+		persistPlaybook(copy);
+		setPage(Page.EncounterList);
+		setDrawer(null);
+	};
+
+	const editEncounter = (encounter: Encounter) => {
+		setSelectedEncounter(encounter);
+		setPage(Page.EncounterEdit);
+		setDrawer(null);
+	};
+
+	const deleteEncounter = (encounter: Encounter) => {
+		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
+		copy.encounters = copy.encounters.filter(enc => enc.id !== encounter.id);
+
+		persistPlaybook(copy);
+		setDrawer(null);
+	};
+
+	const saveEditSelectedEncounter = (encounter: Encounter) => {
+		if (selectedEncounter) {
+			const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
+			const encounterIndex = copy.encounters.findIndex(enc => enc.id === encounter.id);
+			if (encounterIndex !== -1) {
+				copy.encounters[encounterIndex] = encounter;
+			}
+
+			persistPlaybook(copy);
+			setSelectedEncounter(null);
+			setPage(Page.EncounterList);
+		}
+	};
+
+	const cancelEditSelectedEncounter = () => {
+		if (selectedEncounter) {
+			setPage(Page.EncounterList);
+		}
+	};
+
+	//#endregion
+
 	//#region Modals
 
 	const showAbout = () => {
@@ -1064,9 +1157,38 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<MonsterGroupModal
 				monsterGroup={monsterGroup}
+				playbook={playbook}
 				export={format => Utils.export([ monsterGroup.id ], monsterGroup.name || 'Monster Group', monsterGroup, 'monster-group', format)}
 				edit={() => editMonsterGroup(monsterGroup)}
 				delete={() => deleteMonsterGroup(monsterGroup)}
+			/>
+		);
+	};
+
+	const onSelectMonster = (monsterID: string) => {
+		const monster = PlaybookLogic.getMonster(playbook, monsterID);
+		const monsterGroup = PlaybookLogic.getMonsterGroup(playbook, monsterID);
+
+		if (monster && monsterGroup) {
+			setDrawer(
+				<MonsterModal
+					monster={monster}
+					monsterGroup={monsterGroup}
+					playbook={playbook}
+					export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
+				/>
+			);
+		}
+	};
+
+	const onSelectEncounter = (encounter: Encounter) => {
+		setDrawer(
+			<EncounterModal
+				encounter={encounter}
+				playbook={playbook}
+				export={format => Utils.export([ encounter.id ], encounter.name || 'Encounter', encounter, 'encounter', format)}
+				edit={() => editEncounter(encounter)}
+				delete={() => deleteEncounter(encounter)}
 			/>
 		);
 	};
@@ -1150,6 +1272,7 @@ export const Main = (props: Props) => {
 						showHeroes={heroes.length === 0 ? addHero : showHeroList}
 						showElements={showElementList}
 						showMonsters={showMonsterList}
+						showEncounters={showEncounterList}
 					/>
 				);
 			case Page.HeroList:
@@ -1254,6 +1377,29 @@ export const Main = (props: Props) => {
 						showAbout={showAbout}
 						saveChanges={saveEditSelectedMonsterGroup}
 						cancelChanges={cancelEditSelectedMonsterGroup}
+					/>
+				);
+			case Page.EncounterList:
+				return (
+					<EncounterListPage
+						playbook={playbook}
+						goHome={showWelcome}
+						showAbout={showAbout}
+						viewEncounter={onSelectEncounter}
+						onCreateEncounter={() => createEncounter(null)}
+						onImportEncounter={importEncounter}
+					/>
+				);
+			case Page.EncounterEdit:
+				return (
+					<EncounterEditPage
+						encounter={selectedEncounter as Encounter}
+						playbook={playbook}
+						goHome={showWelcome}
+						showAbout={showAbout}
+						showMonster={onSelectMonster}
+						saveChanges={saveEditSelectedEncounter}
+						cancelChanges={cancelEditSelectedEncounter}
 					/>
 				);
 		}

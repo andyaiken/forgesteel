@@ -1,27 +1,23 @@
 import { Button, Popover } from 'antd';
-import { DangerButton } from '../../controls/danger-button/danger-button';
-import { MonsterGroup } from '../../../models/monster';
-import { MonsterGroupPanel } from '../../panels/monster-group-panel/monster-group-panel';
+import { Monster, MonsterGroup } from '../../../models/monster';
+import { MonsterPanel } from '../../panels/monster-panel/monster-panel';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Playbook } from '../../../models/playbook';
-import { PlaybookLogic } from '../../../logic/playbook-logic';
 
-import './monster-group-modal.scss';
+import './monster-modal.scss';
 
 interface Props {
+	monster: Monster;
 	monsterGroup: MonsterGroup;
 	playbook: Playbook;
 	export: (format: 'image' | 'pdf' | 'json') => void;
-	edit: () => void;
-	delete: () => void;
 }
 
-export const MonsterGroupModal = (props: Props) => {
+export const MonsterModal = (props: Props) => {
 	try {
 		return (
-			<div className='monster-group-modal'>
+			<div className='monster-modal'>
 				<div className='toolbar'>
-					<Button onClick={props.edit}>Edit</Button>
 					<Popover
 						trigger='click'
 						placement='bottom'
@@ -37,12 +33,8 @@ export const MonsterGroupModal = (props: Props) => {
 							Export
 						</Button>
 					</Popover>
-					<DangerButton
-						disabled={props.monsterGroup.monsters.some(monster => PlaybookLogic.isUsed(props.playbook, monster.id))}
-						onConfirm={props.delete}
-					/>
 				</div>
-				<MonsterGroupPanel monsterGroup={props.monsterGroup} mode={PanelMode.Full} />
+				<MonsterPanel monster={props.monster} monsterGroup={props.monsterGroup} mode={PanelMode.Full} />
 			</div>
 		);
 	} catch (ex) {

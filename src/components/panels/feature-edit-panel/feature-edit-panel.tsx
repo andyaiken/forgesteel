@@ -460,12 +460,14 @@ export const FeatureEditPanel = (props: Props) => {
 										}
 									]}
 								>
-									<FeatureEditPanel
-										feature={option.feature}
-										sourcebooks={props.sourcebooks}
-										onChange={f => setChoiceFeature(data, n, f)}
-									/>
-									<NumberSpin min={1} value={option.value} onChange={value => setChoiceValue(data, n, value)} />
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<FeatureEditPanel
+											feature={option.feature}
+											sourcebooks={props.sourcebooks}
+											onChange={f => setChoiceFeature(data, n, f)}
+										/>
+										<NumberSpin min={1} value={option.value} onChange={value => setChoiceValue(data, n, value)} />
+									</Space>
 								</Expander>
 							))
 						}
@@ -503,24 +505,26 @@ export const FeatureEditPanel = (props: Props) => {
 						{
 							data.modifiers.map((mod, n) => (
 								<Expander key={n} title='Damage Modifier'>
-									<Input
-										className={mod.damageType === '' ? 'input-empty' : ''}
-										placeholder='Damage type'
-										allowClear={true}
-										value={mod.damageType}
-										onChange={e => setDamageModifierDamageType(data, n, e.target.value)}
-									/>
-									<Select
-										style={{ width: '100%' }}
-										placeholder='Modifier type'
-										options={[ DamageModifierType.Immunity, DamageModifierType.Weakness ].map(o => ({ value: o }))}
-										optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-										value={mod.type}
-										onChange={value => setDamageModifierType(data, n, value)}
-									/>
-									<NumberSpin min={0} value={mod.value} onChange={value => setDamageModifierValue(data, n, value)} />
-									<NumberSpin min={0} value={mod.valuePerLevel} onChange={value => setDamageModifierValuePerLevel(data, n, value)} />
-									<DangerButton onConfirm={() => deleteDamageModifier(data, n)} />
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<Input
+											className={mod.damageType === '' ? 'input-empty' : ''}
+											placeholder='Damage type'
+											allowClear={true}
+											value={mod.damageType}
+											onChange={e => setDamageModifierDamageType(data, n, e.target.value)}
+										/>
+										<Select
+											style={{ width: '100%' }}
+											placeholder='Modifier type'
+											options={[ DamageModifierType.Immunity, DamageModifierType.Weakness ].map(o => ({ value: o }))}
+											optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+											value={mod.type}
+											onChange={value => setDamageModifierType(data, n, value)}
+										/>
+										<NumberSpin min={0} value={mod.value} onChange={value => setDamageModifierValue(data, n, value)} />
+										<NumberSpin min={0} value={mod.valuePerLevel} onChange={value => setDamageModifierValuePerLevel(data, n, value)} />
+										<DangerButton onConfirm={() => deleteDamageModifier(data, n)} />
+									</Space>
 								</Expander>
 							))
 						}
@@ -732,7 +736,7 @@ export const FeatureEditPanel = (props: Props) => {
 					items={[
 						{
 							key: '1',
-							label: 'Element',
+							label: 'Feature',
 							children: (
 								<div>
 									<HeaderText>Name</HeaderText>
@@ -750,7 +754,7 @@ export const FeatureEditPanel = (props: Props) => {
 						},
 						{
 							key: '2',
-							label: 'Feature',
+							label: 'Details',
 							children: (
 								<div>
 									<HeaderText>Feature Type</HeaderText>

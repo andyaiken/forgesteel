@@ -91,6 +91,8 @@ td {
 }
 
 .ant-btn {
+	box-shadow: none;
+
 	&.ant-btn-text {
 		font-size: unset;
 	}
@@ -245,8 +247,8 @@ td {
 	}
 
 	table {
-		border: 1px solid rgba(250, 250, 250, 0.6);
-		background-color: rgb(50, 50, 50);
+		border-color: rgba(250, 250, 250, 0.6);
+		background-color: rgb(30, 30, 30);
 	}
 
 	.ant-collapse {
@@ -303,7 +305,7 @@ td {
 	}
 
 	.ant-select-dropdown {
-		background-color: rgb(50, 50, 50);
+		background-color: rgb(30, 30, 30);
 
 		.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
 			.ds-text,

@@ -1,3 +1,4 @@
+import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
 import { Monster, MonsterGroup } from '../models/monster';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
@@ -12,6 +13,7 @@ import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit';
+import { MonsterFilter } from '../models/monster-filter';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Perk } from '../models/perk';
 import { PerkType } from '../enums/perk-type';
@@ -215,10 +217,10 @@ export class FactoryLogic {
 		};
 	};
 
-	static createMonster = (monsterGroup: MonsterGroup): Monster => {
+	static createMonster = (): Monster => {
 		return {
 			id: Utils.guid(),
-			name: monsterGroup.name || '',
+			name: '',
 			description: '',
 			level: 1,
 			role: {
@@ -262,6 +264,40 @@ export class FactoryLogic {
 			],
 			features: [],
 			villainActions: []
+		};
+	};
+
+	static createMonsterFilter = (): MonsterFilter => {
+		return {
+			name: '',
+			roles: [],
+			isMinion: 'any',
+			level: [ 1, 20 ],
+			ev: [ 0, 500 ]
+		};
+	};
+
+	static createEncounter = (): Encounter => {
+		return {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			groups: []
+		};
+	};
+
+	static createEncounterGroup = (): EncounterGroup => {
+		return {
+			id: Utils.guid(),
+			slots: []
+		};
+	};
+
+	static createEncounterSlot = (monsterID: string): EncounterSlot => {
+		return {
+			id: Utils.guid(),
+			monsterID: monsterID,
+			count: 1
 		};
 	};
 }

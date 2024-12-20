@@ -9,6 +9,7 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { LanguageData } from '../../../data/language-data';
+import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { SkillData } from '../../../data/skill-data';
@@ -115,37 +116,41 @@ export const RulesModal = (props: Props) => {
 		};
 
 		return (
-			<div className='rules-modal'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Conditions',
-							children: getConditionsSection()
-						},
-						{
-							key: '2',
-							label: 'Skills',
-							children: getSkillsSection()
-						},
-						{
-							key: '3',
-							label: 'Actions',
-							children: getActionsSection()
-						},
-						{
-							key: '4',
-							label: 'Maneuvers',
-							children: getManeuversSection()
-						},
-						{
-							key: '5',
-							label: 'Languages',
-							children: getLanguagesSection()
-						}
-					]}
-				/>
-			</div>
+			<Modal
+				content={
+					<div className='rules-modal'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Conditions',
+									children: getConditionsSection()
+								},
+								{
+									key: '2',
+									label: 'Skills',
+									children: getSkillsSection()
+								},
+								{
+									key: '3',
+									label: 'Actions',
+									children: getActionsSection()
+								},
+								{
+									key: '4',
+									label: 'Maneuvers',
+									children: getManeuversSection()
+								},
+								{
+									key: '5',
+									label: 'Languages',
+									children: getLanguagesSection()
+								}
+							]}
+						/>
+					</div>
+				}
+			/>
 		);
 	} catch (ex) {
 		console.error(ex);

@@ -6,6 +6,7 @@ import { Characteristic } from '../../../enums/characteristic';
 import { ConditionPanel } from '../../panels/condition-panel/condition-panel';
 import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
 import { HeroLogic } from '../../../logic/hero-logic';
+import { Modal } from '../modal/modal';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
@@ -269,28 +270,32 @@ export const HeroStateModal = (props: Props) => {
 
 	try {
 		return (
-			<div className='hero-state-modal'>
-				<Tabs
-					items={[
-						{
-							key: 'hero',
-							label: 'Hero',
-							children: getHeroSection()
-						},
-						{
-							key: 'stats',
-							label: 'Statistics',
-							children: getStatisticsSection()
-						},
-						{
-							key: 'conditions',
-							label: 'Conditions',
-							children: getConditionsSection()
-						}
-					]}
-					defaultActiveKey={props.startPage}
-				/>
-			</div>
+			<Modal
+				content={
+					<div className='hero-state-modal'>
+						<Tabs
+							items={[
+								{
+									key: 'hero',
+									label: 'Hero',
+									children: getHeroSection()
+								},
+								{
+									key: 'stats',
+									label: 'Statistics',
+									children: getStatisticsSection()
+								},
+								{
+									key: 'conditions',
+									label: 'Conditions',
+									children: getConditionsSection()
+								}
+							]}
+							defaultActiveKey={props.startPage}
+						/>
+					</div>
+				}
+			/>
 		);
 	} catch (ex) {
 		console.error(ex);

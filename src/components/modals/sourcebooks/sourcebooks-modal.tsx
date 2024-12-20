@@ -1,6 +1,7 @@
 import { Button, Divider, Space, Upload } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import { FactoryLogic } from '../../../logic/factory-logic';
+import { Modal } from '../modal/modal';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookPanel } from '../../panels/sourcebook-panel/sourcebook-panel';
 import { useState } from 'react';
@@ -65,40 +66,44 @@ export const SourcebooksModal = (props: Props) => {
 		};
 
 		return (
-			<div className='sourcebooks-modal'>
-				{
-					[ ...props.officialSourcebooks, ...homebrewSourcebooks ].map(s => (
-						<SourcebookPanel
-							key={s.id}
-							sourcebook={s}
-							visible={!hiddenSourcebookIDs.includes(s.id)}
-							onSetVisible={setVisibility}
-							onChange={changeSourcebook}
-							onDelete={deleteSourcebook}
-						/>
-					))
+			<Modal
+				content={
+					<div className='sourcebooks-modal'>
+						{
+							[ ...props.officialSourcebooks, ...homebrewSourcebooks ].map(s => (
+								<SourcebookPanel
+									key={s.id}
+									sourcebook={s}
+									visible={!hiddenSourcebookIDs.includes(s.id)}
+									onSetVisible={setVisibility}
+									onChange={changeSourcebook}
+									onDelete={deleteSourcebook}
+								/>
+							))
+						}
+						<Divider />
+						<Space direction='vertical' style={{ width: '100%' }}>
+							<Button block={true} onClick={createSourcebook}>Create a new sourcebook</Button>
+							<Upload
+								style={{ width: '100%' }}
+								accept='.drawsteel-sourcebook'
+								showUploadList={false}
+								beforeUpload={file => {
+									file
+										.text()
+										.then(json => {
+											const sourcebook = (JSON.parse(json) as Sourcebook);
+											importSourcebook(sourcebook);
+										});
+									return false;
+								}}
+							>
+								<Button block={true} icon={<DownloadOutlined />}>Import a sourcebook</Button>
+							</Upload>
+						</Space>
+					</div>
 				}
-				<Divider />
-				<Space direction='vertical'>
-					<Button block={true} onClick={createSourcebook}>Create a new sourcebook</Button>
-					<Upload
-						style={{ width: '100%' }}
-						accept='.drawsteel-sourcebook'
-						showUploadList={false}
-						beforeUpload={file => {
-							file
-								.text()
-								.then(json => {
-									const sourcebook = (JSON.parse(json) as Sourcebook);
-									importSourcebook(sourcebook);
-								});
-							return false;
-						}}
-					>
-						<Button block={true} icon={<DownloadOutlined />}>Import a sourcebook</Button>
-					</Upload>
-				</Space>
-			</div>
+			/>
 		);
 	} catch (ex) {
 		console.error(ex);

@@ -85,7 +85,7 @@ export class KitData {
 					description: 'In your hands, the haft is as good as the head.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					distance: [ AbilityLogic.createDistanceReach(1) ],
 					target: '2 creatures or objects',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -125,7 +125,7 @@ export class KitData {
 					description: 'You feint to move your enemies into perfect position.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					distance: [ AbilityLogic.createDistanceReach(1) ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -166,7 +166,7 @@ export class KitData {
 					description: 'An enemy who tagged you will pay for that.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					distance: [ AbilityLogic.createDistanceReach(1) ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -207,7 +207,7 @@ export class KitData {
 					description: 'The faster you move, the harder you hit.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					distance: [ AbilityLogic.createDistanceReach(1) ],
 					target: '1 creature or object',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -248,7 +248,7 @@ export class KitData {
 					description: 'Keeping your enemies stumbling around the battlefield is second nature to you.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					distance: [ AbilityLogic.createDistanceReach(1) ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -289,7 +289,7 @@ export class KitData {
 					description: 'In your hands, a shield isn’t just for protection.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					distance: [ AbilityLogic.createDistanceReach(1) ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -329,7 +329,7 @@ export class KitData {
 					description: 'A well-placed shot leaves your enemy struggling to move.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					distance: [ AbilityLogic.createDistanceRanged(5) ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -369,7 +369,7 @@ export class KitData {
 					description: 'When you fire two arrows back to back, both hit their mark.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					distance: [ AbilityLogic.createDistanceRanged(5) ],
 					target: '2 creatures or objects',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -409,7 +409,7 @@ export class KitData {
 					description: 'The well-thrown net that follows your main attack leaves your foes right where you want them.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					distance: [ AbilityLogic.createDistanceReach(1) ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -449,7 +449,7 @@ export class KitData {
 					description: 'The strength of your assault makes it impossible for your foe to ignore you.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					distance: [ AbilityLogic.createDistanceReach(1) ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -489,7 +489,7 @@ export class KitData {
 					description: 'Breathe … aim … wait… then strike!',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					distance: [ AbilityLogic.createDistanceRanged(5) ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -530,7 +530,7 @@ export class KitData {
 					description: 'When your stick speaks, your enemy moves.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					distance: [ AbilityLogic.createDistanceReach(1) ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -570,7 +570,7 @@ export class KitData {
 					description: 'All combat is a dance—and you’ll be the one leading.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					distance: [ AbilityLogic.createDistanceReach(1) ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -611,7 +611,7 @@ export class KitData {
 					description: 'When you draw your whip back after an attack, your enemy comes ever closer.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 2 }) ],
+					distance: [ AbilityLogic.createDistanceReach(2) ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -651,7 +651,7 @@ export class KitData {
 					description: 'You drain the energy from your target and revitalize your senses.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					distance: [ AbilityLogic.createDistanceReach(1) ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -696,7 +696,7 @@ export class KitData {
 					description: 'Visible energy sparks off you to wash across a nearby foe, who you invite to dance with you.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 2 }) ],
+					distance: [ AbilityLogic.createDistanceReach(2) ],
 					target: '1 creature or object',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -793,7 +793,7 @@ Your ward covers your body in ice, and grants you the following benefits:
 					description: 'Your curse causes a foe’s flesh to rot off as spores that aid your allies.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					distance: [ AbilityLogic.createDistanceRanged(5) ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -841,7 +841,7 @@ Your spirit overflows and warms the area around you. It grants you the following
 					description: 'You lob your implement at high speed toward your opponent, unleashing a chaotic flare of magic.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					distance: [ AbilityLogic.createDistanceRanged(5) ],
 					target: '1 creature or object',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -890,7 +890,7 @@ Your ward wraps itself around your head and shields your eyes, granting you the 
 					description: 'You call forth a small bolt of lightning, then hurl it at your foe.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					distance: [ AbilityLogic.createDistanceRanged(5) ],
 					target: '1 creature or object',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -938,7 +938,7 @@ Your ward surrounds you with protective animal spirits, and grants you the follo
 					description: 'Burning radiance falls upon your foe, outlining them with a holy glow.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					distance: [ AbilityLogic.createDistanceRanged(5) ],
 					target: '1 creature or object',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -986,7 +986,7 @@ Your armor is reinforced by a bright ward of holy energy, and grants you the fol
 					description: 'Two beams of supernatural force lance out at your command.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					distance: [ AbilityLogic.createDistanceRanged(5) ],
 					target: '2 creatures or objects',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -1031,7 +1031,7 @@ Your armor is reinforced by a bright ward of holy energy, and grants you the fol
 					description: 'Absorbing psychic energy from another creature lets you shield yourself within it.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+					distance: [ AbilityLogic.createDistanceRanged(5) ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -1076,7 +1076,7 @@ Your armor is reinforced by a bright ward of holy energy, and grants you the fol
 					description: 'Attacks with your sharp and deadly claws send your foes staggering back.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					distance: [ AbilityLogic.createDistanceReach(1) ],
 					target: '2 creatures or objects',
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
@@ -1135,7 +1135,7 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 					description: 'Foes who try to close around you do so at their peril.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					distance: [ AbilityLogic.createDistanceReach(1) ],
 					target: '3 creatures or objects',
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
@@ -1199,7 +1199,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					description: 'Your enemies try in vain to fall back from your pouncing attack.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					distance: [ AbilityLogic.createDistanceReach(1) ],
 					target: '2 creatures or objects',
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
@@ -1262,7 +1262,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					description: 'A savage assault forces your foes back.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+					distance: [ AbilityLogic.createDistanceReach(1) ],
 					target: '1 creature or object',
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],

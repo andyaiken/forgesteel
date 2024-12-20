@@ -104,7 +104,7 @@ export class HeroLogic {
 				description: '',
 				type: AbilityLogic.createTypeAction(true),
 				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+				distance: [ AbilityLogic.createDistanceReach(1) ],
 				target: '1 creature or object',
 				powerRoll: AbilityLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might, Characteristic.Agility ],
@@ -119,7 +119,7 @@ export class HeroLogic {
 				description: '',
 				type: AbilityLogic.createTypeAction(true),
 				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+				distance: [ AbilityLogic.createDistanceRanged(5) ],
 				target: '1 creature or object',
 				powerRoll: AbilityLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might, Characteristic.Agility ],
@@ -176,7 +176,7 @@ export class HeroLogic {
 				description: '',
 				type: AbilityLogic.createTypeManeuver(),
 				keywords: [],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+				distance: [ AbilityLogic.createDistanceReach(1) ],
 				target: '1 enemy',
 				effect: 'The next attack an ally makes against the target before the start of your next turn has an edge.'
 			}));
@@ -188,7 +188,7 @@ export class HeroLogic {
 				keywords: [],
 				distance: [
 					AbilityLogic.createDistanceSelf(),
-					AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 })
+					AbilityLogic.createDistanceReach(1)
 				],
 				target: 'Self or 1 creature',
 				effect: 'You can use this maneuver to drink a potion yourself or to administer a potion to an adjacent creature.'
@@ -215,7 +215,7 @@ export class HeroLogic {
 				description: '',
 				type: AbilityLogic.createTypeManeuver(),
 				keywords: [ AbilityKeyword.Melee ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+				distance: [ AbilityLogic.createDistanceReach(1) ],
 				target: '1 creature the same size or smaller than you',
 				powerRoll: AbilityLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might ],
@@ -241,7 +241,7 @@ export class HeroLogic {
 				description: '',
 				type: AbilityLogic.createTypeManeuver(),
 				keywords: [ AbilityKeyword.Melee ],
-				distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+				distance: [ AbilityLogic.createDistanceReach(1) ],
 				target: '1 creature the same size or smaller than you',
 				powerRoll: AbilityLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might ],
@@ -281,7 +281,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				keywords: [],
 				distance: [
 					AbilityLogic.createDistanceSelf(),
-					AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 })
+					AbilityLogic.createDistanceReach(1)
 				],
 				target: 'Self or 1 creature',
 				effect: 'You can use this maneuver to stand up if you are prone, ending that condition. Alternatively, you can use this maneuver to make an adjacent prone creature stand up.'
@@ -326,7 +326,7 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 				keywords: [],
 				distance: [
 					AbilityLogic.createDistanceSelf(),
-					AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 })
+					AbilityLogic.createDistanceReach(1)
 				],
 				target: 'Self or 1 creature',
 				effect: 'You use your action to employ medicine or inspiring words to make an adjacent creature feel better and stay in the fight. The creature can spend a Recovery to regain Stamina, or can make a resistance roll against a “(resistance ends)” effect they are suffering.'

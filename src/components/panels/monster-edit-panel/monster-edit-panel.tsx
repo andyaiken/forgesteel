@@ -175,42 +175,6 @@ export const MonsterEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const addVillainAction = () => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.villainActions.push(FeatureLogic.createFeature({
-			id: Utils.guid(),
-			name: '',
-			description: ''
-		}));
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const changeVillainAction = (feature: Feature) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		const index = copy.villainActions.findIndex(f => f.id === feature.id);
-		if (index !== -1) {
-			copy.villainActions[index] = feature;
-		}
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const moveVillainAction = (feature: Feature, direction: 'up' | 'down') => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		const index = copy.villainActions.findIndex(f => f.id === feature.id);
-		copy.villainActions = Collections.move(copy.villainActions, index, direction);
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const deleteVillainAction = (feature: Feature) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.villainActions = copy.villainActions.filter(f => f.id !== feature.id);
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
 	try {
 		return (
 			<div className='monster-edit-panel'>
@@ -366,60 +330,6 @@ export const MonsterEditPanel = (props: Props) => {
 											: null
 									}
 									<Button block={true} onClick={addFeature}>Add a new feature</Button>
-								</Space>
-							)
-						},
-						{
-							key: '5',
-							label: 'Villain Actions',
-							children: (
-								<Space direction='vertical' style={{ width: '100%' }}>
-									<Alert
-										type='info'
-										showIcon={true}
-										message='Leader and Solo monsters should have 3 villain actions; other monsters should generally not have any.'
-									/>
-									{
-										monster.villainActions.map(va => (
-											<Expander
-												key={va.id}
-												title={va.name || 'Unnamed Villain Action'}
-												extra={[
-													{
-														title: 'Move Up',
-														icon: <CaretUpOutlined />,
-														onClick: () => moveVillainAction(va, 'up')
-													},
-													{
-														title: 'Move Down',
-														icon: <CaretDownOutlined />,
-														onClick: () => moveVillainAction(va, 'down')
-													},
-													{
-														title: 'Delete',
-														icon: <DangerButton mode='icon' onConfirm={() => deleteVillainAction(va)} />
-													}
-												]}
-											>
-												<FeatureEditPanel
-													feature={va}
-													sourcebooks={props.sourcebooks}
-													allowedTypes={[ FeatureType.Ability, FeatureType.Text ]}
-													onChange={changeVillainAction}
-												/>
-											</Expander>
-										))
-									}
-									{
-										monster.villainActions.length === 0 ?
-											<Alert
-												type='warning'
-												showIcon={true}
-												message='No villain actions'
-											/>
-											: null
-									}
-									<Button block={true} onClick={addVillainAction}>Add a new villain action</Button>
 								</Space>
 							)
 						}

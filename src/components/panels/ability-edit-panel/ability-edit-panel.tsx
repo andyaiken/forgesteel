@@ -127,7 +127,7 @@ export const AbilityEditPanel = (props: Props) => {
 
 	const addDistance = () => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.distance.push(AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }));
+		copy.distance.push(AbilityLogic.createDistanceReach(1));
 		setAbility(copy);
 		props.onChange(copy);
 	};
@@ -392,7 +392,7 @@ export const AbilityEditPanel = (props: Props) => {
 										<Select
 											style={{ width: '100%' }}
 											placeholder='Select usage type'
-											options={[ AbilityUsage.Action, AbilityUsage.Maneuver, AbilityUsage.Trigger, AbilityUsage.Other ].map(option => ({ value: option }))}
+											options={[ AbilityUsage.Action, AbilityUsage.Maneuver, AbilityUsage.Trigger, AbilityUsage.VillainAction, AbilityUsage.Other ].map(option => ({ value: option }))}
 											optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 											value={ability.type.usage}
 											onChange={setTypeUsage}

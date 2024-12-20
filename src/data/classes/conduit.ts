@@ -80,7 +80,7 @@ Whenever you get the tier 3 result of the Prayer ability, you can choose one of 
 						description: 'Your divine energy restores the righteous.',
 						type: AbilityLogic.createTypeManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+						distance: [ AbilityLogic.createDistanceRanged(5) ],
 						target: 'Self or 1 ally',
 						effect: 'The target can spend 1 Recovery.',
 						spend: [
@@ -102,7 +102,7 @@ For each piety spent, you can choose one of the following enhancements:
 						description: 'You unleash a blast of raw divine magic upon your foe.',
 						type: AbilityLogic.createTypeAction(),
 						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+						distance: [ AbilityLogic.createDistanceRanged(5) ],
 						target: '1 creature or object',
 						powerRoll: AbilityLogic.createPowerRoll({
 							characteristic: [ Characteristic.Intuition ],
@@ -125,7 +125,7 @@ For each piety spent, you can choose one of the following enhancements:
 									description: 'You sap the strength of an attacking enemy with divine energy.',
 									type: AbilityLogic.createTypeTrigger('The target makes an attack. You can use this ability after seeing the result of the attack.'),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-									distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+									distance: [ AbilityLogic.createDistanceRanged(5) ],
 									target: '1 enemy',
 									effect: 'The attack takes a bane and the damage to one creature targeted by the attack is reduced by an amount equal to your Intuition.',
 									spend: [
@@ -146,7 +146,7 @@ For each piety spent, you can choose one of the following enhancements:
 									description: 'You invigorate an attacking ally with divine energy.',
 									type: AbilityLogic.createTypeTrigger('The target makes an attack. You can use this ability after seeing the result of the attack.'),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-									distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+									distance: [ AbilityLogic.createDistanceRanged(5) ],
 									target: '1 ally',
 									effect: 'The attack gains an edge and deals holy damage equal to twice your Intuition score.',
 									spend: [
@@ -194,7 +194,7 @@ For each piety spent, you can choose one of the following enhancements:
 			description: 'A tendril of divine energy shoots forth to draw in your foe.',
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
@@ -225,7 +225,7 @@ For each piety spent, you can choose one of the following enhancements:
 			description: 'The divine energy of creation tears at your foe.',
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
@@ -240,7 +240,7 @@ For each piety spent, you can choose one of the following enhancements:
 			description: 'A bolt of holy energy saps the life from a foe.',
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
@@ -255,7 +255,7 @@ For each piety spent, you can choose one of the following enhancements:
 			description: 'You conjure an angelic spirit who lashes your foes with burning radiance.',
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: 'Special',
 			cost: 3,
 			effect: 'You summon an angelic spirit of size 1M who can’t be harmed, and who appears in an unoccupied space within distance. The spirit lasts until the end of your next turn. You and your allies can move through the spirit’s space, but enemies can’t. The first time on a turn that an enemy moves within 1 square of the spirit or starts their turn there, they take holy damage equal to twice your Intuition score.'
@@ -266,7 +266,7 @@ For each piety spent, you can choose one of the following enhancements:
 			description: 'Your divine fury is a hammer that crashes down upon the unrighteous.',
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: '1 creature or object',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -282,7 +282,7 @@ For each piety spent, you can choose one of the following enhancements:
 			description: 'Divine wrath strikes your foe with lightning that follows them across the battlefield.',
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: '1 creature',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -316,7 +316,7 @@ For each piety spent, you can choose one of the following enhancements:
 			description: 'The divine light of protection surrounds your allies.',
 			type: AbilityLogic.createTypeManeuver(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: '3 allies',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -333,7 +333,7 @@ For each piety spent, you can choose one of the following enhancements:
 			description: 'Divine energy scours your target to make them more susceptible to harm.',
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: '1 creature or object',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -349,7 +349,7 @@ For each piety spent, you can choose one of the following enhancements:
 			description: 'A mote of holy light racks your foe with their greatest fear.',
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: '1 creature',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({

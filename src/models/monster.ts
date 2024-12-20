@@ -27,7 +27,6 @@ export interface Monster extends Element {
 		value: number;
 	}[];
 	features: Feature[];
-	villainActions: Feature[];
 };
 
 export interface MonsterGroup extends Element {

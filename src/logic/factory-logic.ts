@@ -270,8 +270,7 @@ export class FactoryLogic {
 					value: 0
 				}
 			],
-			features: [],
-			villainActions: []
+			features: []
 		};
 	};
 

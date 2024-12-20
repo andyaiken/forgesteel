@@ -23,6 +23,7 @@ export interface AbilityDistance {
 export interface PowerRoll {
 	type: PowerRollType;
 	characteristic: Characteristic[];
+	bonus: number;
 	tier1: string;
 	tier2: string;
 	tier3: string;

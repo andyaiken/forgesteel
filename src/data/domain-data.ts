@@ -1,4 +1,3 @@
-import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { Collections } from '../utils/collections';
@@ -60,7 +59,7 @@ export class DomainData {
 									description: 'The power of death lets you speak with those who have passed from the world.',
 									type: AbilityLogic.createTypeManeuver(),
 									keywords: [ AbilityKeyword.Magic ],
-									distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+									distance: [ AbilityLogic.createDistanceReach(1) ],
 									target: 'Special',
 									effect: 'You can speak to the corpse or head of a creature who has died within the last 24 hours and who can speak a language you know. The target regards you as they would have in life, and you might need to make tests to influence them and convince them to speak with you. After 1 minute, the effect ends. You can’t use this ability on the same creature twice.'
 								})

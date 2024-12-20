@@ -269,7 +269,7 @@ export const EncounterEditPage = (props: Props) => {
 							mode='multiple'
 							allowClear={true}
 							placeholder='Role'
-							options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery ].map(r => ({ label: r, value: r }))}
+							options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Leader, MonsterRoleType.Mount, MonsterRoleType.Solo, MonsterRoleType.Support ].map(r => ({ label: r, value: r }))}
 							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 							value={monsterFilter.roles}
 							onChange={setFilterRoles}

@@ -1,4 +1,3 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { AbilityLogic } from '../../logic/ability-logic';
 import { Characteristic } from '../../enums/characteristic';
@@ -53,7 +52,7 @@ export const tactician: HeroClass = {
 						description: 'You draw your allies’ attention to a specific foe—with devastating effect.',
 						type: AbilityLogic.createTypeManeuver(),
 						keywords: [ AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 10 }) ],
+						distance: [ AbilityLogic.createDistanceRanged(10) ],
 						target: '1 creature',
 						effect: 'The target is marked by you until the start of your next turn. When attacking a marked target, you and each of your allies gains an edge on power rolls and deals extra damage equal to your Reason score.',
 						spend: [
@@ -71,7 +70,7 @@ export const tactician: HeroClass = {
 						description: 'As the battle unfolds, you tell your allies exactly when to strike!',
 						type: AbilityLogic.createTypeAction(),
 						keywords: [ AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 10 }) ],
+						distance: [ AbilityLogic.createDistanceRanged(10) ],
 						target: '1 ally',
 						effect: 'The target makes a signature attack as a free triggered action, and deals extra damage equal to your Reason score.',
 						spend: [
@@ -108,7 +107,7 @@ export const tactician: HeroClass = {
 			description: 'Hearing your shout of triumph fills your allies with combat fervor.',
 			type: AbilityLogic.createTypeManeuver(),
 			keywords: [ AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 10 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(10) ],
 			target: 'Up to 3 allies',
 			cost: 3,
 			effect: 'Each target gains an edge on the next attack or resistance roll they make before the end of the encounter.'
@@ -120,8 +119,8 @@ export const tactician: HeroClass = {
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }),
-				AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 })
+				AbilityLogic.createDistanceReach(1),
+				AbilityLogic.createDistanceRanged(5)
 			],
 			target: '1 creature or object',
 			cost: 3,
@@ -139,8 +138,8 @@ export const tactician: HeroClass = {
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }),
-				AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 })
+				AbilityLogic.createDistanceReach(1),
+				AbilityLogic.createDistanceRanged(5)
 			],
 			target: '1 creature or object',
 			cost: 3,
@@ -157,7 +156,7 @@ export const tactician: HeroClass = {
 			description: 'On your command, you and your allies force back the enemy line.',
 			type: AbilityLogic.createTypeManeuver(),
 			keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 10 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(10) ],
 			target: 'Self and all allies',
 			cost: 3,
 			effect: 'Each target can move their speed, push an adjacent enemy 1 square at the end of that move, and shift 1 square into the square the enemy left.'
@@ -169,8 +168,8 @@ export const tactician: HeroClass = {
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }),
-				AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 })
+				AbilityLogic.createDistanceReach(1),
+				AbilityLogic.createDistanceRanged(5)
 			],
 			target: '1 creature or object',
 			cost: 5,
@@ -188,7 +187,7 @@ export const tactician: HeroClass = {
 			description: 'Your allies wait for your command—then unleash death!',
 			type: AbilityLogic.createTypeManeuver(),
 			keywords: [ AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: 'All allies',
 			cost: 5,
 			effect: 'Each target can make a free strike.'
@@ -200,8 +199,8 @@ export const tactician: HeroClass = {
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }),
-				AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 })
+				AbilityLogic.createDistanceReach(1),
+				AbilityLogic.createDistanceRanged(5)
 			],
 			target: '1 creature or object',
 			cost: 5,
@@ -219,7 +218,7 @@ export const tactician: HeroClass = {
 			description: 'A quick signal from you gives your allies a chance to turn the tide of battle.',
 			type: AbilityLogic.createTypeManeuver(),
 			keywords: [ AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 10 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(10) ],
 			target: '2 allies',
 			cost: 5,
 			effect: 'Each target who hasn’t acted yet this round can take their turn in any order immediately after yours.'
@@ -252,7 +251,7 @@ export const tactician: HeroClass = {
 								keywords: [ AbilityKeyword.Ranged ],
 								distance: [
 									AbilityLogic.createDistanceSelf(),
-									AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 10 })
+									AbilityLogic.createDistanceRanged(10)
 								],
 								target: 'You or an ally',
 								effect: 'The target can shift up to 2 squares before the attack resolves. After the attack resolves, both the original attacker and the target can shift up to 2 squares.',
@@ -314,7 +313,7 @@ You can only make this test once for each encounter and negotiation.`
 								description: 'Under your direction, an ally waits for just the right moment to strike.',
 								type: AbilityLogic.createTypeTrigger('The target moves.'),
 								keywords: [ AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 10 }) ],
+								distance: [ AbilityLogic.createDistanceRanged(10) ],
 								target: '1 enemy',
 								effect: 'At any point during the target’s movement, one ally can make a free strike against the target.',
 								spend: [
@@ -356,7 +355,7 @@ You can only make this test once for each encounter and negotiation.`
 								keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 								distance: [
 									AbilityLogic.createDistanceSelf(),
-									AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 })
+									AbilityLogic.createDistanceReach(1)
 								],
 								target: 'Self or 1 ally',
 								effect: 'The attack’s damage against the target is halved.',

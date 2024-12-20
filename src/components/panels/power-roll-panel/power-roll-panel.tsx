@@ -44,11 +44,14 @@ export const PowerRollPanel = (props: Props) => {
 			case PowerRollType.PowerRoll:
 				if (props.hero) {
 					const values = props.ability.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero as Hero, ch));
-					const characteristic = Collections.max(values, v => v) || 0;
-					const sign = characteristic >= 0 ? '+' : '';
-					header = `Power Roll ${sign}${characteristic}`;
-				} else {
+					const bonus = Collections.max(values, v => v) || 0;
+					const sign = bonus >= 0 ? '+' : '';
+					header = `Power Roll ${sign}${bonus}`;
+				} else if (props.ability.powerRoll.characteristic.length > 0) {
 					header = `Power Roll + ${props.ability.powerRoll.characteristic.join(' or ')}`;
+				} else {
+					const sign = props.ability.powerRoll.bonus >= 0 ? '+' : '';
+					header = `Power Roll ${sign}${props.ability.powerRoll.bonus}`;
 				}
 				break;
 			case PowerRollType.Resistance:

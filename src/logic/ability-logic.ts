@@ -9,87 +9,121 @@ import { HeroLogic } from './hero-logic';
 import { PowerRollType } from '../enums/power-roll-type';
 
 export class AbilityLogic {
-	static createTypeAction = (free = false) => {
+	static createTypeAction = (free = false): AbilityType => {
 		return {
 			usage: AbilityUsage.Action,
 			free: free,
 			trigger: '',
 			time: ''
-		} as AbilityType;
+		};
 	};
 
-	static createTypeManeuver = (free = false) => {
+	static createTypeManeuver = (free = false): AbilityType => {
 		return {
 			usage: AbilityUsage.Maneuver,
 			free: free,
 			trigger: '',
 			time: ''
-		} as AbilityType;
+		};
 	};
 
-	static createTypeTrigger = (trigger: string, free = false) => {
+	static createTypeTrigger = (trigger: string, free = false): AbilityType => {
 		return {
 			usage: AbilityUsage.Trigger,
 			free: free,
 			trigger: trigger,
 			time: ''
-		} as AbilityType;
+		};
 	};
 
-	static createTypeTime = (time: string) => {
+	static createTypeTime = (time: string): AbilityType => {
 		return {
 			usage: AbilityUsage.Other,
 			free: false,
 			trigger: '',
 			time: time
-		} as AbilityType;
+		};
 	};
 
-	static createDistance = (data: { type: AbilityDistanceType, value: number, value2?: number, within?: number }) => {
+	static createTypeVillainAction = (): AbilityType => {
+		return {
+			usage: AbilityUsage.VillainAction,
+			free: false,
+			trigger: '',
+			time: ''
+		};
+	};
+
+	///////////////////////////////////////////////////////////////////////////
+
+	static createDistance = (data: { type: AbilityDistanceType, value: number, value2?: number, within?: number }): AbilityDistance => {
 		return {
 			type: data.type,
 			value: data.value,
 			value2: data.value2 || 0,
 			within: data.within || 0,
 			special: ''
-		} as AbilityDistance;
+		};
 	};
 
-	static createDistanceSelf = () => {
+	static createDistanceSelf = (): AbilityDistance => {
 		return {
 			type: AbilityDistanceType.Self,
 			value: 0,
 			value2: 0,
 			within: 0,
 			special: ''
-		} as AbilityDistance;
+		};
 	};
 
-	static createDistanceSpecial = (special: string) => {
+	static createDistanceReach = (value: number): AbilityDistance => {
+		return {
+			type: AbilityDistanceType.Reach,
+			value: value,
+			value2: 0,
+			within: 0,
+			special: ''
+		};
+	};
+
+	static createDistanceRanged = (value: number): AbilityDistance => {
+		return {
+			type: AbilityDistanceType.Ranged,
+			value: value,
+			value2: 0,
+			within: 0,
+			special: ''
+		};
+	};
+
+	static createDistanceSpecial = (special: string): AbilityDistance => {
 		return {
 			type: AbilityDistanceType.Special,
 			value: 0,
 			value2: 0,
 			within: 0,
 			special: special
-		} as AbilityDistance;
+		};
 	};
 
-	static createPowerRoll = (data: { type?: PowerRollType, characteristic: Characteristic[], tier1: string, tier2: string, tier3: string }) => {
+	///////////////////////////////////////////////////////////////////////////
+
+	static createPowerRoll = (data: { type?: PowerRollType, characteristic?: Characteristic[], bonus?: number, tier1: string, tier2: string, tier3: string }) => {
 		return {
 			type: data.type || PowerRollType.PowerRoll,
-			characteristic: data.characteristic,
+			characteristic: data.characteristic || [],
+			bonus: data.bonus || 0,
 			tier1: data.tier1,
 			tier2: data.tier2,
 			tier3: data.tier3
 		} as PowerRoll;
 	};
 
-	static createAbility = (data: { id: string, name: string, description: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, alternateEffects?: string[], spend?: { value?: number, effect: string }[], persistence?: { value?: number, effect: string }[] }) => {
+	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, alternateEffects?: string[], spend?: { value?: number, effect: string }[], persistence?: { value?: number, effect: string }[] }) => {
 		return {
 			id: data.id,
 			name: data.name,
-			description: data.description,
+			description: data.description || '',
 			type: data.type,
 			keywords: data.keywords || [],
 			distance: data.distance || [],

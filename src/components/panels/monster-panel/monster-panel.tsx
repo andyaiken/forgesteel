@@ -80,13 +80,6 @@ export const MonsterPanel = (props: Props) => {
 						</Space>
 						: null
 				}
-				{
-					props.monster.villainActions.length > 0 ?
-						<Space direction='vertical' style={{ width: '100%' }}>
-							{props.monster.villainActions.map(va => <FeaturePanel key={va.id} feature={va} mode={PanelMode.Full} />)}
-						</Space>
-						: null
-				}
 			</div>
 		);
 	} catch (ex) {

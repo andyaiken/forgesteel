@@ -10,6 +10,7 @@ import { Sourcebook } from '../models/sourcebook';
 import { conduit } from './classes/conduit';
 import { elementalist } from './classes/elementalist';
 import { fury } from './classes/fury';
+import { radenwight } from './monsters/radenwight';
 import { shadow } from './classes/shadow';
 import { tactician } from './classes/tactician';
 
@@ -106,7 +107,9 @@ export class SourcebookData {
 		],
 		perks: [],
 		items: [],
-		monsterGroups: [],
+		monsterGroups: [
+			radenwight
+		],
 		skills: SkillData.getCoreSkills(),
 		languages: [],
 		defaultLanguages: []

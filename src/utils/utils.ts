@@ -65,6 +65,10 @@ export class Utils {
 			.map(id => document.getElementById(id))
 			.filter(element => !!element);
 
+		if (elements.length === 0) {
+			return;
+		}
+
 		const originalBackgroundColors: { [id: string]: string; } = {};
 		elements.forEach(element => {
 			originalBackgroundColors[element.id] = element.style.backgroundColor;

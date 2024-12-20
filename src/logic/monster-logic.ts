@@ -1,4 +1,4 @@
-import { Monster, MonsterGroup } from '../models/monster';
+import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { DamageModifierType } from '../enums/damage-modifier-type';
@@ -6,6 +6,7 @@ import { FeatureDamageModifierData } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { MonsterFilter } from '../models/monster-filter';
 import { MonsterRoleType } from '../enums/monster-role-type';
+import { Size } from '../models/size';
 
 export class MonsterLogic {
 	static getMonsterName = (monster: Monster, group: MonsterGroup) => {
@@ -117,5 +118,38 @@ export class MonsterLogic {
 			case MonsterRoleType.Support:
 				return 'Support creatures specialize in aiding their allies, providing buffs, healing, movement, or action options.';
 		}
+	};
+
+	///////////////////////////////////////////////////////////////////////////
+
+	static createRole = (type: MonsterRoleType, isMinion?: boolean): MonsterRole => {
+		return {
+			type: type,
+			isMinion: isMinion || false
+		};
+	};
+
+	static createSize = (value: number, mod?: string): Size => {
+		return {
+			value: value,
+			mod: mod || ''
+		};
+	};
+
+	static createSpeed = (value: number, modes?: string) => {
+		return {
+			value: value,
+			modes: modes || ''
+		};
+	};
+
+	static createCharacteristics = (might: number, agility: number, reason: number, intuition: number, presence: number) => {
+		return [
+			{ characteristic: Characteristic.Might, value: might },
+			{ characteristic: Characteristic.Agility, value: agility },
+			{ characteristic: Characteristic.Reason, value: reason },
+			{ characteristic: Characteristic.Intuition, value: intuition },
+			{ characteristic: Characteristic.Presence, value: presence }
+		];
 	};
 }

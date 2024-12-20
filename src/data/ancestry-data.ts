@@ -591,7 +591,7 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 					description: 'A magical sigil you placed on a creature explodes with energy.',
 					type: AbilityLogic.createTypeAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-					distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 10 }) ],
+					distance: [ AbilityLogic.createDistanceRanged(10) ],
 					target: '1 creature with your sigil',
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],

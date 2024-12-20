@@ -51,7 +51,7 @@ export const elementalist: HeroClass = {
 						description: 'You hurl a ball of elemental energy at a nearby foe.',
 						type: AbilityLogic.createTypeAction(),
 						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+						distance: [ AbilityLogic.createDistanceRanged(5) ],
 						target: '1 creature or object',
 						powerRoll: AbilityLogic.createPowerRoll({
 							characteristic: [ Characteristic.Reason ],
@@ -124,7 +124,7 @@ Choose one of the following effects:
 			description: 'A jet of fire erupts with elemental fury where it strikes.',
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -139,7 +139,7 @@ Choose one of the following effects:
 			description: 'Whipping vines erupt from a foe’s body to grasp at another close by.',
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -155,7 +155,7 @@ Choose one of the following effects:
 			description: 'A beam of energy corrupts and hinders whatever it touches.',
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -170,7 +170,7 @@ Choose one of the following effects:
 			description: 'Fire engulfs a target of your choice and burns at your command.',
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Persistent, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: '1 creature or object',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -192,7 +192,7 @@ Choose one of the following effects:
 			description: 'Mushrooms erupt from a foe, sapping their vitality to spread strengthening spores.',
 			type: AbilityLogic.createTypeAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: '1 creature',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -272,7 +272,7 @@ Choose one of the following effects:
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Persistent, AbilityKeyword.Void ],
 			distance: [
 				AbilityLogic.createDistanceSelf(),
-				AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 })
+				AbilityLogic.createDistanceReach(1)
 			],
 			target: 'Self or 1 ally',
 			cost: 5,
@@ -307,7 +307,7 @@ Choose one of the following effects:
 			description: 'The surface of the world around you opens up at your command.',
 			type: AbilityLogic.createTypeManeuver(),
 			keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Persistent, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+			distance: [ AbilityLogic.createDistanceRanged(5) ],
 			target: 'Special',
 			cost: 5,
 			preEffect: 'You open four holes with 1-square openings that are 6 squares deep, and which can be placed on any mundane surface within distance. You can place these holes next to each other to create fewer holes with wider openings. For each creature standing above a hole when it opens and small enough to fall in, make a power roll.',
@@ -346,7 +346,7 @@ Choose one of the following effects:
 								description: 'The earth rises, falls, or opens at your command.',
 								type: AbilityLogic.createTypeAction(),
 								keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+								distance: [ AbilityLogic.createDistanceReach(1) ],
 								target: 'Special',
 								cost: 3,
 								effect: 'You touch a square containing mundane dirt, stone, or metal and create a 5 wall of the same material, which rises up out of the ground and must include the square you touched.',
@@ -369,7 +369,7 @@ Choose one of the following effects:
 								description: 'You imbue an attack with the strength of stone.',
 								type: AbilityLogic.createTypeTrigger('The target makes a melee attack.'),
 								keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+								distance: [ AbilityLogic.createDistanceRanged(5) ],
 								target: 'Self or 1 ally',
 								effect: 'The attack deals extra damage equal to 3 times your Reason score.',
 								spend: [
@@ -405,7 +405,7 @@ Choose one of the following effects:
 								description: 'With the merest touch, you cause an object to turn into slag or ash.',
 								type: AbilityLogic.createTypeAction(),
 								keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Reach, value: 1 }) ],
+								distance: [ AbilityLogic.createDistanceReach(1) ],
 								target: '1 mundane object',
 								cost: 3,
 								effect: 'You heat the target and cause it to combust and melt. If the object is larger than 1 square, then only the square of the object that you touch is destroyed.',
@@ -424,7 +424,7 @@ Choose one of the following effects:
 								description: 'You add a little magic to an ally’s aggression at just the right time.',
 								type: AbilityLogic.createTypeTrigger('The target force moves a creature or object.'),
 								keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+								distance: [ AbilityLogic.createDistanceRanged(5) ],
 								target: 'Self or 1 ally',
 								effect: 'The distance of the forced movement is increased by a number of squares equal to your Reason score.',
 								spend: [
@@ -467,7 +467,7 @@ Additionally, when you touch a living plant object, you can communicate with it 
 								description: 'The power you channel grants the ability to get back in the fight.',
 								type: AbilityLogic.createTypeTrigger('The target starts their turn.'),
 								keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+								distance: [ AbilityLogic.createDistanceRanged(5) ],
 								target: 'Self or 1 ally',
 								effect: 'The target can spend a Recovery.'
 							})
@@ -502,7 +502,7 @@ Additionally, when you touch a living plant object, you can communicate with it 
 								description: 'You share your special senses with others.',
 								type: AbilityLogic.createTypeManeuver(),
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
-								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 }) ],
+								distance: [ AbilityLogic.createDistanceRanged(5) ],
 								target: '1 creature',
 								cost: 2,
 								effect: 'The target gains the benefit of your Void Sense feature until the end of your next turn, but doesn’t gain the use of Shared Void Sense.',
@@ -522,7 +522,7 @@ Additionally, when you touch a living plant object, you can communicate with it 
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
 								distance: [
 									AbilityLogic.createDistanceSelf(),
-									AbilityLogic.createDistance({ type: AbilityDistanceType.Ranged, value: 5 })
+									AbilityLogic.createDistanceRanged(5)
 								],
 								target: 'Self or 1 ally',
 								effect: 'At any point during the move, you teleport the target a number of squares equal to your Reason.',

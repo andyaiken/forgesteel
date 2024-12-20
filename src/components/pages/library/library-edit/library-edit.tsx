@@ -2,6 +2,7 @@ import { Alert, Button, Divider, Input, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { KitArmor, KitImplement, KitType, KitWeapon } from '../../../../enums/kit';
+import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
 import { AbilityEditPanel } from '../../../panels/ability-edit-panel/ability-edit-panel';
@@ -36,6 +37,9 @@ import { ItemPanel } from '../../../panels/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/kit-panel/kit-panel';
 import { LanguageData } from '../../../../data/language-data';
+import { MonsterEditPanel } from '../../../panels/monster-edit-panel/monster-edit-panel';
+import { MonsterGroupPanel } from '../../../panels/monster-group-panel/monster-group-panel';
+import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
@@ -50,7 +54,7 @@ import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
-import './element-edit.scss';
+import './library-edit.scss';
 
 interface Props {
 	element: Element;
@@ -62,7 +66,7 @@ interface Props {
 	cancelChanges: () => void;
 }
 
-export const ElementEditPage = (props: Props) => {
+export const LibraryEditPage = (props: Props) => {
 	const [ element, setElement ] = useState<Element>(JSON.parse(JSON.stringify(props.element)));
 	const [ dirty, setDirty ] = useState<boolean>(false);
 
@@ -1169,6 +1173,256 @@ export const ElementEditPage = (props: Props) => {
 		);
 	};
 
+	const getInformationEditSection = () => {
+		const monsterGroup = element as MonsterGroup;
+
+		const addInformation = () => {
+			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			copy.information.push({
+				id: Utils.guid(),
+				name: '',
+				description: ''
+			});
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const changeInformation = (information: Element) => {
+			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const index = copy.information.findIndex(i => i.id === information.id);
+			if (index !== -1) {
+				copy.information[index] = information;
+			}
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const moveInformation = (information: Element, direction: 'up' | 'down') => {
+			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const index = copy.information.findIndex(i => i.id === information.id);
+			copy.information = Collections.move(copy.information, index, direction);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const deleteInformation = (information: Element) => {
+			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			copy.information = copy.information.filter(i => i.id !== information.id);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					monsterGroup.information.map(i => (
+						<Expander
+							key={i.id}
+							title={i.name || 'Unnamed Information'}
+							extra={[
+								{
+									title: 'Move Up',
+									icon: <CaretUpOutlined />,
+									onClick: () => moveInformation(i, 'up')
+								},
+								{
+									title: 'Move Down',
+									icon: <CaretDownOutlined />,
+									onClick: () => moveInformation(i, 'down')
+								},
+								{
+									title: 'Delete',
+									icon: <DangerButton mode='icon' onConfirm={() => deleteInformation(i)} />
+								}
+							]}
+						>
+							<ElementEditPanel
+								element={i}
+								onChange={changeInformation}
+							/>
+						</Expander>
+					))
+				}
+				{
+					monsterGroup.information.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No information pieces'
+						/>
+						: null
+				}
+				<Button block={true} onClick={addInformation}>Add a new information piece</Button>
+			</Space>
+		);
+	};
+
+	const getMaliceEditSection = () => {
+		const monsterGroup = element as MonsterGroup;
+
+		const addFeature = () => {
+			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			copy.malice.push(FeatureLogic.createFeature({
+				id: Utils.guid(),
+				name: '',
+				description: ''
+			}));
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const changeFeature = (feature: Feature) => {
+			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const index = copy.malice.findIndex(f => f.id === feature.id);
+			if (index !== -1) {
+				copy.malice[index] = feature;
+			}
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const moveFeature = (feature: Feature, direction: 'up' | 'down') => {
+			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const index = copy.malice.findIndex(f => f.id === feature.id);
+			copy.malice = Collections.move(copy.malice, index, direction);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const deleteFeature = (feature: Feature) => {
+			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			copy.malice = copy.malice.filter(f => f.id !== feature.id);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					monsterGroup.malice.map(f => (
+						<Expander
+							key={f.id}
+							title={f.name || 'Unnamed Malice Feature'}
+							extra={[
+								{
+									title: 'Move Up',
+									icon: <CaretUpOutlined />,
+									onClick: () => moveFeature(f, 'up')
+								},
+								{
+									title: 'Move Down',
+									icon: <CaretDownOutlined />,
+									onClick: () => moveFeature(f, 'down')
+								},
+								{
+									title: 'Delete',
+									icon: <DangerButton mode='icon' onConfirm={() => deleteFeature(f)} />
+								}
+							]}
+						>
+							<FeatureEditPanel
+								feature={f}
+								sourcebooks={props.sourcebooks}
+								onChange={changeFeature}
+							/>
+						</Expander>
+					))
+				}
+				{
+					monsterGroup.malice.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No malice features'
+						/>
+						: null
+				}
+				<Button block={true} onClick={addFeature}>Add a new malice feature</Button>
+			</Space>
+		);
+	};
+
+	const getMonstersEditSection = () => {
+		const monsterGroup = element as MonsterGroup;
+
+		const addMonster = () => {
+			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			copy.monsters.push(FactoryLogic.createMonster());
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const changeMonster = (monster: Monster) => {
+			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const index = copy.monsters.findIndex(m => m.id === monster.id);
+			if (index !== -1) {
+				copy.monsters[index] = monster;
+			}
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const moveMonster = (monster: Monster, direction: 'up' | 'down') => {
+			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const index = copy.monsters.findIndex(m => m.id ===  monster.id);
+			copy.monsters = Collections.move(copy.monsters, index, direction);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const deleteMonster = (monster: Monster) => {
+			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			copy.monsters = copy.monsters.filter(m => m.id !== monster.id);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					monsterGroup.monsters.map(m => (
+						<Expander
+							key={m.id}
+							title={MonsterLogic.getMonsterName(m, monsterGroup)}
+							extra={[
+								{
+									title: 'Move Up',
+									icon: <CaretUpOutlined />,
+									onClick: () => moveMonster(m, 'up')
+								},
+								{
+									title: 'Move Down',
+									icon: <CaretDownOutlined />,
+									onClick: () => moveMonster(m, 'down')
+								},
+								{
+									title: 'Delete',
+									icon: <DangerButton mode='icon' onConfirm={() => deleteMonster(m)} />
+								}
+							]}
+						>
+							<MonsterEditPanel
+								monster={m}
+								sourcebooks={props.sourcebooks}
+								onChange={changeMonster}
+							/>
+						</Expander>
+					))
+				}
+				{
+					monsterGroup.monsters.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No monsters'
+						/>
+						: null
+				}
+				<Button block={true} onClick={addMonster}>Add a new monster</Button>
+			</Space>
+		);
+	};
+
 	const getEditSection = () => {
 		switch (props.elementType) {
 			case 'Ancestry':
@@ -1369,6 +1623,33 @@ export const ElementEditPage = (props: Props) => {
 						]}
 					/>
 				);
+			case 'Monster Group':
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Monster Group',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Information',
+								children: getInformationEditSection()
+							},
+							{
+								key: '3',
+								label: 'Malice',
+								children: getMaliceEditSection()
+							},
+							{
+								key: '4',
+								label: 'Monsters',
+								children: getMonstersEditSection()
+							}
+						]}
+					/>
+				);
 		}
 
 		return null;
@@ -1394,6 +1675,8 @@ export const ElementEditPage = (props: Props) => {
 				return <PerkPanel perk={element as Perk} mode={PanelMode.Full} />;
 			case 'Item':
 				return <ItemPanel item={element as Item} mode={PanelMode.Full} />;
+			case 'Monster Group':
+				return <MonsterGroupPanel monsterGroup={element as MonsterGroup} mode={PanelMode.Full} />;
 		}
 
 		return null;
@@ -1401,8 +1684,8 @@ export const ElementEditPage = (props: Props) => {
 
 	try {
 		return (
-			<div className='element-edit-page'>
-				<AppHeader subtitle='Elements' goHome={props.goHome} showAbout={props.showAbout}>
+			<div className='library-edit-page'>
+				<AppHeader subtitle='Library' goHome={props.goHome} showAbout={props.showAbout}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(element)}>
 						Save Changes
 					</Button>
@@ -1410,7 +1693,7 @@ export const ElementEditPage = (props: Props) => {
 						Cancel
 					</Button>
 				</AppHeader>
-				<div className='element-edit-page-content'>
+				<div className='library-edit-page-content'>
 					<div className='edit-column'>
 						{getEditSection()}
 					</div>

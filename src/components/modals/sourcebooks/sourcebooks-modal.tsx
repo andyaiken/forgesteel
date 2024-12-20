@@ -5,7 +5,7 @@ import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookPanel } from '../../panels/sourcebook-panel/sourcebook-panel';
 import { useState } from 'react';
 
-import './collections-modal.scss';
+import './sourcebooks-modal.scss';
 
 interface Props {
 	officialSourcebooks: Sourcebook[];
@@ -15,7 +15,7 @@ interface Props {
 	onHiddenSourcebookIDsChange: (ids: string[]) => void;
 }
 
-export const CollectionsModal = (props: Props) => {
+export const SourcebooksModal = (props: Props) => {
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(JSON.parse(JSON.stringify(props.homebrewSourcebooks)) as Sourcebook[]);
 	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(JSON.parse(JSON.stringify(props.hiddenSourcebookIDs)) as string[]);
 
@@ -65,7 +65,7 @@ export const CollectionsModal = (props: Props) => {
 		};
 
 		return (
-			<div className='collections-modal'>
+			<div className='sourcebooks-modal'>
 				{
 					[ ...props.officialSourcebooks, ...homebrewSourcebooks ].map(s => (
 						<SourcebookPanel
@@ -80,10 +80,10 @@ export const CollectionsModal = (props: Props) => {
 				}
 				<Divider />
 				<Space direction='vertical'>
-					<Button block={true} onClick={createSourcebook}>Create a new collection</Button>
+					<Button block={true} onClick={createSourcebook}>Create a new sourcebook</Button>
 					<Upload
 						style={{ width: '100%' }}
-						accept='.drawsteel-collection'
+						accept='.drawsteel-sourcebook'
 						showUploadList={false}
 						beforeUpload={file => {
 							file
@@ -95,7 +95,7 @@ export const CollectionsModal = (props: Props) => {
 							return false;
 						}}
 					>
-						<Button block={true} icon={<DownloadOutlined />}>Import a collection</Button>
+						<Button block={true} icon={<DownloadOutlined />}>Import a sourcebook</Button>
 					</Upload>
 				</Space>
 			</div>

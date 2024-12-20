@@ -20,7 +20,7 @@ The player is making the power roll for one of the hero's abilities.
 
 ## Homebrew
 
-You can also use this app to create homebrew hero-building elements - ancestries, cultures, careers, classes, and complications.
+You can also use this app to create homebrew hero-building elements - ancestries, classes, kits, and so on.
 
 ![Elements](./src/assets/screenshots/elements.png)
 Here we can see the list of elements that can be homebrewed. To create a homebrew element you can create it from whole cloth, or copy an official element.

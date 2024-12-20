@@ -5,12 +5,16 @@ import { MonsterGroupPanel } from '../../panels/monster-group-panel/monster-grou
 import { PanelMode } from '../../../enums/panel-mode';
 import { Playbook } from '../../../models/playbook';
 import { PlaybookLogic } from '../../../logic/playbook-logic';
+import { Sourcebook } from '../../../models/sourcebook';
 
 import './monster-group-modal.scss';
 
 interface Props {
 	monsterGroup: MonsterGroup;
-	playbook: Playbook;
+	homebrewSourcebooks: Sourcebook[];
+	isHomebrew: boolean;
+	playbook: Playbook
+	createHomebrew: (sourcebook: Sourcebook | null) => void;
 	export: (format: 'image' | 'pdf' | 'json') => void;
 	edit: () => void;
 	delete: () => void;
@@ -21,7 +25,27 @@ export const MonsterGroupModal = (props: Props) => {
 		return (
 			<div className='monster-group-modal'>
 				<div className='toolbar'>
-					<Button onClick={props.edit}>Edit</Button>
+					{
+						props.isHomebrew ?
+							<Button onClick={props.edit}>Edit</Button>
+							:
+							<Popover
+								trigger='click'
+								placement='bottom'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										{
+											props.homebrewSourcebooks.map(cs => <Button key={cs.id} onClick={() => props.createHomebrew(cs)}>In {cs.name || 'Unnamed Collection'}</Button>)
+										}
+										<Button onClick={() => props.createHomebrew(null)}>In a new collection</Button>
+									</div>
+								)}
+							>
+								<Button>
+									Create Homebrew Version
+								</Button>
+							</Popover>
+					}
 					<Popover
 						trigger='click'
 						placement='bottom'

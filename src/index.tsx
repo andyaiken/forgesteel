@@ -1,3 +1,4 @@
+import { FactoryLogic } from './logic/factory-logic.ts';
 import { Hero } from './models/hero.ts';
 import { HeroLogic } from './logic/hero-logic.ts';
 import { Main } from './components/main/main.tsx';
@@ -43,6 +44,9 @@ Promise.all(promises).then(results => {
 		if (sourcebook.perks === undefined) {
 			sourcebook.perks = [];
 		}
+		if (sourcebook.monsterGroups === undefined) {
+			sourcebook.monsterGroups = [];
+		}
 	});
 
 	let hiddenSourcebookIDs = results[2] as string[] | null;
@@ -52,10 +56,7 @@ Promise.all(promises).then(results => {
 
 	let playbook = results[3] as Playbook | null;
 	if (!playbook) {
-		playbook = {
-			monsterGroups: [],
-			encounters: []
-		};
+		playbook = FactoryLogic.createPlaybook();
 	}
 
 	let options = results[4] as Options | null;

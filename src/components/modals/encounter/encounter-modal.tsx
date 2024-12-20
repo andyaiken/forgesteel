@@ -4,12 +4,14 @@ import { Encounter } from '../../../models/encounter';
 import { EncounterPanel } from '../../panels/encounter-panel/encounter-panel';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Playbook } from '../../../models/playbook';
+import { Sourcebook } from '../../../models/sourcebook';
 
 import './encounter-modal.scss';
 
 interface Props {
 	encounter: Encounter;
 	playbook: Playbook;
+	sourcebooks: Sourcebook[];
 	export: (format: 'image' | 'pdf' | 'json') => void;
 	edit: () => void;
 	delete: () => void;
@@ -38,7 +40,7 @@ export const EncounterModal = (props: Props) => {
 					</Popover>
 					<DangerButton onConfirm={props.delete} />
 				</div>
-				<EncounterPanel encounter={props.encounter} playbook={props.playbook} mode={PanelMode.Full} />
+				<EncounterPanel encounter={props.encounter} playbook={props.playbook} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 			</div>
 		);
 	} catch (ex) {

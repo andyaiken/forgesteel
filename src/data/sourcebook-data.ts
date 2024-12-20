@@ -7,15 +7,11 @@ import { KitData } from './kit-data';
 import { SkillData } from './skill-data';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
-import { censor } from './classes/censor';
 import { conduit } from './classes/conduit';
 import { elementalist } from './classes/elementalist';
 import { fury } from './classes/fury';
-import { nullClass } from './classes/null';
 import { shadow } from './classes/shadow';
 import { tactician } from './classes/tactician';
-import { talent } from './classes/talent';
-import { troubadour } from './classes/troubadour';
 
 export class SourcebookData {
 	static core: Sourcebook = {
@@ -110,31 +106,8 @@ export class SourcebookData {
 		],
 		perks: [],
 		items: [],
+		monsterGroups: [],
 		skills: SkillData.getCoreSkills(),
-		languages: [],
-		defaultLanguages: []
-	};
-
-	static coreUnreleased: Sourcebook = {
-		id: 'core-unreleased',
-		name: 'Core: Unreleased',
-		description: 'Unreleased game elements.',
-		isHomebrew: false,
-		ancestries: [],
-		cultures: [],
-		careers: [],
-		classes: [
-			censor,
-			nullClass,
-			talent,
-			troubadour
-		],
-		complications: [],
-		domains: [],
-		kits: [],
-		perks: [],
-		items: [],
-		skills: [],
 		languages: [],
 		defaultLanguages: []
 	};
@@ -157,6 +130,7 @@ export class SourcebookData {
 		kits: [],
 		perks: [],
 		items: [],
+		monsterGroups: [],
 		skills: [
 			{
 				name: 'Timescape',
@@ -234,7 +208,6 @@ export class SourcebookData {
 	static getSourcebooks = (homebrew: Sourcebook[]) => {
 		const list: Sourcebook[] = [
 			this.core,
-			// this.coreUnreleased,
 			this.orden
 		];
 

@@ -5,6 +5,7 @@ import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/encounter-panel/encounter-panel';
 import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '../../../../models/sourcebook';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -12,6 +13,7 @@ import './encounter-list.scss';
 
 interface Props {
 	playbook: Playbook;
+	sourcebooks: Sourcebook[];
 	goHome: () => void;
 	showAbout: () => void;
 	viewEncounter: (encounter: Encounter) => void;
@@ -45,7 +47,7 @@ export const EncounterListPage = (props: Props) => {
 				{
 					list.map(enc => (
 						<SelectablePanel key={enc.id} onSelect={() => props.viewEncounter(enc)}>
-							<EncounterPanel encounter={enc} playbook={props.playbook} />
+							<EncounterPanel encounter={enc} playbook={props.playbook} sourcebooks={props.sourcebooks} />
 						</SelectablePanel>
 					))
 				}

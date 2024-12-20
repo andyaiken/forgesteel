@@ -17,6 +17,7 @@ import { MonsterFilter } from '../models/monster-filter';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Perk } from '../models/perk';
 import { PerkType } from '../enums/perk-type';
+import { Playbook } from '../models/playbook';
 import { Sourcebook } from '../models/sourcebook';
 import { SubClass } from '../models/subclass';
 import { Utils } from '../utils/utils';
@@ -62,9 +63,16 @@ export class FactoryLogic {
 			complications: [],
 			perks: [],
 			items: [],
+			monsterGroups: [],
 			skills: [],
 			languages: [],
 			defaultLanguages: []
+		};
+	};
+
+	static createPlaybook = (): Playbook => {
+		return {
+			encounters: []
 		};
 	};
 

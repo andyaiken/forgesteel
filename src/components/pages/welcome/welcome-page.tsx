@@ -8,8 +8,7 @@ import './welcome-page.scss';
 interface Props {
 	showAbout: () => void;
 	showHeroes: () => void;
-	showElements: () => void;
-	showMonsters: () => void;
+	showLibrary: () => void;
 	showEncounters: () => void;
 }
 
@@ -32,24 +31,23 @@ export const WelcomePage = (props: Props) => {
 										With this app you can create heroes using the DRAW STEEL backer packet.
 									</div>
 									<div className='ds-text'>
-										You can export your heroes as PNG or PDF.
+										If you're playing offline, you can export your heroes as PNG or PDF.
 									</div>
 									<Button type='primary' block={true} onClick={props.showHeroes}>Start building heroes</Button>
 								</div>
 								<div>
 									<HeaderText>For Directors</HeaderText>
 									<div className='ds-text'>
-										You can develop homebrew ancestries, classes, kits and more - any of the elements you need to build a hero.
+										In the library, you can browse the collections of ancestries, classes, kits - all of the elements you need to build a hero - and monsters.
 									</div>
 									<div className='ds-text'>
-										You can design homebrew monsters for your heroes to battle.
+										You can use these as a base from which to design your own homebrew elements, or create them from whole cloth.
 									</div>
 									<div className='ds-text'>
-										You can build encounters, ensuring that they're perfectly balanced.
+										You can use the monsters to build encounters, ensuring that they're perfectly balanced.
 									</div>
 									<div className='button-row'>
-										<Button block={true} onClick={props.showElements}>Elements</Button>
-										<Button block={true} onClick={props.showMonsters}>Monsters</Button>
+										<Button block={true} onClick={props.showLibrary}>Library</Button>
 										<Button block={true} onClick={props.showEncounters}>Encounters</Button>
 									</div>
 								</div>

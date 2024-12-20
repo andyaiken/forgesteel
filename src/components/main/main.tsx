@@ -10,7 +10,6 @@ import { Characteristic } from '../../enums/characteristic';
 import { CharacteristicModal } from '../modals/characteristic/characteristic-modal';
 import { ClassModal } from '../modals/class/class-modal';
 import { Collections } from '../../utils/collections';
-import { CollectionsModal } from '../modals/collections/collections-modal';
 import { Complication } from '../../models/complication';
 import { ComplicationModal } from '../modals/complication/complication-modal';
 import { Culture } from '../../models/culture';
@@ -19,8 +18,6 @@ import { Domain } from '../../models/domain';
 import { DomainModal } from '../modals/domain/domain-modal';
 import { Drawer } from 'antd';
 import { Element } from '../../models/element';
-import { ElementEditPage } from '../pages/elements/element-edit/element-edit';
-import { ElementListPage } from '../pages/elements/element-list/element-list';
 import { Encounter } from '../../models/encounter';
 import { EncounterEditPage } from '../pages/encounters/encounter-edit/encounter-edit';
 import { EncounterListPage } from '../pages/encounters/encounter-list/encounter-list';
@@ -37,19 +34,20 @@ import { Item } from '../../models/item';
 import { ItemModal } from '../modals/item/item-modal';
 import { Kit } from '../../models/kit';
 import { KitModal } from '../modals/kit/kit-modal';
-import { MonsterEditPage } from '../pages/monsters/monster-edit/monster-edit';
+import { LibraryEditPage } from '../pages/library/library-edit/library-edit';
+import { LibraryListPage } from '../pages/library/library-list/library-list';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterGroupModal } from '../modals/monster-group/monster-group-modal';
-import { MonsterListPage } from '../pages/monsters/monster-list/monster-list';
 import { MonsterModal } from '../modals/monster/monster-modal';
 import { Options } from '../../models/options';
 import { Perk } from '../../models/perk';
 import { PerkModal } from '../modals/perk/perk-modal';
 import { Playbook } from '../../models/playbook';
-import { PlaybookLogic } from '../../logic/playbook-logic';
 import { RulesModal } from '../modals/rules/rules-modal';
 import { Sourcebook } from '../../models/sourcebook';
 import { SourcebookData } from '../../data/sourcebook-data';
+import { SourcebookLogic } from '../../logic/sourcebook-logic';
+import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
@@ -63,10 +61,8 @@ enum Page {
 	HeroList,
 	HeroView,
 	HeroEdit,
-	ElementList,
-	ElementEdit,
-	MonsterList,
-	MonsterEdit,
+	LibraryList,
+	LibraryEdit,
 	EncounterList,
 	EncounterEdit
 }
@@ -90,7 +86,6 @@ export const Main = (props: Props) => {
 	const [ selectedSourcebook, setSelectedSourcebook ] = useState<Sourcebook | null>(null);
 	const [ selectedElement, setSelectedElement ] = useState<Element | null>(null);
 	const [ selectedElementType, setSelectedElementType ] = useState<string>('');
-	const [ selectedMonsterGroup, setSelectedMonsterGroup ] = useState<MonsterGroup | null>(null);
 	const [ selectedEncounter, setSelectedEncounter ] = useState<Encounter | null>(null);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 
@@ -136,7 +131,6 @@ export const Main = (props: Props) => {
 		setSelectedSourcebook(null);
 		setSelectedElement(null);
 		setSelectedElementType('');
-		setSelectedMonsterGroup(null);
 		setSelectedEncounter(null);
 	};
 
@@ -146,27 +140,15 @@ export const Main = (props: Props) => {
 		setSelectedSourcebook(null);
 		setSelectedElement(null);
 		setSelectedElementType('');
-		setSelectedMonsterGroup(null);
 		setSelectedEncounter(null);
 	};
 
-	const showElementList = () => {
-		setPage(Page.ElementList);
+	const showLibraryList = () => {
+		setPage(Page.LibraryList);
 		setSelectedHero(null);
 		setSelectedSourcebook(null);
 		setSelectedElement(null);
 		setSelectedElementType('');
-		setSelectedMonsterGroup(null);
-		setSelectedEncounter(null);
-	};
-
-	const showMonsterList = () => {
-		setPage(Page.MonsterList);
-		setSelectedHero(null);
-		setSelectedSourcebook(null);
-		setSelectedElement(null);
-		setSelectedElementType('');
-		setSelectedMonsterGroup(null);
 		setSelectedEncounter(null);
 	};
 
@@ -176,7 +158,6 @@ export const Main = (props: Props) => {
 		setSelectedSourcebook(null);
 		setSelectedElement(null);
 		setSelectedElementType('');
-		setSelectedMonsterGroup(null);
 		setSelectedEncounter(null);
 	};
 
@@ -300,6 +281,9 @@ export const Main = (props: Props) => {
 			case 'Item':
 				createItem(null, sourcebook);
 				break;
+			case 'MonsterGroup':
+				createMonsterGroup(null, sourcebook);
+				break;
 		}
 	};
 
@@ -350,11 +334,15 @@ export const Main = (props: Props) => {
 					sourcebook.items.push(element as unknown as Item);
 					Collections.sort(sourcebook.items, item => item.name);
 					break;
+				case 'Monster Group':
+					sourcebook.monsterGroups.push(element as unknown as MonsterGroup);
+					Collections.sort(sourcebook.monsterGroups, item => item.name);
+					break;
 			}
 		}
 
 		persistHomebrewSourcebooks(sourcebooks);
-		setPage(Page.ElementList);
+		setPage(Page.LibraryList);
 		setDrawer(null);
 	};
 
@@ -601,11 +589,38 @@ export const Main = (props: Props) => {
 		}
 	};
 
+	const createMonsterGroup = (original: MonsterGroup | null, sourcebook: Sourcebook | null) => {
+		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
+		} else {
+			const id = sourcebook.id;
+			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+		}
+
+		let monsterGroup: MonsterGroup;
+		if (original) {
+			monsterGroup = JSON.parse(JSON.stringify(original)) as MonsterGroup;
+			monsterGroup.id = Utils.guid();
+		} else {
+			monsterGroup = FactoryLogic.createMonsterGroup();
+		}
+
+		sourcebook.monsterGroups.push(monsterGroup);
+		persistHomebrewSourcebooks(sourcebooks);
+		if (drawer) {
+			onSelectMonsterGroup(monsterGroup);
+		} else {
+			editMonsterGroup(monsterGroup, sourcebook);
+		}
+	};
+
 	const editAncestry = (ancestry: Ancestry, sourcebook: Sourcebook) => {
 		setSelectedElement(ancestry);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Ancestry');
-		setPage(Page.ElementEdit);
+		setPage(Page.LibraryEdit);
 		setDrawer(null);
 	};
 
@@ -613,7 +628,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(culture);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Culture');
-		setPage(Page.ElementEdit);
+		setPage(Page.LibraryEdit);
 		setDrawer(null);
 	};
 
@@ -621,7 +636,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(career);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Career');
-		setPage(Page.ElementEdit);
+		setPage(Page.LibraryEdit);
 		setDrawer(null);
 	};
 
@@ -629,7 +644,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(heroClass);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Class');
-		setPage(Page.ElementEdit);
+		setPage(Page.LibraryEdit);
 		setDrawer(null);
 	};
 
@@ -637,7 +652,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(complication);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Complication');
-		setPage(Page.ElementEdit);
+		setPage(Page.LibraryEdit);
 		setDrawer(null);
 	};
 
@@ -645,7 +660,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(domain);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Domain');
-		setPage(Page.ElementEdit);
+		setPage(Page.LibraryEdit);
 		setDrawer(null);
 	};
 
@@ -653,7 +668,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(kit);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Kit');
-		setPage(Page.ElementEdit);
+		setPage(Page.LibraryEdit);
 		setDrawer(null);
 	};
 
@@ -661,7 +676,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(perk);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Perk');
-		setPage(Page.ElementEdit);
+		setPage(Page.LibraryEdit);
 		setDrawer(null);
 	};
 
@@ -669,7 +684,15 @@ export const Main = (props: Props) => {
 		setSelectedElement(item);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Item');
-		setPage(Page.ElementEdit);
+		setPage(Page.LibraryEdit);
+		setDrawer(null);
+	};
+
+	const editMonsterGroup = (monsterGroup: MonsterGroup, sourcebook: Sourcebook) => {
+		setSelectedElement(monsterGroup);
+		setSelectedSourcebook(sourcebook);
+		setSelectedElementType('Monster Group');
+		setPage(Page.LibraryEdit);
 		setDrawer(null);
 	};
 
@@ -754,6 +777,15 @@ export const Main = (props: Props) => {
 		setDrawer(null);
 	};
 
+	const deleteMonsterGroup = (monsterGroup: MonsterGroup) => {
+		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		copy.forEach(cs => {
+			cs.monsterGroups = cs.monsterGroups.filter(mg => mg.id !== monsterGroup.id);
+		});
+		persistHomebrewSourcebooks(copy);
+		setDrawer(null);
+	};
+
 	const saveEditSelectedElement = (element: Element) => {
 		if (selectedElement) {
 			const list = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
@@ -823,91 +855,27 @@ export const Main = (props: Props) => {
 						}
 					}
 						break;
+					case 'Monster Group': {
+						const monsterGroupIndex = sourcebook.monsterGroups.findIndex(mg => mg.id === element.id);
+						if (monsterGroupIndex !== -1) {
+							sourcebook.monsterGroups[monsterGroupIndex] = element as unknown as MonsterGroup;
+						}
+					}
+						break;
 				}
 			};
 
 			persistHomebrewSourcebooks(list);
-			setPage(Page.ElementList);
+			setPage(Page.LibraryList);
 			setSelectedSourcebook(null);
 			setSelectedElement(null);
 			setSelectedElementType('');
-			setSelectedMonsterGroup(null);
 		}
 	};
 
 	const cancelEditSelectedElement = () => {
 		if (selectedElement) {
-			setPage(Page.ElementList);
-		}
-	};
-
-	//#endregion
-
-	//#region Monsters
-
-	const createMonsterGroup = (original: MonsterGroup | null) => {
-		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
-
-		let monsterGroup: MonsterGroup;
-		if (original) {
-			monsterGroup = JSON.parse(JSON.stringify(original)) as MonsterGroup;
-			monsterGroup.id = Utils.guid();
-		} else {
-			monsterGroup = FactoryLogic.createMonsterGroup();
-		}
-
-		copy.monsterGroups.push(monsterGroup);
-		persistPlaybook(copy);
-		if (drawer) {
-			onSelectMonsterGroup(monsterGroup);
-		} else {
-			editMonsterGroup(monsterGroup);
-		}
-	};
-
-	const importMonsterGroup = (monsterGroup: MonsterGroup) => {
-		monsterGroup.id = Utils.guid();
-
-		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
-		copy.monsterGroups.push(monsterGroup);
-		Collections.sort(copy.monsterGroups, item => item.name);
-
-		persistPlaybook(copy);
-		setPage(Page.MonsterList);
-		setDrawer(null);
-	};
-
-	const editMonsterGroup = (monsterGroup: MonsterGroup) => {
-		setSelectedMonsterGroup(monsterGroup);
-		setPage(Page.MonsterEdit);
-		setDrawer(null);
-	};
-
-	const deleteMonsterGroup = (monsterGroup: MonsterGroup) => {
-		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
-		copy.monsterGroups = copy.monsterGroups.filter(mg => mg.id !== monsterGroup.id);
-
-		persistPlaybook(copy);
-		setDrawer(null);
-	};
-
-	const saveEditSelectedMonsterGroup = (monsterGroup: MonsterGroup) => {
-		if (selectedMonsterGroup) {
-			const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
-			const monsterGroupIndex = copy.monsterGroups.findIndex(mg => mg.id === monsterGroup.id);
-			if (monsterGroupIndex !== -1) {
-				copy.monsterGroups[monsterGroupIndex] = monsterGroup;
-			}
-
-			persistPlaybook(copy);
-			setSelectedMonsterGroup(null);
-			setPage(Page.MonsterList);
-		}
-	};
-
-	const cancelEditSelectedMonsterGroup = () => {
-		if (selectedMonsterGroup) {
-			setPage(Page.MonsterList);
+			setPage(Page.LibraryList);
 		}
 	};
 
@@ -1154,20 +1122,27 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectMonsterGroup = (monsterGroup: MonsterGroup) => {
+		const container = SourcebookData
+			.getSourcebooks(homebrewSourcebooks)
+			.find(cs => cs.monsterGroups.find(mg => mg.id === monsterGroup.id));
+
 		setDrawer(
 			<MonsterGroupModal
 				monsterGroup={monsterGroup}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.monsterGroups).find(mg => mg.id === monsterGroup.id)}
 				playbook={playbook}
+				createHomebrew={sourcebook => createMonsterGroup(monsterGroup, sourcebook)}
 				export={format => Utils.export([ monsterGroup.id ], monsterGroup.name || 'Monster Group', monsterGroup, 'monster-group', format)}
-				edit={() => editMonsterGroup(monsterGroup)}
+				edit={() => editMonsterGroup(monsterGroup, container as Sourcebook)}
 				delete={() => deleteMonsterGroup(monsterGroup)}
 			/>
 		);
 	};
 
 	const onSelectMonster = (monsterID: string) => {
-		const monster = PlaybookLogic.getMonster(playbook, monsterID);
-		const monsterGroup = PlaybookLogic.getMonsterGroup(playbook, monsterID);
+		const monster = SourcebookLogic.getMonster([ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], monsterID);
+		const monsterGroup = SourcebookLogic.getMonsterGroup([ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], monsterID);
 
 		if (monster && monsterGroup) {
 			setDrawer(
@@ -1186,6 +1161,7 @@ export const Main = (props: Props) => {
 			<EncounterModal
 				encounter={encounter}
 				playbook={playbook}
+				sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
 				export={format => Utils.export([ encounter.id ], encounter.name || 'Encounter', encounter, 'encounter', format)}
 				edit={() => editEncounter(encounter)}
 				delete={() => deleteEncounter(encounter)}
@@ -1249,9 +1225,9 @@ export const Main = (props: Props) => {
 		}
 	};
 
-	const showCollections = () => {
+	const showSourcebooks = () => {
 		setDrawer(
-			<CollectionsModal
+			<SourcebooksModal
 				officialSourcebooks={[ SourcebookData.core, SourcebookData.orden ]}
 				homebrewSourcebooks={homebrewSourcebooks}
 				hiddenSourcebookIDs={hiddenSourcebookIDs}
@@ -1270,8 +1246,7 @@ export const Main = (props: Props) => {
 					<WelcomePage
 						showAbout={showAbout}
 						showHeroes={heroes.length === 0 ? addHero : showHeroList}
-						showElements={showElementList}
-						showMonsters={showMonsterList}
+						showLibrary={showLibraryList}
 						showEncounters={showEncounterList}
 					/>
 				);
@@ -1324,14 +1299,14 @@ export const Main = (props: Props) => {
 						cancelChanges={cancelEditSelectedHero}
 					/>
 				);
-			case Page.ElementList:
+			case Page.LibraryList:
 				return (
-					<ElementListPage
+					<LibraryListPage
 						sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
 						hiddenSourcebookIDs={hiddenSourcebookIDs}
 						goHome={showWelcome}
 						showAbout={showAbout}
-						showCollections={showCollections}
+						showSourcebooks={showSourcebooks}
 						viewAncestry={onSelectAncestry}
 						viewCulture={onSelectCulture}
 						viewCareer={onSelectCareer}
@@ -1341,48 +1316,28 @@ export const Main = (props: Props) => {
 						viewKit={onSelectKit}
 						viewPerk={onSelectPerk}
 						viewItem={onSelectItem}
+						viewMonsterGroup={onSelectMonsterGroup}
 						onCreateHomebrew={createHomebrewElement}
 						onImportHomebrew={importHomebrewElement}
 					/>
 				);
-			case Page.ElementEdit:
+			case Page.LibraryEdit:
 				return (
-					<ElementEditPage
-						element={selectedElement as Ancestry | Culture | Career | HeroClass | Kit | Complication}
+					<LibraryEditPage
+						element={selectedElement as Ancestry | Culture | Career | HeroClass | Complication | Domain | Kit | Perk | Item | MonsterGroup}
 						elementType={selectedElementType}
-						sourcebooks={[ SourcebookData.core, SourcebookData.orden, selectedSourcebook as Sourcebook ]}
+						sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						saveChanges={saveEditSelectedElement}
 						cancelChanges={cancelEditSelectedElement}
 					/>
 				);
-			case Page.MonsterList:
-				return (
-					<MonsterListPage
-						playbook={playbook}
-						goHome={showWelcome}
-						showAbout={showAbout}
-						viewMonsterGroup={onSelectMonsterGroup}
-						onCreateMonster={() => createMonsterGroup(null)}
-						onImportMonster={importMonsterGroup}
-					/>
-				);
-			case Page.MonsterEdit:
-				return (
-					<MonsterEditPage
-						monsterGroup={selectedMonsterGroup as MonsterGroup}
-						sourcebooks={[ SourcebookData.core, SourcebookData.orden, selectedSourcebook as Sourcebook ]}
-						goHome={showWelcome}
-						showAbout={showAbout}
-						saveChanges={saveEditSelectedMonsterGroup}
-						cancelChanges={cancelEditSelectedMonsterGroup}
-					/>
-				);
 			case Page.EncounterList:
 				return (
 					<EncounterListPage
 						playbook={playbook}
+						sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						viewEncounter={onSelectEncounter}
@@ -1395,6 +1350,7 @@ export const Main = (props: Props) => {
 					<EncounterEditPage
 						encounter={selectedEncounter as Encounter}
 						playbook={playbook}
+						sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						showMonster={onSelectMonster}

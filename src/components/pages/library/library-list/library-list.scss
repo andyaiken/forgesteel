@@ -1,9 +1,9 @@
-.element-list-page {
+.library-list-page {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 
-	.element-list-page-content {
+	.library-list-page-content {
 		background-color: rgba(0, 0, 0, 0.1);
 		flex: 1 1 0;
 		display: flex;
@@ -12,7 +12,17 @@
 		padding: 20px;
 		overflow-y: auto;
 
-		.element-section-row {
+		.section-header {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+
+			.section-count {
+				opacity: 0.3;
+			}
+		}
+
+		.library-section-row {
 			display: grid;
 			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 			gap: 20px;	

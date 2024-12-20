@@ -1,8 +1,8 @@
 import { Collections } from '../utils/collections';
 import { Encounter } from '../models/encounter';
 import { EncounterDifficulty } from '../enums/encounter-difficulty';
-import { Playbook } from '../models/playbook';
-import { PlaybookLogic } from './playbook-logic';
+import { Sourcebook } from '../models/sourcebook';
+import { SourcebookLogic } from './sourcebook-logic';
 
 export class EncounterLogic {
 	static getBudget = (heroCount: number, heroLevel: number, victories: number) => {
@@ -11,10 +11,10 @@ export class EncounterLogic {
 		return effectiveHeroCount * heroWorth;
 	};
 
-	static getStrength = (encounter: Encounter, playbook: Playbook) => {
+	static getStrength = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
 		return Collections.sum(encounter.groups, group => {
 			return Collections.sum(group.slots, slot => {
-				const monster = PlaybookLogic.getMonster(playbook, slot.monsterID);
+				const monster = SourcebookLogic.getMonster(sourcebooks, slot.monsterID);
 				return monster ? monster.encounterValue * slot.count : 0;
 			});
 		});

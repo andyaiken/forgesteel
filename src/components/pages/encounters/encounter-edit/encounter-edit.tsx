@@ -23,14 +23,16 @@ import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Playbook } from '../../../../models/playbook';
-import { PlaybookLogic } from '../../../../logic/playbook-logic';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '../../../../models/sourcebook';
+import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 
 import './encounter-edit.scss';
 
 interface Props {
 	encounter: Encounter;
 	playbook: Playbook;
+	sourcebooks: Sourcebook[];
 	goHome: () => void;
 	showAbout: () => void;
 	showMonster: (monsterID: string) => void;
@@ -124,8 +126,8 @@ export const EncounterEditPage = (props: Props) => {
 							{encounter.groups.length > 1 ? <HeaderText>Group {(n + 1).toString()}</HeaderText> : null}
 							{
 								group.slots.map(slot => {
-									const monster = PlaybookLogic.getMonster(props.playbook, slot.monsterID);
-									const monsterGroup = PlaybookLogic.getMonsterGroup(props.playbook, slot.monsterID);
+									const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
+									const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
 									if (monster && monsterGroup) {
 										return (
 											<div key={slot.id} className='slot-row'>
@@ -190,7 +192,7 @@ export const EncounterEditPage = (props: Props) => {
 		return (
 			<div style={{ margin: '0 10px' }}>
 				<SelectablePanel>
-					<EncounterPanel encounter={encounter} playbook={props.playbook} mode={PanelMode.Full} />
+					<EncounterPanel encounter={encounter} playbook={props.playbook} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 				</SelectablePanel>
 			</div>
 		);
@@ -250,7 +252,7 @@ export const EncounterEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const monsters = Collections.sort(props.playbook.monsterGroups.flatMap(mg => mg.monsters.filter(m => MonsterLogic.matches(m, mg, monsterFilter))), m => m.name);
+		const monsters = Collections.sort(props.sourcebooks.flatMap(s => s.monsterGroups.flatMap(mg => mg.monsters.filter(m => MonsterLogic.matches(m, mg, monsterFilter)))), m => m.name);
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -315,7 +317,7 @@ export const EncounterEditPage = (props: Props) => {
 				</Expander>
 				{
 					monsters.map(m => {
-						const monsterGroup = PlaybookLogic.getMonsterGroup(props.playbook, m.id) as MonsterGroup;
+						const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup;
 
 						let addBtn: ReactNode;
 						if (encounter.groups.length === 0) {
@@ -364,7 +366,7 @@ export const EncounterEditPage = (props: Props) => {
 
 	const getDifficultySection = () => {
 		const budget = EncounterLogic.getBudget(heroCount, heroLevel, heroVictories);
-		const strength = EncounterLogic.getStrength(encounter, props.playbook);
+		const strength = EncounterLogic.getStrength(encounter, props.sourcebooks);
 		const difficulty = EncounterLogic.getDifficulty(strength, budget);
 
 		const marks: Record<string | number, ReactNode> = {};

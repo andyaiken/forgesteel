@@ -13,12 +13,16 @@
 		overflow-y: auto;
 		padding: 20px;
 
-		.button-row {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			gap: 10px;
-			margin-bottom: 10px;
+		.welcome-column {
+			max-width: 600px;
+
+			.button-row {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 10px;
+				margin-bottom: 10px;
+			}
 		}
 	}
 }

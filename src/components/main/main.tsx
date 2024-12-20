@@ -281,7 +281,7 @@ export const Main = (props: Props) => {
 			case 'Item':
 				createItem(null, sourcebook);
 				break;
-			case 'MonsterGroup':
+			case 'Monster Group':
 				createMonsterGroup(null, sourcebook);
 				break;
 		}

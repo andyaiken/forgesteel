@@ -7,12 +7,16 @@ import { KitData } from './kit-data';
 import { SkillData } from './skill-data';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
+import { censor } from './classes/censor';
 import { conduit } from './classes/conduit';
 import { elementalist } from './classes/elementalist';
 import { fury } from './classes/fury';
+import { nullClass } from './classes/null';
 import { radenwight } from './monsters/radenwight';
 import { shadow } from './classes/shadow';
 import { tactician } from './classes/tactician';
+import { talent } from './classes/talent';
+import { troubadour } from './classes/troubadour';
 
 export class SourcebookData {
 	static core: Sourcebook = {
@@ -43,11 +47,15 @@ export class SourcebookData {
 			CareerData.soldier
 		],
 		classes: [
+			censor,
 			conduit,
 			elementalist,
 			fury,
+			nullClass,
 			shadow,
-			tactician
+			tactician,
+			talent,
+			troubadour
 		],
 		complications: [
 			ComplicationData.cultVictim,

@@ -212,7 +212,7 @@ export const MonsterEditPanel = (props: Props) => {
 										onChange={e => setKeywords(e.target.value)}
 									/>
 									<HeaderText>Level</HeaderText>
-									<NumberSpin min={0} value={monster.level} onChange={setLevel} />
+									<NumberSpin min={1} max={10} value={monster.level} onChange={setLevel} />
 									<HeaderText>Role</HeaderText>
 									<Space direction='vertical' style={{ width: '100%' }}>
 										<Select
@@ -276,6 +276,8 @@ export const MonsterEditPanel = (props: Props) => {
 											<NumberSpin
 												key={ch}
 												label={ch}
+												min={-5}
+												max={5}
 												value={MonsterLogic.getCharacteristic(monster, ch)}
 												onChange={value => setCharacteristic(ch, value)}
 											/>

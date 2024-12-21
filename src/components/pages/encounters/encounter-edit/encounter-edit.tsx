@@ -297,7 +297,7 @@ export const EncounterEditPage = (props: Props) => {
 							<Slider
 								range={{ draggableTrack: true }}
 								min={1}
-								max={20}
+								max={10}
 								value={monsterFilter.level}
 								onChange={setFilterLevel}
 							/>
@@ -307,7 +307,7 @@ export const EncounterEditPage = (props: Props) => {
 							<Slider
 								range={{ draggableTrack: true }}
 								min={0}
-								max={500}
+								max={200}
 								value={monsterFilter.ev}
 								onChange={setFilterEV}
 							/>

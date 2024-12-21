@@ -1,4 +1,4 @@
-import { Button, Space } from 'antd';
+import { Alert, Button, Space } from 'antd';
 import { AppHeader } from '../../panels/app-header/app-header';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
@@ -26,9 +26,16 @@ export const WelcomePage = (props: Props) => {
 									<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players and directors.
 								</div>
 								<div>
+									<Alert
+										type='info'
+										showIcon={true}
+										message='This app is currently being updated to support the content in the new backer packet. Please be patient!'
+									/>
+								</div>
+								<div>
 									<HeaderText>For Players</HeaderText>
 									<div className='ds-text'>
-										With this app you can create heroes using the DRAW STEEL backer packet.
+										With this app you can create heroes for DRAW STEEL.
 									</div>
 									<div className='ds-text'>
 										If you're playing offline, you can export your heroes as PNG or PDF.

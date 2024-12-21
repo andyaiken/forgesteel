@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
 	base: '/forgesteel/',
 	build: {
-		chunkSizeWarningLimit: 2000
+		chunkSizeWarningLimit: 3000
 	},
 	plugins: [ react() ]
 });

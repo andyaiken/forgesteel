@@ -766,6 +766,10 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 			}
 		}
 
+		if (hero.state.surges === undefined) {
+			hero.state.surges = 0;
+		}
+
 		if (hero.state.xp === undefined) {
 			hero.state.xp = 0;
 		}

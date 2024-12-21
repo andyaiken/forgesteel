@@ -33,6 +33,13 @@ export class FactoryLogic {
 			class: null,
 			career: null,
 			complication: null,
+			features: [
+				FeatureLogic.createLanguageChoiceFeature({
+					id: 'default-language',
+					name: 'Default Language',
+					selected: [ 'Caelian' ]
+				})
+			],
 			state: {
 				staminaDamage: 0,
 				recoveriesUsed: 0,
@@ -66,8 +73,7 @@ export class FactoryLogic {
 			items: [],
 			monsterGroups: [],
 			skills: [],
-			languages: [],
-			defaultLanguages: []
+			languages: []
 		};
 	};
 

@@ -3,6 +3,7 @@ import { AbilityLogic } from '../../../logic/ability-logic';
 import { FeatureAbilityCostData } from '../../../models/feature';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
+import { FormatLogic } from '../../../logic/format-logic';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
@@ -61,7 +62,7 @@ export const AbilityPanel = (props: Props) => {
 									<Field label='Keywords' value={props.ability.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} />
 									: null
 							}
-							<Field label='Type' value={AbilityLogic.getType(props.ability.type)} />
+							<Field label='Type' value={FormatLogic.getAbilityType(props.ability.type)} />
 							{props.ability.type.trigger ? <Field label='Trigger' value={props.ability.type.trigger} /> : null}
 							{
 								props.ability.distance.length > 0 ?

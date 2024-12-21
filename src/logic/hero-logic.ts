@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureKitData, FeatureKitTypeData, FeatureLanguageData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from './ability-logic';
@@ -86,6 +86,8 @@ export class HeroLogic {
 		if (hero.complication) {
 			features.push(...FeatureLogic.getFeaturesFromComplication(hero.complication));
 		}
+
+		features.push(...hero.features);
 
 		hero.state.inventory.forEach(item => {
 			features.push(...FeatureLogic.getFeaturesFromItem(item));
@@ -352,10 +354,6 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 	static getLanguages = (hero: Hero, sourcebooks: Sourcebook[]) => {
 		const languageNames: string[] = [];
 
-		sourcebooks.forEach(cs => {
-			languageNames.push(...cs.defaultLanguages);
-		});
-
 		if (hero.culture) {
 			languageNames.push(...hero.culture.languages);
 		}
@@ -365,6 +363,12 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 			.filter(f => f.type === FeatureType.Language)
 			.forEach(f => {
 				const data = f.data as FeatureLanguageData;
+				languageNames.push(data.language);
+			});
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.LanguageChoice)
+			.forEach(f => {
+				const data = f.data as FeatureLanguageChoiceData;
 				languageNames.push(...data.selected);
 			});
 
@@ -764,6 +768,10 @@ If you are dying, you can’t take the Catch Breath action, but other creatures 
 					selectedID: null
 				};
 			}
+		}
+
+		if (hero.features === undefined) {
+			hero.features = [];
 		}
 
 		if (hero.state.surges === undefined) {

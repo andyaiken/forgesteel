@@ -4,6 +4,7 @@ import { Career } from './career';
 import { Characteristic } from '../enums/characteristic';
 import { Complication } from './complication';
 import { Culture } from './culture';
+import { Feature } from './feature';
 import { HeroClass } from './class';
 import { Item } from './item';
 
@@ -40,5 +41,6 @@ export interface Hero {
 	career: Career | null;
 	complication: Complication | null;
 
+	features: Feature[];
 	state: HeroState;
 }

@@ -1,6 +1,6 @@
 import { Button, Divider, Input, Radio, Segmented, Select, Space } from 'antd';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
-import { Feature, FeatureBonusData, FeatureData, FeatureLanguageData, FeatureSkillData } from '../../../../models/feature';
+import { Feature, FeatureBonusData, FeatureData } from '../../../../models/feature';
 import { ReactNode, useState } from 'react';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryData } from '../../../../data/ancestry-data';
@@ -71,8 +71,7 @@ export const HeroEditPage = (props: Props) => {
 			switch (page) {
 				case Page.Ancestry:
 					if (hero.ancestry) {
-						const features = hero.ancestry.features;
-						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (hero.ancestry.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
@@ -100,8 +99,7 @@ export const HeroEditPage = (props: Props) => {
 					}
 				case Page.Career:
 					if (hero.career) {
-						const features = hero.career.features;
-						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (hero.career.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
@@ -131,8 +129,7 @@ export const HeroEditPage = (props: Props) => {
 					}
 				case Page.Complication:
 					if (hero.complication) {
-						const features = hero.complication.features;
-						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (hero.complication.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.Optional;
 					}
@@ -295,7 +292,7 @@ export const HeroEditPage = (props: Props) => {
 			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 			const feature = HeroLogic.getFeatures(heroCopy).find(f => f.id === featureID);
 			if (feature) {
-				feature.data = data as FeatureSkillData | FeatureLanguageData;
+				feature.data = data;
 			}
 			setHero(heroCopy);
 			setDirty(true);
@@ -386,6 +383,7 @@ export const HeroEditPage = (props: Props) => {
 							sourcebooks={props.sourcebooks}
 							setName={setName}
 							setSettingIDs={setSettingIDs}
+							setFeatureData={setFeatureData}
 						/>
 					);
 			}
@@ -890,21 +888,11 @@ interface DetailsSectionProps {
 	sourcebooks: Sourcebook[];
 	setName: (value: string) => void;
 	setSettingIDs: (settingIDs: string[]) => void;
+	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const DetailsSection = (props: DetailsSectionProps) => {
 	try {
-		const getSourcebook = (sourcebookID: string) => {
-			const sourcebook = props.sourcebooks.find(cs => cs.id === sourcebookID);
-			if (sourcebook) {
-				return (
-					<Field key={sourcebook.id} label={sourcebook.name || 'Unnamed Collection'} value={sourcebook.defaultLanguages.join(', ') || 'No default language'} />
-				);
-			}
-
-			return null;
-		};
-
 		return (
 			<div className='hero-edit-content'>
 				<div className='hero-edit-content-column' id='details-main'>
@@ -919,7 +907,7 @@ const DetailsSection = (props: DetailsSectionProps) => {
 						onChange={e => props.setName(e.target.value)}
 					/>
 					<Divider />
-					<HeaderText>Collections</HeaderText>
+					<HeaderText>Sourcebooks</HeaderText>
 					<Select
 						style={{ width: '100%' }}
 						placeholder='Select'
@@ -930,8 +918,18 @@ const DetailsSection = (props: DetailsSectionProps) => {
 						onChange={props.setSettingIDs}
 					/>
 					<Divider />
-					<HeaderText>Default Languages</HeaderText>
-					{props.hero.settingIDs.map(getSourcebook)}
+					{
+						props.hero.features.map(f => (
+							<FeaturePanel
+								key={f.id}
+								feature={f}
+								hero={props.hero}
+								sourcebooks={props.sourcebooks}
+								mode={PanelMode.Full}
+								setData={props.setFeatureData}
+							/>
+						))
+					}
 				</div>
 			</div>
 		);

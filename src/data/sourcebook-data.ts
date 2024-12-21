@@ -119,8 +119,7 @@ export class SourcebookData {
 			radenwight
 		],
 		skills: SkillData.getCoreSkills(),
-		languages: [],
-		defaultLanguages: []
+		languages: []
 	};
 
 	static orden: Sourcebook = {
@@ -210,9 +209,6 @@ export class SourcebookData {
 				name: 'Zaliac',
 				description: 'Spoken by dwarves and used in engineering.'
 			}
-		],
-		defaultLanguages: [
-			'Caelian'
 		]
 	};
 

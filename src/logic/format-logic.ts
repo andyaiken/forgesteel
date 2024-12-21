@@ -1,8 +1,18 @@
+import { AbilityType } from '../models/ability';
+import { AbilityUsage } from '../enums/ability-usage';
 import { DamageModifier } from '../models/damage-modifier';
 import { MonsterRole } from '../models/monster';
 import { Size } from '../models/size';
 
 export class FormatLogic {
+	static getAbilityType = (type: AbilityType) => {
+		if (type.usage === AbilityUsage.Other) {
+			return type.time;
+		}
+
+		return `${type.free ? 'Free ' : ''}${type.usage}`;
+	};
+
 	static getSize = (size: Size) => {
 		if (size.value > 1) {
 			return size.value.toString();

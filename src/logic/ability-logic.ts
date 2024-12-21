@@ -138,14 +138,6 @@ export class AbilityLogic {
 		} as Ability;
 	};
 
-	static getType = (type: AbilityType) => {
-		if (type.usage === AbilityUsage.Other) {
-			return type.time;
-		}
-
-		return `${type.free ? 'Free ' : ''}${type.usage}`;
-	};
-
 	static getDistance = (distance: AbilityDistance, hero?: Hero, ability?: Ability) => {
 		if (distance.type === AbilityDistanceType.Self) {
 			return 'Self';

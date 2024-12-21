@@ -28,6 +28,4 @@ export interface Sourcebook extends Element {
 
 	skills: Skill[];
 	languages: Language[];
-
-	defaultLanguages: string[];
 }

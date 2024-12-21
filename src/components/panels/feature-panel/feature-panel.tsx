@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../../../models/feature';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Collections } from '../../../utils/collections';
@@ -346,7 +346,7 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
-	const getEditableLanguage = (data: FeatureLanguageData) => {
+	const getEditableLanguageChoice = (data: FeatureLanguageChoiceData) => {
 		const languages = LanguageData.getLanguages(props.sourcebooks as Sourcebook[]);
 		const sortedLanguages = Collections.sort(languages, l => l.name);
 
@@ -380,7 +380,7 @@ export const FeaturePanel = (props: Props) => {
 						} else {
 							ids = value as string[];
 						}
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureLanguageData;
+						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureLanguageChoiceData;
 						dataCopy.selected = ids;
 						if (props.setData) {
 							props.setData(props.feature.id, dataCopy);
@@ -390,26 +390,23 @@ export const FeaturePanel = (props: Props) => {
 				{
 					data.selected.map((l, n) => {
 						if (props.hero) {
-							const languages: string[] = [];
-							if (props.hero.culture) {
-								languages.push(...props.hero.culture.languages);
-							}
-							props.hero.settingIDs.forEach(sourcebookID => {
-								if (props.sourcebooks) {
-									const sourcebook = props.sourcebooks.find(cs => cs.id === sourcebookID);
-									if (sourcebook) {
-										languages.push(...sourcebook.defaultLanguages);
-									}
-								}
-							});
-							HeroLogic.getFeatures(props.hero)
+							const selected = HeroLogic.getFeatures(props.hero)
 								.filter(f => f.id !== props.feature.id)
-								.filter(f => f.type === FeatureType.Language)
-								.forEach(f => {
-									const data = f.data as FeatureLanguageData;
-									languages.push(...data.selected);
+								.some(f => {
+									switch (f.type) {
+										case FeatureType.Language: {
+											const data = f.data as FeatureLanguageData;
+											return data.language === l;
+										}
+										case FeatureType.LanguageChoice: {
+											const data = f.data as FeatureLanguageChoiceData;
+											return data.selected.includes(l);
+										}
+									}
+
+									return false;
 								});
-							if (languages.includes(l)) {
+							if (selected) {
 								return (
 									<Alert
 										key={n}
@@ -518,8 +515,8 @@ export const FeaturePanel = (props: Props) => {
 				return getEditableDomainFeature(props.feature.data as FeatureDomainFeatureData);
 			case FeatureType.Kit:
 				return getEditableKit(props.feature.data as FeatureKitData);
-			case FeatureType.Language:
-				return getEditableLanguage(props.feature.data as FeatureLanguageData);
+			case FeatureType.LanguageChoice:
+				return getEditableLanguageChoice(props.feature.data as FeatureLanguageChoiceData);
 			case FeatureType.SkillChoice:
 				return getEditableSkillChoice(props.feature.data as FeatureSkillChoiceData);
 		}
@@ -686,6 +683,16 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getExtraLanguage = (data: FeatureLanguageData) => {
+		if (!props.feature.description) {
+			return (
+				<Field label='Language' value={data.language} />
+			);
+		}
+
+		return null;
+	};
+
+	const getExtraLanguageChoice = (data: FeatureLanguageChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
 				<Field label='Language' value={data.selected.join(', ')} />
@@ -763,6 +770,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraKitType(props.feature.data as FeatureKitTypeData);
 			case FeatureType.Language:
 				return getExtraLanguage(props.feature.data as FeatureLanguageData);
+			case FeatureType.LanguageChoice:
+				return getExtraLanguageChoice(props.feature.data as FeatureLanguageChoiceData);
 			case FeatureType.Size:
 				return getExtraSize(props.feature.data as FeatureSizeData);
 			case FeatureType.Skill:

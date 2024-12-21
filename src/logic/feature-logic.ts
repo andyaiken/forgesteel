@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
 import { Ability } from '../models/ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from '../models/ancestry';
@@ -165,18 +165,30 @@ export class FeatureLogic {
 		} as Feature;
 	};
 
-	static createLanguageChoiceFeature = (data: { id: string, name?: string, description?: string, options?: string[], count?: number }) => {
+	static createLanguageFeature = (data: { id: string, name?: string, description?: string, language: string }) => {
+		return {
+			id: data.id,
+			name: data.name || data.language,
+			description: data.description || '',
+			type: FeatureType.Language,
+			data: {
+				language: data.language
+			} as FeatureLanguageData
+		} as Feature;
+	};
+
+	static createLanguageChoiceFeature = (data: { id: string, name?: string, description?: string, options?: string[], count?: number, selected?: string[] }) => {
 		const count = data.count || 1;
 		return {
 			id: data.id,
 			name: data.name || 'Language',
 			description: data.description || '',
-			type: FeatureType.Language,
+			type: FeatureType.LanguageChoice,
 			data: {
 				options: data.options || [],
 				count: count,
-				selected: []
-			} as FeatureLanguageData
+				selected: data.selected || []
+			} as FeatureLanguageChoiceData
 		} as Feature;
 	};
 
@@ -219,7 +231,7 @@ export class FeatureLogic {
 		} as Feature;
 	};
 
-	static createSkillChoiceFeature = (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number }) => {
+	static createSkillChoiceFeature = (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selected?: string[] }) => {
 		const count = data.count || 1;
 		return {
 			id: data.id,
@@ -230,7 +242,7 @@ export class FeatureLogic {
 				options: data.options || [],
 				listOptions: data.listOptions || [],
 				count: count,
-				selected: []
+				selected: data.selected || []
 			} as FeatureSkillChoiceData
 		} as Feature;
 	};
@@ -381,7 +393,7 @@ export class FeatureLogic {
 			case FeatureType.Domain:
 			case FeatureType.DomainFeature:
 			case FeatureType.Kit:
-			case FeatureType.Language:
+			case FeatureType.LanguageChoice:
 			case FeatureType.SkillChoice:
 				return true;
 		};
@@ -402,23 +414,23 @@ export class FeatureLogic {
 				const data = feature.data as FeatureClassAbilityData;
 				return data.selectedIDs.length >= data.count;
 			}
-			case FeatureType.Domain:{
+			case FeatureType.Domain: {
 				const data = feature.data as FeatureDomainData;
 				return data.selected.length >= data.count;
 			}
-			case FeatureType.DomainFeature:{
+			case FeatureType.DomainFeature: {
 				const data = feature.data as FeatureDomainFeatureData;
 				return data.selected.length >= data.count;
 			}
-			case FeatureType.Kit:{
+			case FeatureType.Kit: {
 				const data = feature.data as FeatureKitData;
 				return data.selected.length >= data.count;
 			}
-			case FeatureType.Language:{
-				const data = feature.data as FeatureLanguageData;
+			case FeatureType.LanguageChoice: {
+				const data = feature.data as FeatureLanguageChoiceData;
 				return data.selected.length >= data.count;
 			}
-			case FeatureType.SkillChoice:{
+			case FeatureType.SkillChoice: {
 				const data = feature.data as FeatureSkillChoiceData;
 				return data.selected.length >= data.count;
 			}
@@ -452,6 +464,8 @@ export class FeatureLogic {
 			case FeatureType.KitType:
 				return 'This feature changes the types of kit you can select.';
 			case FeatureType.Language:
+				return 'This feature grants you a language.';
+			case FeatureType.LanguageChoice:
 				return 'This feature allows you to choose a language.';
 			case FeatureType.Multiple:
 				return 'This feature grants you a collection of features.';

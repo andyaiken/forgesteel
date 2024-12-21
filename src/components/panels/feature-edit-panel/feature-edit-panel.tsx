@@ -1,6 +1,6 @@
 import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../../../models/feature';
 import { Ability } from '../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../enums/ability-keyword';
@@ -130,6 +130,11 @@ export const FeatureEditPanel = (props: Props) => {
 					selected: []
 				};
 				break;
+			case FeatureType.LanguageChoice:
+				data = {
+					language: ''
+				};
+				break;
 			case FeatureType.Multiple:
 				data = {
 					features: []
@@ -177,7 +182,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 	const getDataSection = () => {
 		const setCount = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureKitData | FeatureLanguageData | FeatureSkillChoiceData;
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureKitData | FeatureLanguageChoiceData | FeatureSkillChoiceData;
 			copy.count = value;
 			setData(copy);
 		};
@@ -230,8 +235,14 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
-		const setLanguageOptions = (value: string[]) => {
+		const setLanguage = (value: string) => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureLanguageData;
+			copy.language = value;
+			setData(copy);
+		};
+
+		const setLanguageOptions = (value: string[]) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureLanguageChoiceData;
 			copy.options = value;
 			setData(copy);
 		};
@@ -583,6 +594,24 @@ export const FeatureEditPanel = (props: Props) => {
 			}
 			case FeatureType.Language: {
 				const data = feature.data as FeatureLanguageData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Language</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							className={data.language === '' ? 'selection-empty' : ''}
+							placeholder='Language'
+							allowClear={true}
+							options={LanguageData.getLanguages(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
+							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
+							value={data.language || ''}
+							onChange={setLanguage}
+						/>
+					</Space>
+				);
+			}
+			case FeatureType.LanguageChoice: {
+				const data = feature.data as FeatureLanguageChoiceData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Options</HeaderText>

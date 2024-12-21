@@ -495,6 +495,11 @@ export const HeroPanel = (props: Props) => {
 						{getAbilitiesSection(AbilityUsage.Maneuver)}
 					</div>
 				</div>
+				<div className='hero-main-section' id='moves'>
+					<div className='hero-main-column'>
+						{getAbilitiesSection(AbilityUsage.Move)}
+					</div>
+				</div>
 				<div className='hero-main-section' id='triggers'>
 					<div className='hero-main-column'>
 						{getAbilitiesSection(AbilityUsage.Trigger)}

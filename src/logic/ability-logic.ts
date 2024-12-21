@@ -27,6 +27,15 @@ export class AbilityLogic {
 		};
 	};
 
+	static createTypeMove = (free = false): AbilityType => {
+		return {
+			usage: AbilityUsage.Move,
+			free: free,
+			trigger: '',
+			time: ''
+		};
+	};
+
 	static createTypeTrigger = (trigger: string, free = false): AbilityType => {
 		return {
 			usage: AbilityUsage.Trigger,

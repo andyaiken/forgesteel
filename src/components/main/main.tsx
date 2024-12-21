@@ -217,7 +217,7 @@ export const Main = (props: Props) => {
 
 	const exportSelectedHero = (format: 'image' | 'pdf' | 'json') => {
 		if (selectedHero) {
-			const ids = (format === 'pdf') ? [ 'stats', 'actions', 'maneuvers', 'triggers', 'others' ] : [ selectedHero.id ];
+			const ids = (format === 'pdf') ? [ 'stats', 'actions', 'maneuvers', 'moves', 'triggers', 'others' ] : [ selectedHero.id ];
 			Utils.export(ids, selectedHero.name || 'Unnamed Hero', selectedHero, 'hero', format);
 		}
 	};

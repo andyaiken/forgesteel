@@ -173,6 +173,36 @@ export class HeroLogic {
 
 		if (includeStandard) {
 			abilities.push(AbilityLogic.createAbility({
+				id: 'advance',
+				name: 'Advance',
+				description: '',
+				type: AbilityLogic.createTypeMove(),
+				keywords: [],
+				distance: [ AbilityLogic.createDistanceSelf() ],
+				target: 'Self',
+				effect: 'When you take the Advance move action, you can move a number of squares up to your speed. You can break up this movement granted with your maneuver and action however you wish.'
+			}));
+			abilities.push(AbilityLogic.createAbility({
+				id: 'disengage',
+				name: 'Disengage',
+				description: '',
+				type: AbilityLogic.createTypeMove(),
+				keywords: [],
+				distance: [ AbilityLogic.createDistanceSelf() ],
+				target: 'Self',
+				effect: 'When you take the Disengage move action, you can shift 1 square. Some class features, kits, or other rules let you shift more than 1 square when you take this move action, if they do, you can break up the movement granted by this move action with your maneuver and action however you wish.'
+			}));
+			abilities.push(AbilityLogic.createAbility({
+				id: 'ride',
+				name: 'Ride',
+				description: '',
+				type: AbilityLogic.createTypeMove(),
+				keywords: [],
+				distance: [ AbilityLogic.createDistanceSelf() ],
+				target: 'Self',
+				effect: 'You can only take the Ride move action while mounted on another creature. When you take the Ride move action, you cause your mount to move up to their speed, taking you with them. Alternatively, you can use this move action to have your mount use the Disengage move action as a free triggered action. A mount can only be ridden with this move action once per round.'
+			}));
+			abilities.push(AbilityLogic.createAbility({
 				id: 'aid-attack',
 				name: 'Aid Attack',
 				description: '',
@@ -181,6 +211,18 @@ export class HeroLogic {
 				distance: [ AbilityLogic.createDistanceReach(1) ],
 				target: '1 enemy',
 				effect: 'The next attack an ally makes against the target before the start of your next turn has an edge.'
+			}));
+			abilities.push(AbilityLogic.createAbility({
+				id: 'catch-breath',
+				name: 'Catch Breath',
+				description: '',
+				type: AbilityLogic.createTypeManeuver(),
+				keywords: [],
+				distance: [ AbilityLogic.createDistanceSelf() ],
+				target: 'Self',
+				effect: `
+By using the Catch Breath maneuver, you spend a Recovery and heal an amount equal to your recovery value. In addition, you also gain the benefit of the Defend action.
+If you are dying, you can’t take the Catch Breath maneuver, but other creatures can help you spend recoveries.`
 			}));
 			abilities.push(AbilityLogic.createAbility({
 				id: 'drink-potion',
@@ -287,18 +329,6 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				],
 				target: 'Self or 1 creature',
 				effect: 'You can use this maneuver to stand up if you are prone, ending that condition. Alternatively, you can use this maneuver to make an adjacent prone creature stand up.'
-			}));
-			abilities.push(AbilityLogic.createAbility({
-				id: 'catch-breath',
-				name: 'Catch Breath',
-				description: '',
-				type: AbilityLogic.createTypeAction(),
-				keywords: [],
-				distance: [ AbilityLogic.createDistanceSelf() ],
-				target: 'Self',
-				effect: `
-By using the Catch Breath action, you spend a Recovery and heal an amount equal to your recovery value. In addition, you also gain the benefit of the Defend action.
-If you are dying, you can’t take the Catch Breath action, but other creatures can help you spend recoveries.`
 			}));
 			abilities.push(AbilityLogic.createAbility({
 				id: 'charge',

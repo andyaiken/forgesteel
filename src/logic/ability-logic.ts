@@ -9,113 +9,104 @@ import { HeroLogic } from './hero-logic';
 import { PowerRollType } from '../enums/power-roll-type';
 
 export class AbilityLogic {
-	static createTypeAction = (free = false): AbilityType => {
-		return {
-			usage: AbilityUsage.Action,
-			free: free,
-			trigger: '',
-			time: ''
-		};
+	static type = {
+		createAction: (free = false): AbilityType => {
+			return {
+				usage: AbilityUsage.Action,
+				free: free,
+				trigger: '',
+				time: ''
+			};
+		},
+		createManeuver: (free = false): AbilityType => {
+			return {
+				usage: AbilityUsage.Maneuver,
+				free: free,
+				trigger: '',
+				time: ''
+			};
+		},
+		createMove: (free = false): AbilityType => {
+			return {
+				usage: AbilityUsage.Move,
+				free: free,
+				trigger: '',
+				time: ''
+			};
+		},
+		createTrigger: (trigger: string, free = false): AbilityType => {
+			return {
+				usage: AbilityUsage.Trigger,
+				free: free,
+				trigger: trigger,
+				time: ''
+			};
+		},
+		createTime: (time: string): AbilityType => {
+			return {
+				usage: AbilityUsage.Other,
+				free: false,
+				trigger: '',
+				time: time
+			};
+		},
+		createVillainAction: (): AbilityType => {
+			return {
+				usage: AbilityUsage.VillainAction,
+				free: false,
+				trigger: '',
+				time: ''
+			};
+		}
 	};
 
-	static createTypeManeuver = (free = false): AbilityType => {
-		return {
-			usage: AbilityUsage.Maneuver,
-			free: free,
-			trigger: '',
-			time: ''
-		};
+	static distance = {
+		create: (data: { type: AbilityDistanceType, value: number, value2?: number, within?: number }): AbilityDistance => {
+			return {
+				type: data.type,
+				value: data.value,
+				value2: data.value2 || 0,
+				within: data.within || 0,
+				special: ''
+			};
+		},
+		createSelf: (): AbilityDistance => {
+			return {
+				type: AbilityDistanceType.Self,
+				value: 0,
+				value2: 0,
+				within: 0,
+				special: ''
+			};
+		},
+		createReach: (value: number): AbilityDistance => {
+			return {
+				type: AbilityDistanceType.Reach,
+				value: value,
+				value2: 0,
+				within: 0,
+				special: ''
+			};
+		},
+		createRanged: (value: number): AbilityDistance => {
+			return {
+				type: AbilityDistanceType.Ranged,
+				value: value,
+				value2: 0,
+				within: 0,
+				special: ''
+			};
+		},
+		createSpecial: (special: string): AbilityDistance => {
+			return {
+				type: AbilityDistanceType.Special,
+				value: 0,
+				value2: 0,
+				within: 0,
+				special: special
+			};
+		}
 	};
-
-	static createTypeMove = (free = false): AbilityType => {
-		return {
-			usage: AbilityUsage.Move,
-			free: free,
-			trigger: '',
-			time: ''
-		};
-	};
-
-	static createTypeTrigger = (trigger: string, free = false): AbilityType => {
-		return {
-			usage: AbilityUsage.Trigger,
-			free: free,
-			trigger: trigger,
-			time: ''
-		};
-	};
-
-	static createTypeTime = (time: string): AbilityType => {
-		return {
-			usage: AbilityUsage.Other,
-			free: false,
-			trigger: '',
-			time: time
-		};
-	};
-
-	static createTypeVillainAction = (): AbilityType => {
-		return {
-			usage: AbilityUsage.VillainAction,
-			free: false,
-			trigger: '',
-			time: ''
-		};
-	};
-
-	///////////////////////////////////////////////////////////////////////////
-
-	static createDistance = (data: { type: AbilityDistanceType, value: number, value2?: number, within?: number }): AbilityDistance => {
-		return {
-			type: data.type,
-			value: data.value,
-			value2: data.value2 || 0,
-			within: data.within || 0,
-			special: ''
-		};
-	};
-
-	static createDistanceSelf = (): AbilityDistance => {
-		return {
-			type: AbilityDistanceType.Self,
-			value: 0,
-			value2: 0,
-			within: 0,
-			special: ''
-		};
-	};
-
-	static createDistanceReach = (value: number): AbilityDistance => {
-		return {
-			type: AbilityDistanceType.Reach,
-			value: value,
-			value2: 0,
-			within: 0,
-			special: ''
-		};
-	};
-
-	static createDistanceRanged = (value: number): AbilityDistance => {
-		return {
-			type: AbilityDistanceType.Ranged,
-			value: value,
-			value2: 0,
-			within: 0,
-			special: ''
-		};
-	};
-
-	static createDistanceSpecial = (special: string): AbilityDistance => {
-		return {
-			type: AbilityDistanceType.Special,
-			value: 0,
-			value2: 0,
-			within: 0,
-			special: special
-		};
-	};
-
-	///////////////////////////////////////////////////////////////////////////
 
 	static createPowerRoll = (data: { type?: PowerRollType, characteristic?: Characteristic[], bonus?: number, tier1: string, tier2: string, tier3: string }) => {
 		return {

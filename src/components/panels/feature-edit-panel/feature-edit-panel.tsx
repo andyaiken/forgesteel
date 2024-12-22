@@ -58,9 +58,9 @@ export const FeatureEditPanel = (props: Props) => {
 						id: Utils.guid(),
 						name: '',
 						description: '',
-						type: AbilityLogic.createTypeAction(),
+						type: AbilityLogic.type.createAction(),
 						keywords: [],
-						distance: [ AbilityLogic.createDistanceReach(1) ],
+						distance: [ AbilityLogic.distance.createReach(1) ],
 						target: ''
 					})
 				};

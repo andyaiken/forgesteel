@@ -21,9 +21,9 @@ export class DomainData {
 									id: 'domain-creation-1-1',
 									name: 'Hands Of The Maker',
 									description: 'Craft objects with the power of your mind!',
-									type: AbilityLogic.createTypeManeuver(),
+									type: AbilityLogic.type.createManeuver(),
 									keywords: [ AbilityKeyword.Magic ],
-									distance: [ AbilityLogic.createDistanceSelf() ],
+									distance: [ AbilityLogic.distance.createSelf() ],
 									target: 'Self',
 									effect: 'You create a mundane object no larger than size 1S that you hold. If you use this feature again or stop holding the object, it disappears.'
 								})
@@ -55,9 +55,9 @@ export class DomainData {
 									id: 'domain-death-1-1',
 									name: 'Grave Speech',
 									description: 'The power of death lets you speak with those who have passed from the world.',
-									type: AbilityLogic.createTypeManeuver(),
+									type: AbilityLogic.type.createManeuver(),
 									keywords: [ AbilityKeyword.Magic ],
-									distance: [ AbilityLogic.createDistanceReach(1) ],
+									distance: [ AbilityLogic.distance.createReach(1) ],
 									target: 'Special',
 									effect: 'You can speak to the corpse or head of a creature who has died within the last 24 hours and who can speak a language you know. The target regards you as they would have in life, and you might need to make tests to influence them and convince them to speak with you. After 1 minute, the effect ends. You can’t use this ability on the same creature twice.'
 								})

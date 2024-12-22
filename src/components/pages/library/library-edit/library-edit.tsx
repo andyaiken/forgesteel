@@ -558,9 +558,9 @@ export const LibraryEditPage = (props: Props) => {
 				id: Utils.guid(),
 				name: '',
 				description: '',
-				type: AbilityLogic.type.createAction(),
+				type: AbilityLogic.createTypeAction(),
 				keywords: [],
-				distance: [ AbilityLogic.distance.createReach(1) ],
+				distance: [ AbilityLogic.createDistanceReach(1) ],
 				target: ''
 			}));
 			setElement(elementCopy);

@@ -15,12 +15,11 @@ import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { KitType } from '../../../enums/kit';
-import { LanguageData } from '../../../data/language-data';
 import { MultiLine } from '../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
-import { SkillData } from '../../../data/skill-data';
 import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
+import { SourcebookLogic } from '../../../logic/sourcebook-logic';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
@@ -76,7 +75,8 @@ export const FeatureEditPanel = (props: Props) => {
 				data = {
 					field: FeatureField.Recoveries,
 					value: 0,
-					valuePerLevel: 0
+					valuePerLevel: 0,
+					valuePerEchelon: 0
 				};
 				break;
 			case FeatureType.Choice:
@@ -205,6 +205,12 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
+		const setValuePerEchelon = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
+			copy.valuePerEchelon = value;
+			setData(copy);
+		};
+
 		const setCost = (value: number) => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureClassAbilityData;
 			copy.cost = value;
@@ -326,7 +332,8 @@ export const FeatureEditPanel = (props: Props) => {
 				damageType: 'Fire',
 				type: DamageModifierType.Immunity,
 				value: 0,
-				valuePerLevel: 0
+				valuePerLevel: 0,
+				valuePerEchelon: 0
 			});
 			setData(copy);
 		};
@@ -358,6 +365,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setDamageModifierValuePerLevel = (data: FeatureDamageModifierData, index: number, value: number) => {
 			const copy = JSON.parse(JSON.stringify(data)) as FeatureDamageModifierData;
 			copy.modifiers[index].valuePerLevel = value;
+			setData(copy);
+		};
+
+		const setDamageModifierValuePerEchelon = (data: FeatureDamageModifierData, index: number, value: number) => {
+			const copy = JSON.parse(JSON.stringify(data)) as FeatureDamageModifierData;
+			copy.modifiers[index].valuePerEchelon = value;
 			setData(copy);
 		};
 
@@ -438,8 +451,10 @@ export const FeatureEditPanel = (props: Props) => {
 						/>
 						<HeaderText>Value</HeaderText>
 						<NumberSpin min={0} value={data.value} onChange={setValue} />
-						<HeaderText>Value Per Level</HeaderText>
+						<HeaderText>Value Per Level After 1st</HeaderText>
 						<NumberSpin min={0} value={data.valuePerLevel} onChange={setValuePerLevel} />
+						<HeaderText>Value Per Echelon</HeaderText>
+						<NumberSpin min={0} value={data.valuePerEchelon} onChange={setValuePerEchelon} />
 					</Space>
 				);
 			}
@@ -531,8 +546,12 @@ export const FeatureEditPanel = (props: Props) => {
 											value={mod.type}
 											onChange={value => setDamageModifierType(data, n, value)}
 										/>
+										<HeaderText>Value</HeaderText>
 										<NumberSpin min={0} value={mod.value} onChange={value => setDamageModifierValue(data, n, value)} />
+										<HeaderText>Value Per Level After 1st</HeaderText>
 										<NumberSpin min={0} value={mod.valuePerLevel} onChange={value => setDamageModifierValuePerLevel(data, n, value)} />
+										<HeaderText>Value Per Echelon</HeaderText>
+										<NumberSpin min={0} value={mod.valuePerEchelon} onChange={value => setDamageModifierValuePerEchelon(data, n, value)} />
 										<DangerButton onConfirm={() => deleteDamageModifier(data, n)} />
 									</Space>
 								</Expander>
@@ -602,7 +621,7 @@ export const FeatureEditPanel = (props: Props) => {
 							className={data.language === '' ? 'selection-empty' : ''}
 							placeholder='Language'
 							allowClear={true}
-							options={LanguageData.getLanguages(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
+							options={SourcebookLogic.getLanguages(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
 							value={data.language || ''}
 							onChange={setLanguage}
@@ -621,7 +640,7 @@ export const FeatureEditPanel = (props: Props) => {
 							placeholder='Options'
 							mode='multiple'
 							allowClear={true}
-							options={LanguageData.getLanguages(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
+							options={SourcebookLogic.getLanguages(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
 							value={data.options}
 							onChange={setLanguageOptions}
@@ -713,7 +732,7 @@ export const FeatureEditPanel = (props: Props) => {
 							className={data.skill === '' ? 'selection-empty' : ''}
 							placeholder='Skill'
 							allowClear={true}
-							options={SkillData.getSkills(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
+							options={SourcebookLogic.getSkills(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
 							value={data.skill || ''}
 							onChange={setSkill}
@@ -731,7 +750,7 @@ export const FeatureEditPanel = (props: Props) => {
 							placeholder='Skills'
 							allowClear={true}
 							mode='multiple'
-							options={SkillData.getSkills(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
+							options={SourcebookLogic.getSkills(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
 							value={data.options}
 							onChange={setSkillOptions}

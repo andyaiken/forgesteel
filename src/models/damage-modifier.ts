@@ -5,4 +5,5 @@ export interface DamageModifier {
 	type: DamageModifierType;
 	value: number,
 	valuePerLevel: number;
+	valuePerEchelon: number;
 }

@@ -26,6 +26,7 @@ export interface FeatureBonusData extends FeatureData {
 	field: FeatureField;
 	value: number;
 	valuePerLevel: number;
+	valuePerEchelon: number;
 };
 
 export interface FeatureChoiceData extends FeatureData {

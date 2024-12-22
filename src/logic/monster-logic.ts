@@ -82,7 +82,7 @@ export class MonsterLogic {
 				data.modifiers
 					.filter(dm => dm.type === type)
 					.forEach(dm => {
-						const value = dm.value + (dm.valuePerLevel * (monster.level - 1));
+						const value = dm.value + (dm.valuePerLevel * (monster.level - 1)) + (dm.valuePerEchelon * MonsterLogic.getEchelon(monster.level));
 						immunities.push({
 							type: dm.damageType,
 							value: value
@@ -91,6 +91,27 @@ export class MonsterLogic {
 			});
 
 		return Collections.sort(immunities, i => i.type);
+	};
+
+	static getEchelon = (level: number) => {
+		switch (level) {
+			case 1:
+			case 2:
+			case 3:
+				return 1;
+			case 4:
+			case 5:
+			case 6:
+				return 2;
+			case 7:
+			case 8:
+			case 9:
+				return 3;
+			case 10:
+				return 4;
+		}
+
+		return 1;
 	};
 
 	static getRoleDescription = (type: MonsterRoleType) => {

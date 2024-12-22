@@ -53,7 +53,7 @@ export class FeatureLogic {
 		} as Feature;
 	};
 
-	static createBonusFeature = (data: { id: string, name?: string, description?: string, field: FeatureField, value: number, valuePerLevel?: number }) => {
+	static createBonusFeature = (data: { id: string, name?: string, description?: string, field: FeatureField, value?: number, valuePerLevel?: number, valuePerEchelon?: number }) => {
 		return {
 			id: data.id,
 			name: data.name || data.field.toString(),
@@ -61,8 +61,9 @@ export class FeatureLogic {
 			type: FeatureType.Bonus,
 			data: {
 				field: data.field,
-				value: data.value,
-				valuePerLevel: data.valuePerLevel || 0
+				value: data.value || 0,
+				valuePerLevel: data.valuePerLevel || 0,
+				valuePerEchelon: data.valuePerEchelon || 0
 			} as FeatureBonusData
 		} as Feature;
 	};

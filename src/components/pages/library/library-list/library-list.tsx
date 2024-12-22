@@ -1,36 +1,26 @@
 import { Alert, Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
 import { Ancestry } from '../../../../models/ancestry';
-import { AncestryData } from '../../../../data/ancestry-data';
 import { AncestryPanel } from '../../../panels/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Career } from '../../../../models/career';
-import { CareerData } from '../../../../data/career-data';
 import { CareerPanel } from '../../../panels/career-panel/career-panel';
-import { ClassData } from '../../../../data/class-data';
 import { ClassPanel } from '../../../panels/class-panel/class-panel';
 import { Complication } from '../../../../models/complication';
-import { ComplicationData } from '../../../../data/complication-data';
 import { ComplicationPanel } from '../../../panels/complication-panel/complication-panel';
 import { Culture } from '../../../../models/culture';
-import { CultureData } from '../../../../data/culture-data';
 import { CulturePanel } from '../../../panels/culture-panel/culture-panel';
 import { Domain } from '../../../../models/domain';
-import { DomainData } from '../../../../data/domain-data';
 import { DomainPanel } from '../../../panels/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
-import { ItemData } from '../../../../data/item-data';
 import { ItemPanel } from '../../../panels/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
-import { KitData } from '../../../../data/kit-data';
 import { KitPanel } from '../../../panels/kit-panel/kit-panel';
 import { MonsterGroup } from '../../../../models/monster';
-import { MonsterGroupData } from '../../../../data/monster-group-data';
 import { MonsterGroupPanel } from '../../../panels/monster-group-panel/monster-group-panel';
 import { Perk } from '../../../../models/perk';
-import { PerkData } from '../../../../data/perk-data';
 import { PerkPanel } from '../../../panels/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
@@ -74,7 +64,7 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getAncestries = () => {
-		return AncestryData
+		return SourcebookLogic
 			.getAncestries(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
@@ -83,7 +73,7 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getCultures = () => {
-		return CultureData
+		return SourcebookLogic
 			.getCultures(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name
@@ -91,7 +81,7 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getCareers = () => {
-		return CareerData
+		return SourcebookLogic
 			.getCareers(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
@@ -100,7 +90,7 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getClasses = () => {
-		return ClassData
+		return SourcebookLogic
 			.getClasses(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
@@ -112,7 +102,7 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getComplications = () => {
-		return ComplicationData
+		return SourcebookLogic
 			.getComplications(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name
@@ -120,7 +110,7 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getDomains = () => {
-		return DomainData
+		return SourcebookLogic
 			.getDomains(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
@@ -129,7 +119,7 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getKits = () => {
-		return KitData
+		return SourcebookLogic
 			.getKits(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
@@ -138,7 +128,7 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getPerks = () => {
-		return PerkData
+		return SourcebookLogic
 			.getPerks(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
@@ -147,7 +137,7 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getItems = () => {
-		return ItemData
+		return SourcebookLogic
 			.getItems(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
@@ -156,7 +146,7 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getMonsterGroups = () => {
-		return MonsterGroupData
+		return SourcebookLogic
 			.getMonsterGroups(getSourcebooks())
 			.filter(mg => Utils.textMatches([
 				mg.name,

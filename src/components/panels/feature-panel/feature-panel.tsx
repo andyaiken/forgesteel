@@ -3,7 +3,6 @@ import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, 
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Collections } from '../../../utils/collections';
-import { DomainData } from '../../../data/domain-data';
 import { DomainPanel } from '../domain-panel/domain-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
@@ -12,12 +11,10 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { HeroicResourceBadge } from '../../controls/heroic-resource-badge/heroic-resource-badge';
-import { KitData } from '../../../data/kit-data';
 import { KitPanel } from '../kit-panel/kit-panel';
-import { LanguageData } from '../../../data/language-data';
 import { PanelMode } from '../../../enums/panel-mode';
-import { SkillData } from '../../../data/skill-data';
 import { Sourcebook } from '../../../models/sourcebook';
+import { SourcebookLogic } from '../../../logic/sourcebook-logic';
 import { Utils } from '../../../utils/utils';
 
 import './feature-panel.scss';
@@ -168,7 +165,7 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
-		const domains = DomainData.getDomains(props.sourcebooks as Sourcebook[]);
+		const domains = SourcebookLogic.getDomains(props.sourcebooks as Sourcebook[]);
 		const sortedDomains = Collections.sort(domains, d => d.name);
 
 		if (sortedDomains.length === 0) {
@@ -288,7 +285,7 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		const kitTypes = data.types.length > 0 ? data.types : HeroLogic.getKitTypes(props.hero);
-		const kits = KitData.getKits(props.sourcebooks as Sourcebook[])
+		const kits = SourcebookLogic.getKits(props.sourcebooks as Sourcebook[])
 			.filter(k => kitTypes.includes(k.type));
 
 		const sortedKits = Collections.sort(kits, k => k.name);
@@ -347,7 +344,7 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableLanguageChoice = (data: FeatureLanguageChoiceData) => {
-		const languages = LanguageData.getLanguages(props.sourcebooks as Sourcebook[]);
+		const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
 		const sortedLanguages = Collections.sort(languages, l => l.name);
 
 		if (sortedLanguages.length === 0) {
@@ -425,7 +422,7 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableSkillChoice = (data: FeatureSkillChoiceData) => {
-		const skills = SkillData.getSkills(props.sourcebooks as Sourcebook[])
+		const skills = SourcebookLogic.getSkills(props.sourcebooks as Sourcebook[])
 			.filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
 		const sortedSkills = Collections.sort(skills, s => s.name);
 
@@ -535,9 +532,21 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getExtraBonus = (data: FeatureBonusData) => {
-		let desc = `${data.value >= 0 ? '+' : ''}${data.value}`;
+		let desc = '';
+		if (data.value) {
+			desc += `${data.value >= 0 ? '+' : ''}${data.value}`;
+		}
 		if (data.valuePerLevel) {
-			desc += `, ${data.valuePerLevel >= 0 ? '+' : ''}${data.valuePerLevel} per level after 1st`;
+			if (desc !== '') {
+				desc += ', ';
+			}
+			desc += `${data.valuePerLevel >= 0 ? '+' : ''}${data.valuePerLevel} per level after 1st`;
+		}
+		if (data.valuePerEchelon) {
+			if (desc !== '') {
+				desc += ', ';
+			}
+			desc += `${data.valuePerEchelon >= 0 ? '+' : ''}${data.valuePerEchelon} per echelon`;
 		}
 
 		return (

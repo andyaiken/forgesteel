@@ -35,7 +35,6 @@ import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/kit-panel/kit-panel';
-import { LanguageData } from '../../../../data/language-data';
 import { MonsterEditPanel } from '../../../panels/monster-edit-panel/monster-edit-panel';
 import { MonsterGroupPanel } from '../../../panels/monster-group-panel/monster-group-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
@@ -48,6 +47,7 @@ import { PerkPanel } from '../../../panels/perk-panel/perk-panel';
 import { PerkType } from '../../../../enums/perk-type';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { SubClass } from '../../../../models/subclass';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
@@ -299,7 +299,7 @@ export const LibraryEditPage = (props: Props) => {
 					className={culture.languages.length === 0 ? 'selection-empty' : ''}
 					allowClear={true}
 					placeholder='Select language'
-					options={LanguageData.getLanguages(props.sourcebooks).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
+					options={SourcebookLogic.getLanguages(props.sourcebooks).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={culture.languages.length > 0 ? culture.languages[0] : null}
 					onChange={value => {

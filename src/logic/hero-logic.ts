@@ -457,6 +457,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 						let value = dm.value;
 						if (hero.class) {
 							value += dm.valuePerLevel * (hero.class.level - 1);
+							value += dm.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
 						}
 						immunities.push({
 							type: dm.damageType,
@@ -485,6 +486,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				value += data.value;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
+					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
 				}
 			});
 
@@ -502,6 +504,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				value += data.value;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
+					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
 				}
 			});
 
@@ -519,6 +522,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				value += data.value;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
+					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
 				}
 			});
 
@@ -558,6 +562,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				value += data.value;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
+					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
 				}
 			});
 
@@ -579,6 +584,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				value += data.value;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
+					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
 				}
 			});
 
@@ -694,6 +700,27 @@ Complex or time-consuming tests might require an action if made in combat—or c
 	};
 
 	///////////////////////////////////////////////////////////////////////////
+
+	static getEchelon = (level: number) => {
+		switch (level) {
+			case 1:
+			case 2:
+			case 3:
+				return 1;
+			case 4:
+			case 5:
+			case 6:
+				return 2;
+			case 7:
+			case 8:
+			case 9:
+				return 3;
+			case 10:
+				return 4;
+		}
+
+		return 1;
+	};
 
 	static calculateCharacteristicArrays = (primary: Characteristic[]) => {
 		const all = [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ];

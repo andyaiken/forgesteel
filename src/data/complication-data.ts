@@ -1,10 +1,8 @@
-import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from '../logic/feature-logic';
 import { SkillList } from '../enums/skill-list';
-import { Sourcebook } from '../models/sourcebook';
 
 export class ComplicationData {
 	static cultVictim: Complication = {
@@ -24,7 +22,8 @@ export class ComplicationData {
 						damageType: 'Corruption',
 						type: DamageModifierType.Weakness,
 						value: 5,
-						valuePerLevel: 0
+						valuePerLevel: 0,
+						valuePerEchelon: 0
 					}
 				]
 			})
@@ -81,13 +80,15 @@ export class ComplicationData {
 						damageType: 'Fire',
 						type: DamageModifierType.Immunity,
 						value: 5,
-						valuePerLevel: 0
+						valuePerLevel: 0,
+						valuePerEchelon: 0
 					},
 					{
 						damageType: 'Cold',
 						type: DamageModifierType.Weakness,
 						value: 5,
-						valuePerLevel: 0
+						valuePerLevel: 0,
+						valuePerEchelon: 0
 					}
 				]
 			})
@@ -106,13 +107,15 @@ export class ComplicationData {
 						damageType: 'Poison',
 						type: DamageModifierType.Immunity,
 						value: 5,
-						valuePerLevel: 0
+						valuePerLevel: 0,
+						valuePerEchelon: 0
 					},
 					{
 						damageType: 'Corruption',
 						type: DamageModifierType.Immunity,
 						value: 5,
-						valuePerLevel: 0
+						valuePerLevel: 0,
+						valuePerEchelon: 0
 					}
 				]
 			}),
@@ -217,15 +220,5 @@ Whenever you take a respite, make a Reason power roll.
 				description: 'The faction you wronged hates you, and its members would love to see you pay for your transgression.'
 			})
 		]
-	};
-
-	static getComplications = (sourcebooks: Sourcebook[]) => {
-		const list: Complication[] = [];
-
-		sourcebooks.forEach(sourcebook => {
-			list.push(...sourcebook.complications);
-		});
-
-		return Collections.sort(list, item => item.name);
 	};
 }

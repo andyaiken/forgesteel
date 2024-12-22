@@ -1,8 +1,6 @@
-import { Collections } from '../utils/collections';
 import { Culture } from '../models/culture';
 import { FeatureLogic } from '../logic/feature-logic';
 import { SkillList } from '../enums/skill-list';
-import { Sourcebook } from '../models/sourcebook';
 
 export class EnvironmentData {
 	static nomadic = FeatureLogic.createSkillChoiceFeature({
@@ -199,15 +197,5 @@ export class CultureData {
 		environment: null,
 		organization: null,
 		upbringing: null
-	};
-
-	static getCultures = (sourcebooks: Sourcebook[]) => {
-		const list: Culture[] = [];
-
-		sourcebooks.forEach(sourcebook => {
-			list.push(...sourcebook.cultures);
-		});
-
-		return Collections.sort(list, item => item.name);
 	};
 }

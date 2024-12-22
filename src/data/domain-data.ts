@@ -1,10 +1,8 @@
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
-import { Collections } from '../utils/collections';
 import { Domain } from '../models/domain';
 import { FeatureLogic } from '../logic/feature-logic';
 import { SkillList } from '../enums/skill-list';
-import { Sourcebook } from '../models/sourcebook';
 
 export class DomainData {
 	static creation: Domain = {
@@ -351,15 +349,5 @@ Choose one of the following types of weather:
 				]
 			}
 		]
-	};
-
-	static getDomains = (sourcebooks: Sourcebook[]) => {
-		const list: Domain[] = [];
-
-		sourcebooks.forEach(sourcebook => {
-			list.push(...sourcebook.domains);
-		});
-
-		return Collections.sort(list, item => item.name);
 	};
 }

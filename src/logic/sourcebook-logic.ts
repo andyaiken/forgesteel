@@ -1,14 +1,18 @@
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
+import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { Domain } from '../models/domain';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 import { Kit } from '../models/kit';
+import { Language } from '../models/language';
 import { MonsterGroup } from '../models/monster';
 import { Perk } from '../models/perk';
+import { Skill } from '../models/skill';
 import { Sourcebook } from '../models/sourcebook';
+import { SourcebookData } from '../data/sourcebook-data';
 
 export class SourcebookLogic {
 	static getElementCount = (sourcebook: Sourcebook) => {
@@ -65,6 +69,139 @@ export class SourcebookLogic {
 
 	static getMonsterGroupSourcebook = (sourcebooks: Sourcebook[], monsterGroup: MonsterGroup) => {
 		return sourcebooks.find(s => s.monsterGroups.find(mg => mg.id === monsterGroup.id));
+	};
+
+	///////////////////////////////////////////////////////////////////////////
+
+	static getSourcebooks = (homebrew: Sourcebook[]) => {
+		const list: Sourcebook[] = [
+			SourcebookData.core,
+			SourcebookData.orden
+		];
+
+		list.push(...Collections.sort(homebrew, cs => cs.name));
+
+		return list;
+	};
+
+	static getAncestries = (sourcebooks: Sourcebook[]) => {
+		const list: Ancestry[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.ancestries);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getCultures = (sourcebooks: Sourcebook[]) => {
+		const list: Culture[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.cultures);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getCareers = (sourcebooks: Sourcebook[]) => {
+		const list: Career[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.careers);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getClasses = (sourcebooks: Sourcebook[]) => {
+		const list: HeroClass[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.classes);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getComplications = (sourcebooks: Sourcebook[]) => {
+		const list: Complication[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.complications);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getKits = (sourcebooks: Sourcebook[]) => {
+		const list: Kit[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.kits);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getDomains = (sourcebooks: Sourcebook[]) => {
+		const list: Domain[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.domains);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getPerks = (sourcebooks: Sourcebook[]) => {
+		const list: Perk[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.perks);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getItems = (sourcebooks: Sourcebook[]) => {
+		const list: Item[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.items);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getMonsterGroups = (sourcebooks: Sourcebook[]) => {
+		const list: MonsterGroup[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.monsterGroups);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getSkills = (sourcebooks: Sourcebook[]) => {
+		const list: Skill[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.skills);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getLanguages = (sourcebooks: Sourcebook[]) => {
+		const list: Language[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.languages);
+		});
+
+		return Collections.sort(list, item => item.name);
 	};
 
 	///////////////////////////////////////////////////////////////////////////

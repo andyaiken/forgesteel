@@ -3,11 +3,9 @@ import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { Characteristic } from '../enums/characteristic';
-import { Collections } from '../utils/collections';
 import { FeatureLogic } from '../logic/feature-logic';
 import { Kit } from '../models/kit';
 import { KitLogic } from '../logic/kit-logic';
-import { Sourcebook } from '../models/sourcebook';
 
 export class KitData {
 	static cloakAndDagger: Kit = {
@@ -1298,15 +1296,5 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 				description: 'Your primordial damage type is lightning.'
 			})
 		]
-	};
-
-	static getKits = (sourcebooks: Sourcebook[]) => {
-		const list: Kit[] = [];
-
-		sourcebooks.forEach(sourcebook => {
-			list.push(...sourcebook.kits);
-		});
-
-		return Collections.sort(list, item => item.name);
 	};
 }

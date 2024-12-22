@@ -960,7 +960,7 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectAncestry = (ancestry: Ancestry) => {
-		const container = SourcebookData
+		const container = SourcebookLogic
 			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.ancestries.find(a => a.id === ancestry.id));
 
@@ -978,7 +978,7 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectCulture = (culture: Culture) => {
-		const container = SourcebookData
+		const container = SourcebookLogic
 			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.cultures.find(c => c.id === culture.id));
 
@@ -996,7 +996,7 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectCareer = (career: Career) => {
-		const container = SourcebookData
+		const container = SourcebookLogic
 			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.careers.find(c => c.id === career.id));
 
@@ -1014,7 +1014,7 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectClass = (heroClass: HeroClass) => {
-		const container = SourcebookData
+		const container = SourcebookLogic
 			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.classes.find(c => c.id === heroClass.id));
 
@@ -1032,7 +1032,7 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectComplication = (complication: Complication) => {
-		const container = SourcebookData
+		const container = SourcebookLogic
 			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.complications.find(c => c.id === complication.id));
 
@@ -1050,7 +1050,7 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectDomain = (domain: Domain) => {
-		const container = SourcebookData
+		const container = SourcebookLogic
 			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.domains.find(d => d.id === domain.id));
 
@@ -1068,7 +1068,7 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectKit = (kit: Kit) => {
-		const container = SourcebookData
+		const container = SourcebookLogic
 			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.kits.find(k => k.id === kit.id));
 
@@ -1086,7 +1086,7 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectPerk = (perk: Perk) => {
-		const container = SourcebookData
+		const container = SourcebookLogic
 			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.perks.find(p => p.id === perk.id));
 
@@ -1104,7 +1104,7 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectItem = (item: Item) => {
-		const container = SourcebookData
+		const container = SourcebookLogic
 			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.items.find(i => i.id === item.id));
 
@@ -1122,7 +1122,7 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectMonsterGroup = (monsterGroup: MonsterGroup) => {
-		const container = SourcebookData
+		const container = SourcebookLogic
 			.getSourcebooks(homebrewSourcebooks)
 			.find(cs => cs.monsterGroups.find(mg => mg.id === monsterGroup.id));
 
@@ -1161,7 +1161,7 @@ export const Main = (props: Props) => {
 			<EncounterModal
 				encounter={encounter}
 				playbook={playbook}
-				sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				export={format => Utils.export([ encounter.id ], encounter.name || 'Encounter', encounter, 'encounter', format)}
 				edit={() => editEncounter(encounter)}
 				delete={() => deleteEncounter(encounter)}
@@ -1254,7 +1254,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroListPage
 						heroes={heroes}
-						sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
+						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						addHero={addHero}
@@ -1266,7 +1266,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroPage
 						hero={selectedHero as Hero}
-						sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
+						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 						options={options}
 						setOptions={persistOptions}
 						goHome={showWelcome}
@@ -1292,7 +1292,7 @@ export const Main = (props: Props) => {
 				return (
 					<HeroEditPage
 						hero={selectedHero as Hero}
-						sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
+						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						saveChanges={saveEditSelectedHero}
@@ -1302,7 +1302,7 @@ export const Main = (props: Props) => {
 			case Page.LibraryList:
 				return (
 					<LibraryListPage
-						sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
+						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 						hiddenSourcebookIDs={hiddenSourcebookIDs}
 						goHome={showWelcome}
 						showAbout={showAbout}
@@ -1326,7 +1326,7 @@ export const Main = (props: Props) => {
 					<LibraryEditPage
 						element={selectedElement as Ancestry | Culture | Career | HeroClass | Complication | Domain | Kit | Perk | Item | MonsterGroup}
 						elementType={selectedElementType}
-						sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
+						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						saveChanges={saveEditSelectedElement}
@@ -1337,7 +1337,7 @@ export const Main = (props: Props) => {
 				return (
 					<EncounterListPage
 						playbook={playbook}
-						sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
+						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						viewEncounter={onSelectEncounter}
@@ -1350,7 +1350,7 @@ export const Main = (props: Props) => {
 					<EncounterEditPage
 						encounter={selectedEncounter as Encounter}
 						playbook={playbook}
-						sourcebooks={SourcebookData.getSourcebooks(homebrewSourcebooks)}
+						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 						goHome={showWelcome}
 						showAbout={showAbout}
 						showMonster={onSelectMonster}

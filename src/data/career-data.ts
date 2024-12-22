@@ -1,11 +1,9 @@
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { Career } from '../models/career';
-import { Collections } from '../utils/collections';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from '../logic/feature-logic';
 import { SkillList } from '../enums/skill-list';
-import { Sourcebook } from '../models/sourcebook';
 
 export class CareerData {
 	static artisan: Career = {
@@ -406,15 +404,5 @@ Choose one of the following effects:
 			],
 			selectedID: null
 		}
-	};
-
-	static getCareers = (sourcebooks: Sourcebook[]) => {
-		const list: Career[] = [];
-
-		sourcebooks.forEach(sourcebook => {
-			list.push(...sourcebook.careers);
-		});
-
-		return Collections.sort(list, item => item.name);
 	};
 }

@@ -8,13 +8,12 @@ import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
-import { LanguageData } from '../../../data/language-data';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
-import { SkillData } from '../../../data/skill-data';
 import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
+import { SourcebookLogic } from '../../../logic/sourcebook-logic';
 import { Utils } from '../../../utils/utils';
 
 import './rules-modal.scss';
@@ -67,7 +66,7 @@ export const RulesModal = (props: Props) => {
 							<div key={sl}>
 								<HeaderText>{sl}</HeaderText>
 								{
-									SkillData.getSkills(sourcebooks)
+									SourcebookLogic.getSkills(sourcebooks)
 										.filter(s => s.list === sl)
 										.map(s => (
 											<Field key={s.name} label={s.name} value={s.description} />
@@ -106,7 +105,7 @@ export const RulesModal = (props: Props) => {
 
 		const getLanguagesSection = () => {
 			const sourcebooks = props.hero.settingIDs.map(id => props.sourcebooks.find(s => s.id === id)).filter(s => !!s);
-			const languages = LanguageData.getLanguages(sourcebooks);
+			const languages = SourcebookLogic.getLanguages(sourcebooks);
 
 			return (
 				<div>

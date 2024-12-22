@@ -3,17 +3,13 @@ import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '
 import { Feature, FeatureBonusData, FeatureData } from '../../../../models/feature';
 import { ReactNode, useState } from 'react';
 import { Ancestry } from '../../../../models/ancestry';
-import { AncestryData } from '../../../../data/ancestry-data';
 import { AncestryPanel } from '../../../panels/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Career } from '../../../../models/career';
-import { CareerData } from '../../../../data/career-data';
 import { CareerPanel } from '../../../panels/career-panel/career-panel';
 import { Characteristic } from '../../../../enums/characteristic';
-import { ClassData } from '../../../../data/class-data';
 import { ClassPanel } from '../../../panels/class-panel/class-panel';
 import { Complication } from '../../../../models/complication';
-import { ComplicationData } from '../../../../data/complication-data';
 import { ComplicationPanel } from '../../../panels/complication-panel/complication-panel';
 import { Culture } from '../../../../models/culture';
 import { CulturePanel } from '../../../panels/culture-panel/culture-panel';
@@ -26,12 +22,12 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
-import { LanguageData } from '../../../../data/language-data';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { ThunderboltOutlined } from '@ant-design/icons';
 
 import './hero-edit-page.scss';
@@ -442,7 +438,7 @@ interface AncestrySectionProps {
 
 const AncestrySection = (props: AncestrySectionProps) => {
 	try {
-		const ancestries = AncestryData.getAncestries(props.sourcebooks);
+		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks);
 		const options = ancestries.map(a => (
 			<SelectablePanel key={a.id} onSelect={() => props.selectAncestry(a)}>
 				<AncestryPanel ancestry={a} />
@@ -506,7 +502,7 @@ interface CultureSectionProps {
 
 const CultureSection = (props: CultureSectionProps) => {
 	try {
-		const cultures = CultureData.getCultures(props.sourcebooks);
+		const cultures = SourcebookLogic.getCultures(props.sourcebooks);
 		cultures.unshift(CultureData.bespoke);
 		const options = cultures.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
@@ -525,7 +521,7 @@ const CultureSection = (props: CultureSectionProps) => {
 				));
 
 			if (props.hero.culture.id === CultureData.bespoke.id) {
-				const languages = LanguageData.getLanguages(props.sourcebooks);
+				const languages = SourcebookLogic.getLanguages(props.sourcebooks);
 
 				choices.unshift(
 					<SelectablePanel key='bespoke'>
@@ -623,7 +619,7 @@ interface CareerSectionProps {
 
 const CareerSection = (props: CareerSectionProps) => {
 	try {
-		const careers = CareerData.getCareers(props.sourcebooks);
+		const careers = SourcebookLogic.getCareers(props.sourcebooks);
 		const options = careers.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectCareer(c)}>
 				<CareerPanel career={c} />
@@ -703,7 +699,7 @@ interface ClassSectionProps {
 
 const ClassSection = (props: ClassSectionProps) => {
 	try {
-		const classes = ClassData.getClasses(props.sourcebooks);
+		const classes = SourcebookLogic.getClasses(props.sourcebooks);
 		const options = classes.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectClass(c)}>
 				<ClassPanel heroClass={c} />
@@ -832,7 +828,7 @@ interface ComplicationSectionProps {
 
 const ComplicationSection = (props: ComplicationSectionProps) => {
 	try {
-		const complications = ComplicationData.getComplications(props.sourcebooks);
+		const complications = SourcebookLogic.getComplications(props.sourcebooks);
 		const options = complications.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectComplication(c)}>
 				<ComplicationPanel complication={c} />

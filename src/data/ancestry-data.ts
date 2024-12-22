@@ -3,11 +3,9 @@ import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { Ancestry } from '../models/ancestry';
 import { Characteristic } from '../enums/characteristic';
-import { Collections } from '../utils/collections';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from '../logic/feature-logic';
-import { Sourcebook } from '../models/sourcebook';
 
 export class AncestryData {
 	static devil: Ancestry = {
@@ -57,7 +55,8 @@ export class AncestryData {
 									type: DamageModifierType.Immunity,
 									damageType: 'Weapon',
 									value: 2,
-									valuePerLevel: 0
+									valuePerLevel: 0,
+									valuePerEchelon: 0
 								}
 							]
 						}),
@@ -142,7 +141,8 @@ export class AncestryData {
 									type: DamageModifierType.Immunity,
 									damageType: 'Cold',
 									value: 5,
-									valuePerLevel: 0
+									valuePerLevel: 0,
+									valuePerEchelon: 0
 								}
 							]
 						}),
@@ -156,7 +156,8 @@ export class AncestryData {
 									type: DamageModifierType.Immunity,
 									damageType: 'Corruption',
 									value: 5,
-									valuePerLevel: 0
+									valuePerLevel: 0,
+									valuePerEchelon: 0
 								}
 							]
 						}),
@@ -170,7 +171,8 @@ export class AncestryData {
 									type: DamageModifierType.Immunity,
 									damageType: 'Fire',
 									value: 5,
-									valuePerLevel: 0
+									valuePerLevel: 0,
+									valuePerEchelon: 0
 								}
 							]
 						}),
@@ -184,7 +186,8 @@ export class AncestryData {
 									type: DamageModifierType.Immunity,
 									damageType: 'Lightning',
 									value: 5,
-									valuePerLevel: 0
+									valuePerLevel: 0,
+									valuePerEchelon: 0
 								}
 							]
 						}),
@@ -198,7 +201,8 @@ export class AncestryData {
 									type: DamageModifierType.Immunity,
 									damageType: 'Poison',
 									value: 5,
-									valuePerLevel: 0
+									valuePerLevel: 0,
+									valuePerEchelon: 0
 								}
 							]
 						}),
@@ -420,13 +424,15 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 						damageType: 'Magic',
 						type: DamageModifierType.Immunity,
 						value: 2,
-						valuePerLevel: 1
+						valuePerLevel: 1,
+						valuePerEchelon: 0
 					},
 					{
 						damageType: 'Psionic',
 						type: DamageModifierType.Immunity,
 						value: 2,
-						valuePerLevel: 1
+						valuePerLevel: 1,
+						valuePerEchelon: 0
 					}
 				]
 			}),
@@ -614,31 +620,36 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 						damageType: 'Cold',
 						type: DamageModifierType.Immunity,
 						value: 1,
-						valuePerLevel: 1
+						valuePerLevel: 1,
+						valuePerEchelon: 0
 					},
 					{
 						damageType: 'Corruption',
 						type: DamageModifierType.Immunity,
 						value: 1,
-						valuePerLevel: 1
+						valuePerLevel: 1,
+						valuePerEchelon: 0
 					},
 					{
 						damageType: 'Lightning',
 						type: DamageModifierType.Immunity,
 						value: 1,
-						valuePerLevel: 1
+						valuePerLevel: 1,
+						valuePerEchelon: 0
 					},
 					{
 						damageType: 'Poison',
 						type: DamageModifierType.Immunity,
 						value: 1,
-						valuePerLevel: 1
+						valuePerLevel: 1,
+						valuePerEchelon: 0
 					},
 					{
 						damageType: 'Fire',
 						type: DamageModifierType.Weakness,
 						value: 5,
-						valuePerLevel: 0
+						valuePerLevel: 0,
+						valuePerEchelon: 0
 					}
 				]
 			}),
@@ -683,20 +694,11 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 						damageType: 'Psionic',
 						type: DamageModifierType.Immunity,
 						value: 5,
-						valuePerLevel: 0
+						valuePerLevel: 0,
+						valuePerEchelon: 0
 					}
 				]
 			})
 		]
-	};
-
-	static getAncestries = (sourcebooks: Sourcebook[]) => {
-		const list: Ancestry[] = [];
-
-		sourcebooks.forEach(sourcebook => {
-			list.push(...sourcebook.ancestries);
-		});
-
-		return Collections.sort(list, item => item.name);
 	};
 }

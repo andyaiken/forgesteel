@@ -64,8 +64,8 @@ export const MonsterPanel = (props: Props) => {
 							.map(ch => <Field key={ch} orientation='vertical' label={ch} value={MonsterLogic.getCharacteristic(props.monster, ch)} />)
 					}
 				</div>
-				{immunities.length > 0 ? <Field label='Immunities' value={immunities.join(', ')} /> : null}
-				{weaknesses.length > 0 ? <Field label='Weaknesses' value={weaknesses.join(', ')} /> : null}
+				{immunities.length > 0 ? <Field label='Immunities' value={immunities.map(mod => `${mod.type} ${mod.value}`).join(', ')} /> : null}
+				{weaknesses.length > 0 ? <Field label='Weaknesses' value={weaknesses.map(mod => `${mod.type} ${mod.value}`).join(', ')} /> : null}
 				{
 					features.length > 0 ?
 						<Space direction='vertical' style={{ width: '100%' }}>

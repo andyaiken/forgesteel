@@ -229,9 +229,9 @@ export class CareerData {
 				id: 'mages-apprentice-title',
 				name: 'Arcane Trick',
 				description: 'You cast an entertaining spell that creates a minor but impressive magical effect.',
-				type: AbilityLogic.createTypeAction(),
+				type: AbilityLogic.type.createAction(),
 				keywords: [ AbilityKeyword.Magic ],
-				distance: [ AbilityLogic.createDistanceSelf() ],
+				distance: [ AbilityLogic.distance.createSelf() ],
 				target: 'Self',
 				effect: `
 Choose one of the following effects:

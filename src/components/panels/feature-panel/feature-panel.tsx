@@ -535,9 +535,23 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getExtraBonus = (data: FeatureBonusData) => {
-		let desc = `${data.value >= 0 ? '+' : ''}${data.value}`;
+		const sign = data.value >= 0 ? '+' : '';
+		let desc = data.value !== 0 ? `${sign}${data.value}` : '';
+
 		if (data.valuePerLevel) {
-			desc += `, ${data.valuePerLevel >= 0 ? '+' : ''}${data.valuePerLevel} per level after 1st`;
+			if (desc !== '') {
+				desc += ', ';
+			}
+			const signLevel = data.valuePerLevel >= 0 ? '+' : '';
+			desc += `${signLevel}${data.valuePerLevel} per level after 1st`;
+		}
+
+		if (data.valuePerEchelon) {
+			if (desc !== '') {
+				desc += ', ';
+			}
+			const signEchelon = data.valuePerEchelon >= 0 ? '+' : '';
+			desc += `${signEchelon}${data.valuePerEchelon} per echelon`;
 		}
 
 		return (

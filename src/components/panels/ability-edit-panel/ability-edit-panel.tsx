@@ -9,6 +9,7 @@ import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Expander } from '../../controls/expander/expander';
+import { FormatLogic } from '../../../logic/format-logic';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { MultiLine } from '../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
@@ -127,7 +128,7 @@ export const AbilityEditPanel = (props: Props) => {
 
 	const addDistance = () => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.distance.push(AbilityLogic.createDistanceReach(1));
+		copy.distance.push(AbilityLogic.distance.createReach(1));
 		setAbility(copy);
 		props.onChange(copy);
 	};
@@ -438,7 +439,7 @@ export const AbilityEditPanel = (props: Props) => {
 											ability.distance.map((distance, n) => (
 												<Expander
 													key={n}
-													title={AbilityLogic.getDistance(distance)}
+													title={FormatLogic.getAbilityDistance(distance)}
 													extra={[
 														{
 															title: 'Move Up',

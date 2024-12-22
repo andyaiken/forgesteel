@@ -104,9 +104,9 @@ export class HeroLogic {
 				id: 'free-melee',
 				name: 'Free Strike (melee)',
 				description: '',
-				type: AbilityLogic.createTypeAction(true),
+				type: AbilityLogic.type.createAction(true),
 				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistanceReach(1) ],
+				distance: [ AbilityLogic.distance.createReach(1) ],
 				target: '1 creature or object',
 				powerRoll: AbilityLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might, Characteristic.Agility ],
@@ -119,9 +119,9 @@ export class HeroLogic {
 				id: 'free-ranged',
 				name: 'Free Strike (ranged)',
 				description: '',
-				type: AbilityLogic.createTypeAction(true),
+				type: AbilityLogic.type.createAction(true),
 				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.createDistanceRanged(5) ],
+				distance: [ AbilityLogic.distance.createRanged(5) ],
 				target: '1 creature or object',
 				powerRoll: AbilityLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might, Characteristic.Agility ],
@@ -159,8 +159,8 @@ export class HeroLogic {
 					id: 'mobility',
 					name: 'Mobility',
 					description: '',
-					type: AbilityLogic.createTypeTrigger('An enemy ends its turn adjacent to you.', true),
-					distance: [ AbilityLogic.createDistanceSelf() ],
+					type: AbilityLogic.type.createTrigger('An enemy ends its turn adjacent to you.', true),
+					distance: [ AbilityLogic.distance.createSelf() ],
 					target: 'Self',
 					effect: 'You shift up to 2 squares.'
 				}));
@@ -176,9 +176,9 @@ export class HeroLogic {
 				id: 'advance',
 				name: 'Advance',
 				description: '',
-				type: AbilityLogic.createTypeMove(),
+				type: AbilityLogic.type.createMove(),
 				keywords: [],
-				distance: [ AbilityLogic.createDistanceSelf() ],
+				distance: [ AbilityLogic.distance.createSelf() ],
 				target: 'Self',
 				effect: 'When you take the Advance move action, you can move a number of squares up to your speed. You can break up this movement granted with your maneuver and action however you wish.'
 			}));
@@ -186,9 +186,9 @@ export class HeroLogic {
 				id: 'disengage',
 				name: 'Disengage',
 				description: '',
-				type: AbilityLogic.createTypeMove(),
+				type: AbilityLogic.type.createMove(),
 				keywords: [],
-				distance: [ AbilityLogic.createDistanceSelf() ],
+				distance: [ AbilityLogic.distance.createSelf() ],
 				target: 'Self',
 				effect: 'When you take the Disengage move action, you can shift 1 square. Some class features, kits, or other rules let you shift more than 1 square when you take this move action, if they do, you can break up the movement granted by this move action with your maneuver and action however you wish.'
 			}));
@@ -196,9 +196,9 @@ export class HeroLogic {
 				id: 'ride',
 				name: 'Ride',
 				description: '',
-				type: AbilityLogic.createTypeMove(),
+				type: AbilityLogic.type.createMove(),
 				keywords: [],
-				distance: [ AbilityLogic.createDistanceSelf() ],
+				distance: [ AbilityLogic.distance.createSelf() ],
 				target: 'Self',
 				effect: 'You can only take the Ride move action while mounted on another creature. When you take the Ride move action, you cause your mount to move up to their speed, taking you with them. Alternatively, you can use this move action to have your mount use the Disengage move action as a free triggered action. A mount can only be ridden with this move action once per round.'
 			}));
@@ -206,9 +206,9 @@ export class HeroLogic {
 				id: 'aid-attack',
 				name: 'Aid Attack',
 				description: '',
-				type: AbilityLogic.createTypeManeuver(),
+				type: AbilityLogic.type.createManeuver(),
 				keywords: [],
-				distance: [ AbilityLogic.createDistanceReach(1) ],
+				distance: [ AbilityLogic.distance.createReach(1) ],
 				target: '1 enemy',
 				effect: 'The next attack an ally makes against the target before the start of your next turn has an edge.'
 			}));
@@ -216,9 +216,9 @@ export class HeroLogic {
 				id: 'catch-breath',
 				name: 'Catch Breath',
 				description: '',
-				type: AbilityLogic.createTypeManeuver(),
+				type: AbilityLogic.type.createManeuver(),
 				keywords: [],
-				distance: [ AbilityLogic.createDistanceSelf() ],
+				distance: [ AbilityLogic.distance.createSelf() ],
 				target: 'Self',
 				effect: `
 By using the Catch Breath maneuver, you spend a Recovery and heal an amount equal to your recovery value. In addition, you also gain the benefit of the Defend action.
@@ -228,11 +228,11 @@ If you are dying, you can’t take the Catch Breath maneuver, but other creature
 				id: 'drink-potion',
 				name: 'Drink Potion',
 				description: '',
-				type: AbilityLogic.createTypeManeuver(),
+				type: AbilityLogic.type.createManeuver(),
 				keywords: [],
 				distance: [
-					AbilityLogic.createDistanceSelf(),
-					AbilityLogic.createDistanceReach(1)
+					AbilityLogic.distance.createSelf(),
+					AbilityLogic.distance.createReach(1)
 				],
 				target: 'Self or 1 creature',
 				effect: 'You can use this maneuver to drink a potion yourself or to administer a potion to an adjacent creature.'
@@ -241,9 +241,9 @@ If you are dying, you can’t take the Catch Breath maneuver, but other creature
 				id: 'escape-grab',
 				name: 'Escape Grab',
 				description: '',
-				type: AbilityLogic.createTypeManeuver(),
+				type: AbilityLogic.type.createManeuver(),
 				keywords: [],
-				distance: [ AbilityLogic.createDistanceSelf() ],
+				distance: [ AbilityLogic.distance.createSelf() ],
 				target: 'Self',
 				preEffect: 'While you are grabbed by another creature, you can attempt to escape by making a resistance roll. You take a bane on the roll if the creature’s size is larger than yours.',
 				powerRoll: AbilityLogic.createPowerRoll({
@@ -257,9 +257,9 @@ If you are dying, you can’t take the Catch Breath maneuver, but other creature
 				id: 'grab',
 				name: 'Grab',
 				description: '',
-				type: AbilityLogic.createTypeManeuver(),
+				type: AbilityLogic.type.createManeuver(),
 				keywords: [ AbilityKeyword.Melee ],
-				distance: [ AbilityLogic.createDistanceReach(1) ],
+				distance: [ AbilityLogic.distance.createReach(1) ],
 				target: '1 creature the same size or smaller than you',
 				powerRoll: AbilityLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might ],
@@ -273,9 +273,9 @@ If you are dying, you can’t take the Catch Breath maneuver, but other creature
 				id: 'hide',
 				name: 'Hide',
 				description: '',
-				type: AbilityLogic.createTypeManeuver(),
+				type: AbilityLogic.type.createManeuver(),
 				keywords: [],
-				distance: [ AbilityLogic.createDistanceSelf() ],
+				distance: [ AbilityLogic.distance.createSelf() ],
 				target: 'Self',
 				effect: 'You attempt to hide from other creatures who aren’t observing you while you have cover or concealment.'
 			}));
@@ -283,9 +283,9 @@ If you are dying, you can’t take the Catch Breath maneuver, but other creature
 				id: 'knockback',
 				name: 'Knockback',
 				description: '',
-				type: AbilityLogic.createTypeManeuver(),
+				type: AbilityLogic.type.createManeuver(),
 				keywords: [ AbilityKeyword.Melee ],
-				distance: [ AbilityLogic.createDistanceReach(1) ],
+				distance: [ AbilityLogic.distance.createReach(1) ],
 				target: '1 creature the same size or smaller than you',
 				powerRoll: AbilityLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might ],
@@ -299,9 +299,9 @@ If you are dying, you can’t take the Catch Breath maneuver, but other creature
 				id: 'make-assist-test',
 				name: 'Make Or Assist A Test',
 				description: '',
-				type: AbilityLogic.createTypeManeuver(),
+				type: AbilityLogic.type.createManeuver(),
 				keywords: [],
-				distance: [ AbilityLogic.createDistanceSelf() ],
+				distance: [ AbilityLogic.distance.createSelf() ],
 				target: 'Self',
 				effect: `
 Many tests are maneuvers if made in combat. Searching a chest with a Reason test, picking a door’s lock with an Agility test, or lifting a portcullis with a Might test would all be maneuvers. Assisting a test is also a maneuver in combat.
@@ -311,9 +311,9 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				id: 'search',
 				name: 'Search',
 				description: '',
-				type: AbilityLogic.createTypeManeuver(),
+				type: AbilityLogic.type.createManeuver(),
 				keywords: [],
-				distance: [ AbilityLogic.createDistanceSelf() ],
+				distance: [ AbilityLogic.distance.createSelf() ],
 				target: 'Self',
 				effect: 'You can use this maneuver to attempt to search for creatures hidden from you.'
 			}));
@@ -321,11 +321,11 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				id: 'stand-up',
 				name: 'Stand Up',
 				description: '',
-				type: AbilityLogic.createTypeManeuver(),
+				type: AbilityLogic.type.createManeuver(),
 				keywords: [],
 				distance: [
-					AbilityLogic.createDistanceSelf(),
-					AbilityLogic.createDistanceReach(1)
+					AbilityLogic.distance.createSelf(),
+					AbilityLogic.distance.createReach(1)
 				],
 				target: 'Self or 1 creature',
 				effect: 'You can use this maneuver to stand up if you are prone, ending that condition. Alternatively, you can use this maneuver to make an adjacent prone creature stand up.'
@@ -334,9 +334,9 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				id: 'charge',
 				name: 'Charge',
 				description: '',
-				type: AbilityLogic.createTypeAction(),
+				type: AbilityLogic.type.createAction(),
 				keywords: [],
-				distance: [ AbilityLogic.createDistanceSelf() ],
+				distance: [ AbilityLogic.distance.createSelf() ],
 				target: 'Self',
 				effect: 'When you take the Charge action, you move up to your speed in a straight line, then make a melee free strike against a creature when you end your move. You can’t shift when you charge.'
 			}));
@@ -344,9 +344,9 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				id: 'defend',
 				name: 'Defend',
 				description: '',
-				type: AbilityLogic.createTypeAction(),
+				type: AbilityLogic.type.createAction(),
 				keywords: [],
-				distance: [ AbilityLogic.createDistanceSelf() ],
+				distance: [ AbilityLogic.distance.createSelf() ],
 				target: 'Self',
 				effect: 'When you take the Defend action, all attacks against you have a double bane until the end of your next turn. You gain no benefit from this action while another creature is taunted by you.'
 			}));
@@ -354,11 +354,11 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				id: 'heal',
 				name: 'Heal',
 				description: '',
-				type: AbilityLogic.createTypeAction(),
+				type: AbilityLogic.type.createAction(),
 				keywords: [],
 				distance: [
-					AbilityLogic.createDistanceSelf(),
-					AbilityLogic.createDistanceReach(1)
+					AbilityLogic.distance.createSelf(),
+					AbilityLogic.distance.createReach(1)
 				],
 				target: 'Self or 1 creature',
 				effect: 'You use your action to employ medicine or inspiring words to make an adjacent creature feel better and stay in the fight. The creature can spend a Recovery to regain Stamina, or can make a resistance roll against a “(resistance ends)” effect they are suffering.'
@@ -468,6 +468,29 @@ Complex or time-consuming tests might require an action if made in combat—or c
 		return Collections.sort(immunities, i => i.type);
 	};
 
+	static getEchelon = (hero: Hero) => {
+		if (hero.class) {
+			switch (hero.class.level) {
+				case 1:
+				case 2:
+				case 3:
+					return 1;
+				case 4:
+				case 5:
+				case 6:
+					return 2;
+				case 7:
+				case 8:
+				case 9:
+					return 3;
+				case 10:
+					return 4;
+			}
+		};
+
+		return 1;
+	};
+
 	///////////////////////////////////////////////////////////////////////////
 
 	static getStamina = (hero: Hero) => {
@@ -485,6 +508,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				value += data.value;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
+					value += data.valuePerEchelon * (this.getEchelon(hero));
 				}
 			});
 
@@ -502,6 +526,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				value += data.value;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
+					value += data.valuePerEchelon * (this.getEchelon(hero));
 				}
 			});
 
@@ -519,6 +544,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				value += data.value;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
+					value += data.valuePerEchelon * (this.getEchelon(hero));
 				}
 			});
 
@@ -558,6 +584,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				value += data.value;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
+					value += data.valuePerEchelon * (this.getEchelon(hero));
 				}
 			});
 
@@ -579,6 +606,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				value += data.value;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
+					value += data.valuePerEchelon * (this.getEchelon(hero));
 				}
 			});
 

@@ -232,9 +232,9 @@ export class AncestryData {
 								id: 'dragon-knight-feature-2c',
 								name: 'Draconian Pride',
 								description: 'You let loose a mighty roar to repel your foes and shake their spirits.',
-								type: AbilityLogic.createTypeAction(),
+								type: AbilityLogic.type.createAction(),
 								keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-								distance: [ AbilityLogic.createDistance({ type: AbilityDistanceType.Burst, value: 2 }) ],
+								distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 								target: 'All enemies',
 								powerRoll: AbilityLogic.createPowerRoll({
 									characteristic: [ Characteristic.Might, Characteristic.Presence ],
@@ -406,8 +406,8 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 					id: 'human-feature-1',
 					name: 'Detect the Supernatural',
 					description: 'You open your awareness to detect supernatural creatures and phenomena.',
-					type: AbilityLogic.createTypeManeuver(),
-					distance: [ AbilityLogic.createDistanceSelf() ],
+					type: AbilityLogic.type.createManeuver(),
+					distance: [ AbilityLogic.distance.createSelf() ],
 					target: 'Self',
 					effect: 'Until the end of your next turn, you know the location of any supernatural object, Undead, Construct, or creature from another plane of existence within 5 squares of you, even if you don’t have line of effect to them. You know if you’re detecting an item or a creature, and you know if a creature is Undead, a Construct, or from another plane of existence.'
 				})
@@ -526,9 +526,9 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 					id: 'polder-feature-2',
 					name: 'Shadowmeld',
 					description: 'You become an actual shadow.',
-					type: AbilityLogic.createTypeManeuver(),
+					type: AbilityLogic.type.createManeuver(),
 					keywords: [ AbilityKeyword.Magic ],
-					distance: [ AbilityLogic.createDistanceSelf() ],
+					distance: [ AbilityLogic.distance.createSelf() ],
 					target: 'Self',
 					effect: 'You flatten yourself into a shadow against a wall or floor you are touching, and become hidden from any creature you have cover or concealment from or who isn’t observing you. While in shadow form, you have full awareness of your surroundings, attacks against you and tests made to find you take a bane, and you can’t move or take actions or maneuvers except to exit this form. Any ability or effect that targets more than 1 square affects you in this form only if it explicitly affects the surface you are flattened against. You can exit this form as a maneuver.'
 				})
@@ -589,9 +589,9 @@ You can carve a magic rune onto your skin. The rune you carve determines the ben
 					id: 'revenant-feature-2b',
 					name: 'Detonate Sigil',
 					description: 'A magical sigil you placed on a creature explodes with energy.',
-					type: AbilityLogic.createTypeAction(),
+					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-					distance: [ AbilityLogic.createDistanceRanged(10) ],
+					distance: [ AbilityLogic.distance.createRanged(10) ],
 					target: '1 creature with your sigil',
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],

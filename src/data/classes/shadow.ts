@@ -53,8 +53,8 @@ export const shadow: HeroClass = {
 						id: 'shadow-1-5',
 						name: 'Hesitation Is Weakness',
 						description: 'Waiting for your enemies to act was never your style.',
-						type: AbilityLogic.createTypeTrigger('Another hero ends their turn.', true),
-						distance: [ AbilityLogic.createDistanceSelf() ],
+						type: AbilityLogic.type.createTrigger('Another hero ends their turn.', true),
+						distance: [ AbilityLogic.distance.createSelf() ],
 						target: 'Self',
 						cost: 1,
 						effect: 'You take your turn immediately.'
@@ -83,11 +83,11 @@ export const shadow: HeroClass = {
 			id: 'shadow-ability-1',
 			name: 'Distracting Pain',
 			description: 'Your precise strikes let your allies take advantage of a target’s agony.',
-			type: AbilityLogic.createTypeAction(),
+			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.createDistanceReach(1),
-				AbilityLogic.createDistanceRanged(3)
+				AbilityLogic.distance.createReach(1),
+				AbilityLogic.distance.createRanged(3)
 			],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -101,11 +101,11 @@ export const shadow: HeroClass = {
 			id: 'shadow-ability-2',
 			name: 'I Work Better Alone',
 			description: 'Facing an enemy alone lets you exploit their overconfidence.',
-			type: AbilityLogic.createTypeAction(),
+			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.createDistanceReach(1),
-				AbilityLogic.createDistanceRanged(3)
+				AbilityLogic.distance.createReach(1),
+				AbilityLogic.distance.createRanged(3)
 			],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -120,10 +120,10 @@ export const shadow: HeroClass = {
 			id: 'shadow-ability-3',
 			name: 'Shot And Step',
 			description: 'Being fast on your feet makes your ranged attacks especially deadly.',
-			type: AbilityLogic.createTypeAction(),
+			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.createDistanceRanged(5)
+				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -138,10 +138,10 @@ export const shadow: HeroClass = {
 			id: 'shadow-ability-4',
 			name: 'Sucker Slice',
 			description: 'Keeping an enemy’s focus on you lets your ally hit hard.',
-			type: AbilityLogic.createTypeAction(),
+			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.createDistanceReach(1)
+				AbilityLogic.distance.createReach(1)
 			],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -156,9 +156,9 @@ export const shadow: HeroClass = {
 			id: 'shadow-ability-5',
 			name: 'Blade Dance',
 			description: 'As you move across the battlefield, every foe within reach feels your wrath.',
-			type: AbilityLogic.createTypeAction(),
+			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.createDistanceSelf() ],
+			distance: [ AbilityLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 3,
 			preEffect: 'You move up to your speed, and that movement doesn’t provoke opportunity attacks. You make one power roll that targets each enemy who becomes adjacent to you during the move.',
@@ -173,10 +173,10 @@ export const shadow: HeroClass = {
 			id: 'shadow-ability-6',
 			name: 'Quick Pursuit',
 			description: 'A foe forced away from you might assume they’re out of danger, but they’ll soon learn otherwise.',
-			type: AbilityLogic.createTypeAction(),
+			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.createDistanceReach(1)
+				AbilityLogic.distance.createReach(1)
 			],
 			target: '1 creature',
 			cost: 3,
@@ -192,11 +192,11 @@ export const shadow: HeroClass = {
 			id: 'shadow-ability-7',
 			name: 'Two Throats At Once',
 			description: 'Striking two foes at once is second nature to you.',
-			type: AbilityLogic.createTypeAction(),
+			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.createDistanceReach(1),
-				AbilityLogic.createDistanceRanged(5)
+				AbilityLogic.distance.createReach(1),
+				AbilityLogic.distance.createRanged(5)
 			],
 			target: '2 creatures or objects',
 			cost: 3,
@@ -211,11 +211,11 @@ export const shadow: HeroClass = {
 			id: 'shadow-ability-8',
 			name: 'Wounding Strike',
 			description: 'You leave your foe bleeding out after a devastating attack.',
-			type: AbilityLogic.createTypeAction(),
+			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.createDistanceReach(1),
-				AbilityLogic.createDistanceRanged(3)
+				AbilityLogic.distance.createReach(1),
+				AbilityLogic.distance.createRanged(3)
 			],
 			target: '1 creature',
 			cost: 3,
@@ -231,10 +231,10 @@ export const shadow: HeroClass = {
 			id: 'shadow-ability-9',
 			name: 'Assassinate',
 			description: 'You seize the perfect moment and strike with fatal precision!',
-			type: AbilityLogic.createTypeAction(),
+			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.createDistanceReach(1)
+				AbilityLogic.distance.createReach(1)
 			],
 			target: '1 creature',
 			cost: 5,
@@ -249,10 +249,10 @@ export const shadow: HeroClass = {
 			id: 'shadow-ability-10',
 			name: 'Get In, Get Out',
 			description: 'Move unexpectedly, strike fast, and be gone!',
-			type: AbilityLogic.createTypeAction(),
+			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.createDistanceReach(1)
+				AbilityLogic.distance.createReach(1)
 			],
 			target: '1 creature',
 			cost: 5,
@@ -268,10 +268,10 @@ export const shadow: HeroClass = {
 			id: 'shadow-ability-11',
 			name: 'Impairing Shot',
 			description: 'Your attack leaves a foe in the perfect position for your allies to finish them.',
-			type: AbilityLogic.createTypeAction(),
+			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.createDistanceRanged(5)
+				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
 			cost: 5,
@@ -286,9 +286,9 @@ export const shadow: HeroClass = {
 			id: 'shadow-ability-12',
 			name: 'Quickness',
 			description: 'You put on a burst of magical speed to get the job done.',
-			type: AbilityLogic.createTypeAction(),
+			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic ],
-			distance: [ AbilityLogic.createDistanceSelf() ],
+			distance: [ AbilityLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 5,
 			effect: 'You make two signature attacks that each deal extra damage equal to twice your Agility.'
@@ -312,9 +312,9 @@ export const shadow: HeroClass = {
 								id: 'shadow-sub-1-1-2',
 								name: 'Black Ash Teleport',
 								description: 'In a swirl of black ash, you step from one place to another.',
-								type: AbilityLogic.createTypeManeuver(),
+								type: AbilityLogic.type.createManeuver(),
 								keywords: [ AbilityKeyword.Magic ],
-								distance: [ AbilityLogic.createDistanceSelf() ],
+								distance: [ AbilityLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You teleport up to 5 squares. If you end this movement in concealment or cover, you can use the Hide maneuver even if you are observed.',
 								spend: [
@@ -329,9 +329,9 @@ export const shadow: HeroClass = {
 								id: 'shadow-sub-1-1-3',
 								name: 'In All This Confusion',
 								description: 'You teleport away in a plume of black smoke to avoid danger.',
-								type: AbilityLogic.createTypeTrigger('You take damage.'),
+								type: AbilityLogic.type.createTrigger('You take damage.'),
 								keywords: [ AbilityKeyword.Magic ],
-								distance: [ AbilityLogic.createDistanceSelf() ],
+								distance: [ AbilityLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You teleport up to 4 squares, halve the triggering damage, and don’t suffer any effect associated with the damage.'
 							})
@@ -358,8 +358,8 @@ export const shadow: HeroClass = {
 								id: 'shadow-sub-2-1-2',
 								name: 'Coat The Blade',
 								description: 'Just a little poison goes a long way.',
-								type: AbilityLogic.createTypeManeuver(),
-								distance: [ AbilityLogic.createDistanceSelf() ],
+								type: AbilityLogic.type.createManeuver(),
+								distance: [ AbilityLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You coat one of your weapons with a harmful poison. The next creature you damage with an ability that uses that weapon takes extra poison damage equal to twice your Presence score or the target is weakened (EoT). You choose the effect when you apply the poison. The poison loses its potency after you damage the creature or at the end of the encounter.',
 								spend: [
@@ -379,8 +379,8 @@ export const shadow: HeroClass = {
 								id: 'shadow-sub-2-1-4',
 								name: 'Defensive Roll',
 								description: '',
-								type: AbilityLogic.createTypeTrigger('Another creature damages you.'),
-								distance: [ AbilityLogic.createDistanceSelf() ],
+								type: AbilityLogic.type.createTrigger('Another creature damages you.'),
+								distance: [ AbilityLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You shift up to 2 squares, halve the triggering damage, and don’t suffer any effect associated with the damage. If you end this movement with concealment or cover, you can use the Hide maneuver even if you are observed.',
 								spend: [
@@ -414,9 +414,9 @@ export const shadow: HeroClass = {
 								id: 'shadow-sub-3-1-2',
 								name: 'I’m On Your Side',
 								description: 'Taking on the illusory countenance of another creature gives you an advantage on subterfuge.',
-								type: AbilityLogic.createTypeManeuver(),
+								type: AbilityLogic.type.createManeuver(),
 								keywords: [ AbilityKeyword.Magic ],
-								distance: [ AbilityLogic.createDistanceSelf() ],
+								distance: [ AbilityLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'Choose a creature of your size, whose size is no more than 1 greater than yours, and who is within 10 squares of you. Your body is covered in an illusion that makes you appear to be that creature. This illusion covers your entire body, including clothing and armor, and changes your voice to sound like the creature. While this illusion lasts, you gain an edge on attacks against and Presence tests made to interact with the creature’s allies, and you don’t provoke opportunity attacks from those allies. These benefits don’t apply against the creature whose appearance you’ve taken on. The illusion ends when you harm another creature, when you and another creature physically interact, when you use this ability again, or when you end the illusion (no action required).'
 							})
@@ -426,9 +426,9 @@ export const shadow: HeroClass = {
 								id: 'shadow-sub-3-1-3',
 								name: 'Misdirection',
 								description: 'You sow a moment of confusion in combat, to your enemy’s peril.',
-								type: AbilityLogic.createTypeTrigger('An enemy attacks you.'),
+								type: AbilityLogic.type.createTrigger('An enemy attacks you.'),
 								keywords: [ AbilityKeyword.Magic ],
-								distance: [ AbilityLogic.createDistanceSelf() ],
+								distance: [ AbilityLogic.distance.createSelf() ],
 								target: 'Self',
 								cost: 1,
 								effect: 'Choose an enemy within distance of the attack. The attack targets that enemy instead.'

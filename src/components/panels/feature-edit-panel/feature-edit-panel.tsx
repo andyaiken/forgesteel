@@ -59,9 +59,9 @@ export const FeatureEditPanel = (props: Props) => {
 						id: Utils.guid(),
 						name: '',
 						description: '',
-						type: AbilityLogic.createTypeAction(),
+						type: AbilityLogic.type.createAction(),
 						keywords: [],
-						distance: [ AbilityLogic.createDistanceReach(1) ],
+						distance: [ AbilityLogic.distance.createReach(1) ],
 						target: ''
 					})
 				};
@@ -202,6 +202,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setValuePerLevel = (value: number) => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
 			copy.valuePerLevel = value;
+			setData(copy);
+		};
+
+		const setValuePerEchelon = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
+			copy.valuePerEchelon = value;
 			setData(copy);
 		};
 
@@ -440,6 +446,8 @@ export const FeatureEditPanel = (props: Props) => {
 						<NumberSpin min={0} value={data.value} onChange={setValue} />
 						<HeaderText>Value Per Level</HeaderText>
 						<NumberSpin min={0} value={data.valuePerLevel} onChange={setValuePerLevel} />
+						<HeaderText>Value Per Echelon</HeaderText>
+						<NumberSpin min={0} value={data.valuePerEchelon} onChange={setValuePerEchelon} />
 					</Space>
 				);
 			}

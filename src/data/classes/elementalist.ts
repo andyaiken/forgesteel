@@ -19,32 +19,32 @@ export const elementalist: HeroClass = {
 		{
 			level: 1,
 			features: [
-				FeatureLogic.createBonusFeature({
+				FeatureLogic.feature.createBonusFeature({
 					id: 'elementalist-stamina',
 					field: FeatureField.Stamina,
 					value: 15,
 					valuePerLevel: 6
 				}),
-				FeatureLogic.createBonusFeature({
+				FeatureLogic.feature.createBonusFeature({
 					id: 'elementalist-recoveries',
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
-				FeatureLogic.createSkillFeature({
+				FeatureLogic.feature.createSkillFeature({
 					id: 'elementalist-1-1',
 					skill: 'Magic'
 				}),
-				FeatureLogic.createSkillChoiceFeature({
+				FeatureLogic.feature.createSkillChoiceFeature({
 					id: 'elementalist-1-2',
 					listOptions: [ SkillList.Crafting, SkillList.Lore ],
 					count: 3
 				}),
-				FeatureLogic.createFeature({
+				FeatureLogic.feature.createFeature({
 					id: 'elementalist-1-3',
 					name: 'Essence',
 					description: 'At the start of each of your turns during combat, you gain 2 essence.'
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'elementalist-1-4',
 						name: 'Hurl Element',
@@ -62,12 +62,12 @@ export const elementalist: HeroClass = {
 						effect: 'When you make this attack, choose the damage type from one of the following options: acid, cold, corruption, fire, lightning, poison, or sonic.'
 					})
 				}),
-				FeatureLogic.createFeature({
+				FeatureLogic.feature.createFeature({
 					id: 'elementalist-1-5',
 					name: 'Persistent Magic',
 					description: 'Some of your heroic abilities have the Persistent keyword. Whenever you use a persistent ability, you decide whether you want to maintain it. If you maintain a persistent ability in combat, you reduce the amount of essence you earn at the start of your turn by an amount equal to the ability’s persistent value, which enables the ability’s persistent effect. All your active persistent abilities end when combat ends.'
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'elementalist-1-6',
 						name: 'Practical Magic',
@@ -83,18 +83,18 @@ Choose one of the following effects:
 • You teleport a number of squares equal to your Reason score.`
 					})
 				}),
-				FeatureLogic.createKitChoiceFeature({
+				FeatureLogic.feature.createKitChoiceFeature({
 					id: 'elementalist-1-6.5'
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'elementalist-1-7',
 					cost: 0
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'elementalist-1-8',
 					cost: 3
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'elementalist-1-9',
 					cost: 5
 				})
@@ -334,12 +334,12 @@ Choose one of the following effects:
 				{
 					level: 1,
 					features: [
-						FeatureLogic.createAbilityCostFeature({
+						FeatureLogic.feature.createAbilityCostFeature({
 							id: 'elementalist-sub-1-1-0',
 							keywords: [ AbilityKeyword.Earth ],
 							modifier: -1
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'elementalist-sub-1-1-1',
 								name: 'Manipulate Earth',
@@ -362,7 +362,7 @@ Choose one of the following effects:
 								]
 							})
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'elementalist-sub-1-1-2',
 								name: 'Earthen Force',
@@ -393,12 +393,12 @@ Choose one of the following effects:
 				{
 					level: 1,
 					features: [
-						FeatureLogic.createAbilityCostFeature({
+						FeatureLogic.feature.createAbilityCostFeature({
 							id: 'elementalist-sub-2-1-0',
 							keywords: [ AbilityKeyword.Fire ],
 							modifier: -1
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'elementalist-sub-2-1-1',
 								name: 'Melt',
@@ -417,7 +417,7 @@ Choose one of the following effects:
 								]
 							})
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'elementalist-sub-2-1-2',
 								name: 'Explosive Assistance',
@@ -448,19 +448,19 @@ Choose one of the following effects:
 				{
 					level: 1,
 					features: [
-						FeatureLogic.createAbilityCostFeature({
+						FeatureLogic.feature.createAbilityCostFeature({
 							id: 'elementalist-sub-3-1-0',
 							keywords: [ AbilityKeyword.Green ],
 							modifier: -1
 						}),
-						FeatureLogic.createFeature({
+						FeatureLogic.feature.createFeature({
 							id: 'elementalist-sub-3-1-1',
 							name: 'Speech Of The Wild',
 							description: `
 You can speak with and understand Animals, Plant Creatures, and Monstrosities, even if they don’t share a language with you. Your ability to communicate with such creatures doesn’t make them inherently more intelligent or less hostile toward you.
 Additionally, when you touch a living plant object, you can communicate with it telepathically. You can use words to communicate with the plant, but it communicates with you only by transmitting feelings and sensations that can’t be overly specific.`
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'elementalist-sub-3-1-2',
 								name: 'Mend The Soul',
@@ -485,17 +485,17 @@ Additionally, when you touch a living plant object, you can communicate with it 
 				{
 					level: 1,
 					features: [
-						FeatureLogic.createAbilityCostFeature({
+						FeatureLogic.feature.createAbilityCostFeature({
 							id: 'elementalist-sub-4-1-0',
 							keywords: [ AbilityKeyword.Void ],
 							modifier: -1
 						}),
-						FeatureLogic.createFeature({
+						FeatureLogic.feature.createFeature({
 							id: 'elementalist-sub-4-1-1',
 							name: 'Void Sense',
 							description: 'You instantly recognize illusions for what they are, you can see invisible creatures, and supernatural effects can’t conceal creatures and objects from you. You always know if an area or object you observe is magical or affected by magic, and the specifics of what that magic can do.'
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'elementalist-sub-4-1-2',
 								name: 'Shared Void Sense',
@@ -513,7 +513,7 @@ Additionally, when you touch a living plant object, you can communicate with it 
 								]
 							})
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'elementalist-sub-4-1-3',
 								name: 'Void Embrace',

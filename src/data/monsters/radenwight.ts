@@ -32,7 +32,7 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 		}
 	],
 	malice: [
-		FeatureLogic.createAbilityFeature({
+		FeatureLogic.feature.createAbilityFeature({
 			ability: AbilityLogic.createAbility({
 				id: 'radenwight-malice-1',
 				name: 'Trouser Cut (3pts)',
@@ -51,12 +51,12 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 				effect: 'If a target is wearing clothing covering the lower half of their body, they must use a maneuver to pull that clothing up before they can move.'
 			})
 		}),
-		FeatureLogic.createFeature({
+		FeatureLogic.feature.createFeature({
 			id: 'radenwight-malice-2',
 			name: 'Rat Race (5pts)',
 			description: 'Each radenwight shifts up to their speed. Wherever a radenwight ends this movement adjacent to at least one other radenwight, they can make a melee free strike.'
 		}),
-		FeatureLogic.createFeature({
+		FeatureLogic.feature.createFeature({
 			id: 'radenwight-malice-3',
 			name: 'Wall of Rats (7pts)',
 			description: `
@@ -85,7 +85,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 1, 0),
 			features: [
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-1-feature-1',
 						name: 'Dagger Dance',
@@ -105,7 +105,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'If the mischiever is hidden when they use this ability, they can target two creatures.'
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-1-feature-2',
 						name: 'Ready Rodent',
@@ -133,7 +133,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 0, 1),
 			features: [
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-2-feature-1',
 						name: 'Stinky Glissando',
@@ -149,7 +149,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						})
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-2-feature-2',
 						name: 'Ready Rodent',
@@ -177,7 +177,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(0, 1, 1, 0, -1),
 			features: [
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-3-feature-1',
 						name: 'Rapier Flunge',
@@ -193,7 +193,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						})
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-3-feature-2',
 						name: 'Ready Rodent',
@@ -221,7 +221,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(1, 1, -1, 0, 0),
 			features: [
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-4-feature-1',
 						name: 'Eyes-On-Me Shot',
@@ -238,7 +238,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'An ally of the redeye within 2 squares of the target can shift up to 2 squares.'
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-4-feature-2',
 						name: 'Ready Rodent',
@@ -266,7 +266,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(1, 1, -1, 0, 0),
 			features: [
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-5-feature-1',
 						name: 'Lockjaw',
@@ -283,7 +283,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'While the target is grabbed, they take 2 damage at the start of each of the bruxer’s turns.'
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-5-feature-2',
 						name: 'Flurry of Bites',
@@ -300,7 +300,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						})
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-5-feature-3',
 						name: 'Ready Rodent',
@@ -328,7 +328,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 1, 1),
 			features: [
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-6-feature-1',
 						name: 'Piercing Trill',
@@ -348,7 +348,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'The piper or an ally within distance regains Stamina equal to half the damage dealt.'
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-6-feature-2',
 						name: 'Vivace Vivace!',
@@ -360,7 +360,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'Each target who has used their Ready Rodent ability since their last turn regains the use of their triggered action.'
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-6-feature-3',
 						name: 'Ready Rodent',
@@ -388,12 +388,12 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 0, 1),
 			features: [
-				FeatureLogic.createFeature({
+				FeatureLogic.feature.createFeature({
 					id: 'radenwight-7-feature-1',
 					name: 'Gymratstics',
 					description: 'The ratcrobat gains an edge on attacks against larger creatures.'
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-7-feature-2',
 						name: 'En Garde!',
@@ -410,7 +410,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'The ratcrobat can shift up to 2 squares after attacking the first target, then can shift 1 square after attacking the second target.'
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-7-feature-3',
 						name: 'Over Here, Thanks',
@@ -421,7 +421,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'Slide 1; the ratcrobat can then shift into the square the target left.'
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-7-feature-4',
 						name: 'Ready Rodent',
@@ -449,7 +449,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, 2),
 			features: [
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-8-feature-1',
 						name: 'Cacophony',
@@ -466,7 +466,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'Each of the maestro’s allies can use Ready Rodent as a free triggered action once before the end of the round.'
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-8-feature-2',
 						name: 'Tempo Change',
@@ -489,7 +489,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						]
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-8-feature-3',
 						name: 'Ranged Ready Rodent',
@@ -500,12 +500,12 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'The maestro makes a free strike against the target.'
 					})
 				}),
-				FeatureLogic.createFeature({
+				FeatureLogic.feature.createFeature({
 					id: 'radenwight-8-feature-4',
 					name: 'End Effect',
 					description: 'At the end of their turn, the maestro can take 5 damage to end one EoE effect affecting them. This damage can’t be reduced in any way.'
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-8-feature-5',
 						name: 'Overture',
@@ -516,7 +516,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'Each target shifts up to their speed or takes the Defend action.'
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-8-feature-6',
 						name: 'Solo Act',
@@ -527,7 +527,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'Until the end of their next turn, the target’s Stamina can’t be reduced below 1, their speed is doubled, and their next power roll is automatically a tier 3 result.'
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-8-feature-7',
 						name: 'Rondo of Rat',

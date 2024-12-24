@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureTitleData } from '../../../models/feature';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Collections } from '../../../utils/collections';
@@ -13,8 +13,10 @@ import { HeroLogic } from '../../../logic/hero-logic';
 import { HeroicResourceBadge } from '../../controls/heroic-resource-badge/heroic-resource-badge';
 import { KitPanel } from '../kit-panel/kit-panel';
 import { PanelMode } from '../../../enums/panel-mode';
+import { PerkPanel } from '../perk-panel/perk-panel';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
+import { TitlePanel } from '../title-panel/title-panel';
 import { Utils } from '../../../utils/utils';
 
 import './feature-panel.scss';
@@ -421,6 +423,60 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
+	const getEditablePerk = (data: FeaturePerkData) => {
+		if (!props.hero) {
+			return null;
+		}
+
+		const perks = SourcebookLogic.getPerks(props.sourcebooks as Sourcebook[]);
+		const sortedPerks = Collections.sort(perks, p => p.name);
+
+		if (sortedPerks.length === 0) {
+			return (
+				<Alert
+					type='info'
+					showIcon={true}
+					message='There are no options to choose for this feature.'
+				/>
+			);
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Select
+					style={{ width: '100%' }}
+					className={data.selected.length === 0 ? 'selection-empty' : ''}
+					mode={data.count === 1 ? undefined : 'multiple'}
+					maxCount={data.count === 1 ? undefined : data.count}
+					allowClear={true}
+					placeholder={data.count === 1 ? 'Select a perk' : 'Select perks'}
+					options={sortedPerks.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
+					onChange={value => {
+						let ids: string[] = [];
+						if (data.count === 1) {
+							ids = value !== undefined ? [ value as string ] : [];
+						} else {
+							ids = value as string[];
+						}
+						const dataCopy = JSON.parse(JSON.stringify(data)) as FeaturePerkData;
+						dataCopy.selected = [];
+						ids.forEach(id => {
+							const perk = perks.find(p => p.id === id);
+							if (perk) {
+								dataCopy.selected.push(perk);
+							}
+						});
+						if (props.setData) {
+							props.setData(props.feature.id, dataCopy);
+						}
+					}}
+				/>
+			</Space>
+		);
+	};
+
 	const getEditableSkillChoice = (data: FeatureSkillChoiceData) => {
 		const skills = SourcebookLogic.getSkills(props.sourcebooks as Sourcebook[])
 			.filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
@@ -500,6 +556,60 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
+	const getEditableTitle = (data: FeatureTitleData) => {
+		if (!props.hero) {
+			return null;
+		}
+
+		const titles = SourcebookLogic.getTitles(props.sourcebooks as Sourcebook[]);
+		const sortedTitles = Collections.sort(titles, t => t.name);
+
+		if (sortedTitles.length === 0) {
+			return (
+				<Alert
+					type='info'
+					showIcon={true}
+					message='There are no options to choose for this feature.'
+				/>
+			);
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Select
+					style={{ width: '100%' }}
+					className={data.selected.length === 0 ? 'selection-empty' : ''}
+					mode={data.count === 1 ? undefined : 'multiple'}
+					maxCount={data.count === 1 ? undefined : data.count}
+					allowClear={true}
+					placeholder={data.count === 1 ? 'Select a title' : 'Select titles'}
+					options={sortedTitles.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
+					onChange={value => {
+						let ids: string[] = [];
+						if (data.count === 1) {
+							ids = value !== undefined ? [ value as string ] : [];
+						} else {
+							ids = value as string[];
+						}
+						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureTitleData;
+						dataCopy.selected = [];
+						ids.forEach(id => {
+							const title = titles.find(t => t.id === id);
+							if (title) {
+								dataCopy.selected.push(title);
+							}
+						});
+						if (props.setData) {
+							props.setData(props.feature.id, dataCopy);
+						}
+					}}
+				/>
+			</Space>
+		);
+	};
+
 	const getEditable = () => {
 		switch (props.feature.type) {
 			case FeatureType.Choice:
@@ -514,8 +624,12 @@ export const FeaturePanel = (props: Props) => {
 				return getEditableKit(props.feature.data as FeatureKitData);
 			case FeatureType.LanguageChoice:
 				return getEditableLanguageChoice(props.feature.data as FeatureLanguageChoiceData);
+			case FeatureType.Perk:
+				return getEditablePerk(props.feature.data as FeaturePerkData);
 			case FeatureType.SkillChoice:
 				return getEditableSkillChoice(props.feature.data as FeatureSkillChoiceData);
+			case FeatureType.Title:
+				return getEditableTitle(props.feature.data as FeatureTitleData);
 		}
 
 		return null;
@@ -717,6 +831,26 @@ export const FeaturePanel = (props: Props) => {
 		return null;
 	};
 
+	const getExtraPerk = (data: FeaturePerkData) => {
+		if (data.selected.length > 0) {
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					{
+						data.selected.map(p => <PerkPanel key={p.id} perk={p} mode={PanelMode.Full} />)
+					}
+				</Space>
+			);
+		}
+
+		if (!props.feature.description) {
+			return (
+				<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'perks' : 'perk'}.</div>
+			);
+		}
+
+		return null;
+	};
+
 	const getExtraSize = (data: FeatureSizeData) => {
 		if (!props.feature.description) {
 			return (
@@ -757,6 +891,26 @@ export const FeaturePanel = (props: Props) => {
 		return null;
 	};
 
+	const getExtraTitle = (data: FeatureTitleData) => {
+		if (data.selected.length > 0) {
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					{
+						data.selected.map(t => <TitlePanel key={t.id} title={t} mode={PanelMode.Full} />)
+					}
+				</Space>
+			);
+		}
+
+		if (!props.feature.description) {
+			return (
+				<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'titles' : 'title'}.</div>
+			);
+		}
+
+		return null;
+	};
+
 	const getExtra = () => {
 		switch (props.feature.type) {
 			case FeatureType.AbilityCost:
@@ -781,12 +935,16 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraLanguage(props.feature.data as FeatureLanguageData);
 			case FeatureType.LanguageChoice:
 				return getExtraLanguageChoice(props.feature.data as FeatureLanguageChoiceData);
+			case FeatureType.Perk:
+				return getExtraPerk(props.feature.data as FeaturePerkData);
 			case FeatureType.Size:
 				return getExtraSize(props.feature.data as FeatureSizeData);
 			case FeatureType.Skill:
 				return getExtraSkill(props.feature.data as FeatureSkillData);
 			case FeatureType.SkillChoice:
 				return getExtraSkillChoice(props.feature.data as FeatureSkillChoiceData);
+			case FeatureType.Title:
+				return getExtraTitle(props.feature.data as FeatureTitleData);
 		}
 
 		return null;

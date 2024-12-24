@@ -7,8 +7,11 @@ import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Kit } from './kit';
 import { KitType } from '../enums/kit';
+import { Perk } from './perk';
+import { PerkType } from '../enums/perk-type';
 import { Size } from './size';
 import { SkillList } from '../enums/skill-list';
+import { Title } from './title';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FeatureData { }
@@ -80,6 +83,12 @@ export interface FeatureMultipleData extends FeatureData {
 	features: Feature[];
 };
 
+export interface FeaturePerkData extends FeatureData {
+	types: PerkType[];
+	count: number;
+	selected: Perk[];
+};
+
 export interface FeatureSizeData extends FeatureData {
 	size: Size;
 };
@@ -93,6 +102,11 @@ export interface FeatureSkillChoiceData extends FeatureData {
 	listOptions: SkillList[];
 	count: number;
 	selected: string[];
+};
+
+export interface FeatureTitleData extends FeatureData {
+	count: number;
+	selected: Title[];
 };
 
 export interface Feature extends Element {

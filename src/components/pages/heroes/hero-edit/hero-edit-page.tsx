@@ -912,8 +912,8 @@ const DetailsSection = (props: DetailsSectionProps) => {
 						style={{ width: '100%' }}
 						placeholder='Select'
 						mode='multiple'
-						options={props.sourcebooks.map(cs => ({ value: cs.id, label: cs.name }))}
-						optionRender={option => <div className='ds-text'>{option.data.label || 'Unnamed Collection'}</div>}
+						options={props.sourcebooks.map(cs => ({ value: cs.id, label: cs.name || 'Unnamed Collection' }))}
+						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 						value={props.hero.settingIDs}
 						onChange={props.setSettingIDs}
 					/>

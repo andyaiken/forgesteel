@@ -15,26 +15,26 @@ export const nullClass: HeroClass = {
 		{
 			level: 1,
 			features: [
-				FeatureLogic.createBonusFeature({
+				FeatureLogic.feature.createBonusFeature({
 					id: 'null-stamina',
 					field: FeatureField.Stamina,
 					value: 21,
 					valuePerLevel: 9
 				}),
-				FeatureLogic.createBonusFeature({
+				FeatureLogic.feature.createBonusFeature({
 					id: 'null-recoveries',
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'null-1-6',
 					cost: 0
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'null-1-7',
 					cost: 3
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'null-1-8',
 					cost: 5
 				})

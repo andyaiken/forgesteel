@@ -19,28 +19,28 @@ export const conduit: HeroClass = {
 		{
 			level: 1,
 			features: [
-				FeatureLogic.createBonusFeature({
+				FeatureLogic.feature.createBonusFeature({
 					id: 'conduit-stamina',
 					field: FeatureField.Stamina,
 					value: 18,
 					valuePerLevel: 8
 				}),
-				FeatureLogic.createBonusFeature({
+				FeatureLogic.feature.createBonusFeature({
 					id: 'conduit-recoveries',
 					field: FeatureField.Recoveries,
 					value: 10
 				}),
-				FeatureLogic.createSkillChoiceFeature({
+				FeatureLogic.feature.createSkillChoiceFeature({
 					id: 'conduit-1-1',
 					listOptions: [ SkillList.Interpersonal, SkillList.Lore ],
 					count: 2
 				}),
-				FeatureLogic.createFeature({
+				FeatureLogic.feature.createFeature({
 					id: 'conduit-1-2',
 					name: 'Piety',
 					description: 'At the start of each of your turns during combat, you gain 2 piety.'
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'conduit-1-3',
 						name: 'Prayer',
@@ -73,7 +73,7 @@ Whenever you get the tier 3 result of the Prayer ability, you can choose one of 
 * **War**: Your attacks deal extra damage equal to twice your Intuition score until the end of your next turn.`
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'conduit-1-4',
 						name: 'Healing Grace',
@@ -95,7 +95,7 @@ For each piety spent, you can choose one of the following enhancements:
 						]
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'conduit-1-5',
 						name: 'Pious Force',
@@ -113,12 +113,12 @@ For each piety spent, you can choose one of the following enhancements:
 						effect: 'You can choose to change the damage type to holy.'
 					})
 				}),
-				FeatureLogic.createChoiceFeature({
+				FeatureLogic.feature.createChoiceFeature({
 					id: 'conduit-1-6',
 					name: 'Triggered Action',
 					options: [
 						{
-							feature: FeatureLogic.createAbilityFeature({
+							feature: FeatureLogic.feature.createAbilityFeature({
 								ability: AbilityLogic.createAbility({
 									id: 'conduit-1-6-1',
 									name: 'Divine Disruption',
@@ -139,7 +139,7 @@ For each piety spent, you can choose one of the following enhancements:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.createAbilityFeature({
+							feature: FeatureLogic.feature.createAbilityFeature({
 								ability: AbilityLogic.createAbility({
 									id: 'conduit-1-6-2',
 									name: 'Holy Infusion',
@@ -161,26 +161,26 @@ For each piety spent, you can choose one of the following enhancements:
 						}
 					]
 				}),
-				FeatureLogic.createDomainChoiceFeature({
+				FeatureLogic.feature.createDomainChoiceFeature({
 					id: 'conduit-1-6.4',
 					count: 2
 				}),
-				FeatureLogic.createDomainFeatureFeature({
+				FeatureLogic.feature.createDomainFeatureFeature({
 					id: 'conduit-1-6.5',
 					level: 1
 				}),
-				FeatureLogic.createKitChoiceFeature({
+				FeatureLogic.feature.createKitChoiceFeature({
 					id: 'conduit-1-6.6'
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'conduit-1-7',
 					cost: 0
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'conduit-1-8',
 					cost: 3
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'conduit-1-9',
 					cost: 5
 				})

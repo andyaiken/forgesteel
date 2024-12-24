@@ -20,48 +20,48 @@ export const fury: HeroClass = {
 		{
 			level: 1,
 			features: [
-				FeatureLogic.createBonusFeature({
+				FeatureLogic.feature.createBonusFeature({
 					id: 'fury-stamina',
 					field: FeatureField.Stamina,
 					value: 21,
 					valuePerLevel: 10
 				}),
-				FeatureLogic.createBonusFeature({
+				FeatureLogic.feature.createBonusFeature({
 					id: 'fury-recoveries',
 					field: FeatureField.Recoveries,
 					value: 12
 				}),
-				FeatureLogic.createSkillFeature({
+				FeatureLogic.feature.createSkillFeature({
 					id: 'fury-1-1',
 					skill: 'Nature'
 				}),
-				FeatureLogic.createSkillChoiceFeature({
+				FeatureLogic.feature.createSkillChoiceFeature({
 					id: 'fury-1-2',
 					listOptions: [ SkillList.Exploration, SkillList.Intrigue ],
 					count: 2
 				}),
-				FeatureLogic.createFeature({
+				FeatureLogic.feature.createFeature({
 					id: 'fury-1-3',
 					name: 'Rage',
 					description: 'At the start of each of your turns during combat, you gain 1d3 rage.'
 				}),
-				FeatureLogic.createFeature({
+				FeatureLogic.feature.createFeature({
 					id: 'fury-1-4',
 					name: 'Mighty Leaps',
 					description: 'You always succeed on Might tests made to jump. You can still roll to see if you get a reward result.'
 				}),
-				FeatureLogic.createKitChoiceFeature({
+				FeatureLogic.feature.createKitChoiceFeature({
 					id: 'fury-1-4.5'
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'fury-1-5',
 					cost: 0
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'fury-1-6',
 					cost: 3
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'fury-1-7',
 					cost: 5
 				})
@@ -276,11 +276,11 @@ export const fury: HeroClass = {
 				{
 					level: 1,
 					features: [
-						FeatureLogic.createSkillFeature({
+						FeatureLogic.feature.createSkillFeature({
 							id: 'fury-sub-1-1-1',
 							skill: 'Lift'
 						}),
-						FeatureLogic.createFeature({
+						FeatureLogic.feature.createFeature({
 							id: 'fury-sub-1-1-2',
 							name: 'Primordial Strength',
 							description: `
@@ -290,7 +290,7 @@ When you damage an object with a weapon attack, it takes an additional 5 damage.
 * **Rage 4**: You gain a bonus to weapon damage equal to twice your Might score, instead of once your Might score, if you are at least two squares from where you started your turn when you attack.
 * **Rage 6**: You have a double edge on Might tests and resistance rolls.`
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'fury-sub-1-1-3',
 								name: 'Relentless Toss',
@@ -324,11 +324,11 @@ When you damage an object with a weapon attack, it takes an additional 5 damage.
 				{
 					level: 1,
 					features: [
-						FeatureLogic.createSkillFeature({
+						FeatureLogic.feature.createSkillFeature({
 							id: 'fury-sub-3-1-1',
 							skill: 'Hide'
 						}),
-						FeatureLogic.createFeature({
+						FeatureLogic.feature.createFeature({
 							id: 'fury-sub-2-1-2',
 							name: 'Primordial Cunning',
 							description: `
@@ -338,7 +338,7 @@ You are never surprised. Additionally, whenever you would push a target with for
 * **Rage 4**: Once per turn, when you slide a target or when you move adjacent to a target during a shift, you can deal weapon damage to the target equal to twice your Agility score, instead of once your Agility score.
 * **Rage 6**: You have a double edge on Agility tests and resistance rolls.`
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'fury-sub-2-1-3',
 								name: 'Uncanny Dodge',
@@ -369,16 +369,16 @@ You are never surprised. Additionally, whenever you would push a target with for
 				{
 					level: 1,
 					features: [
-						FeatureLogic.createSkillFeature({
+						FeatureLogic.feature.createSkillFeature({
 							id: 'fury-sub-3-1-1',
 							skill: 'Track'
 						}),
-						FeatureLogic.createFeature({
+						FeatureLogic.feature.createFeature({
 							id: 'fury-sub-3-1-2',
 							name: 'Relentless Hunter',
 							description: 'You gain an edge on tests that use the Track skill.'
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'fury-sub-3-1-3',
 								name: 'Regeneration',
@@ -396,7 +396,7 @@ You are never surprised. Additionally, whenever you would push a target with for
 								]
 							})
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'fury-sub-3-1-4',
 								name: 'Animal Form',
@@ -414,7 +414,7 @@ You are never surprised. Additionally, whenever you would push a target with for
 								]
 							})
 						}),
-						FeatureLogic.createKitTypeFeature({
+						FeatureLogic.feature.createKitTypeFeature({
 							id: 'fury-sub-3-1-5',
 							types: [ KitType.Stormwight ]
 						})

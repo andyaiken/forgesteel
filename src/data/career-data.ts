@@ -9,15 +9,15 @@ export class CareerData {
 		name: 'Artisan',
 		description: 'You started off making and selling art or useful wares.',
 		features: [
-			FeatureLogic.createSkillChoiceFeature({
+			FeatureLogic.feature.createSkillChoiceFeature({
 				id: 'artisan-feature-1',
 				listOptions: [ SkillList.Crafting ],
 				count: 2
 			}),
-			FeatureLogic.createLanguageChoiceFeature({
+			FeatureLogic.feature.createLanguageChoiceFeature({
 				id: 'artisan-feature-2'
 			}),
-			FeatureLogic.createBonusFeature({
+			FeatureLogic.feature.createBonusFeature({
 				id: 'artisan-feature-3',
 				field: FeatureField.ProjectPoints,
 				value: 100
@@ -50,19 +50,19 @@ export class CareerData {
 		name: 'Criminal',
 		description: 'You once worked as a bandit, insurgent, smuggler, outlaw, or even as an assassin.',
 		features: [
-			FeatureLogic.createSkillFeature({
+			FeatureLogic.feature.createSkillFeature({
 				id: 'criminal-feature-1',
 				skill: 'Criminal Underworld'
 			}),
-			FeatureLogic.createSkillChoiceFeature({
+			FeatureLogic.feature.createSkillChoiceFeature({
 				id: 'criminal-feature-2',
 				listOptions: [ SkillList.Intrigue ],
 				count: 2
 			}),
-			FeatureLogic.createLanguageChoiceFeature({
+			FeatureLogic.feature.createLanguageChoiceFeature({
 				id: 'criminal-feature-3'
 			}),
-			FeatureLogic.createBonusFeature({
+			FeatureLogic.feature.createBonusFeature({
 				id: 'criminal-feature-4',
 				field: FeatureField.ProjectPoints,
 				value: 50
@@ -95,15 +95,15 @@ export class CareerData {
 		name: 'Gladiator',
 		description: 'In the past, you entertained the masses with flashy displays of violence in the arena.',
 		features: [
-			FeatureLogic.createSkillChoiceFeature({
+			FeatureLogic.feature.createSkillChoiceFeature({
 				id: 'gladiator-feature-1',
 				listOptions: [ SkillList.Exploration ],
 				count: 2
 			}),
-			FeatureLogic.createLanguageChoiceFeature({
+			FeatureLogic.feature.createLanguageChoiceFeature({
 				id: 'gladiator-feature-2'
 			}),
-			FeatureLogic.createBonusFeature({
+			FeatureLogic.feature.createBonusFeature({
 				id: 'gladiator-feature-3',
 				field: FeatureField.Renown,
 				value: 2
@@ -136,20 +136,20 @@ export class CareerData {
 		name: 'Laborer',
 		description: 'You worked as a farmer, a builder, a lumberjack, a miner, or some other profession engaged in hard manual labor.',
 		features: [
-			FeatureLogic.createSkillFeature({
+			FeatureLogic.feature.createSkillFeature({
 				id: 'laborer-feature-1',
 				skill: 'Endurance'
 			}),
-			FeatureLogic.createSkillChoiceFeature({
+			FeatureLogic.feature.createSkillChoiceFeature({
 				id: 'laborer-feature-2',
 				options: [ 'Blacksmithing' ],
 				listOptions: [ SkillList.Exploration ],
 				count: 2
 			}),
-			FeatureLogic.createLanguageChoiceFeature({
+			FeatureLogic.feature.createLanguageChoiceFeature({
 				id: 'laborer-feature-3'
 			}),
-			FeatureLogic.createBonusFeature({
+			FeatureLogic.feature.createBonusFeature({
 				id: 'laborer-feature-4',
 				field: FeatureField.ProjectPoints,
 				value: 50
@@ -182,19 +182,19 @@ export class CareerData {
 		name: 'Mage’s Apprentice',
 		description: 'For long years, you studied magic under the mentorship of a more experienced mage.',
 		features: [
-			FeatureLogic.createSkillFeature({
+			FeatureLogic.feature.createSkillFeature({
 				id: 'mages-apprentice-feature-1',
 				skill: 'Magic'
 			}),
-			FeatureLogic.createSkillChoiceFeature({
+			FeatureLogic.feature.createSkillChoiceFeature({
 				id: 'mages-apprentice-feature-2',
 				listOptions: [ SkillList.Lore ],
 				count: 2
 			}),
-			FeatureLogic.createLanguageChoiceFeature({
+			FeatureLogic.feature.createLanguageChoiceFeature({
 				id: 'mages-apprentice-feature-3'
 			}),
-			FeatureLogic.createBonusFeature({
+			FeatureLogic.feature.createBonusFeature({
 				id: 'mages-apprentice-feature-4',
 				field: FeatureField.Renown,
 				value: 1
@@ -227,16 +227,16 @@ export class CareerData {
 		name: 'Performer',
 		description: 'You can sing, act, or dance well enough that people actually pay to see you do it. Imagine that!',
 		features: [
-			FeatureLogic.createSkillChoiceFeature({
+			FeatureLogic.feature.createSkillChoiceFeature({
 				id: 'performer-feature-1',
 				options: [ 'Music', 'Performance' ]
 			}),
-			FeatureLogic.createSkillChoiceFeature({
+			FeatureLogic.feature.createSkillChoiceFeature({
 				id: 'performer-feature-2',
 				listOptions: [ SkillList.Interpersonal ],
 				count: 2
 			}),
-			FeatureLogic.createBonusFeature({
+			FeatureLogic.feature.createBonusFeature({
 				id: 'performer-feature-3',
 				field: FeatureField.Renown,
 				value: 2
@@ -269,15 +269,15 @@ export class CareerData {
 		name: 'Sage',
 		description: 'From an early age, you dedicated yourself to learning, whether you shared the knowledge of the world with others or sought out secret lore only for yourself.',
 		features: [
-			FeatureLogic.createSkillChoiceFeature({
+			FeatureLogic.feature.createSkillChoiceFeature({
 				id: 'sage-feature-1',
 				listOptions: [ SkillList.Lore ],
 				count: 2
 			}),
-			FeatureLogic.createLanguageChoiceFeature({
+			FeatureLogic.feature.createLanguageChoiceFeature({
 				id: 'sage-feature-2'
 			}),
-			FeatureLogic.createBonusFeature({
+			FeatureLogic.feature.createBonusFeature({
 				id: 'sage-feature-3',
 				field: FeatureField.ProjectPoints,
 				value: 100
@@ -310,18 +310,18 @@ export class CareerData {
 		name: 'Soldier',
 		description: 'In your formative years, you fought tirelessly in skirmishes and campaigns against enemy forces.',
 		features: [
-			FeatureLogic.createSkillChoiceFeature({
+			FeatureLogic.feature.createSkillChoiceFeature({
 				id: 'soldier-feature-1',
 				listOptions: [ SkillList.Exploration ]
 			}),
-			FeatureLogic.createSkillChoiceFeature({
+			FeatureLogic.feature.createSkillChoiceFeature({
 				id: 'soldier-feature-2',
 				listOptions: [ SkillList.Intrigue ]
 			}),
-			FeatureLogic.createLanguageChoiceFeature({
+			FeatureLogic.feature.createLanguageChoiceFeature({
 				id: 'soldier-feature-3'
 			}),
-			FeatureLogic.createBonusFeature({
+			FeatureLogic.feature.createBonusFeature({
 				id: 'soldier-feature-4',
 				field: FeatureField.Renown,
 				value: 1

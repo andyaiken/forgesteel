@@ -13,7 +13,9 @@ export enum FeatureType {
 	Language = 'Language',
 	LanguageChoice = 'Language Choice',
 	Multiple = 'Multiple Features',
+	Perk = 'Perk',
 	Size = 'Size',
 	Skill = 'Skill',
-	SkillChoice = 'Skill Choice'
+	SkillChoice = 'Skill Choice',
+	Title = 'Title'
 }

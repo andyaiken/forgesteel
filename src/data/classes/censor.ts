@@ -16,34 +16,34 @@ export const censor: HeroClass = {
 		{
 			level: 1,
 			features: [
-				FeatureLogic.createBonusFeature({
+				FeatureLogic.feature.createBonusFeature({
 					id: 'censor-stamina',
 					field: FeatureField.Stamina,
 					value: 21,
 					valuePerLevel: 12
 				}),
-				FeatureLogic.createBonusFeature({
+				FeatureLogic.feature.createBonusFeature({
 					id: 'censor-recoveries',
 					field: FeatureField.Recoveries,
 					value: 12
 				}),
-				FeatureLogic.createSkillChoiceFeature({
+				FeatureLogic.feature.createSkillChoiceFeature({
 					id: 'censor-1-1',
 					listOptions: [ SkillList.Interpersonal, SkillList.Lore ],
 					count: 2
 				}),
-				FeatureLogic.createKitChoiceFeature({
+				FeatureLogic.feature.createKitChoiceFeature({
 					id: 'censor-1-5'
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'censor-1-6',
 					cost: 0
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'censor-1-7',
 					cost: 3
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'censor-1-8',
 					cost: 5
 				})

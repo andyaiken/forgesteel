@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureTitleData } from '../models/feature';
 import { Ability } from '../models/ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from '../models/ancestry';
@@ -12,243 +12,253 @@ import { FeatureType } from '../enums/feature-type';
 import { FormatLogic } from './format-logic';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
-import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit';
-import { Perk } from '../models/perk';
+import { PerkType } from '../enums/perk-type';
 import { SkillList } from '../enums/skill-list';
 
 export class FeatureLogic {
-	static createFeature = (data: { id: string, name: string, description: string }) => {
-		return {
-			id: data.id,
-			name: data.name,
-			description: data.description,
-			type: FeatureType.Text,
-			data: null
-		} as Feature;
+	static feature = {
+		createFeature: (data: { id: string, name: string, description: string }) => {
+			return {
+				id: data.id,
+				name: data.name,
+				description: data.description,
+				type: FeatureType.Text,
+				data: null
+			} as Feature;
+		},
+		createAbilityFeature: (data: { ability: Ability }) => {
+			return {
+				id: data.ability.id,
+				name: data.ability.name,
+				description: data.ability.description,
+				type: FeatureType.Ability,
+				data: {
+					ability: data.ability
+				} as FeatureAbilityData
+			} as Feature;
+		},
+		createAbilityCostFeature: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number }) => {
+			return {
+				id: data.id,
+				name: data.name || `${data.keywords.join(', ')} cost modifier`,
+				description: data.description || '',
+				type: FeatureType.AbilityCost,
+				data: {
+					keywords: data.keywords,
+					modifier: data.modifier
+				} as FeatureAbilityCostData
+			} as Feature;
+		},
+		createBonusFeature: (data: { id: string, name?: string, description?: string, field: FeatureField, value?: number, valuePerLevel?: number, valuePerEchelon?: number }) => {
+			return {
+				id: data.id,
+				name: data.name || data.field.toString(),
+				description: data.description || '',
+				type: FeatureType.Bonus,
+				data: {
+					field: data.field,
+					value: data.value || 0,
+					valuePerLevel: data.valuePerLevel || 0,
+					valuePerEchelon: data.valuePerEchelon || 0
+				} as FeatureBonusData
+			} as Feature;
+		},
+		createChoiceFeature: (data: { id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], count?: number }) => {
+			const count = data.count || 1;
+			return {
+				id: data.id,
+				name: data.name || 'Choice',
+				description: data.description || (count > 1 ? `Choose ${count} options.` : 'Choose an option.'),
+				type: FeatureType.Choice,
+				data: {
+					options: data.options,
+					count: count,
+					selected: []
+				} as FeatureChoiceData
+			} as Feature;
+		},
+		createClassAbilityChoiceFeature: (data: { id: string, name?: string, description?: string, cost: number, count?: number }) => {
+			const count = data.count || 1;
+			return {
+				id: data.id,
+				name: data.name || 'Ability',
+				description: data.description || `Choose a ${data.cost === 0 ? 'signature' : `${data.cost}pt`} ability.`,
+				type: FeatureType.ClassAbility,
+				data: {
+					cost: data.cost,
+					count: count,
+					selectedIDs: []
+				} as FeatureClassAbilityData
+			} as Feature;
+		},
+		createDamageModifierFeature: (data: { id: string, name?: string, description?: string, modifiers: DamageModifier[] }) => {
+			return {
+				id: data.id,
+				name: data.name || 'Damage Modifier',
+				description: data.description || data.modifiers.map(FormatLogic.getDamageModifier).join(', '),
+				type: FeatureType.DamageModifier,
+				data: {
+					modifiers: data.modifiers
+				} as FeatureDamageModifierData
+			} as Feature;
+		},
+		createDomainChoiceFeature: (data: { id: string, name?: string, description?: string, count?: number }) => {
+			const count = data.count || 1;
+			return {
+				id: data.id,
+				name: data.name || 'Domain',
+				description: data.description || (count > 1 ? `Choose ${count} domains.` : 'Choose a domain.'),
+				type: FeatureType.Domain,
+				data: {
+					count: count,
+					selected: []
+				} as FeatureDomainData
+			} as Feature;
+		},
+		createDomainFeatureFeature: (data: { id: string, name?: string, description?: string, level: number, count?: number }) => {
+			const count = data.count || 1;
+			return {
+				id: data.id,
+				name: data.name || 'Domain Feature Choice',
+				description: data.description || (count > 1 ? `Choose ${count} options.` : 'Choose an option.'),
+				type: FeatureType.DomainFeature,
+				data: {
+					level: data.level,
+					count: count,
+					selected: []
+				} as FeatureDomainFeatureData
+			} as Feature;
+		},
+		createKitChoiceFeature: (data: { id: string, name?: string, description?: string, types?: KitType[], count?: number }) => {
+			const count = data.count || 1;
+			return {
+				id: data.id,
+				name: data.name || 'Kit',
+				description: data.description || (count > 1 ? `Choose ${count} kits.` : 'Choose a kit.'),
+				type: FeatureType.Kit,
+				data: {
+					types: data.types || [],
+					count: count,
+					selected: []
+				} as FeatureKitData
+			} as Feature;
+		},
+		createKitTypeFeature: (data: { id: string, name?: string, description?: string, types: KitType[] }) => {
+			return {
+				id: data.id,
+				name: data.name || 'Kit Type',
+				description: data.description || `Allow ${data.types.join(', ')} kits.`,
+				type: FeatureType.KitType,
+				data: {
+					types: data.types || []
+				} as FeatureKitTypeData
+			} as Feature;
+		},
+		screateLanguageFeature: (data: { id: string, name?: string, description?: string, language: string }) => {
+			return {
+				id: data.id,
+				name: data.name || data.language,
+				description: data.description || '',
+				type: FeatureType.Language,
+				data: {
+					language: data.language
+				} as FeatureLanguageData
+			} as Feature;
+		},
+		createLanguageChoiceFeature: (data: { id: string, name?: string, description?: string, options?: string[], count?: number, selected?: string[] }) => {
+			const count = data.count || 1;
+			return {
+				id: data.id,
+				name: data.name || 'Language',
+				description: data.description || '',
+				type: FeatureType.LanguageChoice,
+				data: {
+					options: data.options || [],
+					count: count,
+					selected: data.selected || []
+				} as FeatureLanguageChoiceData
+			} as Feature;
+		},
+		createMultipleFeature: (data: { id: string, name?: string, description?: string, features: Feature[] }) => {
+			return {
+				id: data.id,
+				name: data.name || 'Multiple Features',
+				description: data.description || '',
+				type: FeatureType.Multiple,
+				data: {
+					features: data.features
+				} as FeatureMultipleData
+			} as Feature;
+		},
+		createPerkFeature: (data: { id: string, name?: string, description?: string, types?: PerkType[], count?: number }) => {
+			const count = data.count || 1;
+			return {
+				id: data.id,
+				name: data.name || 'Perk',
+				description: data.description || (count > 1 ? `Choose ${count} perks.` : 'Choose a perk.'),
+				type: FeatureType.Perk,
+				data: {
+					types: data.types || [],
+					count: count,
+					selected: []
+				} as FeaturePerkData
+			} as Feature;
+		},
+		createSizeFeature: (data: { id: string, name?: string, description?: string, sizeValue: number, sizeMod: string; }) => {
+			return {
+				id: data.id,
+				name: data.name || 'Size',
+				description: data.description || '',
+				type: FeatureType.Size,
+				data: {
+					size: {
+						value: data.sizeValue,
+						mod: data.sizeMod
+					}
+				} as FeatureSizeData
+			} as Feature;
+		},
+		createSkillFeature: (data: { id: string, name?: string, description?: string, skill: string }) => {
+			return {
+				id: data.id,
+				name: data.name || data.skill,
+				description: data.description || '',
+				type: FeatureType.Skill,
+				data: {
+					skill: data.skill
+				} as FeatureSkillData
+			} as Feature;
+		},
+		createSkillChoiceFeature: (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selected?: string[] }) => {
+			const count = data.count || 1;
+			return {
+				id: data.id,
+				name: data.name || (count > 1 ? 'Skills' : 'Skill'),
+				description: data.description || '',
+				type: FeatureType.SkillChoice,
+				data: {
+					options: data.options || [],
+					listOptions: data.listOptions || [],
+					count: count,
+					selected: data.selected || []
+				} as FeatureSkillChoiceData
+			} as Feature;
+		},
+		createTitleFeature: (data: { id: string, name?: string, description?: string, count?: number }) => {
+			const count = data.count || 1;
+			return {
+				id: data.id,
+				name: data.name || 'Title',
+				description: data.description || (count > 1 ? `Choose ${count} titles.` : 'Choose a title.'),
+				type: FeatureType.Title,
+				data: {
+					count: count,
+					selected: []
+				} as FeatureTitleData
+			} as Feature;
+		}
 	};
-
-	static createAbilityFeature = (data: { ability: Ability }) => {
-		return {
-			id: data.ability.id,
-			name: data.ability.name,
-			description: data.ability.description,
-			type: FeatureType.Ability,
-			data: {
-				ability: data.ability
-			} as FeatureAbilityData
-		} as Feature;
-	};
-
-	static createAbilityCostFeature = (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number }) => {
-		return {
-			id: data.id,
-			name: data.name || `${data.keywords.join(', ')} cost modifier`,
-			description: data.description || '',
-			type: FeatureType.AbilityCost,
-			data: {
-				keywords: data.keywords,
-				modifier: data.modifier
-			} as FeatureAbilityCostData
-		} as Feature;
-	};
-
-	static createBonusFeature = (data: { id: string, name?: string, description?: string, field: FeatureField, value?: number, valuePerLevel?: number, valuePerEchelon?: number }) => {
-		return {
-			id: data.id,
-			name: data.name || data.field.toString(),
-			description: data.description || '',
-			type: FeatureType.Bonus,
-			data: {
-				field: data.field,
-				value: data.value || 0,
-				valuePerLevel: data.valuePerLevel || 0,
-				valuePerEchelon: data.valuePerEchelon || 0
-			} as FeatureBonusData
-		} as Feature;
-	};
-
-	static createChoiceFeature = (data: { id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], count?: number }) => {
-		const count = data.count || 1;
-		return {
-			id: data.id,
-			name: data.name || 'Choice',
-			description: data.description || (count > 1 ? `Choose ${count} options.` : 'Choose an option.'),
-			type: FeatureType.Choice,
-			data: {
-				options: data.options,
-				count: count,
-				selected: []
-			} as FeatureChoiceData
-		} as Feature;
-	};
-
-	static createClassAbilityChoiceFeature = (data: { id: string, name?: string, description?: string, cost: number, count?: number }) => {
-		const count = data.count || 1;
-		return {
-			id: data.id,
-			name: data.name || 'Ability',
-			description: data.description || `Choose a ${data.cost === 0 ? 'signature' : `${data.cost}pt`} ability.`,
-			type: FeatureType.ClassAbility,
-			data: {
-				cost: data.cost,
-				count: count,
-				selectedIDs: []
-			} as FeatureClassAbilityData
-		} as Feature;
-	};
-
-	static createDamageModifierFeature = (data: { id: string, name?: string, description?: string, modifiers: DamageModifier[] }) => {
-		return {
-			id: data.id,
-			name: data.name || 'Damage Modifier',
-			description: data.description || data.modifiers.map(FormatLogic.getDamageModifier).join(', '),
-			type: FeatureType.DamageModifier,
-			data: {
-				modifiers: data.modifiers
-			} as FeatureDamageModifierData
-		} as Feature;
-	};
-
-	static createDomainChoiceFeature = (data: { id: string, name?: string, description?: string, count?: number }) => {
-		const count = data.count || 1;
-		return {
-			id: data.id,
-			name: data.name || 'Domain',
-			description: data.description || (count > 1 ? `Choose ${count} domains.` : 'Choose a domain.'),
-			type: FeatureType.Domain,
-			data: {
-				count: count,
-				selected: []
-			} as FeatureDomainData
-		} as Feature;
-	};
-
-	static createDomainFeatureFeature = (data: { id: string, name?: string, description?: string, level: number, count?: number }) => {
-		const count = data.count || 1;
-		return {
-			id: data.id,
-			name: data.name || 'Domain Feature Choice',
-			description: data.description || (count > 1 ? `Choose ${count} options.` : 'Choose an option.'),
-			type: FeatureType.DomainFeature,
-			data: {
-				level: data.level,
-				count: count,
-				selected: []
-			} as FeatureDomainFeatureData
-		} as Feature;
-	};
-
-	static createKitChoiceFeature = (data: { id: string, name?: string, description?: string, types?: KitType[], count?: number }) => {
-		const count = data.count || 1;
-		return {
-			id: data.id,
-			name: data.name || 'Kit',
-			description: data.description || (count > 1 ? `Choose ${count} kits.` : 'Choose a kit.'),
-			type: FeatureType.Kit,
-			data: {
-				types: data.types || [],
-				count: count,
-				selected: []
-			} as FeatureKitData
-		} as Feature;
-	};
-
-	static createKitTypeFeature = (data: { id: string, name?: string, description?: string, types: KitType[] }) => {
-		return {
-			id: data.id,
-			name: data.name || 'Kit Type',
-			description: data.description || `Allow ${data.types.join(', ')} kits.`,
-			type: FeatureType.KitType,
-			data: {
-				types: data.types || []
-			} as FeatureKitTypeData
-		} as Feature;
-	};
-
-	static createLanguageFeature = (data: { id: string, name?: string, description?: string, language: string }) => {
-		return {
-			id: data.id,
-			name: data.name || data.language,
-			description: data.description || '',
-			type: FeatureType.Language,
-			data: {
-				language: data.language
-			} as FeatureLanguageData
-		} as Feature;
-	};
-
-	static createLanguageChoiceFeature = (data: { id: string, name?: string, description?: string, options?: string[], count?: number, selected?: string[] }) => {
-		const count = data.count || 1;
-		return {
-			id: data.id,
-			name: data.name || 'Language',
-			description: data.description || '',
-			type: FeatureType.LanguageChoice,
-			data: {
-				options: data.options || [],
-				count: count,
-				selected: data.selected || []
-			} as FeatureLanguageChoiceData
-		} as Feature;
-	};
-
-	static createMultipleFeature = (data: { id: string, name?: string, description?: string, features: Feature[] }) => {
-		return {
-			id: data.id,
-			name: data.name || 'Multiple Features',
-			description: data.description || '',
-			type: FeatureType.Multiple,
-			data: {
-				features: data.features
-			} as FeatureMultipleData
-		} as Feature;
-	};
-
-	static createSizeFeature = (data: { id: string, name?: string, description?: string, sizeValue: number, sizeMod: string; }) => {
-		return {
-			id: data.id,
-			name: data.name || 'Size',
-			description: data.description || '',
-			type: FeatureType.Size,
-			data: {
-				size: {
-					value: data.sizeValue,
-					mod: data.sizeMod
-				}
-			} as FeatureSizeData
-		} as Feature;
-	};
-
-	static createSkillFeature = (data: { id: string, name?: string, description?: string, skill: string }) => {
-		return {
-			id: data.id,
-			name: data.name || data.skill,
-			description: data.description || '',
-			type: FeatureType.Skill,
-			data: {
-				skill: data.skill
-			} as FeatureSkillData
-		} as Feature;
-	};
-
-	static createSkillChoiceFeature = (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selected?: string[] }) => {
-		const count = data.count || 1;
-		return {
-			id: data.id,
-			name: data.name || (count > 1 ? 'Skills' : 'Skill'),
-			description: data.description || '',
-			type: FeatureType.SkillChoice,
-			data: {
-				options: data.options || [],
-				listOptions: data.listOptions || [],
-				count: count,
-				selected: data.selected || []
-			} as FeatureSkillChoiceData
-		} as Feature;
-	};
-
-	///////////////////////////////////////////////////////////////////////////
 
 	static getFeaturesFromAncestry = (ancestry: Ancestry) => {
 		const features: Feature[] = [];
@@ -314,22 +324,6 @@ export class FeatureLogic {
 		return FeatureLogic.simplifyFeatures(features);
 	};
 
-	static getFeaturesFromKit = (kit: Kit) => {
-		const features: Feature[] = [];
-
-		features.push(...kit.features);
-
-		return FeatureLogic.simplifyFeatures(features);
-	};
-
-	static getFeaturesFromPerk = (perk: Perk) => {
-		const features: Feature[] = [];
-
-		features.push(...perk.features);
-
-		return FeatureLogic.simplifyFeatures(features);
-	};
-
 	static getFeaturesFromItem = (item: Item) => {
 		const features: Feature[] = [];
 
@@ -350,6 +344,30 @@ export class FeatureLogic {
 				});
 			});
 		features.push(...featuresFromKits);
+
+		// If any features grant perks, get the features from those perks
+		const featuresFromPerks: Feature[] = [];
+		features
+			.filter(f => f.type === FeatureType.Perk)
+			.forEach(f => {
+				const data = f.data as FeaturePerkData;
+				data.selected.forEach(perk => {
+					featuresFromPerks.push(...perk.features);
+				});
+			});
+		features.push(...featuresFromPerks);
+
+		// If any features grant titles, get the features from those titles
+		const featuresFromTitles: Feature[] = [];
+		features
+			.filter(f => f.type === FeatureType.Title)
+			.forEach(f => {
+				const data = f.data as FeatureTitleData;
+				data.selected.forEach(title => {
+					featuresFromTitles.push(...title.features);
+				});
+			});
+		features.push(...featuresFromTitles);
 
 		// If any features grant feature choices, get the selected features
 		const featuresFromChoices: Feature[] = [];
@@ -392,7 +410,9 @@ export class FeatureLogic {
 			case FeatureType.DomainFeature:
 			case FeatureType.Kit:
 			case FeatureType.LanguageChoice:
+			case FeatureType.Perk:
 			case FeatureType.SkillChoice:
+			case FeatureType.Title:
 				return true;
 		};
 
@@ -428,8 +448,16 @@ export class FeatureLogic {
 				const data = feature.data as FeatureLanguageChoiceData;
 				return data.selected.length >= data.count;
 			}
+			case FeatureType.Perk: {
+				const data = feature.data as FeaturePerkData;
+				return data.selected.length >= data.count;
+			}
 			case FeatureType.SkillChoice: {
 				const data = feature.data as FeatureSkillChoiceData;
+				return data.selected.length >= data.count;
+			}
+			case FeatureType.Title: {
+				const data = feature.data as FeatureTitleData;
 				return data.selected.length >= data.count;
 			}
 		};
@@ -467,6 +495,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose a language.';
 			case FeatureType.Multiple:
 				return 'This feature grants you a collection of features.';
+			case FeatureType.Perk:
+				return 'This feature allows you to choose a perk.';
 			case FeatureType.Size:
 				return 'This feature sets your size.';
 			case FeatureType.Skill:
@@ -474,7 +504,9 @@ export class FeatureLogic {
 			case FeatureType.SkillChoice:
 				return 'This feature allows you to choose a skill.';
 			case FeatureType.Text:
-				return 'This feature has no special properties.';
+				return 'This feature has no special properties, just a text description.';
+			case FeatureType.Title:
+				return 'This feature allows you to choose a title.';
 		}
 	};
 }

@@ -35,7 +35,7 @@ export class FactoryLogic {
 			career: null,
 			complication: null,
 			features: [
-				FeatureLogic.createLanguageChoiceFeature({
+				FeatureLogic.feature.createLanguageChoiceFeature({
 					id: 'default-language',
 					name: 'Default Language',
 					selected: [ 'Caelian' ]
@@ -92,12 +92,12 @@ export class FactoryLogic {
 			name: '',
 			description: '',
 			features: [
-				FeatureLogic.createSizeFeature({
+				FeatureLogic.feature.createSizeFeature({
 					id: Utils.guid(),
 					sizeValue: 1,
 					sizeMod: 'M'
 				}),
-				FeatureLogic.createBonusFeature({
+				FeatureLogic.feature.createBonusFeature({
 					id: Utils.guid(),
 					field: FeatureField.Speed,
 					value: 5

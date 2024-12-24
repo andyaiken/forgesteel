@@ -19,33 +19,33 @@ export const tactician: HeroClass = {
 		{
 			level: 1,
 			features: [
-				FeatureLogic.createBonusFeature({
+				FeatureLogic.feature.createBonusFeature({
 					id: 'tatician-stamina',
 					field: FeatureField.Stamina,
 					value: 21,
 					valuePerLevel: 10
 				}),
-				FeatureLogic.createBonusFeature({
+				FeatureLogic.feature.createBonusFeature({
 					id: 'tactician-recoveries',
 					field: FeatureField.Recoveries,
 					value: 12
 				}),
-				FeatureLogic.createSkillFeature({
+				FeatureLogic.feature.createSkillFeature({
 					id: 'tactician-1-1',
 					skill: 'Lead'
 				}),
-				FeatureLogic.createSkillChoiceFeature({
+				FeatureLogic.feature.createSkillChoiceFeature({
 					id: 'tactician-1-2',
 					options: [ 'Alertness', 'Architecture', 'Blacksmithing', 'Brag', 'Culture', 'Empathize', 'Fletching', 'History', 'Mechanics', 'Monsters', 'Search' ],
 					listOptions: [ SkillList.Exploration ],
 					count: 2
 				}),
-				FeatureLogic.createFeature({
+				FeatureLogic.feature.createFeature({
 					id: 'tactician-1-3',
 					name: 'Focus',
 					description: 'At the start of each of your turns during combat, you gain 2 focus. If an ally gets a tier 3 result on an attack against a target you have marked, you gain 1 focus.'
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'tactician-1-4',
 						name: 'Mark',
@@ -63,7 +63,7 @@ export const tactician: HeroClass = {
 						]
 					})
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'tactician-1-5',
 						name: 'Sieze The Opening',
@@ -81,19 +81,19 @@ export const tactician: HeroClass = {
 						]
 					})
 				}),
-				FeatureLogic.createKitChoiceFeature({
+				FeatureLogic.feature.createKitChoiceFeature({
 					id: 'tactician-1-6a'
 				}),
-				FeatureLogic.createKitChoiceFeature({
+				FeatureLogic.feature.createKitChoiceFeature({
 					id: 'tactician-1-6b',
 					name: 'Field Arsenal',
 					types: [ KitType.Martial ]
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'tactician-1-7',
 					cost: 3
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'tactician-1-8',
 					cost: 5
 				})
@@ -233,16 +233,16 @@ export const tactician: HeroClass = {
 				{
 					level: 1,
 					features: [
-						FeatureLogic.createSkillChoiceFeature({
+						FeatureLogic.feature.createSkillChoiceFeature({
 							id: 'tactician-sub-1-1-1',
 							listOptions: [ SkillList.Intrigue ]
 						}),
-						FeatureLogic.createFeature({
+						FeatureLogic.feature.createFeature({
 							id: 'tactician-sub-1-1-2',
 							name: 'Covert Operations',
 							description: 'While in your presence or working according to your plans, each of your allies gains an edge on tests with any skill from the intrigue skill group. Additionally, you can use the Lead skill to assist on any test made with a skill from the intrigue skill group. At the Director’s discretion, you and your allies can use skills from the intrigue skill group to attempt research or reconnaissance during a negotiation instead of outside of negotiation.'
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'tactician-sub-1-1-3',
 								name: 'Flank Them Now!',
@@ -276,11 +276,11 @@ export const tactician: HeroClass = {
 				{
 					level: 1,
 					features: [
-						FeatureLogic.createSkillChoiceFeature({
+						FeatureLogic.feature.createSkillChoiceFeature({
 							id: 'tactician-sub-2-1-1',
 							listOptions: [ SkillList.Lore ]
 						}),
-						FeatureLogic.createFeature({
+						FeatureLogic.feature.createFeature({
 							id: 'tactician-sub-2-1-2',
 							name: 'I Read Your Book!',
 							description: `
@@ -306,7 +306,7 @@ The following test results apply to a negotiation:
 
 You can only make this test once for each encounter and negotiation.`
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'tactician-sub-2-1-3',
 								name: 'Overwatch',
@@ -337,16 +337,16 @@ You can only make this test once for each encounter and negotiation.`
 				{
 					level: 1,
 					features: [
-						FeatureLogic.createSkillChoiceFeature({
+						FeatureLogic.feature.createSkillChoiceFeature({
 							id: 'tactician-sub-3-1-1',
 							listOptions: [ SkillList.Interpersonal ]
 						}),
-						FeatureLogic.createFeature({
+						FeatureLogic.feature.createFeature({
 							id: 'tactician-sub-3-1-2',
 							name: 'Imposing Attitude',
 							description: 'You command any room you walk into. While you are present, each hero with you is treated as having a Renown 2 higher than usual for the purpose of negotiations and influencing tests. Additionally, each hero with you has a double edge on tests made to stop combat and start a negotiation with the other side.'
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'tactician-sub-3-1-3',
 								name: 'Parry',

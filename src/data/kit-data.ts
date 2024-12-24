@@ -27,7 +27,7 @@ export class KitData {
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-cloak-and-dagger-signature',
 					name: 'Fade',
@@ -76,7 +76,7 @@ export class KitData {
 		area: 0,
 		mobility: false,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-guisarmier-signature',
 					name: 'Forward Thrust, Backward Smash',
@@ -116,7 +116,7 @@ export class KitData {
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-martial-artist-signature',
 					name: 'Battle Grace',
@@ -157,7 +157,7 @@ export class KitData {
 		area: 0,
 		mobility: false,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-mountain-signature',
 					name: 'Pain For Pain',
@@ -198,7 +198,7 @@ export class KitData {
 		area: 0,
 		mobility: false,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-panther-signature',
 					name: 'Devastating Rush',
@@ -239,7 +239,7 @@ export class KitData {
 		area: 0,
 		mobility: false,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-pugilist-signature',
 					name: 'Let’s Dance',
@@ -280,7 +280,7 @@ export class KitData {
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-raider-signature',
 					name: 'Shield Bash',
@@ -320,7 +320,7 @@ export class KitData {
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-ranger-signature',
 					name: 'Hamstring Shot',
@@ -360,7 +360,7 @@ export class KitData {
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-rapid-fire-signature',
 					name: 'Two Shot',
@@ -400,7 +400,7 @@ export class KitData {
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-retiarius-signature',
 					name: 'Net And Stab',
@@ -440,7 +440,7 @@ export class KitData {
 		area: 0,
 		mobility: false,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-shining-armor-signature',
 					name: 'Protective Attack',
@@ -480,7 +480,7 @@ export class KitData {
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-sniper-signature',
 					name: 'Patient Shot',
@@ -521,7 +521,7 @@ export class KitData {
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-stick-and-robe-signature',
 					name: 'Where I Want You',
@@ -561,7 +561,7 @@ export class KitData {
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-swashbuckler-signature',
 					name: 'Fancy Footwork',
@@ -602,7 +602,7 @@ export class KitData {
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-whirlwind-signature',
 					name: 'Extension Of My Arm',
@@ -642,7 +642,7 @@ export class KitData {
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-bloodpact-signature',
 					name: 'Drain',
@@ -660,7 +660,7 @@ export class KitData {
 					})
 				})
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-bloodpact-ward',
 				name: 'Blood Ward',
 				description: 'The blood ward is a large projection of your heart that magnifies the sound of your heartbeat. Whenever an ability lets you spend a Recovery, you can forgo regaining Stamina to instead increase your speed by 2 and have your abilities deal 2 extra corruption damage until the end of the encounter instead.'
@@ -687,7 +687,7 @@ export class KitData {
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-dancer-signature',
 					name: 'Tarantella Volley',
@@ -706,7 +706,7 @@ export class KitData {
 					effect: 'If you roll a 12 or better and can’t swap places with the target because one or both of you is too big to fit into the swapped space, you both remain in your original spaces and the target takes 2 extra damage.'
 				})
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-dancer-ward',
 				name: 'Walzing Ward',
 				description: `
@@ -736,7 +736,7 @@ Your ward surrounds you with a soft, enchanting melody whose volume you control,
 		area: 1,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-frigid-signature',
 					name: 'Frozen Explosion',
@@ -754,7 +754,7 @@ Your ward surrounds you with a soft, enchanting melody whose volume you control,
 					})
 				})
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-frigid-ward',
 				name: 'Ice Armor',
 				description: `
@@ -784,7 +784,7 @@ Your ward covers your body in ice, and grants you the following benefits:
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-meditator-signature',
 					name: 'Bountiful Decay',
@@ -802,7 +802,7 @@ Your ward covers your body in ice, and grants you the following benefits:
 					})
 				})
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-meditator-ward',
 				name: 'Spirit Ward',
 				description: `
@@ -832,7 +832,7 @@ Your spirit overflows and warms the area around you. It grants you the following
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-missile-signature',
 					name: 'Spike!',
@@ -851,7 +851,7 @@ Your spirit overflows and warms the area around you. It grants you the following
 					effect: 'If your Magic Eye Ward is locked onto the target, you can target them with this ability regardless of the distance as long as you have line of effect to them, and this ability deals additional damage equal to your highest characteristic.'
 				})
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-missile-ward',
 				name: 'Magic Eye Ward',
 				description: `
@@ -881,7 +881,7 @@ Your ward wraps itself around your head and shields your eyes, granting you the 
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-nature-calling-signature',
 					name: 'Lightning Spark',
@@ -899,7 +899,7 @@ Your ward wraps itself around your head and shields your eyes, granting you the 
 					})
 				})
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-nature-calling-ward',
 				name: 'Vine Ward',
 				description: `
@@ -929,7 +929,7 @@ Your ward surrounds you with protective animal spirits, and grants you the follo
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-rook-signature',
 					name: 'Blessed Light',
@@ -947,7 +947,7 @@ Your ward surrounds you with protective animal spirits, and grants you the follo
 					})
 				})
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-rook-ward',
 				name: 'Castle Guard',
 				description: `
@@ -977,7 +977,7 @@ Your armor is reinforced by a bright ward of holy energy, and grants you the fol
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-spellslinger-signature',
 					name: 'Split Beam',
@@ -995,7 +995,7 @@ Your armor is reinforced by a bright ward of holy energy, and grants you the fol
 					})
 				})
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-spellslinger-ward',
 				name: 'Invigorating Ward',
 				description: 'Your ward surrounds you with crackling energy. Whenever you take damage, you gain a bonus to damage equal to your highest characteristic score, which you apply to the next damage-dealing magic ability you use before the end of the encounter. This benefit is cumulative, so that you can accrue bonus damage multiple times, then expend it all on one use of an ability.'
@@ -1022,7 +1022,7 @@ Your armor is reinforced by a bright ward of holy energy, and grants you the fol
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-ward-weaver-signature',
 					name: 'Energy Siphon',
@@ -1040,7 +1040,7 @@ Your armor is reinforced by a bright ward of holy energy, and grants you the fol
 					})
 				})
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-ward-weaver-ward',
 				name: 'Repulsive Ward',
 				description: 'You have an invisible ward of magical force that extends 2 squares from you in all directions. When you or an ally within the area of your ward take damage from another creature’s melee ability, you can push that creature a number of squares equal to your highest characteristic score.'
@@ -1067,7 +1067,7 @@ Your armor is reinforced by a bright ward of holy energy, and grants you the fol
 		area: 0,
 		mobility: false,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-boren-signature',
 					name: 'Bear Claws',
@@ -1084,7 +1084,7 @@ Your armor is reinforced by a bright ward of holy energy, and grants you the fol
 					})
 				})
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-boren-feature-1',
 				name: 'Aspect Benefits',
 				description: `
@@ -1094,12 +1094,12 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 * **Rage 4**: While in bear form, you can use all your abilities, your attacks deal extra damage equal to twice your Might score, instead of once your Might score, and any target you have grabbed at the start of your turn takes damage equal to twice your Might score, instead of once your Might score.
 * **Rage 6**: You have a double edge on Might tests, resistance rolls, and power rolls made with the Grab ability.`
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-boren-feature-2',
 				name: 'Animal Form: Bear',
 				description: 'When you are in your bear form, your speed increases by 2, your size becomes 2, and you have a +1 reach bonus with melee attacks. You gain 10 temporary Stamina the first time you shapeshift into bear form during an encounter.'
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-boren-feature-3',
 				name: 'Primordial Storm: Blizzard',
 				description: 'Your primordial damage type is cold.'
@@ -1126,7 +1126,7 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-corven-signature',
 					name: 'Wing Buffet',
@@ -1144,7 +1144,7 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 					effect: 'Resolve each attack individually using one power roll. You can shift 1 square after resolving damage for each target, then choose your next target from your new location.'
 				})
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-boren-feature-1',
 				name: 'Aspect Benefits',
 				description: `
@@ -1156,14 +1156,14 @@ You gain an edge on tests made to hide and sneak. Whenever you are falling, you 
 * **Rage 4**: Once per turn while in crow or hybrid crow form, when you move away from an enemy, that enemy takes damage equal to twice your Agility score, instead of once your Agility score.
 * **Rage 6**: You can shift up to 2 squares as a free maneuver once per turn.`
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-boren-feature-2',
 				name: 'Animal Form: Crow',
 				description: `
 When you are in your crow form, your movement gains the Fly keyword, and your size becomes 1T. You can use the Hide maneuver as a free maneuver, and you can use your allies as cover when you hide.
 Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal crow of your true form’s size. You gain 10 temporary Stamina the first time you shapeshift into hybrid crow form during an encounter.`
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-boren-feature-3',
 				name: 'Primordial Storm: Katabatic Wind',
 				description: 'Your primordial damage type is fire.'
@@ -1190,7 +1190,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-raden-signature',
 					name: 'Driving Pounce',
@@ -1208,7 +1208,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					effect: 'Resolve each attack one at a time. After each attack, you can shift the same number of squares that you pushed the target. You select your second target from the square where you end your shift, which can be the first target again.'
 				})
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-boren-feature-1',
 				name: 'Aspect Benefits',
 				description: `
@@ -1219,14 +1219,14 @@ You gain an edge on tests made to hide and sneak. Additionally, you ignore diffi
 * **Rage 4**: While in rat or hybrid rat form, you can use all your abilities, and your attacks deal extra damage equal to twice your Agility score, instead of once your Agility score.
 * **Rage 6**: You have Weapon immunity 2. Any damage you ignore because of this immunity is dealt to each enemy adjacent to you when you are attacked.`
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-boren-feature-2',
 				name: 'Animal Form: Rat',
 				description: `
 When you are in your rat form, your movement gains the Climb keyword, and your size becomes 1T. You can use the Hide maneuver as a free maneuver, and you can use your allies as cover when hiding. You can stay hidden while moving through squares occupied by a creature.
 Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal rat of your true form’s size. You gain 10 temporary Stamina the first time you shapeshift into hybrid rat form during an encounter.`
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-boren-feature-3',
 				name: 'Primordial Storm: Rat Flood',
 				description: 'Your primordial damage type is corruption.'
@@ -1253,7 +1253,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 		area: 0,
 		mobility: true,
 		features: [
-			FeatureLogic.createAbilityFeature({
+			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-vuken-signature',
 					name: 'Probing Attack',
@@ -1271,7 +1271,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					effect: 'You can shift up to 2 squares as long as you end the shift adjacent to the target.'
 				})
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-boren-feature-1',
 				name: 'Aspect Benefits',
 				description: `
@@ -1283,14 +1283,14 @@ You and an ally gain the benefits of flanking whenever you are both adjacent to 
 * **Rage 4**: When you attack a target while in wolf or hybrid wolf form, the next ally to damage that target before the start of your next turn deals extra damage equal to twice your Agility score, instead of once your Agility score.
 * **Rage 6**: You have a double edge on Agility tests and resistance rolls.`
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-boren-feature-2',
 				name: 'Animal Form: Wolf',
 				description: `
 When you are in your wolf form, your speed increases by 2, you ignore difficult terrain, and your size becomes 1M.
 Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal wolf of your true form’s size. You gain 10 temporary Stamina the first time you shapeshift into hybrid wolf form during an encounter.`
 			}),
-			FeatureLogic.createFeature({
+			FeatureLogic.feature.createFeature({
 				id: 'kit-boren-feature-3',
 				name: 'Primordial Storm: Lightning Storm',
 				description: 'Your primordial damage type is lightning.'

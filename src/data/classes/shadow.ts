@@ -18,37 +18,37 @@ export const shadow: HeroClass = {
 		{
 			level: 1,
 			features: [
-				FeatureLogic.createBonusFeature({
+				FeatureLogic.feature.createBonusFeature({
 					id: 'shadow-stamina',
 					field: FeatureField.Stamina,
 					value: 18,
 					valuePerLevel: 8
 				}),
-				FeatureLogic.createBonusFeature({
+				FeatureLogic.feature.createBonusFeature({
 					id: 'shadow-recoveries',
 					field: FeatureField.Recoveries,
 					value: 10
 				}),
-				FeatureLogic.createSkillFeature({
+				FeatureLogic.feature.createSkillFeature({
 					id: 'shadow-1-1',
 					skill: 'Hide'
 				}),
-				FeatureLogic.createSkillFeature({
+				FeatureLogic.feature.createSkillFeature({
 					id: 'shadow-1-2',
 					skill: 'Sneak'
 				}),
-				FeatureLogic.createSkillChoiceFeature({
+				FeatureLogic.feature.createSkillChoiceFeature({
 					id: 'shadow-1-3',
 					options: [ 'Criminal Underworld' ],
 					listOptions: [ SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue ],
 					count: 5
 				}),
-				FeatureLogic.createFeature({
+				FeatureLogic.feature.createFeature({
 					id: 'shadow-1-4',
 					name: 'Insight',
 					description: 'At the start of each of your turns during combat, you gain 2 insight. You gain 1 insight whenever you get a tier 3 result with an attack.'
 				}),
-				FeatureLogic.createAbilityFeature({
+				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'shadow-1-5',
 						name: 'Hesitation Is Weakness',
@@ -60,18 +60,18 @@ export const shadow: HeroClass = {
 						effect: 'You take your turn immediately.'
 					})
 				}),
-				FeatureLogic.createKitChoiceFeature({
+				FeatureLogic.feature.createKitChoiceFeature({
 					id: 'shadow-1-5.5'
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'shadow-1-6',
 					cost: 0
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'shadow-1-7',
 					cost: 3
 				}),
-				FeatureLogic.createClassAbilityChoiceFeature({
+				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'shadow-1-8',
 					cost: 5
 				})
@@ -303,11 +303,11 @@ export const shadow: HeroClass = {
 				{
 					level: 1,
 					features: [
-						FeatureLogic.createSkillFeature({
+						FeatureLogic.feature.createSkillFeature({
 							id: 'shadow-sub-1-1-1',
 							skill: 'Magic'
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'shadow-sub-1-1-2',
 								name: 'Black Ash Teleport',
@@ -324,7 +324,7 @@ export const shadow: HeroClass = {
 								]
 							})
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'shadow-sub-1-1-3',
 								name: 'In All This Confusion',
@@ -349,11 +349,11 @@ export const shadow: HeroClass = {
 				{
 					level: 1,
 					features: [
-						FeatureLogic.createSkillFeature({
+						FeatureLogic.feature.createSkillFeature({
 							id: 'shadow-sub-2-1-1',
 							skill: 'Alchemy'
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'shadow-sub-2-1-2',
 								name: 'Coat The Blade',
@@ -369,12 +369,12 @@ export const shadow: HeroClass = {
 								]
 							})
 						}),
-						FeatureLogic.createFeature({
+						FeatureLogic.feature.createFeature({
 							id: 'shadow-sub-2-1-3',
 							name: 'Smoke Bomb',
 							description: 'You always carry a supply of smoke bombs to make it easy for you to distract and get away from foes. You can use the Hide maneuver even if you are observed and don’t start in cover or concealment. If you do, you can shift a number of squares equal to your Agility. If you end this movement in cover or concealment, you are hidden.'
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'shadow-sub-2-1-4',
 								name: 'Defensive Roll',
@@ -405,11 +405,11 @@ export const shadow: HeroClass = {
 				{
 					level: 1,
 					features: [
-						FeatureLogic.createSkillFeature({
+						FeatureLogic.feature.createSkillFeature({
 							id: 'shadow-sub-3-1-1',
 							skill: 'Lie'
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'shadow-sub-3-1-2',
 								name: 'I’m On Your Side',
@@ -421,7 +421,7 @@ export const shadow: HeroClass = {
 								effect: 'Choose a creature of your size, whose size is no more than 1 greater than yours, and who is within 10 squares of you. Your body is covered in an illusion that makes you appear to be that creature. This illusion covers your entire body, including clothing and armor, and changes your voice to sound like the creature. While this illusion lasts, you gain an edge on attacks against and Presence tests made to interact with the creature’s allies, and you don’t provoke opportunity attacks from those allies. These benefits don’t apply against the creature whose appearance you’ve taken on. The illusion ends when you harm another creature, when you and another creature physically interact, when you use this ability again, or when you end the illusion (no action required).'
 							})
 						}),
-						FeatureLogic.createAbilityFeature({
+						FeatureLogic.feature.createAbilityFeature({
 							ability: AbilityLogic.createAbility({
 								id: 'shadow-sub-3-1-3',
 								name: 'Misdirection',

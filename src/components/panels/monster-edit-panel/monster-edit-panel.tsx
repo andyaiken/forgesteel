@@ -141,7 +141,7 @@ export const MonsterEditPanel = (props: Props) => {
 
 	const addFeature = () => {
 		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.features.push(FeatureLogic.createFeature({
+		copy.features.push(FeatureLogic.feature.createFeature({
 			id: Utils.guid(),
 			name: '',
 			description: ''
@@ -316,7 +316,7 @@ export const MonsterEditPanel = (props: Props) => {
 												<FeatureEditPanel
 													feature={f}
 													sourcebooks={props.sourcebooks}
-													allowedTypes={[ FeatureType.Ability, FeatureType.DamageModifier, FeatureType.Text ]}
+													allowedTypes={[ FeatureType.Text, FeatureType.Ability, FeatureType.DamageModifier ]}
 													onChange={changeFeature}
 												/>
 											</Expander>

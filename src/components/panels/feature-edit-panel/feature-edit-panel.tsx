@@ -1,6 +1,6 @@
 import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureTitleData } from '../../../models/feature';
 import { Ability } from '../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../enums/ability-keyword';
@@ -17,6 +17,7 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { KitType } from '../../../enums/kit';
 import { MultiLine } from '../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
+import { PerkType } from '../../../enums/perk-type';
 import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
@@ -140,6 +141,13 @@ export const FeatureEditPanel = (props: Props) => {
 					features: []
 				};
 				break;
+			case FeatureType.Perk:
+				data = {
+					types: [],
+					count: 1,
+					selected: []
+				};
+				break;
 			case FeatureType.Size:
 				data = {
 					size: {
@@ -164,6 +172,12 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.Text:
 				data = null;
 				break;
+			case FeatureType.Title:
+				data = {
+					count: 1,
+					selected: []
+				};
+				break;
 		}
 
 		const copy = JSON.parse(JSON.stringify(feature)) as Feature;
@@ -182,7 +196,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 	const getDataSection = () => {
 		const setCount = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureKitData | FeatureLanguageChoiceData | FeatureSkillChoiceData;
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureTitleData;
 			copy.count = value;
 			setData(copy);
 		};
@@ -241,6 +255,12 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
+		const setPerkTypes = (value: PerkType[]) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeaturePerkData;
+			copy.types = value;
+			setData(copy);
+		};
+
 		const setLanguage = (value: string) => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureLanguageData;
 			copy.language = value;
@@ -292,7 +312,7 @@ export const FeatureEditPanel = (props: Props) => {
 		const addChoice = (data: FeatureChoiceData) => {
 			const copy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
 			copy.options.push({
-				feature: FeatureLogic.createFeature({
+				feature: FeatureLogic.feature.createFeature({
 					id: Utils.guid(),
 					name: '',
 					description: ''
@@ -376,7 +396,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 		const addMultipleFeature = (data: FeatureMultipleData) => {
 			const copy = JSON.parse(JSON.stringify(data)) as FeatureMultipleData;
-			copy.features.push(FeatureLogic.createFeature({
+			copy.features.push(FeatureLogic.feature.createFeature({
 				id: Utils.guid(),
 				name: '',
 				description: ''
@@ -698,6 +718,27 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
+			case FeatureType.Perk: {
+				const data = feature.data as FeaturePerkData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Types</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							className={data.types.length === 0 ? 'selection-empty' : ''}
+							placeholder='Perk types'
+							mode='multiple'
+							allowClear={true}
+							options={[ PerkType.Crafting, PerkType.Exploration, PerkType.Interpersonal, PerkType.Intrigue, PerkType.Lore, PerkType.Supernatural ].map(option => ({ value: option }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={data.types}
+							onChange={setPerkTypes}
+						/>
+						<HeaderText>Count</HeaderText>
+						<NumberSpin min={1} value={data.count} onChange={setCount} />
+					</Space>
+				);
+			}
 			case FeatureType.Size: {
 				const data = feature.data as FeatureSizeData;
 				return (
@@ -773,6 +814,15 @@ export const FeatureEditPanel = (props: Props) => {
 			}
 			case FeatureType.Text:
 				return null;
+			case FeatureType.Title: {
+				const data = feature.data as FeatureTitleData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Count</HeaderText>
+						<NumberSpin min={1} value={data.count} onChange={setCount} />
+					</Space>
+				);
+			}
 		}
 	};
 
@@ -808,7 +858,7 @@ export const FeatureEditPanel = (props: Props) => {
 									<Select
 										style={{ width: '100%' }}
 										placeholder='Select type'
-										options={(props.allowedTypes || [ FeatureType.Ability, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Text ]).map(o => ({ value: o }))}
+										options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Title ]).map(o => ({ value: o }))}
 										optionRender={option => <Field label={option.data.value} value={FeatureLogic.getFeatureTypeDescription(option.data.value)} />}
 										value={feature.type}
 										onChange={setType}

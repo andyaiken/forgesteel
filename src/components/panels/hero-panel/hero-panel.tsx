@@ -315,7 +315,7 @@ export const HeroPanel = (props: Props) => {
 							<Statistic title='Renown' value={props.hero.state.renown} />
 						</div>
 						<div className='characteristic'>
-							<Statistic title='Project Points' value={props.hero.state.projectPoints} />
+							<Statistic title='Wealth' value={props.hero.state.wealth} />
 						</div>
 					</div>
 				</Col>

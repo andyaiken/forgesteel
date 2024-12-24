@@ -839,9 +839,29 @@ Complex or time-consuming tests might require an action if made in combat—or c
 			hero.state.xp = 0;
 		}
 
+		if (hero.state.wealth === undefined) {
+			hero.state.wealth = 1;
+		}
+
 		if (hero.state.inventory === undefined) {
 			hero.state.inventory = [];
 		}
+
+		this.getFeatures(hero).filter(f => f.type === FeatureType.Bonus).forEach(f => {
+			const data = f.data as FeatureBonusData;
+			if (data.valuePerEchelon === undefined) {
+				data.valuePerEchelon = 0;
+			}
+		});
+
+		this.getFeatures(hero).filter(f => f.type === FeatureType.DamageModifier).forEach(f => {
+			const data = f.data as FeatureDamageModifierData;
+			data.modifiers.forEach(dm => {
+				if (dm.valuePerEchelon === undefined) {
+					dm.valuePerEchelon = 0;
+				}
+			});
+		});
 
 		this.getAbilities(hero, true, true, true).forEach(a => {
 			if (a.powerRoll && (a.powerRoll.type === undefined)) {

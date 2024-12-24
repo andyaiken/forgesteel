@@ -215,6 +215,7 @@ export const HeroEditPage = (props: Props) => {
 			if (careerCopy) {
 				heroCopy.state.projectPoints = 0;
 				heroCopy.state.renown = 0;
+				heroCopy.state.wealth = 1;
 				careerCopy.features.filter(f => f.type === FeatureType.Bonus).map(f => {
 					const data = f.data as FeatureBonusData;
 					switch (data.field) {
@@ -223,6 +224,9 @@ export const HeroEditPage = (props: Props) => {
 							break;
 						case FeatureField.Renown:
 							heroCopy.state.renown += data.value;
+							break;
+						case FeatureField.Wealth:
+							heroCopy.state.wealth += data.value;
 							break;
 					}
 				});

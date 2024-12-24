@@ -49,6 +49,8 @@ import { SelectablePanel } from '../../../controls/selectable-panel/selectable-p
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { SubClass } from '../../../../models/subclass';
+import { Title } from '../../../../models/title';
+import { TitlePanel } from '../../../panels/title-panel/title-panel';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
@@ -183,25 +185,6 @@ export const LibraryEditPage = (props: Props) => {
 				}
 				<Button block={true} onClick={addFeature}>Add a new feature</Button>
 			</Space>
-		);
-	};
-
-	const getTitleEditSection = () => {
-		const career = element as Career;
-
-		const changeFeature = (feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Career;
-			elementCopy.title = feature;
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
-		return (
-			<FeatureEditPanel
-				feature={career.title}
-				sourcebooks={props.sourcebooks}
-				onChange={changeFeature}
-			/>
 		);
 	};
 
@@ -1172,6 +1155,38 @@ export const LibraryEditPage = (props: Props) => {
 		);
 	};
 
+	const getTitleEditSection = () => {
+		const title = element as Title;
+
+		const setEchelon = (value: number) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Title;
+			elementCopy.echelon = value;
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		const setPrerequisites = (value: string) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Title;
+			elementCopy.prerequisites = value;
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Echelon</HeaderText>
+				<NumberSpin min={1} max={4} value={title.echelon} onChange={setEchelon} />
+				<HeaderText>Prerequisites</HeaderText>
+				<Input
+					placeholder='Prerequisites'
+					allowClear={true}
+					value={title.prerequisites}
+					onChange={e => setPrerequisites(e.target.value)}
+				/>
+			</Space>
+		);
+	};
+
 	const getInformationEditSection = () => {
 		const monsterGroup = element as MonsterGroup;
 
@@ -1474,11 +1489,6 @@ export const LibraryEditPage = (props: Props) => {
 							},
 							{
 								key: '3',
-								label: 'Title',
-								children: getTitleEditSection()
-							},
-							{
-								key: '4',
 								label: 'Inciting Incidents',
 								children: getIncitingIncidentsSection()
 							}
@@ -1605,6 +1615,28 @@ export const LibraryEditPage = (props: Props) => {
 						]}
 					/>
 				);
+			case 'Title':
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Title',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Details',
+								children: getTitleEditSection()
+							},
+							{
+								key: '3',
+								label: 'Features',
+								children: getFeaturesEditSection()
+							}
+						]}
+					/>
+				);
 			case 'Item':
 				return (
 					<Tabs
@@ -1672,6 +1704,8 @@ export const LibraryEditPage = (props: Props) => {
 				return <KitPanel kit={element as Kit} mode={PanelMode.Full} />;
 			case 'Perk':
 				return <PerkPanel perk={element as Perk} mode={PanelMode.Full} />;
+			case 'Title':
+				return <TitlePanel title={element as Title} mode={PanelMode.Full} />;
 			case 'Item':
 				return <ItemPanel item={element as Item} mode={PanelMode.Full} />;
 			case 'Monster Group':

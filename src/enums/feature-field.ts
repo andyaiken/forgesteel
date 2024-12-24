@@ -5,5 +5,6 @@ export enum FeatureField {
 	Renown = 'Renown',
 	Speed = 'Speed',
 	Stability = 'Stability',
-	Stamina = 'Stamina'
+	Stamina = 'Stamina',
+	Wealth = 'Wealth'
 };

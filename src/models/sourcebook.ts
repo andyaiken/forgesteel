@@ -11,6 +11,7 @@ import { Language } from './language';
 import { MonsterGroup } from './monster';
 import { Perk } from './perk';
 import { Skill } from './skill';
+import { Title } from './title';
 
 export interface Sourcebook extends Element {
 	isHomebrew: boolean;
@@ -23,6 +24,7 @@ export interface Sourcebook extends Element {
 	domains: Domain[];
 	kits: Kit[];
 	perks: Perk[];
+	titles: Title[];
 	items: Item[];
 	monsterGroups: MonsterGroup[];
 

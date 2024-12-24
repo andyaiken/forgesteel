@@ -14,6 +14,7 @@ import { Skill } from '../models/skill';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
+import { Title } from '../models/title';
 
 export class SourcebookLogic {
 	static getElementCount = (sourcebook: Sourcebook) => {
@@ -62,6 +63,10 @@ export class SourcebookLogic {
 
 	static getPerkSourcebook = (sourcebooks: Sourcebook[], perk: Perk) => {
 		return sourcebooks.find(s => s.perks.find(p => p.id === perk.id));
+	};
+
+	static getTitleSourcebook = (sourcebooks: Sourcebook[], title: Title) => {
+		return sourcebooks.find(s => s.titles.find(t => t.id === title.id));
 	};
 
 	static getItemSourcebook = (sourcebooks: Sourcebook[], item: Item) => {
@@ -160,6 +165,16 @@ export class SourcebookLogic {
 
 		sourcebooks.forEach(sourcebook => {
 			list.push(...sourcebook.perks);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getTitles = (sourcebooks: Sourcebook[]) => {
+		const list: Title[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.titles);
 		});
 
 		return Collections.sort(list, item => item.name);

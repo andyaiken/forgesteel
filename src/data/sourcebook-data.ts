@@ -112,6 +112,7 @@ export class SourcebookData {
 			KitData.vuken
 		],
 		perks: [],
+		titles: [],
 		items: [],
 		monsterGroups: [
 			radenwight
@@ -191,6 +192,7 @@ export class SourcebookData {
 		domains: [],
 		kits: [],
 		perks: [],
+		titles: [],
 		items: [],
 		monsterGroups: [],
 		skills: [

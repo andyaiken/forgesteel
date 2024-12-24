@@ -25,6 +25,8 @@ import { PerkPanel } from '../../../panels/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { Title } from '../../../../models/title';
+import { TitlePanel } from '../../../panels/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -44,6 +46,7 @@ interface Props {
 	viewDomain: (domain: Domain) => void;
 	viewKit: (kit: Kit) => void;
 	viewPerk: (perk: Perk) => void;
+	viewTitle: (title: Title) => void;
 	viewItem: (item: Item) => void;
 	viewMonsterGroup: (monsterGroup: MonsterGroup) => void;
 	onCreateHomebrew: (type: string, sourcebookID: string | null) => void;
@@ -130,6 +133,15 @@ export const LibraryListPage = (props: Props) => {
 	const getPerks = () => {
 		return SourcebookLogic
 			.getPerks(getSourcebooks())
+			.filter(item => Utils.textMatches([
+				item.name,
+				...item.features.map(f => f.name)
+			], searchTerm));
+	};
+
+	const getTitles = () => {
+		return SourcebookLogic
+			.getTitles(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.features.map(f => f.name)
@@ -451,6 +463,43 @@ export const LibraryListPage = (props: Props) => {
 		);
 	};
 
+	const getTitlesSection = (list: Title[]) => {
+		if (list.length === 0) {
+			return (
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No titles'
+				/>
+			);
+		}
+
+		return (
+			<div className='library-section-row'>
+				{
+					list.map(t => {
+						const item = (
+							<SelectablePanel key={t.id} onSelect={() => props.viewTitle(t)}>
+								<TitlePanel title={t} />
+							</SelectablePanel>
+						);
+
+						const sourcebook = SourcebookLogic.getTitleSourcebook(props.sourcebooks, t);
+						if (sourcebook && sourcebook.id) {
+							return (
+								<Badge.Ribbon key={t.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+									{item}
+								</Badge.Ribbon>
+							);
+						}
+
+						return item;
+					})
+				}
+			</div>
+		);
+	};
+
 	const getItemsSection = (list: Item[]) => {
 		if (list.length === 0) {
 			return (
@@ -526,7 +575,7 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	try {
-		const elementOptions = [ 'Ancestry', 'Culture', 'Career', 'Class', 'Complication', 'Domain', 'Kit', 'Perk', 'Item', 'Monster Group' ].map(e => ({ label: e, value: e }));
+		const elementOptions = [ 'Ancestry', 'Culture', 'Career', 'Class', 'Complication', 'Domain', 'Kit', 'Perk', 'Title', 'Item', 'Monster Group' ].map(e => ({ label: e, value: e }));
 		const sourcebookOptions = props.sourcebooks.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
 
 		const ancestries = getAncestries();
@@ -537,6 +586,7 @@ export const LibraryListPage = (props: Props) => {
 		const domains = getDomains();
 		const kits = getKits();
 		const perks = getPerks();
+		const titles = getTitles();
 		const items = getItems();
 		const monsterGroups = getMonsterGroups();
 
@@ -696,6 +746,16 @@ export const LibraryListPage = (props: Props) => {
 									</div>
 								),
 								children: getPerksSection(perks)
+							},
+							{
+								key: 'Title',
+								label: (
+									<div className='section-header'>
+										<div className='section-title'>Titles</div>
+										<div className='section-count'>{titles.length}</div>
+									</div>
+								),
+								children: getTitlesSection(titles)
 							},
 							{
 								key: 'Item',

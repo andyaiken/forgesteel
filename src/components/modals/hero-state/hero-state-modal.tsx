@@ -232,6 +232,12 @@ export const HeroStateModal = (props: Props) => {
 					onChange={value => onChange('renown', value)}
 				/>
 				<NumberSpin
+					label='Wealth'
+					value={hero.state.wealth}
+					min={1}
+					onChange={value => onChange('wealth', value)}
+				/>
+				<NumberSpin
 					label='Project Points'
 					value={hero.state.projectPoints}
 					min={0}

@@ -24,6 +24,7 @@ export interface HeroState {
 	heroicResource: number;
 	heroTokens: number;
 	renown: number;
+	wealth: number;
 	projectPoints: number;
 	conditions: Condition[];
 	inventory: Item[];

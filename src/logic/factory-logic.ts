@@ -20,6 +20,7 @@ import { PerkType } from '../enums/perk-type';
 import { Playbook } from '../models/playbook';
 import { Sourcebook } from '../models/sourcebook';
 import { SubClass } from '../models/subclass';
+import { Title } from '../models/title';
 import { Utils } from '../utils/utils';
 
 export class FactoryLogic {
@@ -49,6 +50,7 @@ export class FactoryLogic {
 				heroicResource: 0,
 				heroTokens: 0,
 				renown: 0,
+				wealth: 1,
 				projectPoints: 0,
 				conditions: [],
 				inventory: []
@@ -70,6 +72,7 @@ export class FactoryLogic {
 			kits: [],
 			complications: [],
 			perks: [],
+			titles: [],
 			items: [],
 			monsterGroups: [],
 			skills: [],
@@ -121,11 +124,6 @@ export class FactoryLogic {
 			name: '',
 			description: '',
 			features: [],
-			title: FeatureLogic.createFeature({
-				id: Utils.guid(),
-				name: '',
-				description: ''
-			}),
 			incitingIncidents: {
 				options: [],
 				selectedID: null
@@ -207,6 +205,17 @@ export class FactoryLogic {
 			name: '',
 			description: '',
 			type: PerkType.Crafting,
+			features: []
+		};
+	};
+
+	static createTitle = (): Title => {
+		return {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			echelon: 1,
+			prerequisites: '',
 			features: []
 		};
 	};

@@ -278,9 +278,6 @@ export class FeatureLogic {
 		const features: Feature[] = [];
 
 		features.push(...career.features);
-		if (career.title) {
-			features.push(career.title);
-		}
 
 		return FeatureLogic.simplifyFeatures(features);
 	};

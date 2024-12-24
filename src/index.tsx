@@ -44,6 +44,9 @@ Promise.all(promises).then(results => {
 		if (sourcebook.perks === undefined) {
 			sourcebook.perks = [];
 		}
+		if (sourcebook.titles === undefined) {
+			sourcebook.titles = [];
+		}
 		if (sourcebook.monsterGroups === undefined) {
 			sourcebook.monsterGroups = [];
 		}

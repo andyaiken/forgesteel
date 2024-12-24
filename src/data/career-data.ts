@@ -1,5 +1,3 @@
-import { AbilityKeyword } from '../enums/ability-keyword';
-import { AbilityLogic } from '../logic/ability-logic';
 import { Career } from '../models/career';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from '../logic/feature-logic';
@@ -25,11 +23,6 @@ export class CareerData {
 				value: 100
 			})
 		],
-		title: FeatureLogic.createFeature({
-			id: 'artisan-title',
-			name: 'Expert Artisan',
-			description: 'Whenever you make a test as part of a research or crafting project that uses a skill you have from the crafting skill group, you can roll the test twice and use either roll.'
-		}),
 		incitingIncidents: {
 			options: [
 				{
@@ -75,11 +68,6 @@ export class CareerData {
 				value: 50
 			})
 		],
-		title: FeatureLogic.createFeature({
-			id: 'criminal-title',
-			name: 'Lucky Dog',
-			description: 'When you fail a test using any skill from the intrigue skill group, you can roll a d6. You lose Stamina equal to the roll and improve the result of your test by one tier. You can make this roll only once per test.'
-		}),
 		incitingIncidents: {
 			options: [
 				{
@@ -121,11 +109,6 @@ export class CareerData {
 				value: 2
 			})
 		],
-		title: FeatureLogic.createFeature({
-			id: 'gladiator-title',
-			name: 'Monologue Champion',
-			description: 'When you are not in combat, you can shout to get the attention of all creatures within 10 squares of you. Each creature who is not hostile toward you listens to what you have to say for at least the next minute, or until they sense danger or any form of imminent harm. While creatures are listening to you, your allies gain an edge on tests made to avoid being noticed by those creatures.'
-		}),
 		incitingIncidents: {
 			options: [
 				{
@@ -172,11 +155,6 @@ export class CareerData {
 				value: 50
 			})
 		],
-		title: FeatureLogic.createFeature({
-			id: 'laborer-title',
-			name: 'Team Backbone',
-			description: 'When you take your first turn during a montage test, you can both make a test and assist another hero’s test.'
-		}),
 		incitingIncidents: {
 			options: [
 				{
@@ -222,26 +200,6 @@ export class CareerData {
 				value: 1
 			})
 		],
-		title: FeatureLogic.createAbilityFeature({
-			ability: AbilityLogic.createAbility({
-				id: 'mages-apprentice-title',
-				name: 'Arcane Trick',
-				description: 'You cast an entertaining spell that creates a minor but impressive magical effect.',
-				type: AbilityLogic.type.createAction(),
-				keywords: [ AbilityKeyword.Magic ],
-				distance: [ AbilityLogic.distance.createSelf() ],
-				target: 'Self',
-				effect: `
-Choose one of the following effects:
-• You teleport an unattended size 1T or 1S object within 1 square of you to an unoccupied space within 1 square of you.
-• Until the start of your next turn, a part of your body shoots a shower of harmless noisy sparks that give off light within 1 square of you.
-• You ignite or snuff out (your choice) every mundane light source within 1 square of you.
-• You make up to 1 pound of edible food you can touch taste delicious or disgusting.
-• Until the start of your next turn, you make your body exude a particular odor you’ve smelled before. This smell can be sensed by creatures within 5 squares of you, but can’t impose any condition or other drawback on creatures.
-• You place a small magical inscription on the surface of a mundane object you can touch, or remove an inscription that was made by you or by another creature using Arcane Trick.
-• You cover a size 1T object that you touch with an illusion that makes it look like another object. A creature who handles the object can see through the illusion. The illusion ends when you stop touching the object.`
-			})
-		}),
 		incitingIncidents: {
 			options: [
 				{
@@ -284,11 +242,6 @@ Choose one of the following effects:
 				value: 2
 			})
 		],
-		title: FeatureLogic.createFeature({
-			id: 'performer-title',
-			name: 'Dazzler',
-			description: 'When a creature watches you perform a song, dance, or role (as an actor, not in disguise) for at least 1 minute, you gain an edge on tests made to influence that creature for 1 hour after the performance ends.'
-		}),
 		incitingIncidents: {
 			options: [
 				{
@@ -330,11 +283,6 @@ Choose one of the following effects:
 				value: 100
 			})
 		],
-		title: FeatureLogic.createFeature({
-			id: 'sage-title',
-			name: 'Expert Sage',
-			description: 'Whenever you make a test as part of a research or crafting project that uses a skill you have from the lore skill group, you can roll the test twice and use either roll.'
-		}),
 		incitingIncidents: {
 			options: [
 				{
@@ -379,11 +327,6 @@ Choose one of the following effects:
 				value: 1
 			})
 		],
-		title: FeatureLogic.createFeature({
-			id: 'soldier-title',
-			name: 'Drill Sergeant',
-			description: 'At the start of a group test or montage test, you can spend a hope token. If you do, all participants make tests as if they also had your exploration skills.'
-		}),
 		incitingIncidents: {
 			options: [
 				{

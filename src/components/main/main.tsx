@@ -48,6 +48,8 @@ import { Sourcebook } from '../../models/sourcebook';
 import { SourcebookData } from '../../data/sourcebook-data';
 import { SourcebookLogic } from '../../logic/sourcebook-logic';
 import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
+import { Title } from '../../models/title';
+import { TitleModal } from '../modals/title/title-modal';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
@@ -252,7 +254,7 @@ export const Main = (props: Props) => {
 
 	//#endregion
 
-	//#region Elements
+	//#region Library
 
 	const createHomebrewElement = (type: string, sourcebookID: string | null) => {
 		const sourcebook = homebrewSourcebooks.find(cs => cs.id === sourcebookID) || null;
@@ -278,6 +280,9 @@ export const Main = (props: Props) => {
 			case 'Perk':
 				createPerk(null, sourcebook);
 				break;
+			case 'Title':
+				createTitle(null, sourcebook);
+				break;
 			case 'Item':
 				createItem(null, sourcebook);
 				break;
@@ -299,43 +304,47 @@ export const Main = (props: Props) => {
 		if (sourcebook) {
 			switch(type) {
 				case 'Ancestry':
-					sourcebook.ancestries.push(element as unknown as Ancestry);
+					sourcebook.ancestries.push(element as Ancestry);
 					Collections.sort(sourcebook.ancestries, item => item.name);
 					break;
 				case 'Culture':
-					sourcebook.cultures.push(element as unknown as Culture);
+					sourcebook.cultures.push(element as Culture);
 					Collections.sort(sourcebook.cultures, item => item.name);
 					break;
 				case 'Career':
-					sourcebook.careers.push(element as unknown as Career);
+					sourcebook.careers.push(element as Career);
 					Collections.sort(sourcebook.careers, item => item.name);
 					break;
 				case 'Class':
-					sourcebook.classes.push(element as unknown as HeroClass);
+					sourcebook.classes.push(element as HeroClass);
 					Collections.sort(sourcebook.classes, item => item.name);
 					break;
 				case 'Complication':
-					sourcebook.complications.push(element as unknown as Complication);
+					sourcebook.complications.push(element as Complication);
 					Collections.sort(sourcebook.complications, item => item.name);
 					break;
 				case 'Domain':
-					sourcebook.domains.push(element as unknown as Domain);
+					sourcebook.domains.push(element as Domain);
 					Collections.sort(sourcebook.domains, item => item.name);
 					break;
 				case 'Kit':
-					sourcebook.kits.push(element as unknown as Kit);
+					sourcebook.kits.push(element as Kit);
 					Collections.sort(sourcebook.kits, item => item.name);
 					break;
 				case 'Perk':
-					sourcebook.perks.push(element as unknown as Perk);
+					sourcebook.perks.push(element as Perk);
 					Collections.sort(sourcebook.perks, item => item.name);
 					break;
+				case 'Title':
+					sourcebook.titles.push(element as Title);
+					Collections.sort(sourcebook.titles, item => item.name);
+					break;
 				case 'Item':
-					sourcebook.items.push(element as unknown as Item);
+					sourcebook.items.push(element as Item);
 					Collections.sort(sourcebook.items, item => item.name);
 					break;
 				case 'Monster Group':
-					sourcebook.monsterGroups.push(element as unknown as MonsterGroup);
+					sourcebook.monsterGroups.push(element as MonsterGroup);
 					Collections.sort(sourcebook.monsterGroups, item => item.name);
 					break;
 			}
@@ -562,6 +571,33 @@ export const Main = (props: Props) => {
 		}
 	};
 
+	const createTitle = (original: Title | null, sourcebook: Sourcebook | null) => {
+		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
+		} else {
+			const id = sourcebook.id;
+			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+		}
+
+		let title: Title;
+		if (original) {
+			title = JSON.parse(JSON.stringify(original)) as Title;
+			title.id = Utils.guid();
+		} else {
+			title = FactoryLogic.createTitle();
+		}
+
+		sourcebook.titles.push(title);
+		persistHomebrewSourcebooks(sourcebooks);
+		if (drawer) {
+			onSelectTitle(title);
+		} else {
+			editTitle(title, sourcebook);
+		}
+	};
+
 	const createItem = (original: Item | null, sourcebook: Sourcebook | null) => {
 		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		if (!sourcebook) {
@@ -680,6 +716,14 @@ export const Main = (props: Props) => {
 		setDrawer(null);
 	};
 
+	const editTitle = (title: Title, sourcebook: Sourcebook) => {
+		setSelectedElement(title);
+		setSelectedSourcebook(sourcebook);
+		setSelectedElementType('Title');
+		setPage(Page.LibraryEdit);
+		setDrawer(null);
+	};
+
 	const editItem = (item: Item, sourcebook: Sourcebook) => {
 		setSelectedElement(item);
 		setSelectedSourcebook(sourcebook);
@@ -768,6 +812,15 @@ export const Main = (props: Props) => {
 		setDrawer(null);
 	};
 
+	const deleteTitle = (title: Title) => {
+		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		copy.forEach(cs => {
+			cs.titles = cs.titles.filter(t => t.id !== title.id);
+		});
+		persistHomebrewSourcebooks(copy);
+		setDrawer(null);
+	};
+
 	const deleteItem = (item: Item) => {
 		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		copy.forEach(cs => {
@@ -795,70 +848,77 @@ export const Main = (props: Props) => {
 					case 'Ancestry': {
 						const ancestryIndex = sourcebook.ancestries.findIndex(a => a.id === element.id);
 						if (ancestryIndex !== -1) {
-							sourcebook.ancestries[ancestryIndex] = element as unknown as Ancestry;
+							sourcebook.ancestries[ancestryIndex] = element as Ancestry;
 						}
 					}
 						break;
 					case 'Culture': {
 						const cultureIndex = sourcebook.cultures.findIndex(c => c.id === element.id);
 						if (cultureIndex !== -1) {
-							sourcebook.cultures[cultureIndex] = element as unknown as Culture;
+							sourcebook.cultures[cultureIndex] = element as Culture;
 						}
 					}
 						break;
 					case 'Career': {
 						const careerIndex = sourcebook.careers.findIndex(c => c.id === element.id);
 						if (careerIndex !== -1) {
-							sourcebook.careers[careerIndex] = element as unknown as Career;
+							sourcebook.careers[careerIndex] = element as Career;
 						}
 					}
 						break;
 					case 'Class': {
 						const classIndex = sourcebook.classes.findIndex(c => c.id === element.id);
 						if (classIndex !== -1) {
-							sourcebook.classes[classIndex] = element as unknown as HeroClass;
+							sourcebook.classes[classIndex] = element as HeroClass;
 						}
 					}
 						break;
 					case 'Complication': {
 						const complicationIndex = sourcebook.complications.findIndex(c => c.id === element.id);
 						if (complicationIndex !== -1) {
-							sourcebook.complications[complicationIndex] = element as unknown as Complication;
+							sourcebook.complications[complicationIndex] = element as Complication;
 						}
 					}
 						break;
 					case 'Domain': {
 						const domainIndex = sourcebook.domains.findIndex(d => d.id === element.id);
 						if (domainIndex !== -1) {
-							sourcebook.domains[domainIndex] = element as unknown as Domain;
+							sourcebook.domains[domainIndex] = element as Domain;
 						}
 					}
 						break;
 					case 'Kit': {
 						const kitIndex = sourcebook.kits.findIndex(k => k.id === element.id);
 						if (kitIndex !== -1) {
-							sourcebook.kits[kitIndex] = element as unknown as Kit;
+							sourcebook.kits[kitIndex] = element as Kit;
 						}
 					}
 						break;
 					case 'Perk': {
 						const perkIndex = sourcebook.perks.findIndex(p => p.id === element.id);
 						if (perkIndex !== -1) {
-							sourcebook.perks[perkIndex] = element as unknown as Perk;
+							sourcebook.perks[perkIndex] = element as Perk;
+						}
+					}
+						break;
+					case 'Title': {
+						const titleIndex = sourcebook.titles.findIndex(t => t.id === element.id);
+						if (titleIndex !== -1) {
+							sourcebook.titles[titleIndex] = element as Title;
 						}
 					}
 						break;
 					case 'Item': {
 						const itemIndex = sourcebook.items.findIndex(i => i.id === element.id);
 						if (itemIndex !== -1) {
-							sourcebook.items[itemIndex] = element as unknown as Item;
+							sourcebook.items[itemIndex] = element as Item;
 						}
 					}
 						break;
 					case 'Monster Group': {
 						const monsterGroupIndex = sourcebook.monsterGroups.findIndex(mg => mg.id === element.id);
 						if (monsterGroupIndex !== -1) {
-							sourcebook.monsterGroups[monsterGroupIndex] = element as unknown as MonsterGroup;
+							sourcebook.monsterGroups[monsterGroupIndex] = element as MonsterGroup;
 						}
 					}
 						break;
@@ -1103,6 +1163,24 @@ export const Main = (props: Props) => {
 		);
 	};
 
+	const onSelectTitle = (title: Title) => {
+		const container = SourcebookLogic
+			.getSourcebooks(homebrewSourcebooks)
+			.find(cs => cs.titles.find(t => t.id === title.id));
+
+		setDrawer(
+			<TitleModal
+				title={title}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.titles).find(t => t.id === title.id)}
+				createHomebrew={sourcebook => createTitle(title, sourcebook)}
+				export={format => Utils.export([ title.id ], title.name || 'Title', title, 'title', format)}
+				edit={() => editTitle(title, container as Sourcebook)}
+				delete={() => deleteTitle(title)}
+			/>
+		);
+	};
+
 	const onSelectItem = (item: Item) => {
 		const container = SourcebookLogic
 			.getSourcebooks(homebrewSourcebooks)
@@ -1315,6 +1393,7 @@ export const Main = (props: Props) => {
 						viewDomain={onSelectDomain}
 						viewKit={onSelectKit}
 						viewPerk={onSelectPerk}
+						viewTitle={onSelectTitle}
 						viewItem={onSelectItem}
 						viewMonsterGroup={onSelectMonsterGroup}
 						onCreateHomebrew={createHomebrewElement}

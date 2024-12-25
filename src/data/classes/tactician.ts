@@ -87,7 +87,7 @@ export const tactician: HeroClass = {
 				FeatureLogic.feature.createKitChoiceFeature({
 					id: 'tactician-1-6b',
 					name: 'Field Arsenal',
-					types: [ KitType.Martial ]
+					types: [ KitType.Standard ]
 				}),
 				FeatureLogic.feature.createClassAbilityChoiceFeature({
 					id: 'tactician-1-7',

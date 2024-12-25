@@ -24,15 +24,13 @@ export const PowerRollPanel = (props: Props) => {
 		if (props.hero) {
 			const dmgMelee = HeroLogic.getMeleeDamageBonus(props.hero, props.ability);
 			const dmgRanged = HeroLogic.getRangedDamageBonus(props.hero, props.ability);
-			const dmgMagic = HeroLogic.getMagicalDamageBonus(props.hero, props.ability);
 
-			if (dmgMelee || dmgRanged || dmgMagic) {
+			if (dmgMelee || dmgRanged) {
 				bonus = (
 					<div className='power-roll-row power-roll-footer'>
 						<div>
 							{dmgMelee ? <Field label='Bonus melee damage' value={`+${dmgMelee.tier1} / +${dmgMelee.tier2} / +${dmgMelee.tier3}`} /> : null}
 							{dmgRanged ? <Field label='Bonus ranged damage' value={`+${dmgRanged.tier1} / +${dmgRanged.tier2} / +${dmgRanged.tier3}`} /> : null}
-							{dmgMagic ? <Field label='Bonus magical damage' value={`+${dmgMagic.tier1} / +${dmgMagic.tier2} / +${dmgMagic.tier3}`} /> : null}
 						</div>
 					</div>
 				);

@@ -1,6 +1,5 @@
 export enum KitType {
-	Martial = 'Martial',
-	Caster = 'Caster',
+	Standard = 'Standard',
 	Stormwight = 'Stormwight'
 };
 
@@ -20,13 +19,4 @@ export enum KitWeapon {
 	Polearm = 'Polearm',
 	Unarmed = 'Unarmed Strike',
 	Whip = 'Whip'
-}
-
-export enum KitImplement {
-	Bone = 'Bone',
-	Crystal = 'Crystal',
-	Glass = 'Glass',
-	Metal = 'Metal',
-	Stone = 'Stone',
-	Wood = 'Wood'
 }

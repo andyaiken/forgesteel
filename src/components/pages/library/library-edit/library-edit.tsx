@@ -1,7 +1,7 @@
 import { Alert, Button, Divider, Input, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
-import { KitArmor, KitImplement, KitType, KitWeapon } from '../../../../enums/kit';
+import { KitArmor, KitType, KitWeapon } from '../../../../enums/kit';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../../../panels/ability-edit-panel/ability-edit-panel';
@@ -850,27 +850,13 @@ export const LibraryEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const setImplement = (value: KitImplement[]) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
-			elementCopy.implement = value;
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
-		const setMobility = (value: boolean) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
-			elementCopy.mobility = value;
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Type</HeaderText>
 				<Select
 					style={{ width: '100%' }}
 					placeholder='Select type'
-					options={[ KitType.Martial, KitType.Caster, KitType.Stormwight ].map(l => ({ value: l }))}
+					options={[ KitType.Standard, KitType.Stormwight ].map(l => ({ value: l }))}
 					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 					value={kit.type}
 					onChange={setType}
@@ -899,20 +885,6 @@ export const LibraryEditPage = (props: Props) => {
 					value={kit.weapon}
 					onChange={setWeapon}
 				/>
-				<HeaderText>Implements</HeaderText>
-				<Select
-					style={{ width: '100%' }}
-					className={kit.implement.length === 0 ? 'selection-empty' : ''}
-					mode='multiple'
-					allowClear={true}
-					placeholder='Select implement'
-					options={[ KitImplement.Bone, KitImplement.Crystal, KitImplement.Glass, KitImplement.Metal, KitImplement.Stone, KitImplement.Wood ].map(option => ({ value: option }))}
-					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					value={kit.implement}
-					onChange={setImplement}
-				/>
-				<HeaderText>Mobility</HeaderText>
-				<Toggle label='Mobility' value={kit.mobility} onChange={setMobility} />
 			</Space>
 		);
 	};
@@ -941,23 +913,16 @@ export const LibraryEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const setDistance = (value: number) => {
+		const setMeleeDistance = (value: number) => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
-			elementCopy.distance = value;
+			elementCopy.meleeDistance = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
-		const setReach = (value: number) => {
+		const setRangedDistance = (value: number) => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
-			elementCopy.reach = value;
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
-		const setArea = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
-			elementCopy.area = value;
+			elementCopy.rangedDistance = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
@@ -984,21 +949,16 @@ export const LibraryEditPage = (props: Props) => {
 				/>
 				<HeaderText>Distance</HeaderText>
 				<NumberSpin
+					label='Melee'
 					min={0}
-					value={kit.distance}
-					onChange={setDistance}
+					value={kit.meleeDistance}
+					onChange={setMeleeDistance}
 				/>
-				<HeaderText>Reach</HeaderText>
 				<NumberSpin
+					label='Ranged'
 					min={0}
-					value={kit.reach}
-					onChange={setReach}
-				/>
-				<HeaderText>Area</HeaderText>
-				<NumberSpin
-					min={0}
-					value={kit.area}
-					onChange={setArea}
+					value={kit.rangedDistance}
+					onChange={setRangedDistance}
 				/>
 			</Space>
 		);
@@ -1075,40 +1035,6 @@ export const LibraryEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const setMagicalDamage = (value: boolean) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
-			elementCopy.magicalDamage = value ? { tier1: 0, tier2: 0, tier3: 0 } : null;
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
-		const setMagicalDamage1 = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
-			if (elementCopy.magicalDamage) {
-				elementCopy.magicalDamage.tier1 = value;
-			}
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
-		const setMagicalDamage2 = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
-			if (elementCopy.magicalDamage) {
-				elementCopy.magicalDamage.tier2 = value;
-			}
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
-		const setMagicalDamage3 = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
-			if (elementCopy.magicalDamage) {
-				elementCopy.magicalDamage.tier3 = value;
-			}
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Melee Damage</HeaderText>
@@ -1121,11 +1047,6 @@ export const LibraryEditPage = (props: Props) => {
 				{kit.rangedDamage ? <NumberSpin label='Tier 1' min={0} value={kit.rangedDamage.tier1} onChange={setRangedDamage1} /> : null}
 				{kit.rangedDamage ? <NumberSpin label='Tier 2' min={0} value={kit.rangedDamage.tier2} onChange={setRangedDamage2} /> : null}
 				{kit.rangedDamage ? <NumberSpin label='Tier 3' min={0} value={kit.rangedDamage.tier3} onChange={setRangedDamage3} /> : null}
-				<HeaderText>Magical Damage</HeaderText>
-				<Toggle label='Magical damage' value={!!kit.magicalDamage} onChange={setMagicalDamage} />
-				{kit.magicalDamage ? <NumberSpin label='Tier 1' min={0} value={kit.magicalDamage.tier1} onChange={setMagicalDamage1} /> : null}
-				{kit.magicalDamage ? <NumberSpin label='Tier 2' min={0} value={kit.magicalDamage.tier2} onChange={setMagicalDamage2} /> : null}
-				{kit.magicalDamage ? <NumberSpin label='Tier 3' min={0} value={kit.magicalDamage.tier3} onChange={setMagicalDamage3} /> : null}
 			</Space>
 		);
 	};

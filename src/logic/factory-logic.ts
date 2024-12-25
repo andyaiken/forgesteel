@@ -181,20 +181,16 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
-			type: KitType.Martial,
+			type: KitType.Standard,
 			armor: [],
 			weapon: [],
-			implement: [],
 			stamina: 0,
 			speed: 0,
 			stability: 0,
 			meleeDamage: null,
 			rangedDamage: null,
-			magicalDamage: null,
-			distance: 0,
-			reach: 0,
-			area: 0,
-			mobility: false,
+			meleeDistance: 0,
+			rangedDistance: 0,
 			features: []
 		};
 	};

@@ -621,7 +621,7 @@ export const FeatureEditPanel = (props: Props) => {
 							placeholder='Kit types'
 							mode='multiple'
 							allowClear={true}
-							options={[ KitType.Martial, KitType.Caster, KitType.Stormwight ].map(option => ({ value: option }))}
+							options={[ KitType.Standard, KitType.Stormwight ].map(option => ({ value: option }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 							value={data.types}
 							onChange={setKitTypes}

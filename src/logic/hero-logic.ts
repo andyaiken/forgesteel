@@ -23,7 +23,7 @@ import { SourcebookLogic } from './sourcebook-logic';
 
 export class HeroLogic {
 	static getKitTypes = (hero: Hero) => {
-		const types = [ KitType.Martial, KitType.Caster ];
+		const types = [ KitType.Standard ];
 
 		// Collate from features
 		this.getFeatures(hero)
@@ -153,18 +153,6 @@ export class HeroLogic {
 						}
 					});
 				});
-
-			if (this.getKits(hero).some(kit => kit.mobility)) {
-				choices.push(AbilityLogic.createAbility({
-					id: 'mobility',
-					name: 'Mobility',
-					description: '',
-					type: AbilityLogic.type.createTrigger('An enemy ends its turn adjacent to you.', true),
-					distance: [ AbilityLogic.distance.createSelf() ],
-					target: 'Self',
-					effect: 'You shift up to 2 squares.'
-				}));
-			}
 
 			Collections.distinct(choices.map(a => a.cost), a => a)
 				.sort((a, b) => a - b)
@@ -641,59 +629,17 @@ Complex or time-consuming tests might require an action if made in combat—or c
 		};
 	};
 
-	static getMagicalDamageBonus = (hero: Hero, ability: Ability) => {
-		let value1 = 0;
-		let value2 = 0;
-		let value3 = 0;
-
-		if (ability.keywords.includes(AbilityKeyword.Magic)) {
-			// Add maximum from kits
-			const kits = this.getKits(hero);
-			value1 += Collections.max(kits.map(kit => kit.magicalDamage?.tier1 || 0), value => value) || 0;
-			value2 += Collections.max(kits.map(kit => kit.magicalDamage?.tier2 || 0), value => value) || 0;
-			value3 += Collections.max(kits.map(kit => kit.magicalDamage?.tier3 || 0), value => value) || 0;
-		}
-
-		if ((value1 === 0) && (value2 === 0) && (value3 === 0)) {
-			return null;
-		}
-
-		return {
-			tier1: value1,
-			tier2: value2,
-			tier3: value3
-		};
-	};
-
 	static getDistanceBonus = (hero: Hero, ability: Ability, distance: AbilityDistance) => {
 		const kits = this.getKits(hero);
 
 		if (ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon) && (distance.type === AbilityDistanceType.Reach)) {
-			// Add maximum reach bonus from kits
-			return Collections.max(kits.map(kit => kit.reach), value => value) || 0;
+			// Add maximum melee distance bonus from kits
+			return Collections.max(kits.map(kit => kit.meleeDistance), value => value) || 0;
 		}
 
 		if (ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon) && (distance.type === AbilityDistanceType.Ranged)) {
-			// Add maximum distance bonus from martial kits
-			return Collections.max(kits.filter(kit => kit.type === KitType.Martial).map(kit => kit.distance), value => value) || 0;
-		}
-
-		if (ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Magic) && (distance.type === AbilityDistanceType.Ranged)) {
-			// Add maximum distance bonus from caster kits
-			return Collections.max(kits.filter(kit => kit.type === KitType.Caster).map(kit => kit.distance), value => value) || 0;
-		}
-
-		const areaTypes = [
-			AbilityDistanceType.Aura,
-			AbilityDistanceType.Burst,
-			AbilityDistanceType.Cube,
-			AbilityDistanceType.Line,
-			AbilityDistanceType.Wall
-		];
-
-		if (ability.keywords.includes(AbilityKeyword.Magic) && areaTypes.includes(distance.type)) {
-			// Add maximum area bonus from kits
-			return Collections.max(kits.map(kit => kit.area), value => value) || 0;
+			// Add maximum ranged distance bonus from kits
+			return Collections.max(kits.map(kit => kit.rangedDistance), value => value) || 0;
 		}
 
 		return 0;

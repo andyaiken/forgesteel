@@ -173,7 +173,6 @@ export const HeroPanel = (props: Props) => {
 								<Field label='Kit' value={kit.name} />
 								{kit.armor.length > 0 ? <Field label='Armor' value={kit.armor.join(', ')} /> : null}
 								{kit.weapon.length > 0 ? <Field label='Weapons' value={kit.weapon.join(', ')} /> : null}
-								{kit.implement.length > 0 ? <Field label='Implements' value={kit.implement.join(', ')} /> : null}
 							</div>
 						))
 						:

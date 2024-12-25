@@ -79,30 +79,6 @@ export const RulesModal = (props: Props) => {
 			);
 		};
 
-		const getActionsSection = () => {
-			return (
-				<Space direction='vertical'>
-					{
-						HeroLogic.getAbilities(props.hero, false, true, true)
-							.filter(a => a.type.usage === AbilityUsage.Action)
-							.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} /></SelectablePanel>)
-					}
-				</Space>
-			);
-		};
-
-		const getManeuversSection = () => {
-			return (
-				<Space direction='vertical'>
-					{
-						HeroLogic.getAbilities(props.hero, false, true, true)
-							.filter(a => a.type.usage === AbilityUsage.Maneuver)
-							.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} /></SelectablePanel>)
-					}
-				</Space>
-			);
-		};
-
 		const getLanguagesSection = () => {
 			const sourcebooks = props.hero.settingIDs.map(id => props.sourcebooks.find(s => s.id === id)).filter(s => !!s);
 			const languages = SourcebookLogic.getLanguages(sourcebooks);
@@ -111,6 +87,33 @@ export const RulesModal = (props: Props) => {
 				<div>
 					{Collections.sort(languages, l => l.name).map(l => <Field key={l.name} label={l.name} value={l.description} />)}
 				</div>
+			);
+		};
+
+		const getAbilitiesSection = () => {
+			const abilities = HeroLogic.getAbilities(props.hero, false, true, true);
+
+			return (
+				<Space direction='vertical'>
+					<HeaderText>Actions</HeaderText>
+					{
+						abilities
+							.filter(a => a.type.usage === AbilityUsage.Action)
+							.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} /></SelectablePanel>)
+					}
+					<HeaderText>Maneuvers</HeaderText>
+					{
+						abilities
+							.filter(a => a.type.usage === AbilityUsage.Maneuver)
+							.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} /></SelectablePanel>)
+					}
+					<HeaderText>Move Actions</HeaderText>
+					{
+						abilities
+							.filter(a => a.type.usage === AbilityUsage.Move)
+							.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} /></SelectablePanel>)
+					}
+				</Space>
 			);
 		};
 
@@ -132,18 +135,13 @@ export const RulesModal = (props: Props) => {
 								},
 								{
 									key: '3',
-									label: 'Actions',
-									children: getActionsSection()
+									label: 'Languages',
+									children: getLanguagesSection()
 								},
 								{
 									key: '4',
-									label: 'Maneuvers',
-									children: getManeuversSection()
-								},
-								{
-									key: '5',
-									label: 'Languages',
-									children: getLanguagesSection()
+									label: 'Abilities',
+									children: getAbilitiesSection()
 								}
 							]}
 						/>

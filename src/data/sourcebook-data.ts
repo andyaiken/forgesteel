@@ -1,5 +1,4 @@
 import { EnvironmentData, OrganizationData, UpbringingData } from './culture-data';
-import { AncestryData } from './ancestry-data';
 import { CareerData } from './career-data';
 import { ComplicationData } from './complication-data';
 import { DomainData } from './domain-data';
@@ -9,14 +8,26 @@ import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
 import { censor } from './classes/censor';
 import { conduit } from './classes/conduit';
+import { devil } from './ancestries/devil';
+import { dragonKnight } from './ancestries/dragon-knight';
+import { dwarf } from './ancestries/dwarf';
 import { elementalist } from './classes/elementalist';
 import { fury } from './classes/fury';
+import { hakaan } from './ancestries/hakaan';
+import { highElf } from './ancestries/elf-high';
+import { human } from './ancestries/human';
+import { memonek } from './ancestries/memonek';
 import { nullClass } from './classes/null';
+import { orc } from './ancestries/orc';
+import { polder } from './ancestries/polder';
 import { radenwight } from './monsters/radenwight';
+import { revenant } from './ancestries/revenant';
 import { shadow } from './classes/shadow';
 import { tactician } from './classes/tactician';
 import { talent } from './classes/talent';
+import { timeRaider } from './ancestries/time-raider';
 import { troubadour } from './classes/troubadour';
+import { wodeElf } from './ancestries/elf-wode';
 
 export class SourcebookData {
 	static core: Sourcebook = {
@@ -25,15 +36,15 @@ export class SourcebookData {
 		description: 'Core game elements.',
 		isHomebrew: false,
 		ancestries: [
-			AncestryData.devil,
-			AncestryData.dragonKnight,
-			AncestryData.dwarf,
-			AncestryData.wodeElf,
-			AncestryData.highElf,
-			AncestryData.human,
-			AncestryData.orc,
-			AncestryData.polder,
-			AncestryData.revenant
+			devil,
+			dragonKnight,
+			dwarf,
+			wodeElf,
+			highElf,
+			human,
+			orc,
+			polder,
+			revenant
 		],
 		cultures: [],
 		careers: [
@@ -174,9 +185,9 @@ export class SourcebookData {
 		description: 'The default setting for Draw Steel.',
 		isHomebrew: false,
 		ancestries: [
-			AncestryData.hakaan,
-			AncestryData.memonek,
-			AncestryData.timeRaider
+			hakaan,
+			memonek,
+			timeRaider
 		],
 		cultures: [
 			FactoryLogic.createCulture('Devil', 'Urban, bureaucratic, academic.', [ 'Anjali' ], EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.academic),

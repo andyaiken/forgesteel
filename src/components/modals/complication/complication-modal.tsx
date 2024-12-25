@@ -1,6 +1,6 @@
 import { Button, Popover } from 'antd';
 import { Complication } from '../../../models/complication';
-import { ComplicationPanel } from '../../panels/complication-panel/complication-panel';
+import { ComplicationPanel } from '../../panels/elements/complication-panel/complication-panel';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';

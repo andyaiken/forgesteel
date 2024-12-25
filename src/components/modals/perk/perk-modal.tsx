@@ -3,7 +3,7 @@ import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Perk } from '../../../models/perk';
-import { PerkPanel } from '../../panels/perk-panel/perk-panel';
+import { PerkPanel } from '../../panels/elements/perk-panel/perk-panel';
 import { Sourcebook } from '../../../models/sourcebook';
 
 import './perk-modal.scss';

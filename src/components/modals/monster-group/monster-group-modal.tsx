@@ -2,7 +2,7 @@ import { Button, Popover } from 'antd';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Modal } from '../modal/modal';
 import { MonsterGroup } from '../../../models/monster';
-import { MonsterGroupPanel } from '../../panels/monster-group-panel/monster-group-panel';
+import { MonsterGroupPanel } from '../../panels/elements/monster-group-panel/monster-group-panel';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Playbook } from '../../../models/playbook';
 import { PlaybookLogic } from '../../../logic/playbook-logic';

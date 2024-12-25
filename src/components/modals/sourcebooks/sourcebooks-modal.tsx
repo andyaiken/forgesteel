@@ -3,7 +3,7 @@ import { DownloadOutlined } from '@ant-design/icons';
 import { FactoryLogic } from '../../../logic/factory-logic';
 import { Modal } from '../modal/modal';
 import { Sourcebook } from '../../../models/sourcebook';
-import { SourcebookPanel } from '../../panels/sourcebook-panel/sourcebook-panel';
+import { SourcebookPanel } from '../../panels/elements/sourcebook-panel/sourcebook-panel';
 import { useState } from 'react';
 
 import './sourcebooks-modal.scss';

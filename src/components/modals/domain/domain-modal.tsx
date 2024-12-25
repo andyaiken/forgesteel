@@ -1,7 +1,7 @@
 import { Button, Popover } from 'antd';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Domain } from '../../../models/domain';
-import { DomainPanel } from '../../panels/domain-panel/domain-panel';
+import { DomainPanel } from '../../panels/elements/domain-panel/domain-panel';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Sourcebook } from '../../../models/sourcebook';

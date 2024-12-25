@@ -16,12 +16,27 @@
 		.welcome-column {
 			max-width: 600px;
 
-			.button-row {
+			.welcome-actions {
+				border-top: 1px solid rgba(5, 5, 5, 0.06);
+				padding-top: 20px;
+				flex: 0 0 auto;
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
 				gap: 10px;
 				margin-bottom: 10px;
+			}
+		}
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.welcome-page {
+		.welcome-page-content {
+			.welcome-column {
+				.welcome-actions {
+					border-top-color: rgba(250, 250, 250, 0.6);
+				}
 			}
 		}
 	}

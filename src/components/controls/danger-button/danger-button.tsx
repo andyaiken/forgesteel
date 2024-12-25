@@ -17,7 +17,7 @@ export const DangerButton = (props: Props) => {
 	try {
 		return (
 			<Popover
-				className='danger-button'
+				className={props.mode === 'icon' ? 'danger-button icon' : 'danger-button'}
 				trigger='click'
 				placement='bottom'
 				content={(

@@ -1,6 +1,6 @@
 import { Ability } from '../../../models/ability';
-import { AbilityPanel } from '../../panels/ability-panel/ability-panel';
-import { DieRollPanel } from '../../panels/die-roll-panel/die-roll-panel';
+import { AbilityPanel } from '../../panels/elements/ability-panel/ability-panel';
+import { DieRollPanel } from '../../panels/die-roll/die-roll-panel';
 import { Hero } from '../../../models/hero';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';

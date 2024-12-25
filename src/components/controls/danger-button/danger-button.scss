@@ -1,3 +1,16 @@
 .danger-button {
 	display: block;
+
+	&.icon {
+		height: 32px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 6px;
+
+		&:hover {
+			color: rgba(0, 0, 0, 0.88);
+			background: rgba(0, 0, 0, 0.04);
+		}
+	}
 }

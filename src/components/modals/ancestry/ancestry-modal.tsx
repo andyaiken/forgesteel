@@ -1,6 +1,6 @@
 import { Button, Popover } from 'antd';
 import { Ancestry } from '../../../models/ancestry';
-import { AncestryPanel } from '../../panels/ancestry-panel/ancestry-panel';
+import { AncestryPanel } from '../../panels/elements/ancestry-panel/ancestry-panel';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';

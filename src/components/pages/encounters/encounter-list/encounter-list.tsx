@@ -2,7 +2,7 @@ import { Alert, Button, Input, Popover, Space, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Encounter } from '../../../../models/encounter';
-import { EncounterPanel } from '../../../panels/encounter-panel/encounter-panel';
+import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';

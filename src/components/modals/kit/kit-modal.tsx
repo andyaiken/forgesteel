@@ -1,7 +1,7 @@
 import { Button, Popover } from 'antd';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Kit } from '../../../models/kit';
-import { KitPanel } from '../../panels/kit-panel/kit-panel';
+import { KitPanel } from '../../panels/elements/kit-panel/kit-panel';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Sourcebook } from '../../../models/sourcebook';

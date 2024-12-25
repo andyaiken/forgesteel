@@ -1,6 +1,6 @@
 import { Button, Popover } from 'antd';
 import { Career } from '../../../models/career';
-import { CareerPanel } from '../../panels/career-panel/career-panel';
+import { CareerPanel } from '../../panels/elements/career-panel/career-panel';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';

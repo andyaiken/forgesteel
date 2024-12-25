@@ -1,5 +1,5 @@
 import { Characteristic } from '../../../enums/characteristic';
-import { DieRollPanel } from '../../panels/die-roll-panel/die-roll-panel';
+import { DieRollPanel } from '../../panels/die-roll/die-roll-panel';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { Modal } from '../modal/modal';

@@ -1,7 +1,7 @@
 import { Button, Popover } from 'antd';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Encounter } from '../../../models/encounter';
-import { EncounterPanel } from '../../panels/encounter-panel/encounter-panel';
+import { EncounterPanel } from '../../panels/elements/encounter-panel/encounter-panel';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Playbook } from '../../../models/playbook';

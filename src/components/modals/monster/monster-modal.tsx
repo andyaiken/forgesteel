@@ -1,7 +1,7 @@
 import { Button, Popover } from 'antd';
 import { Monster, MonsterGroup } from '../../../models/monster';
 import { Modal } from '../modal/modal';
-import { MonsterPanel } from '../../panels/monster-panel/monster-panel';
+import { MonsterPanel } from '../../panels/elements/monster-panel/monster-panel';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Playbook } from '../../../models/playbook';
 

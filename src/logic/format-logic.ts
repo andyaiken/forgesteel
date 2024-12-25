@@ -30,16 +30,19 @@ export class FormatLogic {
 	};
 
 	static getDamageModifier = (mod: DamageModifier) => {
-		let desc = `${mod.damageType} ${mod.type}`;
+		let desc = `${mod.damageType} ${mod.type} `;
+
 		if (mod.value) {
 			desc += `${mod.value >= 0 ? '+' : ''}${mod.value}`;
 		}
+
 		if (mod.valuePerLevel) {
 			if (desc !== '') {
 				desc += ', ';
 			}
 			desc += `${mod.valuePerLevel >= 0 ? '+' : ''}${mod.valuePerLevel} per level after 1st`;
 		}
+
 		if (mod.valuePerEchelon) {
 			if (desc !== '') {
 				desc += ', ';
@@ -47,6 +50,6 @@ export class FormatLogic {
 			desc += `${mod.valuePerEchelon >= 0 ? '+' : ''}${mod.valuePerEchelon} per echelon`;
 		}
 
-		return mod;
+		return desc;
 	};
 }

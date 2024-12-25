@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { ClassPanel } from '../../panels/class-panel/class-panel';
+import { ClassPanel } from '../../panels/elements/class-panel/class-panel';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { HeroClass } from '../../../models/class';
 import { Modal } from '../modal/modal';

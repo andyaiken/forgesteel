@@ -4,7 +4,7 @@ import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Sourcebook } from '../../../models/sourcebook';
 import { Title } from '../../../models/title';
-import { TitlePanel } from '../../panels/title-panel/title-panel';
+import { TitlePanel } from '../../panels/elements/title-panel/title-panel';
 
 import './title-modal.scss';
 

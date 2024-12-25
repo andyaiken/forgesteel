@@ -1,3 +1,4 @@
+import { AimOutlined, BookOutlined, TeamOutlined } from '@ant-design/icons';
 import { Alert, Button, Space } from 'antd';
 import { AppHeader } from '../../panels/app-header/app-header';
 import { HeaderText } from '../../controls/header-text/header-text';
@@ -25,38 +26,35 @@ export const WelcomePage = (props: Props) => {
 								<div className='ds-text'>
 									<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players and directors.
 								</div>
-								<div>
-									<Alert
-										type='info'
-										showIcon={true}
-										message='This app is currently being updated to support the content in the new backer packet. Please be patient!'
-									/>
-								</div>
+								<Alert
+									type='info'
+									showIcon={true}
+									message='This app is currently being updated to support the content in the new backer packet. Please be patient!'
+								/>
 								<div>
 									<HeaderText>For Players</HeaderText>
 									<div className='ds-text'>
-										With this app you can create heroes for DRAW STEEL.
+										With this app you can create heroes for <b>DRAW STEEL</b>.
 									</div>
 									<div className='ds-text'>
 										If you're playing offline, you can export your heroes as PNG or PDF.
 									</div>
-									<Button type='primary' block={true} onClick={props.showHeroes}>Start building heroes</Button>
-								</div>
-								<div>
+									<div className='ds-text'>
+										If your Director has homebrew content that you'd like to use for your heroes, you can add it to your library.
+									</div>
 									<HeaderText>For Directors</HeaderText>
 									<div className='ds-text'>
 										In the library, you can browse the collections of ancestries, classes, kits - all of the elements you need to build a hero - and monsters.
-									</div>
-									<div className='ds-text'>
 										You can use these as a base from which to design your own homebrew elements, or create them from whole cloth.
 									</div>
 									<div className='ds-text'>
 										You can use the monsters to build encounters, ensuring that they're perfectly balanced.
 									</div>
-									<div className='button-row'>
-										<Button block={true} onClick={props.showLibrary}>Library</Button>
-										<Button block={true} onClick={props.showEncounters}>Encounters</Button>
-									</div>
+								</div>
+								<div className='welcome-actions'>
+									<Button type='primary' block={true} icon={<TeamOutlined />} onClick={props.showHeroes}>Heroes</Button>
+									<Button block={true} icon={<BookOutlined />} onClick={props.showLibrary}>Library</Button>
+									<Button block={true} icon={<AimOutlined />} onClick={props.showEncounters}>Encounters</Button>
 								</div>
 							</Space>
 						</SelectablePanel>

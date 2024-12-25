@@ -1,6 +1,6 @@
 import { Button, Popover } from 'antd';
 import { Culture } from '../../../models/culture';
-import { CulturePanel } from '../../panels/culture-panel/culture-panel';
+import { CulturePanel } from '../../panels/elements/culture-panel/culture-panel';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';

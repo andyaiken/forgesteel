@@ -3,7 +3,7 @@ import { Condition, Hero } from '../../../models/hero';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { ArrowUpOutlined } from '@ant-design/icons';
 import { Characteristic } from '../../../enums/characteristic';
-import { ConditionPanel } from '../../panels/condition-panel/condition-panel';
+import { ConditionPanel } from '../../panels/condition/condition-panel';
 import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { Modal } from '../modal/modal';

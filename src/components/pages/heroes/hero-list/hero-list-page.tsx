@@ -2,7 +2,7 @@ import { Button, Upload } from 'antd';
 import { DownloadOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Hero } from '../../../../models/hero';
-import { HeroPanel } from '../../../panels/hero-panel/hero-panel';
+import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 

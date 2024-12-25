@@ -1,5 +1,5 @@
 import { Space, Tabs } from 'antd';
-import { AbilityPanel } from '../../panels/ability-panel/ability-panel';
+import { AbilityPanel } from '../../panels/elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
 import { Collections } from '../../../utils/collections';
 import { ConditionLogic } from '../../../logic/condition-logic';

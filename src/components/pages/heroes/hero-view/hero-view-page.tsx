@@ -12,7 +12,7 @@ import { Domain } from '../../../../models/domain';
 import { DropdownButton } from '../../../controls/dropdown-button/dropdown-button';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
-import { HeroPanel } from '../../../panels/hero-panel/hero-panel';
+import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
 import { Kit } from '../../../../models/kit';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';

@@ -525,22 +525,9 @@ const CultureSection = (props: CultureSectionProps) => {
 				));
 
 			if (props.hero.culture.id === CultureData.bespoke.id) {
-				const languages = SourcebookLogic.getLanguages(props.sourcebooks);
-
 				choices.unshift(
 					<SelectablePanel key='bespoke'>
 						<HeaderText>Bespoke Culture</HeaderText>
-						<div className='ds-text'>Choose your language.</div>
-						<Select
-							style={{ width: '100%' }}
-							className={props.hero.culture.languages.length === 0 ? 'selection-empty' : ''}
-							allowClear={true}
-							placeholder='Select'
-							options={languages.map(l => ({ label: l.name, value: l.name, desc: l.description }))}
-							optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-							value={props.hero.culture.languages.length > 0 ? props.hero.culture.languages[0] : null}
-							onChange={value => props.selectLanguages(value ? [ value ] : [])}
-						/>
 						<div className='ds-text'>Choose your Environment, Organization, and Upbringing.</div>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							<Select
@@ -577,6 +564,27 @@ const CultureSection = (props: CultureSectionProps) => {
 					</SelectablePanel>
 				);
 
+			}
+
+			if (props.hero.culture.languages.length === 0) {
+				const languages = SourcebookLogic.getLanguages(props.sourcebooks);
+
+				choices.unshift(
+					<SelectablePanel key='language'>
+						<HeaderText>Language</HeaderText>
+						<div className='ds-text'>Choose your language.</div>
+						<Select
+							style={{ width: '100%' }}
+							className={props.hero.culture.languages.length === 0 ? 'selection-empty' : ''}
+							allowClear={true}
+							placeholder='Select'
+							options={languages.map(l => ({ label: l.name, value: l.name, desc: l.description }))}
+							optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+							value={props.hero.culture.languages.length > 0 ? props.hero.culture.languages[0] : null}
+							onChange={value => props.selectLanguages(value ? [ value ] : [])}
+						/>
+					</SelectablePanel>
+				);
 			}
 		}
 

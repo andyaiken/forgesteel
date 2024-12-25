@@ -465,7 +465,7 @@ export const HeroPanel = (props: Props) => {
 					<Field label='Career' value={props.hero.career?.name || 'No career'} />
 					<Field label='Class' value={props.hero.class?.name || 'No class'} />
 					{subclasses ? <Field label={props.hero.class?.subclassName || 'Subclass'} value={subclasses.map(sc => sc.name).join(', ')} /> : null}
-					<Field label='Level' value={props.hero.class?.level || '-'} />
+					{props.hero.class ? <Field label='Level' value={props.hero.class.level} /> : null}
 					{domains.length > 0 ? <Field label='Domain' value={domains.map(d => d.name).join(', ')} /> : null}
 					{kits.length > 0 ? <Field label='Kit' value={kits.map(k => k.name).join(', ')} /> : null}
 				</div>

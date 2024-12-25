@@ -6,6 +6,7 @@ import { Characteristic } from '../enums/characteristic';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { Domain } from '../models/domain';
+import { Feature } from '../models/feature';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from './feature-logic';
 import { Hero } from '../models/hero';
@@ -106,15 +107,15 @@ export class FactoryLogic {
 		};
 	};
 
-	static createCulture = (): Culture => {
+	static createCulture = (name?: string, description?: string, languages?: string[], environment?: Feature, organization?: Feature, upbringing?: Feature): Culture => {
 		return {
-			id: Utils.guid(),
-			name: '',
-			description: '',
-			languages: [],
-			environment: null,
-			organization: null,
-			upbringing: null
+			id: name ? `culture-${name.replace(' ', '-').toLowerCase()}` : Utils.guid(),
+			name: name || '',
+			description: description || '',
+			languages: languages || [],
+			environment: environment || null,
+			organization: organization || null,
+			upbringing: upbringing || null
 		};
 	};
 

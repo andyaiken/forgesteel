@@ -29,7 +29,7 @@ export const MonsterPanel = (props: Props) => {
 						<div className='ds-text'>
 							Level {props.monster.level} {FormatLogic.getRole(props.monster.role)} {props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
 						</div>
-						<Field label='EV' value={props.monster.encounterValue} />
+						<Field label='EV' value={props.monster.role.isMinion ? `${props.monster.encounterValue} for 8 minions` : props.monster.encounterValue} />
 					</Flex>
 				</div>
 			);
@@ -49,7 +49,7 @@ export const MonsterPanel = (props: Props) => {
 					<div className='ds-text'>
 						Level {props.monster.level} {FormatLogic.getRole(props.monster.role)} {props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
 					</div>
-					<Field label='EV' value={props.monster.encounterValue} />
+					<Field label='EV' value={props.monster.role.isMinion ? `${props.monster.encounterValue} for 8 minions` : props.monster.encounterValue} />
 				</Flex>
 				<div className='stats'>
 					<Field orientation='vertical' label='Speed' value={speed} />

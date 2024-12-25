@@ -36,10 +36,17 @@ export const EncounterPanel = (props: Props) => {
 								group.slots.map(slot => {
 									const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
 									const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
+
 									let name = (monster && monsterGroup) ? MonsterLogic.getMonsterName(monster, monsterGroup) : 'Unknown Monster';
-									if (slot.count > 1) {
-										name += ` x${slot.count}`;
+
+									let count = slot.count;
+									if (monster && monster.role.isMinion) {
+										count *= 8;
 									}
+									if (count > 1) {
+										name += ` (x${count})`;
+									}
+
 									return (
 										<div key={slot.id} className='encounter-slot'>
 											<Field label='Monster' value={name} />

@@ -134,7 +134,7 @@ export const EncounterEditPage = (props: Props) => {
 												<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Compact} />
 												<div className='actions'>
 													<Button block={true} onClick={() => props.showMonster(slot.monsterID)}>Details</Button>
-													<NumberSpin value={slot.count} onChange={value => setSlotCount(group.id, slot.id, value)} />
+													<NumberSpin value={slot.count} format={value => (value * 8).toString()} onChange={value => setSlotCount(group.id, slot.id, value)} />
 												</div>
 											</div>
 										);

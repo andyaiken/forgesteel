@@ -6,8 +6,8 @@ import { SourcebookLogic } from './sourcebook-logic';
 
 export class EncounterLogic {
 	static getBudget = (heroCount: number, heroLevel: number, victories: number) => {
-		const effectiveHeroCount = heroCount + Math.floor(victories / 3);
-		const heroWorth = 12 + (3 * heroLevel);
+		const effectiveHeroCount = heroCount + Math.floor(victories / 2);
+		const heroWorth = 4 + (2 * heroLevel);
 		return effectiveHeroCount * heroWorth;
 	};
 

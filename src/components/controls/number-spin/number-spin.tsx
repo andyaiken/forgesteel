@@ -10,6 +10,7 @@ interface Props {
 	steps?: number[];
 	min?: number;
 	max?: number;
+	format?: (value: number) => string;
 	onChange: (value: number) => void;
 }
 
@@ -57,7 +58,7 @@ export const NumberSpin = (props: Props) => {
 				<Statistic
 					className='spin-middle'
 					title={props.label}
-					value={props.value}
+					value={props.format ? props.format(props.value) : props.value}
 				/>
 				<div className='spin-buttons'>
 					{

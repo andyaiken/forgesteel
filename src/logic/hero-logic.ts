@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from './ability-logic';
@@ -106,7 +106,7 @@ export class HeroLogic {
 				description: '',
 				type: AbilityLogic.type.createAction(true),
 				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.distance.createReach(1) ],
+				distance: [ AbilityLogic.distance.createMelee(1) ],
 				target: '1 creature or object',
 				powerRoll: AbilityLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might, Characteristic.Agility ],
@@ -196,7 +196,7 @@ export class HeroLogic {
 				description: '',
 				type: AbilityLogic.type.createManeuver(),
 				keywords: [],
-				distance: [ AbilityLogic.distance.createReach(1) ],
+				distance: [ AbilityLogic.distance.createMelee(1) ],
 				target: '1 enemy',
 				effect: 'The next attack an ally makes against the target before the start of your next turn has an edge.'
 			}));
@@ -220,7 +220,7 @@ If you are dying, you can’t take the Catch Breath maneuver, but other creature
 				keywords: [],
 				distance: [
 					AbilityLogic.distance.createSelf(),
-					AbilityLogic.distance.createReach(1)
+					AbilityLogic.distance.createMelee(1)
 				],
 				target: 'Self or 1 creature',
 				effect: 'You can use this maneuver to drink a potion yourself or to administer a potion to an adjacent creature.'
@@ -247,7 +247,7 @@ If you are dying, you can’t take the Catch Breath maneuver, but other creature
 				description: '',
 				type: AbilityLogic.type.createManeuver(),
 				keywords: [ AbilityKeyword.Melee ],
-				distance: [ AbilityLogic.distance.createReach(1) ],
+				distance: [ AbilityLogic.distance.createMelee(1) ],
 				target: '1 creature the same size or smaller than you',
 				powerRoll: AbilityLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might ],
@@ -273,7 +273,7 @@ If you are dying, you can’t take the Catch Breath maneuver, but other creature
 				description: '',
 				type: AbilityLogic.type.createManeuver(),
 				keywords: [ AbilityKeyword.Melee ],
-				distance: [ AbilityLogic.distance.createReach(1) ],
+				distance: [ AbilityLogic.distance.createMelee(1) ],
 				target: '1 creature the same size or smaller than you',
 				powerRoll: AbilityLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might ],
@@ -313,7 +313,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				keywords: [],
 				distance: [
 					AbilityLogic.distance.createSelf(),
-					AbilityLogic.distance.createReach(1)
+					AbilityLogic.distance.createMelee(1)
 				],
 				target: 'Self or 1 creature',
 				effect: 'You can use this maneuver to stand up if you are prone, ending that condition. Alternatively, you can use this maneuver to make an adjacent prone creature stand up.'
@@ -346,7 +346,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				keywords: [],
 				distance: [
 					AbilityLogic.distance.createSelf(),
-					AbilityLogic.distance.createReach(1)
+					AbilityLogic.distance.createMelee(1)
 				],
 				target: 'Self or 1 creature',
 				effect: 'You use your action to employ medicine or inspiring words to make an adjacent creature feel better and stay in the fight. The creature can spend a Recovery to regain Stamina, or can make a resistance roll against a “(resistance ends)” effect they are suffering.'
@@ -536,7 +536,13 @@ Complex or time-consuming tests might require an action if made in combat—or c
 	};
 
 	static getSpeed = (hero: Hero) => {
-		let value = 0;
+		let value = 5;
+
+		const features = this.getFeatures(hero).filter(f => f.type === FeatureType.Size);
+		if (features.length > 0) {
+			const datas = features.map(f => f.data as FeatureSpeedData);
+			value = Collections.max(datas.map(d => d.speed), v => v) || 0;
+		}
 
 		// Add maximum from kits
 		const kits = this.getKits(hero);
@@ -632,7 +638,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 	static getDistanceBonus = (hero: Hero, ability: Ability, distance: AbilityDistance) => {
 		const kits = this.getKits(hero);
 
-		if (ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon) && (distance.type === AbilityDistanceType.Reach)) {
+		if (ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon) && (distance.type === AbilityDistanceType.Melee)) {
 			// Add maximum melee distance bonus from kits
 			return Collections.max(kits.map(kit => kit.meleeDistance), value => value) || 0;
 		}

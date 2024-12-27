@@ -12,6 +12,7 @@ export enum AbilityKeyword {
 	Psionic = 'Psionic',
 	Ranged = 'Ranged',
 	Resistance = 'Resistance',
+	Strike = 'Strike',
 	Void = 'Void',
 	Weapon = 'Weapon'
 }

@@ -86,7 +86,7 @@ export const shadow: HeroClass = {
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createReach(1),
+				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(3)
 			],
 			target: '1 creature',
@@ -104,7 +104,7 @@ export const shadow: HeroClass = {
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createReach(1),
+				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(3)
 			],
 			target: '1 creature',
@@ -141,7 +141,7 @@ export const shadow: HeroClass = {
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createReach(1)
+				AbilityLogic.distance.createMelee(1)
 			],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -176,7 +176,7 @@ export const shadow: HeroClass = {
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createReach(1)
+				AbilityLogic.distance.createMelee(1)
 			],
 			target: '1 creature',
 			cost: 3,
@@ -195,7 +195,7 @@ export const shadow: HeroClass = {
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createReach(1),
+				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '2 creatures or objects',
@@ -214,7 +214,7 @@ export const shadow: HeroClass = {
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createReach(1),
+				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(3)
 			],
 			target: '1 creature',
@@ -234,7 +234,7 @@ export const shadow: HeroClass = {
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createReach(1)
+				AbilityLogic.distance.createMelee(1)
 			],
 			target: '1 creature',
 			cost: 5,
@@ -252,7 +252,7 @@ export const shadow: HeroClass = {
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createReach(1)
+				AbilityLogic.distance.createMelee(1)
 			],
 			target: '1 creature',
 			cost: 5,

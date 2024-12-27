@@ -79,9 +79,9 @@ export class AbilityLogic {
 				special: ''
 			};
 		},
-		createReach: (value: number): AbilityDistance => {
+		createMelee: (value: number): AbilityDistance => {
 			return {
-				type: AbilityDistanceType.Reach,
+				type: AbilityDistanceType.Melee,
 				value: value,
 				value2: 0,
 				within: 0,

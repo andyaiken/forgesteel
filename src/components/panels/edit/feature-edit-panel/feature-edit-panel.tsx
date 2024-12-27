@@ -1,6 +1,6 @@
 import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureTitleData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -61,7 +61,7 @@ export const FeatureEditPanel = (props: Props) => {
 						description: '',
 						type: AbilityLogic.type.createAction(),
 						keywords: [],
-						distance: [ AbilityLogic.distance.createReach(1) ],
+						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: ''
 					})
 				};
@@ -167,6 +167,11 @@ export const FeatureEditPanel = (props: Props) => {
 					listOptions: [],
 					count: 1,
 					selected: []
+				};
+				break;
+			case FeatureType.Speed:
+				data = {
+					speed: 5
 				};
 				break;
 			case FeatureType.Text:
@@ -306,6 +311,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setModifier = (value: number) => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureAbilityCostData;
 			copy.modifier = value;
+			setData(copy);
+		};
+
+		const setSpeed = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureSpeedData;
+			copy.speed = value;
 			setData(copy);
 		};
 
@@ -487,20 +498,9 @@ export const FeatureEditPanel = (props: Props) => {
 									key={n}
 									title={option.feature.name || 'Unnamed Feature'}
 									extra={[
-										{
-											title: 'Move Up',
-											icon: <CaretUpOutlined />,
-											onClick: () => moveChoice(data, n, 'up')
-										},
-										{
-											title: 'Move Down',
-											icon: <CaretDownOutlined />,
-											onClick: () => moveChoice(data, n, 'down')
-										},
-										{
-											title: 'Delete',
-											icon: <DangerButton mode='icon' onConfirm={() => deleteChoice(data, n)} />
-										}
+										<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveChoice(data, n, 'up')} />,
+										<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveChoice(data, n, 'down')} />,
+										<DangerButton key='delete' mode='icon' onConfirm={() => deleteChoice(data, n)} />
 									]}
 								>
 									<Space direction='vertical' style={{ width: '100%' }}>
@@ -677,20 +677,9 @@ export const FeatureEditPanel = (props: Props) => {
 									key={feature.id}
 									title={feature.name}
 									extra={[
-										{
-											title: 'Move Up',
-											icon: <CaretUpOutlined />,
-											onClick: () => moveMultipleFeature(data, n, 'up')
-										},
-										{
-											title: 'Move Down',
-											icon: <CaretDownOutlined />,
-											onClick: () => moveMultipleFeature(data, n, 'down')
-										},
-										{
-											title: 'Delete',
-											icon: <DangerButton mode='icon' onConfirm={() => deleteMultipleFeature(data, n)} />
-										}
+										<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveMultipleFeature(data, n, 'up')} />,
+										<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveMultipleFeature(data, n, 'down')} />,
+										<DangerButton key='delete' mode='icon' onConfirm={() => deleteMultipleFeature(data, n)} />
 									]}
 								>
 									<FeatureEditPanel
@@ -808,6 +797,15 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
+			case FeatureType.Speed: {
+				const data = feature.data as FeatureSpeedData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Speed</HeaderText>
+						<NumberSpin min={1} value={data.speed} onChange={setSpeed} />
+					</Space>
+				);
+			}
 			case FeatureType.Text:
 				return null;
 			case FeatureType.Title: {
@@ -854,7 +852,7 @@ export const FeatureEditPanel = (props: Props) => {
 									<Select
 										style={{ width: '100%' }}
 										placeholder='Select type'
-										options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Title ]).map(o => ({ value: o }))}
+										options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.Title ]).map(o => ({ value: o }))}
 										optionRender={option => <Field label={option.data.value} value={FeatureLogic.getFeatureTypeDescription(option.data.value)} />}
 										value={feature.type}
 										onChange={setType}

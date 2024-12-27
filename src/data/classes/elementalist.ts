@@ -272,7 +272,7 @@ Choose one of the following effects:
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Persistent, AbilityKeyword.Void ],
 			distance: [
 				AbilityLogic.distance.createSelf(),
-				AbilityLogic.distance.createReach(1)
+				AbilityLogic.distance.createMelee(1)
 			],
 			target: 'Self or 1 ally',
 			cost: 5,
@@ -346,7 +346,7 @@ Choose one of the following effects:
 								description: 'The earth rises, falls, or opens at your command.',
 								type: AbilityLogic.type.createAction(),
 								keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-								distance: [ AbilityLogic.distance.createReach(1) ],
+								distance: [ AbilityLogic.distance.createMelee(1) ],
 								target: 'Special',
 								cost: 3,
 								effect: 'You touch a square containing mundane dirt, stone, or metal and create a 5 wall of the same material, which rises up out of the ground and must include the square you touched.',
@@ -405,7 +405,7 @@ Choose one of the following effects:
 								description: 'With the merest touch, you cause an object to turn into slag or ash.',
 								type: AbilityLogic.type.createAction(),
 								keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-								distance: [ AbilityLogic.distance.createReach(1) ],
+								distance: [ AbilityLogic.distance.createMelee(1) ],
 								target: '1 mundane object',
 								cost: 3,
 								effect: 'You heat the target and cause it to combust and melt. If the object is larger than 1 square, then only the square of the object that you touch is destroyed.',

@@ -297,20 +297,9 @@ export const MonsterEditPanel = (props: Props) => {
 												key={f.id}
 												title={f.name || 'Unnamed Feature'}
 												extra={[
-													{
-														title: 'Move Up',
-														icon: <CaretUpOutlined />,
-														onClick: () => moveFeature(f, 'up')
-													},
-													{
-														title: 'Move Down',
-														icon: <CaretDownOutlined />,
-														onClick: () => moveFeature(f, 'down')
-													},
-													{
-														title: 'Delete',
-														icon: <DangerButton mode='icon' onConfirm={() => deleteFeature(f)} />
-													}
+													<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveFeature(f, 'up')} />,
+													<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveFeature(f, 'down')} />,
+													<DangerButton key='delete' mode='icon' onConfirm={() => deleteFeature(f)} />
 												]}
 											>
 												<FeatureEditPanel

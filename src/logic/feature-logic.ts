@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureTitleData } from '../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../models/feature';
 import { Ability } from '../models/ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from '../models/ancestry';
@@ -205,7 +205,7 @@ export class FeatureLogic {
 				} as FeaturePerkData
 			} as Feature;
 		},
-		createSizeFeature: (data: { id: string, name?: string, description?: string, sizeValue: number, sizeMod: string; }) => {
+		createSizeFeature: (data: { id: string, name?: string, description?: string, sizeValue: number, sizeMod: string }) => {
 			return {
 				id: data.id,
 				name: data.name || 'Size',
@@ -243,6 +243,17 @@ export class FeatureLogic {
 					count: count,
 					selected: data.selected || []
 				} as FeatureSkillChoiceData
+			} as Feature;
+		},
+		createSpeedFeature: (data: { id: string, name?: string, description?: string, speed: number }) => {
+			return {
+				id: data.id,
+				name: data.name || 'Speed',
+				description: data.description || '',
+				type: FeatureType.Speed,
+				data: {
+					speed: data.speed
+				} as FeatureSpeedData
 			} as Feature;
 		},
 		createTitleFeature: (data: { id: string, name?: string, description?: string, count?: number }) => {
@@ -503,6 +514,8 @@ export class FeatureLogic {
 				return 'This feature grants you a skill.';
 			case FeatureType.SkillChoice:
 				return 'This feature allows you to choose a skill.';
+			case FeatureType.Speed:
+				return 'This feature sets your base speed.';
 			case FeatureType.Text:
 				return 'This feature has no special properties, just a text description.';
 			case FeatureType.Title:

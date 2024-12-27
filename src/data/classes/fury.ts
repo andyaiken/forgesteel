@@ -75,7 +75,7 @@ export const fury: HeroClass = {
 			description: 'The heavy impact of your weapon attacks drives your foes ever backward.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createReach(1) ],
+			distance: [ AbilityLogic.distance.createMelee(1) ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
@@ -90,7 +90,7 @@ export const fury: HeroClass = {
 			description: 'Keeping in constant motion helps you slip out of reach after a brutal assault.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createReach(1) ],
+			distance: [ AbilityLogic.distance.createMelee(1) ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
@@ -106,7 +106,7 @@ export const fury: HeroClass = {
 			description: 'You hit with a strength that’s worth the risk of raising your opponent’s ire.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createReach(1) ],
+			distance: [ AbilityLogic.distance.createMelee(1) ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
@@ -122,7 +122,7 @@ export const fury: HeroClass = {
 			description: 'Fighting up close lets you keep your foe exactly where you want them.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createReach(1) ],
+			distance: [ AbilityLogic.distance.createMelee(1) ],
 			target: '1 creature of your size or smaller',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
@@ -138,7 +138,7 @@ export const fury: HeroClass = {
 			description: 'Your enemies will get out of your way—whether they want to or not.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createReach(1) ],
+			distance: [ AbilityLogic.distance.createMelee(1) ],
 			target: '',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -190,7 +190,7 @@ export const fury: HeroClass = {
 			cost: 3,
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createReach(1) ],
+			distance: [ AbilityLogic.distance.createMelee(1) ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
@@ -206,7 +206,7 @@ export const fury: HeroClass = {
 			description: 'A mighty strike leaves your foe reeling.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createReach(1) ],
+			distance: [ AbilityLogic.distance.createMelee(1) ],
 			target: '1 creature or object',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -234,7 +234,7 @@ export const fury: HeroClass = {
 			description: 'You focus your rage into a single devastating strike.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createReach(1) ],
+			distance: [ AbilityLogic.distance.createMelee(1) ],
 			target: '1 creature',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -299,7 +299,7 @@ When you damage an object with a weapon attack, it takes an additional 5 damage.
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee ],
 								distance: [
 									AbilityLogic.distance.createSelf(),
-									AbilityLogic.distance.createReach(1)
+									AbilityLogic.distance.createMelee(1)
 								],
 								target: 'Self or 1 creature',
 								effect: 'You can select a new target of the same size or smaller within distance to be force moved instead. Additionally, you can increase the forced move distance by a number of squares equal to your Might score. You can use your Primordial Strength benefit to make this forced movement vertical.',
@@ -345,7 +345,7 @@ You are never surprised. Additionally, whenever you would push a target with for
 								description: 'When a damaging effect surrounds you, you stay two steps ahead.',
 								type: AbilityLogic.type.createTrigger('You are targeted by a damaging area of effect.'),
 								keywords: [ AbilityKeyword.Melee ],
-								distance: [ AbilityLogic.distance.createReach(1) ],
+								distance: [ AbilityLogic.distance.createMelee(1) ],
 								target: 'Self',
 								effect: 'You shift up to 2 squares. If that moves you out of the area of effect, you ignore the attack. Otherwise, you take half damage.',
 								spend: [

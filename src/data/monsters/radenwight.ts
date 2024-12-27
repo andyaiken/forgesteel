@@ -39,7 +39,7 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 				description: 'A non-minion radenwight can use the following ability.',
 				type: AbilityLogic.type.createAction(),
 				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.distance.createReach(1) ],
+				distance: [ AbilityLogic.distance.createMelee(1) ],
 				target: 'One creature',
 				cost: 3,
 				powerRoll: AbilityLogic.createPowerRoll({
@@ -92,7 +92,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						type: AbilityLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [
-							AbilityLogic.distance.createReach(1),
+							AbilityLogic.distance.createMelee(1),
 							AbilityLogic.distance.createRanged(5)
 						],
 						target: 'One creature per minion',
@@ -111,7 +111,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						name: 'Ready Rodent',
 						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createReach(1) ],
+						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature',
 						effect: 'The mischiever makes a free strike against the target.'
 					})
@@ -139,7 +139,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						name: 'Stinky Glissando',
 						type: AbilityLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-						distance: [ AbilityLogic.distance.createReach(1) ],
+						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature or object per minion',
 						powerRoll: AbilityLogic.createPowerRoll({
 							bonus: 1,
@@ -155,7 +155,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						name: 'Ready Rodent',
 						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createReach(1) ],
+						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature',
 						effect: 'The ratagast makes a free strike against the target.'
 					})
@@ -183,7 +183,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						name: 'Rapier Flunge',
 						type: AbilityLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createReach(1) ],
+						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature or object per minion',
 						powerRoll: AbilityLogic.createPowerRoll({
 							bonus: 1,
@@ -199,7 +199,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						name: 'Ready Rodent',
 						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createReach(1) ],
+						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature',
 						effect: 'The swiftpaw makes a free strike against the target.'
 					})
@@ -244,7 +244,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						name: 'Ready Rodent',
 						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createReach(1) ],
+						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature',
 						effect: 'The redeye makes a free strike against the target.'
 					})
@@ -272,7 +272,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						name: 'Lockjaw',
 						type: AbilityLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createReach(1) ],
+						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature or object',
 						powerRoll: AbilityLogic.createPowerRoll({
 							bonus: 1,
@@ -306,7 +306,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						name: 'Ready Rodent',
 						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createReach(1) ],
+						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature',
 						effect: 'The bruxer makes a free strike against the target.'
 					})
@@ -335,7 +335,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						type: AbilityLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [
-							AbilityLogic.distance.createReach(1),
+							AbilityLogic.distance.createMelee(1),
 							AbilityLogic.distance.createRanged(10)
 						],
 						target: 'One creature or object',
@@ -366,7 +366,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						name: 'Ready Rodent',
 						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createReach(1) ],
+						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature',
 						effect: 'The piper makes a free strike against the target.'
 					})
@@ -399,7 +399,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						name: 'En Garde!',
 						type: AbilityLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createReach(1) ],
+						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'Two creatures or objects',
 						powerRoll: AbilityLogic.createPowerRoll({
 							bonus: 1,
@@ -416,7 +416,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						name: 'Over Here, Thanks',
 						type: AbilityLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Melee ],
-						distance: [ AbilityLogic.distance.createReach(1) ],
+						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One enemy',
 						effect: 'Slide 1; the ratcrobat can then shift into the square the target left.'
 					})
@@ -427,7 +427,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						name: 'Ready Rodent',
 						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createReach(1) ],
+						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature',
 						effect: 'The ratcrobat makes a free strike against the target.'
 					})

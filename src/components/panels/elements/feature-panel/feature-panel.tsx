@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureTitleData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Collections } from '../../../../utils/collections';
@@ -891,6 +891,16 @@ export const FeaturePanel = (props: Props) => {
 		return null;
 	};
 
+	const getExtraSpeed = (data: FeatureSpeedData) => {
+		if (!props.feature.description) {
+			return (
+				<Field label='Speed' value={data.speed} />
+			);
+		}
+
+		return null;
+	};
+
 	const getExtraTitle = (data: FeatureTitleData) => {
 		if (data.selected.length > 0) {
 			return (
@@ -943,6 +953,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraSkill(props.feature.data as FeatureSkillData);
 			case FeatureType.SkillChoice:
 				return getExtraSkillChoice(props.feature.data as FeatureSkillChoiceData);
+			case FeatureType.Speed:
+				return getExtraSpeed(props.feature.data as FeatureSpeedData);
 			case FeatureType.Title:
 				return getExtraTitle(props.feature.data as FeatureTitleData);
 		}

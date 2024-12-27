@@ -150,20 +150,9 @@ export const LibraryEditPage = (props: Props) => {
 							key={f.id}
 							title={f.name || 'Unnamed Feature'}
 							extra={[
-								{
-									title: 'Move Up',
-									icon: <CaretUpOutlined />,
-									onClick: () => moveFeature(f, 'up')
-								},
-								{
-									title: 'Move Down',
-									icon: <CaretDownOutlined />,
-									onClick: () => moveFeature(f, 'down')
-								},
-								{
-									title: 'Delete',
-									icon: <DangerButton mode='icon' onConfirm={() => deleteFeature(f)} />
-								}
+								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveFeature(f, 'up')} />,
+								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveFeature(f, 'down')} />,
+								<DangerButton key='delete' mode='icon' onConfirm={() => deleteFeature(f)} />
 							]}
 						>
 							<FeatureEditPanel
@@ -235,20 +224,9 @@ export const LibraryEditPage = (props: Props) => {
 							key={o.id}
 							title={o.name || 'Unnamed Incident'}
 							extra={[
-								{
-									title: 'Move Up',
-									icon: <CaretUpOutlined />,
-									onClick: () => moveIncident(o, 'up')
-								},
-								{
-									title: 'Move Down',
-									icon: <CaretDownOutlined />,
-									onClick: () => moveIncident(o, 'down')
-								},
-								{
-									title: 'Delete',
-									icon: <DangerButton mode='icon' onConfirm={() => deleteIncident(o)} />
-								}
+								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveIncident(o, 'up')} />,
+								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveIncident(o, 'down')} />,
+								<DangerButton key='delete' mode='icon' onConfirm={() => deleteIncident(o)} />
 							]}
 						>
 							<ElementEditPanel
@@ -492,20 +470,9 @@ export const LibraryEditPage = (props: Props) => {
 											key={f.id}
 											title={f.name || 'Unnamed Feature'}
 											extra={[
-												{
-													title: 'Move Up',
-													icon: <CaretUpOutlined />,
-													onClick: () => moveFeature(lvl.level, f, 'up')
-												},
-												{
-													title: 'Move Down',
-													icon: <CaretDownOutlined />,
-													onClick: () => moveFeature(lvl.level, f, 'down')
-												},
-												{
-													title: 'Delete',
-													icon: <DangerButton mode='icon' onConfirm={() => deleteFeature(lvl.level, f)} />
-												}
+												<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveFeature(lvl.level, f, 'up')} />,
+												<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveFeature(lvl.level, f, 'down')} />,
+												<DangerButton key='delete' mode='icon' onConfirm={() => deleteFeature(lvl.level, f)} />
 											]}
 										>
 											<FeatureEditPanel
@@ -545,7 +512,7 @@ export const LibraryEditPage = (props: Props) => {
 				description: '',
 				type: AbilityLogic.type.createAction(),
 				keywords: [],
-				distance: [ AbilityLogic.distance.createReach(1) ],
+				distance: [ AbilityLogic.distance.createMelee(1) ],
 				target: ''
 			}));
 			setElement(elementCopy);
@@ -585,20 +552,9 @@ export const LibraryEditPage = (props: Props) => {
 							key={a.id}
 							title={a.name || 'Unnamed Ability'}
 							extra={[
-								{
-									title: 'Move Up',
-									icon: <CaretUpOutlined />,
-									onClick: () => moveAbility(a, 'up')
-								},
-								{
-									title: 'Move Down',
-									icon: <CaretDownOutlined />,
-									onClick: () => moveAbility(a, 'down')
-								},
-								{
-									title: 'Delete',
-									icon: <DangerButton mode='icon' onConfirm={() => deleteAbility(a)} />
-								}
+								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveAbility(a, 'up')} />,
+								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveAbility(a, 'down')} />,
+								<DangerButton key='delete' mode='icon' onConfirm={() => deleteAbility(a)} />
 							]}
 						>
 							<AbilityEditPanel
@@ -739,20 +695,9 @@ export const LibraryEditPage = (props: Props) => {
 								key={f.id}
 								title={f.name || 'Unnamed Feature'}
 								extra={[
-									{
-										title: 'Move Up',
-										icon: <CaretUpOutlined />,
-										onClick: () => moveFeature(subclass, lvl.level, f, 'up')
-									},
-									{
-										title: 'Move Down',
-										icon: <CaretDownOutlined />,
-										onClick: () => moveFeature(subclass, lvl.level, f, 'down')
-									},
-									{
-										title: 'Delete',
-										icon: <DangerButton mode='icon' onConfirm={() => deleteFeature(subclass, lvl.level, f)} />
-									}
+									<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveFeature(subclass, lvl.level, f, 'up')} />,
+									<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveFeature(subclass, lvl.level, f, 'down')} />,
+									<DangerButton key='delete' mode='icon' onConfirm={() => deleteFeature(subclass, lvl.level, f)} />
 								]}
 							>
 								<FeatureEditPanel
@@ -1157,20 +1102,9 @@ export const LibraryEditPage = (props: Props) => {
 							key={i.id}
 							title={i.name || 'Unnamed Information'}
 							extra={[
-								{
-									title: 'Move Up',
-									icon: <CaretUpOutlined />,
-									onClick: () => moveInformation(i, 'up')
-								},
-								{
-									title: 'Move Down',
-									icon: <CaretDownOutlined />,
-									onClick: () => moveInformation(i, 'down')
-								},
-								{
-									title: 'Delete',
-									icon: <DangerButton mode='icon' onConfirm={() => deleteInformation(i)} />
-								}
+								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveInformation(i, 'up')} />,
+								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveInformation(i, 'down')} />,
+								<DangerButton key='delete' mode='icon' onConfirm={() => deleteInformation(i)} />
 							]}
 						>
 							<ElementEditPanel
@@ -1241,20 +1175,9 @@ export const LibraryEditPage = (props: Props) => {
 							key={f.id}
 							title={f.name || 'Unnamed Malice Feature'}
 							extra={[
-								{
-									title: 'Move Up',
-									icon: <CaretUpOutlined />,
-									onClick: () => moveFeature(f, 'up')
-								},
-								{
-									title: 'Move Down',
-									icon: <CaretDownOutlined />,
-									onClick: () => moveFeature(f, 'down')
-								},
-								{
-									title: 'Delete',
-									icon: <DangerButton mode='icon' onConfirm={() => deleteFeature(f)} />
-								}
+								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveFeature(f, 'up')} />,
+								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveFeature(f, 'down')} />,
+								<DangerButton key='delete' mode='icon' onConfirm={() => deleteFeature(f)} />
 							]}
 						>
 							<FeatureEditPanel
@@ -1322,20 +1245,9 @@ export const LibraryEditPage = (props: Props) => {
 							key={m.id}
 							title={MonsterLogic.getMonsterName(m, monsterGroup)}
 							extra={[
-								{
-									title: 'Move Up',
-									icon: <CaretUpOutlined />,
-									onClick: () => moveMonster(m, 'up')
-								},
-								{
-									title: 'Move Down',
-									icon: <CaretDownOutlined />,
-									onClick: () => moveMonster(m, 'down')
-								},
-								{
-									title: 'Delete',
-									icon: <DangerButton mode='icon' onConfirm={() => deleteMonster(m)} />
-								}
+								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveMonster(m, 'up')} />,
+								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveMonster(m, 'down')} />,
+								<DangerButton key='delete' mode='icon' onConfirm={() => deleteMonster(m)} />
 							]}
 						>
 							<MonsterEditPanel

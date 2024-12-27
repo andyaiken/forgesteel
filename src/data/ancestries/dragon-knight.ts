@@ -4,7 +4,6 @@ import { AbilityLogic } from '../../logic/ability-logic';
 import { Ancestry } from '../../models/ancestry';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { FeatureField } from '../../enums/feature-field';
 import { FeatureLogic } from '../../logic/feature-logic';
 
 export const dragonKnight: Ancestry = {
@@ -12,30 +11,35 @@ export const dragonKnight: Ancestry = {
 	name: 'Dragon Knight',
 	description: 'The Ritual of Dracogenesis that grants the power to create a generation of dragon knights—also known as draconians or wyrmwights—is obscure and supremely difficult for even an experienced sorcerer to master.',
 	features: [
-		FeatureLogic.feature.createSizeFeature({
-			id: 'dragon-knight-size',
-			sizeValue: 1,
-			sizeMod: 'M'
-		}),
-		FeatureLogic.feature.createBonusFeature({
-			id: 'dragon-knight-speed',
-			field: FeatureField.Speed,
-			value: 5
-		}),
 		FeatureLogic.feature.createChoiceFeature({
 			id: 'dragon-knight-feature-1',
 			name: 'Wyrmplate',
-			description: 'Your hardened scales grant you immunity 5 to one of the following damage types: cold, corruption, fire, lightning, or poison. You can change your damage immunity type while out of combat (no action required).',
+			description: 'Your hardened scales grant you immunity equal to yor level to one of the following damage types: acid, cold, corruption, fire, lightning, or poison. You can change your damage immunity type when you finish a respite.',
 			options: [
 				{
 					feature: FeatureLogic.feature.createDamageModifierFeature({
-						id: 'dragon-knight-feature-1a',
+						id: 'dragon-knight-feature-1-1',
+						modifiers: [
+							{
+								type: DamageModifierType.Immunity,
+								damageType: 'Acid',
+								value: 0,
+								valuePerLevel: 1,
+								valuePerEchelon: 0
+							}
+						]
+					}),
+					value: 1
+				},
+				{
+					feature: FeatureLogic.feature.createDamageModifierFeature({
+						id: 'dragon-knight-feature-1-2',
 						modifiers: [
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Cold',
-								value: 5,
-								valuePerLevel: 0,
+								value: 0,
+								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
 						]
@@ -44,13 +48,13 @@ export const dragonKnight: Ancestry = {
 				},
 				{
 					feature: FeatureLogic.feature.createDamageModifierFeature({
-						id: 'dragon-knight-feature-1b',
+						id: 'dragon-knight-feature-1-3',
 						modifiers: [
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Corruption',
-								value: 5,
-								valuePerLevel: 0,
+								value: 0,
+								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
 						]
@@ -59,13 +63,13 @@ export const dragonKnight: Ancestry = {
 				},
 				{
 					feature: FeatureLogic.feature.createDamageModifierFeature({
-						id: 'dragon-knight-feature-1c',
+						id: 'dragon-knight-feature-1-4',
 						modifiers: [
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Fire',
-								value: 5,
-								valuePerLevel: 0,
+								value: 0,
+								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
 						]
@@ -74,13 +78,13 @@ export const dragonKnight: Ancestry = {
 				},
 				{
 					feature: FeatureLogic.feature.createDamageModifierFeature({
-						id: 'dragon-knight-feature-1d',
+						id: 'dragon-knight-feature-1-5',
 						modifiers: [
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Lightning',
-								value: 5,
-								valuePerLevel: 0,
+								value: 0,
+								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
 						]
@@ -89,13 +93,13 @@ export const dragonKnight: Ancestry = {
 				},
 				{
 					feature: FeatureLogic.feature.createDamageModifierFeature({
-						id: 'dragon-knight-feature-1e',
+						id: 'dragon-knight-feature-1-6',
 						modifiers: [
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Poison',
-								value: 5,
-								valuePerLevel: 0,
+								value: 0,
+								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
 						]
@@ -106,46 +110,182 @@ export const dragonKnight: Ancestry = {
 		}),
 		FeatureLogic.feature.createChoiceFeature({
 			id: 'dragon-knight-feature-2',
-			name: 'Knighthood',
+			name: 'Dragon Knight Traits',
 			options: [
 				{
 					feature: FeatureLogic.feature.createFeature({
-						id: 'dragon-knight-feature-2a',
-						name: 'Draconian Rush',
-						description: 'As a maneuver, you can fly in a straight line up to your speed. Until you reach level 6, you must end your turn on a solid surface or fall, then fall prone.'
+						id: 'dragon-knight-feature-2-1',
+						name: 'Draconian Guard',
+						description: 'When you or a creature adjacent to you takes damage from a strike, you can use a triggered action to swing your wings around and guard against the blow, reducing the any damage from the strike by an amount equal to your level.'
+					}),
+					value: 1
+				},
+				{
+					feature: FeatureLogic.feature.createDamageModifierFeature({
+						id: 'dragon-knight-feature-2-2',
+						name: 'Prismatic Scales (acid)',
+						modifiers: [
+							{
+								type: DamageModifierType.Immunity,
+								damageType: 'Acid',
+								value: 0,
+								valuePerLevel: 1,
+								valuePerEchelon: 0
+							}
+						]
+					}),
+					value: 1
+				},
+				{
+					feature: FeatureLogic.feature.createDamageModifierFeature({
+						id: 'dragon-knight-feature-2-3',
+						name: 'Prismatic Scales (cold)',
+						modifiers: [
+							{
+								type: DamageModifierType.Immunity,
+								damageType: 'Cold',
+								value: 0,
+								valuePerLevel: 1,
+								valuePerEchelon: 0
+							}
+						]
+					}),
+					value: 1
+				},
+				{
+					feature: FeatureLogic.feature.createDamageModifierFeature({
+						id: 'dragon-knight-feature-2-4',
+						name: 'Prismatic Scales (corruption)',
+						modifiers: [
+							{
+								type: DamageModifierType.Immunity,
+								damageType: 'Corruption',
+								value: 0,
+								valuePerLevel: 1,
+								valuePerEchelon: 0
+							}
+						]
+					}),
+					value: 1
+				},
+				{
+					feature: FeatureLogic.feature.createDamageModifierFeature({
+						id: 'dragon-knight-feature-2-5',
+						name: 'Prismatic Scales (fire)',
+						modifiers: [
+							{
+								type: DamageModifierType.Immunity,
+								damageType: 'Fire',
+								value: 0,
+								valuePerLevel: 1,
+								valuePerEchelon: 0
+							}
+						]
+					}),
+					value: 1
+				},
+				{
+					feature: FeatureLogic.feature.createDamageModifierFeature({
+						id: 'dragon-knight-feature-2-6',
+						name: 'Prismatic Scales (lightning)',
+						modifiers: [
+							{
+								type: DamageModifierType.Immunity,
+								damageType: 'Lightning',
+								value: 0,
+								valuePerLevel: 1,
+								valuePerEchelon: 0
+							}
+						]
+					}),
+					value: 1
+				},
+				{
+					feature: FeatureLogic.feature.createDamageModifierFeature({
+						id: 'dragon-knight-feature-2-7',
+						name: 'Prismatic Scales (poison)',
+						modifiers: [
+							{
+								type: DamageModifierType.Immunity,
+								damageType: 'Poison',
+								value: 0,
+								valuePerLevel: 1,
+								valuePerEchelon: 0
+							}
+						]
 					}),
 					value: 1
 				},
 				{
 					feature: FeatureLogic.feature.createFeature({
-						id: 'dragon-knight-feature-2b',
-						name: 'Draconian Guard',
-						description: 'When you or a creature adjacent to you is attacked, you can use a triggered action to swing your wings around and guard against the blow, reducing any damage from the attack by an amount equal to your level + your Victories.'
+						id: 'dragon-knight-feature-2-8',
+						name: 'Remember your Oath',
+						description: `
+As a maneuver, you can recite the following oath. If you do, you succeed on saving throws when you roll a 4 or higher until the start of your next turn:
+Even should the sun stop in the sky
+Even should the night last a thousand years
+I will stand forever
+I shall not yield
+Those who suffer and yearn for justice
+I am your sword and shield
+I will yield no ground
+I will speak no lies
+I will stand against all tyrants
+Until the last villain dies.`
 					}),
 					value: 1
 				},
 				{
 					feature: FeatureLogic.feature.createAbilityFeature({
 						ability: AbilityLogic.createAbility({
-							id: 'dragon-knight-feature-2c',
-							name: 'Draconian Pride',
-							description: 'You let loose a mighty roar to repel your foes and shake their spirits.',
+							id: 'dragon-knight-feature-2-9',
+							name: 'Draconic Pride',
+							description: 'You let loose a mighty roar to shake your foes’ spirits.',
 							type: AbilityLogic.type.createAction(),
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-							distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
+							distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 							target: 'All enemies',
 							powerRoll: AbilityLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Presence ],
-								tier1: '2 damage; push 1',
-								tier2: '4 damage; push 3',
-								tier3: '7 damage; push 5; frightened (EoT)'
-							}),
-							effect: 'You have a bane on the power roll for this ability when you use it in consecutive rounds of the same encounter.'
+								tier1: '2 damage',
+								tier2: '5 damage; push 1',
+								tier3: '7 damage; push 2'
+							})
 						})
 					}),
-					value: 1
+					value: 2
+				},
+				{
+					feature: FeatureLogic.feature.createAbilityFeature({
+						ability: AbilityLogic.createAbility({
+							id: 'dragon-knight-feature-2-10',
+							name: 'Dragon Breath',
+							description: 'You expel energy to damage your foes.',
+							type: AbilityLogic.type.createAction(),
+							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+							distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
+							target: 'All enemies',
+							powerRoll: AbilityLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Presence ],
+								tier1: '2 damage',
+								tier2: '4 damage',
+								tier3: '6 damage'
+							}),
+							effect: 'You choose the ability’s damage type from acid, cold, corruption, fire, lightning, or poison.'
+						})
+					}),
+					value: 2
+				},
+				{
+					feature: FeatureLogic.feature.createFeature({
+						id: 'dragon-knight-feature-2-11',
+						name: 'Wings',
+						description: 'You possess wings powerful enough to take you airborne. While using your wings to fly, you can stay aloft for a number of rounds equal to your Might (minimum of 1 round) before you fall prone. While using your wings to fly at 1st, 2nd, and 3rd level, you have damage weakness 5.'
+					}),
+					value: 2
 				}
-			]
+			],
+			count: 3
 		})
 	]
 };

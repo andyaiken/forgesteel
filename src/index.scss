@@ -107,6 +107,10 @@ td {
 	>.ant-collapse-item {
 		>.ant-collapse-header {
 			align-items: center;
+
+			>.ant-collapse-extra {
+				display: flex;
+			}
 		}
 	}
 

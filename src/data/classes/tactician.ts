@@ -119,7 +119,7 @@ export const tactician: HeroClass = {
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createReach(1),
+				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature or object',
@@ -138,7 +138,7 @@ export const tactician: HeroClass = {
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createReach(1),
+				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature or object',
@@ -168,7 +168,7 @@ export const tactician: HeroClass = {
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createReach(1),
+				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature or object',
@@ -199,7 +199,7 @@ export const tactician: HeroClass = {
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createReach(1),
+				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature or object',
@@ -355,7 +355,7 @@ You can only make this test once for each encounter and negotiation.`
 								keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 								distance: [
 									AbilityLogic.distance.createSelf(),
-									AbilityLogic.distance.createReach(1)
+									AbilityLogic.distance.createMelee(1)
 								],
 								target: 'Self or 1 ally',
 								effect: 'The attack’s damage against the target is halved.',

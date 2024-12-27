@@ -104,6 +104,10 @@ export interface FeatureSkillChoiceData extends FeatureData {
 	selected: string[];
 };
 
+export interface FeatureSpeedData extends FeatureData {
+	speed: number;
+};
+
 export interface FeatureTitleData extends FeatureData {
 	count: number;
 	selected: Title[];

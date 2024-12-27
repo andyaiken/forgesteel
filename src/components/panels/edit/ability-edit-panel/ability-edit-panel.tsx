@@ -81,8 +81,8 @@ export const AbilityEditPanel = (props: Props) => {
 		switch (distance.type) {
 			case AbilityDistanceType.Self:
 				return 'Self';
-			case AbilityDistanceType.Reach:
-				return 'Reach';
+			case AbilityDistanceType.Melee:
+				return 'Melee';
 			case AbilityDistanceType.Ranged:
 				return 'Ranged';
 			case AbilityDistanceType.Aura:
@@ -104,8 +104,8 @@ export const AbilityEditPanel = (props: Props) => {
 			case 'Self':
 				copy.distance[index].type = AbilityDistanceType.Self;
 				break;
-			case 'Reach':
-				copy.distance[index].type = AbilityDistanceType.Reach;
+			case 'Melee':
+				copy.distance[index].type = AbilityDistanceType.Melee;
 				break;
 			case 'Ranged':
 				copy.distance[index].type = AbilityDistanceType.Ranged;
@@ -127,7 +127,7 @@ export const AbilityEditPanel = (props: Props) => {
 
 	const addDistance = () => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.distance.push(AbilityLogic.distance.createReach(1));
+		copy.distance.push(AbilityLogic.distance.createMelee(1));
 		setAbility(copy);
 		props.onChange(copy);
 	};
@@ -440,27 +440,16 @@ export const AbilityEditPanel = (props: Props) => {
 													key={n}
 													title={AbilityLogic.getDistance(distance)}
 													extra={[
-														{
-															title: 'Move Up',
-															icon: <CaretUpOutlined />,
-															onClick: () => moveDistance(n, 'up')
-														},
-														{
-															title: 'Move Down',
-															icon: <CaretDownOutlined />,
-															onClick: () => moveDistance(n, 'down')
-														},
-														{
-															title: 'Delete',
-															icon: <DangerButton mode='icon' onConfirm={() => deleteDistance(n)} />
-														}
+														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveDistance(n, 'up')} />,
+														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveDistance(n, 'down')} />,
+														<DangerButton key='delete' mode='icon' onConfirm={() => deleteDistance(n)} />
 													]}
 												>
 													<Space direction='vertical' style={{ width: '100%' }}>
 														<HeaderText>Distance Type</HeaderText>
 														<Segmented
 															block={true}
-															options={[ 'Self', 'Reach', 'Ranged', 'Area', 'Line', 'Special' ]}
+															options={[ 'Self', 'Melee', 'Ranged', 'Area', 'Line', 'Special' ]}
 															value={getDistanceMainType(n)}
 															onChange={value => setDistanceMainType(n, value)}
 														/>
@@ -642,20 +631,9 @@ export const AbilityEditPanel = (props: Props) => {
 													key={n}
 													title='Alternate Effect'
 													extra={[
-														{
-															title: 'Move Up',
-															icon: <CaretUpOutlined />,
-															onClick: () => moveAlternateEffect(n, 'up')
-														},
-														{
-															title: 'Move Down',
-															icon: <CaretDownOutlined />,
-															onClick: () => moveAlternateEffect(n, 'down')
-														},
-														{
-															title: 'Delete',
-															icon: <DangerButton mode='icon' onConfirm={() => deleteAlternateEffect(n)} />
-														}
+														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveAlternateEffect(n, 'up')} />,
+														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveAlternateEffect(n, 'down')} />,
+														<DangerButton key='delete' mode='icon' onConfirm={() => deleteAlternateEffect(n)} />
 													]}
 												>
 													<Input
@@ -687,20 +665,9 @@ export const AbilityEditPanel = (props: Props) => {
 													key={n}
 													title='Spend Effect'
 													extra={[
-														{
-															title: 'Move Up',
-															icon: <CaretUpOutlined />,
-															onClick: () => moveSpend(n, 'up')
-														},
-														{
-															title: 'Move Down',
-															icon: <CaretDownOutlined />,
-															onClick: () => moveSpend(n, 'down')
-														},
-														{
-															title: 'Delete',
-															icon: <DangerButton mode='icon' onConfirm={() => deleteSpend(n)} />
-														}
+														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveSpend(n, 'up')} />,
+														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveSpend(n, 'down')} />,
+														<DangerButton key='delete' mode='icon' onConfirm={() => deleteSpend(n)} />
 													]}
 												>
 													<Space direction='vertical' style={{ width: '100%' }}>
@@ -735,20 +702,9 @@ export const AbilityEditPanel = (props: Props) => {
 													key={n}
 													title='Persistence Effect'
 													extra={[
-														{
-															title: 'Move Up',
-															icon: <CaretUpOutlined />,
-															onClick: () => movePersistence(n, 'up')
-														},
-														{
-															title: 'Move Down',
-															icon: <CaretDownOutlined />,
-															onClick: () => movePersistence(n, 'down')
-														},
-														{
-															title: 'Delete',
-															icon: <DangerButton mode='icon' onConfirm={() => deletePersistence(n)} />
-														}
+														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => movePersistence(n, 'up')} />,
+														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => movePersistence(n, 'down')} />,
+														<DangerButton key='delete' mode='icon' onConfirm={() => deletePersistence(n)} />
 													]}
 												>
 													<Space direction='vertical' style={{ width: '100%' }}>

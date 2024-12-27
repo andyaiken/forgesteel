@@ -1,5 +1,4 @@
 import { Ancestry } from '../../models/ancestry';
-import { FeatureField } from '../../enums/feature-field';
 import { FeatureLogic } from '../../logic/feature-logic';
 
 export const highElf: Ancestry = {
@@ -7,30 +6,57 @@ export const highElf: Ancestry = {
 	name: 'Elf (high)',
 	description: 'Children of the solar celestials created to tend their libraries and attend to the true elves as heralds, the high elves remember a better age, before the coming of humans and war. A time when the celestials were still in the world, and all that mattered was art and beauty.',
 	features: [
-		FeatureLogic.feature.createSizeFeature({
-			id: 'high-elf-size',
-			sizeValue: 1,
-			sizeMod: 'M'
-		}),
-		FeatureLogic.feature.createBonusFeature({
-			id: 'high-elf-speed',
-			field: FeatureField.Speed,
-			value: 5
-		}),
 		FeatureLogic.feature.createFeature({
 			id: 'high-elf-feature-1',
 			name: 'High Elf Glamor',
 			description: 'A magic glamor makes others perceive you as interesting and engaging, granting you an edge on Presence tests using the Flirt or Persuade skills. This glamor makes you look and sound slightly different to each creature you meet, since what is engaging to one might be different for another. However, you never appear to be anyone other than yourself.'
 		}),
-		FeatureLogic.feature.createFeature({
+		FeatureLogic.feature.createChoiceFeature({
 			id: 'high-elf-feature-2',
-			name: 'Otherworldly Grace',
-			description: 'Your elven body and mind can’t be contained for long, and accessing memories is as easy as living in the present for you. You gain an edge on resistance rolls, and on tests that use any skills you have from the lore skill group.'
-		}),
-		FeatureLogic.feature.createFeature({
-			id: 'high-elf-feature-3',
-			name: 'Unstoppable Mind',
-			description: 'Your mind allows you to maintain your cool in any situation. You can’t be dazed.'
+			name: 'High Elf Features',
+			options: [
+				{
+					feature: FeatureLogic.feature.createFeature({
+						id: 'high-elf-feature-2-1',
+						name: 'Graceful Retreat',
+						description: 'When you take the Disengage move action, you can shift 1 additional square as part of the move action.'
+					}),
+					value: 1
+				},
+				{
+					feature: FeatureLogic.feature.createFeature({
+						id: 'high-elf-feature-2-2',
+						name: 'High Senses',
+						description: 'You have senses that are keen and perceptive. You have an edge on Intuition tests that use the Awareness skill.'
+					}),
+					value: 1
+				},
+				{
+					feature: FeatureLogic.feature.createFeature({
+						id: 'high-elf-feature-2-3',
+						name: 'Revisit Memory',
+						description: 'Accessing memories is as easy as living in the present for you. You have an edge on all tests made to recall lore.'
+					}),
+					value: 1
+				},
+				{
+					feature: FeatureLogic.feature.createFeature({
+						id: 'high-elf-feature-2-4',
+						name: 'Otherwordly Grace',
+						description: 'Your elf body and mind can’t be contained for long. You succeed on saving throws when you get a 5 or higher.'
+					}),
+					value: 2
+				},
+				{
+					feature: FeatureLogic.feature.createFeature({
+						id: 'high-elf-feature-2-5',
+						name: 'Unstoppable Mind',
+						description: 'Your mind allows you to maintain your focus in any situation. You can’t be dazed.'
+					}),
+					value: 2
+				}
+			],
+			count: 3
 		})
 	]
 };

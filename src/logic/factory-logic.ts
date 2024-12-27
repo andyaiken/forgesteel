@@ -7,7 +7,6 @@ import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { Domain } from '../models/domain';
 import { Feature } from '../models/feature';
-import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from './feature-logic';
 import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
@@ -92,18 +91,7 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
-			features: [
-				FeatureLogic.feature.createSizeFeature({
-					id: Utils.guid(),
-					sizeValue: 1,
-					sizeMod: 'M'
-				}),
-				FeatureLogic.feature.createBonusFeature({
-					id: Utils.guid(),
-					field: FeatureField.Speed,
-					value: 5
-				})
-			]
+			features: []
 		};
 	};
 

@@ -17,6 +17,7 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { KitType } from '../../../../enums/kit';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
+import { Perk } from '../../../../models/perk';
 import { PerkList } from '../../../../enums/perk-list';
 import { SkillList } from '../../../../enums/skill-list';
 import { Sourcebook } from '../../../../models/sourcebook';
@@ -27,14 +28,14 @@ import { useState } from 'react';
 import './feature-edit-panel.scss';
 
 interface Props {
-	feature: Feature;
+	feature: Feature | Perk;
 	allowedTypes?: FeatureType[];
 	sourcebooks: Sourcebook[];
 	onChange: (feature: Feature) => void;
 }
 
 export const FeatureEditPanel = (props: Props) => {
-	const [ feature, setFeature ] = useState<Feature>(props.feature);
+	const [ feature, setFeature ] = useState<Feature | Perk>(props.feature);
 
 	const setName = (value: string) => {
 		const copy = JSON.parse(JSON.stringify(feature)) as Feature;
@@ -188,6 +189,13 @@ export const FeatureEditPanel = (props: Props) => {
 		const copy = JSON.parse(JSON.stringify(feature)) as Feature;
 		copy.type = value;
 		copy.data = data;
+		setFeature(copy);
+		props.onChange(copy);
+	};
+
+	const setList = (value: PerkList) => {
+		const copy = JSON.parse(JSON.stringify(feature)) as Perk;
+		copy.list = value;
 		setFeature(copy);
 		props.onChange(copy);
 	};
@@ -857,6 +865,21 @@ export const FeatureEditPanel = (props: Props) => {
 										value={feature.type}
 										onChange={setType}
 									/>
+									{
+										(feature as Perk).list !== undefined ?
+											<div>
+												<HeaderText>Perk List</HeaderText>
+												<Select
+													style={{ width: '100%' }}
+													placeholder='Select list'
+													options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(o => ({ value: o }))}
+													optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+													value={(feature as Perk).list}
+													onChange={setList}
+												/>
+											</div>
+											: null
+									}
 									{getDataSection()}
 								</div>
 							)

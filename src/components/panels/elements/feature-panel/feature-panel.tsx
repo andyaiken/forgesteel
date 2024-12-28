@@ -13,6 +13,7 @@ import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroicResourceBadge } from '../../../controls/heroic-resource-badge/heroic-resource-badge';
 import { KitPanel } from '../kit-panel/kit-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../perk-panel/perk-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -22,7 +23,7 @@ import { Utils } from '../../../../utils/utils';
 import './feature-panel.scss';
 
 interface Props {
-	feature: Feature;
+	feature: Feature | Perk;
 	cost?: number;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];

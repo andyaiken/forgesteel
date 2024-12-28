@@ -43,7 +43,6 @@ import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
-import { PerkList } from '../../../../enums/perk-list';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
@@ -998,31 +997,6 @@ export const LibraryEditPage = (props: Props) => {
 		);
 	};
 
-	const getPerkEditSection = () => {
-		const perk = element as Perk;
-
-		const setList = (value: PerkList) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Perk;
-			elementCopy.list = value;
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				<HeaderText>Type</HeaderText>
-				<Select
-					style={{ width: '100%' }}
-					placeholder='Select type'
-					options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(l => ({ value: l }))}
-					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					value={perk.list}
-					onChange={setList}
-				/>
-			</Space>
-		);
-	};
-
 	const getTitleEditSection = () => {
 		const title = element as Title;
 
@@ -1430,24 +1404,14 @@ export const LibraryEditPage = (props: Props) => {
 				);
 			case 'Perk':
 				return (
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Perk',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Details',
-								children: getPerkEditSection()
-							},
-							{
-								key: '3',
-								label: 'Features',
-								children: getFeaturesEditSection()
-							}
-						]}
+					<FeatureEditPanel
+						feature={props.element as Perk}
+						sourcebooks={props.sourcebooks}
+						onChange={perk => {
+							const copy = JSON.parse(JSON.stringify(perk)) as Perk;
+							setElement(copy);
+							setDirty(true);
+						}}
 					/>
 				);
 			case 'Title':

@@ -43,8 +43,8 @@ import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
+import { PerkList } from '../../../../enums/perk-list';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
-import { PerkType } from '../../../../enums/perk-type';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -104,10 +104,10 @@ export const LibraryEditPage = (props: Props) => {
 	};
 
 	const getFeaturesEditSection = () => {
-		const el = element as Ancestry | Career | Complication | Kit | Perk | Item;
+		const el = element as Ancestry | Career | Complication | Kit | Item;
 
 		const addFeature = () => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Perk | Item;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Item;
 			elementCopy.features.push(FeatureLogic.feature.createFeature({
 				id: Utils.guid(),
 				name: '',
@@ -118,7 +118,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeFeature = (feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Perk | Item;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Item;
 			const index = elementCopy.features.findIndex(f => f.id === feature.id);
 			if (index !== -1) {
 				elementCopy.features[index] = feature;
@@ -128,7 +128,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveFeature = (feature: Feature, direction: 'up' | 'down') => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Perk | Item;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Item;
 			const index = elementCopy.features.findIndex(f => f.id === feature.id);
 			elementCopy.features = Collections.move(elementCopy.features, index, direction);
 			setElement(elementCopy);
@@ -136,7 +136,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteFeature = (feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Perk | Item;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Item;
 			elementCopy.features = elementCopy.features.filter(f => f.id !== feature.id);
 			setElement(elementCopy);
 			setDirty(true);
@@ -1001,9 +1001,9 @@ export const LibraryEditPage = (props: Props) => {
 	const getPerkEditSection = () => {
 		const perk = element as Perk;
 
-		const setType = (value: PerkType) => {
+		const setList = (value: PerkList) => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as Perk;
-			elementCopy.type = value;
+			elementCopy.list = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
@@ -1014,10 +1014,10 @@ export const LibraryEditPage = (props: Props) => {
 				<Select
 					style={{ width: '100%' }}
 					placeholder='Select type'
-					options={[ PerkType.Crafting, PerkType.Exploration, PerkType.Interpersonal, PerkType.Intrigue, PerkType.Lore, PerkType.Supernatural ].map(l => ({ value: l }))}
+					options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(l => ({ value: l }))}
 					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					value={perk.type}
-					onChange={setType}
+					value={perk.list}
+					onChange={setList}
 				/>
 			</Space>
 		);

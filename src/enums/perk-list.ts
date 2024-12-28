@@ -1,4 +1,4 @@
-export enum PerkType {
+export enum PerkList {
 	Crafting = 'Crafting',
 	Exploration = 'Exploration',
 	Interpersonal = 'Interpersonal',

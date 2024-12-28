@@ -17,7 +17,7 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { KitType } from '../../../../enums/kit';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
-import { PerkType } from '../../../../enums/perk-type';
+import { PerkList } from '../../../../enums/perk-list';
 import { SkillList } from '../../../../enums/skill-list';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -260,9 +260,9 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
-		const setPerkTypes = (value: PerkType[]) => {
+		const setPerkLists = (value: PerkList[]) => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeaturePerkData;
-			copy.types = value;
+			copy.lists = value;
 			setData(copy);
 		};
 
@@ -707,17 +707,17 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeaturePerkData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Types</HeaderText>
+						<HeaderText>Lists</HeaderText>
 						<Select
 							style={{ width: '100%' }}
-							className={data.types.length === 0 ? 'selection-empty' : ''}
-							placeholder='Perk types'
+							className={data.lists.length === 0 ? 'selection-empty' : ''}
+							placeholder='Perk lists'
 							mode='multiple'
 							allowClear={true}
-							options={[ PerkType.Crafting, PerkType.Exploration, PerkType.Interpersonal, PerkType.Intrigue, PerkType.Lore, PerkType.Supernatural ].map(option => ({ value: option }))}
+							options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(option => ({ value: option }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							value={data.types}
-							onChange={setPerkTypes}
+							value={data.lists}
+							onChange={setPerkLists}
 						/>
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />

@@ -428,7 +428,7 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
-		const perks = SourcebookLogic.getPerks(props.sourcebooks as Sourcebook[]);
+		const perks = SourcebookLogic.getPerks(props.sourcebooks as Sourcebook[]).filter(p => data.lists.includes(p.list));
 		const sortedPerks = Collections.sort(perks, p => p.name);
 
 		if (sortedPerks.length === 0) {

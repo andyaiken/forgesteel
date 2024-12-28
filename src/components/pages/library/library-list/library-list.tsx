@@ -134,8 +134,7 @@ export const LibraryListPage = (props: Props) => {
 		return SourcebookLogic
 			.getPerks(getSourcebooks())
 			.filter(item => Utils.textMatches([
-				item.name,
-				...item.features.map(f => f.name)
+				item.name
 			], searchTerm));
 	};
 

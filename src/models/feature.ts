@@ -8,7 +8,7 @@ import { FeatureType } from '../enums/feature-type';
 import { Kit } from './kit';
 import { KitType } from '../enums/kit';
 import { Perk } from './perk';
-import { PerkType } from '../enums/perk-type';
+import { PerkList } from '../enums/perk-list';
 import { Size } from './size';
 import { SkillList } from '../enums/skill-list';
 import { Title } from './title';
@@ -84,7 +84,7 @@ export interface FeatureMultipleData extends FeatureData {
 };
 
 export interface FeaturePerkData extends FeatureData {
-	types: PerkType[];
+	lists: PerkList[];
 	count: number;
 	selected: Perk[];
 };

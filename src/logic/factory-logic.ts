@@ -8,6 +8,7 @@ import { Culture } from '../models/culture';
 import { Domain } from '../models/domain';
 import { Feature } from '../models/feature';
 import { FeatureLogic } from './feature-logic';
+import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
@@ -16,7 +17,7 @@ import { KitType } from '../enums/kit';
 import { MonsterFilter } from '../models/monster-filter';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Perk } from '../models/perk';
-import { PerkType } from '../enums/perk-type';
+import { PerkList } from '../enums/perk-list';
 import { Playbook } from '../models/playbook';
 import { Sourcebook } from '../models/sourcebook';
 import { SubClass } from '../models/subclass';
@@ -190,8 +191,9 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
-			type: PerkType.Crafting,
-			features: []
+			type: FeatureType.Text,
+			data: null,
+			list: PerkList.Crafting
 		};
 	};
 

@@ -1,7 +1,7 @@
 import { Career } from '../models/career';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from '../logic/feature-logic';
-import { PerkType } from '../enums/perk-type';
+import { PerkList } from '../enums/perk-list';
 import { SkillList } from '../enums/skill-list';
 
 export class CareerData {
@@ -28,7 +28,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'career-agent-feature-5',
-				types: [ PerkType.Intrigue ]
+				lists: [ PerkList.Intrigue ]
 			})
 		],
 		incitingIncidents: {
@@ -96,7 +96,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'career-aristocrat-feature-6',
-				types: [ PerkType.Lore ]
+				lists: [ PerkList.Lore ]
 			})
 		],
 		incitingIncidents: {
@@ -156,7 +156,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'career-artisan-feature-4',
-				types: [ PerkType.Crafting ]
+				lists: [ PerkList.Crafting ]
 			})
 		],
 		incitingIncidents: {
@@ -219,7 +219,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'career-beggar-feature-5',
-				types: [ PerkType.Interpersonal ]
+				lists: [ PerkList.Interpersonal ]
 			})
 		],
 		incitingIncidents: {
@@ -283,7 +283,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'career-criminal-feature-5',
-				types: [ PerkType.Intrigue ]
+				lists: [ PerkList.Intrigue ]
 			})
 		],
 		incitingIncidents: {
@@ -344,7 +344,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'career-disciple-feature-4',
-				types: [ PerkType.Supernatural ]
+				lists: [ PerkList.Supernatural ]
 			})
 		],
 		incitingIncidents: {
@@ -404,7 +404,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'career-explorer-feature-4',
-				types: [ PerkType.Exploration ]
+				lists: [ PerkList.Exploration ]
 			})
 		],
 		incitingIncidents: {
@@ -468,7 +468,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'career-farmer-feature-5',
-				types: [ PerkType.Exploration ]
+				lists: [ PerkList.Exploration ]
 			})
 		],
 		incitingIncidents: {
@@ -528,7 +528,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'gladiator-feature-4',
-				types: [ PerkType.Exploration ]
+				lists: [ PerkList.Exploration ]
 			})
 		],
 		incitingIncidents: {
@@ -592,7 +592,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'laborer-feature-5',
-				types: [ PerkType.Exploration ]
+				lists: [ PerkList.Exploration ]
 			})
 		],
 		incitingIncidents: {
@@ -656,7 +656,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'mages-apprentice-feature-5',
-				types: [ PerkType.Supernatural ]
+				lists: [ PerkList.Supernatural ]
 			})
 		],
 		incitingIncidents: {
@@ -717,7 +717,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'performer-feature-4',
-				types: [ PerkType.Interpersonal ]
+				lists: [ PerkList.Interpersonal ]
 			})
 		],
 		incitingIncidents: {
@@ -782,7 +782,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'career-politician-feature-5',
-				types: [ PerkType.Interpersonal ]
+				lists: [ PerkList.Interpersonal ]
 			})
 		],
 		incitingIncidents: {
@@ -842,7 +842,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'career-sage-feature-4',
-				types: [ PerkType.Lore ]
+				lists: [ PerkList.Lore ]
 			})
 		],
 		incitingIncidents: {
@@ -902,7 +902,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'career-sailor-feature-4',
-				types: [ PerkType.Exploration ]
+				lists: [ PerkList.Exploration ]
 			})
 		],
 		incitingIncidents: {
@@ -966,7 +966,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'career-soldier-feature-5',
-				types: [ PerkType.Exploration ]
+				lists: [ PerkList.Exploration ]
 			})
 		],
 		incitingIncidents: {
@@ -1033,7 +1033,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'career-warden-feature-6',
-				types: [ PerkType.Exploration ]
+				lists: [ PerkList.Exploration ]
 			})
 		],
 		incitingIncidents: {
@@ -1093,7 +1093,7 @@ export class CareerData {
 			}),
 			FeatureLogic.feature.createPerkFeature({
 				id: 'career-watch-officer-feature-4',
-				types: [ PerkType.Exploration ]
+				lists: [ PerkList.Exploration ]
 			})
 		],
 		incitingIncidents: {

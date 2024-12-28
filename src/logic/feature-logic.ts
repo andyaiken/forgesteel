@@ -13,7 +13,7 @@ import { FormatLogic } from './format-logic';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 import { KitType } from '../enums/kit';
-import { PerkType } from '../enums/perk-type';
+import { PerkList } from '../enums/perk-list';
 import { SkillList } from '../enums/skill-list';
 
 export class FeatureLogic {
@@ -191,7 +191,7 @@ export class FeatureLogic {
 				} as FeatureMultipleData
 			} as Feature;
 		},
-		createPerkFeature: (data: { id: string, name?: string, description?: string, types?: PerkType[], count?: number }) => {
+		createPerkFeature: (data: { id: string, name?: string, description?: string, lists?: PerkList[], count?: number }) => {
 			const count = data.count || 1;
 			return {
 				id: data.id,
@@ -199,7 +199,7 @@ export class FeatureLogic {
 				description: data.description || (count > 1 ? `Choose ${count} perks.` : 'Choose a perk.'),
 				type: FeatureType.Perk,
 				data: {
-					types: data.types || [],
+					lists: data.lists || [],
 					count: count,
 					selected: []
 				} as FeaturePerkData
@@ -363,7 +363,7 @@ export class FeatureLogic {
 			.forEach(f => {
 				const data = f.data as FeaturePerkData;
 				data.selected.forEach(perk => {
-					featuresFromPerks.push(...perk.features);
+					featuresFromPerks.push(perk);
 				});
 			});
 		features.push(...featuresFromPerks);

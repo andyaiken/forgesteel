@@ -1,24 +1,33 @@
+# General Changes
+
 Calculate and show disengage value on hero sheet
 Show similar monsters in monster editor
-More intelligent feature collation
+Use encounter templates in encounter editor
+More intelligent feature collation - for each one, look for sub-features
+Add new feature type to allow revenant to choose features from other ancestries
+Revenants should have 2 or 3 ancestry points depending on sides
+Allow perks to be edited to be any sort of feature - use the feature UI
 
-Update classes
-- conduit
-- elementalist
-- fury
-- shadow
-- tactician
+# Classes
 
-Add new classes
-- censor
-- null
-- talent
-- troubadour
+Update classes:
 
-Add perks
+* Conduit
+* Elementalist
+* Fury
+* Shadow
+* Tactician
 
-Update / add complications
+Add new classes:
 
-Add titles
+* Censor
+* Null
+* Talent
+* Troubadour
 
-Add items
+# New Data
+
+* Update / add complications
+* Add titles
+* Add items
+* Add / update monsters

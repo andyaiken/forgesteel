@@ -48,14 +48,24 @@ export class SourcebookData {
 		],
 		cultures: [],
 		careers: [
+			CareerData.agent,
+			CareerData.aristocrat,
 			CareerData.artisan,
+			CareerData.beggar,
 			CareerData.criminal,
+			CareerData.disciple,
+			CareerData.explorer,
+			CareerData.farmer,
 			CareerData.gladiator,
 			CareerData.laborer,
 			CareerData.magesApprentice,
 			CareerData.performer,
+			CareerData.politician,
 			CareerData.sage,
-			CareerData.soldier
+			CareerData.sailor,
+			CareerData.soldier,
+			CareerData.warden,
+			CareerData.watchOfficer
 		],
 		classes: [
 			censor,

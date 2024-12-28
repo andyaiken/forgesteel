@@ -117,7 +117,7 @@ export const tactician: HeroClass = {
 			name: 'Dazing Blow',
 			description: 'Your precise strike leaves your foe struggling to respond.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(5)
@@ -136,7 +136,7 @@ export const tactician: HeroClass = {
 			name: 'Inspiring Strike',
 			description: 'You hit a foe so hard that it gets your allies back in the fight.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(5)
@@ -166,7 +166,7 @@ export const tactician: HeroClass = {
 			name: 'Hammer And Anvil',
 			description: 'Your attack is your allies’ signal to strike!',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(5)
@@ -197,7 +197,7 @@ export const tactician: HeroClass = {
 			name: 'Their Weakness Is Our Strength',
 			description: 'Leaving your foe struggling gives your allies a strategic opening.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(5)

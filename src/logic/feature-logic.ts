@@ -155,7 +155,7 @@ export class FeatureLogic {
 				} as FeatureKitTypeData
 			} as Feature;
 		},
-		screateLanguageFeature: (data: { id: string, name?: string, description?: string, language: string }) => {
+		createLanguageFeature: (data: { id: string, name?: string, description?: string, language: string }) => {
 			return {
 				id: data.id,
 				name: data.name || data.language,

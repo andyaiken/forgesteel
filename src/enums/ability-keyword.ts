@@ -1,7 +1,6 @@
 export enum AbilityKeyword {
 	Animal = 'Animal',
 	Area = 'Area',
-	Attack = 'Attack',
 	Charge = 'Charge',
 	Earth = 'Earth',
 	Fire = 'Fire',

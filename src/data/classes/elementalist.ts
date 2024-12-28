@@ -50,7 +50,7 @@ export const elementalist: HeroClass = {
 						name: 'Hurl Element',
 						description: 'You hurl a ball of elemental energy at a nearby foe.',
 						type: AbilityLogic.type.createAction(),
-						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ AbilityLogic.distance.createRanged(5) ],
 						target: '1 creature or object',
 						powerRoll: AbilityLogic.createPowerRoll({
@@ -123,7 +123,7 @@ Choose one of the following effects:
 			name: 'Fire Lance',
 			description: 'A jet of fire erupts with elemental fury where it strikes.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ AbilityLogic.distance.createRanged(5) ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -138,7 +138,7 @@ Choose one of the following effects:
 			name: 'Growing Pains',
 			description: 'Whipping vines erupt from a foe’s body to grasp at another close by.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+			keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ AbilityLogic.distance.createRanged(5) ],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -154,7 +154,7 @@ Choose one of the following effects:
 			name: 'Void Ray',
 			description: 'A beam of energy corrupts and hinders whatever it touches.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Void ],
 			distance: [ AbilityLogic.distance.createRanged(5) ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -169,7 +169,7 @@ Choose one of the following effects:
 			name: 'Burn!',
 			description: 'Fire engulfs a target of your choice and burns at your command.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Persistent, AbilityKeyword.Ranged ],
+			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Persistent, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ AbilityLogic.distance.createRanged(5) ],
 			target: '1 creature or object',
 			cost: 3,
@@ -191,7 +191,7 @@ Choose one of the following effects:
 			name: 'Invigorating Growth',
 			description: 'Mushrooms erupt from a foe, sapping their vitality to spread strengthening spores.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+			keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ AbilityLogic.distance.createRanged(5) ],
 			target: '1 creature',
 			cost: 3,

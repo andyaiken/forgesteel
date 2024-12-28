@@ -84,7 +84,7 @@ export const shadow: HeroClass = {
 			name: 'Distracting Pain',
 			description: 'Your precise strikes let your allies take advantage of a target’s agony.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(3)
@@ -102,7 +102,7 @@ export const shadow: HeroClass = {
 			name: 'I Work Better Alone',
 			description: 'Facing an enemy alone lets you exploit their overconfidence.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(3)
@@ -121,7 +121,7 @@ export const shadow: HeroClass = {
 			name: 'Shot And Step',
 			description: 'Being fast on your feet makes your ranged attacks especially deadly.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				AbilityLogic.distance.createRanged(5)
 			],
@@ -139,7 +139,7 @@ export const shadow: HeroClass = {
 			name: 'Sucker Slice',
 			description: 'Keeping an enemy’s focus on you lets your ally hit hard.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				AbilityLogic.distance.createMelee(1)
 			],
@@ -157,7 +157,7 @@ export const shadow: HeroClass = {
 			name: 'Blade Dance',
 			description: 'As you move across the battlefield, every foe within reach feels your wrath.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ AbilityLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 3,
@@ -174,7 +174,7 @@ export const shadow: HeroClass = {
 			name: 'Quick Pursuit',
 			description: 'A foe forced away from you might assume they’re out of danger, but they’ll soon learn otherwise.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				AbilityLogic.distance.createMelee(1)
 			],
@@ -193,7 +193,7 @@ export const shadow: HeroClass = {
 			name: 'Two Throats At Once',
 			description: 'Striking two foes at once is second nature to you.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(5)
@@ -212,7 +212,7 @@ export const shadow: HeroClass = {
 			name: 'Wounding Strike',
 			description: 'You leave your foe bleeding out after a devastating attack.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				AbilityLogic.distance.createMelee(1),
 				AbilityLogic.distance.createRanged(3)
@@ -232,7 +232,7 @@ export const shadow: HeroClass = {
 			name: 'Assassinate',
 			description: 'You seize the perfect moment and strike with fatal precision!',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				AbilityLogic.distance.createMelee(1)
 			],
@@ -250,7 +250,7 @@ export const shadow: HeroClass = {
 			name: 'Get In, Get Out',
 			description: 'Move unexpectedly, strike fast, and be gone!',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				AbilityLogic.distance.createMelee(1)
 			],
@@ -269,7 +269,7 @@ export const shadow: HeroClass = {
 			name: 'Impairing Shot',
 			description: 'Your attack leaves a foe in the perfect position for your allies to finish them.',
 			type: AbilityLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				AbilityLogic.distance.createRanged(5)
 			],

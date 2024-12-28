@@ -105,7 +105,7 @@ export class HeroLogic {
 				name: 'Free Strike (melee)',
 				description: '',
 				type: AbilityLogic.type.createAction(true),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ AbilityLogic.distance.createMelee(1) ],
 				target: '1 creature or object',
 				powerRoll: AbilityLogic.createPowerRoll({
@@ -120,7 +120,7 @@ export class HeroLogic {
 				name: 'Free Strike (ranged)',
 				description: '',
 				type: AbilityLogic.type.createAction(true),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+				keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ AbilityLogic.distance.createRanged(5) ],
 				target: '1 creature or object',
 				powerRoll: AbilityLogic.createPowerRoll({

@@ -38,7 +38,7 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 				name: 'Trouser Cut (3pts)',
 				description: 'A non-minion radenwight can use the following ability.',
 				type: AbilityLogic.type.createAction(),
-				keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ AbilityLogic.distance.createMelee(1) ],
 				target: 'One creature',
 				cost: 3,
@@ -90,7 +90,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						id: 'radenwight-1-feature-1',
 						name: 'Dagger Dance',
 						type: AbilityLogic.type.createAction(),
-						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							AbilityLogic.distance.createMelee(1),
 							AbilityLogic.distance.createRanged(5)
@@ -138,7 +138,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						id: 'radenwight-2-feature-1',
 						name: 'Stinky Glissando',
 						type: AbilityLogic.type.createAction(),
-						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Melee ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature or object per minion',
 						powerRoll: AbilityLogic.createPowerRoll({
@@ -182,7 +182,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						id: 'radenwight-3-feature-1',
 						name: 'Rapier Flunge',
 						type: AbilityLogic.type.createAction(),
-						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature or object per minion',
 						powerRoll: AbilityLogic.createPowerRoll({
@@ -226,7 +226,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						id: 'radenwight-4-feature-1',
 						name: 'Eyes-On-Me Shot',
 						type: AbilityLogic.type.createAction(),
-						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ AbilityLogic.distance.createRanged(10) ],
 						target: 'One creature or object per minion',
 						powerRoll: AbilityLogic.createPowerRoll({
@@ -271,7 +271,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						id: 'radenwight-5-feature-1',
 						name: 'Lockjaw',
 						type: AbilityLogic.type.createAction(),
-						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature or object',
 						powerRoll: AbilityLogic.createPowerRoll({
@@ -333,7 +333,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						id: 'radenwight-6-feature-1',
 						name: 'Piercing Trill',
 						type: AbilityLogic.type.createAction(),
-						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							AbilityLogic.distance.createMelee(1),
 							AbilityLogic.distance.createRanged(10)
@@ -398,7 +398,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						id: 'radenwight-7-feature-2',
 						name: 'En Garde!',
 						type: AbilityLogic.type.createAction(),
-						keywords: [ AbilityKeyword.Attack, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'Two creatures or objects',
 						powerRoll: AbilityLogic.createPowerRoll({

@@ -427,7 +427,7 @@ export const AbilityEditPanel = (props: Props) => {
 										placeholder='Keywords'
 										mode='multiple'
 										allowClear={true}
-										options={[ AbilityKeyword.Animal, AbilityKeyword.Area, AbilityKeyword.Attack, AbilityKeyword.Charge, AbilityKeyword.Earth, AbilityKeyword.Fire, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Persistent, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Resistance, AbilityKeyword.Void, AbilityKeyword.Weapon ].map(option => ({ value: option }))}
+										options={[ AbilityKeyword.Animal, AbilityKeyword.Area, AbilityKeyword.Charge, AbilityKeyword.Earth, AbilityKeyword.Fire, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Persistent, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Resistance, AbilityKeyword.Strike, AbilityKeyword.Void, AbilityKeyword.Weapon ].map(option => ({ value: option }))}
 										optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 										value={ability.keywords}
 										onChange={setKeywords}

@@ -588,6 +588,28 @@ Complex or time-consuming tests might require an action if made in combat—or c
 		return value;
 	};
 
+	static getDisengage = (hero: Hero) => {
+		let value = 1;
+
+		// Add maximum from kits
+		const kits = this.getKits(hero);
+		value += Collections.max(kits.map(kit => kit.disengage), value => value) || 0;
+
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.Bonus)
+			.map(f => f.data as FeatureBonusData)
+			.filter(data => data.field === FeatureField.Disengage)
+			.forEach(data => {
+				value += data.value;
+				if (hero.class) {
+					value += data.valuePerLevel * (hero.class.level - 1);
+					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
+				}
+			});
+
+		return value;
+	};
+
 	///////////////////////////////////////////////////////////////////////////
 
 	static getMeleeDamageBonus = (hero: Hero, ability: Ability) => {

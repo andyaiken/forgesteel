@@ -115,7 +115,7 @@ export const HeroPanel = (props: Props) => {
 					props.hero.culture ?
 						<div className='overview-tile clickable' onClick={onSelectCulture}>
 							<HeaderText>Culture</HeaderText>
-							{props.hero.culture.id !== CultureData.bespoke.id ? <div className='ds-text'>{props.hero.culture.name}</div> : null}
+							{props.hero.culture.id !== CultureData.bespoke.id ? <Field label='Culture' value={props.hero.culture.name} /> : null}
 							{props.hero.culture.environment ? <Field label='Environment' value={props.hero.culture.environment.name} /> : null}
 							{props.hero.culture.organization ? <Field label='Organization' value={props.hero.culture.organization.name} /> : null}
 							{props.hero.culture.upbringing ? <Field label='Upbringing' value={props.hero.culture.upbringing.name} /> : null}
@@ -249,13 +249,22 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getStatsSection = () => {
-		const size = {
+		const sizeSmall = {
 			xs: 24,
 			sm: 24,
 			md: 24,
-			lg: 12,
-			xl: 12,
-			xxl: 6
+			lg: 10,
+			xl: 10,
+			xxl: 4
+		};
+
+		const sizeLarge = {
+			xs: 24,
+			sm: 24,
+			md: 24,
+			lg: 14,
+			xl: 14,
+			xxl: 8
 		};
 
 		const onSelectCharacteristic = (characteristic: Characteristic) => {
@@ -305,7 +314,23 @@ export const HeroPanel = (props: Props) => {
 						</div>
 					</div>
 				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+				<Col xs={sizeLarge.xs} sm={sizeLarge.sm} md={sizeLarge.md} lg={sizeLarge.lg} xl={sizeLarge.xl} xxl={sizeLarge.xxl}>
+					<div className='characteristics-box'>
+						<div className='characteristic'>
+							<Statistic title='Size' value={FormatLogic.getSize(HeroLogic.getSize(props.hero))} />
+						</div>
+						<div className='characteristic'>
+							<Statistic title='Speed' value={HeroLogic.getSpeed(props.hero)} />
+						</div>
+						<div className='characteristic'>
+							<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />
+						</div>
+						<div className='characteristic'>
+							<Statistic title='Disengage' value={HeroLogic.getDisengage(props.hero)} />
+						</div>
+					</div>
+				</Col>
+				<Col xs={sizeSmall.xs} sm={sizeSmall.sm} md={sizeSmall.md} lg={sizeSmall.lg} xl={sizeSmall.xl} xxl={sizeSmall.xxl}>
 					<div className='characteristics-box clickable' onClick={onShowStats}>
 						<div className='characteristic'>
 							<Statistic title='Hero Tokens' value={props.hero.state.heroTokens} />
@@ -318,20 +343,7 @@ export const HeroPanel = (props: Props) => {
 						</div>
 					</div>
 				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
-					<div className='characteristics-box'>
-						<div className='characteristic'>
-							<Statistic title='Size' value={FormatLogic.getSize(HeroLogic.getSize(props.hero))} />
-						</div>
-						<div className='characteristic'>
-							<Statistic title='Speed' value={HeroLogic.getSpeed(props.hero)} />
-						</div>
-						<div className='characteristic'>
-							<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />
-						</div>
-					</div>
-				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+				<Col xs={sizeLarge.xs} sm={sizeLarge.sm} md={sizeLarge.md} lg={sizeLarge.lg} xl={sizeLarge.xl} xxl={sizeLarge.xxl}>
 					<div className='characteristics-box clickable' onClick={onShowHero}>
 						<div className='characteristic'>
 							<Statistic title={props.hero.class ? props.hero.class.heroicResource : 'Resource'} value={props.hero.state.heroicResource} />
@@ -342,9 +354,12 @@ export const HeroPanel = (props: Props) => {
 						<div className='characteristic'>
 							<Statistic title='Victories' value={props.hero.state.victories} />
 						</div>
+						<div className='characteristic'>
+							<Statistic title='XP' value={props.hero.state.xp} />
+						</div>
 					</div>
 				</Col>
-				<Col xs={size.xs} sm={size.sm} md={size.md} lg={size.lg} xl={size.xl} xxl={size.xxl}>
+				<Col xs={sizeSmall.xs} sm={sizeSmall.sm} md={sizeSmall.md} lg={sizeSmall.lg} xl={sizeSmall.xl} xxl={sizeSmall.xxl}>
 					<div className='characteristics-box clickable' onClick={onShowHero}>
 						<div className='characteristic'>
 							<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />

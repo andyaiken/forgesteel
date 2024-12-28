@@ -873,6 +873,13 @@ export const LibraryEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const setDisengage = (value: number) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			elementCopy.disengage = value;
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Stamina</HeaderText>
@@ -905,6 +912,12 @@ export const LibraryEditPage = (props: Props) => {
 					min={0}
 					value={kit.rangedDistance}
 					onChange={setRangedDistance}
+				/>
+				<HeaderText>Disengage</HeaderText>
+				<NumberSpin
+					min={0}
+					value={kit.disengage}
+					onChange={setDisengage}
 				/>
 			</Space>
 		);

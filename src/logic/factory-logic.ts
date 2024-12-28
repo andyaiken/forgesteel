@@ -180,6 +180,7 @@ export class FactoryLogic {
 			rangedDamage: null,
 			meleeDistance: 0,
 			rangedDistance: 0,
+			disengage: 0,
 			features: []
 		};
 	};

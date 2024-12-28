@@ -105,7 +105,10 @@ export class SourcebookData {
 			DomainData.war
 		],
 		kits: [
+			KitData.arcaneArcher,
+			KitData.battlemind,
 			KitData.cloakAndDagger,
+			KitData.dualWielder,
 			KitData.guisarmier,
 			KitData.martialArtist,
 			KitData.mountain,
@@ -117,8 +120,11 @@ export class SourcebookData {
 			KitData.retiarius,
 			KitData.shiningArmor,
 			KitData.sniper,
+			KitData.spellsword,
 			KitData.stickAndRobe,
 			KitData.swashbuckler,
+			KitData.swordAndBoard,
+			KitData.warriorPriest,
 			KitData.whirlwind,
 			KitData.boren,
 			KitData.corven,

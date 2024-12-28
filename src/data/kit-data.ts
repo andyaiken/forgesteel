@@ -1,5 +1,4 @@
 import { KitArmor, KitType, KitWeapon } from '../enums/kit';
-import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { Characteristic } from '../enums/characteristic';
@@ -8,6 +7,81 @@ import { Kit } from '../models/kit';
 import { KitLogic } from '../logic/kit-logic';
 
 export class KitData {
+	static arcaneArcher: Kit = {
+		id: 'kit-arcane-archer',
+		name: 'Arcane Archer',
+		description: 'The Arcane Archer kit allows you to combine magic and ranged weapon attacks. Your lack of armor keeps you mobile, and your magic makes your arrows explode to devastate your foes.',
+		type: KitType.Standard,
+		armor: [],
+		weapon: [ KitWeapon.Bow ],
+		stamina: 0,
+		speed: 1,
+		stability: 0,
+		meleeDamage: null,
+		rangedDamage: KitLogic.createDamageBonus(2, 2, 2),
+		meleeDistance: 0,
+		rangedDistance: 10,
+		disengage: 1,
+		features: [
+			FeatureLogic.feature.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-arcane-archer-signature',
+					name: 'Exploding Arrow',
+					description: 'Your ammunition explodes with magical energy.',
+					type: AbilityLogic.type.createAction(),
+					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.distance.createRanged(5) ],
+					target: '1 creature or object',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+						tier1: '3 + A, R, I, or P fire damage',
+						tier2: '5 + A, R, I, or P fire damage',
+						tier3: '8 + A, R, I, or P fire damage'
+					}),
+					effect: 'A creature or object within 2 squares of your target takes fire damage equal to the characteristic score you added to this ability’s power roll.'
+				})
+			})
+		]
+	};
+
+	static battlemind: Kit = {
+		id: 'kit-battlemind',
+		name: 'Battlemind',
+		description: 'Who says lightly armored heroes can’t also be hard to move? You just need to employ some psionics! You use the Battlemind kit harnesses the power of your mind to make yourself harder to move and your foes easier to push around.',
+		type: KitType.Standard,
+		armor: [ KitArmor.Light ],
+		weapon: [ KitWeapon.Medium ],
+		stamina: 3,
+		speed: 2,
+		stability: 1,
+		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		rangedDamage: null,
+		meleeDistance: 0,
+		rangedDistance: 0,
+		disengage: 10,
+		features: [
+			FeatureLogic.feature.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-battlemind-signature',
+					name: 'Unmooring',
+					description: 'Your weapon unleashes psionic energy that reduces your target’s weight.',
+					type: AbilityLogic.type.createAction(),
+					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.distance.createMelee(1) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+						tier1: '3 + M, R, I, or P damage; stability reduced by 2 (EoT)',
+						tier2: '6 + M, R, I, or P damage; stability reduced by 3 (EoT)',
+						tier3: '9 + M, R, I, or P damage; stability reduced by 4 (EoT)'
+					})
+				})
+			})
+		]
+	};
+
 	static cloakAndDagger: Kit = {
 		id: 'kit-cloak-and-dagger',
 		name: 'Cloak and Dagger',
@@ -22,6 +96,7 @@ export class KitData {
 		rangedDamage: KitLogic.createDamageBonus(1, 1, 1),
 		meleeDistance: 0,
 		rangedDistance: 5,
+		disengage: 1,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -31,23 +106,55 @@ export class KitData {
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [
-						AbilityLogic.distance.create({
-							type: AbilityDistanceType.Melee,
-							value: 1
-						}),
-						AbilityLogic.distance.create({
-							type: AbilityDistanceType.Ranged,
-							value: 5
-						})
+						AbilityLogic.distance.createMelee(1),
+						AbilityLogic.distance.createRanged(5)
 					],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 damage; you shift 1 square',
-						tier2: '8 damage; you shift 2 squares',
-						tier3: '12 damage; you shift 3 squares'
+						tier1: '2 + M or A damage; you shift 1 square',
+						tier2: '5 + M or A damage; you shift up to 2 squares',
+						tier3: '7 + M or A damage; you shift up to 3 squares'
 					})
+				})
+			})
+		]
+	};
+
+	static dualWielder: Kit = {
+		id: 'kit-dual-wielder',
+		name: 'Dual Wielder',
+		description: 'The Dual Wielder kit is for folks who want to excel at using two weapons at the same time. The fighting style maximizes the power of each instrument in your hands, making you a whirling deliverer of death.',
+		type: KitType.Standard,
+		armor: [ KitArmor.Medium ],
+		weapon: [ KitWeapon.Light, KitWeapon.Medium ],
+		stamina: 6,
+		speed: 2,
+		stability: 0,
+		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		rangedDamage: null,
+		meleeDistance: 0,
+		rangedDistance: 0,
+		disengage: 1,
+		features: [
+			FeatureLogic.feature.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-dual-wielder-signature',
+					name: 'Double Strike',
+					description: 'Why strike once when you could do it twice?',
+					type: AbilityLogic.type.createAction(),
+					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.distance.createMelee(1) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '2 damage',
+						tier2: '4 damage',
+						tier3: '6 damage'
+					}),
+					effect: 'If you use this ability on your turn, you can target one creature or object with it then use your maneuver and move action for that turn before targeting a second creature or object. You still use the same power roll for both targets.'
 				})
 			})
 		]
@@ -67,6 +174,7 @@ export class KitData {
 		rangedDamage: null,
 		meleeDistance: 1,
 		rangedDistance: 0,
+		disengage: 0,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -81,8 +189,8 @@ export class KitData {
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 damage',
-						tier2: '4 damage',
-						tier3: '6 damage'
+						tier2: '5 damage',
+						tier3: '7 damage'
 					})
 				})
 			})
@@ -103,6 +211,7 @@ export class KitData {
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
+		disengage: 1,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -116,9 +225,9 @@ export class KitData {
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 damage',
-						tier2: '7 damage; you swap places with the target',
-						tier3: '10 damage; you swap places with the target, then slide the target two squares'
+						tier1: '3 + M or A damage',
+						tier2: '6 + M or A damage; you swap places with the target',
+						tier3: '9 + M or A damage; you swap places with the target'
 					}),
 					effect: 'If you roll a 12 or better and can’t swap places with the target because one or both of you is too big to fit into the swapped space, you both remain in your original spaces and the target takes 2 extra damage.'
 				})
@@ -140,6 +249,7 @@ export class KitData {
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
+		disengage: 0,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -153,11 +263,11 @@ export class KitData {
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 damage',
-						tier2: '8 damage',
-						tier3: '12 damage'
+						tier1: '3 damage + M or A damage',
+						tier2: '5 damage + M or A damage',
+						tier3: '9 damage + M or A damage'
 					}),
-					effect: 'If the target dealt damage to you since the end of your last turn, this attack gains an edge.'
+					effect: 'If the target dealt damage to you since the end of your last turn, this strike deals additional damage equal to your Might or Agility score (your choice).'
 				})
 			})
 		]
@@ -177,6 +287,7 @@ export class KitData {
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
+		disengage: 0,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -190,9 +301,9 @@ export class KitData {
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 damage',
-						tier2: '8 damage',
-						tier3: '12 damage'
+						tier1: '3 + M or A damage',
+						tier2: '6 + M or A damage',
+						tier3: '9 + M or A damage'
 					}),
 					effect: 'You can move up to 3 squares straight toward the target before this attack. You deal extra damage equal to the distance moved this way.'
 				})
@@ -214,6 +325,7 @@ export class KitData {
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
+		disengage: 0,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -227,9 +339,9 @@ export class KitData {
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 damage',
-						tier2: '8 damage; slide 1',
-						tier3: '12 damage; slide 2'
+						tier1: '2 + M or A damage',
+						tier2: '5 + M or A damage; slide 1',
+						tier3: '7 + M or A damage; slide 2'
 					}),
 					effect: 'You can shift into any square your target leaves after you slide them.'
 				})
@@ -244,30 +356,35 @@ export class KitData {
 		type: KitType.Standard,
 		armor: [ KitArmor.Medium, KitArmor.Shield ],
 		weapon: [ KitWeapon.Light ],
-		stamina: 9,
+		stamina: 6,
 		speed: 1,
 		stability: 0,
 		meleeDamage: KitLogic.createDamageBonus(1, 1, 1),
-		rangedDamage: null,
+		rangedDamage: KitLogic.createDamageBonus(1, 1, 1),
 		meleeDistance: 0,
 		rangedDistance: 5,
+		disengage: 1,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-raider-signature',
-					name: 'Shield Bash',
-					description: 'In your hands, a shield isn’t just for protection.',
+					name: 'Shock and Awe',
+					description: 'You execute a brutal strike that leaves your foe reeling.',
 					type: AbilityLogic.type.createAction(),
-					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+					distance: [
+						AbilityLogic.distance.createMelee(1),
+						AbilityLogic.distance.createRanged(5)
+					],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 damage; push 1',
-						tier2: '7 damage; push 2',
-						tier3: '10 damage; push 3; prone if the target is your size or smaller'
-					})
+						tier1: '2 + M or A damage',
+						tier2: '5 + M or A damage',
+						tier3: '7 + M or A damage'
+					}),
+					effect: 'The target has a bane on their next power roll made before the end of their next turn.'
 				})
 			})
 		]
@@ -287,6 +404,7 @@ export class KitData {
 		rangedDamage: KitLogic.createDamageBonus(1, 1, 1),
 		meleeDistance: 0,
 		rangedDistance: 5,
+		disengage: 1,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -300,9 +418,9 @@ export class KitData {
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '2 damage',
-						tier2: '6 damage; slowed (EoT)',
-						tier3: '9 damage; slowed (EoE)'
+						tier1: '2 + M or A damage; A < [weak] slowed (save ends)',
+						tier2: '4 + M or A damage; A < [average] slowed (save ends)',
+						tier3: '6 + M or A damage; A < [strong] slowed (save ends)'
 					})
 				})
 			})
@@ -323,6 +441,7 @@ export class KitData {
 		rangedDamage: KitLogic.createDamageBonus(2, 2, 2),
 		meleeDistance: 0,
 		rangedDistance: 7,
+		disengage: 1,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -338,7 +457,7 @@ export class KitData {
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 damage',
 						tier2: '4 damage',
-						tier3: '5 damage'
+						tier3: '6 damage'
 					})
 				})
 			})
@@ -359,6 +478,7 @@ export class KitData {
 		rangedDamage: null,
 		meleeDistance: 1,
 		rangedDistance: 0,
+		disengage: 1,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -372,9 +492,9 @@ export class KitData {
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '2 damage',
-						tier2: '5 damage; slowed (EoT)',
-						tier3: '8 damage; restrained (EoT)'
+						tier1: '2 + M or A damage; A < [weak] slowed (EoT)',
+						tier2: '4 + M or A damage; A < [average] slowed (EoT)',
+						tier3: '6 + M or A damage; A < [strong] restrained (EoT)'
 					})
 				})
 			})
@@ -395,6 +515,7 @@ export class KitData {
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
+		disengage: 0,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -408,10 +529,11 @@ export class KitData {
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 damage; taunted (EoT)',
-						tier2: '7 damage; taunted (EoT)',
-						tier3: '10 damage; taunted (EoT)'
-					})
+						tier1: '3 + M or A damage',
+						tier2: '7 + M or A damage',
+						tier3: '9 + M or A damage'
+					}),
+					effect: 'The target is taunted (EoT).'
 				})
 			})
 		]
@@ -431,12 +553,13 @@ export class KitData {
 		rangedDamage: KitLogic.createDamageBonus(0, 0, 4),
 		meleeDistance: 0,
 		rangedDistance: 10,
+		disengage: 1,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
 					id: 'kit-sniper-signature',
 					name: 'Patient Shot',
-					description: 'Breathe … aim … wait… then strike!',
+					description: 'Breathe … aim … wait … then strike!',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ AbilityLogic.distance.createRanged(5) ],
@@ -444,11 +567,49 @@ export class KitData {
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 damage',
-						tier2: '7 damage',
-						tier3: '10 damage'
+						tier1: '3 + M or A damage',
+						tier2: '6 + M or A damage',
+						tier3: '9 + M or A damage'
 					}),
-					effect: 'If you don’t take a move action this turn, you gain an edge on this attack.'
+					effect: 'If you don’t take a move action this turn, this strike deals extra damage equal to your Might or Agility score (your choice).'
+				})
+			})
+		]
+	};
+
+	static spellsword: Kit = {
+		id: 'kit-spellsword',
+		name: 'Spellsword',
+		description: 'The Spellsword kit combines melee attacks and a little bit of magic for warriors who don’t want to have to choose between the incantation and the blade.',
+		type: KitType.Standard,
+		armor: [ KitArmor.Light, KitArmor.Shield ],
+		weapon: [ KitWeapon.Medium ],
+		stamina: 6,
+		speed: 1,
+		stability: 1,
+		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		rangedDamage: null,
+		meleeDistance: 0,
+		rangedDistance: 0,
+		disengage: 0,
+		features: [
+			FeatureLogic.feature.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-spellsword-signature',
+					name: 'Leaping Lightning',
+					description: 'Lightning jumps from your weapon as you strike to harm a nearby foe.',
+					type: AbilityLogic.type.createAction(),
+					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.distance.createMelee(1) ],
+					target: '1 creature or object',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+						tier1: '3 + M, R, I or P lightning damage',
+						tier2: '6 + M, R, I or P lightning damage',
+						tier3: '9 + M, R, I or P lightning damage'
+					}),
+					effect: 'A creature or object within 2 squares of your target takes lightning damage equal to the characteristic you used for this ability’s power roll.'
 				})
 			})
 		]
@@ -468,6 +629,7 @@ export class KitData {
 		rangedDamage: null,
 		meleeDistance: 1,
 		rangedDistance: 0,
+		disengage: 1,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -481,9 +643,9 @@ export class KitData {
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 damage',
-						tier2: '7 damage; slide 1',
-						tier3: '10 damage; slide 3'
+						tier1: '3 + M or A damage',
+						tier2: '6 + M or A damage; slide 1',
+						tier3: '9 + M or A damage; slide 3'
 					})
 				})
 			})
@@ -504,6 +666,7 @@ export class KitData {
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
+		disengage: 1,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -517,11 +680,86 @@ export class KitData {
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 damage',
-						tier2: '8 damage; push 1',
-						tier3: '12 damage; push 2'
+						tier1: '3 + M or A damage',
+						tier2: '5 + M or A damage; push 1',
+						tier3: '8 + M or A damage; push 2'
 					}),
 					effect: 'You can shift into any square your target leaves after you force move them with this ability.'
+				})
+			})
+		]
+	};
+
+	static swordAndBoard: Kit = {
+		id: 'kit-sword-and-board',
+		name: 'Sword and Board',
+		description: 'The Sword and Board kit doesn\'t just give you a shield — it makes the shield part of your offensive arsenal. With a medium weapon in one hand and a block of steel or solid oak in the other, you can protect yourself and control the battlefield.',
+		type: KitType.Standard,
+		armor: [ KitArmor.Medium, KitArmor.Shield ],
+		weapon: [ KitWeapon.Medium ],
+		stamina: 9,
+		speed: 0,
+		stability: 1,
+		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		rangedDamage: null,
+		meleeDistance: 0,
+		rangedDistance: 0,
+		disengage: 1,
+		features: [
+			FeatureLogic.feature.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-sword-and-board-signature',
+					name: 'Shield Bash',
+					description: 'In your hands, a shield isn’t just for protection.',
+					type: AbilityLogic.type.createAction(),
+					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.distance.createMelee(1) ],
+					target: '1 creature',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility ],
+						tier1: '2 + M or A damage; push 1',
+						tier2: '5 + M or A damage; push 2',
+						tier3: '7 + M or A damage; push 3; M < [strong] prone'
+					})
+				})
+			})
+		]
+	};
+
+	static warriorPriest: Kit = {
+		id: 'kit-warrior-priest',
+		name: 'Warrior Priest',
+		description: 'The Warrior Priest kit imbues the power of the gods into your weapon, making it a smiting instrument. You wade into the fray without fear, thanks to the power of the divine ... and the heavy armor you’re wearing.',
+		type: KitType.Standard,
+		armor: [ KitArmor.Heavy ],
+		weapon: [ KitWeapon.Light ],
+		stamina: 9,
+		speed: 1,
+		stability: 1,
+		meleeDamage: KitLogic.createDamageBonus(1, 1, 1),
+		rangedDamage: null,
+		meleeDistance: 0,
+		rangedDistance: 0,
+		disengage: 0,
+		features: [
+			FeatureLogic.feature.createAbilityFeature({
+				ability: AbilityLogic.createAbility({
+					id: 'kit-warrior-priest-signature',
+					name: 'Weakening Brand',
+					description: '',
+					type: AbilityLogic.type.createAction(),
+					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+					distance: [ AbilityLogic.distance.createMelee(1) ],
+					target: '1 creature or object',
+					cost: 0,
+					powerRoll: AbilityLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+						tier1: '3 + M or A damage; vertical pull 1',
+						tier2: '6 + M or A damage; vertical pull 2',
+						tier3: '9 + M or A damage; vertical pull 3'
+					}),
+					effect: 'The target has damage weakness equal to the characteristic score you used on this ability’s power roll (EoT).'
 				})
 			})
 		]
@@ -541,6 +779,7 @@ export class KitData {
 		rangedDamage: null,
 		meleeDistance: 1,
 		rangedDistance: 0,
+		disengage: 1,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -554,14 +793,16 @@ export class KitData {
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 damage',
-						tier2: '7 damage; pull 1',
-						tier3: '10 damage; pull 2'
+						tier1: '3 + M or A damage; vertical pull 1',
+						tier2: '6 + M or A damage; vertical pull 2',
+						tier3: '9 + M or A damage; vertical pull 3'
 					})
 				})
 			})
 		]
 	};
+
+	///////////////////////////////////////////////////////////////////////////
 
 	static boren: Kit = {
 		id: 'kit-boren',
@@ -577,6 +818,7 @@ export class KitData {
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
+		disengage: 0,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -632,6 +874,7 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
+		disengage: 0,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -692,6 +935,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
+		disengage: 0,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({
@@ -751,6 +995,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
+		disengage: 0,
 		features: [
 			FeatureLogic.feature.createAbilityFeature({
 				ability: AbilityLogic.createAbility({

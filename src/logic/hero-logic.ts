@@ -464,7 +464,10 @@ Complex or time-consuming tests might require an action if made in combat—or c
 
 		// Add maximum from kits
 		const kits = this.getKits(hero);
-		value += Collections.max(kits.map(kit => kit.stamina), value => value) || 0;
+		const v = Collections.max(kits.map(kit => kit.stamina), value => value) || 0;
+		if (hero.class) {
+			value += v * HeroLogic.getEchelon(hero.class.level);
+		}
 
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Bonus)

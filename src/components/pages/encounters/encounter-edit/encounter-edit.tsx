@@ -34,7 +34,6 @@ interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	goHome: () => void;
-	showAbout: () => void;
 	showMonster: (monsterID: string) => void;
 	saveChanges: (encounter: Encounter) => void;
 	cancelChanges: () => void;
@@ -456,7 +455,7 @@ export const EncounterEditPage = (props: Props) => {
 	try {
 		return (
 			<div className='encounter-edit-page'>
-				<AppHeader subtitle='Encounters' goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader subtitle='Encounters' goHome={props.goHome}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(encounter)}>
 						Save Changes
 					</Button>

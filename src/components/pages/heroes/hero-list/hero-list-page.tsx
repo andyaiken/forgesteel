@@ -12,7 +12,6 @@ interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	goHome: () => void;
-	showAbout: () => void;
 	addHero: () => void;
 	importHero: (hero: Hero) => void;
 	viewHero: (heroID: string) => void;
@@ -22,7 +21,7 @@ export const HeroListPage = (props: Props) => {
 	try {
 		return (
 			<div className='hero-list-page'>
-				<AppHeader subtitle='Heroes' goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader subtitle='Heroes' goHome={props.goHome}>
 					<Button type='primary' icon={<PlusCircleOutlined />} onClick={props.addHero}>
 						Create A New Hero
 					</Button>

@@ -63,7 +63,6 @@ import './library-edit.scss';
 interface Props {
 	sourcebooks: Sourcebook[];
 	goHome: () => void;
-	showAbout: () => void;
 	saveChanges: (sourcebookId: string, kind: SourcebookElementKind, element: Element) => void;
 	cancelChanges: () => void;
 }
@@ -1538,7 +1537,7 @@ export const LibraryEditPage = (props: Props) => {
 	try {
 		return (
 			<div className='library-edit-page'>
-				<AppHeader subtitle='Library' goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader subtitle='Library' goHome={props.goHome}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(sourcebookId!, kind!, element)}>
 						Save Changes
 					</Button>

@@ -1,14 +1,9 @@
 import { Navigate, Route, Routes } from 'react-router';
 import { ReactNode, useState } from 'react';
-import { Ability } from '../../models/ability';
-import { AbilityModal } from '../modals/ability/ability-modal';
-import { AboutModal } from '../modals/about/about-modal';
 import { Ancestry } from '../../models/ancestry';
 import { AncestryModal } from '../modals/ancestry/ancestry-modal';
 import { Career } from '../../models/career';
 import { CareerModal } from '../modals/career/career-modal';
-import { Characteristic } from '../../enums/characteristic';
-import { CharacteristicModal } from '../modals/characteristic/characteristic-modal';
 import { ClassModal } from '../modals/class/class-modal';
 import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
@@ -21,7 +16,6 @@ import { Element } from '../../models/element';
 import { Encounter } from '../../models/encounter';
 import { EncounterEditPage } from '../pages/encounters/encounter-edit/encounter-edit';
 import { EncounterListPage } from '../pages/encounters/encounter-list/encounter-list';
-import { EncounterModal } from '../modals/encounter/encounter-modal';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
@@ -29,7 +23,6 @@ import { HeroEditPage } from '../pages/heroes/hero-edit/hero-edit-page';
 import { HeroListPage } from '../pages/heroes/hero-list/hero-list-page';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroPage } from '../pages/heroes/hero-view/hero-view-page';
-import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { Item } from '../../models/item';
 import { ItemModal } from '../modals/item/item-modal';
 import { Kit } from '../../models/kit';
@@ -44,13 +37,11 @@ import { Options } from '../../models/options';
 import { Perk } from '../../models/perk';
 import { PerkModal } from '../modals/perk/perk-modal';
 import { Playbook } from '../../models/playbook';
-import { RulesModal } from '../modals/rules/rules-modal';
 import { Sourcebook } from '../../models/sourcebook';
 import { SourcebookData } from '../../data/sourcebook-data';
 import { SourcebookElementKind } from '../../models/sourcebook-element-kind';
 import { SourcebookElementsKey } from '../../models/sourcebook-elements-key';
 import { SourcebookLogic } from '../../logic/sourcebook-logic';
-import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
 import { Title } from '../../models/title';
 import { TitleModal } from '../modals/title/title-modal';
 import { Utils } from '../../utils/utils';
@@ -647,11 +638,7 @@ export const Main = (props: Props) => {
 
 		copy.encounters.push(encounter);
 		await persistPlaybook(copy);
-		if (drawer) {
-			onSelectEncounter(encounter);
-		} else {
-			editEncounter(encounter.id);
-		}
+		navigation.goToEncounterEdit(encounter.id);
 	};
 
 	const importEncounter = async (encounter: Encounter) => {
@@ -663,20 +650,14 @@ export const Main = (props: Props) => {
 
 		await persistPlaybook(copy);
 		navigation.goToEncounterList();
-		setDrawer(null);
 	};
 
-	const editEncounter = (encounterId: string) => {
-		navigation.goToEncounterEdit(encounterId);
-		setDrawer(null);
-	};
-
-	const deleteEncounter = async (encounter: Encounter) => {
+	const deleteEncounter = async (encounterId: string) => {
 		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
-		copy.encounters = copy.encounters.filter(enc => enc.id !== encounter.id);
+		copy.encounters = copy.encounters.filter(enc => enc.id !== encounterId);
 
 		await persistPlaybook(copy);
-		setDrawer(null);
+		navigation.goToEncounterList();
 	};
 
 	const saveEditEncounter = async (encounter: Encounter) => {
@@ -697,12 +678,6 @@ export const Main = (props: Props) => {
 	//#endregion
 
 	//#region Modals
-
-	const showAbout = () => {
-		setDrawer(
-			<AboutModal />
-		);
-	};
 
 	const onSelectAncestry = (ancestry: Ancestry) => {
 		const container = SourcebookLogic
@@ -919,74 +894,6 @@ export const Main = (props: Props) => {
 		}
 	};
 
-	const onSelectEncounter = (encounter: Encounter) => {
-		setDrawer(
-			<EncounterModal
-				encounter={encounter}
-				playbook={playbook}
-				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-				export={format => Utils.export([ encounter.id ], encounter.name || 'Encounter', encounter, 'encounter', format)}
-				edit={() => editEncounter(encounter.id)}
-				delete={() => deleteEncounter(encounter)}
-			/>
-		);
-	};
-
-	const onSelectCharacteristic = (characteristic: Characteristic, hero: Hero) => {
-		setDrawer(
-			<CharacteristicModal characteristic={characteristic} hero={hero} />
-		);
-	};
-
-	const onSelectAbility = (ability: Ability, hero: Hero) => {
-		setDrawer(
-			<AbilityModal ability={ability} hero={hero} />
-		);
-	};
-
-	const onShowHeroState = (heroId: string, page: 'hero' | 'stats' | 'conditions') => {
-		const hero = props.heroes.find(h => h.id === heroId)!;
-		setDrawer(
-			<HeroStateModal
-				hero={hero}
-				startPage={page}
-				onChange={updatedHero => {
-					persistHero(updatedHero);
-				}}
-				onLevelUp={async () => {
-					if (hero && hero.class) {
-						hero.class.level += 1;
-						await persistHero(hero);
-						navigation.goToHeroEdit(hero.id);
-						setDrawer(null);
-					}
-				}}
-			/>
-		);
-	};
-
-	const onShowRules = (heroId: string) => {
-		const hero = props.heroes.find(h => h.id === heroId)!;
-		setDrawer(
-			<RulesModal
-				hero={hero}
-				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
-			/>
-		);
-	};
-
-	const showSourcebooks = () => {
-		setDrawer(
-			<SourcebooksModal
-				officialSourcebooks={[ SourcebookData.core, SourcebookData.orden ]}
-				homebrewSourcebooks={homebrewSourcebooks}
-				hiddenSourcebookIDs={hiddenSourcebookIDs}
-				onHomebrewSourcebookChange={persistHomebrewSourcebooks}
-				onHiddenSourcebookIDsChange={persistHiddenSourcebookIDs}
-			/>
-		);
-	};
-
 	//#endregion
 
 	return (
@@ -995,17 +902,20 @@ export const Main = (props: Props) => {
 				path='/'
 				element={
 					<MainLayout
-						section='hero'
-						drawer={drawer}
-						setDrawer={setDrawer}
+						heroes={heroes}
+						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+						hiddenSourcebookIDs={hiddenSourcebookIDs}
+						playbook={playbook}
+						onHeroChange={persistHero}
+						onHomebrewSourcebookChange={persistHomebrewSourcebooks}
+						onHiddenSourcebookIDsChange={persistHiddenSourcebookIDs}
+						onEncounterDelete={deleteEncounter}
 					/>
-				}
-			>
+				}>
 				<Route
 					index={true}
 					element={
 						<WelcomePage
-							showAbout={showAbout}
 							showHeroes={heroes.length === 0 ? addHero : navigation.goToHeroList}
 							showLibrary={() => navigation.goToLibraryList()}
 							showEncounters={navigation.goToEncounterList}
@@ -1024,7 +934,6 @@ export const Main = (props: Props) => {
 								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								goHome={navigation.goToWelcome}
-								showAbout={showAbout}
 								addHero={addHero}
 								importHero={importHero}
 								viewHero={viewHero}
@@ -1040,7 +949,6 @@ export const Main = (props: Props) => {
 								options={options}
 								setOptions={persistOptions}
 								goHome={navigation.goToWelcome}
-								showAbout={showAbout}
 								closeHero={closeHero}
 								editHero={editHero}
 								exportHero={exportHero}
@@ -1052,10 +960,6 @@ export const Main = (props: Props) => {
 								onSelectComplication={onSelectComplication}
 								onSelectDomain={onSelectDomain}
 								onSelectKit={onSelectKit}
-								onSelectCharacteristic={onSelectCharacteristic}
-								onSelectAbility={onSelectAbility}
-								onShowHeroState={onShowHeroState}
-								onShowRules={onShowRules}
 							/>
 						}
 					/>
@@ -1070,7 +974,6 @@ export const Main = (props: Props) => {
 								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								goHome={navigation.goToWelcome}
-								showAbout={showAbout}
 								saveChanges={saveEditHero}
 								cancelChanges={cancelEditHero}
 							/>
@@ -1093,8 +996,6 @@ export const Main = (props: Props) => {
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								hiddenSourcebookIDs={hiddenSourcebookIDs}
 								goHome={navigation.goToWelcome}
-								showAbout={showAbout}
-								showSourcebooks={showSourcebooks}
 								viewAncestry={onSelectAncestry}
 								viewCulture={onSelectCulture}
 								viewCareer={onSelectCareer}
@@ -1117,7 +1018,6 @@ export const Main = (props: Props) => {
 							<LibraryEditPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								goHome={navigation.goToWelcome}
-								showAbout={showAbout}
 								saveChanges={saveEditElement}
 								cancelChanges={cancelEditElement}
 							/>
@@ -1136,8 +1036,6 @@ export const Main = (props: Props) => {
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								goHome={navigation.goToWelcome}
-								showAbout={showAbout}
-								viewEncounter={onSelectEncounter}
 								onCreateEncounter={() => createEncounter(null)}
 								onImportEncounter={importEncounter}
 							/>
@@ -1150,7 +1048,6 @@ export const Main = (props: Props) => {
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								goHome={navigation.goToWelcome}
-								showAbout={showAbout}
 								showMonster={onSelectMonster}
 								saveChanges={saveEditEncounter}
 								cancelChanges={cancelEditEncounter}

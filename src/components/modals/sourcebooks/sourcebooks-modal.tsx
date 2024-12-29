@@ -1,23 +1,24 @@
 import { Button, Divider, Space, Upload } from 'antd';
+import { useMemo, useState } from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
 import { FactoryLogic } from '../../../logic/factory-logic';
 import { Modal } from '../modal/modal';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookPanel } from '../../panels/elements/sourcebook-panel/sourcebook-panel';
-import { useState } from 'react';
 
 import './sourcebooks-modal.scss';
 
 interface Props {
-	officialSourcebooks: Sourcebook[];
-	homebrewSourcebooks: Sourcebook[];
+	sourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
 	onHomebrewSourcebookChange: (Sourcebooks: Sourcebook[]) => void;
 	onHiddenSourcebookIDsChange: (ids: string[]) => void;
 }
 
 export const SourcebooksModal = (props: Props) => {
-	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(JSON.parse(JSON.stringify(props.homebrewSourcebooks)) as Sourcebook[]);
+	const officialSourcebooks = useMemo(() => props.sourcebooks.filter(s => !s.isHomebrew), [ props.sourcebooks ]);
+	const originalHomebrewSourcebooks = useMemo(() => props.sourcebooks.filter(s => s.isHomebrew), [ props.sourcebooks ]);
+	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(JSON.parse(JSON.stringify(originalHomebrewSourcebooks)) as Sourcebook[]);
 	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(JSON.parse(JSON.stringify(props.hiddenSourcebookIDs)) as string[]);
 
 	try {
@@ -70,7 +71,7 @@ export const SourcebooksModal = (props: Props) => {
 				content={
 					<div className='sourcebooks-modal'>
 						{
-							[ ...props.officialSourcebooks, ...homebrewSourcebooks ].map(s => (
+							[ ...officialSourcebooks, ...homebrewSourcebooks ].map(s => (
 								<SourcebookPanel
 									key={s.id}
 									sourcebook={s}

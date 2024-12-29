@@ -1,19 +1,140 @@
 import { AimOutlined, BookOutlined, TeamOutlined } from '@ant-design/icons';
 import { Button, Drawer } from 'antd';
-import { Outlet } from 'react-router';
-import { type ReactNode } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router';
+import { useCallback, useMemo } from 'react';
+import { AbilityModal } from '../modals/ability/ability-modal';
+import { AboutModal } from '../modals/about/about-modal';
+import type { Characteristic } from '../../enums/characteristic';
+import { CharacteristicModal } from '../modals/characteristic/characteristic-modal';
+import { EncounterModal } from '../modals/encounter/encounter-modal';
+import type { Hero } from '../../models/hero';
+import { HeroLogic } from '../../logic/hero-logic';
+import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
+import type { Playbook } from '../../models/playbook';
+import { RulesModal } from '../modals/rules/rules-modal';
+import type { Sourcebook } from '../../models/sourcebook';
+import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
+import { Utils } from '../../utils/utils';
+import pbds from '../../assets/powered-by-draw-steel.png';
 import { useNavigation } from '../../hooks/use-navigation';
 
-import pbds from '../../assets/powered-by-draw-steel.png';
-
 interface Props {
-	section: 'hero' | 'library' | 'encounter';
-	drawer: ReactNode;
-	setDrawer: React.Dispatch<React.SetStateAction<ReactNode>>;
+	heroes: Hero[];
+	sourcebooks: Sourcebook[];
+	hiddenSourcebookIDs: string[];
+	playbook: Playbook;
+	onEncounterDelete: (encounterId: string) => Promise<void> | void;
+	onHeroChange: (hero: Hero) => Promise<void> | void;
+	onHomebrewSourcebookChange: (Sourcebooks: Sourcebook[]) => void;
+	onHiddenSourcebookIDsChange: (ids: string[]) => void;
 }
-
-export const MainLayout = (props: Props) => {
+export const MainLayout = ({
+	heroes,
+	sourcebooks,
+	hiddenSourcebookIDs,
+	playbook,
+	onEncounterDelete,
+	onHeroChange,
+	onHomebrewSourcebookChange,
+	onHiddenSourcebookIDsChange
+}: Props) => {
+	const location = useLocation();
+	const navigate = useNavigate();
 	const navigation = useNavigation();
+
+	const getEncounterModal = useCallback(
+		(segments: string[]) => {
+			const [ encounterId ] = segments as [ string ];
+			const encounter = playbook.encounters.find(e => e.id === encounterId)!;
+			return <EncounterModal
+				encounter={encounter}
+				playbook={playbook}
+				sourcebooks={sourcebooks}
+				export={format => Utils.export([ encounter.id ], encounter.name || 'Encounter', encounter, 'encounter', format)}
+				edit={() => navigation.goToEncounterEdit(encounterId)}
+				delete={() => onEncounterDelete(encounterId)}
+			/>;
+		},
+		[ playbook, sourcebooks, navigation, onEncounterDelete ]
+	);
+
+	const getHeroModal = useCallback(
+		(segments: string[]) => {
+			const [ heroId, heroPage, ...remainingSegments ] = segments as [ string, 'ability' | 'characteristic'| 'hero' | 'stats' | 'conditions' | 'rules', ...string[] ];
+			const hero = heroes.find(h => h.id === heroId)!;
+			switch (heroPage) {
+				case 'ability':
+					return getHeroAbilityModal(hero, remainingSegments);
+				case 'characteristic':
+					return getHeroCharcteristicModal(hero, remainingSegments);
+				case 'hero':
+				case 'stats':
+				case 'conditions':
+					return <HeroStateModal
+						hero={hero}
+						startPage={heroPage}
+						onChange={onHeroChange}
+						onLevelUp={async () => {
+							if (hero && hero.class) {
+								hero.class.level += 1;
+								await onHeroChange(hero);
+								navigation.goToHeroEdit(hero.id, 'Class');
+							}
+						}}
+					/>;
+				case 'rules':
+					return <RulesModal
+						hero={hero}
+						sourcebooks={sourcebooks}
+					/>;
+			}
+		},
+		[ heroes, sourcebooks, navigation, onHeroChange ]
+	);
+
+	function getHeroAbilityModal(hero: Hero, segments: string[]) {
+		const [ abilityId ] = segments;
+		const ability = HeroLogic.getAbilities(hero, true, true, true)
+			.find(a => a.id === abilityId)!;
+		return <AbilityModal ability={ability} hero={hero} />;
+	}
+
+	function getHeroCharcteristicModal(hero: Hero, segments: string[]) {
+		const [ characteristic ] = segments as [ Characteristic ];
+		return <CharacteristicModal characteristic={characteristic} hero={hero} />;
+	}
+
+	const drawer = useMemo(
+		() => {
+			// Drop leading # character
+			const hash = location.hash.substring(1);
+			const [ hashRoot, ...hashSegments ] = hash.split('/');
+			switch (hashRoot) {
+				case 'about':
+					return <AboutModal />;
+				case 'encounter':
+					return getEncounterModal(hashSegments);
+				case 'hero':
+					return getHeroModal(hashSegments);
+				case 'sourcebooks':
+					return <SourcebooksModal
+						sourcebooks={sourcebooks}
+						hiddenSourcebookIDs={hiddenSourcebookIDs}
+						onHomebrewSourcebookChange={onHomebrewSourcebookChange}
+						onHiddenSourcebookIDsChange={onHiddenSourcebookIDsChange}
+					/>;
+			}
+		},
+		[
+			location,
+			sourcebooks,
+			hiddenSourcebookIDs,
+			onHomebrewSourcebookChange,
+			onHiddenSourcebookIDsChange,
+			getEncounterModal,
+			getHeroModal
+		]
+	);
 
 	return (
 		<div className='main'>
@@ -34,8 +155,8 @@ export const MainLayout = (props: Props) => {
 					<Button type='text' title='Encounters' icon={<AimOutlined />} onClick={() => navigation.goToEncounterList()} />
 				</div>
 			</div>
-			<Drawer open={props.drawer !== null} onClose={() => props.setDrawer(null)} closeIcon={null} width='500px'>
-				{props.drawer}
+			<Drawer open={Boolean(drawer)} onClose={() => navigate({ hash: '' })} closeIcon={null} width='500px'>
+				{drawer}
 			</Drawer>
 		</div>
 	);

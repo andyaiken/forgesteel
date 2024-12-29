@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import { ReactNode } from 'react';
-
 import shield from './../../../assets/shield.png';
+import { useModals } from '../../../hooks/use-modals';
 
 import './app-header.scss';
 
@@ -9,10 +9,10 @@ interface Props {
 	subtitle?: string;
 	children?: ReactNode;
 	goHome?: () => void;
-	showAbout: () => void;
 }
 
 export const AppHeader = (props: Props) => {
+	const modals = useModals();
 	return (
 		<div className='app-header'>
 			<div className={props.goHome ? 'title clickable' : 'title'} onClick={props.goHome}>
@@ -23,7 +23,7 @@ export const AppHeader = (props: Props) => {
 			<div className='action-buttons'>
 				{props.children}
 				{props.children ? <div className='divider' /> : null}
-				<Button onClick={props.showAbout}>About</Button>
+				<Button onClick={modals.showAbout}>About</Button>
 			</div>
 		</div>
 	);

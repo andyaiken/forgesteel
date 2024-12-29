@@ -1,10 +1,8 @@
 import { Button, Divider, Popover } from 'antd';
 import { DownOutlined, EditOutlined } from '@ant-design/icons';
-import { Ability } from '../../../../models/ability';
 import { Ancestry } from '../../../../models/ancestry';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Career } from '../../../../models/career';
-import { Characteristic } from '../../../../enums/characteristic';
 import { Complication } from '../../../../models/complication';
 import { Culture } from '../../../../models/culture';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
@@ -19,6 +17,7 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { useMemo } from 'react';
+import { useModals } from '../../../../hooks/use-modals';
 import { useParams } from 'react-router';
 
 import './hero-view-page.scss';
@@ -29,7 +28,6 @@ interface Props {
 	options: Options;
 	setOptions: (options: Options) => void;
 	goHome: () => void;
-	showAbout: () => void;
 	closeHero: () => void;
 	editHero: (heroId: string) => void;
 	exportHero: (heroId: string, format: 'image' | 'pdf' | 'json') => void;
@@ -41,15 +39,12 @@ interface Props {
 	onSelectComplication: (complication: Complication) => void;
 	onSelectDomain: (domain: Domain) => void;
 	onSelectKit: (kit: Kit) => void;
-	onSelectCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
-	onSelectAbility: (ability: Ability, hero: Hero) => void;
-	onShowHeroState: (heroId: string, page: 'hero' | 'stats' | 'conditions') => void;
-	onShowRules: (heroId: string) => void;
 }
 
 const getHero = (heroId: string, heroes: Hero[]) => heroes.find(h => h.id === heroId)!;
 
 export const HeroPage = (props: Props) => {
+	const modals = useModals();
 	const { heroId } = useParams<{ heroId: string }>();
 	const hero = useMemo(() => getHero(heroId!, props.heroes), [ heroId, props.heroes ]);
 	try {
@@ -79,14 +74,14 @@ export const HeroPage = (props: Props) => {
 
 		return (
 			<div className='hero-view-page'>
-				<AppHeader subtitle='Heroes' goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader subtitle='Heroes' goHome={props.goHome}>
 					<Button onClick={props.closeHero}>
 						Close
 					</Button>
-					<Button onClick={() => props.onShowHeroState(heroId!, 'hero')}>
+					<Button onClick={() => modals.showHeroState(heroId!, 'hero')}>
 						State
 					</Button>
-					<Button onClick={() => props.onShowRules(heroId!)}>
+					<Button onClick={() => modals.showHeroRules(heroId!)}>
 						Rules
 					</Button>
 					<Popover
@@ -141,9 +136,6 @@ export const HeroPage = (props: Props) => {
 						onSelectComplication={props.onSelectComplication}
 						onSelectDomain={props.onSelectDomain}
 						onSelectKit={props.onSelectKit}
-						onSelectCharacteristic={characteristic => props.onSelectCharacteristic(characteristic, hero)}
-						onSelectAbility={ability => props.onSelectAbility(ability, hero)}
-						onShowState={page => props.onShowHeroState(heroId!, page)}
 					/>
 				</div>
 			</div>

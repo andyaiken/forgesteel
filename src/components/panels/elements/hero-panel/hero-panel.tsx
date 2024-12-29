@@ -1,5 +1,4 @@
 import { Col, Row, Statistic } from 'antd';
-import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { AbilityUsage } from '../../../../enums/ability-usage';
@@ -29,6 +28,7 @@ import { SelectablePanel } from '../../../controls/selectable-panel/selectable-p
 import { Skill } from '../../../../models/skill';
 import { SkillList } from '../../../../enums/skill-list';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { useModals } from '../../../../hooks/use-modals';
 
 import './hero-panel.scss';
 
@@ -44,12 +44,11 @@ interface Props {
 	onSelectComplication?: (complication: Complication) => void;
 	onSelectDomain?: (domain: Domain) => void;
 	onSelectKit?: (kit: Kit) => void;
-	onSelectCharacteristic?: (characteristic: Characteristic) => void;
-	onSelectAbility?: (ability: Ability) => void;
-	onShowState?: (page: 'hero' | 'stats' | 'conditions') => void;
 }
 
 export const HeroPanel = (props: Props) => {
+	const modals = useModals();
+
 	const getLeftColumn = () => {
 		const onSelectAncestry = () => {
 			if (props.hero.ancestry && props.onSelectAncestry) {
@@ -267,24 +266,6 @@ export const HeroPanel = (props: Props) => {
 			xxl: 8
 		};
 
-		const onSelectCharacteristic = (characteristic: Characteristic) => {
-			if (props.onSelectCharacteristic) {
-				props.onSelectCharacteristic(characteristic);
-			}
-		};
-
-		const onShowHero = () => {
-			if (props.onShowState) {
-				props.onShowState('hero');
-			}
-		};
-
-		const onShowStats = () => {
-			if (props.onShowState) {
-				props.onShowState('stats');
-			}
-		};
-
 		const maxStamina = HeroLogic.getStamina(props.hero);
 		const stamina = props.hero.state.staminaDamage === 0 ? maxStamina : maxStamina - props.hero.state.staminaDamage;
 		const staminaSuffix = props.hero.state.staminaDamage === 0 ? null : `/ ${maxStamina}`;
@@ -297,19 +278,19 @@ export const HeroPanel = (props: Props) => {
 			<Row gutter={[ 16, 16 ]}>
 				<Col span={24}>
 					<div className='characteristics-box'>
-						<div className='characteristic clickable' onClick={() => onSelectCharacteristic(Characteristic.Might)}>
+						<div className='characteristic clickable' onClick={() => modals.showHeroCharacteristic(props.hero.id, Characteristic.Might)}>
 							<Statistic title='Might' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
 						</div>
-						<div className='characteristic clickable' onClick={() => onSelectCharacteristic(Characteristic.Agility)}>
+						<div className='characteristic clickable' onClick={() => modals.showHeroCharacteristic(props.hero.id, Characteristic.Agility)}>
 							<Statistic title='Agility' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
 						</div>
-						<div className='characteristic clickable' onClick={() => onSelectCharacteristic(Characteristic.Reason)}>
+						<div className='characteristic clickable' onClick={() => modals.showHeroCharacteristic(props.hero.id, Characteristic.Reason)}>
 							<Statistic title='Reason' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
 						</div>
-						<div className='characteristic clickable' onClick={() => onSelectCharacteristic(Characteristic.Intuition)}>
+						<div className='characteristic clickable' onClick={() => modals.showHeroCharacteristic(props.hero.id, Characteristic.Intuition)}>
 							<Statistic title='Intuition' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
 						</div>
-						<div className='characteristic clickable' onClick={() => onSelectCharacteristic(Characteristic.Presence)}>
+						<div className='characteristic clickable' onClick={() => modals.showHeroCharacteristic(props.hero.id, Characteristic.Presence)}>
 							<Statistic title='Presence' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
 						</div>
 					</div>
@@ -331,7 +312,7 @@ export const HeroPanel = (props: Props) => {
 					</div>
 				</Col>
 				<Col xs={sizeSmall.xs} sm={sizeSmall.sm} md={sizeSmall.md} lg={sizeSmall.lg} xl={sizeSmall.xl} xxl={sizeSmall.xxl}>
-					<div className='characteristics-box clickable' onClick={onShowStats}>
+					<div className='characteristics-box clickable' onClick={() => modals.showHeroState(props.hero.id, 'stats')}>
 						<div className='characteristic'>
 							<Statistic title='Hero Tokens' value={props.hero.state.heroTokens} />
 						</div>
@@ -344,7 +325,7 @@ export const HeroPanel = (props: Props) => {
 					</div>
 				</Col>
 				<Col xs={sizeLarge.xs} sm={sizeLarge.sm} md={sizeLarge.md} lg={sizeLarge.lg} xl={sizeLarge.xl} xxl={sizeLarge.xxl}>
-					<div className='characteristics-box clickable' onClick={onShowHero}>
+					<div className='characteristics-box clickable' onClick={() => modals.showHeroState(props.hero.id, 'hero')}>
 						<div className='characteristic'>
 							<Statistic title={props.hero.class ? props.hero.class.heroicResource : 'Resource'} value={props.hero.state.heroicResource} />
 						</div>
@@ -360,7 +341,7 @@ export const HeroPanel = (props: Props) => {
 					</div>
 				</Col>
 				<Col xs={sizeSmall.xs} sm={sizeSmall.sm} md={sizeSmall.md} lg={sizeSmall.lg} xl={sizeSmall.xl} xxl={sizeSmall.xxl}>
-					<div className='characteristics-box clickable' onClick={onShowHero}>
+					<div className='characteristics-box clickable' onClick={() => modals.showHeroState(props.hero.id, 'hero')}>
 						<div className='characteristic'>
 							<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />
 						</div>
@@ -381,19 +362,13 @@ export const HeroPanel = (props: Props) => {
 			return null;
 		}
 
-		const openConditions = () => {
-			if (props.onShowState) {
-				props.onShowState('conditions');
-			}
-		};
-
 		return (
 			<div className='conditions-section'>
 				<HeaderText level={1}>Conditions</HeaderText>
 				<div className='conditions-grid'>
 					{
 						props.hero.state.conditions.map(c => (
-							<div key={c.id} className='condition-tile' onClick={openConditions}>
+							<div key={c.id} className='condition-tile' onClick={() => modals.showHeroState(props.hero.id, 'conditions')}>
 								<HeaderText>
 									{
 										(c.ends === ConditionEndType.ResistanceEnds) ?
@@ -445,12 +420,6 @@ export const HeroPanel = (props: Props) => {
 			return null;
 		}
 
-		const onSelectAbility = (ability: Ability) => {
-			if (props.onSelectAbility) {
-				props.onSelectAbility(ability);
-			}
-		};
-
 		return (
 			<div className='abilities-section'>
 				<HeaderText level={1}>{type}s</HeaderText>
@@ -458,7 +427,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						abilities.map(ability => (
 							<SelectablePanel key={ability.id} style={{ gridColumn: `span ${AbilityLogic.panelWidth(ability)}` }}>
-								<AbilityPanel ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} onRoll={() => onSelectAbility(ability)} />
+								<AbilityPanel ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} onRoll={() => modals.showHeroAbility(props.hero.id, ability.id)} />
 							</SelectablePanel>
 						))
 					}

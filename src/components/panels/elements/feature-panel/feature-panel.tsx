@@ -966,10 +966,16 @@ export const FeaturePanel = (props: Props) => {
 	// #endregion
 
 	try {
+		const tags = [];
+		const list = (props.feature as Perk).list;
+		if (list !== undefined) {
+			tags.push(list);
+		}
+
 		if (props.feature.type === FeatureType.Ability) {
 			const data = props.feature.data as FeatureAbilityData;
 			return (
-				<AbilityPanel ability={data.ability} hero={props.hero} mode={props.mode} />
+				<AbilityPanel ability={data.ability} hero={props.hero} mode={props.mode} tags={tags} />
 			);
 		}
 
@@ -977,6 +983,7 @@ export const FeaturePanel = (props: Props) => {
 			const data = props.feature.data as FeatureMultipleData;
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
+					{tags.length > 0 ? <HeaderText tags={tags}>{props.feature.name || 'Unnamed Perk'}</HeaderText> : null}
 					{data.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
 				</Space>
 			);
@@ -984,7 +991,7 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<div className='feature-panel' id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
-				<HeaderText ribbon={props.cost ? <HeroicResourceBadge value={props.cost} /> : null}>
+				<HeaderText ribbon={props.cost ? <HeroicResourceBadge value={props.cost} /> : null} tags={tags}>
 					{props.feature.name || 'Unnamed Feature'}
 				</HeaderText>
 				{props.feature.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.feature.description) }} /> : null}

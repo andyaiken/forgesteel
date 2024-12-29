@@ -21,6 +21,7 @@ interface Props {
 	hero?: Hero;
 	options?: Options;
 	mode?: PanelMode;
+	tags?: string[];
 	onRoll?: () => void;
 }
 
@@ -50,7 +51,7 @@ export const AbilityPanel = (props: Props) => {
 
 		return (
 			<div className={className} id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
-				<HeaderText ribbon={cost > 0 ? <HeroicResourceBadge value={cost} /> : null}>
+				<HeaderText ribbon={cost > 0 ? <HeroicResourceBadge value={cost} /> : null} tags={props.tags}>
 					{props.ability.name || 'Unnamed Ability'}
 				</HeaderText>
 				{props.ability.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.description) }} /> : null}

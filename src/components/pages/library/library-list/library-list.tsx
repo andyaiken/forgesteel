@@ -1,5 +1,7 @@
 import { Alert, Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -28,7 +30,6 @@ import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
-import { useState } from 'react';
 
 import './library-list.scss';
 
@@ -53,10 +54,24 @@ interface Props {
 	onImportHomebrew: (type: string, sourcebookID: string | null, element: Element) => void;
 }
 
+type GameElement = 'Ancestry' | 'Culture' | 'Career' | 'Class' | 'Complication' | 'Kit' | 'Domain' | 'Perk' | 'Title' | 'Item' | 'Monster';
+
+const useTabKey = (): [GameElement, (tabKey: GameElement) => void] => {
+	const navigate = useNavigate();
+	const { tab } = useParams<{ tab: GameElement }>();
+	const setTabKey = (tabKey: GameElement) => {
+		navigate(`/forgesteel/library/list/${tabKey}`);
+	};
+	return [ tab ?? 'Ancestry', setTabKey ];
+};
+
 export const LibraryListPage = (props: Props) => {
+	const [ tabKey, setTabKey ] = useTabKey();
+	const [ element, setElement ] = useState<GameElement>('Ancestry');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
-	const [ element, setElement ] = useState<string>('Ancestry');
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? props.sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
+
+	useEffect(() => setElement(tabKey), [ tabKey ]);
 
 	const getSourcebooks = () => {
 		return props.sourcebooks.filter(cs => !props.hiddenSourcebookIDs.includes(cs.id));
@@ -665,6 +680,7 @@ export const LibraryListPage = (props: Props) => {
 				</AppHeader>
 				<div className='library-list-page-content'>
 					<Tabs
+						activeKey={tabKey}
 						items={[
 							{
 								key: 'Ancestry',
@@ -777,7 +793,7 @@ export const LibraryListPage = (props: Props) => {
 								children: getMonsterGroupsSection(monsterGroups)
 							}
 						]}
-						onChange={setElement}
+						onChange={tabKey => setTabKey(tabKey as GameElement)}
 					/>
 				</div>
 			</div>

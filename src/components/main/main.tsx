@@ -1,5 +1,5 @@
+import { Navigate, Route, Routes, useNavigate } from 'react-router';
 import { ReactNode, useState } from 'react';
-import { Route, Routes, useNavigate } from 'react-router';
 import { Ability } from '../../models/ability';
 import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
@@ -72,7 +72,6 @@ export const Main = (props: Props) => {
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
 	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(props.hiddenSourcebookIDs);
 	const [ options, setOptions ] = useState<Options>(props.options);
-	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
 	const [ selectedSourcebook, setSelectedSourcebook ] = useState<Sourcebook | null>(null);
 	const [ selectedElement, setSelectedElement ] = useState<Element | null>(null);
 	const [ selectedElementType, setSelectedElementType ] = useState<string>('');
@@ -81,10 +80,26 @@ export const Main = (props: Props) => {
 
 	//#region Persistence
 
-	const persistHeroes = (heroes: Hero[]) => {
-		localforage
-			.setItem<Hero[]>('forgesteel-heroes', Collections.sort(heroes, h => h.name))
-			.then(setHeroes);
+	const persistHeroes = async (heroes: Hero[]) => {
+		const newHeroes = await localforage
+			.setItem<Hero[]>('forgesteel-heroes', Collections.sort(heroes, h => h.name));
+		setHeroes(newHeroes);
+	};
+
+	const persistHero = async (hero: Hero) => {
+		if (heroes.some(h => h.id === hero.id)) {
+			const list = (JSON.parse(JSON.stringify(heroes)) as Hero[])
+				.map(h => h.id === hero.id ? hero : h);
+
+			await persistHeroes(list);
+		}
+		else {
+			const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
+			copy.push(hero);
+			Collections.sort(copy, h => h.name);
+
+			await persistHeroes(copy);
+		}
 	};
 
 	const persistPlaybook = (playbook: Playbook) => {
@@ -119,7 +134,6 @@ export const Main = (props: Props) => {
 
 	const showWelcome = () => {
 		navigate(routeRoot);
-		setSelectedHero(null);
 		setSelectedSourcebook(null);
 		setSelectedElement(null);
 		setSelectedElementType('');
@@ -128,7 +142,6 @@ export const Main = (props: Props) => {
 
 	const showHeroList = () => {
 		navigate(`${routeRoot}/hero/list`);
-		setSelectedHero(null);
 		setSelectedSourcebook(null);
 		setSelectedElement(null);
 		setSelectedElementType('');
@@ -137,7 +150,6 @@ export const Main = (props: Props) => {
 
 	const showLibraryList = () => {
 		navigate(`${routeRoot}/library/list`);
-		setSelectedHero(null);
 		setSelectedSourcebook(null);
 		setSelectedElement(null);
 		setSelectedElementType('');
@@ -146,7 +158,6 @@ export const Main = (props: Props) => {
 
 	const showEncounterList = () => {
 		navigate(`${routeRoot}/encounter/list`);
-		setSelectedHero(null);
 		setSelectedSourcebook(null);
 		setSelectedElement(null);
 		setSelectedElementType('');
@@ -157,89 +168,59 @@ export const Main = (props: Props) => {
 
 	//#region Heroes
 
-	const addHero = () => {
+	const addHero = async () => {
 		const hero = FactoryLogic.createHero([
 			SourcebookData.core.id,
 			SourcebookData.orden.id
 		]);
 
-		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
-		copy.push(hero);
-		Collections.sort(copy, h => h.name);
-
-		persistHeroes(copy);
-		navigate(`${routeRoot}/hero/edit`);
-		setSelectedHero(hero);
+		await persistHero(hero);
+		navigate(`${routeRoot}/hero/edit/${hero.id}`);
 	};
 
-	const importHero = (hero: Hero) => {
+	const importHero = async (hero: Hero) => {
 		hero.id = Utils.guid();
 		HeroLogic.updateHero(hero);
 
-		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
-		copy.push(hero);
-		Collections.sort(copy, h => h.name);
-
-		persistHeroes(copy);
-		navigate(`${routeRoot}/hero/view`);
-		setSelectedHero(hero);
+		await persistHero(hero);
+		navigate(`${routeRoot}/hero/view/${hero.id}`);
 		setDrawer(null);
 	};
 
 	const viewHero = (heroID: string) => {
 		const hero = heroes.find(h => h.id === heroID);
 		if (hero) {
-			navigate(`${routeRoot}/hero/view`);
-			setSelectedHero(hero);
+			navigate(`${routeRoot}/hero/view/${heroID}`);
 		}
 	};
 
-	const closeSelectedHero = () => {
-		if (selectedHero) {
-			navigate(`${routeRoot}/hero/list`);
-			setSelectedHero(null);
-		}
+	const closeHero = () => {
+		navigate(`${routeRoot}/hero/list`);
 	};
 
-	const editSelectedHero = () => {
-		if (selectedHero) {
-			navigate(`${routeRoot}/hero/edit`);
-		}
+	const editHero = (heroId: string) => {
+		navigate(`${routeRoot}/hero/edit/${heroId}`);
 	};
 
-	const exportSelectedHero = (format: 'image' | 'pdf' | 'json') => {
-		if (selectedHero) {
-			const ids = (format === 'pdf') ? [ 'stats', 'actions', 'maneuvers', 'moves', 'triggers', 'others' ] : [ selectedHero.id ];
-			Utils.export(ids, selectedHero.name || 'Unnamed Hero', selectedHero, 'hero', format);
-		}
+	const exportHero = (heroId: string, format: 'image' | 'pdf' | 'json') => {
+		const hero = heroes.find(h => h.id === heroId)!;
+		const ids = (format === 'pdf') ? [ 'stats', 'actions', 'maneuvers', 'moves', 'triggers', 'others' ] : [ heroId ];
+		Utils.export(ids, hero.name || 'Unnamed Hero', hero, 'hero', format);
 	};
 
-	const deleteSelectedHero = () => {
-		if (selectedHero) {
-			const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
-			persistHeroes(copy.filter(h => h.id !== selectedHero.id));
-			navigate(`${routeRoot}/hero/list`);
-			setSelectedHero(null);
-		}
+	const deleteHero = (heroId: string) => {
+		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
+		persistHeroes(copy.filter(h => h.id !== heroId));
+		navigate(`${routeRoot}/hero/list`);
 	};
 
-	const saveEditSelectedHero = (hero: Hero) => {
-		if (selectedHero) {
-			const list = JSON.parse(JSON.stringify(heroes)) as Hero[];
-			const index = list.findIndex(h => h.id === hero.id);
-			if (index !== -1) {
-				list[index] = hero;
-				persistHeroes(list);
-				navigate(`${routeRoot}/hero/view`);
-				setSelectedHero(hero);
-			}
-		}
+	const saveEditHero = async (hero: Hero) => {
+		await persistHero(hero);
+		navigate(`${routeRoot}/hero/view/${hero.id}`);
 	};
 
-	const cancelEditSelectedHero = () => {
-		if (selectedHero) {
-			navigate(`${routeRoot}/hero/view`);
-		}
+	const cancelEditHero = (heroId: string) => {
+		navigate(`${routeRoot}/hero/view/${heroId}`);
 	};
 
 	//#endregion
@@ -1249,48 +1230,35 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onShowHeroState = (page: 'hero' | 'stats' | 'conditions') => {
-		if (selectedHero) {
-			setDrawer(
-				<HeroStateModal
-					hero={selectedHero}
-					startPage={page}
-					onChange={updatedHero => {
-						const list = JSON.parse(JSON.stringify(heroes)) as Hero[];
-						const index = list.findIndex(h => h.id === updatedHero.id);
-						if (index !== -1) {
-							list[index] = updatedHero;
-							persistHeroes(list);
-							setSelectedHero(updatedHero);
-						}
-					}}
-					onLevelUp={() => {
-						if (selectedHero && selectedHero.class) {
-							selectedHero.class.level += 1;
-							const list = JSON.parse(JSON.stringify(heroes)) as Hero[];
-							const index = list.findIndex(h => h.id === selectedHero.id);
-							if (index !== -1) {
-								list[index] = selectedHero;
-								persistHeroes(list);
-								navigate(`${routeRoot}/hero/edit`);
-								setDrawer(null);
-							}
-						}
-					}}
-				/>
-			);
-		}
+	const onShowHeroState = (heroId: string, page: 'hero' | 'stats' | 'conditions') => {
+		const hero = props.heroes.find(h => h.id === heroId)!;
+		setDrawer(
+			<HeroStateModal
+				hero={hero}
+				startPage={page}
+				onChange={updatedHero => {
+					persistHero(updatedHero);
+				}}
+				onLevelUp={async () => {
+					if (hero && hero.class) {
+						hero.class.level += 1;
+						await persistHero(hero);
+						navigate(`${routeRoot}/hero/edit/${hero.id}`);
+						setDrawer(null);
+					}
+				}}
+			/>
+		);
 	};
 
-	const onShowRules = () => {
-		if (selectedHero) {
-			setDrawer(
-				<RulesModal
-					hero={selectedHero}
-					sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
-				/>
-			);
-		}
+	const onShowRules = (heroId: string) => {
+		const hero = props.heroes.find(h => h.id === heroId)!;
+		setDrawer(
+			<RulesModal
+				hero={hero}
+				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+			/>
+		);
 	};
 
 	const showSourcebooks = () => {
@@ -1335,18 +1303,18 @@ export const Main = (props: Props) => {
 							viewHero={viewHero}
 						/>
 					} />
-					<Route path='view' element={
+					<Route path='view/:heroId' element={
 						<HeroPage
-							hero={selectedHero as Hero}
+							heroes={heroes}
 							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 							options={options}
 							setOptions={persistOptions}
 							goHome={showWelcome}
 							showAbout={showAbout}
-							closeHero={closeSelectedHero}
-							editHero={editSelectedHero}
-							exportHero={exportSelectedHero}
-							deleteHero={deleteSelectedHero}
+							closeHero={closeHero}
+							editHero={editHero}
+							exportHero={exportHero}
+							deleteHero={deleteHero}
 							onSelectAncestry={onSelectAncestry}
 							onSelectCulture={onSelectCulture}
 							onSelectCareer={onSelectCareer}
@@ -1360,19 +1328,21 @@ export const Main = (props: Props) => {
 							onShowRules={onShowRules}
 						/>
 					} />
-					<Route path='edit' element={
+					<Route path='edit/:heroId' element={<Navigate to='Ancestry' replace />} />
+					<Route path='edit/:heroId/:tab' element={
 						<HeroEditPage
-							hero={selectedHero as Hero}
+							heroes={heroes}
 							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 							goHome={showWelcome}
 							showAbout={showAbout}
-							saveChanges={saveEditSelectedHero}
-							cancelChanges={cancelEditSelectedHero}
+							saveChanges={saveEditHero}
+							cancelChanges={cancelEditHero}
 						/>
 					} />
 				</Route>
 				<Route path='library'>
-					<Route path='list' element={
+					<Route path='list' element={<Navigate to='Ancestry' replace />} />
+					<Route path='list/:tab' element={
 						<LibraryListPage
 							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 							hiddenSourcebookIDs={hiddenSourcebookIDs}

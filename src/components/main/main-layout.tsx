@@ -3,7 +3,6 @@ import { Outlet } from 'react-router';
 import { type ReactNode } from 'react';
 import pbds from '../../assets/powered-by-draw-steel.png';
 
-
 interface Props {
 	drawer: ReactNode;
 	setDrawer: React.Dispatch<React.SetStateAction<ReactNode>>;

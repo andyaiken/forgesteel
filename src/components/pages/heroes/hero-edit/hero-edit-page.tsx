@@ -1,7 +1,7 @@
 import { Button, Divider, Input, Radio, Segmented, Select, Space } from 'antd';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureBonusData, FeatureData } from '../../../../models/feature';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -69,8 +69,8 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 		navigation.goToHeroEdit(heroId!, tabKey);
 	};
 	const [ page, setPage ] = [ tab, setTabKey ];
-	const [ hero, setHero ] = useState<Hero>(props.heroes.find(h => h.id === heroId)!);
-	useEffect(() => setHero(props.heroes.find(h => h.id === heroId)!), [ heroId, props.heroes ]);
+	const originalHero = useMemo(() => props.heroes.find(h => h.id === heroId)!, [ heroId, props.heroes ]);
+	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(originalHero)) as Hero);
 	const [ dirty, setDirty ] = useState<boolean>(false);
 
 	try {

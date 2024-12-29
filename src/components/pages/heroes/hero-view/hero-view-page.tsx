@@ -1,6 +1,5 @@
 import { Button, Divider, Popover } from 'antd';
 import { DownOutlined, EditOutlined } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
 import { Ability } from '../../../../models/ability';
 import { Ancestry } from '../../../../models/ancestry';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -19,6 +18,7 @@ import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Toggle } from '../../../controls/toggle/toggle';
+import { useMemo } from 'react';
 import { useParams } from 'react-router';
 
 import './hero-view-page.scss';
@@ -51,8 +51,7 @@ const getHero = (heroId: string, heroes: Hero[]) => heroes.find(h => h.id === he
 
 export const HeroPage = (props: Props) => {
 	const { heroId } = useParams<{ heroId: string }>();
-	const [ hero, setHero ] = useState(getHero(heroId!, props.heroes));
-	useEffect(() => setHero(getHero(heroId!, props.heroes)), [ heroId, props.heroes ]);
+	const hero = useMemo(() => getHero(heroId!, props.heroes), [ heroId, props.heroes ]);
 	try {
 		const setShowSkillsInGroups = (value: boolean) => {
 			const copy = JSON.parse(JSON.stringify(props.options)) as Options;

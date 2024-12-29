@@ -3,7 +3,7 @@ import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-de
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { KitArmor, KitType, KitWeapon } from '../../../../enums/kit';
 import { Monster, MonsterGroup } from '../../../../models/monster';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../../../panels/edit/ability-edit-panel/ability-edit-panel';
 import { AbilityLogic } from '../../../../logic/ability-logic';
@@ -69,12 +69,10 @@ interface Props {
 
 export const LibraryEditPage = (props: Props) => {
 	const { sourcebookId, kind, elementId } = useParams<{ sourcebookId: string, kind: SourcebookElementKind, elementId: string }>();
-	const [ sourcebook, setSourcebook ] = useState<Sourcebook>(props.sourcebooks.find(s => s.id === sourcebookId)!);
-	useEffect(() => setSourcebook(props.sourcebooks.find(s => s.id === sourcebookId)!), [ sourcebookId, props.sourcebooks ]);
-	const [ sourcebookKey, setSourcebookKey ] = useState(getSourcebookKey(kind!));
-	useEffect(() => setSourcebookKey(getSourcebookKey(kind!)), [ kind ]);
-	const [ element, setElement ] = useState<Element>(sourcebook[sourcebookKey].find(e => e.id === elementId)!);
-	useEffect(() => setElement(sourcebook[sourcebookKey].find(e => e.id === elementId)!), [ sourcebook, sourcebookKey, elementId ]);
+	const sourcebook = useMemo(() => props.sourcebooks.find(s => s.id === sourcebookId)!, [ sourcebookId, props.sourcebooks ]);
+	const sourcebookKey = useMemo(() => getSourcebookKey(kind!), [ kind ]);
+	const originalElement = useMemo(() => sourcebook[sourcebookKey].find(e => e.id === elementId)!, [ sourcebook, sourcebookKey, elementId ]);
+	const [ element, setElement ] = useState<Element>(JSON.parse(JSON.stringify(originalElement)) as Element);
 	const [ dirty, setDirty ] = useState<boolean>(false);
 
 	const getNameAndDescriptionSection = () => {

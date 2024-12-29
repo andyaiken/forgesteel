@@ -2,7 +2,6 @@ import { Button, Divider, Input, Radio, Segmented, Select, Space } from 'antd';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureBonusData, FeatureData } from '../../../../models/feature';
 import { ReactNode, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -30,6 +29,8 @@ import { SelectablePanel } from '../../../controls/selectable-panel/selectable-p
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { ThunderboltOutlined } from '@ant-design/icons';
+import { useNavigation } from '../../../../hooks/use-navigation';
+import { useParams } from 'react-router';
 
 import './hero-edit-page.scss';
 
@@ -62,10 +63,10 @@ type HeroTab = 'Ancestry' | 'Culture' | 'Career' | 'Class' | 'Complication' | 'D
 
 
 export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
-	const navigate = useNavigate();
+	const navigation = useNavigation();
 	const { heroId, tab } = useParams<{ heroId: string; tab: HeroTab }>();
 	const setTabKey = (tabKey: HeroTab) => {
-		navigate(`/forgesteel/hero/edit/${heroId}/${tabKey}`);
+		navigation.goToHeroEdit(heroId!, tabKey);
 	};
 	const [ page, setPage ] = [ tab, setTabKey ];
 	const [ hero, setHero ] = useState<Hero>(props.heroes.find(h => h.id === heroId)!);

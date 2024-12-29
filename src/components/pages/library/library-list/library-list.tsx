@@ -1,7 +1,6 @@
 import { Alert, Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -31,6 +30,8 @@ import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
+import { useNavigation } from '../../../../hooks/use-navigation';
+import { useParams } from 'react-router';
 
 import './library-list.scss';
 
@@ -56,10 +57,10 @@ interface Props {
 }
 
 const useTabKey = (): [SourcebookElementKind, (tabKey: SourcebookElementKind) => void] => {
-	const navigate = useNavigate();
+	const navigation = useNavigation();
 	const { tab } = useParams<{ tab: SourcebookElementKind }>();
 	const setTabKey = (tabKey: SourcebookElementKind) => {
-		navigate(`/forgesteel/library/list/${tabKey}`);
+		navigation.goToLibraryList(tabKey);
 	};
 	return [ tab ?? 'Ancestry', setTabKey ];
 };

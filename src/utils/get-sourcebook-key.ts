@@ -1,8 +1,7 @@
-import type { Element } from '../models/element';
-import type { Sourcebook } from '../models/sourcebook';
 import type { SourcebookElementKind } from '../models/sourcebook-element-kind';
+import type { SourcebookElementsKey } from '../models/sourcebook-elements-key';
 
-export function getSourcebookKey(kind: SourcebookElementKind): keyof Omit<Sourcebook, keyof Element | 'isHomebrew' | 'skills' | 'languages'> {
+export function getSourcebookKey(kind: SourcebookElementKind): SourcebookElementsKey {
 	switch (kind) {
 		case 'Ancestry': return 'ancestries';
 		case 'Career': return 'careers';

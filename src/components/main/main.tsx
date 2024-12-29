@@ -48,6 +48,7 @@ import { RulesModal } from '../modals/rules/rules-modal';
 import { Sourcebook } from '../../models/sourcebook';
 import { SourcebookData } from '../../data/sourcebook-data';
 import { SourcebookElementKind } from '../../models/sourcebook-element-kind';
+import { SourcebookElementsKey } from '../../models/sourcebook-elements-key';
 import { SourcebookLogic } from '../../logic/sourcebook-logic';
 import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
 import { Title } from '../../models/title';
@@ -234,8 +235,7 @@ export const Main = (props: Props) => {
 			sourcebooks.push(sourcebook);
 		}
 		const sourcebookKey = getSourcebookKey(kind);
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		sourcebook[sourcebookKey].push(element as any);
+		(sourcebook as Record<SourcebookElementsKey, Element[]>)[sourcebookKey].push(element);
 		Collections.sort<Element>(sourcebook[sourcebookKey], item => item.name);
 
 		await persistHomebrewSourcebooks(sourcebooks);
@@ -604,26 +604,23 @@ export const Main = (props: Props) => {
 		editHomebrewElement('MonsterGroup', monsterGroup, sourcebook);
 	};
 
-	async function deleteSourcebookElement(kind: SourcebookElementKind, elementId: string) {
+	const deleteSourcebookElement = async (kind: SourcebookElementKind, elementId: string) => {
 		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		const sourcebookKey = getSourcebookKey(kind);
-		copy.forEach(cs => {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			cs[sourcebookKey] = cs[sourcebookKey].filter(x => x.id !== elementId) as any[];
+		copy.forEach((cs: Record<SourcebookElementsKey, Element[]>) => {
+			cs[sourcebookKey] = cs[sourcebookKey].filter(x => x.id !== elementId);
 		});
 		await persistHomebrewSourcebooks(copy);
 		setDrawer(null);
-	}
+	};
 
 	const saveEditElement = async (sourcebookId: string, kind: SourcebookElementKind, element: Element) => {
 		const list = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
-		const sourcebook = list.find(cs => cs.id === sourcebookId);
+		const sourcebook = list.find(cs => cs.id === sourcebookId) as Record<SourcebookElementsKey, Element[]>;
 		if (sourcebook) {
 			const elementKey = getSourcebookKey(kind);
-			sourcebook[elementKey] = sourcebook[elementKey]
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				.map(x => x.id === element.id ? element as any : x);
-		};
+			sourcebook[elementKey] = sourcebook[elementKey].map(x => x.id === element.id ? element : x);
+		}
 
 		await persistHomebrewSourcebooks(list);
 		navigation.goToLibraryList();

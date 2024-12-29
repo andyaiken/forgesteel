@@ -21,7 +21,6 @@ import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
 import { HeroEditPage } from '../pages/heroes/hero-edit/hero-edit-page';
 import { HeroListPage } from '../pages/heroes/hero-list/hero-list-page';
-import { HeroLogic } from '../../logic/hero-logic';
 import { HeroPage } from '../pages/heroes/hero-view/hero-view-page';
 import { Item } from '../../models/item';
 import { ItemModal } from '../modals/item/item-modal';
@@ -32,7 +31,6 @@ import { LibraryListPage } from '../pages/library/library-list/library-list';
 import { MainLayout } from './main-layout';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterGroupModal } from '../modals/monster-group/monster-group-modal';
-import { MonsterModal } from '../modals/monster/monster-modal';
 import { Options } from '../../models/options';
 import { Perk } from '../../models/perk';
 import { PerkModal } from '../modals/perk/perk-modal';
@@ -49,11 +47,11 @@ import { WelcomePage } from '../pages/welcome/welcome-page';
 import { getSourcebookKey } from '../../utils/get-sourcebook-key';
 import localforage from 'localforage';
 import { useNavigation } from '../../hooks/use-navigation';
+import { usePersistedHeroes } from '../../hooks/use-persisted-heroes';
 
 import './main.scss';
 
 interface Props {
-	heroes: Hero[];
 	playbook: Playbook;
 	homebrewSourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
@@ -62,7 +60,7 @@ interface Props {
 
 export const Main = (props: Props) => {
 	const navigation = useNavigation();
-	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
+	const { heroes, persistHero } = usePersistedHeroes();
 	const [ playbook, setPlaybook ] = useState<Playbook>(props.playbook);
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
 	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(props.hiddenSourcebookIDs);
@@ -70,28 +68,6 @@ export const Main = (props: Props) => {
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 
 	//#region Persistence
-
-	const persistHeroes = async (heroes: Hero[]) => {
-		const newHeroes = await localforage
-			.setItem<Hero[]>('forgesteel-heroes', Collections.sort(heroes, h => h.name));
-		setHeroes(newHeroes);
-	};
-
-	const persistHero = async (hero: Hero) => {
-		if (heroes.some(h => h.id === hero.id)) {
-			const list = (JSON.parse(JSON.stringify(heroes)) as Hero[])
-				.map(h => h.id === hero.id ? hero : h);
-
-			await persistHeroes(list);
-		}
-		else {
-			const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
-			copy.push(hero);
-			Collections.sort(copy, h => h.name);
-
-			await persistHeroes(copy);
-		}
-	};
 
 	const persistPlaybook = async (playbook: Playbook) => {
 		await localforage
@@ -131,40 +107,12 @@ export const Main = (props: Props) => {
 		navigation.goToHeroEdit(hero.id);
 	};
 
-	const importHero = async (hero: Hero) => {
-		hero.id = Utils.guid();
-		HeroLogic.updateHero(hero);
-
-		await persistHero(hero);
-		navigation.goToHeroView(hero.id);
-		setDrawer(null);
-	};
-
-	const viewHero = (heroID: string) => {
-		const hero = heroes.find(h => h.id === heroID);
-		if (hero) {
-			navigation.goToHeroView(hero.id);
-		}
-	};
-
 	const closeHero = () => {
 		navigation.goToHeroList();
 	};
 
 	const editHero = (heroId: string) => {
 		navigation.goToHeroEdit(heroId);
-	};
-
-	const exportHero = (heroId: string, format: 'image' | 'pdf' | 'json') => {
-		const hero = heroes.find(h => h.id === heroId)!;
-		const ids = (format === 'pdf') ? [ 'stats', 'actions', 'maneuvers', 'moves', 'triggers', 'others', 'none' ] : [ heroId ];
-		Utils.export(ids, hero.name || 'Unnamed Hero', hero, 'hero', format);
-	};
-
-	const deleteHero = (heroId: string) => {
-		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
-		persistHeroes(copy.filter(h => h.id !== heroId));
-		navigation.goToHeroList();
 	};
 
 	const saveEditHero = async (hero: Hero) => {
@@ -878,22 +826,6 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onSelectMonster = (monsterID: string) => {
-		const monster = SourcebookLogic.getMonster([ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], monsterID);
-		const monsterGroup = SourcebookLogic.getMonsterGroup([ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], monsterID);
-
-		if (monster && monsterGroup) {
-			setDrawer(
-				<MonsterModal
-					monster={monster}
-					monsterGroup={monsterGroup}
-					playbook={playbook}
-					export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
-				/>
-			);
-		}
-	};
-
 	//#endregion
 
 	return (
@@ -902,7 +834,6 @@ export const Main = (props: Props) => {
 				path='/'
 				element={
 					<MainLayout
-						heroes={heroes}
 						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 						hiddenSourcebookIDs={hiddenSourcebookIDs}
 						playbook={playbook}
@@ -931,12 +862,9 @@ export const Main = (props: Props) => {
 						path='list'
 						element={
 							<HeroListPage
-								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								goHome={navigation.goToWelcome}
 								addHero={addHero}
-								importHero={importHero}
-								viewHero={viewHero}
 							/>
 						}
 					/>
@@ -944,15 +872,12 @@ export const Main = (props: Props) => {
 						path='view/:heroId'
 						element={
 							<HeroPage
-								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								options={options}
 								setOptions={persistOptions}
 								goHome={navigation.goToWelcome}
 								closeHero={closeHero}
 								editHero={editHero}
-								exportHero={exportHero}
-								deleteHero={deleteHero}
 								onSelectAncestry={onSelectAncestry}
 								onSelectCulture={onSelectCulture}
 								onSelectCareer={onSelectCareer}
@@ -971,7 +896,6 @@ export const Main = (props: Props) => {
 						path='edit/:heroId/:tab'
 						element={
 							<HeroEditPage
-								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								goHome={navigation.goToWelcome}
 								saveChanges={saveEditHero}
@@ -1048,7 +972,6 @@ export const Main = (props: Props) => {
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								goHome={navigation.goToWelcome}
-								showMonster={onSelectMonster}
 								saveChanges={saveEditEncounter}
 								cancelChanges={cancelEditEncounter}
 							/>

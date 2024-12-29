@@ -10,16 +10,19 @@ import { EncounterModal } from '../modals/encounter/encounter-modal';
 import type { Hero } from '../../models/hero';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
+import { MonsterGroupModal } from '../modals/monster-group/monster-group-modal';
+import { MonsterModal } from '../modals/monster/monster-modal';
 import type { Playbook } from '../../models/playbook';
 import { RulesModal } from '../modals/rules/rules-modal';
 import type { Sourcebook } from '../../models/sourcebook';
+import { SourcebookLogic } from '../../logic/sourcebook-logic';
 import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
 import { Utils } from '../../utils/utils';
 import pbds from '../../assets/powered-by-draw-steel.png';
 import { useNavigation } from '../../hooks/use-navigation';
+import { usePersistedHeroes } from '../../hooks/use-persisted-heroes';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
 	playbook: Playbook;
@@ -29,7 +32,6 @@ interface Props {
 	onHiddenSourcebookIDsChange: (ids: string[]) => void;
 }
 export const MainLayout = ({
-	heroes,
 	sourcebooks,
 	hiddenSourcebookIDs,
 	playbook,
@@ -41,6 +43,8 @@ export const MainLayout = ({
 	const location = useLocation();
 	const navigate = useNavigate();
 	const navigation = useNavigation();
+
+	const { heroes } = usePersistedHeroes();
 
 	const getEncounterModal = useCallback(
 		(segments: string[]) => {
@@ -92,6 +96,46 @@ export const MainLayout = ({
 		[ heroes, sourcebooks, navigation, onHeroChange ]
 	);
 
+	const getMonsterModal = useCallback(
+		(segments: string[]) => {
+			const [ monsterId ] = segments;
+			const monster = SourcebookLogic.getMonster(sourcebooks, monsterId)!;
+			const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, monsterId)!;
+			return <MonsterModal
+				monster={monster}
+				monsterGroup={monsterGroup}
+				playbook={playbook}
+				export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
+			/>;
+		},
+		[ sourcebooks, playbook ]
+	);
+
+	const getMonsterGroupModal = useCallback(
+		(segments: string[]) => {
+			const [ monsterId ] = segments;
+			const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, monsterId)!;
+			const homebrewSourcebooks = sourcebooks.filter(s => !s.isHomebrew);
+			const sourcebook = sourcebooks
+				.find(cs => cs.monsterGroups.some(mg => mg.id === monsterGroup.id))!;
+			return <MonsterGroupModal
+				monsterGroup={monsterGroup}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={sourcebook.isHomebrew}
+				playbook={playbook}
+				createHomebrew={() => {}}
+				export={() => {}}
+				edit={() => {}}
+				delete={() => {}}
+				// createHomebrew={sourcebook => createMonsterGroup(monsterGroup, sourcebook)}
+				// export={format => Utils.export([ monsterGroup.id ], monsterGroup.name || 'Monster Group', monsterGroup, 'monster-group', format)}
+				// edit={() => editMonsterGroup(monsterGroup, sourcebook)}
+				// delete={() => deleteSourcebookElement('MonsterGroup', monsterGroup.id)}
+			/>;
+		},
+		[ sourcebooks, playbook ]
+	);
+
 	function getHeroAbilityModal(hero: Hero, segments: string[]) {
 		const [ abilityId ] = segments;
 		const ability = HeroLogic.getAbilities(hero, true, true, true)
@@ -116,6 +160,10 @@ export const MainLayout = ({
 					return getEncounterModal(hashSegments);
 				case 'hero':
 					return getHeroModal(hashSegments);
+				case 'monster':
+					return getMonsterModal(hashSegments);
+				case 'monster-group':
+					return getMonsterGroupModal(hashSegments);
 				case 'sourcebooks':
 					return <SourcebooksModal
 						sourcebooks={sourcebooks}
@@ -132,7 +180,9 @@ export const MainLayout = ({
 			onHomebrewSourcebookChange,
 			onHiddenSourcebookIDsChange,
 			getEncounterModal,
-			getHeroModal
+			getHeroModal,
+			getMonsterModal,
+			getMonsterGroupModal
 		]
 	);
 

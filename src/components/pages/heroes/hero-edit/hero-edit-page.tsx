@@ -32,6 +32,7 @@ import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { ThunderboltOutlined } from '@ant-design/icons';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
+import { usePersistedHeroes } from '../../../../hooks/use-persisted-heroes';
 
 import './hero-edit-page.scss';
 
@@ -43,7 +44,6 @@ enum PageState {
 }
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	goHome: () => void;
 	saveChanges: (hero: Hero) => void;
@@ -55,12 +55,13 @@ type HeroTab = 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'd
 
 export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 	const navigation = useNavigation();
+	const { heroes } = usePersistedHeroes();
 	const { heroId, tab } = useParams<{ heroId: string; tab: HeroTab }>();
 	const setTabKey = (tabKey: HeroTab) => {
 		navigation.goToHeroEdit(heroId!, tabKey);
 	};
 	const [ page, setPage ] = [ tab, setTabKey ];
-	const originalHero = useMemo(() => props.heroes.find(h => h.id === heroId)!, [ heroId, props.heroes ]);
+	const originalHero = useMemo(() => heroes.find(h => h.id === heroId)!, [ heroId, heroes ]);
 	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(originalHero)) as Hero);
 	const [ dirty, setDirty ] = useState<boolean>(false);
 

@@ -26,6 +26,7 @@ import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { useModals } from '../../../../hooks/use-modals';
 import { useParams } from 'react-router';
 
 import './encounter-edit.scss';
@@ -34,12 +35,12 @@ interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	goHome: () => void;
-	showMonster: (monsterID: string) => void;
 	saveChanges: (encounter: Encounter) => void;
 	cancelChanges: () => void;
 }
 
 export const EncounterEditPage = (props: Props) => {
+	const modals = useModals();
 	const { encounterId } = useParams<{ encounterId: string }>();
 	const originalEncounter = useMemo(() => props.playbook.encounters.find(e => e.id === encounterId)!, [ encounterId, props.playbook ]);
 	const [ encounter, setEncounter ] = useState(JSON.parse(JSON.stringify(originalEncounter)) as Encounter);
@@ -134,7 +135,7 @@ export const EncounterEditPage = (props: Props) => {
 											<div key={slot.id} className='slot-row'>
 												<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Compact} />
 												<div className='actions'>
-													<Button block={true} onClick={() => props.showMonster(slot.monsterID)}>Details</Button>
+													<Button block={true} onClick={() => modals.showMonster(slot.monsterID)}>Details</Button>
 													<NumberSpin value={slot.count} format={value => (value * 8).toString()} onChange={value => setSlotCount(group.id, slot.id, value)} />
 												</div>
 											</div>
@@ -345,7 +346,7 @@ export const EncounterEditPage = (props: Props) => {
 							<div key={m.id} className='monster-row'>
 								<MonsterPanel monster={m} monsterGroup={monsterGroup} mode={PanelMode.Compact} />
 								<div className='actions'>
-									<Button block={true} onClick={() => props.showMonster(m.id)}>Details</Button>
+									<Button block={true} onClick={() => modals.showMonster(m.id)}>Details</Button>
 									{addBtn}
 								</div>
 							</div>

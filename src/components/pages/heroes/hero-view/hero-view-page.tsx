@@ -8,7 +8,6 @@ import { Culture } from '../../../../models/culture';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { DropdownButton } from '../../../controls/dropdown-button/dropdown-button';
-import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
 import { Kit } from '../../../../models/kit';
@@ -16,22 +15,21 @@ import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Toggle } from '../../../controls/toggle/toggle';
-import { useMemo } from 'react';
 import { useModals } from '../../../../hooks/use-modals';
+import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
+import { usePersistedHero } from '../../../../hooks/use-persisted-hero';
+import { usePersistedHeroes } from '../../../../hooks/use-persisted-heroes';
 
 import './hero-view-page.scss';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	options: Options;
 	setOptions: (options: Options) => void;
 	goHome: () => void;
 	closeHero: () => void;
 	editHero: (heroId: string) => void;
-	exportHero: (heroId: string, format: 'image' | 'pdf' | 'json') => void;
-	deleteHero: (heroId: string) => void;
 	onSelectAncestry: (ancestry: Ancestry) => void;
 	onSelectCulture: (culture: Culture) => void;
 	onSelectCareer: (career: Career) => void;
@@ -41,12 +39,12 @@ interface Props {
 	onSelectKit: (kit: Kit) => void;
 }
 
-const getHero = (heroId: string, heroes: Hero[]) => heroes.find(h => h.id === heroId)!;
-
 export const HeroPage = (props: Props) => {
 	const modals = useModals();
+	const navigation = useNavigation();
 	const { heroId } = useParams<{ heroId: string }>();
-	const hero = useMemo(() => getHero(heroId!, props.heroes), [ heroId, props.heroes ]);
+	const { exportHero, deleteHero } = usePersistedHeroes();
+	const hero = usePersistedHero(heroId!);
 	try {
 		const setShowSkillsInGroups = (value: boolean) => {
 			const copy = JSON.parse(JSON.stringify(props.options)) as Options;
@@ -110,10 +108,10 @@ export const HeroPage = (props: Props) => {
 											label: <div className='ds-text centered-text'>Export As Data</div>
 										}
 									]}
-									onClick={key => props.exportHero(heroId!, key as 'image' | 'pdf' | 'json')}
+									onClick={key => exportHero(heroId!, key as 'image' | 'pdf' | 'json')}
 								/>
 								<Button icon={<EditOutlined />} onClick={() => (props).editHero(heroId!)}>Edit</Button>
-								<DangerButton onConfirm={() => props.deleteHero(heroId!)} />
+								<DangerButton onConfirm={async () => { await deleteHero(heroId!); navigation.goToHeroList(); }} />
 							</div>
 						)}
 					>
@@ -124,19 +122,23 @@ export const HeroPage = (props: Props) => {
 					</Popover>
 				</AppHeader>
 				<div className='hero-view-page-content'>
-					<HeroPanel
-						hero={hero}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						mode={PanelMode.Full}
-						onSelectAncestry={props.onSelectAncestry}
-						onSelectCulture={props.onSelectCulture}
-						onSelectCareer={props.onSelectCareer}
-						onSelectClass={props.onSelectClass}
-						onSelectComplication={props.onSelectComplication}
-						onSelectDomain={props.onSelectDomain}
-						onSelectKit={props.onSelectKit}
-					/>
+					{
+						hero
+							? <HeroPanel
+								hero={hero}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+								mode={PanelMode.Full}
+								onSelectAncestry={props.onSelectAncestry}
+								onSelectCulture={props.onSelectCulture}
+								onSelectCareer={props.onSelectCareer}
+								onSelectClass={props.onSelectClass}
+								onSelectComplication={props.onSelectComplication}
+								onSelectDomain={props.onSelectDomain}
+								onSelectKit={props.onSelectKit}
+							/>
+							: null
+					}
 				</div>
 			</div>
 		);

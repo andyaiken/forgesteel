@@ -8,6 +8,7 @@ import { AbilityUsage } from '../../../../enums/ability-usage';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
+import { DistanceLogic } from '../../../../logic/distance-logic';
 import { Expander } from '../../../controls/expander/expander';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
@@ -442,7 +443,7 @@ export const AbilityEditPanel = (props: Props) => {
 											ability.distance.map((distance, n) => (
 												<Expander
 													key={n}
-													title={AbilityLogic.getDistance(distance)}
+													title={DistanceLogic.getDistance(distance)}
 													extra={[
 														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveDistance(n, 'up')} />,
 														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveDistance(n, 'down')} />,

@@ -22,6 +22,12 @@ export const useModals = () => {
 		showHeroState(heroId: string, page: 'hero' | 'stats' | 'conditions') {
 			return navigate({ hash: `hero/${heroId}/${page}` });
 		},
+		showMonster(monsterId: string) {
+			return navigate({ hash: `monster/${monsterId}` });
+		},
+		showMonsterGroup(monsterGroupId: string) {
+			return navigate({ hash: `monster-group/${monsterGroupId}` });
+		},
 		showSourcebooks() {
 			return navigate({ hash: 'sourcebooks' });
 		}

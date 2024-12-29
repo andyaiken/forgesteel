@@ -1,7 +1,5 @@
 import { FactoryLogic } from './logic/factory-logic.ts';
 import { HashRouter } from 'react-router';
-import { Hero } from './models/hero.ts';
-import { HeroLogic } from './logic/hero-logic.ts';
 import { Main } from './components/main/main.tsx';
 import { Options } from './models/options.ts';
 import { Playbook } from './models/playbook.ts';
@@ -13,24 +11,13 @@ import localforage from 'localforage';
 import './index.scss';
 
 const promises = [
-	localforage.getItem<Hero[]>('forgesteel-heroes'),
 	localforage.getItem<Sourcebook[]>('forgesteel-homebrew-settings'),
 	localforage.getItem<string[]>('forgesteel-hidden-setting-ids'),
 	localforage.getItem<Playbook>('forgesteel-playbook'),
-	localforage.getItem<Options[]>('forgesteel-options')
-];
+	localforage.getItem<Options>('forgesteel-options')
+] as const;
 
-Promise.all(promises).then(results => {
-	let heroes = results[0] as Hero[] | null;
-	if (!heroes) {
-		heroes = [];
-	}
-
-	heroes.forEach(hero => {
-		HeroLogic.updateHero(hero);
-	});
-
-	let sourcebooks = results[1] as Sourcebook[] | null;
+Promise.all(promises).then(([ sourcebooks, hiddenSourcebookIDs, playbook, options ]) => {
 	if (!sourcebooks) {
 		sourcebooks = [];
 	}
@@ -53,17 +40,14 @@ Promise.all(promises).then(results => {
 		}
 	});
 
-	let hiddenSourcebookIDs = results[2] as string[] | null;
 	if (!hiddenSourcebookIDs) {
 		hiddenSourcebookIDs = [];
 	}
 
-	let playbook = results[3] as Playbook | null;
 	if (!playbook) {
 		playbook = FactoryLogic.createPlaybook();
 	}
 
-	let options = results[4] as Options | null;
 	if (!options) {
 		options = {
 			showSkillsInGroups: false,
@@ -77,7 +61,6 @@ Promise.all(promises).then(results => {
 		<StrictMode>
 			<HashRouter>
 				<Main
-					heroes={heroes}
 					homebrewSourcebooks={sourcebooks}
 					hiddenSourcebookIDs={hiddenSourcebookIDs}
 					playbook={playbook}

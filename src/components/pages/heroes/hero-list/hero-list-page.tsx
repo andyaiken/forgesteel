@@ -5,19 +5,20 @@ import { Hero } from '../../../../models/hero';
 import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { useNavigation } from '../../../../hooks/use-navigation';
+import { usePersistedHeroes } from '../../../../hooks/use-persisted-heroes';
 
 import './hero-list-page.scss';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	goHome: () => void;
 	addHero: () => void;
-	importHero: (hero: Hero) => void;
-	viewHero: (heroID: string) => void;
 }
 
 export const HeroListPage = (props: Props) => {
+	const { heroes, importHero } = usePersistedHeroes();
+	const navigation = useNavigation();
 	try {
 		return (
 			<div className='hero-list-page'>
@@ -32,9 +33,10 @@ export const HeroListPage = (props: Props) => {
 						beforeUpload={file => {
 							file
 								.text()
-								.then(json => {
+								.then(async json => {
 									const hero = (JSON.parse(json) as Hero);
-									props.importHero(hero);
+									await importHero(hero);
+									navigation.goToHeroView(hero.id);
 								});
 							return false;
 						}}
@@ -44,8 +46,8 @@ export const HeroListPage = (props: Props) => {
 				</AppHeader>
 				<div className='hero-list-page-content'>
 					{
-						props.heroes.map(hero => (
-							<SelectablePanel key={hero.id} onSelect={() => props.viewHero(hero.id)}>
+						heroes.map(hero => (
+							<SelectablePanel key={hero.id} onSelect={() => navigation.goToHeroView(hero.id)}>
 								<HeroPanel hero={hero} sourcebooks={props.sourcebooks} />
 							</SelectablePanel>
 						))

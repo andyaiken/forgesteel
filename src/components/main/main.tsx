@@ -1,4 +1,5 @@
 import { ReactNode, useState } from 'react';
+import { Route, Routes, useNavigate } from 'react-router';
 import { Ability } from '../../models/ability';
 import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
@@ -16,7 +17,6 @@ import { Culture } from '../../models/culture';
 import { CultureModal } from '../modals/culture/culture-modal';
 import { Domain } from '../../models/domain';
 import { DomainModal } from '../modals/domain/domain-modal';
-import { Drawer } from 'antd';
 import { Element } from '../../models/element';
 import { Encounter } from '../../models/encounter';
 import { EncounterEditPage } from '../pages/encounters/encounter-edit/encounter-edit';
@@ -36,6 +36,7 @@ import { Kit } from '../../models/kit';
 import { KitModal } from '../modals/kit/kit-modal';
 import { LibraryEditPage } from '../pages/library/library-edit/library-edit';
 import { LibraryListPage } from '../pages/library/library-list/library-list';
+import { MainLayout } from './main-layout';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterGroupModal } from '../modals/monster-group/monster-group-modal';
 import { MonsterModal } from '../modals/monster/monster-modal';
@@ -54,20 +55,7 @@ import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
 
-import pbds from '../../assets/powered-by-draw-steel.png';
-
 import './main.scss';
-
-enum Page {
-	Welcome,
-	HeroList,
-	HeroView,
-	HeroEdit,
-	LibraryList,
-	LibraryEdit,
-	EncounterList,
-	EncounterEdit
-}
 
 interface Props {
 	heroes: Hero[];
@@ -78,12 +66,12 @@ interface Props {
 }
 
 export const Main = (props: Props) => {
+	const navigate = useNavigate();
 	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
 	const [ playbook, setPlaybook ] = useState<Playbook>(props.playbook);
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
 	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(props.hiddenSourcebookIDs);
 	const [ options, setOptions ] = useState<Options>(props.options);
-	const [ page, setPage ] = useState<Page>(Page.Welcome);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
 	const [ selectedSourcebook, setSelectedSourcebook ] = useState<Sourcebook | null>(null);
 	const [ selectedElement, setSelectedElement ] = useState<Element | null>(null);
@@ -127,8 +115,10 @@ export const Main = (props: Props) => {
 
 	//#region Pages
 
+	const routeRoot = '/forgesteel';
+
 	const showWelcome = () => {
-		setPage(Page.Welcome);
+		navigate(routeRoot);
 		setSelectedHero(null);
 		setSelectedSourcebook(null);
 		setSelectedElement(null);
@@ -137,7 +127,7 @@ export const Main = (props: Props) => {
 	};
 
 	const showHeroList = () => {
-		setPage(Page.HeroList);
+		navigate(`${routeRoot}/hero/list`);
 		setSelectedHero(null);
 		setSelectedSourcebook(null);
 		setSelectedElement(null);
@@ -146,7 +136,7 @@ export const Main = (props: Props) => {
 	};
 
 	const showLibraryList = () => {
-		setPage(Page.LibraryList);
+		navigate(`${routeRoot}/library/list`);
 		setSelectedHero(null);
 		setSelectedSourcebook(null);
 		setSelectedElement(null);
@@ -155,7 +145,7 @@ export const Main = (props: Props) => {
 	};
 
 	const showEncounterList = () => {
-		setPage(Page.EncounterList);
+		navigate(`${routeRoot}/encounter/list`);
 		setSelectedHero(null);
 		setSelectedSourcebook(null);
 		setSelectedElement(null);
@@ -178,7 +168,7 @@ export const Main = (props: Props) => {
 		Collections.sort(copy, h => h.name);
 
 		persistHeroes(copy);
-		setPage(Page.HeroEdit);
+		navigate(`${routeRoot}/hero/edit`);
 		setSelectedHero(hero);
 	};
 
@@ -191,7 +181,7 @@ export const Main = (props: Props) => {
 		Collections.sort(copy, h => h.name);
 
 		persistHeroes(copy);
-		setPage(Page.HeroView);
+		navigate(`${routeRoot}/hero/view`);
 		setSelectedHero(hero);
 		setDrawer(null);
 	};
@@ -199,21 +189,21 @@ export const Main = (props: Props) => {
 	const viewHero = (heroID: string) => {
 		const hero = heroes.find(h => h.id === heroID);
 		if (hero) {
-			setPage(Page.HeroView);
+			navigate(`${routeRoot}/hero/view`);
 			setSelectedHero(hero);
 		}
 	};
 
 	const closeSelectedHero = () => {
 		if (selectedHero) {
-			setPage(Page.HeroList);
+			navigate(`${routeRoot}/hero/list`);
 			setSelectedHero(null);
 		}
 	};
 
 	const editSelectedHero = () => {
 		if (selectedHero) {
-			setPage(Page.HeroEdit);
+			navigate(`${routeRoot}/hero/edit`);
 		}
 	};
 
@@ -228,7 +218,7 @@ export const Main = (props: Props) => {
 		if (selectedHero) {
 			const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
 			persistHeroes(copy.filter(h => h.id !== selectedHero.id));
-			setPage(Page.HeroList);
+			navigate(`${routeRoot}/hero/list`);
 			setSelectedHero(null);
 		}
 	};
@@ -240,7 +230,7 @@ export const Main = (props: Props) => {
 			if (index !== -1) {
 				list[index] = hero;
 				persistHeroes(list);
-				setPage(Page.HeroView);
+				navigate(`${routeRoot}/hero/view`);
 				setSelectedHero(hero);
 			}
 		}
@@ -248,7 +238,7 @@ export const Main = (props: Props) => {
 
 	const cancelEditSelectedHero = () => {
 		if (selectedHero) {
-			setPage(Page.HeroView);
+			navigate(`${routeRoot}/hero/view`);
 		}
 	};
 
@@ -351,7 +341,7 @@ export const Main = (props: Props) => {
 		}
 
 		persistHomebrewSourcebooks(sourcebooks);
-		setPage(Page.LibraryList);
+		navigate(`${routeRoot}/library/list`);
 		setDrawer(null);
 	};
 
@@ -656,7 +646,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(ancestry);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Ancestry');
-		setPage(Page.LibraryEdit);
+		navigate(`${routeRoot}/library/edit`);
 		setDrawer(null);
 	};
 
@@ -664,7 +654,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(culture);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Culture');
-		setPage(Page.LibraryEdit);
+		navigate(`${routeRoot}/library/edit`);
 		setDrawer(null);
 	};
 
@@ -672,7 +662,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(career);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Career');
-		setPage(Page.LibraryEdit);
+		navigate(`${routeRoot}/library/edit`);
 		setDrawer(null);
 	};
 
@@ -680,7 +670,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(heroClass);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Class');
-		setPage(Page.LibraryEdit);
+		navigate(`${routeRoot}/library/edit`);
 		setDrawer(null);
 	};
 
@@ -688,7 +678,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(complication);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Complication');
-		setPage(Page.LibraryEdit);
+		navigate(`${routeRoot}/library/edit`);
 		setDrawer(null);
 	};
 
@@ -696,7 +686,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(domain);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Domain');
-		setPage(Page.LibraryEdit);
+		navigate(`${routeRoot}/library/edit`);
 		setDrawer(null);
 	};
 
@@ -704,7 +694,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(kit);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Kit');
-		setPage(Page.LibraryEdit);
+		navigate(`${routeRoot}/library/edit`);
 		setDrawer(null);
 	};
 
@@ -712,7 +702,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(perk);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Perk');
-		setPage(Page.LibraryEdit);
+		navigate(`${routeRoot}/library/edit`);
 		setDrawer(null);
 	};
 
@@ -720,7 +710,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(title);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Title');
-		setPage(Page.LibraryEdit);
+		navigate(`${routeRoot}/library/edit`);
 		setDrawer(null);
 	};
 
@@ -728,7 +718,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(item);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Item');
-		setPage(Page.LibraryEdit);
+		navigate(`${routeRoot}/library/edit`);
 		setDrawer(null);
 	};
 
@@ -736,7 +726,7 @@ export const Main = (props: Props) => {
 		setSelectedElement(monsterGroup);
 		setSelectedSourcebook(sourcebook);
 		setSelectedElementType('Monster Group');
-		setPage(Page.LibraryEdit);
+		navigate(`${routeRoot}/library/edit`);
 		setDrawer(null);
 	};
 
@@ -926,7 +916,7 @@ export const Main = (props: Props) => {
 			};
 
 			persistHomebrewSourcebooks(list);
-			setPage(Page.LibraryList);
+			navigate(`${routeRoot}/library/list`);
 			setSelectedSourcebook(null);
 			setSelectedElement(null);
 			setSelectedElementType('');
@@ -935,7 +925,7 @@ export const Main = (props: Props) => {
 
 	const cancelEditSelectedElement = () => {
 		if (selectedElement) {
-			setPage(Page.LibraryList);
+			navigate(`${routeRoot}/library/list`);
 		}
 	};
 
@@ -971,13 +961,13 @@ export const Main = (props: Props) => {
 		Collections.sort(copy.encounters, item => item.name);
 
 		persistPlaybook(copy);
-		setPage(Page.EncounterList);
+		navigate(`${routeRoot}/encounter/list`);
 		setDrawer(null);
 	};
 
 	const editEncounter = (encounter: Encounter) => {
 		setSelectedEncounter(encounter);
-		setPage(Page.EncounterEdit);
+		navigate(`${routeRoot}/encounter/edit`);
 		setDrawer(null);
 	};
 
@@ -999,13 +989,13 @@ export const Main = (props: Props) => {
 
 			persistPlaybook(copy);
 			setSelectedEncounter(null);
-			setPage(Page.EncounterList);
+			navigate(`${routeRoot}/encounter/list`);
 		}
 	};
 
 	const cancelEditSelectedEncounter = () => {
 		if (selectedEncounter) {
-			setPage(Page.EncounterList);
+			navigate(`${routeRoot}/encounter/list`);
 		}
 	};
 
@@ -1282,7 +1272,7 @@ export const Main = (props: Props) => {
 							if (index !== -1) {
 								list[index] = selectedHero;
 								persistHeroes(list);
-								setPage(Page.HeroEdit);
+								navigate(`${routeRoot}/hero/edit`);
 								setDrawer(null);
 							}
 						}
@@ -1317,144 +1307,131 @@ export const Main = (props: Props) => {
 
 	//#endregion
 
-	const getContent = () => {
-		switch (page) {
-			case Page.Welcome:
-				return (
+	return (
+		<Routes>
+			<Route path={routeRoot} element={
+				<MainLayout
+					drawer={drawer}
+					setDrawer={setDrawer}
+				/>
+			}>
+				<Route index element={
 					<WelcomePage
 						showAbout={showAbout}
 						showHeroes={heroes.length === 0 ? addHero : showHeroList}
 						showLibrary={showLibraryList}
 						showEncounters={showEncounterList}
 					/>
-				);
-			case Page.HeroList:
-				return (
-					<HeroListPage
-						heroes={heroes}
-						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-						goHome={showWelcome}
-						showAbout={showAbout}
-						addHero={addHero}
-						importHero={importHero}
-						viewHero={viewHero}
-					/>
-				);
-			case Page.HeroView:
-				return (
-					<HeroPage
-						hero={selectedHero as Hero}
-						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-						options={options}
-						setOptions={persistOptions}
-						goHome={showWelcome}
-						showAbout={showAbout}
-						closeHero={closeSelectedHero}
-						editHero={editSelectedHero}
-						exportHero={exportSelectedHero}
-						deleteHero={deleteSelectedHero}
-						onSelectAncestry={onSelectAncestry}
-						onSelectCulture={onSelectCulture}
-						onSelectCareer={onSelectCareer}
-						onSelectClass={onSelectClass}
-						onSelectComplication={onSelectComplication}
-						onSelectDomain={onSelectDomain}
-						onSelectKit={onSelectKit}
-						onSelectCharacteristic={onSelectCharacteristic}
-						onSelectAbility={onSelectAbility}
-						onShowHeroState={onShowHeroState}
-						onShowRules={onShowRules}
-					/>
-				);
-			case Page.HeroEdit:
-				return (
-					<HeroEditPage
-						hero={selectedHero as Hero}
-						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-						goHome={showWelcome}
-						showAbout={showAbout}
-						saveChanges={saveEditSelectedHero}
-						cancelChanges={cancelEditSelectedHero}
-					/>
-				);
-			case Page.LibraryList:
-				return (
-					<LibraryListPage
-						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-						hiddenSourcebookIDs={hiddenSourcebookIDs}
-						goHome={showWelcome}
-						showAbout={showAbout}
-						showSourcebooks={showSourcebooks}
-						viewAncestry={onSelectAncestry}
-						viewCulture={onSelectCulture}
-						viewCareer={onSelectCareer}
-						viewClass={onSelectClass}
-						viewComplication={onSelectComplication}
-						viewDomain={onSelectDomain}
-						viewKit={onSelectKit}
-						viewPerk={onSelectPerk}
-						viewTitle={onSelectTitle}
-						viewItem={onSelectItem}
-						viewMonsterGroup={onSelectMonsterGroup}
-						onCreateHomebrew={createHomebrewElement}
-						onImportHomebrew={importHomebrewElement}
-					/>
-				);
-			case Page.LibraryEdit:
-				return (
-					<LibraryEditPage
-						element={selectedElement as Ancestry | Culture | Career | HeroClass | Complication | Domain | Kit | Perk | Item | MonsterGroup}
-						elementType={selectedElementType}
-						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-						goHome={showWelcome}
-						showAbout={showAbout}
-						saveChanges={saveEditSelectedElement}
-						cancelChanges={cancelEditSelectedElement}
-					/>
-				);
-			case Page.EncounterList:
-				return (
-					<EncounterListPage
-						playbook={playbook}
-						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-						goHome={showWelcome}
-						showAbout={showAbout}
-						viewEncounter={onSelectEncounter}
-						onCreateEncounter={() => createEncounter(null)}
-						onImportEncounter={importEncounter}
-					/>
-				);
-			case Page.EncounterEdit:
-				return (
-					<EncounterEditPage
-						encounter={selectedEncounter as Encounter}
-						playbook={playbook}
-						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-						goHome={showWelcome}
-						showAbout={showAbout}
-						showMonster={onSelectMonster}
-						saveChanges={saveEditSelectedEncounter}
-						cancelChanges={cancelEditSelectedEncounter}
-					/>
-				);
-		}
-	};
-
-	return (
-		<div className='main'>
-			<div className='main-content'>
-				{getContent()}
-			</div>
-			<div className='main-footer'>
-				<div className='main-footer-section'>
-					<img className='ds-logo' src={pbds} />
-					FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC.
-					DRAW STEEL © 2024 MCDM Productions, LLC.
-				</div>
-			</div>
-			<Drawer open={drawer !== null} onClose={() => setDrawer(null)} closeIcon={null} width='500px'>
-				{drawer}
-			</Drawer>
-		</div>
+				} />
+				<Route path='hero'>
+					<Route path='list' element={
+						<HeroListPage
+							heroes={heroes}
+							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+							goHome={showWelcome}
+							showAbout={showAbout}
+							addHero={addHero}
+							importHero={importHero}
+							viewHero={viewHero}
+						/>
+					} />
+					<Route path='view' element={
+						<HeroPage
+							hero={selectedHero as Hero}
+							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+							options={options}
+							setOptions={persistOptions}
+							goHome={showWelcome}
+							showAbout={showAbout}
+							closeHero={closeSelectedHero}
+							editHero={editSelectedHero}
+							exportHero={exportSelectedHero}
+							deleteHero={deleteSelectedHero}
+							onSelectAncestry={onSelectAncestry}
+							onSelectCulture={onSelectCulture}
+							onSelectCareer={onSelectCareer}
+							onSelectClass={onSelectClass}
+							onSelectComplication={onSelectComplication}
+							onSelectDomain={onSelectDomain}
+							onSelectKit={onSelectKit}
+							onSelectCharacteristic={onSelectCharacteristic}
+							onSelectAbility={onSelectAbility}
+							onShowHeroState={onShowHeroState}
+							onShowRules={onShowRules}
+						/>
+					} />
+					<Route path='edit' element={
+						<HeroEditPage
+							hero={selectedHero as Hero}
+							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+							goHome={showWelcome}
+							showAbout={showAbout}
+							saveChanges={saveEditSelectedHero}
+							cancelChanges={cancelEditSelectedHero}
+						/>
+					} />
+				</Route>
+				<Route path='library'>
+					<Route path='list' element={
+						<LibraryListPage
+							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+							hiddenSourcebookIDs={hiddenSourcebookIDs}
+							goHome={showWelcome}
+							showAbout={showAbout}
+							showSourcebooks={showSourcebooks}
+							viewAncestry={onSelectAncestry}
+							viewCulture={onSelectCulture}
+							viewCareer={onSelectCareer}
+							viewClass={onSelectClass}
+							viewComplication={onSelectComplication}
+							viewDomain={onSelectDomain}
+							viewKit={onSelectKit}
+							viewPerk={onSelectPerk}
+							viewTitle={onSelectTitle}
+							viewItem={onSelectItem}
+							viewMonsterGroup={onSelectMonsterGroup}
+							onCreateHomebrew={createHomebrewElement}
+							onImportHomebrew={importHomebrewElement}
+						/>
+					} />
+					<Route path='edit' element={
+						<LibraryEditPage
+							element={selectedElement as Ancestry | Culture | Career | HeroClass | Complication | Domain | Kit | Perk | Item | MonsterGroup}
+							elementType={selectedElementType}
+							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+							goHome={showWelcome}
+							showAbout={showAbout}
+							saveChanges={saveEditSelectedElement}
+							cancelChanges={cancelEditSelectedElement}
+						/>
+					} />
+				</Route>
+				<Route path='encounter'>
+					<Route path='list' element={
+						<EncounterListPage
+							playbook={playbook}
+							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+							goHome={showWelcome}
+							showAbout={showAbout}
+							viewEncounter={onSelectEncounter}
+							onCreateEncounter={() => createEncounter(null)}
+							onImportEncounter={importEncounter}
+						/>
+					} />
+					<Route path='edit' element={
+						<EncounterEditPage
+							encounter={selectedEncounter as Encounter}
+							playbook={playbook}
+							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+							goHome={showWelcome}
+							showAbout={showAbout}
+							showMonster={onSelectMonster}
+							saveChanges={saveEditSelectedEncounter}
+							cancelChanges={cancelEditSelectedEncounter}
+						/>
+					} />
+				</Route>
+			</Route>
+		</Routes>
 	);
 };

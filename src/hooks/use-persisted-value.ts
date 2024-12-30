@@ -1,55 +1,45 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import localforage from 'localforage';
 
-const PERSISTED_UPDATE_EVENT_TYPE = 'forgesteel-persisted-update';
-
-export const usePersistedValue = <T>(key: string, initialValue: T): [T, (newValue: T) => Promise<void>] => {
-	const [ value, setValue ] = useState<T>(initialValue);
-
+const useBroadcastChannel = (key: string, listener: (event: MessageEvent) => void) => {
+	const channel = useMemo(() => new BroadcastChannel(key), [ key ]);
 	useEffect(
 		() => {
-			localforage.getItem<T>(key)
-				.then(persistedValue => {
-					setValue(persistedValue ?? initialValue);
-				});
-
-			function loadValue() {
-				localforage.getItem<T>(key)
-					.then(persistedValue => {
-						setValue(persistedValue ?? initialValue);
-					});
-			}
-			function handleStorageChange(event: StorageEvent) {
-				if (event.key !== key) {
-					return;
-				}
-				loadValue();
-			}
-			function handleCustomChange(event: Event) {
-				if ((event as CustomEvent<{ key: string }>).detail?.key !== key) {
-					return;
-				}
-				loadValue();
-			}
-			addEventListener('storage', handleStorageChange);
-			addEventListener(PERSISTED_UPDATE_EVENT_TYPE, handleCustomChange);
-			// Unregister event listener on unmount
+			channel.addEventListener('message', listener);
 			return () => {
-				removeEventListener('storage', handleStorageChange);
-				removeEventListener(PERSISTED_UPDATE_EVENT_TYPE, handleCustomChange);
+				channel.removeEventListener('message', listener);
 			};
 		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[ ]
+		[ channel, listener ]
 	);
 
-	const persistValue = useCallback(async (newValue: T) => {
-		await localforage.setItem(key, newValue);
-		localStorage.setItem(key, `${new Date().getTime()}`);
+	const postMessage = () => {
+		channel.postMessage(undefined);
+	};
 
-		const persistedUpdateEvent = new CustomEvent(PERSISTED_UPDATE_EVENT_TYPE, { detail: { key } });
-		dispatchEvent(persistedUpdateEvent);
-	}, [ key ]);
+	return { postMessage };
+};
+
+export const usePersistedValue = <T>(key: string, initialValue: T): [T, (newValue: T) => Promise<void>] => {
+	const [ value, setValue ] = useState(initialValue);
+	const [ defaultValue ] = useState(initialValue);
+	const loadValue = useCallback(() => {
+		localforage.getItem<T>(key)
+			.then(persistedValue => {
+				setValue(persistedValue ?? defaultValue);
+			});
+	}, [ key, defaultValue ]);
+
+	useEffect(() => loadValue(), [ loadValue ]);
+
+	const { postMessage } = useBroadcastChannel(key, loadValue);
+
+	const persistValue = async (newValue: T) => {
+		await localforage.setItem(key, newValue);
+
+		loadValue();
+		postMessage();
+	};
 
 	return [ value, persistValue ];
 };

@@ -29,7 +29,6 @@ import { LibraryEditPage } from '../pages/library/library-edit/library-edit';
 import { LibraryListPage } from '../pages/library/library-list/library-list';
 import { MainLayout } from './main-layout';
 import { MonsterGroup } from '../../models/monster';
-import { Options } from '../../models/options';
 import { Perk } from '../../models/perk';
 import { PerkModal } from '../modals/perk/perk-modal';
 import { Playbook } from '../../models/playbook';
@@ -42,7 +41,6 @@ import { TitleModal } from '../modals/title/title-modal';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import { getSourcebookKey } from '../../utils/get-sourcebook-key';
-import localforage from 'localforage';
 import { useModals } from '../../hooks/use-modals';
 import { useNavigation } from '../../hooks/use-navigation';
 import { usePersistedHeroes } from '../../hooks/use-persisted-heroes';
@@ -51,29 +49,14 @@ import { usePersistedSourcebooks } from '../../hooks/use-persisted-sourcebooks';
 
 import './main.scss';
 
-interface Props {
-	options: Options;
-}
-
-export const Main = (props: Props) => {
+export const Main = () => {
 	const location = useLocation();
 	const navigation = useNavigation();
 	const modals = useModals();
 	const { heroes, persistHero } = usePersistedHeroes();
 	const { sourcebooks, homebrewSourcebooks, persistHomebrewSourcebooks, deleteSourcebookElement } = usePersistedSourcebooks();
 	const { playbook, persistPlaybook } = usePersistedPlaybook();
-	const [ options, setOptions ] = useState<Options>(props.options);
 	const [ _, setDrawer ] = useState<ReactNode>(null);
-
-	//#region Persistence
-
-	const persistOptions = (options: Options) => {
-		localforage
-			.setItem<Options>('forgesteel-options', options)
-			.then(setOptions);
-	};
-
-	//#endregion
 
 	//#region Heroes
 
@@ -769,8 +752,6 @@ export const Main = (props: Props) => {
 						path='view/:heroId'
 						element={
 							<HeroPage
-								options={options}
-								setOptions={persistOptions}
 								goHome={navigation.goToWelcome}
 								closeHero={closeHero}
 								editHero={editHero}

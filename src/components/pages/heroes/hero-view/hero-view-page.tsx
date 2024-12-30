@@ -18,12 +18,11 @@ import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 import { usePersistedHero } from '../../../../hooks/use-persisted-hero';
 import { usePersistedHeroes } from '../../../../hooks/use-persisted-heroes';
+import { usePersistedOptions } from '../../../../hooks/use-persisted-options';
 
 import './hero-view-page.scss';
 
 interface Props {
-	options: Options;
-	setOptions: (options: Options) => void;
 	goHome: () => void;
 	closeHero: () => void;
 	editHero: (heroId: string) => void;
@@ -40,30 +39,31 @@ export const HeroPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { heroId } = useParams<{ heroId: string }>();
 	const { exportHero, deleteHero } = usePersistedHeroes();
+	const { options, persistOptions } = usePersistedOptions();
 	const hero = usePersistedHero(heroId!);
 	try {
-		const setShowSkillsInGroups = (value: boolean) => {
-			const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const setShowSkillsInGroups = async (value: boolean) => {
+			const copy = JSON.parse(JSON.stringify(options)) as Options;
 			copy.showSkillsInGroups = value;
-			props.setOptions(copy);
+			await persistOptions(copy);
 		};
 
-		const setShowFreeStrikes = (value: boolean) => {
-			const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const setShowFreeStrikes = async (value: boolean) => {
+			const copy = JSON.parse(JSON.stringify(options)) as Options;
 			copy.showFreeStrikes = value;
-			props.setOptions(copy);
+			await persistOptions(copy);
 		};
 
-		const setShowStandardAbilities = (value: boolean) => {
-			const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const setShowStandardAbilities = async (value: boolean) => {
+			const copy = JSON.parse(JSON.stringify(options)) as Options;
 			copy.showStandardAbilities = value;
-			props.setOptions(copy);
+			await persistOptions(copy);
 		};
 
-		const setDimUnavailableAbilities = (value: boolean) => {
-			const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const setDimUnavailableAbilities = async (value: boolean) => {
+			const copy = JSON.parse(JSON.stringify(options)) as Options;
 			copy.dimUnavailableAbilities = value;
-			props.setOptions(copy);
+			await persistOptions(copy);
 		};
 
 		return (
@@ -83,10 +83,10 @@ export const HeroPage = (props: Props) => {
 						placement='bottom'
 						content={(
 							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Toggle label='Show skills in groups' value={props.options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
-								<Toggle label='Show free strikes' value={props.options.showFreeStrikes} onChange={setShowFreeStrikes} />
-								<Toggle label='Show standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
-								<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
+								<Toggle label='Show skills in groups' value={options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
+								<Toggle label='Show free strikes' value={options.showFreeStrikes} onChange={setShowFreeStrikes} />
+								<Toggle label='Show standard abilities' value={options.showStandardAbilities} onChange={setShowStandardAbilities} />
+								<Toggle label='Dim unavailable abilities' value={options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
 								<Divider />
 								<DropdownButton
 									label='Export'
@@ -122,7 +122,6 @@ export const HeroPage = (props: Props) => {
 						hero
 							? <HeroPanel
 								hero={hero}
-								options={props.options}
 								mode={PanelMode.Full}
 								onSelectCulture={props.onSelectCulture}
 								onSelectCareer={props.onSelectCareer}

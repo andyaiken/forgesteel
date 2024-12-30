@@ -21,19 +21,18 @@ import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { Kit } from '../../../../models/kit';
-import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Skill } from '../../../../models/skill';
 import { SkillList } from '../../../../enums/skill-list';
 import { useModals } from '../../../../hooks/use-modals';
+import { usePersistedOptions } from '../../../../hooks/use-persisted-options';
 import { usePersistedSourcebooks } from '../../../../hooks/use-persisted-sourcebooks';
 
 import './hero-panel.scss';
 
 interface Props {
 	hero: Hero;
-	options?: Options;
 	mode?: PanelMode;
 	onSelectCulture?: (culture: Culture) => void;
 	onSelectCareer?: (career: Career) => void;
@@ -46,6 +45,7 @@ interface Props {
 export const HeroPanel = (props: Props) => {
 	const modals = useModals();
 	const { sourcebooks } = usePersistedSourcebooks();
+	const { options } = usePersistedOptions();
 
 	const getLeftColumn = () => {
 		const onSelectAncestry = () => {
@@ -235,7 +235,7 @@ export const HeroPanel = (props: Props) => {
 					}
 				</div>
 				{
-					(props.options?.showSkillsInGroups || false) ?
+					(options?.showSkillsInGroups || false) ?
 						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
 							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, heroSourcebooks).filter(s => s.list === list)))
 						:
@@ -411,7 +411,7 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getAbilitiesSection = (type: AbilityUsage) => {
-		const abilities = HeroLogic.getAbilities(props.hero, true, props.options?.showFreeStrikes || false, props.options?.showStandardAbilities || false)
+		const abilities = HeroLogic.getAbilities(props.hero, true, options?.showFreeStrikes || false, options?.showStandardAbilities || false)
 			.filter(ability => ability.type.usage === type);
 		if (abilities.length === 0) {
 			return null;
@@ -424,7 +424,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						abilities.map(ability => (
 							<SelectablePanel key={ability.id} style={{ gridColumn: `span ${AbilityLogic.panelWidth(ability)}` }}>
-								<AbilityPanel ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} onRoll={() => modals.showHeroAbility(props.hero.id, ability.id)} />
+								<AbilityPanel ability={ability} hero={props.hero} mode={PanelMode.Full} onRoll={() => modals.showHeroAbility(props.hero.id, ability.id)} />
 							</SelectablePanel>
 						))
 					}

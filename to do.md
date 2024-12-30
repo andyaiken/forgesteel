@@ -6,9 +6,6 @@
 * Update classes
   * Conduit
   * Elementalist
-  * Fury
-  * Shadow
-  * Tactician
 * Add new classes
   * Censor
   * Null
@@ -19,8 +16,10 @@
 * Add items
 * Add / update monsters
 
-**Miscallaneous changes**
+**Miscellaneous changes**
 * Some classes have only 1 primary characteristic - this means choosing their characteristic arrays will be a lot more tricky
+* Show potency values in power roll panel
+* Automatically add characteristics to damage
 * Add new feature type to allow Revenant to choose features from other ancestries
 * Revenants should have either 2 or 3 ancestry points depending on size
 

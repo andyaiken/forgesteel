@@ -31,7 +31,7 @@ export const ClassPanel = (props: Props) => {
 				<Field label='Primary Characteristics' value={props.heroClass.primaryCharacteristics.join(', ')} />
 				{
 					props.mode === PanelMode.Full ?
-						props.heroClass.featuresByLevel.map(lvl => (
+						props.heroClass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
 							<Space key={lvl.level} direction='vertical'>
 								<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
 								{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}

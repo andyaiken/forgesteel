@@ -6,7 +6,6 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Playbook } from '../../../../models/playbook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Utils } from '../../../../utils/utils';
 import { usePersistedSourcebooks } from '../../../../hooks/use-persisted-sourcebooks';
@@ -15,7 +14,6 @@ import './encounter-panel.scss';
 
 interface Props {
 	encounter: Encounter;
-	playbook: Playbook;
 	mode?: PanelMode;
 }
 

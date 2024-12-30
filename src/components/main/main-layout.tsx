@@ -15,7 +15,6 @@ import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import type { MonsterGroup } from '../../models/monster';
 import { MonsterGroupModal } from '../modals/monster-group/monster-group-modal';
 import { MonsterModal } from '../modals/monster/monster-modal';
-import type { Playbook } from '../../models/playbook';
 import { RulesModal } from '../modals/rules/rules-modal';
 import type { Sourcebook } from '../../models/sourcebook';
 import { SourcebookLogic } from '../../logic/sourcebook-logic';
@@ -24,17 +23,16 @@ import { Utils } from '../../utils/utils';
 import pbds from '../../assets/powered-by-draw-steel.png';
 import { useNavigation } from '../../hooks/use-navigation';
 import { usePersistedHeroes } from '../../hooks/use-persisted-heroes';
+import { usePersistedPlaybook } from '../../hooks/use-persisted-playbook';
 import { usePersistedSourcebooks } from '../../hooks/use-persisted-sourcebooks';
 
 interface Props {
-	playbook: Playbook;
 	onAncestryCreate: (ancestry: Ancestry, sourcebook: Sourcebook | null) => void;
 	onEncounterDelete: (encounterId: string) => Promise<void> | void;
 	onHeroChange: (hero: Hero) => Promise<void> | void;
 	onMonsterGroupCreate: (monsterGroup: MonsterGroup, sourcebook: Sourcebook | null) => void;
 }
 export const MainLayout = ({
-	playbook,
 	onAncestryCreate,
 	onEncounterDelete,
 	onHeroChange,
@@ -46,6 +44,7 @@ export const MainLayout = ({
 
 	const { heroes } = usePersistedHeroes();
 	const { sourcebooks, deleteSourcebookElement } = usePersistedSourcebooks();
+	const { playbook } = usePersistedPlaybook();
 
 	const getAncestryModal = useCallback(
 		(segments: string[]) => {
@@ -75,7 +74,6 @@ export const MainLayout = ({
 			const encounter = playbook.encounters.find(e => e.id === encounterId)!;
 			return <EncounterModal
 				encounter={encounter}
-				playbook={playbook}
 				export={format => Utils.export([ encounter.id ], encounter.name || 'Encounter', encounter, 'encounter', format)}
 				edit={() => navigation.goToEncounterEdit(encounterId)}
 				delete={() => onEncounterDelete(encounterId)}
@@ -123,11 +121,10 @@ export const MainLayout = ({
 			return <MonsterModal
 				monster={monster}
 				monsterGroup={monsterGroup}
-				playbook={playbook}
 				export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
 			/>;
 		},
-		[ sourcebooks, playbook ]
+		[ sourcebooks ]
 	);
 
 	const getMonsterGroupModal = useCallback(
@@ -144,14 +141,13 @@ export const MainLayout = ({
 				monsterGroup={monsterGroup}
 				homebrewSourcebooks={homebrewSourcebooks}
 				isHomebrew={sourcebook.isHomebrew}
-				playbook={playbook}
 				createHomebrew={sourcebook => onMonsterGroupCreate(monsterGroup, sourcebook)}
 				export={format => Utils.export([ monsterGroup.id ], monsterGroup.name || 'Monster Group', monsterGroup, 'monster-group', format)}
 				edit={() => navigation.goToLibraryEdit(sourcebook.id, 'monster-group', monsterGroup.id)}
 				delete={() => { deleteSourcebookElement('monster-group', monsterGroup.id); navigate({ hash: '' }); }}
 			/>;
 		},
-		[ sourcebooks, playbook, navigate, navigation, onMonsterGroupCreate, deleteSourcebookElement ]
+		[ sourcebooks, navigate, navigation, onMonsterGroupCreate, deleteSourcebookElement ]
 	);
 
 	function getHeroAbilityModal(hero: Hero, segments: string[]) {

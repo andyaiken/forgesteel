@@ -46,12 +46,12 @@ import localforage from 'localforage';
 import { useModals } from '../../hooks/use-modals';
 import { useNavigation } from '../../hooks/use-navigation';
 import { usePersistedHeroes } from '../../hooks/use-persisted-heroes';
+import { usePersistedPlaybook } from '../../hooks/use-persisted-playbook';
 import { usePersistedSourcebooks } from '../../hooks/use-persisted-sourcebooks';
 
 import './main.scss';
 
 interface Props {
-	playbook: Playbook;
 	options: Options;
 }
 
@@ -61,17 +61,11 @@ export const Main = (props: Props) => {
 	const modals = useModals();
 	const { heroes, persistHero } = usePersistedHeroes();
 	const { sourcebooks, homebrewSourcebooks, persistHomebrewSourcebooks, deleteSourcebookElement } = usePersistedSourcebooks();
-	const [ playbook, setPlaybook ] = useState<Playbook>(props.playbook);
+	const { playbook, persistPlaybook } = usePersistedPlaybook();
 	const [ options, setOptions ] = useState<Options>(props.options);
 	const [ _, setDrawer ] = useState<ReactNode>(null);
 
 	//#region Persistence
-
-	const persistPlaybook = async (playbook: Playbook) => {
-		await localforage
-			.setItem<Playbook>('forgesteel-playbook', playbook)
-			.then(setPlaybook);
-	};
 
 	const persistOptions = (options: Options) => {
 		localforage
@@ -741,7 +735,6 @@ export const Main = (props: Props) => {
 				path='/'
 				element={
 					<MainLayout
-						playbook={playbook}
 						onAncestryCreate={createAncestry}
 						onHeroChange={persistHero}
 						onEncounterDelete={deleteEncounter}
@@ -852,7 +845,6 @@ export const Main = (props: Props) => {
 						path='list'
 						element={
 							<EncounterListPage
-								playbook={playbook}
 								goHome={navigation.goToWelcome}
 								onCreateEncounter={() => createEncounter(null)}
 								onImportEncounter={importEncounter}
@@ -863,7 +855,6 @@ export const Main = (props: Props) => {
 						path='edit/:encounterId'
 						element={
 							<EncounterEditPage
-								playbook={playbook}
 								goHome={navigation.goToWelcome}
 								saveChanges={saveEditEncounter}
 								cancelChanges={cancelEditEncounter}

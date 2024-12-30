@@ -4,13 +4,11 @@ import { Encounter } from '../../../models/encounter';
 import { EncounterPanel } from '../../panels/elements/encounter-panel/encounter-panel';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';
-import { Playbook } from '../../../models/playbook';
 
 import './encounter-modal.scss';
 
 interface Props {
 	encounter: Encounter;
-	playbook: Playbook;
 	export: (format: 'image' | 'pdf' | 'json') => void;
 	edit: () => void;
 	delete: () => void;
@@ -43,7 +41,7 @@ export const EncounterModal = (props: Props) => {
 				}
 				content={
 					<div className='encounter-modal'>
-						<EncounterPanel encounter={props.encounter} playbook={props.playbook} mode={PanelMode.Full} />
+						<EncounterPanel encounter={props.encounter} mode={PanelMode.Full} />
 					</div>
 				}
 			/>

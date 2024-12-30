@@ -3,16 +3,15 @@ import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } fr
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
-import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Utils } from '../../../../utils/utils';
 import { useModals } from '../../../../hooks/use-modals';
+import { usePersistedPlaybook } from '../../../../hooks/use-persisted-playbook';
 import { useState } from 'react';
 
 import './encounter-list.scss';
 
 interface Props {
-	playbook: Playbook;
 	goHome: () => void;
 	onCreateEncounter: () => void;
 	onImportEncounter: (encounter: Encounter) => void;
@@ -20,10 +19,11 @@ interface Props {
 
 export const EncounterListPage = (props: Props) => {
 	const modals = useModals();
+	const { playbook } = usePersistedPlaybook();
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
 	const getEncounters = () => {
-		return props.playbook.encounters
+		return playbook.encounters
 			.filter(item => Utils.textMatches([
 				item.name
 			], searchTerm));
@@ -45,7 +45,7 @@ export const EncounterListPage = (props: Props) => {
 				{
 					list.map(enc => (
 						<SelectablePanel key={enc.id} onSelect={() => modals.showEncounter(enc.id)}>
-							<EncounterPanel encounter={enc} playbook={props.playbook} />
+							<EncounterPanel encounter={enc} />
 						</SelectablePanel>
 					))
 				}

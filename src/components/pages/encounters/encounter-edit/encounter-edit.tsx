@@ -22,17 +22,16 @@ import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { useModals } from '../../../../hooks/use-modals';
 import { useParams } from 'react-router';
+import { usePersistedPlaybook } from '../../../../hooks/use-persisted-playbook';
 import { usePersistedSourcebooks } from '../../../../hooks/use-persisted-sourcebooks';
 
 import './encounter-edit.scss';
 
 interface Props {
-	playbook: Playbook;
 	goHome: () => void;
 	saveChanges: (encounter: Encounter) => void;
 	cancelChanges: () => void;
@@ -40,15 +39,26 @@ interface Props {
 
 export const EncounterEditPage = (props: Props) => {
 	const modals = useModals();
+	const { playbook } = usePersistedPlaybook();
 	const { sourcebooks } = usePersistedSourcebooks();
 	const { encounterId } = useParams<{ encounterId: string }>();
-	const originalEncounter = useMemo(() => props.playbook.encounters.find(e => e.id === encounterId)!, [ encounterId, props.playbook ]);
-	const [ encounter, setEncounter ] = useState(JSON.parse(JSON.stringify(originalEncounter)) as Encounter);
+	const originalEncounter = useMemo(() => playbook.encounters.find(e => e.id === encounterId)!, [ encounterId, playbook ]);
+	const [ previousEncounter, setPreviousEncounter ] = useState(originalEncounter);
+	const [ encounter, setEncounter ] = useState(originalEncounter);
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ heroCount, setHeroCount ] = useState<number>(4);
 	const [ heroLevel, setHeroLevel ] = useState<number>(1);
 	const [ heroVictories, setHeroVictories ] = useState<number>(0);
+
+	if (originalEncounter !== previousEncounter) {
+		setEncounter(originalEncounter);
+		setPreviousEncounter(originalEncounter);
+	}
+
+	if (!encounter) {
+		return null;
+	}
 
 	//#region Edit
 
@@ -194,7 +204,7 @@ export const EncounterEditPage = (props: Props) => {
 		return (
 			<div style={{ margin: '0 10px' }}>
 				<SelectablePanel>
-					<EncounterPanel encounter={encounter} playbook={props.playbook} mode={PanelMode.Full} />
+					<EncounterPanel encounter={encounter} mode={PanelMode.Full} />
 				</SelectablePanel>
 			</div>
 		);

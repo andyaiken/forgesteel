@@ -1,8 +1,6 @@
-import { FactoryLogic } from './logic/factory-logic.ts';
 import { HashRouter } from 'react-router';
 import { Main } from './components/main/main.tsx';
 import { Options } from './models/options.ts';
-import { Playbook } from './models/playbook.ts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import localforage from 'localforage';
@@ -10,15 +8,10 @@ import localforage from 'localforage';
 import './index.scss';
 
 const promises = [
-	localforage.getItem<Playbook>('forgesteel-playbook'),
 	localforage.getItem<Options>('forgesteel-options')
 ] as const;
 
-Promise.all(promises).then(([ playbook, options ]) => {
-	if (!playbook) {
-		playbook = FactoryLogic.createPlaybook();
-	}
-
+Promise.all(promises).then(([ options ]) => {
 	if (!options) {
 		options = {
 			showSkillsInGroups: false,
@@ -32,7 +25,6 @@ Promise.all(promises).then(([ playbook, options ]) => {
 		<StrictMode>
 			<HashRouter>
 				<Main
-					playbook={playbook}
 					options={options}
 				/>
 			</HashRouter>

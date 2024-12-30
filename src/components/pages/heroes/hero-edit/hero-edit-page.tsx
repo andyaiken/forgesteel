@@ -62,10 +62,20 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 		navigation.goToHeroEdit(heroId!, tabKey);
 	};
 	const [ page, setPage ] = [ tab, setTabKey ];
-	const originalHero = useMemo(() => heroes.find(h => h.id === heroId)!, [ heroId, heroes ]);
-	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(originalHero)) as Hero);
-	const heroSourcebooks = useMemo(() => sourcebooks.filter(cs => hero.settingIDs.includes(cs.id)), [ sourcebooks, hero ]);
+	const originalHero = useMemo(() => heroes.find(h => h.id === heroId), [ heroId, heroes ]);
+	const [ previousHero, setPreviousHero ] = useState(originalHero);
+	const [ hero, setHero ] = useState(originalHero);
+	const heroSourcebooks = useMemo(() => sourcebooks.filter(cs => hero?.settingIDs.includes(cs.id)), [ sourcebooks, hero ]);
 	const [ dirty, setDirty ] = useState<boolean>(false);
+
+	if (originalHero !== previousHero) {
+		setHero(originalHero);
+		setPreviousHero(originalHero);
+	}
+
+	if (!hero) {
+		return null;
+	}
 
 	try {
 		const getPageState = (page: HeroTab) => {

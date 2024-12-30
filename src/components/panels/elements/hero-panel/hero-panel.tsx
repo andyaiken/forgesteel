@@ -2,12 +2,9 @@ import { Col, Row, Statistic } from 'antd';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { AbilityUsage } from '../../../../enums/ability-usage';
-import { Career } from '../../../../models/career';
 import { Characteristic } from '../../../../enums/characteristic';
-import { Complication } from '../../../../models/complication';
 import { ConditionEndType } from '../../../../enums/condition-type';
 import { ConditionLogic } from '../../../../logic/condition-logic';
-import { Culture } from '../../../../models/culture';
 import { CultureData } from '../../../../data/culture-data';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { Domain } from '../../../../models/domain';
@@ -18,7 +15,6 @@ import { Field } from '../../../controls/field/field';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
-import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { Kit } from '../../../../models/kit';
 import { PanelMode } from '../../../../enums/panel-mode';
@@ -34,10 +30,6 @@ import './hero-panel.scss';
 interface Props {
 	hero: Hero;
 	mode?: PanelMode;
-	onSelectCulture?: (culture: Culture) => void;
-	onSelectCareer?: (career: Career) => void;
-	onSelectClass?: (heroClass: HeroClass) => void;
-	onSelectComplication?: (complication: Complication) => void;
 	onSelectDomain?: (domain: Domain) => void;
 	onSelectKit?: (kit: Kit) => void;
 }
@@ -55,26 +47,26 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		const onSelectCulture = () => {
-			if (props.hero.culture && props.onSelectCulture) {
-				props.onSelectCulture(props.hero.culture);
+			if (props.hero.culture) {
+				modals.showCulture(props.hero.culture.id);
 			}
 		};
 
 		const onSelectCareer = () => {
-			if (props.hero.career && props.onSelectCareer) {
-				props.onSelectCareer(props.hero.career);
+			if (props.hero.career) {
+				modals.showCareer(props.hero.career.id);
 			}
 		};
 
 		const onSelectClass = () => {
-			if (props.hero.class && props.onSelectClass) {
-				props.onSelectClass(props.hero.class);
+			if (props.hero.class) {
+				modals.showClass(props.hero.class.id);
 			}
 		};
 
 		const onSelectComplication = () => {
-			if (props.hero.complication && props.onSelectComplication) {
-				props.onSelectComplication(props.hero.complication);
+			if (props.hero.complication) {
+				modals.showComplication(props.hero.complication.id);
 			}
 		};
 

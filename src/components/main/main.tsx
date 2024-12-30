@@ -2,13 +2,9 @@ import { Navigate, Route, Routes, useLocation } from 'react-router';
 import { ReactNode, useState } from 'react';
 import { Ancestry } from '../../models/ancestry';
 import { Career } from '../../models/career';
-import { CareerModal } from '../modals/career/career-modal';
-import { ClassModal } from '../modals/class/class-modal';
 import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
-import { ComplicationModal } from '../modals/complication/complication-modal';
 import { Culture } from '../../models/culture';
-import { CultureModal } from '../modals/culture/culture-modal';
 import { Domain } from '../../models/domain';
 import { DomainModal } from '../modals/domain/domain-modal';
 import { Element } from '../../models/element';
@@ -192,9 +188,9 @@ export const Main = () => {
 		sourcebook.cultures.push(culture);
 		await persistHomebrewSourcebooks(sourcebooks);
 		if (location.hash) {
-			onSelectCulture(culture);
+			modals.showCulture(culture.id);
 		} else {
-			editCulture(culture, sourcebook);
+			navigation.goToLibraryEdit(sourcebook.id, 'culture', culture.id);
 		}
 	};
 
@@ -219,9 +215,9 @@ export const Main = () => {
 		sourcebook.careers.push(career);
 		await persistHomebrewSourcebooks(sourcebooks);
 		if (location.hash) {
-			onSelectCareer(career);
+			modals.showCareer(career.id);
 		} else {
-			editCareer(career, sourcebook);
+			navigation.goToLibraryEdit(sourcebook.id, 'career', career.id);
 		}
 	};
 
@@ -246,9 +242,9 @@ export const Main = () => {
 		sourcebook.classes.push(heroClass);
 		await persistHomebrewSourcebooks(sourcebooks);
 		if (location.hash) {
-			onSelectClass(heroClass);
+			modals.showClass(heroClass.id);
 		} else {
-			editClass(heroClass, sourcebook);
+			navigation.goToLibraryEdit(sourcebook.id, 'class', heroClass.id);
 		}
 	};
 
@@ -273,9 +269,9 @@ export const Main = () => {
 		sourcebook.complications.push(complication);
 		persistHomebrewSourcebooks(sourcebooks);
 		if (location.hash) {
-			onSelectComplication(complication);
+			modals.showComplication(complication.id);
 		} else {
-			editComplication(complication, sourcebook);
+			navigation.goToLibraryEdit(sourcebook.id, 'complication', complication.id);
 		}
 	};
 
@@ -460,22 +456,6 @@ export const Main = () => {
 		navigation.goToLibraryEdit(sourcebook.id, kind, element.id);
 	}
 
-	const editCulture = (culture: Culture, sourcebook: Sourcebook) => {
-		editHomebrewElement('culture', culture, sourcebook);
-	};
-
-	const editCareer = (career: Career, sourcebook: Sourcebook) => {
-		editHomebrewElement('career', career, sourcebook);
-	};
-
-	const editClass = (heroClass: HeroClass, sourcebook: Sourcebook) => {
-		editHomebrewElement('class', heroClass, sourcebook);
-	};
-
-	const editComplication = (complication: Complication, sourcebook: Sourcebook) => {
-		editHomebrewElement('complication', complication, sourcebook);
-	};
-
 	const editDomain = (domain: Domain, sourcebook: Sourcebook) => {
 		editHomebrewElement('domain', domain, sourcebook);
 	};
@@ -566,70 +546,6 @@ export const Main = () => {
 
 	//#region Modals
 
-	const onSelectCulture = (culture: Culture) => {
-		const container = sourcebooks.find(cs => cs.cultures.find(c => c.id === culture.id))!;
-
-		setDrawer(
-			<CultureModal
-				culture={culture}
-				homebrewSourcebooks={homebrewSourcebooks}
-				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.cultures).find(c => c.id === culture.id)}
-				createHomebrew={sourcebook => createCulture(culture, sourcebook)}
-				export={format => Utils.export([ culture.id ], culture.name || 'Culture', culture, 'culture', format)}
-				edit={() => editCulture(culture, container)}
-				delete={() => deleteSourcebookElement('culture', culture.id)}
-			/>
-		);
-	};
-
-	const onSelectCareer = (career: Career) => {
-		const container = sourcebooks.find(cs => cs.careers.find(c => c.id === career.id))!;
-
-		setDrawer(
-			<CareerModal
-				career={career}
-				homebrewSourcebooks={homebrewSourcebooks}
-				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.careers).find(c => c.id === career.id)}
-				createHomebrew={sourcebook => createCareer(career, sourcebook)}
-				export={format => Utils.export([ career.id ], career.name || 'Career', career, 'career', format)}
-				edit={() => editCareer(career, container)}
-				delete={() => deleteSourcebookElement('career', career.id)}
-			/>
-		);
-	};
-
-	const onSelectClass = (heroClass: HeroClass) => {
-		const container = sourcebooks.find(cs => cs.classes.find(c => c.id === heroClass.id))!;
-
-		setDrawer(
-			<ClassModal
-				heroClass={heroClass}
-				homebrewSourcebooks={homebrewSourcebooks}
-				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.classes).find(c => c.id === heroClass.id)}
-				createHomebrew={sourcebook => createClass(heroClass, sourcebook)}
-				export={format => Utils.export([ heroClass.id ], heroClass.name || 'Class', heroClass, 'class', format)}
-				edit={() => editClass(heroClass, container)}
-				delete={() => deleteSourcebookElement('class', heroClass.id)}
-			/>
-		);
-	};
-
-	const onSelectComplication = (complication: Complication) => {
-		const container = sourcebooks.find(cs => cs.complications.find(c => c.id === complication.id))!;
-
-		setDrawer(
-			<ComplicationModal
-				complication={complication}
-				homebrewSourcebooks={homebrewSourcebooks}
-				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.complications).find(c => c.id === complication.id)}
-				createHomebrew={sourcebook => createComplication(complication, sourcebook)}
-				export={format => Utils.export([ complication.id ], complication.name || 'Complication', complication, 'complication', format)}
-				edit={() => editComplication(complication, container)}
-				delete={() => deleteSourcebookElement('complication', complication.id)}
-			/>
-		);
-	};
-
 	const onSelectDomain = (domain: Domain) => {
 		const container = sourcebooks.find(cs => cs.domains.find(d => d.id === domain.id))!;
 
@@ -719,6 +635,10 @@ export const Main = () => {
 				element={
 					<MainLayout
 						onAncestryCreate={createAncestry}
+						onCareerChange={createCareer}
+						onClassChange={createClass}
+						onComplicationChange={createComplication}
+						onCultureCreate={createCulture}
 						onHeroChange={persistHero}
 						onEncounterDelete={deleteEncounter}
 						onMonsterGroupCreate={createMonsterGroup}
@@ -755,10 +675,6 @@ export const Main = () => {
 								goHome={navigation.goToWelcome}
 								closeHero={closeHero}
 								editHero={editHero}
-								onSelectCulture={onSelectCulture}
-								onSelectCareer={onSelectCareer}
-								onSelectClass={onSelectClass}
-								onSelectComplication={onSelectComplication}
 								onSelectDomain={onSelectDomain}
 								onSelectKit={onSelectKit}
 							/>
@@ -793,10 +709,6 @@ export const Main = () => {
 						element={
 							<LibraryListPage
 								goHome={navigation.goToWelcome}
-								viewCulture={onSelectCulture}
-								viewCareer={onSelectCareer}
-								viewClass={onSelectClass}
-								viewComplication={onSelectComplication}
 								viewDomain={onSelectDomain}
 								viewKit={onSelectKit}
 								viewPerk={onSelectPerk}

@@ -6,10 +6,18 @@ import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
 import type { Ancestry } from '../../models/ancestry';
 import { AncestryModal } from '../modals/ancestry/ancestry-modal';
+import type { Career } from '../../models/career';
+import { CareerModal } from '../modals/career/career-modal';
 import type { Characteristic } from '../../enums/characteristic';
 import { CharacteristicModal } from '../modals/characteristic/characteristic-modal';
+import { ClassModal } from '../modals/class/class-modal';
+import type { Complication } from '../../models/complication';
+import { ComplicationModal } from '../modals/complication/complication-modal';
+import type { Culture } from '../../models/culture';
+import { CultureModal } from '../modals/culture/culture-modal';
 import { EncounterModal } from '../modals/encounter/encounter-modal';
 import type { Hero } from '../../models/hero';
+import type { HeroClass } from '../../models/class';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import type { MonsterGroup } from '../../models/monster';
@@ -28,12 +36,20 @@ import { usePersistedSourcebooks } from '../../hooks/use-persisted-sourcebooks';
 
 interface Props {
 	onAncestryCreate: (ancestry: Ancestry, sourcebook: Sourcebook | null) => void;
+	onCareerChange: (culture: Career, sourcebook: Sourcebook | null) => void;
+	onClassChange: (heroClass: HeroClass, sourcebook: Sourcebook | null) => void;
+	onComplicationChange: (complication: Complication, sourcebook: Sourcebook | null) => void;
+	onCultureCreate: (culture: Culture, sourcebook: Sourcebook | null) => void;
 	onEncounterDelete: (encounterId: string) => Promise<void> | void;
 	onHeroChange: (hero: Hero) => Promise<void> | void;
 	onMonsterGroupCreate: (monsterGroup: MonsterGroup, sourcebook: Sourcebook | null) => void;
 }
 export const MainLayout = ({
 	onAncestryCreate,
+	onCareerChange,
+	onClassChange,
+	onComplicationChange,
+	onCultureCreate,
 	onEncounterDelete,
 	onHeroChange,
 	onMonsterGroupCreate
@@ -58,7 +74,7 @@ export const MainLayout = ({
 			return <AncestryModal
 				ancestry={ancestry}
 				homebrewSourcebooks={homebrewSourcebooks}
-				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.ancestries).find(a => a.id === ancestry.id)}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.cultures).find(a => a.id === ancestry.id)}
 				createHomebrew={sourcebook => onAncestryCreate(ancestry, sourcebook)}
 				export={format => Utils.export([ ancestry.id ], ancestry.name || 'Ancestry', ancestry, 'ancestry', format)}
 				edit={() => navigation.goToLibraryEdit(sourcebook.id, 'ancestry', ancestryId)}
@@ -66,6 +82,98 @@ export const MainLayout = ({
 			/>;
 		},
 		[ sourcebooks, navigate, navigation, onAncestryCreate, deleteSourcebookElement ]
+	);
+
+	const getCareerModal = useCallback(
+		(segments: string[]) => {
+			const [ careerId ] = segments;
+			const homebrewSourcebooks = sourcebooks.filter(s => s.isHomebrew);
+			const career = sourcebooks.flatMap(s => s.careers).find(a => a.id === careerId);
+			if (!career) {
+				return null;
+			}
+			const sourcebook = SourcebookLogic.getCareerSourcebook(sourcebooks, career)!;
+
+			return <CareerModal
+				career={career}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.careers).find(c => c.id === career.id)}
+				createHomebrew={sourcebook => onCareerChange(career, sourcebook)}
+				export={format => Utils.export([ career.id ], career.name || 'Career', career, 'career', format)}
+				edit={() => navigation.goToLibraryEdit(sourcebook.id, 'career', careerId)}
+				delete={() => { deleteSourcebookElement('career', career.id); navigate({ hash: '' }); }}
+			/>;
+		},
+		[ sourcebooks, navigate, navigation, onCareerChange, deleteSourcebookElement ]
+	);
+
+	const getClassModal = useCallback(
+		(segments: string[]) => {
+			const [ classId ] = segments;
+			const homebrewSourcebooks = sourcebooks.filter(s => s.isHomebrew);
+			const heroClass = sourcebooks.flatMap(s => s.classes).find(a => a.id === classId);
+			if (!heroClass) {
+				return null;
+			}
+			const sourcebook = SourcebookLogic.getClassSourcebook(sourcebooks, heroClass)!;
+
+			return <ClassModal
+				heroClass={heroClass}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.classes).find(c => c.id === heroClass.id)}
+				createHomebrew={sourcebook => onClassChange(heroClass, sourcebook)}
+				export={format => Utils.export([ heroClass.id ], heroClass.name || 'Class', heroClass, 'class', format)}
+				edit={() => navigation.goToLibraryEdit(sourcebook.id, 'class', classId)}
+				delete={() => { deleteSourcebookElement('class', heroClass.id); navigate({ hash: '' }); }}
+			/>;
+		},
+		[ sourcebooks, navigate, navigation, onClassChange, deleteSourcebookElement ]
+	);
+
+	const getComplicationModal = useCallback(
+		(segments: string[]) => {
+			const [ complicationId ] = segments;
+			const homebrewSourcebooks = sourcebooks.filter(s => s.isHomebrew);
+			const complication = sourcebooks.flatMap(s => s.complications).find(a => a.id === complicationId);
+			if (!complication) {
+				return null;
+			}
+			const sourcebook = SourcebookLogic.getComplicationSourcebook(sourcebooks, complication)!;
+
+			return <ComplicationModal
+				complication={complication}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.complications).find(c => c.id === complication.id)}
+				createHomebrew={sourcebook => onComplicationChange(complication, sourcebook)}
+				export={format => Utils.export([ complication.id ], complication.name || 'Complication', complication, 'complication', format)}
+				edit={() => navigation.goToLibraryEdit(sourcebook.id, 'complication', complicationId)}
+				delete={() => { deleteSourcebookElement('complication', complication.id); navigate({ hash: '' }); }}
+			/>;
+		},
+		[ sourcebooks, navigate, navigation, onComplicationChange, deleteSourcebookElement ]
+	);
+
+	const getCultureModal = useCallback(
+		(segments: string[]) => {
+			const [ cultureId ] = segments;
+			const homebrewSourcebooks = sourcebooks.filter(s => s.isHomebrew);
+			const culture = sourcebooks.flatMap(s => s.cultures).find(a => a.id === cultureId);
+			if (!culture) {
+				return null;
+			}
+			const sourcebook = SourcebookLogic.getCultureSourcebook(sourcebooks, culture)!;
+
+			return <CultureModal
+				culture={culture}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.cultures).find(c => c.id === culture.id)}
+				createHomebrew={sourcebook => onCultureCreate(culture, sourcebook)}
+				export={format => Utils.export([ culture.id ], culture.name || 'Culture', culture, 'culture', format)}
+				edit={() => navigation.goToLibraryEdit(sourcebook.id, 'culture', cultureId)}
+				delete={() => { deleteSourcebookElement('culture', culture.id); navigate({ hash: '' }); }}
+			/>;
+		},
+		[ sourcebooks, navigate, navigation, onCultureCreate, deleteSourcebookElement ]
 	);
 
 	const getEncounterModal = useCallback(
@@ -170,8 +278,16 @@ export const MainLayout = ({
 			switch (hashRoot) {
 				case 'about':
 					return <AboutModal />;
-				case 'ancestries':
+				case 'ancestry':
 					return getAncestryModal(hashSegments);
+				case 'career':
+					return getCareerModal(hashSegments);
+				case 'class':
+					return getClassModal(hashSegments);
+				case 'complication':
+					return getComplicationModal(hashSegments);
+				case 'culture':
+					return getCultureModal(hashSegments);
 				case 'encounter':
 					return getEncounterModal(hashSegments);
 				case 'hero':
@@ -187,6 +303,10 @@ export const MainLayout = ({
 		[
 			location,
 			getAncestryModal,
+			getCareerModal,
+			getClassModal,
+			getComplicationModal,
+			getCultureModal,
 			getEncounterModal,
 			getHeroModal,
 			getMonsterModal,

@@ -42,7 +42,7 @@ export const EncounterEditPage = (props: Props) => {
 	const { playbook } = usePersistedPlaybook();
 	const { sourcebooks } = usePersistedSourcebooks();
 	const { encounterId } = useParams<{ encounterId: string }>();
-	const originalEncounter = useMemo(() => playbook.encounters.find(e => e.id === encounterId)!, [ encounterId, playbook ]);
+	const originalEncounter = useMemo(() => playbook.encounters.find(e => e.id === encounterId), [ encounterId, playbook ]);
 	const [ previousEncounter, setPreviousEncounter ] = useState(originalEncounter);
 	const [ encounter, setEncounter ] = useState(originalEncounter);
 	const [ dirty, setDirty ] = useState<boolean>(false);

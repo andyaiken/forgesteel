@@ -8,7 +8,19 @@ export const useModals = () => {
 			return navigate({ hash: 'about' });
 		},
 		showAncestry(ancestryId: string) {
-			return navigate({ hash: `ancestries/${ancestryId}` });
+			return navigate({ hash: `ancestry/${ancestryId}` });
+		},
+		showCareer(careerId: string) {
+			return navigate({ hash: `career/${careerId}` });
+		},
+		showClass(classId: string) {
+			return navigate({ hash: `class/${classId}` });
+		},
+		showComplication(complicationId: string) {
+			return navigate({ hash: `complication/${complicationId}` });
+		},
+		showCulture(cultureId: string) {
+			return navigate({ hash: `culture/${cultureId}` });
 		},
 		showEncounter(encounterId: string) {
 			return navigate({ hash: `encounter/${encounterId}` });

@@ -39,10 +39,6 @@ import './library-list.scss';
 
 interface Props {
 	goHome: () => void;
-	viewCulture: (cultiure: Culture) => void;
-	viewCareer: (career: Career) => void;
-	viewClass: (heroClass: HeroClass) => void;
-	viewComplication: (complication: Complication) => void;
 	viewDomain: (domain: Domain) => void;
 	viewKit: (kit: Kit) => void;
 	viewPerk: (perk: Perk) => void;
@@ -235,7 +231,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.viewCulture(c)}>
+							<SelectablePanel key={c.id} onSelect={() => modals.showCulture(c.id)}>
 								<CulturePanel culture={c} />
 							</SelectablePanel>
 						);
@@ -272,7 +268,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.viewCareer(c)}>
+							<SelectablePanel key={c.id} onSelect={() => modals.showCareer(c.id)}>
 								<CareerPanel career={c} />
 							</SelectablePanel>
 						);
@@ -310,7 +306,7 @@ export const LibraryListPage = (props: Props) => {
 					list.map(c => {
 
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.viewClass(c)}>
+							<SelectablePanel key={c.id} onSelect={() => modals.showClass(c.id)}>
 								<ClassPanel heroClass={c} />
 							</SelectablePanel>
 						);
@@ -347,7 +343,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.viewComplication(c)}>
+							<SelectablePanel key={c.id} onSelect={() => modals.showComplication(c.id)}>
 								<ComplicationPanel complication={c} />
 							</SelectablePanel>
 						);

@@ -1,13 +1,9 @@
 import { Button, Divider, Popover } from 'antd';
 import { DownOutlined, EditOutlined } from '@ant-design/icons';
 import { AppHeader } from '../../../panels/app-header/app-header';
-import { Career } from '../../../../models/career';
-import { Complication } from '../../../../models/complication';
-import { Culture } from '../../../../models/culture';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { DropdownButton } from '../../../controls/dropdown-button/dropdown-button';
-import { HeroClass } from '../../../../models/class';
 import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
 import { Kit } from '../../../../models/kit';
 import { Options } from '../../../../models/options';
@@ -26,10 +22,6 @@ interface Props {
 	goHome: () => void;
 	closeHero: () => void;
 	editHero: (heroId: string) => void;
-	onSelectCulture: (culture: Culture) => void;
-	onSelectCareer: (career: Career) => void;
-	onSelectClass: (heroClass: HeroClass) => void;
-	onSelectComplication: (complication: Complication) => void;
 	onSelectDomain: (domain: Domain) => void;
 	onSelectKit: (kit: Kit) => void;
 }
@@ -123,10 +115,6 @@ export const HeroPage = (props: Props) => {
 							? <HeroPanel
 								hero={hero}
 								mode={PanelMode.Full}
-								onSelectCulture={props.onSelectCulture}
-								onSelectCareer={props.onSelectCareer}
-								onSelectClass={props.onSelectClass}
-								onSelectComplication={props.onSelectComplication}
 								onSelectDomain={props.onSelectDomain}
 								onSelectKit={props.onSelectKit}
 							/>

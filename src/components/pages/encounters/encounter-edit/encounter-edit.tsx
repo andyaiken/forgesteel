@@ -51,6 +51,18 @@ export const EncounterEditPage = (props: Props) => {
 	const [ heroLevel, setHeroLevel ] = useState<number>(1);
 	const [ heroVictories, setHeroVictories ] = useState<number>(0);
 
+	const monsters = useMemo(
+		() => Collections.sort(
+			sourcebooks.flatMap(s => s.monsterGroups)
+				.flatMap(mg => mg.monsters
+					.filter(m => MonsterLogic.matches(m, mg, monsterFilter))
+					.map(m => ({ monsterGroupId: mg.id, ...m }))
+				),
+			m => m.name
+		),
+		[ sourcebooks, monsterFilter ]
+	);
+
 	if (originalEncounter !== previousEncounter) {
 		setEncounter(originalEncounter);
 		setPreviousEncounter(originalEncounter);
@@ -264,8 +276,6 @@ export const EncounterEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const monsters = Collections.sort(sourcebooks.flatMap(s => s.monsterGroups.flatMap(mg => mg.monsters.filter(m => MonsterLogic.matches(m, mg, monsterFilter)))), m => m.name);
-
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Expander title='Filter'>
@@ -353,7 +363,7 @@ export const EncounterEditPage = (props: Props) => {
 						}
 
 						return (
-							<div key={m.id} className='monster-row'>
+							<div key={`${m.monsterGroupId}.${m.id}`} className='monster-row'>
 								<MonsterPanel monster={m} monsterGroup={monsterGroup} mode={PanelMode.Compact} />
 								<div className='actions'>
 									<Button block={true} onClick={() => modals.showMonster(m.id)}>Details</Button>

@@ -13,7 +13,6 @@ import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
 import { Kit } from '../../../../models/kit';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Sourcebook } from '../../../../models/sourcebook';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { useModals } from '../../../../hooks/use-modals';
 import { useNavigation } from '../../../../hooks/use-navigation';
@@ -24,7 +23,6 @@ import { usePersistedHeroes } from '../../../../hooks/use-persisted-heroes';
 import './hero-view-page.scss';
 
 interface Props {
-	sourcebooks: Sourcebook[];
 	options: Options;
 	setOptions: (options: Options) => void;
 	goHome: () => void;
@@ -126,7 +124,6 @@ export const HeroPage = (props: Props) => {
 						hero
 							? <HeroPanel
 								hero={hero}
-								sourcebooks={props.sourcebooks}
 								options={props.options}
 								mode={PanelMode.Full}
 								onSelectAncestry={props.onSelectAncestry}

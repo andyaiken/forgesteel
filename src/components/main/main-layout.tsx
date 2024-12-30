@@ -10,6 +10,7 @@ import { EncounterModal } from '../modals/encounter/encounter-modal';
 import type { Hero } from '../../models/hero';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
+import type { MonsterGroup } from '../../models/monster';
 import { MonsterGroupModal } from '../modals/monster-group/monster-group-modal';
 import { MonsterModal } from '../modals/monster/monster-modal';
 import type { Playbook } from '../../models/playbook';
@@ -21,30 +22,26 @@ import { Utils } from '../../utils/utils';
 import pbds from '../../assets/powered-by-draw-steel.png';
 import { useNavigation } from '../../hooks/use-navigation';
 import { usePersistedHeroes } from '../../hooks/use-persisted-heroes';
+import { usePersistedSourcebooks } from '../../hooks/use-persisted-sourcebooks';
 
 interface Props {
-	sourcebooks: Sourcebook[];
-	hiddenSourcebookIDs: string[];
 	playbook: Playbook;
 	onEncounterDelete: (encounterId: string) => Promise<void> | void;
 	onHeroChange: (hero: Hero) => Promise<void> | void;
-	onHomebrewSourcebookChange: (Sourcebooks: Sourcebook[]) => void;
-	onHiddenSourcebookIDsChange: (ids: string[]) => void;
+	onMonsterGroupCreate: (monsterGroup: MonsterGroup, sourcebook: Sourcebook | null) => void;
 }
 export const MainLayout = ({
-	sourcebooks,
-	hiddenSourcebookIDs,
 	playbook,
 	onEncounterDelete,
 	onHeroChange,
-	onHomebrewSourcebookChange,
-	onHiddenSourcebookIDsChange
+	onMonsterGroupCreate
 }: Props) => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const navigation = useNavigation();
 
 	const { heroes } = usePersistedHeroes();
+	const { sourcebooks, deleteSourcebookElement } = usePersistedSourcebooks();
 
 	const getEncounterModal = useCallback(
 		(segments: string[]) => {
@@ -53,13 +50,12 @@ export const MainLayout = ({
 			return <EncounterModal
 				encounter={encounter}
 				playbook={playbook}
-				sourcebooks={sourcebooks}
 				export={format => Utils.export([ encounter.id ], encounter.name || 'Encounter', encounter, 'encounter', format)}
 				edit={() => navigation.goToEncounterEdit(encounterId)}
 				delete={() => onEncounterDelete(encounterId)}
 			/>;
 		},
-		[ playbook, sourcebooks, navigation, onEncounterDelete ]
+		[ playbook, navigation, onEncounterDelete ]
 	);
 
 	const getHeroModal = useCallback(
@@ -87,13 +83,10 @@ export const MainLayout = ({
 						}}
 					/>;
 				case 'rules':
-					return <RulesModal
-						hero={hero}
-						sourcebooks={sourcebooks}
-					/>;
+					return <RulesModal hero={hero} />;
 			}
 		},
-		[ heroes, sourcebooks, navigation, onHeroChange ]
+		[ heroes, navigation, onHeroChange ]
 	);
 
 	const getMonsterModal = useCallback(
@@ -123,17 +116,13 @@ export const MainLayout = ({
 				homebrewSourcebooks={homebrewSourcebooks}
 				isHomebrew={sourcebook.isHomebrew}
 				playbook={playbook}
-				createHomebrew={() => {}}
-				export={() => {}}
-				edit={() => {}}
-				delete={() => {}}
-				// createHomebrew={sourcebook => createMonsterGroup(monsterGroup, sourcebook)}
-				// export={format => Utils.export([ monsterGroup.id ], monsterGroup.name || 'Monster Group', monsterGroup, 'monster-group', format)}
-				// edit={() => editMonsterGroup(monsterGroup, sourcebook)}
-				// delete={() => deleteSourcebookElement('MonsterGroup', monsterGroup.id)}
+				createHomebrew={sourcebook => onMonsterGroupCreate(monsterGroup, sourcebook)}
+				export={format => Utils.export([ monsterGroup.id ], monsterGroup.name || 'Monster Group', monsterGroup, 'monster-group', format)}
+				edit={() => navigation.goToLibraryEdit(sourcebook.id, 'MonsterGroup', monsterGroup.id)}
+				delete={() => deleteSourcebookElement('MonsterGroup', monsterGroup.id)}
 			/>;
 		},
-		[ sourcebooks, playbook ]
+		[ sourcebooks, playbook, navigation, onMonsterGroupCreate, deleteSourcebookElement ]
 	);
 
 	function getHeroAbilityModal(hero: Hero, segments: string[]) {
@@ -165,20 +154,11 @@ export const MainLayout = ({
 				case 'monster-group':
 					return getMonsterGroupModal(hashSegments);
 				case 'sourcebooks':
-					return <SourcebooksModal
-						sourcebooks={sourcebooks}
-						hiddenSourcebookIDs={hiddenSourcebookIDs}
-						onHomebrewSourcebookChange={onHomebrewSourcebookChange}
-						onHiddenSourcebookIDsChange={onHiddenSourcebookIDsChange}
-					/>;
+					return <SourcebooksModal />;
 			}
 		},
 		[
 			location,
-			sourcebooks,
-			hiddenSourcebookIDs,
-			onHomebrewSourcebookChange,
-			onHiddenSourcebookIDsChange,
 			getEncounterModal,
 			getHeroModal,
 			getMonsterModal,

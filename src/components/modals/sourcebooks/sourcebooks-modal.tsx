@@ -1,33 +1,25 @@
 import { Button, Divider, Space, Upload } from 'antd';
-import { useMemo, useState } from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
 import { FactoryLogic } from '../../../logic/factory-logic';
 import { Modal } from '../modal/modal';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookPanel } from '../../panels/elements/sourcebook-panel/sourcebook-panel';
+import { useMemo } from 'react';
+import { usePersistedSourcebooks } from '../../../hooks/use-persisted-sourcebooks';
 
 import './sourcebooks-modal.scss';
 
-interface Props {
-	sourcebooks: Sourcebook[];
-	hiddenSourcebookIDs: string[];
-	onHomebrewSourcebookChange: (Sourcebooks: Sourcebook[]) => void;
-	onHiddenSourcebookIDsChange: (ids: string[]) => void;
-}
-
-export const SourcebooksModal = (props: Props) => {
-	const officialSourcebooks = useMemo(() => props.sourcebooks.filter(s => !s.isHomebrew), [ props.sourcebooks ]);
-	const originalHomebrewSourcebooks = useMemo(() => props.sourcebooks.filter(s => s.isHomebrew), [ props.sourcebooks ]);
-	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(JSON.parse(JSON.stringify(originalHomebrewSourcebooks)) as Sourcebook[]);
-	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(JSON.parse(JSON.stringify(props.hiddenSourcebookIDs)) as string[]);
+export const SourcebooksModal = () => {
+	const { sourcebooks, hiddenSourcebookIds, persistHomebrewSourcebooks, persistHiddenSourcebookIds } = usePersistedSourcebooks();
+	const officialSourcebooks = useMemo(() => sourcebooks.filter(s => !s.isHomebrew), [ sourcebooks ]);
+	const homebrewSourcebooks = useMemo(() => sourcebooks.filter(s => s.isHomebrew), [ sourcebooks ]);
 
 	try {
 		const createSourcebook = () => {
 			const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 			const sourcebook = FactoryLogic.createSourcebook();
 			copy.push(sourcebook);
-			setHomebrewSourcebooks(copy);
-			props.onHomebrewSourcebookChange(copy);
+			persistHomebrewSourcebooks(copy);
 		};
 
 		const changeSourcebook = (sourcebook: Sourcebook) => {
@@ -35,34 +27,29 @@ export const SourcebooksModal = (props: Props) => {
 			const index = copy.findIndex(s => s.id === sourcebook.id);
 			if (index !== -1) {
 				copy[index] = sourcebook;
-				setHomebrewSourcebooks(copy);
-				props.onHomebrewSourcebookChange(copy);
+				persistHomebrewSourcebooks(copy);
 			}
 		};
 
 		const deleteSourcebook = (sourcebook: Sourcebook) => {
 			const copy = JSON.parse(JSON.stringify(homebrewSourcebooks.filter(s => s.id !== sourcebook.id))) as Sourcebook[];
-			setHomebrewSourcebooks(copy);
-			props.onHomebrewSourcebookChange(copy);
+			persistHomebrewSourcebooks(copy);
 		};
 
 		const importSourcebook = (sourcebook: Sourcebook) => {
 			const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 			copy.push(sourcebook);
-			setHomebrewSourcebooks(copy);
-			props.onHomebrewSourcebookChange(copy);
+			persistHomebrewSourcebooks(copy);
 		};
 
 		const setVisibility = (sourcebook: Sourcebook, visible: boolean) => {
 			if (visible) {
-				const copy = JSON.parse(JSON.stringify(hiddenSourcebookIDs.filter(id => id !== sourcebook.id))) as string[];
-				setHiddenSourcebookIDs(copy);
-				props.onHiddenSourcebookIDsChange(copy);
+				const copy = JSON.parse(JSON.stringify(hiddenSourcebookIds.filter(id => id !== sourcebook.id))) as string[];
+				persistHiddenSourcebookIds(copy);
 			} else {
-				const copy = JSON.parse(JSON.stringify(hiddenSourcebookIDs)) as string[];
+				const copy = JSON.parse(JSON.stringify(hiddenSourcebookIds)) as string[];
 				copy.push(sourcebook.id);
-				setHiddenSourcebookIDs(copy);
-				props.onHiddenSourcebookIDsChange(copy);
+				persistHiddenSourcebookIds(copy);
 			}
 		};
 
@@ -75,7 +62,7 @@ export const SourcebooksModal = (props: Props) => {
 								<SourcebookPanel
 									key={s.id}
 									sourcebook={s}
-									visible={!hiddenSourcebookIDs.includes(s.id)}
+									visible={!hiddenSourcebookIds.includes(s.id)}
 									onSetVisible={setVisibility}
 									onChange={changeSourcebook}
 									onDelete={deleteSourcebook}

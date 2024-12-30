@@ -3,7 +3,6 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Item } from '../../../../models/item';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Sourcebook } from '../../../../models/sourcebook';
 import { Utils } from '../../../../utils/utils';
 
 import './item-panel.scss';
@@ -11,7 +10,6 @@ import './item-panel.scss';
 interface Props {
 	item: Item;
 	hero?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 
@@ -23,7 +21,7 @@ export const ItemPanel = (props: Props) => {
 				{props.item.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.item.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full ?
-						props.item.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)
+						props.item.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />)
 						: null
 				}
 			</div>

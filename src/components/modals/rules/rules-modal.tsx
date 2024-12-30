@@ -12,18 +12,18 @@ import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { SkillList } from '../../../enums/skill-list';
-import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
 import { Utils } from '../../../utils/utils';
+import { usePersistedSourcebooks } from '../../../hooks/use-persisted-sourcebooks';
 
 import './rules-modal.scss';
 
 interface Props {
 	hero: Hero;
-	sourcebooks: Sourcebook[];
 }
 
 export const RulesModal = (props: Props) => {
+	const { sourcebooks } = usePersistedSourcebooks();
 	try {
 		const getConditionsSection = () => {
 			return (
@@ -51,7 +51,7 @@ export const RulesModal = (props: Props) => {
 		};
 
 		const getSkillsSection = () => {
-			const sourcebooks = props.hero.settingIDs.map(id => props.sourcebooks.find(s => s.id === id)).filter(s => !!s);
+			const heroSourcebooks = props.hero.settingIDs.map(id => sourcebooks.find(s => s.id === id)).filter(s => !!s);
 
 			return (
 				<div>
@@ -66,7 +66,7 @@ export const RulesModal = (props: Props) => {
 							<div key={sl}>
 								<HeaderText>{sl}</HeaderText>
 								{
-									SourcebookLogic.getSkills(sourcebooks)
+									SourcebookLogic.getSkills(heroSourcebooks)
 										.filter(s => s.list === sl)
 										.map(s => (
 											<Field key={s.name} label={s.name} value={s.description} />
@@ -80,8 +80,8 @@ export const RulesModal = (props: Props) => {
 		};
 
 		const getLanguagesSection = () => {
-			const sourcebooks = props.hero.settingIDs.map(id => props.sourcebooks.find(s => s.id === id)).filter(s => !!s);
-			const languages = SourcebookLogic.getLanguages(sourcebooks);
+			const heroSourcebooks = props.hero.settingIDs.map(id => sourcebooks.find(s => s.id === id)).filter(s => !!s);
+			const languages = SourcebookLogic.getLanguages(heroSourcebooks);
 
 			return (
 				<div>

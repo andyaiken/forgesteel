@@ -48,22 +48,20 @@ import { getSourcebookKey } from '../../utils/get-sourcebook-key';
 import localforage from 'localforage';
 import { useNavigation } from '../../hooks/use-navigation';
 import { usePersistedHeroes } from '../../hooks/use-persisted-heroes';
+import { usePersistedSourcebooks } from '../../hooks/use-persisted-sourcebooks';
 
 import './main.scss';
 
 interface Props {
 	playbook: Playbook;
-	homebrewSourcebooks: Sourcebook[];
-	hiddenSourcebookIDs: string[];
 	options: Options;
 }
 
 export const Main = (props: Props) => {
 	const navigation = useNavigation();
 	const { heroes, persistHero } = usePersistedHeroes();
+	const { homebrewSourcebooks, persistHomebrewSourcebooks, deleteSourcebookElement } = usePersistedSourcebooks();
 	const [ playbook, setPlaybook ] = useState<Playbook>(props.playbook);
-	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
-	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(props.hiddenSourcebookIDs);
 	const [ options, setOptions ] = useState<Options>(props.options);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 
@@ -73,18 +71,6 @@ export const Main = (props: Props) => {
 		await localforage
 			.setItem<Playbook>('forgesteel-playbook', playbook)
 			.then(setPlaybook);
-	};
-
-	const persistHomebrewSourcebooks = async (homebrew: Sourcebook[]) => {
-		await localforage
-			.setItem<Sourcebook[]>('forgesteel-homebrew-settings', homebrew)
-			.then(setHomebrewSourcebooks);
-	};
-
-	const persistHiddenSourcebookIDs = async (ids: string[]) => {
-		await localforage
-			.setItem<string[]>('forgesteel-hidden-setting-ids', ids)
-			.then(setHiddenSourcebookIDs);
 	};
 
 	const persistOptions = (options: Options) => {
@@ -543,16 +529,6 @@ export const Main = (props: Props) => {
 		editHomebrewElement('monster-group', monsterGroup, sourcebook);
 	};
 
-	const deleteSourcebookElement = async (kind: SourcebookElementKind, elementId: string) => {
-		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
-		const sourcebookKey = getSourcebookKey(kind);
-		copy.forEach((cs: Record<SourcebookElementsKey, Element[]>) => {
-			cs[sourcebookKey] = cs[sourcebookKey].filter(x => x.id !== elementId);
-		});
-		await persistHomebrewSourcebooks(copy);
-		setDrawer(null);
-	};
-
 	const saveEditElement = async (sourcebookId: string, kind: SourcebookElementKind, element: Element) => {
 		const list = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		const sourcebook = list.find(cs => cs.id === sourcebookId) as Record<SourcebookElementsKey, Element[]>;
@@ -834,13 +810,10 @@ export const Main = (props: Props) => {
 				path='/'
 				element={
 					<MainLayout
-						sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-						hiddenSourcebookIDs={hiddenSourcebookIDs}
 						playbook={playbook}
 						onHeroChange={persistHero}
-						onHomebrewSourcebookChange={persistHomebrewSourcebooks}
-						onHiddenSourcebookIDsChange={persistHiddenSourcebookIDs}
 						onEncounterDelete={deleteEncounter}
+						onMonsterGroupCreate={createMonsterGroup}
 					/>
 				}>
 				<Route
@@ -862,7 +835,6 @@ export const Main = (props: Props) => {
 						path='list'
 						element={
 							<HeroListPage
-								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								goHome={navigation.goToWelcome}
 								addHero={addHero}
 							/>
@@ -872,7 +844,6 @@ export const Main = (props: Props) => {
 						path='view/:heroId'
 						element={
 							<HeroPage
-								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								options={options}
 								setOptions={persistOptions}
 								goHome={navigation.goToWelcome}
@@ -896,7 +867,6 @@ export const Main = (props: Props) => {
 						path='edit/:heroId/:tab'
 						element={
 							<HeroEditPage
-								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								goHome={navigation.goToWelcome}
 								saveChanges={saveEditHero}
 								cancelChanges={cancelEditHero}
@@ -917,8 +887,6 @@ export const Main = (props: Props) => {
 						path='list/:tab'
 						element={
 							<LibraryListPage
-								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								hiddenSourcebookIDs={hiddenSourcebookIDs}
 								goHome={navigation.goToWelcome}
 								viewAncestry={onSelectAncestry}
 								viewCulture={onSelectCulture}
@@ -940,7 +908,6 @@ export const Main = (props: Props) => {
 						path='edit/:sourcebookId/:kind/:elementId'
 						element={
 							<LibraryEditPage
-								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								goHome={navigation.goToWelcome}
 								saveChanges={saveEditElement}
 								cancelChanges={cancelEditElement}
@@ -958,7 +925,6 @@ export const Main = (props: Props) => {
 						element={
 							<EncounterListPage
 								playbook={playbook}
-								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								goHome={navigation.goToWelcome}
 								onCreateEncounter={() => createEncounter(null)}
 								onImportEncounter={importEncounter}
@@ -970,7 +936,6 @@ export const Main = (props: Props) => {
 						element={
 							<EncounterEditPage
 								playbook={playbook}
-								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								goHome={navigation.goToWelcome}
 								saveChanges={saveEditEncounter}
 								cancelChanges={cancelEditEncounter}

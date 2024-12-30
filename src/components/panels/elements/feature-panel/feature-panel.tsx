@@ -19,6 +19,7 @@ import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { TitlePanel } from '../title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
+import { usePersistedSourcebooks } from '../../../../hooks/use-persisted-sourcebooks';
 
 import './feature-panel.scss';
 
@@ -26,12 +27,12 @@ interface Props {
 	feature: Feature | Perk;
 	cost?: number;
 	hero?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 	setData?: (featureID: string, data: FeatureData) => void;
 }
 
 export const FeaturePanel = (props: Props) => {
+	const { sourcebooks } = usePersistedSourcebooks();
 	// #region Editable
 
 	const getEditableChoice = (data: FeatureChoiceData) => {
@@ -112,7 +113,7 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected.map(f => (
-						<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+						<FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />
 					))
 				}
 			</Space>
@@ -178,7 +179,7 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
-		const domains = SourcebookLogic.getDomains(props.sourcebooks as Sourcebook[]);
+		const domains = SourcebookLogic.getDomains(sourcebooks as Sourcebook[]);
 		const sortedDomains = Collections.sort(domains, d => d.name);
 
 		if (sortedDomains.length === 0) {
@@ -285,7 +286,7 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected.map(f => (
-						<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+						<FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />
 					))
 				}
 			</Space>
@@ -298,7 +299,7 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		const kitTypes = data.types.length > 0 ? data.types : HeroLogic.getKitTypes(props.hero);
-		const kits = SourcebookLogic.getKits(props.sourcebooks as Sourcebook[])
+		const kits = SourcebookLogic.getKits(sourcebooks)
 			.filter(k => kitTypes.includes(k.type));
 
 		const sortedKits = Collections.sort(kits, k => k.name);
@@ -357,7 +358,7 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableLanguageChoice = (data: FeatureLanguageChoiceData) => {
-		const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
+		const languages = SourcebookLogic.getLanguages(sourcebooks);
 		const sortedLanguages = Collections.sort(languages, l => l.name);
 
 		if (sortedLanguages.length === 0) {
@@ -439,7 +440,7 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
-		const perks = SourcebookLogic.getPerks(props.sourcebooks as Sourcebook[]).filter(p => data.lists.includes(p.list));
+		const perks = SourcebookLogic.getPerks(sourcebooks).filter(p => data.lists.includes(p.list));
 		const sortedPerks = Collections.sort(perks, p => p.name);
 
 		if (sortedPerks.length === 0) {
@@ -489,7 +490,7 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableSkillChoice = (data: FeatureSkillChoiceData) => {
-		const skills = SourcebookLogic.getSkills(props.sourcebooks as Sourcebook[])
+		const skills = SourcebookLogic.getSkills(sourcebooks)
 			.filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
 		const sortedSkills = Collections.sort(skills, s => s.name);
 
@@ -572,7 +573,7 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
-		const titles = SourcebookLogic.getTitles(props.sourcebooks as Sourcebook[]);
+		const titles = SourcebookLogic.getTitles(sourcebooks);
 		const sortedTitles = Collections.sort(titles, t => t.name);
 
 		if (sortedTitles.length === 0) {
@@ -1003,7 +1004,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{tags.length > 0 ? <HeaderText tags={tags}>{props.feature.name || 'Unnamed Perk'}</HeaderText> : null}
-					{data.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
+					{data.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />)}
 				</Space>
 			);
 		}

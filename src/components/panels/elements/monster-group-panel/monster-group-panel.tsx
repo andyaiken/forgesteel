@@ -6,7 +6,6 @@ import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
 import { Space } from 'antd';
 import { Utils } from '../../../../utils/utils';
 
@@ -14,7 +13,6 @@ import './monster-group-panel.scss';
 
 interface Props {
 	monsterGroup: MonsterGroup;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 

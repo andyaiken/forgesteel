@@ -7,20 +7,20 @@ import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Playbook } from '../../../../models/playbook';
-import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Utils } from '../../../../utils/utils';
+import { usePersistedSourcebooks } from '../../../../hooks/use-persisted-sourcebooks';
 
 import './encounter-panel.scss';
 
 interface Props {
 	encounter: Encounter;
 	playbook: Playbook;
-	sourcebooks: Sourcebook[];
 	mode?: PanelMode;
 }
 
 export const EncounterPanel = (props: Props) => {
+	const { sourcebooks } = usePersistedSourcebooks();
 	try {
 		const monsterIDs = EncounterLogic.getMonsterIDs(props.encounter);
 
@@ -34,8 +34,8 @@ export const EncounterPanel = (props: Props) => {
 							{props.encounter.groups.filter(g => g.slots.length > 0).length > 1 ? <HeaderText>Group {(n + 1).toString()}</HeaderText> : null}
 							{
 								group.slots.map(slot => {
-									const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
-									const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
+									const monster = SourcebookLogic.getMonster(sourcebooks, slot.monsterID);
+									const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
 
 									let name = (monster && monsterGroup) ? MonsterLogic.getMonsterName(monster, monsterGroup) : 'Unknown Monster';
 
@@ -81,8 +81,8 @@ export const EncounterPanel = (props: Props) => {
 						<Space direction='vertical' style={{ width: '100%' }}>
 							{
 								monsterIDs.map(id => {
-									const monster = SourcebookLogic.getMonster(props.sourcebooks, id);
-									const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, id);
+									const monster = SourcebookLogic.getMonster(sourcebooks, id);
+									const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, id);
 									return (monster && monsterGroup) ?
 										<MonsterPanel
 											key={monster.id}

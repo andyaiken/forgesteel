@@ -4,14 +4,12 @@ import { AppHeader } from '../../../panels/app-header/app-header';
 import { Hero } from '../../../../models/hero';
 import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { usePersistedHeroes } from '../../../../hooks/use-persisted-heroes';
 
 import './hero-list-page.scss';
 
 interface Props {
-	sourcebooks: Sourcebook[];
 	goHome: () => void;
 	addHero: () => void;
 }
@@ -48,7 +46,7 @@ export const HeroListPage = (props: Props) => {
 					{
 						heroes.map(hero => (
 							<SelectablePanel key={hero.id} onSelect={() => navigation.goToHeroView(hero.id)}>
-								<HeroPanel hero={hero} sourcebooks={props.sourcebooks} />
+								<HeroPanel hero={hero} />
 							</SelectablePanel>
 						))
 					}

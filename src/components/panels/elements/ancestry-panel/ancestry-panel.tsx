@@ -4,7 +4,6 @@ import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Sourcebook } from '../../../../models/sourcebook';
 import { Utils } from '../../../../utils/utils';
 
 import './ancestry-panel.scss';
@@ -12,7 +11,6 @@ import './ancestry-panel.scss';
 interface Props {
 	ancestry: Ancestry;
 	hero?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 
@@ -24,7 +22,7 @@ export const AncestryPanel = (props: Props) => {
 				{props.ancestry.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ancestry.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full ?
-						props.ancestry.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)
+						props.ancestry.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />)
 						:
 						(props.ancestry.features.length > 0 ? <Field label='Features' value={props.ancestry.features.map(f => f.name).join(', ')} /> : null)
 				}

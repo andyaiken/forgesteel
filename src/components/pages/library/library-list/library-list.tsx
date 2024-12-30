@@ -1,6 +1,5 @@
 import { Alert, Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -32,6 +31,7 @@ import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
+import { useState } from 'react';
 
 import './library-list.scss';
 
@@ -67,11 +67,15 @@ const useTabKey = (): [SourcebookElementKind, (tabKey: SourcebookElementKind) =>
 
 export const LibraryListPage = (props: Props) => {
 	const [ tabKey, setTabKey ] = useTabKey();
+	const [ previousTab, setPreviousTab ] = useState(tabKey);
 	const [ element, setElement ] = useState<SourcebookElementKind>('Ancestry');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? props.sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
 
-	useEffect(() => setElement(tabKey), [ tabKey ]);
+	if (tabKey !== previousTab) {
+		setElement(tabKey);
+		setPreviousTab(tabKey);
+	}
 
 	const getSourcebooks = () => {
 		return props.sourcebooks.filter(cs => !props.hiddenSourcebookIDs.includes(cs.id));

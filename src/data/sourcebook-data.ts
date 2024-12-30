@@ -7,7 +7,6 @@ import { KitData } from './kit-data';
 import { PerkData } from './perk-data';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
-import { censor } from './classes/censor';
 import { conduit } from './classes/conduit';
 import { devil } from './ancestries/devil';
 import { dragonKnight } from './ancestries/dragon-knight';
@@ -18,16 +17,13 @@ import { hakaan } from './ancestries/hakaan';
 import { highElf } from './ancestries/elf-high';
 import { human } from './ancestries/human';
 import { memonek } from './ancestries/memonek';
-import { nullClass } from './classes/null';
 import { orc } from './ancestries/orc';
 import { polder } from './ancestries/polder';
 import { radenwight } from './monsters/radenwight';
 import { revenant } from './ancestries/revenant';
 import { shadow } from './classes/shadow';
 import { tactician } from './classes/tactician';
-import { talent } from './classes/talent';
 import { timeRaider } from './ancestries/time-raider';
-import { troubadour } from './classes/troubadour';
 import { wodeElf } from './ancestries/elf-wode';
 
 export class SourcebookData {
@@ -69,15 +65,11 @@ export class SourcebookData {
 			CareerData.watchOfficer
 		],
 		classes: [
-			censor,
 			conduit,
 			elementalist,
 			fury,
-			nullClass,
 			shadow,
-			tactician,
-			talent,
-			troubadour
+			tactician
 		],
 		complications: [
 			ComplicationData.cultVictim,

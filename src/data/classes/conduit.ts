@@ -185,6 +185,14 @@ For each piety spent, you can choose one of the following enhancements:
 					cost: 5
 				})
 			]
+		},
+		{
+			level: 2,
+			features: []
+		},
+		{
+			level: 3,
+			features: []
 		}
 	],
 	abilities: [

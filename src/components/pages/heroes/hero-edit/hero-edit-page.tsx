@@ -563,29 +563,24 @@ const CultureSection = (props: CultureSectionProps) => {
 						</Space>
 					</SelectablePanel>
 				);
-
 			}
 
-			if (props.hero.culture.languages.length === 0) {
-				const languages = SourcebookLogic.getLanguages(props.sourcebooks);
-
-				choices.unshift(
-					<SelectablePanel key='language'>
-						<HeaderText>Language</HeaderText>
-						<div className='ds-text'>Choose your language.</div>
-						<Select
-							style={{ width: '100%' }}
-							className={props.hero.culture.languages.length === 0 ? 'selection-empty' : ''}
-							allowClear={true}
-							placeholder='Select'
-							options={languages.map(l => ({ label: l.name, value: l.name, desc: l.description }))}
-							optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-							value={props.hero.culture.languages.length > 0 ? props.hero.culture.languages[0] : null}
-							onChange={value => props.selectLanguages(value ? [ value ] : [])}
-						/>
-					</SelectablePanel>
-				);
-			}
+			choices.unshift(
+				<SelectablePanel key='language'>
+					<HeaderText>Language</HeaderText>
+					<div className='ds-text'>Choose your language.</div>
+					<Select
+						style={{ width: '100%' }}
+						className={props.hero.culture.languages.length === 0 ? 'selection-empty' : ''}
+						allowClear={true}
+						placeholder='Select'
+						options={SourcebookLogic.getLanguages(props.sourcebooks).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
+						optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+						value={props.hero.culture.languages.length > 0 ? props.hero.culture.languages[0] : null}
+						onChange={value => props.selectLanguages(value ? [ value ] : [])}
+					/>
+				</SelectablePanel>
+			);
 		}
 
 		return (
@@ -790,7 +785,7 @@ const ClassSection = (props: ClassSectionProps) => {
 					<NumberSpin
 						value={props.hero.class.level}
 						min={1}
-						max={10}
+						max={props.hero.class.featuresByLevel.length}
 						onChange={value => props.setLevel(value)}
 					/>
 					<Field label='XP' value={props.hero.state.xp} />

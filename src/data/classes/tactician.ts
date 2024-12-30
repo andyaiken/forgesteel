@@ -49,7 +49,7 @@ export const tactician: HeroClass = {
 					ability: AbilityLogic.createAbility({
 						id: 'tactician-1-4',
 						name: 'Mark',
-						description: 'You draw your allies’ attention to a specific foe—with devastating effect.',
+						description: 'You draw your allies’ attention to a specific foe — with devastating effect.',
 						type: AbilityLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ AbilityLogic.distance.createRanged(10) ],
@@ -98,6 +98,14 @@ export const tactician: HeroClass = {
 					cost: 5
 				})
 			]
+		},
+		{
+			level: 2,
+			features: []
+		},
+		{
+			level: 3,
+			features: []
 		}
 	],
 	abilities: [

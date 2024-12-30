@@ -76,6 +76,14 @@ export const shadow: HeroClass = {
 					cost: 5
 				})
 			]
+		},
+		{
+			level: 2,
+			features: []
+		},
+		{
+			level: 3,
+			features: []
 		}
 	],
 	abilities: [

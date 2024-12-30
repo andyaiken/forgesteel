@@ -20,6 +20,7 @@
 * Add / update monsters
 
 **Miscallaneous changes**
+* Some classes have only 1 primary characteristic - this means choosing their characteristic arrays will be a lot more tricky
 * Add new feature type to allow Revenant to choose features from other ancestries
 * Revenants should have either 2 or 3 ancestry points depending on size
 

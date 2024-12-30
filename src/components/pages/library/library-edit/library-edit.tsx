@@ -4,7 +4,7 @@ import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../d
 import { Feature, FeatureAbility, FeatureMalice } from '../../../../models/feature';
 import { KitArmor, KitType, KitWeapon } from '../../../../enums/kit';
 import { Monster, MonsterGroup } from '../../../../models/monster';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../../../panels/edit/ability-edit-panel/ability-edit-panel';
 import { AbilityLogic } from '../../../../logic/ability-logic';
@@ -55,6 +55,7 @@ import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { getSourcebookKey } from '../../../../utils/get-sourcebook-key';
+import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 import { usePersistedSourcebooks } from '../../../../hooks/use-persisted-sourcebooks';
 
@@ -63,17 +64,29 @@ import './library-edit.scss';
 interface Props {
 	goHome: () => void;
 	saveChanges: (sourcebookId: string, kind: SourcebookElementKind, element: Element) => void;
-	cancelChanges: () => void;
 }
 
 export const LibraryEditPage = (props: Props) => {
+	const navigation = useNavigation();
 	const { sourcebooks } = usePersistedSourcebooks();
 	const { sourcebookId, kind, elementId } = useParams<{ sourcebookId: string, kind: SourcebookElementKind, elementId: string }>();
-	const sourcebook = useMemo(() => sourcebooks.find(s => s.id === sourcebookId)!, [ sourcebookId, sourcebooks ]);
-	const sourcebookKey = useMemo(() => getSourcebookKey(kind!), [ kind ]);
-	const originalElement = useMemo(() => sourcebook[sourcebookKey].find(e => e.id === elementId)!, [ sourcebook, sourcebookKey, elementId ]);
-	const [ element, setElement ] = useState<Element>(JSON.parse(JSON.stringify(originalElement)) as Element);
+	const [ element, setElement ] = useState<Element | undefined>();
 	const [ dirty, setDirty ] = useState<boolean>(false);
+	const sourcebook = useMemo(() => sourcebooks.find(s => s.id === sourcebookId), [ sourcebookId, sourcebooks ]);
+	const sourcebookKey = useMemo(() => getSourcebookKey(kind!), [ kind ]);
+	const originalElement = useMemo(() => sourcebook?.[sourcebookKey].find(e => e.id === elementId), [ sourcebook, sourcebookKey, elementId ]);
+
+	useEffect(() => {
+		if (!originalElement) {
+			return;
+		}
+		setElement(JSON.parse(JSON.stringify(originalElement)) as Element);
+	}, [ originalElement ]);
+
+	if (!element) {
+		return null;
+	}
+
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
@@ -1535,7 +1548,7 @@ export const LibraryEditPage = (props: Props) => {
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(sourcebookId!, kind!, element)}>
 						Save Changes
 					</Button>
-					<Button onClick={() => props.cancelChanges()}>
+					<Button onClick={() => navigation.goToLibraryList(kind!)}>
 						Cancel
 					</Button>
 				</AppHeader>

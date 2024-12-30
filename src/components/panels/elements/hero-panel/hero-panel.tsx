@@ -2,7 +2,6 @@ import { Col, Row, Statistic } from 'antd';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { AbilityUsage } from '../../../../enums/ability-usage';
-import { Ancestry } from '../../../../models/ancestry';
 import { Career } from '../../../../models/career';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Complication } from '../../../../models/complication';
@@ -36,7 +35,6 @@ interface Props {
 	hero: Hero;
 	options?: Options;
 	mode?: PanelMode;
-	onSelectAncestry?: (ancestry: Ancestry) => void;
 	onSelectCulture?: (culture: Culture) => void;
 	onSelectCareer?: (career: Career) => void;
 	onSelectClass?: (heroClass: HeroClass) => void;
@@ -51,8 +49,8 @@ export const HeroPanel = (props: Props) => {
 
 	const getLeftColumn = () => {
 		const onSelectAncestry = () => {
-			if (props.hero.ancestry && props.onSelectAncestry) {
-				props.onSelectAncestry(props.hero.ancestry);
+			if (props.hero.ancestry) {
+				modals.showAncestry(props.hero.ancestry.id);
 			}
 		};
 

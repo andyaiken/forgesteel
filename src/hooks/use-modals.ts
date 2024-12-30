@@ -7,6 +7,9 @@ export const useModals = () => {
 		showAbout() {
 			return navigate({ hash: 'about' });
 		},
+		showAncestry(ancestryId: string) {
+			return navigate({ hash: `ancestries/${ancestryId}` });
+		},
 		showEncounter(encounterId: string) {
 			return navigate({ hash: `encounter/${encounterId}` });
 		},

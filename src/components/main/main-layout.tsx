@@ -4,6 +4,8 @@ import { Outlet, useLocation, useNavigate } from 'react-router';
 import { useCallback, useMemo } from 'react';
 import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
+import type { Ancestry } from '../../models/ancestry';
+import { AncestryModal } from '../modals/ancestry/ancestry-modal';
 import type { Characteristic } from '../../enums/characteristic';
 import { CharacteristicModal } from '../modals/characteristic/characteristic-modal';
 import { EncounterModal } from '../modals/encounter/encounter-modal';
@@ -26,12 +28,14 @@ import { usePersistedSourcebooks } from '../../hooks/use-persisted-sourcebooks';
 
 interface Props {
 	playbook: Playbook;
+	onAncestryCreate: (ancestry: Ancestry, sourcebook: Sourcebook | null) => void;
 	onEncounterDelete: (encounterId: string) => Promise<void> | void;
 	onHeroChange: (hero: Hero) => Promise<void> | void;
 	onMonsterGroupCreate: (monsterGroup: MonsterGroup, sourcebook: Sourcebook | null) => void;
 }
 export const MainLayout = ({
 	playbook,
+	onAncestryCreate,
 	onEncounterDelete,
 	onHeroChange,
 	onMonsterGroupCreate
@@ -42,6 +46,28 @@ export const MainLayout = ({
 
 	const { heroes } = usePersistedHeroes();
 	const { sourcebooks, deleteSourcebookElement } = usePersistedSourcebooks();
+
+	const getAncestryModal = useCallback(
+		(segments: string[]) => {
+			const [ ancestryId ] = segments;
+			const homebrewSourcebooks = sourcebooks.filter(s => s.isHomebrew);
+			const ancestry = sourcebooks.flatMap(s => s.ancestries).find(a => a.id === ancestryId);
+			if (!ancestry) {
+				return null;
+			}
+			const sourcebook = SourcebookLogic.getAncestrySourcebook(sourcebooks, ancestry)!;
+			return <AncestryModal
+				ancestry={ancestry}
+				homebrewSourcebooks={homebrewSourcebooks}
+				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.ancestries).find(a => a.id === ancestry.id)}
+				createHomebrew={sourcebook => onAncestryCreate(ancestry, sourcebook)}
+				export={format => Utils.export([ ancestry.id ], ancestry.name || 'Ancestry', ancestry, 'ancestry', format)}
+				edit={() => navigation.goToLibraryEdit(sourcebook.id, 'ancestry', ancestryId)}
+				delete={() => { deleteSourcebookElement('ancestry', ancestry.id); navigate({ hash: '' }); }}
+			/>;
+		},
+		[ sourcebooks, navigate, navigation, onAncestryCreate, deleteSourcebookElement ]
+	);
 
 	const getEncounterModal = useCallback(
 		(segments: string[]) => {
@@ -106,11 +132,14 @@ export const MainLayout = ({
 
 	const getMonsterGroupModal = useCallback(
 		(segments: string[]) => {
-			const [ monsterId ] = segments;
-			const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, monsterId)!;
-			const homebrewSourcebooks = sourcebooks.filter(s => !s.isHomebrew);
+			const [ monsterGroupId ] = segments;
+			const homebrewSourcebooks = sourcebooks.filter(s => s.isHomebrew);
 			const sourcebook = sourcebooks
-				.find(cs => cs.monsterGroups.some(mg => mg.id === monsterGroup.id))!;
+				.find(cs => cs.monsterGroups.some(mg => mg.id === monsterGroupId));
+			if (!sourcebook) {
+				return null;
+			}
+			const monsterGroup = sourcebook.monsterGroups.find(mg => mg.id === monsterGroupId)!;
 			return <MonsterGroupModal
 				monsterGroup={monsterGroup}
 				homebrewSourcebooks={homebrewSourcebooks}
@@ -118,11 +147,11 @@ export const MainLayout = ({
 				playbook={playbook}
 				createHomebrew={sourcebook => onMonsterGroupCreate(monsterGroup, sourcebook)}
 				export={format => Utils.export([ monsterGroup.id ], monsterGroup.name || 'Monster Group', monsterGroup, 'monster-group', format)}
-				edit={() => navigation.goToLibraryEdit(sourcebook.id, 'MonsterGroup', monsterGroup.id)}
-				delete={() => deleteSourcebookElement('MonsterGroup', monsterGroup.id)}
+				edit={() => navigation.goToLibraryEdit(sourcebook.id, 'monster-group', monsterGroup.id)}
+				delete={() => { deleteSourcebookElement('monster-group', monsterGroup.id); navigate({ hash: '' }); }}
 			/>;
 		},
-		[ sourcebooks, playbook, navigation, onMonsterGroupCreate, deleteSourcebookElement ]
+		[ sourcebooks, playbook, navigate, navigation, onMonsterGroupCreate, deleteSourcebookElement ]
 	);
 
 	function getHeroAbilityModal(hero: Hero, segments: string[]) {
@@ -145,6 +174,8 @@ export const MainLayout = ({
 			switch (hashRoot) {
 				case 'about':
 					return <AboutModal />;
+				case 'ancestries':
+					return getAncestryModal(hashSegments);
 				case 'encounter':
 					return getEncounterModal(hashSegments);
 				case 'hero':
@@ -159,6 +190,7 @@ export const MainLayout = ({
 		},
 		[
 			location,
+			getAncestryModal,
 			getEncounterModal,
 			getHeroModal,
 			getMonsterModal,

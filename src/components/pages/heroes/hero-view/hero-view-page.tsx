@@ -1,6 +1,5 @@
 import { Button, Divider, Popover } from 'antd';
 import { DownOutlined, EditOutlined } from '@ant-design/icons';
-import { Ancestry } from '../../../../models/ancestry';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Career } from '../../../../models/career';
 import { Complication } from '../../../../models/complication';
@@ -28,7 +27,6 @@ interface Props {
 	goHome: () => void;
 	closeHero: () => void;
 	editHero: (heroId: string) => void;
-	onSelectAncestry: (ancestry: Ancestry) => void;
 	onSelectCulture: (culture: Culture) => void;
 	onSelectCareer: (career: Career) => void;
 	onSelectClass: (heroClass: HeroClass) => void;
@@ -126,7 +124,6 @@ export const HeroPage = (props: Props) => {
 								hero={hero}
 								options={props.options}
 								mode={PanelMode.Full}
-								onSelectAncestry={props.onSelectAncestry}
 								onSelectCulture={props.onSelectCulture}
 								onSelectCareer={props.onSelectCareer}
 								onSelectClass={props.onSelectClass}

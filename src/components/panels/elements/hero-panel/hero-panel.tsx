@@ -30,8 +30,6 @@ import './hero-panel.scss';
 interface Props {
 	hero: Hero;
 	mode?: PanelMode;
-	onSelectDomain?: (domain: Domain) => void;
-	onSelectKit?: (kit: Kit) => void;
 }
 
 export const HeroPanel = (props: Props) => {
@@ -71,15 +69,11 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		const onSelectDomain = (domain: Domain) => {
-			if (props.onSelectDomain) {
-				props.onSelectDomain(domain);
-			}
+			modals.showDomain(domain.id);
 		};
 
 		const onSelectKit = (kit: Kit) => {
-			if (props.onSelectKit) {
-				props.onSelectKit(kit);
-			}
+			modals.showKit(kit.id);
 		};
 
 		let incitingIncident: Element | null = null;

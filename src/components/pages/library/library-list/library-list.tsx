@@ -39,11 +39,6 @@ import './library-list.scss';
 
 interface Props {
 	goHome: () => void;
-	viewDomain: (domain: Domain) => void;
-	viewKit: (kit: Kit) => void;
-	viewPerk: (perk: Perk) => void;
-	viewTitle: (title: Title) => void;
-	viewItem: (item: Item) => void;
 	onCreateHomebrew: (type: SourcebookElementKind, sourcebookID: string | null) => void;
 	onImportHomebrew: (type: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 }
@@ -380,7 +375,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(d => {
 						const item = (
-							<SelectablePanel key={d.id} onSelect={() => props.viewDomain(d)}>
+							<SelectablePanel key={d.id} onSelect={() => modals.showDomain(d.id)}>
 								<DomainPanel domain={d} />
 							</SelectablePanel>
 						);
@@ -417,7 +412,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(k => {
 						const item = (
-							<SelectablePanel key={k.id} onSelect={() => props.viewKit(k)}>
+							<SelectablePanel key={k.id} onSelect={() => modals.showKit(k.id)}>
 								<KitPanel kit={k} />
 							</SelectablePanel>
 						);
@@ -454,7 +449,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(p => {
 						const item = (
-							<SelectablePanel key={p.id} onSelect={() => props.viewPerk(p)}>
+							<SelectablePanel key={p.id} onSelect={() => modals.showPerk(p.id)}>
 								<PerkPanel perk={p} />
 							</SelectablePanel>
 						);
@@ -491,7 +486,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(t => {
 						const item = (
-							<SelectablePanel key={t.id} onSelect={() => props.viewTitle(t)}>
+							<SelectablePanel key={t.id} onSelect={() => modals.showTitle(t.id)}>
 								<TitlePanel title={t} />
 							</SelectablePanel>
 						);
@@ -528,7 +523,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(i => {
 						const item = (
-							<SelectablePanel key={i.id} onSelect={() => props.viewItem(i)}>
+							<SelectablePanel key={i.id} onSelect={() => modals.showItem(i.id)}>
 								<ItemPanel item={i} />
 							</SelectablePanel>
 						);

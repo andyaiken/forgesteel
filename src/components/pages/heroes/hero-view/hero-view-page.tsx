@@ -2,10 +2,8 @@ import { Button, Divider, Popover } from 'antd';
 import { DownOutlined, EditOutlined } from '@ant-design/icons';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
-import { Domain } from '../../../../models/domain';
 import { DropdownButton } from '../../../controls/dropdown-button/dropdown-button';
 import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
-import { Kit } from '../../../../models/kit';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Toggle } from '../../../controls/toggle/toggle';
@@ -22,8 +20,6 @@ interface Props {
 	goHome: () => void;
 	closeHero: () => void;
 	editHero: (heroId: string) => void;
-	onSelectDomain: (domain: Domain) => void;
-	onSelectKit: (kit: Kit) => void;
 }
 
 export const HeroPage = (props: Props) => {
@@ -115,8 +111,6 @@ export const HeroPage = (props: Props) => {
 							? <HeroPanel
 								hero={hero}
 								mode={PanelMode.Full}
-								onSelectDomain={props.onSelectDomain}
-								onSelectKit={props.onSelectKit}
 							/>
 							: null
 					}

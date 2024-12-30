@@ -1,12 +1,10 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router';
-import { ReactNode, useState } from 'react';
 import { Ancestry } from '../../models/ancestry';
 import { Career } from '../../models/career';
 import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
 import { Culture } from '../../models/culture';
 import { Domain } from '../../models/domain';
-import { DomainModal } from '../modals/domain/domain-modal';
 import { Element } from '../../models/element';
 import { Encounter } from '../../models/encounter';
 import { EncounterEditPage } from '../pages/encounters/encounter-edit/encounter-edit';
@@ -18,22 +16,18 @@ import { HeroEditPage } from '../pages/heroes/hero-edit/hero-edit-page';
 import { HeroListPage } from '../pages/heroes/hero-list/hero-list-page';
 import { HeroPage } from '../pages/heroes/hero-view/hero-view-page';
 import { Item } from '../../models/item';
-import { ItemModal } from '../modals/item/item-modal';
 import { Kit } from '../../models/kit';
-import { KitModal } from '../modals/kit/kit-modal';
 import { LibraryEditPage } from '../pages/library/library-edit/library-edit';
 import { LibraryListPage } from '../pages/library/library-list/library-list';
 import { MainLayout } from './main-layout';
 import { MonsterGroup } from '../../models/monster';
 import { Perk } from '../../models/perk';
-import { PerkModal } from '../modals/perk/perk-modal';
 import { Playbook } from '../../models/playbook';
 import { Sourcebook } from '../../models/sourcebook';
 import { SourcebookData } from '../../data/sourcebook-data';
 import { SourcebookElementKind } from '../../models/sourcebook-element-kind';
 import { SourcebookElementsKey } from '../../models/sourcebook-elements-key';
 import { Title } from '../../models/title';
-import { TitleModal } from '../modals/title/title-modal';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import { getSourcebookKey } from '../../utils/get-sourcebook-key';
@@ -50,9 +44,8 @@ export const Main = () => {
 	const navigation = useNavigation();
 	const modals = useModals();
 	const { heroes, persistHero } = usePersistedHeroes();
-	const { sourcebooks, homebrewSourcebooks, persistHomebrewSourcebooks, deleteSourcebookElement } = usePersistedSourcebooks();
+	const { homebrewSourcebooks, persistHomebrewSourcebooks } = usePersistedSourcebooks();
 	const { playbook, persistPlaybook } = usePersistedPlaybook();
-	const [ _, setDrawer ] = useState<ReactNode>(null);
 
 	//#region Heroes
 
@@ -296,9 +289,9 @@ export const Main = () => {
 		sourcebook.domains.push(domain);
 		await persistHomebrewSourcebooks(sourcebooks);
 		if (location.hash) {
-			onSelectDomain(domain);
+			modals.showDomain(domain.id);
 		} else {
-			editDomain(domain, sourcebook);
+			navigation.goToLibraryEdit(sourcebook.id, 'domain', domain.id);
 		}
 	};
 
@@ -323,9 +316,9 @@ export const Main = () => {
 		sourcebook.kits.push(kit);
 		await persistHomebrewSourcebooks(sourcebooks);
 		if (location.hash) {
-			onSelectKit(kit);
+			modals.showKit(kit.id);
 		} else {
-			editKit(kit, sourcebook);
+			navigation.goToLibraryEdit(sourcebook.id, 'kit', kit.id);
 		}
 	};
 
@@ -350,9 +343,9 @@ export const Main = () => {
 		sourcebook.perks.push(perk);
 		await persistHomebrewSourcebooks(sourcebooks);
 		if (location.hash) {
-			onSelectPerk(perk);
+			modals.showPerk(perk.id);
 		} else {
-			editPerk(perk, sourcebook);
+			navigation.goToLibraryEdit(sourcebook.id, 'perk', perk.id);
 		}
 	};
 
@@ -377,9 +370,9 @@ export const Main = () => {
 		sourcebook.titles.push(title);
 		await persistHomebrewSourcebooks(sourcebooks);
 		if (location.hash) {
-			onSelectTitle(title);
+			modals.showTitle(title.id);
 		} else {
-			editTitle(title, sourcebook);
+			navigation.goToLibraryEdit(sourcebook.id, 'title', title.id);
 		}
 	};
 
@@ -404,9 +397,9 @@ export const Main = () => {
 		sourcebook.items.push(item);
 		await persistHomebrewSourcebooks(sourcebooks);
 		if (location.hash) {
-			onSelectItem(item);
+			modals.showItem(item.id);
 		} else {
-			editItem(item, sourcebook);
+			navigation.goToLibraryEdit(sourcebook.id, 'item', item.id);
 		}
 	};
 
@@ -435,45 +428,6 @@ export const Main = () => {
 		} else {
 			navigation.goToLibraryEdit(sourcebook.id, 'monster-group', monsterGroup.id);
 		}
-	};
-
-	function editHomebrewElement(kind: 'ancestry', element: Ancestry, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'culture', element: Culture, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'career', element: Career, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'class', element: HeroClass, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'complication', element: Complication, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'domain', element: Domain, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'kit', element: Kit, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'perk', element: Perk, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'title', element: Title, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'item', element: Item, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'monster-group', element: MonsterGroup, sourcebook: Sourcebook): void;
-	function editHomebrewElement(
-		kind: SourcebookElementKind,
-		element: Ancestry | Culture | Career | HeroClass | Complication | Domain | Kit | Perk | Title | Item | MonsterGroup,
-		sourcebook: Sourcebook
-	) {
-		navigation.goToLibraryEdit(sourcebook.id, kind, element.id);
-	}
-
-	const editDomain = (domain: Domain, sourcebook: Sourcebook) => {
-		editHomebrewElement('domain', domain, sourcebook);
-	};
-
-	const editKit = (kit: Kit, sourcebook: Sourcebook) => {
-		editHomebrewElement('kit', kit, sourcebook);
-	};
-
-	const editPerk = (perk: Perk, sourcebook: Sourcebook) => {
-		editHomebrewElement('perk', perk, sourcebook);
-	};
-
-	const editTitle = (title: Title, sourcebook: Sourcebook) => {
-		editHomebrewElement('title', title, sourcebook);
-	};
-
-	const editItem = (item: Item, sourcebook: Sourcebook) => {
-		editHomebrewElement('item', item, sourcebook);
 	};
 
 	const saveEditElement = async (sourcebookId: string, kind: SourcebookElementKind, element: Element) => {
@@ -544,90 +498,6 @@ export const Main = () => {
 
 	//#endregion
 
-	//#region Modals
-
-	const onSelectDomain = (domain: Domain) => {
-		const container = sourcebooks.find(cs => cs.domains.find(d => d.id === domain.id))!;
-
-		setDrawer(
-			<DomainModal
-				domain={domain}
-				homebrewSourcebooks={homebrewSourcebooks}
-				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.domains).find(d => d.id === domain.id)}
-				createHomebrew={sourcebook => createDomain(domain, sourcebook)}
-				export={format => Utils.export([ domain.id ], domain.name || 'Domain', domain, 'domain', format)}
-				edit={() => editDomain(domain, container)}
-				delete={() => deleteSourcebookElement('domain', domain.id)}
-			/>
-		);
-	};
-
-	const onSelectKit = (kit: Kit) => {
-		const container = sourcebooks.find(cs => cs.kits.find(k => k.id === kit.id))!;
-
-		setDrawer(
-			<KitModal
-				kit={kit}
-				homebrewSourcebooks={homebrewSourcebooks}
-				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.kits).find(k => k.id === kit.id)}
-				createHomebrew={sourcebook => createKit(kit, sourcebook)}
-				export={format => Utils.export([ kit.id ], kit.name || 'Kit', kit, 'kit', format)}
-				edit={() => editKit(kit, container)}
-				delete={() => deleteSourcebookElement('kit', kit.id)}
-			/>
-		);
-	};
-
-	const onSelectPerk = (perk: Perk) => {
-		const container = sourcebooks.find(cs => cs.perks.find(p => p.id === perk.id))!;
-
-		setDrawer(
-			<PerkModal
-				perk={perk}
-				homebrewSourcebooks={homebrewSourcebooks}
-				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.perks).find(p => p.id === perk.id)}
-				createHomebrew={sourcebook => createPerk(perk, sourcebook)}
-				export={format => Utils.export([ perk.id ], perk.name || 'Perk', perk, 'perk', format)}
-				edit={() => editPerk(perk, container)}
-				delete={() => deleteSourcebookElement('perk', perk.id)}
-			/>
-		);
-	};
-
-	const onSelectTitle = (title: Title) => {
-		const container = sourcebooks.find(cs => cs.titles.find(t => t.id === title.id))!;
-
-		setDrawer(
-			<TitleModal
-				title={title}
-				homebrewSourcebooks={homebrewSourcebooks}
-				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.titles).find(t => t.id === title.id)}
-				createHomebrew={sourcebook => createTitle(title, sourcebook)}
-				export={format => Utils.export([ title.id ], title.name || 'Title', title, 'title', format)}
-				edit={() => editTitle(title, container)}
-				delete={() => deleteSourcebookElement('title', title.id)}
-			/>
-		);
-	};
-
-	const onSelectItem = (item: Item) => {
-		const container = sourcebooks.find(cs => cs.items.find(i => i.id === item.id))!;
-
-		setDrawer(
-			<ItemModal
-				item={item}
-				homebrewSourcebooks={homebrewSourcebooks}
-				isHomebrew={!!homebrewSourcebooks.flatMap(cs => cs.items).find(i => i.id === item.id)}
-				createHomebrew={sourcebook => createItem(item, sourcebook)}
-				export={format => Utils.export([ item.id ], item.name || 'Item', item, 'item', format)}
-				edit={() => editItem(item, container)}
-				delete={() => deleteSourcebookElement('item', item.id)}
-			/>
-		);
-	};
-
-	//#endregion
-
 	return (
 		<Routes>
 			<Route
@@ -635,10 +505,15 @@ export const Main = () => {
 				element={
 					<MainLayout
 						onAncestryCreate={createAncestry}
-						onCareerChange={createCareer}
-						onClassChange={createClass}
-						onComplicationChange={createComplication}
+						onCareerCreate={createCareer}
+						onClassCreate={createClass}
+						onComplicationCreate={createComplication}
 						onCultureCreate={createCulture}
+						onDomainCreate={createDomain}
+						onItemCreate={createItem}
+						onKitCreate={createKit}
+						onPerkCreate={createPerk}
+						onTitleCreate={createTitle}
 						onHeroChange={persistHero}
 						onEncounterDelete={deleteEncounter}
 						onMonsterGroupCreate={createMonsterGroup}
@@ -675,8 +550,6 @@ export const Main = () => {
 								goHome={navigation.goToWelcome}
 								closeHero={closeHero}
 								editHero={editHero}
-								onSelectDomain={onSelectDomain}
-								onSelectKit={onSelectKit}
 							/>
 						}
 					/>
@@ -709,11 +582,6 @@ export const Main = () => {
 						element={
 							<LibraryListPage
 								goHome={navigation.goToWelcome}
-								viewDomain={onSelectDomain}
-								viewKit={onSelectKit}
-								viewPerk={onSelectPerk}
-								viewTitle={onSelectTitle}
-								viewItem={onSelectItem}
 								onCreateHomebrew={createHomebrewElement}
 								onImportHomebrew={importHomebrewElement}
 							/>

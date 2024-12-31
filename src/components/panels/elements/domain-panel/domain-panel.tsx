@@ -24,7 +24,7 @@ export const DomainPanel = (props: Props) => {
 				{props.domain.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.domain.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full ?
-						props.domain.featuresByLevel.map(lvl => (
+						props.domain.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
 							<Space key={lvl.level} direction='vertical'>
 								<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
 								{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}

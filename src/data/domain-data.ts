@@ -1,5 +1,7 @@
+import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
+import { Characteristic } from '../enums/characteristic';
 import { Domain } from '../models/domain';
 import { FeatureLogic } from '../logic/feature-logic';
 import { SkillList } from '../enums/skill-list';
@@ -20,12 +22,12 @@ export class DomainData {
 								ability: AbilityLogic.createAbility({
 									id: 'domain-creation-1-1',
 									name: 'Hands Of The Maker',
-									description: 'Craft objects with the power of your mind!',
+									description: 'You can craft objects with the power of your mind!',
 									type: AbilityLogic.type.createManeuver(),
 									keywords: [ AbilityKeyword.Magic ],
 									distance: [ AbilityLogic.distance.createSelf() ],
 									target: 'Self',
-									effect: 'You create a mundane object no larger than size 1S that you hold. If you use this feature again or stop holding the object, it disappears.'
+									effect: 'You create a mundane object no larger than size 1S. You can maintain a number of objects created this way equal to your Intuition score. You can destroy an object created this way with a thought, no matter how far you are from it (no action required).'
 								})
 							}),
 							FeatureLogic.feature.createSkillChoiceFeature({
@@ -35,6 +37,28 @@ export class DomainData {
 						]
 					})
 				]
+			},
+			{
+				level: 2,
+				features: [
+					FeatureLogic.feature.createAbilityFeature({
+						ability: AbilityLogic.createAbility({
+							id: 'domain-creation-2',
+							name: 'Statue of Power',
+							description: 'A marble statue of your patron rises from the earth.',
+							type: AbilityLogic.type.createManeuver(),
+							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+							distance: [ AbilityLogic.distance.createRanged(10) ],
+							target: 'Special',
+							cost: 5,
+							effect: 'A size 2 statue rises out of the ground in an unoccupied space within distance and lasts until the end of the encounter. While within 3 squares of the statue, you and your allies each gains a surge at the start of their turns. The statue is destroyed if it takes 20 or more damage. It is immune to poison and psychic damage.'
+						})
+					})
+				]
+			},
+			{
+				level: 3,
+				features: []
 			}
 		]
 	};
@@ -54,12 +78,12 @@ export class DomainData {
 								ability: AbilityLogic.createAbility({
 									id: 'domain-death-1-1',
 									name: 'Grave Speech',
-									description: 'The power of death lets you speak with those who have passed from the world.',
+									description: 'You commune with the lingering soul of the recently dead.',
 									type: AbilityLogic.type.createManeuver(),
 									keywords: [ AbilityKeyword.Magic ],
 									distance: [ AbilityLogic.distance.createMelee(1) ],
-									target: 'Special',
-									effect: 'You can speak to the corpse or head of a creature who has died within the last 24 hours and who can speak a language you know. The target regards you as they would have in life, and you might need to make tests to influence them and convince them to speak with you. After 1 minute, the effect ends. You can’t use this ability on the same creature twice.'
+									target: 'One dead creature',
+									effect: 'You can speak to the target corpse (including just the head) of a creature who has died within the last 24 hours and who can speak a language you know. The target regards you as they would have in life, and you might need to make tests to influence them and convince them to speak with you. The trauma of dying can make a creature’s memory of that event hazy, but the target otherwise knows all they knew in life. After 1 minute, the effect ends. You can’t use this ability on the same creature twice.'
 								})
 							}),
 							FeatureLogic.feature.createSkillChoiceFeature({
@@ -69,6 +93,28 @@ export class DomainData {
 						]
 					})
 				]
+			},
+			{
+				level: 2,
+				features: [
+					FeatureLogic.feature.createAbilityFeature({
+						ability: AbilityLogic.createAbility({
+							id: 'domain-death-2',
+							name: 'Reap',
+							description: 'The gods reward those who smite their foes.',
+							type: AbilityLogic.type.createManeuver(),
+							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+							distance: [ AbilityLogic.distance.createRanged(10) ],
+							target: 'Each ally',
+							cost: 5,
+							effect: 'Until the start of your next turn, each time a target kills an enemy, they regain Stamina equal to 5 + your Intuition score.'
+						})
+					})
+				]
+			},
+			{
+				level: 3,
+				features: []
 			}
 		]
 	};
@@ -86,8 +132,8 @@ export class DomainData {
 						features: [
 							FeatureLogic.feature.createFeature({
 								id: 'domain-fate-1-1',
-								name: 'Fate Trance',
-								description: 'If you spend 10 minutes in an uninterrupted meditative state without moving, you get a glimpse of any significant events that will happen in the area around you in the next 24 hours unless you or your allies intercede in those events. As described by the Director, these glimpses of the future might be clear and concise, or might be vague and hard to understand.'
+								name: 'Oracular Visions',
+								description: 'Your deity rewards you with hazy visions of things to come. Each time you earn 1 or more Victories, you earn an equal number of fate points. When you or a creature within 10 squares of you makes a test, you can spend 1 fate point to tap into a vision of the outcome, granting that creature an edge on the test. You lose any remaining fate points when you finish a respite.'
 							}),
 							FeatureLogic.feature.createSkillChoiceFeature({
 								id: 'domain-fate-1-2',
@@ -96,6 +142,31 @@ export class DomainData {
 						]
 					})
 				]
+			},
+			{
+				level: 2,
+				features: [
+					FeatureLogic.feature.createAbilityFeature({
+						ability: AbilityLogic.createAbility({
+							id: 'domain-fate-2',
+							name: 'Blessing of Fate and Destiny',
+							description: 'Your enemies suffer their fate; your allies embrace their destiny!',
+							type: AbilityLogic.type.createAction(),
+							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+							distance: [ AbilityLogic.distance.createRanged(10) ],
+							target: 'Three creatures, including self',
+							cost: 5,
+							effect: `
+Choose one of the following effects, which lasts until the end of the encounter or until you are dying:
+* Whenever a target makes a power roll, they can roll three dice and choose which two to use.
+* Whenever a target makes a power roll, they must roll three dice and use the lowest two.`
+						})
+					})
+				]
+			},
+			{
+				level: 3,
+				features: []
 			}
 		]
 	};
@@ -113,8 +184,8 @@ export class DomainData {
 						features: [
 							FeatureLogic.feature.createFeature({
 								id: 'domain-knowledge-1-1',
-								name: 'Cypher Mind',
-								description: 'Given a little time, you can translate almost any text into a language you know, even if you don’t know the text’s original language. For the purpose of making project rolls, you are considered fluent in all languages.'
+								name: 'Blessing of Comprehension',
+								description: 'You can interpret diagrams and charts even if you don’t understand the language associated with them. For the purpose of making project rolls for research and crafting items, you are considered fluent in all languages.'
 							}),
 							FeatureLogic.feature.createSkillChoiceFeature({
 								id: 'domain-knowledge-1-2',
@@ -123,6 +194,33 @@ export class DomainData {
 						]
 					})
 				]
+			},
+			{
+				level: 2,
+				features: [
+					FeatureLogic.feature.createAbilityFeature({
+						ability: AbilityLogic.createAbility({
+							id: 'domain-knowledge-2',
+							name: 'The Gods Command, You Obey',
+							description: 'You speak with the voice of your saint, commanding your enemies.',
+							type: AbilityLogic.type.createAction(),
+							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+							distance: [ AbilityLogic.distance.createRanged(10) ],
+							target: '1 creature',
+							cost: 5,
+							powerRoll: AbilityLogic.createPowerRoll({
+								characteristic: [ Characteristic.Intuition ],
+								tier1: '4 + I holy damage; P < weak, before taking damage, the target makes a free strike against a target you choose',
+								tier2: '7 + I holy damage; P < average, before taking damage, the target uses an ability of your choice and you choose any targets for that ability',
+								tier3: '11 + I holy damage; P < strong, before taking damage, the target shifts up to their speed, uses an ability of your choice, and you choose any targets for that ability'
+							})
+						})
+					})
+				]
+			},
+			{
+				level: 3,
+				features: []
 			}
 		]
 	};
@@ -141,7 +239,7 @@ export class DomainData {
 							FeatureLogic.feature.createFeature({
 								id: 'domain-life-1-1',
 								name: 'Revitalizing Ritual',
-								description: 'Each time you finish a respite, you can choose yourself or another character who is also ending a respite to gain the benefit of a divine ritual. When you perform the ritual, the target’s recovery value increases by an amount equal to your level. This benefit lasts until you complete another respite.'
+								description: 'Each time you finish a respite, you can choose yourself or an ally who is also ending a respite to gain the benefit of a divine ritual. When you perform the ritual, the chosen character gains a bonus to their recovery value equal to your level, which lasts until you finish another respite.'
 							}),
 							FeatureLogic.feature.createSkillChoiceFeature({
 								id: 'domain-life-1-2',
@@ -150,6 +248,28 @@ export class DomainData {
 						]
 					})
 				]
+			},
+			{
+				level: 2,
+				features: [
+					FeatureLogic.feature.createAbilityFeature({
+						ability: AbilityLogic.createAbility({
+							id: 'domain-life-2',
+							name: 'Wellspring of Grace',
+							description: 'A holy light is emitted from your body, healing your allies.',
+							type: AbilityLogic.type.createAction(),
+							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+							distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Aura, value: 3 }) ],
+							target: 'Each ally in the area',
+							cost: 5,
+							effect: 'Until the end of the encounter or you are dying, whenever a target starts their turn in the aura, they can spend a Recovery.'
+						})
+					})
+				]
+			},
+			{
+				level: 3,
+				features: []
 			}
 		]
 	};
@@ -167,10 +287,10 @@ export class DomainData {
 						features: [
 							FeatureLogic.feature.createFeature({
 								id: 'domain-love-1-1',
-								name: 'Compassionate Aura',
+								name: 'Blessing of Compassion',
 								description: `
 You exude a magic aura that can soothe those willing to socially engage with you. You gain an edge on any test made to assist another creature with a test.
-Additionally, when you are present at the start of a negotiation, the NPC’s patience increases by 1 (to a maximum of 5), and the first test made to influence them gains an edge.`
+Additionally, when you are present at the start of a negotiation, one NPC of your choice has their patience increased by 1 (to a maximum of 5), and the first test made to influence them gains an edge.`
 							}),
 							FeatureLogic.feature.createSkillChoiceFeature({
 								id: 'domain-love-1-2',
@@ -179,6 +299,28 @@ Additionally, when you are present at the start of a negotiation, the NPC’s pa
 						]
 					})
 				]
+			},
+			{
+				level: 2,
+				features: [
+					FeatureLogic.feature.createAbilityFeature({
+						ability: AbilityLogic.createAbility({
+							id: 'domain-love-2',
+							name: 'Our Hearts, Your Strength',
+							description: 'An ally gains strength from their friends.',
+							type: AbilityLogic.type.createManeuver(),
+							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+							distance: [ AbilityLogic.distance.createRanged(10) ],
+							target: 'Self and one ally',
+							cost: 5,
+							effect: 'Until the end of the encounter or the target is dying, whenever the target starts their turn, they gain a bonus to speed and damage equal to the number of allies within 10 squares of them. This bonus lasts until the start of their next turn.'
+						})
+					})
+				]
+			},
+			{
+				level: 3,
+				features: []
 			}
 		]
 	};
@@ -194,10 +336,17 @@ Additionally, when you are present at the start of a negotiation, the NPC’s pa
 					FeatureLogic.feature.createMultipleFeature({
 						id: 'domain-nature-1',
 						features: [
-							FeatureLogic.feature.createFeature({
-								id: 'domain-nature-1-1',
-								name: 'Animal Spirit',
-								description: 'As an action, you conjure an animal spirit that takes the form of any animal you have seen. The incorporeal animal can’t physically interact with the world, but they have a speed of 5 (fly) and can move through mundane objects. While you are within 20 squares of the spirit, you can sense everything an animal of their form could sense, in addition to sensing your own surroundings. You can dismiss the spirit at any time (no action required).'
+							FeatureLogic.feature.createAbilityFeature({
+								ability: AbilityLogic.createAbility({
+									id: 'domain-nature-1-1',
+									name: 'Faithful Friend',
+									description: 'An animal spirit is drawn to you, sharing their senses and serving you faithfully.',
+									type: AbilityLogic.type.createAction(),
+									keywords: [ AbilityKeyword.Magic ],
+									distance: [ AbilityLogic.distance.createSelf() ],
+									target: 'Self',
+									effect: 'You conjure a spirit that takes the form of any animal you have seen. The incorporeal animal can’t physically interact with the world, but they have a speed of 5 and can fly. While you are within 10 squares of the spirit, you can sense everything an animal of their type would sense, in addition to sensing your own surroundings. You can dismiss the spirit at any time (no action required). If the spirit takes any damage, it is dismissed and you take 1d10 psychic damage, which can’t be reduced in any way.'
+								})
 							}),
 							FeatureLogic.feature.createSkillChoiceFeature({
 								id: 'domain-nature-1-2',
@@ -206,6 +355,33 @@ Additionally, when you are present at the start of a negotiation, the NPC’s pa
 						]
 					})
 				]
+			},
+			{
+				level: 2,
+				features: [
+					FeatureLogic.feature.createAbilityFeature({
+						ability: AbilityLogic.createAbility({
+							id: 'domain-nature-2',
+							name: 'Nature Judges Thee',
+							description: 'Mystical thorned vines appear at your bidding and bind your foes.',
+							type: AbilityLogic.type.createAction(),
+							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+							distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
+							target: 'Each enemy in the area',
+							cost: 5,
+							powerRoll: AbilityLogic.createPowerRoll({
+								characteristic: [ Characteristic.Intuition ],
+								tier1: '2 damage; A < weak, restrained (save ends)',
+								tier2: '3 damage; A < average, restrained (save ends)',
+								tier3: '7 damage; A < strong, restrained (save ends)'
+							})
+						})
+					})
+				]
+			},
+			{
+				level: 3,
+				features: []
 			}
 		]
 	};
@@ -223,8 +399,8 @@ Additionally, when you are present at the start of a negotiation, the NPC’s pa
 						features: [
 							FeatureLogic.feature.createFeature({
 								id: 'domain-protection-1-1',
-								name: 'Alertness Ward',
-								description: 'You exude a magic aura of awareness, granting you and each ally within 2 squares of you an edge on tests that use the Alertness skill.'
+								name: 'Protective Circle',
+								description: 'You can spend 10 minutes working while uninterrupted to create a protective circle on the ground large enough to hold a size 1 creature. The circle lasts for 24 hours or until you dismiss it (no action required). Only creatures you designate at the time of drawing the circle can enter and exit the area. While in the protective area, a creature can’t be targeted by strikes.'
 							}),
 							FeatureLogic.feature.createSkillChoiceFeature({
 								id: 'domain-protection-1-2',
@@ -233,6 +409,30 @@ Additionally, when you are present at the start of a negotiation, the NPC’s pa
 						]
 					})
 				]
+			},
+			{
+				level: 2,
+				features: [
+					FeatureLogic.feature.createAbilityFeature({
+						ability: AbilityLogic.createAbility({
+							id: 'domain-protection-2',
+							name: 'Sacred Bond',
+							description: 'You forge a divine connection between two creatures.',
+							type: AbilityLogic.type.createManeuver(),
+							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+							distance: [ AbilityLogic.distance.createRanged(10) ],
+							target: 'Self and one ally',
+							cost: 5,
+							effect: `
+Until the end of the encounter, whenever one target takes damage, the other target can use a free triggered action to take the damage instead. The original target suffers any effects associated with the damage.
+Additionally, whenever one target spends a Recovery, the other target can use a free triggered action to spend a Recovery.`
+						})
+					})
+				]
+			},
+			{
+				level: 3,
+				features: []
 			}
 		]
 	};
@@ -250,14 +450,14 @@ Additionally, when you are present at the start of a negotiation, the NPC’s pa
 						features: [
 							FeatureLogic.feature.createFeature({
 								id: 'domain-storm-1-1',
-								name: 'Control Weather',
+								name: 'Blessing of Fortunate Weather',
 								description: `
-When you finish a respite, you can decide the weather conditions in the local area. Those weather conditions follow you through any mundane outdoors locations where you travel until the end of your next respite.
-Choose one of the following types of weather:
-* **Clear**: You and your allies each gain an edge on tests that use the Search or Navigate skills.
-* **Foggy**: You and your allies each gain an edge on tests that use the Hide skill.
-* **Overcast**: You and your allies each gain an edge on tests that use the Endurance skill.
-* **Precipitation**: When the ground is muddy or snowy, you and your allies each gain an edge on tests that use the Track skill.`
+When you finish a respite, you can decide the weather conditions within 100 squares of you. If you are in the same area as a creature using this or a similar feature, both features cancel each other where their areas overlap. Until you finish another respite, the weather conditions you establish follow you through any mundane outdoor locations.
+Choose one of the following types of weather, each of which grants a benefit to you and your allies:
+* **Clear**: You and each ally gain an edge on tests that use the Search or Navigate skills.
+* **Foggy**: You and each ally gain an edge on tests that use the Hide skill.
+* **Overcast**: You and each ally gain an edge on tests that use the Endurance skill.
+* **Precipitation**: When the ground is muddy or snowy, you and each ally gain an edge on tests that use the Track skill.`
 							}),
 							FeatureLogic.feature.createSkillChoiceFeature({
 								id: 'domain-storm-1-2',
@@ -266,6 +466,33 @@ Choose one of the following types of weather:
 						]
 					})
 				]
+			},
+			{
+				level: 2,
+				features: [
+					FeatureLogic.feature.createAbilityFeature({
+						ability: AbilityLogic.createAbility({
+							id: 'domain-storm-2',
+							name: 'Saint’s Tempest',
+							description: 'A raging storm appears, striking your foes with lightning and throwing them around with wind.',
+							type: AbilityLogic.type.createAction(),
+							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+							distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
+							target: 'Each enemy in the area',
+							cost: 5,
+							powerRoll: AbilityLogic.createPowerRoll({
+								characteristic: [ Characteristic.Intuition ],
+								tier1: '2 lightning damage; vertical slide 1',
+								tier2: '5 lightning damage; vertical slide 2',
+								tier3: '7 lightning damage; vertical slide 3'
+							})
+						})
+					})
+				]
+			},
+			{
+				level: 3,
+				features: []
 			}
 		]
 	};
@@ -284,7 +511,7 @@ Choose one of the following types of weather:
 							FeatureLogic.feature.createFeature({
 								id: 'domain-sun-1-1',
 								name: 'Inner Light',
-								description: 'Each time you finish a respite, you can choose yourself or another character who is also ending a respite to gain the benefit of a divine ritual. As you perform the ritual, you place a ray of morning light into the target’s soul, granting the target an edge on resistance rolls. This benefit lasts until you complete another respite.'
+								description: 'Each time you finish a respite, you can choose yourself or an ally who is also ending a respite to gain the benefit of a divine ritual. As you perform the ritual, you place a ray of morning light into the chosen character’s soul, granting them a +1 bonus on saving throws. This benefit lasts until you finish another respite.'
 							}),
 							FeatureLogic.feature.createSkillChoiceFeature({
 								id: 'domain-sun-1-2',
@@ -293,6 +520,34 @@ Choose one of the following types of weather:
 						]
 					})
 				]
+			},
+			{
+				level: 2,
+				features: [
+					FeatureLogic.feature.createAbilityFeature({
+						ability: AbilityLogic.createAbility({
+							id: 'domain-sun-2',
+							name: 'Morning Light',
+							description: 'Light shines at your command, burning your foes and blessing your allies.',
+							type: AbilityLogic.type.createAction(),
+							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+							distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
+							target: 'Each enemy in the area',
+							cost: 5,
+							powerRoll: AbilityLogic.createPowerRoll({
+								characteristic: [ Characteristic.Intuition ],
+								tier1: '4 fire damage',
+								tier2: '6 fire damage',
+								tier3: '10 fire damage'
+							}),
+							effect: 'Each ally in the area deals fire damage equal to your Intuition score with their next strike made before the end of their next turn.'
+						})
+					})
+				]
+			},
+			{
+				level: 3,
+				features: []
 			}
 		]
 	};
@@ -310,7 +565,7 @@ Choose one of the following types of weather:
 						features: [
 							FeatureLogic.feature.createFeature({
 								id: 'domain-trickery-1-1',
-								name: 'Divine Thievery',
+								name: 'Inspired Deception',
 								description: 'The gods favor your thievery with magic. Whenever you make a test that uses a skill you have from the intrigue skill group, you can use Intuition on the test instead of another characteristic.'
 							}),
 							FeatureLogic.feature.createSkillChoiceFeature({
@@ -320,6 +575,28 @@ Choose one of the following types of weather:
 						]
 					})
 				]
+			},
+			{
+				level: 2,
+				features: [
+					FeatureLogic.feature.createAbilityFeature({
+						ability: AbilityLogic.createAbility({
+							id: 'domain-trickery-2',
+							name: 'Divine Comedy',
+							description: 'You and your allies swap places to confound your foes.',
+							type: AbilityLogic.type.createManeuver(),
+							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+							distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
+							target: 'Each ally in the area',
+							cost: 5,
+							effect: 'Each target can choose another creature within 5 squares of them, then swap places with that creature. The creature they choose must be able to fit into the space they leave and vice versa.'
+						})
+					})
+				]
+			},
+			{
+				level: 3,
+				features: []
 			}
 		]
 	};
@@ -337,8 +614,8 @@ Choose one of the following types of weather:
 						features: [
 							FeatureLogic.feature.createFeature({
 								id: 'domain-war-1-1',
-								name: 'Ritual Of Preparation',
-								description: 'As a respite action, you can bless a weapon. Any creature who wields the weapon gains a +1 bonus to damage with abilities that use the weapon. This benefit lasts until you complete your next respite.'
+								name: 'Sanctified Weapon',
+								description: 'As a respite activity, you can bless a weapon. Any creature who wields the weapon gains a +1 rolled damage bonus with abilities that use the weapon. This benefit lasts until you finish another respite.'
 							}),
 							FeatureLogic.feature.createSkillChoiceFeature({
 								id: 'domain-war-1-2',
@@ -347,6 +624,28 @@ Choose one of the following types of weather:
 						]
 					})
 				]
+			},
+			{
+				level: 2,
+				features: [
+					FeatureLogic.feature.createAbilityFeature({
+						ability: AbilityLogic.createAbility({
+							id: 'domain-war-2',
+							name: 'Blessing of Insight',
+							description: 'The gods grant insight revealing where best to strike your enemies.',
+							type: AbilityLogic.type.createManeuver(),
+							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+							distance: [ AbilityLogic.distance.createRanged(10) ],
+							target: 'Self and each ally in the area',
+							cost: 5,
+							effect: 'Until the end of the encounter or until you are dying, each target gains a surge at the end of each of your turns.'
+						})
+					})
+				]
+			},
+			{
+				level: 3,
+				features: []
 			}
 		]
 	};

@@ -3,18 +3,22 @@
 ## Updating Forge Steel to Backer Packet #2
 
 **Add and update element data**
-* Update classes
-  * Conduit
-  * Elementalist
-* Add new classes
-  * Censor
-  * Null
-  * Talent
-  * Troubadour
-* Update / add complications
+* Classes
+  * Update classes
+    * Elementalist
+  * Add new classes
+    * Censor
+    * Null
+    * Talent
+    * Troubadour
+* Complications
+  * Update existing complications
+  * Add new complications
 * Add titles
 * Add items
-* Add / update monsters
+* Monsters
+  * Update existing monsters
+  * Add new monsters
 
 **Miscellaneous changes**
 * Some classes have only 1 primary characteristic - this means choosing their characteristic arrays will be a lot more tricky

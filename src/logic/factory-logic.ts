@@ -130,7 +130,7 @@ export class FactoryLogic {
 			subclassName: '',
 			subclassCount: 1,
 			primaryCharacteristics: [],
-			featuresByLevel: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(n => ({ level: n, features: [] })),
+			featuresByLevel: [ 1, 2, 3 ].map(n => ({ level: n, features: [] })),
 			abilities: [],
 			subclasses: [],
 			level: 1,
@@ -143,7 +143,7 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
-			featuresByLevel: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(n => ({ level: n, features: [], optionalFeatures: [] })),
+			featuresByLevel: [ 1, 2, 3 ].map(n => ({ level: n, features: [], optionalFeatures: [] })),
 			selected: false
 		};
 	};
@@ -162,7 +162,7 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
-			featuresByLevel: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(n => ({ level: n, features: [], optionalFeatures: [] }))
+			featuresByLevel: [ 1, 2, 3 ].map(n => ({ level: n, features: [], optionalFeatures: [] }))
 		};
 	};
 

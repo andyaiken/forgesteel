@@ -183,7 +183,7 @@ export class FeatureLogic {
 		createMultipleFeature: (data: { id: string, name?: string, description?: string, features: Feature[] }) => {
 			return {
 				id: data.id,
-				name: data.name || 'Multiple Features',
+				name: data.name || data.features.map(f => f.name || 'Unnamed Feature').join(', '),
 				description: data.description || '',
 				type: FeatureType.Multiple,
 				data: {

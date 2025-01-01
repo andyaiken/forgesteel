@@ -13,6 +13,7 @@ import { CulturePanel } from '../../../panels/elements/culture-panel/culture-pan
 import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
+import { Format } from '../../../../utils/format';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
@@ -62,13 +63,13 @@ const useTabKey = (): [SourcebookElementKind, (tabKey: SourcebookElementKind) =>
 	const setTabKey = (tabKey: SourcebookElementKind) => {
 		navigation.goToLibraryList(tabKey);
 	};
-	return [ tab ?? 'Ancestry', setTabKey ];
+	return [ tab ?? 'ancestry', setTabKey ];
 };
 
 export const LibraryListPage = (props: Props) => {
 	const [ tabKey, setTabKey ] = useTabKey();
 	const [ previousTab, setPreviousTab ] = useState(tabKey);
-	const [ element, setElement ] = useState<SourcebookElementKind>('Ancestry');
+	const [ element, setElement ] = useState<SourcebookElementKind>('ancestry');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? props.sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
 
@@ -593,8 +594,11 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	try {
-		const elementOptions = [ 'Ancestry', 'Culture', 'Career', [ 'HeroClass', 'Class' ], 'Complication', 'Domain', 'Kit', 'Perk', 'Title', 'Item', [ 'MonsterGroup', 'Monster Group' ] ]
-			.map(e => Array.isArray(e) ? { label: e[1], value: e[0] } : ({ label: e, value: e }));
+		const elementOptions = [ 'ancestry', 'culture', 'career', 'class', 'complication', 'domain', 'kit', 'perk', 'title', 'item', 'monster-group' ]
+			.map(e => ({
+				value: e,
+				label: Format.capitalize(e, '-')
+			}));
 		const sourcebookOptions = props.sourcebooks.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
 
 		const ancestries = getAncestries();
@@ -688,7 +692,7 @@ export const LibraryListPage = (props: Props) => {
 						activeKey={tabKey}
 						items={[
 							{
-								key: 'Ancestry',
+								key: 'ancestry',
 								label: (
 									<div className='section-header'>
 										<div className='section-title'>Ancestries</div>
@@ -698,7 +702,7 @@ export const LibraryListPage = (props: Props) => {
 								children: getAncestriesSection(ancestries)
 							},
 							{
-								key: 'Culture',
+								key: 'culture',
 								label: (
 									<div className='section-header'>
 										<div className='section-title'>Cultures</div>
@@ -708,7 +712,7 @@ export const LibraryListPage = (props: Props) => {
 								children: getCulturesSection(cultures)
 							},
 							{
-								key: 'Career',
+								key: 'career',
 								label: (
 									<div className='section-header'>
 										<div className='section-title'>Careers</div>
@@ -718,7 +722,7 @@ export const LibraryListPage = (props: Props) => {
 								children: getCareersSection(careers)
 							},
 							{
-								key: 'HeroClass',
+								key: 'class',
 								label: (
 									<div className='section-header'>
 										<div className='section-title'>Classes</div>
@@ -728,7 +732,7 @@ export const LibraryListPage = (props: Props) => {
 								children: getClassesSection(classes)
 							},
 							{
-								key: 'Complication',
+								key: 'complication',
 								label: (
 									<div className='section-header'>
 										<div className='section-title'>Complications</div>
@@ -738,7 +742,7 @@ export const LibraryListPage = (props: Props) => {
 								children: getComplicationsSection(complications)
 							},
 							{
-								key: 'Kit',
+								key: 'kit',
 								label: (
 									<div className='section-header'>
 										<div className='section-title'>Kits</div>
@@ -748,7 +752,7 @@ export const LibraryListPage = (props: Props) => {
 								children: getKitsSection(kits)
 							},
 							{
-								key: 'Domain',
+								key: 'domain',
 								label: (
 									<div className='section-header'>
 										<div className='section-title'>Domains</div>
@@ -758,7 +762,7 @@ export const LibraryListPage = (props: Props) => {
 								children: getDomainsSection(domains)
 							},
 							{
-								key: 'Perk',
+								key: 'perk',
 								label: (
 									<div className='section-header'>
 										<div className='section-title'>Perks</div>
@@ -768,7 +772,7 @@ export const LibraryListPage = (props: Props) => {
 								children: getPerksSection(perks)
 							},
 							{
-								key: 'Title',
+								key: 'title',
 								label: (
 									<div className='section-header'>
 										<div className='section-title'>Titles</div>
@@ -778,7 +782,7 @@ export const LibraryListPage = (props: Props) => {
 								children: getTitlesSection(titles)
 							},
 							{
-								key: 'Item',
+								key: 'item',
 								label: (
 									<div className='section-header'>
 										<div className='section-title'>Items</div>
@@ -788,7 +792,7 @@ export const LibraryListPage = (props: Props) => {
 								children: getItemsSection(items)
 							},
 							{
-								key: 'MonsterGroup',
+								key: 'monster-group',
 								label: (
 									<div className='section-header'>
 										<div className='section-title'>Monsters</div>

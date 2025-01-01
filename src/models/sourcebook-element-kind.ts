@@ -1,1 +1,1 @@
-export type SourcebookElementKind = 'Ancestry' | 'Culture' | 'Career' | 'HeroClass' | 'Complication' | 'Kit' | 'Domain' | 'Perk' | 'Title' | 'Item' | 'MonsterGroup';
+export type SourcebookElementKind = 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'kit' | 'domain' | 'perk' | 'title' | 'item' | 'monster-group';

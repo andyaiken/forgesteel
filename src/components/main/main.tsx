@@ -192,34 +192,34 @@ export const Main = (props: Props) => {
 	const createHomebrewElement = async (type: SourcebookElementKind, sourcebookID: string | null) => {
 		const sourcebook = homebrewSourcebooks.find(cs => cs.id === sourcebookID) || null;
 		switch (type) {
-			case 'Ancestry':
+			case 'ancestry':
 				await createAncestry(null, sourcebook);
 				break;
-			case 'Culture':
+			case 'culture':
 				await createCulture(null, sourcebook);
 				break;
-			case 'Career':
+			case 'career':
 				await createCareer(null, sourcebook);
 				break;
-			case 'HeroClass':
+			case 'class':
 				await createClass(null, sourcebook);
 				break;
-			case 'Complication':
+			case 'complication':
 				await createComplication(null, sourcebook);
 				break;
-			case 'Kit':
+			case 'kit':
 				await createKit(null, sourcebook);
 				break;
-			case 'Perk':
+			case 'perk':
 				await createPerk(null, sourcebook);
 				break;
-			case 'Title':
+			case 'title':
 				await createTitle(null, sourcebook);
 				break;
-			case 'Item':
+			case 'item':
 				await createItem(null, sourcebook);
 				break;
-			case 'MonsterGroup':
+			case 'monster-group':
 				await createMonsterGroup(null, sourcebook);
 				break;
 		}
@@ -540,17 +540,17 @@ export const Main = (props: Props) => {
 		}
 	};
 
-	function editHomebrewElement(kind: 'Ancestry', element: Ancestry, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'Culture', element: Culture, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'Career', element: Career, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'HeroClass', element: HeroClass, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'Complication', element: Complication, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'Domain', element: Domain, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'Kit', element: Kit, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'Perk', element: Perk, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'Title', element: Title, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'Item', element: Item, sourcebook: Sourcebook): void;
-	function editHomebrewElement(kind: 'MonsterGroup', element: MonsterGroup, sourcebook: Sourcebook): void;
+	function editHomebrewElement(kind: 'ancestry', element: Ancestry, sourcebook: Sourcebook): void;
+	function editHomebrewElement(kind: 'culture', element: Culture, sourcebook: Sourcebook): void;
+	function editHomebrewElement(kind: 'career', element: Career, sourcebook: Sourcebook): void;
+	function editHomebrewElement(kind: 'class', element: HeroClass, sourcebook: Sourcebook): void;
+	function editHomebrewElement(kind: 'complication', element: Complication, sourcebook: Sourcebook): void;
+	function editHomebrewElement(kind: 'domain', element: Domain, sourcebook: Sourcebook): void;
+	function editHomebrewElement(kind: 'kit', element: Kit, sourcebook: Sourcebook): void;
+	function editHomebrewElement(kind: 'perk', element: Perk, sourcebook: Sourcebook): void;
+	function editHomebrewElement(kind: 'title', element: Title, sourcebook: Sourcebook): void;
+	function editHomebrewElement(kind: 'item', element: Item, sourcebook: Sourcebook): void;
+	function editHomebrewElement(kind: 'monster-group', element: MonsterGroup, sourcebook: Sourcebook): void;
 	function editHomebrewElement(
 		kind: SourcebookElementKind,
 		element: Ancestry | Culture | Career | HeroClass | Complication | Domain | Kit | Perk | Title | Item | MonsterGroup,
@@ -561,47 +561,47 @@ export const Main = (props: Props) => {
 	}
 
 	const editAncestry = (ancestry: Ancestry, sourcebook: Sourcebook) => {
-		editHomebrewElement('Ancestry', ancestry, sourcebook);
+		editHomebrewElement('ancestry', ancestry, sourcebook);
 	};
 
 	const editCulture = (culture: Culture, sourcebook: Sourcebook) => {
-		editHomebrewElement('Culture', culture, sourcebook);
+		editHomebrewElement('culture', culture, sourcebook);
 	};
 
 	const editCareer = (career: Career, sourcebook: Sourcebook) => {
-		editHomebrewElement('Career', career, sourcebook);
+		editHomebrewElement('career', career, sourcebook);
 	};
 
 	const editClass = (heroClass: HeroClass, sourcebook: Sourcebook) => {
-		editHomebrewElement('HeroClass', heroClass, sourcebook);
+		editHomebrewElement('class', heroClass, sourcebook);
 	};
 
 	const editComplication = (complication: Complication, sourcebook: Sourcebook) => {
-		editHomebrewElement('Complication', complication, sourcebook);
+		editHomebrewElement('complication', complication, sourcebook);
 	};
 
 	const editDomain = (domain: Domain, sourcebook: Sourcebook) => {
-		editHomebrewElement('Domain', domain, sourcebook);
+		editHomebrewElement('domain', domain, sourcebook);
 	};
 
 	const editKit = (kit: Kit, sourcebook: Sourcebook) => {
-		editHomebrewElement('Kit', kit, sourcebook);
+		editHomebrewElement('kit', kit, sourcebook);
 	};
 
 	const editPerk = (perk: Perk, sourcebook: Sourcebook) => {
-		editHomebrewElement('Perk', perk, sourcebook);
+		editHomebrewElement('perk', perk, sourcebook);
 	};
 
 	const editTitle = (title: Title, sourcebook: Sourcebook) => {
-		editHomebrewElement('Title', title, sourcebook);
+		editHomebrewElement('title', title, sourcebook);
 	};
 
 	const editItem = (item: Item, sourcebook: Sourcebook) => {
-		editHomebrewElement('Item', item, sourcebook);
+		editHomebrewElement('item', item, sourcebook);
 	};
 
 	const editMonsterGroup = (monsterGroup: MonsterGroup, sourcebook: Sourcebook) => {
-		editHomebrewElement('MonsterGroup', monsterGroup, sourcebook);
+		editHomebrewElement('monster-group', monsterGroup, sourcebook);
 	};
 
 	const deleteSourcebookElement = async (kind: SourcebookElementKind, elementId: string) => {
@@ -717,7 +717,7 @@ export const Main = (props: Props) => {
 				createHomebrew={sourcebook => createAncestry(ancestry, sourcebook)}
 				export={format => Utils.export([ ancestry.id ], ancestry.name || 'Ancestry', ancestry, 'ancestry', format)}
 				edit={() => editAncestry(ancestry, container as Sourcebook)}
-				delete={() => deleteSourcebookElement('Ancestry', ancestry.id)}
+				delete={() => deleteSourcebookElement('ancestry', ancestry.id)}
 			/>
 		);
 	};
@@ -735,7 +735,7 @@ export const Main = (props: Props) => {
 				createHomebrew={sourcebook => createCulture(culture, sourcebook)}
 				export={format => Utils.export([ culture.id ], culture.name || 'Culture', culture, 'culture', format)}
 				edit={() => editCulture(culture, container as Sourcebook)}
-				delete={() => deleteSourcebookElement('Culture', culture.id)}
+				delete={() => deleteSourcebookElement('culture', culture.id)}
 			/>
 		);
 	};
@@ -753,7 +753,7 @@ export const Main = (props: Props) => {
 				createHomebrew={sourcebook => createCareer(career, sourcebook)}
 				export={format => Utils.export([ career.id ], career.name || 'Career', career, 'career', format)}
 				edit={() => editCareer(career, container as Sourcebook)}
-				delete={() => deleteSourcebookElement('Career', career.id)}
+				delete={() => deleteSourcebookElement('career', career.id)}
 			/>
 		);
 	};
@@ -771,7 +771,7 @@ export const Main = (props: Props) => {
 				createHomebrew={sourcebook => createClass(heroClass, sourcebook)}
 				export={format => Utils.export([ heroClass.id ], heroClass.name || 'Class', heroClass, 'class', format)}
 				edit={() => editClass(heroClass, container as Sourcebook)}
-				delete={() => deleteSourcebookElement('HeroClass', heroClass.id)}
+				delete={() => deleteSourcebookElement('class', heroClass.id)}
 			/>
 		);
 	};
@@ -789,7 +789,7 @@ export const Main = (props: Props) => {
 				createHomebrew={sourcebook => createComplication(complication, sourcebook)}
 				export={format => Utils.export([ complication.id ], complication.name || 'Complication', complication, 'complication', format)}
 				edit={() => editComplication(complication, container as Sourcebook)}
-				delete={() => deleteSourcebookElement('Complication', complication.id)}
+				delete={() => deleteSourcebookElement('complication', complication.id)}
 			/>
 		);
 	};
@@ -807,7 +807,7 @@ export const Main = (props: Props) => {
 				createHomebrew={sourcebook => createDomain(domain, sourcebook)}
 				export={format => Utils.export([ domain.id ], domain.name || 'Domain', domain, 'domain', format)}
 				edit={() => editDomain(domain, container as Sourcebook)}
-				delete={() => deleteSourcebookElement('Domain', domain.id)}
+				delete={() => deleteSourcebookElement('domain', domain.id)}
 			/>
 		);
 	};
@@ -825,7 +825,7 @@ export const Main = (props: Props) => {
 				createHomebrew={sourcebook => createKit(kit, sourcebook)}
 				export={format => Utils.export([ kit.id ], kit.name || 'Kit', kit, 'kit', format)}
 				edit={() => editKit(kit, container as Sourcebook)}
-				delete={() => deleteSourcebookElement('Kit', kit.id)}
+				delete={() => deleteSourcebookElement('kit', kit.id)}
 			/>
 		);
 	};
@@ -843,7 +843,7 @@ export const Main = (props: Props) => {
 				createHomebrew={sourcebook => createPerk(perk, sourcebook)}
 				export={format => Utils.export([ perk.id ], perk.name || 'Perk', perk, 'perk', format)}
 				edit={() => editPerk(perk, container as Sourcebook)}
-				delete={() => deleteSourcebookElement('Perk', perk.id)}
+				delete={() => deleteSourcebookElement('perk', perk.id)}
 			/>
 		);
 	};
@@ -861,7 +861,7 @@ export const Main = (props: Props) => {
 				createHomebrew={sourcebook => createTitle(title, sourcebook)}
 				export={format => Utils.export([ title.id ], title.name || 'Title', title, 'title', format)}
 				edit={() => editTitle(title, container as Sourcebook)}
-				delete={() => deleteSourcebookElement('Title', title.id)}
+				delete={() => deleteSourcebookElement('title', title.id)}
 			/>
 		);
 	};
@@ -879,7 +879,7 @@ export const Main = (props: Props) => {
 				createHomebrew={sourcebook => createItem(item, sourcebook)}
 				export={format => Utils.export([ item.id ], item.name || 'Item', item, 'item', format)}
 				edit={() => editItem(item, container as Sourcebook)}
-				delete={() => deleteSourcebookElement('Item', item.id)}
+				delete={() => deleteSourcebookElement('item', item.id)}
 			/>
 		);
 	};
@@ -898,7 +898,7 @@ export const Main = (props: Props) => {
 				createHomebrew={sourcebook => createMonsterGroup(monsterGroup, sourcebook)}
 				export={format => Utils.export([ monsterGroup.id ], monsterGroup.name || 'Monster Group', monsterGroup, 'monster-group', format)}
 				edit={() => editMonsterGroup(monsterGroup, container as Sourcebook)}
-				delete={() => deleteSourcebookElement('MonsterGroup', monsterGroup.id)}
+				delete={() => deleteSourcebookElement('monster-group', monsterGroup.id)}
 			/>
 		);
 	};
@@ -1061,7 +1061,7 @@ export const Main = (props: Props) => {
 					/>
 					<Route
 						path='edit/:heroId'
-						element={<Navigate to='Ancestry' replace={true} />}
+						element={<Navigate to='ancestry' replace={true} />}
 					/>
 					<Route
 						path='edit/:heroId/:tab'
@@ -1084,7 +1084,7 @@ export const Main = (props: Props) => {
 					/>
 					<Route
 						path='list'
-						element={<Navigate to='Ancestry' replace={true} />}
+						element={<Navigate to='ancestry' replace={true} />}
 					/>
 					<Route
 						path='list/:tab'

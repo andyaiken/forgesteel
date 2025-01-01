@@ -1266,7 +1266,7 @@ export const LibraryEditPage = (props: Props) => {
 
 	const getEditSection = () => {
 		switch (kind) {
-			case 'Ancestry':
+			case 'ancestry':
 				return (
 					<Tabs
 						items={[
@@ -1283,7 +1283,7 @@ export const LibraryEditPage = (props: Props) => {
 						]}
 					/>
 				);
-			case 'Culture':
+			case 'culture':
 				return (
 					<Tabs
 						items={[
@@ -1300,7 +1300,7 @@ export const LibraryEditPage = (props: Props) => {
 						]}
 					/>
 				);
-			case 'Career':
+			case 'career':
 				return (
 					<Tabs
 						items={[
@@ -1322,7 +1322,7 @@ export const LibraryEditPage = (props: Props) => {
 						]}
 					/>
 				);
-			case 'HeroClass':
+			case 'class':
 				return (
 					<Tabs
 						items={[
@@ -1354,7 +1354,7 @@ export const LibraryEditPage = (props: Props) => {
 						]}
 					/>
 				);
-			case 'Complication':
+			case 'complication':
 				return (
 					<Tabs
 						items={[
@@ -1371,7 +1371,7 @@ export const LibraryEditPage = (props: Props) => {
 						]}
 					/>
 				);
-			case 'Domain':
+			case 'domain':
 				return (
 					<Tabs
 						items={[
@@ -1388,7 +1388,7 @@ export const LibraryEditPage = (props: Props) => {
 						]}
 					/>
 				);
-			case 'Kit':
+			case 'kit':
 				return (
 					<Tabs
 						items={[
@@ -1420,7 +1420,7 @@ export const LibraryEditPage = (props: Props) => {
 						]}
 					/>
 				);
-			case 'Perk':
+			case 'perk':
 				return (
 					<FeatureEditPanel
 						feature={element as Perk}
@@ -1432,7 +1432,7 @@ export const LibraryEditPage = (props: Props) => {
 						}}
 					/>
 				);
-			case 'Title':
+			case 'title':
 				return (
 					<Tabs
 						items={[
@@ -1454,7 +1454,7 @@ export const LibraryEditPage = (props: Props) => {
 						]}
 					/>
 				);
-			case 'Item':
+			case 'item':
 				return (
 					<Tabs
 						items={[
@@ -1471,7 +1471,7 @@ export const LibraryEditPage = (props: Props) => {
 						]}
 					/>
 				);
-			case 'MonsterGroup':
+			case 'monster-group':
 				return (
 					<Tabs
 						items={[
@@ -1505,27 +1505,27 @@ export const LibraryEditPage = (props: Props) => {
 
 	const getPreview = () => {
 		switch (kind) {
-			case 'Ancestry':
+			case 'ancestry':
 				return <AncestryPanel ancestry={element as Ancestry} mode={PanelMode.Full} />;
-			case 'Culture':
+			case 'culture':
 				return <CulturePanel culture={element as Culture} mode={PanelMode.Full} />;
-			case 'Career':
+			case 'career':
 				return <CareerPanel career={element as Career} mode={PanelMode.Full} />;
-			case 'HeroClass':
+			case 'class':
 				return <ClassPanel heroClass={element as HeroClass} mode={PanelMode.Full} />;
-			case 'Complication':
+			case 'complication':
 				return <ComplicationPanel complication={element as Complication} mode={PanelMode.Full} />;
-			case 'Domain':
+			case 'domain':
 				return <DomainPanel domain={element as Domain} mode={PanelMode.Full} />;
-			case 'Kit':
+			case 'kit':
 				return <KitPanel kit={element as Kit} mode={PanelMode.Full} />;
-			case 'Perk':
+			case 'perk':
 				return <PerkPanel perk={element as Perk} mode={PanelMode.Full} />;
-			case 'Title':
+			case 'title':
 				return <TitlePanel title={element as Title} mode={PanelMode.Full} />;
-			case 'Item':
+			case 'item':
 				return <ItemPanel item={element as Item} mode={PanelMode.Full} />;
-			case 'MonsterGroup':
+			case 'monster-group':
 				return <MonsterGroupPanel monsterGroup={element as MonsterGroup} mode={PanelMode.Full} />;
 		}
 

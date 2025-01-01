@@ -18,6 +18,7 @@ import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeaturePanel } from '../../../panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
+import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
@@ -33,15 +34,6 @@ import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
 import './hero-edit-page.scss';
-
-enum Page {
-	Ancestry = 'Ancestry',
-	Culture = 'Culture',
-	Career = 'Career',
-	Class = 'Class',
-	Complication = 'Complication',
-	Details = 'Details'
-}
 
 enum PageState {
 	Optional = 'Optional',
@@ -59,7 +51,7 @@ interface Props {
 	cancelChanges: (heroId: string) => void;
 }
 
-type HeroTab = 'Ancestry' | 'Culture' | 'Career' | 'Class' | 'Complication' | 'Details';
+type HeroTab = 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'details';
 
 
 export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
@@ -74,15 +66,15 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 	const [ dirty, setDirty ] = useState<boolean>(false);
 
 	try {
-		const getPageState = (page: Page) => {
+		const getPageState = (page: HeroTab) => {
 			switch (page) {
-				case Page.Ancestry:
+				case 'ancestry':
 					if (hero.ancestry) {
 						return (hero.ancestry.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
-				case Page.Culture:
+				case 'culture':
 					if (hero.culture) {
 						if (hero.culture.languages.length === 0) {
 							return PageState.InProgress;
@@ -104,13 +96,13 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 					} else {
 						return PageState.NotStarted;
 					}
-				case Page.Career:
+				case 'career':
 					if (hero.career) {
 						return (hero.career.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
-				case Page.Class:
+				case 'class':
 					if (hero.class) {
 						if (hero.class.characteristics.every(ch => ch.value === 0)) {
 							return PageState.InProgress;
@@ -134,13 +126,13 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 					} else {
 						return PageState.NotStarted;
 					}
-				case Page.Complication:
+				case 'complication':
 					if (hero.complication) {
 						return (hero.complication.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.Optional;
 					}
-				case Page.Details:
+				case 'details':
 					if (hero.name) {
 						return PageState.Completed;
 					} else {
@@ -330,7 +322,7 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 
 		const getContent = () => {
 			switch (page) {
-				case Page.Ancestry:
+				case 'ancestry':
 					return (
 						<AncestrySection
 							hero={hero}
@@ -339,7 +331,7 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 							setFeatureData={setFeatureData}
 						/>
 					);
-				case Page.Culture:
+				case 'culture':
 					return (
 						<CultureSection
 							hero={hero}
@@ -352,7 +344,7 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 							setFeatureData={setFeatureData}
 						/>
 					);
-				case Page.Career:
+				case 'career':
 					return (
 						<CareerSection
 							hero={hero}
@@ -362,7 +354,7 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 							setFeatureData={setFeatureData}
 						/>
 					);
-				case Page.Class:
+				case 'class':
 					return (
 						<ClassSection
 							hero={hero}
@@ -374,7 +366,7 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 							setFeatureData={setFeatureData}
 						/>
 					);
-				case Page.Complication:
+				case 'complication':
 					return (
 						<ComplicationSection
 							hero={hero}
@@ -383,7 +375,7 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 							setFeatureData={setFeatureData}
 						/>
 					);
-				case Page.Details:
+				case 'details':
 					return (
 						<DetailsSection
 							hero={hero}
@@ -409,19 +401,19 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 				<div className='hero-edit-page-content'>
 					<div className='page-selector'>
 						<Segmented<HeroTab>
-							options={[
-								Page.Ancestry,
-								Page.Culture,
-								Page.Career,
-								Page.Class,
-								Page.Complication,
-								Page.Details
-							].map(page => ({
-								value: page,
+							options={([
+								'ancestry',
+								'culture',
+								'career',
+								'class',
+								'complication',
+								'details'
+							] as const).map(tab => ({
+								value: tab,
 								label: (
-									<div className={`page-button ${getPageState(page).toLowerCase().replace(' ', '-')}`}>
-										<div className='page-button-title'>{page}</div>
-										<div className='page-button-subtitle'>{getPageState(page)}</div>
+									<div className={`page-button ${getPageState(tab).toLowerCase().replace(' ', '-')}`}>
+										<div className='page-button-title'>{Format.capitalize(tab, '-')}</div>
+										<div className='page-button-subtitle'>{getPageState(tab)}</div>
 									</div>
 								)
 							}))}

@@ -8,9 +8,7 @@
   * Null
   * Talent
   * Troubadour
-* Complications
-  * Update existing complications
-  * Add new complications
+* Add new complications
 * Add titles
 * Add items
 * Monsters
@@ -19,10 +17,11 @@
 
 **Miscellaneous changes**
 * Some classes have only 1 primary characteristic - this means choosing their characteristic arrays will be a lot more tricky
-* Show potency values in power roll panel
+* Show potency values in power roll panel if appropriate
 * Automatically add characteristics to damage
 * Add new feature type to allow Revenant to choose features from other ancestries
 * Revenants should have either 2 or 3 ancestry points depending on size
+* Elementalist has some abilities that can't be chosen until a particular level
 
 ## Future Work
 

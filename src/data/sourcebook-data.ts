@@ -73,15 +73,14 @@ export class SourcebookData {
 		],
 		complications: [
 			ComplicationData.cultVictim,
-			ComplicationData.devilDeal,
-			ComplicationData.elementalAbsorption,
+			ComplicationData.elementalInside,
 			ComplicationData.fireAndChaos,
 			ComplicationData.primordialSickness,
 			ComplicationData.punishmentCurse,
 			ComplicationData.shipwrecked,
-			ComplicationData.vividDreams,
-			ComplicationData.ward,
-			ComplicationData.warOfTheGuilds
+			ComplicationData.wakingDreams,
+			ComplicationData.warOfAssassins,
+			ComplicationData.ward
 		],
 		domains: [
 			DomainData.creation,

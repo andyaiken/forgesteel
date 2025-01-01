@@ -30,40 +30,21 @@ export class ComplicationData {
 		]
 	};
 
-	static devilDeal: Complication = {
-		id: 'comp-devil-deal',
-		name: 'Devil Deal',
-		description: 'Your ancestors made a deal with an archdevil that has tied you to that fiend’s service. When you first learned of this deal, you were taken to the Seven Cities of Hell, where some of the timescape’s best minds taught you the ways of battle or magic. The archdevil allows you to use these gifts as you will … until they require a favor from you.',
-		features: [
-			FeatureLogic.feature.createFeature({
-				id: 'comp-devil-deal-b',
-				name: 'Devil Deal Benefit',
-				description: 'Whenever you are present for a battle in which all the creatures on one side are not surprised, your side goes first on a result of 4 or greater on the d10 roll.'
-			}),
-			FeatureLogic.feature.createFeature({
-				id: 'comp-devil-deal-d',
-				name: 'Devil Deal Drawback',
-				description: 'The archdevil occasionally asks you to defeat enemies on their behalf. If you refuse, your fiendish patron sends devils after you and those you care about.'
-			})
-		]
-	};
-
-	static elementalAbsorption: Complication = {
-		id: 'comp-elemental-absorption',
-		name: 'Elemental Absorption',
+	static elementalInside: Complication = {
+		id: 'comp-elemental-inside',
+		name: 'Elemental Inside',
 		description: 'When an evil mage threatened someone you loved, you blocked your foe’s summoning of an elemental creature by absorbing their magic with your body. You are now infused with the power of that elemental—and they’re not happy about it.',
 		features: [
 			FeatureLogic.feature.createBonusFeature({
-				id: 'comp-elemental-absorption-b',
-				name: 'Elemental Absorption Benefit',
+				id: 'comp-elemental-inside-b',
+				name: 'Elemental Inside Benefit',
 				field: FeatureField.Stamina,
-				value: 6,
-				valuePerLevel: 1
+				valuePerEchelon: 3
 			}),
 			FeatureLogic.feature.createFeature({
-				id: 'comp-elemental-absorption-d',
-				name: 'Elemental Absorption Drawback',
-				description: 'When you are dying, your possessing elemental takes control of your body. The elemental yearns for destruction, causing you to attack the closest creature they notice without regard for your desires or your body’s safety.'
+				id: 'comp-elemental-inside-d',
+				name: 'Elemental Inside Drawback',
+				description: 'When you are dying, your possessing elemental takes control of your body. The elemental yearns for destruction, causing you to attack the closest creature they notice without regard for your desires or your body’s safety. The Director or you can control the hero, but whoever does must do their best to kill any creature they notice until you are no longer dying.'
 			})
 		]
 	};
@@ -137,7 +118,7 @@ export class ComplicationData {
 				id: 'comp-punishment-curse-b',
 				name: 'Punishment Curse Benefit',
 				field: FeatureField.Recoveries,
-				value: 2
+				value: 1
 			}),
 			FeatureLogic.feature.createFeature({
 				id: 'comp-punishment-curse-d',
@@ -166,14 +147,14 @@ export class ComplicationData {
 		]
 	};
 
-	static vividDreams: Complication = {
-		id: 'comp-vivid-dreams',
-		name: 'Vivid Dreams',
+	static wakingDreams: Complication = {
+		id: 'comp-waking-dreams',
+		name: 'Waking Dreams',
 		description: 'You broke a magic amulet that immersed your mind in weird magic. This magic has given you the power of premonition, but you struggle to control this new gift.',
 		features: [
 			FeatureLogic.feature.createFeature({
-				id: 'comp-vivid-dreams-b',
-				name: 'Vivid Dreams',
+				id: 'comp-waking-dreams-bd',
+				name: 'Waking Dreams',
 				description: `
 Whenever you take a respite, make a Reason power roll.
 
@@ -182,6 +163,24 @@ Whenever you take a respite, make a Reason power roll.
 | 11 -    | You receive a painful vision that is fractal and inscrutable. When the respite ends, you immediately lose 1 Recovery.                                            |
 | 12 - 16 | You experience a vision of an event currently happening in your world. The vision lasts for just a few seconds, but the information you glean is helpful to you. |
 | 17 +    | You receive a full minute or more of the scene.                                                                                                                  |`
+			})
+		]
+	};
+
+	static warOfAssassins: Complication = {
+		id: 'comp-war-of-assassins',
+		name: 'War Of Assassins',
+		description: 'Being in the wrong place at the wrong time saw you caught in the middle of a conflict between two warring thieves’ guilds. Whether by choice or by accident, you wound up helping one faction at the expense of the other.',
+		features: [
+			FeatureLogic.feature.createFeature({
+				id: 'comp-war-of-assassins-b',
+				name: 'War Of Assassins Benefit',
+				description: 'Having gained the favor of the faction who you helped, you can call on its members three times for favors. If a favor is reasonable and within the faction’s power to grant, they’ll do it, no questions asked.'
+			}),
+			FeatureLogic.feature.createFeature({
+				id: 'comp-war-of-assassins-d',
+				name: 'War Of Assassins Drawback',
+				description: 'The faction you wronged hates you, and its members would love to see you pay for your transgression.'
 			})
 		]
 	};
@@ -199,25 +198,7 @@ Whenever you take a respite, make a Reason power roll.
 			FeatureLogic.feature.createFeature({
 				id: 'comp-ward-d',
 				name: 'Ward Drawback',
-				description: 'Your royal ward regularly calls upon you for advice and takes that advice to heart—for better or for worse.'
-			})
-		]
-	};
-
-	static warOfTheGuilds: Complication = {
-		id: 'comp-war-of-the-guilds',
-		name: 'War Of The Guilds',
-		description: 'Being in the wrong place at the wrong time saw you caught in the middle of a conflict between two warring thieves’ guilds. Whether by choice or by accident, you wound up helping one faction at the expense of the other.',
-		features: [
-			FeatureLogic.feature.createFeature({
-				id: 'comp-war-of-the-guilds-b',
-				name: 'War Of The Guilds Benefit',
-				description: 'Having gained the favor of the faction who you helped, you can call on its members three times for favors. If a favor is reasonable and within the faction’s power to grant, they’ll do it, no questions asked.'
-			}),
-			FeatureLogic.feature.createFeature({
-				id: 'comp-war-of-the-guilds-d',
-				name: 'War Of The Guilds Drawback',
-				description: 'The faction you wronged hates you, and its members would love to see you pay for your transgression.'
+				description: 'Your royal ward can be a burden. When you start a respite, roll a d10. On a roll of 1, your ward contacts you and requires your help during the respite, requiring you to spend your time helping them instead of taking a respite activity.'
 			})
 		]
 	};

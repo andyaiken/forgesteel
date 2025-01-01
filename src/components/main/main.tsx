@@ -992,7 +992,7 @@ export const Main = (props: Props) => {
 	return (
 		<Routes>
 			<Route
-				path={navigation.rootRoute}
+				path='/'
 				element={
 					<MainLayout
 						section='hero'

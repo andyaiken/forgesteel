@@ -2,7 +2,7 @@ import { Alert, Button, Divider, Input, Segmented, Select, Slider, Space, Tabs }
 import { Encounter, EncounterGroup } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
@@ -26,11 +26,11 @@ import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { useParams } from 'react-router';
 
 import './encounter-edit.scss';
 
 interface Props {
-	encounter: Encounter;
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	goHome: () => void;
@@ -41,7 +41,9 @@ interface Props {
 }
 
 export const EncounterEditPage = (props: Props) => {
-	const [ encounter, setEncounter ] = useState<Encounter>(JSON.parse(JSON.stringify(props.encounter)));
+	const { encounterId } = useParams<{ encounterId: string }>();
+	const originalEncounter = useMemo(() => props.playbook.encounters.find(e => e.id === encounterId)!, [ encounterId, props.playbook ]);
+	const [ encounter, setEncounter ] = useState(JSON.parse(JSON.stringify(originalEncounter)) as Encounter);
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ heroCount, setHeroCount ] = useState<number>(4);

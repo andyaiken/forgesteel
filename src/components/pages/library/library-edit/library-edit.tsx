@@ -3,6 +3,7 @@ import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-de
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { KitArmor, KitType, KitWeapon } from '../../../../enums/kit';
 import { Monster, MonsterGroup } from '../../../../models/monster';
+import { useMemo, useState } from 'react';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../../../panels/edit/ability-edit-panel/ability-edit-panel';
 import { AbilityLogic } from '../../../../logic/ability-logic';
@@ -46,28 +47,32 @@ import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { SourcebookElementKind } from '../../../../models/sourcebook-element-kind';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { SubClass } from '../../../../models/subclass';
 import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
-import { useState } from 'react';
+import { getSourcebookKey } from '../../../../utils/get-sourcebook-key';
+import { useParams } from 'react-router';
 
 import './library-edit.scss';
 
 interface Props {
-	element: Element;
-	elementType: string;
 	sourcebooks: Sourcebook[];
 	goHome: () => void;
 	showAbout: () => void;
-	saveChanges: (element: Element) => void;
+	saveChanges: (sourcebookId: string, kind: SourcebookElementKind, element: Element) => void;
 	cancelChanges: () => void;
 }
 
 export const LibraryEditPage = (props: Props) => {
-	const [ element, setElement ] = useState<Element>(JSON.parse(JSON.stringify(props.element)));
+	const { sourcebookId, kind, elementId } = useParams<{ sourcebookId: string, kind: SourcebookElementKind, elementId: string }>();
+	const sourcebook = useMemo(() => props.sourcebooks.find(s => s.id === sourcebookId)!, [ sourcebookId, props.sourcebooks ]);
+	const sourcebookKey = useMemo(() => getSourcebookKey(kind!), [ kind ]);
+	const originalElement = useMemo(() => sourcebook[sourcebookKey].find(e => e.id === elementId)!, [ sourcebook, sourcebookKey, elementId ]);
+	const [ element, setElement ] = useState<Element>(JSON.parse(JSON.stringify(originalElement)) as Element);
 	const [ dirty, setDirty ] = useState<boolean>(false);
 
 	const getNameAndDescriptionSection = () => {
@@ -1260,7 +1265,7 @@ export const LibraryEditPage = (props: Props) => {
 	};
 
 	const getEditSection = () => {
-		switch (props.elementType) {
+		switch (kind) {
 			case 'Ancestry':
 				return (
 					<Tabs
@@ -1317,7 +1322,7 @@ export const LibraryEditPage = (props: Props) => {
 						]}
 					/>
 				);
-			case 'Class':
+			case 'HeroClass':
 				return (
 					<Tabs
 						items={[
@@ -1418,7 +1423,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'Perk':
 				return (
 					<FeatureEditPanel
-						feature={props.element as Perk}
+						feature={element as Perk}
 						sourcebooks={props.sourcebooks}
 						onChange={perk => {
 							const copy = JSON.parse(JSON.stringify(perk)) as Perk;
@@ -1466,7 +1471,7 @@ export const LibraryEditPage = (props: Props) => {
 						]}
 					/>
 				);
-			case 'Monster Group':
+			case 'MonsterGroup':
 				return (
 					<Tabs
 						items={[
@@ -1499,14 +1504,14 @@ export const LibraryEditPage = (props: Props) => {
 	};
 
 	const getPreview = () => {
-		switch (props.elementType) {
+		switch (kind) {
 			case 'Ancestry':
 				return <AncestryPanel ancestry={element as Ancestry} mode={PanelMode.Full} />;
 			case 'Culture':
 				return <CulturePanel culture={element as Culture} mode={PanelMode.Full} />;
 			case 'Career':
 				return <CareerPanel career={element as Career} mode={PanelMode.Full} />;
-			case 'Class':
+			case 'HeroClass':
 				return <ClassPanel heroClass={element as HeroClass} mode={PanelMode.Full} />;
 			case 'Complication':
 				return <ComplicationPanel complication={element as Complication} mode={PanelMode.Full} />;
@@ -1520,7 +1525,7 @@ export const LibraryEditPage = (props: Props) => {
 				return <TitlePanel title={element as Title} mode={PanelMode.Full} />;
 			case 'Item':
 				return <ItemPanel item={element as Item} mode={PanelMode.Full} />;
-			case 'Monster Group':
+			case 'MonsterGroup':
 				return <MonsterGroupPanel monsterGroup={element as MonsterGroup} mode={PanelMode.Full} />;
 		}
 
@@ -1531,7 +1536,7 @@ export const LibraryEditPage = (props: Props) => {
 		return (
 			<div className='library-edit-page'>
 				<AppHeader subtitle='Library' goHome={props.goHome} showAbout={props.showAbout}>
-					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(element)}>
+					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(sourcebookId!, kind!, element)}>
 						Save Changes
 					</Button>
 					<Button onClick={() => props.cancelChanges()}>

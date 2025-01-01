@@ -24,10 +24,13 @@ import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { SourcebookElementKind } from '../../../../models/sourcebook-element-kind';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
+import { useNavigation } from '../../../../hooks/use-navigation';
+import { useParams } from 'react-router';
 import { useState } from 'react';
 
 import './library-list.scss';
@@ -49,14 +52,30 @@ interface Props {
 	viewTitle: (title: Title) => void;
 	viewItem: (item: Item) => void;
 	viewMonsterGroup: (monsterGroup: MonsterGroup) => void;
-	onCreateHomebrew: (type: string, sourcebookID: string | null) => void;
-	onImportHomebrew: (type: string, sourcebookID: string | null, element: Element) => void;
+	onCreateHomebrew: (type: SourcebookElementKind, sourcebookID: string | null) => void;
+	onImportHomebrew: (type: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 }
 
+const useTabKey = (): [SourcebookElementKind, (tabKey: SourcebookElementKind) => void] => {
+	const navigation = useNavigation();
+	const { tab } = useParams<{ tab: SourcebookElementKind }>();
+	const setTabKey = (tabKey: SourcebookElementKind) => {
+		navigation.goToLibraryList(tabKey);
+	};
+	return [ tab ?? 'Ancestry', setTabKey ];
+};
+
 export const LibraryListPage = (props: Props) => {
+	const [ tabKey, setTabKey ] = useTabKey();
+	const [ previousTab, setPreviousTab ] = useState(tabKey);
+	const [ element, setElement ] = useState<SourcebookElementKind>('Ancestry');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
-	const [ element, setElement ] = useState<string>('Ancestry');
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? props.sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
+
+	if (tabKey !== previousTab) {
+		setElement(tabKey);
+		setPreviousTab(tabKey);
+	}
 
 	const getSourcebooks = () => {
 		return props.sourcebooks.filter(cs => !props.hiddenSourcebookIDs.includes(cs.id));
@@ -574,7 +593,8 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	try {
-		const elementOptions = [ 'Ancestry', 'Culture', 'Career', 'Class', 'Complication', 'Domain', 'Kit', 'Perk', 'Title', 'Item', 'Monster Group' ].map(e => ({ label: e, value: e }));
+		const elementOptions = [ 'Ancestry', 'Culture', 'Career', [ 'HeroClass', 'Class' ], 'Complication', 'Domain', 'Kit', 'Perk', 'Title', 'Item', [ 'MonsterGroup', 'Monster Group' ] ]
+			.map(e => Array.isArray(e) ? { label: e[1], value: e[0] } : ({ label: e, value: e }));
 		const sourcebookOptions = props.sourcebooks.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
 
 		const ancestries = getAncestries();
@@ -665,6 +685,7 @@ export const LibraryListPage = (props: Props) => {
 				</AppHeader>
 				<div className='library-list-page-content'>
 					<Tabs
+						activeKey={tabKey}
 						items={[
 							{
 								key: 'Ancestry',
@@ -697,7 +718,7 @@ export const LibraryListPage = (props: Props) => {
 								children: getCareersSection(careers)
 							},
 							{
-								key: 'Class',
+								key: 'HeroClass',
 								label: (
 									<div className='section-header'>
 										<div className='section-title'>Classes</div>
@@ -767,7 +788,7 @@ export const LibraryListPage = (props: Props) => {
 								children: getItemsSection(items)
 							},
 							{
-								key: 'Monster Group',
+								key: 'MonsterGroup',
 								label: (
 									<div className='section-header'>
 										<div className='section-title'>Monsters</div>
@@ -777,7 +798,7 @@ export const LibraryListPage = (props: Props) => {
 								children: getMonsterGroupsSection(monsterGroups)
 							}
 						]}
-						onChange={setElement}
+						onChange={tabKey => setTabKey(tabKey as SourcebookElementKind)}
 					/>
 				</div>
 			</div>

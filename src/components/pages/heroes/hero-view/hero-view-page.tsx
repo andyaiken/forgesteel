@@ -18,20 +18,22 @@ import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Toggle } from '../../../controls/toggle/toggle';
+import { useMemo } from 'react';
+import { useParams } from 'react-router';
 
 import './hero-view-page.scss';
 
 interface Props {
-	hero: Hero;
+	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	options: Options;
 	setOptions: (options: Options) => void;
 	goHome: () => void;
 	showAbout: () => void;
 	closeHero: () => void;
-	editHero: () => void;
-	exportHero: (format: 'image' | 'pdf' | 'json') => void;
-	deleteHero: () => void;
+	editHero: (heroId: string) => void;
+	exportHero: (heroId: string, format: 'image' | 'pdf' | 'json') => void;
+	deleteHero: (heroId: string) => void;
 	onSelectAncestry: (ancestry: Ancestry) => void;
 	onSelectCulture: (culture: Culture) => void;
 	onSelectCareer: (career: Career) => void;
@@ -41,11 +43,15 @@ interface Props {
 	onSelectKit: (kit: Kit) => void;
 	onSelectCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	onSelectAbility: (ability: Ability, hero: Hero) => void;
-	onShowHeroState: (page: 'hero' | 'stats' | 'conditions') => void;
-	onShowRules: () => void;
+	onShowHeroState: (heroId: string, page: 'hero' | 'stats' | 'conditions') => void;
+	onShowRules: (heroId: string) => void;
 }
 
+const getHero = (heroId: string, heroes: Hero[]) => heroes.find(h => h.id === heroId)!;
+
 export const HeroPage = (props: Props) => {
+	const { heroId } = useParams<{ heroId: string }>();
+	const hero = useMemo(() => getHero(heroId!, props.heroes), [ heroId, props.heroes ]);
 	try {
 		const setShowSkillsInGroups = (value: boolean) => {
 			const copy = JSON.parse(JSON.stringify(props.options)) as Options;
@@ -77,10 +83,10 @@ export const HeroPage = (props: Props) => {
 					<Button onClick={props.closeHero}>
 						Close
 					</Button>
-					<Button onClick={() => props.onShowHeroState('hero')}>
+					<Button onClick={() => props.onShowHeroState(heroId!, 'hero')}>
 						State
 					</Button>
-					<Button onClick={props.onShowRules}>
+					<Button onClick={() => props.onShowRules(heroId!)}>
 						Rules
 					</Button>
 					<Popover
@@ -109,10 +115,10 @@ export const HeroPage = (props: Props) => {
 											label: <div className='ds-text centered-text'>Export As Data</div>
 										}
 									]}
-									onClick={key => props.exportHero(key as 'image' | 'pdf' | 'json')}
+									onClick={key => props.exportHero(heroId!, key as 'image' | 'pdf' | 'json')}
 								/>
-								<Button icon={<EditOutlined />} onClick={props.editHero}>Edit</Button>
-								<DangerButton onConfirm={props.deleteHero} />
+								<Button icon={<EditOutlined />} onClick={() => (props).editHero(heroId!)}>Edit</Button>
+								<DangerButton onConfirm={() => props.deleteHero(heroId!)} />
 							</div>
 						)}
 					>
@@ -124,7 +130,7 @@ export const HeroPage = (props: Props) => {
 				</AppHeader>
 				<div className='hero-view-page-content'>
 					<HeroPanel
-						hero={props.hero}
+						hero={hero}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
@@ -135,9 +141,9 @@ export const HeroPage = (props: Props) => {
 						onSelectComplication={props.onSelectComplication}
 						onSelectDomain={props.onSelectDomain}
 						onSelectKit={props.onSelectKit}
-						onSelectCharacteristic={characteristic => props.onSelectCharacteristic(characteristic, props.hero)}
-						onSelectAbility={ability => props.onSelectAbility(ability, props.hero)}
-						onShowState={props.onShowHeroState}
+						onSelectCharacteristic={characteristic => props.onSelectCharacteristic(characteristic, hero)}
+						onSelectAbility={ability => props.onSelectAbility(ability, hero)}
+						onShowState={page => props.onShowHeroState(heroId!, page)}
 					/>
 				</div>
 			</div>

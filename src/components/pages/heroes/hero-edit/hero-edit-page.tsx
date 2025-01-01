@@ -1,7 +1,7 @@
 import { Button, Divider, Input, Radio, Segmented, Select, Space } from 'antd';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureBonusData, FeatureData } from '../../../../models/feature';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -29,6 +29,8 @@ import { SelectablePanel } from '../../../controls/selectable-panel/selectable-p
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { ThunderboltOutlined } from '@ant-design/icons';
+import { useNavigation } from '../../../../hooks/use-navigation';
+import { useParams } from 'react-router';
 
 import './hero-edit-page.scss';
 
@@ -49,17 +51,26 @@ enum PageState {
 }
 
 interface Props {
-	hero: Hero;
+	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	goHome: () => void;
 	showAbout: () => void;
 	saveChanges: (hero: Hero) => void;
-	cancelChanges: () => void;
+	cancelChanges: (heroId: string) => void;
 }
 
-export const HeroEditPage = (props: Props) => {
-	const [ page, setPage ] = useState<Page>(Page.Ancestry);
-	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(props.hero)) as Hero);
+type HeroTab = 'Ancestry' | 'Culture' | 'Career' | 'Class' | 'Complication' | 'Details';
+
+
+export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
+	const navigation = useNavigation();
+	const { heroId, tab } = useParams<{ heroId: string; tab: HeroTab }>();
+	const setTabKey = (tabKey: HeroTab) => {
+		navigation.goToHeroEdit(heroId!, tabKey);
+	};
+	const [ page, setPage ] = [ tab, setTabKey ];
+	const originalHero = useMemo(() => props.heroes.find(h => h.id === heroId)!, [ heroId, props.heroes ]);
+	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(originalHero)) as Hero);
 	const [ dirty, setDirty ] = useState<boolean>(false);
 
 	try {
@@ -317,10 +328,6 @@ export const HeroEditPage = (props: Props) => {
 			setDirty(false);
 		};
 
-		const cancelChanges = () => {
-			props.cancelChanges();
-		};
-
 		const getContent = () => {
 			switch (page) {
 				case Page.Ancestry:
@@ -395,13 +402,13 @@ export const HeroEditPage = (props: Props) => {
 					<Button type='primary' disabled={!dirty} onClick={saveChanges}>
 						Save Changes
 					</Button>
-					<Button onClick={cancelChanges}>
+					<Button onClick={() => cancelChanges(heroId!)}>
 						Cancel
 					</Button>
 				</AppHeader>
 				<div className='hero-edit-page-content'>
 					<div className='page-selector'>
-						<Segmented<Page>
+						<Segmented<HeroTab>
 							options={[
 								Page.Ancestry,
 								Page.Culture,

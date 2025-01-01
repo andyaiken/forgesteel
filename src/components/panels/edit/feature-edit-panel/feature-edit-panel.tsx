@@ -253,7 +253,7 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
-		const setSizeMod = (value: string) => {
+		const setSizeMod = (value: 'T' | 'S' | 'M' | 'L') => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureSizeData;
 			copy.size.mod = value;
 			setData(copy);
@@ -761,7 +761,7 @@ export const FeatureEditPanel = (props: Props) => {
 									block={true}
 									options={[ 'T', 'S', 'M', 'L' ]}
 									value={data.size.mod}
-									onChange={setSizeMod}
+									onChange={s => setSizeMod(s as 'T' | 'S' | 'M' | 'L')}
 								/>
 								: null
 						}

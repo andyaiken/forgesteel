@@ -88,7 +88,7 @@ export const MonsterEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setSizeMod = (value: string) => {
+	const setSizeMod = (value: 'T' | 'S' | 'M' | 'L') => {
 		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
 		copy.size.mod = value;
 		setMonster(copy);
@@ -243,7 +243,7 @@ export const MonsterEditPanel = (props: Props) => {
 													block={true}
 													options={[ 'T', 'S', 'M', 'L' ]}
 													value={monster.size.mod}
-													onChange={setSizeMod}
+													onChange={e => setSizeMod(e as 'T' | 'S' | 'M' | 'L')}
 												/>
 												: null
 										}

@@ -4,13 +4,10 @@
 
 **Add and update element data**
 * Classes
-  * Update classes
-    * Elementalist
-  * Add new classes
-    * Censor
-    * Null
-    * Talent
-    * Troubadour
+  * Censor
+  * Null
+  * Talent
+  * Troubadour
 * Complications
   * Update existing complications
   * Add new complications

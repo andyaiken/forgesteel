@@ -1,5 +1,5 @@
 import { AimOutlined, BookOutlined, TeamOutlined } from '@ant-design/icons';
-import { Alert, Button, Space } from 'antd';
+import { Button, Space } from 'antd';
 import { AppHeader } from '../../panels/app-header/app-header';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
@@ -26,11 +26,6 @@ export const WelcomePage = (props: Props) => {
 								<div className='ds-text'>
 									<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players and directors.
 								</div>
-								<Alert
-									type='info'
-									showIcon={true}
-									message='This app is currently being updated to support the content in the new backer packet. Please be patient!'
-								/>
 								<div>
 									<HeaderText>For Players</HeaderText>
 									<div className='ds-text'>

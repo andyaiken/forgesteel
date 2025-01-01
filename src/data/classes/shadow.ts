@@ -17,7 +17,7 @@ As a shadow, you have abilities that deal a lot of damage, let you move swiftly 
 	heroicResource: 'Insight',
 	subclassName: 'Shadow College',
 	subclassCount: 1,
-	// TODO: Remove presence as a primary characteristic
+	// TODO: Presence only
 	primaryCharacteristics: [ Characteristic.Agility, Characteristic.Presence ],
 	featuresByLevel: [
 		{

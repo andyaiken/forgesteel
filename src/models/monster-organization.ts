@@ -1,0 +1,1 @@
+export type MonsterOrganization = 'minion' | 'band' | 'platoon' | 'troop' | 'leader' | 'solo';

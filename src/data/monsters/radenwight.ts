@@ -6,7 +6,6 @@ import { FeatureLogic } from '../../logic/feature-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterRoleType } from '../../enums/monster-role-type';
-import { PowerRollType } from '../../enums/power-roll-type';
 
 export const radenwight: MonsterGroup = {
 	id: 'monster-group-radenwight',
@@ -85,21 +84,23 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			name: 'Radenwight Mischiever',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Ambusher, true),
+			role: MonsterLogic.createRole(MonsterRoleType.Ambusher, 'minion'),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
 			size: MonsterLogic.createSize(1, 'S'),
 			speed: MonsterLogic.createSpeed(7, 'climb'),
-			stamina: 10,
+			stamina: 4,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 1, 0),
+			characteristics: MonsterLogic.createCharacteristics(-1, 2, 0, 1, 0),
+			withCaptain: 'Strike damage +1',
 			features: [
 				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-1-feature-1',
 						name: 'Dagger Dance',
 						type: AbilityLogic.type.createAction(),
+						signature: true,
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							AbilityLogic.distance.createMelee(1),
@@ -107,10 +108,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						],
 						target: 'One creature per minion',
 						powerRoll: AbilityLogic.createPowerRoll({
-							bonus: 1,
+							bonus: 2,
 							tier1: '2 damage',
-							tier2: '5 damage',
-							tier3: '6 damage'
+							tier2: '4 damage',
+							tier3: '5 damage'
 						}),
 						effect: 'If the mischiever is hidden when they use this ability, they can target two creatures.'
 					})
@@ -130,32 +131,34 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 		},
 		{
 			id: 'radenwight-2',
-			name: 'Radenwight Ratagast',
+			name: 'Radenwight Scrapper',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Defender, true),
+			role: MonsterLogic.createRole(MonsterRoleType.Defender, 'minion'),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
 			size: MonsterLogic.createSize(1, 'S'),
 			speed: MonsterLogic.createSpeed(6, 'climb'),
-			stamina: 12,
-			stability: 0,
-			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 0, 1),
+			stamina: 5,
+			stability: 1,
+			freeStrikeDamage: 1,
+			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 0, 2),
+			withCaptain: 'Melee distance +2',
 			features: [
 				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-2-feature-1',
-						name: 'Stinky Glissando',
+						name: 'Buckler Bash',
 						type: AbilityLogic.type.createAction(),
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
+						signature: true,
+						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature or object per minion',
 						powerRoll: AbilityLogic.createPowerRoll({
-							bonus: 1,
-							tier1: '2 poison damage',
-							tier2: '4 poison damage; taunted (EoT)',
-							tier3: '5 poison damage; taunted (EoT)'
+							bonus: 2,
+							tier1: '1 damage',
+							tier2: '2 damage; taunted (EoT)',
+							tier3: '3 damage; taunted (EoT)'
 						})
 					})
 				}),
@@ -167,7 +170,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature',
-						effect: 'The ratagast makes a free strike against the target.'
+						effect: 'The scrapper makes a free strike against the target.'
 					})
 				})
 			]
@@ -177,29 +180,30 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			name: 'Radenwight Swiftpaw',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Harrier, true),
+			role: MonsterLogic.createRole(MonsterRoleType.Harrier, 'minion'),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
 			size: MonsterLogic.createSize(1, 'S'),
 			speed: MonsterLogic.createSpeed(7, 'climb'),
-			stamina: 10,
+			stamina: 4,
 			stability: 0,
-			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 1, 0, -1),
+			freeStrikeDamage: 1,
+			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 0, -1),
 			features: [
 				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-3-feature-1',
 						name: 'Rapier Flunge',
 						type: AbilityLogic.type.createAction(),
+						signature: true,
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature or object per minion',
 						powerRoll: AbilityLogic.createPowerRoll({
-							bonus: 1,
-							tier1: '2 damage; slide 1; the swiftpaw can shift 1 square',
-							tier2: '4 damage; slide 2; the swiftpaw can shift 2 squares',
-							tier3: '5 damage; slide 3; the swiftpaw can shift 3 squares'
+							bonus: 2,
+							tier1: '1 damage; slide 1; shift 1',
+							tier2: '2 damage; slide 2; shift 2',
+							tier3: '3 damage; slide 3; shift 3'
 						})
 					})
 				}),
@@ -221,29 +225,31 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			name: 'Radenwight Redeye',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Artillery, true),
+			role: MonsterLogic.createRole(MonsterRoleType.Artillery, 'minion'),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
 			size: MonsterLogic.createSize(1, 'S'),
 			speed: MonsterLogic.createSpeed(5, 'climb'),
-			stamina: 8,
+			stamina: 3,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(1, 1, -1, 0, 0),
+			characteristics: MonsterLogic.createCharacteristics(1, 2, -1, 0, 0),
+			withCaptain: 'Edge on strikes',
 			features: [
 				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-4-feature-1',
 						name: 'Eyes-On-Me Shot',
 						type: AbilityLogic.type.createAction(),
+						signature: true,
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ AbilityLogic.distance.createRanged(10) ],
 						target: 'One creature or object per minion',
 						powerRoll: AbilityLogic.createPowerRoll({
-							bonus: 1,
+							bonus: 2,
 							tier1: '2 damage',
-							tier2: '5 damage',
-							tier3: '6 damage'
+							tier2: '4 damage',
+							tier3: '5 damage'
 						}),
 						effect: 'An ally of the redeye within 2 squares of the target can shift up to 2 squares.'
 					})
@@ -266,28 +272,29 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			name: 'Radenwight Bruxer',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Brute),
+			role: MonsterLogic.createRole(MonsterRoleType.Brute, 'platoon'),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
 			size: MonsterLogic.createSize(1, 'S'),
 			speed: MonsterLogic.createSpeed(5, 'climb'),
 			stamina: 40,
-			stability: 0,
-			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 1, -1, 0, 0),
+			stability: 2,
+			freeStrikeDamage: 4,
+			characteristics: MonsterLogic.createCharacteristics(2, 1, -1, 0, 0),
 			features: [
 				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-5-feature-1',
 						name: 'Lockjaw',
 						type: AbilityLogic.type.createAction(),
+						signature: true,
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One creature or object',
 						powerRoll: AbilityLogic.createPowerRoll({
-							bonus: 1,
-							tier1: '5 damage',
-							tier2: '9 damage; grabbed',
+							bonus: 2,
+							tier1: '6 damage',
+							tier2: '9 damage',
 							tier3: '12 damage; grabbed'
 						}),
 						effect: 'While the target is grabbed, they take 2 damage at the start of each of the bruxer’s turns.'
@@ -298,15 +305,15 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						id: 'radenwight-5-feature-2',
 						name: 'Flurry of Bites',
 						type: AbilityLogic.type.createAction(),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-						target: 'Each enemy',
+						target: 'All enemies in the burst',
 						cost: 3,
 						powerRoll: AbilityLogic.createPowerRoll({
-							bonus: 1,
-							tier1: '4 damage',
-							tier2: '8 damage',
-							tier3: '10 damage; bleeding (EoT)'
+							bonus: 2,
+							tier1: '3 damage; A<0 bleeding (save ends)',
+							tier2: '5 damage; A<1 bleeding (save ends)',
+							tier3: '8 damage; A<2 bleeding (save ends)'
 						})
 					})
 				}),
@@ -320,6 +327,11 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						target: 'One creature',
 						effect: 'The bruxer makes a free strike against the target.'
 					})
+				}),
+				FeatureLogic.feature.createFeature({
+					id: 'radenwight-5-feature-4',
+					name: 'Lockdown',
+					description: 'An enemy can’t shift while adjacent to the bruxer.'
 				})
 			]
 		},
@@ -328,32 +340,33 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			name: 'Radenwight Piper',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Support),
+			role: MonsterLogic.createRole(MonsterRoleType.Support, 'platoon'),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
 			size: MonsterLogic.createSize(1, 'S'),
 			speed: MonsterLogic.createSpeed(5, 'climb'),
 			stamina: 30,
 			stability: 0,
-			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 1, 1),
+			freeStrikeDamage: 3,
+			characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 2, 1),
 			features: [
 				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-6-feature-1',
 						name: 'Piercing Trill',
 						type: AbilityLogic.type.createAction(),
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						signature: true,
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [
 							AbilityLogic.distance.createMelee(1),
 							AbilityLogic.distance.createRanged(10)
 						],
 						target: 'One creature or object',
 						powerRoll: AbilityLogic.createPowerRoll({
-							bonus: 1,
-							tier1: '3 sonic damage; push 1',
-							tier2: '5 sonic damage; push 3',
-							tier3: '7 sonic damage; push 4'
+							bonus: 2,
+							tier1: '5 sonic damage; push 1',
+							tier2: '7 sonic damage; push 3',
+							tier3: '9 sonic damage; push 4'
 						}),
 						effect: 'The piper or an ally within distance regains Stamina equal to half the damage dealt.'
 					})
@@ -364,10 +377,11 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						name: 'Vivace Vivace!',
 						type: AbilityLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-						distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
-						target: 'Each ally',
+						distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
+						target: 'Each ally in the burst',
 						cost: 3,
-						effect: 'Each target who has used their Ready Rodent ability since their last turn regains the use of their triggered action.'
+						effect: 'Each target who has used their Ready Rodent ability since their last turn regains the use of their triggered action.',
+						spend: [ { value: 2, effect: 'The area increases to 6 burst.' } ]
 					})
 				}),
 				FeatureLogic.feature.createAbilityFeature({
@@ -380,6 +394,11 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						target: 'One creature',
 						effect: 'The piper makes a free strike against the target.'
 					})
+				}),
+				FeatureLogic.feature.createFeature({
+					id: 'radenwight-6-feature-4',
+					name: 'Musical Suggestion',
+					description: 'At the end of the piper’s turn, they can choose an adjacent creature and slide them 2, ignoring stability.'
 				})
 			]
 		},
@@ -388,36 +407,32 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			name: 'Radenwight Ratcrobat',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Harrier),
+			role: MonsterLogic.createRole(MonsterRoleType.Harrier, 'platoon'),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
 			size: MonsterLogic.createSize(1, 'S'),
 			speed: MonsterLogic.createSpeed(7, 'climb'),
 			stamina: 30,
 			stability: 0,
-			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 0, 1),
+			freeStrikeDamage: 3,
+			characteristics: MonsterLogic.createCharacteristics(-1, 2, 0, 0, 1),
 			features: [
-				FeatureLogic.feature.createFeature({
-					id: 'radenwight-7-feature-1',
-					name: 'Gymratstics',
-					description: 'The ratcrobat gains an edge on attacks against larger creatures.'
-				}),
 				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-7-feature-2',
 						name: 'En Garde!',
 						type: AbilityLogic.type.createAction(),
+						signature: true,
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'Two creatures or objects',
 						powerRoll: AbilityLogic.createPowerRoll({
-							bonus: 1,
-							tier1: '2 damage',
-							tier2: '5 damage',
-							tier3: '6 damage'
+							bonus: 2,
+							tier1: '4 damage',
+							tier2: '6 damage',
+							tier3: '8 damage'
 						}),
-						effect: 'The ratcrobat can shift up to 2 squares after attacking the first target, then can shift 1 square after attacking the second target.'
+						effect: 'The ratcrobat can shift up to 2 squares after striking the first target, then can shift 1 square after striking the second target.'
 					})
 				}),
 				FeatureLogic.feature.createAbilityFeature({
@@ -428,7 +443,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Melee ],
 						distance: [ AbilityLogic.distance.createMelee(1) ],
 						target: 'One enemy',
-						effect: 'Slide 1; the ratcrobat can then shift into the square the target left.'
+						effect: 'Slide 3; the ratcrobat can then shift into the any of the squares the target left.'
 					})
 				}),
 				FeatureLogic.feature.createAbilityFeature({
@@ -441,6 +456,11 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						target: 'One creature',
 						effect: 'The ratcrobat makes a free strike against the target.'
 					})
+				}),
+				FeatureLogic.feature.createFeature({
+					id: 'radenwight-7-feature-1',
+					name: 'Gymratstics',
+					description: 'The ratcrobat has an edge on strikes against larger creatures.'
 				})
 			]
 		},
@@ -449,31 +469,32 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			name: 'Radenwight Maestro',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Leader),
+			role: MonsterLogic.createRole(MonsterRoleType.Leader, 'leader'),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 12,
 			size: MonsterLogic.createSize(1, 'S'),
 			speed: MonsterLogic.createSpeed(5, 'climb'),
 			stamina: 80,
 			stability: 1,
-			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, 2),
+			freeStrikeDamage: 4,
+			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, 3),
 			features: [
 				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-8-feature-1',
 						name: 'Cacophony',
 						type: AbilityLogic.type.createAction(),
+						signature: true,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
-						target: 'Each enemy',
+						target: 'All enemies in the burst',
 						powerRoll: AbilityLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '3 sonic damage; slide 1; the maestro can shift 1 square',
-							tier2: '5 sonic damage; slide 3; the maestro can shift 3 squares',
-							tier3: '7 sonic damage; slide 5; the maestro can shift 5 squares'
+							bonus: 3,
+							tier1: '3 sonic damage; slide 1; shift 1',
+							tier2: '6 sonic damage; slide 3; shift 3',
+							tier3: '8 sonic damage; slide 5; shift 5'
 						}),
-						effect: 'Each of the maestro’s allies can use Ready Rodent as a free triggered action once before the end of the round.'
+						effect: 'Each all within distance can use Ready Roden as a free triggered action once before the end of the round.'
 					})
 				}),
 				FeatureLogic.feature.createAbilityFeature({
@@ -481,20 +502,19 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						id: 'radenwight-8-feature-2',
 						name: 'Tempo Change',
 						type: AbilityLogic.type.createManeuver(),
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Resistance ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ AbilityLogic.distance.createRanged(10) ],
 						target: 'Two enemies',
 						powerRoll: AbilityLogic.createPowerRoll({
-							type: PowerRollType.Resistance,
-							characteristic: [ Characteristic.Presence ],
-							tier1: 'Slowed (MGT ends)',
-							tier2: 'Slowed (EoT)',
-							tier3: 'No effect'
+							bonus: 3,
+							tier1: 'P<1 Slowed (save ends)',
+							tier2: 'P<2 Slowed (save ends)',
+							tier3: 'P<3 Slowed (save ends)'
 						}),
 						spend: [
 							{
-								value: 5,
-								effect: 'Each ally of the maestro within distance has their speed increased by 2 until the end of their next turn.'
+								value: 3,
+								effect: 'Each ally within 3 of a target has their speed increased by 2 until the end of their next turn.'
 							}
 						]
 					})
@@ -502,10 +522,11 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
 						id: 'radenwight-8-feature-3',
-						name: 'Ranged Ready Rodent',
-						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.distance.createRanged(10) ],
+						name: 'Ever Ready Rodent',
+						type: AbilityLogic.type.createTrigger('The target deals damage to an ally or takes damage from an ally.', true),
+						cost: 2,
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged ],
+						distance: [ AbilityLogic.distance.createRanged(5) ],
 						target: 'One creature',
 						effect: 'The maestro makes a free strike against the target.'
 					})
@@ -513,7 +534,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 				FeatureLogic.feature.createFeature({
 					id: 'radenwight-8-feature-4',
 					name: 'End Effect',
-					description: 'At the end of their turn, the maestro can take 5 damage to end one EoE effect affecting them. This damage can’t be reduced in any way.'
+					description: 'At the end of their turn, the maestro can take 5 damage to end one save ends effect affecting them. This damage can’t be reduced in any way.'
 				}),
 				FeatureLogic.feature.createAbilityFeature({
 					ability: AbilityLogic.createAbility({
@@ -521,8 +542,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						name: 'Overture',
 						type: AbilityLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area ],
-						distance: [ AbilityLogic.distance.createRanged(15) ],
-						target: 'Each Ally',
+						distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
+						target: 'All allies in the burst',
 						effect: 'Each target shifts up to their speed or takes the Defend action.'
 					})
 				}),
@@ -534,7 +555,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ AbilityLogic.distance.createRanged(15) ],
 						target: 'One creature',
-						effect: 'Until the end of their next turn, the target’s Stamina can’t be reduced below 1, their speed is doubled, and their next power roll is automatically a tier 3 result.'
+						effect: 'Until the end of their next turn, the target halves incoming damage, deals an additional 4 damage on strikes, and their speed is doubled.'
 					})
 				}),
 				FeatureLogic.feature.createAbilityFeature({
@@ -544,7 +565,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						type: AbilityLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
-						target: 'Each dead ally',
+						target: 'All dead allies in the burst',
 						effect: 'Each target stands, makes a free strike, then collapses again. Allies of the targets can use Ready Rodent as a free triggered action once in conjunction with these free strikes.'
 					})
 				})

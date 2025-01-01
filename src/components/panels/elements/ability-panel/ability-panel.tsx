@@ -1,6 +1,6 @@
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
-import { FeatureAbilityCostData } from '../../../../models/feature';
+import { Badge } from '../../../controls/badge/badge';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { FormatLogic } from '../../../../logic/format-logic';
@@ -13,6 +13,7 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { PowerRollPanel } from '../../power-roll/power-roll-panel';
 import { Tag } from 'antd';
 import { Utils } from '../../../../utils/utils';
+import { useMemo } from 'react';
 
 import './ability-panel.scss';
 
@@ -26,24 +27,35 @@ interface Props {
 }
 
 export const AbilityPanel = (props: Props) => {
-	try {
-		let cost = props.ability.cost;
-		let disabled = false;
-		if ((cost > 0) && props.hero) {
-			HeroLogic.getFeatures(props.hero).filter(f => f.type === FeatureType.AbilityCost).forEach(f => {
-				const data = f.data as FeatureAbilityCostData;
-				if (data.keywords.every(k => props.ability.keywords.includes(k))) {
-					cost += data.modifier;
-				}
-			});
-
-			cost = Math.max(cost, 1);
-
-			if (props.options?.dimUnavailableAbilities || false) {
-				disabled = cost > props.hero.state.heroicResource;
+	const cost = useMemo(
+		() => {
+			const cost = props.ability.cost;
+			if (cost <= 0 || !props.hero) {
+				return cost;
 			}
-		}
+			const modifierSum = HeroLogic.getFeatures(props.hero)
+				.filter(f => f.type === FeatureType.AbilityCost)
+				.filter(f => f.data.keywords.every(k => props.ability.keywords.includes(k)))
+				.map(f => f.data.modifier)
+				.reduce((sum, m) => sum + m, 0);
 
+			return Math.max(cost + modifierSum, 1);
+		},
+		[ props.ability, props.hero ]
+	);
+	const headerRibbon = useMemo(
+		() => props.ability.signature
+			? (<Badge value='Signature' />)
+			: cost > 0 ? (<HeroicResourceBadge value={cost} />) : null,
+		[ props.ability, cost ]
+	);
+	const disabled = useMemo(
+		() => (props.options?.dimUnavailableAbilities ?? false)
+			&& props.hero
+			&& cost > props.hero.state.heroicResource,
+		[ props.hero, props.options, cost ]
+	);
+	try {
 		let className = 'ability-panel';
 		if (disabled) {
 			className += ' disabled';
@@ -51,7 +63,7 @@ export const AbilityPanel = (props: Props) => {
 
 		return (
 			<div className={className} id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
-				<HeaderText ribbon={cost > 0 ? <HeroicResourceBadge value={cost} /> : null} tags={props.tags}>
+				<HeaderText ribbon={headerRibbon} tags={props.tags}>
 					{props.ability.name || 'Unnamed Ability'}
 				</HeaderText>
 				{props.ability.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.description) }} /> : null}

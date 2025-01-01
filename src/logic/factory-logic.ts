@@ -237,7 +237,7 @@ export class FactoryLogic {
 			level: 1,
 			role: {
 				type: MonsterRoleType.Ambusher,
-				isMinion: false
+				organization: 'platoon'
 			},
 			keywords: [],
 			encounterValue: 0,

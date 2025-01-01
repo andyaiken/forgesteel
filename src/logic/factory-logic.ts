@@ -35,6 +35,13 @@ import { SubClass } from '../models/subclass';
 import { Title } from '../models/title';
 import { Utils } from '../utils/utils';
 
+type RequiredAbilityProps = 'id' | 'name' | 'type' | 'distance' | 'target';
+type OptionalAbilityProps = 'description' | 'keywords' | 'cost' | 'preEffect' | 'powerRoll' | 'effect' | 'strained' | 'alternateEffects';
+interface InitAbility extends Pick<Ability, RequiredAbilityProps>, Partial<Pick<Ability, OptionalAbilityProps>> {
+	spend?: { value?: number, effect: string }[];
+	persistence?: { value?: number, effect: string }[];
+}
+
 export class FactoryLogic {
 	static createHero = (sourcebookIDs: string[]): Hero => {
 		return {
@@ -353,7 +360,7 @@ export class FactoryLogic {
 		};
 	};
 
-	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, strained?: string, alternateEffects?: string[], spend?: { value?: number, effect: string }[], persistence?: { value?: number, effect: string }[] }): Ability => {
+	static createAbility = (data: InitAbility): Ability => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -385,12 +392,13 @@ export class FactoryLogic {
 	};
 
 	static type = {
-		createAction: (free = false): AbilityType => {
+		createAction: (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
 			return {
 				usage: AbilityUsage.Action,
-				free: free,
+				free: options?.free ?? false,
 				trigger: '',
-				time: ''
+				time: '',
+				qualifiers: options?.qualifiers
 			};
 		},
 		createManeuver: (free = false): AbilityType => {

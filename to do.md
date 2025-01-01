@@ -36,3 +36,5 @@
 
 **Heroes**
 * More intelligent feature collation - for each one, look for sub-features
+* Add hero inventory management
+* Add a way for heroes to be modified - additional skills, languages, perks, titles, etc

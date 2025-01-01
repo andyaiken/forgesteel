@@ -40,5 +40,5 @@ here we can see a homebrew kit being created.
 
 If you would like to contribute, you can:
 
-* Add feature requests and raise bug reports [here](https://github.com/andyaiken/forgesteel/issues).
+* Add feature requests and raise bug reports [here](https://github.com/andyaiken/forgesteel/issues)
 * Fork the repository, make your changes to the code, and raise a pull request

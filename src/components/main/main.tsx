@@ -991,126 +991,172 @@ export const Main = (props: Props) => {
 
 	return (
 		<Routes>
-			<Route path={navigation.rootRoute} element={
-				<MainLayout
-					drawer={drawer}
-					setDrawer={setDrawer}
-				/>
-			}>
-				<Route index element={
-					<WelcomePage
-						showAbout={showAbout}
-						showHeroes={heroes.length === 0 ? addHero : navigation.goToHeroList}
-						showLibrary={() => navigation.goToLibraryList()}
-						showEncounters={navigation.goToEncounterList}
+			<Route
+				path={navigation.rootRoute}
+				element={
+					<MainLayout
+						section='hero'
+						drawer={drawer}
+						setDrawer={setDrawer}
 					/>
-				} />
+				}
+			>
+				<Route
+					index={true}
+					element={
+						<WelcomePage
+							showAbout={showAbout}
+							showHeroes={heroes.length === 0 ? addHero : navigation.goToHeroList}
+							showLibrary={() => navigation.goToLibraryList()}
+							showEncounters={navigation.goToEncounterList}
+						/>
+					}
+				/>
 				<Route path='hero'>
-					<Route path='list' element={
-						<HeroListPage
-							heroes={heroes}
-							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-							goHome={navigation.goToWelcome}
-							showAbout={showAbout}
-							addHero={addHero}
-							importHero={importHero}
-							viewHero={viewHero}
-						/>
-					} />
-					<Route path='view/:heroId' element={
-						<HeroPage
-							heroes={heroes}
-							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-							options={options}
-							setOptions={persistOptions}
-							goHome={navigation.goToWelcome}
-							showAbout={showAbout}
-							closeHero={closeHero}
-							editHero={editHero}
-							exportHero={exportHero}
-							deleteHero={deleteHero}
-							onSelectAncestry={onSelectAncestry}
-							onSelectCulture={onSelectCulture}
-							onSelectCareer={onSelectCareer}
-							onSelectClass={onSelectClass}
-							onSelectComplication={onSelectComplication}
-							onSelectDomain={onSelectDomain}
-							onSelectKit={onSelectKit}
-							onSelectCharacteristic={onSelectCharacteristic}
-							onSelectAbility={onSelectAbility}
-							onShowHeroState={onShowHeroState}
-							onShowRules={onShowRules}
-						/>
-					} />
-					<Route path='edit/:heroId' element={<Navigate to='Ancestry' replace />} />
-					<Route path='edit/:heroId/:tab' element={
-						<HeroEditPage
-							heroes={heroes}
-							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-							goHome={navigation.goToWelcome}
-							showAbout={showAbout}
-							saveChanges={saveEditHero}
-							cancelChanges={cancelEditHero}
-						/>
-					} />
+					<Route
+						index={true}
+						element={<Navigate to='list' replace={true} />}
+					/>
+					<Route
+						path='list'
+						element={
+							<HeroListPage
+								heroes={heroes}
+								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								goHome={navigation.goToWelcome}
+								showAbout={showAbout}
+								addHero={addHero}
+								importHero={importHero}
+								viewHero={viewHero}
+							/>
+						}
+					/>
+					<Route
+						path='view/:heroId'
+						element={
+							<HeroPage
+								heroes={heroes}
+								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								options={options}
+								setOptions={persistOptions}
+								goHome={navigation.goToWelcome}
+								showAbout={showAbout}
+								closeHero={closeHero}
+								editHero={editHero}
+								exportHero={exportHero}
+								deleteHero={deleteHero}
+								onSelectAncestry={onSelectAncestry}
+								onSelectCulture={onSelectCulture}
+								onSelectCareer={onSelectCareer}
+								onSelectClass={onSelectClass}
+								onSelectComplication={onSelectComplication}
+								onSelectDomain={onSelectDomain}
+								onSelectKit={onSelectKit}
+								onSelectCharacteristic={onSelectCharacteristic}
+								onSelectAbility={onSelectAbility}
+								onShowHeroState={onShowHeroState}
+								onShowRules={onShowRules}
+							/>
+						}
+					/>
+					<Route
+						path='edit/:heroId'
+						element={<Navigate to='Ancestry' replace={true} />}
+					/>
+					<Route
+						path='edit/:heroId/:tab'
+						element={
+							<HeroEditPage
+								heroes={heroes}
+								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								goHome={navigation.goToWelcome}
+								showAbout={showAbout}
+								saveChanges={saveEditHero}
+								cancelChanges={cancelEditHero}
+							/>
+						}
+					/>
 				</Route>
 				<Route path='library'>
-					<Route path='list' element={<Navigate to='Ancestry' replace />} />
-					<Route path='list/:tab' element={
-						<LibraryListPage
-							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-							hiddenSourcebookIDs={hiddenSourcebookIDs}
-							goHome={navigation.goToWelcome}
-							showAbout={showAbout}
-							showSourcebooks={showSourcebooks}
-							viewAncestry={onSelectAncestry}
-							viewCulture={onSelectCulture}
-							viewCareer={onSelectCareer}
-							viewClass={onSelectClass}
-							viewComplication={onSelectComplication}
-							viewDomain={onSelectDomain}
-							viewKit={onSelectKit}
-							viewPerk={onSelectPerk}
-							viewTitle={onSelectTitle}
-							viewItem={onSelectItem}
-							viewMonsterGroup={onSelectMonsterGroup}
-							onCreateHomebrew={createHomebrewElement}
-							onImportHomebrew={importHomebrewElement}
-						/>
-					} />
-					<Route path='edit/:sourcebookId/:kind/:elementId' element={
-						<LibraryEditPage
-							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-							goHome={navigation.goToWelcome}
-							showAbout={showAbout}
-							saveChanges={saveEditElement}
-							cancelChanges={cancelEditElement}
-						/>
-					} />
+					<Route
+						index={true}
+						element={<Navigate to='list' replace={true} />}
+					/>
+					<Route
+						path='list'
+						element={<Navigate to='Ancestry' replace={true} />}
+					/>
+					<Route
+						path='list/:tab'
+						element={
+							<LibraryListPage
+								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								hiddenSourcebookIDs={hiddenSourcebookIDs}
+								goHome={navigation.goToWelcome}
+								showAbout={showAbout}
+								showSourcebooks={showSourcebooks}
+								viewAncestry={onSelectAncestry}
+								viewCulture={onSelectCulture}
+								viewCareer={onSelectCareer}
+								viewClass={onSelectClass}
+								viewComplication={onSelectComplication}
+								viewDomain={onSelectDomain}
+								viewKit={onSelectKit}
+								viewPerk={onSelectPerk}
+								viewTitle={onSelectTitle}
+								viewItem={onSelectItem}
+								viewMonsterGroup={onSelectMonsterGroup}
+								onCreateHomebrew={createHomebrewElement}
+								onImportHomebrew={importHomebrewElement}
+							/>
+						}
+					/>
+					<Route
+						path='edit/:sourcebookId/:kind/:elementId'
+						element={
+							<LibraryEditPage
+								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								goHome={navigation.goToWelcome}
+								showAbout={showAbout}
+								saveChanges={saveEditElement}
+								cancelChanges={cancelEditElement}
+							/>
+						}
+					/>
 				</Route>
 				<Route path='encounter'>
-					<Route path='list' element={
-						<EncounterListPage
-							playbook={playbook}
-							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-							goHome={navigation.goToWelcome}
-							showAbout={showAbout}
-							viewEncounter={onSelectEncounter}
-							onCreateEncounter={() => createEncounter(null)}
-							onImportEncounter={importEncounter}
-						/>
-					} />
-					<Route path='edit/:encounterId' element={
-						<EncounterEditPage
-							playbook={playbook}
-							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-							goHome={navigation.goToWelcome}
-							showAbout={showAbout}
-							showMonster={onSelectMonster}
-							saveChanges={saveEditEncounter}
-							cancelChanges={cancelEditEncounter}
-						/>
-					} />
+					<Route
+						index={true}
+						element={<Navigate to='list' replace={true} />}
+					/>
+					<Route
+						path='list'
+						element={
+							<EncounterListPage
+								playbook={playbook}
+								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								goHome={navigation.goToWelcome}
+								showAbout={showAbout}
+								viewEncounter={onSelectEncounter}
+								onCreateEncounter={() => createEncounter(null)}
+								onImportEncounter={importEncounter}
+							/>
+						}
+					/>
+					<Route
+						path='edit/:encounterId'
+						element={
+							<EncounterEditPage
+								playbook={playbook}
+								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								goHome={navigation.goToWelcome}
+								showAbout={showAbout}
+								showMonster={onSelectMonster}
+								saveChanges={saveEditEncounter}
+								cancelChanges={cancelEditEncounter}
+							/>
+						}
+					/>
 				</Route>
 			</Route>
 		</Routes>

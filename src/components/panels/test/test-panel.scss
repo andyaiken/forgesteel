@@ -1,0 +1,60 @@
+.test-panel {
+	margin: 10px 0;
+	border: 1px solid rgba(5, 5, 5, 0.06);
+	border-radius: 5px;
+	background-color: rgb(250, 250, 250);
+	padding: 10px;
+
+	&.clickable {
+		cursor: pointer;
+
+		&:hover {
+			background-color: rgb(180, 220, 255);
+		}
+	}
+
+	.test-row {
+		display: flex;
+		gap: 10px;
+
+		&.test-header {
+			font-weight: 600;
+			padding-bottom: 8px;
+			border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+		}
+
+		.tier {
+			flex: 0 0 55px;
+			border-right: 1px solid rgba(5, 5, 5, 0.06);
+			padding: 5px 0;
+		}
+
+		.effect {
+			flex: 1 1 0;
+			padding: 5px 0;
+		}
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.test-panel {
+		border-color: rgba(250, 250, 250, 0.6);
+		background-color: rgb(30, 30, 30);
+
+		&.clickable {
+			&:hover {
+				background-color: rgb(125, 180, 255);
+			}
+		}
+
+		.test-row {
+			&.test-header {
+				border-bottom: 1px solid rgba(250, 250, 250, 0.6);
+			}
+
+			.tier {
+				border-right: 1px solid rgba(250, 250, 250, 0.6);
+			}
+		}
+	}
+}

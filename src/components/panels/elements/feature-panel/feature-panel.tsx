@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Collections } from '../../../../utils/collections';
@@ -17,6 +17,7 @@ import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../perk-panel/perk-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { TestPanel } from '../../test/test-panel';
 import { TitlePanel } from '../title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
 
@@ -832,6 +833,10 @@ export const FeaturePanel = (props: Props) => {
 		return null;
 	};
 
+	const getExtraMalice = (data: FeatureMaliceData) => {
+		return data.test ? (<TestPanel test={data.test} />) : null;
+	};
+
 	const getExtraPerk = (data: FeaturePerkData) => {
 		if (data.selected.length > 0) {
 			return (
@@ -946,6 +951,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraLanguage(props.feature.data as FeatureLanguageData);
 			case FeatureType.LanguageChoice:
 				return getExtraLanguageChoice(props.feature.data as FeatureLanguageChoiceData);
+			case FeatureType.Malice:
+				return getExtraMalice(props.feature.data);
 			case FeatureType.Perk:
 				return getExtraPerk(props.feature.data as FeaturePerkData);
 			case FeatureType.Size:

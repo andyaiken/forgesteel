@@ -11,6 +11,7 @@ import { Perk } from './perk';
 import { PerkList } from '../enums/perk-list';
 import { Size } from './size';
 import { SkillList } from '../enums/skill-list';
+import type { Test } from './test';
 import { Title } from './title';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -93,6 +94,12 @@ export interface FeatureLanguageChoiceData extends _FeatureData {
 };
 export type FeatureLanguageChoice = FeatureOf<FeatureType.LanguageChoice, FeatureLanguageChoiceData>;
 
+export interface FeatureMaliceData extends _FeatureData {
+	cost: number;
+	test?: Test;
+}
+export type FeatureMalice = FeatureOf<FeatureType.Malice, FeatureMaliceData>;
+
 export interface FeatureMultipleData extends _FeatureData {
 	features: Feature[];
 };
@@ -149,6 +156,7 @@ export type Feature =
 	| FeatureKitType
 	| FeatureLanguage
 	| FeatureLanguageChoice
+	| FeatureMalice
 	| FeatureMultiple
 	| FeaturePerk
 	| FeatureSize

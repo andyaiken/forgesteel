@@ -675,6 +675,7 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
+			// TODO: support for editing Malice feature
 			case FeatureType.Multiple: {
 				const data = feature.data as FeatureMultipleData;
 				return (

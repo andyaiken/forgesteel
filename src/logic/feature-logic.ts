@@ -1,7 +1,7 @@
 import type {
 	Feature,
+	FeatureAbility,
 	FeatureAbilityCostData,
-	FeatureAbilityData,
 	FeatureBonusData,
 	FeatureChoiceData,
 	FeatureClassAbilityData,
@@ -12,6 +12,8 @@ import type {
 	FeatureKitTypeData,
 	FeatureLanguageChoiceData,
 	FeatureLanguageData,
+	FeatureMalice,
+	FeatureMaliceData,
 	FeatureMultipleData,
 	FeaturePerkData,
 	FeatureSizeData,
@@ -28,6 +30,7 @@ import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { DamageModifier } from '../models/damage-modifier';
+import type { Element } from '../models/element';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { FormatLogic } from './format-logic';
@@ -36,6 +39,8 @@ import { Item } from '../models/item';
 import { KitType } from '../enums/kit';
 import { PerkList } from '../enums/perk-list';
 import { SkillList } from '../enums/skill-list';
+
+type InitElement = Pick<Element, 'id'> & Partial<Pick<Element, 'name' | 'description'>>;
 
 export class FeatureLogic {
 	static feature = {
@@ -48,7 +53,7 @@ export class FeatureLogic {
 				data: null
 			} as Feature;
 		},
-		createAbilityFeature: (data: { ability: Ability }) => {
+		createAbilityFeature: (data: { ability: Ability }): FeatureAbility => {
 			return {
 				id: data.ability.id,
 				name: data.ability.name,
@@ -56,8 +61,8 @@ export class FeatureLogic {
 				type: FeatureType.Ability,
 				data: {
 					ability: data.ability
-				} as FeatureAbilityData
-			} as Feature;
+				}
+			};
 		},
 		createAbilityCostFeature: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number }) => {
 			return {
@@ -201,6 +206,13 @@ export class FeatureLogic {
 				} as FeatureLanguageChoiceData
 			} as Feature;
 		},
+		createMaliceFeature: ({ id, name, description }: InitElement, data: FeatureMaliceData): FeatureMalice => ({
+			id,
+			name: name ?? '',
+			description: description ?? '',
+			type: FeatureType.Malice,
+			data
+		}),
 		createMultipleFeature: (data: { id: string, name?: string, description?: string, features: Feature[] }) => {
 			return {
 				id: data.id,

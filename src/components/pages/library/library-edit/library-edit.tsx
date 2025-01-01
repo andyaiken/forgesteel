@@ -1,6 +1,7 @@
 import { Alert, Button, Divider, Input, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
+import type { Feature, FeatureMalice } from '../../../../models/feature';
 import { KitArmor, KitType, KitWeapon } from '../../../../enums/kit';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { useMemo, useState } from 'react';
@@ -26,7 +27,6 @@ import { Element } from '../../../../models/element';
 import { ElementEditPanel } from '../../../panels/edit/element-edit-panel/element-edit-panel';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
-import { Feature } from '../../../../models/feature';
 import { FeatureEditPanel } from '../../../panels/edit/feature-edit-panel/feature-edit-panel';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { Field } from '../../../controls/field/field';
@@ -1125,16 +1125,16 @@ export const LibraryEditPage = (props: Props) => {
 
 		const addFeature = () => {
 			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
-			copy.malice.push(FeatureLogic.feature.createFeature({
+			copy.malice.push(FeatureLogic.feature.createMaliceFeature({
 				id: Utils.guid(),
 				name: '',
 				description: ''
-			}));
+			}, { cost: 0 }));
 			setElement(copy);
 			setDirty(true);
 		};
 
-		const changeFeature = (feature: Feature) => {
+		const changeFeature = (feature: FeatureMalice) => {
 			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
 			const index = copy.malice.findIndex(f => f.id === feature.id);
 			if (index !== -1) {
@@ -1175,7 +1175,7 @@ export const LibraryEditPage = (props: Props) => {
 							<FeatureEditPanel
 								feature={f}
 								sourcebooks={props.sourcebooks}
-								onChange={changeFeature}
+								onChange={f => changeFeature(f as FeatureMalice)}
 							/>
 						</Expander>
 					))

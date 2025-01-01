@@ -5,6 +5,7 @@ import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureDamageModifierData } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { MonsterFilter } from '../models/monster-filter';
+import { MonsterOrganization } from '../models/monster-organization';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Size } from '../models/size';
 
@@ -34,14 +35,15 @@ export class MonsterLogic {
 			return filter.roles.includes(monster.role.type);
 		}
 
+		// TODO: filter by organizations multiselect
 		switch (filter.isMinion) {
 			case 'yes':
-				if (!monster.role.isMinion) {
+				if (monster.role.organization !== 'minion') {
 					return false;
 				}
 				break;
 			case 'no':
-				if (monster.role.isMinion) {
+				if (monster.role.organization === 'minion') {
 					return false;
 				}
 				break;
@@ -143,10 +145,10 @@ export class MonsterLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
-	static createRole = (type: MonsterRoleType, isMinion?: boolean): MonsterRole => {
+	static createRole = (type: MonsterRoleType, organization: MonsterOrganization): MonsterRole => {
 		return {
 			type: type,
-			isMinion: isMinion || false
+			organization
 		};
 	};
 

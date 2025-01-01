@@ -1,3 +1,4 @@
+// TODO: remove Leader and Solo; subsumed by Organization
 export enum MonsterRoleType {
 	Ambusher = 'Ambusher',
 	Artillery = 'Artillery',

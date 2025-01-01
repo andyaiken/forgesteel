@@ -8,7 +8,7 @@ import { HeroLogic } from './hero-logic';
 import { PowerRollType } from '../enums/power-roll-type';
 
 type RequiredAbilityProps = 'id' | 'name' | 'type' | 'distance' | 'target';
-type OptionalAbilityProps = 'description' | 'keywords' | 'cost' | 'preEffect' | 'powerRoll' | 'effect' | 'alternateEffects';
+type OptionalAbilityProps = 'description' | 'keywords' | 'cost' | 'signature' | 'preEffect' | 'powerRoll' | 'effect' | 'alternateEffects';
 interface InitAbility extends Pick<Ability, RequiredAbilityProps>, Partial<Pick<Ability, OptionalAbilityProps>> {
 	spend?: { value?: number, effect: string }[];
 	persistence?: { value?: number, effect: string }[];
@@ -144,6 +144,7 @@ export class AbilityLogic {
 			distance: data.distance || [],
 			target: data.target || '',
 			cost: data.cost || 0,
+			signature: data.signature ?? false,
 			preEffect: data.preEffect || '',
 			powerRoll: data.powerRoll || null,
 			effect: data.effect || '',

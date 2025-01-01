@@ -1,6 +1,7 @@
 import { AbilityType } from '../models/ability';
 import { AbilityUsage } from '../enums/ability-usage';
 import { DamageModifier } from '../models/damage-modifier';
+import { Format } from '../utils/format';
 import { MonsterRole } from '../models/monster';
 import { Size } from '../models/size';
 
@@ -25,11 +26,13 @@ export class FormatLogic {
 	};
 
 	static getRole = (role: MonsterRole) => {
-		if (role.isMinion) {
-			return `${role.type} Minion`;
+		if (role.organization === 'leader') {
+			return 'Leader';
 		}
-
-		return role.type;
+		if (role.organization === 'solo') {
+			return 'Solo';
+		}
+		return `${Format.capitalize(role.organization)} ${role.type}`;
 	};
 
 	static getDamageModifier = (mod: DamageModifier) => {

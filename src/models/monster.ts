@@ -27,6 +27,7 @@ export interface Monster extends Element {
 		characteristic: Characteristic;
 		value: number;
 	}[];
+	withCaptain?: string;
 	features: Feature[];
 };
 

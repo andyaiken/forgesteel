@@ -36,7 +36,7 @@ import { Title } from '../models/title';
 import { Utils } from '../utils/utils';
 
 type RequiredAbilityProps = 'id' | 'name' | 'type' | 'distance' | 'target';
-type OptionalAbilityProps = 'description' | 'keywords' | 'cost' | 'preEffect' | 'powerRoll' | 'effect' | 'strained' | 'alternateEffects';
+type OptionalAbilityProps = 'description' | 'keywords' | 'cost' | 'signature' | 'preEffect' | 'powerRoll' | 'effect' | 'strained' | 'alternateEffects';
 interface InitAbility extends Pick<Ability, RequiredAbilityProps>, Partial<Pick<Ability, OptionalAbilityProps>> {
 	spend?: { value?: number, effect: string }[];
 	persistence?: { value?: number, effect: string }[];
@@ -370,13 +370,14 @@ export class FactoryLogic {
 			distance: data.distance || [],
 			target: data.target || '',
 			cost: data.cost || 0,
+			signature: data.signature ?? false,
 			preEffect: data.preEffect || '',
 			powerRoll: data.powerRoll || null,
 			effect: data.effect || '',
 			strained: data.strained || '',
 			alternateEffects: data.alternateEffects || [],
-			spend: data.spend ? data.spend.map(s => ({ value: s.value || 0, effect: s.effect })) : [],
-			persistence: data.persistence ? data.persistence.map(p => ({ value: p.value || 0, effect: p.effect })) : []
+			spend: (data.spend ?? []).map(s => ({ ...s, value: s.value ?? 0 })),
+			persistence: (data.persistence ?? []).map(p => ({ ...p, value: p.value ?? 0 }))
 		};
 	};
 	static createPowerRoll = (data: { characteristic?: Characteristic | Characteristic[] } & Pick<PowerRoll, 'tier1' | 'tier2' | 'tier3'> & Partial<Pick<PowerRoll, 'bonus'>>): PowerRoll => {

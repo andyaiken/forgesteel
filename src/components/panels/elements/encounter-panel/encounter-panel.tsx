@@ -41,12 +41,8 @@ export const EncounterPanel = (props: Props) => {
 									let name = (monster && monsterGroup) ? MonsterLogic.getMonsterName(monster, monsterGroup) : 'Unknown Monster';
 
 									let count = slot.count;
-									if (monster) {
-										switch (monster.role.organization) {
-											case MonsterOrganizationType.Minion:
-												count *= 8;
-												break;
-										}
+									if (monster && monster.role.organization === MonsterOrganizationType.Minion) {
+										count *= 8;
 									}
 									if (count > 1) {
 										name += ` (x${count})`;

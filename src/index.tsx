@@ -1,5 +1,5 @@
-import { BrowserRouter } from 'react-router';
 import { FactoryLogic } from './logic/factory-logic.ts';
+import { HashRouter } from 'react-router';
 import { Hero } from './models/hero.ts';
 import { HeroLogic } from './logic/hero-logic.ts';
 import { Main } from './components/main/main.tsx';
@@ -75,7 +75,7 @@ Promise.all(promises).then(results => {
 
 	createRoot(document.getElementById('root')!).render(
 		<StrictMode>
-			<BrowserRouter>
+			<HashRouter>
 				<Main
 					heroes={heroes}
 					homebrewSourcebooks={sourcebooks}
@@ -83,7 +83,7 @@ Promise.all(promises).then(results => {
 					playbook={playbook}
 					options={options}
 				/>
-			</BrowserRouter>
+			</HashRouter>
 		</StrictMode>
 	);
 });

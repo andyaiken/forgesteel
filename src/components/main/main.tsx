@@ -166,7 +166,7 @@ export const Main = (props: Props) => {
 
 	const exportHero = (heroId: string, format: 'image' | 'pdf' | 'json') => {
 		const hero = heroes.find(h => h.id === heroId)!;
-		const ids = (format === 'pdf') ? [ 'stats', 'actions', 'maneuvers', 'moves', 'triggers', 'others' ] : [ heroId ];
+		const ids = (format === 'pdf') ? [ 'stats', 'actions', 'maneuvers', 'moves', 'triggers', 'others', 'none' ] : [ heroId ];
 		Utils.export(ids, hero.name || 'Unnamed Hero', hero, 'hero', format);
 	};
 

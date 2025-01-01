@@ -524,6 +524,11 @@ export const HeroPanel = (props: Props) => {
 						{getAbilitiesSection(AbilityUsage.Other)}
 					</div>
 				</div>
+				<div className='hero-main-section' id='none'>
+					<div className='hero-main-column'>
+						{getAbilitiesSection(AbilityUsage.NoAction)}
+					</div>
+				</div>
 			</div>
 		);
 	} catch (ex) {

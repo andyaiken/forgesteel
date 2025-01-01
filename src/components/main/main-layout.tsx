@@ -23,6 +23,8 @@ export const MainLayout = (props: Props) => {
 			<div className='main-footer'>
 				<div className='main-footer-section'>
 					<img className='ds-logo' src={pbds} />
+				</div>
+				<div className='main-footer-section'>
 					FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC.
 					DRAW STEEL © 2024 MCDM Productions, LLC.
 				</div>

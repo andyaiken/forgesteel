@@ -392,12 +392,16 @@ export const AbilityEditPanel = (props: Props) => {
 										<Select
 											style={{ width: '100%' }}
 											placeholder='Select usage type'
-											options={[ AbilityUsage.Action, AbilityUsage.Maneuver, AbilityUsage.Move, AbilityUsage.Trigger, AbilityUsage.VillainAction, AbilityUsage.Other ].map(option => ({ value: option }))}
+											options={[ AbilityUsage.Action, AbilityUsage.Maneuver, AbilityUsage.Move, AbilityUsage.Trigger, AbilityUsage.VillainAction, AbilityUsage.NoAction, AbilityUsage.Other ].map(option => ({ value: option }))}
 											optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 											value={ability.type.usage}
 											onChange={setTypeUsage}
 										/>
-										<Toggle label='Free' value={ability.type.free} onChange={setTypeFree} />
+										{
+											(ability.type.usage === AbilityUsage.Action) || (ability.type.usage === AbilityUsage.Maneuver) || (ability.type.usage === AbilityUsage.Trigger) ?
+												<Toggle label='Free' value={ability.type.free} onChange={setTypeFree} />
+												: null
+										}
 										{
 											ability.type.usage === AbilityUsage.Trigger ?
 												<Input
@@ -427,7 +431,7 @@ export const AbilityEditPanel = (props: Props) => {
 										placeholder='Keywords'
 										mode='multiple'
 										allowClear={true}
-										options={[ AbilityKeyword.Animal, AbilityKeyword.Area, AbilityKeyword.Charge, AbilityKeyword.Earth, AbilityKeyword.Fire, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Persistent, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Resistance, AbilityKeyword.Strike, AbilityKeyword.Void, AbilityKeyword.Weapon ].map(option => ({ value: option }))}
+										options={[ AbilityKeyword.Animal, AbilityKeyword.Area, AbilityKeyword.Charge, AbilityKeyword.Earth, AbilityKeyword.Fire, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Persistent, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Resistance, AbilityKeyword.Rot, AbilityKeyword.Routine, AbilityKeyword.Strike, AbilityKeyword.Void, AbilityKeyword.Weapon ].map(option => ({ value: option }))}
 										optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 										value={ability.keywords}
 										onChange={setKeywords}

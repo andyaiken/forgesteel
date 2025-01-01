@@ -57,6 +57,14 @@ export class AbilityLogic {
 				trigger: '',
 				time: ''
 			};
+		},
+		createNoAction: (): AbilityType => {
+			return {
+				usage: AbilityUsage.NoAction,
+				free: false,
+				trigger: '',
+				time: ''
+			};
 		}
 	};
 

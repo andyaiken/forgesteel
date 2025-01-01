@@ -23,7 +23,7 @@ export const dragonKnight: Ancestry = {
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Acid',
-								value: 0,
+								value: 1,
 								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
@@ -38,7 +38,7 @@ export const dragonKnight: Ancestry = {
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Cold',
-								value: 0,
+								value: 1,
 								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
@@ -53,7 +53,7 @@ export const dragonKnight: Ancestry = {
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Corruption',
-								value: 0,
+								value: 1,
 								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
@@ -68,7 +68,7 @@ export const dragonKnight: Ancestry = {
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Fire',
-								value: 0,
+								value: 1,
 								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
@@ -83,7 +83,7 @@ export const dragonKnight: Ancestry = {
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Lightning',
-								value: 0,
+								value: 1,
 								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
@@ -98,7 +98,7 @@ export const dragonKnight: Ancestry = {
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Poison',
-								value: 0,
+								value: 1,
 								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
@@ -128,7 +128,7 @@ export const dragonKnight: Ancestry = {
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Acid',
-								value: 0,
+								value: 1,
 								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
@@ -144,7 +144,7 @@ export const dragonKnight: Ancestry = {
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Cold',
-								value: 0,
+								value: 1,
 								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
@@ -160,7 +160,7 @@ export const dragonKnight: Ancestry = {
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Corruption',
-								value: 0,
+								value: 1,
 								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
@@ -176,7 +176,7 @@ export const dragonKnight: Ancestry = {
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Fire',
-								value: 0,
+								value: 1,
 								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
@@ -192,7 +192,7 @@ export const dragonKnight: Ancestry = {
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Lightning',
-								value: 0,
+								value: 1,
 								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}
@@ -208,7 +208,7 @@ export const dragonKnight: Ancestry = {
 							{
 								type: DamageModifierType.Immunity,
 								damageType: 'Poison',
-								value: 0,
+								value: 1,
 								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}

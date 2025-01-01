@@ -10,6 +10,7 @@ export interface AbilityType {
 	free: boolean;
 	trigger: string;
 	time: string;
+	qualifiers?: string[];
 }
 
 export interface AbilityDistance {

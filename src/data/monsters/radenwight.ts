@@ -13,12 +13,13 @@ export const radenwight: MonsterGroup = {
 	name: 'Radenwight',
 	description: `
 Small, agile, and hardy, radenwights have the appearance of humanoid rodents. They’re often referred to as “ratfolk,” a name they don’t particularly mind but also don’t embrace. Should anyone ask, many radenwights speak of being a ratfolk when they’re alone, but always a radenwight when part of a group. Radenwight groups proudly call themselves a “meddle,” and have a knack for appearing where others hoped they wouldn’t or whenever they are least expected. Radenwight meddles can be found in the wilderness as easily as in any city, so long as there’s suitable work and excitement to keep the members of the meddle occupied.
-If radenwights’ enemies expect them to scurry away like rats, they will be painfully surprised to see the combined arrows, bodies, and blades of a meddle thrown against them all at once. Whatever radenwights do, they do it fearlessly, with deeply cherished values of bravery and fair play shining through in even the most rakish and roguish of them. Radenwights aren’t above banditry if it will support the meddle, but they greatly prefer to overwhelm, knock down, and knock out their targets rather than engage in deadly violence. They prefer weapons of precision, and look for opportunities to strike as they and their comrades create openings for one another.`,
+
+If radenwights’ enemies expect them to scurry away like rats, they will be painfully surprised to see the combined arrows, bodies, and blades of a meddle thrown against them all at once. Whatever radenwights do, they do it fearlessly, with deeply cherished values of bravery and fair play shining through even the most rakish and roguish of them. Radenwights aren’t above banditry if it would support the meddle, but they greatly prefer to overwhelm, knock down, and knock out their targets rather than engage in deadly violence. They prefer weapons of precision and look for opportunities to strike as they and their comrades create openings for one another.`,
 	information: [
 		{
 			id: 'radenwight-info-1',
 			name: 'Bonds and Bravado',
-			description: 'It’s a big world out there for a bunch of small ratfolk, and radenwights learned long ago that trying to survive by running away or climbing to safety only gets you so far. Radenwights learn boldness from birth, and are taught to hurl themselves fearlessly against any challenge that stands in their way. The key to this bravery is the intense bond of trust that exists between every radenwight, their comrades, and their community, and the knowledge that every other radenwight will act just as decisively as they do. In a scrap, it’s not one radenwight’s blade or arrow that brings down the foe, but the instant and instinctual follow-up from their fellows.'
+			description: 'It’s a big world out there for a bunch of small ratfolk, and radenwights learned long ago that trying to survive by running away or climbing to safety only gets you so far. Radenwights learn boldness from birth and are taught to hurl themselves fearlessly against any challenge that stands in their way. The key to this bravery is the intense bond of trust that exists between every radenwight, their comrades, and their community, and the knowledge that every other radenwight will act just as decisively as they do. In a scrap, it’s not one radenwight’s blade or arrow that brings down the foe, but the instant and instinctual follow-up from their fellows.'
 		},
 		{
 			id: 'radenwight-info-2',
@@ -27,6 +28,14 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 		},
 		{
 			id: 'radenwight-info-3',
+			name: 'The Great Maclette',
+			description: `
+The name Maclette is never uttered without The Great before it. The radenwight maestro leads his band in complex city-wide robberies that always seem to be one step ahead of any would-be ratcatchers. Some say Maclette leads his life of crime to provide for his meddle, while others claim he strives to be king of the criminal world.
+
+In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is as euphonious as music to his ears, and the maestro treats every operation like a new composition. As long as his band remains at large, he’ll always be looking to outdo himself with his next great masterpiece.`
+		},
+		{
+			id: 'radenwight-info-4',
 			name: 'Radenwight Languages',
 			description: 'Most radenwights speak Caelian and Szetch.'
 		}
@@ -36,17 +45,16 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 			ability: AbilityLogic.createAbility({
 				id: 'radenwight-malice-1',
 				name: 'Trouser Cut',
-				description: 'A non-minion radenwight can use the following ability.',
-				type: AbilityLogic.type.createAction(),
+				type: AbilityLogic.type.createAction({ qualifiers: [ 'Non-minion' ] }),
+				cost: 3,
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ AbilityLogic.distance.createMelee(1) ],
 				target: 'One creature',
-				cost: 3,
 				powerRoll: AbilityLogic.createPowerRoll({
 					bonus: 2,
-					tier1: '5 damage; push 3',
+					tier1: '7 damage; push 3',
 					tier2: '10 damage; push 3; taunted (EoT)',
-					tier3: '12 damage; push 3; taunted (REA ends)'
+					tier3: '13 damage; push 5; taunted (EoT)'
 				}),
 				effect: 'If a target is wearing clothing covering the lower half of their body, they must use a maneuver to pull that clothing up before they can move.'
 			})
@@ -54,21 +62,20 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 		FeatureLogic.feature.createMaliceFeature({
 			id: 'radenwight-malice-2',
 			name: 'Rat Race',
-			description: 'Each radenwight shifts up to their speed. Wherever a radenwight ends this movement adjacent to at least one other radenwight, they can make a melee free strike.',
+			description: 'Each radenwight shifts up to their speed. Wherever a radenwight ends this movement adjacent to at least one other radenwight, they can make a melee free strike against each adjacent enemy.',
 			cost: 5
 		}),
 		FeatureLogic.feature.createMaliceFeature({
 			id: 'radenwight-malice-3',
-			name: 'Wall of Rats',
-			description: `
-A 10 wall of living rats scurrying atop one another in a coordinated manner appears in unoccupied spaces anywhere on the encounter map and lasts until the end of the encounter. The wall doesn’t block line of eﬀect for radenwights and their allies, but it does for other creatures, as the rats coordinate their movements with the radenwights. Each square of the wall has 10 Stamina. If the last radenwight in the encounter dies and the wall is still standing, the rats let out a hideous screech as they disperse. Each enemy on the encounter map must then make an Intuition resistance roll.
-
-| Roll    | Effect                                                                                                                                                           |
-|:--------|:----------------|
-| 11 -    | 10 sonic damage |
-| 12 - 16 | 5 sonic damage  |
-| 17 +    | No effect       |`,
-			cost: 7
+			name: 'Rally the Rodents',
+			description: 'A radenwight uses music to coordinate rats to form a 10 wall of living rats scurrying atop one another into unoccupied spaces anywhere on the encounter map. The wall doesn’t block line of effect for radenwights and their allies, but it does for other creatures, as the rats coordinate their movements with the radenwights. Each square of the wall has 10 Stamina. If the last radenwight in the encounter dies and the wall is still standing, the rats let out a hideous screech as they disperse. Each enemy on the encounter map makes an Intuition test.',
+			cost: 7,
+			test: {
+				characteristic: Characteristic.Intuition,
+				tier1: '7 sonic damage; target can’t take a respite activity during their next respite',
+				tier2: '5 sonic damage',
+				tier3: 'No effect'
+			}
 		})
 	],
 	monsters: [

@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureMalice } from './feature';
+import type { Feature, FeatureAbility, FeatureMalice } from './feature';
 import { Characteristic } from '../enums/characteristic';
 import { Element } from './element';
 import { MonsterRoleType } from '../enums/monster-role-type';
@@ -31,6 +31,6 @@ export interface Monster extends Element {
 
 export interface MonsterGroup extends Element {
 	information: Element[];
-	malice: (FeatureMalice | FeatureAbility)[];
+	malice: (FeatureAbility | FeatureMalice)[];
 	monsters: Monster[];
 };

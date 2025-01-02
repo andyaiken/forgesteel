@@ -176,6 +176,7 @@ export const FeatureEditPanel = (props: Props) => {
 				};
 				break;
 			case FeatureType.Text:
+			default:
 				data = null;
 				break;
 			case FeatureType.Title:

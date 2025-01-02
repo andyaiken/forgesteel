@@ -14,106 +14,148 @@ import { SkillList } from '../enums/skill-list';
 import { Title } from './title';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface FeatureData { }
+interface _FeatureData { }
 
-export interface FeatureAbilityData extends FeatureData {
+type FeatureOf<Type extends FeatureType, Data extends _FeatureData | null = null> = Element & { type: Type, data: Data };
+
+export interface FeatureAbilityData extends _FeatureData {
 	ability: Ability;
 };
+export type FeatureAbility = FeatureOf<FeatureType.Ability, FeatureAbilityData>;
 
-export interface FeatureAbilityCostData extends FeatureData {
+export interface FeatureAbilityCostData extends _FeatureData {
 	keywords: AbilityKeyword[];
 	modifier: number;
 };
+export type FeatureAbilityCost = FeatureOf<FeatureType.AbilityCost, FeatureAbilityCostData>
 
-export interface FeatureBonusData extends FeatureData {
+export interface FeatureBonusData extends _FeatureData {
 	field: FeatureField;
 	value: number;
 	valuePerLevel: number;
 	valuePerEchelon: number;
 };
+export type FeatureBonus = FeatureOf<FeatureType.Bonus, FeatureBonusData>;
 
-export interface FeatureChoiceData extends FeatureData {
+export interface FeatureChoiceData extends _FeatureData {
 	options: { feature: Feature, value: number }[];
 	count: number;
 	selected: Feature[];
 }
+export type FeatureChoice = FeatureOf<FeatureType.Choice, FeatureChoiceData>;
 
-export interface FeatureClassAbilityData extends FeatureData {
+export interface FeatureClassAbilityData extends _FeatureData {
 	cost: number;
 	count: number;
 	selectedIDs: string[];
 }
+export type FeatureClassAbility = FeatureOf<FeatureType.ClassAbility, FeatureClassAbilityData>;
 
-export interface FeatureDamageModifierData extends FeatureData {
+export interface FeatureDamageModifierData extends _FeatureData {
 	modifiers: DamageModifier[];
 }
+export type FeatureDamageModifier = FeatureOf<FeatureType.DamageModifier, FeatureDamageModifierData>;
 
-export interface FeatureDomainData extends FeatureData {
+export interface FeatureDomainData extends _FeatureData {
 	count: number;
 	selected: Domain[];
 };
+export type FeatureDomain = FeatureOf<FeatureType.Domain, FeatureDomainData>;
 
-export interface FeatureDomainFeatureData extends FeatureData {
+export interface FeatureDomainFeatureData extends _FeatureData {
 	level: number;
 	count: number;
 	selected: Feature[];
 };
+export type FeatureDomainFeature = FeatureOf<FeatureType.DomainFeature, FeatureDomainFeatureData>;
 
-export interface FeatureKitData extends FeatureData {
+export interface FeatureKitData extends _FeatureData {
 	types: KitType[];
 	count: number;
 	selected: Kit[];
 };
+export type FeatureKit = FeatureOf<FeatureType.Kit, FeatureKitData>;
 
-export interface FeatureKitTypeData extends FeatureData {
+export interface FeatureKitTypeData extends _FeatureData {
 	types: KitType[];
 };
+export type FeatureKitType = FeatureOf<FeatureType.KitType, FeatureKitTypeData>;
 
-export interface FeatureLanguageData extends FeatureData {
+export interface FeatureLanguageData extends _FeatureData {
 	language: string;
 };
+export type FeatureLanguage = FeatureOf<FeatureType.Language, FeatureLanguageData>;
 
-export interface FeatureLanguageChoiceData extends FeatureData {
+export interface FeatureLanguageChoiceData extends _FeatureData {
 	options: string[];
 	count: number;
 	selected: string[];
 };
+export type FeatureLanguageChoice = FeatureOf<FeatureType.LanguageChoice, FeatureLanguageChoiceData>;
 
-export interface FeatureMultipleData extends FeatureData {
+export interface FeatureMultipleData extends _FeatureData {
 	features: Feature[];
 };
+export type FeatureMultiple = FeatureOf<FeatureType.Multiple, FeatureMultipleData>;
 
-export interface FeaturePerkData extends FeatureData {
+export interface FeaturePerkData extends _FeatureData {
 	lists: PerkList[];
 	count: number;
 	selected: Perk[];
 };
+export type FeaturePerk = FeatureOf<FeatureType.Perk, FeaturePerkData | null>;
 
-export interface FeatureSizeData extends FeatureData {
+export interface FeatureSizeData extends _FeatureData {
 	size: Size;
 };
+export type FeatureSize = FeatureOf<FeatureType.Size, FeatureSizeData>;
 
-export interface FeatureSkillData extends FeatureData {
+export interface FeatureSkillData extends _FeatureData {
 	skill: string;
 };
+export type FeatureSkill = FeatureOf<FeatureType.Skill, FeatureSkillData>;
 
-export interface FeatureSkillChoiceData extends FeatureData {
+export interface FeatureSkillChoiceData extends _FeatureData {
 	options: string[];
 	listOptions: SkillList[];
 	count: number;
 	selected: string[];
 };
+export type FeatureSkillChoice = FeatureOf<FeatureType.SkillChoice, FeatureSkillChoiceData>;
 
-export interface FeatureSpeedData extends FeatureData {
+export interface FeatureSpeedData extends _FeatureData {
 	speed: number;
 };
+export type FeatureSpeed = FeatureOf<FeatureType.Speed, FeatureSpeedData>;
 
-export interface FeatureTitleData extends FeatureData {
+export type FeatureText = FeatureOf<FeatureType.Text>;
+
+export interface FeatureTitleData extends _FeatureData {
 	count: number;
 	selected: Title[];
 };
+export type FeatureTitle = FeatureOf<FeatureType.Title, FeatureTitleData>;
 
-export interface Feature extends Element {
-	type: FeatureType;
-	data: FeatureData | null;
-}
+export type Feature =
+	| FeatureAbility
+	| FeatureAbilityCost
+	| FeatureBonus
+	| FeatureChoice
+	| FeatureClassAbility
+	| FeatureDamageModifier
+	| FeatureDomain
+	| FeatureDomainFeature
+	| FeatureKit
+	| FeatureKitType
+	| FeatureLanguage
+	| FeatureLanguageChoice
+	| FeatureMultiple
+	| FeaturePerk
+	| FeatureSize
+	| FeatureSkill
+	| FeatureSkillChoice
+	| FeatureSpeed
+	| FeatureText
+	| FeatureTitle;
+
+export type FeatureData = Feature['data'];

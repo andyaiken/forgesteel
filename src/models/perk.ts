@@ -1,6 +1,4 @@
-import { Feature } from './feature';
-import { PerkList } from '../enums/perk-list';
+import type { Feature } from './feature';
+import type { PerkList } from '../enums/perk-list';
 
-export interface Perk extends Feature {
-	list: PerkList;
-}
+export type Perk<TFeature extends Feature = Feature> = TFeature & { list: PerkList };

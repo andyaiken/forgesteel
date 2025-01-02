@@ -1,4 +1,25 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../models/feature';
+import type {
+	Feature,
+	FeatureAbilityCostData,
+	FeatureAbilityData,
+	FeatureBonusData,
+	FeatureChoiceData,
+	FeatureClassAbilityData,
+	FeatureDamageModifierData,
+	FeatureDomainData,
+	FeatureDomainFeatureData,
+	FeatureKitData,
+	FeatureKitTypeData,
+	FeatureLanguageChoiceData,
+	FeatureLanguageData,
+	FeatureMultipleData,
+	FeaturePerkData,
+	FeatureSizeData,
+	FeatureSkillChoiceData,
+	FeatureSkillData,
+	FeatureSpeedData,
+	FeatureTitleData
+} from '../models/feature';
 import { Ability } from '../models/ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from '../models/ancestry';

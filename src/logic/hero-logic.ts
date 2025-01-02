@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from './ability-logic';
@@ -541,9 +541,9 @@ Complex or time-consuming tests might require an action if made in combat—or c
 	static getSpeed = (hero: Hero) => {
 		let value = 5;
 
-		const features = this.getFeatures(hero).filter(f => f.type === FeatureType.Size);
+		const features = this.getFeatures(hero).filter(f => f.type === FeatureType.Speed);
 		if (features.length > 0) {
-			const datas = features.map(f => f.data as FeatureSpeedData);
+			const datas = features.map(f => f.data);
 			value = Collections.max(datas.map(d => d.speed), v => v) || 0;
 		}
 

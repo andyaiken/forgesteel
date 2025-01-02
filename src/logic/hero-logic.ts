@@ -14,6 +14,7 @@ import { Hero } from '../models/hero';
 import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit';
 import { Language } from '../models/language';
+import { PowerRoll } from '../models/power-roll';
 import { PowerRollType } from '../enums/power-roll-type';
 import { Size } from '../models/size';
 import { Skill } from '../models/skill';
@@ -841,8 +842,9 @@ Complex or time-consuming tests might require an action if made in combat—or c
 		});
 
 		this.getAbilities(hero, true, true, true).forEach(a => {
-			if (a.powerRoll && (a.powerRoll.type === undefined)) {
-				a.powerRoll.type = PowerRollType.PowerRoll;
+			const migratePowerRoll = a.powerRoll as Omit<PowerRoll, 'type'> & { type: PowerRollType | undefined };
+			if (migratePowerRoll && (migratePowerRoll.type === undefined)) {
+				migratePowerRoll.type = PowerRollType.PowerRoll;
 			}
 		});
 	};

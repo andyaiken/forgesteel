@@ -1,12 +1,12 @@
-import { Ability, AbilityDistance, AbilityType, PowerRoll } from '../models/ability';
+import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
-import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { Hero } from '../models/hero';
 import { HeroLogic } from './hero-logic';
-import { PowerRollType } from '../enums/power-roll-type';
+import type { PowerRoll } from '../models/power-roll';
+import { PowerRollLogic } from './power-roll-logic';
 
 export class AbilityLogic {
 	static type = {
@@ -116,16 +116,7 @@ export class AbilityLogic {
 		}
 	};
 
-	static createPowerRoll = (data: { type?: PowerRollType, characteristic?: Characteristic[], bonus?: number, tier1: string, tier2: string, tier3: string }) => {
-		return {
-			type: data.type || PowerRollType.PowerRoll,
-			characteristic: data.characteristic || [],
-			bonus: data.bonus || 0,
-			tier1: data.tier1,
-			tier2: data.tier2,
-			tier3: data.tier3
-		} as PowerRoll;
-	};
+	static createPowerRoll = PowerRollLogic.createPowerRoll;
 
 	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, alternateEffects?: string[], spend?: { value?: number, effect: string }[], persistence?: { value?: number, effect: string }[] }) => {
 		return {

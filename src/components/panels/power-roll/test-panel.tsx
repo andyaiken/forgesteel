@@ -1,9 +1,9 @@
+import type { PowerRoll } from '../../../models/power-roll';
 import { PowerRollPanel } from './power-roll-panel';
-import type { Test } from '../../../models/power-roll';
 import { useMemo } from 'react';
 
 interface Props {
-	test: Test;
+	test: PowerRoll;
 	onRoll?: () => void;
 }
 

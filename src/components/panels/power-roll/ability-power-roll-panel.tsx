@@ -4,7 +4,6 @@ import { Field } from '../../controls/field/field';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { PowerRollPanel } from './power-roll-panel';
-import { PowerRollType } from '../../../enums/power-roll-type';
 import type { ReactNode } from 'react';
 
 interface Props {
@@ -35,23 +34,16 @@ export const AbilityPowerRollPanel = (props: Props) => {
 		}
 
 		let header: string;
-		switch (props.ability.powerRoll.type) {
-			case PowerRollType.PowerRoll:
-				if (props.hero) {
-					const values = props.ability.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero!, ch));
-					const bonus = Collections.max(values, v => v) || 0;
-					const sign = bonus >= 0 ? '+' : '';
-					header = `Power Roll ${sign}${bonus}`;
-				} else if (props.ability.powerRoll.characteristic.length > 0) {
-					header = `Power Roll + ${props.ability.powerRoll.characteristic.join(' or ')}`;
-				} else {
-					const sign = props.ability.powerRoll.bonus >= 0 ? '+' : '';
-					header = `Power Roll ${sign}${props.ability.powerRoll.bonus}`;
-				}
-				break;
-			case PowerRollType.Test:
-				header = `${props.ability.powerRoll.characteristic.join(' or ')} Test`;
-				break;
+		if (props.hero) {
+			const values = props.ability.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero!, ch));
+			const bonus = Collections.max(values, v => v) || 0;
+			const sign = bonus >= 0 ? '+' : '';
+			header = `Power Roll ${sign}${bonus}`;
+		} else if (props.ability.powerRoll.characteristic.length > 0) {
+			header = `Power Roll + ${props.ability.powerRoll.characteristic.join(' or ')}`;
+		} else {
+			const sign = props.ability.powerRoll.bonus >= 0 ? '+' : '';
+			header = `Power Roll ${sign}${props.ability.powerRoll.bonus}`;
 		}
 
 		return (<PowerRollPanel powerRoll={props.ability.powerRoll} header={header} footer={bonus} onRoll={props.onRoll} />);

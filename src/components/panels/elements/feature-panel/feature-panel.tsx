@@ -844,7 +844,7 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getExtraMalice = (data: FeatureMaliceData) => {
-		return data.test ? (<TestPanel  test={data.test} />) : null;
+		return data.test ? (<TestPanel test={data.test} />) : null;
 	};
 
 	const getExtraPerk = (data: FeaturePerkData) => {

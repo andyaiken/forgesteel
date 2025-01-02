@@ -9,9 +9,9 @@ import { Kit } from './kit';
 import { KitType } from '../enums/kit';
 import { Perk } from './perk';
 import { PerkList } from '../enums/perk-list';
+import { PowerRoll } from './power-roll';
 import { Size } from './size';
 import { SkillList } from '../enums/skill-list';
-import type { Test } from './power-roll';
 import { Title } from './title';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -96,7 +96,7 @@ export type FeatureLanguageChoice = FeatureOf<FeatureType.LanguageChoice, Featur
 
 export interface FeatureMaliceData extends _FeatureData {
 	cost: number;
-	test?: Test;
+	test?: PowerRoll;
 };
 export type FeatureMalice = FeatureOf<FeatureType.Malice, FeatureMaliceData>;
 

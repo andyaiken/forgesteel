@@ -12,6 +12,7 @@ export enum FeatureType {
 	KitType = 'Kit Type',
 	Language = 'Language',
 	LanguageChoice = 'Language Choice',
+	Malice = 'Malice',
 	Multiple = 'Multiple Features',
 	Perk = 'Perk',
 	Size = 'Size',

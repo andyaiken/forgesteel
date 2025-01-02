@@ -93,6 +93,11 @@ export interface FeatureLanguageChoiceData extends _FeatureData {
 };
 export type FeatureLanguageChoice = FeatureOf<FeatureType.LanguageChoice, FeatureLanguageChoiceData>;
 
+export interface FeatureMaliceData extends _FeatureData {
+	cost: number;
+};
+export type FeatureMalice = FeatureOf<FeatureType.Malice, FeatureMaliceData>;
+
 export interface FeatureMultipleData extends _FeatureData {
 	features: Feature[];
 };
@@ -149,6 +154,7 @@ export type Feature =
 	| FeatureKitType
 	| FeatureLanguage
 	| FeatureLanguageChoice
+	| FeatureMalice
 	| FeatureMultiple
 	| FeaturePerk
 	| FeatureSize

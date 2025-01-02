@@ -1,23 +1,45 @@
 import type {
 	Feature,
+	FeatureAbility,
+	FeatureAbilityCost,
 	FeatureAbilityCostData,
 	FeatureAbilityData,
+	FeatureBonus,
 	FeatureBonusData,
+	FeatureChoice,
 	FeatureChoiceData,
+	FeatureClassAbility,
 	FeatureClassAbilityData,
+	FeatureDamageModifier,
 	FeatureDamageModifierData,
+	FeatureDomain,
 	FeatureDomainData,
+	FeatureDomainFeature,
 	FeatureDomainFeatureData,
+	FeatureKit,
 	FeatureKitData,
+	FeatureKitType,
 	FeatureKitTypeData,
+	FeatureLanguage,
+	FeatureLanguageChoice,
 	FeatureLanguageChoiceData,
 	FeatureLanguageData,
+	FeatureMalice,
+	FeatureMaliceData,
+	FeatureMultiple,
 	FeatureMultipleData,
+	FeaturePerk,
 	FeaturePerkData,
+	FeatureSize,
 	FeatureSizeData,
+	FeatureSkill,
+	FeatureSkillChoice,
 	FeatureSkillChoiceData,
 	FeatureSkillData,
+	FeatureSpeed,
 	FeatureSpeedData,
+	FeatureText,
+	FeatureTitle,
 	FeatureTitleData
 } from '../models/feature';
 import { Ability } from '../models/ability';
@@ -46,7 +68,7 @@ export class FeatureLogic {
 				description: data.description,
 				type: FeatureType.Text,
 				data: null
-			} as Feature;
+			} as FeatureText;
 		},
 		createAbilityFeature: (data: { ability: Ability }) => {
 			return {
@@ -57,7 +79,7 @@ export class FeatureLogic {
 				data: {
 					ability: data.ability
 				} as FeatureAbilityData
-			} as Feature;
+			} as FeatureAbility;
 		},
 		createAbilityCostFeature: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number }) => {
 			return {
@@ -69,7 +91,7 @@ export class FeatureLogic {
 					keywords: data.keywords,
 					modifier: data.modifier
 				} as FeatureAbilityCostData
-			} as Feature;
+			} as FeatureAbilityCost;
 		},
 		createBonusFeature: (data: { id: string, name?: string, description?: string, field: FeatureField, value?: number, valuePerLevel?: number, valuePerEchelon?: number }) => {
 			return {
@@ -83,7 +105,7 @@ export class FeatureLogic {
 					valuePerLevel: data.valuePerLevel || 0,
 					valuePerEchelon: data.valuePerEchelon || 0
 				} as FeatureBonusData
-			} as Feature;
+			} as FeatureBonus;
 		},
 		createChoiceFeature: (data: { id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], count?: number }) => {
 			const count = data.count || 1;
@@ -97,7 +119,7 @@ export class FeatureLogic {
 					count: count,
 					selected: []
 				} as FeatureChoiceData
-			} as Feature;
+			} as FeatureChoice;
 		},
 		createClassAbilityChoiceFeature: (data: { id: string, name?: string, description?: string, cost: number, count?: number }) => {
 			const count = data.count || 1;
@@ -111,7 +133,7 @@ export class FeatureLogic {
 					count: count,
 					selectedIDs: []
 				} as FeatureClassAbilityData
-			} as Feature;
+			} as FeatureClassAbility;
 		},
 		createDamageModifierFeature: (data: { id: string, name?: string, description?: string, modifiers: DamageModifier[] }) => {
 			return {
@@ -122,7 +144,7 @@ export class FeatureLogic {
 				data: {
 					modifiers: data.modifiers
 				} as FeatureDamageModifierData
-			} as Feature;
+			} as FeatureDamageModifier;
 		},
 		createDomainChoiceFeature: (data: { id: string, name?: string, description?: string, count?: number }) => {
 			const count = data.count || 1;
@@ -135,7 +157,7 @@ export class FeatureLogic {
 					count: count,
 					selected: []
 				} as FeatureDomainData
-			} as Feature;
+			} as FeatureDomain;
 		},
 		createDomainFeatureFeature: (data: { id: string, name?: string, description?: string, level: number, count?: number }) => {
 			const count = data.count || 1;
@@ -149,7 +171,7 @@ export class FeatureLogic {
 					count: count,
 					selected: []
 				} as FeatureDomainFeatureData
-			} as Feature;
+			} as FeatureDomainFeature;
 		},
 		createKitChoiceFeature: (data: { id: string, name?: string, description?: string, types?: KitType[], count?: number }) => {
 			const count = data.count || 1;
@@ -163,7 +185,7 @@ export class FeatureLogic {
 					count: count,
 					selected: []
 				} as FeatureKitData
-			} as Feature;
+			} as FeatureKit;
 		},
 		createKitTypeFeature: (data: { id: string, name?: string, description?: string, types: KitType[] }) => {
 			return {
@@ -174,7 +196,7 @@ export class FeatureLogic {
 				data: {
 					types: data.types || []
 				} as FeatureKitTypeData
-			} as Feature;
+			} as FeatureKitType;
 		},
 		createLanguageFeature: (data: { id: string, name?: string, description?: string, language: string }) => {
 			return {
@@ -185,7 +207,7 @@ export class FeatureLogic {
 				data: {
 					language: data.language
 				} as FeatureLanguageData
-			} as Feature;
+			} as FeatureLanguage;
 		},
 		createLanguageChoiceFeature: (data: { id: string, name?: string, description?: string, options?: string[], count?: number, selected?: string[] }) => {
 			const count = data.count || 1;
@@ -199,7 +221,18 @@ export class FeatureLogic {
 					count: count,
 					selected: data.selected || []
 				} as FeatureLanguageChoiceData
-			} as Feature;
+			} as FeatureLanguageChoice;
+		},
+		createMaliceFeature: (data: { id: string, name: string, description: string, cost: number }) => {
+			return {
+				id: data.id,
+				name: data.name,
+				description: data.description,
+				type: FeatureType.Malice,
+				data: {
+					cost: data.cost
+				} as FeatureMaliceData
+			} as FeatureMalice;
 		},
 		createMultipleFeature: (data: { id: string, name?: string, description?: string, features: Feature[] }) => {
 			return {
@@ -210,7 +243,7 @@ export class FeatureLogic {
 				data: {
 					features: data.features
 				} as FeatureMultipleData
-			} as Feature;
+			} as FeatureMultiple;
 		},
 		createPerkFeature: (data: { id: string, name?: string, description?: string, lists?: PerkList[], count?: number }) => {
 			const count = data.count || 1;
@@ -224,7 +257,7 @@ export class FeatureLogic {
 					count: count,
 					selected: []
 				} as FeaturePerkData
-			} as Feature;
+			} as FeaturePerk;
 		},
 		createSizeFeature: (data: { id: string, name?: string, description?: string, sizeValue: number, sizeMod: string }) => {
 			return {
@@ -238,7 +271,7 @@ export class FeatureLogic {
 						mod: data.sizeMod
 					}
 				} as FeatureSizeData
-			} as Feature;
+			} as FeatureSize;
 		},
 		createSkillFeature: (data: { id: string, name?: string, description?: string, skill: string }) => {
 			return {
@@ -249,7 +282,7 @@ export class FeatureLogic {
 				data: {
 					skill: data.skill
 				} as FeatureSkillData
-			} as Feature;
+			} as FeatureSkill;
 		},
 		createSkillChoiceFeature: (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selected?: string[] }) => {
 			const count = data.count || 1;
@@ -264,7 +297,7 @@ export class FeatureLogic {
 					count: count,
 					selected: data.selected || []
 				} as FeatureSkillChoiceData
-			} as Feature;
+			} as FeatureSkillChoice;
 		},
 		createSpeedFeature: (data: { id: string, name?: string, description?: string, speed: number }) => {
 			return {
@@ -275,7 +308,7 @@ export class FeatureLogic {
 				data: {
 					speed: data.speed
 				} as FeatureSpeedData
-			} as Feature;
+			} as FeatureSpeed;
 		},
 		createTitleFeature: (data: { id: string, name?: string, description?: string, count?: number }) => {
 			const count = data.count || 1;
@@ -288,7 +321,7 @@ export class FeatureLogic {
 					count: count,
 					selected: []
 				} as FeatureTitleData
-			} as Feature;
+			} as FeatureTitle;
 		}
 	};
 
@@ -525,6 +558,8 @@ export class FeatureLogic {
 				return 'This feature grants you a language.';
 			case FeatureType.LanguageChoice:
 				return 'This feature allows you to choose a language.';
+			case FeatureType.Malice:
+				return 'This feature grants you a malice effect.';
 			case FeatureType.Multiple:
 				return 'This feature grants you a collection of features.';
 			case FeatureType.Perk:

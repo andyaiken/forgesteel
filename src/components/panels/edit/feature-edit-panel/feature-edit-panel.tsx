@@ -1,6 +1,6 @@
 import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -52,7 +52,8 @@ export const FeatureEditPanel = (props: Props) => {
 	};
 
 	const setType = (value: FeatureType) => {
-		let data: FeatureData | null;
+		let data: FeatureData | null = null;
+
 		switch (value) {
 			case FeatureType.Ability:
 				data = {
@@ -137,6 +138,11 @@ export const FeatureEditPanel = (props: Props) => {
 					language: ''
 				};
 				break;
+			case FeatureType.Malice:
+				data = {
+					cost: 3
+				};
+				break;
 			case FeatureType.Multiple:
 				data = {
 					features: []
@@ -174,10 +180,6 @@ export const FeatureEditPanel = (props: Props) => {
 				data = {
 					speed: 5
 				};
-				break;
-			case FeatureType.Text:
-			default:
-				data = null;
 				break;
 			case FeatureType.Title:
 				data = {
@@ -240,7 +242,7 @@ export const FeatureEditPanel = (props: Props) => {
 		};
 
 		const setCost = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureClassAbilityData;
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureClassAbilityData | FeatureMaliceData;
 			copy.cost = value;
 			setData(copy);
 		};
@@ -672,6 +674,15 @@ export const FeatureEditPanel = (props: Props) => {
 						/>
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
+					</Space>
+				);
+			}
+			case FeatureType.Malice: {
+				const data = feature.data as FeatureMaliceData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Cost</HeaderText>
+						<NumberSpin min={1} value={data.cost} onChange={setCost} />
 					</Space>
 				);
 			}

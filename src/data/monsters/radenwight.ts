@@ -35,7 +35,7 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 		FeatureLogic.feature.createAbilityFeature({
 			ability: AbilityLogic.createAbility({
 				id: 'radenwight-malice-1',
-				name: 'Trouser Cut (3pts)',
+				name: 'Trouser Cut',
 				description: 'A non-minion radenwight can use the following ability.',
 				type: AbilityLogic.type.createAction(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -51,14 +51,15 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 				effect: 'If a target is wearing clothing covering the lower half of their body, they must use a maneuver to pull that clothing up before they can move.'
 			})
 		}),
-		FeatureLogic.feature.createFeature({
+		FeatureLogic.feature.createMaliceFeature({
 			id: 'radenwight-malice-2',
-			name: 'Rat Race (5pts)',
-			description: 'Each radenwight shifts up to their speed. Wherever a radenwight ends this movement adjacent to at least one other radenwight, they can make a melee free strike.'
+			name: 'Rat Race',
+			description: 'Each radenwight shifts up to their speed. Wherever a radenwight ends this movement adjacent to at least one other radenwight, they can make a melee free strike.',
+			cost: 5
 		}),
-		FeatureLogic.feature.createFeature({
+		FeatureLogic.feature.createMaliceFeature({
 			id: 'radenwight-malice-3',
-			name: 'Wall of Rats (7pts)',
+			name: 'Wall of Rats',
 			description: `
 A 10 wall of living rats scurrying atop one another in a coordinated manner appears in unoccupied spaces anywhere on the encounter map and lasts until the end of the encounter. The wall doesn’t block line of eﬀect for radenwights and their allies, but it does for other creatures, as the rats coordinate their movements with the radenwights. Each square of the wall has 10 Stamina. If the last radenwight in the encounter dies and the wall is still standing, the rats let out a hideous screech as they disperse. Each enemy on the encounter map must then make an Intuition resistance roll.
 
@@ -66,7 +67,8 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 |:--------|:----------------|
 | 11 -    | 10 sonic damage |
 | 12 - 16 | 5 sonic damage  |
-| 17 +    | No effect       |`
+| 17 +    | No effect       |`,
+			cost: 7
 		})
 	],
 	monsters: [

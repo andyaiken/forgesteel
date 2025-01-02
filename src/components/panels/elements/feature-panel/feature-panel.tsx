@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Collections } from '../../../../utils/collections';
@@ -56,8 +56,18 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
+		const showCosts = data.options.some(o => o.value > 1);
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<div className='ds-text'>
+					{
+						showCosts ?
+							`You have ${data.count} points to spend on the following options:`
+							:
+							`Choose ${data.count} of the following options:`
+					}
+				</div>
 				<Select
 					style={{ width: '100%' }}
 					className={data.selected.length === 0 ? 'selection-empty' : ''}
@@ -71,7 +81,7 @@ export const FeaturePanel = (props: Props) => {
 							label={(
 								<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
 									<span>{option.data.label}</span>
-									{option.data.cost > 1 ? <HeroicResourceBadge value={option.data.cost} /> : null}
+									{showCosts ? <HeroicResourceBadge value={option.data.cost} /> : null}
 								</div>
 							)}
 							value={option.data.desc}
@@ -966,6 +976,15 @@ export const FeaturePanel = (props: Props) => {
 	// #endregion
 
 	try {
+		let cost = 0;
+		if (props.cost) {
+			cost = props.cost;
+		}
+		if (props.feature.type === FeatureType.Malice) {
+			const data = props.feature.data as FeatureMaliceData;
+			cost = data.cost;
+		}
+
 		const tags = [];
 		const list = (props.feature as Perk).list;
 		if (list !== undefined) {
@@ -975,7 +994,7 @@ export const FeaturePanel = (props: Props) => {
 		if (props.feature.type === FeatureType.Ability) {
 			const data = props.feature.data as FeatureAbilityData;
 			return (
-				<AbilityPanel ability={data.ability} hero={props.hero} mode={props.mode} tags={tags} />
+				<AbilityPanel ability={data.ability} hero={props.hero} cost={cost > 0 ? cost : undefined} mode={props.mode} tags={tags} />
 			);
 		}
 
@@ -991,7 +1010,7 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<div className='feature-panel' id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
-				<HeaderText ribbon={props.cost ? <HeroicResourceBadge value={props.cost} /> : null} tags={tags}>
+				<HeaderText ribbon={cost ? <HeroicResourceBadge value={cost} /> : null} tags={tags}>
 					{props.feature.name || 'Unnamed Feature'}
 				</HeaderText>
 				{props.feature.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.feature.description) }} /> : null}

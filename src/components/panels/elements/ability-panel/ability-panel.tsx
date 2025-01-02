@@ -19,6 +19,7 @@ import './ability-panel.scss';
 interface Props {
 	ability: Ability;
 	hero?: Hero;
+	cost?: number;
 	options?: Options;
 	mode?: PanelMode;
 	tags?: string[];
@@ -27,7 +28,7 @@ interface Props {
 
 export const AbilityPanel = (props: Props) => {
 	try {
-		let cost = props.ability.cost;
+		let cost = props.cost || props.ability.cost;
 		let disabled = false;
 		if ((cost > 0) && props.hero) {
 			HeroLogic.getFeatures(props.hero).filter(f => f.type === FeatureType.AbilityCost).forEach(f => {

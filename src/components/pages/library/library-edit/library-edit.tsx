@@ -1,6 +1,7 @@
 import { Alert, Button, Divider, Input, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
+import { Feature, FeatureAbility, FeatureMalice } from '../../../../models/feature';
 import { KitArmor, KitType, KitWeapon } from '../../../../enums/kit';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { useMemo, useState } from 'react';
@@ -26,9 +27,9 @@ import { Element } from '../../../../models/element';
 import { ElementEditPanel } from '../../../panels/edit/element-edit-panel/element-edit-panel';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
-import { Feature } from '../../../../models/feature';
 import { FeatureEditPanel } from '../../../panels/edit/feature-edit-panel/feature-edit-panel';
 import { FeatureLogic } from '../../../../logic/feature-logic';
+import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
@@ -1123,18 +1124,19 @@ export const LibraryEditPage = (props: Props) => {
 	const getMaliceEditSection = () => {
 		const monsterGroup = element as MonsterGroup;
 
-		const addFeature = () => {
+		const addMaliceFeature = () => {
 			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
-			copy.malice.push(FeatureLogic.feature.createFeature({
+			copy.malice.push(FeatureLogic.feature.createMaliceFeature({
 				id: Utils.guid(),
 				name: '',
-				description: ''
+				description: '',
+				cost: 3
 			}));
 			setElement(copy);
 			setDirty(true);
 		};
 
-		const changeFeature = (feature: Feature) => {
+		const changeMaliceFeature = (feature: FeatureMalice | FeatureAbility) => {
 			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
 			const index = copy.malice.findIndex(f => f.id === feature.id);
 			if (index !== -1) {
@@ -1144,7 +1146,7 @@ export const LibraryEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const moveFeature = (feature: Feature, direction: 'up' | 'down') => {
+		const moveMaliceFeature = (feature: FeatureMalice | FeatureAbility, direction: 'up' | 'down') => {
 			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
 			const index = copy.malice.findIndex(f => f.id === feature.id);
 			copy.malice = Collections.move(copy.malice, index, direction);
@@ -1152,7 +1154,7 @@ export const LibraryEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const deleteFeature = (feature: Feature) => {
+		const deleteMaliceFeature = (feature: FeatureMalice | FeatureAbility) => {
 			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
 			copy.malice = copy.malice.filter(f => f.id !== feature.id);
 			setElement(copy);
@@ -1167,15 +1169,16 @@ export const LibraryEditPage = (props: Props) => {
 							key={f.id}
 							title={f.name || 'Unnamed Malice Feature'}
 							extra={[
-								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveFeature(f, 'up')} />,
-								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveFeature(f, 'down')} />,
-								<DangerButton key='delete' mode='icon' onConfirm={() => deleteFeature(f)} />
+								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveMaliceFeature(f, 'up')} />,
+								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveMaliceFeature(f, 'down')} />,
+								<DangerButton key='delete' mode='icon' onConfirm={() => deleteMaliceFeature(f)} />
 							]}
 						>
 							<FeatureEditPanel
 								feature={f}
+								allowedTypes={[ FeatureType.Ability, FeatureType.Malice ]}
 								sourcebooks={props.sourcebooks}
-								onChange={changeFeature}
+								onChange={f => changeMaliceFeature(f as FeatureMalice | FeatureAbility)}
 							/>
 						</Expander>
 					))
@@ -1189,7 +1192,7 @@ export const LibraryEditPage = (props: Props) => {
 						/>
 						: null
 				}
-				<Button block={true} onClick={addFeature}>Add a new malice feature</Button>
+				<Button block={true} onClick={addMaliceFeature}>Add a new malice feature</Button>
 			</Space>
 		);
 	};

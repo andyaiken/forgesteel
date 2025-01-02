@@ -7,7 +7,6 @@
   * Censor
   * Null
   * Talent
-  * Troubadour
 * Add new complications
 * Add titles
 * Add items

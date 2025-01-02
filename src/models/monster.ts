@@ -1,12 +1,13 @@
-import { Feature, FeatureAbility, FeatureMalice } from './feature';
+import type { Feature, FeatureAbility, FeatureMalice } from './feature';
 import { Characteristic } from '../enums/characteristic';
 import { Element } from './element';
+import { MonsterOrganization } from './monster-organization';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Size } from './size';
 
 export interface MonsterRole {
 	type: MonsterRoleType;
-	isMinion: boolean;
+	organization: MonsterOrganization;
 };
 
 export interface Monster extends Element {
@@ -26,11 +27,12 @@ export interface Monster extends Element {
 		characteristic: Characteristic;
 		value: number;
 	}[];
+	withCaptain?: string;
 	features: Feature[];
 };
 
 export interface MonsterGroup extends Element {
 	information: Element[];
-	malice: (FeatureMalice | FeatureAbility)[];
+	malice: (FeatureAbility | FeatureMalice)[];
 	monsters: Monster[];
 };

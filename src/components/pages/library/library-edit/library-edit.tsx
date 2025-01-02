@@ -1,7 +1,7 @@
 import { Alert, Button, Divider, Input, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
-import { Feature, FeatureAbility, FeatureMalice } from '../../../../models/feature';
+import type { Feature, FeatureAbility, FeatureMalice } from '../../../../models/feature';
 import { KitArmor, KitType, KitWeapon } from '../../../../enums/kit';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { useMemo, useState } from 'react';

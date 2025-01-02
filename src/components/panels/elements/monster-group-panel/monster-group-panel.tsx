@@ -1,4 +1,5 @@
 import { FeaturePanel } from '../feature-panel/feature-panel';
+import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { MonsterGroup } from '../../../../models/monster';
@@ -41,10 +42,18 @@ export const MonsterGroupPanel = (props: Props) => {
 				}
 				{
 					(props.mode === PanelMode.Full) && (props.monsterGroup.malice.length > 0) ?
-						<div>
-							<HeaderText level={1}>Malice</HeaderText>
-							{props.monsterGroup.malice.map(m => <FeaturePanel key={m.id} feature={m} mode={PanelMode.Full} />)}
-						</div>
+						<SelectablePanel>
+							<HeaderText level={1}>{props.monsterGroup.name} Malice</HeaderText>
+							At the start of any {props.monsterGroup.name}'s turn, you can spend malice to activate one of the following features.
+							{props.monsterGroup.malice.map(m =>
+								<FeaturePanel
+									key={m.id}
+									feature={m}
+									mode={PanelMode.Full}
+									cost={m.type === FeatureType.Ability ? m.data.ability.cost : m.data.cost}
+								/>
+							)}
+						</SelectablePanel>
 						: null
 				}
 				{

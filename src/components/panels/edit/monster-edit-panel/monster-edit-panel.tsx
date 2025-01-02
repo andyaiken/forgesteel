@@ -9,15 +9,16 @@ import { FeatureEditPanel } from '../feature-edit-panel/feature-edit-panel';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
+import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Monster } from '../../../../models/monster';
 import { MonsterLogic } from '../../../../logic/monster-logic';
+import { MonsterOrganization } from '../../../../models/monster-organization';
 import { MonsterRoleType } from '../../../../enums/monster-role-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Sourcebook } from '../../../../models/sourcebook';
-import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -67,9 +68,9 @@ export const MonsterEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setIsMinion = (value: boolean) => {
+	const setOrganization = (value: MonsterOrganization) => {
 		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.role.isMinion = value;
+		copy.role.organization = value;
 		setMonster(copy);
 		props.onChange(copy);
 	};
@@ -213,8 +214,16 @@ export const MonsterEditPanel = (props: Props) => {
 									/>
 									<HeaderText>Level</HeaderText>
 									<NumberSpin min={1} max={10} value={monster.level} onChange={setLevel} />
-									<HeaderText>Role</HeaderText>
 									<Space direction='vertical' style={{ width: '100%' }}>
+										<HeaderText>Organization</HeaderText>
+										<Select
+											style={{ width: '100%' }}
+											placeholder='Select organization'
+											options={[ 'minion', 'band', 'platoon', 'troop', 'leader', 'solo' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
+											value={monster.role.organization}
+											onChange={setOrganization}
+										/>
+										<HeaderText>Role</HeaderText>
 										<Select
 											style={{ width: '100%' }}
 											placeholder='Select role'
@@ -223,7 +232,6 @@ export const MonsterEditPanel = (props: Props) => {
 											value={monster.role.type}
 											onChange={setRoleType}
 										/>
-										<Toggle label='Minion' value={monster.role.isMinion} onChange={setIsMinion} />
 									</Space>
 									<HeaderText>Encounter Value</HeaderText>
 									<NumberSpin min={1} value={monster.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />

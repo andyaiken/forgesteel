@@ -42,7 +42,6 @@ import type {
 	FeatureTitle,
 	FeatureTitleData
 } from '../models/feature';
-import { Ability } from '../models/ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
@@ -50,6 +49,7 @@ import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { DamageModifier } from '../models/damage-modifier';
+import type { Element } from '../models/element';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { FormatLogic } from './format-logic';
@@ -70,16 +70,14 @@ export class FeatureLogic {
 				data: null
 			} as FeatureText;
 		},
-		createAbilityFeature: (data: { ability: Ability }) => {
+		createAbilityFeature: (data: FeatureAbilityData): FeatureAbility => {
 			return {
 				id: data.ability.id,
 				name: data.ability.name,
 				description: data.ability.description,
 				type: FeatureType.Ability,
-				data: {
-					ability: data.ability
-				} as FeatureAbilityData
-			} as FeatureAbility;
+				data
+			};
 		},
 		createAbilityCostFeature: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number }) => {
 			return {
@@ -223,16 +221,17 @@ export class FeatureLogic {
 				} as FeatureLanguageChoiceData
 			} as FeatureLanguageChoice;
 		},
-		createMaliceFeature: (data: { id: string, name: string, description: string, cost: number }) => {
+		createMaliceFeature: (data: Element & FeatureMaliceData): FeatureMalice => {
 			return {
 				id: data.id,
 				name: data.name,
 				description: data.description,
 				type: FeatureType.Malice,
 				data: {
-					cost: data.cost
-				} as FeatureMaliceData
-			} as FeatureMalice;
+					cost: data.cost,
+					test: data.test
+				}
+			};
 		},
 		createMultipleFeature: (data: { id: string, name?: string, description?: string, features: Feature[] }) => {
 			return {

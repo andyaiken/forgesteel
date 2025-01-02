@@ -10,6 +10,7 @@ export interface AbilityType {
 	free: boolean;
 	trigger: string;
 	time: string;
+	qualifiers?: string[];
 }
 
 export interface AbilityDistance {
@@ -35,6 +36,7 @@ export interface Ability extends Element {
 	distance: AbilityDistance[];
 	target: string; // Creature, Object, Enemy, Ally, Self, All
 	cost: number;
+	signature: boolean;
 	preEffect: string;
 	powerRoll: PowerRoll | null,
 	effect: string;

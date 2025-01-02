@@ -21,7 +21,7 @@ export const DomainPanel = (props: Props) => {
 		return (
 			<div className='domain-panel' id={props.mode === PanelMode.Full ? props.domain.id : undefined}>
 				<HeaderText level={1}>{props.domain.name || 'Unnamed Domain'}</HeaderText>
-				{props.domain.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.domain.description) }} /> : null}
+				{props.domain.description ? <div dangerouslySetInnerHTML={{ __html: Utils.makeHtml(props.domain.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full ?
 						props.domain.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (

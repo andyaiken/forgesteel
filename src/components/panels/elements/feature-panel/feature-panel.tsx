@@ -1001,7 +1001,7 @@ export const FeaturePanel = (props: Props) => {
 				<HeaderText ribbon={props.cost ? <HeroicResourceBadge value={props.cost} /> : null} tags={tags}>
 					{props.feature.name || 'Unnamed Feature'}
 				</HeaderText>
-				{props.feature.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.feature.description) }} /> : null}
+				{props.feature.description ? <div dangerouslySetInnerHTML={{ __html: Utils.makeHtml(props.feature.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full
 						? (props.setData ? getEditable() : getExtra())

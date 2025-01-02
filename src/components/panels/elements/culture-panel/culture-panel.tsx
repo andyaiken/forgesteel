@@ -20,7 +20,7 @@ export const CulturePanel = (props: Props) => {
 		return (
 			<div className='culture-panel' id={props.mode === PanelMode.Full ? props.culture.id : undefined}>
 				<HeaderText level={1}>{props.culture.name || 'Unnamed Culture'}</HeaderText>
-				{props.culture.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.culture.description) }} /> : null}
+				{props.culture.description ? <div dangerouslySetInnerHTML={{ __html: Utils.makeHtml(props.culture.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full ?
 						<div style={{ paddingTop: '10px' }}>

@@ -33,7 +33,7 @@ export const AbilityEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setDescription = (value: string) => {
+	const setDescription = (value: string | string[]) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
 		copy.description = value;
 		setAbility(copy);
@@ -195,7 +195,7 @@ export const AbilityEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setPreEffect = (value: string) => {
+	const setPreEffect = (value: string | string[]) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
 		copy.preEffect = value;
 		setAbility(copy);
@@ -254,7 +254,7 @@ export const AbilityEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setEffect = (value: string) => {
+	const setEffect = (value: string | string[]) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
 		copy.effect = value;
 		setAbility(copy);

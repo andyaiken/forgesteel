@@ -27,7 +27,7 @@ export const EncounterPanel = (props: Props) => {
 		return (
 			<div className='encounter-panel' id={props.mode === PanelMode.Full ? props.encounter.id : undefined}>
 				<HeaderText level={1}>{props.encounter.name || 'Unnamed Encounter'}</HeaderText>
-				{props.encounter.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.encounter.description) }} /> : null}
+				{props.encounter.description ? <div dangerouslySetInnerHTML={{ __html: Utils.makeHtml(props.encounter.description) }} /> : null}
 				{
 					props.encounter.groups.filter(g => g.slots.length > 0).map((group, n) => (
 						<div key={group.id} className='encounter-group'>

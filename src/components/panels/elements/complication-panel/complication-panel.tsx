@@ -20,7 +20,7 @@ export const ComplicationPanel = (props: Props) => {
 		return (
 			<div className='complication-panel' id={props.mode === PanelMode.Full ? props.complication.id : undefined}>
 				<HeaderText level={1}>{props.complication.name || 'Unnamed Complication'}</HeaderText>
-				{props.complication.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.complication.description) }} /> : null}
+				{props.complication.description ? <div dangerouslySetInnerHTML={{ __html: Utils.makeHtml(props.complication.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full ?
 						props.complication.features.map(f => (

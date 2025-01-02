@@ -21,7 +21,7 @@ export const SubclassPanel = (props: Props) => {
 		return (
 			<div className='subclass-panel' id={props.mode === PanelMode.Full ? props.subclass.id : undefined}>
 				<HeaderText level={1}>{props.subclass.name || 'Unnamed Subclass'}</HeaderText>
-				{props.subclass.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.subclass.description) }} /> : null}
+				{props.subclass.description ? <div dangerouslySetInnerHTML={{ __html: Utils.makeHtml(props.subclass.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full ?
 						props.subclass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (

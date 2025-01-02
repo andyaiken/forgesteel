@@ -21,7 +21,7 @@ export const TitlePanel = (props: Props) => {
 		return (
 			<div className='title-panel' id={props.mode === PanelMode.Full ? props.title.id : undefined}>
 				<HeaderText level={1}>{props.title.name || 'Unnamed Title'}</HeaderText>
-				{props.title.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.title.description) }} /> : null}
+				{props.title.description ? <div dangerouslySetInnerHTML={{ __html: Utils.makeHtml(props.title.description) }} /> : null}
 				<Field label='Echelon' value={props.title.echelon} />
 				<Field label='Prerequisites' value={props.title.prerequisites} />
 				{

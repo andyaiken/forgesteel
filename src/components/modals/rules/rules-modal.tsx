@@ -42,7 +42,7 @@ export const RulesModal = (props: Props) => {
 						].map(ct => (
 							<div key={ct}>
 								<HeaderText>{ct}</HeaderText>
-								<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(ConditionLogic.getDescription(ct)) }} />
+								<div dangerouslySetInnerHTML={{ __html: Utils.makeHtml(ConditionLogic.getDescription(ct)) }} />
 							</div>
 						))
 					}

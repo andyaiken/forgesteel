@@ -40,7 +40,7 @@ export const MonsterEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setDescription = (value: string) => {
+	const setDescription = (value: string | string[]) => {
 		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
 		copy.description = value;
 		setMonster(copy);

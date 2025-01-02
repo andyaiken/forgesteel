@@ -6,6 +6,12 @@ import jsPDF from 'jspdf';
 
 export class Utils {
 	static showdownConverter = new Converter({ simpleLineBreaks: true, tables: true });
+	static makeHtml = (text: string | string[]) => {
+		const combinedText = Array.isArray(text)
+			? text.join('\n\n')
+			: text;
+		return this.showdownConverter.makeHtml(combinedText);
+	};
 
 	static guid = (): string => {
 		const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';

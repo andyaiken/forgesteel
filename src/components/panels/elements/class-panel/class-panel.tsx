@@ -25,7 +25,7 @@ export const ClassPanel = (props: Props) => {
 		return (
 			<div className='class-panel' id={props.mode === PanelMode.Full ? props.heroClass.id : undefined}>
 				<HeaderText level={1}>{props.heroClass.name || 'Unnamed Class'}</HeaderText>
-				{props.heroClass.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.heroClass.description) }} /> : null}
+				{props.heroClass.description ? <div dangerouslySetInnerHTML={{ __html: Utils.makeHtml(props.heroClass.description) }} /> : null}
 				<Field label='Heroic Resource' value={props.heroClass.heroicResource} />
 				{props.heroClass.subclasses.length > 0 ? <Field label={`${props.heroClass.subclassName}s`} value={props.heroClass.subclasses.map(c => c.name).join(', ')} /> : null}
 				<Field label='Primary Characteristics' value={props.heroClass.primaryCharacteristics.join(', ')} />

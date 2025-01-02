@@ -60,7 +60,7 @@ export const EncounterEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const setDescription = (value: string) => {
+		const setDescription = (value: string | string[]) => {
 			const copy = JSON.parse(JSON.stringify(encounter)) as Encounter;
 			copy.description = value;
 			setEncounter(copy);

@@ -21,7 +21,7 @@ export const ElementEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setDescription = (value: string) => {
+	const setDescription = (value: string | string[]) => {
 		const copy = JSON.parse(JSON.stringify(element)) as Element;
 		copy.description = value;
 		setElement(copy);

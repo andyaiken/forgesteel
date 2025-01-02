@@ -83,7 +83,7 @@ export const LibraryEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const setDescription = (value: string) => {
+		const setDescription = (value: string | string[]) => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as Element;
 			elementCopy.description = value;
 			setElement(elementCopy);
@@ -596,7 +596,7 @@ export const LibraryEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const setDescription = (subclass: SubClass, value: string) => {
+		const setDescription = (subclass: SubClass, value: string | string[]) => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
 			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			if (index !== -1) {

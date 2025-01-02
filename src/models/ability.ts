@@ -37,9 +37,9 @@ export interface Ability extends Element {
 	target: string; // Creature, Object, Enemy, Ally, Self, All
 	cost: number;
 	signature: boolean;
-	preEffect: string;
+	preEffect: string | string[];
 	powerRoll: PowerRoll | null,
-	effect: string;
+	effect: string | string[];
 	alternateEffects: string[];
 	spend: { value: number, effect: string }[];
 	persistence: { value: number, effect: string }[];

@@ -24,7 +24,7 @@ export const MonsterGroupPanel = (props: Props) => {
 		return (
 			<div className='monster-group-panel' id={props.mode === PanelMode.Full ? props.monsterGroup.id : undefined}>
 				<HeaderText level={1}>{props.monsterGroup.name || 'Unnamed Monster Group'}</HeaderText>
-				{props.monsterGroup.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.monsterGroup.description) }} /> : null}
+				{props.monsterGroup.description ? <div dangerouslySetInnerHTML={{ __html: Utils.makeHtml(props.monsterGroup.description) }} /> : null}
 				{
 					(props.mode !== PanelMode.Full) && (props.monsterGroup.monsters.length > 0) ?
 						<Field label='Monsters' value={props.monsterGroup.monsters.map(m => MonsterLogic.getMonsterName(m, props.monsterGroup)).join(', ')} />
@@ -35,7 +35,7 @@ export const MonsterGroupPanel = (props: Props) => {
 						props.monsterGroup.information.map(i => (
 							<div key={i.id}>
 								<HeaderText>{i.name || 'Unnamed Information'}</HeaderText>
-								{i.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(i.description) }} /> : null}
+								{i.description ? <div dangerouslySetInnerHTML={{ __html: Utils.makeHtml(i.description) }} /> : null}
 							</div>
 						))
 						: null

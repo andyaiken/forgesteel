@@ -72,7 +72,7 @@ export const SourcebookPanel = (props: Props) => {
 						:
 						<div style={{ width: '100%' }}>
 							<HeaderText tags={sourcebook.isHomebrew ? [ 'Homebrew' ] : []}>{sourcebook.name || 'Unnamed Sourcebook'}</HeaderText>
-							<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(sourcebook.description) }} />
+							<div dangerouslySetInnerHTML={{ __html: Utils.makeHtml(sourcebook.description) }} />
 							<div className='ds-text'>{SourcebookLogic.getElementCount(sourcebook)} elements</div>
 						</div>
 				}

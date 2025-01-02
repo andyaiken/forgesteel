@@ -40,7 +40,7 @@ export const CareerPanel = (props: Props) => {
 		return (
 			<div className='career-panel' id={props.mode === PanelMode.Full ? props.career.id : undefined}>
 				<HeaderText level={1}>{props.career.name || 'Unnamed Career'}</HeaderText>
-				{props.career.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.career.description) }} /> : null}
+				{props.career.description ? <div dangerouslySetInnerHTML={{ __html: Utils.makeHtml(props.career.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full ?
 						<div>

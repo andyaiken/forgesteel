@@ -44,7 +44,7 @@ export const FeatureEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setDescription = (value: string) => {
+	const setDescription = (value: string | string[]) => {
 		const copy = JSON.parse(JSON.stringify(feature)) as Feature;
 		copy.description = value;
 		setFeature(copy);

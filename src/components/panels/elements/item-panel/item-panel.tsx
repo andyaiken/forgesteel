@@ -20,7 +20,7 @@ export const ItemPanel = (props: Props) => {
 		return (
 			<div className='item-panel' id={props.mode === PanelMode.Full ? props.item.id : undefined}>
 				<HeaderText level={1}>{props.item.name || 'Unnamed Item'}</HeaderText>
-				{props.item.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.item.description) }} /> : null}
+				{props.item.description ? <div dangerouslySetInnerHTML={{ __html: Utils.makeHtml(props.item.description) }} /> : null}
 				{
 					props.mode === PanelMode.Full ?
 						props.item.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)

@@ -1,6 +1,5 @@
 import { Ability, AbilityDistance, AbilityType, PowerRoll } from '../models/ability';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
-import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
@@ -8,14 +7,22 @@ import { Hero } from '../models/hero';
 import { HeroLogic } from './hero-logic';
 import { PowerRollType } from '../enums/power-roll-type';
 
+type RequiredAbilityProps = 'id' | 'name' | 'type' | 'distance' | 'target';
+type OptionalAbilityProps = 'description' | 'keywords' | 'cost' | 'preEffect' | 'powerRoll' | 'effect' | 'alternateEffects';
+interface InitAbility extends Pick<Ability, RequiredAbilityProps>, Partial<Pick<Ability, OptionalAbilityProps>> {
+	spend?: { value?: number, effect: string }[];
+	persistence?: { value?: number, effect: string }[];
+}
+
 export class AbilityLogic {
 	static type = {
-		createAction: (free = false): AbilityType => {
+		createAction: (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
 			return {
 				usage: AbilityUsage.Action,
-				free: free,
+				free: options?.free ?? false,
 				trigger: '',
-				time: ''
+				time: '',
+				qualifiers: options?.qualifiers
 			};
 		},
 		createManeuver: (free = false): AbilityType => {
@@ -127,7 +134,7 @@ export class AbilityLogic {
 		} as PowerRoll;
 	};
 
-	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, alternateEffects?: string[], spend?: { value?: number, effect: string }[], persistence?: { value?: number, effect: string }[] }) => {
+	static createAbility = (data: InitAbility): Ability => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -141,9 +148,9 @@ export class AbilityLogic {
 			powerRoll: data.powerRoll || null,
 			effect: data.effect || '',
 			alternateEffects: data.alternateEffects || [],
-			spend: data.spend || [],
-			persistence: data.persistence || []
-		} as Ability;
+			spend: (data.spend ?? []).map(s => ({ ...s, value: s.value ?? 0 })),
+			persistence: (data.persistence ?? []).map(p => ({ ...p, value: p.value ?? 0 }))
+		};
 	};
 
 	static getDistance = (distance: AbilityDistance, hero?: Hero, ability?: Ability) => {

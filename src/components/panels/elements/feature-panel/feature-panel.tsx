@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Collections } from '../../../../utils/collections';
@@ -17,6 +17,7 @@ import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../perk-panel/perk-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { TestPanel } from '../../test/test-panel';
 import { TitlePanel } from '../title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
 
@@ -842,6 +843,10 @@ export const FeaturePanel = (props: Props) => {
 		return null;
 	};
 
+	const getExtraMalice = (data: FeatureMaliceData) => {
+		return data.test ? (<TestPanel test={data.test} />) : null;
+	};
+
 	const getExtraPerk = (data: FeaturePerkData) => {
 		if (data.selected.length > 0) {
 			return (
@@ -956,6 +961,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraLanguage(props.feature.data as FeatureLanguageData);
 			case FeatureType.LanguageChoice:
 				return getExtraLanguageChoice(props.feature.data as FeatureLanguageChoiceData);
+			case FeatureType.Malice:
+				return getExtraMalice(props.feature.data);
 			case FeatureType.Perk:
 				return getExtraPerk(props.feature.data as FeaturePerkData);
 			case FeatureType.Size:
@@ -976,15 +983,6 @@ export const FeaturePanel = (props: Props) => {
 	// #endregion
 
 	try {
-		let cost = 0;
-		if (props.cost) {
-			cost = props.cost;
-		}
-		if (props.feature.type === FeatureType.Malice) {
-			const data = props.feature.data as FeatureMaliceData;
-			cost = data.cost;
-		}
-
 		const tags = [];
 		const list = (props.feature as Perk).list;
 		if (list !== undefined) {
@@ -992,9 +990,8 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		if (props.feature.type === FeatureType.Ability) {
-			const data = props.feature.data as FeatureAbilityData;
 			return (
-				<AbilityPanel ability={data.ability} hero={props.hero} cost={cost > 0 ? cost : undefined} mode={props.mode} tags={tags} />
+				<AbilityPanel ability={props.feature.data.ability} hero={props.hero} cost={props.cost} mode={props.mode} tags={tags} />
 			);
 		}
 
@@ -1010,7 +1007,7 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<div className='feature-panel' id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
-				<HeaderText ribbon={cost ? <HeroicResourceBadge value={cost} /> : null} tags={tags}>
+				<HeaderText ribbon={props.cost ? <HeroicResourceBadge value={props.cost} /> : null} tags={tags}>
 					{props.feature.name || 'Unnamed Feature'}
 				</HeaderText>
 				{props.feature.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.feature.description) }} /> : null}

@@ -22,33 +22,55 @@ import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { useModals } from '../../../../hooks/use-modals';
 import { useParams } from 'react-router';
+import { usePersistedPlaybook } from '../../../../hooks/use-persisted-playbook';
+import { usePersistedSourcebooks } from '../../../../hooks/use-persisted-sourcebooks';
 
 import './encounter-edit.scss';
 
 interface Props {
-	playbook: Playbook;
-	sourcebooks: Sourcebook[];
 	goHome: () => void;
-	showAbout: () => void;
-	showMonster: (monsterID: string) => void;
 	saveChanges: (encounter: Encounter) => void;
 	cancelChanges: () => void;
 }
 
 export const EncounterEditPage = (props: Props) => {
+	const modals = useModals();
+	const { playbook } = usePersistedPlaybook();
+	const { sourcebooks } = usePersistedSourcebooks();
 	const { encounterId } = useParams<{ encounterId: string }>();
-	const originalEncounter = useMemo(() => props.playbook.encounters.find(e => e.id === encounterId)!, [ encounterId, props.playbook ]);
-	const [ encounter, setEncounter ] = useState(JSON.parse(JSON.stringify(originalEncounter)) as Encounter);
+	const originalEncounter = useMemo(() => playbook.encounters.find(e => e.id === encounterId), [ encounterId, playbook ]);
+	const [ previousEncounter, setPreviousEncounter ] = useState(originalEncounter);
+	const [ encounter, setEncounter ] = useState(originalEncounter);
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ heroCount, setHeroCount ] = useState<number>(4);
 	const [ heroLevel, setHeroLevel ] = useState<number>(1);
 	const [ heroVictories, setHeroVictories ] = useState<number>(0);
+
+	const monsters = useMemo(
+		() => Collections.sort(
+			sourcebooks.flatMap(s => s.monsterGroups)
+				.flatMap(mg => mg.monsters
+					.filter(m => MonsterLogic.matches(m, mg, monsterFilter))
+					.map(m => ({ monsterGroupId: mg.id, ...m }))
+				),
+			m => m.name
+		),
+		[ sourcebooks, monsterFilter ]
+	);
+
+	if (originalEncounter !== previousEncounter) {
+		setEncounter(originalEncounter);
+		setPreviousEncounter(originalEncounter);
+	}
+
+	if (!encounter) {
+		return null;
+	}
 
 	//#region Edit
 
@@ -128,14 +150,14 @@ export const EncounterEditPage = (props: Props) => {
 							{encounter.groups.length > 1 ? <HeaderText>Group {(n + 1).toString()}</HeaderText> : null}
 							{
 								group.slots.map(slot => {
-									const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
-									const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
+									const monster = SourcebookLogic.getMonster(sourcebooks, slot.monsterID);
+									const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
 									if (monster && monsterGroup) {
 										return (
 											<div key={slot.id} className='slot-row'>
 												<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Compact} />
 												<div className='actions'>
-													<Button block={true} onClick={() => props.showMonster(slot.monsterID)}>Details</Button>
+													<Button block={true} onClick={() => modals.showMonster(slot.monsterID)}>Details</Button>
 													<NumberSpin value={slot.count} format={value => (value * 8).toString()} onChange={value => setSlotCount(group.id, slot.id, value)} />
 												</div>
 											</div>
@@ -194,7 +216,7 @@ export const EncounterEditPage = (props: Props) => {
 		return (
 			<div style={{ margin: '0 10px' }}>
 				<SelectablePanel>
-					<EncounterPanel encounter={encounter} playbook={props.playbook} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+					<EncounterPanel encounter={encounter} mode={PanelMode.Full} />
 				</SelectablePanel>
 			</div>
 		);
@@ -253,8 +275,6 @@ export const EncounterEditPage = (props: Props) => {
 			setEncounter(copy);
 			setDirty(true);
 		};
-
-		const monsters = Collections.sort(props.sourcebooks.flatMap(s => s.monsterGroups.flatMap(mg => mg.monsters.filter(m => MonsterLogic.matches(m, mg, monsterFilter)))), m => m.name);
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -319,7 +339,7 @@ export const EncounterEditPage = (props: Props) => {
 				</Expander>
 				{
 					monsters.map(m => {
-						const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup;
+						const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, m.id) as MonsterGroup;
 
 						let addBtn: ReactNode;
 						if (encounter.groups.length === 0) {
@@ -343,10 +363,10 @@ export const EncounterEditPage = (props: Props) => {
 						}
 
 						return (
-							<div key={m.id} className='monster-row'>
+							<div key={`${m.monsterGroupId}.${m.id}`} className='monster-row'>
 								<MonsterPanel monster={m} monsterGroup={monsterGroup} mode={PanelMode.Compact} />
 								<div className='actions'>
-									<Button block={true} onClick={() => props.showMonster(m.id)}>Details</Button>
+									<Button block={true} onClick={() => modals.showMonster(m.id)}>Details</Button>
 									{addBtn}
 								</div>
 							</div>
@@ -368,7 +388,7 @@ export const EncounterEditPage = (props: Props) => {
 
 	const getDifficultySection = () => {
 		const budget = EncounterLogic.getBudget(heroCount, heroLevel, heroVictories);
-		const strength = EncounterLogic.getStrength(encounter, props.sourcebooks);
+		const strength = EncounterLogic.getStrength(encounter, sourcebooks);
 		const difficulty = EncounterLogic.getDifficulty(strength, budget);
 
 		const marks: Record<string | number, ReactNode> = {};
@@ -456,7 +476,7 @@ export const EncounterEditPage = (props: Props) => {
 	try {
 		return (
 			<div className='encounter-edit-page'>
-				<AppHeader subtitle='Encounters' goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader subtitle='Encounters' goHome={props.goHome}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(encounter)}>
 						Save Changes
 					</Button>

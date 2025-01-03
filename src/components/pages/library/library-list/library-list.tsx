@@ -1,5 +1,6 @@
 import { Alert, Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
+import { useMemo, useState } from 'react';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -24,35 +25,20 @@ import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookElementKind } from '../../../../models/sourcebook-element-kind';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
+import { useModals } from '../../../../hooks/use-modals';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
-import { useState } from 'react';
+import { usePersistedSourcebooks } from '../../../../hooks/use-persisted-sourcebooks';
 
 import './library-list.scss';
 
 interface Props {
-	sourcebooks: Sourcebook[];
-	hiddenSourcebookIDs: string[];
 	goHome: () => void;
-	showAbout: () => void;
-	showSourcebooks: () => void;
-	viewAncestry: (ancestry: Ancestry) => void;
-	viewCulture: (cultiure: Culture) => void;
-	viewCareer: (career: Career) => void;
-	viewClass: (heroClass: HeroClass) => void;
-	viewComplication: (complication: Complication) => void;
-	viewDomain: (domain: Domain) => void;
-	viewKit: (kit: Kit) => void;
-	viewPerk: (perk: Perk) => void;
-	viewTitle: (title: Title) => void;
-	viewItem: (item: Item) => void;
-	viewMonsterGroup: (monsterGroup: MonsterGroup) => void;
 	onCreateHomebrew: (type: SourcebookElementKind, sourcebookID: string | null) => void;
 	onImportHomebrew: (type: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 }
@@ -67,37 +53,38 @@ const useTabKey = (): [SourcebookElementKind, (tabKey: SourcebookElementKind) =>
 };
 
 export const LibraryListPage = (props: Props) => {
+	const modals = useModals();
+	const { sourcebooks, hiddenSourcebookIds } = usePersistedSourcebooks();
 	const [ tabKey, setTabKey ] = useTabKey();
 	const [ previousTab, setPreviousTab ] = useState(tabKey);
-	const [ element, setElement ] = useState<SourcebookElementKind>('ancestry');
+	const [ element, setElement ] = useState<SourcebookElementKind>(tabKey);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
-	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? props.sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
+	const [ sourcebookID, setSourcebookID ] = useState<string | null>(sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
 
 	if (tabKey !== previousTab) {
 		setElement(tabKey);
 		setPreviousTab(tabKey);
 	}
 
-	const getSourcebooks = () => {
-		return props.sourcebooks.filter(cs => !props.hiddenSourcebookIDs.includes(cs.id));
-	};
+	const visibleSourcebooks = useMemo(() => sourcebooks.filter(cs => !hiddenSourcebookIds.includes(cs.id)), [ sourcebooks, hiddenSourcebookIds ]);
 
 	const createHomebrew = () => {
 		props.onCreateHomebrew(element, sourcebookID);
 	};
 
-	const getAncestries = () => {
-		return SourcebookLogic
-			.getAncestries(getSourcebooks())
+	const ancestries = useMemo(
+		() => SourcebookLogic
+			.getAncestries(visibleSourcebooks)
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.features.map(f => f.name)
-			], searchTerm));
-	};
+			], searchTerm)),
+		[ visibleSourcebooks, searchTerm ]
+	);
 
 	const getCultures = () => {
 		return SourcebookLogic
-			.getCultures(getSourcebooks())
+			.getCultures(visibleSourcebooks)
 			.filter(item => Utils.textMatches([
 				item.name
 			], searchTerm));
@@ -105,7 +92,7 @@ export const LibraryListPage = (props: Props) => {
 
 	const getCareers = () => {
 		return SourcebookLogic
-			.getCareers(getSourcebooks())
+			.getCareers(visibleSourcebooks)
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.features.map(f => f.name)
@@ -114,7 +101,7 @@ export const LibraryListPage = (props: Props) => {
 
 	const getClasses = () => {
 		return SourcebookLogic
-			.getClasses(getSourcebooks())
+			.getClasses(visibleSourcebooks)
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name)),
@@ -126,7 +113,7 @@ export const LibraryListPage = (props: Props) => {
 
 	const getComplications = () => {
 		return SourcebookLogic
-			.getComplications(getSourcebooks())
+			.getComplications(visibleSourcebooks)
 			.filter(item => Utils.textMatches([
 				item.name
 			], searchTerm));
@@ -134,7 +121,7 @@ export const LibraryListPage = (props: Props) => {
 
 	const getDomains = () => {
 		return SourcebookLogic
-			.getDomains(getSourcebooks())
+			.getDomains(visibleSourcebooks)
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
@@ -143,7 +130,7 @@ export const LibraryListPage = (props: Props) => {
 
 	const getKits = () => {
 		return SourcebookLogic
-			.getKits(getSourcebooks())
+			.getKits(visibleSourcebooks)
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.features.map(f => f.name)
@@ -152,7 +139,7 @@ export const LibraryListPage = (props: Props) => {
 
 	const getPerks = () => {
 		return SourcebookLogic
-			.getPerks(getSourcebooks())
+			.getPerks(visibleSourcebooks)
 			.filter(item => Utils.textMatches([
 				item.name
 			], searchTerm));
@@ -160,7 +147,7 @@ export const LibraryListPage = (props: Props) => {
 
 	const getTitles = () => {
 		return SourcebookLogic
-			.getTitles(getSourcebooks())
+			.getTitles(visibleSourcebooks)
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.features.map(f => f.name)
@@ -169,21 +156,22 @@ export const LibraryListPage = (props: Props) => {
 
 	const getItems = () => {
 		return SourcebookLogic
-			.getItems(getSourcebooks())
+			.getItems(visibleSourcebooks)
 			.filter(item => Utils.textMatches([
 				item.name,
 				...item.features.map(f => f.name)
 			], searchTerm));
 	};
 
-	const getMonsterGroups = () => {
-		return SourcebookLogic
-			.getMonsterGroups(getSourcebooks())
+	const monsterGroups = useMemo(
+		() => SourcebookLogic
+			.getMonsterGroups(visibleSourcebooks)
 			.filter(mg => Utils.textMatches([
 				mg.name,
 				...mg.monsters.map(m => m.name)
-			], searchTerm));
-	};
+			], searchTerm)),
+		[ visibleSourcebooks, searchTerm ]
+	);
 
 	const getAncestriesSection = (list: Ancestry[]) => {
 		if (list.length === 0) {
@@ -201,12 +189,12 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(a => {
 						const item = (
-							<SelectablePanel key={a.id} onSelect={() => props.viewAncestry(a)}>
+							<SelectablePanel key={a.id} onSelect={() => modals.showAncestry(a.id)}>
 								<AncestryPanel ancestry={a} />
 							</SelectablePanel>
 						);
 
-						const sourcebook = SourcebookLogic.getAncestrySourcebook(props.sourcebooks, a);
+						const sourcebook = SourcebookLogic.getAncestrySourcebook(sourcebooks, a);
 						if (sourcebook && sourcebook.id) {
 							return (
 								<Badge.Ribbon key={a.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
@@ -238,12 +226,12 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.viewCulture(c)}>
+							<SelectablePanel key={c.id} onSelect={() => modals.showCulture(c.id)}>
 								<CulturePanel culture={c} />
 							</SelectablePanel>
 						);
 
-						const sourcebook = SourcebookLogic.getCultureSourcebook(props.sourcebooks, c);
+						const sourcebook = SourcebookLogic.getCultureSourcebook(sourcebooks, c);
 						if (sourcebook && sourcebook.id) {
 							return (
 								<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
@@ -275,12 +263,12 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.viewCareer(c)}>
+							<SelectablePanel key={c.id} onSelect={() => modals.showCareer(c.id)}>
 								<CareerPanel career={c} />
 							</SelectablePanel>
 						);
 
-						const sourcebook = SourcebookLogic.getCareerSourcebook(props.sourcebooks, c);
+						const sourcebook = SourcebookLogic.getCareerSourcebook(sourcebooks, c);
 						if (sourcebook && sourcebook.id) {
 							return (
 								<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
@@ -313,12 +301,12 @@ export const LibraryListPage = (props: Props) => {
 					list.map(c => {
 
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.viewClass(c)}>
+							<SelectablePanel key={c.id} onSelect={() => modals.showClass(c.id)}>
 								<ClassPanel heroClass={c} />
 							</SelectablePanel>
 						);
 
-						const sourcebook = SourcebookLogic.getClassSourcebook(props.sourcebooks, c);
+						const sourcebook = SourcebookLogic.getClassSourcebook(sourcebooks, c);
 						if (sourcebook && sourcebook.id) {
 							return (
 								<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
@@ -350,12 +338,12 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.viewComplication(c)}>
+							<SelectablePanel key={c.id} onSelect={() => modals.showComplication(c.id)}>
 								<ComplicationPanel complication={c} />
 							</SelectablePanel>
 						);
 
-						const sourcebook = SourcebookLogic.getComplicationSourcebook(props.sourcebooks, c);
+						const sourcebook = SourcebookLogic.getComplicationSourcebook(sourcebooks, c);
 						if (sourcebook && sourcebook.id) {
 							return (
 								<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
@@ -387,12 +375,12 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(d => {
 						const item = (
-							<SelectablePanel key={d.id} onSelect={() => props.viewDomain(d)}>
+							<SelectablePanel key={d.id} onSelect={() => modals.showDomain(d.id)}>
 								<DomainPanel domain={d} />
 							</SelectablePanel>
 						);
 
-						const sourcebook = SourcebookLogic.getDomainSourcebook(props.sourcebooks, d);
+						const sourcebook = SourcebookLogic.getDomainSourcebook(sourcebooks, d);
 						if (sourcebook && sourcebook.id) {
 							return (
 								<Badge.Ribbon key={d.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
@@ -424,12 +412,12 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(k => {
 						const item = (
-							<SelectablePanel key={k.id} onSelect={() => props.viewKit(k)}>
+							<SelectablePanel key={k.id} onSelect={() => modals.showKit(k.id)}>
 								<KitPanel kit={k} />
 							</SelectablePanel>
 						);
 
-						const sourcebook = SourcebookLogic.getKitSourcebook(props.sourcebooks, k);
+						const sourcebook = SourcebookLogic.getKitSourcebook(sourcebooks, k);
 						if (sourcebook && sourcebook.id) {
 							return (
 								<Badge.Ribbon key={k.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
@@ -461,12 +449,12 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(p => {
 						const item = (
-							<SelectablePanel key={p.id} onSelect={() => props.viewPerk(p)}>
+							<SelectablePanel key={p.id} onSelect={() => modals.showPerk(p.id)}>
 								<PerkPanel perk={p} />
 							</SelectablePanel>
 						);
 
-						const sourcebook = SourcebookLogic.getPerkSourcebook(props.sourcebooks, p);
+						const sourcebook = SourcebookLogic.getPerkSourcebook(sourcebooks, p);
 						if (sourcebook && sourcebook.id) {
 							return (
 								<Badge.Ribbon key={p.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
@@ -498,12 +486,12 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(t => {
 						const item = (
-							<SelectablePanel key={t.id} onSelect={() => props.viewTitle(t)}>
+							<SelectablePanel key={t.id} onSelect={() => modals.showTitle(t.id)}>
 								<TitlePanel title={t} />
 							</SelectablePanel>
 						);
 
-						const sourcebook = SourcebookLogic.getTitleSourcebook(props.sourcebooks, t);
+						const sourcebook = SourcebookLogic.getTitleSourcebook(sourcebooks, t);
 						if (sourcebook && sourcebook.id) {
 							return (
 								<Badge.Ribbon key={t.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
@@ -535,12 +523,12 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(i => {
 						const item = (
-							<SelectablePanel key={i.id} onSelect={() => props.viewItem(i)}>
+							<SelectablePanel key={i.id} onSelect={() => modals.showItem(i.id)}>
 								<ItemPanel item={i} />
 							</SelectablePanel>
 						);
 
-						const sourcebook = SourcebookLogic.getItemSourcebook(props.sourcebooks, i);
+						const sourcebook = SourcebookLogic.getItemSourcebook(sourcebooks, i);
 						if (sourcebook && sourcebook.id) {
 							return (
 								<Badge.Ribbon key={i.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
@@ -572,12 +560,12 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(mg => {
 						const item = (
-							<SelectablePanel key={mg.id} onSelect={() => props.viewMonsterGroup(mg)}>
-								<MonsterGroupPanel monsterGroup={mg} sourcebooks={props.sourcebooks} />
+							<SelectablePanel key={mg.id} onSelect={() => modals.showMonsterGroup(mg.id)}>
+								<MonsterGroupPanel monsterGroup={mg} />
 							</SelectablePanel>
 						);
 
-						const sourcebook = SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, mg);
+						const sourcebook = SourcebookLogic.getMonsterGroupSourcebook(sourcebooks, mg);
 						if (sourcebook && sourcebook.id) {
 							return (
 								<Badge.Ribbon key={mg.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
@@ -599,9 +587,8 @@ export const LibraryListPage = (props: Props) => {
 				value: e,
 				label: Format.capitalize(e, '-')
 			}));
-		const sourcebookOptions = props.sourcebooks.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
+		const sourcebookOptions = sourcebooks.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
 
-		const ancestries = getAncestries();
 		const cultures = getCultures();
 		const careers = getCareers();
 		const classes = getClasses();
@@ -611,11 +598,10 @@ export const LibraryListPage = (props: Props) => {
 		const perks = getPerks();
 		const titles = getTitles();
 		const items = getItems();
-		const monsterGroups = getMonsterGroups();
 
 		return (
 			<div className='library-list-page'>
-				<AppHeader subtitle='Library' goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader subtitle='Library' goHome={props.goHome}>
 					<Input
 						placeholder='Search'
 						allowClear={true}
@@ -683,7 +669,7 @@ export const LibraryListPage = (props: Props) => {
 							<DownOutlined />
 						</Button>
 					</Popover>
-					<Button onClick={props.showSourcebooks}>
+					<Button onClick={modals.showSourcebooks}>
 						Sourcebooks
 					</Button>
 				</AppHeader>

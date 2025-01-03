@@ -4,8 +4,6 @@ import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
-import { Hero } from '../models/hero';
-import { HeroLogic } from './hero-logic';
 import { PowerRollType } from '../enums/power-roll-type';
 
 export class AbilityLogic {
@@ -144,28 +142,6 @@ export class AbilityLogic {
 			spend: data.spend || [],
 			persistence: data.persistence || []
 		} as Ability;
-	};
-
-	static getDistance = (distance: AbilityDistance, hero?: Hero, ability?: Ability) => {
-		if (distance.type === AbilityDistanceType.Self) {
-			return 'Self';
-		}
-
-		if (distance.type === AbilityDistanceType.Special) {
-			return distance.special || 'Special';
-		}
-
-		const bonus = (hero && ability) ? HeroLogic.getDistanceBonus(hero, ability, distance) : 0;
-
-		let result = `${distance.type} ${distance.value + bonus}`;
-		if (distance.type === AbilityDistanceType.Line) {
-			result += `x${distance.value2 + bonus}`;
-		}
-		if (distance.within > 0) {
-			result += ` within ${distance.within}`;
-		}
-
-		return result;
 	};
 
 	static panelWidth = (ability: Ability) => {

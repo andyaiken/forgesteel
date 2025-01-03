@@ -1,5 +1,5 @@
 import { Ability } from '../../../../models/ability';
-import { AbilityLogic } from '../../../../logic/ability-logic';
+import { DistanceLogic } from '../../../../logic/distance-logic';
 import { FeatureAbilityCostData } from '../../../../models/feature';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
@@ -8,11 +8,11 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroicResourceBadge } from '../../../controls/heroic-resource-badge/heroic-resource-badge';
-import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { PowerRollPanel } from '../../power-roll/power-roll-panel';
 import { Tag } from 'antd';
 import { Utils } from '../../../../utils/utils';
+import { usePersistedOptions } from '../../../../hooks/use-persisted-options';
 
 import './ability-panel.scss';
 
@@ -20,13 +20,14 @@ interface Props {
 	ability: Ability;
 	hero?: Hero;
 	cost?: number;
-	options?: Options;
 	mode?: PanelMode;
 	tags?: string[];
 	onRoll?: () => void;
 }
 
 export const AbilityPanel = (props: Props) => {
+	const { options } = usePersistedOptions();
+
 	try {
 		let cost = props.cost || props.ability.cost;
 		let disabled = false;
@@ -40,7 +41,7 @@ export const AbilityPanel = (props: Props) => {
 
 			cost = Math.max(cost, 1);
 
-			if (props.options?.dimUnavailableAbilities || false) {
+			if (options?.dimUnavailableAbilities || false) {
 				disabled = cost > props.hero.state.heroicResource;
 			}
 		}
@@ -68,7 +69,7 @@ export const AbilityPanel = (props: Props) => {
 							{props.ability.type.trigger ? <Field label='Trigger' value={props.ability.type.trigger} /> : null}
 							{
 								props.ability.distance.length > 0 ?
-									<Field label='Distance' value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.hero, props.ability)).join(' or ')} />
+									<Field label='Distance' value={props.ability.distance.map(d => DistanceLogic.getDistance(d, props.hero, props.ability)).join(' or ')} />
 									: null
 							}
 							{props.ability.target ? <Field label='Target' value={props.ability.target} /> : null}
@@ -96,7 +97,7 @@ export const AbilityPanel = (props: Props) => {
 								props.ability.spend.map((spend, n) => (
 									<Field
 										key={n}
-										disabled={props.hero && (props.options?.dimUnavailableAbilities || false) && (spend.value > props.hero.state.heroicResource)}
+										disabled={props.hero && (options?.dimUnavailableAbilities || false) && (spend.value > props.hero.state.heroicResource)}
 										label={(
 											<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
 												<span>Spend</span>

@@ -3,29 +3,27 @@ import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } fr
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
-import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
 import { Utils } from '../../../../utils/utils';
+import { useModals } from '../../../../hooks/use-modals';
+import { usePersistedPlaybook } from '../../../../hooks/use-persisted-playbook';
 import { useState } from 'react';
 
 import './encounter-list.scss';
 
 interface Props {
-	playbook: Playbook;
-	sourcebooks: Sourcebook[];
 	goHome: () => void;
-	showAbout: () => void;
-	viewEncounter: (encounter: Encounter) => void;
 	onCreateEncounter: () => void;
 	onImportEncounter: (encounter: Encounter) => void;
 }
 
 export const EncounterListPage = (props: Props) => {
+	const modals = useModals();
+	const { playbook } = usePersistedPlaybook();
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
 	const getEncounters = () => {
-		return props.playbook.encounters
+		return playbook.encounters
 			.filter(item => Utils.textMatches([
 				item.name
 			], searchTerm));
@@ -46,8 +44,8 @@ export const EncounterListPage = (props: Props) => {
 			<div className='encounter-section-row'>
 				{
 					list.map(enc => (
-						<SelectablePanel key={enc.id} onSelect={() => props.viewEncounter(enc)}>
-							<EncounterPanel encounter={enc} playbook={props.playbook} sourcebooks={props.sourcebooks} />
+						<SelectablePanel key={enc.id} onSelect={() => modals.showEncounter(enc.id)}>
+							<EncounterPanel encounter={enc} />
 						</SelectablePanel>
 					))
 				}
@@ -60,7 +58,7 @@ export const EncounterListPage = (props: Props) => {
 
 		return (
 			<div className='encounter-list-page'>
-				<AppHeader subtitle='Encounters' goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader subtitle='Encounters' goHome={props.goHome}>
 					<Input
 						placeholder='Search'
 						allowClear={true}

@@ -3,14 +3,12 @@ import { Monster, MonsterGroup } from '../../../models/monster';
 import { Modal } from '../modal/modal';
 import { MonsterPanel } from '../../panels/elements/monster-panel/monster-panel';
 import { PanelMode } from '../../../enums/panel-mode';
-import { Playbook } from '../../../models/playbook';
 
 import './monster-modal.scss';
 
 interface Props {
 	monster: Monster;
 	monsterGroup: MonsterGroup;
-	playbook: Playbook;
 	export: (format: 'image' | 'pdf' | 'json') => void;
 }
 

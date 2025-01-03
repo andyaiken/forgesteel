@@ -20,9 +20,9 @@ import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Perk } from '../../../../models/perk';
 import { PerkList } from '../../../../enums/perk-list';
 import { SkillList } from '../../../../enums/skill-list';
-import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Utils } from '../../../../utils/utils';
+import { usePersistedSourcebooks } from '../../../../hooks/use-persisted-sourcebooks';
 import { useState } from 'react';
 
 import './feature-edit-panel.scss';
@@ -30,11 +30,11 @@ import './feature-edit-panel.scss';
 interface Props {
 	feature: Feature | Perk;
 	allowedTypes?: FeatureType[];
-	sourcebooks: Sourcebook[];
 	onChange: (feature: Feature) => void;
 }
 
 export const FeatureEditPanel = (props: Props) => {
+	const { sourcebooks } = usePersistedSourcebooks();
 	const [ feature, setFeature ] = useState<Feature | Perk>(props.feature);
 
 	const setName = (value: string) => {
@@ -517,7 +517,6 @@ export const FeatureEditPanel = (props: Props) => {
 									<Space direction='vertical' style={{ width: '100%' }}>
 										<FeatureEditPanel
 											feature={option.feature}
-											sourcebooks={props.sourcebooks}
 											onChange={f => setChoiceFeature(data, n, f)}
 										/>
 										<NumberSpin min={1} value={option.value} onChange={value => setChoiceValue(data, n, value)} />
@@ -648,7 +647,7 @@ export const FeatureEditPanel = (props: Props) => {
 							className={data.language === '' ? 'selection-empty' : ''}
 							placeholder='Language'
 							allowClear={true}
-							options={SourcebookLogic.getLanguages(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
+							options={SourcebookLogic.getLanguages(sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
 							value={data.language || ''}
 							onChange={setLanguage}
@@ -667,7 +666,7 @@ export const FeatureEditPanel = (props: Props) => {
 							placeholder='Options'
 							mode='multiple'
 							allowClear={true}
-							options={SourcebookLogic.getLanguages(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
+							options={SourcebookLogic.getLanguages(sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
 							value={data.options}
 							onChange={setLanguageOptions}
@@ -704,7 +703,6 @@ export const FeatureEditPanel = (props: Props) => {
 								>
 									<FeatureEditPanel
 										feature={feature}
-										sourcebooks={props.sourcebooks}
 										onChange={f => setMultipleFeature(data, n, f)}
 									/>
 								</Expander>
@@ -778,7 +776,7 @@ export const FeatureEditPanel = (props: Props) => {
 							className={data.skill === '' ? 'selection-empty' : ''}
 							placeholder='Skill'
 							allowClear={true}
-							options={SourcebookLogic.getSkills(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
+							options={SourcebookLogic.getSkills(sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
 							value={data.skill || ''}
 							onChange={setSkill}
@@ -796,7 +794,7 @@ export const FeatureEditPanel = (props: Props) => {
 							placeholder='Skills'
 							allowClear={true}
 							mode='multiple'
-							options={SourcebookLogic.getSkills(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
+							options={SourcebookLogic.getSkills(sourcebooks).map(option => ({ value: option.name, description: option.description }))}
 							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
 							value={data.options}
 							onChange={setSkillOptions}

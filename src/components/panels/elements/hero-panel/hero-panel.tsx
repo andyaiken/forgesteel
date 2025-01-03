@@ -1,15 +1,10 @@
 import { Col, Row, Statistic } from 'antd';
-import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { AbilityUsage } from '../../../../enums/ability-usage';
-import { Ancestry } from '../../../../models/ancestry';
-import { Career } from '../../../../models/career';
 import { Characteristic } from '../../../../enums/characteristic';
-import { Complication } from '../../../../models/complication';
 import { ConditionEndType } from '../../../../enums/condition-type';
 import { ConditionLogic } from '../../../../logic/condition-logic';
-import { Culture } from '../../../../models/culture';
 import { CultureData } from '../../../../data/culture-data';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { Domain } from '../../../../models/domain';
@@ -20,77 +15,65 @@ import { Field } from '../../../controls/field/field';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
-import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { Kit } from '../../../../models/kit';
-import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Skill } from '../../../../models/skill';
 import { SkillList } from '../../../../enums/skill-list';
-import { Sourcebook } from '../../../../models/sourcebook';
+import { useModals } from '../../../../hooks/use-modals';
+import { usePersistedOptions } from '../../../../hooks/use-persisted-options';
+import { usePersistedSourcebooks } from '../../../../hooks/use-persisted-sourcebooks';
 
 import './hero-panel.scss';
 
 interface Props {
 	hero: Hero;
-	sourcebooks: Sourcebook[];
-	options?: Options;
 	mode?: PanelMode;
-	onSelectAncestry?: (ancestry: Ancestry) => void;
-	onSelectCulture?: (culture: Culture) => void;
-	onSelectCareer?: (career: Career) => void;
-	onSelectClass?: (heroClass: HeroClass) => void;
-	onSelectComplication?: (complication: Complication) => void;
-	onSelectDomain?: (domain: Domain) => void;
-	onSelectKit?: (kit: Kit) => void;
-	onSelectCharacteristic?: (characteristic: Characteristic) => void;
-	onSelectAbility?: (ability: Ability) => void;
-	onShowState?: (page: 'hero' | 'stats' | 'conditions') => void;
 }
 
 export const HeroPanel = (props: Props) => {
+	const modals = useModals();
+	const { sourcebooks } = usePersistedSourcebooks();
+	const { options } = usePersistedOptions();
+
 	const getLeftColumn = () => {
 		const onSelectAncestry = () => {
-			if (props.hero.ancestry && props.onSelectAncestry) {
-				props.onSelectAncestry(props.hero.ancestry);
+			if (props.hero.ancestry) {
+				modals.showAncestry(props.hero.ancestry.id);
 			}
 		};
 
 		const onSelectCulture = () => {
-			if (props.hero.culture && props.onSelectCulture) {
-				props.onSelectCulture(props.hero.culture);
+			if (props.hero.culture) {
+				modals.showCulture(props.hero.culture.id);
 			}
 		};
 
 		const onSelectCareer = () => {
-			if (props.hero.career && props.onSelectCareer) {
-				props.onSelectCareer(props.hero.career);
+			if (props.hero.career) {
+				modals.showCareer(props.hero.career.id);
 			}
 		};
 
 		const onSelectClass = () => {
-			if (props.hero.class && props.onSelectClass) {
-				props.onSelectClass(props.hero.class);
+			if (props.hero.class) {
+				modals.showClass(props.hero.class.id);
 			}
 		};
 
 		const onSelectComplication = () => {
-			if (props.hero.complication && props.onSelectComplication) {
-				props.onSelectComplication(props.hero.complication);
+			if (props.hero.complication) {
+				modals.showComplication(props.hero.complication.id);
 			}
 		};
 
 		const onSelectDomain = (domain: Domain) => {
-			if (props.onSelectDomain) {
-				props.onSelectDomain(domain);
-			}
+			modals.showDomain(domain.id);
 		};
 
 		const onSelectKit = (kit: Kit) => {
-			if (props.onSelectKit) {
-				props.onSelectKit(kit);
-			}
+			modals.showKit(kit.id);
 		};
 
 		let incitingIncident: Element | null = null;
@@ -195,7 +178,7 @@ export const HeroPanel = (props: Props) => {
 		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
 		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
-		const sourcebooks = props.sourcebooks.filter(cs => props.hero.settingIDs.includes(cs.id));
+		const heroSourcebooks = sourcebooks.filter(cs => props.hero.settingIDs.includes(cs.id));
 
 		const getSkills = (label: string, skills: Skill[]) => {
 			return skills.length > 0 ?
@@ -231,18 +214,18 @@ export const HeroPanel = (props: Props) => {
 				<div className='overview-tile'>
 					<HeaderText>Languages</HeaderText>
 					{
-						HeroLogic.getLanguages(props.hero, sourcebooks).length > 0 ?
-							HeroLogic.getLanguages(props.hero, sourcebooks).map(l => <div key={l.name} className='ds-text'>{l.name}</div>)
+						HeroLogic.getLanguages(props.hero, heroSourcebooks).length > 0 ?
+							HeroLogic.getLanguages(props.hero, heroSourcebooks).map(l => <div key={l.name} className='ds-text'>{l.name}</div>)
 							:
 							<div className='ds-text dimmed-text'>None</div>
 					}
 				</div>
 				{
-					(props.options?.showSkillsInGroups || false) ?
+					(options?.showSkillsInGroups || false) ?
 						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
-							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, sourcebooks).filter(s => s.list === list)))
+							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, heroSourcebooks).filter(s => s.list === list)))
 						:
-						getSkills('Skills', HeroLogic.getSkills(props.hero, sourcebooks))
+						getSkills('Skills', HeroLogic.getSkills(props.hero, heroSourcebooks))
 				}
 			</div>
 		);
@@ -267,24 +250,6 @@ export const HeroPanel = (props: Props) => {
 			xxl: 8
 		};
 
-		const onSelectCharacteristic = (characteristic: Characteristic) => {
-			if (props.onSelectCharacteristic) {
-				props.onSelectCharacteristic(characteristic);
-			}
-		};
-
-		const onShowHero = () => {
-			if (props.onShowState) {
-				props.onShowState('hero');
-			}
-		};
-
-		const onShowStats = () => {
-			if (props.onShowState) {
-				props.onShowState('stats');
-			}
-		};
-
 		const maxStamina = HeroLogic.getStamina(props.hero);
 		const stamina = props.hero.state.staminaDamage === 0 ? maxStamina : maxStamina - props.hero.state.staminaDamage;
 		const staminaSuffix = props.hero.state.staminaDamage === 0 ? null : `/ ${maxStamina}`;
@@ -297,19 +262,19 @@ export const HeroPanel = (props: Props) => {
 			<Row gutter={[ 16, 16 ]}>
 				<Col span={24}>
 					<div className='characteristics-box'>
-						<div className='characteristic clickable' onClick={() => onSelectCharacteristic(Characteristic.Might)}>
+						<div className='characteristic clickable' onClick={() => modals.showHeroCharacteristic(props.hero.id, Characteristic.Might)}>
 							<Statistic title='Might' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
 						</div>
-						<div className='characteristic clickable' onClick={() => onSelectCharacteristic(Characteristic.Agility)}>
+						<div className='characteristic clickable' onClick={() => modals.showHeroCharacteristic(props.hero.id, Characteristic.Agility)}>
 							<Statistic title='Agility' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
 						</div>
-						<div className='characteristic clickable' onClick={() => onSelectCharacteristic(Characteristic.Reason)}>
+						<div className='characteristic clickable' onClick={() => modals.showHeroCharacteristic(props.hero.id, Characteristic.Reason)}>
 							<Statistic title='Reason' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
 						</div>
-						<div className='characteristic clickable' onClick={() => onSelectCharacteristic(Characteristic.Intuition)}>
+						<div className='characteristic clickable' onClick={() => modals.showHeroCharacteristic(props.hero.id, Characteristic.Intuition)}>
 							<Statistic title='Intuition' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
 						</div>
-						<div className='characteristic clickable' onClick={() => onSelectCharacteristic(Characteristic.Presence)}>
+						<div className='characteristic clickable' onClick={() => modals.showHeroCharacteristic(props.hero.id, Characteristic.Presence)}>
 							<Statistic title='Presence' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
 						</div>
 					</div>
@@ -331,7 +296,7 @@ export const HeroPanel = (props: Props) => {
 					</div>
 				</Col>
 				<Col xs={sizeSmall.xs} sm={sizeSmall.sm} md={sizeSmall.md} lg={sizeSmall.lg} xl={sizeSmall.xl} xxl={sizeSmall.xxl}>
-					<div className='characteristics-box clickable' onClick={onShowStats}>
+					<div className='characteristics-box clickable' onClick={() => modals.showHeroState(props.hero.id, 'stats')}>
 						<div className='characteristic'>
 							<Statistic title='Hero Tokens' value={props.hero.state.heroTokens} />
 						</div>
@@ -344,7 +309,7 @@ export const HeroPanel = (props: Props) => {
 					</div>
 				</Col>
 				<Col xs={sizeLarge.xs} sm={sizeLarge.sm} md={sizeLarge.md} lg={sizeLarge.lg} xl={sizeLarge.xl} xxl={sizeLarge.xxl}>
-					<div className='characteristics-box clickable' onClick={onShowHero}>
+					<div className='characteristics-box clickable' onClick={() => modals.showHeroState(props.hero.id, 'hero')}>
 						<div className='characteristic'>
 							<Statistic title={props.hero.class ? props.hero.class.heroicResource : 'Resource'} value={props.hero.state.heroicResource} />
 						</div>
@@ -360,7 +325,7 @@ export const HeroPanel = (props: Props) => {
 					</div>
 				</Col>
 				<Col xs={sizeSmall.xs} sm={sizeSmall.sm} md={sizeSmall.md} lg={sizeSmall.lg} xl={sizeSmall.xl} xxl={sizeSmall.xxl}>
-					<div className='characteristics-box clickable' onClick={onShowHero}>
+					<div className='characteristics-box clickable' onClick={() => modals.showHeroState(props.hero.id, 'hero')}>
 						<div className='characteristic'>
 							<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />
 						</div>
@@ -381,19 +346,13 @@ export const HeroPanel = (props: Props) => {
 			return null;
 		}
 
-		const openConditions = () => {
-			if (props.onShowState) {
-				props.onShowState('conditions');
-			}
-		};
-
 		return (
 			<div className='conditions-section'>
 				<HeaderText level={1}>Conditions</HeaderText>
 				<div className='conditions-grid'>
 					{
 						props.hero.state.conditions.map(c => (
-							<div key={c.id} className='condition-tile' onClick={openConditions}>
+							<div key={c.id} className='condition-tile' onClick={() => modals.showHeroState(props.hero.id, 'conditions')}>
 								<HeaderText>
 									{
 										(c.ends === ConditionEndType.ResistanceEnds) ?
@@ -428,7 +387,6 @@ export const HeroPanel = (props: Props) => {
 								key={feature.id}
 								feature={feature}
 								hero={props.hero}
-								sourcebooks={props.sourcebooks}
 								mode={PanelMode.Full}
 							/>
 						))
@@ -439,17 +397,11 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getAbilitiesSection = (type: AbilityUsage) => {
-		const abilities = HeroLogic.getAbilities(props.hero, true, props.options?.showFreeStrikes || false, props.options?.showStandardAbilities || false)
+		const abilities = HeroLogic.getAbilities(props.hero, true, options?.showFreeStrikes || false, options?.showStandardAbilities || false)
 			.filter(ability => ability.type.usage === type);
 		if (abilities.length === 0) {
 			return null;
 		}
-
-		const onSelectAbility = (ability: Ability) => {
-			if (props.onSelectAbility) {
-				props.onSelectAbility(ability);
-			}
-		};
 
 		return (
 			<div className='abilities-section'>
@@ -458,7 +410,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						abilities.map(ability => (
 							<SelectablePanel key={ability.id} style={{ gridColumn: `span ${AbilityLogic.panelWidth(ability)}` }}>
-								<AbilityPanel ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} onRoll={() => onSelectAbility(ability)} />
+								<AbilityPanel ability={ability} hero={props.hero} mode={PanelMode.Full} onRoll={() => modals.showHeroAbility(props.hero.id, ability.id)} />
 							</SelectablePanel>
 						))
 					}

@@ -24,6 +24,7 @@ import { revenant } from './ancestries/revenant';
 import { shadow } from './classes/shadow';
 import { tactician } from './classes/tactician';
 import { timeRaider } from './ancestries/time-raider';
+import { troubadour } from './classes/troubadour';
 import { wodeElf } from './ancestries/elf-wode';
 
 export class SourcebookData {
@@ -69,7 +70,8 @@ export class SourcebookData {
 			elementalist,
 			fury,
 			shadow,
-			tactician
+			tactician,
+			troubadour
 		],
 		complications: [
 			ComplicationData.cultVictim,

@@ -227,6 +227,10 @@ export const Main = (props: Props) => {
 
 	const importHomebrewElement = async (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => {
 		element.id = Utils.guid();
+		if (kind === 'monster-group') {
+			const group = element as MonsterGroup;
+			group.monsters.forEach(m => m.id === Utils.guid());
+		}
 
 		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		let sourcebook = sourcebooks.find(cs => cs.id === sourcebookID);
@@ -527,6 +531,7 @@ export const Main = (props: Props) => {
 		if (original) {
 			monsterGroup = JSON.parse(JSON.stringify(original)) as MonsterGroup;
 			monsterGroup.id = Utils.guid();
+			monsterGroup.monsters.forEach(m => m.id === Utils.guid());
 		} else {
 			monsterGroup = FactoryLogic.createMonsterGroup();
 		}

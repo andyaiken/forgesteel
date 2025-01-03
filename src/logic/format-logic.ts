@@ -30,26 +30,29 @@ export class FormatLogic {
 	};
 
 	static getDamageModifier = (mod: DamageModifier) => {
-		let desc = `${mod.damageType} ${mod.type} `;
-
-		if (mod.value) {
-			desc += `${mod.value >= 0 ? '+' : ''}${mod.value}`;
-		}
-
-		if (mod.valuePerLevel) {
-			if (desc !== '') {
-				desc += ', ';
+		let desc = '';
+		if (mod.value && mod.valuePerLevel && !mod.valuePerEchelon && (mod.value === mod.valuePerLevel)) {
+			desc += `${mod.value >= 0 ? '+' : ''}${mod.value} per level`;
+		} else {
+			if (mod.value) {
+				desc += `${mod.value >= 0 ? '+' : ''}${mod.value}`;
 			}
-			desc += `${mod.valuePerLevel >= 0 ? '+' : ''}${mod.valuePerLevel} per level after 1st`;
-		}
 
-		if (mod.valuePerEchelon) {
-			if (desc !== '') {
-				desc += ', ';
+			if (mod.valuePerLevel) {
+				if (desc !== '') {
+					desc += ', ';
+				}
+				desc += `${mod.valuePerLevel >= 0 ? '+' : ''}${mod.valuePerLevel} per level after 1st`;
 			}
-			desc += `${mod.valuePerEchelon >= 0 ? '+' : ''}${mod.valuePerEchelon} per echelon`;
+
+			if (mod.valuePerEchelon) {
+				if (desc !== '') {
+					desc += ', ';
+				}
+				desc += `${mod.valuePerEchelon >= 0 ? '+' : ''}${mod.valuePerEchelon} per echelon`;
+			}
 		}
 
-		return desc;
+		return `${mod.damageType} ${mod.type} ${desc}`;
 	};
 }

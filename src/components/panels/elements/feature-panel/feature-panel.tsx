@@ -658,20 +658,24 @@ export const FeaturePanel = (props: Props) => {
 
 	const getExtraBonus = (data: FeatureBonusData) => {
 		let desc = '';
-		if (data.value) {
-			desc += `${data.value >= 0 ? '+' : ''}${data.value}`;
-		}
-		if (data.valuePerLevel) {
-			if (desc !== '') {
-				desc += ', ';
+		if (data.value && data.valuePerLevel && !data.valuePerEchelon && (data.value === data.valuePerLevel)) {
+			desc = `${data.value >= 0 ? '+' : ''}${data.value} per level`;
+		} else {
+			if (data.value) {
+				desc += `${data.value >= 0 ? '+' : ''}${data.value}`;
 			}
-			desc += `${data.valuePerLevel >= 0 ? '+' : ''}${data.valuePerLevel} per level after 1st`;
-		}
-		if (data.valuePerEchelon) {
-			if (desc !== '') {
-				desc += ', ';
+			if (data.valuePerLevel) {
+				if (desc !== '') {
+					desc += ', ';
+				}
+				desc += `${data.valuePerLevel >= 0 ? '+' : ''}${data.valuePerLevel} per level after 1st`;
 			}
-			desc += `${data.valuePerEchelon >= 0 ? '+' : ''}${data.valuePerEchelon} per echelon`;
+			if (data.valuePerEchelon) {
+				if (desc !== '') {
+					desc += ', ';
+				}
+				desc += `${data.valuePerEchelon >= 0 ? '+' : ''}${data.valuePerEchelon} per echelon`;
+			}
 		}
 
 		return (

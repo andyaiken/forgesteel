@@ -12,7 +12,6 @@ import { Expander } from '../../../controls/expander/expander';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
-import { PowerRollType } from '../../../../enums/power-roll-type';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { useState } from 'react';
 
@@ -205,15 +204,6 @@ export const AbilityEditPanel = (props: Props) => {
 	const setPowerRoll = (value: boolean) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
 		copy.powerRoll = value ? AbilityLogic.createPowerRoll({ characteristic: [], tier1: '', tier2: '', tier3: '' }) : null;
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const setPowerRollType = (value: PowerRollType) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		if (copy.powerRoll) {
-			copy.powerRoll.type = value;
-		}
 		setAbility(copy);
 		props.onChange(copy);
 	};
@@ -566,16 +556,6 @@ export const AbilityEditPanel = (props: Props) => {
 									<HeaderText>Power Roll</HeaderText>
 									<Space direction='vertical' style={{ width: '100%' }}>
 										<Toggle label='Has Power Roll' value={!!ability.powerRoll} onChange={setPowerRoll} />
-										{
-											ability.powerRoll ?
-												<Segmented
-													block={true}
-													options={[ PowerRollType.PowerRoll, PowerRollType.Resistance ].map(i => ({ label: i, value: i }))}
-													value={ability.powerRoll.type}
-													onChange={setPowerRollType}
-												/>
-												: null
-										}
 										{
 											ability.powerRoll ?
 												<Select

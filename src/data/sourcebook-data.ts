@@ -18,6 +18,7 @@ import { hakaan } from './ancestries/hakaan';
 import { highElf } from './ancestries/elf-high';
 import { human } from './ancestries/human';
 import { memonek } from './ancestries/memonek';
+import { nullClass } from './classes/null';
 import { orc } from './ancestries/orc';
 import { polder } from './ancestries/polder';
 import { radenwight } from './monsters/radenwight';
@@ -71,6 +72,7 @@ export class SourcebookData {
 			conduit,
 			elementalist,
 			fury,
+			nullClass,
 			shadow,
 			tactician,
 			troubadour

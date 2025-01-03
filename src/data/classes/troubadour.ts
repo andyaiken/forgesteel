@@ -178,7 +178,7 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			description: 'And they said practicing fencing was a waste!',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: 'Two creatures or objects',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
@@ -199,7 +199,7 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			description: 'There you are, radiating your usual charisma.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'One creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
@@ -214,7 +214,7 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			description: 'I didn’t do it! What?',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
@@ -231,7 +231,7 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
+				AbilityLogic.distance.createMelee(),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
@@ -256,8 +256,8 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
-				AbilityLogic.distance.createRanged(10)
+				AbilityLogic.distance.createMelee(),
+				AbilityLogic.distance.createRanged()
 			],
 			target: '1 creature or object',
 			cost: 3,
@@ -369,7 +369,7 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			description: 'They’re so hurt by your performance, you sort of start to believe it yourself.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -421,8 +421,8 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
-				AbilityLogic.distance.createRanged(10)
+				AbilityLogic.distance.createMelee(),
+				AbilityLogic.distance.createRanged()
 			],
 			target: '1 creature or object',
 			cost: 7,
@@ -440,7 +440,7 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			description: 'Totus mundus agit histrionem.',
 			type: AbilityLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 7,
 			effect: `
@@ -498,7 +498,7 @@ Additionally, on each of your turns, you can use a free maneuver to communicate 
 								description: '“I’d have brought treats had I known I’d be fighting a dog.”',
 								type: AbilityLogic.type.createTrigger('The target takes damage from a melee strike.'),
 								keywords: [],
-								distance: [ AbilityLogic.distance.createMelee(1) ],
+								distance: [ AbilityLogic.distance.createMelee() ],
 								target: 'Self or one ally',
 								effect: 'The target makes a free strike against the triggering striker.'
 							})
@@ -519,7 +519,7 @@ Additionally, on each of your turns, you can use a free maneuver to communicate 
 											description: 'Audiences love this bit.',
 											type: AbilityLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-											distance: [ AbilityLogic.distance.createMelee(1) ],
+											distance: [ AbilityLogic.distance.createMelee() ],
 											target: 'Self and 1 willing ally',
 											cost: 5,
 											effect: 'Each target shifts up to 5 squares, and can shift vertically. Both targets must end this movement adjacent to each other and on solid ground. Each target can then make a melee free strike that deals additional damage equal to twice their highest characteristic score.'
@@ -535,7 +535,7 @@ Additionally, on each of your turns, you can use a free maneuver to communicate 
 											description: 'Wait it’s … Guard! Turn! Perry! Dodge! Spin! Thrust! Hah!',
 											type: AbilityLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-											distance: [ AbilityLogic.distance.createMelee(1) ],
+											distance: [ AbilityLogic.distance.createMelee() ],
 											target: '1 creature',
 											cost: 5,
 											powerRoll: AbilityLogic.createPowerRoll({
@@ -597,7 +597,7 @@ Additionally, on each of your turns, you can use a free maneuver to communicate 
 								description: 'It doesn’t need to make sense. Just say it with emotionality.',
 								type: AbilityLogic.type.createManeuver(),
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: 'Special',
 								effect: `
 Choose one of the following effects:
@@ -619,7 +619,7 @@ Choose one of the following effects:
 								description: 'All’s fair in love and whatever.',
 								type: AbilityLogic.type.createTrigger('The target makes an ability power roll with at least one edge or bane.'),
 								keywords: [],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: '1 creature',
 								effect: 'One of the edges becomes a bane or vice versa.',
 								spend: [
@@ -646,7 +646,7 @@ Choose one of the following effects:
 											description: 'We offered them a percentage of the gross. So they’re working for free!',
 											type: AbilityLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-											distance: [ AbilityLogic.distance.createRanged(10) ],
+											distance: [ AbilityLogic.distance.createRanged() ],
 											target: 'Special',
 											cost: 5,
 											effect: 'Either a bystander within distance is uplifted by your magic, or a mysterious new hero appears in an unoccupied space to help out during the encounter. This guest star is controlled by you, has their own turn, shares your characteristics. Their stamina is maximum is half yours. They have no abilities other than your melee and ranged free strikes. When the target is reduced to 0 Stamina or at the end of the encounter, they retreat or revert to a bystander. An individual bystander can’t be uplifted in this way more than once in an encounter.'
@@ -662,7 +662,7 @@ Choose one of the following effects:
 											description: 'You didn’t see that coming, did you?!',
 											type: AbilityLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-											distance: [ AbilityLogic.distance.createRanged(10) ],
+											distance: [ AbilityLogic.distance.createRanged() ],
 											target: '1 dead enemy',
 											cost: 5,
 											effect: 'As long as the target is not a leader or a solo creature, they come back to life with half their Stamina and become an ally under the Director’s control. The players can discuss with the Director when the target takes their turn each round. The target turns to dust and blows away at the end of the encounter.'
@@ -723,7 +723,7 @@ Choose one of the following effects:
 								description: 'All for thunder motherrr! 🎵 Run and hide for coverrr! 🎵',
 								type: AbilityLogic.type.createNoAction(),
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Routine, AbilityKeyword.Strike ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: '1 creature',
 								preEffect: 'At the end of each round while this routine is active, make a power roll that ignores cover. You can’t target the same creature twice with this effect.',
 								powerRoll: AbilityLogic.createPowerRoll({

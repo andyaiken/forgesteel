@@ -122,7 +122,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			description: 'Your precise strikes let your allies take advantage of a target’s agony.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
@@ -139,7 +139,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
+				AbilityLogic.distance.createMelee(),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
@@ -158,7 +158,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
+				AbilityLogic.distance.createMelee(),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature or object',
@@ -176,7 +176,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			description: 'They can’t watch both of you at once.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
@@ -192,7 +192,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			description: 'Your attack leaves them reeling, allowing you to follow up.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -210,7 +210,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
+				AbilityLogic.distance.createMelee(),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
@@ -228,7 +228,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			description: 'Move unexpectedly, strike fast, and be gone!',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -246,7 +246,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
+				AbilityLogic.distance.createMelee(),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '2 creatures or objects',
@@ -265,7 +265,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
+				AbilityLogic.distance.createMelee(),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
@@ -339,7 +339,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
+				AbilityLogic.distance.createMelee(),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
@@ -375,7 +375,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
+				AbilityLogic.distance.createMelee(),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
@@ -452,7 +452,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 											type: AbilityLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 											distance: [
-												AbilityLogic.distance.createMelee(1),
+												AbilityLogic.distance.createMelee(),
 												AbilityLogic.distance.createRanged(5)
 											],
 											target: '1 creature',
@@ -561,7 +561,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 											description: 'Explosives are best when they’re attached to an enemy.',
 											type: AbilityLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Ranged ],
-											distance: [ AbilityLogic.distance.createRanged(10) ],
+											distance: [ AbilityLogic.distance.createRanged() ],
 											target: '1 creature',
 											cost: 5,
 											preEffect: 'You attach a small bomb to a creature. If you are hidden from the creature, they don’t notice the bomb and you remain hidden. The creature otherwise notices the bomb and can remove it as an action, disarming the bomb. At the end of your next turn, the bomb detonates. You can also detonate it earlier (no action required). When the bomb detonates, you make a power roll targeting each enemy within 3 squares of it.',

@@ -60,7 +60,7 @@ As a tactician, you have abilities that heal your allies and grant them increase
 						description: 'You draw your allies’ attention to a specific foe — with devastating effect.',
 						type: AbilityLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.distance.createRanged(10) ],
+						distance: [ AbilityLogic.distance.createRanged() ],
 						target: '1 creature',
 						effect: `
 The target is marked by you until the end of the encounter, you die, you use this ability again, or you willingly end this effect (no action required). If another tactician marks the target, then your mark on the target ends. You can have one target marked this way, but other tactician abilities can allow you to have multiple marked creatures.
@@ -79,7 +79,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 						description: 'Your foe left an opening. You point this out to an ally!',
 						type: AbilityLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.distance.createRanged(10) ],
+						distance: [ AbilityLogic.distance.createRanged() ],
 						target: '1 ally',
 						effect: 'The target can make a signature attack as a free triggered action.',
 						spend: [
@@ -131,7 +131,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			description: 'You shout a phrase that galvanizes your team.',
 			type: AbilityLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'Three allies',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -148,7 +148,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
+				AbilityLogic.distance.createMelee(),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature or object',
@@ -167,7 +167,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
+				AbilityLogic.distance.createMelee(),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature or object',
@@ -185,7 +185,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			description: 'On your command, you and your allies force back the enemy line.',
 			type: AbilityLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'Self and two allies',
 			cost: 3,
 			effect: 'Each target can move their speed.'
@@ -197,7 +197,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
+				AbilityLogic.distance.createMelee(),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature or object',
@@ -217,7 +217,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
+				AbilityLogic.distance.createMelee(),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: 'One creature or object',
@@ -248,7 +248,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			description: 'All those coordination drills you made them do finally pay off.',
 			type: AbilityLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '2 allies',
 			cost: 5,
 			effect: 'Each target who hasn’t acted yet this round can take their turn in any order immediately after yours.'
@@ -323,7 +323,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 								description: 'Your leadership aids an ally.',
 								type: AbilityLogic.type.createTrigger('The target deals damage to another creature.'),
 								keywords: [ AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: 'Any creature',
 								effect: 'The target gains two surges, which they can use on the triggering damage.',
 								spend: [
@@ -355,7 +355,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 											description: 'Your unorthodox strategy causes enemies to lash out in fear, heedless of who they might be attacking.',
 											type: AbilityLogic.type.createManeuver(),
 											keywords: [ AbilityKeyword.Ranged ],
-											distance: [ AbilityLogic.distance.createRanged(10) ],
+											distance: [ AbilityLogic.distance.createRanged() ],
 											target: '2 creatures',
 											cost: 5,
 											effect: `
@@ -373,7 +373,7 @@ Each target is marked by you. You immediately force each targeted creature to ma
 											description: '“Try picking on someone MY size.',
 											type: AbilityLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-											distance: [ AbilityLogic.distance.createMelee(1) ],
+											distance: [ AbilityLogic.distance.createMelee() ],
 											target: '1 creature',
 											cost: 5,
 											preEffect: 'You shift your speed directly toward an ally adjacent to the target, then swap locations with the ally as long as you can each fit into the other’s space. The ally can spend a Recovery, and you make a power roll against the target.',
@@ -443,7 +443,7 @@ You can only make this test once for each encounter and negotiation.`
 								description: 'Under your direction, an ally waits for just the right moment to strike.',
 								type: AbilityLogic.type.createTrigger('The target moves.'),
 								keywords: [ AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: '1 enemy',
 								effect: 'At any point during the target’s movement, one ally can make a free strike against them.',
 								spend: [
@@ -542,7 +542,7 @@ Each target is marked by you. You gain two surges.
 								description: 'Your quick reflexes cost an enemy the precision they seek.',
 								type: AbilityLogic.type.createTrigger('A creature deals damage to the target.'),
 								keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-								distance: [ AbilityLogic.distance.createMelee(1) ],
+								distance: [ AbilityLogic.distance.createMelee() ],
 								target: 'Self or 1 ally',
 								effect: 'The damage is halved. If any effect of the damage has a potency effect, you decrease the potency by 1.',
 								spend: [

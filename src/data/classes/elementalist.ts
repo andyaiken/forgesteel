@@ -55,7 +55,7 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 						description: 'You hurl a ball of elemental energy at an unsuspecting foe.',
 						type: AbilityLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-						distance: [ AbilityLogic.distance.createRanged(10) ],
+						distance: [ AbilityLogic.distance.createRanged() ],
 						target: '1 creature or object',
 						powerRoll: AbilityLogic.createPowerRoll({
 							characteristic: [ Characteristic.Reason ],
@@ -220,7 +220,7 @@ Choose one of the following effects:
 			description: 'Your curse causes a foe’s flesh to rot off as spores that aid your allies.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Green, AbilityKeyword.Rot, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -236,7 +236,7 @@ Choose one of the following effects:
 			description: 'Two jets of flame lance out at your command.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '2 creatures or objects',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -251,7 +251,7 @@ Choose one of the following effects:
 			description: 'You absorb the life energy of another creature and use it to teleport.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Void ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -267,7 +267,7 @@ Choose one of the following effects:
 			description: 'Whipping vines erupt from a foe’s body to grasp at another close by.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -283,7 +283,7 @@ Choose one of the following effects:
 			description: 'You give your enemy a gentle tap like an asteroid impact.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -298,7 +298,7 @@ Choose one of the following effects:
 			description: 'You inflict pain and doubt in equal measure.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Void ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -330,7 +330,7 @@ Choose one of the following effects:
 			description: 'A jet of heavy fire erupts with elemental fury where it strikes.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -367,7 +367,7 @@ Choose one of the following effects:
 			description: 'Fire engulfs a target of your choice and burns at your command.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature or object',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -389,7 +389,7 @@ Choose one of the following effects:
 			description: 'Mushrooms erupt from a foe, sapping their vitality to spread strengthening spores.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -445,7 +445,7 @@ Choose one of the following effects:
 			description: 'The surface of the world around you opens up at your command.',
 			type: AbilityLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'Special',
 			cost: 5,
 			preEffect: 'You open up two holes with 1-square openings that are 4 squares deep, and which can be placed on any mundane surface within distance. You can place these holes next to each other to create fewer holes with wider openings. When the holes open, make a separate power roll for each creature on the ground above a hole and small enough to fall in. (You can’t get a critical hit with this power because it uses a maneuver.)',
@@ -468,7 +468,7 @@ Choose one of the following effects:
 			description: 'The material substance of a creature shreds away at your command.',
 			type: AbilityLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'Self or one ally',
 			cost: 5,
 			effect: 'Until the start of your next turn, the target can move through solid matter, ignores difficult terrain, and their movement can’t provoke opportunity attacks. If the target ends their turn inside solid matter, they are shunted out into the space where they entered it and this effect ends.',
@@ -524,7 +524,7 @@ Until the start of your next turn, the area gains the following effects:
 			description: 'Burrow into their brains and take control!',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Void ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 5,
 			preEffect: 'The target uses their signature ability against a target of your choice. You then make a power roll against the target of this ability.',
@@ -541,7 +541,7 @@ Until the start of your next turn, the area gains the following effects:
 			description: 'Your ally disappears, then reappears in a burst of fire!',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'Self or one ally',
 			cost: 5,
 			preEffect: 'The target is teleported to another space within distance. Make a power roll that targets each enemy adjacent to the target’s new space.',
@@ -558,7 +558,7 @@ Until the start of your next turn, the area gains the following effects:
 			description: 'Wrap them up in fire and melting stone.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Earth, AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -574,7 +574,7 @@ Until the start of your next turn, the area gains the following effects:
 			description: 'With a flick of the wrist, you phase creatures out of existence.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Void ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'Special',
 			cost: 7,
 			preEffect: 'The number of creatures you target with this ability is determined by your power roll.',
@@ -665,7 +665,7 @@ Until the start of your next turn, the area gains the following effects:
 								description: 'The earth rises, falls, or opens up at your command.',
 								type: AbilityLogic.type.createAction(),
 								keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-								distance: [ AbilityLogic.distance.createMelee(1) ],
+								distance: [ AbilityLogic.distance.createMelee() ],
 								target: 'Special',
 								cost: 3,
 								effect: `
@@ -681,7 +681,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 								description: 'You make yourself or an ally covered in protective stone.',
 								type: AbilityLogic.type.createTrigger('The target takes damage.'),
 								keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: 'Self or 1 ally',
 								effect: 'The damage is halved.',
 								spend: [
@@ -744,7 +744,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 								description: 'With the merest touch, you cause an object to turn into slag or ash.',
 								type: AbilityLogic.type.createAction(),
 								keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-								distance: [ AbilityLogic.distance.createMelee(1) ],
+								distance: [ AbilityLogic.distance.createMelee() ],
 								target: '1 mundane object',
 								effect: 'You heat the target and cause it to combust and melt, destroying it. If the object is larger than 1 square, then only the square of the object that you touch is destroyed.'
 							})
@@ -756,7 +756,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 								description: 'You add a little magic to an ally’s aggression at just the right time.',
 								type: AbilityLogic.type.createTrigger('The target force moves a creature or object.'),
 								keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: 'Self or 1 ally',
 								effect: 'The forced movement distance gains a bonus equal to your Reason score.',
 								spend: [
@@ -819,7 +819,7 @@ Additionally, whenever you touch a living plant that is not a Plant Creature, yo
 								description: 'The power you channel grants the ability to get back in the fight.',
 								type: AbilityLogic.type.createTrigger('The target starts their turn.'),
 								keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: 'Self or 1 ally',
 								effect: 'The target can spend a Recovery.',
 								spend: [
@@ -863,7 +863,7 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 								description: 'You stir any wood’s memory and learn what it has seen.',
 								type: AbilityLogic.type.createAction(),
 								keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-								distance: [ AbilityLogic.distance.createMelee(1) ],
+								distance: [ AbilityLogic.distance.createMelee() ],
 								target: 'One mundane wooden object',
 								effect: 'You see and hear any events that have occurred within 10 squares of the object within the last 12 hours, perceiving those events from the object’s location as if you were there.'
 							})
@@ -898,7 +898,7 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 								description: 'You grant allies a taste of your unearthly vision.',
 								type: AbilityLogic.type.createManeuver(),
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: 'Special',
 								effect: 'For each Victory you have, you can target one creature. That creature gains the benefit of your A Beyonding of Vision feature until the end of your next turn, but doesn’t gain the use of Shared Void Sense.'
 							})
@@ -910,7 +910,7 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 								description: 'You call on the void to swallow and spit out an ally.',
 								type: AbilityLogic.type.createTrigger('The target starts their turn, moves, or is force moved.'),
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: 'Self or 1 ally',
 								effect: 'You teleport the target up to a number of squares equal to your Reason score. If the target moves to trigger this ability, you can teleport them at any point during the move.',
 								spend: [
@@ -933,7 +933,7 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 								description: '',
 								type: AbilityLogic.type.createManeuver(),
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: 'Special',
 								effect: `
 You open two size 1 portals in unoccupied spaces in range, which last until you move beyond distance from any portal, end the effect as a maneuver, or are dying. Each portal must be placed at a height of no more than 1 square above the ground. When you or any ally touch a portal, that creature can choose to be instantly teleported to an unoccupied space of their choice within 1 square of the other portal. If an enemy is force moved into a portal, their forced movement ends and they emerge from the other portal in an unoccupied space chosen by the creature who force moved them.

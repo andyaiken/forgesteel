@@ -68,7 +68,7 @@ export class KitData {
 					description: 'Your weapon unleashes psionic energy that reduces your target’s weight.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -106,7 +106,7 @@ export class KitData {
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [
-						AbilityLogic.distance.createMelee(1),
+						AbilityLogic.distance.createMelee(),
 						AbilityLogic.distance.createRanged(5)
 					],
 					target: '1 creature',
@@ -145,7 +145,7 @@ export class KitData {
 					description: 'Why strike once when you could do it twice?',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -183,7 +183,7 @@ export class KitData {
 					description: 'In your hands, the haft is as good as the head.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '2 creatures or objects',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -220,7 +220,7 @@ export class KitData {
 					description: 'You feint to move your enemies into perfect position.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -258,7 +258,7 @@ export class KitData {
 					description: 'An enemy who tagged you will pay for that.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -296,7 +296,7 @@ export class KitData {
 					description: 'The faster you move, the harder you hit.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '1 creature or object',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -334,7 +334,7 @@ export class KitData {
 					description: 'Keeping your enemies stumbling around the battlefield is second nature to you.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -373,7 +373,7 @@ export class KitData {
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [
-						AbilityLogic.distance.createMelee(1),
+						AbilityLogic.distance.createMelee(),
 						AbilityLogic.distance.createRanged(5)
 					],
 					target: '1 creature',
@@ -487,7 +487,7 @@ export class KitData {
 					description: 'The well-thrown net that follows your main attack leaves your foes right where you want them.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -524,7 +524,7 @@ export class KitData {
 					description: 'The strength of your assault makes it impossible for your foe to ignore you.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -600,7 +600,7 @@ export class KitData {
 					description: 'Lightning jumps from your weapon as you strike to harm a nearby foe.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '1 creature or object',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -638,7 +638,7 @@ export class KitData {
 					description: 'When your stick speaks, your enemy moves.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -675,7 +675,7 @@ export class KitData {
 					description: 'All combat is a dance—and you’ll be the one leading.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -713,7 +713,7 @@ export class KitData {
 					description: 'In your hands, a shield isn’t just for protection.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -750,7 +750,7 @@ export class KitData {
 					description: '',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '1 creature or object',
 					cost: 0,
 					powerRoll: AbilityLogic.createPowerRoll({
@@ -827,7 +827,7 @@ export class KitData {
 					description: 'Attacks with your sharp and deadly claws send your foes staggering back.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '2 creatures or objects',
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
@@ -883,7 +883,7 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 					description: 'Foes who try to close around you do so at their peril.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '3 creatures or objects',
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
@@ -944,7 +944,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					description: 'Your enemies try in vain to fall back from your pouncing attack.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '2 creatures or objects',
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
@@ -1004,7 +1004,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					description: 'A savage assault forces your foes back.',
 					type: AbilityLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(1) ],
+					distance: [ AbilityLogic.distance.createMelee() ],
 					target: '1 creature or object',
 					powerRoll: AbilityLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],

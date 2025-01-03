@@ -100,7 +100,7 @@ Additionally, you can gain more piety by praying to the gods — but beware! Doi
 						description: 'Your divine energy restores the righteous.',
 						type: AbilityLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.distance.createRanged(10) ],
+						distance: [ AbilityLogic.distance.createRanged() ],
 						target: 'Self or 1 ally',
 						effect: 'The target can spend a Recovery.',
 						spend: [
@@ -122,7 +122,7 @@ For each piety spent, you can choose one of the following enhancements:
 						description: 'You unleash a blast of holy light upon your foe.',
 						type: AbilityLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-						distance: [ AbilityLogic.distance.createRanged(10) ],
+						distance: [ AbilityLogic.distance.createRanged() ],
 						target: '1 creature or object',
 						powerRoll: AbilityLogic.createPowerRoll({
 							characteristic: [ Characteristic.Intuition ],
@@ -145,7 +145,7 @@ For each piety spent, you can choose one of the following enhancements:
 									description: 'You invigorate an attacking ally with divine energy.',
 									type: AbilityLogic.type.createTrigger('The target makes an ability power roll for an ability that deals damage.'),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-									distance: [ AbilityLogic.distance.createRanged(10) ],
+									distance: [ AbilityLogic.distance.createRanged() ],
 									target: '1 ally',
 									effect: 'The power roll gains an edge.',
 									spend: [
@@ -166,7 +166,7 @@ For each piety spent, you can choose one of the following enhancements:
 									description: 'Your holy word saps an attacking enemy’s strength.',
 									type: AbilityLogic.type.createTrigger('The target takes damage from an ability that requires a power roll.'),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-									distance: [ AbilityLogic.distance.createRanged(10) ],
+									distance: [ AbilityLogic.distance.createRanged() ],
 									target: '1 ally',
 									effect: 'The power roll gains a bane against the target.',
 									spend: [
@@ -318,7 +318,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'Burning radiance falls upon your foe, transferring some of their energy to a nearby ally.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
@@ -334,7 +334,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'You drain the energy from your target and revitalize yourself or an ally.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
@@ -350,7 +350,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'A tendril of divine energy shoots forth to draw in your foe.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
@@ -381,7 +381,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'Divine magic tears at your foe and defends a nearby friend.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
@@ -397,7 +397,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'A blast of judgment disorients your foe.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
@@ -412,7 +412,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'Your quickly uttered prayer lends aggressive divine energy to a friend engaged in melee.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
@@ -428,7 +428,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'A bolt of holy energy saps the life from a foe.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
@@ -460,7 +460,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'A brilliant column of holy light appears on the battlefield, striking out at nearby enemies.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'Special',
 			cost: 3,
 			effect: 'You summon a spirit of size 2 who can’t be harmed, and who appears in an unoccupied space within distance. The spirit lasts until the end of your next turn. You and your allies can move through the spirit’s space, but enemies can’t. An enemy who moves within 2 squares of the spirit for the first time in a round or starts their turn there takes holy damage equal to your Intuition score.'
@@ -471,7 +471,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'Your divine fury is a hammer that crashes down upon the unrighteous.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature or object',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -487,7 +487,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'After some holy lightning, your enemy will think twice about their next attack.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -504,7 +504,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'Cursed by you, your enemy takes more damage from your allies.',
 			type: AbilityLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature or object',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -520,7 +520,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'Fear of divine judgment overwhelms your foe.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -536,7 +536,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'The heroes’ armor glows with golden light, granting divine protection.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'Self and up to three allies',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -563,7 +563,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'Your divine magic makes a creature appear as what your enemies fear most.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'Each enemy in the area',
 			cost: 7,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -580,7 +580,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'An ally becomes the wearer of an empowered golden cloak.',
 			type: AbilityLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 ally',
 			cost: 7,
 			effect: 'The target gains 20 Temporary Stamina and three surges.'
@@ -591,7 +591,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'A beam of energy connects a foe to a friend, draining life from one to heal the other.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 enemy',
 			cost: 7,
 			powerRoll: AbilityLogic.createPowerRoll({

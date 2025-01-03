@@ -47,7 +47,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 						description: 'A telepathic bolt instantly zaps a creature’s brain.',
 						type: AbilityLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Telepathy ],
-						distance: [ AbilityLogic.distance.createRanged(10) ],
+						distance: [ AbilityLogic.distance.createRanged() ],
 						target: '1 creature',
 						powerRoll: AbilityLogic.createPowerRoll({
 							characteristic: [ Characteristic.Reason ],
@@ -201,7 +201,7 @@ If you have a kit, you can’t take this augmentation.`
 			description: 'You advance an enemy’s age for a moment.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Chronopathy, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'One creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -235,7 +235,7 @@ If you have a kit, you can’t take this augmentation.`
 			description: 'A row of the terrain freezes over ahead of you, turning hard and slick.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Cryokinesis, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -284,7 +284,7 @@ If you have a kit, you can’t take this augmentation.`
 			description: 'You picture an object in your mind and give it form in the world, directly above your opponent’s head.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Resopathy, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'One creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -301,7 +301,7 @@ If you have a kit, you can’t take this augmentation.`
 			description: 'Your eyes emit rays of powerful enervating force.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Metamorphosis, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'One creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -335,7 +335,7 @@ If you have a kit, you can’t take this augmentation.`
 			description: 'You project psionic energy out to a creature and take on a new visage in their mind.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Telepathy ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'One ally or enemy',
 			cost: 3,
 			preEffect: 'Any ally targeted by this ability gains temporary Stamina equal to twice your Presence score, and can end one effect on them that is ended by a saving throw or that ends at the end of their turn. If you target an enemy, you make a power roll.',
@@ -352,7 +352,7 @@ If you have a kit, you can’t take this augmentation.`
 			description: 'Be careful not to choke on your aspirations.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Telekinesis ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -380,7 +380,7 @@ If you have a kit, you can’t take this augmentation.`
 			description: 'Smoke flows from your enemy like tears as their skin begins to blacken and flake.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Pyrokinesis, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 3,
 			preEffect: 'The target takes damage before this ability imposes any weakness effect. The damage type and the weakness for this ability must be chosen from one of the following: acid, corruption, or fire.',
@@ -397,7 +397,7 @@ If you have a kit, you can’t take this augmentation.`
 			description: 'The target is thrown several seconds back through time, and gets to do it all again.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Chronopathy, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'Self or one ally',
 			cost: 5,
 			effect: 'The target immediately uses an ability they’ve previously used this round without spending any heroic resources.',
@@ -409,7 +409,7 @@ If you have a kit, you can’t take this augmentation.`
 			description: 'Your psionic energy surrounds the target and pushes everything else away from them.',
 			type: AbilityLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Telekinesis ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'Self or one ally',
 			cost: 5,
 			effect: 'The target ignores difficult terrain and takes no damage from forced movement until the start of your next turn. Whenever the target moves into a square while under this effect, they can push one adjacent creature up to 2 squares. If pushing an ally, the target can ignore that ally’s stability.',
@@ -421,7 +421,7 @@ If you have a kit, you can’t take this augmentation.`
 			description: 'The target’s skin turns to hard, dark metal, impenetrable and dense.',
 			type: AbilityLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Metamorphosis, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'Self or one ally',
 			cost: 5,
 			effect: 'The target’s stability increases by 5 and they gain 10 temporary stamina and two surges.',
@@ -433,7 +433,7 @@ If you have a kit, you can’t take this augmentation.`
 			description: 'You clear the mind of nothing but the goal.',
 			type: AbilityLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Telepathy ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'Self or one ally',
 			cost: 5,
 			effect: 'Until the start of your next turn, the target gains a +3 bonus to speed, and they have a double edge on the next power roll they make. If the target gets a tier 3 result on that roll, you gain 1 clarity.',
@@ -445,7 +445,7 @@ If you have a kit, you can’t take this augmentation.`
 			description: 'You hurl the target through the annals of time, forcing them to witness every moment of their existence all at once.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Chronopathy, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: 'One creature or object',
 			cost: 7,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -495,7 +495,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 			description: 'You blast their soul out of their body, leaving it to helplessly float back to a weakened husk.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Animapathy, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 7,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -524,7 +524,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								description: 'To your ally, it seems as though the world has slowed down.',
 								type: AbilityLogic.type.createManeuver(),
 								keywords: [ AbilityKeyword.Psionic ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: 'Self or one creature',
 								effect: 'The target immediately shifts up to a number of squares equal to your Reason score.',
 								spend: [
@@ -542,7 +542,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								description: 'You step back a split second to see if things play out a little differently.',
 								type: AbilityLogic.type.createTrigger('The target makes an ability power roll.'),
 								keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: 'Self or one creature',
 								effect: 'You can use this ability after seeing the power roll for the triggering roll. You force the target to reroll the power roll and use the new result.'
 							})
@@ -568,7 +568,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 											description: 'Time slows down around you. Your heartbeat is the only gauge of the extra moments you’ve gained.',
 											type: AbilityLogic.type.createManeuver(),
 											keywords: [ AbilityKeyword.Chronopathy, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
-											distance: [ AbilityLogic.distance.createRanged(10) ],
+											distance: [ AbilityLogic.distance.createRanged() ],
 											target: 'Special',
 											cost: 5,
 											powerRoll: AbilityLogic.createPowerRoll({
@@ -591,7 +591,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 											description: 'Perhaps they wonder why everyone else is moving so quickly?',
 											type: AbilityLogic.type.createManeuver(),
 											keywords: [ AbilityKeyword.Chronopathy, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
-											distance: [ AbilityLogic.distance.createRanged(10) ],
+											distance: [ AbilityLogic.distance.createRanged() ],
 											target: 'Three creatures or objects',
 											cost: 5,
 											powerRoll: AbilityLogic.createPowerRoll({
@@ -632,7 +632,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								description: 'Wisps of psychic energy ripple visibly from your brain as you force the target to move using only your mind.',
 								type: AbilityLogic.type.createManeuver(),
 								keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: 'Self, or a size 1 creature or object',
 								effect: 'You slide the target up to a number of squares equal to your Reason score.',
 								spend: [
@@ -653,7 +653,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								description: 'They aren’t going anywhere, but you might!',
 								type: AbilityLogic.type.createTrigger('The target takes damage or is force moved.'),
 								keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: 'Self or one ally',
 								effect: 'The triggering damage is halved or distance of the triggering forced movement is reduced by a number of squares equal to your Reason score. If the target was damaged and force moved, you choose the effect. If the triggering forced movement is reduced to 0 squares, the target pushes the source of the forced movement a number of squares equal to your Reason score.'
 							})
@@ -701,7 +701,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 											description: 'You raise the target into the air, then smother them against the ground.',
 											type: AbilityLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Telekinesis ],
-											distance: [ AbilityLogic.distance.createRanged(10) ],
+											distance: [ AbilityLogic.distance.createRanged() ],
 											target: 'One creature or object',
 											cost: 5,
 											powerRoll: AbilityLogic.createPowerRoll({
@@ -742,7 +742,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								description: 'Creating a brief psychic link between a foe and their target gives that foe a taste of their own medicine.',
 								type: AbilityLogic.type.createTrigger('The target deals damage to an ally.'),
 								keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: '1 creature',
 								effect: 'The target takes psychic damage equal to half the triggering damage.'
 							})
@@ -754,7 +754,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								description: 'An ally gains the benefit of your intellect.',
 								type: AbilityLogic.type.createTrigger('One creature or object'),
 								keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.distance.createRanged(10) ],
+								distance: [ AbilityLogic.distance.createRanged() ],
 								target: '1 creature or object',
 								effect: 'The next ability power roll an ally makes against the target before the start of your next turn gains an edge.',
 								spend: [
@@ -786,7 +786,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 											description: 'You overload their senses, turning all their subconscious thoughts into conscious ones.',
 											type: AbilityLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Telepathy ],
-											distance: [ AbilityLogic.distance.createRanged(10) ],
+											distance: [ AbilityLogic.distance.createRanged() ],
 											target: '1 creature',
 											cost: 5,
 											powerRoll: AbilityLogic.createPowerRoll({
@@ -808,7 +808,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 											description: 'You gain control over an enemy’s nervous system. How pleasant for them.',
 											type: AbilityLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Telepathy ],
-											distance: [ AbilityLogic.distance.createRanged(10) ],
+											distance: [ AbilityLogic.distance.createRanged() ],
 											target: '1 enemy',
 											cost: 5,
 											powerRoll: AbilityLogic.createPowerRoll({

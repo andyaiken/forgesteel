@@ -59,7 +59,7 @@ export const timeRaider: Ancestry = {
 							description: 'You slam an invisible force down upon the target.',
 							type: AbilityLogic.type.createAction(),
 							keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-							distance: [ AbilityLogic.distance.createRanged(10) ],
+							distance: [ AbilityLogic.distance.createRanged() ],
 							target: '1 creature or object',
 							powerRoll: AbilityLogic.createPowerRoll({
 								characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
@@ -79,7 +79,7 @@ export const timeRaider: Ancestry = {
 							description: 'You shoot forth a beam of psychic purple force that grips your target.',
 							type: AbilityLogic.type.createAction(),
 							keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-							distance: [ AbilityLogic.distance.createRanged(10) ],
+							distance: [ AbilityLogic.distance.createRanged() ],
 							target: '1 creature or object',
 							powerRoll: AbilityLogic.createPowerRoll({
 								characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
@@ -101,7 +101,7 @@ export const timeRaider: Ancestry = {
 							keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Melee ],
 							distance: [
 								AbilityLogic.distance.createSelf(),
-								AbilityLogic.distance.createMelee(1)
+								AbilityLogic.distance.createMelee()
 							],
 							target: 'Self or 1 ally',
 							effect: ''

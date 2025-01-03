@@ -93,7 +93,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			description: 'The heavy impact of your weapon attacks drives your foes ever backward.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
@@ -108,7 +108,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			description: 'Keeping in constant motion helps you slip out of reach after a brutal assault.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
@@ -124,7 +124,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			description: 'You plunge your weapon into your enemy like a boar upon a spit.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature of your size or smaller',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
@@ -139,7 +139,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			description: 'Your reckless assault leaves you tactically vulnerable.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
@@ -171,7 +171,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			description: 'Your enemies will get out of your way—whether they want to or not.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -206,7 +206,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			description: 'Hard for them to fight when they’re busy holding in their giblets.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -223,7 +223,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			description: 'A mighty strike leaves your foe reeling.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or obeject',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -267,7 +267,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			description: 'You spend your life force to ensure their death.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -322,7 +322,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			description: 'Slash. Walk away.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 7,
 			effect: 'If the target is not a leader or solo creature, they die at the end of their next turn. If the target is a leader or solo creature, you gain three surges and can make a melee free strike against them.'
@@ -361,7 +361,7 @@ As your rage grows, your primordial strength intensifies. Benefits are cumulativ
 								description: 'You redirect the energy of motion.',
 								type: AbilityLogic.type.createTrigger('The target would be force moved.'),
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee ],
-								distance: [ AbilityLogic.distance.createMelee(1) ],
+								distance: [ AbilityLogic.distance.createMelee() ],
 								target: 'Self or 1 creature',
 								effect: 'You can select a new target of the same size or smaller within distance to be force moved instead, and you can turn that forced movement into a push instead. You become the source of the forced movement and decide where the new target’s destination. Additionally, the forced movement distance gains a bonus equal to your Might score.',
 								spend: [
@@ -393,7 +393,7 @@ As your rage grows, your primordial strength intensifies. Benefits are cumulativ
 											description: 'You ready?',
 											type: AbilityLogic.type.createManeuver(),
 											keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-											distance: [ AbilityLogic.distance.createMelee(1) ],
+											distance: [ AbilityLogic.distance.createMelee() ],
 											target: 'One willing ally',
 											cost: 5,
 											effect: 'You vertically push the target up to 4 squares. This forced movement ignores the target’s stability, and the target takes no damage from the move. At the end of this movement, the target can make a free strike that deals additional damage equal to your Might score.'
@@ -529,7 +529,7 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 											description: 'Death! Deeaaath!!',
 											type: AbilityLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-											distance: [ AbilityLogic.distance.createMelee(1) ],
+											distance: [ AbilityLogic.distance.createMelee() ],
 											target: '1 creature',
 											cost: 5,
 											powerRoll: AbilityLogic.createPowerRoll({
@@ -619,7 +619,7 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 											description: 'I will hunt you down.',
 											type: AbilityLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-											distance: [ AbilityLogic.distance.createMelee(1) ],
+											distance: [ AbilityLogic.distance.createMelee() ],
 											target: '1 creature',
 											cost: 5,
 											powerRoll: AbilityLogic.createPowerRoll({

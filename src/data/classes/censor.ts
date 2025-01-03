@@ -55,7 +55,7 @@ Additionally, the first time each round that a creature judged by you (see Judgm
 						description: 'You utter a pray that outlines your foe in holy energy.',
 						type: AbilityLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.distance.createRanged(10) ],
+						distance: [ AbilityLogic.distance.createRanged() ],
 						target: '1 enemy',
 						effect: `
 The target is judged by you until the end of the encounter, you die, you use this ability again, or you willingly end this effect (no action required). If another censor judges the target, then your judgment on the target ends.
@@ -77,7 +77,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 						description: 'The first principle of the oath: defend the righteous.',
 						type: AbilityLogic.type.createTrigger('The target starts their turn or takes damage.'),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.distance.createRanged(10) ],
+						distance: [ AbilityLogic.distance.createRanged() ],
 						target: 'Self or one ally',
 						effect: 'You spend a Recovery and the target regains Stamina equal to your Recovery value.',
 						spend: [
@@ -152,7 +152,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			description: 'You show your foe a glimpse of their fate after death.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
@@ -168,7 +168,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			description: '“Your race is run!”',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
@@ -183,7 +183,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			description: '“See how they abandon you!”',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
@@ -199,7 +199,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			description: '“Allow me to intercede.”',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -216,7 +216,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			description: 'As you force your enemy back with your weapon, you use your faith to stay close.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -233,7 +233,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			description: 'You channel holy energy to smite a foe and heal an ally.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -250,7 +250,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			description: 'You conjure memories of their sins.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged(10) ],
+			distance: [ AbilityLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -266,7 +266,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			description: '“I got you, you son of a bitch.”',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -284,7 +284,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
+				AbilityLogic.distance.createMelee(),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
@@ -303,7 +303,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			description: 'Judged and sentenced.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -321,7 +321,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(1),
+				AbilityLogic.distance.createMelee(),
 				AbilityLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
@@ -423,7 +423,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 											description: 'I am but a vessel. Your own deeds weigh upon you.',
 											type: AbilityLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-											distance: [ AbilityLogic.distance.createRanged(10) ],
+											distance: [ AbilityLogic.distance.createRanged() ],
 											target: '1 creature',
 											cost: 5,
 											powerRoll: AbilityLogic.createPowerRoll({
@@ -507,7 +507,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 											description: '“Hah! I see your plan. It will not work!”',
 											type: AbilityLogic.type.createTrigger('An enemy within 10 squares starts their turn.'),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-											distance: [ AbilityLogic.distance.createRanged(10) ],
+											distance: [ AbilityLogic.distance.createRanged() ],
 											target: 'Self or one ally',
 											cost: 5,
 											effect: 'You can spend a Recovery to allow the target to regain Stamina equal to your Recovery value. The target can then take their turn immediately before the triggering enemy.'
@@ -523,7 +523,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 											description: 'A word in prayer, and the gods show the way.',
 											type: AbilityLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-											distance: [ AbilityLogic.distance.createRanged(10) ],
+											distance: [ AbilityLogic.distance.createRanged() ],
 											target: 'Self or one ally',
 											cost: 5,
 											effect: 'When you use this ability, the target can use a free triggered action to make a signature strike or a heroic ability that is a strike, and has a double edge on the power roll.'
@@ -601,7 +601,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 											description: 'I am the law!',
 											type: AbilityLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-											distance: [ AbilityLogic.distance.createMelee(1) ],
+											distance: [ AbilityLogic.distance.createMelee() ],
 											target: '1 creature',
 											cost: 5,
 											powerRoll: AbilityLogic.createPowerRoll({

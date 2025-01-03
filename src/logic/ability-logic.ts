@@ -87,7 +87,7 @@ export class AbilityLogic {
 				special: ''
 			};
 		},
-		createMelee: (value: number): AbilityDistance => {
+		createMelee: (value = 1): AbilityDistance => {
 			return {
 				type: AbilityDistanceType.Melee,
 				value: value,
@@ -96,7 +96,7 @@ export class AbilityLogic {
 				special: ''
 			};
 		},
-		createRanged: (value: number): AbilityDistance => {
+		createRanged: (value = 10): AbilityDistance => {
 			return {
 				type: AbilityDistanceType.Ranged,
 				value: value,

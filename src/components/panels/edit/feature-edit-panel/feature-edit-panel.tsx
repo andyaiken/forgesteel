@@ -63,7 +63,7 @@ export const FeatureEditPanel = (props: Props) => {
 						description: '',
 						type: AbilityLogic.type.createAction(),
 						keywords: [],
-						distance: [ AbilityLogic.distance.createMelee(1) ],
+						distance: [ AbilityLogic.distance.createMelee() ],
 						target: ''
 					})
 				};

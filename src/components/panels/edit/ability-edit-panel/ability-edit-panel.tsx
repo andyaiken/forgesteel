@@ -127,7 +127,7 @@ export const AbilityEditPanel = (props: Props) => {
 
 	const addDistance = () => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.distance.push(AbilityLogic.distance.createMelee(1));
+		copy.distance.push(AbilityLogic.distance.createMelee());
 		setAbility(copy);
 		props.onChange(copy);
 	};

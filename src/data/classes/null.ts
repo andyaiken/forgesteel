@@ -192,7 +192,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			description: 'You strike so quickly that your hands become a blur.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: 'Two creatures or objects',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
@@ -208,7 +208,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			description: 'You flit about the battlefield with an opportunistic strike.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
@@ -224,7 +224,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			description: 'You contort your enemy’s body into a stance they struggle to escape from.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
@@ -239,7 +239,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			description: 'Your opponent staggers. They cannot ignore you.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
@@ -269,7 +269,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			description: 'You step momentarily out of phase as you pull an enemy through you.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
@@ -285,7 +285,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			description: 'You strike at key nerve clusters to leave your foe staggered.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			powerRoll: AbilityLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
@@ -300,7 +300,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			description: 'You foresee the best moment to strike, then exploit it.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -328,7 +328,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			description: 'You strike, and for the next few moments, your enemy can’t escape you.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -345,7 +345,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			description: 'You focus your psionic technique into a debilitating concussive punch.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -361,7 +361,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			description: 'Your blow reorders a foe’s body, causing pain if they attempt to channel sorcery.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -378,7 +378,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			description: 'A single touch from you, and your enemy flies backward.',
 			type: AbilityLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({
@@ -395,7 +395,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			description: 'For a moment, your foe slips out of phase with this manifold.',
 			type: AbilityLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee(1) ],
+			distance: [ AbilityLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 5,
 			powerRoll: AbilityLogic.createPowerRoll({

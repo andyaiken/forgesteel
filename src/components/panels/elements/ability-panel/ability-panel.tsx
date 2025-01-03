@@ -13,6 +13,7 @@ import { Markdown } from '../../../controls/markdown/markdown';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Tag } from 'antd';
+import { TestPanel } from '../../power-roll/test-panel';
 import { useMemo } from 'react';
 
 import './ability-panel.scss';
@@ -97,6 +98,7 @@ export const AbilityPanel = (props: Props) => {
 									: null
 							}
 							{props.ability.effect ? <Markdown text={props.ability.effect} /> : null}
+							{props.ability.test ? <TestPanel test={props.ability.test} /> : null}
 							{
 								props.ability.strained ?
 									<Field

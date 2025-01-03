@@ -49,7 +49,7 @@
   * [ ] Shambling Mound
   * [ ] Time Raiders
   * [ ] Voiceless Talkers
-  * [ ] Lord Syuul
+  * [x] Lord Syuul
   * [ ] War Dogs
   * [ ] War Dogs - 2nd Echelon
   * [ ] Werewolf

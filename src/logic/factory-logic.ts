@@ -660,7 +660,7 @@ export class FactoryLogic {
 				type: FeatureType.Malice,
 				data: {
 					cost: data.cost,
-					test: data.test
+					sections: data.sections
 				}
 			};
 		},

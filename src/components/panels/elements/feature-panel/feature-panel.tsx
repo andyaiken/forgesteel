@@ -12,6 +12,7 @@ import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroicResourceBadge } from '../../../controls/heroic-resource-badge/heroic-resource-badge';
 import { KitPanel } from '../kit-panel/kit-panel';
+import { Markdown } from '../../../controls/markdown/markdown';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../perk-panel/perk-panel';
@@ -19,7 +20,6 @@ import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { TestPanel } from '../../power-roll/test-panel';
 import { TitlePanel } from '../title-panel/title-panel';
-import { Utils } from '../../../../utils/utils';
 
 import './feature-panel.scss';
 
@@ -848,7 +848,11 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getExtraMalice = (data: FeatureMaliceData) => {
-		return data.test ? (<TestPanel test={data.test} />) : null;
+		return (data.sections ?? [])
+			.map(section => typeof section === 'string'
+				? (<Markdown value={section} />)
+				: (<TestPanel test={section} />)
+			);
 	};
 
 	const getExtraPerk = (data: FeaturePerkData) => {
@@ -1014,7 +1018,7 @@ export const FeaturePanel = (props: Props) => {
 				<HeaderText ribbon={props.cost ? <HeroicResourceBadge value={props.cost} /> : null} tags={tags}>
 					{props.feature.name || 'Unnamed Feature'}
 				</HeaderText>
-				{props.feature.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.feature.description) }} /> : null}
+				<Markdown value={props.feature.description} />
 				{
 					props.mode === PanelMode.Full
 						? (props.setData ? getEditable() : getExtra())

@@ -436,7 +436,7 @@ If the Director does not have an answer to the question you ask, you can instead
 	static arcaneTrick: Perk = {
 		id: 'perk-arcane-trick',
 		name: 'Arcane Trick',
-		description: '',
+		description: 'You cast an entertaining spell that creates a minor but impressive magical effect.',
 		type: FeatureType.Ability,
 		data: {
 			ability: AbilityLogic.createAbility({

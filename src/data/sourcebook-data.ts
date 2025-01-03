@@ -7,6 +7,7 @@ import { KitData } from './kit-data';
 import { PerkData } from './perk-data';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
+import { censor } from './classes/censor';
 import { conduit } from './classes/conduit';
 import { devil } from './ancestries/devil';
 import { dragonKnight } from './ancestries/dragon-knight';
@@ -66,6 +67,7 @@ export class SourcebookData {
 			CareerData.watchOfficer
 		],
 		classes: [
+			censor,
 			conduit,
 			elementalist,
 			fury,

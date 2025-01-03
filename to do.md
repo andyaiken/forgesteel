@@ -4,7 +4,6 @@
 
 **Add and update element data**
 * Classes
-  * Censor
   * Null
   * Talent
 * Add new complications

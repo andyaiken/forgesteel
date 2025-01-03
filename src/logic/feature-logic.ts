@@ -253,7 +253,7 @@ export class FeatureLogic {
 				description: data.description || (count > 1 ? `Choose ${count} perks.` : 'Choose a perk.'),
 				type: FeatureType.Perk,
 				data: {
-					lists: data.lists || [],
+					lists: data.lists || [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ],
 					count: count,
 					selected: []
 				} as FeaturePerkData

@@ -84,6 +84,14 @@ export const AbilityPanel = (props: Props) => {
 							}
 							{props.ability.effect ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.effect) }} /> : null}
 							{
+								props.ability.strained ?
+									<Field
+										label='Strained'
+										value={<span dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.strained) }} />}
+									/>
+									: null
+							}
+							{
 								props.ability.alternateEffects.map((effect, n) => (
 									<Field
 										key={n}

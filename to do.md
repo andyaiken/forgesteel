@@ -3,8 +3,6 @@
 ## Updating Forge Steel to Backer Packet #2
 
 **Add and update element data**
-* Classes
-  * Talent
 * Add new complications
 * Add titles
 * Add items

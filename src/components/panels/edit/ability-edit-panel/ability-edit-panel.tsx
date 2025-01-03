@@ -359,6 +359,13 @@ export const AbilityEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const setStrained = (value: string) => {
+		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		copy.strained = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
 	try {
 		return (
 			<div className='ability-edit-panel'>
@@ -431,7 +438,7 @@ export const AbilityEditPanel = (props: Props) => {
 										placeholder='Keywords'
 										mode='multiple'
 										allowClear={true}
-										options={[ AbilityKeyword.Animal, AbilityKeyword.Area, AbilityKeyword.Charge, AbilityKeyword.Earth, AbilityKeyword.Fire, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Persistent, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Resistance, AbilityKeyword.Rot, AbilityKeyword.Routine, AbilityKeyword.Strike, AbilityKeyword.Void, AbilityKeyword.Weapon ].map(option => ({ value: option }))}
+										options={[ AbilityKeyword.Animal, AbilityKeyword.Animapathy, AbilityKeyword.Area, AbilityKeyword.Charge, AbilityKeyword.Chronopathy, AbilityKeyword.Cryokinesis, AbilityKeyword.Earth, AbilityKeyword.Fire, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Metamorphosis, AbilityKeyword.Persistent, AbilityKeyword.Psionic, AbilityKeyword.Pyrokinesis, AbilityKeyword.Ranged, AbilityKeyword.Resistance, AbilityKeyword.Resopathy, AbilityKeyword.Rot, AbilityKeyword.Routine, AbilityKeyword.Strike, AbilityKeyword.Telekinesis, AbilityKeyword.Telepathy, AbilityKeyword.Void, AbilityKeyword.Weapon ].map(option => ({ value: option }))}
 										optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 										value={ability.keywords}
 										onChange={setKeywords}
@@ -734,6 +741,8 @@ export const AbilityEditPanel = (props: Props) => {
 												: null
 										}
 										<Button block={true} onClick={addPersistence}>Add a persistence effect</Button>
+										<HeaderText>Strained</HeaderText>
+										<MultiLine label='Strained' value={ability.strained} onChange={setStrained} />
 									</Space>
 								</div>
 							)

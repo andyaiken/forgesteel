@@ -25,6 +25,7 @@ import { radenwight } from './monsters/radenwight';
 import { revenant } from './ancestries/revenant';
 import { shadow } from './classes/shadow';
 import { tactician } from './classes/tactician';
+import { talent } from './classes/talent';
 import { timeRaider } from './ancestries/time-raider';
 import { troubadour } from './classes/troubadour';
 import { wodeElf } from './ancestries/elf-wode';
@@ -75,6 +76,7 @@ export class SourcebookData {
 			nullClass,
 			shadow,
 			tactician,
+			talent,
 			troubadour
 		],
 		complications: [

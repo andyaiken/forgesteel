@@ -38,6 +38,7 @@ export interface Ability extends Element {
 	preEffect: string;
 	powerRoll: PowerRoll | null,
 	effect: string;
+	strained: string;
 	alternateEffects: string[];
 	spend: { value: number, effect: string }[];
 	persistence: { value: number, effect: string }[];

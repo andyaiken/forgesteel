@@ -24,7 +24,7 @@ export const human: Ancestry = {
 			name: 'Human Traits',
 			options: [
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'human-feature-2-1',
 						name: 'Can\'t Take Hold',
 						description: 'Your connection to the natural world allows you resist supernatural effects. You ignore difficult terrain (but not other effects) created by magic and psionic abilities. Additionally, when you are force moved by a magic or psionic ability, you reduce the forced movement by 1.'
@@ -32,7 +32,7 @@ export const human: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'human-feature-2-2',
 						name: 'Perseverence',
 						description: 'Giving up is for other people. You have an edge on tests that use the Endurance skill and when you are slowed, your speed is reduced to 3 instead of 2.'
@@ -40,7 +40,7 @@ export const human: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'human-feature-2-3',
 						name: 'Resist the Unnatural',
 						description: 'Your connection to the natural world protects you from unnatural forces. When you take damage that isn’t untyped, you can use your triggered action to half the damage.'
@@ -48,7 +48,7 @@ export const human: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'human-feature-2-4',
 						name: 'Determination',
 						description: 'Your anatomical tolerance for pain allows you to push through difficult situations. If you are frightened, slowed, or weakened, you can use a maneuver to immediately end the condition.'

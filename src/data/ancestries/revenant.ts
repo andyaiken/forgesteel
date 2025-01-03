@@ -84,7 +84,7 @@ export const revenant: Ancestry = {
 				}
 			]
 		}),
-		FeatureLogic.feature.createFeature({
+		FeatureLogic.feature.create({
 			id: 'revenant-feature-3',
 			name: 'Tough But Withered',
 			description: 'When your Stamina equals the negative of your winded value, you become inert instead of dying. You can continue to observe your surroundings, but you can’t speak, take actions, maneuvers, or triggered actions, or move and you fall prone. If you take any fire damage while in this state, your body is destroyed and you die. Otherwise, after 12 hours, you regain Stamina equal to your recovery value.'
@@ -95,7 +95,7 @@ export const revenant: Ancestry = {
 			options: [
 				// TODO: Previous Life (1pt)
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'revenant-feature-4-2',
 						name: 'Undead Influence',
 						description: 'Your supernatural gifts allow you to influence other undead. You gain an edge on Reason, Intuition, and Presence tests made to interact with undead creatures.'
@@ -103,7 +103,7 @@ export const revenant: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'revenant-feature-4-3',
 						name: 'Bloodless',
 						description: 'For you, an open wound is indistinguishable from a scratch. You can’t become bleeding.'
@@ -116,7 +116,7 @@ export const revenant: Ancestry = {
 						id: 'revenant-feature-4-5',
 						name: 'Vengeance Mark',
 						features: [
-							FeatureLogic.feature.createFeature({
+							FeatureLogic.feature.create({
 								id: 'revenant-feature-4-5-1',
 								name: 'Vengeance Mark',
 								description: `

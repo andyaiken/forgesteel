@@ -7,7 +7,7 @@ export const orc: Ancestry = {
 	name: 'Orc',
 	description: 'An anger that cannot be hidden. A fury that drives them in battle. Orcs are famed throughout the world as consummate warriors—a reputation that the peace-loving orcs find distasteful.',
 	features: [
-		FeatureLogic.feature.createFeature({
+		FeatureLogic.feature.create({
 			id: 'orc-feature-1',
 			name: 'Relentless',
 			description: 'When a creature deals damage to you that leaves you dying, you can make a free strike against any creature. If the creature is reduced to 0 Stamina by your strike, you can spend a Recovery.'
@@ -17,7 +17,7 @@ export const orc: Ancestry = {
 			name: 'Orc Traits',
 			options: [
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'orc-feature-2-1',
 						name: 'Bloodfire Rush',
 						description: 'The magic coursing through your veins makes you run faster in the heat of battle. When you take damage, your speed increases by 2 until the end of the round. You can benefit from this feature only once per round.'
@@ -35,7 +35,7 @@ export const orc: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'orc-feature-2-3',
 						name: 'Passionate Artisan',
 						description: 'When you are stirred by passion for creation, your bloodfire allows you to work longer and harder. Choose two skills from the crafting skill group. Whenever you make a project roll using these skills, you gain a +2 bonus to the roll.'
@@ -43,7 +43,7 @@ export const orc: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'orc-feature-2-4',
 						name: 'Glowing Recovery',
 						description: 'Your bloodfire allows you to regain your strength quicker than others. When you can take the Catch Breath maneuver, you can spend as many Recoveries as you like instead of just one.'
@@ -51,7 +51,7 @@ export const orc: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'orc-feature-2-5',
 						name: 'Nonstop',
 						description: 'Your bloodfire supplies you with a constant rush of adrenaline. You can’t be slowed.'

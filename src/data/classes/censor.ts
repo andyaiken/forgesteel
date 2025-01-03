@@ -41,7 +41,7 @@ You’re at your best against the strongest foes. Your judgments terrify heretic
 				FeatureLogic.feature.createDomainChoiceFeature({
 					id: 'censor-1-2'
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'censor-1-3',
 					name: 'Wrath',
 					description: `
@@ -118,7 +118,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 		{
 			level: 3,
 			features: [
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'censor-3-1',
 					name: 'Look on My Work and Despair',
 					description: 'Your judgment has grown in divine power, manifesting your deity’s ire against blasphemers, causing them to fear your actions, especially when their allies are smited. Whenever you judge a creature you can spend 1 wrath to channel your divine power to make them afraid. If the target has P < average, they are frightened of you (save ends). Whenever a creature judged by you to is reduced to 0 Stamina and you judge a new target as a free triggered action, if that new target has P < strong, they are frightened of you (save ends). If the target is already frightened of you, they take damage equal to twice your Presence score instead.'
@@ -392,7 +392,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 							id: 'censor-sub-1-1-1',
 							skill: 'Read Person'
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'censor-sub-1-1-2',
 							name: 'Judgment Order Benefit',
 							description: 'You can teleport up to a number of squares equal to twice your Presence score. This movement must take you closer to the judged creature. You do not need line of effect to your destination.'
@@ -402,12 +402,12 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'censor-sub-1-2-1',
 							name: 'Saint\'s Vigilance',
 							description: 'You have honed your ability to detect sin and can use it to find those who hide from justice. Any creature judged by you cannot take the Hide maneuver. You have an edge when searching for hidden creatures and, if you find a hidden creature, you can use Judgment on them as a free triggered action.'
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'censor-sub-1-2-2',
 							name: 'A Sense for Truth',
 							description: 'You are trained in secret techniques from your order that allow you to discern the truth at a supernatural level. This puts you in high demand for your church and any governments it is allied with. If a creature is of a lower level than you, you automatically know when they are lying, though you don’t necessarily know the actual truth behind their lie. Additionally, you have an edge on tests to detect lies or hidden motives, such as when using the Read Person skill.'
@@ -476,7 +476,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 							id: 'censor-sub-2-1-1',
 							skill: 'Magic'
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'censor-sub-2-1-2',
 							name: 'Judgment Order Benefit',
 							description: 'You deal holy damage equal to twice your Presence score to the target.'
@@ -486,12 +486,12 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'censor-sub-2-2-1',
 							name: 'It Was Foretold',
 							description: 'Your order has trained you to understand fragments of the constant visions given to you by your deity, giving you a momentary advantage in challenging situations. At the start of an encounter, you can take one action before any other creature and before your first turn. Additionally, whenever a montage test is called for, you can make one test before the montage begins.'
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'censor-sub-2-2-2',
 							name: 'Judge of Character',
 							description: 'Your focus on your fragmentary visions to gain divine insight on creatures and the world beyond your normal senses. Whenever you would make an Intuition test, you can make a Presence test instead.'
@@ -554,7 +554,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 							id: 'censor-sub-3-1-1',
 							skill: 'Lead'
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'censor-sub-3-1-2',
 							name: 'Judgment Order Benefit',
 							description: 'You vertically pull the target up to a number of squares equal to twice your Presence score.'
@@ -564,12 +564,12 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'censor-sub-3-2-1',
 							name: 'Lead by Example',
 							description: 'Your devotion to your deity allows you to take command of the battlefield, letting your allies benefit from your wisdom. When you are adjacent to a target, any ally gains the benefits of flanking against that target. Additionally, each of your allies gains an edge on tests made to aid other creatures with their tests.'
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'censor-sub-3-2-2',
 							name: 'Stalwart Example',
 							description: 'You begin to exhibit a small spark of your deity’s power, causing creatures to trust or fear you, depending on what you need. You gain an edge on tests that use skills from the interpersonal skill group.'

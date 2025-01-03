@@ -32,7 +32,7 @@ A talent is limited only by the strength of their mind. Powerful psionic heroes 
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'talent-1-1',
 					name: 'Clarity and Strain',
 					description: `
@@ -62,7 +62,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 					id: 'talent-1-3',
 					language: 'Mindspeech'
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'talent-1-4',
 					name: 'Telepathic Speech',
 					description: 'you can telepathically communicate with any creatures within the distance of your Mind Spike ability if they share a language with you and you know of each other. The receiver of your telepathic communications can choose to respond telepathically.'
@@ -73,7 +73,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 					description: 'Through psionic meditation, you create pathways in your mind that enhance your statistics. Choose one of the following augmentations. You can change your augmentation along with your ward by undergoing a psionic meditation as a respite activity.',
 					options: [
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'talent-1-5a',
 								name: 'Battle Augmentation',
 								description: `
@@ -83,7 +83,7 @@ If you have a kit, you can’t take this augmentation.`
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'talent-1-5b',
 								name: 'Distance Augmentation',
 								description: 'You gain a +2 bonus to the distance of your ranged psionic abilities.'
@@ -91,7 +91,7 @@ If you have a kit, you can’t take this augmentation.`
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'talent-1-5c',
 								name: 'Density Augmentation',
 								description: 'You gain a +6 bonus to Stamina, and this bonus increases by 6 at 4th, 7th, and 10th levels. Additionally, you gain a +1 bonus to stability.'
@@ -99,7 +99,7 @@ If you have a kit, you can’t take this augmentation.`
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'talent-1-5d',
 								name: 'Force Augmentation',
 								description: 'Your damage-dealing psionic abilities gain a +1 rolled damage bonus.'
@@ -107,7 +107,7 @@ If you have a kit, you can’t take this augmentation.`
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'talent-1-5e',
 								name: 'Speed Augmentation',
 								description: 'You gain a +1 bonus to speed and to the distance you shift when you take the Disengage move action.'
@@ -122,7 +122,7 @@ If you have a kit, you can’t take this augmentation.`
 					description: 'Through psionic meditation, you create a ward that protects you. Choose one of the following wards. You can change your ward along with your psionic augmentation by undergoing a psionic meditation as a respite activity.',
 					options: [
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'talent-1-6a',
 								name: 'Entropy Ward',
 								description: 'You ward slows time for your enemies. Whenever a creature deals damage to you, their speed is reduced by an amount equal to your Reason score and they can’t use triggered actions, all until the end of their next turn.'
@@ -130,7 +130,7 @@ If you have a kit, you can’t take this augmentation.`
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'talent-1-6b',
 								name: 'Repulsive Ward',
 								description: 'You surround yourself with an invisible ward of telekinetic energy. Whenever an adjacent creature deals damage to you, you can use a free triggered action to push them up to a number of squares equal to your Reason score.'
@@ -138,7 +138,7 @@ If you have a kit, you can’t take this augmentation.`
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'talent-1-6c',
 								name: 'Steel Ward',
 								description: 'Your ward reacts to danger, protecting your body from future harm. Whenever you take damage, the damage resolves and you then gain damage immunity equal to your Reason score until the end of your next turn.'
@@ -146,7 +146,7 @@ If you have a kit, you can’t take this augmentation.`
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'talent-1-6d',
 								name: 'Vanishing Ward',
 								description: 'Your ward allows you to slip away from danger. Whenever you take damage, you become invisible until the end of your next turn.'
@@ -182,7 +182,7 @@ If you have a kit, you can’t take this augmentation.`
 		{
 			level: 3,
 			features: [
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'talent-3-1',
 					name: 'Scan',
 					description: 'You can extend your psionic senses out beyond their normal range. You can search for hidden creatures as a free maneuver once on each of your turns. Additionally, once you establish line of effect to a thinking creature within the distance of your Mind Spike ability, you always have line of effect to that creature until they leave move outside that distance.'
@@ -552,7 +552,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'talent-sub-1-2-1',
 							name: 'Ease the Hours',
 							description: 'You can increase the number of rounds in a montage test by 1 if the test would end before the heroes hit the success limit.'
@@ -663,7 +663,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'talent-sub-2-2-1',
 							name: 'Ease their Fall',
 							description: 'Whenever you land after a fall, or if any falling creature lands within 2 squares of you, you can use a free triggered action to reduce the falling damage by an amount equal to 2 + your Reason score.'
@@ -770,7 +770,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'talent-sub-3-2-1',
 							name: 'Ease the Mind',
 							description: 'You gain an edge on tests to stop combat and start a negotiation. Any NPC who has a hostile or suspicious starting attitude in a negotiation has an additional 1 patience.'

@@ -17,7 +17,7 @@ export const hakaan: Ancestry = {
 			name: 'Hakaan Traits',
 			options: [
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'hakaan-feature-2-1',
 						name: 'All Is A Feather',
 						description: 'You are exceptionally strong and have an edge made on tests that use the Lift skill.'
@@ -25,7 +25,7 @@ export const hakaan: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'hakaan-feature-2-2',
 						name: 'Forceful',
 						description: 'When you force move a creature or object, you can increase the distance moved by 1.'
@@ -33,7 +33,7 @@ export const hakaan: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'hakaan-feature-2-3',
 						name: 'Stand Tough',
 						description: 'Your body is made to withstand the blows of your enemies. Your Might score counts as 1 higher for resisting potencies.'
@@ -41,7 +41,7 @@ export const hakaan: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'hakaan-feature-2-4',
 						name: 'Great Fortitude',
 						description: 'Your hearty constitution prevents you from losing strength. You can’t be weakened.'
@@ -49,7 +49,7 @@ export const hakaan: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'hakaan-feature-2-5',
 						name: 'Doomsight',
 						description: `

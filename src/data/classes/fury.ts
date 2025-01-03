@@ -43,12 +43,12 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 					listOptions: [ SkillList.Exploration, SkillList.Intrigue ],
 					count: 2
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'fury-1-3',
 					name: 'Rage',
 					description: 'At the start of each of your turns during combat, you gain 1d3 rage. Additionally, the first time each round that you take damage, you gain 1 rage. The first time in an encounter that you become winded or dying, you gain 1d3 rage.'
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'fury-1-4',
 					name: 'Mighty Leaps',
 					description: 'You always succeed on Might tests made to jump. You can still roll to see if you get a reward result.'
@@ -344,7 +344,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 						FeatureLogic.feature.createKitChoiceFeature({
 							id: 'fury-sub-1-1-2'
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'fury-sub-1-1-3',
 							name: 'Primordial Strength',
 							description: `
@@ -377,7 +377,7 @@ As your rage grows, your primordial strength intensifies. Benefits are cumulativ
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'fury-sub-1-2-1',
 							name: 'Unstoppable Force',
 							description: 'Whenever you use the Charge action, you can make a signature strike or a heroic ability melee strike instead of a free strike. Additionally, you can jump as part of a charge.'
@@ -432,7 +432,7 @@ Additionally, you make one power roll that targets each enemy you come adjacent 
 				{
 					level: 3,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'fury-sub-1-3-1',
 							name: 'Immovable Object',
 							description: `
@@ -459,7 +459,7 @@ Additionally, you gain a bonus to stability equal to your Might score.`
 						FeatureLogic.feature.createKitChoiceFeature({
 							id: 'fury-sub-2-1-2'
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'fury-sub-2-1-3',
 							name: 'Primordial Cunning',
 							description: `
@@ -491,7 +491,7 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'fury-sub-2-2-1',
 							name: 'Inescapable Wrath',
 							description: 'You have a bonus to speed equal to your Agility score, and you ignore difficult terrain.'
@@ -549,7 +549,7 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 				{
 					level: 3,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'fury-sub-1-3-1',
 							name: 'See Through Your Tricks',
 							description: 'You have a double edge on tests made to search for hidden creatures, discern hidden motives, or detect lies. You also have a double edge on tests made to gamble!'
@@ -576,7 +576,7 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 							name: 'Beast Shape',
 							types: [ KitType.Standard, KitType.Stormwight ]
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'fury-sub-3-1-3',
 							name: 'Relentless Hunter',
 							description: 'You gain an edge on tests that use the Track skill.'
@@ -603,7 +603,7 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'fury-sub-3-2-1',
 							name: 'Tooth and Claw',
 							description: 'When you end your turn, each enemy who is adjacent to you takes damage equal to your Might score.'
@@ -662,7 +662,7 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 				{
 					level: 3,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'fury-sub-1-3-1',
 							name: 'Nature’s Knight',
 							description: 'You can speak with animals and elementals. You automatically sense the presence of any animal or elemental within 10 squares of you, even if they are hidden. If you are in a negotiation with an animal or elemental, you treat your Renown as 1 higher than usual. This stacks with the increase to your Renown in a negotiation with an animal of your type while in animal form.'

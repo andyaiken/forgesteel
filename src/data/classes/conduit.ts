@@ -43,7 +43,7 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 					id: 'conduit-1-6.4',
 					count: 2
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'conduit-1-2',
 					name: 'Piety',
 					description: `
@@ -186,7 +186,7 @@ For each piety spent, you can choose one of the following enhancements:
 					name: 'Prayer',
 					options: [
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'conduit-1-7a',
 								name: 'Prayer of Destruction',
 								description: 'Your god infuses wrath within your being. You gain a +1 rolled damage bonus with magic abilities.'
@@ -194,7 +194,7 @@ For each piety spent, you can choose one of the following enhancements:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'conduit-1-7b',
 								name: 'Prayer of Distance',
 								description: 'Your god blesses you with the ability to stretch your divine magic further. You gain a +2 bonus to the distance of your ranged magic abilities.'
@@ -202,7 +202,7 @@ For each piety spent, you can choose one of the following enhancements:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'conduit-1-7c',
 								name: 'Prayer of Speed',
 								description: 'Your god blesses your flesh and infuses it with divine quickness. You gain a +1 bonus to speed and to the distance you shift when you take the Disengage move action.'
@@ -210,7 +210,7 @@ For each piety spent, you can choose one of the following enhancements:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'conduit-1-7d',
 								name: 'Prayer of Soldier\'s Skill',
 								description: 'Your god gives your mind the training of a soldier. You can wear light armor and wield light weapons effectively, even though you don’t have a kit. While you wear light armor, you gain a +3 bonus to Stamina and that bonus increases by 3 at 4th, 7th, and 10th levels. While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this blessing.'
@@ -218,7 +218,7 @@ For each piety spent, you can choose one of the following enhancements:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'conduit-1-7e',
 								name: 'Prayer of Steel',
 								description: 'Your god fills your body with the light of creation, making you harder to hurt and move. You gain a +6 bonus to Stamina, and this bonus increases by 6 at 4th, 7th, and 10th levels. Additionally, you gain a +1 bonus to stability.'
@@ -232,7 +232,7 @@ For each piety spent, you can choose one of the following enhancements:
 					name: 'Conduit Ward',
 					options: [
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'conduit-1-8a',
 								name: 'Bastion Ward',
 								description: 'You god grants you a holy countenance that protects you at all times. You gain a +1 bonus to saving throws.'
@@ -240,7 +240,7 @@ For each piety spent, you can choose one of the following enhancements:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'conduit-1-8b',
 								name: 'Quickness Ward',
 								description: 'The gods imbue a divine swiftness within you. Whenever an adjacent creature deals damage to you, you can shift up to a number of squares equal to your Intuition score after the damage is dealt.'
@@ -248,7 +248,7 @@ For each piety spent, you can choose one of the following enhancements:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'conduit-1-8c',
 								name: 'Sanctuary Ward',
 								description: 'In response to a foe’s aggression, the gods protect you. After another creature damages you, that creature can’t target you with a strike until you harm them or one of their allies, or until the end of their next turn.'
@@ -256,7 +256,7 @@ For each piety spent, you can choose one of the following enhancements:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'conduit-1-8d',
 								name: 'Spirit Ward',
 								description: 'Invisible spirits surround you if you are harmed. Whenever an adjacent creature deals damage to you, they take corruption damage equal to your Intuition score.'
@@ -283,7 +283,7 @@ For each piety spent, you can choose one of the following enhancements:
 		{
 			level: 2,
 			features: [
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'conduit-2-1',
 					name: 'The Lists of Heaven',
 					description: 'Your patron is aware of your growing influence, making it easier to get their attention and power when you heal your allies. Whenever you allow another creature to spend a Recovery, you can also spend a Recovery.'
@@ -297,7 +297,7 @@ For each piety spent, you can choose one of the following enhancements:
 		{
 			level: 3,
 			features: [
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'conduit-3-1',
 					name: 'Minor Miracle',
 					description: `

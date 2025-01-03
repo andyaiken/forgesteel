@@ -7,7 +7,7 @@ export const dwarf: Ancestry = {
 	name: 'Dwarf',
 	description: 'Possessed of a strength that belies their size, dwarves have flesh infused with stone—a silico-organic hybrid making them physically denser than other humanoids. They enjoy a reputation in Orden as savvy engineers and technologists thanks to the lore they inherited from their elder siblings, the long-extinct steel dwarves.',
 	features: [
-		FeatureLogic.feature.createFeature({
+		FeatureLogic.feature.create({
 			id: 'dwarf-feature-1',
 			name: 'Runic Carving',
 			description: `
@@ -31,7 +31,7 @@ You can carve a rune onto your skin and the magic within your body activates it.
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'dwarf-feature-2-2',
 						name: 'Stand Tough',
 						description: 'Your body is made to withstand the blows of your enemies. Your Might counts as 1 higher for resisting potencies.'
@@ -39,7 +39,7 @@ You can carve a rune onto your skin and the magic within your body activates it.
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'dwarf-feature-2-3',
 						name: 'Stone Singer',
 						description: 'You have a magic connection to the earth. You can spend 1 uninterrupted hour singing and reshape any unworked, mundane stone within 3 squares of you. You can’t destroy this stone, but you can move each square of it anywhere within 3 squares of you, piling it off to one side to dig a hole or building it all up to create a wall.'
@@ -47,7 +47,7 @@ You can carve a rune onto your skin and the magic within your body activates it.
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'dwarf-feature-2-4',
 						name: 'Great Fortitude',
 						description: 'Your hearty constitution prevents you from losing strength. You can’t be weakened.'

@@ -48,7 +48,7 @@ As a shadow, you have abilities that deal a lot of damage, let you move swiftly 
 					listOptions: [ SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue ],
 					count: 5
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'shadow-1-4',
 					name: 'Insight',
 					description: `
@@ -522,7 +522,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 								]
 							})
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'shadow-sub-2-1-3',
 							name: 'Smoke Bomb',
 							description: 'You always carry a supply of smoke bombs to make it easy for you to distract and get away from foes. You can use the Hide maneuver even if you are observed and don’t initially have cover or concealment. When you do so, you can shift a number of squares equal to your Agility score. If you end this movement with cover or concealment, you are hidden.'

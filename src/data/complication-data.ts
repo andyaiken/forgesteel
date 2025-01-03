@@ -10,7 +10,7 @@ export class ComplicationData {
 		name: 'Cult Victim',
 		description: 'Cultists captured you while raiding your home, then began an unholy ritual to turn your body into an undead spirit. The ritual failed, but your body became infused with corrupted magic, turning you partially incorporeal.',
 		features: [
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'comp-cult-victim-b',
 				name: 'Cult Victim Benefit',
 				description: 'Once per turn, you can move through a solid mundane object no more than 1 square thick. If you end your turn inside the object, you take 5 damage and are shunted out into the space where you entered the object.'
@@ -41,7 +41,7 @@ export class ComplicationData {
 				field: FeatureField.Stamina,
 				valuePerEchelon: 3
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'comp-elemental-inside-d',
 				name: 'Elemental Inside Drawback',
 				description: 'When you are dying, your possessing elemental takes control of your body. The elemental yearns for destruction, causing you to attack the closest creature they notice without regard for your desires or your body’s safety. The Director or you can control the hero, but whoever does must do their best to kill any creature they notice until you are no longer dying.'
@@ -120,7 +120,7 @@ export class ComplicationData {
 				field: FeatureField.Recoveries,
 				value: 1
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'comp-punishment-curse-d',
 				name: 'Punishment Curse Drawback',
 				description: 'When you are out of Recoveries, you are dying, no matter what your current Stamina is.'
@@ -139,7 +139,7 @@ export class ComplicationData {
 				listOptions: [ SkillList.Exploration ],
 				count: 2
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'comp-shipwrecked-d',
 				name: 'Shipwrecked Drawback',
 				description: 'You have forgotten one language you know.'
@@ -152,7 +152,7 @@ export class ComplicationData {
 		name: 'Waking Dreams',
 		description: 'You broke a magic amulet that immersed your mind in weird magic. This magic has given you the power of premonition, but you struggle to control this new gift.',
 		features: [
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'comp-waking-dreams-bd',
 				name: 'Waking Dreams',
 				description: `
@@ -172,12 +172,12 @@ Whenever you take a respite, make a Reason power roll.
 		name: 'War Of Assassins',
 		description: 'Being in the wrong place at the wrong time saw you caught in the middle of a conflict between two warring thieves’ guilds. Whether by choice or by accident, you wound up helping one faction at the expense of the other.',
 		features: [
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'comp-war-of-assassins-b',
 				name: 'War Of Assassins Benefit',
 				description: 'Having gained the favor of the faction who you helped, you can call on its members three times for favors. If a favor is reasonable and within the faction’s power to grant, they’ll do it, no questions asked.'
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'comp-war-of-assassins-d',
 				name: 'War Of Assassins Drawback',
 				description: 'The faction you wronged hates you, and its members would love to see you pay for your transgression.'
@@ -190,12 +190,12 @@ Whenever you take a respite, make a Reason power roll.
 		name: 'Ward',
 		description: 'Your childhood sweetheart was royalty, and the two of you stayed close throughout the years. When your former sweetheart died, you swore an oath to dedicate your life to become a tutor for their child, advising them in the ways of being a benevolent monarch.',
 		features: [
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'comp-ward-b',
 				name: 'Ward Benefit',
 				description: 'You know how to talk to monarchs, aristocrats, and other wealthy leaders. When you engage with any such NPC during a negotiation, their patience increases by 1 (to a maximum of 5).'
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'comp-ward-d',
 				name: 'Ward Drawback',
 				description: 'Your royal ward can be a burden. When you start a respite, roll a d10. On a roll of 1, your ward contacts you and requires your help during the respite, requiring you to spend your time helping them instead of taking a respite activity.'

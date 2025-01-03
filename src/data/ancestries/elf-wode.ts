@@ -8,7 +8,7 @@ export const wodeElf: Ancestry = {
 	name: 'Elf (wode)',
 	description: 'Children of the sylvan celestials and masters of the elf-haunted forests called wodes, wode elves see all forests as their domain by birthright. They know and enjoy their reputation among humans for snatching children who wander too far into the woods. Humans should fear the trees.',
 	features: [
-		FeatureLogic.feature.createFeature({
+		FeatureLogic.feature.create({
 			id: 'wode-elf-feature-1',
 			name: 'Wode Elf Glamor',
 			description: 'You can magically alter your appearance to better blend in with your surroundings. You gain an edge on Agility tests made to hide and sneak, and tests made to find you while you are hidden take a bane.'
@@ -18,7 +18,7 @@ export const wodeElf: Ancestry = {
 			name: 'Wode Elf Traits',
 			options: [
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'wode-elf-feature-2-1',
 						name: 'Forest Walk',
 						description: 'You can shift into difficult terrain.'
@@ -26,7 +26,7 @@ export const wodeElf: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'wode-elf-feature-2-2',
 						name: 'Revisit Memory',
 						description: 'Accessing memories is as easy as living in the present for you. You have an edge on all tests made to recall lore.'
@@ -42,7 +42,7 @@ export const wodeElf: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'wode-elf-feature-2-4',
 						name: 'Otherworldly Grace',
 						description: 'Your elf body and mind can’t be contained for long. You succeed on saving throws when you get a 5 or higher.'

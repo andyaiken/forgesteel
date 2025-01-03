@@ -130,7 +130,7 @@ export class DomainData {
 					FeatureLogic.feature.createMultipleFeature({
 						id: 'domain-fate-1',
 						features: [
-							FeatureLogic.feature.createFeature({
+							FeatureLogic.feature.create({
 								id: 'domain-fate-1-1',
 								name: 'Oracular Visions',
 								description: 'Your deity rewards you with hazy visions of things to come. Each time you earn 1 or more Victories, you earn an equal number of fate points. When you or a creature within 10 squares of you makes a test, you can spend 1 fate point to tap into a vision of the outcome, granting that creature an edge on the test. You lose any remaining fate points when you finish a respite.'
@@ -182,7 +182,7 @@ Choose one of the following effects, which lasts until the end of the encounter 
 					FeatureLogic.feature.createMultipleFeature({
 						id: 'domain-knowledge-1',
 						features: [
-							FeatureLogic.feature.createFeature({
+							FeatureLogic.feature.create({
 								id: 'domain-knowledge-1-1',
 								name: 'Blessing of Comprehension',
 								description: 'You can interpret diagrams and charts even if you don’t understand the language associated with them. For the purpose of making project rolls for research and crafting items, you are considered fluent in all languages.'
@@ -236,7 +236,7 @@ Choose one of the following effects, which lasts until the end of the encounter 
 					FeatureLogic.feature.createMultipleFeature({
 						id: 'domain-life-1',
 						features: [
-							FeatureLogic.feature.createFeature({
+							FeatureLogic.feature.create({
 								id: 'domain-life-1-1',
 								name: 'Revitalizing Ritual',
 								description: 'Each time you finish a respite, you can choose yourself or an ally who is also ending a respite to gain the benefit of a divine ritual. When you perform the ritual, the chosen character gains a bonus to their recovery value equal to your level, which lasts until you finish another respite.'
@@ -285,7 +285,7 @@ Choose one of the following effects, which lasts until the end of the encounter 
 					FeatureLogic.feature.createMultipleFeature({
 						id: 'domain-love-1',
 						features: [
-							FeatureLogic.feature.createFeature({
+							FeatureLogic.feature.create({
 								id: 'domain-love-1-1',
 								name: 'Blessing of Compassion',
 								description: `
@@ -397,7 +397,7 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 					FeatureLogic.feature.createMultipleFeature({
 						id: 'domain-protection-1',
 						features: [
-							FeatureLogic.feature.createFeature({
+							FeatureLogic.feature.create({
 								id: 'domain-protection-1-1',
 								name: 'Protective Circle',
 								description: 'You can spend 10 minutes working while uninterrupted to create a protective circle on the ground large enough to hold a size 1 creature. The circle lasts for 24 hours or until you dismiss it (no action required). Only creatures you designate at the time of drawing the circle can enter and exit the area. While in the protective area, a creature can’t be targeted by strikes.'
@@ -448,7 +448,7 @@ Additionally, whenever one target spends a Recovery, the other target can use a 
 					FeatureLogic.feature.createMultipleFeature({
 						id: 'domain-storm-1',
 						features: [
-							FeatureLogic.feature.createFeature({
+							FeatureLogic.feature.create({
 								id: 'domain-storm-1-1',
 								name: 'Blessing of Fortunate Weather',
 								description: `
@@ -508,7 +508,7 @@ Choose one of the following types of weather, each of which grants a benefit to 
 					FeatureLogic.feature.createMultipleFeature({
 						id: 'domain-sun-1',
 						features: [
-							FeatureLogic.feature.createFeature({
+							FeatureLogic.feature.create({
 								id: 'domain-sun-1-1',
 								name: 'Inner Light',
 								description: 'Each time you finish a respite, you can choose yourself or an ally who is also ending a respite to gain the benefit of a divine ritual. As you perform the ritual, you place a ray of morning light into the chosen character’s soul, granting them a +1 bonus on saving throws. This benefit lasts until you finish another respite.'
@@ -563,7 +563,7 @@ Choose one of the following types of weather, each of which grants a benefit to 
 					FeatureLogic.feature.createMultipleFeature({
 						id: 'domain-trickery-1',
 						features: [
-							FeatureLogic.feature.createFeature({
+							FeatureLogic.feature.create({
 								id: 'domain-trickery-1-1',
 								name: 'Inspired Deception',
 								description: 'The gods favor your thievery with magic. Whenever you make a test that uses a skill you have from the intrigue skill group, you can use Intuition on the test instead of another characteristic.'
@@ -612,7 +612,7 @@ Choose one of the following types of weather, each of which grants a benefit to 
 					FeatureLogic.feature.createMultipleFeature({
 						id: 'domain-war-1',
 						features: [
-							FeatureLogic.feature.createFeature({
+							FeatureLogic.feature.create({
 								id: 'domain-war-1-1',
 								name: 'Sanctified Weapon',
 								description: 'As a respite activity, you can bless a weapon. Any creature who wields the weapon gains a +1 rolled damage bonus with abilities that use the weapon. This benefit lasts until you finish another respite.'

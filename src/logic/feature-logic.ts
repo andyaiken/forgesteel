@@ -61,7 +61,7 @@ import { SkillList } from '../enums/skill-list';
 
 export class FeatureLogic {
 	static feature = {
-		createFeature: (data: { id: string, name: string, description: string }) => {
+		create: (data: { id: string, name: string, description: string }) => {
 			return {
 				id: data.id,
 				name: data.name,

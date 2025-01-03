@@ -392,7 +392,7 @@ If the Director does not have an answer to the question you ask, you can instead
 		type: FeatureType.Multiple,
 		data: {
 			features: [
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'perk-linguist-1',
 					name: 'Linguist',
 					description: 'If you spend at least 7 days in a place where you regularly hear a language you don’t know spoken, you can pick up enough of that language to hold a conversation, though you still can’t read it. After doing so, you can learn it twice as fast as normal.'

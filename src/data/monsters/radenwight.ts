@@ -390,7 +390,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 0, 1),
 			features: [
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'radenwight-7-feature-1',
 					name: 'Gymratstics',
 					description: 'The ratcrobat gains an edge on attacks against larger creatures.'
@@ -502,7 +502,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'The maestro makes a free strike against the target.'
 					})
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'radenwight-8-feature-4',
 					name: 'End Effect',
 					description: 'At the end of their turn, the maestro can take 5 damage to end one EoE effect affecting them. This damage can’t be reduced in any way.'

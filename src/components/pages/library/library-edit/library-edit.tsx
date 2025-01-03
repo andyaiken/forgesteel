@@ -113,7 +113,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		const addFeature = () => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Item;
-			elementCopy.features.push(FeatureLogic.feature.createFeature({
+			elementCopy.features.push(FeatureLogic.feature.create({
 				id: Utils.guid(),
 				name: '',
 				description: ''
@@ -415,7 +415,7 @@ export const LibraryEditPage = (props: Props) => {
 			elementCopy.featuresByLevel
 				.filter(lvl => lvl.level === level)
 				.forEach(lvl => {
-					lvl.features.push(FeatureLogic.feature.createFeature({
+					lvl.features.push(FeatureLogic.feature.create({
 						id: Utils.guid(),
 						name: '',
 						description: ''
@@ -616,7 +616,7 @@ export const LibraryEditPage = (props: Props) => {
 				sc.featuresByLevel
 					.filter(lvl => lvl.level === level)
 					.forEach(lvl => {
-						lvl.features.push(FeatureLogic.feature.createFeature({
+						lvl.features.push(FeatureLogic.feature.create({
 							id: Utils.guid(),
 							name: '',
 							description: ''

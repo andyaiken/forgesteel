@@ -43,7 +43,7 @@ The null is an unarmed psionic warrior who dampens and absorbs the effects of ma
 					listOptions: [ SkillList.Interpersonal, SkillList.Lore ],
 					count: 2
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'null-1-3',
 					name: 'Discipline',
 					description: 'At the start of each of your turns during combat, you gain 2 discipline. Additionally, you gain 1 discipline the first time in a round an enemy in your null field takes an action. You gain 1 discipline the first time in a round that an enemy uses Malice.'
@@ -84,7 +84,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 						]
 					})
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'null-1-6',
 					name: 'Null Speed',
 					description: 'Your psionic mastery of your body allows you to achieve great quickness. You gain a bonus to your speed and a bonus to the number of squares you shift when you take the Disengage move action equal to your Agility score.'
@@ -95,7 +95,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 					description: 'Your training has turned your body into the perfect psionic weapon, shaping pathways in your mind that enhance your physical form. Choose one of the following augmentations. You can change your focus by undergoing a psionic meditation as a respite activity.',
 					options: [
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'null-1-7a',
 								name: 'Density Augmentation',
 								description: 'You gain a +6 bonus to Stamina, and this bonus increases by 6 at 4th, 7th, and 10th levels. Additionally, you gain a +1 bonus to stability.'
@@ -103,7 +103,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'null-1-7b',
 								name: 'Force Augmentation',
 								description: 'You gain a +1 rolled damage bonus with damage-dealing psionic abilities.'
@@ -111,7 +111,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'null-1-7c',
 								name: 'Speed Augmentation',
 								description: 'You gain a +1 bonus to speed and to the distance you shift when you take the Disengage move action.'
@@ -120,7 +120,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 						}
 					]
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'null-1-8',
 					name: 'Psionic Martial Arts',
 					description: 'When you use the Knockback or Grab maneuver, you use Intuition instead of Might for the power roll. If you use Knockback, you can choose to slide the target instead of pushing them.'
@@ -152,12 +152,12 @@ This ability stays active even after encounters end. It ends if you are dying or
 		{
 			level: 3,
 			features: [
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'null-3-1',
 					name: 'Psionic Leap',
 					description: 'You can long and high jump a distance equal to twice your Agility score without needing to make a test.'
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'null-3-2',
 					name: 'Reorder',
 					description: 'Each time you start your turn, you can use a free triggered action to end one effect on you or another creature in the area of your Null Field ability.'
@@ -481,7 +481,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 							id: 'null-sub-1-1-1',
 							listOptions: [ SkillList.Lore ]
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'null-sub-1-1-2',
 							name: 'Chronokinetic Mastery',
 							description: `
@@ -500,7 +500,7 @@ As your discipline grows, your psionic mastery of your body intensifies.
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'null-sub-1-2-1',
 							name: 'Rapid Processing',
 							description: 'As a maneuver, you can read an entire book or process a similar amount of information. Additionally, during any respite, you can take an additional respite activity.'
@@ -568,7 +568,7 @@ As your discipline grows, your psionic mastery of your body intensifies.
 							id: 'null-sub-2-1-1',
 							listOptions: [ SkillList.Crafting ]
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'null-sub-2-1-2',
 							name: 'Cryokinetic Mastery',
 							description: `
@@ -587,7 +587,7 @@ As your discipline grows, your psionic mastery of your body intensifies.
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'null-sub-2-2-1',
 							name: 'Entropic Adaptability',
 							description: 'You ignore difficult terrain related to cold and ice, and you can automatically climb at full speed while moving. Additionally, you have cold immunity equal to twice your Intuition score.'
@@ -655,7 +655,7 @@ As your discipline grows, your psionic mastery of your body intensifies.
 							id: 'null-sub-3-1-1',
 							listOptions: [ SkillList.Exploration ]
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'null-sub-3-1-2',
 							name: 'Metakinetic Mastery',
 							description: `
@@ -674,7 +674,7 @@ As your discipline grows, your psionic mastery of your body intensifies.
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'null-sub-3-2-1',
 							name: 'Inertial Sink',
 							description: `

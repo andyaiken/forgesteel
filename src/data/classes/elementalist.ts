@@ -43,7 +43,7 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 					listOptions: [ SkillList.Crafting, SkillList.Lore ],
 					count: 3
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'elementalist-1-3',
 					name: 'Essence',
 					description: 'At the start of each of your turns during combat, you gain 2 essence. You also gain 1 essence the first time in a round that you or a creature within 10 of you takes damage that isn’t untyped or holy.'
@@ -66,7 +66,7 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 						effect: 'When you make this strike, choose the damage type from one of the following options: acid, cold, corruption, fire, lightning, poison, or sonic.'
 					})
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'elementalist-1-5',
 					name: 'Persistent Magic',
 					description: `
@@ -96,7 +96,7 @@ Choose one of the following effects:
 					name: 'Enchantment',
 					options: [
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'elementalist-1-7a',
 								name: 'Enchantment of Battle',
 								description: 'You tap into the elemental mysteries to gain the mind and training of a warrior. You can wear light armor and wield light weapons effectively, even though you don’t have a kit. While you wear light armor, you gain a +3 bonus to Stamina and that bonus increases by 3 at 4th, 7th, and 10th levels. While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this enchantment.'
@@ -104,7 +104,7 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'elementalist-1-7b',
 								name: 'Enchantment of Celerity',
 								description: 'You infuse your body with the speed of elemental air. You gain a +1 bonus to speed and to the distance you shift when you take the Disengage move action.'
@@ -112,7 +112,7 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'elementalist-1-7c',
 								name: 'Enchantment of Destruction',
 								description: 'You harness the destructive power of flame inside your mind, allowing you to focus your magic on destroying your enemies. You gain a +1 rolled damage bonus with magic abilities.'
@@ -120,7 +120,7 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'elementalist-1-7d',
 								name: 'Enchantment of Distance',
 								description: 'You reach into the mysteries of the void and mix that element with all of your abilities. You gain a +2 bonus to the distance of your ranged magic abilities.'
@@ -128,7 +128,7 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'elementalist-1-7e',
 								name: 'Enchantment of Permanence',
 								description: 'You place the magic of earth into your flesh and bones, making your body tougher and harder to move. You gain a +6 bonus to Stamina, and this bonus increases by 6 at 4th, 7th, and 10th levels. Additionally, you gain a +1 bonus to stability.'
@@ -142,7 +142,7 @@ Choose one of the following effects:
 					name: 'Elementalist Ward',
 					options: [
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'elementalist-1-8a',
 								name: 'Ward of Delightful Consequences',
 								description: 'A protective field of void magic absorbs violence aimed at you, then lets you hurl it back at your enemies. The first time each round that you take damage, you gain a surge.'
@@ -150,7 +150,7 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'elementalist-1-8b',
 								name: 'Ward of Excellent Protection',
 								description: 'The protective shield you weave around yourself is made of all the elements to channel their full protective power. You have immunity to acid, cold, corruption, fire, and lightning damage equal to your Reason score.'
@@ -158,7 +158,7 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'elementalist-1-8c',
 								name: 'Ward of Nature\'s Affection',
 								description: 'You store green energy within your body that allows you to produce powerful vines when you’re in danger. Whenever a creature within a number of squares equal to your Reason score deals damage to you, you can use a free triggered action to slide that creature up to a number of squares equal to your Reason score.'
@@ -166,7 +166,7 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'elementalist-1-8d',
 								name: 'Ward of Surprising Reactivity',
 								description: 'You use the magic of fire to create an invisible ward of explosive fire energy. Whenever an adjacent creature deals damage to you, you can use a free triggered action to push that creature a number of squares equal to twice your Reason score.'
@@ -653,7 +653,7 @@ Until the start of your next turn, the area gains the following effects:
 				{
 					level: 1,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'elementalist-sub-1-1-1',
 							name: 'Acolyte of Earth',
 							description: 'Whenever you use an earth magic ability, your stability increases by 1 until the start of your next turn. This benefit is cumulative.'
@@ -697,7 +697,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'elementalist-sub-1-2-1',
 							name: 'Disciple of Earth',
 							description: 'Your body is strengthened by your mind’s connection to the element of permanence. You have a +6 bonus to Stamina, plus you gain an additional +3 bonus to Stamina whenever you gain a level beyond 2nd in this class.'
@@ -732,7 +732,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 				{
 					level: 1,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'elementalist-sub-2-1-1',
 							name: 'Acolyte of Fire',
 							description: 'Your abilities that have the Fire and Magic keywords gain a +1 rolled damage bonus.'
@@ -772,7 +772,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'elementalist-sub-2-2-1',
 							name: 'Disciple of Fire',
 							description: 'Your connection to fire allows you to protect yourself from it, even as you rip away the protections of others. You have fire immunity equal to 5 plus your level in this class. Any fire damage you deal ignores a target’s fire immunity.'
@@ -782,7 +782,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 				{
 					level: 3,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'elementalist-sub-2-3-1',
 							name: 'A Conversation with Fire',
 							description: 'When you spend 1 minute in front of a fire, you can speak the name of another creature. If that creature is willing to speak to you, their image appears in the fire, and they can see you before them in a shimmering ball of light. The two of you can speak to each other through these images as if you were together in person. You or the creature can end the conversation as a maneuver.'
@@ -800,12 +800,12 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 				{
 					level: 1,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'elementalist-sub-3-1-1',
 							name: 'Acolyte of the Green',
 							description: 'Whenever you deal damage to one or more creatures with a green magic ability that costs essence to use (see below), you or one creature of your choice within 10 squares of you gains temporary Stamina equal to your Reason score.'
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'elementalist-sub-3-1-2',
 							name: 'It Is the Soul Which Hears',
 							description: `
@@ -834,7 +834,7 @@ Additionally, whenever you touch a living plant that is not a Plant Creature, yo
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'elementalist-sub-3-2-1',
 							name: 'Disciple of the Green',
 							description: `
@@ -881,12 +881,12 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 				{
 					level: 1,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'elementalist-sub-4-1-1',
 							name: 'Acolyte of the Void',
 							description: 'The distance of all your ranged void magic abilities increases by 2.'
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'elementalist-sub-4-1-2',
 							name: 'A Beyonding of Vision',
 							description: 'You instantly recognize illusions for what they are, you can see invisible creatures, and supernatural effects can’t conceal creatures and objects from you. You always know if an area or object you observe is magical or affected by magic, and you know the specifics of what that magic can do.'
@@ -945,7 +945,7 @@ At the start of each of your turns while the portals are active, you can open a 
 				{
 					level: 3,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'elementalist-sub-4-3-1',
 							name: 'Distance is Only Memory',
 							description: 'When you finish a respite, you can open a two-way portal that leads to any place you have previously been. Your allies can pass through the portal, which remains open for 1 hour or until you dismiss it as an action.'

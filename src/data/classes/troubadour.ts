@@ -45,7 +45,7 @@ And beyond the mundane, there are insurmountable dangers that cause many a hero 
 					id: 'troubadour-1-3',
 					listOptions: [ SkillList.Intrigue, SkillList.Lore ]
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'troubadour-1-4',
 					name: 'Drama',
 					description: `
@@ -58,12 +58,12 @@ Additionally, you gain drama when certain events occur during battle:
 
 You still gain drama during combat if you are dead as long as your body is intact. During the encounter in which you died, if you have 30 drama, you can come back to life with 1 Stamina and 0 drama (no action required). You can’t gain drama in future encounters while you remain dead.`
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'troubadour-1-5',
 					name: 'Scene Partner',
 					description: 'Whenever you use a skill from the interpersonal group on a test while interacting with an NPC (a bystander, a rival, and so forth) and you don’t fail the test, you can form a bond with that NPC. If you then enter into a negotiation with this NPC, their patience increases by 1, and any compelling arguments you personally make to the NPC that would increase their interest by 1 instead increase their interest by 2. You can have a number of such bonds active equal to your level, losing a bond of your choice whenever you make a new bond beyond your limit.'
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'troubadour-1-6',
 					name: 'Curtain Call',
 					description: 'You enter every performance with a set of routines at the ready. Routines are auras and other wide-reaching effects that have the Routine keyword, and which center around you while you move through the fray. At the start of each round of combat, as long as you are not dazed, dead, or surprised, you can either set a new routine to be active or maintain your current routine (no action required). Your routine ends if you are unable to maintain it, or at the end of the encounter.'
@@ -112,7 +112,7 @@ You still gain drama during combat if you are dead as long as your body is intac
 		{
 			level: 2,
 			features: [
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'troubadour-2-1',
 					name: 'Appeal to the Muses',
 					description: `
@@ -127,7 +127,7 @@ Whenever you roll to gain 1d3 drama at the start of your turn, you can make your
 					name: 'Invocation',
 					options: [
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'troubadour-2-2a',
 								name: 'Allow Me To Introduce Tonight\'s Players',
 								description: 'Whenever you take the first turn in a combat encounter, you can use your action to introduce yourself and your allies to your opponents. Each creature on your side can shift up to their speed and gains the benefit of the Defend action until the end of the round. However, any enemies who were surprised are no longer surprised.'
@@ -135,7 +135,7 @@ Whenever you roll to gain 1d3 drama at the start of your turn, you can make your
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'troubadour-2-2b',
 								name: 'Formal Introductions',
 								description: `
@@ -145,7 +145,7 @@ The Director determines when the target receives your notice. Once the target re
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.createFeature({
+							feature: FeatureLogic.feature.create({
 								id: 'troubadour-2-2c',
 								name: 'My Reputation Precedes Me',
 								description: `
@@ -556,7 +556,7 @@ Additionally, on each of your turns, you can use a free maneuver to communicate 
 				{
 					level: 3,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'troubadour-sub-1-3-1',
 							name: 'Foil',
 							description: 'Choose one creature within line of effect at the start of an encounter. You have a double edge on power rolls made against or in competition with that creature. The chosen creature also has a double edge on power rolls made against or in competition with you. If the creature dies, you can choose a new foil at the start of the next round.'
@@ -677,7 +677,7 @@ Choose one of the following effects:
 				{
 					level: 3,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'troubadour-sub-2-3-1',
 							name: 'Recast a Supporting Part',
 							description: 'If you aren’t surprised at the beginning of an encounter, you can choose one enemy within line of effect who isn’t a leader or a solo creature. The director swaps that creature out with a squad of minions whose encounter value doesn’t exceed the chosen creature’s encounter value. The Director can determine that this feature can’t be used against certain special enemies.'

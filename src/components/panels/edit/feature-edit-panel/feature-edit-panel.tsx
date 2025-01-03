@@ -334,7 +334,7 @@ export const FeatureEditPanel = (props: Props) => {
 		const addChoice = (data: FeatureChoiceData) => {
 			const copy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
 			copy.options.push({
-				feature: FeatureLogic.feature.createFeature({
+				feature: FeatureLogic.feature.create({
 					id: Utils.guid(),
 					name: '',
 					description: ''
@@ -418,7 +418,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 		const addMultipleFeature = (data: FeatureMultipleData) => {
 			const copy = JSON.parse(JSON.stringify(data)) as FeatureMultipleData;
-			copy.features.push(FeatureLogic.feature.createFeature({
+			copy.features.push(FeatureLogic.feature.create({
 				id: Utils.guid(),
 				name: '',
 				description: ''

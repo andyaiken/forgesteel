@@ -10,7 +10,7 @@ export const timeRaider: Ancestry = {
 	name: 'Time Raider',
 	description: 'The original servitor species of the synliiroi — evil psions with near god-like power — the kuran’zoi liberated themselves during the First Psychic War. In the centuries since, they built their own culture and civilization as nomads of the timescape. The exonym “time raiders” was given to them by denizens of the lower worlds who, seeing the advanced technology they wield, concluded they must be from the future.',
 	features: [
-		FeatureLogic.feature.createFeature({
+		FeatureLogic.feature.create({
 			id: 'time-raider-feature-1',
 			name: 'Four Arms',
 			description: 'Your multiple arms let you take on multiple tasks at the same time. Whenever you use the Grab or Knockback maneuver against an adjacent creature, you can target an additional adjacent creature, using the same power roll for both targets. You can grab up to two creatures at a time.'
@@ -20,7 +20,7 @@ export const timeRaider: Ancestry = {
 			name: 'Time Raider Traits',
 			options: [
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'time-raider-feature-2-1',
 						name: 'Beyondsight',
 						description: 'As a maneuver, you can adjust your vision to allow you to see through mundane obstructions that 1 square thick or less. While your vision is adjusted this way, you can’t see and don’t have line of effect to any creatures or objects within 1 square of you. You can return your vision to normal as a maneuver.'
@@ -28,7 +28,7 @@ export const timeRaider: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'time-raider-feature-2-2',
 						name: 'Foresight',
 						description: 'Your senses extend past mundane obscuration and the veil of the future alike. You instinctively know the location of any concealed creatures who aren’t hidden from you, negating the usual bane on strikes against them. Additionally, whenever you are targeted with a strike, you can use a triggered action to impose a bane on the power roll.'
@@ -110,7 +110,7 @@ export const timeRaider: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'time-raider-feature-2-7',
 						name: 'Unstoppable Mind',
 						description: 'Your mind allows you to maintain your focus in any situation. You can’t be dazed.'

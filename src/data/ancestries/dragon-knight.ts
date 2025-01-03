@@ -113,7 +113,7 @@ export const dragonKnight: Ancestry = {
 			name: 'Dragon Knight Traits',
 			options: [
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'dragon-knight-feature-2-1',
 						name: 'Draconian Guard',
 						description: 'When you or a creature adjacent to you takes damage from a strike, you can use a triggered action to swing your wings around and guard against the blow, reducing the any damage from the strike by an amount equal to your level.'
@@ -217,7 +217,7 @@ export const dragonKnight: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'dragon-knight-feature-2-8',
 						name: 'Remember your Oath',
 						description: `
@@ -277,7 +277,7 @@ Until the last villain dies.`
 					value: 2
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'dragon-knight-feature-2-11',
 						name: 'Wings',
 						description: 'You possess wings powerful enough to take you airborne. While using your wings to fly, you can stay aloft for a number of rounds equal to your Might (minimum of 1 round) before you fall prone. While using your wings to fly at 1st, 2nd, and 3rd level, you have damage weakness 5.'

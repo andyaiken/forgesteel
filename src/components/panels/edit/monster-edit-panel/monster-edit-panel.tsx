@@ -141,7 +141,7 @@ export const MonsterEditPanel = (props: Props) => {
 
 	const addFeature = () => {
 		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.features.push(FeatureLogic.feature.createFeature({
+		copy.features.push(FeatureLogic.feature.create({
 			id: Utils.guid(),
 			name: '',
 			description: ''

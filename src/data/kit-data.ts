@@ -837,7 +837,7 @@ export class KitData {
 					})
 				})
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'kit-boren-feature-1',
 				name: 'Aspect Benefits',
 				description: `
@@ -847,12 +847,12 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 * **Rage 4**: While in bear form, you can use all your abilities, your attacks deal extra damage equal to twice your Might score, instead of once your Might score, and any target you have grabbed at the start of your turn takes damage equal to twice your Might score, instead of once your Might score.
 * **Rage 6**: You have a double edge on Might tests, resistance rolls, and power rolls made with the Grab ability.`
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'kit-boren-feature-2',
 				name: 'Animal Form: Bear',
 				description: 'When you are in your bear form, your speed increases by 2, your size becomes 2, and you have a +1 reach bonus with melee attacks. You gain 10 temporary Stamina the first time you shapeshift into bear form during an encounter.'
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'kit-boren-feature-3',
 				name: 'Primordial Storm: Blizzard',
 				description: 'Your primordial damage type is cold.'
@@ -894,7 +894,7 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 					effect: 'Resolve each attack individually using one power roll. You can shift 1 square after resolving damage for each target, then choose your next target from your new location.'
 				})
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'kit-boren-feature-1',
 				name: 'Aspect Benefits',
 				description: `
@@ -906,14 +906,14 @@ You gain an edge on tests made to hide and sneak. Whenever you are falling, you 
 * **Rage 4**: Once per turn while in crow or hybrid crow form, when you move away from an enemy, that enemy takes damage equal to twice your Agility score, instead of once your Agility score.
 * **Rage 6**: You can shift up to 2 squares as a free maneuver once per turn.`
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'kit-boren-feature-2',
 				name: 'Animal Form: Crow',
 				description: `
 When you are in your crow form, your movement gains the Fly keyword, and your size becomes 1T. You can use the Hide maneuver as a free maneuver, and you can use your allies as cover when you hide.
 Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal crow of your true form’s size. You gain 10 temporary Stamina the first time you shapeshift into hybrid crow form during an encounter.`
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'kit-boren-feature-3',
 				name: 'Primordial Storm: Katabatic Wind',
 				description: 'Your primordial damage type is fire.'
@@ -955,7 +955,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					effect: 'Resolve each attack one at a time. After each attack, you can shift the same number of squares that you pushed the target. You select your second target from the square where you end your shift, which can be the first target again.'
 				})
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'kit-boren-feature-1',
 				name: 'Aspect Benefits',
 				description: `
@@ -966,14 +966,14 @@ You gain an edge on tests made to hide and sneak. Additionally, you ignore diffi
 * **Rage 4**: While in rat or hybrid rat form, you can use all your abilities, and your attacks deal extra damage equal to twice your Agility score, instead of once your Agility score.
 * **Rage 6**: You have Weapon immunity 2. Any damage you ignore because of this immunity is dealt to each enemy adjacent to you when you are attacked.`
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'kit-boren-feature-2',
 				name: 'Animal Form: Rat',
 				description: `
 When you are in your rat form, your movement gains the Climb keyword, and your size becomes 1T. You can use the Hide maneuver as a free maneuver, and you can use your allies as cover when hiding. You can stay hidden while moving through squares occupied by a creature.
 Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal rat of your true form’s size. You gain 10 temporary Stamina the first time you shapeshift into hybrid rat form during an encounter.`
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'kit-boren-feature-3',
 				name: 'Primordial Storm: Rat Flood',
 				description: 'Your primordial damage type is corruption.'
@@ -1015,7 +1015,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					effect: 'You can shift up to 2 squares as long as you end the shift adjacent to the target.'
 				})
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'kit-boren-feature-1',
 				name: 'Aspect Benefits',
 				description: `
@@ -1027,14 +1027,14 @@ You and an ally gain the benefits of flanking whenever you are both adjacent to 
 * **Rage 4**: When you attack a target while in wolf or hybrid wolf form, the next ally to damage that target before the start of your next turn deals extra damage equal to twice your Agility score, instead of once your Agility score.
 * **Rage 6**: You have a double edge on Agility tests and resistance rolls.`
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'kit-boren-feature-2',
 				name: 'Animal Form: Wolf',
 				description: `
 When you are in your wolf form, your speed increases by 2, you ignore difficult terrain, and your size becomes 1M.
 Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal wolf of your true form’s size. You gain 10 temporary Stamina the first time you shapeshift into hybrid wolf form during an encounter.`
 			}),
-			FeatureLogic.feature.createFeature({
+			FeatureLogic.feature.create({
 				id: 'kit-boren-feature-3',
 				name: 'Primordial Storm: Lightning Storm',
 				description: 'Your primordial damage type is lightning.'

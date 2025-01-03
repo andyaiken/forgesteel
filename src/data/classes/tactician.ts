@@ -43,7 +43,7 @@ As a tactician, you have abilities that heal your allies and grant them increase
 					listOptions: [ SkillList.Exploration ],
 					count: 2
 				}),
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'tactician-1-3',
 					name: 'Focus',
 					description: 'At the start of each of your turns during combat, you gain 2 focus. The first time each round that you or an ally damages a target you have marked, you gain 1 focus. The first time in a round that an ally within 10 squares of you uses a heroic ability, you gain 1 focus.'
@@ -112,7 +112,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 		{
 			level: 3,
 			features: [
-				FeatureLogic.feature.createFeature({
+				FeatureLogic.feature.create({
 					id: 'tactician-3-1',
 					name: 'Out of Position',
 					description: 'You are prepared for all eventualities. At the start of an encounter, you can use a free triggered action to use your Mark ability against an enemy you have line of effect to, even if you are surprised. You can then immediately slide the marked target up to 3 squares, ignoring their stability. The target can’t be moved in a way that would harm them (such as over a cliff), leave them dying, or result in them suffering a condition or other negative effect.'
@@ -311,7 +311,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 							id: 'tactician-sub-1-1-1',
 							listOptions: [ SkillList.Intrigue ]
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'tactician-sub-1-1-2',
 							name: 'Covert Operations',
 							description: 'While in your presence or working according to your plans, each of your allies gains an edge on tests with any skill from the intrigue skill group. Additionally, you can use the Lead skill to assist on any test made with a skill from the intrigue group. At the Director’s discretion, you and your allies can use skills from the intrigue skill group to attempt research or reconnaissance during a negotiation instead of outside of negotiation.'
@@ -339,7 +339,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'tactician-sub-1-2-1',
 							name: 'Infiltration Tactics',
 							description: 'You have trained your squad to work together and benefit from staying silent and waiting for the opportune time to strike. When you or any of your allies within 10 squares of you becomes hidden, they gain a surge.'
@@ -410,7 +410,7 @@ Each target is marked by you. You immediately force each targeted creature to ma
 							id: 'tactician-sub-2-1-1',
 							listOptions: [ SkillList.Lore ]
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'tactician-sub-2-1-2',
 							name: 'Studied Commander',
 							description: `
@@ -459,7 +459,7 @@ You can only make this test once for each encounter and negotiation.`
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'tactician-sub-2-2-1',
 							name: 'Goaded',
 							description: 'You have learned to leverage the psychology of your marked foes and goad them into acting before they are tactically ready. When a creature marked by you uses a strike that targets you or an ally, you can use a free triggered action to retarget the attack to you or another one of your allies or yourself. The new target must be a valid option for the strike.'
@@ -530,7 +530,7 @@ Each target is marked by you. You gain two surges.
 							id: 'tactician-sub-3-1-1',
 							listOptions: [ SkillList.Interpersonal ]
 						}),
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'tactician-sub-3-1-2',
 							name: 'Commanding Presence',
 							description: 'You command any room you walk into. While you are present, each hero with you is treated as having a Renown 2 higher than usual for the purpose of negotiations. Additionally, each hero with you has a double edge on tests made to stop combat and start a negotiation with the other side.'
@@ -558,7 +558,7 @@ Each target is marked by you. You gain two surges.
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createFeature({
+						FeatureLogic.feature.create({
 							id: 'tactician-sub-3-2-1',
 							name: 'Melee Superiority',
 							description: `

@@ -48,7 +48,7 @@ export const polder: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'polder-feature-3-2',
 						name: 'Graceful Retreat',
 						description: 'When you take the Disengage move action, you can shift 1 additional square as part of the move action.'
@@ -56,7 +56,7 @@ export const polder: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'polder-feature-3-3',
 						name: 'Polder Geist',
 						description: 'When you start your turn while no creatures have line of effect to you, or while you are hidden from or have concealment from all enemies with line of effect to you, your speed is increased by 3 until the end of your turn.'
@@ -64,7 +64,7 @@ export const polder: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'polder-feature-3-4',
 						name: 'Fearless',
 						description: 'Courage is all you know. You can’t be frightened.'
@@ -72,7 +72,7 @@ export const polder: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FeatureLogic.feature.createFeature({
+					feature: FeatureLogic.feature.create({
 						id: 'polder-feature-3-5',
 						name: 'Nimblestep',
 						description: 'Your light feet allow you to ignore the effects of difficult terrain and move at full speed while you are sneaking.'

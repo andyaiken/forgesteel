@@ -28,6 +28,11 @@
 				height: 30px;
 				border-radius: 5px;
 			}
+
+			&.navigation-buttons {
+				background-color: rgb(220, 220, 220);
+				border-radius: 5px;
+			}
 		}
 	}
 }
@@ -39,7 +44,7 @@
 
 			.main-footer-section {
 				.ds-logo {
-					background-color: rgb(255, 255, 255);
+					background-color: rgb(220, 220, 220);
 				}
 			}
 		}

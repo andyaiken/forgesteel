@@ -28,7 +28,7 @@ export const MainLayout = (props: Props) => {
 					FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC.
 					DRAW STEEL © 2024 MCDM Productions, LLC.
 				</div>
-				<div className='main-footer-section'>
+				<div className='main-footer-section navigation-buttons'>
 					<Button type='text' title='Heroes' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()} />
 					<Button type='text' title='Library' icon={<BookOutlined />} onClick={() => navigation.goToLibraryList()} />
 					<Button type='text' title='Encounters' icon={<AimOutlined />} onClick={() => navigation.goToEncounterList()} />

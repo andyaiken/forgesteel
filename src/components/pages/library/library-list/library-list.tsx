@@ -16,7 +16,7 @@ import { Element } from '../../../../models/element';
 import { Format } from '../../../../utils/format';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
-import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
+// import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
 import { MonsterGroup } from '../../../../models/monster';
@@ -28,7 +28,7 @@ import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookElementKind } from '../../../../models/sourcebook-element-kind';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Title } from '../../../../models/title';
-import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
+// import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
@@ -158,6 +158,7 @@ export const LibraryListPage = (props: Props) => {
 			], searchTerm));
 	};
 
+	/*
 	const getTitles = () => {
 		return SourcebookLogic
 			.getTitles(getSourcebooks())
@@ -175,6 +176,7 @@ export const LibraryListPage = (props: Props) => {
 				...item.features.map(f => f.name)
 			], searchTerm));
 	};
+	*/
 
 	const getMonsterGroups = () => {
 		return SourcebookLogic
@@ -482,6 +484,7 @@ export const LibraryListPage = (props: Props) => {
 		);
 	};
 
+	/*
 	const getTitlesSection = (list: Title[]) => {
 		if (list.length === 0) {
 			return (
@@ -555,6 +558,7 @@ export const LibraryListPage = (props: Props) => {
 			</div>
 		);
 	};
+	*/
 
 	const getMonsterGroupsSection = (list: MonsterGroup[]) => {
 		if (list.length === 0) {
@@ -609,8 +613,8 @@ export const LibraryListPage = (props: Props) => {
 		const domains = getDomains();
 		const kits = getKits();
 		const perks = getPerks();
-		const titles = getTitles();
-		const items = getItems();
+		// const titles = getTitles();
+		// const items = getItems();
 		const monsterGroups = getMonsterGroups();
 
 		return (
@@ -771,6 +775,7 @@ export const LibraryListPage = (props: Props) => {
 								),
 								children: getPerksSection(perks)
 							},
+							/*
 							{
 								key: 'title',
 								label: (
@@ -791,6 +796,7 @@ export const LibraryListPage = (props: Props) => {
 								),
 								children: getItemsSection(items)
 							},
+							*/
 							{
 								key: 'monster-group',
 								label: (

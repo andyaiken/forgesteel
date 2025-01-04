@@ -81,15 +81,15 @@ export const Main = (props: Props) => {
 	//#region Persistence
 
 	const persistHeroes = async (heroes: Hero[]) => {
-		const newHeroes = await localforage
-			.setItem<Hero[]>('forgesteel-heroes', Collections.sort(heroes, h => h.name));
-		setHeroes(newHeroes);
+		await localforage
+			.setItem<Hero[]>('forgesteel-heroes', Collections.sort(heroes, h => h.name))
+			.then(setHeroes);
 	};
 
 	const persistHero = async (hero: Hero) => {
 		if (heroes.some(h => h.id === hero.id)) {
-			const list = (JSON.parse(JSON.stringify(heroes)) as Hero[])
-				.map(h => h.id === hero.id ? hero : h);
+			const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
+			const list = copy.map(h => h.id === hero.id ? hero : h);
 
 			await persistHeroes(list);
 		}
@@ -949,14 +949,13 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onShowHeroState = (heroId: string, page: 'hero' | 'stats' | 'conditions') => {
-		const hero = props.heroes.find(h => h.id === heroId)!;
+	const onShowHeroState = (hero: Hero, page: 'hero' | 'stats' | 'conditions') => {
 		setDrawer(
 			<HeroStateModal
 				hero={hero}
 				startPage={page}
-				onChange={updatedHero => {
-					persistHero(updatedHero);
+				onChange={async hero => {
+					await persistHero(hero);
 				}}
 				onLevelUp={async () => {
 					if (hero && hero.class) {
@@ -970,8 +969,7 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onShowRules = (heroId: string) => {
-		const hero = props.heroes.find(h => h.id === heroId)!;
+	const onShowRules = (hero: Hero) => {
 		setDrawer(
 			<RulesModal
 				hero={hero}

@@ -11,6 +11,7 @@
   * Add new monsters
 
 **Miscellaneous changes**
+* Need to go through all text features and see if they can be changed to more useful feature types (bonuses, etc)
 * Some classes have only 1 primary characteristic - this means choosing their characteristic arrays will be a lot more tricky
 * Show potency values in power roll panel if appropriate
 * Automatically add characteristics to damage

@@ -23,10 +23,72 @@ interface Props {
 export const HeroStateModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(props.hero)));
 
-	const onChange = (field: string, value: number) => {
+	const setHeroicResource = (value: number) => {
 		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		const state = copy.state as unknown;
-		(state as { [field: string]: unknown })[field] = value;
+		copy.state.heroicResource = value;
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const setSurges = (value: number) => {
+		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		copy.state.surges = value;
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const setVictories = (value: number) => {
+		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		copy.state.victories = value;
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const setXP = (value: number) => {
+		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		copy.state.xp = value;
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const setStaminaDamage = (value: number) => {
+		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		copy.state.staminaDamage = value;
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const setRecoveriesUsed = (value: number) => {
+		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		copy.state.recoveriesUsed = value;
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const setHeroTokens = (value: number) => {
+		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		copy.state.heroTokens = value;
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const setRenown = (value: number) => {
+		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		copy.state.renown = value;
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const setWealth = (value: number) => {
+		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		copy.state.wealth = value;
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const setProjectPoints = (value: number) => {
+		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		copy.state.projectPoints = value;
 		setHero(copy);
 		props.onChange(copy);
 	};
@@ -100,25 +162,25 @@ export const HeroStateModal = (props: Props) => {
 					label={hero.class ? hero.class.heroicResource : 'Heroic Resource'}
 					value={hero.state.heroicResource}
 					min={0}
-					onChange={value => onChange('heroicResource', value)}
+					onChange={setHeroicResource}
 				/>
 				<NumberSpin
 					label='Surges'
 					value={hero.state.surges}
 					min={0}
-					onChange={value => onChange('surges', value)}
+					onChange={setSurges}
 				/>
 				<NumberSpin
 					label='Victories'
 					value={hero.state.victories}
 					min={0}
-					onChange={value => onChange('victories', value)}
+					onChange={setVictories}
 				/>
 				<NumberSpin
 					label='XP'
 					value={hero.state.xp}
 					min={0}
-					onChange={value => onChange('xp', value)}
+					onChange={setXP}
 				/>
 				{
 					HeroLogic.canLevelUp(hero) ?
@@ -164,14 +226,14 @@ export const HeroStateModal = (props: Props) => {
 					label='Damage Taken'
 					value={hero.state.staminaDamage}
 					min={0}
-					onChange={value => onChange('staminaDamage', value)}
+					onChange={setStaminaDamage}
 				/>
 				<NumberSpin
 					label='Recoveries Used'
 					value={hero.state.recoveriesUsed}
 					min={0}
 					max={HeroLogic.getRecoveries(hero)}
-					onChange={value => onChange('recoveriesUsed', value)}
+					onChange={setRecoveriesUsed}
 				/>
 				{
 					hero.state.staminaDamage >= (HeroLogic.getStamina(hero) / 2) ?
@@ -223,26 +285,26 @@ export const HeroStateModal = (props: Props) => {
 					label='Hero Tokens'
 					value={hero.state.heroTokens}
 					min={0}
-					onChange={value => onChange('heroTokens', value)}
+					onChange={setHeroTokens}
 				/>
 				<NumberSpin
 					label='Renown'
 					value={hero.state.renown}
 					min={0}
-					onChange={value => onChange('renown', value)}
+					onChange={setRenown}
 				/>
 				<NumberSpin
 					label='Wealth'
 					value={hero.state.wealth}
 					min={1}
-					onChange={value => onChange('wealth', value)}
+					onChange={setWealth}
 				/>
 				<NumberSpin
 					label='Project Points'
 					value={hero.state.projectPoints}
 					min={0}
 					steps={[ 5 ]}
-					onChange={value => onChange('projectPoints', value)}
+					onChange={setProjectPoints}
 				/>
 			</Space>
 		);

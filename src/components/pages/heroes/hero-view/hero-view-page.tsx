@@ -43,8 +43,8 @@ interface Props {
 	onSelectKit: (kit: Kit) => void;
 	onSelectCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	onSelectAbility: (ability: Ability, hero: Hero) => void;
-	onShowHeroState: (heroId: string, page: 'hero' | 'stats' | 'conditions') => void;
-	onShowRules: (heroId: string) => void;
+	onShowHeroState: (hero: Hero, page: 'hero' | 'stats' | 'conditions') => void;
+	onShowRules: (hero: Hero) => void;
 }
 
 const getHero = (heroId: string, heroes: Hero[]) => heroes.find(h => h.id === heroId)!;
@@ -52,6 +52,7 @@ const getHero = (heroId: string, heroes: Hero[]) => heroes.find(h => h.id === he
 export const HeroPage = (props: Props) => {
 	const { heroId } = useParams<{ heroId: string }>();
 	const hero = useMemo(() => getHero(heroId!, props.heroes), [ heroId, props.heroes ]);
+
 	try {
 		const setShowSkillsInGroups = (value: boolean) => {
 			const copy = JSON.parse(JSON.stringify(props.options)) as Options;
@@ -83,10 +84,10 @@ export const HeroPage = (props: Props) => {
 					<Button onClick={props.closeHero}>
 						Close
 					</Button>
-					<Button onClick={() => props.onShowHeroState(heroId!, 'hero')}>
+					<Button onClick={() => props.onShowHeroState(hero, 'hero')}>
 						State
 					</Button>
-					<Button onClick={() => props.onShowRules(heroId!)}>
+					<Button onClick={() => props.onShowRules(hero)}>
 						Rules
 					</Button>
 					<Popover
@@ -143,7 +144,7 @@ export const HeroPage = (props: Props) => {
 						onSelectKit={props.onSelectKit}
 						onSelectCharacteristic={characteristic => props.onSelectCharacteristic(characteristic, hero)}
 						onSelectAbility={ability => props.onSelectAbility(ability, hero)}
-						onShowState={page => props.onShowHeroState(heroId!, page)}
+						onShowState={page => props.onShowHeroState(hero, page)}
 					/>
 				</div>
 			</div>

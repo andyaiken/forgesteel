@@ -9,6 +9,7 @@ import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Expander } from '../../../controls/expander/expander';
+import { FactoryLogic } from '../../../../logic/factory-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
@@ -127,7 +128,7 @@ export const AbilityEditPanel = (props: Props) => {
 
 	const addDistance = () => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.distance.push(AbilityLogic.distance.createMelee());
+		copy.distance.push(FactoryLogic.distance.createMelee());
 		setAbility(copy);
 		props.onChange(copy);
 	};
@@ -204,7 +205,7 @@ export const AbilityEditPanel = (props: Props) => {
 
 	const setPowerRoll = (value: boolean) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.powerRoll = value ? AbilityLogic.createPowerRoll({ characteristic: [], tier1: '', tier2: '', tier3: '' }) : null;
+		copy.powerRoll = value ? FactoryLogic.createPowerRoll({ characteristic: [], tier1: '', tier2: '', tier3: '' }) : null;
 		setAbility(copy);
 		props.onChange(copy);
 	};

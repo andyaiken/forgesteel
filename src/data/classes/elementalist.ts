@@ -1,9 +1,8 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
-import { AbilityLogic } from '../../logic/ability-logic';
 import { Characteristic } from '../../enums/characteristic';
+import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
-import { FeatureLogic } from '../../logic/feature-logic';
 import { HeroClass } from '../../models/class';
 import { PerkList } from '../../enums/perk-list';
 import { SkillList } from '../../enums/skill-list';
@@ -23,41 +22,41 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 		{
 			level: 1,
 			features: [
-				FeatureLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonusFeature({
 					id: 'elementalist-stamina',
 					field: FeatureField.Stamina,
 					value: 18,
 					valuePerLevel: 9
 				}),
-				FeatureLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonusFeature({
 					id: 'elementalist-recoveries',
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
-				FeatureLogic.feature.createSkillFeature({
+				FactoryLogic.feature.createSkillFeature({
 					id: 'elementalist-1-1',
 					skill: 'Magic'
 				}),
-				FeatureLogic.feature.createSkillChoiceFeature({
+				FactoryLogic.feature.createSkillChoiceFeature({
 					id: 'elementalist-1-2',
 					listOptions: [ SkillList.Crafting, SkillList.Lore ],
 					count: 3
 				}),
-				FeatureLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'elementalist-1-3',
 					name: 'Essence',
 					description: 'At the start of each of your turns during combat, you gain 2 essence. You also gain 1 essence the first time in a round that you or a creature within 10 of you takes damage that isn’t untyped or holy.'
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'elementalist-1-4',
 						name: 'Hurl Element',
 						description: 'You hurl a ball of elemental energy at an unsuspecting foe.',
-						type: AbilityLogic.type.createAction(),
+						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-						distance: [ AbilityLogic.distance.createRanged() ],
+						distance: [ FactoryLogic.distance.createRanged() ],
 						target: '1 creature or object',
-						powerRoll: AbilityLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Reason ],
 							tier1: '2 + R damage',
 							tier2: '4 + R damage',
@@ -66,7 +65,7 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 						effect: 'When you make this strike, choose the damage type from one of the following options: acid, cold, corruption, fire, lightning, poison, or sonic.'
 					})
 				}),
-				FeatureLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'elementalist-1-5',
 					name: 'Persistent Magic',
 					description: `
@@ -75,14 +74,14 @@ You can’t maintain any abilities that would make you earn a negative amount of
 If you maintain the same ability on several targets and the effect includes a power roll, you make that roll once and apply the same effect to all targets. A creature can’t be affected by multiple instances of a persistent ability.
 If you take damage equal to or greater than 5 × your Reason score in one turn, you stop maintaining any persistent abilities. For instance, if you have a Reason score of 2 and are maintaining Instantaneous Excavation, taking 10 or more damage in one turn causes you to stop maintaining the ability.`
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'elementalist-1-6',
 						name: 'Practical Magic',
 						description: 'Your mastery of elemental power lets you customize your conjurations.',
-						type: AbilityLogic.type.createManeuver(),
+						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.distance.createSelf() ],
+						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						effect: `
 Choose one of the following effects:
@@ -91,12 +90,12 @@ Choose one of the following effects:
 * You teleport up to a number of squares equal to your Reason score.`
 					})
 				}),
-				FeatureLogic.feature.createChoiceFeature({
+				FactoryLogic.feature.createChoiceFeature({
 					id: 'elementalist-1-7',
 					name: 'Enchantment',
 					options: [
 						{
-							feature: FeatureLogic.feature.create({
+							feature: FactoryLogic.feature.create({
 								id: 'elementalist-1-7a',
 								name: 'Enchantment of Battle',
 								description: 'You tap into the elemental mysteries to gain the mind and training of a warrior. You can wear light armor and wield light weapons effectively, even though you don’t have a kit. While you wear light armor, you gain a +3 bonus to Stamina and that bonus increases by 3 at 4th, 7th, and 10th levels. While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this enchantment.'
@@ -104,7 +103,7 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.create({
+							feature: FactoryLogic.feature.create({
 								id: 'elementalist-1-7b',
 								name: 'Enchantment of Celerity',
 								description: 'You infuse your body with the speed of elemental air. You gain a +1 bonus to speed and to the distance you shift when you take the Disengage move action.'
@@ -112,7 +111,7 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.create({
+							feature: FactoryLogic.feature.create({
 								id: 'elementalist-1-7c',
 								name: 'Enchantment of Destruction',
 								description: 'You harness the destructive power of flame inside your mind, allowing you to focus your magic on destroying your enemies. You gain a +1 rolled damage bonus with magic abilities.'
@@ -120,7 +119,7 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.create({
+							feature: FactoryLogic.feature.create({
 								id: 'elementalist-1-7d',
 								name: 'Enchantment of Distance',
 								description: 'You reach into the mysteries of the void and mix that element with all of your abilities. You gain a +2 bonus to the distance of your ranged magic abilities.'
@@ -128,7 +127,7 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.create({
+							feature: FactoryLogic.feature.create({
 								id: 'elementalist-1-7e',
 								name: 'Enchantment of Permanence',
 								description: 'You place the magic of earth into your flesh and bones, making your body tougher and harder to move. You gain a +6 bonus to Stamina, and this bonus increases by 6 at 4th, 7th, and 10th levels. Additionally, you gain a +1 bonus to stability.'
@@ -137,12 +136,12 @@ Choose one of the following effects:
 						}
 					]
 				}),
-				FeatureLogic.feature.createChoiceFeature({
+				FactoryLogic.feature.createChoiceFeature({
 					id: 'elementalist-1-8',
 					name: 'Elementalist Ward',
 					options: [
 						{
-							feature: FeatureLogic.feature.create({
+							feature: FactoryLogic.feature.create({
 								id: 'elementalist-1-8a',
 								name: 'Ward of Delightful Consequences',
 								description: 'A protective field of void magic absorbs violence aimed at you, then lets you hurl it back at your enemies. The first time each round that you take damage, you gain a surge.'
@@ -150,7 +149,7 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.create({
+							feature: FactoryLogic.feature.create({
 								id: 'elementalist-1-8b',
 								name: 'Ward of Excellent Protection',
 								description: 'The protective shield you weave around yourself is made of all the elements to channel their full protective power. You have immunity to acid, cold, corruption, fire, and lightning damage equal to your Reason score.'
@@ -158,7 +157,7 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.create({
+							feature: FactoryLogic.feature.create({
 								id: 'elementalist-1-8c',
 								name: 'Ward of Nature\'s Affection',
 								description: 'You store green energy within your body that allows you to produce powerful vines when you’re in danger. Whenever a creature within a number of squares equal to your Reason score deals damage to you, you can use a free triggered action to slide that creature up to a number of squares equal to your Reason score.'
@@ -166,7 +165,7 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FeatureLogic.feature.create({
+							feature: FactoryLogic.feature.create({
 								id: 'elementalist-1-8d',
 								name: 'Ward of Surprising Reactivity',
 								description: 'You use the magic of fire to create an invisible ward of explosive fire energy. Whenever an adjacent creature deals damage to you, you can use a free triggered action to push that creature a number of squares equal to twice your Reason score.'
@@ -175,16 +174,16 @@ Choose one of the following effects:
 						}
 					]
 				}),
-				FeatureLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoiceFeature({
 					id: 'elementalist-1-9',
 					cost: 0,
 					count: 2
 				}),
-				FeatureLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoiceFeature({
 					id: 'elementalist-1-10',
 					cost: 3
 				}),
-				FeatureLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoiceFeature({
 					id: 'elementalist-1-11',
 					cost: 5
 				})
@@ -193,11 +192,11 @@ Choose one of the following effects:
 		{
 			level: 2,
 			features: [
-				FeatureLogic.feature.createPerkFeature({
+				FactoryLogic.feature.createPerkFeature({
 					id: 'elementalist-2-1',
 					lists: [ PerkList.Crafting, PerkList.Lore, PerkList.Supernatural ]
 				}),
-				FeatureLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoiceFeature({
 					id: 'elementalist-2-2',
 					cost: 5
 				})
@@ -206,7 +205,7 @@ Choose one of the following effects:
 		{
 			level: 3,
 			features: [
-				FeatureLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoiceFeature({
 					id: 'elementalist-3-1',
 					cost: 7
 				})
@@ -214,15 +213,15 @@ Choose one of the following effects:
 		}
 	],
 	abilities: [
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-1',
 			name: 'Afflict a Bountiful Decay',
 			description: 'Your curse causes a foe’s flesh to rot off as spores that aid your allies.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Green, AbilityKeyword.Rot, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 + R corruption damage',
 				tier2: '4 + R corruption damage',
@@ -230,30 +229,30 @@ Choose one of the following effects:
 			}),
 			effect: 'You or one ally within distance can end one effect that is ended by a saving throw or that ends at the end of that creature’s turn.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-2',
 			name: 'Bifurcated Conflagration',
 			description: 'Two jets of flame lance out at your command.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '2 creatures or objects',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 fire damage',
 				tier2: '4 fire damage',
 				tier3: '6 fire damage'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-3',
 			name: 'Grasp of Beyond',
 			description: 'You absorb the life energy of another creature and use it to teleport.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Void ],
-			distance: [ AbilityLogic.distance.createMelee() ],
+			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '3 + R corruption damage',
 				tier2: '6 + R corruption damage',
@@ -261,15 +260,15 @@ Choose one of the following effects:
 			}),
 			effect: 'You can teleport up to a number of squares equal to your Reason score.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-4',
 			name: 'The Green Within, The Green Without',
 			description: 'Whipping vines erupt from a foe’s body to grasp at another close by.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 + R damage',
 				tier2: '5 + R damage',
@@ -277,46 +276,46 @@ Choose one of the following effects:
 			}),
 			effect: 'You slide one creature within 10 squares of the target up to 2 squares.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-5',
 			name: 'A Meteoric Introduction',
 			description: 'You give your enemy a gentle tap like an asteroid impact.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createMelee() ],
+			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '3 + R damage; push 2',
 				tier2: '5 + R damage; push 3',
 				tier3: '8 + R damage; push 4'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-6',
 			name: 'Ray of Agonizing Self Reflection',
 			description: 'You inflict pain and doubt in equal measure.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Void ],
-			distance: [ AbilityLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature or object',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 + R corruption damage; R < weak, slowed (save ends)',
 				tier2: '4 + R corruption damage; R < average, slowed (save ends)',
 				tier3: '6 + R corruption damage; R < strong, slowed (save ends)'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-7',
 			name: 'Unquiet Ground',
 			description: 'A sudden storm of detritus assaults your foes and leaves them struggling to move.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 10 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 10 }) ],
 			target: 'Each enemy in the area',
 			preEffect: '',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 damage',
 				tier2: '5 damage',
@@ -324,31 +323,31 @@ Choose one of the following effects:
 			}),
 			effect: 'The ground beneath the area becomes difficult terrain for enemies.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-8',
 			name: 'Viscous Fire',
 			description: 'A jet of heavy fire erupts with elemental fury where it strikes.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature or object',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 + R fire damage; push 2',
 				tier2: '5 + R fire damage; push 3',
 				tier3: '7 + R fire damage; push 4'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-9',
 			name: 'Behold the Mystery',
 			description: 'You open a rift into the void to harry your foes.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
-			distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 			target: 'Each enemy in the area',
 			cost: 3,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 psychic damage',
 				tier2: '4 psychic damage',
@@ -361,16 +360,16 @@ Choose one of the following effects:
 				}
 			]
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-10',
 			name: 'The Flesh, a Crucible',
 			description: 'Fire engulfs a target of your choice and burns at your command.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '5 + R fire damage',
 				tier2: '8 + R fire damage',
@@ -383,16 +382,16 @@ Choose one of the following effects:
 				}
 			]
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-11',
 			name: 'Invigorating Growth',
 			description: 'Mushrooms erupt from a foe, sapping their vitality to spread strengthening spores.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 3,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '4 + R poison damage',
 				tier2: '7 + R poison damage',
@@ -400,16 +399,16 @@ Choose one of the following effects:
 			}),
 			effect: 'Mushrooms cover the target’s body, and can be removed by the target or by an adjacent creature as an action. While the mushrooms are on the target, you and each of your allies adjacent to the target gains a surge whenever the target takes damage.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-12',
 			name: 'Ripples in the Earth',
 			description: 'Like a stone dropped into a pond, waves in the earth radiate from you.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Earth, AbilityKeyword.Magic ],
-			distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 3,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '3 damage',
 				tier2: '5 damage',
@@ -417,16 +416,16 @@ Choose one of the following effects:
 			}),
 			effect: 'You must be touching the ground to use this ability. Choose a square of ground in the area that is unoccupied or occupied by your or an ally. A pillar of earth that is 1 square wide and long and is up to as many squares tall as your Reason score rises out of the ground. The pillar can’t collide with any creatures or objects nor can it force any creatures being raised by it to collide with other creatures or objects.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-13',
 			name: 'Conflagration',
 			description: 'A storm of fire descends upon your enemies.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 			target: 'Each enemy in the area',
 			cost: 5,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '4 fire damage',
 				tier2: '6 fire damage',
@@ -439,17 +438,17 @@ Choose one of the following effects:
 				}
 			]
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-14',
 			name: 'Instantaneous Excavation',
 			description: 'The surface of the world around you opens up at your command.',
-			type: AbilityLogic.type.createManeuver(),
+			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged() ],
 			target: 'Special',
 			cost: 5,
 			preEffect: 'You open up two holes with 1-square openings that are 4 squares deep, and which can be placed on any mundane surface within distance. You can place these holes next to each other to create fewer holes with wider openings. When the holes open, make a separate power roll for each creature on the ground above a hole and small enough to fall in. (You can’t get a critical hit with this power because it uses a maneuver.)',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: 'The target can shift 1 square from the edge of the hole to the nearest unoccupied space of their choice.',
 				tier2: 'The target falls into the hole.',
@@ -462,13 +461,13 @@ Choose one of the following effects:
 				}
 			]
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-15',
 			name: 'No More than a Breeze',
 			description: 'The material substance of a creature shreds away at your command.',
-			type: AbilityLogic.type.createManeuver(),
+			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
-			distance: [ AbilityLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged() ],
 			target: 'Self or one ally',
 			cost: 5,
 			effect: 'Until the start of your next turn, the target can move through solid matter, ignores difficult terrain, and their movement can’t provoke opportunity attacks. If the target ends their turn inside solid matter, they are shunted out into the space where they entered it and this effect ends.',
@@ -479,16 +478,16 @@ Choose one of the following effects:
 				}
 			]
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-16',
 			name: 'Test of Rain',
 			description: 'You call down a rain that burns your enemies and restores your allies.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 			target: 'Each enemy in the area',
 			cost: 5,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '4 acid damage',
 				tier2: '6 acid damage',
@@ -497,13 +496,13 @@ Choose one of the following effects:
 			effect: 'You and each ally within the area can end one effect that is ended by a saving throw or that ends at the end of that creature’s turn.'
 		}),
 		// TODO: These abilities should be selectable at 2nd level only
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-17',
 			name: 'O Flower Aid, O Earth Defend',
 			description: 'Revitalizing plants and jagged stones grow, helping allies and hindering foes.',
-			type: AbilityLogic.type.createManeuver(),
+			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Earth, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 			target: 'Special',
 			cost: 5,
 			effect: `
@@ -518,67 +517,67 @@ Until the start of your next turn, the area gains the following effects:
 				}
 			]
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-18',
 			name: 'Subvert the Green Within',
 			description: 'Burrow into their brains and take control!',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Void ],
-			distance: [ AbilityLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 5,
 			preEffect: 'The target uses their signature ability against a target of your choice. You then make a power roll against the target of this ability.',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '5 + R poison damage',
 				tier2: '9 + R poison damage',
 				tier3: '12 + R poison damage'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-19',
 			name: 'Translated Through Flame',
 			description: 'Your ally disappears, then reappears in a burst of fire!',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
-			distance: [ AbilityLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged() ],
 			target: 'Self or one ally',
 			cost: 5,
 			preEffect: 'The target is teleported to another space within distance. Make a power roll that targets each enemy adjacent to the target’s new space.',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '3 fire damage',
 				tier2: '5 fire damage',
 				tier3: '8 fire damage'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-20',
 			name: 'Volcano\'s Embrace',
 			description: 'Wrap them up in fire and melting stone.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Earth, AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '5 + R fire damage; A < weak, restrained (save ends)',
 				tier2: '9 + R fire damage; A < average, restrained (save ends)',
 				tier3: '12 + R fire damage; A < strong, restrained (save ends)'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-21',
 			name: 'Erase',
 			description: 'With a flick of the wrist, you phase creatures out of existence.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Void ],
-			distance: [ AbilityLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged() ],
 			target: 'Special',
 			cost: 7,
 			preEffect: 'The number of creatures you target with this ability is determined by your power roll.',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: 'One creature',
 				tier2: 'Two creatures',
@@ -586,16 +585,16 @@ Until the start of your next turn, the area gains the following effects:
 			}),
 			effect: 'Each target begins to fade from existence (save ends). While fading from existence, a target initially takes a bane on power rolls. At the end of their first turn, they have a double bane on power rolls. At the end of their second turn, they fade from existence for 1 hour, reappearing in their original space or the nearest available space.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-22',
 			name: 'Maw of Earth',
 			description: 'You open up the ground, unleashing a shower of stone and debris.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 			target: '1 creature or object',
 			cost: 7,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '5 damage',
 				tier2: '9 damage',
@@ -603,16 +602,16 @@ Until the start of your next turn, the area gains the following effects:
 			}),
 			effect: 'The ground in or directly beneath the area drops, lowering 3 squares.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-23',
 			name: 'Swarm of Spirits',
 			description: 'Guardian animal spirits surround you to harry your foes and bolster your allies.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Green, AbilityKeyword.Magic ],
-			distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Aura, value: 3 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 3 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '3 damage',
 				tier2: '6 damage',
@@ -626,13 +625,13 @@ Until the start of your next turn, the area gains the following effects:
 				}
 			]
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'elementalist-ability-24',
 			name: 'Wall of Fire',
 			description: 'A blazing, beautifully organized inferno erupts at your command.',
-			type: AbilityLogic.type.createManeuver(),
+			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Wall, value: 10, within: 10 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 10, within: 10 }) ],
 			target: 'Special',
 			cost: 7,
 			effect: 'The wall lasts until the start of your next turn, and can be placed in occupied squares. Creatures can enter and pass through the wall. When an enemy enters or starts their turn in a square of the wall, they take fire damage equal to your Reason score.',
@@ -653,19 +652,19 @@ Until the start of your next turn, the area gains the following effects:
 				{
 					level: 1,
 					features: [
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'elementalist-sub-1-1-1',
 							name: 'Acolyte of Earth',
 							description: 'Whenever you use an earth magic ability, your stability increases by 1 until the start of your next turn. This benefit is cumulative.'
 						}),
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-1-1-2',
 								name: 'Motivate Earth',
 								description: 'The earth rises, falls, or opens up at your command.',
-								type: AbilityLogic.type.createAction(),
+								type: FactoryLogic.type.createAction(),
 								keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-								distance: [ AbilityLogic.distance.createMelee() ],
+								distance: [ FactoryLogic.distance.createMelee() ],
 								target: 'Special',
 								cost: 3,
 								effect: `
@@ -674,14 +673,14 @@ Alternatively, you touch a structure made of mundane dirt, stone, or metal that 
 You can instead touch a doorway or other opening in a mundane dirt, stone, or metal surface that is no larger than 1 square. The opening is sealed by the same material that makes up the surface.`
 							})
 						}),
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-1-1-3',
 								name: 'Skin Like Castle Walls',
 								description: 'You make yourself or an ally covered in protective stone.',
-								type: AbilityLogic.type.createTrigger('The target takes damage.'),
+								type: FactoryLogic.type.createTrigger('The target takes damage.'),
 								keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.distance.createRanged() ],
+								distance: [ FactoryLogic.distance.createRanged() ],
 								target: 'Self or 1 ally',
 								effect: 'The damage is halved.',
 								spend: [
@@ -697,7 +696,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'elementalist-sub-1-2-1',
 							name: 'Disciple of Earth',
 							description: 'Your body is strengthened by your mind’s connection to the element of permanence. You have a +6 bonus to Stamina, plus you gain an additional +3 bonus to Stamina whenever you gain a level beyond 2nd in this class.'
@@ -707,14 +706,14 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 				{
 					level: 3,
 					features: [
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-1-3-1',
 								name: 'The Earth Accepts Me',
 								description: 'You can slip into the stone.',
-								type: AbilityLogic.type.createAction(),
+								type: FactoryLogic.type.createAction(),
 								keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic ],
-								distance: [ AbilityLogic.distance.createSelf() ],
+								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You step into a mundane dirt, metal, or stone object (including a wall) that is as large as you or larger. You can remain inside the object for as long as you like. While inside the object, you can observe events and speak to creatures outside of it, but you don’t have line of effect to anything outside the object and vice versa. You can travel through the object freely until you exit it. If the object you meld with is destroyed, you take 10 damage and exit the object.'
 							})
@@ -732,31 +731,31 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 				{
 					level: 1,
 					features: [
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'elementalist-sub-2-1-1',
 							name: 'Acolyte of Fire',
 							description: 'Your abilities that have the Fire and Magic keywords gain a +1 rolled damage bonus.'
 						}),
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-2-1-2',
 								name: 'Return to Formlessness',
 								description: 'With the merest touch, you cause an object to turn into slag or ash.',
-								type: AbilityLogic.type.createAction(),
+								type: FactoryLogic.type.createAction(),
 								keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-								distance: [ AbilityLogic.distance.createMelee() ],
+								distance: [ FactoryLogic.distance.createMelee() ],
 								target: '1 mundane object',
 								effect: 'You heat the target and cause it to combust and melt, destroying it. If the object is larger than 1 square, then only the square of the object that you touch is destroyed.'
 							})
 						}),
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-2-1-3',
 								name: 'Explosive Assistance',
 								description: 'You add a little magic to an ally’s aggression at just the right time.',
-								type: AbilityLogic.type.createTrigger('The target force moves a creature or object.'),
+								type: FactoryLogic.type.createTrigger('The target force moves a creature or object.'),
 								keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.distance.createRanged() ],
+								distance: [ FactoryLogic.distance.createRanged() ],
 								target: 'Self or 1 ally',
 								effect: 'The forced movement distance gains a bonus equal to your Reason score.',
 								spend: [
@@ -772,7 +771,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'elementalist-sub-2-2-1',
 							name: 'Disciple of Fire',
 							description: 'Your connection to fire allows you to protect yourself from it, even as you rip away the protections of others. You have fire immunity equal to 5 plus your level in this class. Any fire damage you deal ignores a target’s fire immunity.'
@@ -782,7 +781,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 				{
 					level: 3,
 					features: [
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'elementalist-sub-2-3-1',
 							name: 'A Conversation with Fire',
 							description: 'When you spend 1 minute in front of a fire, you can speak the name of another creature. If that creature is willing to speak to you, their image appears in the fire, and they can see you before them in a shimmering ball of light. The two of you can speak to each other through these images as if you were together in person. You or the creature can end the conversation as a maneuver.'
@@ -800,26 +799,26 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 				{
 					level: 1,
 					features: [
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'elementalist-sub-3-1-1',
 							name: 'Acolyte of the Green',
 							description: 'Whenever you deal damage to one or more creatures with a green magic ability that costs essence to use (see below), you or one creature of your choice within 10 squares of you gains temporary Stamina equal to your Reason score.'
 						}),
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'elementalist-sub-3-1-2',
 							name: 'It Is the Soul Which Hears',
 							description: `
 You can speak with and understand Animals, Monstrosities, and Plant Creatures, even if they don’t share a language with you. Your ability to communicate with such creatures doesn’t make them inherently more intelligent, but you can use Reason in place of Presence while making tests to influence them.
 Additionally, whenever you touch a living plant that is not a Plant Creature, you can communicate with it telepathically. You can use words to communicate with the plant, but it communicates with you only by transmitting feelings and sensations that can’t be overly specific.`
 						}),
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-3-1-3',
 								name: 'The Breath of Dawn Remembered',
 								description: 'The power you channel grants the ability to get back in the fight.',
-								type: AbilityLogic.type.createTrigger('The target starts their turn.'),
+								type: FactoryLogic.type.createTrigger('The target starts their turn.'),
 								keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-								distance: [ AbilityLogic.distance.createRanged() ],
+								distance: [ FactoryLogic.distance.createRanged() ],
 								target: 'Self or 1 ally',
 								effect: 'The target can spend a Recovery.',
 								spend: [
@@ -834,7 +833,7 @@ Additionally, whenever you touch a living plant that is not a Plant Creature, yo
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'elementalist-sub-3-2-1',
 							name: 'Disciple of the Green',
 							description: `
@@ -856,14 +855,14 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 				{
 					level: 3,
 					features: [
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-3-3-1',
 								name: 'Remember Growth and Sun and Rain',
 								description: 'You stir any wood’s memory and learn what it has seen.',
-								type: AbilityLogic.type.createAction(),
+								type: FactoryLogic.type.createAction(),
 								keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-								distance: [ AbilityLogic.distance.createMelee() ],
+								distance: [ FactoryLogic.distance.createMelee() ],
 								target: 'One mundane wooden object',
 								effect: 'You see and hear any events that have occurred within 10 squares of the object within the last 12 hours, perceiving those events from the object’s location as if you were there.'
 							})
@@ -881,36 +880,36 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 				{
 					level: 1,
 					features: [
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'elementalist-sub-4-1-1',
 							name: 'Acolyte of the Void',
 							description: 'The distance of all your ranged void magic abilities increases by 2.'
 						}),
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'elementalist-sub-4-1-2',
 							name: 'A Beyonding of Vision',
 							description: 'You instantly recognize illusions for what they are, you can see invisible creatures, and supernatural effects can’t conceal creatures and objects from you. You always know if an area or object you observe is magical or affected by magic, and you know the specifics of what that magic can do.'
 						}),
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-4-1-3',
 								name: 'Shared Void Sense',
 								description: 'You grant allies a taste of your unearthly vision.',
-								type: AbilityLogic.type.createManeuver(),
+								type: FactoryLogic.type.createManeuver(),
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
-								distance: [ AbilityLogic.distance.createRanged() ],
+								distance: [ FactoryLogic.distance.createRanged() ],
 								target: 'Special',
 								effect: 'For each Victory you have, you can target one creature. That creature gains the benefit of your A Beyonding of Vision feature until the end of your next turn, but doesn’t gain the use of Shared Void Sense.'
 							})
 						}),
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-4-1-4',
 								name: 'A Subtle Relocation',
 								description: 'You call on the void to swallow and spit out an ally.',
-								type: AbilityLogic.type.createTrigger('The target starts their turn, moves, or is force moved.'),
+								type: FactoryLogic.type.createTrigger('The target starts their turn, moves, or is force moved.'),
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
-								distance: [ AbilityLogic.distance.createRanged() ],
+								distance: [ FactoryLogic.distance.createRanged() ],
 								target: 'Self or 1 ally',
 								effect: 'You teleport the target up to a number of squares equal to your Reason score. If the target moves to trigger this ability, you can teleport them at any point during the move.',
 								spend: [
@@ -926,14 +925,14 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-4-2-1',
 								name: 'There is No Space Between',
 								description: '',
-								type: AbilityLogic.type.createManeuver(),
+								type: FactoryLogic.type.createManeuver(),
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
-								distance: [ AbilityLogic.distance.createRanged() ],
+								distance: [ FactoryLogic.distance.createRanged() ],
 								target: 'Special',
 								effect: `
 You open two size 1 portals in unoccupied spaces in range, which last until you move beyond distance from any portal, end the effect as a maneuver, or are dying. Each portal must be placed at a height of no more than 1 square above the ground. When you or any ally touch a portal, that creature can choose to be instantly teleported to an unoccupied space of their choice within 1 square of the other portal. If an enemy is force moved into a portal, their forced movement ends and they emerge from the other portal in an unoccupied space chosen by the creature who force moved them.
@@ -945,7 +944,7 @@ At the start of each of your turns while the portals are active, you can open a 
 				{
 					level: 3,
 					features: [
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'elementalist-sub-4-3-1',
 							name: 'Distance is Only Memory',
 							description: 'When you finish a respite, you can open a two-way portal that leads to any place you have previously been. Your allies can pass through the portal, which remains open for 1 hour or until you dismiss it as an action.'

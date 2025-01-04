@@ -1,8 +1,7 @@
 import { KitArmor, KitType, KitWeapon } from '../enums/kit';
 import { AbilityKeyword } from '../enums/ability-keyword';
-import { AbilityLogic } from '../logic/ability-logic';
 import { Characteristic } from '../enums/characteristic';
-import { FeatureLogic } from '../logic/feature-logic';
+import { FactoryLogic } from '../logic/factory-logic';
 import { Kit } from '../models/kit';
 import { KitLogic } from '../logic/kit-logic';
 
@@ -23,17 +22,17 @@ export class KitData {
 		rangedDistance: 10,
 		disengage: 1,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-arcane-archer-signature',
 					name: 'Exploding Arrow',
 					description: 'Your ammunition explodes with magical energy.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createRanged(5) ],
+					distance: [ FactoryLogic.distance.createRanged(5) ],
 					target: '1 creature or object',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 						tier1: '3 + A, R, I, or P fire damage',
 						tier2: '5 + A, R, I, or P fire damage',
@@ -61,17 +60,17 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 10,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-battlemind-signature',
 					name: 'Unmooring',
 					description: 'Your weapon unleashes psionic energy that reduces your target’s weight.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 						tier1: '3 + M, R, I, or P damage; stability reduced by 2 (EoT)',
 						tier2: '6 + M, R, I, or P damage; stability reduced by 3 (EoT)',
@@ -98,20 +97,20 @@ export class KitData {
 		rangedDistance: 5,
 		disengage: 1,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-cloak-and-dagger-signature',
 					name: 'Fade',
 					description: 'A stab, and a few quick, careful steps back.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [
-						AbilityLogic.distance.createMelee(),
-						AbilityLogic.distance.createRanged(5)
+						FactoryLogic.distance.createMelee(),
+						FactoryLogic.distance.createRanged(5)
 					],
 					target: '1 creature',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 + M or A damage; you shift 1 square',
 						tier2: '5 + M or A damage; you shift up to 2 squares',
@@ -138,17 +137,17 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 1,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-dual-wielder-signature',
 					name: 'Double Strike',
 					description: 'Why strike once when you could do it twice?',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 damage',
 						tier2: '4 damage',
@@ -176,17 +175,17 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-guisarmier-signature',
 					name: 'Forward Thrust, Backward Smash',
 					description: 'In your hands, the haft is as good as the head.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '2 creatures or objects',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 damage',
 						tier2: '5 damage',
@@ -213,17 +212,17 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 1,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-martial-artist-signature',
 					name: 'Battle Grace',
 					description: 'You feint to move your enemies into perfect position.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage',
 						tier2: '6 + M or A damage; you swap places with the target',
@@ -251,17 +250,17 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-mountain-signature',
 					name: 'Pain For Pain',
 					description: 'An enemy who tagged you will pay for that.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 damage + M or A damage',
 						tier2: '5 damage + M or A damage',
@@ -289,17 +288,17 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-panther-signature',
 					name: 'Devastating Rush',
 					description: 'The faster you move, the harder you hit.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature or object',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage',
 						tier2: '6 + M or A damage',
@@ -327,17 +326,17 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-pugilist-signature',
 					name: 'Let’s Dance',
 					description: 'Keeping your enemies stumbling around the battlefield is second nature to you.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 + M or A damage',
 						tier2: '5 + M or A damage; slide 1',
@@ -365,20 +364,20 @@ export class KitData {
 		rangedDistance: 5,
 		disengage: 1,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-raider-signature',
 					name: 'Shock and Awe',
 					description: 'You execute a brutal strike that leaves your foe reeling.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [
-						AbilityLogic.distance.createMelee(),
-						AbilityLogic.distance.createRanged(5)
+						FactoryLogic.distance.createMelee(),
+						FactoryLogic.distance.createRanged(5)
 					],
 					target: '1 creature',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 + M or A damage',
 						tier2: '5 + M or A damage',
@@ -406,17 +405,17 @@ export class KitData {
 		rangedDistance: 5,
 		disengage: 1,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-ranger-signature',
 					name: 'Hamstring Shot',
 					description: 'A well-placed shot leaves your enemy struggling to move.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createRanged(5) ],
+					distance: [ FactoryLogic.distance.createRanged(5) ],
 					target: '1 creature',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 + M or A damage; A < [weak] slowed (save ends)',
 						tier2: '4 + M or A damage; A < [average] slowed (save ends)',
@@ -443,17 +442,17 @@ export class KitData {
 		rangedDistance: 7,
 		disengage: 1,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-rapid-fire-signature',
 					name: 'Two Shot',
 					description: 'When you fire two arrows back to back, both hit their mark.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createRanged(5) ],
+					distance: [ FactoryLogic.distance.createRanged(5) ],
 					target: '2 creatures or objects',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 damage',
 						tier2: '4 damage',
@@ -480,17 +479,17 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 1,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-retiarius-signature',
 					name: 'Net And Stab',
 					description: 'The well-thrown net that follows your main attack leaves your foes right where you want them.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 + M or A damage; A < [weak] slowed (EoT)',
 						tier2: '4 + M or A damage; A < [average] slowed (EoT)',
@@ -517,17 +516,17 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-shining-armor-signature',
 					name: 'Protective Attack',
 					description: 'The strength of your assault makes it impossible for your foe to ignore you.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage',
 						tier2: '7 + M or A damage',
@@ -555,17 +554,17 @@ export class KitData {
 		rangedDistance: 10,
 		disengage: 1,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-sniper-signature',
 					name: 'Patient Shot',
 					description: 'Breathe … aim … wait … then strike!',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createRanged(5) ],
+					distance: [ FactoryLogic.distance.createRanged(5) ],
 					target: '1 creature',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage',
 						tier2: '6 + M or A damage',
@@ -593,17 +592,17 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-spellsword-signature',
 					name: 'Leaping Lightning',
 					description: 'Lightning jumps from your weapon as you strike to harm a nearby foe.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature or object',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 						tier1: '3 + M, R, I or P lightning damage',
 						tier2: '6 + M, R, I or P lightning damage',
@@ -631,17 +630,17 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 1,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-stick-and-robe-signature',
 					name: 'Where I Want You',
 					description: 'When your stick speaks, your enemy moves.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage',
 						tier2: '6 + M or A damage; slide 1',
@@ -668,17 +667,17 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 1,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-swashbuckler-signature',
 					name: 'Fancy Footwork',
 					description: 'All combat is a dance—and you’ll be the one leading.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage',
 						tier2: '5 + M or A damage; push 1',
@@ -706,17 +705,17 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 1,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-sword-and-board-signature',
 					name: 'Shield Bash',
 					description: 'In your hands, a shield isn’t just for protection.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 + M or A damage; push 1',
 						tier2: '5 + M or A damage; push 2',
@@ -743,17 +742,17 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-warrior-priest-signature',
 					name: 'Weakening Brand',
 					description: '',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature or object',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 						tier1: '3 + M or A damage; vertical pull 1',
 						tier2: '6 + M or A damage; vertical pull 2',
@@ -781,17 +780,17 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 1,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-whirlwind-signature',
 					name: 'Extension Of My Arm',
 					description: 'When you draw your whip back after an attack, your enemy comes ever closer.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee(2) ],
+					distance: [ FactoryLogic.distance.createMelee(2) ],
 					target: '1 creature',
 					cost: 0,
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage; vertical pull 1',
 						tier2: '6 + M or A damage; vertical pull 2',
@@ -820,16 +819,16 @@ export class KitData {
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-boren-signature',
 					name: 'Bear Claws',
 					description: 'Attacks with your sharp and deadly claws send your foes staggering back.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '2 creatures or objects',
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
 						tier1: '2 damage; push 1',
 						tier2: '3 damage; push 2',
@@ -837,7 +836,7 @@ export class KitData {
 					})
 				})
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-1',
 				name: 'Aspect Benefits',
 				description: `
@@ -847,12 +846,12 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 * **Rage 4**: While in bear form, you can use all your abilities, your attacks deal extra damage equal to twice your Might score, instead of once your Might score, and any target you have grabbed at the start of your turn takes damage equal to twice your Might score, instead of once your Might score.
 * **Rage 6**: You have a double edge on Might tests, resistance rolls, and power rolls made with the Grab ability.`
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-2',
 				name: 'Animal Form: Bear',
 				description: 'When you are in your bear form, your speed increases by 2, your size becomes 2, and you have a +1 reach bonus with melee attacks. You gain 10 temporary Stamina the first time you shapeshift into bear form during an encounter.'
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-3',
 				name: 'Primordial Storm: Blizzard',
 				description: 'Your primordial damage type is cold.'
@@ -876,16 +875,16 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-corven-signature',
 					name: 'Wing Buffet',
 					description: 'Foes who try to close around you do so at their peril.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '3 creatures or objects',
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
 						tier1: '4 damage',
 						tier2: '5 damage',
@@ -894,7 +893,7 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 					effect: 'Resolve each attack individually using one power roll. You can shift 1 square after resolving damage for each target, then choose your next target from your new location.'
 				})
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-1',
 				name: 'Aspect Benefits',
 				description: `
@@ -906,14 +905,14 @@ You gain an edge on tests made to hide and sneak. Whenever you are falling, you 
 * **Rage 4**: Once per turn while in crow or hybrid crow form, when you move away from an enemy, that enemy takes damage equal to twice your Agility score, instead of once your Agility score.
 * **Rage 6**: You can shift up to 2 squares as a free maneuver once per turn.`
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-2',
 				name: 'Animal Form: Crow',
 				description: `
 When you are in your crow form, your movement gains the Fly keyword, and your size becomes 1T. You can use the Hide maneuver as a free maneuver, and you can use your allies as cover when you hide.
 Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal crow of your true form’s size. You gain 10 temporary Stamina the first time you shapeshift into hybrid crow form during an encounter.`
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-3',
 				name: 'Primordial Storm: Katabatic Wind',
 				description: 'Your primordial damage type is fire.'
@@ -937,16 +936,16 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-raden-signature',
 					name: 'Driving Pounce',
 					description: 'Your enemies try in vain to fall back from your pouncing attack.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '2 creatures or objects',
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
 						tier1: '4 damage',
 						tier2: '5 damage; push 1',
@@ -955,7 +954,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					effect: 'Resolve each attack one at a time. After each attack, you can shift the same number of squares that you pushed the target. You select your second target from the square where you end your shift, which can be the first target again.'
 				})
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-1',
 				name: 'Aspect Benefits',
 				description: `
@@ -966,14 +965,14 @@ You gain an edge on tests made to hide and sneak. Additionally, you ignore diffi
 * **Rage 4**: While in rat or hybrid rat form, you can use all your abilities, and your attacks deal extra damage equal to twice your Agility score, instead of once your Agility score.
 * **Rage 6**: You have Weapon immunity 2. Any damage you ignore because of this immunity is dealt to each enemy adjacent to you when you are attacked.`
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-2',
 				name: 'Animal Form: Rat',
 				description: `
 When you are in your rat form, your movement gains the Climb keyword, and your size becomes 1T. You can use the Hide maneuver as a free maneuver, and you can use your allies as cover when hiding. You can stay hidden while moving through squares occupied by a creature.
 Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal rat of your true form’s size. You gain 10 temporary Stamina the first time you shapeshift into hybrid rat form during an encounter.`
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-3',
 				name: 'Primordial Storm: Rat Flood',
 				description: 'Your primordial damage type is corruption.'
@@ -997,16 +996,16 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FeatureLogic.feature.createAbilityFeature({
-				ability: AbilityLogic.createAbility({
+			FactoryLogic.feature.createAbilityFeature({
+				ability: FactoryLogic.createAbility({
 					id: 'kit-vuken-signature',
 					name: 'Probing Attack',
 					description: 'A savage assault forces your foes back.',
-					type: AbilityLogic.type.createAction(),
+					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ AbilityLogic.distance.createMelee() ],
+					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature or object',
-					powerRoll: AbilityLogic.createPowerRoll({
+					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
 						tier1: '5 damage',
 						tier2: '9 damage; push 1',
@@ -1015,7 +1014,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					effect: 'You can shift up to 2 squares as long as you end the shift adjacent to the target.'
 				})
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-1',
 				name: 'Aspect Benefits',
 				description: `
@@ -1027,14 +1026,14 @@ You and an ally gain the benefits of flanking whenever you are both adjacent to 
 * **Rage 4**: When you attack a target while in wolf or hybrid wolf form, the next ally to damage that target before the start of your next turn deals extra damage equal to twice your Agility score, instead of once your Agility score.
 * **Rage 6**: You have a double edge on Agility tests and resistance rolls.`
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-2',
 				name: 'Animal Form: Wolf',
 				description: `
 When you are in your wolf form, your speed increases by 2, you ignore difficult terrain, and your size becomes 1M.
 Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal wolf of your true form’s size. You gain 10 temporary Stamina the first time you shapeshift into hybrid wolf form during an encounter.`
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-3',
 				name: 'Primordial Storm: Lightning Storm',
 				description: 'Your primordial damage type is lightning.'

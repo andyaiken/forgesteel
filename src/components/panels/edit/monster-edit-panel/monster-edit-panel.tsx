@@ -4,9 +4,9 @@ import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Expander } from '../../../controls/expander/expander';
+import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Feature } from '../../../../models/feature';
 import { FeatureEditPanel } from '../feature-edit-panel/feature-edit-panel';
-import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -141,7 +141,7 @@ export const MonsterEditPanel = (props: Props) => {
 
 	const addFeature = () => {
 		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.features.push(FeatureLogic.feature.create({
+		copy.features.push(FactoryLogic.feature.create({
 			id: Utils.guid(),
 			name: '',
 			description: ''

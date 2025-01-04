@@ -1,6 +1,6 @@
 import { Career } from '../models/career';
+import { FactoryLogic } from '../logic/factory-logic';
 import { FeatureField } from '../enums/feature-field';
-import { FeatureLogic } from '../logic/feature-logic';
 import { PerkList } from '../enums/perk-list';
 import { SkillList } from '../enums/skill-list';
 
@@ -10,23 +10,23 @@ export class CareerData {
 		name: 'Agent',
 		description: 'You worked as a spy for a government or organization.',
 		features: [
-			FeatureLogic.feature.createSkillFeature({
+			FactoryLogic.feature.createSkillFeature({
 				id: 'career-agent-feature-1',
 				skill: 'Sneak'
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-agent-feature-2',
 				listOptions: [ SkillList.Interpersonal ]
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-agent-feature-3',
 				listOptions: [ SkillList.Intrigue ]
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'career-agent-feature-4',
 				count: 2
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'career-agent-feature-5',
 				lists: [ PerkList.Intrigue ]
 			})
@@ -73,28 +73,28 @@ export class CareerData {
 		name: 'Aristocrat',
 		description: 'Career? Who needs a career when you’re born into money! Or marry into it! Or con your way into it! Whatever the case, you didn’t need to work thanks to (someone’s) generational wealth.',
 		features: [
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-aristocrat-feature-1',
 				listOptions: [ SkillList.Interpersonal ]
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-aristocrat-feature-2',
 				listOptions: [ SkillList.Lore ]
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'career-aristocrat-feature-3'
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'career-aristocrat-feature-4',
 				field: FeatureField.Renown,
 				value: 1
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'career-aristocrat-feature-5',
 				field: FeatureField.Wealth,
 				value: 1
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'career-aristocrat-feature-6',
 				lists: [ PerkList.Lore ]
 			})
@@ -141,20 +141,20 @@ export class CareerData {
 		name: 'Artisan',
 		description: 'You made and sold useful wares.',
 		features: [
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-artisan-feature-1',
 				listOptions: [ SkillList.Crafting ],
 				count: 2
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'career-artisan-feature-2'
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'career-artisan-feature-3',
 				field: FeatureField.ProjectPoints,
 				value: 240
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'career-artisan-feature-4',
 				lists: [ PerkList.Crafting ]
 			})
@@ -201,23 +201,23 @@ export class CareerData {
 		name: 'Beggar',
 		description: 'You lived by going to a tavern, crossroads, city street, or other busy area and begging passersby for money or food.',
 		features: [
-			FeatureLogic.feature.createSkillFeature({
+			FactoryLogic.feature.createSkillFeature({
 				id: 'career-beggar-feature-1',
 				skill: 'Rumors'
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-beggar-feature-2',
 				listOptions: [ SkillList.Exploration ]
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-beggar-feature-3',
 				listOptions: [ SkillList.Interpersonal ]
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'career-beggar-feature-4',
 				count: 2
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'career-beggar-feature-5',
 				lists: [ PerkList.Interpersonal ]
 			})
@@ -264,24 +264,24 @@ export class CareerData {
 		name: 'Criminal',
 		description: 'You once worked as a bandit, insurgent, smuggler, outlaw, or even as an assassin.',
 		features: [
-			FeatureLogic.feature.createSkillFeature({
+			FactoryLogic.feature.createSkillFeature({
 				id: 'career-criminal-feature-1',
 				skill: 'Criminal Underworld'
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-criminal-feature-2',
 				listOptions: [ SkillList.Intrigue ],
 				count: 2
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'career-criminal-feature-3'
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'career-criminal-feature-4',
 				field: FeatureField.ProjectPoints,
 				value: 120
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'career-criminal-feature-5',
 				lists: [ PerkList.Intrigue ]
 			})
@@ -328,21 +328,21 @@ export class CareerData {
 		name: 'Disciple',
 		description: 'You worked in a church, temple, or other religious institution as part of the clergy.',
 		features: [
-			FeatureLogic.feature.createSkillFeature({
+			FactoryLogic.feature.createSkillFeature({
 				id: 'career-disciple-feature-1',
 				skill: 'Religion'
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-disciple-feature-2',
 				listOptions: [ SkillList.Lore ],
 				count: 2
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'career-disciple-feature-3',
 				field: FeatureField.ProjectPoints,
 				value: 240
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'career-disciple-feature-4',
 				lists: [ PerkList.Supernatural ]
 			})
@@ -389,20 +389,20 @@ export class CareerData {
 		name: 'Explorer',
 		description: 'You ventured into uncharted areas and made your living as a cartographer, researcher, resource seeker, or treasure hunter.',
 		features: [
-			FeatureLogic.feature.createSkillFeature({
+			FactoryLogic.feature.createSkillFeature({
 				id: 'career-explorer-feature-1',
 				skill: 'Navigate'
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-explorer-feature-2',
 				listOptions: [ SkillList.Exploration ],
 				count: 2
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'career-explorer-feature-3',
 				count: 2
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'career-explorer-feature-4',
 				lists: [ PerkList.Exploration ]
 			})
@@ -449,24 +449,24 @@ export class CareerData {
 		name: 'Farmer',
 		description: 'You grew crops or cared for livestock.',
 		features: [
-			FeatureLogic.feature.createSkillFeature({
+			FactoryLogic.feature.createSkillFeature({
 				id: 'career-farmer-feature-1',
 				skill: 'Handle Animals'
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-farmer-feature-2',
 				listOptions: [ SkillList.Exploration ],
 				count: 2
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'career-farmer-feature-3'
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'career-farmer-feature-4',
 				field: FeatureField.ProjectPoints,
 				value: 120
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'career-farmer-feature-5',
 				lists: [ PerkList.Exploration ]
 			})
@@ -513,20 +513,20 @@ export class CareerData {
 		name: 'Gladiator',
 		description: 'In the past, you entertained the masses with flashy displays of violence in the arena.',
 		features: [
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'gladiator-feature-1',
 				listOptions: [ SkillList.Exploration ],
 				count: 2
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'gladiator-feature-2'
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'gladiator-feature-3',
 				field: FeatureField.Renown,
 				value: 2
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'gladiator-feature-4',
 				lists: [ PerkList.Exploration ]
 			})
@@ -573,24 +573,24 @@ export class CareerData {
 		name: 'Laborer',
 		description: 'You worked as a farmer, builder, clothes washer, forester, miner, or some other profession engaged in hard manual labor.',
 		features: [
-			FeatureLogic.feature.createSkillFeature({
+			FactoryLogic.feature.createSkillFeature({
 				id: 'laborer-feature-1',
 				skill: 'Endurance'
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'laborer-feature-2',
 				listOptions: [ SkillList.Crafting, SkillList.Exploration ],
 				count: 2
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'laborer-feature-3'
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'laborer-feature-4',
 				field: FeatureField.ProjectPoints,
 				value: 120
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'laborer-feature-5',
 				lists: [ PerkList.Exploration ]
 			})
@@ -637,24 +637,24 @@ export class CareerData {
 		name: 'Mage’s Apprentice',
 		description: 'For long years, you studied magic under the mentorship of a more experienced mage.',
 		features: [
-			FeatureLogic.feature.createSkillFeature({
+			FactoryLogic.feature.createSkillFeature({
 				id: 'mages-apprentice-feature-1',
 				skill: 'Magic'
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'mages-apprentice-feature-2',
 				listOptions: [ SkillList.Lore ],
 				count: 2
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'mages-apprentice-feature-3'
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'mages-apprentice-feature-4',
 				field: FeatureField.Renown,
 				value: 1
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'mages-apprentice-feature-5',
 				lists: [ PerkList.Supernatural ]
 			})
@@ -701,21 +701,21 @@ export class CareerData {
 		name: 'Performer',
 		description: 'You can sing, act, or dance well enough that people actually pay to see you do it. Imagine that!',
 		features: [
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'performer-feature-1',
 				options: [ 'Music', 'Perform' ]
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'performer-feature-2',
 				listOptions: [ SkillList.Interpersonal ],
 				count: 2
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'performer-feature-3',
 				field: FeatureField.Renown,
 				value: 2
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'performer-feature-4',
 				lists: [ PerkList.Interpersonal ]
 			})
@@ -762,25 +762,25 @@ export class CareerData {
 		name: 'Politician',
 		description: 'You worked as a leader within a formal, bureaucratic organization or government. You might have been appointed, born, or elected into your position, but getting people to agree and making decisions for the people you serve (or who served you) was your job.',
 		features: [
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-politician-feature-1',
 				listOptions: [ SkillList.Interpersonal ],
 				count: 2
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'career-politician-feature-2'
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'career-politician-feature-3',
 				field: FeatureField.Renown,
 				value: 1
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'career-politician-feature-4',
 				field: FeatureField.Wealth,
 				value: 1
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'career-politician-feature-5',
 				lists: [ PerkList.Interpersonal ]
 			})
@@ -827,20 +827,20 @@ export class CareerData {
 		name: 'Sage',
 		description: 'From an early age, you dedicated yourself to learning, whether you shared the knowledge of the world with others or sought out secret lore only for yourself.',
 		features: [
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-sage-feature-1',
 				listOptions: [ SkillList.Lore ],
 				count: 2
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'career-sage-feature-2'
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'career-sage-feature-3',
 				field: FeatureField.ProjectPoints,
 				value: 240
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'career-sage-feature-4',
 				lists: [ PerkList.Lore ]
 			})
@@ -887,20 +887,20 @@ export class CareerData {
 		name: 'Sailor',
 		description: 'You worked on a ship that might have been a merchant cog, a mercenary or military craft, or a pirate vessel. You might have been a deckhand, a mate, or even the captain.',
 		features: [
-			FeatureLogic.feature.createSkillFeature({
+			FactoryLogic.feature.createSkillFeature({
 				id: 'career-sailor-feature-1',
 				skill: 'Swim'
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-sailor-feature-2',
 				listOptions: [ SkillList.Exploration ],
 				count: 2
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'career-sailor-feature-3',
 				count: 2
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'career-sailor-feature-4',
 				lists: [ PerkList.Exploration ]
 			})
@@ -947,24 +947,24 @@ export class CareerData {
 		name: 'Soldier',
 		description: 'In your formative years, you fought tirelessly in skirmishes and campaigns against enemy forces.',
 		features: [
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-soldier-feature-1',
 				listOptions: [ SkillList.Exploration ]
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-soldier-feature-2',
 				listOptions: [ SkillList.Intrigue ]
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'career-soldier-feature-3',
 				count: 2
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'career-soldier-feature-4',
 				field: FeatureField.Renown,
 				value: 1
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'career-soldier-feature-5',
 				lists: [ PerkList.Exploration ]
 			})
@@ -1011,27 +1011,27 @@ export class CareerData {
 		name: 'Warden',
 		description: 'You protected a wild region from those who sought to harm it, such as poachers and cultists bent on the destruction of the natural world. Knowing your land well, you could also serve as a guide or the leader of a rescue party for those wandering the wilds.',
 		features: [
-			FeatureLogic.feature.createSkillFeature({
+			FactoryLogic.feature.createSkillFeature({
 				id: 'career-warden-feature-1',
 				skill: 'Nature'
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-warden-feature-2',
 				listOptions: [ SkillList.Exploration ]
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-warden-feature-3',
 				listOptions: [ SkillList.Intrigue ]
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'career-warden-feature-4'
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'career-warden-feature-5',
 				field: FeatureField.ProjectPoints,
 				value: 120
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'career-warden-feature-6',
 				lists: [ PerkList.Exploration ]
 			})
@@ -1078,20 +1078,20 @@ export class CareerData {
 		name: 'Watch Officer',
 		description: 'You served as an officer of the law for a local government. You might have been a single person in a much larger city watch or the only constable patrolling a small village.',
 		features: [
-			FeatureLogic.feature.createSkillFeature({
+			FactoryLogic.feature.createSkillFeature({
 				id: 'career-watch-officer-feature-1',
 				skill: 'Alertness'
 			}),
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'career-watch-officer-feature-2',
 				listOptions: [ SkillList.Intrigue ],
 				count: 2
 			}),
-			FeatureLogic.feature.createLanguageChoiceFeature({
+			FactoryLogic.feature.createLanguageChoiceFeature({
 				id: 'career-watch-officer-feature-3',
 				count: 2
 			}),
-			FeatureLogic.feature.createPerkFeature({
+			FactoryLogic.feature.createPerkFeature({
 				id: 'career-watch-officer-feature-4',
 				lists: [ PerkList.Exploration ]
 			})

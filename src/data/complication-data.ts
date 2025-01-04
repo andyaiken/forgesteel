@@ -1,7 +1,7 @@
 import { Complication } from '../models/complication';
 import { DamageModifierType } from '../enums/damage-modifier-type';
+import { FactoryLogic } from '../logic/factory-logic';
 import { FeatureField } from '../enums/feature-field';
-import { FeatureLogic } from '../logic/feature-logic';
 import { SkillList } from '../enums/skill-list';
 
 export class ComplicationData {
@@ -10,12 +10,12 @@ export class ComplicationData {
 		name: 'Cult Victim',
 		description: 'Cultists captured you while raiding your home, then began an unholy ritual to turn your body into an undead spirit. The ritual failed, but your body became infused with corrupted magic, turning you partially incorporeal.',
 		features: [
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'comp-cult-victim-b',
 				name: 'Cult Victim Benefit',
 				description: 'Once per turn, you can move through a solid mundane object no more than 1 square thick. If you end your turn inside the object, you take 5 damage and are shunted out into the space where you entered the object.'
 			}),
-			FeatureLogic.feature.createDamageModifierFeature({
+			FactoryLogic.feature.createDamageModifierFeature({
 				id: 'comp-cult-victim-d',
 				modifiers: [
 					{
@@ -35,13 +35,13 @@ export class ComplicationData {
 		name: 'Elemental Inside',
 		description: 'When an evil mage threatened someone you loved, you blocked your foe’s summoning of an elemental creature by absorbing their magic with your body. You are now infused with the power of that elemental—and they’re not happy about it.',
 		features: [
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'comp-elemental-inside-b',
 				name: 'Elemental Inside Benefit',
 				field: FeatureField.Stamina,
 				valuePerEchelon: 3
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'comp-elemental-inside-d',
 				name: 'Elemental Inside Drawback',
 				description: 'When you are dying, your possessing elemental takes control of your body. The elemental yearns for destruction, causing you to attack the closest creature they notice without regard for your desires or your body’s safety. The Director or you can control the hero, but whoever does must do their best to kill any creature they notice until you are no longer dying.'
@@ -54,7 +54,7 @@ export class ComplicationData {
 		name: 'Fire And Chaos',
 		description: 'A great monster who breathed fire burned your home to the ground. While everything around you was consumed, you somehow stood strong amid the inferno, your body adapting to ignore the effects of the flames.',
 		features: [
-			FeatureLogic.feature.createDamageModifierFeature({
+			FactoryLogic.feature.createDamageModifierFeature({
 				id: 'comp-fire-and-chaos-b',
 				modifiers: [
 					{
@@ -81,7 +81,7 @@ export class ComplicationData {
 		name: 'Primordial Sickness',
 		description: 'You once contracted a terrible illness for which no one could find a cure. You sought out a primordial swamp said to be either incredibly poisonous or miraculously salubrious. It turned out to be both, keeping your illness at bay while corrupting your body with its unnatural energy.',
 		features: [
-			FeatureLogic.feature.createDamageModifierFeature({
+			FactoryLogic.feature.createDamageModifierFeature({
 				id: 'comp-primordial-sickness-b',
 				modifiers: [
 					{
@@ -100,7 +100,7 @@ export class ComplicationData {
 					}
 				]
 			}),
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'comp-primordial-sickness-d',
 				name: 'Primordial Sickness Drawback',
 				field: FeatureField.Recoveries,
@@ -114,13 +114,13 @@ export class ComplicationData {
 		name: 'Punishment Curse',
 		description: 'Through ignorance, fear, spite, or selfishness, you refused to help someone in need. To teach you a lesson, a deity offered you what seemed to be a blessing—extra power to help you heal yourself in times of need, but harsh consequences should your need become excessive. You took the deal, and now benefit from the blessing but also suffer from a curse.',
 		features: [
-			FeatureLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonusFeature({
 				id: 'comp-punishment-curse-b',
 				name: 'Punishment Curse Benefit',
 				field: FeatureField.Recoveries,
 				value: 1
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'comp-punishment-curse-d',
 				name: 'Punishment Curse Drawback',
 				description: 'When you are out of Recoveries, you are dying, no matter what your current Stamina is.'
@@ -133,13 +133,13 @@ export class ComplicationData {
 		name: 'Shipwrecked',
 		description: 'You are the sole survivor of a shipwreck that left you stranded on a remote and inhospitable island for years. Your struggle to survive there granted you insight into the natural world but distanced you from who you once were.',
 		features: [
-			FeatureLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoiceFeature({
 				id: 'comp-shipwrecked-b',
 				name: 'Shipwrecked Benefit',
 				listOptions: [ SkillList.Exploration ],
 				count: 2
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'comp-shipwrecked-d',
 				name: 'Shipwrecked Drawback',
 				description: 'You have forgotten one language you know.'
@@ -152,7 +152,7 @@ export class ComplicationData {
 		name: 'Waking Dreams',
 		description: 'You broke a magic amulet that immersed your mind in weird magic. This magic has given you the power of premonition, but you struggle to control this new gift.',
 		features: [
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'comp-waking-dreams-bd',
 				name: 'Waking Dreams',
 				description: `
@@ -172,12 +172,12 @@ Whenever you take a respite, make a Reason power roll.
 		name: 'War Of Assassins',
 		description: 'Being in the wrong place at the wrong time saw you caught in the middle of a conflict between two warring thieves’ guilds. Whether by choice or by accident, you wound up helping one faction at the expense of the other.',
 		features: [
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'comp-war-of-assassins-b',
 				name: 'War Of Assassins Benefit',
 				description: 'Having gained the favor of the faction who you helped, you can call on its members three times for favors. If a favor is reasonable and within the faction’s power to grant, they’ll do it, no questions asked.'
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'comp-war-of-assassins-d',
 				name: 'War Of Assassins Drawback',
 				description: 'The faction you wronged hates you, and its members would love to see you pay for your transgression.'
@@ -190,12 +190,12 @@ Whenever you take a respite, make a Reason power roll.
 		name: 'Ward',
 		description: 'Your childhood sweetheart was royalty, and the two of you stayed close throughout the years. When your former sweetheart died, you swore an oath to dedicate your life to become a tutor for their child, advising them in the ways of being a benevolent monarch.',
 		features: [
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'comp-ward-b',
 				name: 'Ward Benefit',
 				description: 'You know how to talk to monarchs, aristocrats, and other wealthy leaders. When you engage with any such NPC during a negotiation, their patience increases by 1 (to a maximum of 5).'
 			}),
-			FeatureLogic.feature.create({
+			FactoryLogic.feature.create({
 				id: 'comp-ward-d',
 				name: 'Ward Drawback',
 				description: 'Your royal ward can be a burden. When you start a respite, roll a d10. On a roll of 1, your ward contacts you and requires your help during the respite, requiring you to spend your time helping them instead of taking a respite activity.'

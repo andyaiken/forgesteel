@@ -4,11 +4,11 @@ import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, 
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
-import { AbilityLogic } from '../../../../logic/ability-logic';
 import { Collections } from '../../../../utils/collections';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Expander } from '../../../controls/expander/expander';
+import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeatureField } from '../../../../enums/feature-field';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
@@ -57,13 +57,13 @@ export const FeatureEditPanel = (props: Props) => {
 		switch (value) {
 			case FeatureType.Ability:
 				data = {
-					ability: AbilityLogic.createAbility({
+					ability: FactoryLogic.createAbility({
 						id: Utils.guid(),
 						name: '',
 						description: '',
-						type: AbilityLogic.type.createAction(),
+						type: FactoryLogic.type.createAction(),
 						keywords: [],
-						distance: [ AbilityLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: ''
 					})
 				};
@@ -334,7 +334,7 @@ export const FeatureEditPanel = (props: Props) => {
 		const addChoice = (data: FeatureChoiceData) => {
 			const copy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
 			copy.options.push({
-				feature: FeatureLogic.feature.create({
+				feature: FactoryLogic.feature.create({
 					id: Utils.guid(),
 					name: '',
 					description: ''
@@ -418,7 +418,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 		const addMultipleFeature = (data: FeatureMultipleData) => {
 			const copy = JSON.parse(JSON.stringify(data)) as FeatureMultipleData;
-			copy.features.push(FeatureLogic.feature.create({
+			copy.features.push(FactoryLogic.feature.create({
 				id: Utils.guid(),
 				name: '',
 				description: ''

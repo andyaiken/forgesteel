@@ -1,23 +1,23 @@
 import { Ancestry } from '../../models/ancestry';
-import { FeatureLogic } from '../../logic/feature-logic';
+import { FactoryLogic } from '../../logic/factory-logic';
 
 export const hakaan: Ancestry = {
 	id: 'ancestry-hakaan',
 	name: 'Hakaan',
 	description: 'In spite of their friendly, outgoing nature, the rare presence of a hakaan in human society is considered a harbinger—an omen of dark times. Descended from a tribe of giants in upper Vanigar, the original Haka’an tribe made a bargain with Holkatja the Vanigar trickster god. They traded some of their gigantic size and strength for the ability to see the future.',
 	features: [
-		FeatureLogic.feature.createSizeFeature({
+		FactoryLogic.feature.createSizeFeature({
 			id: 'hakaan-feature-1',
 			name: 'Big!',
 			sizeValue: 1,
 			sizeMod: 'L'
 		}),
-		FeatureLogic.feature.createChoiceFeature({
+		FactoryLogic.feature.createChoiceFeature({
 			id: 'hakaan-feature-2',
 			name: 'Hakaan Traits',
 			options: [
 				{
-					feature: FeatureLogic.feature.create({
+					feature: FactoryLogic.feature.create({
 						id: 'hakaan-feature-2-1',
 						name: 'All Is A Feather',
 						description: 'You are exceptionally strong and have an edge made on tests that use the Lift skill.'
@@ -25,7 +25,7 @@ export const hakaan: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.create({
+					feature: FactoryLogic.feature.create({
 						id: 'hakaan-feature-2-2',
 						name: 'Forceful',
 						description: 'When you force move a creature or object, you can increase the distance moved by 1.'
@@ -33,7 +33,7 @@ export const hakaan: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.create({
+					feature: FactoryLogic.feature.create({
 						id: 'hakaan-feature-2-3',
 						name: 'Stand Tough',
 						description: 'Your body is made to withstand the blows of your enemies. Your Might score counts as 1 higher for resisting potencies.'
@@ -41,7 +41,7 @@ export const hakaan: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FeatureLogic.feature.create({
+					feature: FactoryLogic.feature.create({
 						id: 'hakaan-feature-2-4',
 						name: 'Great Fortitude',
 						description: 'Your hearty constitution prevents you from losing strength. You can’t be weakened.'
@@ -49,7 +49,7 @@ export const hakaan: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FeatureLogic.feature.create({
+					feature: FactoryLogic.feature.create({
 						id: 'hakaan-feature-2-5',
 						name: 'Doomsight',
 						description: `

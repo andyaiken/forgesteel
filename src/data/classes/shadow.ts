@@ -1,9 +1,8 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
-import { AbilityLogic } from '../../logic/ability-logic';
 import { Characteristic } from '../../enums/characteristic';
+import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
-import { FeatureLogic } from '../../logic/feature-logic';
 import { HeroClass } from '../../models/class';
 import { PerkList } from '../../enums/perk-list';
 import { SkillList } from '../../enums/skill-list';
@@ -23,62 +22,62 @@ As a shadow, you have abilities that deal a lot of damage, let you move swiftly 
 		{
 			level: 1,
 			features: [
-				FeatureLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonusFeature({
 					id: 'shadow-stamina',
 					field: FeatureField.Stamina,
 					value: 18,
 					valuePerLevel: 9
 				}),
-				FeatureLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonusFeature({
 					id: 'shadow-recoveries',
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
-				FeatureLogic.feature.createSkillFeature({
+				FactoryLogic.feature.createSkillFeature({
 					id: 'shadow-1-1',
 					skill: 'Hide'
 				}),
-				FeatureLogic.feature.createSkillFeature({
+				FactoryLogic.feature.createSkillFeature({
 					id: 'shadow-1-2',
 					skill: 'Sneak'
 				}),
-				FeatureLogic.feature.createSkillChoiceFeature({
+				FactoryLogic.feature.createSkillChoiceFeature({
 					id: 'shadow-1-3',
 					options: [ 'Criminal Underworld' ],
 					listOptions: [ SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue ],
 					count: 5
 				}),
-				FeatureLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'shadow-1-4',
 					name: 'Insight',
 					description: `
 At the start of each of your turns during combat, you gain 1d3 insight. The first time each round that you deal damage with at least one surge, you gain 1 insight.
 When you use a heroic ability that has a power roll, that ability costs 1 less insight if you have an edge or double edge on it. If the ability has multiple targets, the cost is reduced even if the ability has an edge or double edge against only one target.`
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'shadow-1-5',
 						name: 'Hesitation Is Weakness',
 						description: 'Keep up the attack. Never give them a moment’s grace.',
-						type: AbilityLogic.type.createTrigger('Another hero ends their turn. That hero can’t have used this ability to start their turn.', true),
-						distance: [ AbilityLogic.distance.createSelf() ],
+						type: FactoryLogic.type.createTrigger('Another hero ends their turn. That hero can’t have used this ability to start their turn.', true),
+						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						cost: 1,
 						effect: 'You take your turn after the triggering hero.'
 					})
 				}),
-				FeatureLogic.feature.createKitChoiceFeature({
+				FactoryLogic.feature.createKitChoiceFeature({
 					id: 'shadow-1-5.5'
 				}),
-				FeatureLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoiceFeature({
 					id: 'shadow-1-6',
 					cost: 0
 				}),
-				FeatureLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoiceFeature({
 					id: 'shadow-1-7',
 					cost: 3
 				}),
-				FeatureLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoiceFeature({
 					id: 'shadow-1-8',
 					cost: 5
 				})
@@ -87,7 +86,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 		{
 			level: 2,
 			features: [
-				FeatureLogic.feature.createPerkFeature({
+				FactoryLogic.feature.createPerkFeature({
 					id: 'shadow-2-1',
 					lists: [ PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue ]
 				})
@@ -96,19 +95,19 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 		{
 			level: 3,
 			features: [
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'shadow-3-1',
 						name: 'Careful Observation',
 						description: 'A moment of focus leaves a foe firmly in your sights.',
-						type: AbilityLogic.type.createManeuver(),
+						type: FactoryLogic.type.createManeuver(),
 						keywords: [],
-						distance: [ AbilityLogic.distance.createSpecial('20 squares') ],
+						distance: [ FactoryLogic.distance.createSpecial('20 squares') ],
 						target: '1 creature',
 						effect: 'As long as you remain within distance of the target, maintain line of effect to them, and strike no other creature first, you gain a surge and an edge on the next strike you make against the assessed creature.'
 					})
 				}),
-				FeatureLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoiceFeature({
 					id: 'shadow-3-2',
 					cost: 7
 				})
@@ -116,15 +115,15 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 		}
 	],
 	abilities: [
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-1',
 			name: 'Gasping in Pain',
 			description: 'Your precise strikes let your allies take advantage of a target’s agony.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee() ],
+			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '3 + A damage',
 				tier2: '5 + A damage',
@@ -132,18 +131,18 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			}),
 			effect: 'An ally of your choice within 5 squares of the target gains a surge.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-2',
 			name: 'I Work Better Alone',
 			description: 'It’s better, just you and me. Isn’t it?',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(),
-				AbilityLogic.distance.createRanged(5)
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '3 + A damage',
 				tier2: '6 + A damage',
@@ -151,18 +150,18 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			}),
 			effect: 'If the target has no allies adjacent to them, this strike deals extra damage equal to your Agility score.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-3',
 			name: 'Teamwork Has It\'s Place',
 			description: 'You attack an enemy, distracting them long enough for an ally to stab them.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(),
-				AbilityLogic.distance.createRanged(5)
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
 			],
 			target: '1 creature or object',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '3 + A damage',
 				tier2: '6 + A damage',
@@ -170,15 +169,15 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			}),
 			effect: 'If an ally is adjacent to the target, the target takes extra damage equal to your Agility score.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-4',
 			name: 'You Were Watching The Wrong One',
 			description: 'They can’t watch both of you at once.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee() ],
+			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '3 + A damage',
 				tier2: '5 + A damage',
@@ -186,16 +185,16 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			}),
 			effect: 'As long as you have at least one ally within 5 squares of the target, you gain a surge. If you are flanking the target when you use this ability, choose one ally who is flanking with you. That ally also gain a surge.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-5',
 			name: 'Disorienting Strike',
 			description: 'Your attack leaves them reeling, allowing you to follow up.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee() ],
+			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 3,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '4 + A damage; slide 2',
 				tier2: '6 + A damage; slide 3',
@@ -203,35 +202,35 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			}),
 			effect: 'You can shift into any square the target leaves when you slide them.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-6',
 			name: 'Eviscerate',
 			description: 'You leave your foe bleeding out after a devastating attack.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(),
-				AbilityLogic.distance.createRanged(5)
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
 			cost: 3,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '4 + A damage; A < weak, bleeding (save ends)',
 				tier2: '6 + A damage; A < average, bleeding (save ends)',
 				tier3: '10 + A damage; A < strong, bleeding (save ends)'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-7',
 			name: 'Get In Get Out',
 			description: 'Move unexpectedly, strike fast, and be gone!',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee() ],
+			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 3,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '5 + A damage',
 				tier2: '8 + A damage',
@@ -239,112 +238,112 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			}),
 			effect: 'You can shift up to your speed, dividing that movement before or after your strike as desired.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-8',
 			name: 'Two Throats At Once',
 			description: 'A bargain.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(),
-				AbilityLogic.distance.createRanged(5)
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
 			],
 			target: '2 creatures or objects',
 			cost: 3,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '4 damage',
 				tier2: '6 damage',
 				tier3: '10 damage'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-9',
 			name: 'Coup de Grace',
 			description: 'Your blade might be the last thing they see.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(),
-				AbilityLogic.distance.createRanged(5)
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '1d6 + 7 + A damage',
 				tier2: '1d6 + 11 + A damage',
 				tier3: '1d6 + 16 + A damage'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-10',
 			name: 'One Hundred Throats',
 			description: 'As you move across the battlefield, every foe within reach feels your wrath.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createSelf() ],
+			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 5,
 			preEffect: 'You shift up to your speed. You make one power roll that targets up to three enemies, each of who became adjacent to you during the move.',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '3 damage',
 				tier2: '6 damage',
 				tier3: '9 + A damage'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-11',
 			name: 'Set-Up',
 			description: 'Your friends will thank you.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createRanged(5) ],
+			distance: [ FactoryLogic.distance.createRanged(5) ],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '6 + A damage; R < weak, the target has damage weakness 5 (save ends)',
 				tier2: '9 + A damage; R < average, the target has damage weakness 5 (save ends)',
 				tier3: '13 + A damage; R < strong, the target has damage weakness 5 (save ends)'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-12',
 			name: 'Shadowstrike',
 			description: 'They have no idea what the college taught you.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged ],
-			distance: [ AbilityLogic.distance.createSelf() ],
+			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 5,
 			effect: 'You make two signature strikes.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-13',
 			name: 'Dancer',
 			description: 'You enter a flow state that makes you nearly impossible to pin down.',
-			type: AbilityLogic.type.createManeuver(),
+			type: FactoryLogic.type.createManeuver(),
 			keywords: [],
-			distance: [ AbilityLogic.distance.createSelf() ],
+			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
 			effect: 'Until the end of the encounter, whenever an enemy moves adjacent to you or damages you, you can take the Disengage move action as a free triggered action.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-14',
 			name: 'Misdirecting Strike',
 			description: 'Why are you looking at ME?!',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(),
-				AbilityLogic.distance.createRanged(5)
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
 			cost: 7,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '9 + A damage',
 				tier2: '13 + A damage',
@@ -352,35 +351,35 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			}),
 			effect: 'The target is taunted by a willing ally within 5 squares of you until the end of the target’s next turn.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-15',
 			name: 'Pinning Shot',
 			description: 'One missile—placed well and placed hard.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createRanged(5) ],
+			distance: [ FactoryLogic.distance.createRanged(5) ],
 			target: '1 creature',
 			cost: 7,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '8 + A damage; A < weak, restrained (save ends)',
 				tier2: '12 + A damage; A < average, restrained (save ends)',
 				tier3: '16 + A damage; A < strong, restrained (save ends)'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'shadow-ability-16',
 			name: 'Staggering Blow',
 			description: 'There’s no recovering from this.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(),
-				AbilityLogic.distance.createRanged(5)
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
 			cost: 7,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '7 + A damage; M < weak, slowed (save ends)',
 				tier2: '11 + A damage; M < average, prone and can’t stand (save ends)',
@@ -397,18 +396,18 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				{
 					level: 1,
 					features: [
-						FeatureLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkillFeature({
 							id: 'shadow-sub-1-1-1',
 							skill: 'Magic'
 						}),
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'shadow-sub-1-1-2',
 								name: 'Black Ash Teleport',
 								description: 'In a swirl of black ash, you step from one place to another.',
-								type: AbilityLogic.type.createManeuver(),
+								type: FactoryLogic.type.createManeuver(),
 								keywords: [ AbilityKeyword.Magic ],
-								distance: [ AbilityLogic.distance.createSelf() ],
+								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You teleport up to 5 squares. If you have concealment or cover at your destination, you can use the Hide maneuver even if you are observed. If you hide using this maneuver, you gain a surge.',
 								spend: [
@@ -418,14 +417,14 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 								]
 							})
 						}),
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'shadow-sub-1-1-3',
 								name: 'In All This Confusion',
 								description: 'You vanish in a plume of black smoke to avoid danger.',
-								type: AbilityLogic.type.createTrigger('You take damage.'),
+								type: FactoryLogic.type.createTrigger('You take damage.'),
 								keywords: [ AbilityKeyword.Magic ],
-								distance: [ AbilityLogic.distance.createSelf() ],
+								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You halve the damage, then can teleport up to 4 squares after the triggering effect resolves.',
 								spend: [
@@ -440,24 +439,24 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoiceFeature({
 							id: 'shadow-sub-1-2-1',
 							options: [
 								{
-									feature: FeatureLogic.feature.createAbilityFeature({
-										ability: AbilityLogic.createAbility({
+									feature: FactoryLogic.feature.createAbilityFeature({
+										ability: FactoryLogic.createAbility({
 											id: 'shadow-sub-1-2-1a',
 											name: 'In a Puff of Ash',
 											description: 'You enchant a strike with your teleportation magic.',
-											type: AbilityLogic.type.createAction(),
+											type: FactoryLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 											distance: [
-												AbilityLogic.distance.createMelee(),
-												AbilityLogic.distance.createRanged(5)
+												FactoryLogic.distance.createMelee(),
+												FactoryLogic.distance.createRanged(5)
 											],
 											target: '1 creature',
 											cost: 5,
-											powerRoll: AbilityLogic.createPowerRoll({
+											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Agility ],
 												tier1: '6 + A damage; you can teleport the target 1 square',
 												tier2: '10 + A damage; you can teleport the target up to 3 squares',
@@ -468,14 +467,14 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 									value: 1
 								},
 								{
-									feature: FeatureLogic.feature.createAbilityFeature({
-										ability: AbilityLogic.createAbility({
+									feature: FactoryLogic.feature.createAbilityFeature({
+										ability: FactoryLogic.createAbility({
 											id: 'shadow-sub-1-2-1b',
 											name: 'Too Slow',
 											description: 'Your foe made a big mistake.',
-											type: AbilityLogic.type.createTrigger('You use your In All This Confusion ability.', true),
+											type: FactoryLogic.type.createTrigger('You use your In All This Confusion ability.', true),
 											keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-											distance: [ AbilityLogic.distance.createSelf() ],
+											distance: [ FactoryLogic.distance.createSelf() ],
 											target: 'Self',
 											cost: 5,
 											effect: 'You avoid any effects associated with the damage that triggered your In All This Confusion ability. Before you teleport, you can make a free strike against a creature who damaged you to trigger In All This Confusion. After you teleport, you can spend a Recovery.'
@@ -502,17 +501,17 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				{
 					level: 1,
 					features: [
-						FeatureLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkillFeature({
 							id: 'shadow-sub-2-1-1',
 							skill: 'Alchemy'
 						}),
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'shadow-sub-2-1-2',
 								name: 'Coat The Blade',
 								description: 'Just a little poison goes a long way.',
-								type: AbilityLogic.type.createManeuver(),
-								distance: [ AbilityLogic.distance.createSelf() ],
+								type: FactoryLogic.type.createManeuver(),
+								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You gain two surges. Whenever you use a surge before the end of the encounter, you can choose to have its damage be poison damage.',
 								spend: [
@@ -522,18 +521,18 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 								]
 							})
 						}),
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'shadow-sub-2-1-3',
 							name: 'Smoke Bomb',
 							description: 'You always carry a supply of smoke bombs to make it easy for you to distract and get away from foes. You can use the Hide maneuver even if you are observed and don’t initially have cover or concealment. When you do so, you can shift a number of squares equal to your Agility score. If you end this movement with cover or concealment, you are hidden.'
 						}),
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'shadow-sub-2-1-4',
 								name: 'Defensive Roll',
 								description: 'When an enemy attacks, you roll with the impact to reduce the harm.',
-								type: AbilityLogic.type.createTrigger('Another creature damages you.'),
-								distance: [ AbilityLogic.distance.createSelf() ],
+								type: FactoryLogic.type.createTrigger('Another creature damages you.'),
+								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You halve the damage against the triggering damage, then can shift up to 2 squares after the triggering effect resolves. If you end this shift with concealment or cover, you can use the Hide maneuver even if you are observed.',
 								spend: [
@@ -550,22 +549,22 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoiceFeature({
 							id: 'shadow-sub-2-2-1',
 							options: [
 								{
-									feature: FeatureLogic.feature.createAbilityFeature({
-										ability: AbilityLogic.createAbility({
+									feature: FactoryLogic.feature.createAbilityFeature({
+										ability: FactoryLogic.createAbility({
 											id: 'shadow-sub-2-2-1a',
 											name: 'Sticky Bomb',
 											description: 'Explosives are best when they’re attached to an enemy.',
-											type: AbilityLogic.type.createAction(),
+											type: FactoryLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Ranged ],
-											distance: [ AbilityLogic.distance.createRanged() ],
+											distance: [ FactoryLogic.distance.createRanged() ],
 											target: '1 creature',
 											cost: 5,
 											preEffect: 'You attach a small bomb to a creature. If you are hidden from the creature, they don’t notice the bomb and you remain hidden. The creature otherwise notices the bomb and can remove it as an action, disarming the bomb. At the end of your next turn, the bomb detonates. You can also detonate it earlier (no action required). When the bomb detonates, you make a power roll targeting each enemy within 3 squares of it.',
-											powerRoll: AbilityLogic.createPowerRoll({
+											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Agility ],
 												tier1: '4 + A fire damage',
 												tier2: '7 + A fire damage',
@@ -576,17 +575,17 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 									value: 1
 								},
 								{
-									feature: FeatureLogic.feature.createAbilityFeature({
-										ability: AbilityLogic.createAbility({
+									feature: FactoryLogic.feature.createAbilityFeature({
+										ability: FactoryLogic.createAbility({
 											id: 'shadow-sub-2-2-1b',
 											name: 'Stink Bomb',
 											description: 'Yellow, disgusting gas explodes from a bomb you toss.',
-											type: AbilityLogic.type.createAction(),
+											type: FactoryLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
-											distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
+											distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 											target: 'Each creature in the area',
 											cost: 5,
-											powerRoll: AbilityLogic.createPowerRoll({
+											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Agility ],
 												tier1: '2 poison damage',
 												tier2: '5 poison damage',
@@ -616,18 +615,18 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				{
 					level: 1,
 					features: [
-						FeatureLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkillFeature({
 							id: 'shadow-sub-3-1-1',
 							skill: 'Lie'
 						}),
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'shadow-sub-3-1-2',
 								name: 'I’m No Threat',
 								description: 'Taking on the illusory countenance of another creature gives you an advantage on subterfuge.',
-								type: AbilityLogic.type.createManeuver(),
+								type: FactoryLogic.type.createManeuver(),
 								keywords: [ AbilityKeyword.Magic ],
-								distance: [ AbilityLogic.distance.createSelf() ],
+								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: `
 When you use this ability, you cover yourself in an illusion that causes you to appear nonthreatening and harmless to your enemies. You might take on the appearance of a harmless animal of your size, such as a sheep or capybara, or you might appear as a less heroic, unarmed, and capable version of yourself. While this illusion lasts, your strikes made against other creatures gain an edge. If you use this ability in combat, you gain a surge when you use it.
@@ -640,14 +639,14 @@ The illusion ends when you harm another creature, when you and any creature phys
 								]
 							})
 						}),
-						FeatureLogic.feature.createAbilityFeature({
-							ability: AbilityLogic.createAbility({
+						FactoryLogic.feature.createAbilityFeature({
+							ability: FactoryLogic.createAbility({
 								id: 'shadow-sub-3-1-3',
 								name: 'Clever Trick',
 								description: 'You sow a moment of confusion in combat, to your enemy’s peril.',
-								type: AbilityLogic.type.createTrigger('An enemy targets you with a strike.'),
+								type: FactoryLogic.type.createTrigger('An enemy targets you with a strike.'),
 								keywords: [ AbilityKeyword.Magic ],
-								distance: [ AbilityLogic.distance.createSelf() ],
+								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								cost: 1,
 								effect: 'Choose an enemy within distance of the triggering strike, including the enemy who targeted you. The strike targets that enemy instead.'
@@ -658,21 +657,21 @@ The illusion ends when you harm another creature, when you and any creature phys
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoiceFeature({
 							id: 'shadow-sub-3-2-1',
 							options: [
 								{
-									feature: FeatureLogic.feature.createAbilityFeature({
-										ability: AbilityLogic.createAbility({
+									feature: FactoryLogic.feature.createAbilityFeature({
+										ability: FactoryLogic.createAbility({
 											id: 'shadow-sub-3-2-1a',
 											name: 'Machinations of Sound',
 											description: 'Illusory sounds make your foes reposition themselves as they cower or investigate the disturbance.',
-											type: AbilityLogic.type.createManeuver(),
+											type: FactoryLogic.type.createManeuver(),
 											keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-											distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
+											distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 											target: 'Each enemy in the area',
 											cost: 5,
-											powerRoll: AbilityLogic.createPowerRoll({
+											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Agility ],
 												tier1: 'Slide 4',
 												tier2: 'Slide 5',
@@ -684,14 +683,14 @@ The illusion ends when you harm another creature, when you and any creature phys
 									value: 1
 								},
 								{
-									feature: FeatureLogic.feature.createAbilityFeature({
-										ability: AbilityLogic.createAbility({
+									feature: FactoryLogic.feature.createAbilityFeature({
+										ability: FactoryLogic.createAbility({
 											id: 'shadow-sub-3-2-1b',
 											name: 'So Gullible',
 											description: 'When your enemy strikes, you reveal you were in a different place all along.',
-											type: AbilityLogic.type.createTrigger('An enemy strikes you.', true),
+											type: FactoryLogic.type.createTrigger('An enemy strikes you.', true),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-											distance: [ AbilityLogic.distance.createSelf() ],
+											distance: [ FactoryLogic.distance.createSelf() ],
 											target: 'Self',
 											cost: 5,
 											effect: 'You use your Clever Trick ability with no insight cost, causing the creature who made the triggering strike to target an illusory image of you. You appear in an unoccupied space within 3 squares of that creature and can make a free strike against them. You can then spend a Recovery.'

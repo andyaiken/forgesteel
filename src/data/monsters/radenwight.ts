@@ -1,8 +1,7 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
-import { AbilityLogic } from '../../logic/ability-logic';
 import { Characteristic } from '../../enums/characteristic';
-import { FeatureLogic } from '../../logic/feature-logic';
+import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterRoleType } from '../../enums/monster-role-type';
@@ -32,17 +31,17 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 		}
 	],
 	malice: [
-		FeatureLogic.feature.createAbilityFeature({
-			ability: AbilityLogic.createAbility({
+		FactoryLogic.feature.createAbilityFeature({
+			ability: FactoryLogic.createAbility({
 				id: 'radenwight-malice-1',
 				name: 'Trouser Cut',
 				description: 'A non-minion radenwight can use the following ability.',
-				type: AbilityLogic.type.createAction(),
+				type: FactoryLogic.type.createAction(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-				distance: [ AbilityLogic.distance.createMelee() ],
+				distance: [ FactoryLogic.distance.createMelee() ],
 				target: 'One creature',
 				cost: 3,
-				powerRoll: AbilityLogic.createPowerRoll({
+				powerRoll: FactoryLogic.createPowerRoll({
 					bonus: 2,
 					tier1: '5 damage; push 3',
 					tier2: '10 damage; push 3; taunted (EoT)',
@@ -51,13 +50,13 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 				effect: 'If a target is wearing clothing covering the lower half of their body, they must use a maneuver to pull that clothing up before they can move.'
 			})
 		}),
-		FeatureLogic.feature.createMaliceFeature({
+		FactoryLogic.feature.createMaliceFeature({
 			id: 'radenwight-malice-2',
 			name: 'Rat Race',
 			description: 'Each radenwight shifts up to their speed. Wherever a radenwight ends this movement adjacent to at least one other radenwight, they can make a melee free strike.',
 			cost: 5
 		}),
-		FeatureLogic.feature.createMaliceFeature({
+		FactoryLogic.feature.createMaliceFeature({
 			id: 'radenwight-malice-3',
 			name: 'Wall of Rats',
 			description: `
@@ -87,18 +86,18 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 1, 0),
 			features: [
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-1-feature-1',
 						name: 'Dagger Dance',
-						type: AbilityLogic.type.createAction(),
+						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
-							AbilityLogic.distance.createMelee(),
-							AbilityLogic.distance.createRanged(5)
+							FactoryLogic.distance.createMelee(),
+							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature per minion',
-						powerRoll: AbilityLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 1,
 							tier1: '2 damage',
 							tier2: '5 damage',
@@ -107,13 +106,13 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'If the mischiever is hidden when they use this ability, they can target two creatures.'
 					})
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-1-feature-2',
 						name: 'Ready Rodent',
-						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
+						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
 						effect: 'The mischiever makes a free strike against the target.'
 					})
@@ -135,15 +134,15 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 0, 1),
 			features: [
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-2-feature-1',
 						name: 'Stinky Glissando',
-						type: AbilityLogic.type.createAction(),
+						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
-						distance: [ AbilityLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: AbilityLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 1,
 							tier1: '2 poison damage',
 							tier2: '4 poison damage; taunted (EoT)',
@@ -151,13 +150,13 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						})
 					})
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-2-feature-2',
 						name: 'Ready Rodent',
-						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
+						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
 						effect: 'The ratagast makes a free strike against the target.'
 					})
@@ -179,15 +178,15 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(0, 1, 1, 0, -1),
 			features: [
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-3-feature-1',
 						name: 'Rapier Flunge',
-						type: AbilityLogic.type.createAction(),
+						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: AbilityLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 1,
 							tier1: '2 damage; slide 1; the swiftpaw can shift 1 square',
 							tier2: '4 damage; slide 2; the swiftpaw can shift 2 squares',
@@ -195,13 +194,13 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						})
 					})
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-3-feature-2',
 						name: 'Ready Rodent',
-						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
+						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
 						effect: 'The swiftpaw makes a free strike against the target.'
 					})
@@ -223,15 +222,15 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(1, 1, -1, 0, 0),
 			features: [
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-4-feature-1',
 						name: 'Eyes-On-Me Shot',
-						type: AbilityLogic.type.createAction(),
+						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createRanged() ],
+						distance: [ FactoryLogic.distance.createRanged() ],
 						target: 'One creature or object per minion',
-						powerRoll: AbilityLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 1,
 							tier1: '2 damage',
 							tier2: '5 damage',
@@ -240,13 +239,13 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'An ally of the redeye within 2 squares of the target can shift up to 2 squares.'
 					})
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-4-feature-2',
 						name: 'Ready Rodent',
-						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
+						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
 						effect: 'The redeye makes a free strike against the target.'
 					})
@@ -268,15 +267,15 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(1, 1, -1, 0, 0),
 			features: [
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-5-feature-1',
 						name: 'Lockjaw',
-						type: AbilityLogic.type.createAction(),
+						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: AbilityLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 1,
 							tier1: '5 damage',
 							tier2: '9 damage; grabbed',
@@ -285,16 +284,16 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'While the target is grabbed, they take 2 damage at the start of each of the bruxer’s turns.'
 					})
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-5-feature-2',
 						name: 'Flurry of Bites',
-						type: AbilityLogic.type.createAction(),
+						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'Each enemy',
 						cost: 3,
-						powerRoll: AbilityLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 1,
 							tier1: '4 damage',
 							tier2: '8 damage',
@@ -302,13 +301,13 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						})
 					})
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-5-feature-3',
 						name: 'Ready Rodent',
-						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
+						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
 						effect: 'The bruxer makes a free strike against the target.'
 					})
@@ -330,18 +329,18 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 1, 1),
 			features: [
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-6-feature-1',
 						name: 'Piercing Trill',
-						type: AbilityLogic.type.createAction(),
+						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
-							AbilityLogic.distance.createMelee(),
-							AbilityLogic.distance.createRanged()
+							FactoryLogic.distance.createMelee(),
+							FactoryLogic.distance.createRanged()
 						],
 						target: 'One creature or object',
-						powerRoll: AbilityLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 1,
 							tier1: '3 sonic damage; push 1',
 							tier2: '5 sonic damage; push 3',
@@ -350,25 +349,25 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'The piper or an ally within distance regains Stamina equal to half the damage dealt.'
 					})
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-6-feature-2',
 						name: 'Vivace Vivace!',
-						type: AbilityLogic.type.createManeuver(),
+						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-						distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each ally',
 						cost: 3,
 						effect: 'Each target who has used their Ready Rodent ability since their last turn regains the use of their triggered action.'
 					})
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-6-feature-3',
 						name: 'Ready Rodent',
-						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
+						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
 						effect: 'The piper makes a free strike against the target.'
 					})
@@ -390,20 +389,20 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 0, 1),
 			features: [
-				FeatureLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'radenwight-7-feature-1',
 					name: 'Gymratstics',
 					description: 'The ratcrobat gains an edge on attacks against larger creatures.'
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-7-feature-2',
 						name: 'En Garde!',
-						type: AbilityLogic.type.createAction(),
+						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
-						powerRoll: AbilityLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 1,
 							tier1: '2 damage',
 							tier2: '5 damage',
@@ -412,24 +411,24 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'The ratcrobat can shift up to 2 squares after attacking the first target, then can shift 1 square after attacking the second target.'
 					})
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-7-feature-3',
 						name: 'Over Here, Thanks',
-						type: AbilityLogic.type.createManeuver(),
+						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Melee ],
-						distance: [ AbilityLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One enemy',
 						effect: 'Slide 1; the ratcrobat can then shift into the square the target left.'
 					})
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-7-feature-4',
 						name: 'Ready Rodent',
-						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
+						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ AbilityLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
 						effect: 'The ratcrobat makes a free strike against the target.'
 					})
@@ -451,15 +450,15 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, 2),
 			features: [
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-1',
 						name: 'Cacophony',
-						type: AbilityLogic.type.createAction(),
+						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-						distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy',
-						powerRoll: AbilityLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
 							tier1: '3 sonic damage; slide 1; the maestro can shift 1 square',
 							tier2: '5 sonic damage; slide 3; the maestro can shift 3 squares',
@@ -468,15 +467,15 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'Each of the maestro’s allies can use Ready Rodent as a free triggered action once before the end of the round.'
 					})
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-2',
 						name: 'Tempo Change',
-						type: AbilityLogic.type.createManeuver(),
+						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Resistance ],
-						distance: [ AbilityLogic.distance.createRanged() ],
+						distance: [ FactoryLogic.distance.createRanged() ],
 						target: 'Two enemies',
-						powerRoll: AbilityLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							type: PowerRollType.Resistance,
 							characteristic: [ Characteristic.Presence ],
 							tier1: 'Slowed (MGT ends)',
@@ -491,51 +490,51 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						]
 					})
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-3',
 						name: 'Ranged Ready Rodent',
-						type: AbilityLogic.type.createTrigger('An ally deals damage to the target.'),
+						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.distance.createRanged() ],
+						distance: [ FactoryLogic.distance.createRanged() ],
 						target: 'One creature',
 						effect: 'The maestro makes a free strike against the target.'
 					})
 				}),
-				FeatureLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'radenwight-8-feature-4',
 					name: 'End Effect',
 					description: 'At the end of their turn, the maestro can take 5 damage to end one EoE effect affecting them. This damage can’t be reduced in any way.'
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-5',
 						name: 'Overture',
-						type: AbilityLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area ],
-						distance: [ AbilityLogic.distance.createRanged(15) ],
+						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'Each Ally',
 						effect: 'Each target shifts up to their speed or takes the Defend action.'
 					})
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-6',
 						name: 'Solo Act',
-						type: AbilityLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.distance.createRanged(15) ],
+						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'One creature',
 						effect: 'Until the end of their next turn, the target’s Stamina can’t be reduced below 1, their speed is doubled, and their next power roll is automatically a tier 3 result.'
 					})
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-7',
 						name: 'Rondo of Rat',
-						type: AbilityLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area ],
-						distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each dead ally',
 						effect: 'Each target stands, makes a free strike, then collapses again. Allies of the targets can use Ready Rodent as a free triggered action once in conjunction with these free strikes.'
 					})

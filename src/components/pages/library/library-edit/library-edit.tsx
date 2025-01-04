@@ -7,7 +7,6 @@ import { Monster, MonsterGroup } from '../../../../models/monster';
 import { useMemo, useState } from 'react';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../../../panels/edit/ability-edit-panel/ability-edit-panel';
-import { AbilityLogic } from '../../../../logic/ability-logic';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -28,7 +27,6 @@ import { ElementEditPanel } from '../../../panels/edit/element-edit-panel/elemen
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeatureEditPanel } from '../../../panels/edit/feature-edit-panel/feature-edit-panel';
-import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -113,7 +111,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		const addFeature = () => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Item;
-			elementCopy.features.push(FeatureLogic.feature.create({
+			elementCopy.features.push(FactoryLogic.feature.create({
 				id: Utils.guid(),
 				name: '',
 				description: ''
@@ -415,7 +413,7 @@ export const LibraryEditPage = (props: Props) => {
 			elementCopy.featuresByLevel
 				.filter(lvl => lvl.level === level)
 				.forEach(lvl => {
-					lvl.features.push(FeatureLogic.feature.create({
+					lvl.features.push(FactoryLogic.feature.create({
 						id: Utils.guid(),
 						name: '',
 						description: ''
@@ -511,13 +509,13 @@ export const LibraryEditPage = (props: Props) => {
 
 		const addAbility = () => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
-			elementCopy.abilities.push(AbilityLogic.createAbility({
+			elementCopy.abilities.push(FactoryLogic.createAbility({
 				id: Utils.guid(),
 				name: '',
 				description: '',
-				type: AbilityLogic.type.createAction(),
+				type: FactoryLogic.type.createAction(),
 				keywords: [],
-				distance: [ AbilityLogic.distance.createMelee() ],
+				distance: [ FactoryLogic.distance.createMelee() ],
 				target: ''
 			}));
 			setElement(elementCopy);
@@ -616,7 +614,7 @@ export const LibraryEditPage = (props: Props) => {
 				sc.featuresByLevel
 					.filter(lvl => lvl.level === level)
 					.forEach(lvl => {
-						lvl.features.push(FeatureLogic.feature.create({
+						lvl.features.push(FactoryLogic.feature.create({
 							id: Utils.guid(),
 							name: '',
 							description: ''
@@ -1126,7 +1124,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		const addMaliceFeature = () => {
 			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
-			copy.malice.push(FeatureLogic.feature.createMaliceFeature({
+			copy.malice.push(FactoryLogic.feature.createMaliceFeature({
 				id: Utils.guid(),
 				name: '',
 				description: '',

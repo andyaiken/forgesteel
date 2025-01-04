@@ -1,9 +1,8 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
-import { AbilityLogic } from '../../logic/ability-logic';
 import { Characteristic } from '../../enums/characteristic';
+import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
-import { FeatureLogic } from '../../logic/feature-logic';
 import { HeroClass } from '../../models/class';
 import { PerkList } from '../../enums/perk-list';
 import { SkillList } from '../../enums/skill-list';
@@ -22,40 +21,40 @@ You’re at your best against the strongest foes. Your judgments terrify heretic
 		{
 			level: 1,
 			features: [
-				FeatureLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonusFeature({
 					id: 'censor-stamina',
 					field: FeatureField.Stamina,
 					value: 21,
 					valuePerLevel: 12
 				}),
-				FeatureLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonusFeature({
 					id: 'censor-recoveries',
 					field: FeatureField.Recoveries,
 					value: 12
 				}),
-				FeatureLogic.feature.createSkillChoiceFeature({
+				FactoryLogic.feature.createSkillChoiceFeature({
 					id: 'censor-1-1',
 					listOptions: [ SkillList.Interpersonal, SkillList.Lore ],
 					count: 2
 				}),
-				FeatureLogic.feature.createDomainChoiceFeature({
+				FactoryLogic.feature.createDomainChoiceFeature({
 					id: 'censor-1-2'
 				}),
-				FeatureLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'censor-1-3',
 					name: 'Wrath',
 					description: `
 At the start of each of your turns during combat, you gain 2 wrath.
 Additionally, the first time each round that a creature judged by you (see Judgment) deals damage to you, you gain 1 wrath. You also gain 1 wrath the first time each round that you deal damage to a creature judged by you.`
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'censor-1-4',
 						name: 'Judgment',
 						description: 'You utter a pray that outlines your foe in holy energy.',
-						type: AbilityLogic.type.createManeuver(),
+						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.distance.createRanged() ],
+						distance: [ FactoryLogic.distance.createRanged() ],
 						target: '1 enemy',
 						effect: `
 The target is judged by you until the end of the encounter, you die, you use this ability again, or you willingly end this effect (no action required). If another censor judges the target, then your judgment on the target ends.
@@ -67,17 +66,17 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 * When a judged target within distance uses an ability with a potency against another creature, you reduce the potency of the ability by 1 for that creature (to a minimum of 0).`
 					})
 				}),
-				FeatureLogic.feature.createKitChoiceFeature({
+				FactoryLogic.feature.createKitChoiceFeature({
 					id: 'censor-1-5'
 				}),
-				FeatureLogic.feature.createAbilityFeature({
-					ability: AbilityLogic.createAbility({
+				FactoryLogic.feature.createAbilityFeature({
+					ability: FactoryLogic.createAbility({
 						id: 'censor-1-6',
 						name: 'My Life for Yours',
 						description: 'The first principle of the oath: defend the righteous.',
-						type: AbilityLogic.type.createTrigger('The target starts their turn or takes damage.'),
+						type: FactoryLogic.type.createTrigger('The target starts their turn or takes damage.'),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ AbilityLogic.distance.createRanged() ],
+						distance: [ FactoryLogic.distance.createRanged() ],
 						target: 'Self or one ally',
 						effect: 'You spend a Recovery and the target regains Stamina equal to your Recovery value.',
 						spend: [
@@ -88,19 +87,19 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 						]
 					})
 				}),
-				FeatureLogic.feature.createDomainFeatureFeature({
+				FactoryLogic.feature.createDomainFeatureFeature({
 					id: 'censor-1-7',
 					level: 1
 				}),
-				FeatureLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoiceFeature({
 					id: 'censor-1-8',
 					cost: 0
 				}),
-				FeatureLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoiceFeature({
 					id: 'censor-1-9',
 					cost: 3
 				}),
-				FeatureLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoiceFeature({
 					id: 'censor-1-10',
 					cost: 5
 				})
@@ -109,7 +108,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 		{
 			level: 2,
 			features: [
-				FeatureLogic.feature.createPerkFeature({
+				FactoryLogic.feature.createPerkFeature({
 					id: 'censor-2-1',
 					lists: [ PerkList.Interpersonal, PerkList.Lore, PerkList.Supernatural ]
 				})
@@ -118,12 +117,12 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 		{
 			level: 3,
 			features: [
-				FeatureLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'censor-3-1',
 					name: 'Look on My Work and Despair',
 					description: 'Your judgment has grown in divine power, manifesting your deity’s ire against blasphemers, causing them to fear your actions, especially when their allies are smited. Whenever you judge a creature you can spend 1 wrath to channel your divine power to make them afraid. If the target has P < average, they are frightened of you (save ends). Whenever a creature judged by you to is reduced to 0 Stamina and you judge a new target as a free triggered action, if that new target has P < strong, they are frightened of you (save ends). If the target is already frightened of you, they take damage equal to twice your Presence score instead.'
 				}),
-				FeatureLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoiceFeature({
 					id: 'censor-3-2',
 					cost: 7
 				})
@@ -131,30 +130,30 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 		}
 	],
 	abilities: [
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-1',
 			name: 'Back, Blasphemer!',
 			description: 'You channel power through your weapon to repel foes.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 1 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 1 }) ],
 			target: 'Each enemy in the area',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
 				tier1: '2 holy damage; push 1',
 				tier2: '4 holy damage; push 2',
 				tier3: '6 holy damage; push 3'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-2',
 			name: 'Every Step ... Death!',
 			description: 'You show your foe a glimpse of their fate after death.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
 				tier1: '5 + P psychic damage',
 				tier2: '5 + P psychic damage',
@@ -162,30 +161,30 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			}),
 			effect: 'Each time the target willingly moves before the end of your next turn, they take 1 psychic damage for each square they move.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-3',
 			name: 'Halt, Miscreant!',
 			description: '“Your race is run!”',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee() ],
+			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '2 + m holy damage; P < weak, slowed (save ends)',
 				tier2: '5 + M holy damage; P < average, slowed (save ends)',
 				tier3: '7 + M holy damage; P < strong, slowed (save ends)'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-4',
 			name: 'Your Allies Cannot Save You!',
 			description: '“See how they abandon you!”',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee() ],
+			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '3 + M holy damage',
 				tier2: '5 + M holy damage',
@@ -193,16 +192,16 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			}),
 			effect: 'Each enemy adjacent to the target is pushed away from the target up to a number of squares equal to your Presence score.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-5',
 			name: 'Behold, a Shield of Faith!',
 			description: '“Allow me to intercede.”',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee() ],
+			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '3 + M holy damage',
 				tier2: '6 + M holy damage',
@@ -210,16 +209,16 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			}),
 			effect: 'Until the start of your next turn, enemies have a bane on ability power rolls made against you and each ally adjacent to you.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-6',
 			name: 'Driving Assault',
 			description: 'As you force your enemy back with your weapon, you use your faith to stay close.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee() ],
+			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '3 + M damage; push 1',
 				tier2: '6 + M damage; push 3',
@@ -227,16 +226,16 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			}),
 			effect: 'You can shift up to your speed and must end that shift within distance of the target.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-7',
 			name: 'The Gods Punish and Defend',
 			description: 'You channel holy energy to smite a foe and heal an ally.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee() ],
+			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '5 + M holy damage',
 				tier2: '8 + M holy damage',
@@ -244,32 +243,32 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			}),
 			effect: 'You can spend a Recovery to allow yourself or one ally within 10 squares of you to regain Stamina equal to your Recovery value.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-8',
 			name: 'Repent!',
 			description: 'You conjure memories of their sins.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ AbilityLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 3,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
 				tier1: '5 + P holy damage; I < weak, dazed (save ends)',
 				tier2: '8 + P holy damage; I < average, dazed (save ends)',
 				tier3: '11 + P holy damage; I < strong, dazed (save ends)'
 			})
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-9',
 			name: 'Arrest',
 			description: '“I got you, you son of a bitch.”',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee() ],
+			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '6 + M holy damage; grabbed',
 				tier2: '9 + M holy damage; grabbed',
@@ -277,19 +276,19 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			}),
 			effect: 'If the target makes a strike against a creature while grabbed by you, you can then spend 3 wrath to deal holy damage to them equal to your Presence score and change the target of the strike to another target within the strike’s distance.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-10',
 			name: 'Behold the Face of Evil!',
 			description: 'You show your enemies a vision of the true nature of one of their companions.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(),
-				AbilityLogic.distance.createRanged(5)
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '3 + M holy damage; if the target has P < weak, each enemy within 2 squares of them is frightened of you (save ends)',
 				tier2: '5 + M holy damage; if the target has P < average, each enemy within 2 squares of them is frightened of you (save ends)',
@@ -297,16 +296,16 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			}),
 			effect: 'Each enemy frightened by this ability is pushed 2 squares away from the target and takes psychic damage equal to your Presence score.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-11',
 			name: 'Censored',
 			description: 'Judged and sentenced.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-			distance: [ AbilityLogic.distance.createMelee() ],
+			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '2 + M holy damage',
 				tier2: '3 + M holy damage',
@@ -314,19 +313,19 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			}),
 			effect: 'If a target who is not a leader or a solo creature is winded after the damage is resolved, they die.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-12',
 			name: 'Purifying Fire',
 			description: 'The gods judge, fire cleanses.',
-			type: AbilityLogic.type.createAction(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
-				AbilityLogic.distance.createMelee(),
-				AbilityLogic.distance.createRanged(5)
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: AbilityLogic.createPowerRoll({
+			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '5 + M holy damage; M < weak, the target has fire weakness 3 (save ends)',
 				tier2: '9 + M holy damage; M < average, the target has fire weakness 5 (save ends)',
@@ -334,46 +333,46 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			}),
 			effect: 'While the target has fire weakness from this ability, you can choose to have your abilities deal fire damage to the target instead of holy damage.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-13',
 			name: 'Edict of Disruptive Isolation',
 			description: 'Gather not together in secret to conspire.',
-			type: AbilityLogic.type.createManeuver(),
+			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-			distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
 			effect: 'Until the end of the encounter or you are dying, at the end of each of your turns, each target takes holy damage equal to your Presence score. Any target adjacent to one or more enemies takes an extra 2d6 holy damage if they are judged by you or adjacent to one of your enemies.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-14',
 			name: 'Edict of Perfect Order',
 			description: 'Use not the fell arts!',
-			type: AbilityLogic.type.createManeuver(),
+			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-			distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
 			effect: 'Until the end of the encounter or you are dying, whenever a target uses an ability that requires Malice, they take holy damage equal to three times your Presence score. A target judged by you takes an additional 2d6 holy damage.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-15',
 			name: 'Edict of Purifying Pacifism',
 			description: 'Shed not the blood of innocents!',
-			type: AbilityLogic.type.createManeuver(),
+			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-			distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
 			effect: 'Until the end of the encounter or you are dying, whenever a target makes a strike, they take holy damage equal to twice your Presence score. A target judged by you takes an extra 2d6 holy damage.'
 		}),
-		AbilityLogic.createAbility({
+		FactoryLogic.createAbility({
 			id: 'censor-ability-16',
 			name: 'Edict of Stillness',
 			description: 'Flee not from just punishment.',
-			type: AbilityLogic.type.createManeuver(),
+			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-			distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
 			effect: 'Until the end of the encounter or you are dying, whenever a target is force moved or moves willingly out of the aura, they take holy damage equal to twice your Presence score. A target judged by you who moves willingly takes an extra 2d6 holy damage.'
@@ -388,11 +387,11 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 				{
 					level: 1,
 					features: [
-						FeatureLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkillFeature({
 							id: 'censor-sub-1-1-1',
 							skill: 'Read Person'
 						}),
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'censor-sub-1-1-2',
 							name: 'Judgment Order Benefit',
 							description: 'You can teleport up to a number of squares equal to twice your Presence score. This movement must take you closer to the judged creature. You do not need line of effect to your destination.'
@@ -402,31 +401,31 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'censor-sub-1-2-1',
 							name: 'Saint\'s Vigilance',
 							description: 'You have honed your ability to detect sin and can use it to find those who hide from justice. Any creature judged by you cannot take the Hide maneuver. You have an edge when searching for hidden creatures and, if you find a hidden creature, you can use Judgment on them as a free triggered action.'
 						}),
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'censor-sub-1-2-2',
 							name: 'A Sense for Truth',
 							description: 'You are trained in secret techniques from your order that allow you to discern the truth at a supernatural level. This puts you in high demand for your church and any governments it is allied with. If a creature is of a lower level than you, you automatically know when they are lying, though you don’t necessarily know the actual truth behind their lie. Additionally, you have an edge on tests to detect lies or hidden motives, such as when using the Read Person skill.'
 						}),
-						FeatureLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoiceFeature({
 							id: 'censor-sub-1-2-3',
 							options: [
 								{
-									feature: FeatureLogic.feature.createAbilityFeature({
-										ability: AbilityLogic.createAbility({
+									feature: FactoryLogic.feature.createAbilityFeature({
+										ability: FactoryLogic.createAbility({
 											id: 'censor-sub-1-2-3a',
 											name: 'It Is Justice You Fear',
 											description: 'I am but a vessel. Your own deeds weigh upon you.',
-											type: AbilityLogic.type.createAction(),
+											type: FactoryLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-											distance: [ AbilityLogic.distance.createRanged() ],
+											distance: [ FactoryLogic.distance.createRanged() ],
 											target: '1 creature',
 											cost: 5,
-											powerRoll: AbilityLogic.createPowerRoll({
+											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Presence ],
 												tier1: '8 + M holy damage; P < weak, frightened (save ends)',
 												tier2: '12 + M holy damage; P < average, frightened (save ends)',
@@ -438,14 +437,14 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 									value: 1
 								},
 								{
-									feature: FeatureLogic.feature.createAbilityFeature({
-										ability: AbilityLogic.createAbility({
+									feature: FactoryLogic.feature.createAbilityFeature({
+										ability: FactoryLogic.createAbility({
 											id: 'censor-sub-1-2-3b',
 											name: 'Revelator',
 											description: 'You channel holy energy to harm unbelievers and reveal those hidden from your judgment.',
-											type: AbilityLogic.type.createManeuver(),
+											type: FactoryLogic.type.createManeuver(),
 											keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-											distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
+											distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 											target: 'Each enemy in the area',
 											cost: 5,
 											effect: 'Each target takes twice your Presence in holy damage. Any hidden enemies are automatically revealed and can’t become hidden again until the start of your next turn. You can use Judgment on one of the targets as a free triggered action.'
@@ -472,11 +471,11 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 				{
 					level: 1,
 					features: [
-						FeatureLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkillFeature({
 							id: 'censor-sub-2-1-1',
 							skill: 'Magic'
 						}),
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'censor-sub-2-1-2',
 							name: 'Judgment Order Benefit',
 							description: 'You deal holy damage equal to twice your Presence score to the target.'
@@ -486,28 +485,28 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'censor-sub-2-2-1',
 							name: 'It Was Foretold',
 							description: 'Your order has trained you to understand fragments of the constant visions given to you by your deity, giving you a momentary advantage in challenging situations. At the start of an encounter, you can take one action before any other creature and before your first turn. Additionally, whenever a montage test is called for, you can make one test before the montage begins.'
 						}),
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'censor-sub-2-2-2',
 							name: 'Judge of Character',
 							description: 'Your focus on your fragmentary visions to gain divine insight on creatures and the world beyond your normal senses. Whenever you would make an Intuition test, you can make a Presence test instead.'
 						}),
-						FeatureLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoiceFeature({
 							id: 'censor-sub-2-2-3',
 							options: [
 								{
-									feature: FeatureLogic.feature.createAbilityFeature({
-										ability: AbilityLogic.createAbility({
+									feature: FactoryLogic.feature.createAbilityFeature({
+										ability: FactoryLogic.createAbility({
 											id: 'censor-sub-2-2-3a',
 											name: 'Prescient Grace',
 											description: '“Hah! I see your plan. It will not work!”',
-											type: AbilityLogic.type.createTrigger('An enemy within 10 squares starts their turn.'),
+											type: FactoryLogic.type.createTrigger('An enemy within 10 squares starts their turn.'),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-											distance: [ AbilityLogic.distance.createRanged() ],
+											distance: [ FactoryLogic.distance.createRanged() ],
 											target: 'Self or one ally',
 											cost: 5,
 											effect: 'You can spend a Recovery to allow the target to regain Stamina equal to your Recovery value. The target can then take their turn immediately before the triggering enemy.'
@@ -516,14 +515,14 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 									value: 1
 								},
 								{
-									feature: FeatureLogic.feature.createAbilityFeature({
-										ability: AbilityLogic.createAbility({
+									feature: FactoryLogic.feature.createAbilityFeature({
+										ability: FactoryLogic.createAbility({
 											id: 'censor-sub-2-2-3b',
 											name: 'With My Blessing',
 											description: 'A word in prayer, and the gods show the way.',
-											type: AbilityLogic.type.createAction(),
+											type: FactoryLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-											distance: [ AbilityLogic.distance.createRanged() ],
+											distance: [ FactoryLogic.distance.createRanged() ],
 											target: 'Self or one ally',
 											cost: 5,
 											effect: 'When you use this ability, the target can use a free triggered action to make a signature strike or a heroic ability that is a strike, and has a double edge on the power roll.'
@@ -550,11 +549,11 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 				{
 					level: 1,
 					features: [
-						FeatureLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkillFeature({
 							id: 'censor-sub-3-1-1',
 							skill: 'Lead'
 						}),
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'censor-sub-3-1-2',
 							name: 'Judgment Order Benefit',
 							description: 'You vertically pull the target up to a number of squares equal to twice your Presence score.'
@@ -564,28 +563,28 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 				{
 					level: 2,
 					features: [
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'censor-sub-3-2-1',
 							name: 'Lead by Example',
 							description: 'Your devotion to your deity allows you to take command of the battlefield, letting your allies benefit from your wisdom. When you are adjacent to a target, any ally gains the benefits of flanking against that target. Additionally, each of your allies gains an edge on tests made to aid other creatures with their tests.'
 						}),
-						FeatureLogic.feature.create({
+						FactoryLogic.feature.create({
 							id: 'censor-sub-3-2-2',
 							name: 'Stalwart Example',
 							description: 'You begin to exhibit a small spark of your deity’s power, causing creatures to trust or fear you, depending on what you need. You gain an edge on tests that use skills from the interpersonal skill group.'
 						}),
-						FeatureLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoiceFeature({
 							id: 'censor-sub-3-2-3',
 							options: [
 								{
-									feature: FeatureLogic.feature.createAbilityFeature({
-										ability: AbilityLogic.createAbility({
+									feature: FactoryLogic.feature.createAbilityFeature({
+										ability: FactoryLogic.createAbility({
 											id: 'censor-sub-3-2-3a',
 											name: 'Blessing of the Faithful',
 											description: 'The gods reward your faith.',
-											type: AbilityLogic.type.createManeuver(),
+											type: FactoryLogic.type.createManeuver(),
 											keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-											distance: [ AbilityLogic.distance.create({ type: AbilityDistanceType.Aura, value: 3 }) ],
+											distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 3 }) ],
 											target: 'Self and each ally in the area',
 											cost: 5,
 											effect: 'Until the end of the encounter or you are dying, each target in the aura gains a surge at the end of each of your turns.'
@@ -594,17 +593,17 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 									value: 1
 								},
 								{
-									feature: FeatureLogic.feature.createAbilityFeature({
-										ability: AbilityLogic.createAbility({
+									feature: FactoryLogic.feature.createAbilityFeature({
+										ability: FactoryLogic.createAbility({
 											id: 'censor-sub-3-2-3b',
 											name: 'Sentenced',
 											description: 'I am the law!',
-											type: AbilityLogic.type.createAction(),
+											type: FactoryLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-											distance: [ AbilityLogic.distance.createMelee() ],
+											distance: [ FactoryLogic.distance.createMelee() ],
 											target: '1 creature',
 											cost: 5,
-											powerRoll: AbilityLogic.createPowerRoll({
+											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Presence ],
 												tier1: '5 + P damage; P < weak, restrained (save ends)',
 												tier2: '9 + P damage; P < average, restrained (save ends)',

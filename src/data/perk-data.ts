@@ -1,6 +1,5 @@
 import { AbilityKeyword } from '../enums/ability-keyword';
-import { AbilityLogic } from '../logic/ability-logic';
-import { FeatureLogic } from '../logic/feature-logic';
+import { FactoryLogic } from '../logic/factory-logic';
 import { FeatureType } from '../enums/feature-type';
 import { Perk } from '../models/perk';
 import { PerkList } from '../enums/perk-list';
@@ -392,12 +391,12 @@ If the Director does not have an answer to the question you ask, you can instead
 		type: FeatureType.Multiple,
 		data: {
 			features: [
-				FeatureLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'perk-linguist-1',
 					name: 'Linguist',
 					description: 'If you spend at least 7 days in a place where you regularly hear a language you don’t know spoken, you can pick up enough of that language to hold a conversation, though you still can’t read it. After doing so, you can learn it twice as fast as normal.'
 				}),
-				FeatureLogic.feature.createLanguageChoiceFeature({
+				FactoryLogic.feature.createLanguageChoiceFeature({
 					id: 'perk-linguist-2',
 					count: 2
 				})
@@ -439,13 +438,13 @@ If the Director does not have an answer to the question you ask, you can instead
 		description: 'You cast an entertaining spell that creates a minor but impressive magical effect.',
 		type: FeatureType.Ability,
 		data: {
-			ability: AbilityLogic.createAbility({
+			ability: FactoryLogic.createAbility({
 				id: 'perk-arcane-trick-1',
 				name: 'Arcane Trick',
 				description: 'You cast an entertaining spell that creates a minor but impressive magical effect.',
-				type: AbilityLogic.type.createAction(),
+				type: FactoryLogic.type.createAction(),
 				keywords: [ AbilityKeyword.Magic ],
-				distance: [ AbilityLogic.distance.createSelf() ],
+				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
 				effect: `
 Choose one of the following effects:
@@ -487,13 +486,13 @@ If the familiar is destroyed, you can restore them as a respite activity or by s
 		description: '',
 		type: FeatureType.Ability,
 		data: {
-			ability: AbilityLogic.createAbility({
+			ability: FactoryLogic.createAbility({
 				id: 'perk-invisible-force-1',
 				name: 'Invisible Force',
 				description: 'You manipulate a tiny object with your mind.',
-				type: AbilityLogic.type.createManeuver(),
+				type: FactoryLogic.type.createManeuver(),
 				keywords: [ AbilityKeyword.Psionic ],
-				distance: [ AbilityLogic.distance.createRanged() ],
+				distance: [ FactoryLogic.distance.createRanged() ],
 				target: '1 size 1T unattended object',
 				effect: 'You can grab or manipulate the target with your mind. You can move the object up to a number of squares equal to your Reason, Intuition, or Presence score (your choice). You can use this ability to turn doorknobs, pull levers, and manipulate other smaller, movable pieces of a larger object as long as the piece you\'re manipulating is unattended and size 1T (though you can’t use this ability to break smaller piece off of a larger object).'
 			})
@@ -507,13 +506,13 @@ If the familiar is destroyed, you can restore them as a respite activity or by s
 		description: '',
 		type: FeatureType.Ability,
 		data: {
-			ability: AbilityLogic.createAbility({
+			ability: FactoryLogic.createAbility({
 				id: 'perk-psychic-whisper-1',
 				name: 'Psychic Whisper',
 				description: 'You send a one-way telepathic message to a friend.',
-				type: AbilityLogic.type.createManeuver(),
+				type: FactoryLogic.type.createManeuver(),
 				keywords: [ AbilityKeyword.Psionic ],
-				distance: [ AbilityLogic.distance.createRanged() ],
+				distance: [ FactoryLogic.distance.createRanged() ],
 				target: '1 ally who understands at least one language',
 				effect: 'You send a telepathic message to the target that takes 10 seconds or less to speak.'
 			})

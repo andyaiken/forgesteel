@@ -10,13 +10,13 @@ export const dragonKnight: Ancestry = {
 	name: 'Dragon Knight',
 	description: 'The Ritual of Dracogenesis that grants the power to create a generation of dragon knights—also known as draconians or wyrmwights—is obscure and supremely difficult for even an experienced sorcerer to master.',
 	features: [
-		FactoryLogic.feature.createChoiceFeature({
+		FactoryLogic.feature.createChoice({
 			id: 'dragon-knight-feature-1',
 			name: 'Wyrmplate',
 			description: 'Your hardened scales grant you immunity equal to yor level to one of the following damage types: acid, cold, corruption, fire, lightning, or poison. You can change your damage immunity type when you finish a respite.',
 			options: [
 				{
-					feature: FactoryLogic.feature.createDamageModifierFeature({
+					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-1-1',
 						modifiers: [
 							{
@@ -31,7 +31,7 @@ export const dragonKnight: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createDamageModifierFeature({
+					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-1-2',
 						modifiers: [
 							{
@@ -46,7 +46,7 @@ export const dragonKnight: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createDamageModifierFeature({
+					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-1-3',
 						modifiers: [
 							{
@@ -61,7 +61,7 @@ export const dragonKnight: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createDamageModifierFeature({
+					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-1-4',
 						modifiers: [
 							{
@@ -76,7 +76,7 @@ export const dragonKnight: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createDamageModifierFeature({
+					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-1-5',
 						modifiers: [
 							{
@@ -91,7 +91,7 @@ export const dragonKnight: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createDamageModifierFeature({
+					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-1-6',
 						modifiers: [
 							{
@@ -107,7 +107,7 @@ export const dragonKnight: Ancestry = {
 				}
 			]
 		}),
-		FactoryLogic.feature.createChoiceFeature({
+		FactoryLogic.feature.createChoice({
 			id: 'dragon-knight-feature-2',
 			name: 'Dragon Knight Traits',
 			options: [
@@ -120,7 +120,7 @@ export const dragonKnight: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createDamageModifierFeature({
+					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-2-2',
 						name: 'Prismatic Scales (acid)',
 						modifiers: [
@@ -136,7 +136,7 @@ export const dragonKnight: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createDamageModifierFeature({
+					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-2-3',
 						name: 'Prismatic Scales (cold)',
 						modifiers: [
@@ -152,7 +152,7 @@ export const dragonKnight: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createDamageModifierFeature({
+					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-2-4',
 						name: 'Prismatic Scales (corruption)',
 						modifiers: [
@@ -168,7 +168,7 @@ export const dragonKnight: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createDamageModifierFeature({
+					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-2-5',
 						name: 'Prismatic Scales (fire)',
 						modifiers: [
@@ -184,7 +184,7 @@ export const dragonKnight: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createDamageModifierFeature({
+					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-2-6',
 						name: 'Prismatic Scales (lightning)',
 						modifiers: [
@@ -200,7 +200,7 @@ export const dragonKnight: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createDamageModifierFeature({
+					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-2-7',
 						name: 'Prismatic Scales (poison)',
 						modifiers: [
@@ -235,7 +235,7 @@ Until the last villain dies.`
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createAbilityFeature({
+					feature: FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'dragon-knight-feature-2-9',
 							name: 'Draconic Pride',
@@ -255,7 +255,7 @@ Until the last villain dies.`
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.createAbilityFeature({
+					feature: FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'dragon-knight-feature-2-10',
 							name: 'Dragon Breath',

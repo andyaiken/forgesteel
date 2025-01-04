@@ -1,7 +1,8 @@
 import { Ability, AbilityDistance, AbilityType, PowerRoll } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityCostData, FeatureAbilityData, FeatureBonus, FeatureBonusData, FeatureChoice, FeatureChoiceData, FeatureClassAbility, FeatureClassAbilityData, FeatureDamageModifier, FeatureDamageModifierData, FeatureDomain, FeatureDomainData, FeatureDomainFeature, FeatureDomainFeatureData, FeatureKit, FeatureKitData, FeatureKitType, FeatureKitTypeData, FeatureLanguage, FeatureLanguageChoice, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeatureMultipleData, FeaturePerk, FeaturePerkData, FeatureSize, FeatureSizeData, FeatureSkill, FeatureSkillChoice, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeed, FeatureSpeedData, FeatureText, FeatureTitle, FeatureTitleData } from '../models/feature';
-import { Monster, MonsterGroup } from '../models/monster';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitle } from '../models/feature';
+import { Kit, KitDamageBonus } from '../models/kit';
+import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
@@ -18,7 +19,6 @@ import { FormatLogic } from './format-logic';
 import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
-import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit';
 import { MonsterFilter } from '../models/monster-filter';
 import { MonsterRoleType } from '../enums/monster-role-type';
@@ -26,6 +26,7 @@ import { Perk } from '../models/perk';
 import { PerkList } from '../enums/perk-list';
 import { Playbook } from '../models/playbook';
 import { PowerRollType } from '../enums/power-roll-type';
+import { Size } from '../models/size';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
 import { SubClass } from '../models/subclass';
@@ -44,7 +45,7 @@ export class FactoryLogic {
 			career: null,
 			complication: null,
 			features: [
-				FactoryLogic.feature.createLanguageChoiceFeature({
+				FactoryLogic.feature.createLanguageChoice({
 					id: 'default-language',
 					name: 'Default Language',
 					selected: [ 'Caelian' ]
@@ -194,6 +195,14 @@ export class FactoryLogic {
 		};
 	};
 
+	static createKitDamageBonus = (tier1: number, tier2: number, tier3: number): KitDamageBonus => {
+		return {
+			tier1: tier1,
+			tier2: tier2,
+			tier3: tier3
+		};
+	};
+
 	static createPerk = (): Perk => {
 		return {
 			id: Utils.guid(),
@@ -283,6 +292,27 @@ export class FactoryLogic {
 				}
 			],
 			features: []
+		};
+	};
+
+	static createMonsterRole = (type: MonsterRoleType, isMinion?: boolean): MonsterRole => {
+		return {
+			type: type,
+			isMinion: isMinion || false
+		};
+	};
+
+	static createSize = (value: number, mod?: string): Size => {
+		return {
+			value: value,
+			mod: mod || ''
+		};
+	};
+
+	static createSpeed = (value: number, modes?: string) => {
+		return {
+			value: value,
+			modes: modes || ''
 		};
 	};
 
@@ -459,16 +489,16 @@ export class FactoryLogic {
 	};
 
 	static feature = {
-		create: (data: { id: string, name: string, description: string }) => {
+		create: (data: { id: string, name: string, description: string }): FeatureText => {
 			return {
 				id: data.id,
 				name: data.name,
 				description: data.description,
 				type: FeatureType.Text,
 				data: null
-			} as FeatureText;
+			};
 		},
-		createAbilityFeature: (data: { ability: Ability }) => {
+		createAbility: (data: { ability: Ability }): FeatureAbility => {
 			return {
 				id: data.ability.id,
 				name: data.ability.name,
@@ -476,10 +506,10 @@ export class FactoryLogic {
 				type: FeatureType.Ability,
 				data: {
 					ability: data.ability
-				} as FeatureAbilityData
-			} as FeatureAbility;
+				}
+			};
 		},
-		createAbilityCostFeature: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number }) => {
+		createAbilityCost: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number }): FeatureAbilityCost => {
 			return {
 				id: data.id,
 				name: data.name || `${data.keywords.join(', ')} cost modifier`,
@@ -488,10 +518,10 @@ export class FactoryLogic {
 				data: {
 					keywords: data.keywords,
 					modifier: data.modifier
-				} as FeatureAbilityCostData
-			} as FeatureAbilityCost;
+				}
+			};
 		},
-		createBonusFeature: (data: { id: string, name?: string, description?: string, field: FeatureField, value?: number, valuePerLevel?: number, valuePerEchelon?: number }) => {
+		createBonus: (data: { id: string, name?: string, description?: string, field: FeatureField, value?: number, valuePerLevel?: number, valuePerEchelon?: number }): FeatureBonus => {
 			return {
 				id: data.id,
 				name: data.name || data.field.toString(),
@@ -502,10 +532,10 @@ export class FactoryLogic {
 					value: data.value || 0,
 					valuePerLevel: data.valuePerLevel || 0,
 					valuePerEchelon: data.valuePerEchelon || 0
-				} as FeatureBonusData
-			} as FeatureBonus;
+				}
+			};
 		},
-		createChoiceFeature: (data: { id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], count?: number }) => {
+		createChoice: (data: { id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], count?: number }): FeatureChoice => {
 			const count = data.count || 1;
 			return {
 				id: data.id,
@@ -516,10 +546,10 @@ export class FactoryLogic {
 					options: data.options,
 					count: count,
 					selected: []
-				} as FeatureChoiceData
-			} as FeatureChoice;
+				}
+			};
 		},
-		createClassAbilityChoiceFeature: (data: { id: string, name?: string, description?: string, cost: number, count?: number }) => {
+		createClassAbilityChoice: (data: { id: string, name?: string, description?: string, cost: number, count?: number }): FeatureClassAbility => {
 			const count = data.count || 1;
 			return {
 				id: data.id,
@@ -530,10 +560,10 @@ export class FactoryLogic {
 					cost: data.cost,
 					count: count,
 					selectedIDs: []
-				} as FeatureClassAbilityData
-			} as FeatureClassAbility;
+				}
+			};
 		},
-		createDamageModifierFeature: (data: { id: string, name?: string, description?: string, modifiers: DamageModifier[] }) => {
+		createDamageModifier: (data: { id: string, name?: string, description?: string, modifiers: DamageModifier[] }): FeatureDamageModifier => {
 			return {
 				id: data.id,
 				name: data.name || 'Damage Modifier',
@@ -541,10 +571,10 @@ export class FactoryLogic {
 				type: FeatureType.DamageModifier,
 				data: {
 					modifiers: data.modifiers
-				} as FeatureDamageModifierData
-			} as FeatureDamageModifier;
+				}
+			};
 		},
-		createDomainChoiceFeature: (data: { id: string, name?: string, description?: string, count?: number }) => {
+		createDomainChoice: (data: { id: string, name?: string, description?: string, count?: number }): FeatureDomain => {
 			const count = data.count || 1;
 			return {
 				id: data.id,
@@ -554,10 +584,10 @@ export class FactoryLogic {
 				data: {
 					count: count,
 					selected: []
-				} as FeatureDomainData
-			} as FeatureDomain;
+				}
+			};
 		},
-		createDomainFeatureFeature: (data: { id: string, name?: string, description?: string, level: number, count?: number }) => {
+		createDomainFeature: (data: { id: string, name?: string, description?: string, level: number, count?: number }): FeatureDomainFeature => {
 			const count = data.count || 1;
 			return {
 				id: data.id,
@@ -568,10 +598,10 @@ export class FactoryLogic {
 					level: data.level,
 					count: count,
 					selected: []
-				} as FeatureDomainFeatureData
-			} as FeatureDomainFeature;
+				}
+			};
 		},
-		createKitChoiceFeature: (data: { id: string, name?: string, description?: string, types?: KitType[], count?: number }) => {
+		createKitChoice: (data: { id: string, name?: string, description?: string, types?: KitType[], count?: number }): FeatureKit => {
 			const count = data.count || 1;
 			return {
 				id: data.id,
@@ -582,10 +612,10 @@ export class FactoryLogic {
 					types: data.types || [],
 					count: count,
 					selected: []
-				} as FeatureKitData
-			} as FeatureKit;
+				}
+			};
 		},
-		createKitTypeFeature: (data: { id: string, name?: string, description?: string, types: KitType[] }) => {
+		createKitType: (data: { id: string, name?: string, description?: string, types: KitType[] }): FeatureKitType => {
 			return {
 				id: data.id,
 				name: data.name || 'Kit Type',
@@ -593,10 +623,10 @@ export class FactoryLogic {
 				type: FeatureType.KitType,
 				data: {
 					types: data.types || []
-				} as FeatureKitTypeData
-			} as FeatureKitType;
+				}
+			};
 		},
-		createLanguageFeature: (data: { id: string, name?: string, description?: string, language: string }) => {
+		createLanguage: (data: { id: string, name?: string, description?: string, language: string }): FeatureLanguage => {
 			return {
 				id: data.id,
 				name: data.name || data.language,
@@ -604,10 +634,10 @@ export class FactoryLogic {
 				type: FeatureType.Language,
 				data: {
 					language: data.language
-				} as FeatureLanguageData
-			} as FeatureLanguage;
+				}
+			};
 		},
-		createLanguageChoiceFeature: (data: { id: string, name?: string, description?: string, options?: string[], count?: number, selected?: string[] }) => {
+		createLanguageChoice: (data: { id: string, name?: string, description?: string, options?: string[], count?: number, selected?: string[] }): FeatureLanguageChoice => {
 			const count = data.count || 1;
 			return {
 				id: data.id,
@@ -618,10 +648,10 @@ export class FactoryLogic {
 					options: data.options || [],
 					count: count,
 					selected: data.selected || []
-				} as FeatureLanguageChoiceData
-			} as FeatureLanguageChoice;
+				}
+			};
 		},
-		createMaliceFeature: (data: { id: string, name: string, description: string, cost: number }) => {
+		createMalice: (data: { id: string, name: string, description: string, cost: number }): FeatureMalice => {
 			return {
 				id: data.id,
 				name: data.name,
@@ -629,10 +659,10 @@ export class FactoryLogic {
 				type: FeatureType.Malice,
 				data: {
 					cost: data.cost
-				} as FeatureMaliceData
-			} as FeatureMalice;
+				}
+			};
 		},
-		createMultipleFeature: (data: { id: string, name?: string, description?: string, features: Feature[] }) => {
+		createMultiple: (data: { id: string, name?: string, description?: string, features: Feature[] }): FeatureMultiple => {
 			return {
 				id: data.id,
 				name: data.name || data.features.map(f => f.name || 'Unnamed Feature').join(', '),
@@ -640,10 +670,10 @@ export class FactoryLogic {
 				type: FeatureType.Multiple,
 				data: {
 					features: data.features
-				} as FeatureMultipleData
-			} as FeatureMultiple;
+				}
+			};
 		},
-		createPerkFeature: (data: { id: string, name?: string, description?: string, lists?: PerkList[], count?: number }) => {
+		createPerk: (data: { id: string, name?: string, description?: string, lists?: PerkList[], count?: number }): FeaturePerk => {
 			const count = data.count || 1;
 			return {
 				id: data.id,
@@ -654,10 +684,10 @@ export class FactoryLogic {
 					lists: data.lists || [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ],
 					count: count,
 					selected: []
-				} as FeaturePerkData
-			} as FeaturePerk;
+				}
+			};
 		},
-		createSizeFeature: (data: { id: string, name?: string, description?: string, sizeValue: number, sizeMod: string }) => {
+		createSize: (data: { id: string, name?: string, description?: string, sizeValue: number, sizeMod: string }): FeatureSize => {
 			return {
 				id: data.id,
 				name: data.name || 'Size',
@@ -668,10 +698,10 @@ export class FactoryLogic {
 						value: data.sizeValue,
 						mod: data.sizeMod
 					}
-				} as FeatureSizeData
-			} as FeatureSize;
+				}
+			};
 		},
-		createSkillFeature: (data: { id: string, name?: string, description?: string, skill: string }) => {
+		createSkill: (data: { id: string, name?: string, description?: string, skill: string }): FeatureSkill => {
 			return {
 				id: data.id,
 				name: data.name || data.skill,
@@ -679,10 +709,10 @@ export class FactoryLogic {
 				type: FeatureType.Skill,
 				data: {
 					skill: data.skill
-				} as FeatureSkillData
-			} as FeatureSkill;
+				}
+			};
 		},
-		createSkillChoiceFeature: (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selected?: string[] }) => {
+		createSkillChoice: (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selected?: string[] }): FeatureSkillChoice => {
 			const count = data.count || 1;
 			return {
 				id: data.id,
@@ -694,10 +724,10 @@ export class FactoryLogic {
 					listOptions: data.listOptions || [],
 					count: count,
 					selected: data.selected || []
-				} as FeatureSkillChoiceData
-			} as FeatureSkillChoice;
+				}
+			};
 		},
-		createSpeedFeature: (data: { id: string, name?: string, description?: string, speed: number }) => {
+		createSpeed: (data: { id: string, name?: string, description?: string, speed: number }): FeatureSpeed => {
 			return {
 				id: data.id,
 				name: data.name || 'Speed',
@@ -705,10 +735,10 @@ export class FactoryLogic {
 				type: FeatureType.Speed,
 				data: {
 					speed: data.speed
-				} as FeatureSpeedData
-			} as FeatureSpeed;
+				}
+			};
 		},
-		createTitleFeature: (data: { id: string, name?: string, description?: string, count?: number }) => {
+		createTitle: (data: { id: string, name?: string, description?: string, count?: number }): FeatureTitle => {
 			const count = data.count || 1;
 			return {
 				id: data.id,
@@ -718,8 +748,8 @@ export class FactoryLogic {
 				data: {
 					count: count,
 					selected: []
-				} as FeatureTitleData
-			} as FeatureTitle;
+				}
+			};
 		}
 	};
 }

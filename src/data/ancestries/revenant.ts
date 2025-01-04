@@ -9,13 +9,13 @@ export const revenant: Ancestry = {
 	name: 'Revenant',
 	description: 'Unlike the necromantic rituals that produce wights and wraiths and zombies, revenants rise from the grave through a combination of an unjust death and a burning desire for vengeance. Creatures sustained on pure will, they have no need of food or water or air—and, unlike their zombified cousins, they retain all their memories and personality from life.',
 	features: [
-		FactoryLogic.feature.createChoiceFeature({
+		FactoryLogic.feature.createChoice({
 			id: 'revenant-feature-1',
 			name: 'Former Life',
 			description: 'Choose the ancestry you were before you died.',
 			options: [
 				{
-					feature: FactoryLogic.feature.createSizeFeature({
+					feature: FactoryLogic.feature.createSize({
 						id: 'revenant-feature-1-1',
 						description: '1S',
 						sizeValue: 1,
@@ -24,7 +24,7 @@ export const revenant: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createSizeFeature({
+					feature: FactoryLogic.feature.createSize({
 						id: 'revenant-feature-1-2',
 						description: '1M',
 						sizeValue: 1,
@@ -33,7 +33,7 @@ export const revenant: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createSizeFeature({
+					feature: FactoryLogic.feature.createSize({
 						id: 'revenant-feature-1-3',
 						description: '1L',
 						sizeValue: 1,
@@ -43,34 +43,34 @@ export const revenant: Ancestry = {
 				}
 			]
 		}),
-		FactoryLogic.feature.createDamageModifierFeature({
+		FactoryLogic.feature.createDamageModifier({
 			id: 'revenant-feature-2',
 			modifiers: [
 				{
 					damageType: 'Cold',
 					type: DamageModifierType.Immunity,
-					value: 0,
+					value: 1,
 					valuePerLevel: 1,
 					valuePerEchelon: 0
 				},
 				{
 					damageType: 'Corruption',
 					type: DamageModifierType.Immunity,
-					value: 0,
+					value: 1,
 					valuePerLevel: 1,
 					valuePerEchelon: 0
 				},
 				{
 					damageType: 'Lightning',
 					type: DamageModifierType.Immunity,
-					value: 0,
+					value: 1,
 					valuePerLevel: 1,
 					valuePerEchelon: 0
 				},
 				{
 					damageType: 'Poison',
 					type: DamageModifierType.Immunity,
-					value: 0,
+					value: 1,
 					valuePerLevel: 1,
 					valuePerEchelon: 0
 				},
@@ -88,7 +88,7 @@ export const revenant: Ancestry = {
 			name: 'Tough But Withered',
 			description: 'When your Stamina equals the negative of your winded value, you become inert instead of dying. You can continue to observe your surroundings, but you can’t speak, take actions, maneuvers, or triggered actions, or move and you fall prone. If you take any fire damage while in this state, your body is destroyed and you die. Otherwise, after 12 hours, you regain Stamina equal to your recovery value.'
 		}),
-		FactoryLogic.feature.createChoiceFeature({
+		FactoryLogic.feature.createChoice({
 			id: 'revenant-feature-4',
 			name: 'Revenant Traits',
 			options: [
@@ -111,7 +111,7 @@ export const revenant: Ancestry = {
 				},
 				// TODO: Previous Life (2pts)
 				{
-					feature: FactoryLogic.feature.createMultipleFeature({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'revenant-feature-4-5',
 						name: 'Vengeance Mark',
 						features: [
@@ -123,7 +123,7 @@ As a maneuver, you place a magic sigil on a creature within 10 squares of you. W
 You always know the direction to the exact location of a creature who bears one of your sigils and is on the same world as you.
 You can have an active number of sigils equal to your level. You can remove a sigil from a creature harmlessly (no action required). If you are already using your maximum number of sigils and place a new one, your oldest sigil disappears with no other effect.`
 							}),
-							FactoryLogic.feature.createAbilityFeature({
+							FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
 									id: 'revenant-feature-4-5-2',
 									name: 'Detonate Sigil',
@@ -146,7 +146,7 @@ You can have an active number of sigils equal to your level. You can remove a si
 					value: 2
 				}
 			],
-			count: 3 // TODO: Or 2 if small
+			count: 2 // TODO: Or 3 if small
 		})
 	]
 };

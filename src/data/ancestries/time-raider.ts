@@ -14,7 +14,7 @@ export const timeRaider: Ancestry = {
 			name: 'Four Arms',
 			description: 'Your multiple arms let you take on multiple tasks at the same time. Whenever you use the Grab or Knockback maneuver against an adjacent creature, you can target an additional adjacent creature, using the same power roll for both targets. You can grab up to two creatures at a time.'
 		}),
-		FactoryLogic.feature.createChoiceFeature({
+		FactoryLogic.feature.createChoice({
 			id: 'time-raider-feature-2',
 			name: 'Time Raider Traits',
 			options: [
@@ -35,7 +35,7 @@ export const timeRaider: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createDamageModifierFeature({
+					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'time-raider-feature-2-3',
 						name: 'Psychic Scar',
 						modifiers: [
@@ -51,7 +51,7 @@ export const timeRaider: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createAbilityFeature({
+					feature: FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'time-raider-feature-2-4',
 							name: 'Concussive Slam',
@@ -71,7 +71,7 @@ export const timeRaider: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.createAbilityFeature({
+					feature: FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'time-raider-feature-2-5',
 							name: 'Psionic Bolt',
@@ -91,7 +91,7 @@ export const timeRaider: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.createAbilityFeature({
+					feature: FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'time-raider-feature-2-6',
 							name: 'Minor Acceleration',

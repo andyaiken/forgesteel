@@ -16,7 +16,7 @@ export const memonek: Ancestry = {
 			name: 'Lightweight',
 			description: 'Your body is light for a creature of your height. Your size is considered 1S when being force moved by another creature.'
 		}),
-		FactoryLogic.feature.createChoiceFeature({
+		FactoryLogic.feature.createChoice({
 			id: 'memonek-feature-3',
 			name: 'Memonek Traits',
 			options: [
@@ -61,7 +61,7 @@ export const memonek: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.createSpeedFeature({
+					feature: FactoryLogic.feature.createSpeed({
 						id: 'memonek-feature-3-6',
 						name: 'Lightning Nimbleness',
 						description: 'You can push your body to move at incredible speeds.',

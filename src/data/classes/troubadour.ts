@@ -20,27 +20,27 @@ And beyond the mundane, there are insurmountable dangers that cause many a hero 
 		{
 			level: 1,
 			features: [
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'troubadour-stamina',
 					field: FeatureField.Stamina,
 					value: 18,
 					valuePerLevel: 9
 				}),
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'troubadour-recoveries',
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
-				FactoryLogic.feature.createSkillFeature({
+				FactoryLogic.feature.createSkill({
 					id: 'troubadour-1-1',
 					skill: 'Read Person'
 				}),
-				FactoryLogic.feature.createSkillChoiceFeature({
+				FactoryLogic.feature.createSkillChoice({
 					id: 'troubadour-1-2',
 					listOptions: [ SkillList.Interpersonal ],
 					count: 2
 				}),
-				FactoryLogic.feature.createSkillChoiceFeature({
+				FactoryLogic.feature.createSkillChoice({
 					id: 'troubadour-1-3',
 					listOptions: [ SkillList.Intrigue, SkillList.Lore ]
 				}),
@@ -67,7 +67,7 @@ You still gain drama during combat if you are dead as long as your body is intac
 					name: 'Curtain Call',
 					description: 'You enter every performance with a set of routines at the ready. Routines are auras and other wide-reaching effects that have the Routine keyword, and which center around you while you move through the fray. At the start of each round of combat, as long as you are not dazed, dead, or surprised, you can either set a new routine to be active or maintain your current routine (no action required). Your routine ends if you are unable to maintain it, or at the end of the encounter.'
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'troubadour-1-7',
 						name: 'Choreography',
@@ -79,7 +79,7 @@ You still gain drama during combat if you are dead as long as your body is intac
 						effect: 'While this routine is active, each target who starts their turn in the aura gains a +2 bonus to speed until the end of their turn.'
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'troubadour-1-8',
 						name: 'Revitalizing Limerick',
@@ -91,18 +91,18 @@ You still gain drama during combat if you are dead as long as your body is intac
 						effect: 'While this routine is active, choose a number of targets equal to your Presence score at the end of your turn. Each chosen target can spend a Recovery.'
 					})
 				}),
-				FactoryLogic.feature.createKitChoiceFeature({
+				FactoryLogic.feature.createKitChoice({
 					id: 'troubadour-1-9'
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'troubadour-1-10',
 					cost: 0
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'troubadour-1-11',
 					cost: 3
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'troubadour-1-12',
 					cost: 5
 				})
@@ -121,7 +121,7 @@ Whenever you roll to gain 1d3 drama at the start of your turn, you can make your
 * If the roll is a 2, you gain 1 Heroic Resource, which you can keep for yourself or give to an ally within the distance of your active routine. The Director also gains 1 Malice.
 * If the roll is a 3, you gain 2 Heroic Resources, which you can distribute among yourself and any allies within the distance of your active routine.`
 				}),
-				FactoryLogic.feature.createChoiceFeature({
+				FactoryLogic.feature.createChoice({
 					id: 'troubadour-2-2',
 					name: 'Invocation',
 					options: [
@@ -155,7 +155,7 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 						}
 					]
 				}),
-				FactoryLogic.feature.createPerkFeature({
+				FactoryLogic.feature.createPerk({
 					id: 'troubadour-2-3'
 				})
 			]
@@ -163,7 +163,7 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 		{
 			level: 3,
 			features: [
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'troubadour-3-1',
 					cost: 7
 				})
@@ -456,11 +456,11 @@ Additionally, on each of your turns, you can use a free maneuver to communicate 
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkill({
 							id: 'troubadour-sub-1-1-0',
 							skill: 'Gymnastics'
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'troubadour-sub-1-1-1',
 								name: 'Acrobatics',
@@ -472,7 +472,7 @@ Additionally, on each of your turns, you can use a free maneuver to communicate 
 								effect: 'While this routine is active, any target who starts their turn in the aura can automatically obtain a tier 3 result on one test made to jump, tumble, or climb as part of their movement before the end of their turn.'
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'troubadour-sub-1-1-2',
 								name: 'Star Power',
@@ -490,7 +490,7 @@ Additionally, on each of your turns, you can use a free maneuver to communicate 
 								]
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'troubadour-sub-1-1-3',
 								name: 'Riposte',
@@ -507,11 +507,11 @@ Additionally, on each of your turns, you can use a free maneuver to communicate 
 				{
 					level: 2,
 					features: [
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'troubadour-sub-1-2-1',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'troubadour-sub-1-2-1a',
 											name: 'Classic Chandelier Stunt',
@@ -527,7 +527,7 @@ Additionally, on each of your turns, you can use a free maneuver to communicate 
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'troubadour-sub-1-2-1b',
 											name: 'En Garde!',
@@ -573,11 +573,11 @@ Additionally, on each of your turns, you can use a free maneuver to communicate 
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkill({
 							id: 'troubadour-sub-2-1-0',
 							skill: 'Brag'
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'troubadour-sub-2-1-1',
 								name: 'Blocking',
@@ -589,7 +589,7 @@ Additionally, on each of your turns, you can use a free maneuver to communicate 
 								effect: 'At the end of each of your turns while this routine is active, you can choose a number of creatures equal to your Presence score in the aura, causing those creatures to be teleported to unoccupied squares in the aura. A target can’t be teleported in a way that would harm them (such as over a cliff), leave them dying, or result in them suffering a condition or other negative effect.'
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'troubadour-sub-2-1-2',
 								name: 'Dramatic Monologue',
@@ -611,7 +611,7 @@ Choose one of the following effects:
 								]
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'troubadour-sub-2-1-3',
 								name: 'Turnabout is Fair Play',
@@ -634,11 +634,11 @@ Choose one of the following effects:
 				{
 					level: 2,
 					features: [
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'troubadour-sub-2-1-1',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'troubadour-sub-2-1-1a',
 											name: 'Guest Star',
@@ -654,7 +654,7 @@ Choose one of the following effects:
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'troubadour-sub-2-1-1b',
 											name: 'Twist at the End',
@@ -694,11 +694,11 @@ Choose one of the following effects:
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkill({
 							id: 'troubadour-sub-3-1-0',
 							skill: 'Music'
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'troubadour-sub-3-1-1',
 								name: 'Power Chord',
@@ -715,7 +715,7 @@ Choose one of the following effects:
 								})
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'troubadour-sub-3-1-2',
 								name: 'Thunder Mother',
@@ -733,7 +733,7 @@ Choose one of the following effects:
 								})
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'troubadour-sub-3-1-3',
 								name: 'Ballad of the Beast',
@@ -745,7 +745,7 @@ Choose one of the following effects:
 								effect: 'While this routine is active, each target who starts their turn in the aura gains a surge.'
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'troubadour-sub-3-1-4',
 								name: 'Harmonize',
@@ -769,11 +769,11 @@ Choose one of the following effects:
 				{
 					level: 2,
 					features: [
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'troubadour-sub-3-2-1',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'troubadour-sub-3-2-1a',
 											name: 'Encore',
@@ -789,7 +789,7 @@ Choose one of the following effects:
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'troubadour-sub-3-2-1b',
 											name: 'Tough Crowd',
@@ -817,7 +817,7 @@ Choose one of the following effects:
 				{
 					level: 3,
 					features: [
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'troubadour-sub-3-3-1',
 								name: 'Fire Up the Night',
@@ -829,7 +829,7 @@ Choose one of the following effects:
 								effect: 'While this routine is active, each target who starts their turn in the aura doesn’t take a bane on attacks against a creature with concealment. They can also search for hidden creatures as a free maneuver once during their turn.'
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'troubadour-sub-3-3-2',
 								name: 'Neverending Hero',

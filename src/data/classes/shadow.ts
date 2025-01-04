@@ -22,26 +22,26 @@ As a shadow, you have abilities that deal a lot of damage, let you move swiftly 
 		{
 			level: 1,
 			features: [
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'shadow-stamina',
 					field: FeatureField.Stamina,
 					value: 18,
 					valuePerLevel: 9
 				}),
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'shadow-recoveries',
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
-				FactoryLogic.feature.createSkillFeature({
+				FactoryLogic.feature.createSkill({
 					id: 'shadow-1-1',
 					skill: 'Hide'
 				}),
-				FactoryLogic.feature.createSkillFeature({
+				FactoryLogic.feature.createSkill({
 					id: 'shadow-1-2',
 					skill: 'Sneak'
 				}),
-				FactoryLogic.feature.createSkillChoiceFeature({
+				FactoryLogic.feature.createSkillChoice({
 					id: 'shadow-1-3',
 					options: [ 'Criminal Underworld' ],
 					listOptions: [ SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue ],
@@ -54,7 +54,7 @@ As a shadow, you have abilities that deal a lot of damage, let you move swiftly 
 At the start of each of your turns during combat, you gain 1d3 insight. The first time each round that you deal damage with at least one surge, you gain 1 insight.
 When you use a heroic ability that has a power roll, that ability costs 1 less insight if you have an edge or double edge on it. If the ability has multiple targets, the cost is reduced even if the ability has an edge or double edge against only one target.`
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'shadow-1-5',
 						name: 'Hesitation Is Weakness',
@@ -66,18 +66,18 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 						effect: 'You take your turn after the triggering hero.'
 					})
 				}),
-				FactoryLogic.feature.createKitChoiceFeature({
+				FactoryLogic.feature.createKitChoice({
 					id: 'shadow-1-5.5'
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'shadow-1-6',
 					cost: 0
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'shadow-1-7',
 					cost: 3
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'shadow-1-8',
 					cost: 5
 				})
@@ -86,7 +86,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 		{
 			level: 2,
 			features: [
-				FactoryLogic.feature.createPerkFeature({
+				FactoryLogic.feature.createPerk({
 					id: 'shadow-2-1',
 					lists: [ PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue ]
 				})
@@ -95,7 +95,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 		{
 			level: 3,
 			features: [
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'shadow-3-1',
 						name: 'Careful Observation',
@@ -107,7 +107,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 						effect: 'As long as you remain within distance of the target, maintain line of effect to them, and strike no other creature first, you gain a surge and an edge on the next strike you make against the assessed creature.'
 					})
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'shadow-3-2',
 					cost: 7
 				})
@@ -396,11 +396,11 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkill({
 							id: 'shadow-sub-1-1-1',
 							skill: 'Magic'
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'shadow-sub-1-1-2',
 								name: 'Black Ash Teleport',
@@ -417,7 +417,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 								]
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'shadow-sub-1-1-3',
 								name: 'In All This Confusion',
@@ -439,11 +439,11 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				{
 					level: 2,
 					features: [
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'shadow-sub-1-2-1',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'shadow-sub-1-2-1a',
 											name: 'In a Puff of Ash',
@@ -467,7 +467,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'shadow-sub-1-2-1b',
 											name: 'Too Slow',
@@ -501,11 +501,11 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkill({
 							id: 'shadow-sub-2-1-1',
 							skill: 'Alchemy'
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'shadow-sub-2-1-2',
 								name: 'Coat The Blade',
@@ -526,7 +526,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 							name: 'Smoke Bomb',
 							description: 'You always carry a supply of smoke bombs to make it easy for you to distract and get away from foes. You can use the Hide maneuver even if you are observed and don’t initially have cover or concealment. When you do so, you can shift a number of squares equal to your Agility score. If you end this movement with cover or concealment, you are hidden.'
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'shadow-sub-2-1-4',
 								name: 'Defensive Roll',
@@ -549,11 +549,11 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				{
 					level: 2,
 					features: [
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'shadow-sub-2-2-1',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'shadow-sub-2-2-1a',
 											name: 'Sticky Bomb',
@@ -575,7 +575,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'shadow-sub-2-2-1b',
 											name: 'Stink Bomb',
@@ -615,11 +615,11 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkill({
 							id: 'shadow-sub-3-1-1',
 							skill: 'Lie'
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'shadow-sub-3-1-2',
 								name: 'I’m No Threat',
@@ -639,7 +639,7 @@ The illusion ends when you harm another creature, when you and any creature phys
 								]
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'shadow-sub-3-1-3',
 								name: 'Clever Trick',
@@ -657,11 +657,11 @@ The illusion ends when you harm another creature, when you and any creature phys
 				{
 					level: 2,
 					features: [
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'shadow-sub-3-2-1',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'shadow-sub-3-2-1a',
 											name: 'Machinations of Sound',
@@ -683,7 +683,7 @@ The illusion ends when you harm another creature, when you and any creature phys
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'shadow-sub-3-2-1b',
 											name: 'So Gullible',

@@ -12,7 +12,7 @@ export const orc: Ancestry = {
 			name: 'Relentless',
 			description: 'When a creature deals damage to you that leaves you dying, you can make a free strike against any creature. If the creature is reduced to 0 Stamina by your strike, you can spend a Recovery.'
 		}),
-		FactoryLogic.feature.createChoiceFeature({
+		FactoryLogic.feature.createChoice({
 			id: 'orc-feature-2',
 			name: 'Orc Traits',
 			options: [
@@ -25,7 +25,7 @@ export const orc: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createBonusFeature({
+					feature: FactoryLogic.feature.createBonus({
 						id: 'orc-feature-2-2',
 						name: 'Grounded',
 						description: 'The magic in your blood makes it difficult for others to move you.',

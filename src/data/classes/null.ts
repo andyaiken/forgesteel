@@ -22,22 +22,22 @@ The null is an unarmed psionic warrior who dampens and absorbs the effects of ma
 		{
 			level: 1,
 			features: [
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'null-stamina',
 					field: FeatureField.Stamina,
 					value: 21,
 					valuePerLevel: 9
 				}),
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'null-recoveries',
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
-				FactoryLogic.feature.createSkillFeature({
+				FactoryLogic.feature.createSkill({
 					id: 'null-1-1',
 					skill: 'Psionics'
 				}),
-				FactoryLogic.feature.createSkillChoiceFeature({
+				FactoryLogic.feature.createSkillChoice({
 					id: 'null-1-2',
 					listOptions: [ SkillList.Interpersonal, SkillList.Lore ],
 					count: 2
@@ -47,7 +47,7 @@ The null is an unarmed psionic warrior who dampens and absorbs the effects of ma
 					name: 'Discipline',
 					description: 'At the start of each of your turns during combat, you gain 2 discipline. Additionally, you gain 1 discipline the first time in a round an enemy in your null field takes an action. You gain 1 discipline the first time in a round that an enemy uses Malice.'
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'null-1-4',
 						name: 'Null Field',
@@ -65,7 +65,7 @@ Once as a free maneuver on your turn, you can spend 1 discipline and give your N
 This ability stays active even after encounters end. It ends if you are dying or if you willingly end it (no action required).`
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'null-1-5',
 						name: 'Inertial Shield',
@@ -88,7 +88,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 					name: 'Null Speed',
 					description: 'Your psionic mastery of your body allows you to achieve great quickness. You gain a bonus to your speed and a bonus to the number of squares you shift when you take the Disengage move action equal to your Agility score.'
 				}),
-				FactoryLogic.feature.createChoiceFeature({
+				FactoryLogic.feature.createChoice({
 					id: 'null-1-7',
 					name: 'Psionic Augmentation',
 					description: 'Your training has turned your body into the perfect psionic weapon, shaping pathways in your mind that enhance your physical form. Choose one of the following augmentations. You can change your focus by undergoing a psionic meditation as a respite activity.',
@@ -124,16 +124,16 @@ This ability stays active even after encounters end. It ends if you are dying or
 					name: 'Psionic Martial Arts',
 					description: 'When you use the Knockback or Grab maneuver, you use Intuition instead of Might for the power roll. If you use Knockback, you can choose to slide the target instead of pushing them.'
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'null-1-9',
 					cost: 0,
 					count: 2
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'null-1-10',
 					cost: 3
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'null-1-11',
 					cost: 5
 				})
@@ -142,7 +142,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 		{
 			level: 2,
 			features: [
-				FactoryLogic.feature.createPerkFeature({
+				FactoryLogic.feature.createPerk({
 					id: 'null-2-1',
 					lists: [ PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue ]
 				})
@@ -161,7 +161,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 					name: 'Reorder',
 					description: 'Each time you start your turn, you can use a free triggered action to end one effect on you or another creature in the area of your Null Field ability.'
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'null-3-3',
 					cost: 7
 				})
@@ -476,7 +476,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillChoiceFeature({
+						FactoryLogic.feature.createSkillChoice({
 							id: 'null-sub-1-1-1',
 							listOptions: [ SkillList.Lore ]
 						}),
@@ -504,11 +504,11 @@ As your discipline grows, your psionic mastery of your body intensifies.
 							name: 'Rapid Processing',
 							description: 'As a maneuver, you can read an entire book or process a similar amount of information. Additionally, during any respite, you can take an additional respite activity.'
 						}),
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'null-sub-1-2-2',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'null-sub-1-2-2a',
 											name: 'Blur',
@@ -524,7 +524,7 @@ As your discipline grows, your psionic mastery of your body intensifies.
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'null-sub-1-2-2b',
 											name: 'Force Redirected',
@@ -563,7 +563,7 @@ As your discipline grows, your psionic mastery of your body intensifies.
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillChoiceFeature({
+						FactoryLogic.feature.createSkillChoice({
 							id: 'null-sub-2-1-1',
 							listOptions: [ SkillList.Crafting ]
 						}),
@@ -591,11 +591,11 @@ As your discipline grows, your psionic mastery of your body intensifies.
 							name: 'Entropic Adaptability',
 							description: 'You ignore difficult terrain related to cold and ice, and you can automatically climb at full speed while moving. Additionally, you have cold immunity equal to twice your Intuition score.'
 						}),
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'null-sub-2-2-2',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'null-sub-2-2-2a',
 											name: 'Entropic Field',
@@ -616,7 +616,7 @@ As your discipline grows, your psionic mastery of your body intensifies.
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'null-sub-2-2-2b',
 											name: 'Heat Sink',
@@ -650,7 +650,7 @@ As your discipline grows, your psionic mastery of your body intensifies.
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillChoiceFeature({
+						FactoryLogic.feature.createSkillChoice({
 							id: 'null-sub-3-1-1',
 							listOptions: [ SkillList.Exploration ]
 						}),
@@ -680,11 +680,11 @@ As your discipline grows, your psionic mastery of your body intensifies.
 You add your Intuition score to your effective size for the purpose of interacting with creatures and objects, including determining whether you can lift an object, are affected by forced movement, and so forth. This has no effect on your ability to be grabbed.
 Additionally, you have forced movement damage immunity equal to your level and reduce the distance of your falls by an additional 5 squares.`
 						}),
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'null-sub-3-2-2',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'null-sub-3-2-2a',
 											name: 'Gravitic Strike',
@@ -705,7 +705,7 @@ Additionally, you have forced movement damage immunity equal to your level and r
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'null-sub-3-2-2b',
 											name: 'Kinetic Shield',

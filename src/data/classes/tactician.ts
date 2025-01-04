@@ -21,22 +21,22 @@ As a tactician, you have abilities that heal your allies and grant them increase
 		{
 			level: 1,
 			features: [
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'tatician-stamina',
 					field: FeatureField.Stamina,
 					value: 21,
 					valuePerLevel: 12
 				}),
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'tactician-recoveries',
 					field: FeatureField.Recoveries,
 					value: 10
 				}),
-				FactoryLogic.feature.createSkillFeature({
+				FactoryLogic.feature.createSkill({
 					id: 'tactician-1-1',
 					skill: 'Lead'
 				}),
-				FactoryLogic.feature.createSkillChoiceFeature({
+				FactoryLogic.feature.createSkillChoice({
 					id: 'tactician-1-2',
 					options: [ 'Alertness', 'Architecture', 'Blacksmithing', 'Brag', 'Culture', 'Empathize', 'Fletching', 'Mechanics', 'Monsters', 'Search', 'Strategy' ],
 					listOptions: [ SkillList.Exploration ],
@@ -47,12 +47,12 @@ As a tactician, you have abilities that heal your allies and grant them increase
 					name: 'Focus',
 					description: 'At the start of each of your turns during combat, you gain 2 focus. The first time each round that you or an ally damages a target you have marked, you gain 1 focus. The first time in a round that an ally within 10 squares of you uses a heroic ability, you gain 1 focus.'
 				}),
-				FactoryLogic.feature.createKitChoiceFeature({
+				FactoryLogic.feature.createKitChoice({
 					id: 'tactician-1-4',
 					name: 'Field Arsenal',
 					count: 2
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'tactician-1-5',
 						name: 'Mark',
@@ -71,7 +71,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 * The damage dealer can shift up to a number of squares equal to your Reason score.`
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'tactician-1-6',
 						name: 'Strike Now!',
@@ -89,11 +89,11 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 						]
 					})
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'tactician-1-7',
 					cost: 3
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'tactician-1-8',
 					cost: 5
 				})
@@ -102,7 +102,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 		{
 			level: 2,
 			features: [
-				FactoryLogic.feature.createPerkFeature({
+				FactoryLogic.feature.createPerk({
 					id: 'tactician-2-1',
 					lists: [ PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue ]
 				})
@@ -116,7 +116,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 					name: 'Out of Position',
 					description: 'You are prepared for all eventualities. At the start of an encounter, you can use a free triggered action to use your Mark ability against an enemy you have line of effect to, even if you are surprised. You can then immediately slide the marked target up to 3 squares, ignoring their stability. The target can’t be moved in a way that would harm them (such as over a cliff), leave them dying, or result in them suffering a condition or other negative effect.'
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'tactician-3-2',
 					cost: 7
 				})
@@ -306,7 +306,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillChoiceFeature({
+						FactoryLogic.feature.createSkillChoice({
 							id: 'tactician-sub-1-1-1',
 							listOptions: [ SkillList.Intrigue ]
 						}),
@@ -315,7 +315,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 							name: 'Covert Operations',
 							description: 'While in your presence or working according to your plans, each of your allies gains an edge on tests with any skill from the intrigue skill group. Additionally, you can use the Lead skill to assist on any test made with a skill from the intrigue group. At the Director’s discretion, you and your allies can use skills from the intrigue skill group to attempt research or reconnaissance during a negotiation instead of outside of negotiation.'
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'tactician-sub-1-1-3',
 								name: 'Advanced Tactics',
@@ -343,11 +343,11 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 							name: 'Infiltration Tactics',
 							description: 'You have trained your squad to work together and benefit from staying silent and waiting for the opportune time to strike. When you or any of your allies within 10 squares of you becomes hidden, they gain a surge.'
 						}),
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'tactician-sub-1-2-2',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'tactician-sub-1-2-2a',
 											name: 'Fog of War',
@@ -365,7 +365,7 @@ Each target is marked by you. You immediately force each targeted creature to ma
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'tactician-sub-1-2-2b',
 											name: 'Try Me Instead',
@@ -405,7 +405,7 @@ Each target is marked by you. You immediately force each targeted creature to ma
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillChoiceFeature({
+						FactoryLogic.feature.createSkillChoice({
 							id: 'tactician-sub-2-1-1',
 							listOptions: [ SkillList.Lore ]
 						}),
@@ -435,7 +435,7 @@ The following test results apply to a negotiation:
 
 You can only make this test once for each encounter and negotiation.`
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'tactician-sub-2-1-3',
 								name: 'Overwatch',
@@ -463,11 +463,11 @@ You can only make this test once for each encounter and negotiation.`
 							name: 'Goaded',
 							description: 'You have learned to leverage the psychology of your marked foes and goad them into acting before they are tactically ready. When a creature marked by you uses a strike that targets you or an ally, you can use a free triggered action to retarget the attack to you or another one of your allies or yourself. The new target must be a valid option for the strike.'
 						}),
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'tactician-sub-2-2-2',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'tactician-sub-2-2-2a',
 											name: 'I\'ve Got Your Back',
@@ -489,7 +489,7 @@ You can only make this test once for each encounter and negotiation.`
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'tactician-sub-2-2-2b',
 											name: 'Their Tactics Are So Primitive',
@@ -525,7 +525,7 @@ Each target is marked by you. You gain two surges.
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillChoiceFeature({
+						FactoryLogic.feature.createSkillChoice({
 							id: 'tactician-sub-3-1-1',
 							listOptions: [ SkillList.Interpersonal ]
 						}),
@@ -534,7 +534,7 @@ Each target is marked by you. You gain two surges.
 							name: 'Commanding Presence',
 							description: 'You command any room you walk into. While you are present, each hero with you is treated as having a Renown 2 higher than usual for the purpose of negotiations. Additionally, each hero with you has a double edge on tests made to stop combat and start a negotiation with the other side.'
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'tactician-sub-3-1-3',
 								name: 'Parry',
@@ -564,11 +564,11 @@ Each target is marked by you. You gain two surges.
 After constant drills you have improved your ability to anticipate an enemy’s attack and thwart their attempts to move freely across the battlefield. Whenever you make an opportunity attack, the target’s speed is reduced to 0 until the end of the current turn.
 **Mark Benefit**: You can spend 2 focus to make a melee free strike against a marked creature who attempts to move or Disengage within distance of your melee free strike as a free triggered action. If you do, the target’s speed is reduced to 0 until the end of the current turn.`
 						}),
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'tactician-sub-3-2-2',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'tactician-sub-3-2-2a',
 											name: 'No Dying On My Watch',
@@ -590,7 +590,7 @@ After constant drills you have improved your ability to anticipate an enemy’s 
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'tactician-sub-3-2-2b',
 											name: 'Squad! On Me!',

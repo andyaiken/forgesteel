@@ -22,22 +22,22 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 		{
 			level: 1,
 			features: [
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'elementalist-stamina',
 					field: FeatureField.Stamina,
 					value: 18,
 					valuePerLevel: 9
 				}),
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'elementalist-recoveries',
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
-				FactoryLogic.feature.createSkillFeature({
+				FactoryLogic.feature.createSkill({
 					id: 'elementalist-1-1',
 					skill: 'Magic'
 				}),
-				FactoryLogic.feature.createSkillChoiceFeature({
+				FactoryLogic.feature.createSkillChoice({
 					id: 'elementalist-1-2',
 					listOptions: [ SkillList.Crafting, SkillList.Lore ],
 					count: 3
@@ -47,7 +47,7 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 					name: 'Essence',
 					description: 'At the start of each of your turns during combat, you gain 2 essence. You also gain 1 essence the first time in a round that you or a creature within 10 of you takes damage that isn’t untyped or holy.'
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'elementalist-1-4',
 						name: 'Hurl Element',
@@ -74,7 +74,7 @@ You can’t maintain any abilities that would make you earn a negative amount of
 If you maintain the same ability on several targets and the effect includes a power roll, you make that roll once and apply the same effect to all targets. A creature can’t be affected by multiple instances of a persistent ability.
 If you take damage equal to or greater than 5 × your Reason score in one turn, you stop maintaining any persistent abilities. For instance, if you have a Reason score of 2 and are maintaining Instantaneous Excavation, taking 10 or more damage in one turn causes you to stop maintaining the ability.`
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'elementalist-1-6',
 						name: 'Practical Magic',
@@ -90,7 +90,7 @@ Choose one of the following effects:
 * You teleport up to a number of squares equal to your Reason score.`
 					})
 				}),
-				FactoryLogic.feature.createChoiceFeature({
+				FactoryLogic.feature.createChoice({
 					id: 'elementalist-1-7',
 					name: 'Enchantment',
 					options: [
@@ -136,7 +136,7 @@ Choose one of the following effects:
 						}
 					]
 				}),
-				FactoryLogic.feature.createChoiceFeature({
+				FactoryLogic.feature.createChoice({
 					id: 'elementalist-1-8',
 					name: 'Elementalist Ward',
 					options: [
@@ -174,16 +174,16 @@ Choose one of the following effects:
 						}
 					]
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'elementalist-1-9',
 					cost: 0,
 					count: 2
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'elementalist-1-10',
 					cost: 3
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'elementalist-1-11',
 					cost: 5
 				})
@@ -192,11 +192,11 @@ Choose one of the following effects:
 		{
 			level: 2,
 			features: [
-				FactoryLogic.feature.createPerkFeature({
+				FactoryLogic.feature.createPerk({
 					id: 'elementalist-2-1',
 					lists: [ PerkList.Crafting, PerkList.Lore, PerkList.Supernatural ]
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'elementalist-2-2',
 					cost: 5
 				})
@@ -205,7 +205,7 @@ Choose one of the following effects:
 		{
 			level: 3,
 			features: [
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'elementalist-3-1',
 					cost: 7
 				})
@@ -657,7 +657,7 @@ Until the start of your next turn, the area gains the following effects:
 							name: 'Acolyte of Earth',
 							description: 'Whenever you use an earth magic ability, your stability increases by 1 until the start of your next turn. This benefit is cumulative.'
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-1-1-2',
 								name: 'Motivate Earth',
@@ -673,7 +673,7 @@ Alternatively, you touch a structure made of mundane dirt, stone, or metal that 
 You can instead touch a doorway or other opening in a mundane dirt, stone, or metal surface that is no larger than 1 square. The opening is sealed by the same material that makes up the surface.`
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-1-1-3',
 								name: 'Skin Like Castle Walls',
@@ -706,7 +706,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 				{
 					level: 3,
 					features: [
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-1-3-1',
 								name: 'The Earth Accepts Me',
@@ -736,7 +736,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 							name: 'Acolyte of Fire',
 							description: 'Your abilities that have the Fire and Magic keywords gain a +1 rolled damage bonus.'
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-2-1-2',
 								name: 'Return to Formlessness',
@@ -748,7 +748,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 								effect: 'You heat the target and cause it to combust and melt, destroying it. If the object is larger than 1 square, then only the square of the object that you touch is destroyed.'
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-2-1-3',
 								name: 'Explosive Assistance',
@@ -811,7 +811,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 You can speak with and understand Animals, Monstrosities, and Plant Creatures, even if they don’t share a language with you. Your ability to communicate with such creatures doesn’t make them inherently more intelligent, but you can use Reason in place of Presence while making tests to influence them.
 Additionally, whenever you touch a living plant that is not a Plant Creature, you can communicate with it telepathically. You can use words to communicate with the plant, but it communicates with you only by transmitting feelings and sensations that can’t be overly specific.`
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-3-1-3',
 								name: 'The Breath of Dawn Remembered',
@@ -855,7 +855,7 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 				{
 					level: 3,
 					features: [
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-3-3-1',
 								name: 'Remember Growth and Sun and Rain',
@@ -890,7 +890,7 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 							name: 'A Beyonding of Vision',
 							description: 'You instantly recognize illusions for what they are, you can see invisible creatures, and supernatural effects can’t conceal creatures and objects from you. You always know if an area or object you observe is magical or affected by magic, and you know the specifics of what that magic can do.'
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-4-1-3',
 								name: 'Shared Void Sense',
@@ -902,7 +902,7 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 								effect: 'For each Victory you have, you can target one creature. That creature gains the benefit of your A Beyonding of Vision feature until the end of your next turn, but doesn’t gain the use of Shared Void Sense.'
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-4-1-4',
 								name: 'A Subtle Relocation',
@@ -925,7 +925,7 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 				{
 					level: 2,
 					features: [
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'elementalist-sub-4-2-1',
 								name: 'There is No Space Between',

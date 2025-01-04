@@ -12,7 +12,7 @@ export const wodeElf: Ancestry = {
 			name: 'Wode Elf Glamor',
 			description: 'You can magically alter your appearance to better blend in with your surroundings. You gain an edge on Agility tests made to hide and sneak, and tests made to find you while you are hidden take a bane.'
 		}),
-		FactoryLogic.feature.createChoiceFeature({
+		FactoryLogic.feature.createChoice({
 			id: 'wode-elf-feature-2',
 			name: 'Wode Elf Traits',
 			options: [
@@ -33,7 +33,7 @@ export const wodeElf: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createSpeedFeature({
+					feature: FactoryLogic.feature.createSpeed({
 						id: 'wode-elf-feature-2-3',
 						name: 'Swift',
 						speed: 6
@@ -49,7 +49,7 @@ export const wodeElf: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.createAbilityFeature({
+					feature: FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'wode-elf-feature-2-5',
 							name: 'The Wode Defends',

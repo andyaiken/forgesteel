@@ -1124,7 +1124,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		const addMaliceFeature = () => {
 			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
-			copy.malice.push(FactoryLogic.feature.createMaliceFeature({
+			copy.malice.push(FactoryLogic.feature.createMalice({
 				id: Utils.guid(),
 				name: '',
 				description: '',

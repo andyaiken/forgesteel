@@ -21,23 +21,23 @@ You’re at your best against the strongest foes. Your judgments terrify heretic
 		{
 			level: 1,
 			features: [
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'censor-stamina',
 					field: FeatureField.Stamina,
 					value: 21,
 					valuePerLevel: 12
 				}),
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'censor-recoveries',
 					field: FeatureField.Recoveries,
 					value: 12
 				}),
-				FactoryLogic.feature.createSkillChoiceFeature({
+				FactoryLogic.feature.createSkillChoice({
 					id: 'censor-1-1',
 					listOptions: [ SkillList.Interpersonal, SkillList.Lore ],
 					count: 2
 				}),
-				FactoryLogic.feature.createDomainChoiceFeature({
+				FactoryLogic.feature.createDomainChoice({
 					id: 'censor-1-2'
 				}),
 				FactoryLogic.feature.create({
@@ -47,7 +47,7 @@ You’re at your best against the strongest foes. Your judgments terrify heretic
 At the start of each of your turns during combat, you gain 2 wrath.
 Additionally, the first time each round that a creature judged by you (see Judgment) deals damage to you, you gain 1 wrath. You also gain 1 wrath the first time each round that you deal damage to a creature judged by you.`
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'censor-1-4',
 						name: 'Judgment',
@@ -66,10 +66,10 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 * When a judged target within distance uses an ability with a potency against another creature, you reduce the potency of the ability by 1 for that creature (to a minimum of 0).`
 					})
 				}),
-				FactoryLogic.feature.createKitChoiceFeature({
+				FactoryLogic.feature.createKitChoice({
 					id: 'censor-1-5'
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'censor-1-6',
 						name: 'My Life for Yours',
@@ -87,19 +87,19 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 						]
 					})
 				}),
-				FactoryLogic.feature.createDomainFeatureFeature({
+				FactoryLogic.feature.createDomainFeature({
 					id: 'censor-1-7',
 					level: 1
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'censor-1-8',
 					cost: 0
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'censor-1-9',
 					cost: 3
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'censor-1-10',
 					cost: 5
 				})
@@ -108,7 +108,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 		{
 			level: 2,
 			features: [
-				FactoryLogic.feature.createPerkFeature({
+				FactoryLogic.feature.createPerk({
 					id: 'censor-2-1',
 					lists: [ PerkList.Interpersonal, PerkList.Lore, PerkList.Supernatural ]
 				})
@@ -122,7 +122,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 					name: 'Look on My Work and Despair',
 					description: 'Your judgment has grown in divine power, manifesting your deity’s ire against blasphemers, causing them to fear your actions, especially when their allies are smited. Whenever you judge a creature you can spend 1 wrath to channel your divine power to make them afraid. If the target has P < average, they are frightened of you (save ends). Whenever a creature judged by you to is reduced to 0 Stamina and you judge a new target as a free triggered action, if that new target has P < strong, they are frightened of you (save ends). If the target is already frightened of you, they take damage equal to twice your Presence score instead.'
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'censor-3-2',
 					cost: 7
 				})
@@ -387,7 +387,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkill({
 							id: 'censor-sub-1-1-1',
 							skill: 'Read Person'
 						}),
@@ -411,11 +411,11 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 							name: 'A Sense for Truth',
 							description: 'You are trained in secret techniques from your order that allow you to discern the truth at a supernatural level. This puts you in high demand for your church and any governments it is allied with. If a creature is of a lower level than you, you automatically know when they are lying, though you don’t necessarily know the actual truth behind their lie. Additionally, you have an edge on tests to detect lies or hidden motives, such as when using the Read Person skill.'
 						}),
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'censor-sub-1-2-3',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'censor-sub-1-2-3a',
 											name: 'It Is Justice You Fear',
@@ -437,7 +437,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'censor-sub-1-2-3b',
 											name: 'Revelator',
@@ -471,7 +471,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkill({
 							id: 'censor-sub-2-1-1',
 							skill: 'Magic'
 						}),
@@ -495,11 +495,11 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 							name: 'Judge of Character',
 							description: 'Your focus on your fragmentary visions to gain divine insight on creatures and the world beyond your normal senses. Whenever you would make an Intuition test, you can make a Presence test instead.'
 						}),
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'censor-sub-2-2-3',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'censor-sub-2-2-3a',
 											name: 'Prescient Grace',
@@ -515,7 +515,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'censor-sub-2-2-3b',
 											name: 'With My Blessing',
@@ -549,7 +549,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkill({
 							id: 'censor-sub-3-1-1',
 							skill: 'Lead'
 						}),
@@ -573,11 +573,11 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 							name: 'Stalwart Example',
 							description: 'You begin to exhibit a small spark of your deity’s power, causing creatures to trust or fear you, depending on what you need. You gain an edge on tests that use skills from the interpersonal skill group.'
 						}),
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'censor-sub-3-2-3',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'censor-sub-3-2-3a',
 											name: 'Blessing of the Faithful',
@@ -593,7 +593,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'censor-sub-3-2-3b',
 											name: 'Sentenced',

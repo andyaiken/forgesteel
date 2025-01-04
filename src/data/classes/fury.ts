@@ -22,22 +22,22 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 		{
 			level: 1,
 			features: [
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'fury-stamina',
 					field: FeatureField.Stamina,
 					value: 21,
 					valuePerLevel: 12
 				}),
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'fury-recoveries',
 					field: FeatureField.Recoveries,
 					value: 10
 				}),
-				FactoryLogic.feature.createSkillFeature({
+				FactoryLogic.feature.createSkill({
 					id: 'fury-1-1',
 					skill: 'Nature'
 				}),
-				FactoryLogic.feature.createSkillChoiceFeature({
+				FactoryLogic.feature.createSkillChoice({
 					id: 'fury-1-2',
 					listOptions: [ SkillList.Exploration, SkillList.Intrigue ],
 					count: 2
@@ -52,15 +52,15 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 					name: 'Mighty Leaps',
 					description: 'You always succeed on Might tests made to jump. You can still roll to see if you get a reward result.'
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'fury-1-5',
 					cost: 0
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'fury-1-6',
 					cost: 3
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'fury-1-7',
 					cost: 5
 				})
@@ -69,7 +69,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 		{
 			level: 2,
 			features: [
-				FactoryLogic.feature.createPerkFeature({
+				FactoryLogic.feature.createPerk({
 					id: 'fury-2-1',
 					lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Intrigue ]
 				})
@@ -78,7 +78,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 		{
 			level: 3,
 			features: [
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'fury-3-1',
 					cost: 7
 				})
@@ -336,11 +336,11 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkill({
 							id: 'fury-sub-1-1-1',
 							skill: 'Lift'
 						}),
-						FactoryLogic.feature.createKitChoiceFeature({
+						FactoryLogic.feature.createKitChoice({
 							id: 'fury-sub-1-1-2'
 						}),
 						FactoryLogic.feature.create({
@@ -353,7 +353,7 @@ As your rage grows, your primordial strength intensifies. Benefits are cumulativ
 * **Rage 4**: Gain one surge the first time on a turn that you push a creature.
 * **Rage 6**: Gain an edge on Might tests and the Knockback maneuver.`
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'fury-sub-1-1-4',
 								name: 'Lines of Force',
@@ -381,11 +381,11 @@ As your rage grows, your primordial strength intensifies. Benefits are cumulativ
 							name: 'Unstoppable Force',
 							description: 'Whenever you use the Charge action, you can make a signature strike or a heroic ability melee strike instead of a free strike. Additionally, you can jump as part of a charge.'
 						}),
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'fury-sub-1-2-2',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'fury-sub-1-2-2a',
 											name: 'Special Delivery',
@@ -401,7 +401,7 @@ As your rage grows, your primordial strength intensifies. Benefits are cumulativ
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'fury-sub-1-2-2b',
 											name: 'Wrecking Ball',
@@ -451,11 +451,11 @@ Additionally, you gain a bonus to stability equal to your Might score.`
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkill({
 							id: 'fury-sub-2-1-1',
 							skill: 'Hide'
 						}),
-						FactoryLogic.feature.createKitChoiceFeature({
+						FactoryLogic.feature.createKitChoice({
 							id: 'fury-sub-2-1-2'
 						}),
 						FactoryLogic.feature.create({
@@ -468,7 +468,7 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 * **Rage 4**: Gain one surge the first time on a turn that you slide a creature.
 * **Rage 6**: Gain an edge on Agility tests and the Knockback maneuver.`
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'fury-sub-2-1-4',
 								name: 'Unearthly Reflexes',
@@ -495,11 +495,11 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 							name: 'Inescapable Wrath',
 							description: 'You have a bonus to speed equal to your Agility score, and you ignore difficult terrain.'
 						}),
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'fury-sub-2-2-2',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'fury-sub-2-2-2a',
 											name: 'Phalanx Breaker',
@@ -521,7 +521,7 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'fury-sub-2-2-2b',
 											name: 'RRRAAAGHH!',
@@ -566,11 +566,11 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkillFeature({
+						FactoryLogic.feature.createSkill({
 							id: 'fury-sub-3-1-1',
 							skill: 'Track'
 						}),
-						FactoryLogic.feature.createKitChoiceFeature({
+						FactoryLogic.feature.createKitChoice({
 							id: 'fury-sub-3-1-2',
 							name: 'Beast Shape',
 							types: [ KitType.Standard, KitType.Stormwight ]
@@ -580,7 +580,7 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 							name: 'Relentless Hunter',
 							description: 'You gain an edge on tests that use the Track skill.'
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'fury-sub-3-1-4',
 								name: 'Furious Change',
@@ -607,11 +607,11 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 							name: 'Tooth and Claw',
 							description: 'When you end your turn, each enemy who is adjacent to you takes damage equal to your Might score.'
 						}),
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'fury-sub-3-2-2',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'fury-sub-3-2-2a',
 											name: 'Apex Predator',
@@ -633,7 +633,7 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'fury-sub-3-2-2b',
 											name: 'Visceral Roar',

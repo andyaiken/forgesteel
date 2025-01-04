@@ -8,7 +8,7 @@ export const polder: Ancestry = {
 	name: 'Polder',
 	description: 'After humans, polders are the most numerous and diverse ancestry in Orden. They are not humans, but they live in and among humans, sharing their gods and culture. Almost every human culture in Orden has a polder saint or a human saint venerated by polder.',
 	features: [
-		FactoryLogic.feature.createAbilityFeature({
+		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'polder-feature-1',
 				name: 'Shadowmeld',
@@ -20,18 +20,18 @@ export const polder: Ancestry = {
 				effect: 'You flatten yourself into a shadow against a wall or floor you are touching, and become hidden from any creature you have cover or concealment from or who isn’t observing you. While in shadow form, you have full awareness of your surroundings, attacks against you and tests made to find you take a bane, and you can’t move or take actions or maneuvers except to exit this form. Any ability or effect that targets more than 1 square affects you in this form only if it explicitly affects the surface you are flattened against. You can exit this form as a maneuver.'
 			})
 		}),
-		FactoryLogic.feature.createSizeFeature({
+		FactoryLogic.feature.createSize({
 			id: 'polder-feature-2',
 			name: 'Small!',
 			sizeValue: 1,
 			sizeMod: 'S'
 		}),
-		FactoryLogic.feature.createChoiceFeature({
+		FactoryLogic.feature.createChoice({
 			id: 'polder-feature-3',
 			name: 'Polder Traits',
 			options: [
 				{
-					feature: FactoryLogic.feature.createDamageModifierFeature({
+					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'polder-feature-3-1',
 						name: 'Corruption Immunity',
 						modifiers: [

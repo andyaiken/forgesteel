@@ -15,7 +15,7 @@ export class ComplicationData {
 				name: 'Cult Victim Benefit',
 				description: 'Once per turn, you can move through a solid mundane object no more than 1 square thick. If you end your turn inside the object, you take 5 damage and are shunted out into the space where you entered the object.'
 			}),
-			FactoryLogic.feature.createDamageModifierFeature({
+			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-cult-victim-d',
 				modifiers: [
 					{
@@ -35,7 +35,7 @@ export class ComplicationData {
 		name: 'Elemental Inside',
 		description: 'When an evil mage threatened someone you loved, you blocked your foe’s summoning of an elemental creature by absorbing their magic with your body. You are now infused with the power of that elemental—and they’re not happy about it.',
 		features: [
-			FactoryLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonus({
 				id: 'comp-elemental-inside-b',
 				name: 'Elemental Inside Benefit',
 				field: FeatureField.Stamina,
@@ -54,7 +54,7 @@ export class ComplicationData {
 		name: 'Fire And Chaos',
 		description: 'A great monster who breathed fire burned your home to the ground. While everything around you was consumed, you somehow stood strong amid the inferno, your body adapting to ignore the effects of the flames.',
 		features: [
-			FactoryLogic.feature.createDamageModifierFeature({
+			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-fire-and-chaos-b',
 				modifiers: [
 					{
@@ -81,7 +81,7 @@ export class ComplicationData {
 		name: 'Primordial Sickness',
 		description: 'You once contracted a terrible illness for which no one could find a cure. You sought out a primordial swamp said to be either incredibly poisonous or miraculously salubrious. It turned out to be both, keeping your illness at bay while corrupting your body with its unnatural energy.',
 		features: [
-			FactoryLogic.feature.createDamageModifierFeature({
+			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-primordial-sickness-b',
 				modifiers: [
 					{
@@ -100,7 +100,7 @@ export class ComplicationData {
 					}
 				]
 			}),
-			FactoryLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonus({
 				id: 'comp-primordial-sickness-d',
 				name: 'Primordial Sickness Drawback',
 				field: FeatureField.Recoveries,
@@ -114,7 +114,7 @@ export class ComplicationData {
 		name: 'Punishment Curse',
 		description: 'Through ignorance, fear, spite, or selfishness, you refused to help someone in need. To teach you a lesson, a deity offered you what seemed to be a blessing—extra power to help you heal yourself in times of need, but harsh consequences should your need become excessive. You took the deal, and now benefit from the blessing but also suffer from a curse.',
 		features: [
-			FactoryLogic.feature.createBonusFeature({
+			FactoryLogic.feature.createBonus({
 				id: 'comp-punishment-curse-b',
 				name: 'Punishment Curse Benefit',
 				field: FeatureField.Recoveries,
@@ -133,7 +133,7 @@ export class ComplicationData {
 		name: 'Shipwrecked',
 		description: 'You are the sole survivor of a shipwreck that left you stranded on a remote and inhospitable island for years. Your struggle to survive there granted you insight into the natural world but distanced you from who you once were.',
 		features: [
-			FactoryLogic.feature.createSkillChoiceFeature({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-shipwrecked-b',
 				name: 'Shipwrecked Benefit',
 				listOptions: [ SkillList.Exploration ],

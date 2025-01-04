@@ -22,23 +22,23 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 		{
 			level: 1,
 			features: [
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'conduit-stamina',
 					field: FeatureField.Stamina,
 					value: 18,
 					valuePerLevel: 9
 				}),
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'conduit-recoveries',
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
-				FactoryLogic.feature.createSkillChoiceFeature({
+				FactoryLogic.feature.createSkillChoice({
 					id: 'conduit-1-1',
 					listOptions: [ SkillList.Interpersonal, SkillList.Lore ],
 					count: 2
 				}),
-				FactoryLogic.feature.createDomainChoiceFeature({
+				FactoryLogic.feature.createDomainChoice({
 					id: 'conduit-1-6.4',
 					count: 2
 				}),
@@ -88,11 +88,11 @@ Additionally, you can gain more piety by praying to the gods — but beware! Doi
 * Piety: You gain 2 piety the first time in an encounter that you or a creature within 10 squares of deals damage in an amount equal to or greater than 10 + your level.
 * Prayer Effect: Three allies of your choice within 10 squares of you, including yourself, gain two surges.`
 				}),
-				FactoryLogic.feature.createDomainFeatureFeature({
+				FactoryLogic.feature.createDomainFeature({
 					id: 'conduit-1-6.5',
 					level: 1
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'conduit-1-4',
 						name: 'Healing Grace',
@@ -114,7 +114,7 @@ For each piety spent, you can choose one of the following enhancements:
 						]
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'conduit-1-5',
 						name: 'Ray of Wrath',
@@ -132,12 +132,12 @@ For each piety spent, you can choose one of the following enhancements:
 						effect: 'You can have this ability deal holy damage.'
 					})
 				}),
-				FactoryLogic.feature.createChoiceFeature({
+				FactoryLogic.feature.createChoice({
 					id: 'conduit-1-6',
 					name: 'Triggered Action',
 					options: [
 						{
-							feature: FactoryLogic.feature.createAbilityFeature({
+							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
 									id: 'conduit-1-6-1',
 									name: 'Word of Guidance',
@@ -158,7 +158,7 @@ For each piety spent, you can choose one of the following enhancements:
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.createAbilityFeature({
+							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
 									id: 'conduit-1-6-2',
 									name: 'Word of Judgment',
@@ -180,7 +180,7 @@ For each piety spent, you can choose one of the following enhancements:
 						}
 					]
 				}),
-				FactoryLogic.feature.createChoiceFeature({
+				FactoryLogic.feature.createChoice({
 					id: 'conduit-1-7',
 					name: 'Prayer',
 					options: [
@@ -226,7 +226,7 @@ For each piety spent, you can choose one of the following enhancements:
 						}
 					]
 				}),
-				FactoryLogic.feature.createChoiceFeature({
+				FactoryLogic.feature.createChoice({
 					id: 'conduit-1-8',
 					name: 'Conduit Ward',
 					options: [
@@ -264,16 +264,16 @@ For each piety spent, you can choose one of the following enhancements:
 						}
 					]
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'conduit-1-9',
 					cost: 0,
 					count: 2
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'conduit-1-10',
 					cost: 3
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'conduit-1-11',
 					cost: 5
 				})
@@ -287,7 +287,7 @@ For each piety spent, you can choose one of the following enhancements:
 					name: 'The Lists of Heaven',
 					description: 'Your patron is aware of your growing influence, making it easier to get their attention and power when you heal your allies. Whenever you allow another creature to spend a Recovery, you can also spend a Recovery.'
 				}),
-				FactoryLogic.feature.createPerkFeature({
+				FactoryLogic.feature.createPerk({
 					id: 'conduit-2-2',
 					lists: [ PerkList.Crafting, PerkList.Lore, PerkList.Supernatural ]
 				})
@@ -303,7 +303,7 @@ For each piety spent, you can choose one of the following enhancements:
 As a respite activity, you perform a religious ritual and beseech the gods to restore a dead creature to life. You must have at least half the creature’s remains, and they must have died within the last 24 hours from an effect that isn’t age related. The creature’s soul must be willing to return to life for the ritual to work. If they are not willing, you instinctively understand that as you start the respite activity and can cease it immediately.
 A creature with a willing soul returns to life at the end of the respite with full Stamina and half their Recoveries. You regain only half your Recoveries at the end of the respite.`
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'conduit-3-2',
 					cost: 7
 				})

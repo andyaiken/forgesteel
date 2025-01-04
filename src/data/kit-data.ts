@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
 import { FactoryLogic } from '../logic/factory-logic';
 import { Kit } from '../models/kit';
-import { KitLogic } from '../logic/kit-logic';
 
 export class KitData {
 	static arcaneArcher: Kit = {
@@ -17,12 +16,12 @@ export class KitData {
 		speed: 1,
 		stability: 0,
 		meleeDamage: null,
-		rangedDamage: KitLogic.createDamageBonus(2, 2, 2),
+		rangedDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
 		meleeDistance: 0,
 		rangedDistance: 10,
 		disengage: 1,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-arcane-archer-signature',
 					name: 'Exploding Arrow',
@@ -54,13 +53,13 @@ export class KitData {
 		stamina: 3,
 		speed: 2,
 		stability: 1,
-		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		meleeDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
 		disengage: 10,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-battlemind-signature',
 					name: 'Unmooring',
@@ -91,13 +90,13 @@ export class KitData {
 		stamina: 3,
 		speed: 2,
 		stability: 0,
-		meleeDamage: KitLogic.createDamageBonus(1, 1, 1),
-		rangedDamage: KitLogic.createDamageBonus(1, 1, 1),
+		meleeDamage: FactoryLogic.createKitDamageBonus(1, 1, 1),
+		rangedDamage: FactoryLogic.createKitDamageBonus(1, 1, 1),
 		meleeDistance: 0,
 		rangedDistance: 5,
 		disengage: 1,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-cloak-and-dagger-signature',
 					name: 'Fade',
@@ -131,13 +130,13 @@ export class KitData {
 		stamina: 6,
 		speed: 2,
 		stability: 0,
-		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		meleeDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
 		disengage: 1,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-dual-wielder-signature',
 					name: 'Double Strike',
@@ -169,13 +168,13 @@ export class KitData {
 		stamina: 6,
 		speed: 0,
 		stability: 1,
-		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		meleeDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
 		rangedDamage: null,
 		meleeDistance: 1,
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-guisarmier-signature',
 					name: 'Forward Thrust, Backward Smash',
@@ -206,13 +205,13 @@ export class KitData {
 		stamina: 3,
 		speed: 3,
 		stability: 0,
-		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		meleeDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
 		disengage: 1,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-martial-artist-signature',
 					name: 'Battle Grace',
@@ -244,13 +243,13 @@ export class KitData {
 		stamina: 9,
 		speed: 0,
 		stability: 2,
-		meleeDamage: KitLogic.createDamageBonus(0, 0, 4),
+		meleeDamage: FactoryLogic.createKitDamageBonus(0, 0, 4),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-mountain-signature',
 					name: 'Pain For Pain',
@@ -282,13 +281,13 @@ export class KitData {
 		stamina: 6,
 		speed: 1,
 		stability: 1,
-		meleeDamage: KitLogic.createDamageBonus(0, 0, 4),
+		meleeDamage: FactoryLogic.createKitDamageBonus(0, 0, 4),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-panther-signature',
 					name: 'Devastating Rush',
@@ -320,13 +319,13 @@ export class KitData {
 		stamina: 6,
 		speed: 2,
 		stability: 1,
-		meleeDamage: KitLogic.createDamageBonus(1, 1, 1),
+		meleeDamage: FactoryLogic.createKitDamageBonus(1, 1, 1),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-pugilist-signature',
 					name: 'Let’s Dance',
@@ -358,13 +357,13 @@ export class KitData {
 		stamina: 6,
 		speed: 1,
 		stability: 0,
-		meleeDamage: KitLogic.createDamageBonus(1, 1, 1),
-		rangedDamage: KitLogic.createDamageBonus(1, 1, 1),
+		meleeDamage: FactoryLogic.createKitDamageBonus(1, 1, 1),
+		rangedDamage: FactoryLogic.createKitDamageBonus(1, 1, 1),
 		meleeDistance: 0,
 		rangedDistance: 5,
 		disengage: 1,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-raider-signature',
 					name: 'Shock and Awe',
@@ -399,13 +398,13 @@ export class KitData {
 		stamina: 6,
 		speed: 1,
 		stability: 0,
-		meleeDamage: KitLogic.createDamageBonus(1, 1, 1),
-		rangedDamage: KitLogic.createDamageBonus(1, 1, 1),
+		meleeDamage: FactoryLogic.createKitDamageBonus(1, 1, 1),
+		rangedDamage: FactoryLogic.createKitDamageBonus(1, 1, 1),
 		meleeDistance: 0,
 		rangedDistance: 5,
 		disengage: 1,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-ranger-signature',
 					name: 'Hamstring Shot',
@@ -437,12 +436,12 @@ export class KitData {
 		speed: 1,
 		stability: 0,
 		meleeDamage: null,
-		rangedDamage: KitLogic.createDamageBonus(2, 2, 2),
+		rangedDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
 		meleeDistance: 0,
 		rangedDistance: 7,
 		disengage: 1,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-rapid-fire-signature',
 					name: 'Two Shot',
@@ -473,13 +472,13 @@ export class KitData {
 		stamina: 3,
 		speed: 1,
 		stability: 0,
-		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		meleeDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
 		rangedDamage: null,
 		meleeDistance: 1,
 		rangedDistance: 0,
 		disengage: 1,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-retiarius-signature',
 					name: 'Net And Stab',
@@ -510,13 +509,13 @@ export class KitData {
 		stamina: 12,
 		speed: 0,
 		stability: 1,
-		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		meleeDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-shining-armor-signature',
 					name: 'Protective Attack',
@@ -549,12 +548,12 @@ export class KitData {
 		speed: 1,
 		stability: 0,
 		meleeDamage: null,
-		rangedDamage: KitLogic.createDamageBonus(0, 0, 4),
+		rangedDamage: FactoryLogic.createKitDamageBonus(0, 0, 4),
 		meleeDistance: 0,
 		rangedDistance: 10,
 		disengage: 1,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-sniper-signature',
 					name: 'Patient Shot',
@@ -586,13 +585,13 @@ export class KitData {
 		stamina: 6,
 		speed: 1,
 		stability: 1,
-		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		meleeDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-spellsword-signature',
 					name: 'Leaping Lightning',
@@ -624,13 +623,13 @@ export class KitData {
 		stamina: 3,
 		speed: 2,
 		stability: 0,
-		meleeDamage: KitLogic.createDamageBonus(1, 1, 1),
+		meleeDamage: FactoryLogic.createKitDamageBonus(1, 1, 1),
 		rangedDamage: null,
 		meleeDistance: 1,
 		rangedDistance: 0,
 		disengage: 1,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-stick-and-robe-signature',
 					name: 'Where I Want You',
@@ -661,13 +660,13 @@ export class KitData {
 		stamina: 3,
 		speed: 3,
 		stability: 0,
-		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		meleeDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
 		disengage: 1,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-swashbuckler-signature',
 					name: 'Fancy Footwork',
@@ -699,13 +698,13 @@ export class KitData {
 		stamina: 9,
 		speed: 0,
 		stability: 1,
-		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		meleeDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
 		disengage: 1,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-sword-and-board-signature',
 					name: 'Shield Bash',
@@ -736,13 +735,13 @@ export class KitData {
 		stamina: 9,
 		speed: 1,
 		stability: 1,
-		meleeDamage: KitLogic.createDamageBonus(1, 1, 1),
+		meleeDamage: FactoryLogic.createKitDamageBonus(1, 1, 1),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-warrior-priest-signature',
 					name: 'Weakening Brand',
@@ -774,13 +773,13 @@ export class KitData {
 		stamina: 0,
 		speed: 3,
 		stability: 0,
-		meleeDamage: KitLogic.createDamageBonus(1, 1, 1),
+		meleeDamage: FactoryLogic.createKitDamageBonus(1, 1, 1),
 		rangedDamage: null,
 		meleeDistance: 1,
 		rangedDistance: 0,
 		disengage: 1,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-whirlwind-signature',
 					name: 'Extension Of My Arm',
@@ -813,13 +812,13 @@ export class KitData {
 		stamina: 9,
 		speed: 0,
 		stability: 2,
-		meleeDamage: KitLogic.createDamageBonus(0, 0, 4),
+		meleeDamage: FactoryLogic.createKitDamageBonus(0, 0, 4),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-boren-signature',
 					name: 'Bear Claws',
@@ -869,13 +868,13 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 		stamina: 3,
 		speed: 3,
 		stability: 2,
-		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		meleeDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-corven-signature',
 					name: 'Wing Buffet',
@@ -930,13 +929,13 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 		stamina: 3,
 		speed: 3,
 		stability: 0,
-		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		meleeDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-raden-signature',
 					name: 'Driving Pounce',
@@ -990,13 +989,13 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 		stamina: 9,
 		speed: 2,
 		stability: 0,
-		meleeDamage: KitLogic.createDamageBonus(2, 2, 2),
+		meleeDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
 		disengage: 0,
 		features: [
-			FactoryLogic.feature.createAbilityFeature({
+			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'kit-vuken-signature',
 					name: 'Probing Attack',

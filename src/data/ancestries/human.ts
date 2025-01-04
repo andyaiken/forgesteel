@@ -7,7 +7,7 @@ export const human: Ancestry = {
 	name: 'Human',
 	description: '“Humans,” the dwarf said with a combination of exasperation and awe. “Their only virtue seems to be believing in impossible things.”',
 	features: [
-		FactoryLogic.feature.createAbilityFeature({
+		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'human-feature-1',
 				name: 'Detect the Supernatural',
@@ -18,7 +18,7 @@ export const human: Ancestry = {
 				effect: 'Until the end of your next turn, you know the location of any supernatural object, undead, construct, or creature from another plane of existence within 5 squares of you, even if you don’t have line of effect to them. You know if you’re detecting an item or a creature, and you know if a creature is undead, a construct, or from another plane of existence.'
 			})
 		}),
-		FactoryLogic.feature.createChoiceFeature({
+		FactoryLogic.feature.createChoice({
 			id: 'human-feature-2',
 			name: 'Human Traits',
 			options: [
@@ -55,7 +55,7 @@ export const human: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.createBonusFeature({
+					feature: FactoryLogic.feature.createBonus({
 						id: 'human-feature-2-5',
 						name: 'Staying Power',
 						description: 'Your human anatomy allows you to fight, run, and stay awake longer than others.',

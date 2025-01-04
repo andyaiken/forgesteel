@@ -11,7 +11,7 @@ export const highElf: Ancestry = {
 			name: 'High Elf Glamor',
 			description: 'A magic glamor makes others perceive you as interesting and engaging, granting you an edge on Presence tests using the Flirt or Persuade skills. This glamor makes you look and sound slightly different to each creature you meet, since what is engaging to one might be different for another. However, you never appear to be anyone other than yourself.'
 		}),
-		FactoryLogic.feature.createChoiceFeature({
+		FactoryLogic.feature.createChoice({
 			id: 'high-elf-feature-2',
 			name: 'High Elf Features',
 			options: [

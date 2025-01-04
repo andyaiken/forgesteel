@@ -11,7 +11,7 @@ export const devil: Ancestry = {
 			name: 'Silver Tongue',
 			description: 'Your innate magic allows you to twist how your words are perceived to get a better read on people and convince them to see things your way. You gain an interpersonal skill of your choice, and you have an edge when attempting to discover an NPC’s motivations and pitfalls during negotiations.'
 		}),
-		FactoryLogic.feature.createChoiceFeature({
+		FactoryLogic.feature.createChoice({
 			id: 'devil-feature-2',
 			name: 'Devil Traits',
 			options: [
@@ -24,7 +24,7 @@ export const devil: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createSpeedFeature({
+					feature: FactoryLogic.feature.createSpeed({
 						id: 'devil-feature-2-2',
 						name: 'Beast Legs',
 						description: 'Your powerful legs improve your speed. Your speed becomes 6',

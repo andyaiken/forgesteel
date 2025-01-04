@@ -20,13 +20,13 @@ A talent is limited only by the strength of their mind. Powerful psionic heroes 
 		{
 			level: 1,
 			features: [
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'talent-stamina',
 					field: FeatureField.Stamina,
 					value: 18,
 					valuePerLevel: 9
 				}),
-				FactoryLogic.feature.createBonusFeature({
+				FactoryLogic.feature.createBonus({
 					id: 'talent-recoveries',
 					field: FeatureField.Recoveries,
 					value: 8
@@ -39,7 +39,7 @@ At the start of each of your turns during combat, you gain 1d3 clarity. You gain
 You can spend clarity you do not have, pushing that Heroic Resource into negative numbers, to a maximum negative value equal to 1 + your Reason score. At the end of each of your turns, you take 1 damage for each negative point of clarity.
 Whenever you have clarity below 0, you are strained. Some psionic abilities have additional effects if you are already strained or become strained when you use them. Strained effects can still impact you even after you are no longer strained.`
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'talent-1-2',
 						name: 'Mind Spike',
@@ -57,7 +57,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 						strained: 'The strike deals an extra 2 psychic damage to the target and to you. The damage you take can’t be reduced in any way.'
 					})
 				}),
-				FactoryLogic.feature.createLanguageFeature({
+				FactoryLogic.feature.createLanguage({
 					id: 'talent-1-3',
 					language: 'Mindspeech'
 				}),
@@ -66,7 +66,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 					name: 'Telepathic Speech',
 					description: 'you can telepathically communicate with any creatures within the distance of your Mind Spike ability if they share a language with you and you know of each other. The receiver of your telepathic communications can choose to respond telepathically.'
 				}),
-				FactoryLogic.feature.createChoiceFeature({
+				FactoryLogic.feature.createChoice({
 					id: 'talent-1-5',
 					name: 'Psionic Augmentation',
 					description: 'Through psionic meditation, you create pathways in your mind that enhance your statistics. Choose one of the following augmentations. You can change your augmentation along with your ward by undergoing a psionic meditation as a respite activity.',
@@ -115,7 +115,7 @@ If you have a kit, you can’t take this augmentation.`
 						}
 					]
 				}),
-				FactoryLogic.feature.createChoiceFeature({
+				FactoryLogic.feature.createChoice({
 					id: 'talent-1-6',
 					name: 'Talent Ward',
 					description: 'Through psionic meditation, you create a ward that protects you. Choose one of the following wards. You can change your ward along with your psionic augmentation by undergoing a psionic meditation as a respite activity.',
@@ -154,16 +154,16 @@ If you have a kit, you can’t take this augmentation.`
 						}
 					]
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'talent-1-7',
 					cost: 0,
 					count: 2
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'talent-1-8',
 					cost: 3
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'talent-1-9',
 					cost: 5
 				})
@@ -172,7 +172,7 @@ If you have a kit, you can’t take this augmentation.`
 		{
 			level: 2,
 			features: [
-				FactoryLogic.feature.createPerkFeature({
+				FactoryLogic.feature.createPerk({
 					id: 'talent-2-1',
 					lists: [ PerkList.Interpersonal, PerkList.Lore, PerkList.Supernatural ]
 				})
@@ -186,7 +186,7 @@ If you have a kit, you can’t take this augmentation.`
 					name: 'Scan',
 					description: 'You can extend your psionic senses out beyond their normal range. You can search for hidden creatures as a free maneuver once on each of your turns. Additionally, once you establish line of effect to a thinking creature within the distance of your Mind Spike ability, you always have line of effect to that creature until they leave move outside that distance.'
 				}),
-				FactoryLogic.feature.createClassAbilityChoiceFeature({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'talent-3-2',
 					cost: 7
 				})
@@ -516,7 +516,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'talent-sub-1-1-1',
 								name: 'Accelerate',
@@ -534,7 +534,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								]
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'talent-sub-1-1-2',
 								name: 'Again',
@@ -556,11 +556,11 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 							name: 'Ease the Hours',
 							description: 'You can increase the number of rounds in a montage test by 1 if the test would end before the heroes hit the success limit.'
 						}),
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'talent-sub-1-2-2',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'talent-sub-1-2-2a',
 											name: 'Applied Chronometrics',
@@ -583,7 +583,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'talent-sub-1-2-2b',
 											name: 'Slow',
@@ -624,7 +624,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'talent-sub-2-1-1',
 								name: 'Minor Telekinesis',
@@ -645,7 +645,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								]
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'talent-sub-2-1-2',
 								name: 'Repel',
@@ -667,11 +667,11 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 							name: 'Ease their Fall',
 							description: 'Whenever you land after a fall, or if any falling creature lands within 2 squares of you, you can use a free triggered action to reduce the falling damage by an amount equal to 2 + your Reason score.'
 						}),
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'talent-sub-2-2-2',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'talent-sub-2-2-2a',
 											name: 'Gravitic Burst',
@@ -693,7 +693,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'talent-sub-2-2-2b',
 											name: 'Levity and Gravity',
@@ -734,7 +734,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'talent-sub-3-1-1',
 								name: 'Feedback Loop',
@@ -746,7 +746,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								effect: 'The target takes psychic damage equal to half the triggering damage.'
 							})
 						}),
-						FactoryLogic.feature.createAbilityFeature({
+						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
 								id: 'talent-sub-3-1-2',
 								name: 'Remote Assistance',
@@ -774,11 +774,11 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 							name: 'Ease the Mind',
 							description: 'You gain an edge on tests to stop combat and start a negotiation. Any NPC who has a hostile or suspicious starting attitude in a negotiation has an additional 1 patience.'
 						}),
-						FactoryLogic.feature.createChoiceFeature({
+						FactoryLogic.feature.createChoice({
 							id: 'talent-sub-3-2-2',
 							options: [
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'talent-sub-3-2-2a',
 											name: 'Overwhelm',
@@ -800,7 +800,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 									value: 1
 								},
 								{
-									feature: FactoryLogic.feature.createAbilityFeature({
+									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: 'talent-sub-3-2-2b',
 											name: 'Synaptic Override',

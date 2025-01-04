@@ -31,7 +31,7 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 		}
 	],
 	malice: [
-		FactoryLogic.feature.createAbilityFeature({
+		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'radenwight-malice-1',
 				name: 'Trouser Cut',
@@ -50,13 +50,13 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 				effect: 'If a target is wearing clothing covering the lower half of their body, they must use a maneuver to pull that clothing up before they can move.'
 			})
 		}),
-		FactoryLogic.feature.createMaliceFeature({
+		FactoryLogic.feature.createMalice({
 			id: 'radenwight-malice-2',
 			name: 'Rat Race',
 			description: 'Each radenwight shifts up to their speed. Wherever a radenwight ends this movement adjacent to at least one other radenwight, they can make a melee free strike.',
 			cost: 5
 		}),
-		FactoryLogic.feature.createMaliceFeature({
+		FactoryLogic.feature.createMalice({
 			id: 'radenwight-malice-3',
 			name: 'Wall of Rats',
 			description: `
@@ -76,17 +76,17 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			name: 'Radenwight Mischiever',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Ambusher, true),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.Ambusher, true),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
-			size: MonsterLogic.createSize(1, 'S'),
-			speed: MonsterLogic.createSpeed(7, 'climb'),
+			size: FactoryLogic.createSize(1, 'S'),
+			speed: FactoryLogic.createSpeed(7, 'climb'),
 			stamina: 10,
 			stability: 0,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 1, 0),
 			features: [
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-1-feature-1',
 						name: 'Dagger Dance',
@@ -106,7 +106,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'If the mischiever is hidden when they use this ability, they can target two creatures.'
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-1-feature-2',
 						name: 'Ready Rodent',
@@ -124,17 +124,17 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			name: 'Radenwight Ratagast',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Defender, true),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.Defender, true),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
-			size: MonsterLogic.createSize(1, 'S'),
-			speed: MonsterLogic.createSpeed(6, 'climb'),
+			size: FactoryLogic.createSize(1, 'S'),
+			speed: FactoryLogic.createSpeed(6, 'climb'),
 			stamina: 12,
 			stability: 0,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 0, 1),
 			features: [
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-2-feature-1',
 						name: 'Stinky Glissando',
@@ -150,7 +150,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						})
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-2-feature-2',
 						name: 'Ready Rodent',
@@ -168,17 +168,17 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			name: 'Radenwight Swiftpaw',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Harrier, true),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.Harrier, true),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
-			size: MonsterLogic.createSize(1, 'S'),
-			speed: MonsterLogic.createSpeed(7, 'climb'),
+			size: FactoryLogic.createSize(1, 'S'),
+			speed: FactoryLogic.createSpeed(7, 'climb'),
 			stamina: 10,
 			stability: 0,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(0, 1, 1, 0, -1),
 			features: [
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-3-feature-1',
 						name: 'Rapier Flunge',
@@ -194,7 +194,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						})
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-3-feature-2',
 						name: 'Ready Rodent',
@@ -212,17 +212,17 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			name: 'Radenwight Redeye',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Artillery, true),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.Artillery, true),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
-			size: MonsterLogic.createSize(1, 'S'),
-			speed: MonsterLogic.createSpeed(5, 'climb'),
+			size: FactoryLogic.createSize(1, 'S'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 8,
 			stability: 0,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(1, 1, -1, 0, 0),
 			features: [
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-4-feature-1',
 						name: 'Eyes-On-Me Shot',
@@ -239,7 +239,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'An ally of the redeye within 2 squares of the target can shift up to 2 squares.'
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-4-feature-2',
 						name: 'Ready Rodent',
@@ -257,17 +257,17 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			name: 'Radenwight Bruxer',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Brute),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.Brute),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
-			size: MonsterLogic.createSize(1, 'S'),
-			speed: MonsterLogic.createSpeed(5, 'climb'),
+			size: FactoryLogic.createSize(1, 'S'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 40,
 			stability: 0,
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(1, 1, -1, 0, 0),
 			features: [
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-5-feature-1',
 						name: 'Lockjaw',
@@ -284,7 +284,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'While the target is grabbed, they take 2 damage at the start of each of the bruxer’s turns.'
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-5-feature-2',
 						name: 'Flurry of Bites',
@@ -301,7 +301,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						})
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-5-feature-3',
 						name: 'Ready Rodent',
@@ -319,17 +319,17 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			name: 'Radenwight Piper',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Support),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.Support),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
-			size: MonsterLogic.createSize(1, 'S'),
-			speed: MonsterLogic.createSpeed(5, 'climb'),
+			size: FactoryLogic.createSize(1, 'S'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 1, 1),
 			features: [
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-6-feature-1',
 						name: 'Piercing Trill',
@@ -349,7 +349,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'The piper or an ally within distance regains Stamina equal to half the damage dealt.'
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-6-feature-2',
 						name: 'Vivace Vivace!',
@@ -361,7 +361,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'Each target who has used their Ready Rodent ability since their last turn regains the use of their triggered action.'
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-6-feature-3',
 						name: 'Ready Rodent',
@@ -379,11 +379,11 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			name: 'Radenwight Ratcrobat',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Harrier),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.Harrier),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
-			size: MonsterLogic.createSize(1, 'S'),
-			speed: MonsterLogic.createSpeed(7, 'climb'),
+			size: FactoryLogic.createSize(1, 'S'),
+			speed: FactoryLogic.createSpeed(7, 'climb'),
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 5,
@@ -394,7 +394,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 					name: 'Gymratstics',
 					description: 'The ratcrobat gains an edge on attacks against larger creatures.'
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-7-feature-2',
 						name: 'En Garde!',
@@ -411,7 +411,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'The ratcrobat can shift up to 2 squares after attacking the first target, then can shift 1 square after attacking the second target.'
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-7-feature-3',
 						name: 'Over Here, Thanks',
@@ -422,7 +422,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'Slide 1; the ratcrobat can then shift into the square the target left.'
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-7-feature-4',
 						name: 'Ready Rodent',
@@ -440,17 +440,17 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 			name: 'Radenwight Maestro',
 			description: '',
 			level: 1,
-			role: MonsterLogic.createRole(MonsterRoleType.Leader),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.Leader),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 12,
-			size: MonsterLogic.createSize(1, 'S'),
-			speed: MonsterLogic.createSpeed(5, 'climb'),
+			size: FactoryLogic.createSize(1, 'S'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 80,
 			stability: 1,
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, 2),
 			features: [
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-1',
 						name: 'Cacophony',
@@ -467,7 +467,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'Each of the maestro’s allies can use Ready Rodent as a free triggered action once before the end of the round.'
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-2',
 						name: 'Tempo Change',
@@ -490,7 +490,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						]
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-3',
 						name: 'Ranged Ready Rodent',
@@ -506,7 +506,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 					name: 'End Effect',
 					description: 'At the end of their turn, the maestro can take 5 damage to end one EoE effect affecting them. This damage can’t be reduced in any way.'
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-5',
 						name: 'Overture',
@@ -517,7 +517,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'Each target shifts up to their speed or takes the Defend action.'
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-6',
 						name: 'Solo Act',
@@ -528,7 +528,7 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						effect: 'Until the end of their next turn, the target’s Stamina can’t be reduced below 1, their speed is doubled, and their next power roll is automatically a tier 3 result.'
 					})
 				}),
-				FactoryLogic.feature.createAbilityFeature({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-7',
 						name: 'Rondo of Rat',

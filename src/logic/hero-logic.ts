@@ -468,6 +468,14 @@ Complex or time-consuming tests might require an action if made in combat—or c
 		return Collections.sort(immunities, i => i.type);
 	};
 
+	static getFormerLife = (hero: Hero) => {
+		const ancestries = hero.ancestry?.features.find(f => f.type === FeatureType.FormerLife)?.data.selected;
+		if (ancestries !== undefined) {
+			return ancestries;
+		}
+		return [];
+	};
+
 	///////////////////////////////////////////////////////////////////////////
 
 	static getStamina = (hero: Hero) => {
@@ -535,7 +543,13 @@ Complex or time-consuming tests might require an action if made in combat—or c
 	};
 
 	static getSize = (hero: Hero) => {
-		const features = this.getFeatures(hero).filter(f => f.type === FeatureType.Size);
+		const featuresToSearch: Feature[] = [];
+		if (this.getFormerLife(hero).length === 1) {
+			featuresToSearch.push(...this.getFormerLife(hero)[0].features);
+		} else {
+			featuresToSearch.push(...this.getFeatures(hero));
+		}
+		const features = featuresToSearch.filter(f => f.type === FeatureType.Size);
 		if (features.length > 0) {
 			const datas = features.map(f => f.data as FeatureSizeData);
 			const value = Collections.max(datas.map(d => d.size.value), v => v);

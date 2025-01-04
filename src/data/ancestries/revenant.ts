@@ -9,39 +9,9 @@ export const revenant: Ancestry = {
 	name: 'Revenant',
 	description: 'Unlike the necromantic rituals that produce wights and wraiths and zombies, revenants rise from the grave through a combination of an unjust death and a burning desire for vengeance. Creatures sustained on pure will, they have no need of food or water or air—and, unlike their zombified cousins, they retain all their memories and personality from life.',
 	features: [
-		FactoryLogic.feature.createChoice({
+		FactoryLogic.feature.createFormerLifeFeature({
 			id: 'revenant-feature-1',
-			name: 'Former Life',
-			description: 'Choose the ancestry you were before you died.',
-			options: [
-				{
-					feature: FactoryLogic.feature.createSize({
-						id: 'revenant-feature-1-1',
-						description: '1S',
-						sizeValue: 1,
-						sizeMod: 'S'
-					}),
-					value: 1
-				},
-				{
-					feature: FactoryLogic.feature.createSize({
-						id: 'revenant-feature-1-2',
-						description: '1M',
-						sizeValue: 1,
-						sizeMod: 'M'
-					}),
-					value: 1
-				},
-				{
-					feature: FactoryLogic.feature.createSize({
-						id: 'revenant-feature-1-3',
-						description: '1L',
-						sizeValue: 1,
-						sizeMod: 'L'
-					}),
-					value: 1
-				}
-			]
+			description: 'Choose the ancestry you were before you died.'
 		}),
 		FactoryLogic.feature.createDamageModifier({
 			id: 'revenant-feature-2',

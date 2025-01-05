@@ -96,6 +96,8 @@ export class FeatureLogic {
 		const list: Feature[] = [];
 
 		const addFeature = (feature: Feature) => {
+			list.push(feature);
+
 			switch (feature.type) {
 				case FeatureType.Choice:
 					feature.data.selected.forEach(addFeature);
@@ -108,9 +110,6 @@ export class FeatureLogic {
 					break;
 				case FeatureType.Title:
 					feature.data.selected.forEach(title => title.features.forEach(addFeature));
-					break;
-				default:
-					list.push(feature);
 					break;
 			}
 		};

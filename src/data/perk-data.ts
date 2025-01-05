@@ -98,18 +98,40 @@ export class PerkData {
 	static friendCatapult: Perk = {
 		id: 'perk-friend-catapult',
 		name: 'Friend Catapult',
-		description: 'As a maneuver, you can grab a willing, adjacent ally or object of your size or smaller and hurl them a number of squares equal to twice your Might score in any direction. If they fall as a result of this movement, their fall distance is reduced by a number equal to twice your Might score. You can\'t use this perk again until you gain at least 1 Victory.',
-		type: FeatureType.Text,
-		data: null,
+		description: '',
+		type: FeatureType.Ability,
+		data: {
+			ability: FactoryLogic.createAbility({
+				id: 'perk-friend-catapult-1',
+				name: 'Friend Catapult',
+				description: '',
+				type: FactoryLogic.type.createManeuver(),
+				keywords: [],
+				distance: [ FactoryLogic.distance.createSelf() ],
+				target: 'Self',
+				effect: 'You grab a willing, adjacent ally or object of your size or smaller and hurl them a number of squares equal to twice your Might score in any direction. If they fall as a result of this movement, their fall distance is reduced by a number equal to twice your Might score. You can\'t use this perk again until you gain at least 1 Victory.'
+			})
+		},
 		list: PerkList.Exploration
 	};
 
 	static iveGotYou: Perk = {
 		id: 'perk-ive-got-you',
 		name: 'I\'ve Got You',
-		description: 'If a willing ally lands on you when they fall, you can use your triggered action to catch them. Neither of you takes damage from the fall.',
-		type: FeatureType.Text,
-		data: null,
+		description: '',
+		type: FeatureType.Ability,
+		data: {
+			ability: FactoryLogic.createAbility({
+				id: 'perk-ive-got-you-1',
+				name: 'I\'ve Got You',
+				description: '',
+				type: FactoryLogic.type.createTrigger('A willing ally lands on you when they fall.'),
+				keywords: [],
+				distance: [ FactoryLogic.distance.createSelf() ],
+				target: 'Self',
+				effect: 'You catch your ally. Neither of you takes damage from the fall.'
+			})
+		},
 		list: PerkList.Exploration
 	};
 
@@ -310,9 +332,20 @@ For you, music is a universal language.
 	static gumUpTheWorks: Perk = {
 		id: 'perk-gum-up-the-works',
 		name: 'Gum Up The Works',
-		description: 'When a mundane trap activates within 3 squares of you, you can move up to 3 squares toward it as a triggered action. If you’re adjacent to any of the trap’s mechanisms after this movement, you jam the trap, preventing it from activating. So long as you stay adjacent to the mechanism, the trap can’t go off. If an attempt to disarm the trap you are stall fails, it goes off.',
-		type: FeatureType.Text,
-		data: null,
+		description: '',
+		type: FeatureType.Ability,
+		data: {
+			ability: FactoryLogic.createAbility({
+				id: 'perk-gum-up-the-works-1',
+				name: 'Gum Up The Works',
+				description: '',
+				type: FactoryLogic.type.createTrigger('A mundane trap activates within 3 squares of you.'),
+				keywords: [],
+				distance: [ FactoryLogic.distance.createSelf() ],
+				target: 'Self',
+				effect: 'You can move up to 3 squares toward the trap. If you’re adjacent to any of the trap’s mechanisms after this movement, you jam the trap, preventing it from activating. So long as you stay adjacent to the mechanism, the trap can’t go off. If an attempt to disarm the trap you are stall fails, it goes off.'
+			})
+		},
 		list: PerkList.Intrigue
 	};
 
@@ -463,9 +496,20 @@ Choose one of the following effects:
 	static creatureSense: Perk = {
 		id: 'perk-creature-sense',
 		name: 'Creature Sense',
-		description: 'As a maneuver, you can magically learn the keywords a creature of lower level within 10 squares of you has in their stat block (e.g. “Demon,” “Humanoid,” or “Undead”).',
-		type: FeatureType.Text,
-		data: null,
+		description: '',
+		type: FeatureType.Ability,
+		data: {
+			ability: FactoryLogic.createAbility({
+				id: 'perk-creature-sense-1',
+				name: 'Creature Sense',
+				description: '',
+				type: FactoryLogic.type.createManeuver(),
+				keywords: [],
+				distance: [ FactoryLogic.distance.createSelf() ],
+				target: 'Self',
+				effect: 'You magically learn the keywords a creature of lower level within 10 squares of you has in their stat block (e.g. “Demon,” “Humanoid,” or “Undead”).'
+			})
+		},
 		list: PerkList.Supernatural
 	};
 

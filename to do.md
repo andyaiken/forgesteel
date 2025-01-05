@@ -4,6 +4,9 @@
 
 **Add and update element data**
 
+* Go through all text features and see if they can be changed to more useful feature types (bonuses, damage modifiers, etc)
+  * Classes
+  * Complications
 * Monsters
   * Update existing monsters
   * Add new monsters
@@ -11,8 +14,7 @@
 **Miscellaneous changes**
 
 * Remove the PowerRollType enum - resistance rolls are no longer in the game
-* Go through all text features and see if they can be changed to more useful feature types (bonuses, damage modifiers, etc)
-* Some classes have only 1 primary characteristic - this means choosing their characteristic arrays will be a lot more tricky
+* Some classes (conduit, elementalist, shadow) have only 1 primary characteristic - this means choosing their characteristic arrays will be a lot more tricky
 * If a hero's power roll uses potencies, replace weak / average / strong with the hero's characteristic value
 * If a hero's power roll adds a characteristic to damage, automatically calculate the total damage
 * Add new feature type to allow Revenant to choose features from other ancestries

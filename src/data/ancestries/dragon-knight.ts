@@ -112,10 +112,17 @@ export const dragonKnight: Ancestry = {
 			name: 'Dragon Knight Traits',
 			options: [
 				{
-					feature: FactoryLogic.feature.create({
-						id: 'dragon-knight-feature-2-1',
-						name: 'Draconian Guard',
-						description: 'When you or a creature adjacent to you takes damage from a strike, you can use a triggered action to swing your wings around and guard against the blow, reducing the any damage from the strike by an amount equal to your level.'
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'dragon-knight-feature-2-1',
+							name: 'Draconian Guard',
+							description: 'You can swing your wings around and guard against a blow.',
+							type: FactoryLogic.type.createTrigger('You, or a creature adjacent to you, takes damage from a strike'),
+							keywords: [],
+							distance: [ FactoryLogic.distance.createSelf() ],
+							target: 'Self',
+							effect: 'You reduce the damage from the strike by an amount equal to your level.'
+						})
 					}),
 					value: 1
 				},
@@ -221,6 +228,7 @@ export const dragonKnight: Ancestry = {
 						name: 'Remember your Oath',
 						description: `
 As a maneuver, you can recite the following oath. If you do, you succeed on saving throws when you roll a 4 or higher until the start of your next turn:
+
 Even should the sun stop in the sky
 Even should the night last a thousand years
 I will stand forever

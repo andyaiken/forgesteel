@@ -53,10 +53,17 @@ export const memonek: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
-						id: 'memonek-feature-3-5',
-						name: 'Keeper of Order',
-						description: 'Your connection to Axiom, the plane of uttermost law, allows you manage chaos around you. When you or a creature adjacent to you makes a power roll, you can remove an edge or a bane on the roll as a free triggered action. You can only use this benefit once per round.'
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'memonek-feature-3-5',
+							name: 'Keeper of Order',
+							description: 'Your connection to Axiom, the plane of uttermost law, allows you manage chaos around you.',
+							type: FactoryLogic.type.createTrigger('You, or a creature adjacent to you, makes a power roll', true),
+							keywords: [],
+							distance: [ FactoryLogic.distance.createSelf() ],
+							target: 'Self',
+							effect: 'You can remove an edge or a bane on the roll. You can only use this benefit once per round.'
+						})
 					}),
 					value: 2
 				},

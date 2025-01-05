@@ -39,18 +39,32 @@ export const human: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
-						id: 'human-feature-2-3',
-						name: 'Resist the Unnatural',
-						description: 'Your connection to the natural world protects you from unnatural forces. When you take damage that isn’t untyped, you can use your triggered action to half the damage.'
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'human-feature-2-3',
+							name: 'Resist the Unnatural',
+							description: 'Your connection to the natural world protects you from unnatural forces.',
+							type: FactoryLogic.type.createTrigger('You take damage that isn’t untyped'),
+							keywords: [],
+							distance: [ FactoryLogic.distance.createSelf() ],
+							target: 'Self',
+							effect: 'You halve the damage.'
+						})
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
-						id: 'human-feature-2-4',
-						name: 'Determination',
-						description: 'Your anatomical tolerance for pain allows you to push through difficult situations. If you are frightened, slowed, or weakened, you can use a maneuver to immediately end the condition.'
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'human-feature-2-4',
+							name: 'Determination',
+							description: 'Your anatomical tolerance for pain allows you to push through difficult situations.',
+							type: FactoryLogic.type.createManeuver(),
+							keywords: [],
+							distance: [ FactoryLogic.distance.createSelf() ],
+							target: 'Self',
+							effect: 'You can end the frightened, slowed, or weakened condition on yourself.'
+						})
 					}),
 					value: 2
 				},

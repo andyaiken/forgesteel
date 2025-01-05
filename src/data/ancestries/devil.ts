@@ -1,15 +1,26 @@
 import { Ancestry } from '../../models/ancestry';
 import { FactoryLogic } from '../../logic/factory-logic';
+import { SkillList } from '../../enums/skill-list';
 
 export const devil: Ancestry = {
 	id: 'ancestry-devil',
 	name: 'Devil',
 	description: 'The native ancestry of the Seven Cities of Hell, devils are humanoids with red or blue skin expressed in a wide variety of hues, from bright crimson to deep purple. Each devil is born with some hellmark—horns, a tail, cloven hooves, a forked tongue, fanged incisors, or even wings.',
 	features: [
-		FactoryLogic.feature.create({
+		FactoryLogic.feature.createMultiple({
 			id: 'devil-feature-1',
 			name: 'Silver Tongue',
-			description: 'Your innate magic allows you to twist how your words are perceived to get a better read on people and convince them to see things your way. You gain an interpersonal skill of your choice, and you have an edge when attempting to discover an NPC’s motivations and pitfalls during negotiations.'
+			features: [
+				FactoryLogic.feature.create({
+					id: 'devil-feature-1a',
+					name: 'Silver Tongue',
+					description: 'Your innate magic allows you to twist how your words are perceived to get a better read on people and convince them to see things your way. You have an edge when attempting to discover an NPC’s motivations and pitfalls during negotiations.'
+				}),
+				FactoryLogic.feature.createSkillChoice({
+					id: 'devil-feature-1b',
+					listOptions: [ SkillList.Interpersonal ]
+				})
+			]
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'devil-feature-2',
@@ -27,16 +38,23 @@ export const devil: Ancestry = {
 					feature: FactoryLogic.feature.createSpeed({
 						id: 'devil-feature-2-2',
 						name: 'Beast Legs',
-						description: 'Your powerful legs improve your speed. Your speed becomes 6',
+						description: 'Your powerful legs improve your speed.',
 						speed: 6
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
-						id: 'devil-feature-2-3',
-						name: 'Glowing Eyes',
-						description: 'Your eyes are a solid, vibrant color that flares to show your excitement or rage. Whenever you take damage from a creature, you can use a triggered action to curse that creature for daring to do you harm. The creature takes 1d10 + your level psychic damage.'
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'devil-feature-2-3',
+							name: 'Glowing Eyes',
+							description: 'Your eyes are a solid, vibrant color that flares to show your excitement or rage.',
+							type: FactoryLogic.type.createTrigger('You take damage from a creature'),
+							keywords: [],
+							distance: [ FactoryLogic.distance.createSelf() ],
+							target: 'Self',
+							effect: 'You curse your attacker for daring to do you harm. The creature takes 1d10 + your level psychic damage.'
+						})
 					}),
 					value: 1
 				},

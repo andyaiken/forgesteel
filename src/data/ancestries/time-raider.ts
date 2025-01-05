@@ -19,18 +19,44 @@ export const timeRaider: Ancestry = {
 			name: 'Time Raider Traits',
 			options: [
 				{
-					feature: FactoryLogic.feature.create({
-						id: 'time-raider-feature-2-1',
-						name: 'Beyondsight',
-						description: 'As a maneuver, you can adjust your vision to allow you to see through mundane obstructions that 1 square thick or less. While your vision is adjusted this way, you can’t see and don’t have line of effect to any creatures or objects within 1 square of you. You can return your vision to normal as a maneuver.'
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'time-raider-feature-2-1',
+							name: 'Beyondsight',
+							description: 'You adjust your vision to allow you to see through mundane obstructions.',
+							type: FactoryLogic.type.createManeuver(),
+							keywords: [],
+							distance: [ FactoryLogic.distance.createSelf() ],
+							target: 'Self',
+							effect: 'You can see through mundane obstructions that are 1 square thick or less. While your vision is adjusted this way, you can’t see and don’t have line of effect to any creatures or objects within 1 square of you. You can return your vision to normal as a maneuver.'
+						})
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'time-raider-feature-2-2',
 						name: 'Foresight',
-						description: 'Your senses extend past mundane obscuration and the veil of the future alike. You instinctively know the location of any concealed creatures who aren’t hidden from you, negating the usual bane on strikes against them. Additionally, whenever you are targeted with a strike, you can use a triggered action to impose a bane on the power roll.'
+						description: 'Your senses extend past mundane obscuration and the veil of the future alike.',
+						features: [
+							FactoryLogic.feature.create({
+								id: 'time-raider-feature-2-2a',
+								name: 'Foresight',
+								description: 'You instinctively know the location of any concealed creatures who aren’t hidden from you, negating the usual bane on strikes against them.'
+							}),
+							FactoryLogic.feature.createAbility({
+								ability: FactoryLogic.createAbility({
+									id: 'time-raider-feature-2-2b',
+									name: 'Foresight',
+									description: '',
+									type: FactoryLogic.type.createTrigger('You are targeted with a strike'),
+									keywords: [],
+									distance: [ FactoryLogic.distance.createSelf() ],
+									target: 'Self',
+									effect: 'You impose a bane on the power roll.'
+								})
+							})
+						]
 					}),
 					value: 1
 				},

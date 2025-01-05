@@ -866,11 +866,6 @@ export const FeaturePanel = (props: Props) => {
 				</Space>
 			)
 		}
-		if (data.selected[0]) {
-			return (
-				<Field label={data.selected[0].name} value={data.selected[0].description} />
-			);
-		}
 
 		return null;
 	}

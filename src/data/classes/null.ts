@@ -94,10 +94,21 @@ This ability stays active even after encounters end. It ends if you are dying or
 					description: 'Your training has turned your body into the perfect psionic weapon, shaping pathways in your mind that enhance your physical form. Choose one of the following augmentations. You can change your focus by undergoing a psionic meditation as a respite activity.',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createMultiple({
 								id: 'null-1-7a',
 								name: 'Density Augmentation',
-								description: 'You gain a +6 bonus to Stamina, and this bonus increases by 6 at 4th, 7th, and 10th levels. Additionally, you gain a +1 bonus to stability.'
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: 'null-1-7aa',
+										field: FeatureField.Stability,
+										valuePerEchelon: 1
+									}),
+									FactoryLogic.feature.createBonus({
+										id: 'null-1-7ab',
+										field: FeatureField.Disengage,
+										value: 1
+									})
+								]
 							}),
 							value: 1
 						},
@@ -110,10 +121,21 @@ This ability stays active even after encounters end. It ends if you are dying or
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createMultiple({
 								id: 'null-1-7c',
 								name: 'Speed Augmentation',
-								description: 'You gain a +1 bonus to speed and to the distance you shift when you take the Disengage move action.'
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: 'null-1-7ca',
+										field: FeatureField.Speed,
+										value: 1
+									}),
+									FactoryLogic.feature.createBonus({
+										id: 'null-1-7cb',
+										field: FeatureField.Disengage,
+										value: 1
+									})
+								]
 							}),
 							value: 1
 						}
@@ -156,10 +178,16 @@ This ability stays active even after encounters end. It ends if you are dying or
 					name: 'Psionic Leap',
 					description: 'You can long and high jump a distance equal to twice your Agility score without needing to make a test.'
 				}),
-				FactoryLogic.feature.create({
-					id: 'null-3-2',
-					name: 'Reorder',
-					description: 'Each time you start your turn, you can use a free triggered action to end one effect on you or another creature in the area of your Null Field ability.'
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'null-3-2',
+						name: 'Reorder',
+						description: '',
+						type: FactoryLogic.type.createTrigger('You start your turn.', true),
+						distance: [ FactoryLogic.distance.createSelf() ],
+						target: 'Self',
+						effect: 'You can end one effect on you or another creature in the area of your Null Field ability.'
+					})
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'null-3-3',

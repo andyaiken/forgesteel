@@ -72,12 +72,22 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 					description: 'Through psionic meditation, you create pathways in your mind that enhance your statistics. Choose one of the following augmentations. You can change your augmentation along with your ward by undergoing a psionic meditation as a respite activity.',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createMultiple({
 								id: 'talent-1-5a',
 								name: 'Battle Augmentation',
-								description: `
-You can wear light armor and wield light weapons effectively, even though you don’t have a kit. While you wear light armor, you gain a +3 bonus to Stamina and that bonus increases by 3 at 4th, 7th, and 10th levels. While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this augmentation.
-If you have a kit, you can’t take this augmentation.`
+								description: 'You can wear light armor and wield light weapons effectively, even though you don’t have a kit. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this augmentation.',
+								features: [
+									FactoryLogic.feature.create({
+										id: 'talent-1-5aa',
+										name: 'Battle Augmentation',
+										description: 'While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes.'
+									}),
+									FactoryLogic.feature.createBonus({
+										id: 'talent-1-5ab',
+										field: FeatureField.Stamina,
+										valuePerEchelon: 3
+									})
+								]
 							}),
 							value: 1
 						},
@@ -90,10 +100,21 @@ If you have a kit, you can’t take this augmentation.`
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createMultiple({
 								id: 'talent-1-5c',
 								name: 'Density Augmentation',
-								description: 'You gain a +6 bonus to Stamina, and this bonus increases by 6 at 4th, 7th, and 10th levels. Additionally, you gain a +1 bonus to stability.'
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: 'talent-1-5ca',
+										field: FeatureField.Stamina,
+										valuePerEchelon: 6
+									}),
+									FactoryLogic.feature.createBonus({
+										id: 'talent-1-5cb',
+										field: FeatureField.Stability,
+										value: 1
+									})
+								]
 							}),
 							value: 1
 						},
@@ -106,10 +127,21 @@ If you have a kit, you can’t take this augmentation.`
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createMultiple({
 								id: 'talent-1-5e',
 								name: 'Speed Augmentation',
-								description: 'You gain a +1 bonus to speed and to the distance you shift when you take the Disengage move action.'
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: 'talent-1-5ea',
+										field: FeatureField.Speed,
+										value: 1
+									}),
+									FactoryLogic.feature.createBonus({
+										id: 'talent-1-5eb',
+										field: FeatureField.Disengage,
+										value: 1
+									})
+								]
 							}),
 							value: 1
 						}
@@ -129,10 +161,17 @@ If you have a kit, you can’t take this augmentation.`
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
-								id: 'talent-1-6b',
-								name: 'Repulsive Ward',
-								description: 'You surround yourself with an invisible ward of telekinetic energy. Whenever an adjacent creature deals damage to you, you can use a free triggered action to push them up to a number of squares equal to your Reason score.'
+							feature: FactoryLogic.feature.createAbility({
+								ability: FactoryLogic.createAbility({
+									id: 'talent-1-6b',
+									name: 'Repulsive Ward',
+									description: 'You surround yourself with an invisible ward of telekinetic energy.',
+									type: FactoryLogic.type.createTrigger('An adjacent creature deals damage to you.', true),
+									keywords: [],
+									distance: [ FactoryLogic.distance.createSelf() ],
+									target: 'Self',
+									effect: 'You can push your attacker up to a number of squares equal to your Reason score.'
+								})
 							}),
 							value: 1
 						},
@@ -662,10 +701,16 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 				{
 					level: 2,
 					features: [
-						FactoryLogic.feature.create({
-							id: 'talent-sub-2-2-1',
-							name: 'Ease their Fall',
-							description: 'Whenever you land after a fall, or if any falling creature lands within 2 squares of you, you can use a free triggered action to reduce the falling damage by an amount equal to 2 + your Reason score.'
+						FactoryLogic.feature.createAbility({
+							ability: FactoryLogic.createAbility({
+								id: 'talent-sub-2-2-1',
+								name: 'Ease their Fall',
+								description: '',
+								type: FactoryLogic.type.createTrigger('You land after a fall, or any falling creature lands within 2 squares of you.', true),
+								distance: [ FactoryLogic.distance.createSelf() ],
+								target: 'Self',
+								effect: 'You can reduce the falling damage by an amount equal to 2 + your Reason score.'
+							})
 						}),
 						FactoryLogic.feature.createChoice({
 							id: 'talent-sub-2-2-2',

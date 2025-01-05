@@ -6,7 +6,6 @@ import type {
 	FeatureDomainFeatureData,
 	FeatureKitData,
 	FeatureLanguageChoiceData,
-	FeatureMultipleData,
 	FeaturePerkData,
 	FeatureSkillChoiceData,
 	FeatureTitleData
@@ -94,71 +93,31 @@ export class FeatureLogic {
 	};
 
 	static simplifyFeatures = (features: Feature[]) => {
-		// If any features grant kits, get the features from those kits
-		const featuresFromKits: Feature[] = [];
-		features
-			.filter(f => f.type === FeatureType.Kit)
-			.forEach(f => {
-				const data = f.data as FeatureKitData;
-				data.selected.forEach(kit => {
-					featuresFromKits.push(...kit.features);
-				});
-			});
-		features.push(...featuresFromKits);
+		const list: Feature[] = [];
 
-		// If any features grant perks, get the features from those perks
-		const featuresFromPerks: Feature[] = [];
-		features
-			.filter(f => f.type === FeatureType.Perk)
-			.forEach(f => {
-				const data = f.data as FeaturePerkData;
-				data.selected.forEach(perk => {
-					featuresFromPerks.push(perk);
-				});
-			});
-		features.push(...featuresFromPerks);
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Choice:
+					feature.data.selected.forEach(addFeature);
+					break;
+				case FeatureType.Kit:
+					feature.data.selected.forEach(kit => kit.features.forEach(addFeature));
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+				case FeatureType.Title:
+					feature.data.selected.forEach(title => title.features.forEach(addFeature));
+					break;
+				default:
+					list.push(feature);
+					break;
+			}
+		};
 
-		// If any features grant titles, get the features from those titles
-		const featuresFromTitles: Feature[] = [];
-		features
-			.filter(f => f.type === FeatureType.Title)
-			.forEach(f => {
-				const data = f.data as FeatureTitleData;
-				data.selected.forEach(title => {
-					featuresFromTitles.push(...title.features);
-				});
-			});
-		features.push(...featuresFromTitles);
+		features.forEach(addFeature);
 
-		// If any features grant feature choices, get the selected features
-		const featuresFromChoices: Feature[] = [];
-		features
-			.filter(f => f.type === FeatureType.Choice)
-			.forEach(f => {
-				const data = f.data as FeatureChoiceData;
-				data.selected.forEach(selected => {
-					featuresFromChoices.push(selected);
-				});
-			});
-		features
-			.filter(f => f.type === FeatureType.DomainFeature)
-			.forEach(f => {
-				const data = f.data as FeatureDomainFeatureData;
-				featuresFromChoices.push(...data.selected);
-			});
-		features.push(...featuresFromChoices);
-
-		// If any features grant multiple features, get those features
-		const featuresFromMultiple: Feature[] = [];
-		features
-			.filter(f => f.type === FeatureType.Multiple)
-			.forEach(f => {
-				const data = f.data as FeatureMultipleData;
-				featuresFromMultiple.push(...data.features);
-			});
-		features.push(...featuresFromMultiple);
-
-		return features;
+		return list;
 	};
 
 	///////////////////////////////////////////////////////////////////////////

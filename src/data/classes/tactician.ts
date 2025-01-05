@@ -111,10 +111,17 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 		{
 			level: 3,
 			features: [
-				FactoryLogic.feature.create({
-					id: 'tactician-3-1',
-					name: 'Out of Position',
-					description: 'You are prepared for all eventualities. At the start of an encounter, you can use a free triggered action to use your Mark ability against an enemy you have line of effect to, even if you are surprised. You can then immediately slide the marked target up to 3 squares, ignoring their stability. The target can’t be moved in a way that would harm them (such as over a cliff), leave them dying, or result in them suffering a condition or other negative effect.'
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'tactician-3-1',
+						name: 'Out of Position',
+						description: 'You are prepared for all eventualities.',
+						type: FactoryLogic.type.createTrigger('At the start of an encounter', true),
+						keywords: [],
+						distance: [ FactoryLogic.distance.createSelf() ],
+						target: 'Self',
+						effect: 'You use your Mark ability against an enemy you have line of effect to, even if you are surprised. You can then immediately slide the marked target up to 3 squares, ignoring their stability. The target can’t be moved in a way that would harm them (such as over a cliff), leave them dying, or result in them suffering a condition or other negative effect.'
+					})
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'tactician-3-2',
@@ -458,10 +465,17 @@ You can only make this test once for each encounter and negotiation.`
 				{
 					level: 2,
 					features: [
-						FactoryLogic.feature.create({
-							id: 'tactician-sub-2-2-1',
-							name: 'Goaded',
-							description: 'You have learned to leverage the psychology of your marked foes and goad them into acting before they are tactically ready. When a creature marked by you uses a strike that targets you or an ally, you can use a free triggered action to retarget the attack to you or another one of your allies or yourself. The new target must be a valid option for the strike.'
+						FactoryLogic.feature.createAbility({
+							ability: FactoryLogic.createAbility({
+								id: 'tactician-sub-2-2-1',
+								name: 'Goaded',
+								description: 'You have learned to leverage the psychology of your marked foes and goad them into acting before they are tactically ready.',
+								type: FactoryLogic.type.createTrigger('A creature marked by you uses a strike that targets you or an ally.', true),
+								keywords: [],
+								distance: [ FactoryLogic.distance.createSelf() ],
+								target: 'Self',
+								effect: 'You retarget the attack to you or another one of your allies or yourself. The new target must be a valid option for the strike.'
+							})
 						}),
 						FactoryLogic.feature.createChoice({
 							id: 'tactician-sub-2-2-2',

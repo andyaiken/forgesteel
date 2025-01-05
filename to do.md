@@ -5,8 +5,7 @@
 **Add and update element data**
 
 * Go through all text features and see if they can be changed to more useful feature types (bonuses, damage modifiers, etc)
-  * Classes
-  * Complications
+]  * Complications
 * Monsters
   * Update existing monsters
   * Add new monsters
@@ -25,7 +24,6 @@
 
 **Heroes**
 
-* More intelligent feature collation - for each one, look for sub-features
 * Add hero inventory management
 * Add a way for heroes to be modified - additional skills, languages, perks, titles, etc
 

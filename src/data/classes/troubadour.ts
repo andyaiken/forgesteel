@@ -126,10 +126,17 @@ Whenever you roll to gain 1d3 drama at the start of your turn, you can make your
 					name: 'Invocation',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
-								id: 'troubadour-2-2a',
-								name: 'Allow Me To Introduce Tonight\'s Players',
-								description: 'Whenever you take the first turn in a combat encounter, you can use your action to introduce yourself and your allies to your opponents. Each creature on your side can shift up to their speed and gains the benefit of the Defend action until the end of the round. However, any enemies who were surprised are no longer surprised.'
+							feature: FactoryLogic.feature.createAbility({
+								ability: FactoryLogic.createAbility({
+									id: 'troubadour-2-2a',
+									name: 'Allow Me To Introduce Tonight\'s Players',
+									description: '',
+									type: FactoryLogic.type.createAction(),
+									keywords: [],
+									distance: [ FactoryLogic.distance.createSelf() ],
+									target: 'Self',
+									effect: 'Whenever you take the first turn in a combat encounter, you can introduce yourself and your allies to your opponents. Each creature on your side can shift up to their speed and gains the benefit of the Defend action until the end of the round. However, any enemies who were surprised are no longer surprised.'
+								})
 							}),
 							value: 1
 						},

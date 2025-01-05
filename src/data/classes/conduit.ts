@@ -201,26 +201,62 @@ For each piety spent, you can choose one of the following enhancements:
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createMultiple({
 								id: 'conduit-1-7c',
 								name: 'Prayer of Speed',
-								description: 'Your god blesses your flesh and infuses it with divine quickness. You gain a +1 bonus to speed and to the distance you shift when you take the Disengage move action.'
+								description: 'Your god blesses your flesh and infuses it with divine quickness.',
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: 'conduit-1-7ca',
+										field: FeatureField.Speed,
+										value: 1
+									}),
+									FactoryLogic.feature.createBonus({
+										id: 'conduit-1-7cb',
+										field: FeatureField.Disengage,
+										value: 1
+									})
+								]
 							}),
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createMultiple({
 								id: 'conduit-1-7d',
 								name: 'Prayer of Soldier\'s Skill',
-								description: 'Your god gives your mind the training of a soldier. You can wear light armor and wield light weapons effectively, even though you don’t have a kit. While you wear light armor, you gain a +3 bonus to Stamina and that bonus increases by 3 at 4th, 7th, and 10th levels. While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this blessing.'
+								description: 'Your god gives your mind the training of a soldier. You can wear light armor and wield light weapons effectively, even though you don’t have a kit. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this blessing.',
+								features: [
+									FactoryLogic.feature.create({
+										id: 'conduit-1-7da',
+										name: 'Prayer of Soldier\'s Skill',
+										description: 'While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes.'
+									}),
+									FactoryLogic.feature.createBonus({
+										id: 'conduit-1-7db',
+										field: FeatureField.Stamina,
+										valuePerEchelon: 3
+									})
+								]
 							}),
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createMultiple({
 								id: 'conduit-1-7e',
 								name: 'Prayer of Steel',
-								description: 'Your god fills your body with the light of creation, making you harder to hurt and move. You gain a +6 bonus to Stamina, and this bonus increases by 6 at 4th, 7th, and 10th levels. Additionally, you gain a +1 bonus to stability.'
+								description: 'Your god fills your body with the light of creation, making you harder to hurt and move.',
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: '',
+										field: FeatureField.Stamina,
+										valuePerEchelon: 6
+									}),
+									FactoryLogic.feature.createBonus({
+										id: '',
+										field: FeatureField.Stability,
+										value: 1
+									})
+								]
 							}),
 							value: 1
 						}

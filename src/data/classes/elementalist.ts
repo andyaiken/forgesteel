@@ -95,18 +95,41 @@ Choose one of the following effects:
 					name: 'Enchantment',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createMultiple({
 								id: 'elementalist-1-7a',
 								name: 'Enchantment of Battle',
-								description: 'You tap into the elemental mysteries to gain the mind and training of a warrior. You can wear light armor and wield light weapons effectively, even though you don’t have a kit. While you wear light armor, you gain a +3 bonus to Stamina and that bonus increases by 3 at 4th, 7th, and 10th levels. While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this enchantment.'
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: 'elementalist-1-7aa',
+										field: FeatureField.Stamina,
+										valuePerEchelon: 3
+									}),
+									FactoryLogic.feature.create({
+										id: 'elementalist-1-7ab',
+										name: 'Enchantment of Battle',
+										description: 'You tap into the elemental mysteries to gain the mind and training of a warrior. You can wear light armor and wield light weapons effectively, even though you don’t have a kit. While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this enchantment.'
+									})
+								]
 							}),
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createMultiple({
 								id: 'elementalist-1-7b',
 								name: 'Enchantment of Celerity',
-								description: 'You infuse your body with the speed of elemental air. You gain a +1 bonus to speed and to the distance you shift when you take the Disengage move action.'
+								description: 'You infuse your body with the speed of elemental air.',
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: 'elementalist-1-7ba',
+										field: FeatureField.Speed,
+										value: 1
+									}),
+									FactoryLogic.feature.createBonus({
+										id: 'elementalist-1-7bb',
+										field: FeatureField.Disengage,
+										value: 1
+									})
+								]
 							}),
 							value: 1
 						},
@@ -127,10 +150,22 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createMultiple({
 								id: 'elementalist-1-7e',
 								name: 'Enchantment of Permanence',
-								description: 'You place the magic of earth into your flesh and bones, making your body tougher and harder to move. You gain a +6 bonus to Stamina, and this bonus increases by 6 at 4th, 7th, and 10th levels. Additionally, you gain a +1 bonus to stability.'
+								description: 'You place the magic of earth into your flesh and bones, making your body tougher and harder to move.',
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: '',
+										field: FeatureField.Stamina,
+										valuePerEchelon: 6
+									}),
+									FactoryLogic.feature.createBonus({
+										id: '',
+										field: FeatureField.Stability,
+										valuePerEchelon: 1
+									})
+								]
 							}),
 							value: 1
 						}
@@ -157,18 +192,30 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
-								id: 'elementalist-1-8c',
-								name: 'Ward of Nature\'s Affection',
-								description: 'You store green energy within your body that allows you to produce powerful vines when you’re in danger. Whenever a creature within a number of squares equal to your Reason score deals damage to you, you can use a free triggered action to slide that creature up to a number of squares equal to your Reason score.'
+							feature: FactoryLogic.feature.createAbility({
+								ability: FactoryLogic.createAbility({
+									id: 'elementalist-1-8c',
+									name: 'Ward of Nature\'s Affection',
+									description: 'You store green energy within your body that allows you to produce powerful vines when you’re in danger.',
+									type: FactoryLogic.type.createTrigger('A creature within a number of squares equal to your Reason score deals damage to you,', true),
+									distance: [ FactoryLogic.distance.createSelf() ],
+									target: 'Self',
+									effect: 'You slide the attacking creature up to a number of squares equal to your Reason score.'
+								})
 							}),
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
-								id: 'elementalist-1-8d',
-								name: 'Ward of Surprising Reactivity',
-								description: 'You use the magic of fire to create an invisible ward of explosive fire energy. Whenever an adjacent creature deals damage to you, you can use a free triggered action to push that creature a number of squares equal to twice your Reason score.'
+							feature: FactoryLogic.feature.createAbility({
+								ability: FactoryLogic.createAbility({
+									id: 'elementalist-1-8d',
+									name: 'Ward of Surprising Reactivity',
+									description: 'You use the magic of fire to create an invisible ward of explosive fire energy.',
+									type: FactoryLogic.type.createTrigger('An adjacent creature deals damage to you.', true),
+									distance: [ FactoryLogic.distance.createSelf() ],
+									target: 'Self',
+									effect: 'You push that creature a number of squares equal to twice your Reason score.'
+								})
 							}),
 							value: 1
 						}
@@ -696,10 +743,13 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 				{
 					level: 2,
 					features: [
-						FactoryLogic.feature.create({
+						FactoryLogic.feature.createBonus({
 							id: 'elementalist-sub-1-2-1',
 							name: 'Disciple of Earth',
-							description: 'Your body is strengthened by your mind’s connection to the element of permanence. You have a +6 bonus to Stamina, plus you gain an additional +3 bonus to Stamina whenever you gain a level beyond 2nd in this class.'
+							description: 'Your body is strengthened by your mind’s connection to the element of permanence.',
+							field: FeatureField.Stamina,
+							value: 3,
+							valuePerLevel: 3
 						})
 					]
 				},

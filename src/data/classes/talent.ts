@@ -5,6 +5,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 import { HeroClass } from '../../models/class';
 import { PerkList } from '../../enums/perk-list';
+import { SkillList } from '../../enums/skill-list';
 
 export const talent: HeroClass = {
 	id: 'class-talent',
@@ -30,6 +31,19 @@ A talent is limited only by the strength of their mind. Powerful psionic heroes 
 					id: 'talent-recoveries',
 					field: FeatureField.Recoveries,
 					value: 8
+				}),
+				FactoryLogic.feature.createSkill({
+					id: 'talent-skill-a',
+					skill: 'Psionics'
+				}),
+				FactoryLogic.feature.createSkill({
+					id: 'talent-skill-b',
+					skill: 'Read Person'
+				}),
+				FactoryLogic.feature.createSkillChoice({
+					id: 'talent-skill-c',
+					listOptions: [ SkillList.Interpersonal, SkillList.Lore ],
+					count: 2
 				}),
 				FactoryLogic.feature.create({
 					id: 'talent-1-1',

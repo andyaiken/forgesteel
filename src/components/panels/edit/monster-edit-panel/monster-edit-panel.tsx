@@ -17,7 +17,6 @@ import { MonsterRoleType } from '../../../../enums/monster-role-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
-import { Sourcebook } from '../../../../models/sourcebook';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -25,7 +24,6 @@ import './monster-edit-panel.scss';
 
 interface Props {
 	monster: Monster;
-	sourcebooks: Sourcebook[];
 	onChange: (monster: Monster) => void;
 }
 
@@ -311,7 +309,6 @@ export const MonsterEditPanel = (props: Props) => {
 											>
 												<FeatureEditPanel
 													feature={f}
-													sourcebooks={props.sourcebooks}
 													allowedTypes={[ FeatureType.Text, FeatureType.Ability, FeatureType.DamageModifier ]}
 													onChange={changeFeature}
 												/>

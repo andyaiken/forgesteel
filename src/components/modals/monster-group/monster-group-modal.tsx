@@ -4,9 +4,9 @@ import { Modal } from '../modal/modal';
 import { MonsterGroup } from '../../../models/monster';
 import { MonsterGroupPanel } from '../../panels/elements/monster-group-panel/monster-group-panel';
 import { PanelMode } from '../../../enums/panel-mode';
-import { Playbook } from '../../../models/playbook';
 import { PlaybookLogic } from '../../../logic/playbook-logic';
 import { Sourcebook } from '../../../models/sourcebook';
+import { usePersistedPlaybook } from '../../../hooks/use-persisted-playbook';
 
 import './monster-group-modal.scss';
 
@@ -14,7 +14,6 @@ interface Props {
 	monsterGroup: MonsterGroup;
 	homebrewSourcebooks: Sourcebook[];
 	isHomebrew: boolean;
-	playbook: Playbook
 	createHomebrew: (sourcebook: Sourcebook | null) => void;
 	export: (format: 'image' | 'pdf' | 'json') => void;
 	edit: () => void;
@@ -22,6 +21,7 @@ interface Props {
 }
 
 export const MonsterGroupModal = (props: Props) => {
+	const { playbook } = usePersistedPlaybook();
 	try {
 		return (
 			<Modal
@@ -64,7 +64,7 @@ export const MonsterGroupModal = (props: Props) => {
 							</Button>
 						</Popover>
 						<DangerButton
-							disabled={props.monsterGroup.monsters.some(monster => PlaybookLogic.isUsed(props.playbook, monster.id))}
+							disabled={props.monsterGroup.monsters.some(monster => PlaybookLogic.isUsed(playbook, monster.id))}
 							onConfirm={props.delete}
 						/>
 					</>

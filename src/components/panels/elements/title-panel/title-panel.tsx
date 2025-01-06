@@ -4,7 +4,6 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Sourcebook } from '../../../../models/sourcebook';
 import { Title } from '../../../../models/title';
 
 import './title-panel.scss';
@@ -12,7 +11,6 @@ import './title-panel.scss';
 interface Props {
 	title: Title;
 	hero?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 
@@ -26,7 +24,7 @@ export const TitlePanel = (props: Props) => {
 				<Field label='Prerequisites' value={props.title.prerequisites} />
 				{
 					props.mode === PanelMode.Full ?
-						props.title.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)
+						props.title.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />)
 						: null
 				}
 			</div>

@@ -34,6 +34,8 @@ import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
+import { usePersistedHeroes } from '../../../../hooks/use-persisted-heroes';
+import { usePersistedSourcebooks } from '../../../../hooks/use-persisted-sourcebooks';
 
 import './hero-edit-page.scss';
 
@@ -56,22 +58,33 @@ const matchElement = (element: Element, searchTerm: string) => {
 };
 
 interface Props {
-	heroes: Hero[];
-	sourcebooks: Sourcebook[];
 	saveChanges: (hero: Hero) => void;
 }
 
 export const HeroEditPage = (props: Props) => {
 	const navigation = useNavigation();
+	const { heroes } = usePersistedHeroes();
+	const { sourcebooks } = usePersistedSourcebooks();
 	const { heroId, tab } = useParams<{ heroId: string; tab: HeroTab }>();
 	const setTabKey = (tabKey: HeroTab) => {
 		navigation.goToHeroEdit(heroId!, tabKey);
 	};
 	const [ page, setPage ] = [ tab, setTabKey ];
-	const originalHero = useMemo(() => props.heroes.find(h => h.id === heroId)!, [ heroId, props.heroes ]);
-	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(originalHero)) as Hero);
+	const originalHero = useMemo(() => heroes.find(h => h.id === heroId), [ heroId, heroes ]);
+	const [ previousHero, setPreviousHero ] = useState(originalHero);
+	const [ hero, setHero ] = useState(originalHero);
+	const heroSourcebooks = useMemo(() => sourcebooks.filter(cs => hero?.settingIDs.includes(cs.id)), [ sourcebooks, hero ]);
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
+
+	if (originalHero !== previousHero) {
+		setHero(originalHero);
+		setPreviousHero(originalHero);
+	}
+
+	if (!hero) {
+		return null;
+	}
 
 	try {
 		const getPageState = (page: HeroTab) => {
@@ -331,19 +344,19 @@ export const HeroEditPage = (props: Props) => {
 		const selectRandom = () => {
 			switch (page) {
 				case 'ancestry':
-					setAncestry(Collections.draw(SourcebookLogic.getAncestries(props.sourcebooks)));
+					setAncestry(Collections.draw(SourcebookLogic.getAncestries(sourcebooks)));
 					break;
 				case 'culture':
-					setCulture(Collections.draw([ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks) ]));
+					setCulture(Collections.draw([ CultureData.bespoke, ...SourcebookLogic.getCultures(sourcebooks) ]));
 					break;
 				case 'career':
-					setCareer(Collections.draw(SourcebookLogic.getCareers(props.sourcebooks)));
+					setCareer(Collections.draw(SourcebookLogic.getCareers(sourcebooks)));
 					break;
 				case 'class':
-					setClass(Collections.draw(SourcebookLogic.getClasses(props.sourcebooks)));
+					setClass(Collections.draw(SourcebookLogic.getClasses(sourcebooks)));
 					break;
 				case 'complication':
-					setComplication(Collections.draw(SourcebookLogic.getComplications(props.sourcebooks)));
+					setComplication(Collections.draw(SourcebookLogic.getComplications(sourcebooks)));
 					break;
 			}
 		};
@@ -354,7 +367,7 @@ export const HeroEditPage = (props: Props) => {
 					return (
 						<AncestrySection
 							hero={hero}
-							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							sourcebooks={heroSourcebooks}
 							searchTerm={searchTerm}
 							selectAncestry={setAncestry}
 							setFeatureData={setFeatureData}
@@ -364,7 +377,7 @@ export const HeroEditPage = (props: Props) => {
 					return (
 						<CultureSection
 							hero={hero}
-							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							sourcebooks={heroSourcebooks}
 							searchTerm={searchTerm}
 							selectCulture={setCulture}
 							selectLanguages={setLanguages}
@@ -378,7 +391,7 @@ export const HeroEditPage = (props: Props) => {
 					return (
 						<CareerSection
 							hero={hero}
-							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							sourcebooks={heroSourcebooks}
 							searchTerm={searchTerm}
 							selectCareer={setCareer}
 							selectIncitingIncident={setIncitingIncident}
@@ -389,7 +402,7 @@ export const HeroEditPage = (props: Props) => {
 					return (
 						<ClassSection
 							hero={hero}
-							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							sourcebooks={heroSourcebooks}
 							searchTerm={searchTerm}
 							selectClass={setClass}
 							setLevel={setLevel}
@@ -402,7 +415,7 @@ export const HeroEditPage = (props: Props) => {
 					return (
 						<ComplicationSection
 							hero={hero}
-							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							sourcebooks={heroSourcebooks}
 							searchTerm={searchTerm}
 							selectComplication={setComplication}
 							setFeatureData={setFeatureData}
@@ -412,7 +425,6 @@ export const HeroEditPage = (props: Props) => {
 					return (
 						<DetailsSection
 							hero={hero}
-							sourcebooks={props.sourcebooks}
 							setName={setName}
 							setSettingIDs={setSettingIDs}
 							setFeatureData={setFeatureData}
@@ -521,7 +533,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 		}
@@ -594,7 +606,7 @@ const CultureSection = (props: CultureSectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 
@@ -722,7 +734,7 @@ const CareerSection = (props: CareerSectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 
@@ -824,7 +836,7 @@ const ClassSection = (props: ClassSectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 
@@ -991,7 +1003,7 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 		}
@@ -1039,13 +1051,13 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 
 interface DetailsSectionProps {
 	hero: Hero;
-	sourcebooks: Sourcebook[];
 	setName: (value: string) => void;
 	setSettingIDs: (settingIDs: string[]) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const DetailsSection = (props: DetailsSectionProps) => {
+	const { sourcebooks } = usePersistedSourcebooks();
 	try {
 		return (
 			<div className='hero-edit-content'>
@@ -1065,7 +1077,7 @@ const DetailsSection = (props: DetailsSectionProps) => {
 						style={{ width: '100%' }}
 						placeholder='Select'
 						mode='multiple'
-						options={props.sourcebooks.map(cs => ({ value: cs.id, label: cs.name || 'Unnamed Collection' }))}
+						options={sourcebooks.map(cs => ({ value: cs.id, label: cs.name || 'Unnamed Collection' }))}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 						value={props.hero.settingIDs}
 						onChange={props.setSettingIDs}
@@ -1077,7 +1089,6 @@ const DetailsSection = (props: DetailsSectionProps) => {
 								key={f.id}
 								feature={f}
 								hero={props.hero}
-								sourcebooks={props.sourcebooks}
 								mode={PanelMode.Full}
 								setData={props.setFeatureData}
 							/>

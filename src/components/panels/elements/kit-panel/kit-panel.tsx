@@ -6,14 +6,12 @@ import { Kit } from '../../../../models/kit';
 import { KitType } from '../../../../enums/kit';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Sourcebook } from '../../../../models/sourcebook';
 
 import './kit-panel.scss';
 
 interface Props {
 	kit: Kit;
 	hero?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 
@@ -46,7 +44,7 @@ export const KitPanel = (props: Props) => {
 							{props.kit.rangedDistance > 0 ? <Field label='Ranged Distance' value={`+${props.kit.rangedDistance}`} /> : null}
 							{props.kit.disengage > 0 ? <Field label='Disengage' value={`+${props.kit.disengage}`} /> : null}
 							{
-								props.kit.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)
+								props.kit.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />)
 							}
 						</div>
 						:

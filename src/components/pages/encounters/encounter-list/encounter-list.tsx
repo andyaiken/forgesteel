@@ -1,30 +1,27 @@
 import { Alert, Button, Input, Popover, Space, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
+import { useModals, usePersistedPlaybook } from '../../../../hooks';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
-import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
 import { Utils } from '../../../../utils/utils';
-import { useModals } from '../../../../hooks/use-modals';
 import { useState } from 'react';
 
 import './encounter-list.scss';
 
 interface Props {
-	playbook: Playbook;
-	sourcebooks: Sourcebook[];
 	onCreateEncounter: () => void;
 	onImportEncounter: (encounter: Encounter) => void;
 }
 
 export const EncounterListPage = (props: Props) => {
 	const modals = useModals();
+	const { playbook } = usePersistedPlaybook();
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
 	const getEncounters = () => {
-		return props.playbook.encounters
+		return playbook.encounters
 			.filter(item => Utils.textMatches([
 				item.name
 			], searchTerm));
@@ -46,7 +43,7 @@ export const EncounterListPage = (props: Props) => {
 				{
 					list.map(enc => (
 						<SelectablePanel key={enc.id} onSelect={() => modals.showEncounter(enc.id)}>
-							<EncounterPanel encounter={enc} playbook={props.playbook} sourcebooks={props.sourcebooks} />
+							<EncounterPanel encounter={enc} />
 						</SelectablePanel>
 					))
 				}

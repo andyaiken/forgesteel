@@ -9,8 +9,9 @@ export const revenant: Ancestry = {
 	name: 'Revenant',
 	description: 'Unlike the necromantic rituals that produce wights and wraiths and zombies, revenants rise from the grave through a combination of an unjust death and a burning desire for vengeance. Creatures sustained on pure will, they have no need of food or water or air—and, unlike their zombified cousins, they retain all their memories and personality from life.',
 	features: [
-		FactoryLogic.feature.createFormerLifeFeature({
+		FactoryLogic.feature.createInheritedAncestry({
 			id: 'revenant-feature-1',
+			name: 'Former Life',
 			description: 'Choose the ancestry you were before you died.'
 		}),
 		FactoryLogic.feature.createDamageModifier({

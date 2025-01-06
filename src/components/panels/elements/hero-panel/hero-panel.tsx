@@ -28,6 +28,7 @@ import { SelectablePanel } from '../../../controls/selectable-panel/selectable-p
 import { Skill } from '../../../../models/skill';
 import { SkillList } from '../../../../enums/skill-list';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 
 import './hero-panel.scss';
 
@@ -97,7 +98,12 @@ export const HeroPanel = (props: Props) => {
 			incitingIncident = props.hero.career.incitingIncidents.options.find(o => o.id === props.hero.career?.incitingIncidents.selectedID) || null;
 		}
 
-		const formerLife = HeroLogic.getFormerLife(props.hero);
+		const inheritedAncestryFeature = HeroLogic.getInheritedAncestry(props.hero);
+		const inheritedAncestries = inheritedAncestryFeature !== undefined ?
+			SourcebookLogic.getAncestriesById(
+				props.sourcebooks,
+				inheritedAncestryFeature.data.selected
+			) : [];
 
 		return (
 			<div className='hero-left-column'>
@@ -106,7 +112,10 @@ export const HeroPanel = (props: Props) => {
 						<div className='overview-tile clickable' onClick={onSelectAncestry}>
 							<HeaderText>Ancestry</HeaderText>
 							<Field label='Ancestry' value={props.hero.ancestry.name} />
-							{ formerLife.length > 0 ? <Field label='Former Life' value={formerLife.map(a => a.name).join(', ')}/> : null }
+							{ inheritedAncestryFeature !== undefined && inheritedAncestryFeature.data.selected.length > 0 ?
+								<Field label={inheritedAncestryFeature.name} value={inheritedAncestries.map(a => a.name).join(', ')}/> :
+								null
+							}
 						</div>
 						:
 						<div className='overview-tile'>

@@ -8,7 +8,7 @@ export enum FeatureType {
 	DamageModifier = 'Damage Modifier',
 	Domain = 'Domain',
 	DomainFeature = 'Domain Feature',
-	FormerLife = 'Former Life',
+	InheritedAncestry = 'Inherited Ancestry',
 	Kit = 'Kit',
 	KitType = 'Kit Type',
 	Language = 'Language',

@@ -133,7 +133,7 @@ export class FeatureLogic {
 			case FeatureType.ClassAbility:
 			case FeatureType.Domain:
 			case FeatureType.DomainFeature:
-			case FeatureType.FormerLife:
+			case FeatureType.InheritedAncestry:
 			case FeatureType.Kit:
 			case FeatureType.LanguageChoice:
 			case FeatureType.Perk:

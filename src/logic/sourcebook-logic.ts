@@ -100,6 +100,19 @@ export class SourcebookLogic {
 		return Collections.sort(list, item => item.name);
 	};
 
+	static getAncestriesById = (sourcebooks: Sourcebook[], ids: string[]) => {
+		const list: Ancestry[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			const ancestries = sourcebook.ancestries.filter(a => ids.includes(a.id));
+			if (ancestries.length > 0) {
+				list.push(...ancestries);
+			}
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
 	static getCultures = (sourcebooks: Sourcebook[]) => {
 		const list: Culture[] = [];
 

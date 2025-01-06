@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityCostData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFormerLifeData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureInheritedAncestryData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Badge } from '../../../controls/badge/badge';
@@ -295,13 +295,14 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
-	const getEditableFormerLife = (data: FeatureFormerLifeData) => {
+	const getEditableInheritedAncestry = (data: FeatureInheritedAncestryData) => {
 		if (!props.hero) {
 			return null;
 		}
 
+		// TODO: Move the filter callback to an AncestryLogic file?
 		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks as Sourcebook[])
-			.filter(a => !a.features.some(f => f.type === FeatureType.FormerLife));
+			.filter(a => !a.features.some(f => f.type === FeatureType.InheritedAncestry));
 		const sortedAncestries = Collections.sort(ancestries, a => a.name);
 
 		if (sortedAncestries.length === 0) {
@@ -325,7 +326,7 @@ export const FeaturePanel = (props: Props) => {
 					placeholder={data.count === 1 ? 'Select an ancestry' : 'Select ancestries'}
 					options={sortedAncestries.map(a => ({ label: a.name, value: a.id, desc: a.description}))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(a => a.id)}
+					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
 					onChange={value => {
 						let ids: string[] = [];
 						if (data.count === 1) {
@@ -333,25 +334,20 @@ export const FeaturePanel = (props: Props) => {
 						} else {
 							ids = value as string[];
 						}
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureFormerLifeData;
-						dataCopy.selected = [];
-						ids.forEach(id => {
-							const ancestry = ancestries.find(a => a.id === id);
-							if (ancestry) {
-								dataCopy.selected.push(ancestry);
-							}
-						});
+						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureInheritedAncestryData;
+						dataCopy.selected = ids;
 						if (props.setData) {
 							props.setData(props.feature.id, dataCopy);
 						}
 					}}
 				/>
 				{
-					data.selected.map(a => {
-						return (
-							<Field label={a.name} value={a.description} />
-						);
-					})
+					ancestries.filter(a => data.selected.includes(a.id))
+						.map(a => {
+							return (
+								<Field label={a.name} value={a.description} />
+							);
+						})
 				}
 			</div>
 		);
@@ -692,8 +688,8 @@ export const FeaturePanel = (props: Props) => {
 				return getEditableDomain(props.feature.data as FeatureDomainData);
 			case FeatureType.DomainFeature:
 				return getEditableDomainFeature(props.feature.data as FeatureDomainFeatureData);
-			case FeatureType.FormerLife:
-				return getEditableFormerLife(props.feature.data as FeatureFormerLifeData);
+			case FeatureType.InheritedAncestry:
+				return getEditableInheritedAncestry(props.feature.data as FeatureInheritedAncestryData);
 			case FeatureType.Kit:
 				return getEditableKit(props.feature.data as FeatureKitData);
 			case FeatureType.LanguageChoice:
@@ -856,12 +852,13 @@ export const FeaturePanel = (props: Props) => {
 		return null;
 	};
 
-	const getExtraFormerLife = (data: FeatureFormerLifeData) => {
+	const getExtraInheritedAncestry = (data: FeatureInheritedAncestryData) => {
 		if (data.selected.length > 0) {
+			const ancestries = SourcebookLogic.getAncestriesById(props.sourcebooks as Sourcebook[], data.selected);
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(a => <Field label={a.name} value={a.description} />)
+						ancestries.map(a => <Field label={a.name} value={a.description} />)
 					}
 				</Space>
 			)
@@ -1040,8 +1037,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraDomain(props.feature.data as FeatureDomainData);
 			case FeatureType.DomainFeature:
 				return getExtraDomainFeature(props.feature.data as FeatureDomainFeatureData);
-			case FeatureType.FormerLife:
-				return getExtraFormerLife(props.feature.data as FeatureFormerLifeData);
+			case FeatureType.InheritedAncestry:
+				return getExtraInheritedAncestry(props.feature.data as FeatureInheritedAncestryData);
 			case FeatureType.Kit:
 				return getExtraKit(props.feature.data as FeatureKitData);
 			case FeatureType.KitType:

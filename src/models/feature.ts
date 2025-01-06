@@ -14,7 +14,6 @@ import { PowerRoll } from './power-roll';
 import { Size } from './size';
 import { SkillList } from '../enums/skill-list';
 import { Title } from './title';
-import { Ancestry } from './ancestry';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface _FeatureData { }
@@ -74,11 +73,11 @@ export interface FeatureDomainFeatureData extends _FeatureData {
 };
 export type FeatureDomainFeature = FeatureOf<FeatureType.DomainFeature, FeatureDomainFeatureData>;
 
-export interface FeatureFormerLifeData extends _FeatureData {
+export interface FeatureInheritedAncestryData extends _FeatureData {
 	count: number;
-	selected: Ancestry[];
+	selected: string[];
 };
-export type FeatureFormerLife = FeatureOf<FeatureType.FormerLife, FeatureFormerLifeData>;
+export type FeatureInheritedAncestry = FeatureOf<FeatureType.InheritedAncestry, FeatureInheritedAncestryData>;
 
 export interface FeatureKitData extends _FeatureData {
 	types: KitType[];
@@ -163,7 +162,7 @@ export type Feature =
 	| FeatureDamageModifier
 	| FeatureDomain
 	| FeatureDomainFeature
-	| FeatureFormerLife
+	| FeatureInheritedAncestry
 	| FeatureKit
 	| FeatureKitType
 	| FeatureLanguage

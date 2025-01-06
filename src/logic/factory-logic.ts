@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitle } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureInheritedAncestry, FeatureInheritedAncestryData, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitle } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
@@ -634,6 +634,19 @@ export class FactoryLogic {
 					selected: []
 				}
 			};
+		},
+		createInheritedAncestry: (data: { id: string, name?: string, description?: string, count?: number }) => {
+			const count = data.count || 1;
+			return {
+				id: data.id,
+				name: data.name || `Inherited ${ count > 1 ? 'Ancestries' : 'Ancestry'}`,
+				description: data.description || `Choose your inherited ${count > 1 ? 'ancestries' : 'ancestry'}.`,
+				type: FeatureType.InheritedAncestry,
+				data: {
+					count: count,
+					selected: []
+				} as FeatureInheritedAncestryData
+			} as FeatureInheritedAncestry
 		},
 		createKitChoice: (data: { id: string, name?: string, description?: string, types?: KitType[], count?: number }): FeatureKit => {
 			const count = data.count || 1;

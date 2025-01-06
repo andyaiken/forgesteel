@@ -307,6 +307,7 @@ export const HeroEditPage = (props: Props) => {
 			if (feature) {
 				feature.data = data;
 			}
+			// TODO: Set size here if feature is Inherited Ancestry
 			setHero(heroCopy);
 			setDirty(true);
 		};
@@ -550,7 +551,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 					props.hero.ancestry ?
 						<div className='hero-edit-content-column selected' id='ancestry-selected'>
 							<SelectablePanel showShadow={false} onUnselect={() => props.selectAncestry(null)}>
-								<AncestryPanel ancestry={props.hero.ancestry} mode={PanelMode.Full} />
+								<AncestryPanel ancestry={props.hero.ancestry} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
 						: null

@@ -14,7 +14,6 @@ import './encounter-list.scss';
 interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
-	goHome: () => void;
 	showAbout: () => void;
 	viewEncounter: (encounter: Encounter) => void;
 	onCreateEncounter: () => void;
@@ -60,7 +59,12 @@ export const EncounterListPage = (props: Props) => {
 
 		return (
 			<div className='encounter-list-page'>
-				<AppHeader subtitle='Encounters' goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader
+					breadcrumbs={[
+						{ label: 'Encounters' }
+					]}
+					showAbout={props.showAbout}
+				>
 					<Input
 						placeholder='Search'
 						allowClear={true}

@@ -28,7 +28,6 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	setOptions: (options: Options) => void;
-	goHome: () => void;
 	showAbout: () => void;
 	closeHero: () => void;
 	editHero: (heroId: string) => void;
@@ -80,7 +79,12 @@ export const HeroPage = (props: Props) => {
 
 		return (
 			<div className='hero-view-page'>
-				<AppHeader subtitle='Heroes' goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader
+					breadcrumbs={[
+						{ label: 'Heroes' }
+					]}
+					showAbout={props.showAbout}
+				>
 					<Button onClick={props.closeHero}>
 						Close
 					</Button>

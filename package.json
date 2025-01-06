@@ -17,7 +17,7 @@
 	"dependencies": {
 		"@ant-design/icons": "^5.5.2",
 		"@types/showdown": "^2.0.6",
-		"antd": "^5.22.7",
+		"antd": "^5.23.0",
 		"gh-pages": "^6.3.0",
 		"html2canvas": "^1.4.1",
 		"jspdf": "^2.5.2",
@@ -30,14 +30,14 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.17.0",
-		"@types/react": "^19.0.2",
+		"@types/react": "^19.0.3",
 		"@types/react-dom": "^19.0.2",
 		"@vitejs/plugin-react": "^4.3.4",
 		"eslint": "^9.17.0",
 		"eslint-plugin-react-hooks": "^5.1.0",
 		"globals": "^15.14.0",
 		"typescript": "^5.7.2",
-		"typescript-eslint": "^8.19.0",
+		"typescript-eslint": "^8.19.1",
 		"vite": "^6.0.7"
 	}
 }

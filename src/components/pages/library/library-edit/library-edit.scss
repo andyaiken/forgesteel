@@ -7,24 +7,36 @@
 		background-color: rgba(0, 0, 0, 0.1);
 		flex: 1 1 0;
 		display: flex;
-		gap: 20px;
-		padding: 20px;
+		gap: 10px;
+		padding: 10px;
 		overflow: hidden;
 
 		.edit-column {
+			padding: 10px;
 			flex: 1 1 0;
 			overflow-x: hidden;
 			overflow-y: auto;
 			display: flex;
 			flex-direction: column;
 			gap: 10px;
+
+			.edit-header-section {
+				padding: 10px 0;
+			}
 		}
 
 		.preview-column {
-			flex: 1 1 0;
 			padding: 10px;
+			flex: 1 1 0;
 			overflow-x: hidden;
 			overflow-y: auto;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+
+			.preview-header-section {
+				padding: 10px 0;
+			}
 		}
 	}
 }

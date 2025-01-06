@@ -675,10 +675,14 @@ export class FactoryLogic {
 		},
 		createPerk: (data: { id: string, name?: string, description?: string, lists?: PerkList[], count?: number }): FeaturePerk => {
 			const count = data.count || 1;
+			const lists = data.lists || [];
+
+			const prefix = (lists.length > 0) ? `${lists.join(' / ')} ` : '';
+
 			return {
 				id: data.id,
-				name: data.name || 'Perk',
-				description: data.description || (count > 1 ? `Choose ${count} perks.` : 'Choose a perk.'),
+				name: data.name || (count > 1 ? `${prefix}Perks` : `${prefix}Perk`),
+				description: data.description || '',
 				type: FeatureType.Perk,
 				data: {
 					lists: data.lists || [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ],
@@ -714,9 +718,14 @@ export class FactoryLogic {
 		},
 		createSkillChoice: (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selected?: string[] }): FeatureSkillChoice => {
 			const count = data.count || 1;
+			const options = data.options || [];
+			const listOptions = data.listOptions || [];
+
+			const prefix = (options.length === 0) && (listOptions.length > 0) ? `${listOptions.join(' / ')} ` : '';
+
 			return {
 				id: data.id,
-				name: data.name || (count > 1 ? 'Skills' : 'Skill'),
+				name: data.name || (count > 1 ? `${prefix}Skills` : `${prefix}Skill`),
 				description: data.description || '',
 				type: FeatureType.SkillChoice,
 				data: {

@@ -5,6 +5,7 @@ import './selectable-panel.scss';
 
 interface Props {
 	children: ReactNode;
+	showShadow?: boolean;
 	style?: CSSProperties;
 	onSelect?: () => void;
 	onUnselect?: () => void;
@@ -15,6 +16,9 @@ export const SelectablePanel = (props: Props) => {
 		let className = 'selectable-panel';
 		if (props.onSelect) {
 			className += ' selectable';
+		}
+		if (props.showShadow !== false) {
+			className += ' shadow';
 		}
 
 		return (

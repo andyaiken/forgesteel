@@ -76,6 +76,7 @@ export const AbilityPanel = (props: Props) => {
 							{
 								props.ability.powerRoll ?
 									<PowerRollPanel
+										powerRoll={props.ability.powerRoll}
 										ability={props.ability}
 										hero={props.hero}
 										onRoll={props.onRoll}

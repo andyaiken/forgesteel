@@ -33,7 +33,11 @@
 
 **Monster Editor**
 
-* Show similar monsters in monster editor
+* Similar monsters
+  * Allow the user to define similarity (currently it's level, role, and minion status)
+  * Add the ability to 'pull in' stuff from similar monsters
+  * Show stats breakdown for similar monsters
+* Allow the user to specify a working set of monsters
 * Auto-create monsters
 
 **Encounter Editor**

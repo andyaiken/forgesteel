@@ -1,7 +1,8 @@
-import { Button, Divider, Input, Radio, Segmented, Select, Space } from 'antd';
+import { Alert, Button, Divider, Input, Radio, Segmented, Select, Space } from 'antd';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureBonusData, FeatureData } from '../../../../models/feature';
 import { ReactNode, useMemo, useState } from 'react';
+import { RightOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -13,6 +14,7 @@ import { Complication } from '../../../../models/complication';
 import { ComplicationPanel } from '../../../panels/elements/complication-panel/complication-panel';
 import { Culture } from '../../../../models/culture';
 import { CulturePanel } from '../../../panels/elements/culture-panel/culture-panel';
+import { Element } from '../../../../models/element';
 import { FeatureField } from '../../../../enums/feature-field';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeaturePanel } from '../../../panels/elements/feature-panel/feature-panel';
@@ -29,7 +31,6 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
-import { ThunderboltOutlined } from '@ant-design/icons';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
@@ -42,19 +43,26 @@ enum PageState {
 	Completed = 'Completed'
 }
 
+type HeroTab = 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'details';
+
+const matchElement = (element: Element, searchTerm: string) => {
+	const name = element.name.toLowerCase();
+	const desc = element.description.toLowerCase();
+	return searchTerm
+		.toLowerCase()
+		.split(' ')
+		.some(token => name.includes(token) || desc.includes(token));
+};
+
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	goHome: () => void;
 	showAbout: () => void;
 	saveChanges: (hero: Hero) => void;
 	cancelChanges: (heroId: string) => void;
 }
 
-type HeroTab = 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'details';
-
-
-export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
+export const HeroEditPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { heroId, tab } = useParams<{ heroId: string; tab: HeroTab }>();
 	const setTabKey = (tabKey: HeroTab) => {
@@ -64,6 +72,7 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 	const originalHero = useMemo(() => props.heroes.find(h => h.id === heroId)!, [ heroId, props.heroes ]);
 	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(originalHero)) as Hero);
 	const [ dirty, setDirty ] = useState<boolean>(false);
+	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
 	try {
 		const getPageState = (page: HeroTab) => {
@@ -327,6 +336,7 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 						<AncestrySection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							searchTerm={searchTerm}
 							selectAncestry={setAncestry}
 							setFeatureData={setFeatureData}
 						/>
@@ -336,6 +346,7 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 						<CultureSection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							searchTerm={searchTerm}
 							selectCulture={setCulture}
 							selectLanguages={setLanguages}
 							selectEnvironment={setEnvironment}
@@ -349,6 +360,7 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 						<CareerSection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							searchTerm={searchTerm}
 							selectCareer={setCareer}
 							selectIncitingIncident={setIncitingIncident}
 							setFeatureData={setFeatureData}
@@ -359,6 +371,7 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 						<ClassSection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							searchTerm={searchTerm}
 							selectClass={setClass}
 							setLevel={setLevel}
 							selectCharacteristics={setCharacteristics}
@@ -371,6 +384,7 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 						<ComplicationSection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							searchTerm={searchTerm}
 							selectComplication={setComplication}
 							setFeatureData={setFeatureData}
 						/>
@@ -388,13 +402,37 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 			}
 		};
 
+		let showSearchBar = false;
+		switch (page) {
+			case 'ancestry':
+				showSearchBar = !hero.ancestry;
+				break;
+			case 'culture':
+				showSearchBar = !hero.culture;
+				break;
+			case 'career':
+				showSearchBar = !hero.career;
+				break;
+			case 'class':
+				showSearchBar = !hero.class;
+				break;
+			case 'complication':
+				showSearchBar = !hero.complication;
+				break;
+		}
+
 		return (
 			<div className='hero-edit-page'>
-				<AppHeader subtitle='Heroes' goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader
+					breadcrumbs={[
+						{ label: 'Heroes' }
+					]}
+					showAbout={props.showAbout}
+				>
 					<Button type='primary' disabled={!dirty} onClick={saveChanges}>
 						Save Changes
 					</Button>
-					<Button onClick={() => cancelChanges(heroId!)}>
+					<Button onClick={() => props.cancelChanges(heroId!)}>
 						Cancel
 					</Button>
 				</AppHeader>
@@ -422,6 +460,19 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 							onChange={setPage}
 						/>
 					</div>
+					{
+						showSearchBar ?
+							<div className='search-bar'>
+								<Input
+									placeholder='Search'
+									allowClear={true}
+									value={searchTerm}
+									suffix={!searchTerm ? <SearchOutlined /> : null}
+									onChange={e => setSearchTerm(e.target.value)}
+								/>
+							</div>
+							: null
+					}
 					{getContent()}
 				</div>
 			</div>
@@ -435,13 +486,14 @@ export const HeroEditPage = ({ cancelChanges, ...props }: Props) => {
 interface AncestrySectionProps {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
+	searchTerm: string;
 	selectAncestry: (ancestry: Ancestry | null) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const AncestrySection = (props: AncestrySectionProps) => {
 	try {
-		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks);
+		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks).filter(a => matchElement(a, props.searchTerm));
 		const options = ancestries.map(a => (
 			<SelectablePanel key={a.id} onSelect={() => props.selectAncestry(a)}>
 				<AncestryPanel ancestry={a} />
@@ -463,22 +515,30 @@ const AncestrySection = (props: AncestrySectionProps) => {
 			<div className='hero-edit-content'>
 				{
 					props.hero.ancestry ?
-						<div className='hero-edit-content-column' id='ancestry-selected'>
-							<HeaderText>Selected</HeaderText>
-							<SelectablePanel onUnselect={() => props.selectAncestry(null)}>
+						<div className='hero-edit-content-column selected' id='ancestry-selected'>
+							<SelectablePanel showShadow={false} onUnselect={() => props.selectAncestry(null)}>
 								<AncestryPanel ancestry={props.hero.ancestry} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
-						:
-						<div className='hero-edit-content-column' id='ancestry-list'>
-							<HeaderText>Ancestries</HeaderText>
+						: null
+				}
+				{
+					!props.hero.ancestry && (options.length > 0) ?
+						<div className='hero-edit-content-column grid' id='ancestry-list'>
 							{options}
-							{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
 						</div>
+						: null
+				}
+				{
+					!props.hero.ancestry && (options.length === 0) ?
+						<div className='hero-edit-content-column' id='ancestry-list'>
+							<EmptyMessage hero={props.hero} />
+						</div>
+						: null
 				}
 				{
 					choices.length > 0 ?
-						<div className='hero-edit-content-column' id='ancestry-choices'>
+						<div className='hero-edit-content-column choices' id='ancestry-choices'>
 							<HeaderText>Choices</HeaderText>
 							{choices}
 						</div>
@@ -495,6 +555,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 interface CultureSectionProps {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
+	searchTerm: string;
 	selectCulture: (culture: Culture | null) => void;
 	selectLanguages: (languages: string[]) => void;
 	selectEnvironment: (id: string | null) => void;
@@ -505,8 +566,7 @@ interface CultureSectionProps {
 
 const CultureSection = (props: CultureSectionProps) => {
 	try {
-		const cultures = SourcebookLogic.getCultures(props.sourcebooks);
-		cultures.unshift(CultureData.bespoke);
+		const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks) ].filter(c => matchElement(c, props.searchTerm));
 		const options = cultures.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
 				<CulturePanel culture={c} />
@@ -586,22 +646,30 @@ const CultureSection = (props: CultureSectionProps) => {
 			<div className='hero-edit-content'>
 				{
 					props.hero.culture ?
-						<div className='hero-edit-content-column' id='culture-selected'>
-							<HeaderText>Selected</HeaderText>
-							<SelectablePanel onUnselect={() => props.selectCulture(null)}>
+						<div className='hero-edit-content-column selected' id='culture-selected'>
+							<SelectablePanel showShadow={false} onUnselect={() => props.selectCulture(null)}>
 								<CulturePanel culture={props.hero.culture} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
-						:
-						<div className='hero-edit-content-column' id='culture-list'>
-							<HeaderText>Cultures</HeaderText>
+						: null
+				}
+				{
+					!props.hero.culture && (options.length > 0) ?
+						<div className='hero-edit-content-column grid' id='culture-list'>
 							{options}
-							{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
 						</div>
+						: null
+				}
+				{
+					!props.hero.culture && (options.length === 0) ?
+						<div className='hero-edit-content-column' id='culture-list'>
+							<EmptyMessage hero={props.hero} />
+						</div>
+						: null
 				}
 				{
 					choices.length > 0 ?
-						<div className='hero-edit-content-column' id='culture-choices'>
+						<div className='hero-edit-content-column choices' id='culture-choices'>
 							<HeaderText>Choices</HeaderText>
 							{choices}
 						</div>
@@ -618,6 +686,7 @@ const CultureSection = (props: CultureSectionProps) => {
 interface CareerSectionProps {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
+	searchTerm: string;
 	selectCareer: (career: Career | null) => void;
 	selectIncitingIncident: (id: string | null) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
@@ -625,7 +694,7 @@ interface CareerSectionProps {
 
 const CareerSection = (props: CareerSectionProps) => {
 	try {
-		const careers = SourcebookLogic.getCareers(props.sourcebooks);
+		const careers = SourcebookLogic.getCareers(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
 		const options = careers.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectCareer(c)}>
 				<CareerPanel career={c} />
@@ -664,22 +733,30 @@ const CareerSection = (props: CareerSectionProps) => {
 			<div className='hero-edit-content'>
 				{
 					props.hero.career ?
-						<div className='hero-edit-content-column' id='career-selected'>
-							<HeaderText>Selected</HeaderText>
-							<SelectablePanel onUnselect={() => props.selectCareer(null)}>
+						<div className='hero-edit-content-column selected' id='career-selected'>
+							<SelectablePanel showShadow={false} onUnselect={() => props.selectCareer(null)}>
 								<CareerPanel career={props.hero.career} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
-						:
-						<div className='hero-edit-content-column' id='career-list'>
-							<HeaderText>Careers</HeaderText>
+						: null
+				}
+				{
+					!props.hero.career && (options.length > 0) ?
+						<div className='hero-edit-content-column grid' id='career-list'>
 							{options}
-							{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
 						</div>
+						: null
+				}
+				{
+					!props.hero.career && (options.length === 0) ?
+						<div className='hero-edit-content-column' id='career-list'>
+							<EmptyMessage hero={props.hero} />
+						</div>
+						: null
 				}
 				{
 					choices.length > 0 ?
-						<div className='hero-edit-content-column' id='career-choices'>
+						<div className='hero-edit-content-column choices' id='career-choices'>
 							<HeaderText>Choices</HeaderText>
 							{choices}
 						</div>
@@ -696,6 +773,7 @@ const CareerSection = (props: CareerSectionProps) => {
 interface ClassSectionProps {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
+	searchTerm: string;
 	selectClass: (heroClass: HeroClass | null) => void;
 	setLevel: (level: number) => void;
 	selectCharacteristics: (array: { characteristic: Characteristic, value: number }[]) => void;
@@ -705,7 +783,7 @@ interface ClassSectionProps {
 
 const ClassSection = (props: ClassSectionProps) => {
 	try {
-		const classes = SourcebookLogic.getClasses(props.sourcebooks);
+		const classes = SourcebookLogic.getClasses(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
 		const options = classes.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectClass(c)}>
 				<ClassPanel heroClass={c} />
@@ -796,22 +874,30 @@ const ClassSection = (props: ClassSectionProps) => {
 			<div className='hero-edit-content'>
 				{
 					props.hero.class ?
-						<div className='hero-edit-content-column' id='class-selected'>
-							<HeaderText>Selected</HeaderText>
-							<SelectablePanel onUnselect={() => props.selectClass(null)}>
+						<div className='hero-edit-content-column selected' id='class-selected'>
+							<SelectablePanel showShadow={false} onUnselect={() => props.selectClass(null)}>
 								<ClassPanel heroClass={props.hero.class} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
-						:
-						<div className='hero-edit-content-column' id='class-list'>
-							<HeaderText>Classes</HeaderText>
+						: null
+				}
+				{
+					!props.hero.class && (options.length > 0) ?
+						<div className='hero-edit-content-column grid' id='class-list'>
 							{options}
-							{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
 						</div>
+						: null
+				}
+				{
+					!props.hero.class && (options.length === 0) ?
+						<div className='hero-edit-content-column' id='class-list'>
+							<EmptyMessage hero={props.hero} />
+						</div>
+						: null
 				}
 				{
 					choices.length > 0 ?
-						<div className='hero-edit-content-column' id='class-choices'>
+						<div className='hero-edit-content-column choices' id='class-choices'>
 							<HeaderText>Choices</HeaderText>
 							{choices}
 						</div>
@@ -828,13 +914,14 @@ const ClassSection = (props: ClassSectionProps) => {
 interface ComplicationSectionProps {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
+	searchTerm: string;
 	selectComplication: (complication: Complication | null) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const ComplicationSection = (props: ComplicationSectionProps) => {
 	try {
-		const complications = SourcebookLogic.getComplications(props.sourcebooks);
+		const complications = SourcebookLogic.getComplications(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
 		const options = complications.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectComplication(c)}>
 				<ComplicationPanel complication={c} />
@@ -856,22 +943,30 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 			<div className='hero-edit-content'>
 				{
 					props.hero.complication ?
-						<div className='hero-edit-content-column' id='complication-selected'>
-							<HeaderText>Selected</HeaderText>
-							<SelectablePanel onUnselect={() => props.selectComplication(null)}>
+						<div className='hero-edit-content-column selected' id='complication-selected'>
+							<SelectablePanel showShadow={false} onUnselect={() => props.selectComplication(null)}>
 								<ComplicationPanel complication={props.hero.complication} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
-						:
-						<div className='hero-edit-content-column' id='complication-list'>
-							<HeaderText>Complications</HeaderText>
+						: null
+				}
+				{
+					!props.hero.complication && (options.length > 0) ?
+						<div className='hero-edit-content-column grid' id='complication-list'>
 							{options}
-							{options.length === 0 ? <div className='ds-text dimmed-text centered-text'>None available</div> : null}
 						</div>
+						: null
+				}
+				{
+					!props.hero.complication && (options.length === 0) ?
+						<div className='hero-edit-content-column' id='complication-list'>
+							<EmptyMessage hero={props.hero} />
+						</div>
+						: null
 				}
 				{
 					choices.length > 0 ?
-						<div className='hero-edit-content-column' id='complication-choices'>
+						<div className='hero-edit-content-column choices' id='complication-choices'>
 							<HeaderText>Choices</HeaderText>
 							{choices}
 						</div>
@@ -897,9 +992,8 @@ const DetailsSection = (props: DetailsSectionProps) => {
 	try {
 		return (
 			<div className='hero-edit-content'>
-				<div className='hero-edit-content-column' id='details-main'>
-					<HeaderText>Details</HeaderText>
-					<div>Name:</div>
+				<div className='hero-edit-content-column choices' id='details-main'>
+					<HeaderText>Name</HeaderText>
 					<Input
 						className={props.hero.name === '' ? 'input-empty' : ''}
 						placeholder='Name'
@@ -934,6 +1028,28 @@ const DetailsSection = (props: DetailsSectionProps) => {
 					}
 				</div>
 			</div>
+		);
+	} catch (ex) {
+		console.error(ex);
+		return null;
+	}
+};
+
+interface EmptyMessageProps {
+	hero: Hero;
+}
+
+const EmptyMessage = (props: EmptyMessageProps) => {
+	const navigation = useNavigation();
+
+	try {
+		return (
+			<Alert
+				type='info'
+				showIcon={true}
+				message='If you&apos;re looking for something specific, make sure you&apos;ve included the sourcebook it&apos;s in.'
+				action={<Button type='text' icon={<RightOutlined />} onClick={() => navigation.goToHeroEdit(props.hero.id, 'details')} />}
+			/>
 		);
 	} catch (ex) {
 		console.error(ex);

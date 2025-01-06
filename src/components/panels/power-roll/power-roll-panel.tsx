@@ -1,4 +1,4 @@
-import { Ability } from '../../../models/ability';
+import { Ability, PowerRoll } from '../../../models/ability';
 import { Collections } from '../../../utils/collections';
 import { Field } from '../../controls/field/field';
 import { Hero } from '../../../models/hero';
@@ -9,19 +9,16 @@ import { ReactNode } from 'react';
 import './power-roll-panel.scss';
 
 interface Props {
-	ability: Ability;
+	powerRoll: PowerRoll
+	ability?: Ability;
 	hero?: Hero;
 	onRoll?: () => void;
 }
 
 export const PowerRollPanel = (props: Props) => {
 	try {
-		if (!props.ability.powerRoll) {
-			return null;
-		}
-
 		let bonus: ReactNode = null;
-		if (props.hero) {
+		if (props.ability && props.hero) {
 			const dmgMelee = HeroLogic.getMeleeDamageBonus(props.hero, props.ability);
 			const dmgRanged = HeroLogic.getRangedDamageBonus(props.hero, props.ability);
 
@@ -38,22 +35,22 @@ export const PowerRollPanel = (props: Props) => {
 		}
 
 		let header: string;
-		switch (props.ability.powerRoll.type) {
+		switch (props.powerRoll.type) {
 			case PowerRollType.PowerRoll:
 				if (props.hero) {
-					const values = props.ability.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero as Hero, ch));
+					const values = props.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero as Hero, ch));
 					const bonus = Collections.max(values, v => v) || 0;
 					const sign = bonus >= 0 ? '+' : '';
 					header = `Power Roll ${sign}${bonus}`;
-				} else if (props.ability.powerRoll.characteristic.length > 0) {
-					header = `Power Roll + ${props.ability.powerRoll.characteristic.join(' or ')}`;
+				} else if (props.powerRoll.characteristic.length > 0) {
+					header = `Power Roll + ${props.powerRoll.characteristic.join(' or ')}`;
 				} else {
-					const sign = props.ability.powerRoll.bonus >= 0 ? '+' : '';
-					header = `Power Roll ${sign}${props.ability.powerRoll.bonus}`;
+					const sign = props.powerRoll.bonus >= 0 ? '+' : '';
+					header = `Power Roll ${sign}${props.powerRoll.bonus}`;
 				}
 				break;
 			case PowerRollType.Resistance:
-				header = `${props.ability.powerRoll.characteristic.join(' or ')} Resistance Roll`;
+				header = `${props.powerRoll.characteristic.join(' or ')} Resistance Roll`;
 				break;
 		}
 
@@ -64,15 +61,15 @@ export const PowerRollPanel = (props: Props) => {
 				</div>
 				<div className='power-roll-row'>
 					<div className='tier'>11 -</div>
-					<div className='effect'>{props.ability.powerRoll.tier1}</div>
+					<div className='effect'>{props.powerRoll.tier1}</div>
 				</div>
 				<div className='power-roll-row'>
 					<div className='tier'>12 - 16</div>
-					<div className='effect'>{props.ability.powerRoll.tier2}</div>
+					<div className='effect'>{props.powerRoll.tier2}</div>
 				</div>
 				<div className='power-roll-row'>
 					<div className='tier'>17 +</div>
-					<div className='effect'>{props.ability.powerRoll.tier3}</div>
+					<div className='effect'>{props.powerRoll.tier3}</div>
 				</div>
 				{bonus}
 			</div>

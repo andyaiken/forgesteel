@@ -438,9 +438,7 @@ export const HeroPanel = (props: Props) => {
 		);
 	};
 
-	const getAbilitiesSection = (type: AbilityUsage) => {
-		const abilities = HeroLogic.getAbilities(props.hero, true, props.options?.showFreeStrikes || false, props.options?.showStandardAbilities || false)
-			.filter(ability => ability.type.usage === type);
+	const getAbilitiesSection = (type: AbilityUsage, abilities: Ability[]) => {
 		if (abilities.length === 0) {
 			return null;
 		}
@@ -487,6 +485,14 @@ export const HeroPanel = (props: Props) => {
 			);
 		}
 
+		const abilities = HeroLogic.getAbilities(props.hero, true, props.options?.showFreeStrikes || false, props.options?.showStandardAbilities || false);
+		const actions = abilities.filter(a => a.type.usage === AbilityUsage.Action);
+		const maneuvers = abilities.filter(a => a.type.usage === AbilityUsage.Maneuver);
+		const moves = abilities.filter(a => a.type.usage === AbilityUsage.Move);
+		const triggers = abilities.filter(a => a.type.usage === AbilityUsage.Trigger);
+		const others = abilities.filter(a => a.type.usage === AbilityUsage.Other);
+		const noactions = abilities.filter(a => a.type.usage === AbilityUsage.NoAction);
+
 		return (
 			<div className='hero-panel' id={props.hero.id}>
 				<div className='hero-main-section' id='stats'>
@@ -499,36 +505,55 @@ export const HeroPanel = (props: Props) => {
 					</div>
 					{getRightColumn()}
 				</div>
-				<div className='hero-main-section' id='actions'>
-					<div className='hero-main-column'>
-						{getAbilitiesSection(AbilityUsage.Action)}
-					</div>
-				</div>
-				<div className='hero-main-section' id='maneuvers'>
-					<div className='hero-main-column'>
-						{getAbilitiesSection(AbilityUsage.Maneuver)}
-					</div>
-				</div>
-				<div className='hero-main-section' id='moves'>
-					<div className='hero-main-column'>
-						{getAbilitiesSection(AbilityUsage.Move)}
-					</div>
-				</div>
-				<div className='hero-main-section' id='triggers'>
-					<div className='hero-main-column'>
-						{getAbilitiesSection(AbilityUsage.Trigger)}
-					</div>
-				</div>
-				<div className='hero-main-section' id='others'>
-					<div className='hero-main-column'>
-						{getAbilitiesSection(AbilityUsage.Other)}
-					</div>
-				</div>
-				<div className='hero-main-section' id='none'>
-					<div className='hero-main-column'>
-						{getAbilitiesSection(AbilityUsage.NoAction)}
-					</div>
-				</div>
+				{
+					actions.length > 0 ?
+						<div className='hero-main-section' id='actions'>
+							<div className='hero-main-column'>
+								{getAbilitiesSection(AbilityUsage.Action, actions)}
+							</div>
+						</div>
+						: null
+				}{
+					maneuvers.length > 0 ?
+						<div className='hero-main-section' id='maneuvers'>
+							<div className='hero-main-column'>
+								{getAbilitiesSection(AbilityUsage.Maneuver, maneuvers)}
+							</div>
+						</div>
+						: null
+				}{
+					moves.length > 0 ?
+						<div className='hero-main-section' id='moves'>
+							<div className='hero-main-column'>
+								{getAbilitiesSection(AbilityUsage.Move, moves)}
+							</div>
+						</div>
+						: null
+				}{
+					triggers.length > 0 ?
+						<div className='hero-main-section' id='triggers'>
+							<div className='hero-main-column'>
+								{getAbilitiesSection(AbilityUsage.Trigger, triggers)}
+							</div>
+						</div>
+						: null
+				}{
+					others.length > 0 ?
+						<div className='hero-main-section' id='others'>
+							<div className='hero-main-column'>
+								{getAbilitiesSection(AbilityUsage.Other, others)}
+							</div>
+						</div>
+						: null
+				}{
+					noactions.length > 0 ?
+						<div className='hero-main-section' id='none'>
+							<div className='hero-main-column'>
+								{getAbilitiesSection(AbilityUsage.NoAction, noactions)}
+							</div>
+						</div>
+						: null
+				}
 			</div>
 		);
 	} catch (ex) {

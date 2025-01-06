@@ -15,7 +15,7 @@ export const MultiLine = (props: Props) => {
 			<div className='multi-line'>
 				<Input.TextArea
 					placeholder={props.label}
-					rows={5}
+					rows={6}
 					value={props.value}
 					onChange={e => props.onChange(e.target.value)}
 				/>

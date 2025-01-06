@@ -531,7 +531,7 @@ export const Main = (props: Props) => {
 		if (original) {
 			monsterGroup = JSON.parse(JSON.stringify(original)) as MonsterGroup;
 			monsterGroup.id = Utils.guid();
-			monsterGroup.monsters.forEach(m => m.id === Utils.guid());
+			monsterGroup.monsters.forEach(m => m.id = Utils.guid());
 		} else {
 			monsterGroup = FactoryLogic.createMonsterGroup();
 		}
@@ -628,11 +628,11 @@ export const Main = (props: Props) => {
 		}
 
 		await persistHomebrewSourcebooks(list);
-		navigation.goToLibraryList();
+		navigation.goToLibraryList(kind);
 	};
 
-	const cancelEditElement = () => {
-		navigation.goToLibraryList();
+	const cancelEditElement = (kind: SourcebookElementKind) => {
+		navigation.goToLibraryList(kind);
 	};
 
 	//#endregion
@@ -1018,15 +1018,10 @@ export const Main = (props: Props) => {
 				<Route path='hero'>
 					<Route
 						index={true}
-						element={<Navigate to='list' replace={true} />}
-					/>
-					<Route
-						path='list'
 						element={
 							<HeroListPage
 								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								goHome={navigation.goToWelcome}
 								showAbout={showAbout}
 								addHero={addHero}
 								importHero={importHero}
@@ -1042,7 +1037,6 @@ export const Main = (props: Props) => {
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								options={options}
 								setOptions={persistOptions}
-								goHome={navigation.goToWelcome}
 								showAbout={showAbout}
 								closeHero={closeHero}
 								editHero={editHero}
@@ -1072,7 +1066,6 @@ export const Main = (props: Props) => {
 							<HeroEditPage
 								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								goHome={navigation.goToWelcome}
 								showAbout={showAbout}
 								saveChanges={saveEditHero}
 								cancelChanges={cancelEditHero}
@@ -1083,19 +1076,14 @@ export const Main = (props: Props) => {
 				<Route path='library'>
 					<Route
 						index={true}
-						element={<Navigate to='list' replace={true} />}
-					/>
-					<Route
-						path='list'
 						element={<Navigate to='ancestry' replace={true} />}
 					/>
 					<Route
-						path='list/:tab'
+						path=':tab'
 						element={
 							<LibraryListPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								hiddenSourcebookIDs={hiddenSourcebookIDs}
-								goHome={navigation.goToWelcome}
 								showAbout={showAbout}
 								showSourcebooks={showSourcebooks}
 								viewAncestry={onSelectAncestry}
@@ -1119,8 +1107,8 @@ export const Main = (props: Props) => {
 						element={
 							<LibraryEditPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								goHome={navigation.goToWelcome}
 								showAbout={showAbout}
+								showMonster={onSelectMonster}
 								saveChanges={saveEditElement}
 								cancelChanges={cancelEditElement}
 							/>
@@ -1130,15 +1118,10 @@ export const Main = (props: Props) => {
 				<Route path='encounter'>
 					<Route
 						index={true}
-						element={<Navigate to='list' replace={true} />}
-					/>
-					<Route
-						path='list'
 						element={
 							<EncounterListPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								goHome={navigation.goToWelcome}
 								showAbout={showAbout}
 								viewEncounter={onSelectEncounter}
 								onCreateEncounter={() => createEncounter(null)}
@@ -1152,7 +1135,6 @@ export const Main = (props: Props) => {
 							<EncounterEditPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								goHome={navigation.goToWelcome}
 								showAbout={showAbout}
 								showMonster={onSelectMonster}
 								saveChanges={saveEditEncounter}

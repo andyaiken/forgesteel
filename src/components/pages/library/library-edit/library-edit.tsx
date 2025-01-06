@@ -1,5 +1,5 @@
 import { Alert, Button, Divider, Input, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, EditOutlined, LeftOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureAbility, FeatureMalice } from '../../../../models/feature';
 import { KitArmor, KitType, KitWeapon } from '../../../../enums/kit';
@@ -38,6 +38,7 @@ import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
 import { MonsterEditPanel } from '../../../panels/edit/monster-edit-panel/monster-edit-panel';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
+import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
@@ -60,14 +61,15 @@ import './library-edit.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
-	goHome: () => void;
 	showAbout: () => void;
+	showMonster: (monsterID: string) => void;
 	saveChanges: (sourcebookId: string, kind: SourcebookElementKind, element: Element) => void;
-	cancelChanges: () => void;
+	cancelChanges: (kind: SourcebookElementKind) => void;
 }
 
 export const LibraryEditPage = (props: Props) => {
 	const { sourcebookId, kind, elementId } = useParams<{ sourcebookId: string, kind: SourcebookElementKind, elementId: string }>();
+	const [ subElementId, setSubElementId ] = useState<string>('');
 	const sourcebook = useMemo(() => props.sourcebooks.find(s => s.id === sourcebookId)!, [ sourcebookId, props.sourcebooks ]);
 	const sourcebookKey = useMemo(() => getSourcebookKey(kind!), [ kind ]);
 	const originalElement = useMemo(() => sourcebook[sourcebookKey].find(e => e.id === elementId)!, [ sourcebook, sourcebookKey, elementId ]);
@@ -1205,16 +1207,6 @@ export const LibraryEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const changeMonster = (monster: Monster) => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
-			const index = copy.monsters.findIndex(m => m.id === monster.id);
-			if (index !== -1) {
-				copy.monsters[index] = monster;
-			}
-			setElement(copy);
-			setDirty(true);
-		};
-
 		const moveMonster = (monster: Monster, direction: 'up' | 'down') => {
 			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
 			const index = copy.monsters.findIndex(m => m.id ===  monster.id);
@@ -1227,6 +1219,9 @@ export const LibraryEditPage = (props: Props) => {
 			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
 			copy.monsters = copy.monsters.filter(m => m.id !== monster.id);
 			setElement(copy);
+			if (subElementId === monster.id) {
+				setSubElementId('');
+			}
 			setDirty(true);
 		};
 
@@ -1238,15 +1233,16 @@ export const LibraryEditPage = (props: Props) => {
 							key={m.id}
 							title={MonsterLogic.getMonsterName(m, monsterGroup)}
 							extra={[
+								<Button key='edit' type='text' icon={<EditOutlined />} onClick={() => setSubElementId(m.id)} />,
 								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveMonster(m, 'up')} />,
 								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveMonster(m, 'down')} />,
 								<DangerButton key='delete' mode='icon' onConfirm={() => deleteMonster(m)} />
 							]}
 						>
-							<MonsterEditPanel
+							<MonsterPanel
 								monster={m}
-								sourcebooks={props.sourcebooks}
-								onChange={changeMonster}
+								monsterGroup={monsterGroup}
+								mode={PanelMode.Compact}
 							/>
 						</Expander>
 					))
@@ -1263,6 +1259,81 @@ export const LibraryEditPage = (props: Props) => {
 				<Button block={true} onClick={addMonster}>Add a new monster</Button>
 			</Space>
 		);
+	};
+
+	const getMonsterEditSection = () => {
+		const monsterGroup = element as MonsterGroup;
+		const monster = monsterGroup.monsters.find(m => m.id === subElementId) as Monster;
+
+		const changeMonster = (monster: Monster) => {
+			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const index = copy.monsters.findIndex(m => m.id === monster.id);
+			if (index !== -1) {
+				copy.monsters[index] = monster;
+			}
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<MonsterEditPanel
+				monster={monster}
+				sourcebooks={props.sourcebooks}
+				onChange={changeMonster}
+			/>
+		);
+	};
+
+	const getSimilarMonsters = (monster: Monster) => {
+		const monsters = props.sourcebooks
+			.flatMap(sb => sb.monsterGroups)
+			.flatMap(mg => mg.monsters)
+			.filter(m => m.id !== monster.id)
+			.filter(m => (m.level === monster.level) && (m.role.type === monster.role.type) && (m.role.isMinion === monster.role.isMinion));
+
+		return (
+			<div>
+				{
+					monsters.map(m => {
+						const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id);
+						if (!monsterGroup) {
+							return null;
+						}
+
+						return (
+							<SelectablePanel key={m.id} onSelect={() => props.showMonster(monster.id)}>
+								<MonsterPanel
+									monster={m}
+									monsterGroup={monsterGroup}
+									mode={PanelMode.Compact}
+								/>
+							</SelectablePanel>
+						);
+					})
+				}
+			</div>
+		);
+	};
+
+	const getEditHeaderSection = () => {
+		switch (kind) {
+			case 'monster-group': {
+				const monsterGroup = element as MonsterGroup;
+				return (
+					<div className='edit-header-section'>
+						<Select
+							style={{ width: '100%' }}
+							options={[ null, ...monsterGroup.monsters ].map(m => ({ label: m ? MonsterLogic.getMonsterName(m, monsterGroup) : 'Monster Group', value: m ? m.id : '' }))}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+							value={subElementId}
+							onChange={setSubElementId}
+						/>
+					</div>
+				);
+			}
+		}
+
+		return null;
 	};
 
 	const getEditSection = () => {
@@ -1473,32 +1544,52 @@ export const LibraryEditPage = (props: Props) => {
 					/>
 				);
 			case 'monster-group':
-				return (
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Monster Group',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Information',
-								children: getInformationEditSection()
-							},
-							{
-								key: '3',
-								label: 'Malice',
-								children: getMaliceEditSection()
-							},
-							{
-								key: '4',
-								label: 'Monsters',
-								children: getMonstersEditSection()
-							}
-						]}
-					/>
-				);
+				if (subElementId === '') {
+					return (
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Monster Group',
+									children: getNameAndDescriptionSection()
+								},
+								{
+									key: '2',
+									label: 'Information',
+									children: getInformationEditSection()
+								},
+								{
+									key: '3',
+									label: 'Malice',
+									children: getMaliceEditSection()
+								},
+								{
+									key: '4',
+									label: 'Monsters',
+									children: getMonstersEditSection()
+								}
+							]}
+						/>
+					);
+				} else {
+					return getMonsterEditSection();
+				}
+		}
+
+		return null;
+	};
+
+	const getPreviewHeaderSection = () => {
+		switch (kind) {
+			case 'monster-group': {
+				if (subElementId !== '') {
+					return (
+						<div className='preview-header-section'>
+							<Button icon={<LeftOutlined />} onClick={() => setSubElementId('')}>Back to Monster Group</Button>
+						</div>
+					);
+				}
+			}
 		}
 
 		return null;
@@ -1507,27 +1598,96 @@ export const LibraryEditPage = (props: Props) => {
 	const getPreview = () => {
 		switch (kind) {
 			case 'ancestry':
-				return <AncestryPanel ancestry={element as Ancestry} mode={PanelMode.Full} />;
+				return (
+					<SelectablePanel>
+						<AncestryPanel ancestry={element as Ancestry} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
 			case 'culture':
-				return <CulturePanel culture={element as Culture} mode={PanelMode.Full} />;
+				return (
+					<SelectablePanel>
+						<CulturePanel culture={element as Culture} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
 			case 'career':
-				return <CareerPanel career={element as Career} mode={PanelMode.Full} />;
+				return (
+					<SelectablePanel>
+						<CareerPanel career={element as Career} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
 			case 'class':
-				return <ClassPanel heroClass={element as HeroClass} mode={PanelMode.Full} />;
+				return (
+					<SelectablePanel>
+						<ClassPanel heroClass={element as HeroClass} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
 			case 'complication':
-				return <ComplicationPanel complication={element as Complication} mode={PanelMode.Full} />;
+				return (
+					<SelectablePanel>
+						<ComplicationPanel complication={element as Complication} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
 			case 'domain':
-				return <DomainPanel domain={element as Domain} mode={PanelMode.Full} />;
+				return (
+					<SelectablePanel>
+						<DomainPanel domain={element as Domain} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
 			case 'kit':
-				return <KitPanel kit={element as Kit} mode={PanelMode.Full} />;
+				return (
+					<SelectablePanel>
+						<KitPanel kit={element as Kit} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
 			case 'perk':
-				return <PerkPanel perk={element as Perk} mode={PanelMode.Full} />;
+				return (
+					<SelectablePanel>
+						<PerkPanel perk={element as Perk} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
 			case 'title':
-				return <TitlePanel title={element as Title} mode={PanelMode.Full} />;
+				return (
+					<SelectablePanel>
+						<TitlePanel title={element as Title} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
 			case 'item':
-				return <ItemPanel item={element as Item} mode={PanelMode.Full} />;
+				return (
+					<SelectablePanel>
+						<ItemPanel item={element as Item} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
 			case 'monster-group':
-				return <MonsterGroupPanel monsterGroup={element as MonsterGroup} mode={PanelMode.Full} />;
+				if (subElementId === '')
+					return (
+						<SelectablePanel>
+							<MonsterGroupPanel monsterGroup={element as MonsterGroup} mode={PanelMode.Full} />
+						</SelectablePanel>
+					);
+				else {
+					const monsterGroup = element as MonsterGroup;
+					const monster = monsterGroup.monsters.find(m => m.id === subElementId) as Monster;
+					return (
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<MonsterPanel monster={monster} monsterGroup={monsterGroup} />
+										</SelectablePanel>
+									)
+								},
+								{
+									key: '2',
+									label: 'Similar Monsters',
+									children: getSimilarMonsters(monster)
+								}
+							]}
+						/>
+					);
+				}
 		}
 
 		return null;
@@ -1536,22 +1696,27 @@ export const LibraryEditPage = (props: Props) => {
 	try {
 		return (
 			<div className='library-edit-page'>
-				<AppHeader subtitle='Library' goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader
+					breadcrumbs={[
+						{ label: 'Library' }
+					]}
+					showAbout={props.showAbout}
+				>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(sourcebookId!, kind!, element)}>
 						Save Changes
 					</Button>
-					<Button onClick={() => props.cancelChanges()}>
+					<Button onClick={() => props.cancelChanges(kind!)}>
 						Cancel
 					</Button>
 				</AppHeader>
 				<div className='library-edit-page-content'>
 					<div className='edit-column'>
+						{getEditHeaderSection()}
 						{getEditSection()}
 					</div>
 					<div className='preview-column'>
-						<SelectablePanel>
-							{getPreview()}
-						</SelectablePanel>
+						{getPreviewHeaderSection()}
+						{getPreview()}
 					</div>
 				</div>
 			</div>

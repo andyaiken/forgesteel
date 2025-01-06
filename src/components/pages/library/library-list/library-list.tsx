@@ -39,7 +39,6 @@ import './library-list.scss';
 interface Props {
 	sourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
-	goHome: () => void;
 	showAbout: () => void;
 	showSourcebooks: () => void;
 	viewAncestry: (ancestry: Ancestry) => void;
@@ -619,7 +618,12 @@ export const LibraryListPage = (props: Props) => {
 
 		return (
 			<div className='library-list-page'>
-				<AppHeader subtitle='Library' goHome={props.goHome} showAbout={props.showAbout}>
+				<AppHeader
+					breadcrumbs={[
+						{ label: 'Library' }
+					]}
+					showAbout={props.showAbout}
+				>
 					<Input
 						placeholder='Search'
 						allowClear={true}

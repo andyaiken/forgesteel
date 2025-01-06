@@ -7,6 +7,7 @@ import type {
 	FeatureKitData,
 	FeatureLanguageChoiceData,
 	FeaturePerkData,
+	FeatureSize,
 	FeatureSkillChoiceData,
 	FeatureTitleData
 } from '../models/feature';
@@ -238,5 +239,9 @@ export class FeatureLogic {
 			case FeatureType.Title:
 				return 'This feature allows you to choose a title.';
 		}
+	};
+
+	static getSizeDescription = (feature: FeatureSize) => {
+		return `${feature.data.size.value.toString()}${feature.data.size.mod}`;
 	};
 }

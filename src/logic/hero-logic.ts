@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureChoice, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureInheritedAncestry, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSize, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
@@ -811,6 +811,66 @@ Complex or time-consuming tests might require an action if made in combat—or c
 	};
 
 	///////////////////////////////////////////////////////////////////////////
+
+	static updateInheritedSize = (hero: Hero, feature: FeatureInheritedAncestry, sourcebooks: Sourcebook[]) => {
+		const featureId = 'inherited-size';
+		const ancestryFeatures = hero.ancestry?.features || [];
+
+		const currentSizeIdx = ancestryFeatures.findIndex(f => f.id === featureId);
+		if (currentSizeIdx > -1) {
+			ancestryFeatures.splice(currentSizeIdx, 1);
+		}
+
+		const sizes = new Set<string>();
+		if (feature.data.selected.length > 0) {
+			const ancestries = SourcebookLogic.getAncestriesById(sourcebooks, feature.data.selected);
+			ancestries.forEach(a => {
+				const ancestryOptions = [];
+				a.features.forEach(f => {
+					if (f.type === FeatureType.Size) {
+						ancestryOptions.push(FeatureLogic.getSizeDescription(f as FeatureSize));
+					} else if (f.type === FeatureType.Choice) {
+						(f as FeatureChoice).data.options.forEach(o => {
+							if (o.feature.type === FeatureType.Size) {
+								ancestryOptions.push(FeatureLogic.getSizeDescription(o.feature as FeatureSize));
+							}
+						});
+					}
+				});
+				
+				if (ancestryOptions.length === 0) {
+					ancestryOptions.push('1M');
+				}
+
+				ancestryOptions.forEach(o => sizes.add(o));
+			});
+		}
+
+		let newFeature;
+		if (sizes.size > 1) {
+			newFeature = FactoryLogic.feature.createChoice({
+				id: featureId,
+				name: 'Size',
+				description: 'Choose your size.',
+				options: Array.from(
+					sizes.values(),
+					v => {
+						return {
+							feature: FactoryLogic.feature.createSizeFromDescription(v),
+							value: 1
+						};
+					}
+				)
+			});
+		} else if (sizes.size === 1) {
+			newFeature = FactoryLogic.feature.createSizeFromDescription(sizes.values().next().value as string, featureId);
+		}
+
+		if (newFeature !== undefined) {
+			const inheritedAncestryIdx = ancestryFeatures.findIndex(f => f.type === FeatureType.InheritedAncestry);
+			ancestryFeatures.splice(inheritedAncestryIdx, 0, newFeature);
+		}
+	};
 
 	static updateHero = (hero: Hero) => {
 		if (hero.settingIDs === undefined) {

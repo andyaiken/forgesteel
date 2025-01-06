@@ -306,8 +306,10 @@ export const HeroEditPage = (props: Props) => {
 			const feature = HeroLogic.getFeatures(heroCopy).find(f => f.id === featureID);
 			if (feature) {
 				feature.data = data;
+				if (feature.type === FeatureType.InheritedAncestry) {
+					HeroLogic.updateInheritedSize(heroCopy, feature, props.sourcebooks);
+				}
 			}
-			// TODO: Set size here if feature is Inherited Ancestry
 			setHero(heroCopy);
 			setDirty(true);
 		};

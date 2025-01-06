@@ -112,7 +112,7 @@ export const HeroPanel = (props: Props) => {
 						<div className='overview-tile clickable' onClick={onSelectAncestry}>
 							<HeaderText>Ancestry</HeaderText>
 							<Field label='Ancestry' value={props.hero.ancestry.name} />
-							{ inheritedAncestryFeature !== undefined && inheritedAncestryFeature.data.selected.length > 0 ?
+							{ inheritedAncestryFeature !== undefined && inheritedAncestries.length > 0 ?
 								<Field label={inheritedAncestryFeature.name} value={inheritedAncestries.map(a => a.name).join(', ')}/> :
 								null
 							}

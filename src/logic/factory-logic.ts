@@ -754,6 +754,17 @@ export class FactoryLogic {
 				}
 			};
 		},
+		createSizeFromDescription: (description: string, newId?: string ) => {
+			const id = newId || `generic-size-${description}`;
+			const sizeValue = Number.parseInt(description.charAt(0));
+			const sizeMod = description.charAt(1);
+			return this.feature.createSize({
+				id,
+				description,
+				sizeValue,
+				sizeMod
+			});
+		},
 		createSkill: (data: { id: string, name?: string, description?: string, skill: string }): FeatureSkill => {
 			return {
 				id: data.id,

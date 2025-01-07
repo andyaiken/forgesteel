@@ -80,10 +80,9 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 		})
 	],
 	monsters: [
-		{
+		FactoryLogic.createMonster({
 			id: 'radenwight-1',
 			name: 'Radenwight Mischiever',
-			description: '',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterRoleType.Ambusher, MonsterOrganizationType.Minion),
 			keywords: [ 'Humanoid', 'Radenwight' ],
@@ -91,7 +90,6 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(7, 'climb'),
 			stamina: 4,
-			stability: 0,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(-1, 2, 0, 1, 0),
 			withCaptain: 'Strike damage +1',
@@ -129,11 +127,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					})
 				})
 			]
-		},
-		{
+		}),
+		FactoryLogic.createMonster({
 			id: 'radenwight-2',
 			name: 'Radenwight Scrapper',
-			description: '',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterRoleType.Defender, MonsterOrganizationType.Minion),
 			keywords: [ 'Humanoid', 'Radenwight' ],
@@ -175,11 +172,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					})
 				})
 			]
-		},
-		{
+		}),
+		FactoryLogic.createMonster({
 			id: 'radenwight-3',
 			name: 'Radenwight Swiftpaw',
-			description: '',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterRoleType.Harrier, MonsterOrganizationType.Minion),
 			keywords: [ 'Humanoid', 'Radenwight' ],
@@ -187,7 +183,6 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(7, 'climb'),
 			stamina: 4,
-			stability: 0,
 			freeStrikeDamage: 1,
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 0, -1),
 			withCaptain: 'Edge on strikes',
@@ -221,11 +216,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					})
 				})
 			]
-		},
-		{
+		}),
+		FactoryLogic.createMonster({
 			id: 'radenwight-4',
 			name: 'Radenwight Redeye',
-			description: '',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterRoleType.Artillery, MonsterOrganizationType.Minion),
 			keywords: [ 'Humanoid', 'Radenwight' ],
@@ -233,7 +227,6 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 3,
-			stability: 0,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(1, 2, -1, 0, 0),
 			withCaptain: 'Edge on strikes',
@@ -268,11 +261,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					})
 				})
 			]
-		},
-		{
+		}),
+		FactoryLogic.createMonster({
 			id: 'radenwight-5',
 			name: 'Radenwight Bruxer',
-			description: '',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterRoleType.Brute, MonsterOrganizationType.Platoon),
 			keywords: [ 'Humanoid', 'Radenwight' ],
@@ -336,11 +328,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					description: 'An enemy can’t shift while adjacent to the bruxer.'
 				})
 			]
-		},
-		{
+		}),
+		FactoryLogic.createMonster({
 			id: 'radenwight-6',
 			name: 'Radenwight Piper',
-			description: '',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterRoleType.Support, MonsterOrganizationType.Platoon),
 			keywords: [ 'Humanoid', 'Radenwight' ],
@@ -348,7 +339,6 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 30,
-			stability: 0,
 			freeStrikeDamage: 3,
 			characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 2, 1),
 			features: [
@@ -403,11 +393,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					description: 'At the end of the piper’s turn, they can choose an adjacent creature and slide them 2, ignoring stability.'
 				})
 			]
-		},
-		{
+		}),
+		FactoryLogic.createMonster({
 			id: 'radenwight-7',
 			name: 'Radenwight Ratcrobat',
-			description: '',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterRoleType.Harrier, MonsterOrganizationType.Platoon),
 			keywords: [ 'Humanoid', 'Radenwight' ],
@@ -415,7 +404,6 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(7, 'climb'),
 			stamina: 30,
-			stability: 0,
 			freeStrikeDamage: 3,
 			characteristics: MonsterLogic.createCharacteristics(-1, 2, 0, 0, 1),
 			features: [
@@ -465,8 +453,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					description: 'The ratcrobat has an edge on strikes against larger creatures.'
 				})
 			]
-		},
-		{
+		}),
+		FactoryLogic.createMonster({
 			id: 'radenwight-8',
 			name: 'Radenwight Maestro',
 			description: '',
@@ -572,6 +560,6 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					})
 				})
 			]
-		}
+		})
 	]
 };

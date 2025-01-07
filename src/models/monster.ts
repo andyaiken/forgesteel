@@ -27,9 +27,11 @@ export interface Monster extends Element {
 		characteristic: Characteristic;
 		value: number;
 	}[];
-	withCaptain?: string;
+	withCaptain: string;
 	features: Feature[];
 };
+
+export type MonsterOptionalProps = 'description' | 'size' | 'speed' | 'stamina' | 'stability' | 'freeStrikeDamage' | 'characteristics' | 'withCaptain' | 'features';
 
 export interface MonsterGroup extends Element {
 	information: Element[];

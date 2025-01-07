@@ -38,7 +38,9 @@ import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
 import { MonsterEditPanel } from '../../../panels/edit/monster-edit-panel/monster-edit-panel';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
+import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
+import { MonsterRoleType } from '../../../../enums/monster-role-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
@@ -1202,7 +1204,17 @@ export const LibraryEditPage = (props: Props) => {
 
 		const addMonster = () => {
 			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
-			copy.monsters.push(FactoryLogic.createMonster());
+			copy.monsters.push(FactoryLogic.createMonster({
+				id: Utils.guid(),
+				name: '',
+				level: 1,
+				role: {
+					type: MonsterRoleType.Ambusher,
+					organization: MonsterOrganizationType.Band
+				},
+				keywords: [],
+				encounterValue: 0
+			}));
 			setElement(copy);
 			setDirty(true);
 		};

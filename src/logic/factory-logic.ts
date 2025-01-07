@@ -2,7 +2,7 @@ import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
 import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitle } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
-import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
+import { Monster, MonsterGroup, MonsterOptionalProps, MonsterRole } from '../models/monster';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
@@ -249,18 +249,9 @@ export class FactoryLogic {
 		};
 	};
 
-	static createMonster = (): Monster => {
+	static createMonster = (data: Omit<Monster, MonsterOptionalProps> & Partial<Pick<Monster, MonsterOptionalProps>>): Monster => {
 		return {
-			id: Utils.guid(),
-			name: '',
 			description: '',
-			level: 1,
-			role: {
-				type: MonsterRoleType.Ambusher,
-				organization: MonsterOrganizationType.Band
-			},
-			keywords: [],
-			encounterValue: 0,
 			size: {
 				value: 1,
 				mod: 'M'
@@ -294,7 +285,9 @@ export class FactoryLogic {
 					value: 0
 				}
 			],
-			features: []
+			withCaptain: '',
+			features: [],
+			...data
 		};
 	};
 

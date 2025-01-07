@@ -125,6 +125,7 @@ export class SourcebookData {
 			ComplicationData.famousRelative,
 			ComplicationData.feytouched,
 			ComplicationData.fieryIdeal,
+			ComplicationData.fireAndChaos,
 			ComplicationData.followingInTheFootsteps,
 			ComplicationData.forbiddenRomance,
 			ComplicationData.frostheart,

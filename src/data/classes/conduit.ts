@@ -16,8 +16,7 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 	heroicResource: 'Piety',
 	subclassName: '',
 	subclassCount: 0,
-	// TODO: Intuition only
-	primaryCharacteristics: [ Characteristic.Intuition, Characteristic.Presence ],
+	primaryCharacteristics: [ Characteristic.Intuition ],
 	featuresByLevel: [
 		{
 			level: 1,

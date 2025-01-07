@@ -16,8 +16,7 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 	heroicResource: 'Essence',
 	subclassName: 'Elemental Specialization',
 	subclassCount: 1,
-	// TODO: Reason only
-	primaryCharacteristics: [ Characteristic.Reason, Characteristic.Intuition ],
+	primaryCharacteristics: [ Characteristic.Reason ],
 	featuresByLevel: [
 		{
 			level: 1,

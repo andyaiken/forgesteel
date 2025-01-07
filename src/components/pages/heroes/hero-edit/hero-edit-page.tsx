@@ -804,6 +804,18 @@ interface ClassSectionProps {
 }
 
 const ClassSection = (props: ClassSectionProps) => {
+	let currentArray = null;
+	if (props.hero.class) {
+		const cls = props.hero.class;
+		const str = cls.characteristics
+			.filter(ch => !cls.primaryCharacteristics.includes(ch.characteristic))
+			.map(ch => ch.value)
+			.join(', ');
+		currentArray = HeroLogic.getCharacteristicArrays(cls.primaryCharacteristics.length)
+			.find(arr => Collections.getPermutations(arr).map(a => a.join(', ')).includes(str)) || null;
+	}
+	const [ array, setArray ] = useState<number[] | null>(currentArray);
+
 	try {
 		const classes = SourcebookLogic.getClasses(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
 		const options = classes.map(c => (
@@ -822,7 +834,8 @@ const ClassSection = (props: ClassSectionProps) => {
 					</SelectablePanel>
 				));
 
-			// Choose subclass(es)
+			//#region Choose subclass
+
 			if (props.hero.class.subclasses.length > 0) {
 				choices.unshift(
 					<SelectablePanel key='subclass'>
@@ -844,39 +857,65 @@ const ClassSection = (props: ClassSectionProps) => {
 				);
 			}
 
-			const arrays = HeroLogic.calculateCharacteristicArrays(props.hero.class.primaryCharacteristics);
+			//#endregion
+
+			//#region Choose characteristics
+
+			const arrays = HeroLogic.getCharacteristicArrays(props.hero.class.primaryCharacteristics.length);
 			choices.unshift(
 				<SelectablePanel key='characteristics'>
 					<HeaderText>Characteristics</HeaderText>
-					<div className='characteristic-row' style={{ margin: '5px 15px', fontWeight: 600 }}>
-						<div className='characteristic-item'>MGT</div>
-						<div className='characteristic-item'>AGI</div>
-						<div className='characteristic-item'>RSN</div>
-						<div className='characteristic-item'>INU</div>
-						<div className='characteristic-item'>PRE</div>
-					</div>
-					<Radio.Group
+					<Select
 						style={{ width: '100%' }}
-						value={JSON.stringify(props.hero.class.characteristics)}
-						onChange={e => {
-							const array = JSON.parse(e.target.value) as { characteristic: Characteristic, value: number }[];
-							props.selectCharacteristics(array);
+						className={array === null ? 'selection-empty' : ''}
+						placeholder='Select characteristic array'
+						options={arrays.map(a => ({ value: a.join(', '), array: a }))}
+						optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+						value={array ? array.join(', ') : null}
+						onChange={(_text, option) => {
+							const data = option as unknown as { value: string, array: number[] };
+							setArray(data.array);
 						}}
-					>
-						<Space direction='vertical' style={{ width: '100%' }}>
-							{
-								arrays.map((array, n1) => (
-									<Radio.Button key={n1} value={JSON.stringify(array)} style={{ width: '100%' }}>
-										<div className='characteristic-row'>
-											{array.map((ch, n2) => <div key={n2} className='characteristic-item'>{ch.value}</div>)}
-										</div>
-									</Radio.Button>
-								))
-							}
-						</Space>
-					</Radio.Group>
+					/>
+					{
+						array ?
+							<div>
+								<div className='characteristic-row' style={{ margin: '5px 15px', fontWeight: 600 }}>
+									<div className='characteristic-item characteristic-heading'>M</div>
+									<div className='characteristic-item characteristic-heading'>A</div>
+									<div className='characteristic-item characteristic-heading'>R</div>
+									<div className='characteristic-item characteristic-heading'>I</div>
+									<div className='characteristic-item characteristic-heading'>P</div>
+								</div>
+								<Radio.Group
+									style={{ width: '100%' }}
+									value={JSON.stringify(props.hero.class.characteristics)}
+									onChange={e => {
+										const array = JSON.parse(e.target.value) as { characteristic: Characteristic, value: number }[];
+										props.selectCharacteristics(array);
+									}}
+								>
+									<Space direction='vertical' style={{ width: '100%' }}>
+										{
+											HeroLogic.calculateCharacteristicArrays(array, props.hero.class.primaryCharacteristics).map((array, n1) => (
+												<Radio.Button key={n1} value={JSON.stringify(array)} style={{ width: '100%' }}>
+													<div className='characteristic-row'>
+														{array.map((ch, n2) => <div key={n2} className='characteristic-item'>{ch.value}</div>)}
+													</div>
+												</Radio.Button>
+											))
+										}
+									</Space>
+								</Radio.Group>
+							</div>
+							: null
+					}
 				</SelectablePanel>
 			);
+
+			//#endregion
+
+			//#region Set level
 
 			choices.unshift(
 				<SelectablePanel key='class-level'>
@@ -890,6 +929,8 @@ const ClassSection = (props: ClassSectionProps) => {
 					<Field label='XP' value={props.hero.state.xp} />
 				</SelectablePanel>
 			);
+
+			//#endregion
 		}
 
 		return (

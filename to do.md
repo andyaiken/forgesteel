@@ -11,7 +11,6 @@
 
 **Miscellaneous changes**
 
-* Some classes (conduit, elementalist, shadow) have only 1 primary characteristic - this means choosing their characteristic arrays will be a lot more tricky
 * If a hero's power roll uses potencies, replace weak / average / strong with the hero's characteristic value
 * If a hero's power roll adds a characteristic to damage, automatically calculate the total damage
 * Add new feature type to allow Revenant to choose features from other ancestries

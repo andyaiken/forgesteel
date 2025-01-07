@@ -698,59 +698,46 @@ Complex or time-consuming tests might require an action if made in combat—or c
 		return 1;
 	};
 
-	static calculateCharacteristicArrays = (primary: Characteristic[]) => {
+	static getCharacteristicArrays = (primaryCount: number) => {
+		if (primaryCount === 2) {
+			return [
+				[ 2, -1, -1 ],
+				[ 1, 0, 0 ],
+				[ 1, 1, -1 ]
+			];
+		}
+
+		if (primaryCount === 1) {
+			return [
+				[ 2, 2, -1, -1 ],
+				[ 2, 1, 1, -1 ],
+				[ 2, 1, 0, 0 ],
+				[ 1, 1, 1, 0 ]
+			];
+		}
+
+		return [];
+	};
+
+	static calculateCharacteristicArrays = (array: number[], primary: Characteristic[]) => {
 		const all = [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ];
 		const others = all.filter(c => !primary.includes(c));
 
-		const arrays: { characteristic: Characteristic, value: number }[][] = [];
-		others.forEach(single => {
-			arrays.push(all.map(ch => {
-				let value: number;
+		return Collections.distinct(Collections.getPermutations(array), item => item.join(', ')).map(arr => {
+			return all.map(ch => {
+				let value = 0;
 				if (primary.includes(ch)) {
 					value = 2;
-				} else if (ch === single) {
-					value = 2;
 				} else {
-					value = -1;
+					const index = others.indexOf(ch);
+					value = arr[index];
 				}
 				return {
 					characteristic: ch,
 					value: value
 				};
-			}));
-
-			arrays.push(all.map(ch => {
-				let value: number;
-				if (primary.includes(ch)) {
-					value = 2;
-				} else if (ch === single) {
-					value = 1;
-				} else {
-					value = 0;
-				}
-				return {
-					characteristic: ch,
-					value: value
-				};
-			}));
-
-			arrays.push(all.map(ch => {
-				let value: number;
-				if (primary.includes(ch)) {
-					value = 2;
-				} else if (ch === single) {
-					value = -1;
-				} else {
-					value = 1;
-				}
-				return {
-					characteristic: ch,
-					value: value
-				};
-			}));
+			});
 		});
-
-		return arrays;
 	};
 
 	static getMinXP = (level: number) => {

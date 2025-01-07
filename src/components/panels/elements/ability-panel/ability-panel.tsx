@@ -1,7 +1,7 @@
 import { Ability } from '../../../../models/ability';
+import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityPowerRollPanel } from '../../power-roll/ability-power-roll-panel';
 import { Badge } from '../../../controls/badge/badge';
-import { DistanceLogic } from '../../../../logic/distance-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { FormatLogic } from '../../../../logic/format-logic';
@@ -82,7 +82,7 @@ export const AbilityPanel = (props: Props) => {
 							{props.ability.type.trigger ? <Field label='Trigger' value={props.ability.type.trigger} /> : null}
 							{
 								props.ability.distance.length > 0 ?
-									<Field label='Distance' value={props.ability.distance.map(d => DistanceLogic.getDistance(d, props.hero, props.ability)).join(' or ')} />
+									<Field label='Distance' value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.hero, props.ability)).join(' or ')} />
 									: null
 							}
 							{props.ability.target ? <Field label='Target' value={props.ability.target} /> : null}

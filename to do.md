@@ -4,7 +4,6 @@
 
 **Add and update element data**
 
-* Go through all text features in complications and see if they can be changed to more useful feature types (bonuses, damage modifiers, etc)
 * Monsters
   * Update existing monsters
   * Add new monsters

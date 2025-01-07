@@ -103,10 +103,17 @@ export class ComplicationData {
 				name: 'Bereaved Benefit',
 				description: 'When you don’t know what to do, you can appeal to your loved one’s spirit for help. You spend a hero token to let the Director determine your next combat or out-of- combat action. The Director chooses the best course of action they can think of for you, even if it relies on information you don’t have. If the Director can’t think of a particularly good course of action for you to take, you don’t expend the hero token.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-bereaved-d',
-				name: 'Bereaved Drawback',
-				description: 'You gain corruption weakness 5.'
+				modifiers: [
+					{
+						damageType: 'Corruption',
+						type: DamageModifierType.Weakness,
+						value: 5,
+						valuePerLevel: 0,
+						valuePerEchelon: 0
+					}
+				]
 			})
 		]
 	};
@@ -139,10 +146,10 @@ export class ComplicationData {
 				name: 'Careful Curse Benefit',
 				description: 'Until you’ve taken your turn in a round, strikes against you take a bane.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'comp-carefulCurse-d',
-				name: 'Careful Curse Drawback',
-				description: 'Your speed is reduced by 1.'
+				field: FeatureField.Speed,
+				value: -1
 			})
 		]
 	};
@@ -188,11 +195,15 @@ export class ComplicationData {
 		name: 'Consuming Interest',
 		description: 'Ever since you were a kid, you’ve been obsessed with a certain topic. During your travels, you spend your free time gleaning all the information you can on it. You might not be the world’s leading expert quite yet, but people should certainly trust your opinion on the topic.',
 		features: [
+			FactoryLogic.feature.createSkillChoice({
+				id: 'comp-consumingInterest-skill',
+				listOptions: [ SkillList.Lore ]
+			}),
 			FactoryLogic.feature.create({
 				id: 'comp-consumingInterest-b',
 				name: 'Consuming Interest Benefit',
 				description: `
-You gain a skill from the lore skill group. You can use the following project up to three times for that skill. Each time you use the project, you must use a different project source.
+You can use the following project up to three times for your chosen skill. Each time you use the project, you must use a different project source.
 **Study Lore**
 **Item Prerequisite**: None
 **Project Source**: A significant source of information on the topic, such as a major library or a world-renowned sage
@@ -256,10 +267,14 @@ Your knowledge of your chosen field increases. When you finish this project, the
 		name: 'Crash Landed',
 		description: 'You used to flit around the stars in your own ship, but after an ugly run-in with a pirate (or a pirate hunter), you’re marooned on this backwater world. You’re prepared to carve out a life here—at least until you can hitch a ride.',
 		features: [
+			FactoryLogic.feature.createSkill({
+				id: 'comp-crashLanded-skill',
+				skill: 'Timescape'
+			}),
 			FactoryLogic.feature.create({
 				id: 'comp-crashLanded-b',
 				name: 'Crash Landed Benefit',
-				description: 'You gain the Timescape skill. Additionally, you have a power pack that you can activate or deactivate as a maneuver. When you activate the power pack, choose an energy type from cold, fire, lightning, or sonic. The damage you deal with abilities becomes that damage type until you deactivate the power pack.'
+				description: 'You have a power pack that you can activate or deactivate as a maneuver. When you activate the power pack, choose an energy type from cold, fire, lightning, or sonic. The damage you deal with abilities becomes that damage type until you deactivate the power pack.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-crashLanded-d',
@@ -348,10 +363,17 @@ Your knowledge of your chosen field increases. When you finish this project, the
 				name: 'Cursed Weapon Benefit',
 				description: 'You gain a leveled weapon of your choice.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-cursedWeapon-d',
-				name: 'Cursed Weapon Drawback',
-				description: 'You have damage weakness 2.'
+				modifiers: [
+					{
+						damageType: 'Damage',
+						type: DamageModifierType.Weakness,
+						value: 2,
+						valuePerLevel: 0,
+						valuePerEchelon: 0
+					}
+				]
 			})
 		]
 	};
@@ -361,10 +383,14 @@ Your knowledge of your chosen field increases. When you finish this project, the
 		name: 'Disgraced',
 		description: 'You’re a disgraced member of a powerful family or guild. You’ve been turned out of the ancestral home, and your relatives won’t give you the time of day, much less a helping hand, until you clear your name or clean up your act.',
 		features: [
-			FactoryLogic.feature.create({
-				id: 'comp-disgraced-b',
-				name: 'Disgraced Benefit',
-				description: 'You gain 1 Renown, and you learn a skill of your choice from the interpersonal or intrigue skill group.'
+			FactoryLogic.feature.createBonus({
+				id: 'comp-disgraced-bonus',
+				field: FeatureField.Renown,
+				value: 1
+			}),
+			FactoryLogic.feature.createSkillChoice({
+				id: 'comp-disgraced-skill',
+				listOptions: [ SkillList.Interpersonal, SkillList.Intrigue ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-disgraced-d',
@@ -434,10 +460,8 @@ Your knowledge of your chosen field increases. When you finish this project, the
 		name: 'Exile',
 		description: 'Whether you’re a convicted criminal, a noble stripped of their title, or just someone who made one too many enemies, you’ve been cast forth from your homeland, never to return—at least, until you’re strong enough to set things right.',
 		features: [
-			FactoryLogic.feature.create({
-				id: 'comp-exile-b',
-				name: 'Exile Benefit',
-				description: 'You learn an extant spoken language of your choice.'
+			FactoryLogic.feature.createLanguageChoice({
+				id: 'comp-exile-lang'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-exile-d',
@@ -452,10 +476,14 @@ Your knowledge of your chosen field increases. When you finish this project, the
 		name: 'Fallen Immortal',
 		description: 'You used to be an immortal creature, dispensing justice and doing the bidding of the gods. Now, as a punishment or perhaps as a reward, you have put aside your wings and become a mortal. Your remaining years will be short, but living aside your fellow mortals gives your life new meaning.',
 		features: [
+			FactoryLogic.feature.createSkill({
+				id: 'comp-fallenImmortal-skill',
+				skill: 'Religion'
+			}),
 			FactoryLogic.feature.create({
 				id: 'comp-fallenImmortal-b',
 				name: 'Fallen Immortal Benefit',
-				description: 'You gain the Religion skill. Additionally, when you deal untyped damage, you can deal holy damage instead.'
+				description: 'When you deal untyped damage, you can deal holy damage instead.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-fallenImmortal-d',
@@ -587,12 +615,26 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 			FactoryLogic.feature.create({
 				id: 'comp-frostheart-b',
 				name: 'Frostheart Benefit',
-				description: 'You have cold immunity 5. When you would deal untyped damage with strike, you can instead deal cold damage.'
+				description: 'When you would deal untyped damage with a strike, you can instead deal cold damage.'
 			}),
-			FactoryLogic.feature.create({
-				id: 'comp-frostheart-d',
-				name: 'Frostheart Drawback',
-				description: 'You have fire weakness 5.'
+			FactoryLogic.feature.createDamageModifier({
+				id: 'comp-frostheart-mods',
+				modifiers: [
+					{
+						damageType: 'Cold',
+						type: DamageModifierType.Immunity,
+						value: 5,
+						valuePerLevel: 0,
+						valuePerEchelon: 0
+					},
+					{
+						damageType: 'Fire',
+						type: DamageModifierType.Weakness,
+						value: 5,
+						valuePerLevel: 0,
+						valuePerEchelon: 0
+					}
+				]
 			})
 		]
 	};
@@ -640,15 +682,24 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Greening',
 		description: 'A great tree in the middle of a forest called upon you to clear its roots of the ichor moss draining its life force. As you removed the moss, you felt as if you were being filled with green elemental energy. Sadly, the great tree withered before you could finish the job, leaving behind a golden sapling which you now carry with you.',
 		features: [
-			FactoryLogic.feature.create({
-				id: 'comp-greening-b',
-				name: 'Greening Benefit',
-				description: 'You have corruption resistance 5.'
-			}),
-			FactoryLogic.feature.create({
-				id: 'comp-greening-d',
-				name: 'Greening Drawback',
-				description: 'You have fire weakness 5.'
+			FactoryLogic.feature.createDamageModifier({
+				id: 'comp-greening-mods',
+				modifiers: [
+					{
+						damageType: 'Corruption',
+						type: DamageModifierType.Immunity,
+						value: 5,
+						valuePerLevel: 0,
+						valuePerEchelon: 0
+					},
+					{
+						damageType: 'Fire',
+						type: DamageModifierType.Weakness,
+						value: 5,
+						valuePerLevel: 0,
+						valuePerEchelon: 0
+					}
+				]
 			})
 		]
 	};
@@ -658,10 +709,9 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Grifter',
 		description: 'You used to be a con artist. Those days are pretty much behind you. Being a hero is an even better racket. After all, if you’re saving the world, who can be mad at you for stealing a couple of coins along the way?',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-grifter-b',
-				name: 'Grifter Benefit',
-				description: 'You gain a skill from the intrigue skill group.'
+				listOptions: [ SkillList.Intrigue ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-grifter-d',
@@ -756,7 +806,19 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-hostBody-d',
 				name: 'Host Body Drawback',
-				description: 'You have fire weakness 5. Additionally, you have a bane on tests made to read humanoid creatures’ emotions and body language.'
+				description: 'You have a bane on tests made to read humanoid creatures’ emotions and body language.'
+			}),
+			FactoryLogic.feature.createDamageModifier({
+				id: 'comp-hostBody-mods',
+				modifiers: [
+					{
+						damageType: 'Fire',
+						type: DamageModifierType.Weakness,
+						value: 5,
+						valuePerLevel: 0,
+						valuePerEchelon: 0
+					}
+				]
 			})
 		]
 	};
@@ -766,10 +828,14 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Hunted',
 		description: 'You’re one step ahead of a pursuer—perhaps a bounty hunter determined to bring you to justice, a revenant, or an assassin intent on your death. Someday, you’ll be strong enough to face your pursuer head to head, but for now you’re living your life on the run.',
 		features: [
+			FactoryLogic.feature.createSkillChoice({
+				id: 'comp-hunted-skill',
+				listOptions: [ SkillList.Intrigue ]
+			}),
 			FactoryLogic.feature.create({
 				id: 'comp-hunted-b',
 				name: 'Hunted Benefit',
-				description: 'You gain a skill from the intrigue skill group. Additionally, you when other creatures are pursuing you, you can take the lay low respite activity. When you use it, anyone pursuing you loses track of your party’s location and must start their search again.'
+				description: 'When other creatures are pursuing you, you can take the lay low respite activity. When you use it, anyone pursuing you loses track of your party’s location and must start their search again.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-hunted-d',
@@ -782,12 +848,16 @@ You can’t take this complication if you can’t be dazed.`,
 	static hunter: Complication = {
 		id: 'comp-hunter',
 		name: 'Hunter',
-		description: 'You’re hunting someone or something—perhaps a wanted criminal or someone who wronged you, or perhaps a dangerous monster or beast. You won’t rest until you meet your quarry face to face!',
+		description: 'You’re hunting someone or something — perhaps a wanted criminal or someone who wronged you, or perhaps a dangerous monster or beast. You won’t rest until you meet your quarry face to face!',
 		features: [
+			FactoryLogic.feature.createSkillChoice({
+				id: '',
+				options: [ 'Alertness', 'Criminal Underworld', 'Eavesdrop', 'Interrogate', 'Rumors', 'Search', 'Track', 'Society' ]
+			}),
 			FactoryLogic.feature.create({
 				id: 'comp-hunter-b',
 				name: 'Hunter Benefit',
-				description: 'Choose one skill from Alertness, Criminal Underworld, Eavesdrop, Interrogate, Rumors, Search, Track, or Society. You gain that skill, and you have an edge on tests made to find or learn clues about your quarry.'
+				description: 'You have an edge on tests made to find or learn clues about your quarry.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-hunter-d',
@@ -805,7 +875,7 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-indebted-b',
 				name: 'Indebted Benefit',
-				description: 'You’re good with money—you’ve had to be. Whenever you would gain Wealth, you gain 1 more than what you’d normally earn.'
+				description: 'You’re good with money — you’ve had to be. Whenever you would gain Wealth, you gain 1 more than what you’d normally earn.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-indebted-d',
@@ -838,10 +908,34 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Infernal Contract … But, Like, Bad',
 		description: 'You made a deal with a devil—not a very good deal, but it wasn’t a very good devil. Now it’s too late for regrets. Your soul is forfeit unless you find a loophole or convince the devil to void the deal.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createChoice({
 				id: 'comp-infernalContractButLikeBad-b',
-				name: 'Infernal Contract … But, Like, Bad Benefit',
-				description: 'Choose one of the following benefits: Your Renown increases by 2, your Wealth increases by 2, or your Stamina increases by 3.'
+				options: [
+					{
+						feature: FactoryLogic.feature.createBonus({
+							id: 'comp-infernalContractButLikeBad-ba',
+							field: FeatureField.Renown,
+							value: 2
+						}),
+						value: 1
+					},
+					{
+						feature: FactoryLogic.feature.createBonus({
+							id: 'comp-infernalContractButLikeBad-bb',
+							field: FeatureField.Wealth,
+							value: 2
+						}),
+						value: 1
+					},
+					{
+						feature: FactoryLogic.feature.createBonus({
+							id: 'comp-infernalContractButLikeBad-bc',
+							field: FeatureField.Stamina,
+							value: 3
+						}),
+						value: 1
+					}
+				]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-infernalContractButLikeBad-d',
@@ -856,10 +950,13 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Ivory Tower',
 		description: 'You studied in an academy or other educational institution. Your training was thorough and your reading list was wide-ranging, but when you left school you discovered that there were serious gaps in your education. Maybe some of those books were a little out of date.',
 		features: [
-			FactoryLogic.feature.create({
-				id: 'comp-ivoryTower-b',
-				name: 'Ivory Tower Benefit',
-				description: 'You learn three skills and one dead language.'
+			FactoryLogic.feature.createSkillChoice({
+				id: 'comp-ivoryTower-skills',
+				listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ],
+				count: 3
+			}),
+			FactoryLogic.feature.createLanguageChoice({
+				id: 'comp-ivoryTower-lang'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-ivoryTower-d',
@@ -987,12 +1084,16 @@ You can’t take this complication if you can’t be dazed.`,
 	static masterChef: Complication = {
 		id: 'comp-masterChef',
 		name: 'Master Chef',
-		description: 'Before you were a hero, you were a chef—and when you retire, you have big plans for your next restaurant or inn. In the meantime, you’re on the lookout for rare ingredients that only a traveler can find. After all, it’s food that makes the world go round.',
+		description: 'Before you were a hero, you were a chef — and when you retire, you have big plans for your next restaurant or inn. In the meantime, you’re on the lookout for rare ingredients that only a traveler can find. After all, it’s food that makes the world go round.',
 		features: [
+			FactoryLogic.feature.createSkill({
+				id: 'comp-masterChef-skill',
+				skill: 'Cooking'
+			}),
 			FactoryLogic.feature.create({
 				id: 'comp-masterChef-b',
 				name: 'Master Chef Benefit',
-				description: 'You gain the Cooking skill. Additionally, when you complete a respite or wake up after a night’s sleep, you can spend 1 uninterrupted hour prepare an excellent meal for up to 10 creatures, provided you have ingredients and cooking tools. Each creature that eats the meal gains 1 bonus Recovery, which expires at the end of the day if not used.'
+				description: 'When you complete a respite or wake up after a night’s sleep, you can spend 1 uninterrupted hour prepare an excellent meal for up to 10 creatures, provided you have ingredients and cooking tools. Each creature that eats the meal gains 1 bonus Recovery, which expires at the end of the day if not used.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-masterChef-d',
@@ -1098,10 +1199,31 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Mundane',
 		description: 'You’re hopelessly nonmagical. When you try to use magical abilities, or when they’re used on you, they never work right. Even magical devices seem to fizzle in your presence.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-mundane-b',
-				name: 'Mundane Benefit',
-				description: 'You have corruption, holy, and psychic damage immunity equal to your level.'
+				modifiers: [
+					{
+						damageType: 'Corruption',
+						type: DamageModifierType.Immunity,
+						value: 1,
+						valuePerLevel: 1,
+						valuePerEchelon: 0
+					},
+					{
+						damageType: 'Holy',
+						type: DamageModifierType.Immunity,
+						value: 1,
+						valuePerLevel: 1,
+						valuePerEchelon: 0
+					},
+					{
+						damageType: 'Psychic',
+						type: DamageModifierType.Immunity,
+						value: 1,
+						valuePerLevel: 1,
+						valuePerEchelon: 0
+					}
+				]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-mundane-d',
@@ -1116,10 +1238,10 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Outlaw',
 		description: 'You might be a common bandit or an idealistic freedom fighter, but in either case, the local authorities don’t approve of your actions. You’ve managed to stay one step ahead of the law, but until your name is cleared you’ve got to keep a low profile.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'comp-outlaw-b',
-				name: 'Outlaw Benefit',
-				description: 'You gain 1 Renown.'
+				field: FeatureField.Renown,
+				value: 1
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-outlaw-d',
@@ -1221,10 +1343,14 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Promising Apprentice',
 		description: 'You were apprenticed to a trade. Your mentor said you had a special gift, and you could have become a master of your craft—but before your training was complete, your mentor was killed.',
 		features: [
+			FactoryLogic.feature.createSkillChoice({
+				id: 'comp-promisingApprentice-skill',
+				listOptions: [ SkillList.Crafting ]
+			}),
 			FactoryLogic.feature.create({
 				id: 'comp-promisingApprentice-b',
 				name: 'Promising Apprentice Benefit',
-				description: 'You gain a skill from the crafting skill group. Choose one of your skills from the crafting skill group. When you use this skill you gain an edge.'
+				description: 'Choose one of your skills from the crafting skill group. When you use this skill you gain an edge.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-promisingApprentice-d',
@@ -1290,10 +1416,14 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Raised by Beasts',
 		description: 'You were orphaned or lost in the wild, and a friendly animal pack (perhaps apes, bears, or wolves) took you in. Returning to so-called civilization was a shock, but you’re determined to learn all you can about your own kind.',
 		features: [
+			FactoryLogic.feature.createSkill({
+				id: 'comp-raisedByBeasts-skill',
+				skill: 'Animal Handling'
+			}),
 			FactoryLogic.feature.create({
 				id: 'comp-raisedByBeasts-b',
 				name: 'Raised by Beasts Benefit',
-				description: 'You gain the Animal Handling skill. Additionally, choose an animal type, such as wolf. You can communicate with this animal as if you shared a language, and animals of this type are not initially hostile to you unless they’re supernaturally compelled to be. You gain an edge when you use Animal Handling to interact with this animal.'
+				description: 'Choose an animal type, such as wolf. You can communicate with this animal as if you shared a language, and animals of this type are not initially hostile to you unless they’re supernaturally compelled to be. You gain an edge when you use Animal Handling to interact with this animal.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-raisedByBeasts-d',
@@ -1362,10 +1492,17 @@ You can’t take this complication if you can’t be dazed.`,
 					})
 				})
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-rogueTalent-d',
-				name: 'Rogue Talent Drawback',
-				description: 'You have psychic weakness 5.'
+				modifiers: [
+					{
+						damageType: 'Psychic',
+						type: DamageModifierType.Weakness,
+						value: 5,
+						valuePerLevel: 0,
+						valuePerEchelon: 0
+					}
+				]
 			})
 		]
 	};
@@ -1375,10 +1512,9 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Runaway',
 		description: 'To your embarrassment, no sinister omens attended your birth and your closet contains no skeletons. You’re just an ordinary person raised in a hardworking family. You’re expected to carry on the family business—but who can settle down to a boring job when adventure calls! That’s why you ran away.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-runaway-b',
-				name: 'Runaway Benefit',
-				description: 'You gain a skill from the crafting skill group.'
+				listOptions: [ SkillList.Crafting ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-runaway-d',
@@ -1411,10 +1547,14 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Secret Identity',
 		description: 'You’re secretly very important—but it’s not safe for your true identity to be known. Perhaps you’re the witness to a crime or a royal on the run from a usurper. Until the appropriate villains are punished, you’ll maintain the guise of an ordinary adventurer.',
 		features: [
+			FactoryLogic.feature.createSkillChoice({
+				id: 'comp-secretIdentity-skill',
+				listOptions: [ SkillList.Intrigue ]
+			}),
 			FactoryLogic.feature.create({
 				id: 'comp-secretIdentity-b',
 				name: 'Secret Identity Benefit',
-				description: 'You gain a skill of your choice from the intrigue skill group. Additionally, you can resume your true identity, either temporarily or permanently. While in your true identity, your Renown and Wealth are treated as 2 higher, along with any other benefits you may gain from your identity.'
+				description: 'You can resume your true identity, either temporarily or permanently. While in your true identity, your Renown and Wealth are treated as 2 higher, along with any other benefits you may gain from your identity.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-secretIdentity-d',
@@ -1437,7 +1577,7 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-secretTwin-d',
 				name: 'Secret Twin Drawback',
-				description: 'Your twin disappeared for a reason— someone wanted them dead. Whenever you finish a respite, roll a d10. On a result of 1 or 2, the Director can decide that your past catches up with you at any point in the future in the form of an assassin or someone who knows your real identity and threatens to reveal it as part of a blackmail scheme.'
+				description: 'Your twin disappeared for a reason — someone wanted them dead. Whenever you finish a respite, roll a d10. On a result of 1 or 2, the Director can decide that your past catches up with you at any point in the future in the form of an assassin or someone who knows your real identity and threatens to reveal it as part of a blackmail scheme.'
 			})
 		]
 	};
@@ -1465,10 +1605,17 @@ You can’t take this complication if you can’t be dazed.`,
 				name: 'Sewer Folk Benefit',
 				description: 'Your movement gains either the Climb or Swim keyword (your choice). Additionally, while in a city you and your companions can move from place to place without being detected, and you never get lost while underground.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-sewerFolk-d',
-				name: 'Sewer Folk Drawback',
-				description: 'You have poison weakness 5.'
+				modifiers: [
+					{
+						damageType: 'Poison',
+						type: DamageModifierType.Weakness,
+						value: 5,
+						valuePerLevel: 0,
+						valuePerEchelon: 0
+					}
+				]
 			})
 		]
 	};
@@ -1483,10 +1630,17 @@ You can’t take this complication if you can’t be dazed.`,
 				name: 'Shadow Born Benefit',
 				description: 'When you start your turn in concealment, you gain a surge.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-shadowBorn-d',
-				name: 'Shadow Born Drawback',
-				description: 'You have holy weakness 5.'
+				modifiers: [
+					{
+						damageType: 'Holy',
+						type: DamageModifierType.Weakness,
+						value: 5,
+						valuePerLevel: 0,
+						valuePerEchelon: 0
+					}
+				]
 			})
 		]
 	};
@@ -1509,10 +1663,13 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Shattered Legacy',
 		description: 'You’re the heir to a powerful magical treasure that has been in your family for generations. The only problem: it’s broken. Some ancestor of yours broke it while saving the world, or maybe they tripped and smashed it on a rock. It’s your job to fix it.',
 		features: [
+			FactoryLogic.feature.createLanguageChoice({
+				id: 'comp-shatteredLegacy-lang'
+			}),
 			FactoryLogic.feature.create({
 				id: 'comp-shatteredLegacy-b',
 				name: 'Shattered Legacy Benefit',
-				description: 'You learn a language of your choice. You gain a leveled item of your choice.'
+				description: 'You gain a leveled item of your choice.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-shatteredLegacy-d',
@@ -1564,15 +1721,39 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Silent Sentinel',
 		description: 'You were trained by a group of spies who psionically infused silence into your every step and enhanced your ability to hear distant whispers. It wasn’t until you got caught by an elementalist who blasted you with thunder that you learned the enhanced hearing had some nasty side effects.',
 		features: [
+			FactoryLogic.feature.createSkill({
+				id: 'comp-silentSentinel-skill1',
+				skill: 'Eavesdrop'
+			}),
+			FactoryLogic.feature.createSkill({
+				id: 'comp-silentSentinel-skill2',
+				skill: 'Sneak'
+			}),
+			FactoryLogic.feature.createSkillChoice({
+				id: 'comp-silentSentinel-skill3',
+				listOptions: [ SkillList.Lore ]
+			}),
 			FactoryLogic.feature.create({
 				id: 'comp-silentSentinel-b',
 				name: 'Silent Sentinel Benefit',
-				description: 'You gain the Eavesdrop and Sneak skills and one skill from the lore skill group of your choice. Additionally, you can silently communicate with any creature, provided you share a language and can see each other.'
+				description: 'You can silently communicate with any creature, provided you share a language and can see each other.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-silentSentinel-d',
 				name: 'Silent Sentinel Drawback',
-				description: 'You have sonic weakness 5. Additionally, when you take sonic damage, you are dazed until the end of your next turn.'
+				description: 'When you take sonic damage, you are dazed until the end of your next turn.'
+			}),
+			FactoryLogic.feature.createDamageModifier({
+				id: 'comp-silentSentinel-mod',
+				modifiers: [
+					{
+						damageType: 'Sonic',
+						type: DamageModifierType.Weakness,
+						value: 5,
+						valuePerLevel: 0,
+						valuePerEchelon: 0
+					}
+				]
 			})
 		]
 	};
@@ -1623,12 +1804,29 @@ Note: Stormwight furies can’t take this complication.`,
 			FactoryLogic.feature.create({
 				id: 'comp-stoneCursed-b',
 				name: 'Stone Cursed Benefit',
-				description: 'Your stability increases by 1. Additionally, while unmoving you appear to be an ordinary statue.'
+				description: 'While unmoving you appear to be an ordinary statue.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-stoneCursed-d',
 				name: 'Stone Cursed Drawback',
-				description: 'You have sonic weakness 5. Additionally, while you are winded you are dazed.'
+				description: 'While you are winded you are dazed.'
+			}),
+			FactoryLogic.feature.createBonus({
+				id: 'comp-stoneCursed-mod1',
+				field: FeatureField.Stability,
+				value: 1
+			}),
+			FactoryLogic.feature.createDamageModifier({
+				id: 'comp-stoneCursed-mod2',
+				modifiers: [
+					{
+						damageType: 'Sonic',
+						type: DamageModifierType.Weakness,
+						value: 5,
+						valuePerLevel: 0,
+						valuePerEchelon: 0
+					}
+				]
 			})
 		]
 	};
@@ -1719,10 +1917,10 @@ Note: If you have the Strike Now tactician ability, the target can use a free tr
 		name: 'Vow of Duty',
 		description: 'You have sworn an oath to an organization. It is your rock, and as long as your faith in it remains unshaken, you are immovable.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'comp-vowOfDuty-b',
-				name: 'Vow of Duty Benefit',
-				description: 'Your stability increases by 1.'
+				field: FeatureField.Stability,
+				value: 1
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-vowOfDuty-d',
@@ -1795,7 +1993,7 @@ Whenever you take a respite, make a Reason power roll.
 			FactoryLogic.feature.create({
 				id: 'comp-warDogCollar-d',
 				name: 'War Dog Collar Drawback',
-				description: ''
+				description: 'When you use your Posthumous Retirement ability, the Director can spend 3 Malice to make your collar malfunction and deal damage to you.'
 			})
 		]
 	};
@@ -1867,7 +2065,19 @@ Whenever you take a respite, make a Reason power roll.
 			FactoryLogic.feature.create({
 				id: 'comp-waterborn-d',
 				name: 'Waterborn Drawback',
-				description: 'You have lightning weakness 5. Additionally, the sea, or one of its representatives, can assign you a quest. If you don’t do the sea’s bidding, it may temporarily deny you this complication’s benefits—including water breathing—at an inconvenient time.'
+				description: 'The sea, or one of its representatives, can assign you a quest. If you don’t do the sea’s bidding, it may temporarily deny you this complication’s benefits—including water breathing—at an inconvenient time.'
+			}),
+			FactoryLogic.feature.createDamageModifier({
+				id: 'comp-waterborn-mod',
+				modifiers: [
+					{
+						damageType: 'Lightning',
+						type: DamageModifierType.Weakness,
+						value: 5,
+						valuePerLevel: 0,
+						valuePerEchelon: 0
+					}
+				]
 			})
 		]
 	};
@@ -1882,10 +2092,17 @@ Whenever you take a respite, make a Reason power roll.
 				name: 'Wodewalker Benefit',
 				description: 'Your recovery value increases by an amount equal to your highest characteristic score.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-wodewalker-d',
-				name: 'Wodewalker Drawback',
-				description: 'You have fire weakness 5.'
+				modifiers: [
+					{
+						damageType: 'Fire',
+						type: DamageModifierType.Weakness,
+						value: 5,
+						valuePerLevel: 0,
+						valuePerEchelon: 0
+					}
+				]
 			})
 		]
 	};
@@ -1913,10 +2130,10 @@ Whenever you take a respite, make a Reason power roll.
 		name: 'Wrongly Imprisoned',
 		description: 'You spent many years imprisoned for a crime you didn’t commit. During your long hours of solitary confinement, you honed your skills and you recited the names of those who framed you. Someday you will have your revenge.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-wronglyImprisoned-b',
-				name: 'Wrongly Imprisoned Benefit',
-				description: 'You learn two skills of your choice, neither of which are from the interpersonal skill group.'
+				listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Intrigue, SkillList.Lore ],
+				count: 2
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-wronglyImprisoned-d',

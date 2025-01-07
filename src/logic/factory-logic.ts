@@ -35,13 +35,6 @@ import { SubClass } from '../models/subclass';
 import { Title } from '../models/title';
 import { Utils } from '../utils/utils';
 
-type RequiredAbilityProps = 'id' | 'name' | 'type' | 'distance' | 'target';
-type OptionalAbilityProps = 'description' | 'keywords' | 'cost' | 'signature' | 'preEffect' | 'powerRoll' | 'effect' | 'strained' | 'alternateEffects';
-interface InitAbility extends Pick<Ability, RequiredAbilityProps>, Partial<Pick<Ability, OptionalAbilityProps>> {
-	spend?: { value?: number, effect: string }[];
-	persistence?: { value?: number, effect: string }[];
-}
-
 export class FactoryLogic {
 	static createHero = (sourcebookIDs: string[]): Hero => {
 		return {
@@ -360,7 +353,7 @@ export class FactoryLogic {
 		};
 	};
 
-	static createAbility = (data: InitAbility): Ability => {
+	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number, signature?: boolean, preEffect?: string, powerRoll?: PowerRoll, effect?: string, strained?: string, alternateEffects?: string[], spend?: { value?: number, effect: string }[], persistence?: { value?: number, effect: string }[] }): Ability => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -399,7 +392,7 @@ export class FactoryLogic {
 				free: options?.free ?? false,
 				trigger: '',
 				time: '',
-				qualifiers: options?.qualifiers
+				qualifiers: options?.qualifiers ?? []
 			};
 		},
 		createManeuver: (free = false): AbilityType => {
@@ -407,7 +400,8 @@ export class FactoryLogic {
 				usage: AbilityUsage.Maneuver,
 				free: free,
 				trigger: '',
-				time: ''
+				time: '',
+				qualifiers: []
 			};
 		},
 		createMove: (free = false): AbilityType => {
@@ -415,7 +409,8 @@ export class FactoryLogic {
 				usage: AbilityUsage.Move,
 				free: free,
 				trigger: '',
-				time: ''
+				time: '',
+				qualifiers: []
 			};
 		},
 		createTrigger: (trigger: string, free = false): AbilityType => {
@@ -423,7 +418,8 @@ export class FactoryLogic {
 				usage: AbilityUsage.Trigger,
 				free: free,
 				trigger: trigger,
-				time: ''
+				time: '',
+				qualifiers: []
 			};
 		},
 		createTime: (time: string): AbilityType => {
@@ -431,7 +427,8 @@ export class FactoryLogic {
 				usage: AbilityUsage.Other,
 				free: false,
 				trigger: '',
-				time: time
+				time: time,
+				qualifiers: []
 			};
 		},
 		createVillainAction: (): AbilityType => {
@@ -439,7 +436,8 @@ export class FactoryLogic {
 				usage: AbilityUsage.VillainAction,
 				free: false,
 				trigger: '',
-				time: ''
+				time: '',
+				qualifiers: []
 			};
 		},
 		createNoAction: (): AbilityType => {
@@ -447,7 +445,8 @@ export class FactoryLogic {
 				usage: AbilityUsage.NoAction,
 				free: false,
 				trigger: '',
-				time: ''
+				time: '',
+				qualifiers: []
 			};
 		}
 	};

@@ -2,7 +2,11 @@
 
 ## Updating Forge Steel to Backer Packet #2
 
-**Add and update element data**
+* Add new feature type to allow Revenant to choose features from other ancestries
+* Revenants should have either 2 or 3 ancestry points depending on size
+* Elementalist has some abilities that can't be chosen until a particular level
+
+## Add monster data
 
 * Monsters
   * [x] Radenwight
@@ -53,15 +57,6 @@
   * [ ] Wyverns
   * [ ] Xorannox the Tyract
   * [ ] Animals
-* Retainers
-
-**Miscellaneous changes**
-
-* If a hero's power roll uses potencies, replace weak / average / strong with the hero's characteristic value
-* If a hero's power roll adds a characteristic to damage, automatically calculate the total damage
-* Add new feature type to allow Revenant to choose features from other ancestries
-* Revenants should have either 2 or 3 ancestry points depending on size
-* Elementalist has some abilities that can't be chosen until a particular level
 
 ## Future Work
 
@@ -69,11 +64,15 @@
 
 * Add hero inventory management
 * Add a way for heroes to be modified - additional skills, languages, perks, titles, retainers, etc
+* Power Rolls:
+  * If a hero's power roll uses potencies, replace weak / average / strong with the hero's characteristic value
+  * If a hero's power roll adds a characteristic to damage, automatically calculate the total damage
 
 **Library**
 
 * Add titles
 * Add items
+* Add retainers
 
 **Monster Editor**
 

@@ -2,7 +2,7 @@ import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
 import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitle } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
-import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
+import { Monster, MonsterGroup, MonsterOptionalProps, MonsterRole } from '../models/monster';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
@@ -249,18 +249,9 @@ export class FactoryLogic {
 		};
 	};
 
-	static createMonster = (): Monster => {
+	static createMonster = (data: Omit<Monster, MonsterOptionalProps> & Partial<Pick<Monster, MonsterOptionalProps>>): Monster => {
 		return {
-			id: Utils.guid(),
-			name: '',
 			description: '',
-			level: 1,
-			role: {
-				type: MonsterRoleType.Ambusher,
-				organization: MonsterOrganizationType.Band
-			},
-			keywords: [],
-			encounterValue: 0,
 			size: {
 				value: 1,
 				mod: 'M'
@@ -294,7 +285,9 @@ export class FactoryLogic {
 					value: 0
 				}
 			],
-			features: []
+			withCaptain: '',
+			features: [],
+			...data
 		};
 	};
 
@@ -353,7 +346,7 @@ export class FactoryLogic {
 		};
 	};
 
-	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, strained?: string, alternateEffects?: string[], spend?: { value?: number, effect: string }[], persistence?: { value?: number, effect: string }[] }): Ability => {
+	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number | 'signature', preEffect?: string, powerRoll?: PowerRoll, effect?: string, strained?: string, alternateEffects?: string[], spend?: { value?: number, effect: string }[], persistence?: { value?: number, effect: string }[] }): Ability => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -368,8 +361,8 @@ export class FactoryLogic {
 			effect: data.effect || '',
 			strained: data.strained || '',
 			alternateEffects: data.alternateEffects || [],
-			spend: data.spend ? data.spend.map(s => ({ value: s.value || 0, effect: s.effect })) : [],
-			persistence: data.persistence ? data.persistence.map(p => ({ value: p.value || 0, effect: p.effect })) : []
+			spend: (data.spend ?? []).map(s => ({ ...s, value: s.value ?? 0 })),
+			persistence: (data.persistence ?? []).map(p => ({ ...p, value: p.value ?? 0 }))
 		};
 	};
 	static createPowerRoll = (data: { characteristic?: Characteristic | Characteristic[] } & Pick<PowerRoll, 'tier1' | 'tier2' | 'tier3'> & Partial<Pick<PowerRoll, 'bonus'>>): PowerRoll => {
@@ -385,12 +378,13 @@ export class FactoryLogic {
 	};
 
 	static type = {
-		createAction: (free = false): AbilityType => {
+		createAction: (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
 			return {
 				usage: AbilityUsage.Action,
-				free: free,
+				free: options?.free ?? false,
 				trigger: '',
-				time: ''
+				time: '',
+				qualifiers: options?.qualifiers ?? []
 			};
 		},
 		createManeuver: (free = false): AbilityType => {
@@ -398,7 +392,8 @@ export class FactoryLogic {
 				usage: AbilityUsage.Maneuver,
 				free: free,
 				trigger: '',
-				time: ''
+				time: '',
+				qualifiers: []
 			};
 		},
 		createMove: (free = false): AbilityType => {
@@ -406,7 +401,8 @@ export class FactoryLogic {
 				usage: AbilityUsage.Move,
 				free: free,
 				trigger: '',
-				time: ''
+				time: '',
+				qualifiers: []
 			};
 		},
 		createTrigger: (trigger: string, free = false): AbilityType => {
@@ -414,7 +410,8 @@ export class FactoryLogic {
 				usage: AbilityUsage.Trigger,
 				free: free,
 				trigger: trigger,
-				time: ''
+				time: '',
+				qualifiers: []
 			};
 		},
 		createTime: (time: string): AbilityType => {
@@ -422,7 +419,8 @@ export class FactoryLogic {
 				usage: AbilityUsage.Other,
 				free: false,
 				trigger: '',
-				time: time
+				time: time,
+				qualifiers: []
 			};
 		},
 		createVillainAction: (): AbilityType => {
@@ -430,7 +428,8 @@ export class FactoryLogic {
 				usage: AbilityUsage.VillainAction,
 				free: false,
 				trigger: '',
-				time: ''
+				time: '',
+				qualifiers: []
 			};
 		},
 		createNoAction: (): AbilityType => {
@@ -438,7 +437,8 @@ export class FactoryLogic {
 				usage: AbilityUsage.NoAction,
 				free: false,
 				trigger: '',
-				time: ''
+				time: '',
+				qualifiers: []
 			};
 		}
 	};

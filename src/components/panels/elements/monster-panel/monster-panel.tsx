@@ -3,7 +3,6 @@ import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Characteristic } from '../../../../enums/characteristic';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { FeaturePanel } from '../feature-panel/feature-panel';
-import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -39,8 +38,6 @@ export const MonsterPanel = (props: Props) => {
 		const immunities = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Immunity);
 		const weaknesses = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Weakness);
 		const speed = props.monster.speed.modes !== '' ? `${props.monster.speed.value} (${props.monster.speed.modes})` : props.monster.speed.value;
-		const features = props.monster.features.filter(f => f.type === FeatureType.Text);
-		const abilities = props.monster.features.filter(f => f.type === FeatureType.Ability);
 
 		return (
 			<div className='monster-panel' id={props.monster.id}>
@@ -59,6 +56,11 @@ export const MonsterPanel = (props: Props) => {
 					<Field orientation='vertical' label='Stability' value={props.monster.stability} />
 					<Field orientation='vertical' label='Free Strike' value={props.monster.freeStrikeDamage} />
 				</div>
+				{
+					props.monster.withCaptain
+						? <Field label='With Captain' value={props.monster.withCaptain} />
+						: null
+				}
 				<div className='stats'>
 					{
 						[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
@@ -68,16 +70,9 @@ export const MonsterPanel = (props: Props) => {
 				{immunities.length > 0 ? <Field label='Immunities' value={immunities.map(mod => `${mod.type} ${mod.value}`).join(', ')} /> : null}
 				{weaknesses.length > 0 ? <Field label='Weaknesses' value={weaknesses.map(mod => `${mod.type} ${mod.value}`).join(', ')} /> : null}
 				{
-					features.length > 0 ?
+					props.monster.features.length > 0 ?
 						<Space direction='vertical' style={{ width: '100%' }}>
-							{features.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
-						</Space>
-						: null
-				}
-				{
-					abilities.length > 0 ?
-						<Space direction='vertical' style={{ width: '100%' }}>
-							{abilities.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
+							{props.monster.features.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
 						</Space>
 						: null
 				}

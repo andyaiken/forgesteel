@@ -10,8 +10,11 @@ export class FormatLogic {
 		if (type.usage === AbilityUsage.Other) {
 			return type.time;
 		}
+		const qualifiers = (type.qualifiers ?? []).map(q => `(${q})`);
 
-		return `${type.free ? 'Free ' : ''}${type.usage}`;
+		return [ type.free ? 'Free' : undefined, type.usage, ...qualifiers ]
+			.filter(x => x)
+			.join(' ');
 	};
 
 	static getSize = (size: Size) => {

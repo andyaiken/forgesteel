@@ -103,7 +103,7 @@ export class HeroLogic {
 				id: 'free-melee',
 				name: 'Free Strike (melee)',
 				description: '',
-				type: FactoryLogic.type.createAction(true),
+				type: FactoryLogic.type.createAction({ free: true }),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature or object',
@@ -118,7 +118,7 @@ export class HeroLogic {
 				id: 'free-ranged',
 				name: 'Free Strike (ranged)',
 				description: '',
-				type: FactoryLogic.type.createAction(true),
+				type: FactoryLogic.type.createAction({ free: true }),
 				keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createRanged(5) ],
 				target: '1 creature or object',
@@ -154,7 +154,18 @@ export class HeroLogic {
 				});
 
 			Collections.distinct(choices.map(a => a.cost), a => a)
-				.sort((a, b) => a - b)
+				.sort((a, b) => {
+					if (a === 'signature' && b === 'signature') {
+						return 0;
+					}
+					if (a === 'signature') {
+						return -1;
+					}
+					if (b === 'signature') {
+						return 1;
+					}
+					return a - b;
+				})
 				.forEach(cost => abilities.push(...Collections.sort(choices.filter(a => a.cost === cost), a => a.name)));
 		}
 

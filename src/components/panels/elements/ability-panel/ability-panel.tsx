@@ -1,7 +1,7 @@
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityPowerRollPanel } from '../../power-roll/ability-power-roll-panel';
-import { FeatureAbilityCostData } from '../../../../models/feature';
+import { Badge } from '../../../controls/badge/badge';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { FormatLogic } from '../../../../logic/format-logic';
@@ -13,13 +13,14 @@ import { Markdown } from '../../../controls/markdown/markdown';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Tag } from 'antd';
+import { useMemo } from 'react';
 
 import './ability-panel.scss';
 
 interface Props {
 	ability: Ability;
 	hero?: Hero;
-	cost?: number;
+	cost?: number | 'signature';
 	options?: Options;
 	mode?: PanelMode;
 	tags?: string[];
@@ -27,24 +28,36 @@ interface Props {
 }
 
 export const AbilityPanel = (props: Props) => {
-	try {
-		let cost = props.cost || props.ability.cost;
-		let disabled = false;
-		if ((cost > 0) && props.hero) {
-			HeroLogic.getFeatures(props.hero).filter(f => f.type === FeatureType.AbilityCost).forEach(f => {
-				const data = f.data as FeatureAbilityCostData;
-				if (data.keywords.every(k => props.ability.keywords.includes(k))) {
-					cost += data.modifier;
-				}
-			});
-
-			cost = Math.max(cost, 1);
-
-			if (props.options?.dimUnavailableAbilities || false) {
-				disabled = cost > props.hero.state.heroicResource;
+	const cost = useMemo(
+		() => {
+			const cost = props.cost ?? props.ability.cost;
+			if (cost === 'signature' || cost <= 0 || !props.hero) {
+				return cost;
 			}
-		}
+			const modifierSum = HeroLogic.getFeatures(props.hero)
+				.filter(f => f.type === FeatureType.AbilityCost)
+				.filter(f => f.data.keywords.every(k => props.ability.keywords.includes(k)))
+				.map(f => f.data.modifier)
+				.reduce((sum, m) => sum + m, 0);
 
+			return Math.max(cost + modifierSum, 1);
+		},
+		[ props.cost, props.ability, props.hero ]
+	);
+	const headerRibbon = useMemo(
+		() => cost === 'signature'
+			? (<Badge>Signature</Badge>)
+			: cost > 0 ? (<HeroicResourceBadge value={cost} />) : null,
+		[ cost ]
+	);
+	const disabled = useMemo(
+		() => (props.options?.dimUnavailableAbilities ?? false)
+			&& props.hero
+			&& cost !== 'signature'
+			&& cost > props.hero.state.heroicResource,
+		[ props.hero, props.options, cost ]
+	);
+	try {
 		let className = 'ability-panel';
 		if (disabled) {
 			className += ' disabled';
@@ -52,7 +65,7 @@ export const AbilityPanel = (props: Props) => {
 
 		return (
 			<div className={className} id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
-				<HeaderText ribbon={cost > 0 ? <HeroicResourceBadge value={cost} /> : null} tags={props.tags}>
+				<HeaderText ribbon={headerRibbon} tags={props.tags}>
 					{props.ability.name || 'Unnamed Ability'}
 				</HeaderText>
 				{props.ability.description ? <Markdown text={props.ability.description} /> : null}

@@ -5,8 +5,55 @@
 **Add and update element data**
 
 * Monsters
-  * Update existing monsters
-  * Add new monsters
+  * [x] Radenwight
+  * [ ] Goblins
+  * [ ] Kobolds
+  * [ ] Dwarves
+  * [ ] Elves, High
+  * [ ] Elves, Wode
+  * [ ] Elves, Shadow
+  * [ ] Gnolls
+  * [ ] Hobgoblins
+  * [ ] Humans
+  * [ ] Lizardfolk
+  * [ ] Orcs
+  * [ ] Rivals
+  * [ ] Trolls
+  * [ ] Undead
+  * [ ] Undead - 2nd Echelon
+  * [ ] Angulotls
+  * [ ] Ankheg
+  * [ ] Ashen Hoarder
+  * [ ] Basilisks
+  * [ ] Bredbeddle
+  * [ ] Bugbears
+  * [ ] Chimera
+  * [ ] Demons
+  * [ ] Demons - 2nd Echelon
+  * [ ] Devils
+  * [ ] Draconians
+  * [ ] Dragons
+  * [ ] Elementals
+  * [ ] Fossil Cryptic
+  * [ ] Griffons
+  * [ ] Hag
+  * [ ] Lightbenders
+  * [ ] Manticore
+  * [ ] Medusa
+  * [ ] Minotaurs
+  * [ ] Ogres
+  * [ ] Olothec
+  * [ ] Shambling Mound
+  * [ ] Time Raiders
+  * [ ] Voiceless Talkers
+  * [ ] Lord Syuul
+  * [ ] War Dogs
+  * [ ] War Dogs - 2nd Echelon
+  * [ ] Werewolf
+  * [ ] Wyverns
+  * [ ] Xorannox the Tyract
+  * [ ] Animals
+* Retainers
 
 **Miscellaneous changes**
 

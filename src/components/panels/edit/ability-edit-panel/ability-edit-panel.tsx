@@ -543,7 +543,12 @@ export const AbilityEditPanel = (props: Props) => {
 										onChange={e => setTarget(e.target.value)}
 									/>
 									<HeaderText>Cost</HeaderText>
-									<NumberSpin min={0} value={ability.cost} onChange={setCost} />
+									<Toggle label='Signature' value={ability.cost === 'signature'} onChange={value => ability.cost = value ? 'signature' : 0} />
+									{
+										ability.cost === 'signature'
+											? null
+											: <NumberSpin min={0} value={ability.cost} onChange={setCost} />
+									}
 								</div>
 							)
 						},

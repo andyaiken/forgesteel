@@ -4,7 +4,7 @@ import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { Characteristic } from '../../../enums/characteristic';
 import { Condition } from '../../../models/hero';
 import { ConditionLogic } from '../../../logic/condition-logic';
-import { Utils } from '../../../utils/utils';
+import { Markdown } from '../../controls/markdown/markdown';
 import { useState } from 'react';
 
 import './condition-panel.scss';
@@ -92,7 +92,7 @@ export const ConditionPanel = (props: Props) => {
 						:
 						<div>
 							<div className='ds-text'>{condition.type} ({ends})</div>
-							<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(ConditionLogic.getDescription(condition.type)) }} />
+							<Markdown text={ConditionLogic.getDescription(condition.type)} />
 						</div>
 				}
 				<div className='action-buttons'>

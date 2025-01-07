@@ -8,13 +8,13 @@ import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
+import { Markdown } from '../../controls/markdown/markdown';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
-import { Utils } from '../../../utils/utils';
 
 import './rules-modal.scss';
 
@@ -42,7 +42,7 @@ export const RulesModal = (props: Props) => {
 						].map(ct => (
 							<div key={ct}>
 								<HeaderText>{ct}</HeaderText>
-								<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(ConditionLogic.getDescription(ct)) }} />
+								<Markdown text={ConditionLogic.getDescription(ct)} />
 							</div>
 						))
 					}

@@ -12,5 +12,12 @@ export const TestPanel = (props: Props) => {
 		const characteristics = props.test.characteristic.join(' or ');
 		return characteristics ? `${characteristics} Test` : 'Test';
 	}, [ props.test ]);
-	return (<PowerRollPanel header={header} powerRoll={props.test} onRoll={props.onRoll} />);
+
+	return (
+		<PowerRollPanel
+			header={header}
+			powerRoll={props.test}
+			onRoll={props.onRoll}
+		/>
+	);
 };

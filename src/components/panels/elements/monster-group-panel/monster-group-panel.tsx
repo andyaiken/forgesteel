@@ -2,6 +2,7 @@ import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
+import { Markdown } from '../../../controls/markdown/markdown';
 import { MonsterGroup } from '../../../../models/monster';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../monster-panel/monster-panel';
@@ -9,7 +10,6 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Space } from 'antd';
-import { Utils } from '../../../../utils/utils';
 
 import './monster-group-panel.scss';
 
@@ -24,7 +24,7 @@ export const MonsterGroupPanel = (props: Props) => {
 		return (
 			<div className='monster-group-panel' id={props.mode === PanelMode.Full ? props.monsterGroup.id : undefined}>
 				<HeaderText level={1}>{props.monsterGroup.name || 'Unnamed Monster Group'}</HeaderText>
-				{props.monsterGroup.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.monsterGroup.description) }} /> : null}
+				{props.monsterGroup.description ? <Markdown text={props.monsterGroup.description} /> : null}
 				{
 					(props.mode !== PanelMode.Full) && (props.monsterGroup.monsters.length > 0) ?
 						<Field label='Monsters' value={props.monsterGroup.monsters.map(m => MonsterLogic.getMonsterName(m, props.monsterGroup)).join(', ')} />
@@ -35,7 +35,7 @@ export const MonsterGroupPanel = (props: Props) => {
 						props.monsterGroup.information.map(i => (
 							<div key={i.id}>
 								<HeaderText>{i.name || 'Unnamed Information'}</HeaderText>
-								{i.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(i.description) }} /> : null}
+								{i.description ? <Markdown text={i.description} /> : null}
 							</div>
 						))
 						: null

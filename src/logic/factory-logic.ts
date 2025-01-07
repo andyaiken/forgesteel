@@ -22,6 +22,7 @@ import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 import { KitType } from '../enums/kit';
 import { MonsterFilter } from '../models/monster-filter';
+import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Perk } from '../models/perk';
 import { PerkList } from '../enums/perk-list';
@@ -255,7 +256,7 @@ export class FactoryLogic {
 			level: 1,
 			role: {
 				type: MonsterRoleType.Ambusher,
-				isMinion: false
+				organization: MonsterOrganizationType.Band
 			},
 			keywords: [],
 			encounterValue: 0,
@@ -296,10 +297,10 @@ export class FactoryLogic {
 		};
 	};
 
-	static createMonsterRole = (type: MonsterRoleType, isMinion?: boolean): MonsterRole => {
+	static createMonsterRole = (type: MonsterRoleType, organization: MonsterOrganizationType): MonsterRole => {
 		return {
 			type: type,
-			isMinion: isMinion || false
+			organization: organization
 		};
 	};
 
@@ -321,7 +322,7 @@ export class FactoryLogic {
 		return {
 			name: '',
 			roles: [],
-			isMinion: 'any',
+			organizations: [],
 			level: [ 1, 20 ],
 			ev: [ 0, 500 ]
 		};

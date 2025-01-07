@@ -1289,7 +1289,7 @@ export const LibraryEditPage = (props: Props) => {
 			.flatMap(sb => sb.monsterGroups)
 			.flatMap(mg => mg.monsters)
 			.filter(m => m.id !== monster.id)
-			.filter(m => (m.level === monster.level) && (m.role.type === monster.role.type) && (m.role.isMinion === monster.role.isMinion));
+			.filter(m => (m.level === monster.level) && (m.role.type === monster.role.type) && (m.role.organization === monster.role.organization));
 
 		return (
 			<div>

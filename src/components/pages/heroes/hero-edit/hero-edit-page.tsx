@@ -10,6 +10,7 @@ import { Career } from '../../../../models/career';
 import { CareerPanel } from '../../../panels/elements/career-panel/career-panel';
 import { Characteristic } from '../../../../enums/characteristic';
 import { ClassPanel } from '../../../panels/elements/class-panel/class-panel';
+import { Collections } from '../../../../utils/collections';
 import { Complication } from '../../../../models/complication';
 import { ComplicationPanel } from '../../../panels/elements/complication-panel/complication-panel';
 import { Culture } from '../../../../models/culture';
@@ -329,6 +330,26 @@ export const HeroEditPage = (props: Props) => {
 			setDirty(false);
 		};
 
+		const selectRandom = () => {
+			switch (page) {
+				case 'ancestry':
+					setAncestry(Collections.draw(SourcebookLogic.getAncestries(props.sourcebooks)));
+					break;
+				case 'culture':
+					setCulture(Collections.draw([ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks) ]));
+					break;
+				case 'career':
+					setCareer(Collections.draw(SourcebookLogic.getCareers(props.sourcebooks)));
+					break;
+				case 'class':
+					setClass(Collections.draw(SourcebookLogic.getClasses(props.sourcebooks)));
+					break;
+				case 'complication':
+					setComplication(Collections.draw(SourcebookLogic.getComplications(props.sourcebooks)));
+					break;
+			}
+		};
+
 		const getContent = () => {
 			switch (page) {
 				case 'ancestry':
@@ -470,6 +491,7 @@ export const HeroEditPage = (props: Props) => {
 									suffix={!searchTerm ? <SearchOutlined /> : null}
 									onChange={e => setSearchTerm(e.target.value)}
 								/>
+								<Button disabled={!!searchTerm} icon={<ThunderboltOutlined />} onClick={selectRandom}>Random</Button>
 							</div>
 							: null
 					}

@@ -2,9 +2,9 @@ import { Culture } from '../../../../models/culture';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
+import { Markdown } from '../../../controls/markdown/markdown';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
-import { Utils } from '../../../../utils/utils';
 
 import './culture-panel.scss';
 
@@ -20,7 +20,7 @@ export const CulturePanel = (props: Props) => {
 		return (
 			<div className='culture-panel' id={props.mode === PanelMode.Full ? props.culture.id : undefined}>
 				<HeaderText level={1}>{props.culture.name || 'Unnamed Culture'}</HeaderText>
-				{props.culture.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.culture.description) }} /> : null}
+				{props.culture.description ? <Markdown text={props.culture.description} /> : null}
 				{
 					props.mode === PanelMode.Full ?
 						<div style={{ paddingTop: '10px' }}>

@@ -44,7 +44,14 @@ export const AbilityPowerRollPanel = (props: Props) => {
 			header = `Power Roll ${sign}${props.powerRoll.bonus}`;
 		}
 
-		return (<PowerRollPanel powerRoll={props.powerRoll} header={header} footer={bonus} onRoll={props.onRoll} />);
+		return (
+			<PowerRollPanel
+				powerRoll={props.powerRoll}
+				header={header}
+				footer={bonus}
+				onRoll={props.onRoll}
+			/>
+		);
 	} catch (ex) {
 		console.error(ex);
 		return null;

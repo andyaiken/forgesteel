@@ -1,12 +1,13 @@
 import { Feature, FeatureAbility, FeatureMalice } from './feature';
 import { Characteristic } from '../enums/characteristic';
 import { Element } from './element';
+import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Size } from './size';
 
 export interface MonsterRole {
 	type: MonsterRoleType;
-	isMinion: boolean;
+	organization: MonsterOrganizationType;
 };
 
 export interface Monster extends Element {

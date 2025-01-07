@@ -4,12 +4,12 @@ import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
+import { Markdown } from '../../../controls/markdown/markdown';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Space } from 'antd';
 import { SubclassPanel } from '../subclass-panel/subclass-panel';
-import { Utils } from '../../../../utils/utils';
 
 import './class-panel.scss';
 
@@ -25,7 +25,7 @@ export const ClassPanel = (props: Props) => {
 		return (
 			<div className='class-panel' id={props.mode === PanelMode.Full ? props.heroClass.id : undefined}>
 				<HeaderText level={1}>{props.heroClass.name || 'Unnamed Class'}</HeaderText>
-				{props.heroClass.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.heroClass.description) }} /> : null}
+				{props.heroClass.description ? <Markdown text={props.heroClass.description} /> : null}
 				<Field label='Heroic Resource' value={props.heroClass.heroicResource} />
 				{props.heroClass.subclasses.length > 0 ? <Field label={`${props.heroClass.subclassName}s`} value={props.heroClass.subclasses.map(c => c.name).join(', ')} /> : null}
 				<Field label='Primary Characteristics' value={props.heroClass.primaryCharacteristics.join(', ')} />

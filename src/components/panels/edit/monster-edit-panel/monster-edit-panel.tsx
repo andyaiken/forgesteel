@@ -12,12 +12,12 @@ import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Monster } from '../../../../models/monster';
 import { MonsterLogic } from '../../../../logic/monster-logic';
+import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../../enums/monster-role-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Sourcebook } from '../../../../models/sourcebook';
-import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -67,9 +67,9 @@ export const MonsterEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setIsMinion = (value: boolean) => {
+	const setRoleOrganization = (value: MonsterOrganizationType) => {
 		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.role.isMinion = value;
+		copy.role.organization = value;
 		setMonster(copy);
 		props.onChange(copy);
 	};
@@ -218,12 +218,19 @@ export const MonsterEditPanel = (props: Props) => {
 										<Select
 											style={{ width: '100%' }}
 											placeholder='Select role'
-											options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Leader, MonsterRoleType.Mount, MonsterRoleType.Solo, MonsterRoleType.Support ].map(option => ({ value: option, desc: MonsterLogic.getRoleDescription(option) }))}
+											options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(option => ({ value: option, desc: MonsterLogic.getRoleTypeDescription(option) }))}
 											optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
 											value={monster.role.type}
 											onChange={setRoleType}
 										/>
-										<Toggle label='Minion' value={monster.role.isMinion} onChange={setIsMinion} />
+										<Select
+											style={{ width: '100%' }}
+											placeholder='Select organization'
+											options={[ MonsterOrganizationType.Minion, MonsterOrganizationType.Band, MonsterOrganizationType.Platoon, MonsterOrganizationType.Troop, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo ].map(option => ({ value: option, desc: MonsterLogic.getRoleOrganizationDescription(option) }))}
+											optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
+											value={monster.role.organization}
+											onChange={setRoleOrganization}
+										/>
 									</Space>
 									<HeaderText>Encounter Value</HeaderText>
 									<NumberSpin min={1} value={monster.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />

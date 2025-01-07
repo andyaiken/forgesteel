@@ -3,6 +3,7 @@ import { HashRouter } from 'react-router';
 import { Hero } from './models/hero.ts';
 import { HeroLogic } from './logic/hero-logic.ts';
 import { Main } from './components/main/main.tsx';
+import { MonsterOrganizationType } from './enums/monster-organization-type.ts';
 import { Options } from './models/options.ts';
 import { Playbook } from './models/playbook.ts';
 import { Sourcebook } from './models/sourcebook.ts';
@@ -51,6 +52,14 @@ Promise.all(promises).then(results => {
 		if (sourcebook.monsterGroups === undefined) {
 			sourcebook.monsterGroups = [];
 		}
+
+		sourcebook.monsterGroups.forEach(group => {
+			group.monsters.forEach(monster => {
+				if (monster.role.organization === undefined) {
+					monster.role.organization = MonsterOrganizationType.Platoon;
+				}
+			});
+		});
 	});
 
 	let hiddenSourcebookIDs = results[2] as string[] | null;

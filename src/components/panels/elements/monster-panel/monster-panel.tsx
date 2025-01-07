@@ -7,9 +7,10 @@ import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
+import { Markdown } from '../../../controls/markdown/markdown';
 import { MonsterLogic } from '../../../../logic/monster-logic';
+import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Utils } from '../../../../utils/utils';
 
 import './monster-panel.scss';
 
@@ -29,7 +30,7 @@ export const MonsterPanel = (props: Props) => {
 						<div className='ds-text'>
 							Level {props.monster.level} {FormatLogic.getRole(props.monster.role)} {props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
 						</div>
-						<Field label='EV' value={props.monster.role.isMinion ? `${props.monster.encounterValue} for 8 minions` : props.monster.encounterValue} />
+						<Field label='EV' value={(props.monster.role.organization === MonsterOrganizationType.Minion) ? `${props.monster.encounterValue} for 8 minions` : props.monster.encounterValue} />
 					</Flex>
 				</div>
 			);
@@ -44,12 +45,12 @@ export const MonsterPanel = (props: Props) => {
 		return (
 			<div className='monster-panel' id={props.monster.id}>
 				<HeaderText level={1}>{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}</HeaderText>
-				{props.monster.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.monster.description) }} /> : null}
+				{props.monster.description ? <Markdown text={props.monster.description} /> : null}
 				<Flex justify='space-between'>
 					<div className='ds-text'>
 						Level {props.monster.level} {FormatLogic.getRole(props.monster.role)} {props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
 					</div>
-					<Field label='EV' value={props.monster.role.isMinion ? `${props.monster.encounterValue} for 8 minions` : props.monster.encounterValue} />
+					<Field label='EV' value={(props.monster.role.organization === MonsterOrganizationType.Minion) ? `${props.monster.encounterValue} for 8 minions` : props.monster.encounterValue} />
 				</Flex>
 				<div className='stats'>
 					<Field orientation='vertical' label='Speed' value={speed} />

@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Input, Segmented, Select, Slider, Space, Tabs } from 'antd';
+import { Alert, Button, Divider, Input, Select, Slider, Space, Tabs } from 'antd';
 import { Encounter, EncounterGroup } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
@@ -16,6 +16,7 @@ import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { MonsterFilter } from '../../../../models/monster-filter';
 import { MonsterLogic } from '../../../../logic/monster-logic';
+import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
 import { MonsterRoleType } from '../../../../enums/monster-role-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
@@ -218,9 +219,9 @@ export const EncounterEditPage = (props: Props) => {
 			setMonsterFilter(copy);
 		};
 
-		const setFilterMinion = (value: 'any' | 'yes' | 'no') => {
+		const setFilterOrganizations = (value: MonsterOrganizationType[]) => {
 			const copy = JSON.parse(JSON.stringify(monsterFilter)) as MonsterFilter;
-			copy.isMinion = value;
+			copy.organizations = value;
 			setMonsterFilter(copy);
 		};
 
@@ -270,29 +271,20 @@ export const EncounterEditPage = (props: Props) => {
 							mode='multiple'
 							allowClear={true}
 							placeholder='Role'
-							options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Leader, MonsterRoleType.Mount, MonsterRoleType.Solo, MonsterRoleType.Support ].map(r => ({ label: r, value: r }))}
+							options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(r => ({ label: r, value: r }))}
 							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 							value={monsterFilter.roles}
 							onChange={setFilterRoles}
 						/>
-						<Segmented
-							block={true}
-							options={[
-								{
-									value: 'any',
-									label: 'All monsters'
-								},
-								{
-									value: 'yes',
-									label: 'Minions'
-								},
-								{
-									value: 'no',
-									label: 'Non-minions'
-								}
-							]}
-							value={monsterFilter.isMinion}
-							onChange={setFilterMinion}
+						<Select
+							style={{ width: '100%' }}
+							mode='multiple'
+							allowClear={true}
+							placeholder='Role'
+							options={[ MonsterOrganizationType.Minion, MonsterOrganizationType.Band, MonsterOrganizationType.Platoon, MonsterOrganizationType.Troop, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo ].map(r => ({ label: r, value: r }))}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+							value={monsterFilter.organizations}
+							onChange={setFilterOrganizations}
 						/>
 						<div>
 							<Slider

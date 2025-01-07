@@ -416,7 +416,7 @@ export const FeaturePanel = (props: Props) => {
 									}
 
 									return false;
-								});
+								}) || (props.hero.culture && props.hero.culture.languages.includes(l));
 							if (selected) {
 								return (
 									<Alert
@@ -848,11 +848,11 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getExtraMalice = (data: FeatureMaliceData) => {
-		return (data.sections ?? [])
-			.map(section => typeof section === 'string'
-				? (<Markdown value={section} />)
-				: (<TestPanel test={section} />)
-			);
+		return (data.sections ?? []).map((section, n) => (typeof section === 'string') ?
+			<Markdown key={n} text={section} />
+			:
+			<TestPanel key={n} test={section} />
+		);
 	};
 
 	const getExtraPerk = (data: FeaturePerkData) => {
@@ -1018,7 +1018,7 @@ export const FeaturePanel = (props: Props) => {
 				<HeaderText ribbon={props.cost ? <HeroicResourceBadge value={props.cost} /> : null} tags={tags}>
 					{props.feature.name || 'Unnamed Feature'}
 				</HeaderText>
-				<Markdown value={props.feature.description} />
+				<Markdown text={props.feature.description} />
 				{
 					props.mode === PanelMode.Full
 						? (props.setData ? getEditable() : getExtra())

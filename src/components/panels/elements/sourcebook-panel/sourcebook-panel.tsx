@@ -2,6 +2,7 @@ import { Button, Input, Space } from 'antd';
 import { CheckCircleOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { HeaderText } from '../../../controls/header-text/header-text';
+import { Markdown } from '../../../controls/markdown/markdown';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -72,7 +73,7 @@ export const SourcebookPanel = (props: Props) => {
 						:
 						<div style={{ width: '100%' }}>
 							<HeaderText tags={sourcebook.isHomebrew ? [ 'Homebrew' ] : []}>{sourcebook.name || 'Unnamed Sourcebook'}</HeaderText>
-							<div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(sourcebook.description) }} />
+							<Markdown text={props.sourcebook.description} />
 							<div className='ds-text'>{SourcebookLogic.getElementCount(sourcebook)} elements</div>
 						</div>
 				}

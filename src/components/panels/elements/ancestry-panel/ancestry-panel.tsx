@@ -3,9 +3,9 @@ import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
+import { Markdown } from '../../../controls/markdown/markdown';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
-import { Utils } from '../../../../utils/utils';
 
 import './ancestry-panel.scss';
 
@@ -21,7 +21,7 @@ export const AncestryPanel = (props: Props) => {
 		return (
 			<div className='ancestry-panel' id={props.mode === PanelMode.Full ? props.ancestry.id : undefined}>
 				<HeaderText level={1}>{props.ancestry.name || 'Unnamed Ancestry'}</HeaderText>
-				{props.ancestry.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ancestry.description) }} /> : null}
+				{props.ancestry.description ? <Markdown text={props.ancestry.description} /> : null}
 				{
 					props.mode === PanelMode.Full ?
 						props.ancestry.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)

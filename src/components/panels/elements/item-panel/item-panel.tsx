@@ -2,9 +2,9 @@ import { FeaturePanel } from '../feature-panel/feature-panel';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Item } from '../../../../models/item';
+import { Markdown } from '../../../controls/markdown/markdown';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
-import { Utils } from '../../../../utils/utils';
 
 import './item-panel.scss';
 
@@ -20,7 +20,7 @@ export const ItemPanel = (props: Props) => {
 		return (
 			<div className='item-panel' id={props.mode === PanelMode.Full ? props.item.id : undefined}>
 				<HeaderText level={1}>{props.item.name || 'Unnamed Item'}</HeaderText>
-				{props.item.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.item.description) }} /> : null}
+				{props.item.description ? <Markdown text={props.item.description} /> : null}
 				{
 					props.mode === PanelMode.Full ?
 						props.item.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)

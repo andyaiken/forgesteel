@@ -11,7 +11,6 @@
 
 **Miscellaneous changes**
 
-* Remove the PowerRollType enum - resistance rolls are no longer in the game
 * Some classes (conduit, elementalist, shadow) have only 1 primary characteristic - this means choosing their characteristic arrays will be a lot more tricky
 * If a hero's power roll uses potencies, replace weak / average / strong with the hero's characteristic value
 * If a hero's power roll adds a characteristic to damage, automatically calculate the total damage
@@ -24,7 +23,7 @@
 **Heroes**
 
 * Add hero inventory management
-* Add a way for heroes to be modified - additional skills, languages, perks, titles, etc
+* Add a way for heroes to be modified - additional skills, languages, perks, titles, retainers, etc
 
 **Library**
 
@@ -34,7 +33,7 @@
 **Monster Editor**
 
 * Similar monsters
-  * Allow the user to define similarity (currently it's level, role, and minion status)
+  * Allow the user to define similarity (currently it's level, role, and organization)
   * Add the ability to 'pull in' stuff from similar monsters
   * Show stats breakdown for similar monsters
 * Allow the user to specify a working set of monsters

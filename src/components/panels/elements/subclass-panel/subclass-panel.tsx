@@ -1,11 +1,11 @@
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
+import { Markdown } from '../../../controls/markdown/markdown';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Space } from 'antd';
 import { SubClass } from '../../../../models/subclass';
-import { Utils } from '../../../../utils/utils';
 
 import './subclass-panel.scss';
 
@@ -21,7 +21,7 @@ export const SubclassPanel = (props: Props) => {
 		return (
 			<div className='subclass-panel' id={props.mode === PanelMode.Full ? props.subclass.id : undefined}>
 				<HeaderText level={1}>{props.subclass.name || 'Unnamed Subclass'}</HeaderText>
-				{props.subclass.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.subclass.description) }} /> : null}
+				{props.subclass.description ? <Markdown text={props.subclass.description} /> : null}
 				{
 					props.mode === PanelMode.Full ?
 						props.subclass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (

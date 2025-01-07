@@ -2,10 +2,10 @@ import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
+import { Markdown } from '../../../controls/markdown/markdown';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Title } from '../../../../models/title';
-import { Utils } from '../../../../utils/utils';
 
 import './title-panel.scss';
 
@@ -21,7 +21,7 @@ export const TitlePanel = (props: Props) => {
 		return (
 			<div className='title-panel' id={props.mode === PanelMode.Full ? props.title.id : undefined}>
 				<HeaderText level={1}>{props.title.name || 'Unnamed Title'}</HeaderText>
-				{props.title.description ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.title.description) }} /> : null}
+				{props.title.description ? <Markdown text={props.title.description} /> : null}
 				<Field label='Echelon' value={props.title.echelon} />
 				<Field label='Prerequisites' value={props.title.prerequisites} />
 				{

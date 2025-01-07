@@ -5,6 +5,7 @@ import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureDamageModifierData } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { MonsterFilter } from '../models/monster-filter';
+import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
 
 export class MonsterLogic {
@@ -33,17 +34,8 @@ export class MonsterLogic {
 			return filter.roles.includes(monster.role.type);
 		}
 
-		switch (filter.isMinion) {
-			case 'yes':
-				if (!monster.role.isMinion) {
-					return false;
-				}
-				break;
-			case 'no':
-				if (monster.role.isMinion) {
-					return false;
-				}
-				break;
+		if (filter.organizations.length > 0) {
+			return filter.organizations.includes(monster.role.organization);
 		}
 
 		const minLevel = Math.min(...filter.level);
@@ -113,7 +105,7 @@ export class MonsterLogic {
 		return 1;
 	};
 
-	static getRoleDescription = (type: MonsterRoleType) => {
+	static getRoleTypeDescription = (type: MonsterRoleType) => {
 		switch (type) {
 			case MonsterRoleType.Ambusher:
 				return 'Ambushers are melee warriors who can slip by beefier heroes to reach squishier targets in the back lines.';
@@ -129,14 +121,27 @@ export class MonsterLogic {
 				return 'Harriers are mobile warriors who make definitive use of hit-and-run tactics. Their traits allow them to make the most of their positioning on the battlefield.';
 			case MonsterRoleType.Hexer:
 				return 'Hexers specialize in debuffing enemies with conditions and other effects. They are generally squishy and rely on allies to help defend them.';
-			case MonsterRoleType.Leader:
-				return 'Leader creatures are powerful commanders who often serve as villains at the climax of adventures and campaigns. They have better Stamina and damage output than other creatures, and often aid those creatures — or can sacrifice lesser allies for their own benefit.';
 			case MonsterRoleType.Mount:
 				return 'Mounts are mobile creatures meant to be ridden in combat, and who make their riders even more dangerous. Mounts act at the same time as their riders.';
-			case MonsterRoleType.Solo:
-				return 'A solo creature is an action-oriented creature capable of taking on the player characters on their own, or with the backup of just a handful of underlings.';
 			case MonsterRoleType.Support:
 				return 'Support creatures specialize in aiding their allies, providing buffs, healing, movement, or action options.';
+		}
+	};
+
+	static getRoleOrganizationDescription = (organization: MonsterOrganizationType) => {
+		switch (organization) {
+			case MonsterOrganizationType.Minion:
+				return 'Minions are weaker enemies who are made to die fast and threaten heroes en masse.';
+			case MonsterOrganizationType.Band:
+				return 'Monster bands are hardier and work in smaller groups than minions, but it still takes multiple of these creatures to effectively threaten a single hero of the same level.';
+			case MonsterOrganizationType.Platoon:
+				return 'Monster platoons are highly organized and usually self- sufficient armies.';
+			case MonsterOrganizationType.Troop:
+				return 'Troops are the functional opposite of minions. A creature under the troop organization is hardy and can usually stand up to two heroes of the same level on their own.';
+			case MonsterOrganizationType.Leader:
+				return 'A leader is a powerful who buffs their allies and grants them extra actions.';
+			case MonsterOrganizationType.Solo:
+				return 'A creature under a solo organization is an encounter all on their own.';
 		}
 	};
 

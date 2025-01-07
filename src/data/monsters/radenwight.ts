@@ -4,6 +4,7 @@ import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
+import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const radenwight: MonsterGroup = {
@@ -76,7 +77,7 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 			name: 'Radenwight Mischiever',
 			description: '',
 			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterRoleType.Ambusher, true),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.Ambusher, MonsterOrganizationType.Minion),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'S'),
@@ -124,7 +125,7 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 			name: 'Radenwight Ratagast',
 			description: '',
 			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterRoleType.Defender, true),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.Defender, MonsterOrganizationType.Minion),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'S'),
@@ -168,7 +169,7 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 			name: 'Radenwight Swiftpaw',
 			description: '',
 			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterRoleType.Harrier, true),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.Harrier, MonsterOrganizationType.Minion),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'S'),
@@ -212,7 +213,7 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 			name: 'Radenwight Redeye',
 			description: '',
 			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterRoleType.Artillery, true),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.Artillery, MonsterOrganizationType.Minion),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'S'),
@@ -257,7 +258,7 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 			name: 'Radenwight Bruxer',
 			description: '',
 			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterRoleType.Brute),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.Brute, MonsterOrganizationType.Band),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'S'),
@@ -319,7 +320,7 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 			name: 'Radenwight Piper',
 			description: '',
 			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterRoleType.Support),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.Support, MonsterOrganizationType.Band),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'S'),
@@ -379,7 +380,7 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 			name: 'Radenwight Ratcrobat',
 			description: '',
 			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterRoleType.Harrier),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.Harrier, MonsterOrganizationType.Band),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'S'),
@@ -440,7 +441,7 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 			name: 'Radenwight Maestro',
 			description: '',
 			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterRoleType.Leader),
+			role: FactoryLogic.createMonsterRole(MonsterRoleType.NoRole, MonsterOrganizationType.Leader),
 			keywords: [ 'Humanoid', 'Radenwight' ],
 			encounterValue: 12,
 			size: FactoryLogic.createSize(1, 'S'),

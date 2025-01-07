@@ -1,9 +1,10 @@
+import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
 
 export interface MonsterFilter {
 	name: string;
 	roles: MonsterRoleType[];
-	isMinion: 'any' | 'yes' | 'no';
+	organizations: MonsterOrganizationType[];
 	level: number[];
 	ev: number[];
 }

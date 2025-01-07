@@ -46,7 +46,7 @@ export const AbilityPanel = (props: Props) => {
 	);
 	const headerRibbon = useMemo(
 		() => props.ability.signature
-			? (<Badge value='Signature' />)
+			? (<Badge>Signature</Badge>)
 			: cost > 0 ? (<HeroicResourceBadge value={cost} />) : null,
 		[ props.ability, cost ]
 	);

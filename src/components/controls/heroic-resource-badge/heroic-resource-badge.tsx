@@ -6,5 +6,5 @@ interface Props {
 }
 
 export const HeroicResourceBadge = (props: Props) => {
-	return (<Badge value={`${props.value}${props.units ?? (props.value === 1 ? 'pt' : 'pts')}`} />);
+	return (<Badge>{props.value}{props.units ?? (props.value === 1 ? 'pt' : 'pts')}</Badge>);
 };

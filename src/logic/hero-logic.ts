@@ -104,14 +104,14 @@ export class HeroLogic {
 				name: 'Free Strike (melee)',
 				description: '',
 				type: FactoryLogic.type.createAction({ free: true }),
-				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+				keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature or object',
 				powerRoll: FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '2 damage',
-					tier2: '6 damage',
-					tier3: '9 damage'
+					tier1: '2 + M or A damage',
+					tier2: '5 + M or A damage',
+					tier3: '7 + M or A damage'
 				})
 			}));
 			abilities.push(FactoryLogic.createAbility({
@@ -124,9 +124,9 @@ export class HeroLogic {
 				target: '1 creature or object',
 				powerRoll: FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '2 damage',
-					tier2: '6 damage',
-					tier3: '9 damage'
+					tier1: '2 + M or A damage',
+					tier2: '4 + M or A damage',
+					tier3: '6 + M or A damage'
 				})
 			}));
 		}

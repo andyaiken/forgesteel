@@ -195,6 +195,8 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			effect: 'You can shift up to 3 squares.',
 			spend: [
 				{
+					value: 2,
+					repeatable: true,
 					effect: 'You can target one additional creature or object within distance for every 2 drama you spend.'
 				}
 			]
@@ -293,6 +295,8 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			}),
 			spend: [
 				{
+					value: 2,
+					repeatable: true,
 					effect: 'The size of the burst is increased by 1 for every 2 drama you spend.'
 				}
 			]

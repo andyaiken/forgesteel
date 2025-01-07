@@ -872,6 +872,8 @@ Additionally, whenever you touch a living plant that is not a Plant Creature, yo
 								effect: 'The target can spend a Recovery.',
 								spend: [
 									{
+										value: 1,
+										repeatable: true,
 										effect: 'The target can spend an additional Recovery for each essence spent.'
 									}
 								]

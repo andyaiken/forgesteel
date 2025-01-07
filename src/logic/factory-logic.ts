@@ -346,7 +346,7 @@ export class FactoryLogic {
 		};
 	};
 
-	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number | 'signature', preEffect?: string, powerRoll?: PowerRoll, effect?: string, strained?: string, alternateEffects?: string[], spend?: { value?: number, effect: string }[], persistence?: { value?: number, effect: string }[] }): Ability => {
+	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number | 'signature', preEffect?: string, powerRoll?: PowerRoll, effect?: string, strained?: string, alternateEffects?: string[], spend?: { value: number, repeatable?: boolean, effect: string }[], persistence?: { value: number, effect: string }[] }): Ability => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -361,8 +361,8 @@ export class FactoryLogic {
 			effect: data.effect || '',
 			strained: data.strained || '',
 			alternateEffects: data.alternateEffects || [],
-			spend: (data.spend ?? []).map(s => ({ ...s, value: s.value ?? 0 })),
-			persistence: (data.persistence ?? []).map(p => ({ ...p, value: p.value ?? 0 }))
+			spend: (data.spend ?? []).map(s => ({ ...s, repeatable: s.repeatable ?? false })),
+			persistence: (data.persistence ?? []).map(p => ({ ...p }))
 		};
 	};
 	static createPowerRoll = (data: { characteristic?: Characteristic | Characteristic[] } & Pick<PowerRoll, 'tier1' | 'tier2' | 'tier3'> & Partial<Pick<PowerRoll, 'bonus'>>): PowerRoll => {

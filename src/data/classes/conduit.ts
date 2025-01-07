@@ -103,6 +103,8 @@ Additionally, you can gain more piety by praying to the gods — but beware! Doi
 						effect: 'The target can spend a Recovery.',
 						spend: [
 							{
+								value: 1,
+								repeatable: true,
 								effect: `
 For each piety spent, you can choose one of the following enhancements:
 • You can target one additional ally within distance.

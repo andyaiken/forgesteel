@@ -122,7 +122,7 @@ export const AbilityPanel = (props: Props) => {
 										label={(
 											<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
 												<span>Spend</span>
-												{spend.value ? <HeroicResourceBadge value={spend.value} /> : null}
+												{spend.value ? <HeroicResourceBadge value={spend.value} repeatable={spend.repeatable} /> : null}
 											</div>
 										)}
 										value={<Markdown text={spend.effect} useSpan={true} />}

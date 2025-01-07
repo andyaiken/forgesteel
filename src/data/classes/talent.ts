@@ -689,6 +689,8 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								effect: 'You slide the target up to a number of squares equal to your Reason score.',
 								spend: [
 									{
+										value: 2,
+										repeatable: true,
 										effect: 'The size of the creature or object you can target increases by 1 for every 2 clarity you spend.'
 									},
 									{

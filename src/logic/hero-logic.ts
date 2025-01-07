@@ -154,7 +154,18 @@ export class HeroLogic {
 				});
 
 			Collections.distinct(choices.map(a => a.cost), a => a)
-				.sort((a, b) => a - b)
+				.sort((a, b) => {
+					if (a === 'signature' && b === 'signature') {
+						return 0;
+					}
+					if (a === 'signature') {
+						return -1;
+					}
+					if (b === 'signature') {
+						return 1;
+					}
+					return a - b;
+				})
 				.forEach(cost => abilities.push(...Collections.sort(choices.filter(a => a.cost === cost), a => a.name)));
 		}
 

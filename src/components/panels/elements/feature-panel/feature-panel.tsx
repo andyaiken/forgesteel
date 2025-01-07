@@ -2,6 +2,7 @@ import { Alert, Select, Space } from 'antd';
 import { Feature, FeatureAbilityCostData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
+import { Badge } from '../../../controls/badge/badge';
 import { Collections } from '../../../../utils/collections';
 import { DomainPanel } from '../domain-panel/domain-panel';
 import { FeatureType } from '../../../../enums/feature-type';
@@ -25,7 +26,7 @@ import './feature-panel.scss';
 
 interface Props {
 	feature: Feature | Perk;
-	cost?: number;
+	cost?: number | 'signature';
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
@@ -1015,7 +1016,7 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<div className='feature-panel' id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
-				<HeaderText ribbon={props.cost ? <HeroicResourceBadge value={props.cost} /> : null} tags={tags}>
+				<HeaderText ribbon={props.cost === 'signature' ? <Badge>Signature</Badge> : props.cost ? <HeroicResourceBadge value={props.cost} /> : null} tags={tags}>
 					{props.feature.name || 'Unnamed Feature'}
 				</HeaderText>
 				<Markdown text={props.feature.description} />

@@ -20,7 +20,7 @@ import './ability-panel.scss';
 interface Props {
 	ability: Ability;
 	hero?: Hero;
-	cost?: number;
+	cost?: number | 'signature';
 	options?: Options;
 	mode?: PanelMode;
 	tags?: string[];
@@ -31,7 +31,7 @@ export const AbilityPanel = (props: Props) => {
 	const cost = useMemo(
 		() => {
 			const cost = props.cost ?? props.ability.cost;
-			if (cost <= 0 || !props.hero) {
+			if (cost === 'signature' || cost <= 0 || !props.hero) {
 				return cost;
 			}
 			const modifierSum = HeroLogic.getFeatures(props.hero)
@@ -45,14 +45,15 @@ export const AbilityPanel = (props: Props) => {
 		[ props.cost, props.ability, props.hero ]
 	);
 	const headerRibbon = useMemo(
-		() => props.ability.signature
+		() => cost === 'signature'
 			? (<Badge>Signature</Badge>)
 			: cost > 0 ? (<HeroicResourceBadge value={cost} />) : null,
-		[ props.ability, cost ]
+		[ cost ]
 	);
 	const disabled = useMemo(
 		() => (props.options?.dimUnavailableAbilities ?? false)
 			&& props.hero
+			&& cost !== 'signature'
 			&& cost > props.hero.state.heroicResource,
 		[ props.hero, props.options, cost ]
 	);

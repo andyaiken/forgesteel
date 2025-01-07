@@ -346,7 +346,7 @@ export class FactoryLogic {
 		};
 	};
 
-	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number, signature?: boolean, preEffect?: string, powerRoll?: PowerRoll, effect?: string, strained?: string, alternateEffects?: string[], spend?: { value?: number, effect: string }[], persistence?: { value?: number, effect: string }[] }): Ability => {
+	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number | 'signature', preEffect?: string, powerRoll?: PowerRoll, effect?: string, strained?: string, alternateEffects?: string[], spend?: { value?: number, effect: string }[], persistence?: { value?: number, effect: string }[] }): Ability => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -356,7 +356,6 @@ export class FactoryLogic {
 			distance: data.distance || [],
 			target: data.target || '',
 			cost: data.cost || 0,
-			signature: data.signature ?? false,
 			preEffect: data.preEffect || '',
 			powerRoll: data.powerRoll || null,
 			effect: data.effect || '',

@@ -223,7 +223,8 @@ export class FactoryLogic {
 			description: '',
 			echelon: 1,
 			prerequisites: '',
-			features: []
+			features: [],
+			selectedFeatureID: ''
 		};
 	};
 

@@ -5,4 +5,5 @@ export interface Title extends Element {
 	echelon: number;
 	prerequisites: string;
 	features: Feature[];
+	selectedFeatureID: string;
 }

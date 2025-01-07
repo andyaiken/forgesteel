@@ -110,7 +110,7 @@ export interface FeaturePerkData extends _FeatureData {
 	count: number;
 	selected: Perk[];
 };
-export type FeaturePerk = FeatureOf<FeatureType.Perk, FeaturePerkData | null>;
+export type FeaturePerk = FeatureOf<FeatureType.Perk, FeaturePerkData>;
 
 export interface FeatureSizeData extends _FeatureData {
 	size: Size;

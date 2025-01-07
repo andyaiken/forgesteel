@@ -102,14 +102,20 @@ export class FeatureLogic {
 				case FeatureType.Choice:
 					feature.data.selected.forEach(addFeature);
 					break;
+				case FeatureType.DomainFeature:
+					feature.data.selected.forEach(addFeature);
+					break;
 				case FeatureType.Kit:
 					feature.data.selected.forEach(kit => kit.features.forEach(addFeature));
 					break;
 				case FeatureType.Multiple:
 					feature.data.features.forEach(addFeature);
 					break;
+				case FeatureType.Perk:
+					feature.data.selected.forEach(addFeature);
+					break;
 				case FeatureType.Title:
-					feature.data.selected.forEach(title => title.features.forEach(addFeature));
+					feature.data.selected.forEach(title => title.features.filter(f => f.id === title.selectedFeatureID).forEach(addFeature));
 					break;
 			}
 		};

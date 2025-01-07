@@ -642,12 +642,12 @@ Choose one of the following effects:
 					level: 2,
 					features: [
 						FactoryLogic.feature.createChoice({
-							id: 'troubadour-sub-2-1-1',
+							id: 'troubadour-sub-2-2-1',
 							options: [
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'troubadour-sub-2-1-1a',
+											id: 'troubadour-sub-2-2-1a',
 											name: 'Guest Star',
 											description: 'We offered them a percentage of the gross. So they’re working for free!',
 											type: FactoryLogic.type.createAction(),
@@ -663,7 +663,7 @@ Choose one of the following effects:
 								{
 									feature: FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
-											id: 'troubadour-sub-2-1-1b',
+											id: 'troubadour-sub-2-2-1b',
 											name: 'Twist at the End',
 											description: 'You didn’t see that coming, did you?!',
 											type: FactoryLogic.type.createAction(),

@@ -21,12 +21,9 @@ export const MainLayout = (props: Props) => {
 				<Outlet />
 			</div>
 			<div className='main-footer'>
-				<div className='main-footer-section'>
+				<div className='main-footer-section legal'>
 					<img className='ds-logo' src={pbds} />
-				</div>
-				<div className='main-footer-section'>
-					FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC.
-					DRAW STEEL © 2024 MCDM Productions, LLC.
+					FORGE STEEL is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC. DRAW STEEL © 2024 MCDM Productions, LLC.
 				</div>
 				<div className='main-footer-section navigation-buttons'>
 					<Button type='text' title='Heroes' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()} />

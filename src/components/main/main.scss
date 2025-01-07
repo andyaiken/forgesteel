@@ -24,10 +24,14 @@
 			display: flex;
 			align-items: center;
 
-			.ds-logo {
-				margin-bottom: -3px;
-				height: 30px;
-				border-radius: 5px;
+			&.legal {
+				gap: 10px;
+
+				.ds-logo {
+					margin-bottom: -3px;
+					height: 30px;
+					border-radius: 5px;
+				}
 			}
 
 			&.navigation-buttons {

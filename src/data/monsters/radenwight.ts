@@ -5,7 +5,6 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterRoleType } from '../../enums/monster-role-type';
-import { PowerRollType } from '../../enums/power-roll-type';
 
 export const radenwight: MonsterGroup = {
 	id: 'monster-group-radenwight',
@@ -59,15 +58,16 @@ If radenwights’ enemies expect them to scurry away like rats, they will be pai
 		FactoryLogic.feature.createMalice({
 			id: 'radenwight-malice-3',
 			name: 'Wall of Rats',
-			description: `
-A 10 wall of living rats scurrying atop one another in a coordinated manner appears in unoccupied spaces anywhere on the encounter map and lasts until the end of the encounter. The wall doesn’t block line of eﬀect for radenwights and their allies, but it does for other creatures, as the rats coordinate their movements with the radenwights. Each square of the wall has 10 Stamina. If the last radenwight in the encounter dies and the wall is still standing, the rats let out a hideous screech as they disperse. Each enemy on the encounter map must then make an Intuition resistance roll.
-
-| Roll    | Effect                                                                                                                                                           |
-|:--------|:----------------|
-| 11 -    | 10 sonic damage |
-| 12 - 16 | 5 sonic damage  |
-| 17 +    | No effect       |`,
-			cost: 7
+			description: 'A 10 wall of living rats scurrying atop one another in a coordinated manner appears in unoccupied spaces anywhere on the encounter map and lasts until the end of the encounter. The wall doesn’t block line of eﬀect for radenwights and their allies, but it does for other creatures, as the rats coordinate their movements with the radenwights. Each square of the wall has 10 Stamina. If the last radenwight in the encounter dies and the wall is still standing, the rats let out a hideous screech as they disperse. Each enemy on the encounter map must then make an Intuition resistance roll.',
+			cost: 7,
+			sections: [
+				FactoryLogic.createPowerRoll({
+					characteristic: Characteristic.Intuition,
+					tier1: '10 sonic damage',
+					tier2: '5 sonic damage',
+					tier3: 'No effect'
+				})
+			]
 		})
 	],
 	monsters: [
@@ -476,11 +476,10 @@ A 10 wall of living rats scurrying atop one another in a coordinated manner appe
 						distance: [ FactoryLogic.distance.createRanged() ],
 						target: 'Two enemies',
 						powerRoll: FactoryLogic.createPowerRoll({
-							type: PowerRollType.Resistance,
-							characteristic: [ Characteristic.Presence ],
-							tier1: 'Slowed (MGT ends)',
-							tier2: 'Slowed (EoT)',
-							tier3: 'No effect'
+							bonus: 3,
+							tier1: 'P<1 slowed (save ends)',
+							tier2: 'P<2 slowed (save ends)',
+							tier3: 'P<3 slowed (save ends)'
 						}),
 						spend: [
 							{

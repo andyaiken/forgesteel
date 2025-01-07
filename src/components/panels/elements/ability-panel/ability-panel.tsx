@@ -1,5 +1,6 @@
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
+import { AbilityPowerRollPanel } from '../../power-roll/ability-power-roll-panel';
 import { FeatureAbilityCostData } from '../../../../models/feature';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
@@ -10,7 +11,6 @@ import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroicResourceBadge } from '../../../controls/heroic-resource-badge/heroic-resource-badge';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { PowerRollPanel } from '../../power-roll/power-roll-panel';
 import { Tag } from 'antd';
 import { Utils } from '../../../../utils/utils';
 
@@ -75,7 +75,7 @@ export const AbilityPanel = (props: Props) => {
 							{props.ability.preEffect ? <div dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.ability.preEffect) }} /> : null}
 							{
 								props.ability.powerRoll ?
-									<PowerRollPanel
+									<AbilityPowerRollPanel
 										powerRoll={props.ability.powerRoll}
 										ability={props.ability}
 										hero={props.hero}

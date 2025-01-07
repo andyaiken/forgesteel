@@ -1,6 +1,6 @@
-import { Ability, AbilityDistance, AbilityType, PowerRoll } from '../models/ability';
+import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitle } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitle } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
@@ -13,6 +13,7 @@ import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { DamageModifier } from '../models/damage-modifier';
 import { Domain } from '../models/domain';
+import type { Element } from '../models/element';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { FormatLogic } from './format-logic';
@@ -25,7 +26,7 @@ import { MonsterRoleType } from '../enums/monster-role-type';
 import { Perk } from '../models/perk';
 import { PerkList } from '../enums/perk-list';
 import { Playbook } from '../models/playbook';
-import { PowerRollType } from '../enums/power-roll-type';
+import { PowerRoll } from '../models/power-roll';
 import { Size } from '../models/size';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
@@ -369,16 +370,16 @@ export class FactoryLogic {
 			persistence: data.persistence ? data.persistence.map(p => ({ value: p.value || 0, effect: p.effect })) : []
 		};
 	};
-
-	static createPowerRoll = (data: { type?: PowerRollType, characteristic?: Characteristic[], bonus?: number, tier1: string, tier2: string, tier3: string }) => {
+	static createPowerRoll = (data: { characteristic?: Characteristic | Characteristic[] } & Pick<PowerRoll, 'tier1' | 'tier2' | 'tier3'> & Partial<Pick<PowerRoll, 'bonus'>>): PowerRoll => {
 		return {
-			type: data.type || PowerRollType.PowerRoll,
-			characteristic: data.characteristic || [],
-			bonus: data.bonus || 0,
+			characteristic: data.characteristic
+				? Array.isArray(data.characteristic) ? data.characteristic : [ data.characteristic ]
+				: [],
+			bonus: data.bonus ?? 0,
 			tier1: data.tier1,
 			tier2: data.tier2,
 			tier3: data.tier3
-		} as PowerRoll;
+		};
 	};
 
 	static type = {
@@ -498,7 +499,7 @@ export class FactoryLogic {
 				data: null
 			};
 		},
-		createAbility: (data: { ability: Ability }): FeatureAbility => {
+		createAbility: (data: FeatureAbilityData): FeatureAbility => {
 			return {
 				id: data.ability.id,
 				name: data.ability.name,
@@ -651,14 +652,15 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createMalice: (data: { id: string, name: string, description: string, cost: number }): FeatureMalice => {
+		createMalice: (data: Element & FeatureMaliceData): FeatureMalice => {
 			return {
 				id: data.id,
 				name: data.name,
 				description: data.description,
 				type: FeatureType.Malice,
 				data: {
-					cost: data.cost
+					cost: data.cost,
+					sections: data.sections
 				}
 			};
 		},

@@ -9,6 +9,7 @@ import { Kit } from './kit';
 import { KitType } from '../enums/kit';
 import { Perk } from './perk';
 import { PerkList } from '../enums/perk-list';
+import { PowerRoll } from './power-roll';
 import { Size } from './size';
 import { SkillList } from '../enums/skill-list';
 import { Title } from './title';
@@ -95,6 +96,7 @@ export type FeatureLanguageChoice = FeatureOf<FeatureType.LanguageChoice, Featur
 
 export interface FeatureMaliceData extends _FeatureData {
 	cost: number;
+	sections?: (string | PowerRoll)[];
 };
 export type FeatureMalice = FeatureOf<FeatureType.Malice, FeatureMaliceData>;
 

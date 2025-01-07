@@ -190,6 +190,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			stability: 0,
 			freeStrikeDamage: 1,
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 0, -1),
+			withCaptain: 'Edge on strikes',
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

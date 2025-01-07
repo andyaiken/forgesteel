@@ -282,7 +282,7 @@ export const AbilityEditPanel = (props: Props) => {
 
 	const addSpend = () => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.spend.push({ effect: '', value: 1 });
+		copy.spend.push({ effect: '', value: 1, repeatable: false });
 		setAbility(copy);
 		props.onChange(copy);
 	};

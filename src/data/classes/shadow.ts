@@ -411,6 +411,8 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 								effect: 'You teleport up to 5 squares. If you have concealment or cover at your destination, you can use the Hide maneuver even if you are observed. If you hide using this maneuver, you gain a surge.',
 								spend: [
 									{
+										value: 1,
+										repeatable: true,
 										effect: 'You teleport 1 additional square for each insight spent.'
 									}
 								]
@@ -428,6 +430,8 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 								effect: 'You halve the damage, then can teleport up to 4 squares after the triggering effect resolves.',
 								spend: [
 									{
+										value: 1,
+										repeatable: true,
 										effect: 'You teleport 1 additional square for each insight spent.'
 									}
 								]
@@ -515,6 +519,8 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 								effect: 'You gain two surges. Whenever you use a surge before the end of the encounter, you can choose to have its damage be poison damage.',
 								spend: [
 									{
+										value: 1,
+										repeatable: true,
 										effect: 'For each insight you spend, you gain an additional surge.'
 									}
 								]

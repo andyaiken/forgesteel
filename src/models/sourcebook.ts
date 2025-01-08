@@ -31,3 +31,6 @@ export interface Sourcebook extends Element {
 	skills: Skill[];
 	languages: Language[];
 }
+
+export type SourcebookElementsKey = 'ancestries' | 'cultures' | 'careers' | 'classes' | 'complications' | 'kits' | 'domains' | 'perks' | 'titles' | 'items' | 'monsterGroups';
+export type SourcebookElementKind = 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'kit' | 'domain' | 'perk' | 'title' | 'item' | 'monster-group';

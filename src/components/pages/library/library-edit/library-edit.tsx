@@ -4,6 +4,7 @@ import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../d
 import { Feature, FeatureAbility, FeatureMalice } from '../../../../models/feature';
 import { KitArmor, KitType, KitWeapon } from '../../../../enums/kit';
 import { Monster, MonsterGroup } from '../../../../models/monster';
+import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { useMemo, useState } from 'react';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../../../panels/edit/ability-edit-panel/ability-edit-panel';
@@ -48,8 +49,6 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { SourcebookElementKind } from '../../../../models/sourcebook-element-kind';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { SubClass } from '../../../../models/subclass';
 import { Title } from '../../../../models/title';
@@ -1208,12 +1207,15 @@ export const LibraryEditPage = (props: Props) => {
 				id: Utils.guid(),
 				name: '',
 				level: 1,
-				role: {
-					type: MonsterRoleType.Ambusher,
-					organization: MonsterOrganizationType.Band
-				},
+				role: FactoryLogic.createMonsterRole(MonsterRoleType.Ambusher, MonsterOrganizationType.Platoon),
 				keywords: [],
-				encounterValue: 0
+				encounterValue: 0,
+				size: FactoryLogic.createSize(1, 'M'),
+				speed: FactoryLogic.createSpeed(5),
+				stamina: 5,
+				freeStrikeDamage: 2,
+				characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 0, 0),
+				features: []
 			}));
 			setElement(copy);
 			setDirty(true);

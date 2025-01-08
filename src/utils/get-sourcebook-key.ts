@@ -1,5 +1,4 @@
-import type { SourcebookElementKind } from '../models/sourcebook-element-kind';
-import type { SourcebookElementsKey } from '../models/sourcebook-elements-key';
+import { SourcebookElementKind, SourcebookElementsKey } from '../models/sourcebook';
 
 export function getSourcebookKey(kind: SourcebookElementKind): SourcebookElementsKey {
 	switch (kind) {

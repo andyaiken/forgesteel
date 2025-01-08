@@ -31,8 +31,6 @@ export interface Monster extends Element {
 	features: Feature[];
 };
 
-export type MonsterOptionalProps = 'description' | 'size' | 'speed' | 'stamina' | 'stability' | 'freeStrikeDamage' | 'characteristics' | 'withCaptain' | 'features';
-
 export interface MonsterGroup extends Element {
 	information: Element[];
 	malice: (FeatureMalice | FeatureAbility)[];

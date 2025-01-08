@@ -2,7 +2,7 @@ import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
 import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitle } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
-import { Monster, MonsterGroup, MonsterOptionalProps, MonsterRole } from '../models/monster';
+import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
@@ -22,6 +22,7 @@ import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 import { KitType } from '../enums/kit';
 import { MonsterFilter } from '../models/monster-filter';
+import { MonsterLogic } from './monster-logic';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Perk } from '../models/perk';
@@ -249,45 +250,39 @@ export class FactoryLogic {
 		};
 	};
 
-	static createMonster = (data: Omit<Monster, MonsterOptionalProps> & Partial<Pick<Monster, MonsterOptionalProps>>): Monster => {
+	static createMonster = (data: {
+		id: string,
+		name: string,
+		description?: string,
+		level: number,
+		role: MonsterRole,
+		keywords: string[],
+		encounterValue: number,
+		size: Size,
+		speed: { value: number, modes: string },
+		stamina: number,
+		stability?: number,
+		freeStrikeDamage: number,
+		characteristics: { characteristic: Characteristic, value: number }[],
+		withCaptain?: string,
+		features: Feature[]
+	}): Monster => {
 		return {
-			description: '',
-			size: {
-				value: 1,
-				mod: 'M'
-			},
-			speed: {
-				value: 5,
-				modes: ''
-			},
-			stamina: 5,
-			stability: 0,
-			freeStrikeDamage: 2,
-			characteristics: [
-				{
-					characteristic: Characteristic.Might,
-					value: 0
-				},
-				{
-					characteristic: Characteristic.Agility,
-					value: 0
-				},
-				{
-					characteristic: Characteristic.Reason,
-					value: 0
-				},
-				{
-					characteristic: Characteristic.Intuition,
-					value: 0
-				},
-				{
-					characteristic: Characteristic.Presence,
-					value: 0
-				}
-			],
-			withCaptain: '',
-			features: [],
-			...data
+			id: data.id || Utils.guid(),
+			name: data.name || '',
+			description: data.description || '',
+			level: data.level || 1,
+			role: data.role || FactoryLogic.createMonsterRole(MonsterRoleType.Ambusher, MonsterOrganizationType.Platoon),
+			keywords: data.keywords || [],
+			encounterValue: data.encounterValue || 0,
+			size: data.size || FactoryLogic.createSize(1, 'M'),
+			speed: data.speed || FactoryLogic.createSpeed(5),
+			stamina: data.stamina || 5,
+			stability: data.stability || 0,
+			freeStrikeDamage: data.freeStrikeDamage || 2,
+			characteristics: data.characteristics || MonsterLogic.createCharacteristics(0, 0, 0, 0, 0),
+			withCaptain: data.withCaptain || '',
+			features: data.features || []
 		};
 	};
 
@@ -346,7 +341,24 @@ export class FactoryLogic {
 		};
 	};
 
-	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number | 'signature', minLevel?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, strained?: string, alternateEffects?: string[], spend?: { name?: string, value: number, repeatable?: boolean, effect: string }[], persistence?: { value: number, effect: string }[] }): Ability => {
+	static createAbility = (data: {
+		id: string,
+		name: string,
+		description?: string,
+		type: AbilityType,
+		keywords?: AbilityKeyword[],
+		distance: AbilityDistance[],
+		target: string,
+		cost?: number | 'signature',
+		minLevel?: number,
+		preEffect?: string,
+		powerRoll?: PowerRoll,
+		effect?: string,
+		strained?: string,
+		alternateEffects?: string[],
+		spend?: { name?: string, value: number, repeatable?: boolean, effect: string }[],
+		persistence?: { value: number, effect: string }[]
+	}): Ability => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -367,7 +379,13 @@ export class FactoryLogic {
 		};
 	};
 
-	static createPowerRoll = (data: { characteristic?: Characteristic | Characteristic[] } & Pick<PowerRoll, 'tier1' | 'tier2' | 'tier3'> & Partial<Pick<PowerRoll, 'bonus'>>): PowerRoll => {
+	static createPowerRoll = (data: {
+		characteristic?: Characteristic | Characteristic[],
+		bonus?: number,
+		tier1: string,
+		tier2: string,
+		tier3: string
+	}): PowerRoll => {
 		return {
 			characteristic: data.characteristic
 				? Array.isArray(data.characteristic) ? data.characteristic : [ data.characteristic ]

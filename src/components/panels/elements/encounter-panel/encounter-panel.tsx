@@ -5,7 +5,6 @@ import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { MonsterLogic } from '../../../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Playbook } from '../../../../models/playbook';
@@ -41,8 +40,8 @@ export const EncounterPanel = (props: Props) => {
 									let name = (monster && monsterGroup) ? MonsterLogic.getMonsterName(monster, monsterGroup) : 'Unknown Monster';
 
 									let count = slot.count;
-									if (monster && monster.role.organization === MonsterOrganizationType.Minion) {
-										count *= 8;
+									if (monster) {
+										count *= MonsterLogic.getRoleMultiplier(monster.role.organization);
 									}
 									if (count > 1) {
 										name += ` (x${count})`;

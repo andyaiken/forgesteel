@@ -1,4 +1,4 @@
-import type { SourcebookElementKind } from '../models/sourcebook-element-kind';
+import { SourcebookElementKind } from '../models/sourcebook';
 import { useNavigate } from 'react-router';
 
 export const useNavigation = () => {

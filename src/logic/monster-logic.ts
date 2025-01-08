@@ -53,6 +53,15 @@ export class MonsterLogic {
 		return true;
 	};
 
+	static getRoleMultiplier = (organization: MonsterOrganizationType) => {
+		switch (organization) {
+			case MonsterOrganizationType.Minion:
+				return 8;
+		}
+
+		return 1;
+	};
+
 	static getCharacteristic = (monster: Monster, characteristic: Characteristic) => {
 		const ch = monster.characteristics.find(ch => ch.characteristic === characteristic);
 		if (ch) {

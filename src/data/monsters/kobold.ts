@@ -499,8 +499,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier3: '7 damage; M<2 restrained (save ends)'
 						}),
 						spend: [
-							// TODO: effect title 'Then We Light the Net on Fire!'
-							{ value: 3, effect: 'Each creature and object restrained by this ability takes 2 fire damage at the start of each of their turns until the condition ends.' }
+							{ name: 'Then We Light the Net on Fire!', value: 3, effect: 'Each creature and object restrained by this ability takes 2 fire damage at the start of each of their turns until the condition ends.' }
 						]
 					})
 				}),

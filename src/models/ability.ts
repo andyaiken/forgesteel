@@ -32,6 +32,6 @@ export interface Ability extends Element {
 	effect: string;
 	strained: string;
 	alternateEffects: string[];
-	spend: { value: number, repeatable: boolean, effect: string }[];
+	spend: { name: string, value: number, repeatable: boolean, effect: string }[];
 	persistence: { value: number, effect: string }[];
 }

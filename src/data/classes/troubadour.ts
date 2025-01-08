@@ -96,7 +96,7 @@ You still gain drama during combat if you are dead as long as your body is intac
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'troubadour-1-10',
-					cost: 0
+					cost: 'signature'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'troubadour-1-11',

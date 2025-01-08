@@ -306,6 +306,8 @@ export class SourcebookData {
 			{ name: 'Alchemy', description: 'Make bombs and potions.', list: SkillList.Crafting },
 			{ name: 'Architecture', description: 'Create buildings and vehicles.', list: SkillList.Crafting },
 			{ name: 'Blacksmithing', description: 'Forge metal armor and weapons.', list: SkillList.Crafting },
+			{ name: 'Carpentry', description: 'Create items out of wood.', list: SkillList.Crafting },
+			{ name: 'Cooking', description: 'Create delicious dishes.', list: SkillList.Crafting },
 			{ name: 'Fletching', description: 'Make ranged weapons and ammunition.', list: SkillList.Crafting },
 			{ name: 'Forgery', description: 'Create false badges, documents, and other items.', list: SkillList.Crafting },
 			{ name: 'Jewelry', description: 'Create bracelets, crowns, rings, and other jewelry.', list: SkillList.Crafting },
@@ -355,7 +357,8 @@ export class SourcebookData {
 			{ name: 'Psionics', description: 'Knowing about psionic places, spells, rituals, items, and phenomena.', list: SkillList.Lore },
 			{ name: 'Religion', description: 'Knowing about religious mythology, practices, and rituals.', list: SkillList.Lore },
 			{ name: 'Rumors', description: 'Knowing gossip, legends, and uncertain truths.', list: SkillList.Lore },
-			{ name: 'Society', description: 'Knowing noble etiquette and the leadership and power dynamics of noble families.', list: SkillList.Lore }
+			{ name: 'Society', description: 'Knowing noble etiquette and the leadership and power dynamics of noble families.', list: SkillList.Lore },
+			{ name: 'Strategy', description: 'Knowing about battle tactics and logistics.', list: SkillList.Lore }
 		],
 		languages: []
 	};

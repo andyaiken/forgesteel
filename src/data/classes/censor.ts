@@ -201,7 +201,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			name: 'Behold, a Shield of Faith!',
 			description: '“Allow me to intercede.”',
 			type: FactoryLogic.type.createAction(),
-			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,

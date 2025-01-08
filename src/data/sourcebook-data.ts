@@ -14,6 +14,7 @@ import { dragonKnight } from './ancestries/dragon-knight';
 import { dwarf } from './ancestries/dwarf';
 import { elementalist } from './classes/elementalist';
 import { fury } from './classes/fury';
+import { goblin } from './monsters/goblin';
 import { hakaan } from './ancestries/hakaan';
 import { highElf } from './ancestries/elf-high';
 import { human } from './ancestries/human';
@@ -296,6 +297,7 @@ export class SourcebookData {
 		titles: [],
 		items: [],
 		monsterGroups: [
+			goblin,
 			radenwight
 		],
 		skills: [

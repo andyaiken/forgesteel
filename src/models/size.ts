@@ -1,4 +1,4 @@
 export interface Size {
 	value: number;
-	mod: string;
+	mod: 'T' | 'S' | 'M' | 'L' | '';
 };

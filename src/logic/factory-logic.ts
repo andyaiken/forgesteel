@@ -298,7 +298,7 @@ export class FactoryLogic {
 		};
 	};
 
-	static createSize = (value: number, mod?: string): Size => {
+	static createSize = (value: number, mod?: 'T' | 'S' | 'M' | 'L' | ''): Size => {
 		return {
 			value: value,
 			mod: mod || ''
@@ -698,7 +698,7 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createSize: (data: { id: string, name?: string, description?: string, sizeValue: number, sizeMod: string }): FeatureSize => {
+		createSize: (data: { id: string, name?: string, description?: string, sizeValue: number, sizeMod: 'T' | 'S' | 'M' | 'L' }): FeatureSize => {
 			return {
 				id: data.id,
 				name: data.name || 'Size',

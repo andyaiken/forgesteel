@@ -188,7 +188,7 @@ export const AbilityEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setCost = (value: number) => {
+	const setCost = (value: number | 'signature') => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
 		copy.cost = value;
 		setAbility(copy);
@@ -542,12 +542,15 @@ export const AbilityEditPanel = (props: Props) => {
 										value={ability.target}
 										onChange={e => setTarget(e.target.value)}
 									/>
-									<HeaderText>Cost</HeaderText>
-									<Toggle label='Signature' value={ability.cost === 'signature'} onChange={value => ability.cost = value ? 'signature' : 0} />
+									<HeaderText>Signature</HeaderText>
+									<Toggle label='Signature' value={ability.cost === 'signature'} onChange={value => setCost(value ? 'signature' : 0)} />
 									{
-										ability.cost === 'signature'
-											? null
-											: <NumberSpin min={0} value={ability.cost} onChange={setCost} />
+										ability.cost !== 'signature' ?
+											<>
+												<HeaderText>Cost</HeaderText>
+												<NumberSpin min={0} value={ability.cost} onChange={setCost} />
+											</>
+											: null
 									}
 								</div>
 							)

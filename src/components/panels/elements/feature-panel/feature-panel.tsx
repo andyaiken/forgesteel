@@ -359,6 +359,25 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableLanguageChoice = (data: FeatureLanguageChoiceData) => {
+		const currentLanguages: string[] = [];
+		if (props.hero) {
+			HeroLogic.getFeatures(props.hero)
+				.filter(f => f.id !== props.feature.id)
+				.forEach(f => {
+					switch (f.type) {
+						case FeatureType.Language:
+							currentLanguages.push(f.data.language);
+							break;
+						case FeatureType.LanguageChoice:
+							currentLanguages.push(...f.data.selected);
+							break;
+					}
+				});
+			if (props.hero.culture) {
+				currentLanguages.push(...props.hero.culture.languages);
+			}
+		}
+
 		const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
 		const sortedLanguages = Collections.sort(languages, l => l.name);
 
@@ -382,8 +401,8 @@ export const FeaturePanel = (props: Props) => {
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder={data.count === 1 ? 'Select a language' : 'Select languages'}
-					options={sortedLanguages.map(l => ({ label: l.name, value: l.name, desc: l.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					options={sortedLanguages.map(l => ({ label: l.name, value: l.name, desc: l.description, disabled: currentLanguages.includes(l.name) }))}
+					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
 					onChange={value => {
 						let ids: string[] = [];
@@ -400,37 +419,16 @@ export const FeaturePanel = (props: Props) => {
 					}}
 				/>
 				{
-					data.selected.map((l, n) => {
-						if (props.hero) {
-							const selected = HeroLogic.getFeatures(props.hero)
-								.filter(f => f.id !== props.feature.id)
-								.some(f => {
-									switch (f.type) {
-										case FeatureType.Language: {
-											const data = f.data as FeatureLanguageData;
-											return data.language === l;
-										}
-										case FeatureType.LanguageChoice: {
-											const data = f.data as FeatureLanguageChoiceData;
-											return data.selected.includes(l);
-										}
-									}
-
-									return false;
-								}) || (props.hero.culture && props.hero.culture.languages.includes(l));
-							if (selected) {
-								return (
-									<Alert
-										key={n}
-										type='warning'
-										showIcon={true}
-										message={`You have already chosen ${l}.`}
-									/>
-								);
-							}
-						}
-						return null;
-					})
+					data.selected
+						.filter(l => currentLanguages.includes(l))
+						.map((l, n) => (
+							<Alert
+								key={n}
+								type='warning'
+								showIcon={true}
+								message={`You have already chosen ${l}.`}
+							/>
+						))
 				}
 			</div>
 		);
@@ -486,11 +484,30 @@ export const FeaturePanel = (props: Props) => {
 						}
 					}}
 				/>
+				{
+					data.selected.map(p => <PerkPanel key={p.id} perk={p} mode={PanelMode.Full} />)
+				}
 			</Space>
 		);
 	};
 
 	const getEditableSkillChoice = (data: FeatureSkillChoiceData) => {
+		const currentSkills: string[] = [];
+		if (props.hero) {
+			HeroLogic.getFeatures(props.hero)
+				.filter(f => f.id !== props.feature.id)
+				.forEach(f => {
+					switch (f.type) {
+						case FeatureType.Skill:
+							currentSkills.push(f.data.skill);
+							break;
+						case FeatureType.SkillChoice:
+							currentSkills.push(...f.data.selected);
+							break;
+					}
+				});
+		}
+
 		const skills = SourcebookLogic.getSkills(props.sourcebooks as Sourcebook[])
 			.filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
 		const sortedSkills = Collections.sort(skills, s => s.name);
@@ -515,8 +532,8 @@ export const FeaturePanel = (props: Props) => {
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder={data.count === 1 ? 'Select a skill' : 'Select skills'}
-					options={sortedSkills.map(s => ({ label: s.name, value: s.name, desc: s.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					options={sortedSkills.map(s => ({ label: s.name, value: s.name, desc: s.description, disabled: currentSkills.includes(s.name) }))}
+					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
 					onChange={value => {
 						let ids: string[] = [];
@@ -533,37 +550,16 @@ export const FeaturePanel = (props: Props) => {
 					}}
 				/>
 				{
-					data.selected.map((s, n) => {
-						if (props.hero) {
-							const selected = HeroLogic.getFeatures(props.hero)
-								.filter(f => f.id !== props.feature.id)
-								.some(f => {
-									switch (f.type) {
-										case FeatureType.Skill: {
-											const data = f.data as FeatureSkillData;
-											return data.skill === s;
-										}
-										case FeatureType.SkillChoice: {
-											const data = f.data as FeatureSkillChoiceData;
-											return data.selected.includes(s);
-										}
-									}
-
-									return false;
-								});
-							if (selected) {
-								return (
-									<Alert
-										key={n}
-										type='warning'
-										showIcon={true}
-										message={`You have already chosen ${s}.`}
-									/>
-								);
-							}
-						}
-						return null;
-					})
+					data.selected
+						.filter(s => currentSkills.includes(s))
+						.map((s, n) => (
+							<Alert
+								key={n}
+								type='warning'
+								showIcon={true}
+								message={`You have already chosen ${s}.`}
+							/>
+						))
 				}
 			</div>
 		);

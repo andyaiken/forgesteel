@@ -516,7 +516,7 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 	static feytouched: Complication = {
 		id: 'comp-feytouched',
 		name: 'Feytouched',
-		description: 'Your birth was attended by faeries. A friendly fairy blessed you, granting you strength so that you could defend yourself. An unfriendly fairy also blessed you, granting you',
+		description: 'Your birth was attended by faeries. A friendly fairy blessed you, granting you strength so that you could defend yourself. An unfriendly fairy also blessed you, granting you a life full of peril so that you could prove your strength.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-feytouched-b',

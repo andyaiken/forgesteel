@@ -551,17 +551,18 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureClassAbilityData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Signature</HeaderText>
 						<Toggle label='Signature' value={data.cost === 'signature'} onChange={value => setAbilityCost(value ? 'signature' : 0)} />
 						{
 							data.cost !== 'signature' ?
 								<>
 									<HeaderText>Cost</HeaderText>
 									<NumberSpin min={1} value={data.cost} onChange={setAbilityCost} />
-									<HeaderText>Count</HeaderText>
-									<NumberSpin min={1} value={data.count} onChange={setAbilityCost} />
 								</>
 								: null
 						}
+						<HeaderText>Count</HeaderText>
+						<NumberSpin min={1} value={data.count} onChange={setCount} />
 					</Space>
 				);
 			}

@@ -747,6 +747,7 @@ const CareerSection = (props: CareerSectionProps) => {
 						value={props.hero.career.incitingIncidents.selectedID}
 						onChange={props.selectIncitingIncident}
 					/>
+					{props.hero.career.incitingIncidents.options.filter(i => i.id === props.hero.career!.incitingIncidents.selectedID).map(i => <Field key={i.id} label={i.name} value={i.description} />)}
 				</SelectablePanel>
 			);
 		}

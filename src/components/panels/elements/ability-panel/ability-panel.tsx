@@ -97,8 +97,15 @@ export const AbilityPanel = (props: Props) => {
 									/>
 									: null
 							}
+							{
+								props.ability.test
+									? (<>
+										<p><b>Effect</b> Each target makes a <b>{props.ability.test.characteristic.join(' or ')} test.</b></p>
+										<TestPanel test={props.ability.test} />
+									</>)
+									: null
+							}
 							{props.ability.effect ? <Markdown text={props.ability.effect} /> : null}
-							{props.ability.test ? <TestPanel test={props.ability.test} /> : null}
 							{
 								props.ability.strained ?
 									<Field

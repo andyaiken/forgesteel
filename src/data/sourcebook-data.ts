@@ -31,6 +31,7 @@ import { tactician } from './classes/tactician';
 import { talent } from './classes/talent';
 import { timeRaider } from './ancestries/time-raider';
 import { troubadour } from './classes/troubadour';
+import { werewolf } from './monsters/werewolf';
 import { wodeElf } from './ancestries/elf-wode';
 
 export class SourcebookData {
@@ -302,7 +303,8 @@ export class SourcebookData {
 			goblin,
 			kobold,
 			radenwight,
-			lordSyuul
+			lordSyuul,
+			werewolf
 		],
 		skills: [
 			{ name: 'Alchemy', description: 'Make bombs and potions.', list: SkillList.Crafting },

@@ -317,8 +317,8 @@ export class FactoryLogic {
 			name: '',
 			roles: [],
 			organizations: [],
-			level: [ 1, 20 ],
-			ev: [ 0, 500 ]
+			level: [ 1, 10 ],
+			ev: [ 0, 120 ]
 		};
 	};
 

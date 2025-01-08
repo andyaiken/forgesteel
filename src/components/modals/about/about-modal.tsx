@@ -12,22 +12,29 @@ export const AboutModal = () => {
 			<Modal
 				content={
 					<div className='about-modal'>
-						<div className='ds-text'>
+						<p>
 							<b>FORGE STEEL</b> is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC.
-						</div>
-						<div className='ds-text'>
+						</p>
+						<p>
 							<b>DRAW STEEL</b> © 2024 <a href='https://mcdmproductions.com/' target='_blank'>MCDM Productions, LLC.</a>
-						</div>
+						</p>
 						<Divider />
-						<div className='ds-text'>
+						<p>
 							Designed by <a href='mailto:andy.aiken@live.co.uk'>Andy Aiken</a>.
-						</div>
-						<div className='ds-text'>
+						</p>
+						<p>
 							To suggest a new feature or improvement, or to report a bug, go <a href='https://github.com/andyaiken/forgesteel/issues' target='_blank'>here</a>.
-						</div>
-						<div className='ds-text'>
-							If you would like to contribute to this project, you can find the repository <a href='https://github.com/andyaiken/forgesteel' target='_blank'>here</a>.
-						</div>
+						</p>
+						<p>
+							If you would like to contribute to this project, you can find the code <a href='https://github.com/andyaiken/forgesteel' target='_blank'>here</a>.
+						</p>
+						<Divider />
+						<p>
+							<b>FORGE STEEL</b> is free.
+						</p>
+						<p>
+							If you really feel the need to show your appreciation, I'd be grateful if you would take whatever you feel the app is worth and donate it to a local mental health charity.
+						</p>
 						<Divider />
 						<Field label='Version' value={pkg.version} />
 					</div>

@@ -8,11 +8,12 @@
 	"scripts": {
 		"update": "npx npm-check-updates --interactive --format group",
 		"dev": "vite",
-		"lint": "tsc -b && eslint .",
+		"lint": "npm run type:check && eslint .",
 		"preview": "vite preview",
 		"build": "vite build",
-		"predeploy": "tsc -b && vite build",
-		"deploy": "gh-pages -d dist"
+		"predeploy": "npm run type:check && vite build",
+		"deploy": "gh-pages -d dist",
+		"type:check": "tsc -p tsconfig.node.json && tsc -p tsconfig.app.json"
 	},
 	"dependencies": {
 		"@ant-design/icons": "^5.5.2",

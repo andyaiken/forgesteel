@@ -346,7 +346,7 @@ export class FactoryLogic {
 		};
 	};
 
-	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number | 'signature', minLevel?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, strained?: string, alternateEffects?: string[], spend?: { value: number, repeatable?: boolean, effect: string }[], persistence?: { value: number, effect: string }[] }): Ability => {
+	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number | 'signature', minLevel?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, strained?: string, alternateEffects?: string[], spend?: { name?: string, value: number, repeatable?: boolean, effect: string }[], persistence?: { value: number, effect: string }[] }): Ability => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -362,7 +362,7 @@ export class FactoryLogic {
 			effect: data.effect || '',
 			strained: data.strained || '',
 			alternateEffects: data.alternateEffects || [],
-			spend: (data.spend ?? []).map(s => ({ ...s, repeatable: s.repeatable ?? false })),
+			spend: (data.spend ?? []).map(s => ({ ...s, name: s.name ?? '', repeatable: s.repeatable ?? false })),
 			persistence: (data.persistence ?? []).map(p => ({ ...p }))
 		};
 	};
@@ -446,13 +446,14 @@ export class FactoryLogic {
 	};
 
 	static distance = {
-		create: (data: { type: AbilityDistanceType, value: number, value2?: number, within?: number }): AbilityDistance => {
+		create: (data: { type: AbilityDistanceType, value: number, value2?: number, within?: number, qualifier?: string }): AbilityDistance => {
 			return {
 				type: data.type,
 				value: data.value,
 				value2: data.value2 || 0,
 				within: data.within || 0,
-				special: ''
+				special: '',
+				qualifier: data.qualifier ?? ''
 			};
 		},
 		createSelf: (): AbilityDistance => {
@@ -461,7 +462,8 @@ export class FactoryLogic {
 				value: 0,
 				value2: 0,
 				within: 0,
-				special: ''
+				special: '',
+				qualifier: ''
 			};
 		},
 		createMelee: (value = 1): AbilityDistance => {
@@ -470,7 +472,8 @@ export class FactoryLogic {
 				value: value,
 				value2: 0,
 				within: 0,
-				special: ''
+				special: '',
+				qualifier: ''
 			};
 		},
 		createRanged: (value = 10): AbilityDistance => {
@@ -479,7 +482,8 @@ export class FactoryLogic {
 				value: value,
 				value2: 0,
 				within: 0,
-				special: ''
+				special: '',
+				qualifier: ''
 			};
 		},
 		createSpecial: (special: string): AbilityDistance => {
@@ -488,7 +492,8 @@ export class FactoryLogic {
 				value: 0,
 				value2: 0,
 				within: 0,
-				special: special
+				special: special,
+				qualifier: ''
 			};
 		}
 	};

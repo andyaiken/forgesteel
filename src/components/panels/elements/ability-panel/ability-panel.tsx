@@ -121,7 +121,7 @@ export const AbilityPanel = (props: Props) => {
 										disabled={props.hero && (props.options?.dimUnavailableAbilities || false) && (spend.value > props.hero.state.heroicResource)}
 										label={(
 											<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
-												<span>Spend</span>
+												<span>{ spend.name || 'Spend' }</span>
 												{spend.value ? <HeroicResourceBadge value={spend.value} repeatable={spend.repeatable} /> : null}
 											</div>
 										)}

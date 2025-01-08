@@ -3,8 +3,7 @@
 ## Updating Forge Steel to Backer Packet #2
 
 * Add new feature type to allow Revenant to choose features from other ancestries
-* Revenants should have either 2 or 3 ancestry points depending on size
-* Elementalist has some abilities that can't be chosen until a particular level
+* Revenants should have 3 ancestry points if small
 
 ## Add monster data
 

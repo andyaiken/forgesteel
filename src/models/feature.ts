@@ -46,7 +46,8 @@ export interface FeatureChoiceData extends _FeatureData {
 export type FeatureChoice = FeatureOf<FeatureType.Choice, FeatureChoiceData>;
 
 export interface FeatureClassAbilityData extends _FeatureData {
-	cost: number;
+	cost: number | 'signature';
+	minLevel: number;
 	count: number;
 	selectedIDs: string[];
 }

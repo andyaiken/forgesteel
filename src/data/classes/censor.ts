@@ -93,7 +93,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'censor-1-8',
-					cost: 0
+					cost: 'signature'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'censor-1-9',
@@ -135,6 +135,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			name: 'Back, Blasphemer!',
 			description: 'You channel power through your weapon to repel foes.',
 			type: FactoryLogic.type.createAction(),
+			cost: 'signature',
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 1 }) ],
 			target: 'Each enemy in the area',
@@ -153,6 +154,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
 				tier1: '5 + P psychic damage',
@@ -169,6 +171,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '2 + m holy damage; P < weak, slowed (save ends)',
@@ -184,6 +187,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '3 + M holy damage',

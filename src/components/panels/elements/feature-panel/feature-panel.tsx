@@ -122,7 +122,7 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableClassAbility = (data: FeatureClassAbilityData) => {
-		const abilities = props.hero?.class?.abilities.filter(a => a.cost === data.cost) || [];
+		const abilities = props.hero?.class?.abilities.filter(a => a.cost === data.cost).filter(a => a.minLevel <= data.minLevel) || [];
 
 		const distinctAbilities = Collections.distinct(abilities, a => a.name);
 		const sortedAbilities = Collections.sort(distinctAbilities, a => a.name);
@@ -735,7 +735,7 @@ export const FeaturePanel = (props: Props) => {
 
 		if (!props.feature.description) {
 			return (
-				<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.cost > 0 ? `${data.cost}pt` : 'signature'} {data.count > 1 ? 'abilities' : 'ability'}.</div>
+				<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {(data.cost === 'signature') || (data.cost === 0) ? 'signature' : `${data.cost}pt`} {data.count > 1 ? 'abilities' : 'ability'}.</div>
 			);
 		}
 

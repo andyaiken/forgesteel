@@ -186,6 +186,7 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: 'Two creatures or objects',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '2 damage',
@@ -209,6 +210,7 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: 'One creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
 				tier1: '2 + P psychic damage; P < weak, bleeding (save ends)',
@@ -224,6 +226,7 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
 				tier1: '3 + P damage',
@@ -243,6 +246,7 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 				FactoryLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
 				tier1: '4 + P psychic damage',

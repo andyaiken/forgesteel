@@ -22,6 +22,7 @@ import { PerkList } from '../../../../enums/perk-list';
 import { SkillList } from '../../../../enums/skill-list';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -241,8 +242,14 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
-		const setCost = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureClassAbilityData | FeatureMaliceData;
+		const setAbilityCost = (value: number | 'signature') => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureClassAbilityData;
+			copy.cost = value;
+			setData(copy);
+		};
+
+		const setMaliceCost = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureMaliceData;
 			copy.cost = value;
 			setData(copy);
 		};
@@ -544,10 +551,17 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureClassAbilityData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Cost</HeaderText>
-						<NumberSpin min={1} value={data.cost} onChange={setCost} />
-						<HeaderText>Count</HeaderText>
-						<NumberSpin min={1} value={data.count} onChange={setCount} />
+						<Toggle label='Signature' value={data.cost === 'signature'} onChange={value => setAbilityCost(value ? 'signature' : 0)} />
+						{
+							data.cost !== 'signature' ?
+								<>
+									<HeaderText>Cost</HeaderText>
+									<NumberSpin min={1} value={data.cost} onChange={setAbilityCost} />
+									<HeaderText>Count</HeaderText>
+									<NumberSpin min={1} value={data.count} onChange={setAbilityCost} />
+								</>
+								: null
+						}
 					</Space>
 				);
 			}
@@ -682,7 +696,7 @@ export const FeatureEditPanel = (props: Props) => {
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Cost</HeaderText>
-						<NumberSpin min={1} value={data.cost} onChange={setCost} />
+						<NumberSpin min={1} value={data.cost} onChange={setMaliceCost} />
 					</Space>
 				);
 			}

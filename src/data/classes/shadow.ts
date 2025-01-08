@@ -70,7 +70,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'shadow-1-6',
-					cost: 0
+					cost: 'signature'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'shadow-1-7',
@@ -122,6 +122,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '3 + A damage',
@@ -141,6 +142,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				FactoryLogic.distance.createRanged(5)
 			],
 			target: '1 creature',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '3 + A damage',
@@ -160,6 +162,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				FactoryLogic.distance.createRanged(5)
 			],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '3 + A damage',
@@ -176,6 +179,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '3 + A damage',

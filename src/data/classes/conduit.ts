@@ -303,7 +303,7 @@ For each piety spent, you can choose one of the following enhancements:
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'conduit-1-9',
-					cost: 0,
+					cost: 'signature',
 					count: 2
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
@@ -356,6 +356,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
 				tier1: '3 + I holy damage',
@@ -372,6 +373,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
 				tier1: '2 + I corruption damage',
@@ -388,6 +390,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
 				tier1: '3 + I holy damage; vertical pull 2',
@@ -403,6 +406,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 			target: 'Each enemy in the area',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
 				tier1: '2 holy damage',
@@ -419,6 +423,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
 				tier1: '2 + I corruption damage',
@@ -435,6 +440,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
 				tier1: '3 + I holy damage; slide 1',
@@ -450,6 +456,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
 				tier1: '3 + I holy damage',
@@ -466,6 +473,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
 				tier1: '3 + I corruption damage; P < weak, the target takes a bane on their next power roll',

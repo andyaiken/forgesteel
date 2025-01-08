@@ -148,7 +148,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'null-1-9',
-					cost: 0,
+					cost: 'signature',
 					count: 2
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
@@ -205,6 +205,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 			target: 'Each enemy in the area',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '4 damage',
@@ -221,6 +222,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: 'Two creatures or objects',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '4 damage',
@@ -237,6 +239,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '5 + A damage',
@@ -253,6 +256,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '4 + A damage; A < weak, grabbed',
@@ -268,6 +272,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '4 + A damage; taunted (EoT)',
@@ -283,6 +288,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee(2) ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '5 + A psychic damage; vertical pull 1',
@@ -298,6 +304,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '4 + A damage; push 2',
@@ -314,6 +321,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
 				tier1: '4 + A damage; A < weak, weakened (save ends)',

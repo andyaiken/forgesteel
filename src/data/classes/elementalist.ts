@@ -222,7 +222,7 @@ Choose one of the following effects:
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'elementalist-1-9',
-					cost: 0,
+					cost: 'signature',
 					count: 2
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
@@ -244,7 +244,8 @@ Choose one of the following effects:
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'elementalist-2-2',
-					cost: 5
+					cost: 5,
+					minLevel: 2
 				})
 			]
 		},
@@ -267,6 +268,7 @@ Choose one of the following effects:
 			keywords: [ AbilityKeyword.Green, AbilityKeyword.Rot, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 + R corruption damage',
@@ -283,6 +285,7 @@ Choose one of the following effects:
 			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '2 creatures or objects',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 fire damage',
@@ -298,6 +301,7 @@ Choose one of the following effects:
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Void ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '3 + R corruption damage',
@@ -314,6 +318,7 @@ Choose one of the following effects:
 			keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 + R damage',
@@ -330,6 +335,7 @@ Choose one of the following effects:
 			keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '3 + R damage; push 2',
@@ -345,6 +351,7 @@ Choose one of the following effects:
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Void ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 + R corruption damage; R < weak, slowed (save ends)',
@@ -360,7 +367,7 @@ Choose one of the following effects:
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 10 }) ],
 			target: 'Each enemy in the area',
-			preEffect: '',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 damage',
@@ -377,6 +384,7 @@ Choose one of the following effects:
 			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 + R fire damage; push 2',
@@ -541,7 +549,6 @@ Choose one of the following effects:
 			}),
 			effect: 'You and each ally within the area can end one effect that is ended by a saving throw or that ends at the end of that creature’s turn.'
 		}),
-		// TODO: These abilities should be selectable at 2nd level only
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-17',
 			name: 'O Flower Aid, O Earth Defend',
@@ -551,6 +558,7 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 			target: 'Special',
 			cost: 5,
+			minLevel: 2,
 			effect: `
 Until the start of your next turn, the area gains the following effects:
 * You and each ally in the area can spend any number of Recoveries at the start of your turn once as a free maneuver.
@@ -572,6 +580,7 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 5,
+			minLevel: 2,
 			preEffect: 'The target uses their signature ability against a target of your choice. You then make a power roll against the target of this ability.',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -589,6 +598,7 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: 'Self or one ally',
 			cost: 5,
+			minLevel: 2,
 			preEffect: 'The target is teleported to another space within distance. Make a power roll that targets each enemy adjacent to the target’s new space.',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
@@ -606,6 +616,7 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature',
 			cost: 5,
+			minLevel: 2,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '5 + R fire damage; A < weak, restrained (save ends)',

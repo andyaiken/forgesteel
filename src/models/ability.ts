@@ -26,6 +26,7 @@ export interface Ability extends Element {
 	distance: AbilityDistance[];
 	target: string; // Creature, Object, Enemy, Ally, Self, All
 	cost: number | 'signature';
+	minLevel: number;
 	preEffect: string;
 	powerRoll: PowerRoll | null,
 	effect: string;

@@ -209,7 +209,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'talent-1-7',
-					cost: 0,
+					cost: 'signature',
 					count: 2
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
@@ -255,6 +255,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			keywords: [ AbilityKeyword.Chronopathy, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: 'One creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 + P corruption damage; P < weak, slowed (save ends)',
@@ -272,6 +273,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Fire, AbilityKeyword.Ranged, AbilityKeyword.Pyrokinesis ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 			target: 'Each enemy in the area',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 fire damage',
@@ -289,6 +291,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			keywords: [ AbilityKeyword.Cryokinesis, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: '1 creature',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 + R cold damage; M < weak, slowed (EoT)',
@@ -305,6 +308,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Telekinesis ],
 			distance: [ FactoryLogic.distance.createMelee(3) ],
 			target: 'One size 1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: 'Push 3',
@@ -322,6 +326,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Telepathy ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 			target: 'Each enemy in the area',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 psychic damage',
@@ -338,6 +343,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Resopathy, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: 'One creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '3 + R damage',
@@ -355,6 +361,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			keywords: [ AbilityKeyword.Metamorphosis, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: 'One creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '2 + R damage; M < weak, prone',
@@ -372,6 +379,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			keywords: [ AbilityKeyword.Animapathy, AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createMelee(2) ],
 			target: 'One creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
 				tier1: '3 + P damage',

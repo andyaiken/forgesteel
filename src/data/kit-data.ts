@@ -30,7 +30,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createRanged(5) ],
 					target: '1 creature or object',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 						tier1: '3 + A, R, I, or P fire damage',
@@ -68,7 +68,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 						tier1: '3 + M, R, I, or P damage; stability reduced by 2 (EoT)',
@@ -108,7 +108,7 @@ export class KitData {
 						FactoryLogic.distance.createRanged(5)
 					],
 					target: '1 creature',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 + M or A damage; you shift 1 square',
@@ -145,7 +145,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 damage',
@@ -183,7 +183,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '2 creatures or objects',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 damage',
@@ -220,7 +220,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage',
@@ -258,7 +258,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 damage + M or A damage',
@@ -296,7 +296,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature or object',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage',
@@ -334,7 +334,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 + M or A damage',
@@ -375,7 +375,7 @@ export class KitData {
 						FactoryLogic.distance.createRanged(5)
 					],
 					target: '1 creature',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 + M or A damage',
@@ -413,7 +413,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createRanged(5) ],
 					target: '1 creature',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 + M or A damage; A < [weak] slowed (save ends)',
@@ -450,7 +450,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createRanged(5) ],
 					target: '2 creatures or objects',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 damage',
@@ -487,7 +487,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 + M or A damage; A < [weak] slowed (EoT)',
@@ -524,7 +524,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage',
@@ -562,7 +562,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createRanged(5) ],
 					target: '1 creature',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage',
@@ -600,7 +600,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature or object',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 						tier1: '3 + M, R, I or P lightning damage',
@@ -638,7 +638,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage',
@@ -675,7 +675,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage',
@@ -713,7 +713,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '2 + M or A damage; push 1',
@@ -750,7 +750,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature or object',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 						tier1: '3 + M or A damage; vertical pull 1',
@@ -788,7 +788,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee(2) ],
 					target: '1 creature',
-					cost: 0,
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage; vertical pull 1',
@@ -827,6 +827,7 @@ export class KitData {
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '2 creatures or objects',
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
 						tier1: '2 damage; push 1',
@@ -883,6 +884,7 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '3 creatures or objects',
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
 						tier1: '4 damage',
@@ -944,6 +946,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '2 creatures or objects',
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
 						tier1: '4 damage',
@@ -1004,6 +1007,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature or object',
+					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
 						tier1: '5 damage',

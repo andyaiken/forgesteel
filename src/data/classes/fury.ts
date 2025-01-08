@@ -54,7 +54,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'fury-1-5',
-					cost: 0
+					cost: 'signature'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'fury-1-6',
@@ -94,6 +94,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '3 + M damage; push 1',
@@ -109,6 +110,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '2 + M damage',
@@ -125,6 +127,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature of your size or smaller',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '2 + M damage; M < weak, grabbed',
@@ -140,6 +143,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
+			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '3 + M damage',

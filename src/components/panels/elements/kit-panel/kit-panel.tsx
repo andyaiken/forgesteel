@@ -50,7 +50,10 @@ export const KitPanel = (props: Props) => {
 							}
 						</div>
 						:
-						<Field label='Uses' value={[ ...props.kit.armor, ...props.kit.weapon ].join(', ')} />
+						<div>
+							<Field label='Uses' value={[ ...props.kit.armor, ...props.kit.weapon ].join(', ')} />
+							<Field label='Features' value={props.kit.features.map(f => f.name).join(', ')} />
+						</div>
 				}
 			</div>
 		);

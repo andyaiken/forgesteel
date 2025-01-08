@@ -346,7 +346,7 @@ export class FactoryLogic {
 		};
 	};
 
-	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number | 'signature', preEffect?: string, powerRoll?: PowerRoll, effect?: string, strained?: string, alternateEffects?: string[], spend?: { value: number, repeatable?: boolean, effect: string }[], persistence?: { value: number, effect: string }[] }): Ability => {
+	static createAbility = (data: { id: string, name: string, description?: string, type: AbilityType, keywords?: AbilityKeyword[], distance: AbilityDistance[], target: string, cost?: number | 'signature', minLevel?: number, preEffect?: string, powerRoll?: PowerRoll, effect?: string, strained?: string, alternateEffects?: string[], spend?: { value: number, repeatable?: boolean, effect: string }[], persistence?: { value: number, effect: string }[] }): Ability => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -356,6 +356,7 @@ export class FactoryLogic {
 			distance: data.distance || [],
 			target: data.target || '',
 			cost: data.cost || 0,
+			minLevel: data.minLevel || 1,
 			preEffect: data.preEffect || '',
 			powerRoll: data.powerRoll || null,
 			effect: data.effect || '',
@@ -365,6 +366,7 @@ export class FactoryLogic {
 			persistence: (data.persistence ?? []).map(p => ({ ...p }))
 		};
 	};
+
 	static createPowerRoll = (data: { characteristic?: Characteristic | Characteristic[] } & Pick<PowerRoll, 'tier1' | 'tier2' | 'tier3'> & Partial<Pick<PowerRoll, 'bonus'>>): PowerRoll => {
 		return {
 			characteristic: data.characteristic
@@ -552,15 +554,16 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createClassAbilityChoice: (data: { id: string, name?: string, description?: string, cost: number, count?: number }): FeatureClassAbility => {
+		createClassAbilityChoice: (data: { id: string, name?: string, description?: string, cost: number | 'signature', minLevel?: number, count?: number }): FeatureClassAbility => {
 			const count = data.count || 1;
 			return {
 				id: data.id,
 				name: data.name || 'Ability',
-				description: data.description || `Choose ${count > 1 ? count : 'a'} ${data.cost === 0 ? 'signature' : `${data.cost}pt`} ${count > 1 ? 'abilities' : 'ability'}.`,
+				description: data.description || `Choose ${count > 1 ? count : 'a'} ${(data.cost === 0) || (data.cost === 'signature') ? 'signature' : `${data.cost}pt`} ${count > 1 ? 'abilities' : 'ability'}.`,
 				type: FeatureType.ClassAbility,
 				data: {
 					cost: data.cost,
+					minLevel: data.minLevel || 1,
 					count: count,
 					selectedIDs: []
 				}

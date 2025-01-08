@@ -756,25 +756,26 @@ Complex or time-consuming tests might require an action if made in combat—or c
 			case 1:
 				return 0;
 			case 2:
-				return 10;
+				return 16;
 			case 3:
-				return 25;
+				return 32;
 			case 4:
-				return 40;
+				return 48;
 			case 5:
-				return 55;
+				return 64;
 			case 6:
-				return 70;
+				return 80;
 			case 7:
-				return 85;
+				return 96;
 			case 8:
-				return 100;
+				return 112;
 			case 9:
-				return 115;
+				return 128;
 			case 10:
-			default:
-				return 130;
+				return 144;
 		}
+
+		return 0;
 	};
 
 	static canLevelUp = (hero: Hero) => {

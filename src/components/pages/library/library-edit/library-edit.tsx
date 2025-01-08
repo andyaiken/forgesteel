@@ -56,19 +56,20 @@ import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { getSourcebookKey } from '../../../../utils/get-sourcebook-key';
+import { useModals } from '../../../../hooks/use-modals';
+import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
 import './library-edit.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
-	showAbout: () => void;
-	showMonster: (monsterID: string) => void;
 	saveChanges: (sourcebookId: string, kind: SourcebookElementKind, element: Element) => void;
-	cancelChanges: (kind: SourcebookElementKind) => void;
 }
 
 export const LibraryEditPage = (props: Props) => {
+	const modals = useModals();
+	const navigation = useNavigation();
 	const { sourcebookId, kind, elementId } = useParams<{ sourcebookId: string, kind: SourcebookElementKind, elementId: string }>();
 	const [ subElementId, setSubElementId ] = useState<string>('');
 	const sourcebook = useMemo(() => props.sourcebooks.find(s => s.id === sourcebookId)!, [ sourcebookId, props.sourcebooks ]);
@@ -1315,7 +1316,7 @@ export const LibraryEditPage = (props: Props) => {
 						}
 
 						return (
-							<SelectablePanel key={m.id} onSelect={() => props.showMonster(monster.id)}>
+							<SelectablePanel key={m.id} onSelect={() => modals.showMonster(monster.id)}>
 								<MonsterPanel
 									monster={m}
 									monsterGroup={monsterGroup}
@@ -1710,16 +1711,11 @@ export const LibraryEditPage = (props: Props) => {
 	try {
 		return (
 			<div className='library-edit-page'>
-				<AppHeader
-					breadcrumbs={[
-						{ label: 'Library' }
-					]}
-					showAbout={props.showAbout}
-				>
+				<AppHeader breadcrumbs={[ { label: 'Library' } ]}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(sourcebookId!, kind!, element)}>
 						Save Changes
 					</Button>
-					<Button onClick={() => props.cancelChanges(kind!)}>
+					<Button onClick={() => navigation.goToLibraryList(kind!)}>
 						Cancel
 					</Button>
 				</AppHeader>

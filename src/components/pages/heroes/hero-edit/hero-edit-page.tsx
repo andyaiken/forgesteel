@@ -58,9 +58,7 @@ const matchElement = (element: Element, searchTerm: string) => {
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	showAbout: () => void;
 	saveChanges: (hero: Hero) => void;
-	cancelChanges: (heroId: string) => void;
 }
 
 export const HeroEditPage = (props: Props) => {
@@ -444,16 +442,11 @@ export const HeroEditPage = (props: Props) => {
 
 		return (
 			<div className='hero-edit-page'>
-				<AppHeader
-					breadcrumbs={[
-						{ label: 'Heroes' }
-					]}
-					showAbout={props.showAbout}
-				>
+				<AppHeader breadcrumbs={[ { label: 'Heroes' } ]}>
 					<Button type='primary' disabled={!dirty} onClick={saveChanges}>
 						Save Changes
 					</Button>
-					<Button onClick={() => props.cancelChanges(heroId!)}>
+					<Button onClick={() => navigation.goToHeroView(heroId!)}>
 						Cancel
 					</Button>
 				</AppHeader>

@@ -18,7 +18,7 @@ export class Utils {
 	};
 
 	static debounce = (func: () => void, delay = 500) => {
-		let timeout: ReturnType<typeof setTimeout>;
+		let timeout: number;
 		return () => {
 			clearTimeout(timeout);
 			timeout = setTimeout(func, delay);

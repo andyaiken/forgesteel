@@ -13,6 +13,7 @@ import { devil } from './ancestries/devil';
 import { dragonKnight } from './ancestries/dragon-knight';
 import { dwarf } from './ancestries/dwarf';
 import { elementalist } from './classes/elementalist';
+import { elfWode as elfWodeMonsterGroup } from './monsters/elf-wode';
 import { fury } from './classes/fury';
 import { goblin } from './monsters/goblin';
 import { hakaan } from './ancestries/hakaan';
@@ -300,6 +301,7 @@ export class SourcebookData {
 		titles: [],
 		items: [],
 		monsterGroups: [
+			elfWodeMonsterGroup,
 			goblin,
 			kobold,
 			radenwight,

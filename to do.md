@@ -10,7 +10,7 @@
   * [x] Kobolds
   * [ ] Dwarves
   * [ ] Elves, High
-  * [ ] Elves, Wode
+  * [x] Elves, Wode
   * [ ] Elves, Shadow
   * [ ] Gnolls
   * [ ] Hobgoblins

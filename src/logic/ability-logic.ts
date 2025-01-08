@@ -16,13 +16,15 @@ export class AbilityLogic {
 
 		const bonus = (hero && ability) ? HeroLogic.getDistanceBonus(hero, ability, distance) : 0;
 
-		let result = `${distance.type} ${distance.value + bonus}`;
-		if (distance.type === AbilityDistanceType.Line) {
-			result += `x${distance.value2 + bonus}`;
-		}
-		if (distance.within > 0) {
-			result += ` within ${distance.within}`;
-		}
+		const result = [
+			distance.type === AbilityDistanceType.Line
+				? `Line ${distance.value + bonus}x${distance.value2 + bonus}`
+				: `${distance.type} ${distance.value + bonus}`,
+			distance.within ? `within ${distance.within}` : undefined,
+			distance.qualifier
+				? `(${distance.qualifier})`
+				: undefined
+		].filter(x => x).join(' ');
 
 		return result;
 	};

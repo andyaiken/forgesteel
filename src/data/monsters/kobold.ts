@@ -570,8 +570,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						type: FactoryLogic.type.createAction(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						// TODO: qualifier '(while burrowing)'
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2, qualifier: 'while burrowing' }) ],
 						target: 'All creatures',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,

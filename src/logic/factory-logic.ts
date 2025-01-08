@@ -446,13 +446,14 @@ export class FactoryLogic {
 	};
 
 	static distance = {
-		create: (data: { type: AbilityDistanceType, value: number, value2?: number, within?: number }): AbilityDistance => {
+		create: (data: { type: AbilityDistanceType, value: number, value2?: number, within?: number, qualifier?: string }): AbilityDistance => {
 			return {
 				type: data.type,
 				value: data.value,
 				value2: data.value2 || 0,
 				within: data.within || 0,
-				special: ''
+				special: '',
+				qualifier: data.qualifier ?? ''
 			};
 		},
 		createSelf: (): AbilityDistance => {
@@ -461,7 +462,8 @@ export class FactoryLogic {
 				value: 0,
 				value2: 0,
 				within: 0,
-				special: ''
+				special: '',
+				qualifier: ''
 			};
 		},
 		createMelee: (value = 1): AbilityDistance => {
@@ -470,7 +472,8 @@ export class FactoryLogic {
 				value: value,
 				value2: 0,
 				within: 0,
-				special: ''
+				special: '',
+				qualifier: ''
 			};
 		},
 		createRanged: (value = 10): AbilityDistance => {
@@ -479,7 +482,8 @@ export class FactoryLogic {
 				value: value,
 				value2: 0,
 				within: 0,
-				special: ''
+				special: '',
+				qualifier: ''
 			};
 		},
 		createSpecial: (special: string): AbilityDistance => {
@@ -488,7 +492,8 @@ export class FactoryLogic {
 				value: 0,
 				value2: 0,
 				within: 0,
-				special: special
+				special: special,
+				qualifier: ''
 			};
 		}
 	};

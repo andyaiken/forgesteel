@@ -18,6 +18,7 @@ export interface AbilityDistance {
 	value2: number;
 	within: number;
 	special: string;
+	qualifier: string;
 }
 
 export interface Ability extends Element {

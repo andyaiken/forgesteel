@@ -88,11 +88,10 @@ However, any hero who has at least one psionic ability can use their maneuver to
 			freeStrikeDamage: 7,
 			characteristics: MonsterLogic.createCharacteristics(1, 3, 4, 4, 3),
 			features: [
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createSoloMonster({
 					id: 'lord-syuul-feature-1',
-					name: 'Solo Monster',
-					// TODO: Solo Monster feature
-					description: 'TODO: Solo Monster feature'
+					monsterName: 'Lord Syuul',
+					gender: 'masc'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

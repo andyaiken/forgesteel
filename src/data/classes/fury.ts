@@ -241,7 +241,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			id: 'fury-ability-10',
 			name: 'Make Peace With Your God!',
 			description: 'Anger is an energy.',
-			type: FactoryLogic.type.createManeuver(true),
+			type: FactoryLogic.type.createManeuver({ free: true }),
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 5,

@@ -410,13 +410,13 @@ export class FactoryLogic {
 				qualifiers: options?.qualifiers ?? []
 			};
 		},
-		createManeuver: (free = false): AbilityType => {
+		createManeuver: (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
 			return {
 				usage: AbilityUsage.Maneuver,
-				free: free,
+				free: options?.free ?? false,
 				trigger: '',
 				time: '',
-				qualifiers: []
+				qualifiers: options?.qualifiers ?? []
 			};
 		},
 		createMove: (free = false): AbilityType => {
@@ -691,6 +691,7 @@ export class FactoryLogic {
 				type: FeatureType.Malice,
 				data: {
 					cost: data.cost,
+					repeatable: data.repeatable,
 					sections: data.sections
 				}
 			};

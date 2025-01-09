@@ -820,7 +820,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								id: 'talent-sub-3-1-2',
 								name: 'Remote Assistance',
 								description: 'An ally gains the benefit of your intellect.',
-								type: FactoryLogic.type.createTrigger('One creature or object'),
+								type: FactoryLogic.type.createManeuver(),
 								keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged() ],
 								target: '1 creature or object',

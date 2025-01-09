@@ -410,13 +410,13 @@ export class FactoryLogic {
 				qualifiers: options?.qualifiers ?? []
 			};
 		},
-		createManeuver: (free = false): AbilityType => {
+		createManeuver: (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
 			return {
 				usage: AbilityUsage.Maneuver,
-				free: free,
+				free: options?.free ?? false,
 				trigger: '',
 				time: '',
-				qualifiers: []
+				qualifiers: options?.qualifiers ?? []
 			};
 		},
 		createMove: (free = false): AbilityType => {
@@ -691,6 +691,7 @@ export class FactoryLogic {
 				type: FeatureType.Malice,
 				data: {
 					cost: data.cost,
+					repeatable: data.repeatable,
 					sections: data.sections
 				}
 			};
@@ -710,7 +711,7 @@ export class FactoryLogic {
 			const count = data.count || 1;
 			const lists = data.lists || [];
 
-			const prefix = (lists.length > 0) ? `${lists.join(' / ')} ` : '';
+			const prefix = (lists.length > 0) && (lists.length < 6) ? `${lists.join(' / ')} ` : '';
 
 			return {
 				id: data.id,
@@ -754,7 +755,7 @@ export class FactoryLogic {
 			const options = data.options || [];
 			const listOptions = data.listOptions || [];
 
-			const prefix = (options.length === 0) && (listOptions.length > 0) ? `${listOptions.join(' / ')} ` : '';
+			const prefix = (listOptions.length < 5) ? ((options.length === 0) && (listOptions.length > 0) ? `${listOptions.join(' / ')} ` : '') : '';
 
 			return {
 				id: data.id,

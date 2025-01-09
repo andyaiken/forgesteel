@@ -1,6 +1,5 @@
 import type { PowerRoll } from '../../../models/power-roll';
 import { PowerRollPanel } from './power-roll-panel';
-import { useMemo } from 'react';
 
 interface Props {
 	test: PowerRoll;
@@ -8,10 +7,7 @@ interface Props {
 }
 
 export const TestPanel = (props: Props) => {
-	const header = useMemo(() => {
-		const characteristics = props.test.characteristic.join(' or ');
-		return characteristics ? `${characteristics} Test` : 'Test';
-	}, [ props.test ]);
+	const header = (props.test.characteristic.length > 0) ? `${props.test.characteristic.join(' or ')} Test` : 'Test';
 
 	return (
 		<PowerRollPanel

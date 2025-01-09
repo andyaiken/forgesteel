@@ -751,6 +751,19 @@ Complex or time-consuming tests might require an action if made in combat—or c
 		});
 	};
 
+	static calculatePotency = (hero: Hero, strength: 'weak' | 'average' | 'strong') => {
+		const value = hero.class ? Math.max(...hero.class.characteristics.map(c => c.value)) : 0;
+
+		switch (strength) {
+			case 'weak':
+				return value - 2;
+			case 'average':
+				return value - 1;
+			case 'strong':
+				return value;
+		}
+	};
+
 	static getMinXP = (level: number) => {
 		switch (level) {
 			case 1:

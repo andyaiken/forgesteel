@@ -521,6 +521,7 @@ export const MainLayout = ({
 						officialSourcebooks={officialSourcebooks}
 						homebrewSourcebooks={homebrewSourcebooks}
 						hiddenSourcebookIDs={hiddenSourcebookIDs}
+						heroes={heroes}
 						onHomebrewSourcebookChange={persistHomebrewSourcebooks}
 						onHiddenSourcebookIDsChange={persistHiddenSourcebookIDs}
 					/>;
@@ -530,6 +531,7 @@ export const MainLayout = ({
 		},
 		[
 			location,
+			heroes,
 			hiddenSourcebookIDs,
 			homebrewSourcebooks,
 			officialSourcebooks,

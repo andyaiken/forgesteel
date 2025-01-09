@@ -17,7 +17,7 @@ export const PerkPanel = (props: Props) => {
 	try {
 		return (
 			<div key={props.perk.id} className='perk-panel'>
-				<FeaturePanel feature={props.perk} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+				<FeaturePanel feature={props.perk} hero={props.hero} sourcebooks={props.sourcebooks} mode={props.mode} />
 			</div>
 		);
 	} catch (ex) {

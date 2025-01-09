@@ -3,6 +3,7 @@ import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { Collections } from '../utils/collections';
 import { Hero } from '../models/hero';
 import { HeroLogic } from './hero-logic';
+import { PowerRoll } from '../models/power-roll';
 
 export class AbilityLogic {
 	static getDistance = (distance: AbilityDistance, hero?: Hero, ability?: Ability) => {
@@ -40,5 +41,13 @@ export class AbilityLogic {
 
 		const length = descLength + preEffectLength + powerRollLength + effectLength + alternateLength + spendLength + persistLength;
 		return Math.max(1, Math.round(length / 20));
+	};
+
+	static usesPotency = (powerRoll: PowerRoll) => {
+		const match = (tier: string) => {
+			return /(<|>|=)\s*(weak|average|strong)/.test(tier);
+		};
+
+		return [ powerRoll.tier1, powerRoll.tier2, powerRoll.tier3 ].some(tier => match(tier));
 	};
 }

@@ -113,7 +113,9 @@
 		.hero-edit-page-content {
 			.hero-edit-content {
 				.hero-edit-content-column {
-					background-color: rgb(10, 10, 10);
+					&.choices {
+						background-color: rgb(10, 10, 10);
+					}
 
 					.random-btn {
 						color: rgba(255, 255, 255, 0.88);

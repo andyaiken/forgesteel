@@ -1,6 +1,7 @@
 import { Button, Divider, Space, Upload } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import { FactoryLogic } from '../../../logic/factory-logic';
+import { Hero } from '../../../models/hero';
 import { Modal } from '../modal/modal';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookPanel } from '../../panels/elements/sourcebook-panel/sourcebook-panel';
@@ -12,6 +13,7 @@ interface Props {
 	officialSourcebooks: Sourcebook[];
 	homebrewSourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
+	heroes: Hero[];
 	onHomebrewSourcebookChange: (Sourcebooks: Sourcebook[]) => Promise<void>;
 	onHiddenSourcebookIDsChange: (ids: string[]) => Promise<void>;
 }
@@ -75,6 +77,7 @@ export const SourcebooksModal = (props: Props) => {
 									key={s.id}
 									sourcebook={s}
 									visible={!hiddenSourcebookIDs.includes(s.id)}
+									heroes={props.heroes}
 									onSetVisible={setVisibility}
 									onChange={changeSourcebook}
 									onDelete={deleteSourcebook}

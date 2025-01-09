@@ -12,6 +12,7 @@ import { conduit } from './classes/conduit';
 import { devil } from './ancestries/devil';
 import { dragonKnight } from './ancestries/dragon-knight';
 import { dwarf } from './ancestries/dwarf';
+import { dwarf as dwarfMonsterGroup } from './monsters/dwarf';
 import { elementalist } from './classes/elementalist';
 import { elfWode as elfWodeMonsterGroup } from './monsters/elf-wode';
 import { fury } from './classes/fury';
@@ -301,7 +302,8 @@ export class SourcebookData {
 		titles: [],
 		items: [],
 		monsterGroups: [
-			elfWodeMonsterGroup,
+			dwarfMonsterGroup,
+      elfWodeMonsterGroup,
 			goblin,
 			kobold,
 			radenwight,

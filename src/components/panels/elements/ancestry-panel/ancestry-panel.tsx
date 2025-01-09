@@ -1,6 +1,5 @@
 import { Ancestry } from '../../../../models/ancestry';
 import { FeaturePanel } from '../feature-panel/feature-panel';
-import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Markdown } from '../../../controls/markdown/markdown';
@@ -26,7 +25,7 @@ export const AncestryPanel = (props: Props) => {
 					props.mode === PanelMode.Full ?
 						props.ancestry.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)
 						:
-						(props.ancestry.features.length > 0 ? <Field label='Features' value={props.ancestry.features.map(f => f.name).join(', ')} /> : null)
+						null
 				}
 			</div>
 		);

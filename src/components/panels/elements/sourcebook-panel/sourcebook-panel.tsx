@@ -4,6 +4,7 @@ import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Expander } from '../../../controls/expander/expander';
 import { HeaderText } from '../../../controls/header-text/header-text';
+import { Hero } from '../../../../models/hero';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
@@ -17,6 +18,7 @@ import './sourcebook-panel.scss';
 
 interface Props {
 	sourcebook: Sourcebook;
+	heroes: Hero[];
 	visible: boolean;
 	onSetVisible: (sourcebook: Sourcebook, visible: boolean) => void;
 	onChange: (sourcebook: Sourcebook) => void;
@@ -240,7 +242,7 @@ export const SourcebookPanel = (props: Props) => {
 				buttons = (
 					<>
 						<Button type='text' title='OK' icon={<CheckCircleOutlined />} onClick={toggleEditing} />
-						<DangerButton mode='icon' onConfirm={onDelete} />
+						<DangerButton disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='icon' onConfirm={onDelete} />
 					</>
 				);
 			}

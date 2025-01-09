@@ -8,7 +8,7 @@
   * [x] Radenwight
   * [x] Goblins
   * [x] Kobolds
-  * [ ] Dwarves
+  * [x] Dwarves
   * [ ] Elves, High
   * [ ] Elves, Wode
   * [ ] Elves, Shadow

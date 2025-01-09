@@ -58,15 +58,13 @@ export const FeatureEditPanel = (props: Props) => {
 		switch (value) {
 			case FeatureType.Ability:
 				data = {
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: Utils.guid(),
 						name: '',
-						description: '',
 						type: FactoryLogic.type.createAction(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: ''
-					})
+					}
 				};
 				break;
 			case FeatureType.AbilityCost:

@@ -29,6 +29,7 @@ import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Title } from '../../../../models/title';
 // import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
+import { useModals } from '../../../../hooks/use-modals';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
@@ -38,19 +39,6 @@ import './library-list.scss';
 interface Props {
 	sourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
-	showAbout: () => void;
-	showSourcebooks: () => void;
-	viewAncestry: (ancestry: Ancestry) => void;
-	viewCulture: (cultiure: Culture) => void;
-	viewCareer: (career: Career) => void;
-	viewClass: (heroClass: HeroClass) => void;
-	viewComplication: (complication: Complication) => void;
-	viewDomain: (domain: Domain) => void;
-	viewKit: (kit: Kit) => void;
-	viewPerk: (perk: Perk) => void;
-	viewTitle: (title: Title) => void;
-	viewItem: (item: Item) => void;
-	viewMonsterGroup: (monsterGroup: MonsterGroup) => void;
 	onCreateHomebrew: (type: SourcebookElementKind, sourcebookID: string | null) => void;
 	onImportHomebrew: (type: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 }
@@ -65,9 +53,10 @@ const useTabKey = (): [SourcebookElementKind, (tabKey: SourcebookElementKind) =>
 };
 
 export const LibraryListPage = (props: Props) => {
+	const modals = useModals();
 	const [ tabKey, setTabKey ] = useTabKey();
 	const [ previousTab, setPreviousTab ] = useState(tabKey);
-	const [ element, setElement ] = useState<SourcebookElementKind>('ancestry');
+	const [ element, setElement ] = useState<SourcebookElementKind>(tabKey);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? props.sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
 
@@ -201,7 +190,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(a => {
 						const item = (
-							<SelectablePanel key={a.id} onSelect={() => props.viewAncestry(a)}>
+							<SelectablePanel key={a.id} onSelect={() => modals.showAncestry(a.id)}>
 								<AncestryPanel ancestry={a} />
 							</SelectablePanel>
 						);
@@ -238,7 +227,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.viewCulture(c)}>
+							<SelectablePanel key={c.id} onSelect={() => modals.showCulture(c.id)}>
 								<CulturePanel culture={c} />
 							</SelectablePanel>
 						);
@@ -275,7 +264,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.viewCareer(c)}>
+							<SelectablePanel key={c.id} onSelect={() => modals.showCareer(c.id)}>
 								<CareerPanel career={c} />
 							</SelectablePanel>
 						);
@@ -313,7 +302,7 @@ export const LibraryListPage = (props: Props) => {
 					list.map(c => {
 
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.viewClass(c)}>
+							<SelectablePanel key={c.id} onSelect={() => modals.showClass(c.id)}>
 								<ClassPanel heroClass={c} />
 							</SelectablePanel>
 						);
@@ -350,7 +339,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.viewComplication(c)}>
+							<SelectablePanel key={c.id} onSelect={() => modals.showComplication(c.id)}>
 								<ComplicationPanel complication={c} />
 							</SelectablePanel>
 						);
@@ -387,7 +376,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(d => {
 						const item = (
-							<SelectablePanel key={d.id} onSelect={() => props.viewDomain(d)}>
+							<SelectablePanel key={d.id} onSelect={() => modals.showDomain(d.id)}>
 								<DomainPanel domain={d} />
 							</SelectablePanel>
 						);
@@ -424,7 +413,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(k => {
 						const item = (
-							<SelectablePanel key={k.id} onSelect={() => props.viewKit(k)}>
+							<SelectablePanel key={k.id} onSelect={() => modals.showKit(k.id)}>
 								<KitPanel kit={k} />
 							</SelectablePanel>
 						);
@@ -461,7 +450,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(p => {
 						const item = (
-							<SelectablePanel key={p.id} onSelect={() => props.viewPerk(p)}>
+							<SelectablePanel key={p.id} onSelect={() => modals.showPerk(p.id)}>
 								<PerkPanel perk={p} />
 							</SelectablePanel>
 						);
@@ -499,7 +488,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(t => {
 						const item = (
-							<SelectablePanel key={t.id} onSelect={() => props.viewTitle(t)}>
+							<SelectablePanel key={t.id} onSelect={() => modals.showTitle(t.id)}>
 								<TitlePanel title={t} />
 							</SelectablePanel>
 						);
@@ -536,7 +525,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(i => {
 						const item = (
-							<SelectablePanel key={i.id} onSelect={() => props.viewItem(i)}>
+							<SelectablePanel key={i.id} onSelect={() => modals.showItem(i.id)}>
 								<ItemPanel item={i} />
 							</SelectablePanel>
 						);
@@ -574,7 +563,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(mg => {
 						const item = (
-							<SelectablePanel key={mg.id} onSelect={() => props.viewMonsterGroup(mg)}>
+							<SelectablePanel key={mg.id} onSelect={() => modals.showMonsterGroup(mg.id)}>
 								<MonsterGroupPanel monsterGroup={mg} sourcebooks={props.sourcebooks} />
 							</SelectablePanel>
 						);
@@ -617,12 +606,7 @@ export const LibraryListPage = (props: Props) => {
 
 		return (
 			<div className='library-list-page'>
-				<AppHeader
-					breadcrumbs={[
-						{ label: 'Library' }
-					]}
-					showAbout={props.showAbout}
-				>
+				<AppHeader breadcrumbs={[ { label: 'Library' } ]}>
 					<Input
 						placeholder='Search'
 						allowClear={true}
@@ -690,7 +674,7 @@ export const LibraryListPage = (props: Props) => {
 							<DownOutlined />
 						</Button>
 					</Popover>
-					<Button onClick={props.showSourcebooks}>
+					<Button onClick={modals.showSourcebooks}>
 						Sourcebooks
 					</Button>
 				</AppHeader>

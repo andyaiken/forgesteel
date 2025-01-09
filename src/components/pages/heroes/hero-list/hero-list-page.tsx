@@ -5,28 +5,23 @@ import { Hero } from '../../../../models/hero';
 import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { useNavigation } from '../../../../hooks/use-navigation';
 
 import './hero-list-page.scss';
 
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	showAbout: () => void;
 	addHero: () => void;
-	importHero: (hero: Hero) => void;
-	viewHero: (heroID: string) => void;
+	importHero: (hero: Hero) => Promise<void>;
 }
 
 export const HeroListPage = (props: Props) => {
+	const navigation = useNavigation();
 	try {
 		return (
 			<div className='hero-list-page'>
-				<AppHeader
-					breadcrumbs={[
-						{ label: 'Heroes' }
-					]}
-					showAbout={props.showAbout}
-				>
+				<AppHeader breadcrumbs={[ { label: 'Heroes' } ]}>
 					<Button type='primary' icon={<PlusCircleOutlined />} onClick={props.addHero}>
 						Create A New Hero
 					</Button>
@@ -37,9 +32,10 @@ export const HeroListPage = (props: Props) => {
 						beforeUpload={file => {
 							file
 								.text()
-								.then(json => {
+								.then(async json => {
 									const hero = (JSON.parse(json) as Hero);
-									props.importHero(hero);
+									await props.importHero(hero);
+									navigation.goToHeroView(hero.id);
 								});
 							return false;
 						}}
@@ -50,7 +46,7 @@ export const HeroListPage = (props: Props) => {
 				<div className='hero-list-page-content'>
 					{
 						props.heroes.map(hero => (
-							<SelectablePanel key={hero.id} onSelect={() => props.viewHero(hero.id)}>
+							<SelectablePanel key={hero.id} onSelect={() => navigation.goToHeroView(hero.id)}>
 								<HeroPanel hero={hero} sourcebooks={props.sourcebooks} />
 							</SelectablePanel>
 						))

@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Input, Radio, Segmented, Select, Space } from 'antd';
+import { Alert, Button, Input, Radio, Segmented, Select, Space } from 'antd';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureBonusData, FeatureData } from '../../../../models/feature';
 import { ReactNode, useMemo, useState } from 'react';
@@ -15,11 +15,7 @@ import { Complication } from '../../../../models/complication';
 import { ComplicationPanel } from '../../../panels/elements/complication-panel/complication-panel';
 import { Culture } from '../../../../models/culture';
 import { CulturePanel } from '../../../panels/elements/culture-panel/culture-panel';
-import { DangerButton } from '../../../controls/danger-button/danger-button';
-import { DropdownButton } from '../../../controls/dropdown-button/dropdown-button';
 import { Element } from '../../../../models/element';
-import { Expander } from '../../../controls/expander/expander';
-import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeatureField } from '../../../../enums/feature-field';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeaturePanel } from '../../../panels/elements/feature-panel/feature-panel';
@@ -29,16 +25,14 @@ import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
+import { HeroCustomizePanel } from '../../../panels/hero-customize/hero-customize-panel';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { PerkList } from '../../../../enums/perk-list';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { SkillList } from '../../../../enums/skill-list';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
-import { Utils } from '../../../../utils/utils';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
@@ -1094,8 +1088,6 @@ const DetailsSection = (props: DetailsSectionProps) => {
 						value={props.hero.settingIDs}
 						onChange={props.setSettingIDs}
 					/>
-				</div>
-				<div className='hero-edit-content-column choices' id='details-features'>
 					{
 						props.hero.features.filter(f => f.id === 'default-language').map(f => (
 							<FeaturePanel
@@ -1108,58 +1100,15 @@ const DetailsSection = (props: DetailsSectionProps) => {
 							/>
 						))
 					}
-					{
-						props.hero.features.filter(f => f.id !== 'default-language').map(f => (
-							<Expander
-								key={f.id}
-								title={f.name}
-								extra={[
-									<DangerButton key='delete' mode='icon' onConfirm={() => props.deleteFeature(f)} />
-								]}
-							>
-								<FeaturePanel
-									feature={f}
-									hero={props.hero}
-									sourcebooks={props.sourcebooks}
-									mode={PanelMode.Full}
-									setData={props.setFeatureData}
-								/>
-							</Expander>
-						))
-					}
-					<Divider />
-					<DropdownButton
-						label='Add a new feature'
-						items={[
-							{ key: FeatureType.LanguageChoice, label: <div className='ds-text centered-text'>Language</div> },
-							{ key: FeatureType.Perk, label: <div className='ds-text centered-text'>Perk</div> },
-							{ key: FeatureType.SkillChoice, label: <div className='ds-text centered-text'>Skill</div> }
-						]}
-						onClick={key => {
-							let feature = null;
-							switch (key) {
-								case FeatureType.LanguageChoice:
-									feature = FactoryLogic.feature.createLanguageChoice({
-										id: Utils.guid()
-									});
-									break;
-								case FeatureType.Perk:
-									feature = FactoryLogic.feature.createPerk({
-										id: Utils.guid(),
-										lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ]
-									});
-									break;
-								case FeatureType.SkillChoice:
-									feature = FactoryLogic.feature.createSkillChoice({
-										id: Utils.guid(),
-										listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
-									});
-									break;
-							}
-							if (feature) {
-								props.addFeature(feature);
-							}
-						}}
+				</div>
+				<div className='hero-edit-content-column choices' id='details-features'>
+					<HeaderText>Customize</HeaderText>
+					<HeroCustomizePanel
+						hero={props.hero}
+						sourcebooks={props.sourcebooks}
+						addFeature={props.addFeature}
+						setFeatureData={props.setFeatureData}
+						deleteFeature={props.deleteFeature}
 					/>
 				</div>
 			</div>

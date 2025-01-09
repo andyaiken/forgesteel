@@ -415,6 +415,7 @@ export const MainLayout = ({
 				case 'conditions':
 					return <HeroStateModal
 						hero={hero}
+						sourcebooks={sourcebooks}
 						startPage={heroPage}
 						onChange={onHeroChange}
 						onLevelUp={async () => {

@@ -303,7 +303,7 @@ export class SourcebookData {
 		items: [],
 		monsterGroups: [
 			dwarfMonsterGroup,
-      elfWodeMonsterGroup,
+			elfWodeMonsterGroup,
 			goblin,
 			kobold,
 			radenwight,

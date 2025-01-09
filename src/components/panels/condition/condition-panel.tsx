@@ -1,7 +1,6 @@
 import { Button, Select, Space } from 'antd';
 import { CheckCircleOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
-import { Characteristic } from '../../../enums/characteristic';
 import { Condition } from '../../../models/hero';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { Markdown } from '../../controls/markdown/markdown';
@@ -37,15 +36,6 @@ export const ConditionPanel = (props: Props) => {
 		}
 	};
 
-	const setConditionResist = (characteristic: Characteristic) => {
-		if (props.onChange) {
-			const copy = JSON.parse(JSON.stringify(condition)) as Condition;
-			copy.resistCharacteristic = characteristic;
-			setCondition(copy);
-			props.onChange(copy);
-		}
-	};
-
 	const deleteCondition = () => {
 		if (props.onDelete) {
 			props.onDelete(condition);
@@ -53,11 +43,6 @@ export const ConditionPanel = (props: Props) => {
 	};
 
 	try {
-		let ends = condition.ends.toString();
-		if (condition.ends === ConditionEndType.ResistanceEnds) {
-			ends = `${condition.resistCharacteristic} resistance ends`;
-		}
-
 		return (
 			<div className='condition-panel'>
 				{
@@ -74,24 +59,15 @@ export const ConditionPanel = (props: Props) => {
 							<Select
 								style={{ width: '100%' }}
 								placeholder='Select'
-								options={[ ConditionEndType.EndOfTurn, ConditionEndType.EndOfEncounter, ConditionEndType.ResistanceEnds ].map(o => ({ label: o, value: o }))}
+								options={[ ConditionEndType.EndOfTurn, ConditionEndType.EndOfEncounter, ConditionEndType.SaveEnds ].map(o => ({ label: o, value: o }))}
 								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 								value={condition.ends}
 								onChange={setConditionEndType}
 							/>
-							<Select
-								style={{ width: '100%' }}
-								placeholder='Select'
-								disabled={condition.ends !== ConditionEndType.ResistanceEnds}
-								options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(o => ({ label: o, value: o }))}
-								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-								value={condition.resistCharacteristic}
-								onChange={setConditionResist}
-							/>
 						</Space>
 						:
 						<div>
-							<div className='ds-text'>{condition.type} ({ends})</div>
+							<div className='ds-text bold-text'>{condition.type} ({condition.ends})</div>
 							<Markdown text={ConditionLogic.getDescription(condition.type)} />
 						</div>
 				}

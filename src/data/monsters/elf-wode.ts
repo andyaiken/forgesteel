@@ -804,7 +804,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					description: 'The wodenelg’s rider has damage immunity 2.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'elf-wode-13-feature-4',
+					id: 'elf-wode-13-feature-5',
 					name: 'Shared Glamor',
 					description: 'If the wodenelg’s rider has the Masking Glamor or Hunter’s Glamor trait, they also gain the trait’s benefits.'
 				})

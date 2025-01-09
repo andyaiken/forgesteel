@@ -148,9 +148,11 @@ export const SourcebookPanel = (props: Props) => {
 						onChange={e => setName(e.target.value)}
 					/>
 					<Expander title='Description'>
+						<HeaderText>Description</HeaderText>
 						<MultiLine label='Description' value={sourcebook.description} onChange={setDescription} />
 					</Expander>
 					<Expander title='Languages'>
+						<HeaderText>Languages</HeaderText>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							{
 								sourcebook.languages.map((lang, n) => (
@@ -190,6 +192,7 @@ export const SourcebookPanel = (props: Props) => {
 						</Space>
 					</Expander>
 					<Expander title='Skills'>
+						<HeaderText>Skills</HeaderText>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							{
 								sourcebook.skills.map((skill, n) => (

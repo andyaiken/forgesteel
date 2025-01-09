@@ -20,3 +20,13 @@
 		padding-left: 10px;
 	}
 }
+
+@media (prefers-color-scheme: dark) {
+	.sourcebook-panel {
+		.action-buttons {
+			button {
+				color: rgb(255, 255, 255);
+			}
+		}
+	}	
+}

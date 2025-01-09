@@ -4,7 +4,6 @@ import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { Characteristic } from '../../../../enums/characteristic';
-import { ConditionEndType } from '../../../../enums/condition-type';
 import { ConditionLogic } from '../../../../logic/condition-logic';
 import { CultureData } from '../../../../data/culture-data';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
@@ -354,14 +353,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						props.hero.state.conditions.map(c => (
 							<div key={c.id} className='condition-tile' onClick={() => modals.showHeroState(props.hero.id, 'conditions')}>
-								<HeaderText>
-									{
-										(c.ends === ConditionEndType.ResistanceEnds) ?
-											`${c.type}: ${c.resistCharacteristic} resistance ends`
-											:
-											`${c.type}: ${c.ends}`
-									}
-								</HeaderText>
+								<HeaderText>{c.type}: {c.ends}</HeaderText>
 								<div className='ds-text'>{ConditionLogic.getDescription(c.type)}</div>
 							</div>
 						))

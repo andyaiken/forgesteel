@@ -29,15 +29,16 @@ interface Props {
 }
 
 export const AbilityPanel = (props: Props) => {
+	// const abilityWithDefaults = useMemo(() => )
 	const cost = useMemo(
 		() => {
 			const cost = props.cost ?? props.ability.cost;
-			if (cost === 'signature' || cost <= 0 || !props.hero) {
+			if (cost === 'signature' || !cost || !props.hero) {
 				return cost;
 			}
 			const modifierSum = HeroLogic.getFeatures(props.hero)
 				.filter(f => f.type === FeatureType.AbilityCost)
-				.filter(f => f.data.keywords.every(k => props.ability.keywords.includes(k)))
+				.filter(f => f.data.keywords.every(k => props.ability.keywords?.includes(k)))
 				.map(f => f.data.modifier)
 				.reduce((sum, m) => sum + m, 0);
 
@@ -48,13 +49,14 @@ export const AbilityPanel = (props: Props) => {
 	const headerRibbon = useMemo(
 		() => cost === 'signature'
 			? (<Badge>Signature</Badge>)
-			: cost > 0 ? (<HeroicResourceBadge value={cost} />) : null,
+			: cost ? (<HeroicResourceBadge value={cost} />) : null,
 		[ cost ]
 	);
 	const disabled = useMemo(
 		() => (props.options?.dimUnavailableAbilities ?? false)
 			&& props.hero
 			&& cost !== 'signature'
+			&& cost
 			&& cost > props.hero.state.heroicResource,
 		[ props.hero, props.options, cost ]
 	);
@@ -74,7 +76,7 @@ export const AbilityPanel = (props: Props) => {
 					props.mode === PanelMode.Full ?
 						<div>
 							{
-								props.ability.keywords.length > 0 ?
+								props.ability.keywords?.length ?
 									<Field label='Keywords' value={props.ability.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} />
 									: null
 							}
@@ -112,7 +114,7 @@ export const AbilityPanel = (props: Props) => {
 									: null
 							}
 							{
-								props.ability.alternateEffects.map((effect, n) => (
+								props.ability.alternateEffects?.map((effect, n) => (
 									<Field
 										key={n}
 										label='Alternate Effect'
@@ -121,7 +123,7 @@ export const AbilityPanel = (props: Props) => {
 								))
 							}
 							{
-								props.ability.spend.map((spend, n) => (
+								props.ability.spend?.map((spend, n) => (
 									<Field
 										key={n}
 										disabled={props.hero && (props.options?.dimUnavailableAbilities || false) && (spend.value > props.hero.state.heroicResource)}
@@ -136,7 +138,7 @@ export const AbilityPanel = (props: Props) => {
 								))
 							}
 							{
-								props.ability.persistence.map((persist, n) => (
+								props.ability.persistence?.map((persist, n) => (
 									<Field
 										key={n}
 										label={(

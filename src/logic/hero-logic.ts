@@ -164,7 +164,7 @@ export class HeroLogic {
 					if (b === 'signature') {
 						return 1;
 					}
-					return a - b;
+					return (a ?? 0) - (b ?? 0);
 				})
 				.forEach(cost => abilities.push(...Collections.sort(choices.filter(a => a.cost === cost), a => a.name)));
 		}
@@ -627,7 +627,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 		let value2 = 0;
 		let value3 = 0;
 
-		if (ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon)) {
+		if (ability.keywords?.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon)) {
 			// Add maximum from kits
 			const kits = this.getKits(hero);
 			value1 += Collections.max(kits.map(kit => kit.meleeDamage?.tier1 || 0), value => value) || 0;
@@ -651,7 +651,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 		let value2 = 0;
 		let value3 = 0;
 
-		if (ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon)) {
+		if (ability.keywords?.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon)) {
 			// Add maximum from kits
 			const kits = this.getKits(hero);
 			value1 += Collections.max(kits.map(kit => kit.rangedDamage?.tier1 || 0), value => value) || 0;
@@ -673,12 +673,12 @@ Complex or time-consuming tests might require an action if made in combat—or c
 	static getDistanceBonus = (hero: Hero, ability: Ability, distance: AbilityDistance) => {
 		const kits = this.getKits(hero);
 
-		if (ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon) && (distance.type === AbilityDistanceType.Melee)) {
+		if (ability.keywords?.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon) && (distance.type === AbilityDistanceType.Melee)) {
 			// Add maximum melee distance bonus from kits
 			return Collections.max(kits.map(kit => kit.meleeDistance), value => value) || 0;
 		}
 
-		if (ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon) && (distance.type === AbilityDistanceType.Ranged)) {
+		if (ability.keywords?.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon) && (distance.type === AbilityDistanceType.Ranged)) {
 			// Add maximum ranged distance bonus from kits
 			return Collections.max(kits.map(kit => kit.rangedDistance), value => value) || 0;
 		}

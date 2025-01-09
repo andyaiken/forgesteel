@@ -342,44 +342,9 @@ export class FactoryLogic {
 		};
 	};
 
-	static createAbility = (data: {
-		id: string,
-		name: string,
-		description?: string,
-		type: AbilityType,
-		keywords?: AbilityKeyword[],
-		distance: AbilityDistance[],
-		target: string,
-		cost?: number | 'signature',
-		minLevel?: number,
-		preEffect?: string,
-		powerRoll?: PowerRoll,
-		test?: PowerRoll,
-		effect?: string,
-		strained?: string,
-		alternateEffects?: string[],
-		spend?: { name?: string, value: number, repeatable?: boolean, effect: string }[],
-		persistence?: { value: number, effect: string }[]
-	}): Ability => {
-		return {
-			id: data.id,
-			name: data.name,
-			description: data.description || '',
-			type: data.type,
-			keywords: data.keywords || [],
-			distance: data.distance || [],
-			target: data.target || '',
-			cost: data.cost || 0,
-			minLevel: data.minLevel || 1,
-			preEffect: data.preEffect || '',
-			powerRoll: data.powerRoll || null,
-			test: data.test ?? null,
-			effect: data.effect || '',
-			strained: data.strained || '',
-			alternateEffects: data.alternateEffects || [],
-			spend: (data.spend ?? []).map(s => ({ ...s, name: s.name ?? '', repeatable: s.repeatable ?? false })),
-			persistence: (data.persistence ?? []).map(p => ({ ...p }))
-		};
+	/** @deprecated Use direct Ability object instead */
+	static createAbility = (data: Ability): Ability => {
+		return data;
 	};
 
 	static createPowerRoll = (data: {

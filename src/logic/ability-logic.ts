@@ -31,13 +31,13 @@ export class AbilityLogic {
 	};
 
 	static panelWidth = (ability: Ability) => {
-		const descLength = Math.round(ability.description.split(' ').length / 10);
-		const preEffectLength = Math.round(ability.preEffect.split(' ').length / 10);
+		const descLength = ability.description ? Math.round(ability.description.split(' ').length / 10) : 0;
+		const preEffectLength = ability.preEffect ? Math.round(ability.preEffect.split(' ').length / 10) : 0;
 		const powerRollLength = ability.powerRoll ? 6 : 0;
-		const effectLength = Math.round(ability.effect.split(' ').length / 10);
-		const alternateLength = Collections.sum(ability.alternateEffects, e => Math.round(e.split(' ').length / 10));
-		const spendLength = Collections.sum(ability.spend, e => Math.round(e.effect.split(' ').length / 10));
-		const persistLength = Collections.sum(ability.persistence, e => Math.round(e.effect.split(' ').length / 10));
+		const effectLength = ability.effect ? Math.round(ability.effect.split(' ').length / 10) : 0;
+		const alternateLength = ability.alternateEffects ? Collections.sum(ability.alternateEffects, e => Math.round(e.split(' ').length / 10)) : 0;
+		const spendLength = ability.spend ? Collections.sum(ability.spend, e => Math.round(e.effect.split(' ').length / 10)) : 0;
+		const persistLength = ability.persistence ? Collections.sum(ability.persistence, e => Math.round(e.effect.split(' ').length / 10)) : 0;
 
 		const length = descLength + preEffectLength + powerRollLength + effectLength + alternateLength + spendLength + persistLength;
 		return Math.max(1, Math.round(length / 20));

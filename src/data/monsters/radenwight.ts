@@ -41,7 +41,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 	],
 	malice: [
 		FactoryLogic.feature.createAbility({
-			ability: FactoryLogic.createAbility({
+			ability: {
 				id: 'radenwight-malice-1',
 				name: 'Trouser Cut',
 				type: FactoryLogic.type.createAction({ qualifiers: [ 'Non-minion' ] }),
@@ -56,7 +56,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					tier3: '13 damage; push 5; taunted (EoT)'
 				}),
 				effect: 'If a target is wearing clothing covering the lower half of their body, they must use a maneuver to pull that clothing up before they can move.'
-			})
+			}
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'radenwight-malice-2',
@@ -95,7 +95,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			withCaptain: 'Strike damage +1',
 			features: [
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-1-feature-1',
 						name: 'Dagger Dance',
 						type: FactoryLogic.type.createAction(),
@@ -113,10 +113,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier3: '5 damage'
 						}),
 						effect: 'If the mischiever is hidden when they use this ability, they can target two creatures.'
-					})
+					}
 				}),
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-1-feature-2',
 						name: 'Ready Rodent',
 						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
@@ -124,7 +124,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
 						effect: 'The mischiever makes a free strike against the target.'
-					})
+					}
 				})
 			]
 		}),
@@ -144,7 +144,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			withCaptain: 'Melee distance +2',
 			features: [
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-2-feature-1',
 						name: 'Buckler Bash',
 						type: FactoryLogic.type.createAction(),
@@ -158,10 +158,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier2: '2 damage; taunted (EoT)',
 							tier3: '3 damage; taunted (EoT)'
 						})
-					})
+					}
 				}),
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-2-feature-2',
 						name: 'Ready Rodent',
 						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
@@ -169,7 +169,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
 						effect: 'The scrapper makes a free strike against the target.'
-					})
+					}
 				})
 			]
 		}),
@@ -188,7 +188,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			withCaptain: 'Edge on strikes',
 			features: [
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-3-feature-1',
 						name: 'Rapier Flunge',
 						type: FactoryLogic.type.createAction(),
@@ -202,10 +202,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier2: '2 damage; slide 2; shift 2',
 							tier3: '3 damage; slide 3; shift 3'
 						})
-					})
+					}
 				}),
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-3-feature-2',
 						name: 'Ready Rodent',
 						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
@@ -213,7 +213,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
 						effect: 'The swiftpaw makes a free strike against the target.'
-					})
+					}
 				})
 			]
 		}),
@@ -232,7 +232,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			withCaptain: 'Edge on strikes',
 			features: [
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-4-feature-1',
 						name: 'Eyes-On-Me Shot',
 						type: FactoryLogic.type.createAction(),
@@ -247,10 +247,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier3: '5 damage'
 						}),
 						effect: 'An ally of the redeye within 2 squares of the target can shift up to 2 squares.'
-					})
+					}
 				}),
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-4-feature-2',
 						name: 'Ready Rodent',
 						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
@@ -258,7 +258,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
 						effect: 'The redeye makes a free strike against the target.'
-					})
+					}
 				})
 			]
 		}),
@@ -277,7 +277,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			characteristics: MonsterLogic.createCharacteristics(2, 1, -1, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-5-feature-1',
 						name: 'Lockjaw',
 						type: FactoryLogic.type.createAction(),
@@ -292,10 +292,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier3: '12 damage; grabbed'
 						}),
 						effect: 'While the target is grabbed, they take 2 damage at the start of each of the bruxer’s turns.'
-					})
+					}
 				}),
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-5-feature-2',
 						name: 'Flurry of Bites',
 						type: FactoryLogic.type.createAction(),
@@ -309,10 +309,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier2: '5 damage; A<1 bleeding (save ends)',
 							tier3: '8 damage; A<2 bleeding (save ends)'
 						})
-					})
+					}
 				}),
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-5-feature-3',
 						name: 'Ready Rodent',
 						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
@@ -320,7 +320,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
 						effect: 'The bruxer makes a free strike against the target.'
-					})
+					}
 				}),
 				FactoryLogic.feature.create({
 					id: 'radenwight-5-feature-4',
@@ -343,7 +343,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-6-feature-1',
 						name: 'Piercing Trill',
 						type: FactoryLogic.type.createAction(),
@@ -361,10 +361,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier3: '9 sonic damage; push 4'
 						}),
 						effect: 'The piper or an ally within distance regains Stamina equal to half the damage dealt.'
-					})
+					}
 				}),
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-6-feature-2',
 						name: 'Vivace Vivace!',
 						type: FactoryLogic.type.createManeuver(),
@@ -374,10 +374,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						cost: 3,
 						effect: 'Each target who has used their Ready Rodent ability since their last turn regains the use of their triggered action.',
 						spend: [ { value: 2, effect: 'The area increases to 6 burst.' } ]
-					})
+					}
 				}),
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-6-feature-3',
 						name: 'Ready Rodent',
 						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
@@ -385,7 +385,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
 						effect: 'The piper makes a free strike against the target.'
-					})
+					}
 				}),
 				FactoryLogic.feature.create({
 					id: 'radenwight-6-feature-4',
@@ -408,7 +408,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			characteristics: MonsterLogic.createCharacteristics(-1, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-7-feature-2',
 						name: 'En Garde!',
 						type: FactoryLogic.type.createAction(),
@@ -423,10 +423,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier3: '8 damage'
 						}),
 						effect: 'The ratcrobat can shift up to 2 squares after striking the first target, then can shift 1 square after striking the second target.'
-					})
+					}
 				}),
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-7-feature-3',
 						name: 'Over Here, Thanks',
 						type: FactoryLogic.type.createManeuver(),
@@ -434,10 +434,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One enemy',
 						effect: 'Slide 3; the ratcrobat can then shift into the any of the squares the target left.'
-					})
+					}
 				}),
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-7-feature-4',
 						name: 'Ready Rodent',
 						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
@@ -445,7 +445,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
 						effect: 'The ratcrobat makes a free strike against the target.'
-					})
+					}
 				}),
 				FactoryLogic.feature.create({
 					id: 'radenwight-7-feature-1',
@@ -470,7 +470,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-8-feature-1',
 						name: 'Cacophony',
 						type: FactoryLogic.type.createAction(),
@@ -485,10 +485,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier3: '8 sonic damage; slide 5; shift 5'
 						}),
 						effect: 'Each all within distance can use Ready Roden as a free triggered action once before the end of the round.'
-					})
+					}
 				}),
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-8-feature-2',
 						name: 'Tempo Change',
 						type: FactoryLogic.type.createManeuver(),
@@ -507,10 +507,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 								effect: 'Each ally within 3 of a target has their speed increased by 2 until the end of their next turn.'
 							}
 						]
-					})
+					}
 				}),
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-8-feature-3',
 						name: 'Ever Ready Rodent',
 						type: FactoryLogic.type.createTrigger('The target deals damage to an ally or takes damage from an ally.', true),
@@ -519,7 +519,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature',
 						effect: 'The maestro makes a free strike against the target.'
-					})
+					}
 				}),
 				FactoryLogic.feature.create({
 					id: 'radenwight-8-feature-4',
@@ -527,7 +527,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					description: 'At the end of their turn, the maestro can take 5 damage to end one save ends effect affecting them. This damage can’t be reduced in any way.'
 				}),
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-8-feature-5',
 						name: 'Overture',
 						type: FactoryLogic.type.createVillainAction(),
@@ -535,10 +535,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All allies in the burst',
 						effect: 'Each target shifts up to their speed or takes the Defend action.'
-					})
+					}
 				}),
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-8-feature-6',
 						name: 'Solo Act',
 						type: FactoryLogic.type.createVillainAction(),
@@ -546,10 +546,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'One creature',
 						effect: 'Until the end of their next turn, the target halves incoming damage, deals an additional 4 damage on strikes, and their speed is doubled.'
-					})
+					}
 				}),
 				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
+					ability: {
 						id: 'radenwight-8-feature-7',
 						name: 'Rondo of Rat',
 						type: FactoryLogic.type.createVillainAction(),
@@ -557,7 +557,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All dead allies in the burst',
 						effect: 'Each target stands, makes a free strike, then collapses again. Allies of the targets can use Ready Rodent as a free triggered action once in conjunction with these free strikes.'
-					})
+					}
 				})
 			]
 		})

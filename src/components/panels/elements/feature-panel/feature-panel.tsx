@@ -123,7 +123,7 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableClassAbility = (data: FeatureClassAbilityData) => {
-		const abilities = props.hero?.class?.abilities.filter(a => a.cost === data.cost).filter(a => a.minLevel <= data.minLevel) || [];
+		const abilities = props.hero?.class?.abilities.filter(a => a.cost === data.cost).filter(a => !a.minLevel || a.minLevel <= data.minLevel) || [];
 
 		const distinctAbilities = Collections.distinct(abilities, a => a.name);
 		const sortedAbilities = Collections.sort(distinctAbilities, a => a.name);

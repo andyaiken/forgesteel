@@ -13,15 +13,7 @@ interface Props {
 export const PowerRollPanel = (props: Props) => {
 	return (
 		<div className={props.onRoll ? 'power-roll-panel clickable' : 'power-roll-panel'} onClick={props.onRoll}>
-			{
-				props.header
-					? (
-						<div className='power-roll-row power-roll-header'>
-							{props.header}
-						</div>
-					)
-					: null
-			}
+			{props.header ? <div className='power-roll-row power-roll-header'>{props.header}</div> : null}
 			<div className='power-roll-row'>
 				<div className='tier'>11 -</div>
 				<div className='effect'>{props.powerRoll.tier1}</div>
@@ -34,15 +26,7 @@ export const PowerRollPanel = (props: Props) => {
 				<div className='tier'>17 +</div>
 				<div className='effect'>{props.powerRoll.tier3}</div>
 			</div>
-			{
-				props.footer
-					?  (
-						<div className='power-roll-row power-roll-footer'>
-							{props.footer}
-						</div>
-					)
-					: null
-			}
+			{props.footer ? <div className='power-roll-row power-roll-footer'>{props.footer}</div> : null}
 		</div>
 	);
 };

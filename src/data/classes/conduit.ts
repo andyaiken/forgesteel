@@ -38,11 +38,11 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 					count: 2
 				}),
 				FactoryLogic.feature.createDomainChoice({
-					id: 'conduit-1-6.4',
+					id: 'conduit-1-2',
 					count: 2
 				}),
 				FactoryLogic.feature.create({
-					id: 'conduit-1-2',
+					id: 'conduit-1-3',
 					name: 'Piety',
 					description: `
 At the start of each of your turns during combat, you gain 1d3 piety.
@@ -88,12 +88,12 @@ Additionally, you can gain more piety by praying to the gods — but beware! Doi
 * Prayer Effect: Three allies of your choice within 10 squares of you, including yourself, gain two surges.`
 				}),
 				FactoryLogic.feature.createDomainFeature({
-					id: 'conduit-1-6.5',
+					id: 'conduit-1-4',
 					level: 1
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'conduit-1-4',
+						id: 'conduit-1-5',
 						name: 'Healing Grace',
 						description: 'Your divine energy restores the righteous.',
 						type: FactoryLogic.type.createManeuver(),
@@ -117,7 +117,7 @@ For each piety spent, you can choose one of the following enhancements:
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'conduit-1-5',
+						id: 'conduit-1-6',
 						name: 'Ray of Wrath',
 						description: 'You unleash a blast of holy light upon your foe.',
 						type: FactoryLogic.type.createAction(),
@@ -134,13 +134,13 @@ For each piety spent, you can choose one of the following enhancements:
 					})
 				}),
 				FactoryLogic.feature.createChoice({
-					id: 'conduit-1-6',
+					id: 'conduit-1-7',
 					name: 'Triggered Action',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'conduit-1-6-1',
+									id: 'conduit-1-7a',
 									name: 'Word of Guidance',
 									description: 'You invigorate an attacking ally with divine energy.',
 									type: FactoryLogic.type.createTrigger('The target makes an ability power roll for an ability that deals damage.'),
@@ -161,7 +161,7 @@ For each piety spent, you can choose one of the following enhancements:
 						{
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
-									id: 'conduit-1-6-2',
+									id: 'conduit-1-7b',
 									name: 'Word of Judgment',
 									description: 'Your holy word saps an attacking enemy’s strength.',
 									type: FactoryLogic.type.createTrigger('The target takes damage from an ability that requires a power roll.'),
@@ -182,12 +182,12 @@ For each piety spent, you can choose one of the following enhancements:
 					]
 				}),
 				FactoryLogic.feature.createChoice({
-					id: 'conduit-1-7',
+					id: 'conduit-1-8',
 					name: 'Prayer',
 					options: [
 						{
 							feature: FactoryLogic.feature.create({
-								id: 'conduit-1-7a',
+								id: 'conduit-1-8a',
 								name: 'Prayer of Destruction',
 								description: 'Your god infuses wrath within your being. You gain a +1 rolled damage bonus with magic abilities.'
 							}),
@@ -195,7 +195,7 @@ For each piety spent, you can choose one of the following enhancements:
 						},
 						{
 							feature: FactoryLogic.feature.create({
-								id: 'conduit-1-7b',
+								id: 'conduit-1-8b',
 								name: 'Prayer of Distance',
 								description: 'Your god blesses you with the ability to stretch your divine magic further. You gain a +2 bonus to the distance of your ranged magic abilities.'
 							}),
@@ -203,17 +203,17 @@ For each piety spent, you can choose one of the following enhancements:
 						},
 						{
 							feature: FactoryLogic.feature.createMultiple({
-								id: 'conduit-1-7c',
+								id: 'conduit-1-8c',
 								name: 'Prayer of Speed',
 								description: 'Your god blesses your flesh and infuses it with divine quickness.',
 								features: [
 									FactoryLogic.feature.createBonus({
-										id: 'conduit-1-7ca',
+										id: 'conduit-1-8ca',
 										field: FeatureField.Speed,
 										value: 1
 									}),
 									FactoryLogic.feature.createBonus({
-										id: 'conduit-1-7cb',
+										id: 'conduit-1-8cb',
 										field: FeatureField.Disengage,
 										value: 1
 									})
@@ -223,17 +223,17 @@ For each piety spent, you can choose one of the following enhancements:
 						},
 						{
 							feature: FactoryLogic.feature.createMultiple({
-								id: 'conduit-1-7d',
+								id: 'conduit-1-8d',
 								name: 'Prayer of Soldier\'s Skill',
 								description: 'Your god gives your mind the training of a soldier. You can wear light armor and wield light weapons effectively, even though you don’t have a kit. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this blessing.',
 								features: [
 									FactoryLogic.feature.create({
-										id: 'conduit-1-7da',
+										id: 'conduit-1-8da',
 										name: 'Prayer of Soldier\'s Skill',
 										description: 'While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes.'
 									}),
 									FactoryLogic.feature.createBonus({
-										id: 'conduit-1-7db',
+										id: 'conduit-1-8db',
 										field: FeatureField.Stamina,
 										valuePerEchelon: 3
 									})
@@ -243,17 +243,17 @@ For each piety spent, you can choose one of the following enhancements:
 						},
 						{
 							feature: FactoryLogic.feature.createMultiple({
-								id: 'conduit-1-7e',
+								id: 'conduit-1-8e',
 								name: 'Prayer of Steel',
 								description: 'Your god fills your body with the light of creation, making you harder to hurt and move.',
 								features: [
 									FactoryLogic.feature.createBonus({
-										id: '',
+										id: 'conduit-1-8ea',
 										field: FeatureField.Stamina,
 										valuePerEchelon: 6
 									}),
 									FactoryLogic.feature.createBonus({
-										id: '',
+										id: 'conduit-1-8eb',
 										field: FeatureField.Stability,
 										value: 1
 									})
@@ -264,12 +264,12 @@ For each piety spent, you can choose one of the following enhancements:
 					]
 				}),
 				FactoryLogic.feature.createChoice({
-					id: 'conduit-1-8',
+					id: 'conduit-1-9',
 					name: 'Conduit Ward',
 					options: [
 						{
 							feature: FactoryLogic.feature.create({
-								id: 'conduit-1-8a',
+								id: 'conduit-1-9a',
 								name: 'Bastion Ward',
 								description: 'You god grants you a holy countenance that protects you at all times. You gain a +1 bonus to saving throws.'
 							}),
@@ -277,7 +277,7 @@ For each piety spent, you can choose one of the following enhancements:
 						},
 						{
 							feature: FactoryLogic.feature.create({
-								id: 'conduit-1-8b',
+								id: 'conduit-1-9b',
 								name: 'Quickness Ward',
 								description: 'The gods imbue a divine swiftness within you. Whenever an adjacent creature deals damage to you, you can shift up to a number of squares equal to your Intuition score after the damage is dealt.'
 							}),
@@ -285,7 +285,7 @@ For each piety spent, you can choose one of the following enhancements:
 						},
 						{
 							feature: FactoryLogic.feature.create({
-								id: 'conduit-1-8c',
+								id: 'conduit-1-9c',
 								name: 'Sanctuary Ward',
 								description: 'In response to a foe’s aggression, the gods protect you. After another creature damages you, that creature can’t target you with a strike until you harm them or one of their allies, or until the end of their next turn.'
 							}),
@@ -293,7 +293,7 @@ For each piety spent, you can choose one of the following enhancements:
 						},
 						{
 							feature: FactoryLogic.feature.create({
-								id: 'conduit-1-8d',
+								id: 'conduit-1-9d',
 								name: 'Spirit Ward',
 								description: 'Invisible spirits surround you if you are harmed. Whenever an adjacent creature deals damage to you, they take corruption damage equal to your Intuition score.'
 							}),
@@ -302,16 +302,16 @@ For each piety spent, you can choose one of the following enhancements:
 					]
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: 'conduit-1-9',
+					id: 'conduit-1-10',
 					cost: 'signature',
 					count: 2
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: 'conduit-1-10',
+					id: 'conduit-1-11',
 					cost: 3
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
-					id: 'conduit-1-11',
+					id: 'conduit-1-12',
 					cost: 5
 				})
 			]
@@ -327,6 +327,14 @@ For each piety spent, you can choose one of the following enhancements:
 				FactoryLogic.feature.createPerk({
 					id: 'conduit-2-2',
 					lists: [ PerkList.Crafting, PerkList.Lore, PerkList.Supernatural ]
+				}),
+				FactoryLogic.feature.createDomainFeature({
+					id: 'conduit-2-3',
+					level: 1
+				}),
+				FactoryLogic.feature.createDomainFeature({
+					id: 'conduit-2-4',
+					level: 2
 				})
 			]
 		},

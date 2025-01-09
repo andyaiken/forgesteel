@@ -32,9 +32,9 @@ export const AbilityPowerRollPanel = (props: Props) => {
 	};
 
 	const getFooter = () => {
-		if (props.ability && props.hero) {
-			const dmgMelee = HeroLogic.getMeleeDamageBonus(props.hero, props.ability);
-			const dmgRanged = HeroLogic.getRangedDamageBonus(props.hero, props.ability);
+		if (props.hero) {
+			const dmgMelee = props.ability ? HeroLogic.getMeleeDamageBonus(props.hero, props.ability) : null;
+			const dmgRanged = props.ability ? HeroLogic.getRangedDamageBonus(props.hero, props.ability) : null;
 
 			const potency = AbilityLogic.usesPotency(props.powerRoll) ?
 				`weak ${HeroLogic.calculatePotency(props.hero, 'weak')}, average ${HeroLogic.calculatePotency(props.hero, 'average')}, strong ${HeroLogic.calculatePotency(props.hero, 'strong')}`

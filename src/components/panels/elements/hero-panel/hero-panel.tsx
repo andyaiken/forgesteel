@@ -1,4 +1,5 @@
 import { Col, Row, Statistic } from 'antd';
+import { usePersistedOptions, usePersistedSourcebooks } from '../../../../hooks';
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityPanel } from '../ability-panel/ability-panel';
@@ -18,25 +19,23 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { Kit } from '../../../../models/kit';
-import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Skill } from '../../../../models/skill';
 import { SkillList } from '../../../../enums/skill-list';
-import { Sourcebook } from '../../../../models/sourcebook';
 import { useModals } from '../../../../hooks/use-modals';
 
 import './hero-panel.scss';
 
 interface Props {
 	hero: Hero;
-	sourcebooks: Sourcebook[];
-	options?: Options;
 	mode?: PanelMode;
 }
 
 export const HeroPanel = (props: Props) => {
 	const modals = useModals();
+	const { sourcebooks } = usePersistedSourcebooks();
+	const { options } = usePersistedOptions();
 
 	const getLeftColumn = () => {
 		const onSelectAncestry = () => {
@@ -179,7 +178,7 @@ export const HeroPanel = (props: Props) => {
 		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
 		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
-		const sourcebooks = props.sourcebooks.filter(cs => props.hero.settingIDs.includes(cs.id));
+		const heroSourcebooks = sourcebooks.filter(cs => props.hero.settingIDs.includes(cs.id));
 
 		const getSkills = (label: string, skills: Skill[]) => {
 			return skills.length > 0 ?
@@ -215,18 +214,18 @@ export const HeroPanel = (props: Props) => {
 				<div className='overview-tile'>
 					<HeaderText>Languages</HeaderText>
 					{
-						HeroLogic.getLanguages(props.hero, sourcebooks).length > 0 ?
-							HeroLogic.getLanguages(props.hero, sourcebooks).map(l => <div key={l.name} className='ds-text'>{l.name}</div>)
+						HeroLogic.getLanguages(props.hero, heroSourcebooks).length > 0 ?
+							HeroLogic.getLanguages(props.hero, heroSourcebooks).map(l => <div key={l.name} className='ds-text'>{l.name}</div>)
 							:
 							<div className='ds-text dimmed-text'>None</div>
 					}
 				</div>
 				{
-					(props.options?.showSkillsInGroups || false) ?
+					(options?.showSkillsInGroups || false) ?
 						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
-							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, sourcebooks).filter(s => s.list === list)))
+							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, heroSourcebooks).filter(s => s.list === list)))
 						:
-						getSkills('Skills', HeroLogic.getSkills(props.hero, sourcebooks))
+						getSkills('Skills', HeroLogic.getSkills(props.hero, heroSourcebooks))
 				}
 			</div>
 		);
@@ -388,7 +387,6 @@ export const HeroPanel = (props: Props) => {
 								key={feature.id}
 								feature={feature}
 								hero={props.hero}
-								sourcebooks={props.sourcebooks}
 								mode={PanelMode.Full}
 							/>
 						))
@@ -410,7 +408,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						abilities.map(ability => (
 							<SelectablePanel key={ability.id} style={{ gridColumn: `span ${AbilityLogic.panelWidth(ability)}` }}>
-								<AbilityPanel ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} onRoll={() => modals.showHeroAbility(props.hero.id, ability.id)} />
+								<AbilityPanel ability={ability} hero={props.hero} mode={PanelMode.Full} onRoll={() => modals.showHeroAbility(props.hero.id, ability.id)} />
 							</SelectablePanel>
 						))
 					}
@@ -439,7 +437,7 @@ export const HeroPanel = (props: Props) => {
 			);
 		}
 
-		const abilities = HeroLogic.getAbilities(props.hero, true, props.options?.showFreeStrikes || false, props.options?.showStandardAbilities || false);
+		const abilities = HeroLogic.getAbilities(props.hero, true, options?.showFreeStrikes || false, options?.showStandardAbilities || false);
 		const actions = abilities.filter(a => a.type.usage === AbilityUsage.Action);
 		const maneuvers = abilities.filter(a => a.type.usage === AbilityUsage.Maneuver);
 		const moves = abilities.filter(a => a.type.usage === AbilityUsage.Move);

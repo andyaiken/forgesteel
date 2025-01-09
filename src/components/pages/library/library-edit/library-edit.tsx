@@ -4,8 +4,8 @@ import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../d
 import { Feature, FeatureAbility, FeatureMalice } from '../../../../models/feature';
 import { KitArmor, KitType, KitWeapon } from '../../../../enums/kit';
 import { Monster, MonsterGroup } from '../../../../models/monster';
-import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { useMemo, useState } from 'react';
+import { useModals, useNavigation, usePersistedSourcebooks } from '../../../../hooks';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../../../panels/edit/ability-edit-panel/ability-edit-panel';
 import { Ancestry } from '../../../../models/ancestry';
@@ -49,6 +49,7 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { SourcebookElementKind } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { SubClass } from '../../../../models/subclass';
 import { Title } from '../../../../models/title';
@@ -56,27 +57,35 @@ import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { getSourcebookKey } from '../../../../utils/get-sourcebook-key';
-import { useModals } from '../../../../hooks/use-modals';
-import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
 import './library-edit.scss';
 
 interface Props {
-	sourcebooks: Sourcebook[];
 	saveChanges: (sourcebookId: string, kind: SourcebookElementKind, element: Element) => void;
 }
 
 export const LibraryEditPage = (props: Props) => {
 	const modals = useModals();
 	const navigation = useNavigation();
+	const { sourcebooks } = usePersistedSourcebooks();
 	const { sourcebookId, kind, elementId } = useParams<{ sourcebookId: string, kind: SourcebookElementKind, elementId: string }>();
 	const [ subElementId, setSubElementId ] = useState<string>('');
-	const sourcebook = useMemo(() => props.sourcebooks.find(s => s.id === sourcebookId)!, [ sourcebookId, props.sourcebooks ]);
+	const sourcebook = useMemo(() => sourcebooks.find(s => s.id === sourcebookId)!, [ sourcebookId, sourcebooks ]);
 	const sourcebookKey = useMemo(() => getSourcebookKey(kind!), [ kind ]);
 	const originalElement = useMemo(() => sourcebook[sourcebookKey].find(e => e.id === elementId)!, [ sourcebook, sourcebookKey, elementId ]);
 	const [ element, setElement ] = useState<Element>(JSON.parse(JSON.stringify(originalElement)) as Element);
+	const [ previousElement, setPreviousElement ] = useState(originalElement);
 	const [ dirty, setDirty ] = useState<boolean>(false);
+
+	if (originalElement !== previousElement) {
+		setElement(originalElement);
+		setPreviousElement(originalElement);
+	}
+
+	if (!element) {
+		return null;
+	}
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
@@ -164,7 +173,6 @@ export const LibraryEditPage = (props: Props) => {
 						>
 							<FeatureEditPanel
 								feature={f}
-								sourcebooks={props.sourcebooks}
 								onChange={changeFeature}
 							/>
 						</Expander>
@@ -267,7 +275,7 @@ export const LibraryEditPage = (props: Props) => {
 					className={culture.languages.length === 0 ? 'selection-empty' : ''}
 					allowClear={true}
 					placeholder='Select language'
-					options={SourcebookLogic.getLanguages(props.sourcebooks).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
+					options={SourcebookLogic.getLanguages(sourcebooks).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={culture.languages.length > 0 ? culture.languages[0] : null}
 					onChange={value => {
@@ -484,7 +492,6 @@ export const LibraryEditPage = (props: Props) => {
 										>
 											<FeatureEditPanel
 												feature={f}
-												sourcebooks={props.sourcebooks}
 												onChange={feature => changeFeature(lvl.level, feature)}
 											/>
 										</Expander>
@@ -709,7 +716,6 @@ export const LibraryEditPage = (props: Props) => {
 							>
 								<FeatureEditPanel
 									feature={f}
-									sourcebooks={props.sourcebooks}
 									onChange={feature => changeFeature(subclass, lvl.level, feature)}
 								/>
 							</Expander>
@@ -1179,7 +1185,6 @@ export const LibraryEditPage = (props: Props) => {
 							<FeatureEditPanel
 								feature={f}
 								allowedTypes={[ FeatureType.Ability, FeatureType.Malice ]}
-								sourcebooks={props.sourcebooks}
 								onChange={f => changeMaliceFeature(f as FeatureMalice | FeatureAbility)}
 							/>
 						</Expander>
@@ -1293,14 +1298,13 @@ export const LibraryEditPage = (props: Props) => {
 		return (
 			<MonsterEditPanel
 				monster={monster}
-				sourcebooks={props.sourcebooks}
 				onChange={changeMonster}
 			/>
 		);
 	};
 
 	const getSimilarMonsters = (monster: Monster) => {
-		const monsters = props.sourcebooks
+		const monsters = sourcebooks
 			.flatMap(sb => sb.monsterGroups)
 			.flatMap(mg => mg.monsters)
 			.filter(m => m.id !== monster.id)
@@ -1310,7 +1314,7 @@ export const LibraryEditPage = (props: Props) => {
 			<div>
 				{
 					monsters.map(m => {
-						const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id);
+						const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, m.id);
 						if (!monsterGroup) {
 							return null;
 						}
@@ -1511,7 +1515,6 @@ export const LibraryEditPage = (props: Props) => {
 				return (
 					<FeatureEditPanel
 						feature={element as Perk}
-						sourcebooks={props.sourcebooks}
 						onChange={perk => {
 							const copy = JSON.parse(JSON.stringify(perk)) as Perk;
 							setElement(copy);

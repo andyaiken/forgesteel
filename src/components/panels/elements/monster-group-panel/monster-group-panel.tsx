@@ -6,14 +6,12 @@ import { MonsterGroup } from '../../../../models/monster';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
 import { Space } from 'antd';
 
 import './monster-group-panel.scss';
 
 interface Props {
 	monsterGroup: MonsterGroup;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 

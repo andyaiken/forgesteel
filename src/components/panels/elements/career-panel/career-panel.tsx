@@ -5,14 +5,12 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Sourcebook } from '../../../../models/sourcebook';
 
 import './career-panel.scss';
 
 interface Props {
 	career: Career;
 	hero?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 
@@ -44,7 +42,7 @@ export const CareerPanel = (props: Props) => {
 				{
 					props.mode === PanelMode.Full ?
 						<div>
-							{props.career.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
+							{props.career.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} mode={PanelMode.Full} />)}
 							{getIncitingIncidents()}
 						</div>
 						: null

@@ -3,6 +3,7 @@ import { Button, Drawer } from 'antd';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 import { ReactNode, useCallback, useMemo } from 'react';
 import type { Sourcebook, SourcebookElementKind } from '../../models/sourcebook';
+import { useNavigation, usePersistedHeroes, usePersistedPlaybook, usePersistedSourcebooks } from '../../hooks';
 import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
 import type { Ancestry } from '../../models/ancestry';
@@ -33,7 +34,6 @@ import { MonsterGroupModal } from '../modals/monster-group/monster-group-modal';
 import { MonsterModal } from '../modals/monster/monster-modal';
 import type { Perk } from '../../models/perk';
 import { PerkModal } from '../modals/perk/perk-modal';
-import { Playbook } from '../../models/playbook';
 import { RulesModal } from '../modals/rules/rules-modal';
 import { SourcebookLogic } from '../../logic/sourcebook-logic';
 import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
@@ -41,17 +41,8 @@ import type { Title } from '../../models/title';
 import { TitleModal } from '../modals/title/title-modal';
 import { Utils } from '../../utils/utils';
 import pbds from '../../assets/powered-by-draw-steel.png';
-import { useNavigation } from '../../hooks/use-navigation';
 
 interface Props {
-	heroes: Hero[];
-	playbook: Playbook;
-	officialSourcebooks: Sourcebook[];
-	homebrewSourcebooks: Sourcebook[];
-	hiddenSourcebookIDs: string[];
-	persistHomebrewSourcebooks: (sourcebooks: Sourcebook[]) => Promise<void>;
-	deleteSourcebookElement: (kind: SourcebookElementKind, elementId: string) => Promise<void>;
-	persistHiddenSourcebookIDs: (ids: string[]) => Promise<void>;
 	onAncestryCreate: (ancestry: Ancestry, sourcebook: Sourcebook | null) => void;
 	onCareerCreate: (culture: Career, sourcebook: Sourcebook | null) => void;
 	onClassCreate: (heroClass: HeroClass, sourcebook: Sourcebook | null) => void;
@@ -67,14 +58,6 @@ interface Props {
 	onMonsterGroupCreate: (monsterGroup: MonsterGroup, sourcebook: Sourcebook | null) => void;
 }
 export const MainLayout = ({
-	heroes,
-	playbook,
-	officialSourcebooks,
-	homebrewSourcebooks,
-	hiddenSourcebookIDs,
-	persistHomebrewSourcebooks,
-	deleteSourcebookElement,
-	persistHiddenSourcebookIDs,
 	onAncestryCreate,
 	onCareerCreate,
 	onClassCreate,
@@ -92,8 +75,11 @@ export const MainLayout = ({
 	const location = useLocation();
 	const navigate = useNavigate();
 	const navigation = useNavigation();
+	const { heroes } = usePersistedHeroes();
+	const { playbook } = usePersistedPlaybook();
+	const { sourcebooks, deleteSourcebookElement } = usePersistedSourcebooks();
 
-	const sourcebooks = useMemo(() => [ ...officialSourcebooks, ...homebrewSourcebooks ], [ officialSourcebooks, homebrewSourcebooks ]);
+	const homebrewSourcebooks = useMemo(() => sourcebooks.filter(s => s.isHomebrew), [ sourcebooks ]);
 
 	// #region Sourcebook Element Modals
 
@@ -390,15 +376,13 @@ export const MainLayout = ({
 			const [ encounterId ] = segments as [ string ];
 			const encounter = playbook.encounters.find(e => e.id === encounterId)!;
 			return <EncounterModal
-				playbook={playbook}
-				sourcebooks={sourcebooks}
 				encounter={encounter}
 				export={format => Utils.export([ encounter.id ], encounter.name || 'Encounter', encounter, 'encounter', format)}
 				edit={() => navigation.goToEncounterEdit(encounterId)}
 				delete={() => onEncounterDelete(encounterId)}
 			/>;
 		},
-		[ sourcebooks, playbook, navigation, onEncounterDelete ]
+		[ playbook, navigation, onEncounterDelete ]
 	);
 
 	const getHeroModal = useCallback(
@@ -426,10 +410,10 @@ export const MainLayout = ({
 						}}
 					/>;
 				case 'rules':
-					return <RulesModal hero={hero} sourcebooks={sourcebooks} />;
+					return <RulesModal hero={hero} />;
 			}
 		},
-		[ heroes, sourcebooks, navigation, onHeroChange ]
+		[ heroes, navigation, onHeroChange ]
 	);
 
 	const getMonsterModal = useCallback(
@@ -438,13 +422,12 @@ export const MainLayout = ({
 			const monster = SourcebookLogic.getMonster(sourcebooks, monsterId)!;
 			const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, monsterId)!;
 			return <MonsterModal
-				playbook={playbook}
 				monster={monster}
 				monsterGroup={monsterGroup}
 				export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
 			/>;
 		},
-		[ sourcebooks, playbook ]
+		[ sourcebooks ]
 	);
 
 	const getMonsterGroupModal = useCallback(
@@ -460,14 +443,13 @@ export const MainLayout = ({
 				monsterGroup={monsterGroup}
 				homebrewSourcebooks={homebrewSourcebooks}
 				isHomebrew={sourcebook.isHomebrew}
-				playbook={playbook}
 				createHomebrew={sourcebook => onMonsterGroupCreate(monsterGroup, sourcebook)}
 				export={format => Utils.export([ monsterGroup.id ], monsterGroup.name || 'Monster Group', monsterGroup, 'monster-group', format)}
 				edit={() => navigation.goToLibraryEdit(sourcebook.id, 'monster-group', monsterGroup.id)}
 				delete={() => { deleteSourcebookElement('monster-group', monsterGroup.id); navigate({ hash: '' }); }}
 			/>;
 		},
-		[ sourcebooks, homebrewSourcebooks, playbook, navigate, navigation, onMonsterGroupCreate, deleteSourcebookElement ]
+		[ sourcebooks, homebrewSourcebooks, navigate, navigation, onMonsterGroupCreate, deleteSourcebookElement ]
 	);
 
 	function getHeroAbilityModal(hero: Hero, segments: string[]) {
@@ -517,24 +499,13 @@ export const MainLayout = ({
 				case 'perk':
 					return getPerkModal(hashSegments);
 				case 'sourcebooks':
-					return <SourcebooksModal
-						officialSourcebooks={officialSourcebooks}
-						homebrewSourcebooks={homebrewSourcebooks}
-						hiddenSourcebookIDs={hiddenSourcebookIDs}
-						onHomebrewSourcebookChange={persistHomebrewSourcebooks}
-						onHiddenSourcebookIDsChange={persistHiddenSourcebookIDs}
-					/>;
+					return <SourcebooksModal />;
 				case 'title':
 					return getTitleModal(hashSegments);
 			}
 		},
 		[
 			location,
-			hiddenSourcebookIDs,
-			homebrewSourcebooks,
-			officialSourcebooks,
-			persistHiddenSourcebookIDs,
-			persistHomebrewSourcebooks,
 			getAncestryModal,
 			getCareerModal,
 			getClassModal,

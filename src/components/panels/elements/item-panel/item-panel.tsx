@@ -20,7 +20,7 @@ export const ItemPanel = (props: Props) => {
 		return (
 			<div className='item-panel' id={props.mode === PanelMode.Full ? props.item.id : undefined}>
 				<HeaderText level={1}>{props.item.name || 'Unnamed Item'}</HeaderText>
-				{props.item.description ? <Markdown text={props.item.description} /> : null}
+				<Markdown text={props.item.description} />
 				{
 					props.mode === PanelMode.Full ?
 						props.item.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)

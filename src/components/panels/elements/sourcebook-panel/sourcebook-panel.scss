@@ -16,6 +16,10 @@
 		background-color: rgba(0, 0, 0, 0.06);
 	}
 
+	.content {
+		flex: 1 1 0;
+	}
+
 	.action-buttons {
 		padding-top: 11px;
 		display: flex;

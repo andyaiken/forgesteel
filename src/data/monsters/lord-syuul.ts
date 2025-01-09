@@ -181,12 +181,12 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All enemies',
-						effect: 'Each target makes an **Intuition Test**',
+						preEffect: 'Each target makes an **Intuition Test**.',
 						test: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Intuition,
 							tier1: '16 psychic damage; can’t establish line of effect to creatures besides Lord Syuul, and strikes targeting Lord Syuul have a bane (save ends)',
 							tier2: '13 psychic damage; can’t establish line of effect to creatures besides Lord Syuul (save ends)',
-							tier3: '7 psychic damage;'
+							tier3: '7 psychic damage'
 						})
 					})
 				}),

@@ -1,12 +1,9 @@
 # Development Plans
 
-## Updating Forge Steel to Backer Packet #2
+## Add Data
 
-* Add new feature type to allow Revenant to choose features from other ancestries
-* Revenants should have 3 ancestry points if small
-
-## Add monster data
-
+* Titles
+* Items
 * Monsters
   * [x] Radenwight
   * [x] Goblins
@@ -56,8 +53,9 @@
   * [ ] Wyverns
   * [ ] Xorannox the Tyract
   * [ ] Animals
+* Retainers
 
-## Future Work
+## New Features
 
 **Heroes**
 
@@ -66,12 +64,9 @@
 * Power Rolls:
   * If a hero's power roll uses potencies, replace weak / average / strong with the hero's characteristic value
   * If a hero's power roll adds a characteristic to damage, automatically calculate the total damage
-
-**Library**
-
-* Add titles
-* Add items
-* Add retainers
+* Hero Builder:
+  * Add new feature type to allow Revenant to choose features from other ancestries
+  * Revenants should have 3 ancestry points if small
 
 **Monster Editor**
 
@@ -87,7 +82,3 @@
 * Encounters should pull in monsters - like how heroes pull in elements
 * Use encounter templates in encounter editor
 * Auto-create encounters
-
-**Sourcebooks**
-
-* It should be possible to add custom languages and skills to sourcebooks

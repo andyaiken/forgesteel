@@ -21,7 +21,7 @@ export const TitlePanel = (props: Props) => {
 		return (
 			<div className='title-panel' id={props.mode === PanelMode.Full ? props.title.id : undefined}>
 				<HeaderText level={1}>{props.title.name || 'Unnamed Title'}</HeaderText>
-				{props.title.description ? <Markdown text={props.title.description} /> : null}
+				<Markdown text={props.title.description} />
 				<Field label='Echelon' value={props.title.echelon} />
 				<Field label='Prerequisites' value={props.title.prerequisites} />
 				{

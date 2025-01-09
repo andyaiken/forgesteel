@@ -69,7 +69,7 @@ export const AbilityPanel = (props: Props) => {
 				<HeaderText ribbon={headerRibbon} tags={props.tags}>
 					{props.ability.name || 'Unnamed Ability'}
 				</HeaderText>
-				{props.ability.description ? <Markdown text={props.ability.description} /> : null}
+				<Markdown text={props.ability.description} />
 				{
 					props.mode === PanelMode.Full ?
 						<div>
@@ -86,7 +86,7 @@ export const AbilityPanel = (props: Props) => {
 									: null
 							}
 							{props.ability.target ? <Field label='Target' value={props.ability.target} /> : null}
-							{props.ability.preEffect ? <Markdown text={props.ability.preEffect} /> : null}
+							<Markdown text={props.ability.preEffect} />
 							{
 								props.ability.powerRoll ?
 									<AbilityPowerRollPanel
@@ -98,14 +98,11 @@ export const AbilityPanel = (props: Props) => {
 									: null
 							}
 							{
-								props.ability.test
-									? (<>
-										<p><b>Effect</b> Each target makes a <b>{props.ability.test.characteristic.join(' or ')} test.</b></p>
-										<TestPanel test={props.ability.test} />
-									</>)
+								props.ability.test ?
+									<TestPanel test={props.ability.test} />
 									: null
 							}
-							{props.ability.effect ? <Markdown text={props.ability.effect} /> : null}
+							<Markdown text={props.ability.effect} />
 							{
 								props.ability.strained ?
 									<Field

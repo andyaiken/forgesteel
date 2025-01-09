@@ -42,7 +42,7 @@ export const MonsterPanel = (props: Props) => {
 		return (
 			<div className='monster-panel' id={props.monster.id}>
 				<HeaderText level={1}>{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}</HeaderText>
-				{props.monster.description ? <Markdown text={props.monster.description} /> : null}
+				<Markdown text={props.monster.description} />
 				<Flex justify='space-between'>
 					<div className='ds-text'>
 						Level {props.monster.level} {FormatLogic.getRole(props.monster.role)} {props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}

@@ -27,7 +27,7 @@ export const EncounterPanel = (props: Props) => {
 		return (
 			<div className='encounter-panel' id={props.mode === PanelMode.Full ? props.encounter.id : undefined}>
 				<HeaderText level={1}>{props.encounter.name || 'Unnamed Encounter'}</HeaderText>
-				{props.encounter.description ? <Markdown text={props.encounter.description} /> : null}
+				<Markdown text={props.encounter.description} />
 				{
 					props.encounter.groups.filter(g => g.slots.length > 0).map((group, n) => (
 						<div key={group.id} className='encounter-group'>

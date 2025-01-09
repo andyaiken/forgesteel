@@ -174,7 +174,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
-				tier1: '2 + m holy damage; P < weak, slowed (save ends)',
+				tier1: '2 + M holy damage; P < weak, slowed (save ends)',
 				tier2: '5 + M holy damage; P < average, slowed (save ends)',
 				tier3: '7 + M holy damage; P < strong, slowed (save ends)'
 			})

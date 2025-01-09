@@ -15,6 +15,8 @@ interface Props {
 
 export const DangerButton = (props: Props) => {
 	try {
+		const disabled = props.disabled || false;
+
 		return (
 			<Popover
 				className={props.mode === 'icon' ? 'danger-button icon' : 'danger-button'}
@@ -31,9 +33,9 @@ export const DangerButton = (props: Props) => {
 			>
 				{
 					props.mode === 'icon' ?
-						<DeleteOutlined disabled={props.disabled || false} style={{ color: '#ff4d4f' }} />
+						<DeleteOutlined style={{ color: '#ff4d4f', pointerEvents: disabled ? 'none' : 'auto', opacity: disabled ? 0.6 : 1 }} />
 						:
-						<Button block={props.block || false} disabled={props.disabled || false} danger={true}>
+						<Button block={props.block || false} disabled={disabled} danger={true}>
 							{props.label || 'Delete'}
 						</Button>
 				}

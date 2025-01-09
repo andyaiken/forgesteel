@@ -61,9 +61,6 @@
 
 * Add hero inventory management
 * Add a way for heroes to be modified - additional skills, languages, perks, titles, retainers, etc
-* Power Rolls:
-  * If a hero's power roll uses potencies, replace weak / average / strong with the hero's characteristic value
-  * If a hero's power roll adds a characteristic to damage, automatically calculate the total damage
 * Hero Builder:
   * Add new feature type to allow Revenant to choose features from other ancestries
   * Revenants should have 3 ancestry points if small

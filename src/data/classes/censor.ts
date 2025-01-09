@@ -158,8 +158,8 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
 				tier1: '5 + P psychic damage',
-				tier2: '5 + P psychic damage',
-				tier3: '5 + P psychic damage'
+				tier2: '7 + P psychic damage',
+				tier3: '10 + P psychic damage'
 			}),
 			effect: 'Each time the target willingly moves before the end of your next turn, they take 1 psychic damage for each square they move.'
 		}),

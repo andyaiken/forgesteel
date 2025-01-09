@@ -301,7 +301,7 @@ export class KitData {
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage',
 						tier2: '6 + M or A damage',
-						tier3: '9 + M or A damage'
+						tier3: '13 + M or A damage'
 					}),
 					effect: 'You can move up to 3 squares straight toward the target before this attack. You deal extra damage equal to the distance moved this way.'
 				})

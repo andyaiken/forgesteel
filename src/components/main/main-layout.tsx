@@ -140,7 +140,7 @@ export const MainLayout = ({
 				delete: () => { deleteSourcebookElement(sourcebookElementKind, elementId); navigate({ hash: '' }); }
 			});
 		},
-		[ sourcebooks, navigate, navigation, deleteSourcebookElement ]
+		[ sourcebooks, homebrewSourcebooks, navigate, navigation, deleteSourcebookElement ]
 	);
 
 	const getAncestryModal = useCallback(
@@ -398,7 +398,7 @@ export const MainLayout = ({
 				delete={() => onEncounterDelete(encounterId)}
 			/>;
 		},
-		[ playbook, navigation, onEncounterDelete ]
+		[ sourcebooks, playbook, navigation, onEncounterDelete ]
 	);
 
 	const getHeroModal = useCallback(
@@ -429,7 +429,7 @@ export const MainLayout = ({
 					return <RulesModal hero={hero} sourcebooks={sourcebooks} />;
 			}
 		},
-		[ heroes, navigation, onHeroChange ]
+		[ heroes, sourcebooks, navigation, onHeroChange ]
 	);
 
 	const getMonsterModal = useCallback(
@@ -444,7 +444,7 @@ export const MainLayout = ({
 				export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
 			/>;
 		},
-		[ sourcebooks ]
+		[ sourcebooks, playbook ]
 	);
 
 	const getMonsterGroupModal = useCallback(
@@ -467,7 +467,7 @@ export const MainLayout = ({
 				delete={() => { deleteSourcebookElement('monster-group', monsterGroup.id); navigate({ hash: '' }); }}
 			/>;
 		},
-		[ sourcebooks, navigate, navigation, onMonsterGroupCreate, deleteSourcebookElement ]
+		[ sourcebooks, homebrewSourcebooks, playbook, navigate, navigation, onMonsterGroupCreate, deleteSourcebookElement ]
 	);
 
 	function getHeroAbilityModal(hero: Hero, segments: string[]) {
@@ -530,6 +530,11 @@ export const MainLayout = ({
 		},
 		[
 			location,
+			hiddenSourcebookIDs,
+			homebrewSourcebooks,
+			officialSourcebooks,
+			persistHiddenSourcebookIDs,
+			persistHomebrewSourcebooks,
 			getAncestryModal,
 			getCareerModal,
 			getClassModal,

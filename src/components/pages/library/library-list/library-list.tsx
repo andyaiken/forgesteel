@@ -16,7 +16,7 @@ import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel'
 import { Element } from '../../../../models/element';
 import { Format } from '../../../../utils/format';
 import { HeroClass } from '../../../../models/class';
-import { Item } from '../../../../models/item';
+// import { Item } from '../../../../models/item';
 // import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
@@ -26,7 +26,7 @@ import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
-import { Title } from '../../../../models/title';
+// import { Title } from '../../../../models/title';
 // import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
 import { useModals } from '../../../../hooks/use-modals';

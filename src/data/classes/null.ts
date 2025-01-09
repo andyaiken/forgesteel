@@ -101,12 +101,12 @@ This ability stays active even after encounters end. It ends if you are dying or
 									FactoryLogic.feature.createBonus({
 										id: 'null-1-7aa',
 										field: FeatureField.Stability,
-										valuePerEchelon: 1
+										value: 1
 									}),
 									FactoryLogic.feature.createBonus({
 										id: 'null-1-7ab',
-										field: FeatureField.Disengage,
-										value: 1
+										field: FeatureField.Stamina,
+										valuePerEchelon: 6
 									})
 								]
 							}),

@@ -19,6 +19,7 @@ import { hakaan } from './ancestries/hakaan';
 import { highElf } from './ancestries/elf-high';
 import { human } from './ancestries/human';
 import { kobold } from './monsters/kobold';
+import { lordSyuul } from './monsters/lord-syuul';
 import { memonek } from './ancestries/memonek';
 import { nullClass } from './classes/null';
 import { orc } from './ancestries/orc';
@@ -30,6 +31,7 @@ import { tactician } from './classes/tactician';
 import { talent } from './classes/talent';
 import { timeRaider } from './ancestries/time-raider';
 import { troubadour } from './classes/troubadour';
+import { werewolf } from './monsters/werewolf';
 import { wodeElf } from './ancestries/elf-wode';
 
 export class SourcebookData {
@@ -300,7 +302,9 @@ export class SourcebookData {
 		monsterGroups: [
 			goblin,
 			kobold,
-			radenwight
+			radenwight,
+			lordSyuul,
+			werewolf
 		],
 		skills: [
 			{ name: 'Alchemy', description: 'Make bombs and potions.', list: SkillList.Crafting },

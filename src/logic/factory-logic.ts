@@ -16,6 +16,7 @@ import { Domain } from '../models/domain';
 import type { Element } from '../models/element';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
+import { Format } from '../utils/format';
 import { FormatLogic } from './format-logic';
 import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
@@ -258,7 +259,7 @@ export class FactoryLogic {
 		role: MonsterRole,
 		keywords: string[],
 		encounterValue: number,
-		size: Size,
+		size?: Size,
 		speed: { value: number, modes: string },
 		stamina: number,
 		stability?: number,
@@ -353,6 +354,7 @@ export class FactoryLogic {
 		minLevel?: number,
 		preEffect?: string,
 		powerRoll?: PowerRoll,
+		test?: PowerRoll,
 		effect?: string,
 		strained?: string,
 		alternateEffects?: string[],
@@ -371,6 +373,7 @@ export class FactoryLogic {
 			minLevel: data.minLevel || 1,
 			preEffect: data.preEffect || '',
 			powerRoll: data.powerRoll || null,
+			test: data.test ?? null,
 			effect: data.effect || '',
 			strained: data.strained || '',
 			alternateEffects: data.alternateEffects || [],
@@ -764,6 +767,23 @@ export class FactoryLogic {
 					count: count,
 					selected: data.selected || []
 				}
+			};
+		},
+		createSoloMonster: ({ id, monsterName, gender }: { id: string, monsterName: string, gender?: 'masc' | 'femme' | 'non-binary' }): FeatureText => {
+			const capitalizedName = monsterName.split(' ').map((n, i) => i === 0 ? Format.capitalize(n) : n).join(' ');
+			const genderWithDefault = gender ?? 'non-binary';
+			const heSheThey = ({ masc: 'he', femme: 'she', 'non-binary': 'they' } as const)[genderWithDefault];
+			const hisHerTheir = ({ masc: 'his', femme: 'her', 'non-binary': 'their' } as const)[genderWithDefault];
+			const himHerThem = ({ masc: 'him', femme: 'her', 'non-binary': 'them' } as const)[genderWithDefault];
+			return {
+				id,
+				name: 'Solo Monster',
+				description: `
+**Solo Turns** ${capitalizedName} takes up to two turns each round. ${Format.capitalize(heSheThey)} can’t take turns consecutively. ${Format.capitalize(heSheThey)} can use two actions on each of ${hisHerTheir} turns. While dazed, ${monsterName} can take one action and one maneuver per turn.
+
+**End Effect** At the end of ${hisHerTheir} turn, ${monsterName} can take 10 damage to end one save ends effect affecting ${himHerThem}. This damage can’t be reduced in any way.`,
+				type: FeatureType.Text,
+				data: null
 			};
 		},
 		createSpeed: (data: { id: string, name?: string, description?: string, speed: number }): FeatureSpeed => {

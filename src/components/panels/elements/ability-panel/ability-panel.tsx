@@ -13,6 +13,7 @@ import { Markdown } from '../../../controls/markdown/markdown';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Tag } from 'antd';
+import { TestPanel } from '../../power-roll/test-panel';
 import { useMemo } from 'react';
 
 import './ability-panel.scss';
@@ -94,6 +95,14 @@ export const AbilityPanel = (props: Props) => {
 										hero={props.hero}
 										onRoll={props.onRoll}
 									/>
+									: null
+							}
+							{
+								props.ability.test
+									? (<>
+										<p><b>Effect</b> Each target makes a <b>{props.ability.test.characteristic.join(' or ')} test.</b></p>
+										<TestPanel test={props.ability.test} />
+									</>)
 									: null
 							}
 							{props.ability.effect ? <Markdown text={props.ability.effect} /> : null}

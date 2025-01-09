@@ -30,6 +30,7 @@ export interface Ability extends Element {
 	minLevel: number;
 	preEffect: string;
 	powerRoll: PowerRoll | null,
+	test: PowerRoll | null,
 	effect: string;
 	strained: string;
 	alternateEffects: string[];

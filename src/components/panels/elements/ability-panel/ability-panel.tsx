@@ -29,7 +29,6 @@ interface Props {
 }
 
 export const AbilityPanel = (props: Props) => {
-	// const abilityWithDefaults = useMemo(() => )
 	const cost = useMemo(
 		() => {
 			const cost = props.cost ?? props.ability.cost;

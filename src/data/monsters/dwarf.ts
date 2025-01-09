@@ -86,6 +86,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 10, within: 10 }) ],
 				target: 'All enemies in the line',
+				preEffect: 'Each target makes an **Agility test**.',
 				test: FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Agility,
 					tier1: '8 damage; restrained (EoT)',
@@ -511,12 +512,14 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
 						target: 'All enemies in the cube',
+						preEffect: 'Each target makes a **Might test**.',
 						test: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Might,
 							tier1: '7 damage; restrained (EoT)',
 							tier2: '5 damage; slowed (EoT)',
 							tier3: 'No effect'
-						})
+						}),
+						effect: 'The snare remains until the end of the encounter. An enemy that moves into an affected square for the first time on their turn must make the test.'
 					})
 				})
 			]

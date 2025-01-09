@@ -711,7 +711,7 @@ export class FactoryLogic {
 			const count = data.count || 1;
 			const lists = data.lists || [];
 
-			const prefix = (lists.length > 0) ? `${lists.join(' / ')} ` : '';
+			const prefix = (lists.length > 0) && (lists.length < 6) ? `${lists.join(' / ')} ` : '';
 
 			return {
 				id: data.id,
@@ -755,7 +755,7 @@ export class FactoryLogic {
 			const options = data.options || [];
 			const listOptions = data.listOptions || [];
 
-			const prefix = (options.length === 0) && (listOptions.length > 0) ? `${listOptions.join(' / ')} ` : '';
+			const prefix = (listOptions.length < 5) ? ((options.length === 0) && (listOptions.length > 0) ? `${listOptions.join(' / ')} ` : '') : '';
 
 			return {
 				id: data.id,

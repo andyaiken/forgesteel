@@ -38,7 +38,7 @@ export const FeaturePanel = (props: Props) => {
 	// #region Editable
 
 	const getEditableAncestryTraits = (data: FeatureAncestryTraitsData) => {
-		const allOptions = [...data.options, ...data.inheritedOptions];
+		const allOptions = [...data.options, ...data.inheritedOptions].filter(o => o.feature.data.selectable !== false);
 		let pointCount = data.count;
 		if (data.overrides.length > 0) {
 			data.overrides.forEach(o => {
@@ -395,7 +395,6 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
-		// TODO: Move the filter callback to an AncestryLogic file?
 		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks as Sourcebook[])
 			.filter(a => !a.features.some(f => f.type === FeatureType.InheritedAncestry));
 		const sortedAncestries = Collections.sort(ancestries, a => a.name);

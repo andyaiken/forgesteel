@@ -5,8 +5,7 @@ import { DamageModifier } from './damage-modifier';
 import { Domain } from './domain';
 import { Element } from './element';
 import { FeatureField } from '../enums/feature-field';
-import { FeatureType } from '../enums/feature-type';
-import { Hero } from './hero';
+import { FeatureType, InheritableFeature } from '../enums/feature-type';
 import { Kit } from './kit';
 import { KitType } from '../enums/kit';
 import { Perk } from './perk';
@@ -24,7 +23,9 @@ export interface FeatureOverride<Type> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface _FeatureData { }
+interface _FeatureData { 
+	selectable?: boolean;
+}
 
 type FeatureOf<Type extends FeatureType, Data extends _FeatureData | null = null> = Element & { type: Type, data: Data };
 
@@ -163,7 +164,7 @@ export interface FeatureSpeedData extends _FeatureData {
 };
 export type FeatureSpeed = FeatureOf<FeatureType.Speed, FeatureSpeedData>;
 
-export type FeatureText = FeatureOf<FeatureType.Text>;
+export type FeatureText = FeatureOf<FeatureType.Text, _FeatureData>;
 
 export interface FeatureTitleData extends _FeatureData {
 	count: number;

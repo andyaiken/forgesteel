@@ -521,13 +521,15 @@ export class FactoryLogic {
 	};
 
 	static feature = {
-		create: (data: { id: string, name: string, description: string }): FeatureText => {
+		create: (data: { id: string, name: string, description: string, selectable?: boolean }): FeatureText => {
 			return {
 				id: data.id,
 				name: data.name,
 				description: data.description,
 				type: FeatureType.Text,
-				data: null
+				data: {
+					selectable: (data.selectable === undefined) ? true : data.selectable
+				},
 			};
 		},
 		createAbility: (data: FeatureAbilityData): FeatureAbility => {

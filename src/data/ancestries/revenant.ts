@@ -70,7 +70,15 @@ export const revenant: Ancestry = {
 			id: 'revenant-feature-4',
 			name: 'Revenant Traits',
 			options: [
-				// TODO: Previous Life (1pt)
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'revenant-feature-4-1',
+						name: 'Previous Life (1pt)',
+						description: 'You gain a purchasable trait that costs 1 ancestry point from your previous ancestry. You can take this trait multiple times, selecting a new cost 1 trait from your previous ancestry each time you take this trait.',
+						selectable: false
+					}),
+					value: 1,
+				},
 				{
 					feature: FactoryLogic.feature.create({
 						id: 'revenant-feature-4-2',
@@ -87,7 +95,15 @@ export const revenant: Ancestry = {
 					}),
 					value: 2
 				},
-				// TODO: Previous Life (2pts)
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'revenant-feature-4-1',
+						name: 'Previous Life (2pt)',
+						description: 'You gain a purchasable trait that costs 2 ancestry points from your previous ancestry.',
+						selectable: false
+					}),
+					value: 1
+				},
 				{
 					feature: FactoryLogic.feature.createMultiple({
 						id: 'revenant-feature-4-5',

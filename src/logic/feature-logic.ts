@@ -100,6 +100,9 @@ export class FeatureLogic {
 			list.push(feature);
 
 			switch (feature.type) {
+				case FeatureType.AncestryTraits:
+					feature.data.selected.forEach(addFeature);
+					break;
 				case FeatureType.Choice:
 					feature.data.selected.forEach(addFeature);
 					break;
@@ -130,6 +133,7 @@ export class FeatureLogic {
 
 	static isChoice = (feature: Feature) => {
 		switch (feature.type) {
+			case FeatureType.AncestryTraits:
 			case FeatureType.Choice:
 			case FeatureType.ClassAbility:
 			case FeatureType.Domain:
@@ -200,6 +204,8 @@ export class FeatureLogic {
 				return 'This feature grants you an ability.';
 			case FeatureType.AbilityCost:
 				return 'This feature modifies the cost to use an ability.';
+			case FeatureType.AncestryTraits:
+				return 'This feature allows you to choose from a collection of Ancestry-specific features.'
 			case FeatureType.Bonus:
 				return 'This feature modifies a statistic.';
 			case FeatureType.Choice:
@@ -212,6 +218,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose a domain.';
 			case FeatureType.DomainFeature:
 				return 'This feature allows you to choose a feature from your domain.';
+			case FeatureType.InheritedAncestry:
+				return 'This feature allows you to choose another ancestry (or ancestries) to inherit features from.'
 			case FeatureType.Kit:
 				return 'This feature allows you to choose a kit.';
 			case FeatureType.KitType:

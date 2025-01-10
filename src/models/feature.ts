@@ -40,6 +40,13 @@ export interface FeatureBonusData extends _FeatureData {
 };
 export type FeatureBonus = FeatureOf<FeatureType.Bonus, FeatureBonusData>;
 
+export interface FeatureAncestryTraitsData extends _FeatureData {
+	options: { feature: Feature, value: number }[];
+	count: number;
+	selected: Feature[];
+}
+export type FeatureAncestryTraits = FeatureOf<FeatureType.AncestryTraits, FeatureAncestryTraitsData>;
+
 export interface FeatureChoiceData extends _FeatureData {
 	options: { feature: Feature, value: number }[];
 	count: number;
@@ -156,6 +163,7 @@ export type FeatureTitle = FeatureOf<FeatureType.Title, FeatureTitleData>;
 export type Feature =
 	| FeatureAbility
 	| FeatureAbilityCost
+	| FeatureAncestryTraits
 	| FeatureBonus
 	| FeatureChoice
 	| FeatureClassAbility

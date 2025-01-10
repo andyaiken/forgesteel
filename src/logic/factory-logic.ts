@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureInheritedAncestry, FeatureInheritedAncestryData, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitle } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryTraits, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureInheritedAncestry, FeatureInheritedAncestryData, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitle } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
@@ -550,6 +550,20 @@ export class FactoryLogic {
 				data: {
 					keywords: data.keywords,
 					modifier: data.modifier
+				}
+			};
+		},
+		createAncestryTraits: (data: {id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], count?: number }): FeatureAncestryTraits => {
+			const count = data.count || 3;
+			return {
+				id: data.id,
+				name: data.name || 'Ancestry Traits',
+				description: data.description || (count > 1 ? `Choose ${count} options.` : 'Choose an option.'),
+				type: FeatureType.AncestryTraits,
+				data: {
+					options: data.options,
+					count: count,
+					selected: []
 				}
 			};
 		},

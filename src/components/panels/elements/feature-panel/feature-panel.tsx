@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityCostData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureInheritedAncestryData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAncestryTraitsData, FeatureBonusData, FeatureChoice, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureInheritedAncestryData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Badge } from '../../../controls/badge/badge';
@@ -36,6 +36,11 @@ interface Props {
 
 export const FeaturePanel = (props: Props) => {
 	// #region Editable
+
+	const getEditableAncestryTraits = (data: FeatureAncestryTraitsData) => {
+		// TODO: Add in any inherited traits before passing through
+		return getEditableChoice(data as FeatureChoiceData);
+	};
 
 	const getEditableChoice = (data: FeatureChoiceData) => {
 		const selectedIDs = data.selected.map(f => f.id);
@@ -680,6 +685,8 @@ export const FeaturePanel = (props: Props) => {
 
 	const getEditable = () => {
 		switch (props.feature.type) {
+			case FeatureType.AncestryTraits:
+				return getEditableAncestryTraits(props.feature.data as FeatureAncestryTraitsData);
 			case FeatureType.Choice:
 				return getEditableChoice(props.feature.data as FeatureChoiceData);
 			case FeatureType.ClassAbility:
@@ -713,6 +720,10 @@ export const FeaturePanel = (props: Props) => {
 		return (
 			<Field label={data.keywords.join(', ')} value={`Heroic resource cost ${data.modifier >= 0 ? '+' : ''}${data.modifier}`} />
 		);
+	};
+
+	const getExtraAncestryTraits = (data: FeatureAncestryTraitsData) => {
+		return getExtraChoice(data as FeatureChoiceData);
 	};
 
 	const getExtraBonus = (data: FeatureBonusData) => {
@@ -1025,6 +1036,8 @@ export const FeaturePanel = (props: Props) => {
 		switch (props.feature.type) {
 			case FeatureType.AbilityCost:
 				return getExtraAbilityCost(props.feature.data as FeatureAbilityCostData);
+			case FeatureType.AncestryTraits:
+				return getExtraAncestryTraits(props.feature.data as FeatureAncestryTraitsData);
 			case FeatureType.Bonus:
 				return getExtraBonus(props.feature.data as FeatureBonusData);
 			case FeatureType.Choice:

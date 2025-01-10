@@ -12,7 +12,7 @@ export const hakaan: Ancestry = {
 			sizeValue: 1,
 			sizeMod: 'L'
 		}),
-		FactoryLogic.feature.createChoice({
+		FactoryLogic.feature.createAncestryTraits({
 			id: 'hakaan-feature-2',
 			name: 'Hakaan Traits',
 			options: [

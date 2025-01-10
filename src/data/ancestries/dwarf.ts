@@ -16,7 +16,7 @@ You can carve a rune onto your skin and the magic within your body activates it.
 • **Light**: Your skin sheds light for 10 squares. You can turn this on and off as a maneuver.
 • **Voice**: As a maneuver, you can communicate telepathically with another willing creature you have met before whose name you know, who can speak and understand a language you know, and is within 1 mile of you. You and the creature can respond to one another as if having a normal conversation. You can change the person you communicate with by changing the rune.`
 		}),
-		FactoryLogic.feature.createChoice({
+		FactoryLogic.feature.createAncestryTraits({
 			id: 'dwarf-feature-2',
 			name: 'Dwarf Traits',
 			options: [

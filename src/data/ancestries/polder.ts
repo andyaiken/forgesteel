@@ -27,7 +27,7 @@ export const polder: Ancestry = {
 			sizeValue: 1,
 			sizeMod: 'S'
 		}),
-		FactoryLogic.feature.createChoice({
+		FactoryLogic.feature.createAncestryTraits({
 			id: 'polder-feature-3',
 			name: 'Polder Traits',
 			options: [

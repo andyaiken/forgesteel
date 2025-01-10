@@ -22,7 +22,7 @@ export const devil: Ancestry = {
 				})
 			]
 		}),
-		FactoryLogic.feature.createChoice({
+		FactoryLogic.feature.createAncestryTraits({
 			id: 'devil-feature-2',
 			name: 'Devil Traits',
 			options: [

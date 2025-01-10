@@ -14,7 +14,7 @@ export const timeRaider: Ancestry = {
 			name: 'Four Arms',
 			description: 'Your multiple arms let you take on multiple tasks at the same time. Whenever you use the Grab or Knockback maneuver against an adjacent creature, you can target an additional adjacent creature, using the same power roll for both targets. You can grab up to two creatures at a time.'
 		}),
-		FactoryLogic.feature.createChoice({
+		FactoryLogic.feature.createAncestryTraits({
 			id: 'time-raider-feature-2',
 			name: 'Time Raider Traits',
 			options: [

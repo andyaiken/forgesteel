@@ -45,7 +45,7 @@ export class AbilityLogic {
 
 	static usesPotency = (powerRoll: PowerRoll) => {
 		const match = (tier: string) => {
-			return /(<|>|=)\s*(weak|average|strong)/.test(tier);
+			return /(<|>|=)\s*(weak|average|avg|strong)/.test(tier);
 		};
 
 		return [ powerRoll.tier1, powerRoll.tier2, powerRoll.tier3 ].some(tier => match(tier));

@@ -1,7 +1,6 @@
 import { AbilityCustomization, Hero } from '../../../../models/hero';
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
-import { AbilityPowerRollPanel } from '../../power-roll/ability-power-roll-panel';
 import { Badge } from '../../../controls/badge/badge';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
@@ -12,8 +11,8 @@ import { HeroicResourceBadge } from '../../../controls/heroic-resource-badge/her
 import { Markdown } from '../../../controls/markdown/markdown';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { PowerRollPanel } from '../../power-roll/power-roll-panel';
 import { Tag } from 'antd';
-import { TestPanel } from '../../power-roll/test-panel';
 import { useMemo } from 'react';
 
 import './ability-panel.scss';
@@ -94,7 +93,7 @@ export const AbilityPanel = (props: Props) => {
 							<Markdown text={props.ability.preEffect} />
 							{
 								props.ability.powerRoll ?
-									<AbilityPowerRollPanel
+									<PowerRollPanel
 										powerRoll={props.ability.powerRoll}
 										ability={props.ability}
 										hero={props.hero}
@@ -103,7 +102,10 @@ export const AbilityPanel = (props: Props) => {
 							}
 							{
 								props.ability.test ?
-									<TestPanel test={props.ability.test} />
+									<PowerRollPanel
+										powerRoll={props.ability.test}
+										test={true}
+									/>
 									: null
 							}
 							<Markdown text={props.ability.effect} />

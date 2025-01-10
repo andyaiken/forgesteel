@@ -1,4 +1,5 @@
 .power-roll-panel {
+	position: relative;
 	margin: 10px 0;
 	border: 1px solid rgba(5, 5, 5, 0.06);
 	border-radius: 5px;
@@ -30,6 +31,12 @@
 			flex: 1 1 0;
 			padding: 5px 0;
 		}
+	}
+
+	.autocalc-btn {
+		position: absolute;
+		top: 2px;
+		right: 2px;
 	}
 }
 

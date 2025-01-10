@@ -17,9 +17,9 @@ import { Markdown } from '../../../controls/markdown/markdown';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../perk-panel/perk-panel';
+import { PowerRollPanel } from '../../power-roll/power-roll-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
-import { TestPanel } from '../../power-roll/test-panel';
 import { TitlePanel } from '../title-panel/title-panel';
 
 import './feature-panel.scss';
@@ -849,7 +849,7 @@ export const FeaturePanel = (props: Props) => {
 		return (data.sections ?? []).map((section, n) => (typeof section === 'string') ?
 			<Markdown key={n} text={section} />
 			:
-			<TestPanel key={n} test={section} />
+			<PowerRollPanel key={n} powerRoll={section} test={true} />
 		);
 	};
 

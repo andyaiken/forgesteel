@@ -752,7 +752,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 	};
 
 	static calculatePotency = (hero: Hero, strength: 'weak' | 'average' | 'strong') => {
-		const value = hero.class ? Math.max(...hero.class.characteristics.map(c => c.value)) : 0;
+		const value = hero.class && (hero.class.characteristics.length > 0) ? Math.max(...hero.class.characteristics.map(c => c.value)) : 0;
 
 		switch (strength) {
 			case 'weak':

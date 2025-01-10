@@ -1,3 +1,4 @@
+import { AbilityCustomization, Hero } from '../../../../models/hero';
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityPowerRollPanel } from '../../power-roll/ability-power-roll-panel';
@@ -6,7 +7,6 @@ import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
-import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroicResourceBadge } from '../../../controls/heroic-resource-badge/heroic-resource-badge';
 import { Markdown } from '../../../controls/markdown/markdown';
@@ -64,24 +64,17 @@ export const AbilityPanel = (props: Props) => {
 			className += ' disabled';
 		}
 
-		let customName = '';
-		let customDescription = '';
-		let customNotes = '';
+		let customization: AbilityCustomization | null = null;
 		if (props.hero) {
-			const customization = props.hero.abilityCustomizations.find(ac => ac.abiliyID === props.ability.id);
-			if (customization) {
-				customName = customization.name;
-				customDescription = customization.description;
-				customNotes = customization.notes;
-			}
+			customization = props.hero.abilityCustomizations.find(ac => ac.abilityID === props.ability.id) || null;
 		}
 
 		return (
 			<div className={className} id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
 				<HeaderText ribbon={headerRibbon} tags={props.tags}>
-					{customName || props.ability.name || 'Unnamed Ability'}
+					{customization?.name || props.ability.name || 'Unnamed Ability'}
 				</HeaderText>
-				<Markdown text={customDescription || props.ability.description} />
+				<Markdown text={customization?.description || props.ability.description} />
 				{
 					props.mode === PanelMode.Full ?
 						<div>
@@ -161,10 +154,10 @@ export const AbilityPanel = (props: Props) => {
 								))
 							}
 							{
-								customNotes ?
+								customization && customization.notes ?
 									<Field
 										label='Notes'
-										value={<Markdown text={customNotes} useSpan={true} />}
+										value={<Markdown text={customization.notes} useSpan={true} />}
 									/>
 									: null
 							}

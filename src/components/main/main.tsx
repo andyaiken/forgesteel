@@ -118,8 +118,8 @@ export const Main = (props: Props) => {
 			.then(setHiddenSourcebookIDs);
 	};
 
-	const persistOptions = (options: Options) => {
-		localforage
+	const persistOptions = async (options: Options) => {
+		await localforage
 			.setItem<Options>('forgesteel-options', options)
 			.then(setOptions);
 	};
@@ -153,9 +153,9 @@ export const Main = (props: Props) => {
 		Utils.export(ids, hero.name || 'Unnamed Hero', hero, 'hero', format);
 	};
 
-	const deleteHero = (heroId: string) => {
+	const deleteHero = async (heroId: string) => {
 		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
-		persistHeroes(copy.filter(h => h.id !== heroId));
+		await persistHeroes(copy.filter(h => h.id !== heroId));
 		navigation.goToHeroList();
 	};
 
@@ -353,7 +353,7 @@ export const Main = (props: Props) => {
 		}
 
 		sourcebook.complications.push(complication);
-		persistHomebrewSourcebooks(sourcebooks);
+		await persistHomebrewSourcebooks(sourcebooks);
 		if (drawer) {
 			onSelectComplication(complication);
 		} else {
@@ -920,7 +920,7 @@ export const Main = (props: Props) => {
 
 	const onSelectAbility = (ability: Ability, hero: Hero) => {
 		setDrawer(
-			<AbilityModal ability={ability} hero={hero} />
+			<AbilityModal ability={ability} hero={hero} updateHero={async hero => await persistHero(hero)} />
 		);
 	};
 
@@ -930,9 +930,7 @@ export const Main = (props: Props) => {
 				hero={hero}
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
 				startPage={page}
-				onChange={async hero => {
-					await persistHero(hero);
-				}}
+				onChange={async hero => await persistHero(hero)}
 				onLevelUp={async () => {
 					if (hero && hero.class) {
 						hero.class.level += 1;
@@ -961,8 +959,8 @@ export const Main = (props: Props) => {
 				officialSourcebooks={[ SourcebookData.core, SourcebookData.orden ]}
 				homebrewSourcebooks={homebrewSourcebooks}
 				hiddenSourcebookIDs={hiddenSourcebookIDs}
-				onHomebrewSourcebookChange={persistHomebrewSourcebooks}
-				onHiddenSourcebookIDsChange={persistHiddenSourcebookIDs}
+				onHomebrewSourcebookChange={async sourcebooks => await persistHomebrewSourcebooks(sourcebooks)}
+				onHiddenSourcebookIDsChange={async ids => persistHiddenSourcebookIDs(ids)}
 			/>
 		);
 	};
@@ -1012,7 +1010,7 @@ export const Main = (props: Props) => {
 								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								options={options}
-								setOptions={persistOptions}
+								setOptions={async options => await persistOptions(options)}
 								showAbout={showAbout}
 								exportHero={exportHero}
 								deleteHero={deleteHero}

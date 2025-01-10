@@ -31,7 +31,7 @@ export interface HeroState {
 }
 
 export interface AbilityCustomization {
-	abiliyID: string;
+	abilityID: string;
 	name: string;
 	description: string;
 	notes: string;

@@ -19,6 +19,7 @@ import { Skill } from '../models/skill';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
 import { SourcebookLogic } from './sourcebook-logic';
+import { revenant } from '../data/ancestries/revenant';
 
 export class HeroLogic {
 	static getKitTypes = (hero: Hero) => {
@@ -880,6 +881,17 @@ Complex or time-consuming tests might require an action if made in combat—or c
 				traitsFeature.type = FeatureType.AncestryTraits;
 			}
 		}
+
+		if (hero?.ancestry?.id === revenant.id) {
+			const newFormerLife = revenant.features.find(f => f.type === FeatureType.InheritedAncestry);
+			if (newFormerLife) {
+				const formerLifeIndex = hero.ancestry.features.findIndex(f => f.id === newFormerLife.id);
+				if (hero.ancestry.features[formerLifeIndex].type !== FeatureType.InheritedAncestry) {
+					const formerLifeCopy = JSON.parse(JSON.stringify(newFormerLife)) as FeatureInheritedAncestry;
+					hero.ancestry.features.splice(formerLifeIndex, 1, formerLifeCopy);
+				}
+			}
+		}
 	};
 
 	///////////////////////////////////////////////////////////////////////////
@@ -940,7 +952,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 
 		if (newFeature !== undefined) {
 			const inheritedAncestryIdx = ancestryFeatures.findIndex(f => f.type === FeatureType.InheritedAncestry);
-			ancestryFeatures.splice(inheritedAncestryIdx, 0, newFeature);
+			ancestryFeatures.splice(inheritedAncestryIdx + 1, 0, newFeature);
 		}
 	};
 }

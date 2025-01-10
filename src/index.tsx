@@ -29,6 +29,7 @@ Promise.all(promises).then(results => {
 
 	heroes.forEach(hero => {
 		HeroLogic.updateHero(hero);
+		HeroLogic.updateBreakingChanges(hero);
 	});
 
 	let sourcebooks = results[1] as Sourcebook[] | null;

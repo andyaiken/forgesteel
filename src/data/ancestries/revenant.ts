@@ -124,7 +124,13 @@ You can have an active number of sigils equal to your level. You can remove a si
 					value: 2
 				}
 			],
-			count: 2 // TODO: Or 3 if small
+			count: 2,
+			overrides: [{
+				overrideTarget: 'count',
+				overrideValue: 3,
+				conditionTarget: FeatureType.Size,
+				conditionValue: '1S'
+			}]
 		})
 	]
 };

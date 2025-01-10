@@ -6,6 +6,7 @@ import { Domain } from './domain';
 import { Element } from './element';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
+import { Hero } from './hero';
 import { Kit } from './kit';
 import { KitType } from '../enums/kit';
 import { Perk } from './perk';
@@ -14,6 +15,13 @@ import { PowerRoll } from './power-roll';
 import { Size } from './size';
 import { SkillList } from '../enums/skill-list';
 import { Title } from './title';
+
+export interface FeatureOverride<Type> {
+	overrideTarget: string;
+	overrideValue: Type;
+	conditionTarget: FeatureType;
+	conditionValue: any;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface _FeatureData { }
@@ -36,6 +44,7 @@ export interface FeatureAncestryTraitsData extends _FeatureData {
 	inheritedOptions: { feature: Feature, value: number }[];
 	count: number;
 	selected: Feature[];
+	overrides: FeatureOverride<any>[];
 }
 export type FeatureAncestryTraits = FeatureOf<FeatureType.AncestryTraits, FeatureAncestryTraitsData>;
 

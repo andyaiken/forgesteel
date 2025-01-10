@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureAncestryTraits, FeatureBonusData, FeatureChoice, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureInheritedAncestry, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSize, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeed } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureAncestryTraits, FeatureBonusData, FeatureChoice, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureInheritedAncestry, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureOverride, FeatureSize, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeed } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
@@ -1013,4 +1013,15 @@ Complex or time-consuming tests might require an action if made in combat—or c
 			}
 		}
 	};
+
+	static shouldDoOverride = (hero: Hero, override: FeatureOverride<any>) => {
+		switch (override.conditionTarget) {
+			case FeatureType.Size:
+				const heroSize = HeroLogic.getSize(hero);
+				const targetSize = [...override.conditionValue];
+				return heroSize.value.toString() === targetSize[0] && heroSize.mod === targetSize[1];
+			default:
+				return false;
+		}
+	}
 }

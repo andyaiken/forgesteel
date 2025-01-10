@@ -39,13 +39,22 @@ export const FeaturePanel = (props: Props) => {
 
 	const getEditableAncestryTraits = (data: FeatureAncestryTraitsData) => {
 		const allOptions = [...data.options, ...data.inheritedOptions];
+		let pointCount = data.count;
+		if (data.overrides.length > 0) {
+			data.overrides.forEach(o => {
+				if (o.overrideTarget === 'count' && props.hero && HeroLogic.shouldDoOverride(props.hero, o)) {
+					pointCount = o.overrideValue;
+				}
+			});
+		}
+
 		const selectedIDs = data.selected.map(f => f.id);
 
 		const pointsUsed = Collections.sum(selectedIDs, id => {
 			const original = allOptions.find(o => o.feature.id === id);
 			return original ? original.value : 0;
 		});
-		const pointsLeft = data.count - pointsUsed;
+		const pointsLeft = pointCount - pointsUsed;
 
 		const availableOptions = allOptions.filter(o => allOptions.every(o => o.value === 1) || selectedIDs.includes(o.feature.id) || (o.value <= pointsLeft));
 		const sortedOptions = Collections.sort(availableOptions, opt => opt.feature.name);
@@ -67,18 +76,18 @@ export const FeaturePanel = (props: Props) => {
 				<div className='ds-text'>
 					{
 						showCosts ?
-							`You have ${data.count} points to spend on the following options:`
+							`You have ${pointCount} points to spend on the following options:`
 							:
-							`Choose ${data.count} of the following options:`
+							`Choose ${pointCount} of the following options:`
 					}
 				</div>
 				<Select
 					style={{ width: '100%' }}
 					className={data.selected.length === 0 ? 'selection-empty' : ''}
-					mode={data.count === 1 ? undefined : 'multiple'}
-					maxCount={data.count === 1 ? undefined : data.count}
+					mode={pointCount === 1 ? undefined : 'multiple'}
+					maxCount={pointCount === 1 ? undefined : pointCount}
 					allowClear={true}
-					placeholder={data.count === 1 ? 'Select an option' : 'Select options'}
+					placeholder={pointCount === 1 ? 'Select an option' : 'Select options'}
 					options={sortedOptions.map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description, cost: o.value }))}
 					optionRender={option => (
 						<Field
@@ -91,10 +100,10 @@ export const FeaturePanel = (props: Props) => {
 							value={option.data.desc}
 						/>
 					)}
-					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
+					value={pointCount === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
 					onChange={value => {
 						let ids: string[] = [];
-						if (data.count === 1) {
+						if (pointCount === 1) {
 							ids = value !== undefined ? [ value as string ] : [];
 						} else {
 							ids = value as string[];

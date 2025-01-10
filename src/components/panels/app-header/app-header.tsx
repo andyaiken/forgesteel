@@ -1,18 +1,18 @@
 import { Button } from 'antd';
 import { ReactNode } from 'react';
-import shield from './../../../assets/shield.png';
-import { useModals } from '../../../hooks/use-modals';
 import { useNavigation } from '../../../hooks/use-navigation';
+
+import shield from './../../../assets/shield.png';
 
 import './app-header.scss';
 
 interface Props {
 	breadcrumbs: { label: string }[];
 	children?: ReactNode;
+	showAbout: () => void;
 }
 
 export const AppHeader = (props: Props) => {
-	const modals = useModals();
 	const navigation = useNavigation();
 
 	return (
@@ -27,7 +27,7 @@ export const AppHeader = (props: Props) => {
 			<div className='action-buttons'>
 				{props.children}
 				{props.children ? <div className='divider' /> : null}
-				<Button onClick={modals.showAbout}>About</Button>
+				<Button onClick={props.showAbout}>About</Button>
 			</div>
 		</div>
 	);

@@ -12,8 +12,9 @@ import './hero-list-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
+	showAbout: () => void;
 	addHero: () => void;
-	importHero: (hero: Hero) => Promise<void>;
+	importHero: (hero: Hero) => void;
 }
 
 export const HeroListPage = (props: Props) => {
@@ -21,7 +22,7 @@ export const HeroListPage = (props: Props) => {
 	try {
 		return (
 			<div className='hero-list-page'>
-				<AppHeader breadcrumbs={[ { label: 'Heroes' } ]}>
+				<AppHeader breadcrumbs={[ { label: 'Heroes' } ]} showAbout={props.showAbout}>
 					<Button type='primary' icon={<PlusCircleOutlined />} onClick={props.addHero}>
 						Create A New Hero
 					</Button>

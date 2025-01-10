@@ -29,7 +29,6 @@ import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 // import { Title } from '../../../../models/title';
 // import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
-import { useModals } from '../../../../hooks/use-modals';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
@@ -39,6 +38,19 @@ import './library-list.scss';
 interface Props {
 	sourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
+	showAbout: () => void;
+ 	showSourcebooks: () => void;
+ 	showAncestry: (ancestry: Ancestry) => void;
+ 	showCulture: (cultiure: Culture) => void;
+ 	showCareer: (career: Career) => void;
+ 	showClass: (heroClass: HeroClass) => void;
+ 	showComplication: (complication: Complication) => void;
+ 	showDomain: (domain: Domain) => void;
+ 	showKit: (kit: Kit) => void;
+ 	showPerk: (perk: Perk) => void;
+ 	// showTitle: (title: Title) => void;
+ 	// showItem: (item: Item) => void;
+ 	showMonsterGroup: (monsterGroup: MonsterGroup) => void;
 	onCreateHomebrew: (type: SourcebookElementKind, sourcebookID: string | null) => void;
 	onImportHomebrew: (type: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 }
@@ -53,7 +65,6 @@ const useTabKey = (): [SourcebookElementKind, (tabKey: SourcebookElementKind) =>
 };
 
 export const LibraryListPage = (props: Props) => {
-	const modals = useModals();
 	const [ tabKey, setTabKey ] = useTabKey();
 	const [ previousTab, setPreviousTab ] = useState(tabKey);
 	const [ element, setElement ] = useState<SourcebookElementKind>(tabKey);
@@ -190,7 +201,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(a => {
 						const item = (
-							<SelectablePanel key={a.id} onSelect={() => modals.showAncestry(a.id)}>
+							<SelectablePanel key={a.id} onSelect={() => props.showAncestry(a)}>
 								<AncestryPanel ancestry={a} />
 							</SelectablePanel>
 						);
@@ -227,7 +238,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => modals.showCulture(c.id)}>
+							<SelectablePanel key={c.id} onSelect={() => props.showCulture(c)}>
 								<CulturePanel culture={c} />
 							</SelectablePanel>
 						);
@@ -264,7 +275,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => modals.showCareer(c.id)}>
+							<SelectablePanel key={c.id} onSelect={() => props.showCareer(c)}>
 								<CareerPanel career={c} />
 							</SelectablePanel>
 						);
@@ -302,7 +313,7 @@ export const LibraryListPage = (props: Props) => {
 					list.map(c => {
 
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => modals.showClass(c.id)}>
+							<SelectablePanel key={c.id} onSelect={() => props.showClass(c)}>
 								<ClassPanel heroClass={c} />
 							</SelectablePanel>
 						);
@@ -339,7 +350,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => modals.showComplication(c.id)}>
+							<SelectablePanel key={c.id} onSelect={() => props.showComplication(c)}>
 								<ComplicationPanel complication={c} />
 							</SelectablePanel>
 						);
@@ -376,7 +387,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(d => {
 						const item = (
-							<SelectablePanel key={d.id} onSelect={() => modals.showDomain(d.id)}>
+							<SelectablePanel key={d.id} onSelect={() => props.showDomain(d)}>
 								<DomainPanel domain={d} />
 							</SelectablePanel>
 						);
@@ -413,7 +424,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(k => {
 						const item = (
-							<SelectablePanel key={k.id} onSelect={() => modals.showKit(k.id)}>
+							<SelectablePanel key={k.id} onSelect={() => props.showKit(k)}>
 								<KitPanel kit={k} />
 							</SelectablePanel>
 						);
@@ -450,7 +461,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(p => {
 						const item = (
-							<SelectablePanel key={p.id} onSelect={() => modals.showPerk(p.id)}>
+							<SelectablePanel key={p.id} onSelect={() => props.showPerk(p)}>
 								<PerkPanel perk={p} />
 							</SelectablePanel>
 						);
@@ -563,7 +574,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(mg => {
 						const item = (
-							<SelectablePanel key={mg.id} onSelect={() => modals.showMonsterGroup(mg.id)}>
+							<SelectablePanel key={mg.id} onSelect={() => props.showMonsterGroup(mg)}>
 								<MonsterGroupPanel monsterGroup={mg} sourcebooks={props.sourcebooks} />
 							</SelectablePanel>
 						);
@@ -606,7 +617,7 @@ export const LibraryListPage = (props: Props) => {
 
 		return (
 			<div className='library-list-page'>
-				<AppHeader breadcrumbs={[ { label: 'Library' } ]}>
+				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showAbout={props.showAbout}>
 					<Input
 						placeholder='Search'
 						allowClear={true}
@@ -674,7 +685,7 @@ export const LibraryListPage = (props: Props) => {
 							<DownOutlined />
 						</Button>
 					</Popover>
-					<Button onClick={modals.showSourcebooks}>
+					<Button onClick={props.showSourcebooks}>
 						Sourcebooks
 					</Button>
 				</AppHeader>

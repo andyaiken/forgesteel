@@ -14,8 +14,8 @@ interface Props {
 	homebrewSourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
 	heroes: Hero[];
-	onHomebrewSourcebookChange: (Sourcebooks: Sourcebook[]) => Promise<void>;
-	onHiddenSourcebookIDsChange: (ids: string[]) => Promise<void>;
+	onHomebrewSourcebookChange: (Sourcebooks: Sourcebook[]) => void;
+	onHiddenSourcebookIDsChange: (ids: string[]) => void;
 }
 
 export const SourcebooksModal = (props: Props) => {

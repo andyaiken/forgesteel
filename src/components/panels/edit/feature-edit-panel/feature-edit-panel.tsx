@@ -1,6 +1,6 @@
 import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAncestryTraitsData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureInheritedAncestryData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -12,7 +12,7 @@ import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeatureField } from '../../../../enums/feature-field';
 import { FeatureLogic } from '../../../../logic/feature-logic';
-import { FeatureType } from '../../../../enums/feature-type';
+import { FeatureType, InheritableFeature } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { KitType } from '../../../../enums/kit';
@@ -76,6 +76,15 @@ export const FeatureEditPanel = (props: Props) => {
 					modifier: -1
 				};
 				break;
+			case FeatureType.AncestryTraits:
+				data = {
+					options: [],
+					inheritedOptions: [],
+					count: 3,
+					selected: [],
+					overrides: []
+				}
+				break;
 			case FeatureType.Bonus:
 				data = {
 					field: FeatureField.Recoveries,
@@ -115,6 +124,13 @@ export const FeatureEditPanel = (props: Props) => {
 					level: 1,
 					count: 1,
 					selected: []
+				};
+				break;
+			case FeatureType.InheritedAncestry:
+				data = {
+					count: 1,
+					selected: [],
+					inheritedFeatures: [FeatureType.Size, FeatureType.AncestryTraits]
 				};
 				break;
 			case FeatureType.Kit:
@@ -277,6 +293,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setField = (value: FeatureField) => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
 			copy.field = value;
+			setData(copy);
+		};
+
+		const setInheritedFeatures = (value: InheritableFeature[]) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureInheritedAncestryData;
+			copy.inheritedFeatures = value;
 			setData(copy);
 		};
 
@@ -500,6 +522,48 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
+			case FeatureType.AncestryTraits: {
+				const data = feature.data as FeatureAncestryTraitsData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Options</HeaderText>
+						{
+							data.options.map((option, n) => (
+								<Expander
+									key={n}
+									title={option.feature.name || 'Unnamed Feature'}
+									extra={[
+										<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveChoice(data, n, 'up')} />,
+										<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveChoice(data, n, 'down')} />,
+										<DangerButton key='delete' mode='icon' onConfirm={() => deleteChoice(data, n)} />
+									]}
+								>
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<FeatureEditPanel
+											feature={option.feature}
+											sourcebooks={props.sourcebooks}
+											onChange={f => setChoiceFeature(data, n, f)}
+										/>
+										<NumberSpin min={1} value={option.value} onChange={value => setChoiceValue(data, n, value)} />
+									</Space>
+								</Expander>
+							))
+						}
+						{
+							data.options.length === 0 ?
+								<Alert
+									type='warning'
+									showIcon={true}
+									message='No options'
+								/>
+								: null
+						}
+						<Button block={true} onClick={() => addChoice(data)}>Add an option</Button>
+						<HeaderText>Count</HeaderText>
+						<NumberSpin min={1} value={data.count} onChange={setCount} />
+					</Space>
+				);
+			}
 			case FeatureType.Bonus: {
 				const data = feature.data as FeatureBonusData;
 				return (
@@ -664,6 +728,28 @@ export const FeatureEditPanel = (props: Props) => {
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
 					</Space>
 				);
+			}
+			case FeatureType.InheritedAncestry: {
+				const data = feature.data as FeatureInheritedAncestryData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Inherited Features</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							className={data.inheritedFeatures.length === 0 ? 'selection-empty' : ''}
+							placeholder='Inherited features'
+							mode='multiple'
+							allowClear={true}
+							options={[ FeatureType.AncestryTraits, FeatureType.Size, FeatureType.Speed ].map(option => ({ value: option }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={data.inheritedFeatures}
+							onChange={setInheritedFeatures}
+						/>
+						<HeaderText>Count</HeaderText>
+						<NumberSpin min={1} value={data.count} onChange={setCount} />
+					</Space>
+				);
+				
 			}
 			case FeatureType.Kit: {
 				const data = feature.data as FeatureKitData;
@@ -920,7 +1006,7 @@ export const FeatureEditPanel = (props: Props) => {
 									<Select
 										style={{ width: '100%' }}
 										placeholder='Select type'
-										options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.Title ]).map(o => ({ value: o }))}
+										options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.AncestryTraits, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.InheritedAncestry, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.Title ]).map(o => ({ value: o }))}
 										optionRender={option => <Field label={option.data.value} value={FeatureLogic.getFeatureTypeDescription(option.data.value)} />}
 										value={feature.type}
 										onChange={setType}

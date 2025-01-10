@@ -30,6 +30,13 @@ export interface HeroState {
 	inventory: Item[];
 }
 
+export interface AbilityCustomization {
+	abiliyID: string;
+	name: string;
+	description: string;
+	notes: string;
+}
+
 export interface Hero {
 	id: string;
 	name: string;
@@ -44,4 +51,5 @@ export interface Hero {
 
 	features: Feature[];
 	state: HeroState;
+	abilityCustomizations: AbilityCustomization[];
 }

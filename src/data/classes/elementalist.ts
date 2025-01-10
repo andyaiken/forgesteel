@@ -97,6 +97,7 @@ Choose one of the following effects:
 							feature: FactoryLogic.feature.createMultiple({
 								id: 'elementalist-1-7a',
 								name: 'Enchantment of Battle',
+								description: 'You tap into the elemental mysteries to gain the mind and training of a warrior.',
 								features: [
 									FactoryLogic.feature.createBonus({
 										id: 'elementalist-1-7aa',
@@ -106,7 +107,7 @@ Choose one of the following effects:
 									FactoryLogic.feature.create({
 										id: 'elementalist-1-7ab',
 										name: 'Enchantment of Battle',
-										description: 'You tap into the elemental mysteries to gain the mind and training of a warrior. You can wear light armor and wield light weapons effectively, even though you don’t have a kit. While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this enchantment.'
+										description: 'You can wear light armor and wield light weapons effectively, even though you don’t have a kit. While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this enchantment.'
 									})
 								]
 							}),

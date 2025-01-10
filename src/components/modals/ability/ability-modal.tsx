@@ -5,6 +5,7 @@ import { Hero } from '../../../models/hero';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
+import { Tabs } from 'antd';
 
 import './ability-modal.scss';
 
@@ -19,14 +20,26 @@ export const AbilityModal = (props: Props) => {
 			<Modal
 				content={
 					<div className='ability-modal'>
-						<SelectablePanel>
-							<AbilityPanel ability={props.ability} hero={props.hero} mode={PanelMode.Full} />
-						</SelectablePanel>
-						{
-							props.ability.powerRoll ?
-								<DieRollPanel hero={props.hero} characteristics={props.ability.powerRoll.characteristic} />
-								: null
-						}
+						<Tabs
+							items={[
+								{
+									key: 'ability',
+									label: 'Ability',
+									children: (
+										<div className='ability-section'>
+											<SelectablePanel>
+												<AbilityPanel ability={props.ability} hero={props.hero} mode={PanelMode.Full} />
+											</SelectablePanel>
+											{
+												props.ability.powerRoll ?
+													<DieRollPanel hero={props.hero} characteristics={props.ability.powerRoll.characteristic} />
+													: null
+											}
+										</div>
+									)
+								}
+							]}
+						/>
 					</div>
 				}
 			/>

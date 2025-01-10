@@ -125,6 +125,7 @@ export const Main = (props: Props) => {
 		]);
 
 		await persistHero(hero);
+		navigation.goToHeroEdit(hero.id);
 	};
 
 	const importHero = async (hero: Hero) => {

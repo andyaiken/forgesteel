@@ -3,7 +3,6 @@ import { PowerRollPanel } from './power-roll-panel';
 
 interface Props {
 	test: PowerRoll;
-	onRoll?: () => void;
 }
 
 export const TestPanel = (props: Props) => {
@@ -13,7 +12,6 @@ export const TestPanel = (props: Props) => {
 		<PowerRollPanel
 			header={header}
 			powerRoll={props.test}
-			onRoll={props.onRoll}
 		/>
 	);
 };

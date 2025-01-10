@@ -25,7 +25,6 @@ interface Props {
 	options?: Options;
 	mode?: PanelMode;
 	tags?: string[];
-	onRoll?: () => void;
 }
 
 export const AbilityPanel = (props: Props) => {
@@ -58,18 +57,31 @@ export const AbilityPanel = (props: Props) => {
 			&& cost > props.hero.state.heroicResource,
 		[ props.hero, props.options, cost ]
 	);
+
 	try {
 		let className = 'ability-panel';
 		if (disabled) {
 			className += ' disabled';
 		}
 
+		let customName = '';
+		let customDescription = '';
+		let customNotes = '';
+		if (props.hero) {
+			const customization = props.hero.abilityCustomizations.find(ac => ac.abiliyID === props.ability.id);
+			if (customization) {
+				customName = customization.name;
+				customDescription = customization.description;
+				customNotes = customization.notes;
+			}
+		}
+
 		return (
 			<div className={className} id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
 				<HeaderText ribbon={headerRibbon} tags={props.tags}>
-					{props.ability.name || 'Unnamed Ability'}
+					{customName || props.ability.name || 'Unnamed Ability'}
 				</HeaderText>
-				<Markdown text={props.ability.description} />
+				<Markdown text={customDescription || props.ability.description} />
 				{
 					props.mode === PanelMode.Full ?
 						<div>
@@ -93,7 +105,6 @@ export const AbilityPanel = (props: Props) => {
 										powerRoll={props.ability.powerRoll}
 										ability={props.ability}
 										hero={props.hero}
-										onRoll={props.onRoll}
 									/>
 									: null
 							}
@@ -148,6 +159,14 @@ export const AbilityPanel = (props: Props) => {
 										value={<Markdown text={persist.effect} useSpan={true} />}
 									/>
 								))
+							}
+							{
+								customNotes ?
+									<Field
+										label='Notes'
+										value={<Markdown text={customNotes} useSpan={true} />}
+									/>
+									: null
 							}
 						</div>
 						: null

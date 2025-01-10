@@ -835,6 +835,10 @@ Complex or time-consuming tests might require an action if made in combat—or c
 			hero.state.inventory = [];
 		}
 
+		if (hero.abilityCustomizations === undefined) {
+			hero.abilityCustomizations = [];
+		}
+
 		this.getFeatures(hero).filter(f => f.type === FeatureType.Bonus).forEach(f => {
 			const data = f.data as FeatureBonusData;
 			if (data.valuePerEchelon === undefined) {

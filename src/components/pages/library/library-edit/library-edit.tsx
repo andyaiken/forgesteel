@@ -30,6 +30,7 @@ import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeatureEditPanel } from '../../../panels/edit/feature-edit-panel/feature-edit-panel';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
+import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
@@ -1711,7 +1712,7 @@ export const LibraryEditPage = (props: Props) => {
 	try {
 		return (
 			<div className='library-edit-page'>
-				<AppHeader breadcrumbs={[ { label: 'Library' } ]}>
+				<AppHeader breadcrumbs={[ { label: `${Format.capitalize(kind!)} Builder` } ]}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(sourcebookId!, kind!, element)}>
 						Save Changes
 					</Button>

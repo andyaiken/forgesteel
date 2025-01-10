@@ -451,7 +451,7 @@ export const EncounterEditPage = (props: Props) => {
 	try {
 		return (
 			<div className='encounter-edit-page'>
-				<AppHeader breadcrumbs={[ { label: 'Encounters' } ]}>
+				<AppHeader breadcrumbs={[ { label: 'Encounter Builder' } ]}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(encounter)}>
 						Save Changes
 					</Button>

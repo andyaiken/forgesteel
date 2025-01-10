@@ -1,6 +1,10 @@
 .ability-modal {
-	padding: 20px;
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
+	padding: 0 20px 20px 20px;
+
+	.ability-section,
+	.customize-section {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
 }

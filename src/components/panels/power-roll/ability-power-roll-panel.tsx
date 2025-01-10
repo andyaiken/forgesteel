@@ -11,7 +11,6 @@ interface Props {
 	powerRoll: PowerRoll,
 	ability?: Ability;
 	hero?: Hero;
-	onRoll?: () => void;
 }
 
 export const AbilityPowerRollPanel = (props: Props) => {
@@ -60,7 +59,6 @@ export const AbilityPowerRollPanel = (props: Props) => {
 				powerRoll={props.powerRoll}
 				header={getHeader()}
 				footer={getFooter()}
-				onRoll={props.onRoll}
 			/>
 		);
 	} catch (ex) {

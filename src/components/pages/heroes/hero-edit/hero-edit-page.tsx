@@ -459,7 +459,7 @@ export const HeroEditPage = (props: Props) => {
 
 		return (
 			<div className='hero-edit-page'>
-				<AppHeader breadcrumbs={[ { label: 'Heroes' } ]}>
+				<AppHeader breadcrumbs={[ { label: 'Hero Builder' } ]}>
 					<Button type='primary' disabled={!dirty} onClick={saveChanges}>
 						Save Changes
 					</Button>

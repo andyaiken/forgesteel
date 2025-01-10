@@ -401,8 +401,8 @@ export const HeroPanel = (props: Props) => {
 				<div className='abilities-grid'>
 					{
 						abilities.map(ability => (
-							<SelectablePanel key={ability.id} style={{ gridColumn: `span ${AbilityLogic.panelWidth(ability)}` }}>
-								<AbilityPanel ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} onRoll={() => modals.showHeroAbility(props.hero.id, ability.id)} />
+							<SelectablePanel key={ability.id} style={{ gridColumn: `span ${AbilityLogic.panelWidth(ability)}` }} onSelect={() => modals.showHeroAbility(props.hero.id, ability.id)}>
+								<AbilityPanel ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						))
 					}

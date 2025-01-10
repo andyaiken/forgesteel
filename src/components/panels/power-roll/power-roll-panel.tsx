@@ -7,12 +7,11 @@ interface Props {
 	powerRoll: PowerRoll;
 	header?: string;
 	footer?: ReactNode;
-	onRoll?: () => void;
 }
 
 export const PowerRollPanel = (props: Props) => {
 	return (
-		<div className={props.onRoll ? 'power-roll-panel clickable' : 'power-roll-panel'} onClick={props.onRoll}>
+		<div className='power-roll-panel'>
 			{props.header ? <div className='power-roll-row power-roll-header'>{props.header}</div> : null}
 			<div className='power-roll-row'>
 				<div className='tier'>11 -</div>

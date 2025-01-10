@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureAncestryTraits, FeatureBonusData, FeatureChoice, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureInheritedAncestry, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSize, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureAncestryTraits, FeatureBonusData, FeatureChoice, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureInheritedAncestry, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSize, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeed } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
@@ -935,9 +935,9 @@ Complex or time-consuming tests might require an action if made in combat—or c
 	static updateInheritedSize = (ancestryFeatures: Feature[], ancestries: Ancestry[]) => {
 		const featureId = 'inherited-size';
 
-		const currentSizeIdx = ancestryFeatures.findIndex(f => f.id === featureId);
-		if (currentSizeIdx > -1) {
-			ancestryFeatures.splice(currentSizeIdx, 1);
+		const currentSizeIndex = ancestryFeatures.findIndex(f => f.id === featureId);
+		if (currentSizeIndex > -1) {
+			ancestryFeatures.splice(currentSizeIndex, 1);
 		}
 
 		const sizes = new Set<string>();
@@ -985,12 +985,32 @@ Complex or time-consuming tests might require an action if made in combat—or c
 		}
 
 		if (newFeature !== undefined) {
-			const inheritedAncestryIdx = ancestryFeatures.findIndex(f => f.type === FeatureType.InheritedAncestry);
-			ancestryFeatures.splice(inheritedAncestryIdx + 1, 0, newFeature);
+			const inheritedAncestryIndex = ancestryFeatures.findIndex(f => f.type === FeatureType.InheritedAncestry);
+			ancestryFeatures.splice(inheritedAncestryIndex + 1, 0, newFeature);
 		}
 	};
 
 	static updateInheritedSpeed = (ancestryFeatures: Feature[], ancestries: Ancestry[]) => {
-		// TODO
+		const currentSpeedIndex = ancestryFeatures.findIndex(f => f.type === FeatureType.Speed);
+		if (currentSpeedIndex > -1) {
+			ancestryFeatures.splice(currentSpeedIndex, 1);
+		}
+
+		if (ancestries.length > 0) {
+			const fastest: FeatureSpeed = ancestries.reduce((acc: FeatureSpeed, curr: Ancestry) => {
+				const speedFeature = curr.features.find(f => f.type === FeatureType.Speed);
+				if (speedFeature) {
+					if (acc.id === undefined || acc.data.speed < speedFeature.data.speed) {
+						return speedFeature;
+					}
+				}
+				return acc;
+			}, {} as FeatureSpeed);
+
+			if (fastest.id) {
+				const inheritedAncestryIndex = ancestryFeatures.findIndex(f => f.type === FeatureType.InheritedAncestry);
+				ancestryFeatures.splice(inheritedAncestryIndex + 1, 0, fastest);
+			}
+		}
 	};
 }

@@ -3,6 +3,7 @@ import { Ancestry } from '../../models/ancestry';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { FactoryLogic } from '../../logic/factory-logic';
+import { FeatureType } from '../../enums/feature-type';
 
 export const revenant: Ancestry = {
 	id: 'ancestry-revenant',
@@ -12,7 +13,8 @@ export const revenant: Ancestry = {
 		FactoryLogic.feature.createInheritedAncestry({
 			id: 'revenant-feature-1',
 			name: 'Former Life',
-			description: 'Choose the ancestry you were before you died.'
+			description: 'Choose the ancestry you were before you died.',
+			inheritedFeatures: [FeatureType.AncestryTraits, FeatureType.Size]
 		}),
 		FactoryLogic.feature.createDamageModifier({
 			id: 'revenant-feature-2',

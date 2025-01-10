@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureChoice, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureInheritedAncestry, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSize, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureAncestryTraits, FeatureBonusData, FeatureChoice, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureInheritedAncestry, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSize, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
@@ -20,6 +20,7 @@ import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
 import { SourcebookLogic } from './sourcebook-logic';
 import { revenant } from '../data/ancestries/revenant';
+import { Ancestry } from '../models/ancestry';
 
 export class HeroLogic {
 	static getKitTypes = (hero: Hero) => {
@@ -895,10 +896,44 @@ Complex or time-consuming tests might require an action if made in combat—or c
 	};
 
 	///////////////////////////////////////////////////////////////////////////
-
-	static updateInheritedSize = (hero: Hero, feature: FeatureInheritedAncestry, sourcebooks: Sourcebook[]) => {
-		const featureId = 'inherited-size';
+	
+	static updateInheritedFeatures = (hero: Hero, feature: FeatureInheritedAncestry, sourcebooks: Sourcebook[]) => {
+		const ancestries = SourcebookLogic.getAncestriesById(sourcebooks, feature.data.selected);
 		const ancestryFeatures = hero.ancestry?.features || [];
+
+		if (feature.data.inheritedFeatures.includes(FeatureType.AncestryTraits)) {
+			this.updateInheritedTraits(ancestryFeatures, ancestries);
+		}
+
+		if (feature.data.inheritedFeatures.includes(FeatureType.Size)) {
+			this.updateInheritedSize(ancestryFeatures, ancestries);
+		}
+
+		if (feature.data.inheritedFeatures.includes(FeatureType.Speed)) {
+			this.updateInheritedSpeed(ancestryFeatures, ancestries);
+		}
+	};
+
+	static updateInheritedTraits = (ancestryFeatures: Feature[], ancestries: Ancestry[]) => {
+		const traitsFeatureIndex = ancestryFeatures.findIndex(f => f.type === FeatureType.AncestryTraits);
+
+		if (traitsFeatureIndex > -1) {
+			const traitsFeature = ancestryFeatures[traitsFeatureIndex] as FeatureAncestryTraits;
+			traitsFeature.data.inheritedOptions = [];
+			ancestries.forEach(a => {
+				const inheritedFeature = a.features.find(f => f.type === FeatureType.AncestryTraits);
+				if (inheritedFeature) {
+					traitsFeature.data.inheritedOptions.push(...inheritedFeature.data.options);
+				}
+			});
+
+			const allTraitIds = [...traitsFeature?.data.options, ...traitsFeature.data.inheritedOptions].map(o => o.feature.id);
+			traitsFeature.data.selected = traitsFeature.data.selected.filter(f => allTraitIds.includes(f.id));
+		}
+	};
+
+	static updateInheritedSize = (ancestryFeatures: Feature[], ancestries: Ancestry[]) => {
+		const featureId = 'inherited-size';
 
 		const currentSizeIdx = ancestryFeatures.findIndex(f => f.id === featureId);
 		if (currentSizeIdx > -1) {
@@ -906,8 +941,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 		}
 
 		const sizes = new Set<string>();
-		if (feature.data.selected.length > 0) {
-			const ancestries = SourcebookLogic.getAncestriesById(sourcebooks, feature.data.selected);
+		if (ancestries.length > 0) {
 			ancestries.forEach(a => {
 				const ancestryOptions = [];
 				a.features.forEach(f => {
@@ -954,5 +988,9 @@ Complex or time-consuming tests might require an action if made in combat—or c
 			const inheritedAncestryIdx = ancestryFeatures.findIndex(f => f.type === FeatureType.InheritedAncestry);
 			ancestryFeatures.splice(inheritedAncestryIdx + 1, 0, newFeature);
 		}
+	};
+
+	static updateInheritedSpeed = (ancestryFeatures: Feature[], ancestries: Ancestry[]) => {
+		// TODO
 	};
 }

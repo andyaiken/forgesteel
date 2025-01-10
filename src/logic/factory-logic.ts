@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryTraits, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureInheritedAncestry, FeatureInheritedAncestryData, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitle } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryTraits, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureInheritedAncestry, FeatureInheritedAncestryData, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitle} from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
@@ -15,7 +15,7 @@ import { DamageModifier } from '../models/damage-modifier';
 import { Domain } from '../models/domain';
 import type { Element } from '../models/element';
 import { FeatureField } from '../enums/feature-field';
-import { FeatureType } from '../enums/feature-type';
+import { FeatureType, InheritableFeature } from '../enums/feature-type';
 import { Format } from '../utils/format';
 import { FormatLogic } from './format-logic';
 import { Hero } from '../models/hero';
@@ -562,6 +562,7 @@ export class FactoryLogic {
 				type: FeatureType.AncestryTraits,
 				data: {
 					options: data.options,
+					inheritedOptions: [],
 					count: count,
 					selected: []
 				}
@@ -649,7 +650,7 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createInheritedAncestry: (data: { id: string, name?: string, description?: string, count?: number }) => {
+		createInheritedAncestry: (data: { id: string, name?: string, description?: string, count?: number, inheritedFeatures?: InheritableFeature[] }) => {
 			const count = data.count || 1;
 			return {
 				id: data.id,
@@ -658,7 +659,8 @@ export class FactoryLogic {
 				type: FeatureType.InheritedAncestry,
 				data: {
 					count: count,
-					selected: []
+					selected: [],
+					inheritedFeatures: data.inheritedFeatures || [FeatureType.Size]
 				} as FeatureInheritedAncestryData
 			} as FeatureInheritedAncestry
 		},

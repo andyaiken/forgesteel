@@ -38,8 +38,89 @@ export const FeaturePanel = (props: Props) => {
 	// #region Editable
 
 	const getEditableAncestryTraits = (data: FeatureAncestryTraitsData) => {
-		// TODO: Add in any inherited traits before passing through
-		return getEditableChoice(data as FeatureChoiceData);
+		const allOptions = [...data.options, ...data.inheritedOptions];
+		const selectedIDs = data.selected.map(f => f.id);
+
+		const pointsUsed = Collections.sum(selectedIDs, id => {
+			const original = allOptions.find(o => o.feature.id === id);
+			return original ? original.value : 0;
+		});
+		const pointsLeft = data.count - pointsUsed;
+
+		const availableOptions = allOptions.filter(o => allOptions.every(o => o.value === 1) || selectedIDs.includes(o.feature.id) || (o.value <= pointsLeft));
+		const sortedOptions = Collections.sort(availableOptions, opt => opt.feature.name);
+
+		if (sortedOptions.length === 0) {
+			return (
+				<Alert
+					type='info'
+					showIcon={true}
+					message='There are no options to choose for this feature.'
+				/>
+			);
+		}
+
+		const showCosts = allOptions.some(o => o.value > 1);
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<div className='ds-text'>
+					{
+						showCosts ?
+							`You have ${data.count} points to spend on the following options:`
+							:
+							`Choose ${data.count} of the following options:`
+					}
+				</div>
+				<Select
+					style={{ width: '100%' }}
+					className={data.selected.length === 0 ? 'selection-empty' : ''}
+					mode={data.count === 1 ? undefined : 'multiple'}
+					maxCount={data.count === 1 ? undefined : data.count}
+					allowClear={true}
+					placeholder={data.count === 1 ? 'Select an option' : 'Select options'}
+					options={sortedOptions.map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description, cost: o.value }))}
+					optionRender={option => (
+						<Field
+							label={(
+								<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
+									<span>{option.data.label}</span>
+									{showCosts ? <HeroicResourceBadge value={option.data.cost} /> : null}
+								</div>
+							)}
+							value={option.data.desc}
+						/>
+					)}
+					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
+					onChange={value => {
+						let ids: string[] = [];
+						if (data.count === 1) {
+							ids = value !== undefined ? [ value as string ] : [];
+						} else {
+							ids = value as string[];
+						}
+						const features: Feature[] = [];
+						ids.forEach(id => {
+							const option = allOptions.find(o => o.feature.id === id);
+							if (option) {
+								const featureCopy = JSON.parse(JSON.stringify(option.feature)) as Feature;
+								features.push(featureCopy);
+							}
+						});
+						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
+						dataCopy.selected = features;
+						if (props.setData) {
+							props.setData(props.feature.id, dataCopy);
+						}
+					}}
+				/>
+				{
+					data.selected.map(f => (
+						<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+					))
+				}
+			</Space>
+		);
 	};
 
 	const getEditableChoice = (data: FeatureChoiceData) => {

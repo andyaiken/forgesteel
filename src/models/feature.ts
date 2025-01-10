@@ -31,6 +31,14 @@ export interface FeatureAbilityCostData extends _FeatureData {
 };
 export type FeatureAbilityCost = FeatureOf<FeatureType.AbilityCost, FeatureAbilityCostData>
 
+export interface FeatureAncestryTraitsData extends _FeatureData {
+	options: { feature: Feature, value: number }[];
+	inheritedOptions: { feature: Feature, value: number }[];
+	count: number;
+	selected: Feature[];
+}
+export type FeatureAncestryTraits = FeatureOf<FeatureType.AncestryTraits, FeatureAncestryTraitsData>;
+
 export interface FeatureBonusData extends _FeatureData {
 	field: FeatureField;
 	value: number;
@@ -39,13 +47,6 @@ export interface FeatureBonusData extends _FeatureData {
 	valuePerEchelon: number;
 };
 export type FeatureBonus = FeatureOf<FeatureType.Bonus, FeatureBonusData>;
-
-export interface FeatureAncestryTraitsData extends _FeatureData {
-	options: { feature: Feature, value: number }[];
-	count: number;
-	selected: Feature[];
-}
-export type FeatureAncestryTraits = FeatureOf<FeatureType.AncestryTraits, FeatureAncestryTraitsData>;
 
 export interface FeatureChoiceData extends _FeatureData {
 	options: { feature: Feature, value: number }[];
@@ -83,6 +84,7 @@ export type FeatureDomainFeature = FeatureOf<FeatureType.DomainFeature, FeatureD
 export interface FeatureInheritedAncestryData extends _FeatureData {
 	count: number;
 	selected: string[];
+	inheritedFeatures: InheritableFeature[];
 };
 export type FeatureInheritedAncestry = FeatureOf<FeatureType.InheritedAncestry, FeatureInheritedAncestryData>;
 

@@ -307,7 +307,7 @@ export const HeroEditPage = (props: Props) => {
 			if (feature) {
 				feature.data = data;
 				if (feature.type === FeatureType.InheritedAncestry) {
-					HeroLogic.updateInheritedSize(heroCopy, feature, props.sourcebooks);
+					HeroLogic.updateInheritedFeatures(heroCopy, feature, props.sourcebooks);
 				}
 			}
 			setHero(heroCopy);

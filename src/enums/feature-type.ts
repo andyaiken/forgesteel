@@ -23,3 +23,8 @@ export enum FeatureType {
 	Speed = 'Speed',
 	Title = 'Title'
 }
+
+export type InheritableFeature =
+	| FeatureType.AncestryTraits
+	| FeatureType.Size
+	| FeatureType.Speed;

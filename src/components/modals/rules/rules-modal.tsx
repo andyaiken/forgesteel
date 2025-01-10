@@ -15,6 +15,7 @@ import { SelectablePanel } from '../../controls/selectable-panel/selectable-pane
 import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
+import { StarFilled } from '@ant-design/icons';
 
 import './rules-modal.scss';
 
@@ -52,6 +53,8 @@ export const RulesModal = (props: Props) => {
 
 		const getSkillsSection = () => {
 			const sourcebooks = props.hero.settingIDs.map(id => props.sourcebooks.find(s => s.id === id)).filter(s => !!s);
+			const allSkills = SourcebookLogic.getSkills(sourcebooks);
+			const skillNames = HeroLogic.getSkills(props.hero, sourcebooks).map(s => s.name);
 
 			return (
 				<div>
@@ -66,10 +69,13 @@ export const RulesModal = (props: Props) => {
 							<div key={sl}>
 								<HeaderText>{sl}</HeaderText>
 								{
-									SourcebookLogic.getSkills(sourcebooks)
+									allSkills
 										.filter(s => s.list === sl)
 										.map(s => (
-											<Field key={s.name} label={s.name} value={s.description} />
+											<div className='language-row'>
+												{skillNames.includes(s.name) ? <StarFilled style={{ color: 'rgb(22, 119, 255)' }} /> : null}
+												<Field key={s.name} label={s.name} value={s.description} />
+											</div>
 										))
 								}
 							</div>
@@ -81,11 +87,21 @@ export const RulesModal = (props: Props) => {
 
 		const getLanguagesSection = () => {
 			const sourcebooks = props.hero.settingIDs.map(id => props.sourcebooks.find(s => s.id === id)).filter(s => !!s);
-			const languages = SourcebookLogic.getLanguages(sourcebooks);
+			const allLanguages = SourcebookLogic.getLanguages(sourcebooks);
+			const languageNames = HeroLogic.getLanguages(props.hero, sourcebooks).map(l => l.name);
 
 			return (
 				<div>
-					{Collections.sort(languages, l => l.name).map(l => <Field key={l.name} label={l.name} value={l.description} />)}
+					{
+						Collections
+							.sort(allLanguages, l => l.name)
+							.map(l => (
+								<div className='skill-row'>
+									{languageNames.includes(l.name) ? <StarFilled style={{ color: 'rgb(22, 119, 255)' }} /> : null}
+									<Field key={l.name} label={l.name} value={l.description} />
+								</div>
+							))
+					}
 				</div>
 			);
 		};

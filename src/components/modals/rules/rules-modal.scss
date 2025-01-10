@@ -1,3 +1,9 @@
 .rules-modal {
 	padding: 0 20px 20px 20px;
+
+	.language-row,
+	.skill-row {
+		display: flex;
+		gap: 5px;
+	}
 }

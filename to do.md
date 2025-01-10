@@ -62,7 +62,9 @@
     * Add title data
     * Show titles in library
   * Retainers
+    * Work out how retainers should be represented
     * Add retainer data
+    * Add a retainer feature
 * Hero Builder:
   * Add new feature type to allow Revenant to choose features from other ancestries
   * Revenants should have 3 ancestry points if small

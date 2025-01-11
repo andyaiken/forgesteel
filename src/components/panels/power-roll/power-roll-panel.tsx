@@ -35,7 +35,7 @@ export const PowerRollPanel = (props: Props) => {
 			const values = props.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero!, ch));
 			const bonus = Collections.max(values, v => v) || 0;
 			const sign = bonus >= 0 ? '+' : '';
-			return `2d10 ${sign}${bonus}`;
+			return `2d10 ${sign} ${bonus}`;
 		}
 
 		if (props.powerRoll.characteristic.length > 0) {
@@ -43,7 +43,7 @@ export const PowerRollPanel = (props: Props) => {
 		}
 
 		const sign = props.powerRoll.bonus >= 0 ? '+' : '';
-		return `Power Roll ${sign}${props.powerRoll.bonus}`;
+		return `Power Roll ${sign} ${props.powerRoll.bonus}`;
 	};
 
 	const getFooter = () => {
@@ -54,10 +54,12 @@ export const PowerRollPanel = (props: Props) => {
 		if (props.hero) {
 			const sections = [];
 			if (autoCalc) {
-				// Show melee and ranged damage only if we have both
+				// Show melee and ranged damage only if we have both and they're different
 				if (dmgMelee && dmgRanged) {
-					sections.push(<Field key='melee' label='Bonus melee damage' value={`+${dmgMelee.tier1} / +${dmgMelee.tier2} / +${dmgMelee.tier3}`} />);
-					sections.push(<Field key='ranged' label='Bonus ranged damage' value={`+${dmgRanged.tier1} / +${dmgRanged.tier2} / +${dmgRanged.tier3}`} />);
+					if ((dmgMelee.tier1 !== dmgRanged.tier1) || (dmgMelee.tier2 !== dmgRanged.tier2) || (dmgMelee.tier3 !== dmgRanged.tier3)) {
+						sections.push(<Field key='melee' label='Bonus melee damage' value={`+${dmgMelee.tier1} / +${dmgMelee.tier2} / +${dmgMelee.tier3}`} />);
+						sections.push(<Field key='ranged' label='Bonus ranged damage' value={`+${dmgRanged.tier1} / +${dmgRanged.tier2} / +${dmgRanged.tier3}`} />);
+					}
 				}
 			} else {
 				if (dmgMelee) {
@@ -103,8 +105,9 @@ export const PowerRollPanel = (props: Props) => {
 					// Modify section to calculate characteristic bonuses
 					let value = 0;
 					let sign = '+';
+					const dice: string[] = [];
 					const characteristics: Characteristic[] = [];
-					let type = '';
+					const types: string[] = [];
 
 					if (dmgMelee && !dmgRanged) {
 						switch (tier) {
@@ -132,12 +135,27 @@ export const PowerRollPanel = (props: Props) => {
 								break;
 						}
 					}
+					if (dmgMelee && dmgRanged && (dmgMelee.tier1 === dmgRanged.tier1) && (dmgMelee.tier2 === dmgRanged.tier2) && (dmgMelee.tier3 === dmgRanged.tier3)) {
+						switch (tier) {
+							case 1:
+								value += dmgMelee.tier1;
+								break;
+							case 2:
+								value += dmgMelee.tier2;
+								break;
+							case 3:
+								value += dmgMelee.tier3;
+								break;
+						}
+					}
 
 					section.toLowerCase().split(' ').forEach(token => {
 						if ((token === 'damage') || (token === 'dmg')) {
 							// Damage; ignore
 						} else if (token === 'or') {
 							// Ignore
+						} else if (/\d+d\d+/.test(token)) {
+							dice.push(token);
 						} else if (!isNaN(parseInt(token))) {
 							value += parseInt(token);
 						} else if ((token === '+') || (token === '-')) {
@@ -153,14 +171,18 @@ export const PowerRollPanel = (props: Props) => {
 						} else if ((token === 'presence') || (token === 'p')) {
 							characteristics.push(Characteristic.Presence);
 						} else {
-							type = token;
+							types.push(token);
 						}
 					});
 
 					const charValues = characteristics.map(ch => HeroLogic.getCharacteristic(props.hero!, ch));
 					const maxCharValue = Collections.max(charValues, n => n) || 0;
-					const total = sign === '+' ? value + maxCharValue : value - maxCharValue;
-					return type ? `${total} ${type} damage` : `${total} damage`;
+					let total: number | string = sign === '+' ? value + maxCharValue : value - maxCharValue;
+					if (dice.length > 0) {
+						total = `${dice.join(' + ')} + ${total}`;
+					}
+					const damage = [ ...types, 'damage' ].join(' ');
+					return `${total} ${damage}`;
 				}
 
 				if (section.toLowerCase().includes('weak') || section.toLowerCase().includes('average') || section.toLowerCase().includes('avg') || section.toLowerCase().includes('strong')) {
@@ -205,7 +227,7 @@ export const PowerRollPanel = (props: Props) => {
 						<Button
 							className='autocalc-btn'
 							type='text'
-							icon={autoCalc ? <ThunderboltFilled /> : <ThunderboltOutlined />}
+							icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
 							onClick={e => {
 								e.stopPropagation();
 								setAutoCalc(!autoCalc);

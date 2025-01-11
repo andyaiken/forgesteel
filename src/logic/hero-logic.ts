@@ -880,6 +880,14 @@ Complex or time-consuming tests might require an action if made in combat—or c
 			const traitsFeature = hero.ancestry?.features.find(f => f.name.includes('Traits'));
 			if (traitsFeature) {
 				traitsFeature.type = FeatureType.AncestryTraits;
+
+				if (hero?.ancestry?.id === revenant.id) {
+					const overrides = revenant.features.find(f => f.type === FeatureType.AncestryTraits)?.data.overrides;
+					if (overrides) {
+						const overridesCopy = JSON.parse(JSON.stringify(overrides));
+						(traitsFeature as FeatureAncestryTraits).data.overrides = overridesCopy;
+					}
+				}
 			}
 		}
 

@@ -2,7 +2,6 @@ import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '../../../models/ability';
 import { AbilityLogic } from '../../../logic/ability-logic';
 import { Button } from 'antd';
-import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
 import { Field } from '../../controls/field/field';
 import { Hero } from '../../../models/hero';
@@ -89,117 +88,11 @@ export const PowerRollPanel = (props: Props) => {
 	};
 
 	const getTier = (tier: number, value: string) => {
-		if (!autoCalc) {
-			return value;
+		if (autoCalc && props.ability && props.hero) {
+			return AbilityLogic.getTierEffect(value, tier, props.ability, props.hero);
 		}
 
-		if (!props.hero) {
-			return value;
-		}
-
-		return value
-			.split(';')
-			.map(section => section.trim())
-			.map(section => {
-				if (section.toLowerCase().includes('damage') || section.toLowerCase().includes('dmg')){
-					// Modify section to calculate characteristic bonuses
-					let value = 0;
-					let sign = '+';
-					const dice: string[] = [];
-					const characteristics: Characteristic[] = [];
-					const types: string[] = [];
-
-					if (dmgMelee && !dmgRanged) {
-						switch (tier) {
-							case 1:
-								value += dmgMelee.tier1;
-								break;
-							case 2:
-								value += dmgMelee.tier2;
-								break;
-							case 3:
-								value += dmgMelee.tier3;
-								break;
-						}
-					}
-					if (!dmgMelee && dmgRanged) {
-						switch (tier) {
-							case 1:
-								value += dmgRanged.tier1;
-								break;
-							case 2:
-								value += dmgRanged.tier2;
-								break;
-							case 3:
-								value += dmgRanged.tier3;
-								break;
-						}
-					}
-					if (dmgMelee && dmgRanged && (dmgMelee.tier1 === dmgRanged.tier1) && (dmgMelee.tier2 === dmgRanged.tier2) && (dmgMelee.tier3 === dmgRanged.tier3)) {
-						switch (tier) {
-							case 1:
-								value += dmgMelee.tier1;
-								break;
-							case 2:
-								value += dmgMelee.tier2;
-								break;
-							case 3:
-								value += dmgMelee.tier3;
-								break;
-						}
-					}
-
-					section.toLowerCase().split(' ').forEach(token => {
-						if ((token === 'damage') || (token === 'dmg')) {
-							// Damage; ignore
-						} else if (token === 'or') {
-							// Ignore
-						} else if (/\d+d\d+/.test(token)) {
-							dice.push(token);
-						} else if (!isNaN(parseInt(token))) {
-							value += parseInt(token);
-						} else if ((token === '+') || (token === '-')) {
-							sign = token;
-						} else if ((token === 'might') || (token === 'm')) {
-							characteristics.push(Characteristic.Might);
-						} else if ((token === 'agility') || (token === 'a')) {
-							characteristics.push(Characteristic.Agility);
-						} else if ((token === 'reason') || (token === 'r')) {
-							characteristics.push(Characteristic.Reason);
-						} else if ((token === 'intuition') || (token === 'i')) {
-							characteristics.push(Characteristic.Intuition);
-						} else if ((token === 'presence') || (token === 'p')) {
-							characteristics.push(Characteristic.Presence);
-						} else {
-							types.push(token);
-						}
-					});
-
-					const charValues = characteristics.map(ch => HeroLogic.getCharacteristic(props.hero!, ch));
-					const maxCharValue = Collections.max(charValues, n => n) || 0;
-					let total: number | string = sign === '+' ? value + maxCharValue : value - maxCharValue;
-					if (dice.length > 0) {
-						total = `${dice.join(' + ')} + ${total}`;
-					}
-					const damage = [ ...types, 'damage' ].join(' ');
-					return `${total} ${damage}`;
-				}
-
-				if (section.toLowerCase().includes('weak') || section.toLowerCase().includes('average') || section.toLowerCase().includes('avg') || section.toLowerCase().includes('strong')) {
-					// Modify text to remove weak / average / strong
-					const weak = HeroLogic.calculatePotency(props.hero!, 'weak').toString();
-					const avg = HeroLogic.calculatePotency(props.hero!, 'average').toString();
-					const strong = HeroLogic.calculatePotency(props.hero!, 'strong').toString();
-					return section
-						.replace(/weak/, weak)
-						.replace(/average/, avg)
-						.replace(/avg/, avg)
-						.replace(/strong/, strong);
-				}
-
-				return section;
-			})
-			.join('; ');
+		return value;
 	};
 
 	try {

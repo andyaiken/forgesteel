@@ -102,22 +102,22 @@ export const AbilityEditPanel = (props: Props) => {
 
 		switch (value) {
 			case 'Self':
-				copy.distance[index].type = AbilityDistanceType.Self;
+				copy.distance[index] = FactoryLogic.distance.createSelf();
 				break;
 			case 'Melee':
-				copy.distance[index].type = AbilityDistanceType.Melee;
+				copy.distance[index] = FactoryLogic.distance.createMelee();
 				break;
 			case 'Ranged':
-				copy.distance[index].type = AbilityDistanceType.Ranged;
+				copy.distance[index] = FactoryLogic.distance.createRanged();
 				break;
 			case 'Area':
-				copy.distance[index].type = AbilityDistanceType.Aura;
+				copy.distance[index] = FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 });
 				break;
 			case 'Line':
-				copy.distance[index].type = AbilityDistanceType.Line;
+				copy.distance[index] = FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 5, within: 1 });
 				break;
 			case 'Special':
-				copy.distance[index].type = AbilityDistanceType.Special;
+				copy.distance[index] = FactoryLogic.distance.createSpecial('');
 				break;
 		}
 

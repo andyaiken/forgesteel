@@ -69,6 +69,11 @@
   * Add new feature type to allow Revenant to choose features from other ancestries
   * Revenants should have 3 ancestry points if small
 
+### Library
+
+* Set up class editor so you can select a subclass or an ability and edit it separately
+* Set up monster group editor so you can select a monster ability and edit it separately
+
 ### Monster Editor
 
 * Similar monsters

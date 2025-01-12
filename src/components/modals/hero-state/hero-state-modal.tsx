@@ -254,6 +254,7 @@ export const HeroStateModal = (props: Props) => {
 					label='Damage Taken'
 					value={hero.state.staminaDamage}
 					min={0}
+					format={value => value > 0 ? `${value} / ${HeroLogic.getStamina(hero)}` : value.toString()}
 					onChange={setStaminaDamage}
 				/>
 				<NumberSpin
@@ -261,6 +262,7 @@ export const HeroStateModal = (props: Props) => {
 					value={hero.state.recoveriesUsed}
 					min={0}
 					max={HeroLogic.getRecoveries(hero)}
+					format={value => value > 0 ? `${value} / ${HeroLogic.getRecoveries(hero)}` : value.toString()}
 					onChange={setRecoveriesUsed}
 				/>
 				{

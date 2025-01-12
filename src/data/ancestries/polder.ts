@@ -2,6 +2,7 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Ancestry } from '../../models/ancestry';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { FactoryLogic } from '../../logic/factory-logic';
+import { FeatureField } from '../../enums/feature-field';
 
 export const polder: Ancestry = {
 	id: 'ancestry-polder',
@@ -48,10 +49,12 @@ export const polder: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createBonus({
 						id: 'polder-feature-3-2',
 						name: 'Graceful Retreat',
-						description: 'When you take the Disengage move action, you can shift 1 additional square as part of the move action.'
+						description: 'When you take the Disengage move action, you can shift 1 additional square as part of the move action.',
+						field: FeatureField.Disengage,
+						value: 1
 					}),
 					value: 1
 				},

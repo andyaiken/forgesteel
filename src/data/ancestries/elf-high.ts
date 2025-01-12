@@ -1,5 +1,6 @@
 import { Ancestry } from '../../models/ancestry';
 import { FactoryLogic } from '../../logic/factory-logic';
+import { FeatureField } from '../../enums/feature-field';
 
 export const highElf: Ancestry = {
 	id: 'ancestry-high-elf',
@@ -16,10 +17,12 @@ export const highElf: Ancestry = {
 			name: 'High Elf Features',
 			options: [
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createBonus({
 						id: 'high-elf-feature-2-1',
 						name: 'Graceful Retreat',
-						description: 'When you take the Disengage move action, you can shift 1 additional square as part of the move action.'
+						description: 'When you take the Disengage move action, you can shift 1 additional square as part of the move action.',
+						field: FeatureField.Disengage,
+						value: 1
 					}),
 					value: 1
 				},

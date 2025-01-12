@@ -57,6 +57,7 @@
 
 * Add hero inventory management
   * Add item data
+* Add a way for bonus features to include characteristic scores
 * Add a way for heroes to be modified:
   * Titles
     * Add title data

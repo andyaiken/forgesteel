@@ -130,7 +130,7 @@ export const timeRaider: Ancestry = {
 								FactoryLogic.distance.createMelee()
 							],
 							target: 'Self or 1 ally',
-							effect: ''
+							effect: 'The target’s speed increases by an amount equal to your Reason, Intuition, or Presence score (your choice) until the start of your next turn.'
 						})
 					}),
 					value: 2

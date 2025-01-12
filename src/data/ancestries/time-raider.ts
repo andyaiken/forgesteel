@@ -69,6 +69,7 @@ export const timeRaider: Ancestry = {
 								damageType: 'Psychic',
 								type: DamageModifierType.Immunity,
 								value: 0,
+								valueCharacteristics: [],
 								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}

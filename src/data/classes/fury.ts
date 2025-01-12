@@ -438,9 +438,12 @@ Additionally, you make one power roll that targets each enemy you come adjacent 
 						FactoryLogic.feature.create({
 							id: 'fury-sub-1-3-1',
 							name: 'Immovable Object',
-							description: `
-You add your level to your effective size for the purpose of interacting with creatures and objects, including determining whether you can lift an object, are affected by forced movement, and so forth. This has no effect on your ability to be grabbed.
-Additionally, you gain a bonus to stability equal to your Might score.`
+							description: 'You add your level to your effective size for the purpose of interacting with creatures and objects, including determining whether you can lift an object, are affected by forced movement, and so forth. This has no effect on your ability to be grabbed.'
+						}),
+						FactoryLogic.feature.createBonus({
+							id: 'fury-sub-1-3-2',
+							field: FeatureField.Stability,
+							valueCharacteristics: [ Characteristic.Might ]
 						})
 					]
 				}
@@ -494,10 +497,21 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 				{
 					level: 2,
 					features: [
-						FactoryLogic.feature.create({
+						FactoryLogic.feature.createMultiple({
 							id: 'fury-sub-2-2-1',
 							name: 'Inescapable Wrath',
-							description: 'You have a bonus to speed equal to your Agility score, and you ignore difficult terrain.'
+							features: [
+								FactoryLogic.feature.create({
+									id: 'fury-sub-2-2-1a',
+									name: 'Inescapable Wrath',
+									description: 'You ignore difficult terrain.'
+								}),
+								FactoryLogic.feature.createBonus({
+									id: 'fury-sub-2-2-1b',
+									field: FeatureField.Speed,
+									valueCharacteristics: [ Characteristic.Agility ]
+								})
+							]
 						}),
 						FactoryLogic.feature.createChoice({
 							id: 'fury-sub-2-2-2',

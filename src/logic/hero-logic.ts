@@ -453,6 +453,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 					.filter(dm => dm.type === type)
 					.forEach(dm => {
 						let value = dm.value;
+						value += Collections.max(dm.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
 						if (hero.class) {
 							value += dm.valuePerLevel * (hero.class.level - 1);
 							value += dm.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
@@ -485,6 +486,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 			.filter(data => data.field === FeatureField.Stamina)
 			.forEach(data => {
 				value += data.value;
+				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
 					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
@@ -503,6 +505,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 			.filter(data => data.field === FeatureField.RecoveryValue)
 			.forEach(data => {
 				value += data.value;
+				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
 					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
@@ -521,6 +524,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 			.filter(data => data.field === FeatureField.Recoveries)
 			.forEach(data => {
 				value += data.value;
+				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
 					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
@@ -567,6 +571,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 			.filter(data => data.field === FeatureField.Speed)
 			.forEach(data => {
 				value += data.value;
+				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
 					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
@@ -589,6 +594,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 			.filter(data => data.field === FeatureField.Stability)
 			.forEach(data => {
 				value += data.value;
+				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
 					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
@@ -611,6 +617,7 @@ Complex or time-consuming tests might require an action if made in combat—or c
 			.filter(data => data.field === FeatureField.Disengage)
 			.forEach(data => {
 				value += data.value;
+				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
 				if (hero.class) {
 					value += data.valuePerLevel * (hero.class.level - 1);
 					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
@@ -841,6 +848,9 @@ Complex or time-consuming tests might require an action if made in combat—or c
 
 		this.getFeatures(hero).filter(f => f.type === FeatureType.Bonus).forEach(f => {
 			const data = f.data as FeatureBonusData;
+			if (data.valueCharacteristics === undefined) {
+				data.valueCharacteristics = [];
+			}
 			if (data.valuePerEchelon === undefined) {
 				data.valuePerEchelon = 0;
 			}
@@ -849,6 +859,9 @@ Complex or time-consuming tests might require an action if made in combat—or c
 		this.getFeatures(hero).filter(f => f.type === FeatureType.DamageModifier).forEach(f => {
 			const data = f.data as FeatureDamageModifierData;
 			data.modifiers.forEach(dm => {
+				if (dm.valueCharacteristics === undefined) {
+					dm.valueCharacteristics = [];
+				}
 				if (dm.valuePerEchelon === undefined) {
 					dm.valuePerEchelon = 0;
 				}

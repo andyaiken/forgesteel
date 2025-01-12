@@ -39,6 +39,7 @@ export const polder: Ancestry = {
 								damageType: 'Corruption',
 								type: DamageModifierType.Immunity,
 								value: 2,
+								valueCharacteristics: [],
 								valuePerLevel: 1,
 								valuePerEchelon: 0
 							}

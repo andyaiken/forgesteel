@@ -4,6 +4,7 @@ import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, 
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
+import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
@@ -79,6 +80,7 @@ export const FeatureEditPanel = (props: Props) => {
 				data = {
 					field: FeatureField.Recoveries,
 					value: 0,
+					valueCharacteristics: [],
 					valuePerLevel: 0,
 					valuePerEchelon: 0
 				};
@@ -227,6 +229,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setValue = (value: number) => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
 			copy.value = value;
+			setData(copy);
+		};
+
+		const setValueCharacteristics = (value: Characteristic[]) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
+			copy.valueCharacteristics = value;
 			setData(copy);
 		};
 
@@ -381,6 +389,7 @@ export const FeatureEditPanel = (props: Props) => {
 				damageType: 'Fire',
 				type: DamageModifierType.Immunity,
 				value: 0,
+				valueCharacteristics: [],
 				valuePerLevel: 0,
 				valuePerEchelon: 0
 			});
@@ -408,6 +417,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setDamageModifierValue = (data: FeatureDamageModifierData, index: number, value: number) => {
 			const copy = JSON.parse(JSON.stringify(data)) as FeatureDamageModifierData;
 			copy.modifiers[index].value = value;
+			setData(copy);
+		};
+
+		const setDamageModifierValueCharacteristics = (data: FeatureDamageModifierData, index: number, value: Characteristic[]) => {
+			const copy = JSON.parse(JSON.stringify(data)) as FeatureDamageModifierData;
+			copy.modifiers[index].valueCharacteristics = value;
 			setData(copy);
 		};
 
@@ -500,6 +515,15 @@ export const FeatureEditPanel = (props: Props) => {
 						/>
 						<HeaderText>Value</HeaderText>
 						<NumberSpin label='Value' min={0} value={data.value} onChange={setValue} />
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Characteristics'
+							mode='multiple'
+							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={data.valueCharacteristics}
+							onChange={setValueCharacteristics}
+						/>
 						<NumberSpin label='Per Level After 1st' min={0} value={data.valuePerLevel} onChange={setValuePerLevel} />
 						<NumberSpin label='Per Echelon' min={0} value={data.valuePerEchelon} onChange={setValuePerEchelon} />
 					</Space>
@@ -592,6 +616,15 @@ export const FeatureEditPanel = (props: Props) => {
 										/>
 										<HeaderText>Value</HeaderText>
 										<NumberSpin label='Value' min={0} value={mod.value} onChange={value => setDamageModifierValue(data, n, value)} />
+										<Select
+											style={{ width: '100%' }}
+											placeholder='Characteristics'
+											mode='multiple'
+											options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
+											optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+											value={mod.valueCharacteristics}
+											onChange={value => setDamageModifierValueCharacteristics(data, n, value)}
+										/>
 										<NumberSpin label='Per Level After 1st' min={0} value={mod.valuePerLevel} onChange={value => setDamageModifierValuePerLevel(data, n, value)} />
 										<NumberSpin label='Per Echelon' min={0} value={mod.valuePerEchelon} onChange={value => setDamageModifierValuePerEchelon(data, n, value)} />
 										<DangerButton onConfirm={() => deleteDamageModifier(data, n)} />

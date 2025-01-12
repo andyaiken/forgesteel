@@ -663,6 +663,9 @@ export const FeaturePanel = (props: Props) => {
 			if (data.value) {
 				desc += `${data.value >= 0 ? '+' : ''}${data.value}`;
 			}
+			if (data.valueCharacteristics.length > 0) {
+				desc += `+${data.valueCharacteristics.join(' or ')}`;
+			}
 			if (data.valuePerLevel) {
 				if (desc !== '') {
 					desc += ', ';

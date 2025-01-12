@@ -1,5 +1,6 @@
 import { Ability } from './ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
+import { Characteristic } from '../enums/characteristic';
 import { DamageModifier } from './damage-modifier';
 import { Domain } from './domain';
 import { Element } from './element';
@@ -33,6 +34,7 @@ export type FeatureAbilityCost = FeatureOf<FeatureType.AbilityCost, FeatureAbili
 export interface FeatureBonusData extends _FeatureData {
 	field: FeatureField;
 	value: number;
+	valueCharacteristics: Characteristic[];
 	valuePerLevel: number;
 	valuePerEchelon: number;
 };

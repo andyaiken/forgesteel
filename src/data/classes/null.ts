@@ -83,10 +83,22 @@ This ability stays active even after encounters end. It ends if you are dying or
 						]
 					})
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'null-1-6',
 					name: 'Null Speed',
-					description: 'Your psionic mastery of your body allows you to achieve great quickness. You gain a bonus to your speed and a bonus to the number of squares you shift when you take the Disengage move action equal to your Agility score.'
+					description: 'Your psionic mastery of your body allows you to achieve great quickness.',
+					features: [
+						FactoryLogic.feature.createBonus({
+							id: 'null-1-6a',
+							field: FeatureField.Speed,
+							valueCharacteristics: [ Characteristic.Agility ]
+						}),
+						FactoryLogic.feature.createBonus({
+							id: 'null-1-6b',
+							field: FeatureField.Disengage,
+							valueCharacteristics: [ Characteristic.Agility ]
+						})
+					]
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'null-1-7',

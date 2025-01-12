@@ -553,7 +553,7 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createBonus: (data: { id: string, name?: string, description?: string, field: FeatureField, value?: number, valuePerLevel?: number, valuePerEchelon?: number }): FeatureBonus => {
+		createBonus: (data: { id: string, name?: string, description?: string, field: FeatureField, value?: number, valueCharacteristics?: Characteristic[], valuePerLevel?: number, valuePerEchelon?: number }): FeatureBonus => {
 			return {
 				id: data.id,
 				name: data.name || data.field.toString(),
@@ -562,6 +562,7 @@ export class FactoryLogic {
 				data: {
 					field: data.field,
 					value: data.value || 0,
+					valueCharacteristics: data.valueCharacteristics || [],
 					valuePerLevel: data.valuePerLevel || 0,
 					valuePerEchelon: data.valuePerEchelon || 0
 				}
@@ -701,7 +702,7 @@ export class FactoryLogic {
 			return {
 				id: data.id,
 				name: data.name || data.features.map(f => f.name || 'Unnamed Feature').join(', '),
-				description: data.description || '',
+				description: data.description || data.features.map(f => f.name || 'Unnamed Feature').join(', '),
 				type: FeatureType.Multiple,
 				data: {
 					features: data.features

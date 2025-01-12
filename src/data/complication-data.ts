@@ -110,6 +110,7 @@ export class ComplicationData {
 						damageType: 'Corruption',
 						type: DamageModifierType.Weakness,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					}
@@ -301,6 +302,7 @@ Your knowledge of your chosen field increases. When you finish this project, the
 						damageType: 'Corruption',
 						type: DamageModifierType.Weakness,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					}
@@ -370,6 +372,7 @@ Your knowledge of your chosen field increases. When you finish this project, the
 						damageType: 'Damage',
 						type: DamageModifierType.Weakness,
 						value: 2,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					}
@@ -556,6 +559,7 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 						damageType: 'Fire',
 						type: DamageModifierType.Immunity,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					},
@@ -563,6 +567,7 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 						damageType: 'Cold',
 						type: DamageModifierType.Weakness,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					}
@@ -624,6 +629,7 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 						damageType: 'Cold',
 						type: DamageModifierType.Immunity,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					},
@@ -631,6 +637,7 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 						damageType: 'Fire',
 						type: DamageModifierType.Weakness,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					}
@@ -689,6 +696,7 @@ You can’t take this complication if you can’t be dazed.`,
 						damageType: 'Corruption',
 						type: DamageModifierType.Immunity,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					},
@@ -696,6 +704,7 @@ You can’t take this complication if you can’t be dazed.`,
 						damageType: 'Fire',
 						type: DamageModifierType.Weakness,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					}
@@ -815,6 +824,7 @@ You can’t take this complication if you can’t be dazed.`,
 						damageType: 'Fire',
 						type: DamageModifierType.Weakness,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					}
@@ -1206,6 +1216,7 @@ You can’t take this complication if you can’t be dazed.`,
 						damageType: 'Corruption',
 						type: DamageModifierType.Immunity,
 						value: 1,
+						valueCharacteristics: [],
 						valuePerLevel: 1,
 						valuePerEchelon: 0
 					},
@@ -1213,6 +1224,7 @@ You can’t take this complication if you can’t be dazed.`,
 						damageType: 'Holy',
 						type: DamageModifierType.Immunity,
 						value: 1,
+						valueCharacteristics: [],
 						valuePerLevel: 1,
 						valuePerEchelon: 0
 					},
@@ -1220,6 +1232,7 @@ You can’t take this complication if you can’t be dazed.`,
 						damageType: 'Psychic',
 						type: DamageModifierType.Immunity,
 						value: 1,
+						valueCharacteristics: [],
 						valuePerLevel: 1,
 						valuePerEchelon: 0
 					}
@@ -1299,6 +1312,7 @@ You can’t take this complication if you can’t be dazed.`,
 						damageType: 'Poison',
 						type: DamageModifierType.Immunity,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					},
@@ -1306,6 +1320,7 @@ You can’t take this complication if you can’t be dazed.`,
 						damageType: 'Corruption',
 						type: DamageModifierType.Immunity,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					}
@@ -1499,6 +1514,7 @@ You can’t take this complication if you can’t be dazed.`,
 						damageType: 'Psychic',
 						type: DamageModifierType.Weakness,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					}
@@ -1612,6 +1628,7 @@ You can’t take this complication if you can’t be dazed.`,
 						damageType: 'Poison',
 						type: DamageModifierType.Weakness,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					}
@@ -1637,6 +1654,7 @@ You can’t take this complication if you can’t be dazed.`,
 						damageType: 'Holy',
 						type: DamageModifierType.Weakness,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					}
@@ -1750,6 +1768,7 @@ You can’t take this complication if you can’t be dazed.`,
 						damageType: 'Sonic',
 						type: DamageModifierType.Weakness,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					}
@@ -1823,6 +1842,7 @@ Note: Stormwight furies can’t take this complication.`,
 						damageType: 'Sonic',
 						type: DamageModifierType.Weakness,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					}
@@ -2074,6 +2094,7 @@ Whenever you take a respite, make a Reason power roll.
 						damageType: 'Lightning',
 						type: DamageModifierType.Weakness,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					}
@@ -2087,10 +2108,10 @@ Whenever you take a respite, make a Reason power roll.
 		name: 'Wodewalker',
 		description: 'You were dying in the wode—starving and wounded, you collapsed. When you woke, you found a group of green elementalists had saved your life by infusing the regenerative bark of a tree to your body.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'comp-wodewalker-b',
-				name: 'Wodewalker Benefit',
-				description: 'Your recovery value increases by an amount equal to your highest characteristic score.'
+				field: FeatureField.Recoveries,
+				valueCharacteristics: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
 			}),
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-wodewalker-d',
@@ -2099,6 +2120,7 @@ Whenever you take a respite, make a Reason power roll.
 						damageType: 'Fire',
 						type: DamageModifierType.Weakness,
 						value: 5,
+						valueCharacteristics: [],
 						valuePerLevel: 0,
 						valuePerEchelon: 0
 					}

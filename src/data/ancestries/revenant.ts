@@ -50,6 +50,7 @@ export const revenant: Ancestry = {
 					damageType: 'Cold',
 					type: DamageModifierType.Immunity,
 					value: 1,
+					valueCharacteristics: [],
 					valuePerLevel: 1,
 					valuePerEchelon: 0
 				},
@@ -57,6 +58,7 @@ export const revenant: Ancestry = {
 					damageType: 'Corruption',
 					type: DamageModifierType.Immunity,
 					value: 1,
+					valueCharacteristics: [],
 					valuePerLevel: 1,
 					valuePerEchelon: 0
 				},
@@ -64,6 +66,7 @@ export const revenant: Ancestry = {
 					damageType: 'Lightning',
 					type: DamageModifierType.Immunity,
 					value: 1,
+					valueCharacteristics: [],
 					valuePerLevel: 1,
 					valuePerEchelon: 0
 				},
@@ -71,6 +74,7 @@ export const revenant: Ancestry = {
 					damageType: 'Poison',
 					type: DamageModifierType.Immunity,
 					value: 1,
+					valueCharacteristics: [],
 					valuePerLevel: 1,
 					valuePerEchelon: 0
 				},
@@ -78,6 +82,7 @@ export const revenant: Ancestry = {
 					damageType: 'Fire',
 					type: DamageModifierType.Weakness,
 					value: 5,
+					valueCharacteristics: [],
 					valuePerLevel: 0,
 					valuePerEchelon: 0
 				}

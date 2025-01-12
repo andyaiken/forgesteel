@@ -42,6 +42,10 @@ export class FormatLogic {
 				desc += `${mod.value >= 0 ? '+' : ''}${mod.value}`;
 			}
 
+			if (mod.valueCharacteristics.length > 0) {
+				desc += `+${mod.valueCharacteristics.join(' or ')}`;
+			}
+
 			if (mod.valuePerLevel) {
 				if (desc !== '') {
 					desc += ', ';

@@ -59,7 +59,6 @@ const matchElement = (element: Element, searchTerm: string) => {
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	showAbout: () => void;
 	saveChanges: (hero: Hero) => void;
 }
 
@@ -460,7 +459,7 @@ export const HeroEditPage = (props: Props) => {
 
 		return (
 			<div className='hero-edit-page'>
-				<AppHeader breadcrumbs={[ { label: 'Hero Builder' } ]} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: 'Hero Builder' } ]}>
 					<Button type='primary' disabled={!dirty} onClick={saveChanges}>
 						Save Changes
 					</Button>

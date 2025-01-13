@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
@@ -366,6 +366,10 @@ Complex or time-consuming tests might require an action if made in combat—or c
 		return abilities;
 	};
 
+	static getFormerAncestries = (hero: Hero) => {
+		return this.getFeatures(hero).filter(f => f.type === FeatureType.AncestryChoice).map(f => f.data.selected).filter(a => !!a);
+	};
+
 	static getCharacteristic = (hero: Hero, characteristic: Characteristic) => {
 		let value = 0;
 
@@ -535,11 +539,24 @@ Complex or time-consuming tests might require an action if made in combat—or c
 	};
 
 	static getSize = (hero: Hero) => {
-		const features = this.getFeatures(hero).filter(f => f.type === FeatureType.Size);
-		if (features.length > 0) {
-			const datas = features.map(f => f.data as FeatureSizeData);
-			const value = Collections.max(datas.map(d => d.size.value), v => v);
-			const mods = Collections.distinct(datas.map(d => d.size.mod), m => m);
+		const featureSizes = this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.Size)
+			.map(f => f.data.size);
+		if (featureSizes.length > 0) {
+			const value = Collections.max(featureSizes.map(s => s.value), v => v);
+			const mods = Collections.distinct(featureSizes.map(s => s.mod), m => m);
+			return {
+				value: value,
+				mod: value === 1 ? mods[0] : ''
+			} as Size;
+		}
+
+		const ancestrySizes = this.getFormerAncestries(hero)
+			.flatMap(a => a.features.filter(f => f.type === FeatureType.Size))
+			.map(f => f.data.size);
+		if (ancestrySizes.length > 0) {
+			const value = Collections.max(ancestrySizes.map(s => s.value), v => v);
+			const mods = Collections.distinct(ancestrySizes.map(s => s.mod), m => m);
 			return {
 				value: value,
 				mod: value === 1 ? mods[0] : ''

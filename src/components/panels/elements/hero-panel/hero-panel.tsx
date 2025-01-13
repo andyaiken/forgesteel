@@ -104,6 +104,7 @@ export const HeroPanel = (props: Props) => {
 						<div className='overview-tile clickable' onClick={onSelectAncestry}>
 							<HeaderText>Ancestry</HeaderText>
 							<Field label='Ancestry' value={props.hero.ancestry.name} />
+							{HeroLogic.getFormerAncestries(props.hero).map(a => <Field key={a.id} label='Former Life' value={a.name} />)}
 						</div>
 						:
 						<div className='overview-tile'>

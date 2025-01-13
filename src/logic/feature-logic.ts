@@ -1,20 +1,9 @@
-import type {
-	Feature,
-	FeatureChoiceData,
-	FeatureClassAbilityData,
-	FeatureDomainData,
-	FeatureDomainFeatureData,
-	FeatureKitData,
-	FeatureLanguageChoiceData,
-	FeaturePerkData,
-	FeatureSkillChoiceData,
-	FeatureTitleChoiceData
-} from '../models/feature';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
 import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
+import type { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
@@ -108,6 +97,11 @@ export class FeatureLogic {
 			list.push(feature);
 
 			switch (feature.type) {
+				case FeatureType.AncestryFeatureChoice:
+					if (feature.data.selected) {
+						addFeature(feature.data.selected);
+					}
+					break;
 				case FeatureType.Choice:
 					feature.data.selected.forEach(addFeature);
 					break;
@@ -138,6 +132,8 @@ export class FeatureLogic {
 
 	static isChoice = (feature: Feature) => {
 		switch (feature.type) {
+			case FeatureType.AncestryChoice:
+			case FeatureType.AncestryFeatureChoice:
 			case FeatureType.Choice:
 			case FeatureType.ClassAbility:
 			case FeatureType.Domain:
@@ -155,45 +151,32 @@ export class FeatureLogic {
 
 	static isChosen = (feature: Feature) => {
 		switch (feature.type) {
+			case FeatureType.AncestryChoice:
+				return !!feature.data.selected;
+			case FeatureType.AncestryFeatureChoice:
+				return !!feature.data.selected;
 			case FeatureType.Choice: {
-				const data = feature.data as FeatureChoiceData;
-				const selected = data.selected
-					.map(f => data.options.find(opt => opt.feature.id === f.id))
+				const selected = feature.data.selected
+					.map(f => feature.data.options.find(opt => opt.feature.id === f.id))
 					.filter(opt => !!opt);
-				return Collections.sum(selected, i => i.value) >= data.count;
+				return Collections.sum(selected, i => i.value) >= feature.data.count;
 			}
-			case FeatureType.ClassAbility: {
-				const data = feature.data as FeatureClassAbilityData;
-				return data.selectedIDs.length >= data.count;
-			}
-			case FeatureType.Domain: {
-				const data = feature.data as FeatureDomainData;
-				return data.selected.length >= data.count;
-			}
-			case FeatureType.DomainFeature: {
-				const data = feature.data as FeatureDomainFeatureData;
-				return data.selected.length >= data.count;
-			}
-			case FeatureType.Kit: {
-				const data = feature.data as FeatureKitData;
-				return data.selected.length >= data.count;
-			}
-			case FeatureType.LanguageChoice: {
-				const data = feature.data as FeatureLanguageChoiceData;
-				return data.selected.length >= data.count;
-			}
-			case FeatureType.Perk: {
-				const data = feature.data as FeaturePerkData;
-				return data.selected.length >= data.count;
-			}
-			case FeatureType.SkillChoice: {
-				const data = feature.data as FeatureSkillChoiceData;
-				return data.selected.length >= data.count;
-			}
-			case FeatureType.TitleChoice: {
-				const data = feature.data as FeatureTitleChoiceData;
-				return data.selected.length >= data.count;
-			}
+			case FeatureType.ClassAbility:
+				return feature.data.selectedIDs.length >= feature.data.count;
+			case FeatureType.Domain:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.DomainFeature:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.Kit:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.LanguageChoice:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.Perk:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.SkillChoice:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.TitleChoice:
+				return feature.data.selected.length >= feature.data.count;
 		};
 
 		return true;
@@ -207,6 +190,10 @@ export class FeatureLogic {
 				return 'This feature grants you an ability.';
 			case FeatureType.AbilityCost:
 				return 'This feature modifies the cost to use an ability.';
+			case FeatureType.AncestryChoice:
+				return 'This feature sets the hero\' ancestry.';
+			case FeatureType.AncestryFeatureChoice:
+				return 'This feature allows you to select a feature from an ancestry.';
 			case FeatureType.Bonus:
 				return 'This feature modifies a statistic.';
 			case FeatureType.Choice:

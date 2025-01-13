@@ -1,6 +1,6 @@
 import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -74,6 +74,17 @@ export const FeatureEditPanel = (props: Props) => {
 				data = {
 					keywords: [],
 					modifier: -1
+				};
+				break;
+			case FeatureType.AncestryChoice:
+				data = {
+					selected: null
+				};
+				break;
+			case FeatureType.AncestryFeatureChoice:
+				data = {
+					value: 1,
+					selected: null
 				};
 				break;
 			case FeatureType.Bonus:
@@ -227,7 +238,7 @@ export const FeatureEditPanel = (props: Props) => {
 		};
 
 		const setValue = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData | FeatureAncestryFeatureChoiceData;
 			copy.value = value;
 			setData(copy);
 		};
@@ -484,7 +495,7 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureAbilityCostData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Field</HeaderText>
+						<HeaderText>Keywords</HeaderText>
 						<Select
 							style={{ width: '100%' }}
 							placeholder='Select keywords'
@@ -497,6 +508,15 @@ export const FeatureEditPanel = (props: Props) => {
 						/>
 						<HeaderText>Modifier</HeaderText>
 						<NumberSpin value={data.modifier} onChange={setModifier} />
+					</Space>
+				);
+			}
+			case FeatureType.AncestryFeatureChoice: {
+				const data = feature.data as FeatureAncestryFeatureChoiceData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Value</HeaderText>
+						<NumberSpin value={data.value} onChange={setValue} />
 					</Space>
 				);
 			}
@@ -920,7 +940,7 @@ export const FeatureEditPanel = (props: Props) => {
 									<Select
 										style={{ width: '100%' }}
 										placeholder='Select type'
-										options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.TitleChoice ]).map(o => ({ value: o }))}
+										options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.AbilityCost, FeatureType.AncestryChoice, FeatureType.AncestryFeatureChoice, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.TitleChoice ]).map(o => ({ value: o }))}
 										optionRender={option => <Field label={option.data.value} value={FeatureLogic.getFeatureTypeDescription(option.data.value)} />}
 										value={feature.type}
 										onChange={setType}

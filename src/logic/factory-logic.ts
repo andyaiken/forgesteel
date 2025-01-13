@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
@@ -550,6 +550,29 @@ export class FactoryLogic {
 				data: {
 					keywords: data.keywords,
 					modifier: data.modifier
+				}
+			};
+		},
+		createAncestry: (data: { id: string, name?: string, description?: string }): FeatureAncestryChoice => {
+			return {
+				id: data.id,
+				name: data.name || 'Ancestry',
+				description: data.description || '',
+				type: FeatureType.AncestryChoice,
+				data: {
+					selected: null
+				}
+			};
+		},
+		createAncestryFeature: (data: { id: string, name?: string, description?: string, value: number }): FeatureAncestryFeatureChoice => {
+			return {
+				id: data.id,
+				name: data.name || 'Ancestry Feature',
+				description: data.description || '',
+				type: FeatureType.AncestryFeatureChoice,
+				data: {
+					value: data.value,
+					selected: null
 				}
 			};
 		},

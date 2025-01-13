@@ -1,5 +1,6 @@
 import { Ability } from './ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
+import { Ancestry } from './ancestry';
 import { Characteristic } from '../enums/characteristic';
 import { DamageModifier } from './damage-modifier';
 import { Domain } from './domain';
@@ -30,6 +31,17 @@ export interface FeatureAbilityCostData extends _FeatureData {
 	modifier: number;
 };
 export type FeatureAbilityCost = FeatureOf<FeatureType.AbilityCost, FeatureAbilityCostData>
+
+export interface FeatureAncestryChoiceData extends _FeatureData {
+	selected: Ancestry | null;
+};
+export type FeatureAncestryChoice = FeatureOf<FeatureType.AncestryChoice, FeatureAncestryChoiceData>
+
+export interface FeatureAncestryFeatureChoiceData extends _FeatureData {
+	value: number;
+	selected: Feature | null;
+};
+export type FeatureAncestryFeatureChoice = FeatureOf<FeatureType.AncestryFeatureChoice, FeatureAncestryFeatureChoiceData>
 
 export interface FeatureBonusData extends _FeatureData {
 	field: FeatureField;
@@ -151,6 +163,8 @@ export type FeatureTitleChoice = FeatureOf<FeatureType.TitleChoice, FeatureTitle
 export type Feature =
 	| FeatureAbility
 	| FeatureAbilityCost
+	| FeatureAncestryChoice
+	| FeatureAncestryFeatureChoice
 	| FeatureBonus
 	| FeatureChoice
 	| FeatureClassAbility

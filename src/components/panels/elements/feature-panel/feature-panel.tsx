@@ -1,7 +1,8 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityCostData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
+import { AncestryPanel } from '../ancestry-panel/ancestry-panel';
 import { Badge } from '../../../controls/badge/badge';
 import { Collections } from '../../../../utils/collections';
 import { DomainPanel } from '../domain-panel/domain-panel';
@@ -36,6 +37,97 @@ interface Props {
 
 export const FeaturePanel = (props: Props) => {
 	// #region Editable
+
+	const getEditableAncestryChoice = (data: FeatureAncestryChoiceData) => {
+		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks || []);
+		const sortedAncestries = Collections.sort(ancestries, a => a.name);
+
+		if (sortedAncestries.length === 0) {
+			return (
+				<Alert
+					type='info'
+					showIcon={true}
+					message='There are no options to choose for this feature.'
+				/>
+			);
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Select
+					style={{ width: '100%' }}
+					className={!data.selected ? 'selection-empty' : ''}
+					allowClear={true}
+					placeholder='Select an ancestry'
+					options={sortedAncestries.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					value={data.selected ? data.selected.id : null}
+					onChange={value => {
+						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureAncestryChoiceData;
+						dataCopy.selected = SourcebookLogic.getAncestries(props.sourcebooks || []).find(a => a.id === value) || null;
+						if (props.setData) {
+							props.setData(props.feature.id, dataCopy);
+						}
+					}}
+				/>
+				{
+					data.selected ?
+						<AncestryPanel ancestry={data.selected} />
+						: null
+				}
+			</Space>
+		);
+	};
+
+	const getEditableAncestryFeatureChoice = (data: FeatureAncestryFeatureChoiceData) => {
+		if (!props.hero) {
+			return null;
+		}
+
+		const features = HeroLogic.getFormerAncestries(props.hero)
+			.flatMap(a => a.features)
+			.filter(f => f.type === FeatureType.Choice)
+			.flatMap(f => f.data.options)
+			.filter(opt => opt.value === data.value)
+			.map(opt => opt.feature);
+		const sortedFeatures = Collections.sort(features, f => f.name);
+
+		if (sortedFeatures.length === 0) {
+			return (
+				<Alert
+					type='info'
+					showIcon={true}
+					message='There are no options to choose for this feature.'
+				/>
+			);
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Select
+					style={{ width: '100%' }}
+					className={!data.selected ? 'selection-empty' : ''}
+					allowClear={true}
+					placeholder='Select an ability from an ancestry'
+					options={sortedFeatures.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					value={data.selected ? data.selected.id : null}
+					onChange={value => {
+						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureAncestryFeatureChoiceData;
+						dataCopy.selected = features.find(f => f.id === value) || null;
+						if (props.setData) {
+							props.setData(props.feature.id, dataCopy);
+						}
+					}}
+				/>
+				{
+					data.selected ?
+						<FeaturePanel feature={data.selected} />
+						: null
+				}
+			</Space>
+		);
+	};
 
 	const getEditableChoice = (data: FeatureChoiceData) => {
 		const selectedIDs = data.selected.map(f => f.id);
@@ -655,24 +747,28 @@ export const FeaturePanel = (props: Props) => {
 
 	const getEditable = () => {
 		switch (props.feature.type) {
+			case FeatureType.AncestryChoice:
+				return getEditableAncestryChoice(props.feature.data);
+			case FeatureType.AncestryFeatureChoice:
+				return getEditableAncestryFeatureChoice(props.feature.data);
 			case FeatureType.Choice:
-				return getEditableChoice(props.feature.data as FeatureChoiceData);
+				return getEditableChoice(props.feature.data);
 			case FeatureType.ClassAbility:
-				return getEditableClassAbility(props.feature.data as FeatureClassAbilityData);
+				return getEditableClassAbility(props.feature.data);
 			case FeatureType.Domain:
-				return getEditableDomain(props.feature.data as FeatureDomainData);
+				return getEditableDomain(props.feature.data);
 			case FeatureType.DomainFeature:
-				return getEditableDomainFeature(props.feature.data as FeatureDomainFeatureData);
+				return getEditableDomainFeature(props.feature.data);
 			case FeatureType.Kit:
-				return getEditableKit(props.feature.data as FeatureKitData);
+				return getEditableKit(props.feature.data);
 			case FeatureType.LanguageChoice:
-				return getEditableLanguageChoice(props.feature.data as FeatureLanguageChoiceData);
+				return getEditableLanguageChoice(props.feature.data);
 			case FeatureType.Perk:
-				return getEditablePerk(props.feature.data as FeaturePerkData);
+				return getEditablePerk(props.feature.data);
 			case FeatureType.SkillChoice:
-				return getEditableSkillChoice(props.feature.data as FeatureSkillChoiceData);
+				return getEditableSkillChoice(props.feature.data);
 			case FeatureType.TitleChoice:
-				return getEditableTitleChoice(props.feature.data as FeatureTitleChoiceData);
+				return getEditableTitleChoice(props.feature.data);
 		}
 
 		return null;
@@ -685,6 +781,16 @@ export const FeaturePanel = (props: Props) => {
 	const getExtraAbilityCost = (data: FeatureAbilityCostData) => {
 		return (
 			<Field label={data.keywords.join(', ')} value={`Heroic resource cost ${data.modifier >= 0 ? '+' : ''}${data.modifier}`} />
+		);
+	};
+
+	const getExtraAncestryChoice = (data: FeatureAncestryChoiceData) => {
+		if (!data.selected) {
+			return null;
+		}
+
+		return (
+			<AncestryPanel ancestry={data.selected} />
 		);
 	};
 
@@ -982,41 +1088,43 @@ export const FeaturePanel = (props: Props) => {
 	const getExtra = () => {
 		switch (props.feature.type) {
 			case FeatureType.AbilityCost:
-				return getExtraAbilityCost(props.feature.data as FeatureAbilityCostData);
+				return getExtraAbilityCost(props.feature.data);
+			case FeatureType.AncestryChoice:
+				return getExtraAncestryChoice(props.feature.data);
 			case FeatureType.Bonus:
-				return getExtraBonus(props.feature.data as FeatureBonusData);
+				return getExtraBonus(props.feature.data);
 			case FeatureType.Choice:
-				return getExtraChoice(props.feature.data as FeatureChoiceData);
+				return getExtraChoice(props.feature.data);
 			case FeatureType.ClassAbility:
-				return getExtraClassAbility(props.feature.data as FeatureClassAbilityData);
+				return getExtraClassAbility(props.feature.data);
 			case FeatureType.DamageModifier:
-				return getExtraDamageModifier(props.feature.data as FeatureDamageModifierData);
+				return getExtraDamageModifier(props.feature.data);
 			case FeatureType.Domain:
-				return getExtraDomain(props.feature.data as FeatureDomainData);
+				return getExtraDomain(props.feature.data);
 			case FeatureType.DomainFeature:
-				return getExtraDomainFeature(props.feature.data as FeatureDomainFeatureData);
+				return getExtraDomainFeature(props.feature.data);
 			case FeatureType.Kit:
-				return getExtraKit(props.feature.data as FeatureKitData);
+				return getExtraKit(props.feature.data);
 			case FeatureType.KitType:
-				return getExtraKitType(props.feature.data as FeatureKitTypeData);
+				return getExtraKitType(props.feature.data);
 			case FeatureType.Language:
-				return getExtraLanguage(props.feature.data as FeatureLanguageData);
+				return getExtraLanguage(props.feature.data);
 			case FeatureType.LanguageChoice:
-				return getExtraLanguageChoice(props.feature.data as FeatureLanguageChoiceData);
+				return getExtraLanguageChoice(props.feature.data);
 			case FeatureType.Malice:
 				return getExtraMalice(props.feature.data);
 			case FeatureType.Perk:
-				return getExtraPerk(props.feature.data as FeaturePerkData);
+				return getExtraPerk(props.feature.data);
 			case FeatureType.Size:
-				return getExtraSize(props.feature.data as FeatureSizeData);
+				return getExtraSize(props.feature.data);
 			case FeatureType.Skill:
-				return getExtraSkill(props.feature.data as FeatureSkillData);
+				return getExtraSkill(props.feature.data);
 			case FeatureType.SkillChoice:
-				return getExtraSkillChoice(props.feature.data as FeatureSkillChoiceData);
+				return getExtraSkillChoice(props.feature.data);
 			case FeatureType.Speed:
-				return getExtraSpeed(props.feature.data as FeatureSpeedData);
+				return getExtraSpeed(props.feature.data);
 			case FeatureType.TitleChoice:
-				return getExtraTitleChoice(props.feature.data as FeatureTitleChoiceData);
+				return getExtraTitleChoice(props.feature.data);
 		}
 
 		return null;
@@ -1035,6 +1143,14 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<AbilityPanel ability={props.feature.data.ability} hero={props.hero} cost={props.cost} mode={props.mode} tags={tags} />
 			);
+		}
+
+		if (props.feature.type === FeatureType.AncestryFeatureChoice) {
+			if (props.feature.data.selected) {
+				return (
+					<FeaturePanel feature={props.feature.data.selected} />
+				);
+			}
 		}
 
 		if (props.feature.type === FeatureType.Multiple) {

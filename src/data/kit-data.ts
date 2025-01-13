@@ -528,7 +528,7 @@ export class KitData {
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],
 						tier1: '3 + M or A damage',
-						tier2: '7 + M or A damage',
+						tier2: '6 + M or A damage',
 						tier3: '9 + M or A damage'
 					}),
 					effect: 'The target is taunted (EoT).'

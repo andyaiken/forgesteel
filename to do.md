@@ -58,9 +58,6 @@
 * Add hero inventory management
   * Add item data
 * Add a way for heroes to be modified
-  * Titles
-    * Add title data
-    * Show titles in library
   * Retainers
     * Work out how retainers should be represented
     * Add retainer data

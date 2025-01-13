@@ -1065,7 +1065,7 @@ export const Main = (props: Props) => {
 								showDomain={onSelectDomain}
 								showKit={onSelectKit}
 								showPerk={onSelectPerk}
-								//showTitle={onSelectTitle}
+								showTitle={onSelectTitle}
 								//showItem={onSelectItem}
 								showMonsterGroup={onSelectMonsterGroup}
 								onCreateHomebrew={createHomebrewElement}

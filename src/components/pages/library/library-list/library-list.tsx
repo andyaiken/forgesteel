@@ -26,8 +26,8 @@ import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
-// import { Title } from '../../../../models/title';
-// import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
+import { Title } from '../../../../models/title';
+import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
@@ -48,7 +48,7 @@ interface Props {
  	showDomain: (domain: Domain) => void;
  	showKit: (kit: Kit) => void;
  	showPerk: (perk: Perk) => void;
- 	// showTitle: (title: Title) => void;
+ 	showTitle: (title: Title) => void;
  	// showItem: (item: Item) => void;
  	showMonsterGroup: (monsterGroup: MonsterGroup) => void;
 	onCreateHomebrew: (type: SourcebookElementKind, sourcebookID: string | null) => void;
@@ -156,7 +156,6 @@ export const LibraryListPage = (props: Props) => {
 			], searchTerm));
 	};
 
-	/*
 	const getTitles = () => {
 		return SourcebookLogic
 			.getTitles(getSourcebooks())
@@ -166,6 +165,7 @@ export const LibraryListPage = (props: Props) => {
 			], searchTerm));
 	};
 
+	/*
 	const getItems = () => {
 		return SourcebookLogic
 			.getItems(getSourcebooks())
@@ -482,7 +482,6 @@ export const LibraryListPage = (props: Props) => {
 		);
 	};
 
-	/*
 	const getTitlesSection = (list: Title[]) => {
 		if (list.length === 0) {
 			return (
@@ -499,7 +498,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(t => {
 						const item = (
-							<SelectablePanel key={t.id} onSelect={() => modals.showTitle(t.id)}>
+							<SelectablePanel key={t.id} onSelect={() => props.showTitle(t)}>
 								<TitlePanel title={t} />
 							</SelectablePanel>
 						);
@@ -520,6 +519,7 @@ export const LibraryListPage = (props: Props) => {
 		);
 	};
 
+	/*
 	const getItemsSection = (list: Item[]) => {
 		if (list.length === 0) {
 			return (
@@ -611,7 +611,7 @@ export const LibraryListPage = (props: Props) => {
 		const domains = getDomains();
 		const kits = getKits();
 		const perks = getPerks();
-		// const titles = getTitles();
+		const titles = getTitles();
 		// const items = getItems();
 		const monsterGroups = getMonsterGroups();
 
@@ -773,7 +773,6 @@ export const LibraryListPage = (props: Props) => {
 								),
 								children: getPerksSection(perks)
 							},
-							/*
 							{
 								key: 'title',
 								label: (
@@ -784,6 +783,7 @@ export const LibraryListPage = (props: Props) => {
 								),
 								children: getTitlesSection(titles)
 							},
+							/*
 							{
 								key: 'item',
 								label: (

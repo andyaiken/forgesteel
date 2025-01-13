@@ -1,12 +1,10 @@
 import { Alert, Button, Divider, Flex, Space, Tabs } from 'antd';
 import { Condition, Hero } from '../../../models/hero';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
-import { Feature, FeatureData } from '../../../models/feature';
 import { ArrowUpOutlined } from '@ant-design/icons';
 import { Characteristic } from '../../../enums/characteristic';
 import { ConditionPanel } from '../../panels/condition/condition-panel';
 import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
-import { HeroCustomizePanel } from '../../panels/hero-customize/hero-customize-panel';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { Modal } from '../modal/modal';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
@@ -155,30 +153,6 @@ export const HeroStateModal = (props: Props) => {
 	const deleteCondition = (condition: Condition) => {
 		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
 		copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const addFeature = (feature: Feature) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.features.push(feature);
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const setFeatureData = (featureID: string, data: FeatureData) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		const feature = HeroLogic.getFeatures(copy).find(f => f.id === featureID);
-		if (feature) {
-			feature.data = data;
-		}
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const deleteFeature = (feature: Feature) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.features = copy.features.filter(f => f.id !== feature.id);
 		setHero(copy);
 		props.onChange(copy);
 	};
@@ -372,18 +346,6 @@ export const HeroStateModal = (props: Props) => {
 		);
 	};
 
-	const getCustomizeSection = () => {
-		return (
-			<HeroCustomizePanel
-				hero={props.hero}
-				sourcebooks={props.sourcebooks}
-				addFeature={addFeature}
-				setFeatureData={setFeatureData}
-				deleteFeature={deleteFeature}
-			/>
-		);
-	};
-
 	try {
 		return (
 			<Modal
@@ -405,11 +367,6 @@ export const HeroStateModal = (props: Props) => {
 									key: 'conditions',
 									label: 'Conditions',
 									children: getConditionsSection()
-								},
-								{
-									key: 'customize',
-									label: 'Customize',
-									children: getCustomizeSection()
 								}
 							]}
 							defaultActiveKey={props.startPage}

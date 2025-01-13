@@ -19,5 +19,5 @@ export enum FeatureType {
 	Skill = 'Skill',
 	SkillChoice = 'Skill Choice',
 	Speed = 'Speed',
-	Title = 'Title'
+	TitleChoice = 'Title'
 }

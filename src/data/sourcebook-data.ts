@@ -7,6 +7,7 @@ import { KitData } from './kit-data';
 import { PerkData } from './perk-data';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
+import { TitleData } from './title-data';
 import { censor } from './classes/censor';
 import { conduit } from './classes/conduit';
 import { devil } from './ancestries/devil';
@@ -299,7 +300,28 @@ export class SourcebookData {
 			PerkData.thingspeaker,
 			PerkData.ritualist
 		],
-		titles: [],
+		titles: [
+			TitleData.ancientLoremaster,
+			TitleData.battleaxeDiplomat,
+			TitleData.brawler,
+			TitleData.cityRat,
+			TitleData.doomed,
+			TitleData.dwarfLegionnaire,
+			TitleData.elementalDabbler,
+			TitleData.factionMember,
+			TitleData.localHero,
+			TitleData.mageHunter,
+			TitleData.marshal,
+			TitleData.monsterBane,
+			TitleData.owedAFavor,
+			TitleData.presumedDead,
+			TitleData.ratcatcher,
+			TitleData.savedForAWorseFate,
+			TitleData.shipCaptain,
+			TitleData.troupeTactics,
+			TitleData.wantedDeadOrAlive,
+			TitleData.zombieSlayer
+		],
 		items: [],
 		monsterGroups: [
 			dwarfMonsterGroup,

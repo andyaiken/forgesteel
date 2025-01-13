@@ -52,7 +52,8 @@ export const HeroCustomizePanel = (props: Props) => {
 					items={[
 						{ key: FeatureType.LanguageChoice, label: <div className='ds-text centered-text'>Language</div> },
 						{ key: FeatureType.Perk, label: <div className='ds-text centered-text'>Perk</div> },
-						{ key: FeatureType.SkillChoice, label: <div className='ds-text centered-text'>Skill</div> }
+						{ key: FeatureType.SkillChoice, label: <div className='ds-text centered-text'>Skill</div> },
+						{ key: FeatureType.TitleChoice, label: <div className='ds-text centered-text'>Title</div> }
 					]}
 					onClick={key => {
 						let feature = null;
@@ -72,6 +73,12 @@ export const HeroCustomizePanel = (props: Props) => {
 								feature = FactoryLogic.feature.createSkillChoice({
 									id: Utils.guid(),
 									listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+								});
+								break;
+							case FeatureType.TitleChoice:
+								feature = FactoryLogic.feature.createTitleChoice({
+									id: Utils.guid(),
+									echelon: 1
 								});
 								break;
 						}

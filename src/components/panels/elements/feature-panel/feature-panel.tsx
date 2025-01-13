@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityCostData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Badge } from '../../../controls/badge/badge';
@@ -566,7 +566,7 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
-	const getEditableTitle = (data: FeatureTitleData) => {
+	const getEditableTitleChoice = (data: FeatureTitleChoiceData) => {
 		if (!props.hero) {
 			return null;
 		}
@@ -603,7 +603,7 @@ export const FeaturePanel = (props: Props) => {
 						} else {
 							ids = value as string[];
 						}
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureTitleData;
+						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureTitleChoiceData;
 						dataCopy.selected = [];
 						ids.forEach(id => {
 							const title = titles.find(t => t.id === id);
@@ -616,6 +616,39 @@ export const FeaturePanel = (props: Props) => {
 						}
 					}}
 				/>
+				{
+					data.selected.map((title, n) => (
+						<Select
+							key={title.id}
+							style={{ width: '100%' }}
+							className={title.selectedFeatureID === '' ? 'selection-empty' : ''}
+							allowClear={true}
+							placeholder='Select a title feature'
+							options={title.features.map(f => ({ label: f.name, value: f.id, desc: f.description }))}
+							optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+							value={title.selectedFeatureID || null}
+							onChange={value => {
+								const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureTitleChoiceData;
+								dataCopy.selected[n].selectedFeatureID = value;
+								if (props.setData) {
+									props.setData(props.feature.id, dataCopy);
+								}
+							}}
+						/>
+					))
+				}
+				{
+					data.selected.map(title => {
+						const f = title.features.find(ft => ft.id === title.selectedFeatureID);
+						if (f) {
+							return (
+								<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+							);
+						}
+
+						return null;
+					})
+				}
 			</Space>
 		);
 	};
@@ -638,8 +671,8 @@ export const FeaturePanel = (props: Props) => {
 				return getEditablePerk(props.feature.data as FeaturePerkData);
 			case FeatureType.SkillChoice:
 				return getEditableSkillChoice(props.feature.data as FeatureSkillChoiceData);
-			case FeatureType.Title:
-				return getEditableTitle(props.feature.data as FeatureTitleData);
+			case FeatureType.TitleChoice:
+				return getEditableTitleChoice(props.feature.data as FeatureTitleChoiceData);
 		}
 
 		return null;
@@ -926,7 +959,7 @@ export const FeaturePanel = (props: Props) => {
 		return null;
 	};
 
-	const getExtraTitle = (data: FeatureTitleData) => {
+	const getExtraTitleChoice = (data: FeatureTitleChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
@@ -982,8 +1015,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraSkillChoice(props.feature.data as FeatureSkillChoiceData);
 			case FeatureType.Speed:
 				return getExtraSpeed(props.feature.data as FeatureSpeedData);
-			case FeatureType.Title:
-				return getExtraTitle(props.feature.data as FeatureTitleData);
+			case FeatureType.TitleChoice:
+				return getExtraTitleChoice(props.feature.data as FeatureTitleChoiceData);
 		}
 
 		return null;

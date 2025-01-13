@@ -65,14 +65,14 @@ export const RulesModal = (props: Props) => {
 							SkillList.Interpersonal,
 							SkillList.Intrigue,
 							SkillList.Lore
-						].map(sl => (
-							<div key={sl}>
+						].map((sl, n1) => (
+							<div key={n1}>
 								<HeaderText>{sl}</HeaderText>
 								{
 									allSkills
 										.filter(s => s.list === sl)
-										.map(s => (
-											<div className='language-row'>
+										.map((s, n2) => (
+											<div key={n2} className='language-row'>
 												{skillNames.includes(s.name) ? <StarFilled style={{ color: 'rgb(22, 119, 255)' }} /> : null}
 												<Field key={s.name} label={s.name} value={s.description} />
 											</div>
@@ -95,8 +95,8 @@ export const RulesModal = (props: Props) => {
 					{
 						Collections
 							.sort(allLanguages, l => l.name)
-							.map(l => (
-								<div className='skill-row'>
+							.map((l, n) => (
+								<div key={n} className='skill-row'>
 									{languageNames.includes(l.name) ? <StarFilled style={{ color: 'rgb(22, 119, 255)' }} /> : null}
 									<Field key={l.name} label={l.name} value={l.description} />
 								</div>

@@ -8,7 +8,7 @@ import type {
 	FeatureLanguageChoiceData,
 	FeaturePerkData,
 	FeatureSkillChoiceData,
-	FeatureTitleData
+	FeatureTitleChoiceData
 } from '../models/feature';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
@@ -16,6 +16,7 @@ import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { FeatureType } from '../enums/feature-type';
+import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 
@@ -84,6 +85,14 @@ export class FeatureLogic {
 		return FeatureLogic.simplifyFeatures(features);
 	};
 
+	static getFeaturesFromCustomization = (hero: Hero) => {
+		const features: Feature[] = [];
+
+		features.push(...hero.features);
+
+		return FeatureLogic.simplifyFeatures(features);
+	};
+
 	static getFeaturesFromItem = (item: Item) => {
 		const features: Feature[] = [];
 
@@ -114,7 +123,7 @@ export class FeatureLogic {
 				case FeatureType.Perk:
 					feature.data.selected.forEach(addFeature);
 					break;
-				case FeatureType.Title:
+				case FeatureType.TitleChoice:
 					feature.data.selected.forEach(title => title.features.filter(f => f.id === title.selectedFeatureID).forEach(addFeature));
 					break;
 			}
@@ -137,7 +146,7 @@ export class FeatureLogic {
 			case FeatureType.LanguageChoice:
 			case FeatureType.Perk:
 			case FeatureType.SkillChoice:
-			case FeatureType.Title:
+			case FeatureType.TitleChoice:
 				return true;
 		};
 
@@ -181,8 +190,8 @@ export class FeatureLogic {
 				const data = feature.data as FeatureSkillChoiceData;
 				return data.selected.length >= data.count;
 			}
-			case FeatureType.Title: {
-				const data = feature.data as FeatureTitleData;
+			case FeatureType.TitleChoice: {
+				const data = feature.data as FeatureTitleChoiceData;
 				return data.selected.length >= data.count;
 			}
 		};
@@ -234,7 +243,7 @@ export class FeatureLogic {
 				return 'This feature sets your base speed.';
 			case FeatureType.Text:
 				return 'This feature has no special properties, just a text description.';
-			case FeatureType.Title:
+			case FeatureType.TitleChoice:
 				return 'This feature allows you to choose a title.';
 		}
 	};

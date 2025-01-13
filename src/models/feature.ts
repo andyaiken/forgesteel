@@ -141,11 +141,12 @@ export type FeatureSpeed = FeatureOf<FeatureType.Speed, FeatureSpeedData>;
 
 export type FeatureText = FeatureOf<FeatureType.Text>;
 
-export interface FeatureTitleData extends _FeatureData {
+export interface FeatureTitleChoiceData extends _FeatureData {
+	echelon: number;
 	count: number;
 	selected: Title[];
 };
-export type FeatureTitle = FeatureOf<FeatureType.Title, FeatureTitleData>;
+export type FeatureTitleChoice = FeatureOf<FeatureType.TitleChoice, FeatureTitleChoiceData>;
 
 export type Feature =
 	| FeatureAbility
@@ -168,6 +169,6 @@ export type Feature =
 	| FeatureSkillChoice
 	| FeatureSpeed
 	| FeatureText
-	| FeatureTitle;
+	| FeatureTitleChoice;
 
 export type FeatureData = Feature['data'];

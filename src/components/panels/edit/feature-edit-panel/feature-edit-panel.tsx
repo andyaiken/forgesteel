@@ -1,6 +1,6 @@
 import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -184,7 +184,7 @@ export const FeatureEditPanel = (props: Props) => {
 					speed: 5
 				};
 				break;
-			case FeatureType.Title:
+			case FeatureType.TitleChoice:
 				data = {
 					count: 1,
 					selected: []
@@ -215,7 +215,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 	const getDataSection = () => {
 		const setCount = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureTitleData;
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureTitleChoiceData;
 			copy.count = value;
 			setData(copy);
 		};
@@ -876,8 +876,8 @@ export const FeatureEditPanel = (props: Props) => {
 			}
 			case FeatureType.Text:
 				return null;
-			case FeatureType.Title: {
-				const data = feature.data as FeatureTitleData;
+			case FeatureType.TitleChoice: {
+				const data = feature.data as FeatureTitleChoiceData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Count</HeaderText>
@@ -920,7 +920,7 @@ export const FeatureEditPanel = (props: Props) => {
 									<Select
 										style={{ width: '100%' }}
 										placeholder='Select type'
-										options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.Title ]).map(o => ({ value: o }))}
+										options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.TitleChoice ]).map(o => ({ value: o }))}
 										optionRender={option => <Field label={option.data.value} value={FeatureLogic.getFeatureTypeDescription(option.data.value)} />}
 										value={feature.type}
 										onChange={setType}

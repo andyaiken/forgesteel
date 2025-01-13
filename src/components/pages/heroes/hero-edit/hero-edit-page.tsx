@@ -428,7 +428,7 @@ export const HeroEditPage = (props: Props) => {
 					return (
 						<DetailsSection
 							hero={hero}
-							sourcebooks={props.sourcebooks}
+							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
 							setName={setName}
 							setSettingIDs={setSettingIDs}
 							addFeature={addFeature}

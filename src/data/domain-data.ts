@@ -59,7 +59,10 @@ export class DomainData {
 				level: 3,
 				features: []
 			}
-		]
+		],
+		piety: `
+* Piety: You gain 2 piety the first time in an encounter that a creature within 10 squares of you uses an ability with the Area keyword.
+* Prayer Effect: You summon the forces of creation and create a wall of stone whose size is 5 + your Intuition score within 10 squares of you. The wall lasts until the end of the encounter.`
 	};
 
 	static death: Domain = {
@@ -115,7 +118,10 @@ export class DomainData {
 				level: 3,
 				features: []
 			}
-		]
+		],
+		piety: `
+* Piety: You gain 2 piety the first time in an encounter that a creature within 10 squares of you who isn’t a minion dies or a solo creature becomes winded.
+* Prayer Effect: You inflict a deadly curse upon two enemies of your choice within 10 squares of you. Each target takes corruption damage equal to twice your Intuition score.`
 	};
 
 	static fate: Domain = {
@@ -167,7 +173,10 @@ Choose one of the following effects, which lasts until the end of the encounter 
 				level: 3,
 				features: []
 			}
-		]
+		],
+		piety: `
+* Piety: You gain 2 piety the first time in an encounter that an ally within 10 squares of you gets a tier 3 result or an enemy within 10 squares of you gets a tier 1 result.
+* Prayer Effect: You call on the forces of fate to create a reliable future. Choose a creature within your line of effect. That creature automatically gets a tier 1 or tier 3 result (your choice) on their next power roll made before the end of the encounter.`
 	};
 
 	static knowledge: Domain = {
@@ -221,7 +230,10 @@ Choose one of the following effects, which lasts until the end of the encounter 
 				level: 3,
 				features: []
 			}
-		]
+		],
+		piety: `
+* Piety: You gain 2 piety the first time in an encounter that the Director uses an ability or feature that costs Malice.
+* Prayer Effect: Choose up to three allies, including yourself, within 10 squares of you. Each target gains a surge.`
 	};
 
 	static life: Domain = {
@@ -270,7 +282,10 @@ Choose one of the following effects, which lasts until the end of the encounter 
 				level: 3,
 				features: []
 			}
-		]
+		],
+		piety: `
+* Piety: You gain 2 piety the first time in an encounter that a creature within 10 squares of you regains Stamina.
+* Prayer Effect: Choose yourself or one ally within 10 squares of you. The targets can spend a Recovery, can end any effects on them that are ended by a saving throw or that end at the end of their turn, or can stand up if they are prone. Alternatively, you and one ally within 10 squares of you gain temporary Stamina equal to 5 × your Intuition score.`
 	};
 
 	static love: Domain = {
@@ -321,7 +336,10 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 				level: 3,
 				features: []
 			}
-		]
+		],
+		piety: `
+* Piety: You gain 2 piety the first time in an encounter that you or an ally within 10 squares of you uses the Aid Another maneuver or an ability that targets an ally.
+* Prayer Effect: Each ally within 10 squares of you gains temporary Stamina equal to 2 × your Intuition score.`
 	};
 
 	static nature: Domain = {
@@ -382,7 +400,10 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 				level: 3,
 				features: []
 			}
-		]
+		],
+		piety: `
+* Piety: You gain 2 piety the first time in an encounter that you or a creature within 10 squares of you takes acid, cold, fire, lightning, poison, or sonic damage.
+* Prayer Effect: Vines whip up from the floor or ground within 10 squares of you, wrapping around a number of creatures of your choice equal to your Intuition score. You can slide each creature up to a number of squares equal to your Intuition score. The vines then fade away.`
 	};
 
 	static protection: Domain = {
@@ -433,7 +454,10 @@ Additionally, whenever one target spends a Recovery, the other target can use a 
 				level: 3,
 				features: []
 			}
-		]
+		],
+		piety: `
+* Piety: You gain 2 piety the first time in an encounter that you or an ally within 10 squares of you gains temporary Stamina or uses a triggered action to reduce incoming damage or give an enemy a bane on a power roll.
+* Prayer Effect: One ally within 10 squares of you gains temporary Stamina equal to three times your Intuition score.`
 	};
 
 	static storm: Domain = {
@@ -493,7 +517,10 @@ Choose one of the following types of weather, each of which grants a benefit to 
 				level: 3,
 				features: []
 			}
-		]
+		],
+		piety: `
+* Piety: You gain 2 piety the first time in an encounter that an enemy within 10 squares of you is force moved.
+* Prayer Effect: Each enemy in a 3-cube area within 10 squares of you takes lightning damage equal to twice your Intuition score.`
 	};
 
 	static sun: Domain = {
@@ -548,7 +575,10 @@ Choose one of the following types of weather, each of which grants a benefit to 
 				level: 3,
 				features: []
 			}
-		]
+		],
+		piety: `
+* Piety: You gain 2 piety the first time in an encounter that an enemy within 10 squares of you takes fire or holy damage.
+* Prayer Effect: One enemy of your choice within 10 squares of you takes fire damage equal to three times your Intuition score.`
 	};
 
 	static trickery: Domain = {
@@ -597,7 +627,10 @@ Choose one of the following types of weather, each of which grants a benefit to 
 				level: 3,
 				features: []
 			}
-		]
+		],
+		piety: `
+* Piety: You gain 2 piety the first time in an encounter that you or a creature within 10 squares of you takes the Aid Another or Hide maneuver.
+* Prayer Effect: Choose a creature within 10 squares of you. You can slide that creature up to a number of squares equal to 5 + your conduit level.`
 	};
 
 	static war: Domain = {
@@ -646,6 +679,9 @@ Choose one of the following types of weather, each of which grants a benefit to 
 				level: 3,
 				features: []
 			}
-		]
+		],
+		piety: `
+* Piety: You gain 2 piety the first time in an encounter that you or a creature within 10 squares of deals damage in an amount equal to or greater than 10 + your level.
+* Prayer Effect: Three allies of your choice within 10 squares of you, including yourself, gain two surges.`
 	};
 }

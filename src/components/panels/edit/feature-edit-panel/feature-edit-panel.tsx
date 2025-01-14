@@ -128,6 +128,9 @@ export const FeatureEditPanel = (props: Props) => {
 					selected: []
 				};
 				break;
+			case FeatureType.DomainPackage:
+				data = {};
+				break;
 			case FeatureType.Kit:
 				data = {
 					types: [],

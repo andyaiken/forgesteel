@@ -931,6 +931,25 @@ export const FeaturePanel = (props: Props) => {
 		return null;
 	};
 
+	const getExtraDomainPackage = () => {
+		if (!props.hero) {
+			return null;
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					HeroLogic.getDomains(props.hero).map(domain => (
+						<div key={domain.id}>
+							<div className='ds-text bold-text'>{domain.name}</div>
+							<Markdown text={domain.piety} />
+						</div>
+					))
+				}
+			</Space>
+		);
+	};
+
 	const getExtraKit = (data: FeatureKitData) => {
 		if (data.selected.length > 0) {
 			return (
@@ -1103,6 +1122,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraDomain(props.feature.data);
 			case FeatureType.DomainFeature:
 				return getExtraDomainFeature(props.feature.data);
+			case FeatureType.DomainPackage:
+				return getExtraDomainPackage();
 			case FeatureType.Kit:
 				return getExtraKit(props.feature.data);
 			case FeatureType.KitType:

@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureDomainPackage, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
@@ -176,7 +176,8 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
-			featuresByLevel: [ 1, 2, 3 ].map(n => ({ level: n, features: [], optionalFeatures: [] }))
+			featuresByLevel: [ 1, 2, 3 ].map(n => ({ level: n, features: [], optionalFeatures: [] })),
+			piety: ''
 		};
 	};
 
@@ -656,6 +657,15 @@ export class FactoryLogic {
 					count: count,
 					selected: []
 				}
+			};
+		},
+		createDomainPackage: (data: { id: string, name?: string, description?: string }): FeatureDomainPackage => {
+			return {
+				id: data.id,
+				name: data.name || 'Domain Package',
+				description: data.description || '',
+				type: FeatureType.DomainPackage,
+				data: {}
 			};
 		},
 		createKitChoice: (data: { id: string, name?: string, description?: string, types?: KitType[], count?: number }): FeatureKit => {

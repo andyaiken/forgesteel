@@ -781,6 +781,24 @@ export const LibraryEditPage = (props: Props) => {
 		);
 	};
 
+	const getPietyEditSection = () => {
+		const domain = element as Domain;
+
+		const setPiety = (value: string) => {
+			const copy = JSON.parse(JSON.stringify(element)) as Domain;
+			copy.piety = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Piety</HeaderText>
+				<MultiLine label='Piety' value={domain.piety} onChange={setPiety} />
+			</Space>
+		);
+	};
+
 	const getKitEditSection = () => {
 		const kit = element as Kit;
 
@@ -1472,6 +1490,11 @@ export const LibraryEditPage = (props: Props) => {
 								key: '2',
 								label: 'Levels',
 								children: getClassLevelsEditSection()
+							},
+							{
+								key: '3',
+								label: 'Piety',
+								children: getPietyEditSection()
 							}
 						]}
 					/>

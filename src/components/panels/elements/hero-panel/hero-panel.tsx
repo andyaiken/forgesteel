@@ -405,8 +405,10 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getFeaturesSection = () => {
+		const featureTypes = [ FeatureType.Text, FeatureType.DomainPackage ];
+
 		const features = HeroLogic.getFeatures(props.hero)
-			.filter(feature => feature.type === FeatureType.Text);
+			.filter(feature => featureTypes.includes(feature.type));
 		if (features.length === 0) {
 			return null;
 		}

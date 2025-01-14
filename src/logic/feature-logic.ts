@@ -206,6 +206,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose a domain.';
 			case FeatureType.DomainFeature:
 				return 'This feature allows you to choose a feature from your domain.';
+			case FeatureType.DomainPackage:
+				return 'This feature collates features from your chosen domains.';
 			case FeatureType.Kit:
 				return 'This feature allows you to choose a kit.';
 			case FeatureType.KitType:

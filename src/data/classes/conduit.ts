@@ -41,7 +41,7 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 					id: 'conduit-1-2',
 					count: 2
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createDomainPackage({
 					id: 'conduit-1-3',
 					name: 'Piety',
 					description: `
@@ -49,43 +49,7 @@ At the start of each of your turns during combat, you gain 1d3 piety.
 Additionally, you can gain more piety by praying to the gods — but beware! Doing so can easily draw their ire, as the gods hate to be annoyed. When you roll to gain 1d3 piety at the start of your turn, you can pray to gain the following additional effects (no action required):
 * If the roll is a 1, you gain 1 additional piety but anger the gods! You take psychic damage equal to 1d6 + your level, which can’t be reduced in any way.
 * If the roll is a 2, you gain 1 additional piety.
-* If the roll is a 3, you gain 2 additional piety and can activate a domain effect of your choice.
-**CREATION DOMAIN**
-* Piety: You gain 2 piety the first time in an encounter that a creature within 10 squares of you uses an ability with the Area keyword.
-* Prayer Effect: You summon the forces of creation and create a wall of stone whose size is 5 + your Intuition score within 10 squares of you. The wall lasts until the end of the encounter.
-**DEATH DOMAIN**
-* Piety: You gain 2 piety the first time in an encounter that a creature within 10 squares of you who isn’t a minion dies or a solo creature becomes winded.
-* Prayer Effect: You inflict a deadly curse upon two enemies of your choice within 10 squares of you. Each target takes corruption damage equal to twice your Intuition score.
-**FATE DOMAIN**
-* Piety: You gain 2 piety the first time in an encounter that an ally within 10 squares of you gets a tier 3 result or an enemy within 10 squares of you gets a tier 1 result.
-* Prayer Effect: You call on the forces of fate to create a reliable future. Choose a creature within your line of effect. That creature automatically gets a tier 1 or tier 3 result (your choice) on their next power roll made before the end of the encounter.
-**KNOWLEDGE DOMAIN**
-* Piety: You gain 2 piety the first time in an encounter that the Director uses an ability or feature that costs Malice.
-* Prayer Effect: Choose up to three allies, including yourself, within 10 squares of you. Each target gains a surge.
-**LIFE DOMAIN**
-* Piety: You gain 2 piety the first time in an encounter that a creature within 10 squares of you regains Stamina.
-* Prayer Effect: Choose yourself or one ally within 10 squares of you. The targets can spend a Recovery, can end any effects on them that are ended by a saving throw or that end at the end of their turn, or can stand up if they are prone. Alternatively, you and one ally within 10 squares of you gain temporary Stamina equal to 5 × your Intuition score.
-**LOVE DOMAIN**
-* Piety: You gain 2 piety the first time in an encounter that you or an ally within 10 squares of you uses the Aid Another maneuver or an ability that targets an ally.
-* Prayer Effect: Each ally within 10 squares of you gains temporary Stamina equal to 2 × your Intuition score.
-**NATURE DOMAIN**
-* Piety: You gain 2 piety the first time in an encounter that you or a creature within 10 squares of you takes acid, cold, fire, lightning, poison, or sonic damage.
-* Prayer Effect: Vines whip up from the floor or ground within 10 squares of you, wrapping around a number of creatures of your choice equal to your Intuition score. You can slide each creature up to a number of squares equal to your Intuition score. The vines then fade away.
-**PROTECTION DOMAIN**
-* Piety: You gain 2 piety the first time in an encounter that you or an ally within 10 squares of you gains temporary Stamina or uses a triggered action to reduce incoming damage or give an enemy a bane on a power roll.
-* Prayer Effect: One ally within 10 squares of you gains temporary Stamina equal to three times your Intuition score.
-**STORM DOMAIN**
-* Piety: You gain 2 piety the first time in an encounter that an enemy within 10 squares of you is force moved.
-* Prayer Effect: Each enemy in a 3-cube area within 10 squares of you takes lightning damage equal to twice your Intuition score.
-**SUN DOMAIN**
-* Piety: You gain 2 piety the first time in an encounter that an enemy within 10 squares of you takes fire or holy damage.
-* Prayer Effect: One enemy of your choice within 10 squares of you takes fire damage equal to three times your Intuition score.
-**TRICKERY DOMAIN**
-* Piety: You gain 2 piety the first time in an encounter that you or a creature within 10 squares of you takes the Aid Another or Hide maneuver.
-* Prayer Effect: Choose a creature within 10 squares of you. You can slide that creature up to a number of squares equal to 5 + your conduit level.
-**WAR DOMAIN**
-* Piety: You gain 2 piety the first time in an encounter that you or a creature within 10 squares of deals damage in an amount equal to or greater than 10 + your level.
-* Prayer Effect: Three allies of your choice within 10 squares of you, including yourself, gain two surges.`
+* If the roll is a 3, you gain 2 additional piety and can activate a domain effect of your choice.`
 				}),
 				FactoryLogic.feature.createDomainFeature({
 					id: 'conduit-1-4',

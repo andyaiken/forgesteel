@@ -85,6 +85,10 @@ export interface FeatureDomainFeatureData extends _FeatureData {
 };
 export type FeatureDomainFeature = FeatureOf<FeatureType.DomainFeature, FeatureDomainFeatureData>;
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface FeatureDomainPackageData extends _FeatureData { };
+export type FeatureDomainPackage = FeatureOf<FeatureType.DomainPackage, FeatureDomainPackageData>;
+
 export interface FeatureKitData extends _FeatureData {
 	types: KitType[];
 	count: number;
@@ -171,6 +175,7 @@ export type Feature =
 	| FeatureDamageModifier
 	| FeatureDomain
 	| FeatureDomainFeature
+	| FeatureDomainPackage
 	| FeatureKit
 	| FeatureKitType
 	| FeatureLanguage

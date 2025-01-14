@@ -64,6 +64,8 @@
     * Add a retainer feature
 * Hero Builder:
   * Auto-create heroes
+  * Conduit piety should only show domains the hero has
+    * This probably requires a new feature type
   * Revenants should have 3 ancestry points if small
 
 ### Library

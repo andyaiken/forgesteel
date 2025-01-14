@@ -151,10 +151,10 @@ export class AbilityLogic {
 					const avg = HeroLogic.calculatePotency(hero, 'average').toString();
 					const strong = HeroLogic.calculatePotency(hero, 'strong').toString();
 					return section
-						.replace(/weak/, weak)
-						.replace(/average/, avg)
-						.replace(/avg/, avg)
-						.replace(/strong/, strong);
+						.replace(/weak,/, `${weak},`)
+						.replace(/average,/, `${avg},`)
+						.replace(/avg,/, `${avg},`)
+						.replace(/strong,/, `${strong},`);
 				}
 
 				return section;

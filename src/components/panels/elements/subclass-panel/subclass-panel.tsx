@@ -18,19 +18,26 @@ interface Props {
 
 export const SubclassPanel = (props: Props) => {
 	try {
+		if (props.mode === PanelMode.Compact) {
+			return (
+				<div className='subclass-panel compact'>
+					<HeaderText>{props.subclass.name || 'Unnamed Subclass'}</HeaderText>
+					<Markdown text={props.subclass.description} />
+				</div>
+			);
+		}
+
 		return (
-			<div className='subclass-panel' id={props.mode === PanelMode.Full ? props.subclass.id : undefined}>
+			<div className='subclass-panel' id={props.subclass.id}>
 				<HeaderText level={1}>{props.subclass.name || 'Unnamed Subclass'}</HeaderText>
 				<Markdown text={props.subclass.description} />
 				{
-					props.mode === PanelMode.Full ?
-						props.subclass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
-							<Space key={lvl.level} direction='vertical'>
-								<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
-								{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
-							</Space>
-						))
-						: null
+					props.subclass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
+						<Space key={lvl.level} direction='vertical'>
+							<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
+							{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
+						</Space>
+					))
 				}
 			</div>
 		);

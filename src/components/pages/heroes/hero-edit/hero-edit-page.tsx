@@ -429,6 +429,7 @@ export const HeroEditPage = (props: Props) => {
 						<DetailsSection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							allSourcebooks={props.sourcebooks}
 							setName={setName}
 							setSettingIDs={setSettingIDs}
 							addFeature={addFeature}
@@ -1058,6 +1059,7 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 interface DetailsSectionProps {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
+	allSourcebooks: Sourcebook[];
 	setName: (value: string) => void;
 	setSettingIDs: (settingIDs: string[]) => void;
 	addFeature: (feature: Feature) => void;
@@ -1084,7 +1086,7 @@ const DetailsSection = (props: DetailsSectionProps) => {
 						style={{ width: '100%' }}
 						placeholder='Select'
 						mode='multiple'
-						options={props.sourcebooks.map(cs => ({ value: cs.id, label: cs.name || 'Unnamed Collection' }))}
+						options={props.allSourcebooks.map(cs => ({ value: cs.id, label: cs.name || 'Unnamed Collection' }))}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 						value={props.hero.settingIDs}
 						onChange={props.setSettingIDs}

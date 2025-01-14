@@ -1,5 +1,6 @@
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '../../../models/ability';
+import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
 import { AbilityLogic } from '../../../logic/ability-logic';
 import { Button } from 'antd';
 import { Collections } from '../../../utils/collections';
@@ -53,10 +54,21 @@ export const PowerRollPanel = (props: Props) => {
 		if (props.hero) {
 			const sections = [];
 			if (autoCalc) {
-				// Show melee and ranged damage only if we have both and they're different
+				// Show melee and ranged damage only if:
+				// * we have both, and they're different
+				// * we have only one, but the ability has melee and ranged distances
+				let showBonuses = false;
 				if (dmgMelee && dmgRanged) {
-					if ((dmgMelee.tier1 !== dmgRanged.tier1) || (dmgMelee.tier2 !== dmgRanged.tier2) || (dmgMelee.tier3 !== dmgRanged.tier3)) {
+					showBonuses = ((dmgMelee.tier1 !== dmgRanged.tier1) || (dmgMelee.tier2 !== dmgRanged.tier2) || (dmgMelee.tier3 !== dmgRanged.tier3));
+				}
+				if (dmgMelee || dmgRanged) {
+					showBonuses = !!props.ability && props.ability.distance.some(d => d.type === AbilityDistanceType.Melee) && props.ability.distance.some(d => d.type === AbilityDistanceType.Ranged);
+				}
+				if (showBonuses) {
+					if (dmgMelee) {
 						sections.push(<Field key='melee' label='Bonus melee damage' value={`+${dmgMelee.tier1} / +${dmgMelee.tier2} / +${dmgMelee.tier3}`} />);
+					}
+					if (dmgRanged) {
 						sections.push(<Field key='ranged' label='Bonus ranged damage' value={`+${dmgRanged.tier1} / +${dmgRanged.tier2} / +${dmgRanged.tier3}`} />);
 					}
 				}

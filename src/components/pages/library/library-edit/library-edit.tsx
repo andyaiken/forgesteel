@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Input, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Input, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, LeftOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureAbility, FeatureMalice } from '../../../../models/feature';
@@ -52,6 +52,7 @@ import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { SubClass } from '../../../../models/subclass';
+import { SubclassPanel } from '../../../panels/elements/subclass-panel/subclass-panel';
 import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Toggle } from '../../../controls/toggle/toggle';
@@ -589,6 +590,64 @@ export const LibraryEditPage = (props: Props) => {
 	const getClassSubclassesEditSection = () => {
 		const heroClass = element as HeroClass;
 
+		const addSubclass = () => {
+			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			classCopy.subclasses.push(FactoryLogic.createSubclass());
+			setElement(classCopy);
+			setDirty(true);
+		};
+
+		const moveSubclass = (subclass: SubClass, direction: 'up' | 'down') => {
+			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const index = classCopy.subclasses.findIndex(sc => sc.id ===  subclass.id);
+			classCopy.subclasses = Collections.move(classCopy.subclasses, index, direction);
+			setElement(classCopy);
+			setDirty(true);
+		};
+
+		const deleteSubclass = (subclass: SubClass) => {
+			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			classCopy.subclasses = classCopy.subclasses.filter(o => o.id !== subclass.id);
+			setElement(classCopy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					heroClass.subclasses.map(sc => (
+						<Expander
+							key={sc.id}
+							title={sc.name || 'Unnamed Subclass'}
+							extra={[
+								<Button key='edit' type='text' icon={<EditOutlined />} onClick={() => setSubElementId(sc.id)} />,
+								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveSubclass(sc, 'up')} />,
+								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveSubclass(sc, 'down')} />,
+								<DangerButton key='delete' mode='icon' onConfirm={() => deleteSubclass(sc)} />
+							]}
+						>
+							<SubclassPanel subclass={sc} mode={PanelMode.Compact} />
+						</Expander>
+					))
+				}
+				{
+					heroClass.subclasses.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No subclasses'
+						/>
+						: null
+				}
+				<Button block={true} onClick={addSubclass}>Add a new subclass</Button>
+			</Space>
+		);
+	};
+
+	const getSubclassEditSection = () => {
+		const heroClass = element as HeroClass;
+		const subclass = heroClass.subclasses.find(sc => sc.id === subElementId) as SubClass;
+
 		const setName = (subclass: SubClass, value: string) => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
 			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
@@ -679,23 +738,9 @@ export const LibraryEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const addSubclass = () => {
-			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
-			classCopy.subclasses.push(FactoryLogic.createSubclass());
-			setElement(classCopy);
-			setDirty(true);
-		};
-
-		const deleteSubclass = (e: SubClass) => {
-			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
-			classCopy.subclasses = classCopy.subclasses.filter(o => o.id !== e.id);
-			setElement(classCopy);
-			setDirty(true);
-		};
-
 		const getSubclassLevels = (subclass: SubClass) => {
 			return subclass.featuresByLevel.map(lvl => (
-				<div key={lvl.level}>
+				<Space key={lvl.level} direction='vertical' style={{ width: '100%' }}>
 					<HeaderText>Level {lvl.level.toString()}</HeaderText>
 					{
 						lvl.features.map(f => (
@@ -726,58 +771,38 @@ export const LibraryEditPage = (props: Props) => {
 							: null
 					}
 					<Button block={true} onClick={() => addFeature(subclass, lvl.level)}>Add a new level {lvl.level} feature</Button>
-				</div>
+				</Space>
 			));
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					heroClass.subclasses.map(sc => (
-						<Expander key={sc.id} title={sc.name || 'Unnamed Subclass'}>
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Subclass',
-										children: (
-											<div>
-												<HeaderText>Name</HeaderText>
-												<Input
-													className={sc.name === '' ? 'input-empty' : ''}
-													placeholder='Name'
-													allowClear={true}
-													value={sc.name}
-													onChange={e => setName(sc, e.target.value)}
-												/>
-												<HeaderText>Description</HeaderText>
-												<MultiLine label='Description' value={sc.description} onChange={value => setDescription(sc, value)} />
-											</div>
-										)
-									},
-									{
-										key: '2',
-										label: 'Levels',
-										children: getSubclassLevels(sc)
-									}
-								]}
-							/>
-							<Divider />
-							<DangerButton onConfirm={() => deleteSubclass(sc)} />
-						</Expander>
-					))
-				}
-				{
-					heroClass.subclasses.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No subclasses'
-						/>
-						: null
-				}
-				<Button block={true} onClick={addSubclass}>Add a new subclass</Button>
-			</Space>
+			<Tabs
+				items={[
+					{
+						key: '1',
+						label: 'Subclass',
+						children: (
+							<div>
+								<HeaderText>Name</HeaderText>
+								<Input
+									className={subclass.name === '' ? 'input-empty' : ''}
+									placeholder='Name'
+									allowClear={true}
+									value={subclass.name}
+									onChange={e => setName(subclass, e.target.value)}
+								/>
+								<HeaderText>Description</HeaderText>
+								<MultiLine label='Description' value={subclass.description} onChange={value => setDescription(subclass, value)} />
+							</div>
+						)
+					},
+					{
+						key: '2',
+						label: 'Levels',
+						children: getSubclassLevels(subclass)
+					}
+				]}
+			/>
 		);
 	};
 
@@ -1351,19 +1376,39 @@ export const LibraryEditPage = (props: Props) => {
 
 	const getEditHeaderSection = () => {
 		switch (kind) {
+			case 'class': {
+				const heroClass = element as HeroClass;
+				if (heroClass.subclasses.length > 0) {
+					return (
+						<div className='edit-header-section'>
+							<Select
+								style={{ width: '100%' }}
+								options={[ null, ...heroClass.subclasses ].map(sc => ({ label: sc ? sc.name || 'Unnamed Subclass' : 'Class', value: sc ? sc.id : '' }))}
+								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+								value={subElementId}
+								onChange={setSubElementId}
+							/>
+						</div>
+					);
+				}
+				break;
+			}
 			case 'monster-group': {
 				const monsterGroup = element as MonsterGroup;
-				return (
-					<div className='edit-header-section'>
-						<Select
-							style={{ width: '100%' }}
-							options={[ null, ...monsterGroup.monsters ].map(m => ({ label: m ? MonsterLogic.getMonsterName(m, monsterGroup) : 'Monster Group', value: m ? m.id : '' }))}
-							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-							value={subElementId}
-							onChange={setSubElementId}
-						/>
-					</div>
-				);
+				if (monsterGroup.monsters.length > 0) {
+					return (
+						<div className='edit-header-section'>
+							<Select
+								style={{ width: '100%' }}
+								options={[ null, ...monsterGroup.monsters ].map(m => ({ label: m ? MonsterLogic.getMonsterName(m, monsterGroup) : 'Monster Group', value: m ? m.id : '' }))}
+								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+								value={subElementId}
+								onChange={setSubElementId}
+							/>
+						</div>
+					);
+				}
+				break;
 			}
 		}
 
@@ -1429,37 +1474,41 @@ export const LibraryEditPage = (props: Props) => {
 					/>
 				);
 			case 'class':
-				return (
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Class',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Details',
-								children: getClassEditSection()
-							},
-							{
-								key: '3',
-								label: 'Levels',
-								children: getClassLevelsEditSection()
-							},
-							{
-								key: '4',
-								label: 'Abilities',
-								children: getClassAbilitiesEditSection()
-							},
-							{
-								key: '5',
-								label: 'Subclasses',
-								children: getClassSubclassesEditSection()
-							}
-						]}
-					/>
-				);
+				if (subElementId === '') {
+					return (
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Class',
+									children: getNameAndDescriptionSection()
+								},
+								{
+									key: '2',
+									label: 'Details',
+									children: getClassEditSection()
+								},
+								{
+									key: '3',
+									label: 'Levels',
+									children: getClassLevelsEditSection()
+								},
+								{
+									key: '4',
+									label: 'Abilities',
+									children: getClassAbilitiesEditSection()
+								},
+								{
+									key: '5',
+									label: 'Subclasses',
+									children: getClassSubclassesEditSection()
+								}
+							]}
+						/>
+					);
+				} else {
+					return getSubclassEditSection();
+				}
 			case 'complication':
 				return (
 					<Tabs
@@ -1620,7 +1669,16 @@ export const LibraryEditPage = (props: Props) => {
 
 	const getPreviewHeaderSection = () => {
 		switch (kind) {
-			case 'monster-group': {
+			case 'class':
+				if (subElementId !== '') {
+					return (
+						<div className='preview-header-section'>
+							<Button icon={<LeftOutlined />} onClick={() => setSubElementId('')}>Back to Class</Button>
+						</div>
+					);
+				}
+				break;
+			case 'monster-group':
 				if (subElementId !== '') {
 					return (
 						<div className='preview-header-section'>
@@ -1628,7 +1686,7 @@ export const LibraryEditPage = (props: Props) => {
 						</div>
 					);
 				}
-			}
+				break;
 		}
 
 		return null;
@@ -1655,11 +1713,19 @@ export const LibraryEditPage = (props: Props) => {
 					</SelectablePanel>
 				);
 			case 'class':
-				return (
-					<SelectablePanel>
-						<ClassPanel heroClass={element as HeroClass} mode={PanelMode.Full} />
-					</SelectablePanel>
-				);
+				if (subElementId === '') {
+					return (
+						<SelectablePanel>
+							<ClassPanel heroClass={element as HeroClass} mode={PanelMode.Full} />
+						</SelectablePanel>
+					);
+				} else {
+					return (
+						<SelectablePanel>
+							<SubclassPanel subclass={element as SubClass} mode={PanelMode.Full} />
+						</SelectablePanel>
+					);
+				}
 			case 'complication':
 				return (
 					<SelectablePanel>
@@ -1697,13 +1763,13 @@ export const LibraryEditPage = (props: Props) => {
 					</SelectablePanel>
 				);
 			case 'monster-group':
-				if (subElementId === '')
+				if (subElementId === '') {
 					return (
 						<SelectablePanel>
 							<MonsterGroupPanel monsterGroup={element as MonsterGroup} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
-				else {
+				} else {
 					const monsterGroup = element as MonsterGroup;
 					const monster = monsterGroup.monsters.find(m => m.id === subElementId) as Monster;
 					return (

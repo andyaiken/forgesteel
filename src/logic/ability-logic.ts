@@ -68,7 +68,8 @@ export class AbilityLogic {
 					const characteristics: Characteristic[] = [];
 					const types: string[] = [];
 
-					if (dmgMelee && !dmgRanged) {
+					const hasMeleeAndRanged = ability.distance.some(d => d.type === AbilityDistanceType.Melee) && ability.distance.some(d => d.type === AbilityDistanceType.Ranged);
+					if (dmgMelee && !dmgRanged && !hasMeleeAndRanged) {
 						switch (tier) {
 							case 1:
 								value += dmgMelee.tier1;
@@ -81,7 +82,7 @@ export class AbilityLogic {
 								break;
 						}
 					}
-					if (!dmgMelee && dmgRanged) {
+					if (!dmgMelee && dmgRanged && !hasMeleeAndRanged) {
 						switch (tier) {
 							case 1:
 								value += dmgRanged.tier1;

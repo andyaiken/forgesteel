@@ -26,7 +26,6 @@ export const KitPanel = (props: Props) => {
 				{
 					props.mode === PanelMode.Full ?
 						<div>
-							<Field label='Type' value={props.kit.type} />
 							{props.kit.armor.length > 0 ? <Field label='Armor' value={props.kit.armor.join(', ')} /> : null}
 							{props.kit.weapon.length > 0 ? <Field label='Weapon' value={props.kit.weapon.join(', ')} /> : null}
 							{props.kit.stamina > 0 ? <Field label='Stamina' value={`+${props.kit.stamina}`} /> : null}

@@ -3,6 +3,7 @@ import { CareerData } from './career-data';
 import { ComplicationData } from './complication-data';
 import { DomainData } from './domain-data';
 import { FactoryLogic } from '../logic/factory-logic';
+import { ItemData } from './item-data';
 import { KitData } from './kit-data';
 import { PerkData } from './perk-data';
 import { SkillList } from '../enums/skill-list';
@@ -322,7 +323,9 @@ export class SourcebookData {
 			TitleData.wantedDeadOrAlive,
 			TitleData.zombieSlayer
 		],
-		items: [],
+		items: [
+			ItemData.blackAshDart
+		],
 		monsterGroups: [
 			dwarfMonsterGroup,
 			elfWodeMonsterGroup,

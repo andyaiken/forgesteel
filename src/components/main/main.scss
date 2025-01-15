@@ -18,7 +18,6 @@
 		align-items: center;
 		justify-content: space-between;
 		gap: 15px;
-		font-size: 10px;
 
 		.main-footer-section {
 			display: flex;
@@ -26,6 +25,7 @@
 
 			&.legal {
 				gap: 10px;
+				font-size: 10px;
 
 				.ds-logo {
 					margin-bottom: -3px;

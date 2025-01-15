@@ -41,7 +41,7 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 					id: 'conduit-1-2',
 					count: 2
 				}),
-				FactoryLogic.feature.createDomainPackage({
+				FactoryLogic.feature.createPackage({
 					id: 'conduit-1-3',
 					name: 'Piety',
 					description: `

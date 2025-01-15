@@ -85,10 +85,6 @@ export interface FeatureDomainFeatureData extends _FeatureData {
 };
 export type FeatureDomainFeature = FeatureOf<FeatureType.DomainFeature, FeatureDomainFeatureData>;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface FeatureDomainPackageData extends _FeatureData { };
-export type FeatureDomainPackage = FeatureOf<FeatureType.DomainPackage, FeatureDomainPackageData>;
-
 export interface FeatureKitData extends _FeatureData {
 	types: KitType[];
 	count: number;
@@ -124,6 +120,10 @@ export interface FeatureMultipleData extends _FeatureData {
 	features: Feature[];
 };
 export type FeatureMultiple = FeatureOf<FeatureType.Multiple, FeatureMultipleData>;
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface FeaturePackageData extends _FeatureData { };
+export type FeaturePackage = FeatureOf<FeatureType.Package, FeaturePackageData>;
 
 export interface FeaturePerkData extends _FeatureData {
 	lists: PerkList[];
@@ -175,13 +175,13 @@ export type Feature =
 	| FeatureDamageModifier
 	| FeatureDomain
 	| FeatureDomainFeature
-	| FeatureDomainPackage
 	| FeatureKit
 	| FeatureKitType
 	| FeatureLanguage
 	| FeatureLanguageChoice
 	| FeatureMalice
 	| FeatureMultiple
+	| FeaturePackage
 	| FeaturePerk
 	| FeatureSize
 	| FeatureSkill

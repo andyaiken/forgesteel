@@ -82,10 +82,13 @@ export class FeatureLogic {
 		return FeatureLogic.simplifyFeatures(features);
 	};
 
-	static getFeaturesFromItem = (item: Item) => {
+	static getFeaturesFromItem = (item: Item, hero: Hero) => {
 		const features: Feature[] = [];
 
-		features.push(...item.features);
+		const heroLevel = hero.class?.level || 1;
+		item.featuresByLevel
+			.filter(lvl => lvl.level <= heroLevel)
+			.forEach(lvl => features.push(...lvl.features));
 
 		return FeatureLogic.simplifyFeatures(features);
 	};
@@ -206,8 +209,6 @@ export class FeatureLogic {
 				return 'This feature allows you to choose a domain.';
 			case FeatureType.DomainFeature:
 				return 'This feature allows you to choose a feature from your domain.';
-			case FeatureType.DomainPackage:
-				return 'This feature collates features from your chosen domains.';
 			case FeatureType.Kit:
 				return 'This feature allows you to choose a kit.';
 			case FeatureType.KitType:
@@ -220,6 +221,8 @@ export class FeatureLogic {
 				return 'This feature grants you a malice effect.';
 			case FeatureType.Multiple:
 				return 'This feature grants you a collection of features.';
+			case FeatureType.Package:
+				return 'This feature collates information.';
 			case FeatureType.Perk:
 				return 'This feature allows you to choose a perk.';
 			case FeatureType.Size:

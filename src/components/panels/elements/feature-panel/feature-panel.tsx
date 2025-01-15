@@ -15,6 +15,7 @@ import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroicResourceBadge } from '../../../controls/heroic-resource-badge/heroic-resource-badge';
 import { KitPanel } from '../kit-panel/kit-panel';
 import { Markdown } from '../../../controls/markdown/markdown';
+import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../perk-panel/perk-panel';
@@ -663,51 +664,64 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
-		const titles = SourcebookLogic.getTitles(props.sourcebooks as Sourcebook[]);
+		const titles = SourcebookLogic.getTitles(props.sourcebooks as Sourcebook[]).filter(t => t.echelon === data.echelon);
 		const sortedTitles = Collections.sort(titles, t => t.name);
-
-		if (sortedTitles.length === 0) {
-			return (
-				<Alert
-					type='info'
-					showIcon={true}
-					message='There are no options to choose for this feature.'
-				/>
-			);
-		}
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<Select
-					style={{ width: '100%' }}
-					className={data.selected.length === 0 ? 'selection-empty' : ''}
-					mode={data.count === 1 ? undefined : 'multiple'}
-					maxCount={data.count === 1 ? undefined : data.count}
-					allowClear={true}
-					placeholder={data.count === 1 ? 'Select a title' : 'Select titles'}
-					options={sortedTitles.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
+				<NumberSpin
+					label='Echelon'
+					min={1}
+					max={4}
+					value={data.echelon}
 					onChange={value => {
-						let ids: string[] = [];
-						if (data.count === 1) {
-							ids = value !== undefined ? [ value as string ] : [];
-						} else {
-							ids = value as string[];
-						}
 						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureTitleChoiceData;
+						dataCopy.echelon = value;
 						dataCopy.selected = [];
-						ids.forEach(id => {
-							const title = titles.find(t => t.id === id);
-							if (title) {
-								dataCopy.selected.push(title);
-							}
-						});
 						if (props.setData) {
 							props.setData(props.feature.id, dataCopy);
 						}
 					}}
 				/>
+				{
+					sortedTitles.length > 0 ?
+						<Select
+							style={{ width: '100%' }}
+							className={data.selected.length === 0 ? 'selection-empty' : ''}
+							mode={data.count === 1 ? undefined : 'multiple'}
+							maxCount={data.count === 1 ? undefined : data.count}
+							allowClear={true}
+							placeholder={data.count === 1 ? 'Select a title' : 'Select titles'}
+							options={sortedTitles.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
+							optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+							value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
+							onChange={value => {
+								let ids: string[] = [];
+								if (data.count === 1) {
+									ids = value !== undefined ? [ value as string ] : [];
+								} else {
+									ids = value as string[];
+								}
+								const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureTitleChoiceData;
+								dataCopy.selected = [];
+								ids.forEach(id => {
+									const title = titles.find(t => t.id === id);
+									if (title) {
+										dataCopy.selected.push(title);
+									}
+								});
+								if (props.setData) {
+									props.setData(props.feature.id, dataCopy);
+								}
+							}}
+						/>
+						:
+						<Alert
+							type='info'
+							showIcon={true}
+							message='There are no options to choose for this feature.'
+						/>
+				}
 				{
 					data.selected.map((title, n) => (
 						<Select
@@ -931,25 +945,6 @@ export const FeaturePanel = (props: Props) => {
 		return null;
 	};
 
-	const getExtraDomainPackage = () => {
-		if (!props.hero) {
-			return null;
-		}
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					HeroLogic.getDomains(props.hero).map(domain => (
-						<div key={domain.id}>
-							<div className='ds-text bold-text'>{domain.name}</div>
-							<Markdown text={domain.piety} />
-						</div>
-					))
-				}
-			</Space>
-		);
-	};
-
 	const getExtraKit = (data: FeatureKitData) => {
 		if (data.selected.length > 0) {
 			return (
@@ -1011,6 +1006,25 @@ export const FeaturePanel = (props: Props) => {
 			<Markdown key={n} text={section} />
 			:
 			<PowerRollPanel key={n} powerRoll={section} test={true} />
+		);
+	};
+
+	const getExtraPackage = () => {
+		if (!props.hero) {
+			return null;
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					HeroLogic.getDomains(props.hero).map(domain => (
+						<div key={domain.id}>
+							<div className='ds-text bold-text'>{domain.name}</div>
+							<Markdown text={domain.piety} />
+						</div>
+					))
+				}
+			</Space>
 		);
 	};
 
@@ -1122,8 +1136,6 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraDomain(props.feature.data);
 			case FeatureType.DomainFeature:
 				return getExtraDomainFeature(props.feature.data);
-			case FeatureType.DomainPackage:
-				return getExtraDomainPackage();
 			case FeatureType.Kit:
 				return getExtraKit(props.feature.data);
 			case FeatureType.KitType:
@@ -1134,6 +1146,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraLanguageChoice(props.feature.data);
 			case FeatureType.Malice:
 				return getExtraMalice(props.feature.data);
+			case FeatureType.Package:
+				return getExtraPackage();
 			case FeatureType.Perk:
 				return getExtraPerk(props.feature.data);
 			case FeatureType.Size:

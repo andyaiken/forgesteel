@@ -33,6 +33,7 @@ import { HeroPage } from '../pages/heroes/hero-view/hero-view-page';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { Item } from '../../models/item';
 import { ItemModal } from '../modals/item/item-modal';
+import { ItemType } from '../../enums/item-type';
 import { Kit } from '../../models/kit';
 import { KitModal } from '../modals/kit/kit-modal';
 import { LibraryEditPage } from '../pages/library/library-edit/library-edit';
@@ -484,7 +485,13 @@ export const Main = (props: Props) => {
 			item = JSON.parse(JSON.stringify(original)) as Item;
 			item.id = Utils.guid();
 		} else {
-			item = FactoryLogic.createItem();
+			item = FactoryLogic.createItem({
+				id: Utils.guid(),
+				name: '',
+				description: '',
+				type: ItemType.Consumable,
+				crafting: FactoryLogic.createProject({})
+			});
 		}
 
 		sourcebook.items.push(item);
@@ -1066,7 +1073,7 @@ export const Main = (props: Props) => {
 								showKit={onSelectKit}
 								showPerk={onSelectPerk}
 								showTitle={onSelectTitle}
-								//showItem={onSelectItem}
+								showItem={onSelectItem}
 								showMonsterGroup={onSelectMonsterGroup}
 								onCreateHomebrew={createHomebrewElement}
 								onImportHomebrew={importHomebrewElement}

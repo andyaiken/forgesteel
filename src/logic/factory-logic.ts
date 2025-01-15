@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureDomainPackage, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
@@ -21,6 +21,7 @@ import { FormatLogic } from './format-logic';
 import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
+import { ItemType } from '../enums/item-type';
 import { KitType } from '../enums/kit';
 import { MonsterFilter } from '../models/monster-filter';
 import { MonsterLogic } from './monster-logic';
@@ -30,6 +31,7 @@ import { Perk } from '../models/perk';
 import { PerkList } from '../enums/perk-list';
 import { Playbook } from '../models/playbook';
 import { PowerRoll } from '../models/power-roll';
+import { Project } from '../models/project';
 import { Size } from '../models/size';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
@@ -232,13 +234,68 @@ export class FactoryLogic {
 		};
 	};
 
-	static createItem = (): Item => {
+	static createItem = (data: {
+		id: string,
+		name: string,
+		description: string,
+		type: ItemType,
+		keywords?: AbilityKeyword[],
+		crafting?: Project,
+		effect?: string,
+		featuresByLevel?: { level: number, features: Feature[] }[]
+	}): Item => {
 		return {
-			id: Utils.guid(),
-			name: '',
-			description: '',
-			features: [],
+			id: data.id,
+			name: data.name,
+			description: data.description,
+			type: data.type,
+			keywords: data.keywords || [],
+			crafting: data.crafting || this.createProject({
+				name: 'Crafting',
+				prerequisites: '',
+				source: '',
+				characteristic: [ Characteristic.Reason ],
+				goal: 50,
+				effect: ''
+			}),
+			effect: data.effect || '',
+			featuresByLevel: data.featuresByLevel || [
+				{
+					level: 1,
+					features: []
+				},
+				{
+					level: 5,
+					features: []
+				},
+				{
+					level: 9,
+					features: []
+				}
+			],
 			count: 1
+		};
+	};
+
+	static createProject = (data: {
+		id?: string,
+		name?: string,
+		description?: string,
+		prerequisites?: string,
+		source?: string,
+		characteristic?: Characteristic[],
+		goal?: number,
+		effect?: string
+	}): Project => {
+		return {
+			id: data.id || Utils.guid(),
+			name: data.name || '',
+			description: data.description || '',
+			itemPrerequisites: data.prerequisites || '',
+			source: data.source || '',
+			characteristic: data.characteristic || [ Characteristic.Reason ],
+			goal: data.goal || 50,
+			effect: data.effect || ''
 		};
 	};
 
@@ -659,15 +716,6 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createDomainPackage: (data: { id: string, name?: string, description?: string }): FeatureDomainPackage => {
-			return {
-				id: data.id,
-				name: data.name || 'Domain Package',
-				description: data.description || '',
-				type: FeatureType.DomainPackage,
-				data: {}
-			};
-		},
 		createKitChoice: (data: { id: string, name?: string, description?: string, types?: KitType[], count?: number }): FeatureKit => {
 			const count = data.count || 1;
 			return {
@@ -740,6 +788,15 @@ export class FactoryLogic {
 				data: {
 					features: data.features
 				}
+			};
+		},
+		createPackage: (data: { id: string, name?: string, description?: string }): FeaturePackage => {
+			return {
+				id: data.id,
+				name: data.name || 'Domain Package',
+				description: data.description || '',
+				type: FeatureType.Package,
+				data: {}
 			};
 		},
 		createPerk: (data: { id: string, name?: string, description?: string, lists?: PerkList[], count?: number }): FeaturePerk => {

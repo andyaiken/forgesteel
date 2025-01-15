@@ -16,8 +16,8 @@ import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel'
 import { Element } from '../../../../models/element';
 import { Format } from '../../../../utils/format';
 import { HeroClass } from '../../../../models/class';
-// import { Item } from '../../../../models/item';
-// import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
+import { Item } from '../../../../models/item';
+import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
 import { MonsterGroup } from '../../../../models/monster';
@@ -49,7 +49,7 @@ interface Props {
  	showKit: (kit: Kit) => void;
  	showPerk: (perk: Perk) => void;
  	showTitle: (title: Title) => void;
- 	// showItem: (item: Item) => void;
+ 	showItem: (item: Item) => void;
  	showMonsterGroup: (monsterGroup: MonsterGroup) => void;
 	onCreateHomebrew: (type: SourcebookElementKind, sourcebookID: string | null) => void;
 	onImportHomebrew: (type: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
@@ -165,16 +165,14 @@ export const LibraryListPage = (props: Props) => {
 			], searchTerm));
 	};
 
-	/*
 	const getItems = () => {
 		return SourcebookLogic
 			.getItems(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
-				...item.features.map(f => f.name)
+				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
 			], searchTerm));
 	};
-	*/
 
 	const getMonsterGroups = () => {
 		return SourcebookLogic
@@ -519,7 +517,6 @@ export const LibraryListPage = (props: Props) => {
 		);
 	};
 
-	/*
 	const getItemsSection = (list: Item[]) => {
 		if (list.length === 0) {
 			return (
@@ -536,7 +533,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(i => {
 						const item = (
-							<SelectablePanel key={i.id} onSelect={() => modals.showItem(i.id)}>
+							<SelectablePanel key={i.id} onSelect={() => props.showItem(i)}>
 								<ItemPanel item={i} />
 							</SelectablePanel>
 						);
@@ -556,7 +553,6 @@ export const LibraryListPage = (props: Props) => {
 			</div>
 		);
 	};
-	*/
 
 	const getMonsterGroupsSection = (list: MonsterGroup[]) => {
 		if (list.length === 0) {
@@ -612,7 +608,7 @@ export const LibraryListPage = (props: Props) => {
 		const kits = getKits();
 		const perks = getPerks();
 		const titles = getTitles();
-		// const items = getItems();
+		const items = getItems();
 		const monsterGroups = getMonsterGroups();
 
 		return (
@@ -783,7 +779,6 @@ export const LibraryListPage = (props: Props) => {
 								),
 								children: getTitlesSection(titles)
 							},
-							/*
 							{
 								key: 'item',
 								label: (
@@ -794,7 +789,6 @@ export const LibraryListPage = (props: Props) => {
 								),
 								children: getItemsSection(items)
 							},
-							*/
 							{
 								key: 'monster-group',
 								label: (

@@ -89,7 +89,7 @@ export class HeroLogic {
 		features.push(...FeatureLogic.getFeaturesFromCustomization(hero));
 
 		hero.state.inventory.forEach(item => {
-			features.push(...FeatureLogic.getFeaturesFromItem(item));
+			features.push(...FeatureLogic.getFeaturesFromItem(item, hero));
 		});
 
 		return Collections.sort(features, f => f.name);

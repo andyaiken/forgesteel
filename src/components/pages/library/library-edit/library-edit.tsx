@@ -1,4 +1,4 @@
-import { Alert, Button, Input, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, LeftOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureAbility, FeatureMalice } from '../../../../models/feature';
@@ -8,6 +8,7 @@ import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook
 import { useMemo, useState } from 'react';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../../../panels/edit/ability-edit-panel/ability-edit-panel';
+import { AbilityKeyword } from '../../../../enums/ability-keyword';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -35,6 +36,7 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
+import { ItemType } from '../../../../enums/item-type';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
 import { MonsterEditPanel } from '../../../panels/edit/monster-edit-panel/monster-edit-panel';
@@ -113,10 +115,10 @@ export const LibraryEditPage = (props: Props) => {
 	};
 
 	const getFeaturesEditSection = () => {
-		const el = element as Ancestry | Career | Complication | Kit | Item;
+		const el = element as Ancestry | Career | Complication | Kit;
 
 		const addFeature = () => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Item;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit;
 			elementCopy.features.push(FactoryLogic.feature.create({
 				id: Utils.guid(),
 				name: '',
@@ -127,7 +129,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeFeature = (feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Item;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit;
 			const index = elementCopy.features.findIndex(f => f.id === feature.id);
 			if (index !== -1) {
 				elementCopy.features[index] = feature;
@@ -137,7 +139,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveFeature = (feature: Feature, direction: 'up' | 'down') => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Item;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit;
 			const index = elementCopy.features.findIndex(f => f.id === feature.id);
 			elementCopy.features = Collections.move(elementCopy.features, index, direction);
 			setElement(elementCopy);
@@ -145,7 +147,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteFeature = (feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit | Item;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit;
 			elementCopy.features = elementCopy.features.filter(f => f.id !== feature.id);
 			setElement(elementCopy);
 			setDirty(true);
@@ -411,11 +413,11 @@ export const LibraryEditPage = (props: Props) => {
 		);
 	};
 
-	const getClassLevelsEditSection = () => {
-		const heroClass = element as HeroClass;
+	const getFeaturesByLevelEditSection = () => {
+		const heroClass = element as HeroClass | Domain | Item;
 
 		const addFeature = (level: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass | Domain | Item;
 			elementCopy.featuresByLevel
 				.filter(lvl => lvl.level === level)
 				.forEach(lvl => {
@@ -430,7 +432,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeFeature = (level: number, feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass | Domain | Item;
 			elementCopy.featuresByLevel
 				.filter(lvl => lvl.level === level)
 				.forEach(lvl => {
@@ -444,7 +446,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveFeature = (level: number, feature: Feature, direction: 'up' | 'down') => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass | Domain | Item;
 			elementCopy.featuresByLevel
 				.filter(lvl => lvl.level === level)
 				.forEach(lvl => {
@@ -456,7 +458,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteFeature = (level: number, feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass | Domain | Item;
 			elementCopy.featuresByLevel
 				.filter(lvl => lvl.level === level)
 				.forEach(lvl => {
@@ -1094,6 +1096,148 @@ export const LibraryEditPage = (props: Props) => {
 		);
 	};
 
+	const getItemDetailsEditSection = () => {
+		const item = element as Item;
+
+		const setType = (value: ItemType) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			elementCopy.type = value;
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		const setKeywords = (value: AbilityKeyword[]) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			elementCopy.keywords = value;
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		const setEffect = (value: string) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			elementCopy.effect = value;
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Item Type</HeaderText>
+				<Segmented
+					block={true}
+					options={[ ItemType.Consumable, ItemType.Trinket, ItemType.Leveled, ItemType.Artifact ]}
+					value={item.type}
+					onChange={setType}
+				/>
+				<HeaderText>Keywords</HeaderText>
+				<Select
+					style={{ width: '100%' }}
+					placeholder='Keywords'
+					mode='multiple'
+					allowClear={true}
+					options={[ AbilityKeyword.Animal, AbilityKeyword.Animapathy, AbilityKeyword.Area, AbilityKeyword.Charge, AbilityKeyword.Chronopathy, AbilityKeyword.Cryokinesis, AbilityKeyword.Earth, AbilityKeyword.Fire, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Metamorphosis, AbilityKeyword.Persistent, AbilityKeyword.Psionic, AbilityKeyword.Pyrokinesis, AbilityKeyword.Ranged, AbilityKeyword.Resistance, AbilityKeyword.Resopathy, AbilityKeyword.Rot, AbilityKeyword.Routine, AbilityKeyword.Strike, AbilityKeyword.Telekinesis, AbilityKeyword.Telepathy, AbilityKeyword.Void, AbilityKeyword.Weapon ].map(option => ({ value: option }))}
+					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+					value={item.keywords}
+					onChange={setKeywords}
+				/>
+				<HeaderText>Effect</HeaderText>
+				<MultiLine label='Effect' value={item.effect} onChange={setEffect} />
+			</Space>
+		);
+	};
+
+	const getCraftingEditSection = () => {
+		const item = element as Item;
+
+		const setPrerequisites = (value: string) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			if (elementCopy.crafting) {
+				elementCopy.crafting.itemPrerequisites = value;
+			}
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		const setSource = (value: string) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			if (elementCopy.crafting) {
+				elementCopy.crafting.source = value;
+			}
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		const setCharacteristic = (value: Characteristic[]) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			if (elementCopy.crafting) {
+				elementCopy.crafting.characteristic = value;
+			}
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		const setGoal = (value: number) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			if (elementCopy.crafting) {
+				elementCopy.crafting.goal = value;
+			}
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		const setEffect = (value: string) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			if (elementCopy.crafting) {
+				elementCopy.crafting.effect = value;
+			}
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
+		if (item.type === ItemType.Artifact) {
+			return (
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='This item can&apos;t be crafted'
+				/>
+			);
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Item Prerequisites</HeaderText>
+				<Input
+					placeholder='Prerequisites'
+					allowClear={true}
+					value={item.crafting.itemPrerequisites}
+					onChange={e => setPrerequisites(e.target.value)}
+				/>
+				<HeaderText>Source</HeaderText>
+				<Input
+					placeholder='Source'
+					allowClear={true}
+					value={item.crafting.source}
+					onChange={e => setSource(e.target.value)}
+				/>
+				<HeaderText>Characteristic</HeaderText>
+				<Select
+					style={{ width: '100%' }}
+					placeholder='Characteristic'
+					mode='multiple'
+					options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
+					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+					value={item.crafting.characteristic}
+					onChange={setCharacteristic}
+				/>
+				<HeaderText>Goal</HeaderText>
+				<NumberSpin min={0} max={500} steps={[ 5 ]} value={item.crafting.goal} onChange={setGoal} />
+				<HeaderText>Effect</HeaderText>
+				<MultiLine label='Effect' value={item.crafting.effect} onChange={setEffect} />
+			</Space>
+		);
+	};
+
 	const getInformationEditSection = () => {
 		const monsterGroup = element as MonsterGroup;
 
@@ -1491,7 +1635,7 @@ export const LibraryEditPage = (props: Props) => {
 								{
 									key: '3',
 									label: 'Levels',
-									children: getClassLevelsEditSection()
+									children: getFeaturesByLevelEditSection()
 								},
 								{
 									key: '4',
@@ -1538,7 +1682,7 @@ export const LibraryEditPage = (props: Props) => {
 							{
 								key: '2',
 								label: 'Levels',
-								children: getClassLevelsEditSection()
+								children: getFeaturesByLevelEditSection()
 							},
 							{
 								key: '3',
@@ -1625,8 +1769,18 @@ export const LibraryEditPage = (props: Props) => {
 							},
 							{
 								key: '2',
-								label: 'Features',
-								children: getFeaturesEditSection()
+								label: 'Details',
+								children: getItemDetailsEditSection()
+							},
+							{
+								key: '3',
+								label: 'Crafting',
+								children: getCraftingEditSection()
+							},
+							{
+								key: '4',
+								label: 'Levels',
+								children: getFeaturesByLevelEditSection()
 							}
 						]}
 					/>
@@ -1799,9 +1953,20 @@ export const LibraryEditPage = (props: Props) => {
 	};
 
 	try {
+		let editing = Format.capitalize(kind!);
+		if ((kind === 'class') && !!subElementId) {
+			editing = 'Subclass';
+		}
+		if (kind === 'monster-group') {
+			editing = 'Monster Group';
+			if (subElementId) {
+				editing = 'Monster';
+			}
+		}
+
 		return (
 			<div className='library-edit-page'>
-				<AppHeader breadcrumbs={[ { label: `${Format.capitalize(kind!)} Builder` } ]} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: `${editing} Builder` } ]} showAbout={props.showAbout}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(sourcebookId!, kind!, element)}>
 						Save Changes
 					</Button>

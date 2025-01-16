@@ -59,8 +59,8 @@ export class AbilityLogic {
 		return value
 			.split(';')
 			.map(section => section.trim())
-			.map(section => {
-				if (section.toLowerCase().includes('damage') || section.toLowerCase().includes('dmg')){
+			.map((section, n) => {
+				if ((n === 0) && section.toLowerCase().includes('damage') || section.toLowerCase().includes('dmg')){
 					// Modify section to calculate characteristic bonuses
 					let value = 0;
 					let sign = '+';

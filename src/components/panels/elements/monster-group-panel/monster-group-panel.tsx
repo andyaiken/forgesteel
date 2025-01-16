@@ -20,7 +20,7 @@ interface Props {
 export const MonsterGroupPanel = (props: Props) => {
 	try {
 		return (
-			<div className='monster-group-panel' id={props.mode === PanelMode.Full ? props.monsterGroup.id : undefined}>
+			<div className={props.mode === PanelMode.Full ? 'monster-group-panel' : 'monster-group-panel compact'} id={props.mode === PanelMode.Full ? props.monsterGroup.id : undefined}>
 				<HeaderText level={1}>{props.monsterGroup.name || 'Unnamed Monster Group'}</HeaderText>
 				<Markdown text={props.monsterGroup.description} />
 				{

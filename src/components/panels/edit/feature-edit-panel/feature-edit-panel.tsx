@@ -1,6 +1,6 @@
 import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -15,6 +15,7 @@ import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
+import { ItemType } from '../../../../enums/item-type';
 import { KitType } from '../../../../enums/kit';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
@@ -128,6 +129,13 @@ export const FeatureEditPanel = (props: Props) => {
 					selected: []
 				};
 				break;
+			case FeatureType.ItemChoice:
+				data = {
+					types: [],
+					count: 1,
+					selected: []
+				};
+				break;
 			case FeatureType.Kit:
 				data = {
 					types: [],
@@ -229,7 +237,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 	const getDataSection = () => {
 		const setCount = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureTitleChoiceData;
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureItemChoiceData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureTitleChoiceData;
 			copy.count = value;
 			setData(copy);
 		};
@@ -291,6 +299,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setField = (value: FeatureField) => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
 			copy.field = value;
+			setData(copy);
+		};
+
+		const setItemTypes = (value: ItemType[]) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureItemChoiceData;
+			copy.types = value;
 			setData(copy);
 		};
 
@@ -683,6 +697,27 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureDomainData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Count</HeaderText>
+						<NumberSpin min={1} value={data.count} onChange={setCount} />
+					</Space>
+				);
+			}
+			case FeatureType.ItemChoice: {
+				const data = feature.data as FeatureItemChoiceData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Types</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							className={data.types.length === 0 ? 'selection-empty' : ''}
+							placeholder='Item types'
+							mode='multiple'
+							allowClear={true}
+							options={[ ItemType.Artifact, ItemType.Consumable, ItemType.Leveled, ItemType.Trinket ].map(option => ({ value: option }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={data.types}
+							onChange={setItemTypes}
+						/>
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
 					</Space>

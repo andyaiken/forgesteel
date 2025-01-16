@@ -5,7 +5,6 @@ import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
 import { Expander } from '../../controls/expander/expander';
 import { FactoryLogic } from '../../../logic/factory-logic';
 import { FeaturePanel } from '../elements/feature-panel/feature-panel';
-import { FeatureType } from '../../../enums/feature-type';
 import { Hero } from '../../../models/hero';
 import { PanelMode } from '../../../enums/panel-mode';
 import { PerkList } from '../../../enums/perk-list';
@@ -50,32 +49,32 @@ export const HeroCustomizePanel = (props: Props) => {
 				<DropdownButton
 					label='Add a new feature'
 					items={[
-						{ key: FeatureType.LanguageChoice, label: <div className='ds-text centered-text'>Language</div> },
-						{ key: FeatureType.Perk, label: <div className='ds-text centered-text'>Perk</div> },
-						{ key: FeatureType.SkillChoice, label: <div className='ds-text centered-text'>Skill</div> },
-						{ key: FeatureType.TitleChoice, label: <div className='ds-text centered-text'>Title</div> }
+						{ key: 'language', label: <div className='ds-text centered-text'>Language</div> },
+						{ key: 'perk', label: <div className='ds-text centered-text'>Perk</div> },
+						{ key: 'skill', label: <div className='ds-text centered-text'>Skill</div> },
+						{ key: 'title', label: <div className='ds-text centered-text'>Title</div> }
 					]}
 					onClick={key => {
 						let feature = null;
 						switch (key) {
-							case FeatureType.LanguageChoice:
+							case 'language':
 								feature = FactoryLogic.feature.createLanguageChoice({
 									id: Utils.guid()
 								});
 								break;
-							case FeatureType.Perk:
+							case 'perk':
 								feature = FactoryLogic.feature.createPerk({
 									id: Utils.guid(),
 									lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ]
 								});
 								break;
-							case FeatureType.SkillChoice:
+							case 'skill':
 								feature = FactoryLogic.feature.createSkillChoice({
 									id: Utils.guid(),
 									listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
 								});
 								break;
-							case FeatureType.TitleChoice:
+							case 'title':
 								feature = FactoryLogic.feature.createTitleChoice({
 									id: Utils.guid(),
 									echelon: 1

@@ -59,6 +59,9 @@ export const AbilityPanel = (props: Props) => {
 
 	try {
 		let className = 'ability-panel';
+		if (props.mode !== PanelMode.Compact) {
+			className += ' compact';
+		}
 		if (disabled) {
 			className += ' disabled';
 		}

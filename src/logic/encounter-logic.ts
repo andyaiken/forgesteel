@@ -40,4 +40,9 @@ export class EncounterLogic {
 	static getMonsterIDs = (encounter: Encounter) => {
 		return Collections.distinct(encounter.groups.flatMap(g => g.slots.flatMap(s => s.monsterID)), item => item);
 	};
+
+	static getMonsterGroups = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
+		const groups = this.getMonsterIDs(encounter).map(id => SourcebookLogic.getMonsterGroup(sourcebooks, id)).filter(group => !!group);
+		return Collections.distinct(groups, item => item.id);
+	};
 }

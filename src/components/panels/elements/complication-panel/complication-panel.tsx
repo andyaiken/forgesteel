@@ -18,7 +18,7 @@ interface Props {
 export const ComplicationPanel = (props: Props) => {
 	try {
 		return (
-			<div className='complication-panel' id={props.mode === PanelMode.Full ? props.complication.id : undefined}>
+			<div className={props.mode === PanelMode.Full ? 'complication-panel' : 'complication-panel compact'} id={props.mode === PanelMode.Full ? props.complication.id : undefined}>
 				<HeaderText level={1}>{props.complication.name || 'Unnamed Complication'}</HeaderText>
 				<Markdown text={props.complication.description} />
 				{

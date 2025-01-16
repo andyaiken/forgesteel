@@ -7,6 +7,8 @@ import { Domain } from './domain';
 import { Element } from './element';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
+import { Item } from './item';
+import { ItemType } from '../enums/item-type';
 import { Kit } from './kit';
 import { KitType } from '../enums/kit';
 import { Perk } from './perk';
@@ -84,6 +86,13 @@ export interface FeatureDomainFeatureData extends _FeatureData {
 	selected: Feature[];
 };
 export type FeatureDomainFeature = FeatureOf<FeatureType.DomainFeature, FeatureDomainFeatureData>;
+
+export interface FeatureItemChoiceData extends _FeatureData {
+	types: ItemType[];
+	count: number;
+	selected: Item[];
+};
+export type FeatureItemChoice = FeatureOf<FeatureType.ItemChoice, FeatureItemChoiceData>;
 
 export interface FeatureKitData extends _FeatureData {
 	types: KitType[];
@@ -175,6 +184,7 @@ export type Feature =
 	| FeatureDamageModifier
 	| FeatureDomain
 	| FeatureDomainFeature
+	| FeatureItemChoice
 	| FeatureKit
 	| FeatureKitType
 	| FeatureLanguage

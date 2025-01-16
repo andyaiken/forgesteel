@@ -1913,7 +1913,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'item':
 				return (
 					<SelectablePanel>
-						<ItemPanel item={element as Item} mode={PanelMode.Full} />
+						<ItemPanel item={element as Item} mode={PanelMode.Full} showCrafting={true} />
 					</SelectablePanel>
 				);
 			case 'monster-group':

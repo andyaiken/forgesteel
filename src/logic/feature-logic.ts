@@ -10,15 +10,15 @@ import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 
 export class FeatureLogic {
-	static getFeaturesFromAncestry = (ancestry: Ancestry) => {
+	static getFeaturesFromAncestry = (ancestry: Ancestry, hero: Hero) => {
 		const features: Feature[] = [];
 
 		features.push(...ancestry.features);
 
-		return FeatureLogic.simplifyFeatures(features);
+		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
-	static getFeaturesFromCulture = (culture: Culture) => {
+	static getFeaturesFromCulture = (culture: Culture, hero: Hero) => {
 		const features: Feature[] = [];
 
 		if (culture.environment) {
@@ -31,18 +31,18 @@ export class FeatureLogic {
 			features.push(culture.upbringing);
 		}
 
-		return FeatureLogic.simplifyFeatures(features);
+		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
-	static getFeaturesFromCareer = (career: Career) => {
+	static getFeaturesFromCareer = (career: Career, hero: Hero) => {
 		const features: Feature[] = [];
 
 		features.push(...career.features);
 
-		return FeatureLogic.simplifyFeatures(features);
+		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
-	static getFeaturesFromClass = (heroClass: HeroClass) => {
+	static getFeaturesFromClass = (heroClass: HeroClass, hero: Hero) => {
 		const features: Feature[] = [];
 
 		const classLevel = heroClass.level;
@@ -63,15 +63,15 @@ export class FeatureLogic {
 				});
 			});
 
-		return FeatureLogic.simplifyFeatures(features);
+		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
-	static getFeaturesFromComplication = (complication: Complication) => {
+	static getFeaturesFromComplication = (complication: Complication, hero: Hero) => {
 		const features: Feature[] = [];
 
 		features.push(...complication.features);
 
-		return FeatureLogic.simplifyFeatures(features);
+		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
 	static getFeaturesFromCustomization = (hero: Hero) => {
@@ -79,7 +79,7 @@ export class FeatureLogic {
 
 		features.push(...hero.features);
 
-		return FeatureLogic.simplifyFeatures(features);
+		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
 	static getFeaturesFromItem = (item: Item, hero: Hero) => {
@@ -90,11 +90,12 @@ export class FeatureLogic {
 			.filter(lvl => lvl.level <= heroLevel)
 			.forEach(lvl => features.push(...lvl.features));
 
-		return FeatureLogic.simplifyFeatures(features);
+		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
-	static simplifyFeatures = (features: Feature[]) => {
+	static simplifyFeatures = (features: Feature[], hero: Hero) => {
 		const list: Feature[] = [];
+		const heroLevel = hero.class?.level || 1;
 
 		const addFeature = (feature: Feature) => {
 			list.push(feature);
@@ -110,6 +111,13 @@ export class FeatureLogic {
 					break;
 				case FeatureType.DomainFeature:
 					feature.data.selected.forEach(addFeature);
+					break;
+				case FeatureType.ItemChoice:
+					feature.data.selected.forEach(item => {
+						item.featuresByLevel
+							.filter(lvl => lvl.level <= heroLevel)
+							.forEach(lvl => lvl.features.forEach(addFeature));
+					});
 					break;
 				case FeatureType.Kit:
 					feature.data.selected.forEach(kit => kit.features.forEach(addFeature));
@@ -141,6 +149,7 @@ export class FeatureLogic {
 			case FeatureType.ClassAbility:
 			case FeatureType.Domain:
 			case FeatureType.DomainFeature:
+			case FeatureType.ItemChoice:
 			case FeatureType.Kit:
 			case FeatureType.LanguageChoice:
 			case FeatureType.Perk:
@@ -169,6 +178,8 @@ export class FeatureLogic {
 			case FeatureType.Domain:
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.DomainFeature:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.ItemChoice:
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.Kit:
 				return feature.data.selected.length >= feature.data.count;
@@ -209,6 +220,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose a domain.';
 			case FeatureType.DomainFeature:
 				return 'This feature allows you to choose a feature from your domain.';
+			case FeatureType.ItemChoice:
+				return 'This feature allows you to choose an item.';
 			case FeatureType.Kit:
 				return 'This feature allows you to choose a kit.';
 			case FeatureType.KitType:

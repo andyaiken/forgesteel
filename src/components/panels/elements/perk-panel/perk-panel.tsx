@@ -16,7 +16,7 @@ interface Props {
 export const PerkPanel = (props: Props) => {
 	try {
 		return (
-			<div key={props.perk.id} className='perk-panel'>
+			<div className={props.mode === PanelMode.Full ? 'perk-panel' : 'perk-panel compact'} id={props.mode === PanelMode.Full ? props.perk.id : undefined}>
 				<FeaturePanel feature={props.perk} hero={props.hero} sourcebooks={props.sourcebooks} mode={props.mode} />
 			</div>
 		);

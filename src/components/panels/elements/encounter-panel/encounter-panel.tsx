@@ -1,6 +1,8 @@
 import { Alert, Divider, Space } from 'antd';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
+import { FeaturePanel } from '../feature-panel/feature-panel';
+import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
@@ -23,9 +25,10 @@ interface Props {
 export const EncounterPanel = (props: Props) => {
 	try {
 		const monsterIDs = EncounterLogic.getMonsterIDs(props.encounter);
+		const monsterGroups = EncounterLogic.getMonsterGroups(props.encounter, props.sourcebooks);
 
 		return (
-			<div className='encounter-panel' id={props.mode === PanelMode.Full ? props.encounter.id : undefined}>
+			<div className={props.mode === PanelMode.Full ? 'encounter-panel' : 'encounter-panel compact'} id={props.mode === PanelMode.Full ? props.encounter.id : undefined}>
 				<HeaderText level={1}>{props.encounter.name || 'Unnamed Encounter'}</HeaderText>
 				<Markdown text={props.encounter.description} />
 				{
@@ -92,6 +95,30 @@ export const EncounterPanel = (props: Props) => {
 										/>
 										: null;
 								})
+							}
+						</Space>
+						: null
+				}
+				{
+					(props.mode === PanelMode.Full) && (monsterGroups.length > 0) ?
+						<Space direction='vertical' style={{ width: '100%' }}>
+							<HeaderText level={1}>Malice</HeaderText>
+							{
+								monsterGroups.map(group => (
+									<div key={group.id}>
+										{
+											group.malice.map(m => (
+												<FeaturePanel
+													key={m.id}
+													feature={m}
+													mode={PanelMode.Full}
+													cost={m.type === FeatureType.Ability ? m.data.ability.cost : m.data.cost}
+													repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
+												/>
+											))
+										}
+									</div>
+								))
 							}
 						</Space>
 						: null

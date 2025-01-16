@@ -14,7 +14,7 @@ interface Props {
 export const ProjectPanel = (props: Props) => {
 	try {
 		return (
-			<div className='project-panel' id={props.mode === PanelMode.Full ? props.project.id : undefined}>
+			<div className={props.mode === PanelMode.Full ? 'project-panel' : 'project-panel compact'} id={props.mode === PanelMode.Full ? props.project.id : undefined}>
 				<HeaderText level={1}>{props.project.name || 'Unnamed Project'}</HeaderText>
 				<Markdown text={props.project.description} />
 				{

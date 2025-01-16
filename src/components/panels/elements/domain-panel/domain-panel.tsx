@@ -19,7 +19,7 @@ interface Props {
 export const DomainPanel = (props: Props) => {
 	try {
 		return (
-			<div className='domain-panel' id={props.mode === PanelMode.Full ? props.domain.id : undefined}>
+			<div className={props.mode === PanelMode.Full ? 'domain-panel' : 'domain-panel compact'} id={props.mode === PanelMode.Full ? props.domain.id : undefined}>
 				<HeaderText level={1}>{props.domain.name || 'Unnamed Domain'}</HeaderText>
 				<Markdown text={props.domain.description} />
 				{

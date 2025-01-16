@@ -5,9 +5,15 @@ import { ArrowUpOutlined } from '@ant-design/icons';
 import { Characteristic } from '../../../enums/characteristic';
 import { ConditionPanel } from '../../panels/condition/condition-panel';
 import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
+import { FactoryLogic } from '../../../logic/factory-logic';
+import { FeatureItemChoiceData } from '../../../models/feature';
+import { FeaturePanel } from '../../panels/elements/feature-panel/feature-panel';
 import { HeroLogic } from '../../../logic/hero-logic';
+import { ItemType } from '../../../enums/item-type';
 import { Modal } from '../modal/modal';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
+import { PanelMode } from '../../../enums/panel-mode';
+import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../models/sourcebook';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
@@ -124,6 +130,16 @@ export const HeroStateModal = (props: Props) => {
 		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
 		copy.state.recoveriesUsed += 1;
 		copy.state.staminaDamage = Math.max(copy.state.staminaDamage - HeroLogic.getRecoveryValue(hero), 0);
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const addItem = (type: ItemType) => {
+		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		copy.state.inventory.push(FactoryLogic.feature.createItemChoice({
+			id: Utils.guid(),
+			types: [ type ]
+		}));
 		setHero(copy);
 		props.onChange(copy);
 	};
@@ -314,9 +330,54 @@ export const HeroStateModal = (props: Props) => {
 		);
 	};
 
+	const getInventorySection = () => {
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					hero.state.inventory.map(f => (
+						<SelectablePanel key={f.id}>
+							<FeaturePanel
+								feature={f}
+								hero={hero}
+								sourcebooks={props.sourcebooks}
+								mode={PanelMode.Full}
+								setData={(featureID, data) => {
+									const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+									copy.state.inventory.forEach(feature => {
+										if (feature.id === featureID) {
+											feature.data = data as FeatureItemChoiceData;
+										}
+									});
+									if (copy.state.inventory.some(feature => feature.data.selected.some(item => item.count === 0))) {
+										copy.state.inventory.forEach(feature => {
+											feature.data.selected = feature.data.selected.filter(item => item.count > 0);
+										});
+										copy.state.inventory = copy.state.inventory.filter(feature => feature.data.selected.length > 0);
+									}
+									props.onChange(copy);
+									setHero(copy);
+								}}
+							/>
+						</SelectablePanel>
+					))
+				}
+				<DropdownButton
+					label='Add a new item'
+					items={[
+						ItemType.Artifact,
+						ItemType.Consumable,
+						ItemType.Leveled,
+						ItemType.Trinket
+					].map(it => ({ key: it, label: <div className='ds-text centered-text'>{it}</div> }))}
+					onClick={key => addItem(key as ItemType)}
+				/>
+			</Space>
+		);
+	};
+
 	const getConditionsSection = () => {
 		return (
-			<div>
+			<Space direction='vertical' style={{ width: '100%' }}>
 				{
 					hero.state.conditions.map(c => (
 						<ConditionPanel
@@ -342,7 +403,7 @@ export const HeroStateModal = (props: Props) => {
 					].map(ct => ({ key: ct, label: <div className='ds-text centered-text'>{ct}</div> }))}
 					onClick={key => addCondition(key as ConditionType)}
 				/>
-			</div>
+			</Space>
 		);
 	};
 
@@ -362,6 +423,11 @@ export const HeroStateModal = (props: Props) => {
 									key: 'stats',
 									label: 'Statistics',
 									children: getStatisticsSection()
+								},
+								{
+									key: 'inventory',
+									label: 'Inventory',
+									children: getInventorySection()
 								},
 								{
 									key: 'conditions',

@@ -20,7 +20,7 @@ interface Props {
 export const KitPanel = (props: Props) => {
 	try {
 		return (
-			<div className='kit-panel' id={props.mode === PanelMode.Full ? props.kit.id : undefined}>
+			<div className={props.mode === PanelMode.Full ? 'kit-panel' : 'kit-panel compact'} id={props.mode === PanelMode.Full ? props.kit.id : undefined}>
 				<HeaderText level={1} tags={props.kit.type === KitType.Standard ? [] : [ props.kit.type ]}>{props.kit.name || 'Unnamed Kit'}</HeaderText>
 				<Markdown text={props.kit.description} />
 				{

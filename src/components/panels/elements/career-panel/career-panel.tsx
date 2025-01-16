@@ -38,7 +38,7 @@ export const CareerPanel = (props: Props) => {
 
 	try {
 		return (
-			<div className='career-panel' id={props.mode === PanelMode.Full ? props.career.id : undefined}>
+			<div className={props.mode === PanelMode.Full ? 'career-panel' : 'career-panel compact'} id={props.mode === PanelMode.Full ? props.career.id : undefined}>
 				<HeaderText level={1}>{props.career.name || 'Unnamed Career'}</HeaderText>
 				<Markdown text={props.career.description} />
 				{

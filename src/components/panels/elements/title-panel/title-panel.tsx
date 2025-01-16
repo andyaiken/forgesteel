@@ -19,7 +19,7 @@ interface Props {
 export const TitlePanel = (props: Props) => {
 	try {
 		return (
-			<div className='title-panel' id={props.mode === PanelMode.Full ? props.title.id : undefined}>
+			<div className={props.mode === PanelMode.Full ? 'title-panel' : 'title-panel compact'} id={props.mode === PanelMode.Full ? props.title.id : undefined}>
 				<HeaderText level={1}>{props.title.name || 'Unnamed Title'}</HeaderText>
 				<Markdown text={props.title.description} />
 				{props.mode === PanelMode.Full ? <Field label='Echelon' value={props.title.echelon} /> : null}

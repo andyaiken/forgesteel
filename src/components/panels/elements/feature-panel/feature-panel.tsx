@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityCostData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { AncestryPanel } from '../ancestry-panel/ancestry-panel';
@@ -13,6 +13,7 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroicResourceBadge } from '../../../controls/heroic-resource-badge/heroic-resource-badge';
+import { ItemPanel } from '../item-panel/item-panel';
 import { KitPanel } from '../kit-panel/kit-panel';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
@@ -383,6 +384,80 @@ export const FeaturePanel = (props: Props) => {
 					data.selected.map(f => (
 						<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 					))
+				}
+			</Space>
+		);
+	};
+
+	const getEditableItemChoice = (data: FeatureItemChoiceData) => {
+		if (!props.hero) {
+			return null;
+		}
+
+		const items = SourcebookLogic.getItems(props.sourcebooks as Sourcebook[])
+			.filter(i => data.types.includes(i.type));
+
+		const sortedItems = Collections.sort(items, i => i.name);
+
+		if (sortedItems.length === 0) {
+			return (
+				<Alert
+					type='info'
+					showIcon={true}
+					message='There are no options to choose for this feature.'
+				/>
+			);
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Select
+					style={{ width: '100%' }}
+					className={data.selected.length === 0 ? 'selection-empty' : ''}
+					mode={data.count === 1 ? undefined : 'multiple'}
+					maxCount={data.count === 1 ? undefined : data.count}
+					allowClear={true}
+					placeholder={data.count === 1 ? 'Select a kit' : 'Select kits'}
+					options={sortedItems.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(i => i.id)}
+					onChange={value => {
+						let ids: string[] = [];
+						if (data.count === 1) {
+							ids = value !== undefined ? [ value as string ] : [];
+						} else {
+							ids = value as string[];
+						}
+						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureItemChoiceData;
+						dataCopy.selected = [];
+						ids.forEach(id => {
+							const item = items.find(i => i.id === id);
+							if (item) {
+								dataCopy.selected.push(item);
+							}
+						});
+						if (props.setData) {
+							props.setData(props.feature.id, dataCopy);
+						}
+					}}
+				/>
+				{
+					data.selected.map((i, n) => {
+						return (
+							<ItemPanel
+								key={i.id}
+								item={i}
+								mode={PanelMode.Full}
+								onChange={item => {
+									const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureItemChoiceData;
+									dataCopy.selected[n] = item;
+									if (props.setData) {
+										props.setData(props.feature.id, dataCopy);
+									}
+								}}
+							/>
+						);
+					})
 				}
 			</Space>
 		);
@@ -773,6 +848,8 @@ export const FeaturePanel = (props: Props) => {
 				return getEditableDomain(props.feature.data);
 			case FeatureType.DomainFeature:
 				return getEditableDomainFeature(props.feature.data);
+			case FeatureType.ItemChoice:
+				return getEditableItemChoice(props.feature.data);
 			case FeatureType.Kit:
 				return getEditableKit(props.feature.data);
 			case FeatureType.LanguageChoice:
@@ -945,6 +1022,26 @@ export const FeaturePanel = (props: Props) => {
 		return null;
 	};
 
+	const getExtraItemChoice = (data: FeatureItemChoiceData) => {
+		if (data.selected.length > 0) {
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					{
+						data.selected.map(i => <ItemPanel key={i.id} item={i} mode={PanelMode.Full} />)
+					}
+				</Space>
+			);
+		}
+
+		if (!props.feature.description) {
+			return (
+				<div className='ds-text'>Choose {data.count > 1 ? data.count : 'an'} {data.types.join(', ')} {data.count > 1 ? 'items' : 'item'}.</div>
+			);
+		}
+
+		return null;
+	};
+
 	const getExtraKit = (data: FeatureKitData) => {
 		if (data.selected.length > 0) {
 			return (
@@ -1006,6 +1103,20 @@ export const FeaturePanel = (props: Props) => {
 			<Markdown key={n} text={section} />
 			:
 			<PowerRollPanel key={n} powerRoll={section} test={true} />
+		);
+	};
+
+	const getExtraMultiple = (data: FeatureMultipleData) => {
+		if (data.features.length === 0) {
+			return null;
+		}
+
+		return (
+			<div>
+				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
+					{data.features.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
+				</Space>
+			</div>
 		);
 	};
 
@@ -1136,6 +1247,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraDomain(props.feature.data);
 			case FeatureType.DomainFeature:
 				return getExtraDomainFeature(props.feature.data);
+			case FeatureType.ItemChoice:
+				return getExtraItemChoice(props.feature.data);
 			case FeatureType.Kit:
 				return getExtraKit(props.feature.data);
 			case FeatureType.KitType:
@@ -1146,6 +1259,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraLanguageChoice(props.feature.data);
 			case FeatureType.Malice:
 				return getExtraMalice(props.feature.data);
+			case FeatureType.Multiple:
+				return getExtraMultiple(props.feature.data);
 			case FeatureType.Package:
 				return getExtraPackage();
 			case FeatureType.Perk:
@@ -1188,6 +1303,7 @@ export const FeaturePanel = (props: Props) => {
 			}
 		}
 
+		/*
 		if (props.feature.type === FeatureType.Multiple) {
 			const data = props.feature.data as FeatureMultipleData;
 			return (
@@ -1197,9 +1313,10 @@ export const FeaturePanel = (props: Props) => {
 				</Space>
 			);
 		}
+		*/
 
 		return (
-			<div className='feature-panel' id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
+			<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
 				<HeaderText ribbon={props.cost === 'signature' ? <Badge>Signature</Badge> : props.cost ? <HeroicResourceBadge value={props.cost} repeatable={props.repeatable} /> : null} tags={tags}>
 					{props.feature.name || 'Unnamed Feature'}
 				</HeaderText>

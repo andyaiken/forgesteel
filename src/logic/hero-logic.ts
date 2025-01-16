@@ -67,29 +67,31 @@ export class HeroLogic {
 		const features: Feature[] = [];
 
 		if (hero.ancestry) {
-			features.push(...FeatureLogic.getFeaturesFromAncestry(hero.ancestry));
+			features.push(...FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero));
 		}
 
 		if (hero.culture) {
-			features.push(...FeatureLogic.getFeaturesFromCulture(hero.culture));
+			features.push(...FeatureLogic.getFeaturesFromCulture(hero.culture, hero));
 		}
 
 		if (hero.career) {
-			features.push(...FeatureLogic.getFeaturesFromCareer(hero.career));
+			features.push(...FeatureLogic.getFeaturesFromCareer(hero.career, hero));
 		}
 
 		if (hero.class) {
-			features.push(...FeatureLogic.getFeaturesFromClass(hero.class));
+			features.push(...FeatureLogic.getFeaturesFromClass(hero.class, hero));
 		}
 
 		if (hero.complication) {
-			features.push(...FeatureLogic.getFeaturesFromComplication(hero.complication));
+			features.push(...FeatureLogic.getFeaturesFromComplication(hero.complication, hero));
 		}
 
 		features.push(...FeatureLogic.getFeaturesFromCustomization(hero));
 
-		hero.state.inventory.forEach(item => {
-			features.push(...FeatureLogic.getFeaturesFromItem(item, hero));
+		hero.state.inventory.forEach(f => {
+			f.data.selected.forEach(item => {
+				features.push(...FeatureLogic.getFeaturesFromItem(item, hero));
+			});
 		});
 
 		return Collections.sort(features, f => f.name);

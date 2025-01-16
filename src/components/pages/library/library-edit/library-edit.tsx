@@ -1495,7 +1495,7 @@ export const LibraryEditPage = (props: Props) => {
 			.filter(m => (m.level === monster.level) && (m.role.type === monster.role.type) && (m.role.organization === monster.role.organization));
 
 		return (
-			<div>
+			<Space direction='vertical' style={{ width: '100%' }}>
 				{
 					monsters.map(m => {
 						const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id);
@@ -1514,7 +1514,7 @@ export const LibraryEditPage = (props: Props) => {
 						);
 					})
 				}
-			</div>
+			</Space>
 		);
 	};
 

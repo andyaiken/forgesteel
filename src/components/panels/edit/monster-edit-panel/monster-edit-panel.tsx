@@ -130,6 +130,13 @@ export const MonsterEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const setWithCaptain = (value: string) => {
+		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+		copy.withCaptain = value;
+		setMonster(copy);
+		props.onChange(copy);
+	};
+
 	const setCharacteristic = (ch: Characteristic, value: number) => {
 		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
 		copy.characteristics
@@ -264,6 +271,8 @@ export const MonsterEditPanel = (props: Props) => {
 									<NumberSpin min={0} value={monster.stability} onChange={setStability} />
 									<HeaderText>Free Strike Damage</HeaderText>
 									<NumberSpin min={0} value={monster.freeStrikeDamage} steps={[ 1, 10 ]} onChange={setFreeStrikeDamage} />
+									<HeaderText>With Captain</HeaderText>
+									<MultiLine label='With Captain' value={monster.withCaptain} onChange={setWithCaptain} />
 								</div>
 							)
 						},

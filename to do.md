@@ -74,7 +74,6 @@
 
 ### Monster Editor
 
-* Allow editing of the 'with captain' field
 * Similar monsters
   * Allow the user to define similarity (currently it's level, role, and organization)
   * Add the ability to 'pull in' stuff from similar monsters

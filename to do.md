@@ -55,8 +55,7 @@
 
 ### Heroes
 
-* Add hero inventory management
-  * Add item data
+* Inventory items need to have their effects + features added to the hero panel
 * Add a way for heroes to be modified
   * Retainers
     * Work out how retainers should be represented
@@ -68,6 +67,7 @@
 
 ### Library
 
+* Ability to add kit weapon / kit armor keywords to homebrew items
 * Set up class editor so you can select a class ability and edit it separately
 * Set up monster group editor so you can select a monster ability and edit it separately
 * It should be possible to create a homebrew subclass / class ability / monster individually

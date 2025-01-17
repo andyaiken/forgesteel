@@ -1,5 +1,6 @@
 import { Ability, AbilityDistance } from '../models/ability';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
+import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { Hero } from '../models/hero';
@@ -7,6 +8,47 @@ import { HeroLogic } from './hero-logic';
 import { PowerRoll } from '../models/power-roll';
 
 export class AbilityLogic {
+	static getKeywords = () => {
+		return [
+			AbilityKeyword.Animal,
+			AbilityKeyword.Animapathy,
+			AbilityKeyword.Area,
+			AbilityKeyword.Arms,
+			AbilityKeyword.Charge,
+			AbilityKeyword.Chronopathy,
+			AbilityKeyword.Cryokinesis,
+			AbilityKeyword.Earth,
+			AbilityKeyword.Feet,
+			AbilityKeyword.Fire,
+			AbilityKeyword.Green,
+			AbilityKeyword.Hands,
+			AbilityKeyword.Head,
+			AbilityKeyword.Implement,
+			AbilityKeyword.Magic,
+			AbilityKeyword.Melee,
+			AbilityKeyword.Metamorphosis,
+			AbilityKeyword.Neck,
+			AbilityKeyword.Oil,
+			AbilityKeyword.Orb,
+			AbilityKeyword.Persistent,
+			AbilityKeyword.Potion,
+			AbilityKeyword.Psionic,
+			AbilityKeyword.Pyrokinesis,
+			AbilityKeyword.Ranged,
+			AbilityKeyword.Resistance,
+			AbilityKeyword.Resopathy,
+			AbilityKeyword.Ring,
+			AbilityKeyword.Rot,
+			AbilityKeyword.Routine,
+			AbilityKeyword.Strike,
+			AbilityKeyword.Telekinesis,
+			AbilityKeyword.Telepathy,
+			AbilityKeyword.Void,
+			AbilityKeyword.Wand,
+			AbilityKeyword.Weapon
+		];
+	};
+
 	static getDistance = (distance: AbilityDistance, hero?: Hero, ability?: Ability) => {
 		if (distance.type === AbilityDistanceType.Self) {
 			return 'Self';

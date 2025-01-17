@@ -1,9 +1,9 @@
+import { ArtifactData, ConsumableData, LeveledArmorData, LeveledImplementData, LeveledOtherData, LeveledWeaponData, TrinketData } from './item-data';
 import { EnvironmentData, OrganizationData, UpbringingData } from './culture-data';
 import { CareerData } from './career-data';
 import { ComplicationData } from './complication-data';
 import { DomainData } from './domain-data';
 import { FactoryLogic } from '../logic/factory-logic';
-import { ItemData } from './item-data';
 import { KitData } from './kit-data';
 import { PerkData } from './perk-data';
 import { SkillList } from '../enums/skill-list';
@@ -324,7 +324,73 @@ export class SourcebookData {
 			TitleData.zombieSlayer
 		],
 		items: [
-			ItemData.blackAshDart
+			ConsumableData.blackAshDart,
+			ConsumableData.bloodEssenceVial,
+			ConsumableData.catapultDust,
+			ConsumableData.giantsBloodFlame,
+			ConsumableData.growthPotion,
+			ConsumableData.healingPotion,
+			ConsumableData.impsTongue,
+			ConsumableData.lachompTooth,
+			ConsumableData.mirrorToken,
+			ConsumableData.pocketHomunculus,
+			ConsumableData.portableCloud,
+			ConsumableData.noxiousCloud,
+			ConsumableData.thunderheadCloud,
+			ConsumableData.veratismo,
+			ConsumableData.snapdragon,
+			TrinketData.colorCloakBlue,
+			TrinketData.colorCloakRed,
+			TrinketData.colorCloakYellow,
+			TrinketData.deadweight,
+			TrinketData.displacingReplacementBracer,
+			TrinketData.divineVine,
+			TrinketData.flameshadeGloves,
+			TrinketData.geckoGloves,
+			TrinketData.gyrotoque,
+			TrinketData.hellchargerHelm,
+			TrinketData.maskOfTheMany,
+			TrinketData.quantumSatchel,
+			TrinketData.unbinderBoots,
+			LeveledArmorData.adaptiveSecondSkin,
+			LeveledArmorData.chainOfTheSeaAndSky,
+			LeveledArmorData.grandScarab,
+			LeveledArmorData.kingsRoar,
+			LeveledArmorData.kuranzoiPrismscale,
+			LeveledArmorData.paperTrappings,
+			LeveledArmorData.shroudedMemory,
+			LeveledArmorData.spinyTurtle,
+			LeveledArmorData.starHunter,
+			LeveledArmorData.telekineticBulwark,
+			LeveledImplementData.abjurersBastion,
+			LeveledImplementData.brittlebreaker,
+			LeveledImplementData.chaldorb,
+			LeveledImplementData.etherFueledVessel,
+			LeveledImplementData.foesenseLenses,
+			LeveledImplementData.geometricManipulator,
+			LeveledImplementData.wordsBecomeWonders,
+			LeveledWeaponData.authoritysEnd,
+			LeveledWeaponData.bladeOfQuintessence,
+			LeveledWeaponData.bladeOfTheLuxuriousFop,
+			LeveledWeaponData.displacer,
+			LeveledWeaponData.executionersBlade,
+			LeveledWeaponData.icemakerMaul,
+			LeveledWeaponData.knifeOfNine,
+			LeveledWeaponData.lanceOfTheSunderedStar,
+			LeveledWeaponData.moltenConstrictor,
+			LeveledWeaponData.onerousBow,
+			LeveledWeaponData.steeltongue,
+			LeveledWeaponData.thirdEyeSeeker,
+			LeveledWeaponData.thunderheadBident,
+			LeveledWeaponData.wetwork,
+			LeveledOtherData.bloodboundBand,
+			LeveledOtherData.bloodyHandWraps,
+			LeveledOtherData.lightningTreads,
+			LeveledOtherData.revengersWrap,
+			LeveledOtherData.thiefOfJoy,
+			ArtifactData.bladeOfAThousandYears,
+			ArtifactData.encepter,
+			ArtifactData.mortalCoil
 		],
 		monsterGroups: [
 			dwarfMonsterGroup,

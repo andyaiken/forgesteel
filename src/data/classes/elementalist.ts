@@ -724,7 +724,6 @@ Until the start of your next turn, the area gains the following effects:
 								keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 								distance: [ FactoryLogic.distance.createMelee() ],
 								target: 'Special',
-								cost: 3,
 								effect: `
 You touch a square containing mundane dirt, stone, or metal and create a 5 wall of the same material, which rises up out of the ground and must include the square you touched.
 Alternatively, you touch a structure made of mundane dirt, stone, or metal that takes up at least 2 squares. You can open a 1-square opening in the structure where you touched it.

@@ -15,6 +15,7 @@ import { FeatureField } from '../../../../enums/feature-field';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
+import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { ItemType } from '../../../../enums/item-type';
 import { KitType } from '../../../../enums/kit-type';
@@ -637,6 +638,7 @@ export const FeatureEditPanel = (props: Props) => {
 							data.modifiers.map((mod, n) => (
 								<Expander key={n} title='Damage Modifier'>
 									<Space direction='vertical' style={{ width: '100%' }}>
+										<HeaderText>{FormatLogic.getDamageModifier(mod)}</HeaderText>
 										<Input
 											className={mod.damageType === '' ? 'input-empty' : ''}
 											placeholder='Damage type'
@@ -652,7 +654,6 @@ export const FeatureEditPanel = (props: Props) => {
 											value={mod.type}
 											onChange={value => setDamageModifierType(data, n, value)}
 										/>
-										<HeaderText>Value</HeaderText>
 										<NumberSpin label='Value' min={0} value={mod.value} onChange={value => setDamageModifierValue(data, n, value)} />
 										<Select
 											style={{ width: '100%' }}
@@ -665,7 +666,7 @@ export const FeatureEditPanel = (props: Props) => {
 										/>
 										<NumberSpin label='Per Level After 1st' min={0} value={mod.valuePerLevel} onChange={value => setDamageModifierValuePerLevel(data, n, value)} />
 										<NumberSpin label='Per Echelon' min={0} value={mod.valuePerEchelon} onChange={value => setDamageModifierValuePerEchelon(data, n, value)} />
-										<DangerButton onConfirm={() => deleteDamageModifier(data, n)} />
+										<DangerButton block={true} onConfirm={() => deleteDamageModifier(data, n)} />
 									</Space>
 								</Expander>
 							))

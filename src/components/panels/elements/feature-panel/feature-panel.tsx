@@ -904,6 +904,10 @@ export const FeaturePanel = (props: Props) => {
 			}
 		}
 
+		if (desc === '') {
+			desc = '+0';
+		}
+
 		return (
 			<Field label={data.field} value={desc} />
 		);

@@ -63,10 +63,7 @@ export const MonsterGroupModal = (props: Props) => {
 								Export
 							</Button>
 						</Popover>
-						<DangerButton
-							disabled={props.monsterGroup.monsters.some(monster => PlaybookLogic.isUsed(props.playbook, monster.id))}
-							onConfirm={props.delete}
-						/>
+						{props.isHomebrew ? <DangerButton disabled={props.monsterGroup.monsters.some(monster => PlaybookLogic.isUsed(props.playbook, monster.id))} onConfirm={props.delete} /> : null}
 					</>
 				}
 				content={

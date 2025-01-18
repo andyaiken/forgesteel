@@ -40,7 +40,7 @@ export const EncounterModal = (props: Props) => {
 								Export
 							</Button>
 						</Popover>
-						<DangerButton onConfirm={props.delete} />
+						<DangerButton block={true} onConfirm={props.delete} />
 					</>
 				}
 				content={

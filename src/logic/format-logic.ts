@@ -61,6 +61,10 @@ export class FormatLogic {
 			}
 		}
 
+		if (desc === '') {
+			desc = '+0';
+		}
+
 		return `${mod.damageType} ${mod.type} ${desc}`;
 	};
 }

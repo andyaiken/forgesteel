@@ -35,7 +35,12 @@ export const AbilityEditPanel = (props: Props) => {
 
 	const setDescription = (value: string) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.description = value;
+		if (value) {
+			copy.description = value;
+		}
+		else {
+			delete copy.description;
+		}
 		setAbility(copy);
 		props.onChange(copy);
 	};
@@ -190,21 +195,36 @@ export const AbilityEditPanel = (props: Props) => {
 
 	const setCost = (value: number | 'signature') => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.cost = value;
+		if (value) {
+			copy.cost = value;
+		}
+		else {
+			delete copy.cost;
+		}
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setPreEffect = (value: string) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.preEffect = value;
+		if (value) {
+			copy.preEffect = value;
+		}
+		else {
+			delete copy.preEffect;
+		}
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setPowerRoll = (value: boolean) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.powerRoll = value ? FactoryLogic.createPowerRoll({ characteristic: [], tier1: '', tier2: '', tier3: '' }) : null;
+		if (value) {
+			copy.powerRoll = FactoryLogic.createPowerRoll({ characteristic: [], tier1: '', tier2: '', tier3: '' })
+		}
+		else {
+			delete copy.powerRoll;
+		}
 		setAbility(copy);
 		props.onChange(copy);
 	};
@@ -247,13 +267,19 @@ export const AbilityEditPanel = (props: Props) => {
 
 	const setEffect = (value: string) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.effect = value;
+		if (value) {
+			copy.effect = value;
+		}
+		else {
+			delete copy.effect;
+		}
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const addAlternateEffect = () => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		copy.alternateEffects = copy.alternateEffects ?? [];
 		copy.alternateEffects.push('');
 		setAbility(copy);
 		props.onChange(copy);
@@ -261,27 +287,33 @@ export const AbilityEditPanel = (props: Props) => {
 
 	const setAlternateEffect = (index: number, value: string) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.alternateEffects[index] = value;
+		copy.alternateEffects![index] = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const moveAlternateEffect = (index: number, direction: 'up' | 'down') => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.alternateEffects = Collections.move(copy.alternateEffects, index, direction);
+		copy.alternateEffects = Collections.move(copy.alternateEffects!, index, direction);
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const deleteAlternateEffect = (index: number) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.alternateEffects.splice(index, 1);
+		if (copy.alternateEffects?.length && copy.alternateEffects.length >= 1) {
+			copy.alternateEffects!.splice(index, 1);
+		}
+		else {
+			delete copy.alternateEffects;
+		}
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const addSpend = () => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		copy.spend = copy.spend ?? [];
 		copy.spend.push({ name: '', effect: '', value: 1, repeatable: false });
 		setAbility(copy);
 		props.onChange(copy);
@@ -289,34 +321,40 @@ export const AbilityEditPanel = (props: Props) => {
 
 	const setSpendValue = (index: number, value: number) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.spend[index].value = value;
+		copy.spend![index].value = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setSpendEffect = (index: number, value: string) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.spend[index].effect = value;
+		copy.spend![index].effect = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const moveSpend = (index: number, direction: 'up' | 'down') => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.spend = Collections.move(copy.spend, index, direction);
+		copy.spend = Collections.move(copy.spend!, index, direction);
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const deleteSpend = (index: number) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.spend.splice(index, 1);
+		if (copy.spend?.length && copy.spend.length >= 1) {
+			copy.spend!.splice(index, 1);
+		}
+		else {
+			delete copy.spend;
+		}
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const addPersistence = () => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		copy.persistence = copy.persistence ?? [];
 		copy.persistence.push({ effect: '', value: 1 });
 		setAbility(copy);
 		props.onChange(copy);
@@ -324,35 +362,45 @@ export const AbilityEditPanel = (props: Props) => {
 
 	const setPersistenceValue = (index: number, value: number) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.persistence[index].value = value;
+		copy.persistence![index].value = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setPersistenceEffect = (index: number, value: string) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.persistence[index].effect = value;
+		copy.persistence![index].effect = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const movePersistence = (index: number, direction: 'up' | 'down') => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.persistence = Collections.move(copy.persistence, index, direction);
+		copy.persistence = Collections.move(copy.persistence!, index, direction);
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const deletePersistence = (index: number) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.persistence.splice(index, 1);
+		if (copy.persistence?.length && copy.persistence.length >= 1) {
+			copy.persistence!.splice(index, 1);
+		}
+		else {
+			delete copy.persistence;
+		}
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setStrained = (value: string) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
-		copy.strained = value;
+		if (value) {
+			copy.strained = value;
+		}
+		else {
+			delete copy.strained;
+		}
 		setAbility(copy);
 		props.onChange(copy);
 	};
@@ -548,7 +596,7 @@ export const AbilityEditPanel = (props: Props) => {
 										ability.cost !== 'signature' ?
 											<>
 												<HeaderText>Cost</HeaderText>
-												<NumberSpin min={0} value={ability.cost} onChange={setCost} />
+												<NumberSpin min={0} value={ability.cost ?? 0} onChange={setCost} />
 											</>
 											: null
 									}
@@ -626,108 +674,99 @@ export const AbilityEditPanel = (props: Props) => {
 									<HeaderText>Alternate Effects</HeaderText>
 									<Space direction='vertical' style={{ width: '100%' }}>
 										{
-											ability.alternateEffects.map((effect, n) => (
-												<Expander
-													key={n}
-													title='Alternate Effect'
-													extra={[
-														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveAlternateEffect(n, 'up')} />,
-														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveAlternateEffect(n, 'down')} />,
-														<DangerButton key='delete' mode='icon' onConfirm={() => deleteAlternateEffect(n)} />
-													]}
-												>
-													<Input
-														className={effect === '' ? 'input-empty' : ''}
-														placeholder='Alternate Effect'
-														allowClear={true}
-														value={effect}
-														onChange={e => setAlternateEffect(n, e.target.value)}
-													/>
-												</Expander>
-											))
-										}
-										{
-											ability.alternateEffects.length === 0 ?
-												<Alert
+											ability.alternateEffects?.length
+												? ability.alternateEffects.map((effect, n) => (
+													<Expander
+														key={n}
+														title='Alternate Effect'
+														extra={[
+															<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveAlternateEffect(n, 'up')} />,
+															<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveAlternateEffect(n, 'down')} />,
+															<DangerButton key='delete' mode='icon' onConfirm={() => deleteAlternateEffect(n)} />
+														]}
+													>
+														<Input
+															className={effect === '' ? 'input-empty' : ''}
+															placeholder='Alternate Effect'
+															allowClear={true}
+															value={effect}
+															onChange={e => setAlternateEffect(n, e.target.value)}
+														/>
+													</Expander>
+												))
+												: <Alert
 													type='warning'
 													showIcon={true}
 													message='No alternate effects'
 												/>
-												: null
 										}
 										<Button block={true} onClick={addAlternateEffect}>Add an alternate effect</Button>
 									</Space>
 									<HeaderText>Spend</HeaderText>
 									<Space direction='vertical' style={{ width: '100%' }}>
 										{
-											ability.spend.map((spend, n) => (
-												<Expander
-													key={n}
-													title='Spend Effect'
-													extra={[
-														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveSpend(n, 'up')} />,
-														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveSpend(n, 'down')} />,
-														<DangerButton key='delete' mode='icon' onConfirm={() => deleteSpend(n)} />
-													]}
-												>
-													<Space direction='vertical' style={{ width: '100%' }}>
-														<Input
-															className={spend.effect === '' ? 'input-empty' : ''}
-															placeholder='Spend effect'
-															allowClear={true}
-															value={spend.effect}
-															onChange={e => setSpendEffect(n, e.target.value)}
-														/>
-														<NumberSpin min={0} value={spend.value} onChange={value => setSpendValue(n, value)} />
-													</Space>
-												</Expander>
-											))
-										}
-										{
-											ability.spend.length === 0 ?
-												<Alert
+											ability.spend?.length
+												? ability.spend.map((spend, n) => (
+													<Expander
+														key={n}
+														title='Spend Effect'
+														extra={[
+															<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveSpend(n, 'up')} />,
+															<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveSpend(n, 'down')} />,
+															<DangerButton key='delete' mode='icon' onConfirm={() => deleteSpend(n)} />
+														]}
+													>
+														<Space direction='vertical' style={{ width: '100%' }}>
+															<Input
+																className={spend.effect === '' ? 'input-empty' : ''}
+																placeholder='Spend effect'
+																allowClear={true}
+																value={spend.effect}
+																onChange={e => setSpendEffect(n, e.target.value)}
+															/>
+															<NumberSpin min={0} value={spend.value} onChange={value => setSpendValue(n, value)} />
+														</Space>
+													</Expander>
+												))
+												: <Alert
 													type='warning'
 													showIcon={true}
 													message='No spend effects'
 												/>
-												: null
 										}
 										<Button block={true} onClick={addSpend}>Add a spend effect</Button>
 									</Space>
 									<HeaderText>Persistence</HeaderText>
 									<Space direction='vertical' style={{ width: '100%' }}>
 										{
-											ability.persistence.map((persist, n) => (
-												<Expander
-													key={n}
-													title='Persistence Effect'
-													extra={[
-														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => movePersistence(n, 'up')} />,
-														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => movePersistence(n, 'down')} />,
-														<DangerButton key='delete' mode='icon' onConfirm={() => deletePersistence(n)} />
-													]}
-												>
-													<Space direction='vertical' style={{ width: '100%' }}>
-														<Input
-															className={persist.effect === '' ? 'input-empty' : ''}
-															placeholder='Persistence Effect'
-															allowClear={true}
-															value={persist.effect}
-															onChange={e => setPersistenceEffect(n, e.target.value)}
-														/>
-														<NumberSpin min={0} value={persist.value} onChange={value => setPersistenceValue(n, value)} />
-													</Space>
-												</Expander>
-											))
-										}
-										{
-											ability.persistence.length === 0 ?
-												<Alert
+											ability.persistence?.length
+												? ability.persistence.map((persist, n) => (
+													<Expander
+														key={n}
+														title='Persistence Effect'
+														extra={[
+															<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => movePersistence(n, 'up')} />,
+															<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => movePersistence(n, 'down')} />,
+															<DangerButton key='delete' mode='icon' onConfirm={() => deletePersistence(n)} />
+														]}
+													>
+														<Space direction='vertical' style={{ width: '100%' }}>
+															<Input
+																className={persist.effect === '' ? 'input-empty' : ''}
+																placeholder='Persistence Effect'
+																allowClear={true}
+																value={persist.effect}
+																onChange={e => setPersistenceEffect(n, e.target.value)}
+															/>
+															<NumberSpin min={0} value={persist.value} onChange={value => setPersistenceValue(n, value)} />
+														</Space>
+													</Expander>
+												))
+												: <Alert
 													type='warning'
 													showIcon={true}
 													message='No persistence effects'
 												/>
-												: null
 										}
 										<Button block={true} onClick={addPersistence}>Add a persistence effect</Button>
 										<HeaderText>Strained</HeaderText>

@@ -1,7 +1,7 @@
 import { Utils } from '../../../utils/utils';
 
 interface Props {
-	text: string;
+	text: string | undefined;
 	useSpan?: boolean;
 }
 

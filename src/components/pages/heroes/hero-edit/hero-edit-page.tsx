@@ -49,11 +49,11 @@ type HeroTab = 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'd
 
 const matchElement = (element: Element, searchTerm: string) => {
 	const name = element.name.toLowerCase();
-	const desc = element.description.toLowerCase();
+	const desc = element.description?.toLowerCase();
 	return searchTerm
 		.toLowerCase()
 		.split(' ')
-		.some(token => name.includes(token) || desc.includes(token));
+		.some(token => name.includes(token) || desc?.includes(token));
 };
 
 interface Props {

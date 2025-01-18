@@ -23,17 +23,17 @@ export interface AbilityDistance {
 
 export interface Ability extends Element {
 	type: AbilityType;
-	keywords: AbilityKeyword[];
+	keywords?: AbilityKeyword[];
 	distance: AbilityDistance[];
 	target: string; // Creature, Object, Enemy, Ally, Self, All
-	cost: number | 'signature';
-	minLevel: number;
-	preEffect: string;
-	powerRoll: PowerRoll | null,
-	test: PowerRoll | null,
-	effect: string;
-	strained: string;
-	alternateEffects: string[];
-	spend: { name: string, value: number, repeatable: boolean, effect: string }[];
-	persistence: { value: number, effect: string }[];
+	cost?: number | 'signature';
+	minLevel?: number;
+	preEffect?: string;
+	powerRoll?: PowerRoll,
+	test?: PowerRoll,
+	effect?: string;
+	strained?: string;
+	alternateEffects?: string[];
+	spend?: { name?: string, value: number, repeatable?: boolean, effect: string }[];
+	persistence?: { value: number, effect: string }[];
 }

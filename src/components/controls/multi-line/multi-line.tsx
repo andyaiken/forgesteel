@@ -5,7 +5,7 @@ import './multi-line.scss';
 
 interface Props {
 	label: string;
-	value: string;
+	value?: string;
 	onChange: (value: string) => void;
 }
 

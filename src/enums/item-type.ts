@@ -1,6 +1,6 @@
 export enum ItemType {
 	Artifact = 'Artifact',
-	Consumable = 'Consumable',
-	Leveled = 'Leveled',
+	Consumable = 'Consumable Item',
+	Leveled = 'Leveled Item',
 	Trinket = 'Trinket'
 };

@@ -1303,18 +1303,6 @@ export const FeaturePanel = (props: Props) => {
 			}
 		}
 
-		/*
-		if (props.feature.type === FeatureType.Multiple) {
-			const data = props.feature.data as FeatureMultipleData;
-			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					{tags.length > 0 ? <HeaderText tags={tags}>{props.feature.name || 'Unnamed Perk'}</HeaderText> : null}
-					{data.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
-				</Space>
-			);
-		}
-		*/
-
 		return (
 			<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
 				<HeaderText ribbon={props.cost === 'signature' ? <Badge>Signature</Badge> : props.cost ? <HeroicResourceBadge value={props.cost} repeatable={props.repeatable} /> : null} tags={tags}>

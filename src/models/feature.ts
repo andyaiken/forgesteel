@@ -10,7 +10,7 @@ import { FeatureType } from '../enums/feature-type';
 import { Item } from './item';
 import { ItemType } from '../enums/item-type';
 import { Kit } from './kit';
-import { KitType } from '../enums/kit';
+import { KitType } from '../enums/kit-type';
 import { Perk } from './perk';
 import { PerkList } from '../enums/perk-list';
 import { PowerRoll } from './power-roll';

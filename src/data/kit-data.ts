@@ -1,8 +1,10 @@
-import { KitArmor, KitType, KitWeapon } from '../enums/kit';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
 import { FactoryLogic } from '../logic/factory-logic';
 import { Kit } from '../models/kit';
+import { KitArmor } from '../enums/kit-armor';
+import { KitType } from '../enums/kit-type';
+import { KitWeapon } from '../enums/kit-weapon';
 
 export class KitData {
 	static arcaneArcher: Kit = {

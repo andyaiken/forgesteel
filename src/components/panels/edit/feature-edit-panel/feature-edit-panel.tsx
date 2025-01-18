@@ -17,7 +17,7 @@ import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { ItemType } from '../../../../enums/item-type';
-import { KitType } from '../../../../enums/kit';
+import { KitType } from '../../../../enums/kit-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Perk } from '../../../../models/perk';

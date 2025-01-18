@@ -5,6 +5,8 @@ import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { Hero } from '../models/hero';
 import { HeroLogic } from './hero-logic';
+import { KitArmor } from '../enums/kit-armor';
+import { KitWeapon } from '../enums/kit-weapon';
 import { PowerRoll } from '../models/power-roll';
 
 export class AbilityLogic {
@@ -45,8 +47,20 @@ export class AbilityLogic {
 			AbilityKeyword.Telepathy,
 			AbilityKeyword.Void,
 			AbilityKeyword.Wand,
-			AbilityKeyword.Weapon
-		];
+			AbilityKeyword.Weapon,
+			KitArmor.Heavy,
+			KitArmor.Light,
+			KitArmor.Medium,
+			KitArmor.Shield,
+			KitWeapon.Bow,
+			KitWeapon.Ensnaring,
+			KitWeapon.Heavy,
+			KitWeapon.Light,
+			KitWeapon.Medium,
+			KitWeapon.Polearm,
+			KitWeapon.Unarmed,
+			KitWeapon.Whip
+		].sort();
 	};
 
 	static getDistance = (distance: AbilityDistance, hero?: Hero, ability?: Ability) => {

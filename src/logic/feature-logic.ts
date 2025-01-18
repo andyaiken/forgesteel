@@ -3,6 +3,7 @@ import { Career } from '../models/career';
 import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
+import { FactoryLogic } from './factory-logic';
 import type { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
@@ -84,6 +85,12 @@ export class FeatureLogic {
 
 	static getFeaturesFromItem = (item: Item, hero: Hero) => {
 		const features: Feature[] = [];
+
+		features.push(FactoryLogic.feature.create({
+			id: item.id,
+			name: item.count === 1 ? item.name : `${item.name} x${item.count}`,
+			description: item.effect || item.description
+		}));
 
 		const heroLevel = hero.class?.level || 1;
 		item.featuresByLevel

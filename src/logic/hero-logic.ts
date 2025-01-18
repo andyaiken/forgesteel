@@ -12,7 +12,7 @@ import { FeatureLogic } from './feature-logic';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 import { Kit } from '../models/kit';
-import { KitType } from '../enums/kit';
+import { KitType } from '../enums/kit-type';
 import { Language } from '../models/language';
 import { Size } from '../models/size';
 import { Skill } from '../models/skill';

@@ -1,9 +1,10 @@
-import { KitArmor, KitWeapon } from '../enums/kit';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
 import { FactoryLogic } from '../logic/factory-logic';
 import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
+import { KitArmor } from '../enums/kit-armor';
+import { KitWeapon } from '../enums/kit-weapon';
 
 export class ConsumableData {
 	static blackAshDart: Item = FactoryLogic.createItem({

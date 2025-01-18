@@ -5,6 +5,7 @@ import { Complication } from '../models/complication';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FactoryLogic } from '../logic/factory-logic';
 import { FeatureField } from '../enums/feature-field';
+import { ItemType } from '../enums/item-type';
 import { SkillList } from '../enums/skill-list';
 
 export class ComplicationData {
@@ -44,10 +45,11 @@ export class ComplicationData {
 		name: 'Amnesia',
 		description: 'You have no memory of your past before the … incident. Hopefully you’ll regain your memory soon and find out what the incident was. In the meantime, you need friends, so you’re not alone when your past catches up to you.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createItemChoice({
 				id: 'comp-amnesia-b',
 				name: 'Amnesia Benefit',
-				description: 'You have a supernatural possession—a 1st echelon trinket. It might have some connection with your former life.'
+				description: 'You have a supernatural possession — a 1st echelon trinket. It might have some connection with your former life.',
+				types: [ ItemType.Trinket ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-amnesia-d',
@@ -124,10 +126,11 @@ export class ComplicationData {
 		name: 'Betrothed',
 		description: 'Your parents made a deal, and as part of that deal, you’re supposed to marry someone—or something—you didn’t choose. But no one is going to tell you what to do! They’ll be sorry when you run away and become a mighty adventurer.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createItemChoice({
 				id: 'comp-betrothed-b',
 				name: 'Betrothed Benefit',
-				description: 'You escaped with a dowry present: a 1st echelon trinket of your choice.'
+				description: 'You escaped with a dowry present: a 1st echelon trinket of your choice.',
+				types: [ ItemType.Trinket ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-betrothed-d',
@@ -360,10 +363,9 @@ Your knowledge of your chosen field increases. When you finish this project, the
 		name: 'Cursed Weapon',
 		description: 'When you were young, you were given, or you found, a magic weapon. Since then, it’s stayed by your side, possibly even inspiring you to lead the life of a hero—but the weapon is cursed.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createItemChoice({
 				id: 'comp-cursedWeapon-b',
-				name: 'Cursed Weapon Benefit',
-				description: 'You gain a leveled weapon of your choice.'
+				types: [ ItemType.Leveled ]
 			}),
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-cursedWeapon-d',
@@ -1585,10 +1587,11 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Secret Twin',
 		description: 'You have an identical twin—either a sibling or someone who looks so much like you that none would ever know the difference. They had a life that you coveted, or they had obligations that couldn’t go unfulfilled. So when they went missing, you stepped in and started living their life. Most folks are none the wiser.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createItemChoice({
 				id: 'comp-secretTwin-b',
 				name: 'Secret Twin Benefit',
-				description: 'You claimed something that belonged to your twin as your own—a signature treasure that is now all yours. You gain a 1st echelon trinket of your choice. This treasure has their name or sigil written, sewn, or emblazoned on it somewhere.'
+				description: 'You claimed something that belonged to your twin as your own—a signature treasure that is now all yours. You gain a 1st echelon trinket of your choice. This treasure has their name or sigil written, sewn, or emblazoned on it somewhere.',
+				types: [ ItemType.Trinket ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-secretTwin-d',
@@ -1684,10 +1687,11 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.createLanguageChoice({
 				id: 'comp-shatteredLegacy-lang'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createItemChoice({
 				id: 'comp-shatteredLegacy-b',
 				name: 'Shattered Legacy Benefit',
-				description: 'You gain a leveled item of your choice.'
+				description: 'You gain a leveled item of your choice.',
+				types: [ ItemType.Leveled ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-shatteredLegacy-d',

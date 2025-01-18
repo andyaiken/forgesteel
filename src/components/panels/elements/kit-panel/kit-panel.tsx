@@ -3,7 +3,7 @@ import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Kit } from '../../../../models/kit';
-import { KitType } from '../../../../enums/kit';
+import { KitType } from '../../../../enums/kit-type';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';

@@ -42,3 +42,18 @@ If you would like to contribute, you can:
 
 * Add feature requests and raise bug reports [here](https://github.com/andyaiken/forgesteel/issues)
 * Fork the repository, make your changes to the code, and raise a pull request
+
+To run the app locally, run the following commands:
+
+```
+npm install
+npm run dev
+```
+
+Once built, the app should then be available at `http://localhost:5173/forgesteel/`.
+
+When you've finished with your changes, make sure to appease the linter:
+
+```
+npm run lint
+```

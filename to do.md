@@ -55,7 +55,6 @@
 
 ### Heroes
 
-* Inventory items need to have their effects + features added to the hero panel
 * Add a way for heroes to be modified
   * Retainers
     * Work out how retainers should be represented

@@ -442,19 +442,13 @@ export const FeaturePanel = (props: Props) => {
 					}}
 				/>
 				{
-					data.selected.map((i, n) => {
+					data.selected.map(i => {
 						return (
 							<ItemPanel
 								key={i.id}
 								item={i}
 								mode={PanelMode.Full}
-								onChange={item => {
-									const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureItemChoiceData;
-									dataCopy.selected[n] = item;
-									if (props.setData) {
-										props.setData(props.feature.id, dataCopy);
-									}
-								}}
+								showCrafting={false}
 							/>
 						);
 					})

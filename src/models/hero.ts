@@ -1,11 +1,12 @@
 import { ConditionEndType, ConditionType } from '../enums/condition-type';
-import { Feature, FeatureItemChoice } from './feature';
 import { Ancestry } from './ancestry';
 import { Career } from './career';
 import { Characteristic } from '../enums/characteristic';
 import { Complication } from './complication';
 import { Culture } from './culture';
+import { Feature } from './feature';
 import { HeroClass } from './class';
+import { Item } from './item';
 
 export interface Condition {
 	id: string;
@@ -26,7 +27,7 @@ export interface HeroState {
 	wealth: number;
 	projectPoints: number;
 	conditions: Condition[];
-	inventory: FeatureItemChoice[];
+	inventory: Item[];
 }
 
 export interface AbilityCustomization {

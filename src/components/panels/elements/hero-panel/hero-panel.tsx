@@ -336,7 +336,7 @@ export const HeroPanel = (props: Props) => {
 							<Statistic title='Hero Tokens' value={props.hero.state.heroTokens} />
 						</div>
 						<div className='characteristic'>
-							<Statistic title='Renown' value={props.hero.state.renown} />
+							<Statistic title='Renown' value={HeroLogic.getRenown(props.hero)} />
 						</div>
 						<div className='characteristic'>
 							<Statistic title='Wealth' value={props.hero.state.wealth} />

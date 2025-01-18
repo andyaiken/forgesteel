@@ -1,19 +1,19 @@
-import { Alert, Button, Divider, Flex, Space, Tabs } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, Space, Tabs } from 'antd';
+import { ArrowUpOutlined, CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Condition, Hero } from '../../../models/hero';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
-import { ArrowUpOutlined } from '@ant-design/icons';
 import { Characteristic } from '../../../enums/characteristic';
+import { Collections } from '../../../utils/collections';
 import { ConditionPanel } from '../../panels/condition/condition-panel';
+import { DangerButton } from '../../controls/danger-button/danger-button';
 import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureItemChoiceData } from '../../../models/feature';
-import { FeaturePanel } from '../../panels/elements/feature-panel/feature-panel';
+import { Expander } from '../../controls/expander/expander';
 import { HeroLogic } from '../../../logic/hero-logic';
-import { ItemType } from '../../../enums/item-type';
+import { InventoryPanel } from '../../panels/inventory-panel/inventory-panel';
+import { Item } from '../../../models/item';
 import { Modal } from '../modal/modal';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
-import { PanelMode } from '../../../enums/panel-mode';
-import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
+import { ShopModal } from '../shop/shop-modal';
 import { Sourcebook } from '../../../models/sourcebook';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
@@ -30,6 +30,7 @@ interface Props {
 
 export const HeroStateModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(props.hero)));
+	const [ shopVisible, setShopVisible ] = useState<boolean>(false);
 
 	const setHeroicResource = (value: number) => {
 		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
@@ -134,13 +135,11 @@ export const HeroStateModal = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const addItem = (type: ItemType) => {
+	const addItem = (item: Item) => {
 		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.inventory.push(FactoryLogic.feature.createItemChoice({
-			id: Utils.guid(),
-			types: [ type ]
-		}));
+		copy.state.inventory.push(item);
 		setHero(copy);
+		setShopVisible(false);
 		props.onChange(copy);
 	};
 
@@ -331,46 +330,65 @@ export const HeroStateModal = (props: Props) => {
 	};
 
 	const getInventorySection = () => {
+		const changeItem = (item: Item) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const index = copy.state.inventory.findIndex(i => i.id === item.id);
+			copy.state.inventory[index] = item;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const moveItem = (item: Item, direction: 'up' | 'down') => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const index = copy.state.inventory.findIndex(i => i.id ===  item.id);
+			copy.state.inventory = Collections.move(copy.state.inventory, index, direction);
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const deleteItem = (item: Item) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.inventory = copy.state.inventory.filter(i => i.id !== item.id);
+			setHero(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
-					hero.state.inventory.map(f => (
-						<SelectablePanel key={f.id}>
-							<FeaturePanel
-								feature={f}
-								hero={hero}
-								sourcebooks={props.sourcebooks}
-								mode={PanelMode.Full}
-								setData={(featureID, data) => {
-									const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-									copy.state.inventory.forEach(feature => {
-										if (feature.id === featureID) {
-											feature.data = data as FeatureItemChoiceData;
-										}
-									});
-									if (copy.state.inventory.some(feature => feature.data.selected.some(item => item.count === 0))) {
-										copy.state.inventory.forEach(feature => {
-											feature.data.selected = feature.data.selected.filter(item => item.count > 0);
-										});
-										copy.state.inventory = copy.state.inventory.filter(feature => feature.data.selected.length > 0);
-									}
-									props.onChange(copy);
-									setHero(copy);
-								}}
+					hero.state.inventory.map(item => (
+						<Expander
+							key={item.id}
+							title={item.count === 1 ? item.name : `${item.name} (x${item.count})`}
+							extra={[
+								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveItem(item, 'up')} />,
+								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveItem(item, 'down')} />,
+								<DangerButton key='delete' mode='icon' onConfirm={() => deleteItem(item)} />
+							]}
+						>
+							<InventoryPanel
+								item={item}
+								onChange={changeItem}
 							/>
-						</SelectablePanel>
+						</Expander>
 					))
 				}
-				<DropdownButton
-					label='Add a new item'
-					items={[
-						ItemType.Artifact,
-						ItemType.Consumable,
-						ItemType.Leveled,
-						ItemType.Trinket
-					].map(it => ({ key: it, label: <div className='ds-text centered-text'>{it}</div> }))}
-					onClick={key => addItem(key as ItemType)}
-				/>
+				{
+					hero.state.inventory.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='Your inventory is empty.'
+						/>
+						: null
+				}
+				<Button block={true} onClick={() => setShopVisible(true)}>Add a new item</Button>
+				<Drawer open={shopVisible} onClose={() => setShopVisible(false)} closeIcon={null} width='500px'>
+					<ShopModal
+						sourcebooks={props.sourcebooks}
+						onSelect={addItem}
+					/>
+				</Drawer>
 			</Space>
 		);
 	};

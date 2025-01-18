@@ -88,10 +88,8 @@ export class HeroLogic {
 
 		features.push(...FeatureLogic.getFeaturesFromCustomization(hero));
 
-		hero.state.inventory.forEach(f => {
-			f.data.selected.forEach(item => {
-				features.push(...FeatureLogic.getFeaturesFromItem(item, hero));
-			});
+		hero.state.inventory.forEach(item => {
+			features.push(...FeatureLogic.getFeaturesFromItem(item, hero));
 		});
 
 		return Collections.sort(features, f => f.name);
@@ -634,6 +632,25 @@ Complex or time-consuming tests might require an action if made in combat—or c
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data as FeatureBonusData)
 			.filter(data => data.field === FeatureField.Disengage)
+			.forEach(data => {
+				value += data.value;
+				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
+				if (hero.class) {
+					value += data.valuePerLevel * (hero.class.level - 1);
+					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
+				}
+			});
+
+		return value;
+	};
+
+	static getRenown = (hero: Hero) => {
+		let value = 0;
+
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.Bonus)
+			.map(f => f.data as FeatureBonusData)
+			.filter(data => data.field === FeatureField.Renown)
 			.forEach(data => {
 				value += data.value;
 				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;

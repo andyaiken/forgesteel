@@ -361,9 +361,9 @@ export const HeroStateModal = (props: Props) => {
 							key={item.id}
 							title={item.count === 1 ? item.name : `${item.name} (x${item.count})`}
 							extra={[
-								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveItem(item, 'up')} />,
-								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveItem(item, 'down')} />,
-								<DangerButton key='delete' mode='icon' onConfirm={() => deleteItem(item)} />
+								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveItem(item, 'up'); }} />,
+								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveItem(item, 'down'); }} />,
+								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteItem(item); }} />
 							]}
 						>
 							<InventoryPanel

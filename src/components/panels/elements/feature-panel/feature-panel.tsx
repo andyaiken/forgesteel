@@ -1300,7 +1300,7 @@ export const FeaturePanel = (props: Props) => {
 		return (
 			<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
 				<HeaderText ribbon={props.cost === 'signature' ? <Badge>Signature</Badge> : props.cost ? <HeroicResourceBadge value={props.cost} repeatable={props.repeatable} /> : null} tags={tags}>
-					{props.feature.name || 'Unnamed Feature'}
+					{props.feature.name}
 				</HeaderText>
 				<Markdown text={props.feature.description} />
 				{

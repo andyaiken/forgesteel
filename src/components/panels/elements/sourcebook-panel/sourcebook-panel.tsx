@@ -160,9 +160,9 @@ export const SourcebookPanel = (props: Props) => {
 										key={n}
 										title={lang.name || 'Unnamed Language'}
 										extra={[
-											<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveLanguage(n, 'up')} />,
-											<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveLanguage(n, 'down')} />,
-											<DangerButton key='delete' mode='icon' onConfirm={() => deleteLanguage(n)} />
+											<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'up'); }} />,
+											<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'down'); }} />,
+											<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteLanguage(n); }} />
 										]}
 									>
 										<Space direction='vertical' style={{ width: '100%' }}>
@@ -200,9 +200,9 @@ export const SourcebookPanel = (props: Props) => {
 										key={n}
 										title={skill.name || 'Unnamed Skill'}
 										extra={[
-											<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveSkill(n, 'up')} />,
-											<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveSkill(n, 'down')} />,
-											<DangerButton key='delete' mode='icon' onConfirm={() => deleteSkill(n)} />
+											<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'up'); }} />,
+											<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'down'); }} />,
+											<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSkill(n); }} />
 										]}
 									>
 										<Space direction='vertical' style={{ width: '100%' }}>

@@ -1,6 +1,6 @@
 import { Button, Popover } from 'antd';
+import { MouseEvent, ReactNode } from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
-import { ReactNode } from 'react';
 
 import './danger-button.scss';
 
@@ -10,7 +10,7 @@ interface Props {
 	disabled?: boolean;
 	label?: ReactNode;
 	message?: ReactNode;
-	onConfirm: () => void;
+	onConfirm: (e: MouseEvent) => void;
 }
 
 export const DangerButton = (props: Props) => {
@@ -31,14 +31,16 @@ export const DangerButton = (props: Props) => {
 					</div>
 				)}
 			>
-				{
-					props.mode === 'icon' ?
-						<DeleteOutlined style={{ color: '#ff4d4f', pointerEvents: disabled ? 'none' : 'auto', opacity: disabled ? 0.6 : 1 }} />
-						:
-						<Button block={props.block || false} disabled={disabled} danger={true}>
-							{props.label || 'Delete'}
-						</Button>
-				}
+				<div onClick={e => e.stopPropagation()}>
+					{
+						props.mode === 'icon' ?
+							<DeleteOutlined style={{ color: '#ff4d4f', pointerEvents: disabled ? 'none' : 'auto', opacity: disabled ? 0.6 : 1 }} />
+							:
+							<Button block={props.block || false} disabled={disabled} danger={true}>
+								{props.label || 'Delete'}
+							</Button>
+					}
+				</div>
 			</Popover>
 		);
 	} catch (ex) {

@@ -89,6 +89,7 @@ export const LibraryListPage = (props: Props) => {
 			.getAncestries(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
+				item.description,
 				...item.features.map(f => f.name)
 			], searchTerm));
 	};
@@ -97,7 +98,8 @@ export const LibraryListPage = (props: Props) => {
 		return SourcebookLogic
 			.getCultures(getSourcebooks())
 			.filter(item => Utils.textMatches([
-				item.name
+				item.name,
+				item.description
 			], searchTerm));
 	};
 
@@ -106,6 +108,7 @@ export const LibraryListPage = (props: Props) => {
 			.getCareers(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
+				item.description,
 				...item.features.map(f => f.name)
 			], searchTerm));
 	};
@@ -115,6 +118,7 @@ export const LibraryListPage = (props: Props) => {
 			.getClasses(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
+				item.description,
 				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name)),
 				...item.abilities.flatMap(a => a.name),
 				...item.subclasses.map(sc => sc.name),
@@ -126,7 +130,8 @@ export const LibraryListPage = (props: Props) => {
 		return SourcebookLogic
 			.getComplications(getSourcebooks())
 			.filter(item => Utils.textMatches([
-				item.name
+				item.name,
+				item.description
 			], searchTerm));
 	};
 
@@ -135,6 +140,7 @@ export const LibraryListPage = (props: Props) => {
 			.getDomains(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
+				item.description,
 				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
 			], searchTerm));
 	};
@@ -144,6 +150,7 @@ export const LibraryListPage = (props: Props) => {
 			.getKits(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
+				item.description,
 				...item.features.map(f => f.name)
 			], searchTerm));
 	};
@@ -152,7 +159,8 @@ export const LibraryListPage = (props: Props) => {
 		return SourcebookLogic
 			.getPerks(getSourcebooks())
 			.filter(item => Utils.textMatches([
-				item.name
+				item.name,
+				item.description
 			], searchTerm));
 	};
 
@@ -161,6 +169,7 @@ export const LibraryListPage = (props: Props) => {
 			.getTitles(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
+				item.description,
 				...item.features.map(f => f.name)
 			], searchTerm));
 	};
@@ -170,6 +179,8 @@ export const LibraryListPage = (props: Props) => {
 			.getItems(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
+				item.description,
+				...item.keywords,
 				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
 			], searchTerm));
 	};
@@ -177,9 +188,10 @@ export const LibraryListPage = (props: Props) => {
 	const getMonsterGroups = () => {
 		return SourcebookLogic
 			.getMonsterGroups(getSourcebooks())
-			.filter(mg => Utils.textMatches([
-				mg.name,
-				...mg.monsters.map(m => m.name)
+			.filter(item => Utils.textMatches([
+				item.name,
+				item.description,
+				...item.monsters.map(m => m.name)
 			], searchTerm));
 	};
 

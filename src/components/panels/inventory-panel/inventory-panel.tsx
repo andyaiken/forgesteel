@@ -1,3 +1,4 @@
+import { Divider, Tag } from 'antd';
 import { FeaturePanel } from '../elements/feature-panel/feature-panel';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
@@ -6,7 +7,6 @@ import { ItemType } from '../../../enums/item-type';
 import { Markdown } from '../../controls/markdown/markdown';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../enums/panel-mode';
-import { Tag } from 'antd';
 import { useState } from 'react';
 
 import './inventory-panel.scss';
@@ -36,16 +36,21 @@ export const InventoryPanel = (props: Props) => {
 				<Field label='Keywords' value={props.item.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} />
 				<Markdown text={props.item.effect} />
 				{
-					props.item.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
-						<div key={lvl.level}>
-							<HeaderText>Level {lvl.level.toString()}</HeaderText>
-							{lvl.features.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
-						</div>
-					))
+					props.item.featuresByLevel
+						.filter(lvl => lvl.features.length > 0)
+						.map(lvl => (
+							<div key={lvl.level}>
+								<HeaderText>Level {lvl.level.toString()}</HeaderText>
+								{lvl.features.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
+							</div>
+						))
 				}
 				{
 					item.type !== ItemType.Artifact ?
-						<NumberSpin min={1} label='Items' value={props.item.count} onChange={setCount} />
+						<>
+							<Divider />
+							<NumberSpin min={1} label='Items' value={props.item.count} onChange={setCount} />
+						</>
 						: null
 				}
 			</div>

@@ -26,7 +26,8 @@ export const EncounterListPage = (props: Props) => {
 	const getEncounters = () => {
 		return props.playbook.encounters
 			.filter(item => Utils.textMatches([
-				item.name
+				item.name,
+				item.description
 			], searchTerm));
 	};
 

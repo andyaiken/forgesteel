@@ -578,9 +578,9 @@ export const FeatureEditPanel = (props: Props) => {
 									key={n}
 									title={option.feature.name || 'Unnamed Feature'}
 									extra={[
-										<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveChoice(data, n, 'up')} />,
-										<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveChoice(data, n, 'down')} />,
-										<DangerButton key='delete' mode='icon' onConfirm={() => deleteChoice(data, n)} />
+										<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveChoice(data, n, 'up'); }} />,
+										<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveChoice(data, n, 'down');}} />,
+										<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteChoice(data, n); }} />
 									]}
 								>
 									<Space direction='vertical' style={{ width: '100%' }}>
@@ -804,9 +804,9 @@ export const FeatureEditPanel = (props: Props) => {
 									key={feature.id}
 									title={feature.name}
 									extra={[
-										<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveMultipleFeature(data, n, 'up')} />,
-										<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveMultipleFeature(data, n, 'down')} />,
-										<DangerButton key='delete' mode='icon' onConfirm={() => deleteMultipleFeature(data, n)} />
+										<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMultipleFeature(data, n, 'up'); }} />,
+										<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMultipleFeature(data, n, 'down'); }} />,
+										<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteMultipleFeature(data, n); }} />
 									]}
 								>
 									<FeatureEditPanel

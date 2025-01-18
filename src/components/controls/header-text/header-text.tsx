@@ -12,6 +12,10 @@ interface Props {
 
 export const HeaderText = (props: Props) => {
 	try {
+		if (!props.children) {
+			return null;
+		}
+
 		return (
 			<div className={`header-text-panel level-${props.level || 2}`}>
 				{props.ribbon}

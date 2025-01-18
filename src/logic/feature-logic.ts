@@ -86,16 +86,32 @@ export class FeatureLogic {
 	static getFeaturesFromItem = (item: Item, hero: Hero) => {
 		const features: Feature[] = [];
 
-		features.push(FactoryLogic.feature.create({
+		const ft = FactoryLogic.feature.create({
 			id: item.id,
 			name: item.count === 1 ? item.name : `${item.name} x${item.count}`,
 			description: item.effect || item.description
-		}));
+		});
+		features.push(ft);
 
 		const heroLevel = hero.class?.level || 1;
 		item.featuresByLevel
 			.filter(lvl => lvl.level <= heroLevel)
-			.forEach(lvl => features.push(...lvl.features));
+			.forEach(lvl => {
+				lvl.features.forEach(f => {
+					if (f.type === FeatureType.Text) {
+						if (f.description) {
+							if (f.name) {
+								ft.description += '\n\n';
+								ft.description += `**${f.name}**`;
+							}
+							ft.description += '\n\n';
+							ft.description += f.description;
+						}
+					} else {
+						features.push(f);
+					}
+				});
+			});
 
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};

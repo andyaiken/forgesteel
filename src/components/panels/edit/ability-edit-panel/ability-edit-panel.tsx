@@ -442,9 +442,9 @@ export const AbilityEditPanel = (props: Props) => {
 													key={n}
 													title={AbilityLogic.getDistance(distance)}
 													extra={[
-														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveDistance(n, 'up')} />,
-														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveDistance(n, 'down')} />,
-														<DangerButton key='delete' mode='icon' onConfirm={() => deleteDistance(n)} />
+														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveDistance(n, 'up'); }} />,
+														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveDistance(n, 'down'); }} />,
+														<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteDistance(n); }} />
 													]}
 												>
 													<Space direction='vertical' style={{ width: '100%' }}>
@@ -631,9 +631,9 @@ export const AbilityEditPanel = (props: Props) => {
 													key={n}
 													title='Alternate Effect'
 													extra={[
-														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveAlternateEffect(n, 'up')} />,
-														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveAlternateEffect(n, 'down')} />,
-														<DangerButton key='delete' mode='icon' onConfirm={() => deleteAlternateEffect(n)} />
+														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveAlternateEffect(n, 'up'); }} />,
+														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveAlternateEffect(n, 'down'); }} />,
+														<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteAlternateEffect(n); }} />
 													]}
 												>
 													<Input
@@ -665,9 +665,9 @@ export const AbilityEditPanel = (props: Props) => {
 													key={n}
 													title='Spend Effect'
 													extra={[
-														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => moveSpend(n, 'up')} />,
-														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => moveSpend(n, 'down')} />,
-														<DangerButton key='delete' mode='icon' onConfirm={() => deleteSpend(n)} />
+														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSpend(n, 'up'); }} />,
+														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSpend(n, 'down'); }} />,
+														<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSpend(n); }} />
 													]}
 												>
 													<Space direction='vertical' style={{ width: '100%' }}>
@@ -702,9 +702,9 @@ export const AbilityEditPanel = (props: Props) => {
 													key={n}
 													title='Persistence Effect'
 													extra={[
-														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={() => movePersistence(n, 'up')} />,
-														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={() => movePersistence(n, 'down')} />,
-														<DangerButton key='delete' mode='icon' onConfirm={() => deletePersistence(n)} />
+														<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); movePersistence(n, 'up'); }} />,
+														<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); movePersistence(n, 'down'); }} />,
+														<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deletePersistence(n); }} />
 													]}
 												>
 													<Space direction='vertical' style={{ width: '100%' }}>

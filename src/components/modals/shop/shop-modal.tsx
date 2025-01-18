@@ -24,6 +24,8 @@ export const ShopModal = (props: Props) => {
 			.getItems(props.sourcebooks)
 			.filter(item => Utils.textMatches([
 				item.name,
+				item.description,
+				...item.keywords,
 				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
 			], searchTerm));
 

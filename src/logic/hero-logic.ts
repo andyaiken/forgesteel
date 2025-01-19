@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureItemChoice, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
@@ -89,7 +89,11 @@ export class HeroLogic {
 		features.push(...FeatureLogic.getFeaturesFromCustomization(hero));
 
 		hero.state.inventory.forEach(item => {
-			features.push(...FeatureLogic.getFeaturesFromItem(item, hero));
+			try {
+				features.push(...FeatureLogic.getFeaturesFromItem(item, hero));
+			} catch (ex) {
+				console.error(ex);
+			}
 		});
 
 		return Collections.sort(features, f => f.name);
@@ -877,6 +881,8 @@ Complex or time-consuming tests might require an action if made in combat—or c
 		if (hero.state.inventory === undefined) {
 			hero.state.inventory = [];
 		}
+
+		hero.state.inventory = hero.state.inventory.filter(i => (i as unknown as FeatureItemChoice).data === undefined);
 
 		if (hero.abilityCustomizations === undefined) {
 			hero.abilityCustomizations = [];

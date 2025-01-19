@@ -550,7 +550,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			id: 'conduit-ability-15',
 			name: 'Faith is Our Armor',
 			description: 'The heroes’ armor glows with golden light, granting divine protection.',
-			type: FactoryLogic.type.createAction(),
+			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: 'Self and up to three allies',

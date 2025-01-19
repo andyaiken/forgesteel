@@ -97,7 +97,7 @@ export class AbilityLogic {
 		const persistLength = Collections.sum(ability.persistence, e => Math.round(e.effect.split(' ').length / 10));
 
 		const length = descLength + preEffectLength + powerRollLength + effectLength + alternateLength + spendLength + persistLength;
-		return Math.max(1, Math.round(length / 20));
+		return Math.max(1, Math.round(length / 12));
 	};
 
 	static usesPotency = (powerRoll: PowerRoll) => {

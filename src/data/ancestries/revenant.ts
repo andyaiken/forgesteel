@@ -70,7 +70,14 @@ export const revenant: Ancestry = {
 			options: [
 				{
 					feature: FactoryLogic.feature.createAncestryFeature({
-						id: 'revenant-feature-4-1',
+						id: 'revenant-feature-4-1a',
+						value: 1
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createAncestryFeature({
+						id: 'revenant-feature-4-1b',
 						value: 1
 					}),
 					value: 1

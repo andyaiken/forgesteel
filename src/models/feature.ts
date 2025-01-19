@@ -1,8 +1,7 @@
+import { DamageModifier, Modifier } from './damage-modifier';
 import { Ability } from './ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from './ancestry';
-import { Characteristic } from '../enums/characteristic';
-import { DamageModifier } from './damage-modifier';
 import { Domain } from './domain';
 import { Element } from './element';
 import { FeatureField } from '../enums/feature-field';
@@ -45,12 +44,8 @@ export interface FeatureAncestryFeatureChoiceData extends _FeatureData {
 };
 export type FeatureAncestryFeatureChoice = FeatureOf<FeatureType.AncestryFeatureChoice, FeatureAncestryFeatureChoiceData>
 
-export interface FeatureBonusData extends _FeatureData {
+export interface FeatureBonusData extends _FeatureData, Modifier {
 	field: FeatureField;
-	value: number;
-	valueCharacteristics: Characteristic[];
-	valuePerLevel: number;
-	valuePerEchelon: number;
 };
 export type FeatureBonus = FeatureOf<FeatureType.Bonus, FeatureBonusData>;
 

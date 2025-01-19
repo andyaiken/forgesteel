@@ -879,37 +879,21 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
+	const getExtraAncestryFeatureChoice = (data: FeatureAncestryFeatureChoiceData) => {
+		if (!data.selected) {
+			return <Alert
+				type='info'
+				showIcon={true}
+				message='Not selected.'
+			/>;
+		}
+
+		return null;
+	};
+
 	const getExtraBonus = (data: FeatureBonusData) => {
-		let desc = '';
-		if (data.value && data.valuePerLevel && !data.valuePerEchelon && (data.value === data.valuePerLevel)) {
-			desc = `${data.value >= 0 ? '+' : ''}${data.value} per level`;
-		} else {
-			if (data.value) {
-				desc += `${data.value >= 0 ? '+' : ''}${data.value}`;
-			}
-			if (data.valueCharacteristics.length > 0) {
-				desc += `+${data.valueCharacteristics.join(' or ')}`;
-			}
-			if (data.valuePerLevel) {
-				if (desc !== '') {
-					desc += ', ';
-				}
-				desc += `${data.valuePerLevel >= 0 ? '+' : ''}${data.valuePerLevel} per level after 1st`;
-			}
-			if (data.valuePerEchelon) {
-				if (desc !== '') {
-					desc += ', ';
-				}
-				desc += `${data.valuePerEchelon >= 0 ? '+' : ''}${data.valuePerEchelon} per echelon`;
-			}
-		}
-
-		if (desc === '') {
-			desc = '+0';
-		}
-
 		return (
-			<Field label={data.field} value={desc} />
+			<Field label={data.field} value={FormatLogic.getModifier(data)} />
 		);
 	};
 
@@ -1233,6 +1217,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraAbilityCost(props.feature.data);
 			case FeatureType.AncestryChoice:
 				return getExtraAncestryChoice(props.feature.data);
+			case FeatureType.AncestryFeatureChoice:
+				return getExtraAncestryFeatureChoice(props.feature.data);
 			case FeatureType.Bonus:
 				return getExtraBonus(props.feature.data);
 			case FeatureType.Choice:

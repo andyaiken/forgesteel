@@ -255,7 +255,7 @@ export const HeroPanel = (props: Props) => {
 			md: 24,
 			lg: 10,
 			xl: 10,
-			xxl: 4
+			xxl: 5
 		};
 
 		const sizeLarge = {
@@ -264,7 +264,7 @@ export const HeroPanel = (props: Props) => {
 			md: 24,
 			lg: 14,
 			xl: 14,
-			xxl: 8
+			xxl: 7
 		};
 
 		const maxStamina = HeroLogic.getStamina(props.hero);

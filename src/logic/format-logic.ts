@@ -1,6 +1,6 @@
+import { DamageModifier, Modifier } from '../models/damage-modifier';
 import { AbilityType } from '../models/ability';
 import { AbilityUsage } from '../enums/ability-usage';
-import { DamageModifier } from '../models/damage-modifier';
 import { MonsterRole } from '../models/monster';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Size } from '../models/size';
@@ -34,6 +34,10 @@ export class FormatLogic {
 	};
 
 	static getDamageModifier = (mod: DamageModifier) => {
+		return `${mod.damageType} ${mod.type} ${FormatLogic.getModifier(mod)}`;
+	};
+
+	static getModifier = (mod: Modifier) => {
 		let desc = '';
 		if (mod.value && mod.valuePerLevel && !mod.valuePerEchelon && (mod.value === mod.valuePerLevel)) {
 			desc += `${mod.value >= 0 ? '+' : ''}${mod.value} per level`;
@@ -65,6 +69,6 @@ export class FormatLogic {
 			desc = '+0';
 		}
 
-		return `${mod.damageType} ${mod.type} ${desc}`;
+		return desc;
 	};
 }

@@ -2,6 +2,7 @@ import { Alert, Select, Space } from 'antd';
 import { Feature, FeatureAbilityCostData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
+import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../ancestry-panel/ancestry-panel';
 import { Badge } from '../../../controls/badge/badge';
 import { Collections } from '../../../../utils/collections';
@@ -86,11 +87,20 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
-		const features = HeroLogic.getFormerAncestries(props.hero)
+		const ancestries: Ancestry[] = [];
+		if (data.source.current && props.hero.ancestry) {
+			ancestries.push(props.hero.ancestry);
+		}
+		if (data.source.former) {
+			ancestries.push(...HeroLogic.getFormerAncestries(props.hero));
+		}
+
+		const features = ancestries
 			.flatMap(a => a.features)
 			.filter(f => f.type === FeatureType.Choice)
 			.flatMap(f => f.data.options)
-			.filter(opt => opt.value === data.value)
+			.filter(opt => (data.value === 0) || (data.value === opt.value))
+			.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice)
 			.map(opt => opt.feature);
 		const sortedFeatures = Collections.sort(features, f => f.name);
 

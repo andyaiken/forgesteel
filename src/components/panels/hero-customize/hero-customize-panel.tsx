@@ -49,6 +49,7 @@ export const HeroCustomizePanel = (props: Props) => {
 				<DropdownButton
 					label='Add a new feature'
 					items={[
+						{ key: 'ancestry', label: <div className='ds-text centered-text'>Ancestry Feature</div> },
 						{ key: 'language', label: <div className='ds-text centered-text'>Language</div> },
 						{ key: 'perk', label: <div className='ds-text centered-text'>Perk</div> },
 						{ key: 'skill', label: <div className='ds-text centered-text'>Skill</div> },
@@ -57,6 +58,14 @@ export const HeroCustomizePanel = (props: Props) => {
 					onClick={key => {
 						let feature = null;
 						switch (key) {
+							case 'ancestry':
+								feature = FactoryLogic.feature.createAncestryFeature({
+									id: Utils.guid(),
+									value: 0,
+									current: true,
+									former: true
+								});
+								break;
 							case 'language':
 								feature = FactoryLogic.feature.createLanguageChoice({
 									id: Utils.guid()

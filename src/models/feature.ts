@@ -39,6 +39,10 @@ export interface FeatureAncestryChoiceData extends _FeatureData {
 export type FeatureAncestryChoice = FeatureOf<FeatureType.AncestryChoice, FeatureAncestryChoiceData>
 
 export interface FeatureAncestryFeatureChoiceData extends _FeatureData {
+	source: {
+		current: boolean;
+		former: boolean;
+	};
 	value: number;
 	selected: Feature | null;
 };

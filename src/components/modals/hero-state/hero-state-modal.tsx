@@ -384,10 +384,7 @@ export const HeroStateModal = (props: Props) => {
 				}
 				<Button block={true} onClick={() => setShopVisible(true)}>Add a new item</Button>
 				<Drawer open={shopVisible} onClose={() => setShopVisible(false)} closeIcon={null} width='500px'>
-					<ShopModal
-						sourcebooks={props.sourcebooks}
-						onSelect={addItem}
-					/>
+					{shopVisible ? <ShopModal sourcebooks={props.sourcebooks} onSelect={addItem} /> : null}
 				</Drawer>
 			</Space>
 		);

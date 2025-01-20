@@ -624,13 +624,17 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createAncestryFeature: (data: { id: string, name?: string, description?: string, value: number }): FeatureAncestryFeatureChoice => {
+		createAncestryFeature: (data: { id: string, name?: string, description?: string, current: boolean, former: boolean, value: number }): FeatureAncestryFeatureChoice => {
 			return {
 				id: data.id,
 				name: data.name || 'Ancestry Feature',
 				description: data.description || '',
 				type: FeatureType.AncestryFeatureChoice,
 				data: {
+					source: {
+						current: data.current,
+						former: data.former
+					},
 					value: data.value,
 					selected: null
 				}

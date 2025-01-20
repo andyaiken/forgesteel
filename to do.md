@@ -56,6 +56,7 @@
 ### Heroes
 
 * Add a way for heroes to be modified
+  * Additional class abilities
   * Retainers
     * Work out how retainers should be represented
     * Add retainer data

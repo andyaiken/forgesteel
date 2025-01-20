@@ -86,6 +86,10 @@ export const FeatureEditPanel = (props: Props) => {
 				break;
 			case FeatureType.AncestryFeatureChoice:
 				data = {
+					source: {
+						current: true,
+						former: true
+					},
 					value: 1,
 					selected: null
 				};
@@ -370,6 +374,18 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
+		const setSourceCurrent = (value: boolean) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureAncestryFeatureChoiceData;
+			copy.source.current = value;
+			setData(copy);
+		};
+
+		const setSourceFormer = (value: boolean) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureAncestryFeatureChoiceData;
+			copy.source.former = value;
+			setData(copy);
+		};
+
 		const setSpeed = (value: number) => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureSpeedData;
 			copy.speed = value;
@@ -534,6 +550,9 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureAncestryFeatureChoiceData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Source</HeaderText>
+						<Toggle label='Current ancestry' value={data.source.current} onChange={setSourceCurrent} />
+						<Toggle label='Former ancestry' value={data.source.former} onChange={setSourceFormer} />
 						<HeaderText>Value</HeaderText>
 						<NumberSpin value={data.value} onChange={setValue} />
 					</Space>

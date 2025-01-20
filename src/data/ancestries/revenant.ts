@@ -71,6 +71,8 @@ export const revenant: Ancestry = {
 				{
 					feature: FactoryLogic.feature.createAncestryFeature({
 						id: 'revenant-feature-4-1a',
+						current: false,
+						former: true,
 						value: 1
 					}),
 					value: 1
@@ -78,6 +80,8 @@ export const revenant: Ancestry = {
 				{
 					feature: FactoryLogic.feature.createAncestryFeature({
 						id: 'revenant-feature-4-1b',
+						current: false,
+						former: true,
 						value: 1
 					}),
 					value: 1
@@ -101,6 +105,8 @@ export const revenant: Ancestry = {
 				{
 					feature: FactoryLogic.feature.createAncestryFeature({
 						id: 'revenant-feature-4-4',
+						current: false,
+						former: true,
 						value: 2
 					}),
 					value: 2

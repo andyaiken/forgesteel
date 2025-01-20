@@ -1,3 +1,4 @@
+import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
 import { FactoryLogic } from '../logic/factory-logic';
@@ -826,37 +827,47 @@ export class KitData {
 					name: 'Bear Claws',
 					description: 'Attacks with your sharp and deadly claws send your foes staggering back.',
 					type: FactoryLogic.type.createAction(),
-					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
-					target: '2 creatures or objects',
+					target: '1 creature or object',
 					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
-						tier1: '2 damage; push 1',
-						tier2: '3 damage; push 2',
-						tier3: '8 damage; push 3'
+						tier1: '2 + M damage; M < weak, grabbed',
+						tier2: '5 + M damage; M < average, grabbed',
+						tier3: '7 + M damage; M < strong, grabbed'
 					})
 				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-1',
 				name: 'Aspect Benefits',
-				description: `
-Whenever you use forced movement to push a creature, you can pull that creature instead. Whenever an attack pulls a creature adjacent to you, you can attempt to grab that creature as a free triggered action.
-* **Rage 2**: You gain an edge on Might tests, resistance rolls, and power rolls made to grab.
-* **Rage 2**: While in bear form, your attacks deal extra damage equal to your Might score, and any target you have grabbed at the start of your turn takes damage equal to your Might score.
-* **Rage 4**: While in bear form, you can use all your abilities, your attacks deal extra damage equal to twice your Might score, instead of once your Might score, and any target you have grabbed at the start of your turn takes damage equal to twice your Might score, instead of once your Might score.
-* **Rage 6**: You have a double edge on Might tests, resistance rolls, and power rolls made with the Grab ability.`
+				description: 'Whenever you use forced movement to push a creature, you can pull that creature instead. Whenever you pull a creature adjacent to you and that creature has M < average, you can use a free triggered action to grab that creature.'
 			}),
 			FactoryLogic.feature.create({
-				id: 'kit-boren-feature-2',
+				id: 'kit-boren-feature-2a',
 				name: 'Animal Form: Bear',
-				description: 'When you are in your bear form, your speed increases by 2, your size becomes 2, and you have a +1 reach bonus with melee attacks. You gain 10 temporary Stamina the first time you shapeshift into bear form during an encounter.'
+				description: 'When you are in your bear form, your size becomes 2, and you gain a +2 bonus to speed and a +1 bonus to distance with melee weapon abilities.'
+			}),
+			FactoryLogic.feature.create({
+				id: 'kit-boren-feature-2b',
+				name: 'Hybrid Form: Bear',
+				description: `
+When you are in your hybrid form, your size becomes 2, and you gain a +2 bonus to speed and a +1 bonus to distance with melee weapon abilities.
+Once you reach 4th level, the first time you take hybrid form in an encounter you gain 10 Temporary Stamina.`
 			}),
 			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-3',
 				name: 'Primordial Storm: Blizzard',
 				description: 'Your primordial damage type is cold.'
+			}),
+			FactoryLogic.feature.create({
+				id: 'kit-boren-feature-4',
+				name: 'Growing Rage',
+				description: `
+* **Rage 2**: You can grab up to 2 creatures and gain a surge whenever you attack a creature you have grabbed.
+* **Rage 4**: Gain one surge the first time on a turn that you grab a creature.
+* **Rage 6**: You have an edge on power rolls for the Knockback and Grab maneuvers, and creatures have a bane on power rolls made to escape being grabbed by you.`
 			})
 		]
 	};
@@ -870,12 +881,12 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 		weapon: [ KitWeapon.Unarmed ],
 		stamina: 3,
 		speed: 3,
-		stability: 2,
+		stability: 0,
 		meleeDamage: FactoryLogic.createKitDamageBonus(2, 2, 2),
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
-		disengage: 0,
+		disengage: 1,
 		features: [
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -883,42 +894,48 @@ Whenever you use forced movement to push a creature, you can pull that creature 
 					name: 'Wing Buffet',
 					description: 'Foes who try to close around you do so at their peril.',
 					type: FactoryLogic.type.createAction(),
-					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-					distance: [ FactoryLogic.distance.createMelee() ],
-					target: '3 creatures or objects',
+					keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+					distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
+					target: 'Each enemy in the area',
 					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might ],
-						tier1: '4 damage',
-						tier2: '5 damage',
-						tier3: '7 damage'
+						characteristic: [ Characteristic.Agility ],
+						tier1: '2 damage',
+						tier2: '4 damage',
+						tier3: '6 damage'
 					}),
-					effect: 'Resolve each attack individually using one power roll. You can shift 1 square after resolving damage for each target, then choose your next target from your new location.'
+					effect: 'You can shift up to 2 squares before or after making the power roll.'
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'kit-boren-feature-1',
+				id: 'kit-corven-feature-1',
 				name: 'Aspect Benefits',
-				description: `
-You gain an edge on tests made to hide and sneak. Whenever you are falling, you can use your Animal Form ability as a free triggered action.
-* **Rage 2**: You can shift 1 square as a free maneuver once per turn.
-* **Rage 2**: While in crow form, your attacks deal extra damage equal to your Agility score.
-* **Rage 2**: Once per turn while in crow form, when you move away from an enemy, that enemy takes damage equal to your Agility score.
-* **Rage 4**: While in crow or hybrid crow form, you can use all your abilities, and your attacks deal extra damage equal to twice your Agility score, instead of once your Agility score.
-* **Rage 4**: Once per turn while in crow or hybrid crow form, when you move away from an enemy, that enemy takes damage equal to twice your Agility score, instead of once your Agility score.
-* **Rage 6**: You can shift up to 2 squares as a free maneuver once per turn.`
+				description: 'You gain an edge on tests made to hide and sneak. Additionally, whenever you are falling, you can use a free triggered action to use your Aspect of the Wild ability.'
 			}),
 			FactoryLogic.feature.create({
-				id: 'kit-boren-feature-2',
+				id: 'kit-corven-feature-2a',
 				name: 'Animal Form: Crow',
-				description: `
-When you are in your crow form, your movement gains the Fly keyword, and your size becomes 1T. You can use the Hide maneuver as a free maneuver, and you can use your allies as cover when you hide.
-Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal crow of your true form’s size. You gain 10 temporary Stamina the first time you shapeshift into hybrid crow form during an encounter.`
+				description: 'When you are in your crow form, your size becomes 1T and your speed gains the Fly keyword. You can use the Hide maneuver as a free maneuver, and you can use your allies as cover when you hide.'
 			}),
 			FactoryLogic.feature.create({
-				id: 'kit-boren-feature-3',
+				id: 'kit-corven-feature-2b',
+				name: 'Hybrid Form: Crow',
+				description: `
+When you are in your hybrid form, your size becomes your choice of 1S or 1M.
+Once you reach 4th level, your speed gains the Fly keyword.`
+			}),
+			FactoryLogic.feature.create({
+				id: 'kit-corven-feature-3',
 				name: 'Primordial Storm: Katabatic Wind',
 				description: 'Your primordial damage type is fire.'
+			}),
+			FactoryLogic.feature.create({
+				id: 'kit-corven-feature-4',
+				name: 'Growing Rage',
+				description: `
+* **Rage 2**: When you take the Disengage move action, you can add your Agility score to the distance you can shift.
+* **Rage 4**: Gain one surge the first time on a turn that you shift.
+* **Rage 6**: You have an edge on Agility tests and the power roll for the Escape Grab and Knockback maneuvers.`
 			})
 		]
 	};
@@ -937,7 +954,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
-		disengage: 0,
+		disengage: 1,
 		features: [
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -945,41 +962,48 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					name: 'Driving Pounce',
 					description: 'Your enemies try in vain to fall back from your pouncing attack.',
 					type: FactoryLogic.type.createAction(),
-					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '2 creatures or objects',
 					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might ],
-						tier1: '4 damage',
-						tier2: '5 damage; push 1',
-						tier3: '6 damage; push 2'
+						characteristic: [ Characteristic.Agility ],
+						tier1: '2 + A damage',
+						tier2: '5 + A damage; push 1',
+						tier3: '7 + A damage; push 2'
 					}),
-					effect: 'Resolve each attack one at a time. After each attack, you can shift the same number of squares that you pushed the target. You select your second target from the square where you end your shift, which can be the first target again.'
+					effect: 'You can shift up to the same number of squares that you pushed the target.'
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'kit-boren-feature-1',
+				id: 'kit-raden-feature-1',
 				name: 'Aspect Benefits',
-				description: `
-You gain an edge on tests made to hide and sneak. Additionally, you ignore difficult terrain, and you gain an edge on tests made to climb other creatures. If you are hidden, you automatically achieve a tier 3 result on attempts to climb and remain hidden.
-* **Rage 2**: You have Weapon immunity 2.
-* **Rage 2**: While in rat form, your attacks deal extra damage equal to your Agility score.
-* **Rage 2**: While in rat form, if you attack a creature you are climbing, that creature is bleeding (EoT).
-* **Rage 4**: While in rat or hybrid rat form, you can use all your abilities, and your attacks deal extra damage equal to twice your Agility score, instead of once your Agility score.
-* **Rage 6**: You have Weapon immunity 2. Any damage you ignore because of this immunity is dealt to each enemy adjacent to you when you are attacked.`
+				description: 'You gain an edge on tests made to hide and sneak. Additionally, you ignore difficult terrain.'
 			}),
 			FactoryLogic.feature.create({
-				id: 'kit-boren-feature-2',
+				id: 'kit-raden-feature-2a',
 				name: 'Animal Form: Rat',
-				description: `
-When you are in your rat form, your movement gains the Climb keyword, and your size becomes 1T. You can use the Hide maneuver as a free maneuver, and you can use your allies as cover when hiding. You can stay hidden while moving through squares occupied by a creature.
-Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal rat of your true form’s size. You gain 10 temporary Stamina the first time you shapeshift into hybrid rat form during an encounter.`
+				description: 'When you are in your rat form, your size becomes 1T and your speed gains the Climb keyword. You can use the Hide maneuver as a free maneuver, and you can use your allies as cover when hiding. You can stay hidden while you move through any square occupied by a creature and gain an edge on tests made to climb other creatures.'
 			}),
 			FactoryLogic.feature.create({
-				id: 'kit-boren-feature-3',
+				id: 'kit-raden-feature-2b',
+				name: 'Hybrid Form: Rat',
+				description: `
+When you are in your hybrid form, your size becomes your choice of 1S or 1M.
+Once you reach 4th level, your speed gains the Climb keyword in hybrid form.`
+			}),
+			FactoryLogic.feature.create({
+				id: 'kit-raden-feature-3',
 				name: 'Primordial Storm: Rat Flood',
 				description: 'Your primordial damage type is corruption.'
+			}),
+			FactoryLogic.feature.create({
+				id: 'kit-raden-feature-4',
+				name: 'Growing Rage',
+				description: `
+* **Rage 2**: When you take the Disengage move action, you can add your Agility score to the distance you can shift.
+* **Rage 4**: Gain one surge the first time on a turn that you shift.
+* **Rage 6**: You have an edge on Agility tests, the Escape Grab maneuver, and the Knockback maneuver.`
 			})
 		]
 	};
@@ -998,7 +1022,7 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 		rangedDamage: null,
 		meleeDistance: 0,
 		rangedDistance: 0,
-		disengage: 0,
+		disengage: 1,
 		features: [
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -1006,42 +1030,47 @@ Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal
 					name: 'Probing Attack',
 					description: 'A savage assault forces your foes back.',
 					type: FactoryLogic.type.createAction(),
-					keywords: [ AbilityKeyword.Animal, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature or object',
 					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
-						tier1: '5 damage',
-						tier2: '9 damage; push 1',
-						tier3: '12 damage; push 2; prone if the target is your size or smaller'
-					}),
-					effect: 'You can shift up to 2 squares as long as you end the shift adjacent to the target.'
+						tier1: '2 + M damage; A < weak, prone',
+						tier2: '5 + M damage; A < average, prone',
+						tier3: '7 + M damage; A < strong, prone'
+					})
 				})
 			}),
 			FactoryLogic.feature.create({
-				id: 'kit-boren-feature-1',
+				id: 'kit-vuken-feature-1',
 				name: 'Aspect Benefits',
-				description: `
-You and an ally gain the benefits of flanking whenever you are both adjacent to a target. If you and at least two other allies are all adjacent to a target, each of you has a double edge for flanking.
-* **Rage 2**: You gain an edge on Agility tests and resistance rolls.
-* **Rage 2**: While in wolf form, your attacks deal extra damage equal to your Agility score.
-* **Rage 2**: When you attack a target while in wolf form, the next ally to damage that target before the start of your next turn deals extra damage equal to your Agility score.
-* **Rage 4**: While in wolf or hybrid wolf form, you can use all your abilities, and your attacks deal extra damage equal to twice your Agility score, instead of once your Agility score.
-* **Rage 4**: When you attack a target while in wolf or hybrid wolf form, the next ally to damage that target before the start of your next turn deals extra damage equal to twice your Agility score, instead of once your Agility score.
-* **Rage 6**: You have a double edge on Agility tests and resistance rolls.`
+				description: 'Whenever you take the Knockback maneuver you can also take the Aid Attack maneuver as a free triggered action.'
 			}),
 			FactoryLogic.feature.create({
-				id: 'kit-boren-feature-2',
+				id: 'kit-vuken-feature-2a',
 				name: 'Animal Form: Wolf',
-				description: `
-When you are in your wolf form, your speed increases by 2, you ignore difficult terrain, and your size becomes 1M.
-Whenever your rage is 4 or higher, you can shapeshift to become a hybrid bipedal wolf of your true form’s size. You gain 10 temporary Stamina the first time you shapeshift into hybrid wolf form during an encounter.`
+				description: 'When you are in your wolf form, your size becomes 1L if it isn’t already, you gain a +2 bonus to speed, and you ignore difficult terrain.'
 			}),
 			FactoryLogic.feature.create({
-				id: 'kit-boren-feature-3',
+				id: 'kit-vuken-feature-2b',
+				name: 'Hybrid Form: Wolf',
+				description: `
+When you are in your hybrid form, your size becomes 1L if it isn’t already, you gain a +2 bonus to speed, and you ignore difficult terrain.
+Once you reach 4th level, the first time you take hybrid form in an encounter you gain 10 Temporary Stamina.`
+			}),
+			FactoryLogic.feature.create({
+				id: 'kit-vuken-feature-3',
 				name: 'Primordial Storm: Lightning Storm',
 				description: 'Your primordial damage type is lightning.'
+			}),
+			FactoryLogic.feature.create({
+				id: 'kit-vuken-feature-4',
+				name: 'Growing Rage',
+				description: `
+* **Rage 2**: You can target one additional creature when using the Knockback maneuver.
+* **Rage 4**: Gain one surge the first time on a turn that you push a creature or knock another creature prone.
+* **Rage 6**: You have an edge on Agility tests and the Knockback maneuver.`
 			})
 		]
 	};

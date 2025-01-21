@@ -135,6 +135,7 @@ td {
 	>.ant-collapse-item {
 		>.ant-collapse-header {
 			align-items: center;
+			user-select: none;
 
 			>.ant-collapse-extra {
 				display: flex;

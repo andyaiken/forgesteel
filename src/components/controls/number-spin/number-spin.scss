@@ -4,6 +4,7 @@
     justify-content: space-between;
 	gap: 10px;
 	border-radius: 6px;
+	user-select: none;
 
 	&.disabled {
 		opacity: 0.6;

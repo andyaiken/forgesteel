@@ -16,6 +16,7 @@ import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { ShopModal } from '../shop/shop-modal';
 import { Sourcebook } from '../../../models/sourcebook';
 import { Utils } from '../../../utils/utils';
+import { talent } from '../../../data/classes/talent';
 import { useState } from 'react';
 
 import './hero-state-modal.scss';
@@ -178,7 +179,7 @@ export const HeroStateModal = (props: Props) => {
 				<NumberSpin
 					label={hero.class ? hero.class.heroicResource : 'Heroic Resource'}
 					value={hero.state.heroicResource}
-					min={0}
+					min={hero.class && (hero.class.id === talent.id) ? undefined : 0}
 					onChange={setHeroicResource}
 				/>
 				<NumberSpin

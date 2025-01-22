@@ -614,6 +614,26 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 									}
 								]
 							})
+						}),
+						FactoryLogic.feature.createAbility({
+							ability: FactoryLogic.createAbility({
+								id: 'fury-sub-3-1-5',
+								name: 'Aspect of the Wild',
+								description: 'You assume the form of the animal who channels your rage.',
+								keywords: [ AbilityKeyword.Magic ],
+								type: FactoryLogic.type.createManeuver(),
+								distance: [ FactoryLogic.distance.createSelf() ],
+								target: 'Self',
+								effect: `
+You can shapeshift into the animal defined by your stormwight kit, a hybrid form, or back into your true form.
+While in animal form or hybrid form, you can speak normally and can speak to animals who share your form. If you are in a negotiation with an animal, you treat your Renown as 2 higher than usual while in animal form.`,
+								spend: [
+									{
+										value: 1,
+										effect: 'As a free maneuver on your turn, you can shapeshift a second time, either into another animal form, into your hybrid form, or back into your true form.'
+									}
+								]
+							})
 						})
 					]
 				},

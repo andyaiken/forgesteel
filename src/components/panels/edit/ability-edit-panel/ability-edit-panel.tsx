@@ -557,7 +557,7 @@ export const AbilityEditPanel = (props: Props) => {
 						},
 						{
 							key: '3',
-							label: 'Info',
+							label: 'Information',
 							children: (
 								<div>
 									<HeaderText>Pre-Roll Effect</HeaderText>

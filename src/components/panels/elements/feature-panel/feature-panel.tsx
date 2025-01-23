@@ -48,7 +48,7 @@ export const FeaturePanel = (props: Props) => {
 		if (sortedAncestries.length === 0) {
 			return (
 				<Alert
-					type='info'
+					type='warning'
 					showIcon={true}
 					message='There are no options to choose for this feature.'
 				/>
@@ -87,6 +87,10 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
+		const currentFeatureIDs = HeroLogic.getFeatures(props.hero)
+			.filter(f => f.id !== props.feature.id)
+			.map(f => f.id);
+
 		const ancestries: Ancestry[] = [];
 		if (data.source.current && props.hero.ancestry) {
 			ancestries.push(props.hero.ancestry);
@@ -99,7 +103,7 @@ export const FeaturePanel = (props: Props) => {
 			.flatMap(a => a.features)
 			.filter(f => f.type === FeatureType.Choice)
 			.flatMap(f => f.data.options)
-			.filter(opt => (data.value === 0) || (data.value === opt.value))
+			.filter(opt => data.value === opt.value)
 			.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice)
 			.map(opt => opt.feature);
 		const sortedFeatures = Collections.sort(features, f => f.name);
@@ -107,7 +111,7 @@ export const FeaturePanel = (props: Props) => {
 		if (sortedFeatures.length === 0) {
 			return (
 				<Alert
-					type='info'
+					type='warning'
 					showIcon={true}
 					message='There are no options to choose for this feature.'
 				/>
@@ -121,8 +125,8 @@ export const FeaturePanel = (props: Props) => {
 					className={!data.selected ? 'selection-empty' : ''}
 					allowClear={true}
 					placeholder='Select an ability from an ancestry'
-					options={sortedFeatures.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					options={sortedFeatures.map(a => ({ label: a.name, value: a.id, desc: a.description, disabled: currentFeatureIDs.includes(a.id) }))}
+					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
 					value={data.selected ? data.selected.id : null}
 					onChange={value => {
 						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureAncestryFeatureChoiceData;
@@ -156,7 +160,7 @@ export const FeaturePanel = (props: Props) => {
 		if (sortedOptions.length === 0) {
 			return (
 				<Alert
-					type='info'
+					type='warning'
 					showIcon={true}
 					message='There are no options to choose for this feature.'
 				/>
@@ -227,7 +231,18 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableClassAbility = (data: FeatureClassAbilityData) => {
-		const abilities = props.hero?.class?.abilities.filter(a => a.cost === data.cost).filter(a => a.minLevel <= data.minLevel) || [];
+		if (!props.hero) {
+			return null;
+		}
+
+		const currentAbilityIDs = HeroLogic.getFeatures(props.hero)
+			.filter(f => f.id !== props.feature.id)
+			.filter(f => f.type === FeatureType.ClassAbility)
+			.flatMap(f => f.data.selectedIDs);
+
+		const abilities = props.hero?.class?.abilities
+			.filter(a => a.cost === data.cost)
+			.filter(a => a.minLevel <= data.minLevel) || [];
 
 		const distinctAbilities = Collections.distinct(abilities, a => a.name);
 		const sortedAbilities = Collections.sort(distinctAbilities, a => a.name);
@@ -235,7 +250,7 @@ export const FeaturePanel = (props: Props) => {
 		if (sortedAbilities.length === 0) {
 			return (
 				<Alert
-					type='info'
+					type='warning'
 					showIcon={true}
 					message='There are no options to choose for this feature.'
 				/>
@@ -251,8 +266,8 @@ export const FeaturePanel = (props: Props) => {
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder={data.count === 1 ? 'Select an ability' : 'Select abilities'}
-					options={sortedAbilities.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					options={sortedAbilities.map(a => ({ label: a.name, value: a.id, desc: a.description, disabled: currentAbilityIDs.includes(a.id) }))}
+					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selectedIDs.length > 0 ? data.selectedIDs[0] : null) : data.selectedIDs}
 					onChange={value => {
 						let ids: string[] = [];
@@ -291,7 +306,7 @@ export const FeaturePanel = (props: Props) => {
 		if (sortedDomains.length === 0) {
 			return (
 				<Alert
-					type='info'
+					type='warning'
 					showIcon={true}
 					message='There are no options to choose for this feature.'
 				/>
@@ -412,7 +427,7 @@ export const FeaturePanel = (props: Props) => {
 		if (sortedItems.length === 0) {
 			return (
 				<Alert
-					type='info'
+					type='warning'
 					showIcon={true}
 					message='There are no options to choose for this feature.'
 				/>
@@ -481,7 +496,7 @@ export const FeaturePanel = (props: Props) => {
 		if (sortedKits.length === 0) {
 			return (
 				<Alert
-					type='info'
+					type='warning'
 					showIcon={true}
 					message='There are no options to choose for this feature.'
 				/>
@@ -557,7 +572,7 @@ export const FeaturePanel = (props: Props) => {
 		if (sortedLanguages.length === 0) {
 			return (
 				<Alert
-					type='info'
+					type='warning'
 					showIcon={true}
 					message='There are no options to choose for this feature.'
 				/>
@@ -612,13 +627,19 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
+		const currentPerkIDs = HeroLogic.getFeatures(props.hero)
+			.filter(f => f.id !== props.feature.id)
+			.filter(f => f.type === FeatureType.Perk)
+			.flatMap(f => f.data.selected)
+			.map(p => p.id);
+
 		const perks = SourcebookLogic.getPerks(props.sourcebooks as Sourcebook[]).filter(p => data.lists.includes(p.list));
 		const sortedPerks = Collections.sort(perks, p => p.name);
 
 		if (sortedPerks.length === 0) {
 			return (
 				<Alert
-					type='info'
+					type='warning'
 					showIcon={true}
 					message='There are no options to choose for this feature.'
 				/>
@@ -634,8 +655,8 @@ export const FeaturePanel = (props: Props) => {
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder={data.count === 1 ? 'Select a perk' : 'Select perks'}
-					options={sortedPerks.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					options={sortedPerks.map(a => ({ label: a.name, value: a.id, desc: a.description, disabled: currentPerkIDs.includes(a.id) }))}
+					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
 					onChange={value => {
 						let ids: string[] = [];
@@ -688,7 +709,7 @@ export const FeaturePanel = (props: Props) => {
 		if (sortedSkills.length === 0) {
 			return (
 				<Alert
-					type='info'
+					type='warning'
 					showIcon={true}
 					message='There are no options to choose for this feature.'
 				/>
@@ -743,6 +764,12 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
+		const currentTitleIDs = HeroLogic.getFeatures(props.hero)
+			.filter(f => f.id !== props.feature.id)
+			.filter(f => f.type === FeatureType.TitleChoice)
+			.flatMap(f => f.data.selected)
+			.map(p => p.id);
+
 		const titles = SourcebookLogic.getTitles(props.sourcebooks as Sourcebook[]).filter(t => t.echelon === data.echelon);
 		const sortedTitles = Collections.sort(titles, t => t.name);
 
@@ -771,8 +798,8 @@ export const FeaturePanel = (props: Props) => {
 							maxCount={data.count === 1 ? undefined : data.count}
 							allowClear={true}
 							placeholder={data.count === 1 ? 'Select a title' : 'Select titles'}
-							options={sortedTitles.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
-							optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+							options={sortedTitles.map(a => ({ label: a.name, value: a.id, desc: a.description, disabled: currentTitleIDs.includes(a.id) }))}
+							optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
 							value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
 							onChange={value => {
 								let ids: string[] = [];
@@ -796,7 +823,7 @@ export const FeaturePanel = (props: Props) => {
 						/>
 						:
 						<Alert
-							type='info'
+							type='warning'
 							showIcon={true}
 							message='There are no options to choose for this feature.'
 						/>
@@ -892,7 +919,7 @@ export const FeaturePanel = (props: Props) => {
 	const getExtraAncestryFeatureChoice = (data: FeatureAncestryFeatureChoiceData) => {
 		if (!data.selected) {
 			return <Alert
-				type='info'
+				type='warning'
 				showIcon={true}
 				message='Not selected.'
 			/>;

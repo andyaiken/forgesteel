@@ -104,7 +104,7 @@ export class PerkData {
 			ability: FactoryLogic.createAbility({
 				id: 'perk-friend-catapult-1',
 				name: 'Friend Catapult',
-				description: '',
+				description: 'You hurl your ally through the air.',
 				type: FactoryLogic.type.createManeuver(),
 				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],
@@ -124,7 +124,7 @@ export class PerkData {
 			ability: FactoryLogic.createAbility({
 				id: 'perk-ive-got-you-1',
 				name: 'I\'ve Got You',
-				description: '',
+				description: 'You catch a falling ally at the last possible moment.',
 				type: FactoryLogic.type.createTrigger('A willing ally lands on you when they fall.'),
 				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],
@@ -338,7 +338,7 @@ For you, music is a universal language.
 			ability: FactoryLogic.createAbility({
 				id: 'perk-gum-up-the-works-1',
 				name: 'Gum Up The Works',
-				description: '',
+				description: 'You prevent a trap from activating.',
 				type: FactoryLogic.type.createTrigger('A mundane trap activates within 3 squares of you.'),
 				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],
@@ -420,7 +420,7 @@ If the Director does not have an answer to the question you ask, you can instead
 	static linguist: Perk = {
 		id: 'perk-linguist',
 		name: 'Linguist',
-		description: '',
+		description: 'You have an ear for languages.',
 		type: FeatureType.Multiple,
 		data: {
 			features: [
@@ -502,7 +502,7 @@ Choose one of the following effects:
 			ability: FactoryLogic.createAbility({
 				id: 'perk-creature-sense-1',
 				name: 'Creature Sense',
-				description: '',
+				description: 'You intuit a creature\'s keywords.',
 				type: FactoryLogic.type.createManeuver(),
 				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],

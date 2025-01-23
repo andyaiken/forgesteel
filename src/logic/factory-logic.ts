@@ -451,9 +451,7 @@ export class FactoryLogic {
 		tier3: string
 	}): PowerRoll => {
 		return {
-			characteristic: data.characteristic
-				? Array.isArray(data.characteristic) ? data.characteristic : [ data.characteristic ]
-				: [],
+			characteristic: data.characteristic ? Array.isArray(data.characteristic) ? data.characteristic : [ data.characteristic ] : [],
 			bonus: data.bonus ?? 0,
 			tier1: data.tier1,
 			tier2: data.tier2,
@@ -660,7 +658,7 @@ export class FactoryLogic {
 			return {
 				id: data.id,
 				name: data.name || 'Choice',
-				description: data.description || (count > 1 ? `Choose ${count} options.` : 'Choose an option.'),
+				description: data.description || '',
 				type: FeatureType.Choice,
 				data: {
 					options: data.options,
@@ -674,7 +672,7 @@ export class FactoryLogic {
 			return {
 				id: data.id,
 				name: data.name || 'Ability',
-				description: data.description || `Choose ${count > 1 ? count : 'a'} ${(data.cost === 0) || (data.cost === 'signature') ? 'signature' : `${data.cost}pt`} ${count > 1 ? 'abilities' : 'ability'}.`,
+				description: data.description || '',
 				type: FeatureType.ClassAbility,
 				data: {
 					cost: data.cost,
@@ -700,7 +698,7 @@ export class FactoryLogic {
 			return {
 				id: data.id,
 				name: data.name || 'Domain',
-				description: data.description || (count > 1 ? `Choose ${count} domains.` : 'Choose a domain.'),
+				description: data.description || '',
 				type: FeatureType.Domain,
 				data: {
 					count: count,
@@ -713,7 +711,7 @@ export class FactoryLogic {
 			return {
 				id: data.id,
 				name: data.name || 'Domain Feature Choice',
-				description: data.description || (count > 1 ? `Choose ${count} options.` : 'Choose an option.'),
+				description: data.description || '',
 				type: FeatureType.DomainFeature,
 				data: {
 					level: data.level,
@@ -728,7 +726,7 @@ export class FactoryLogic {
 			return {
 				id: data.id,
 				name: data.name || type,
-				description: data.description || (count > 1 ? `Choose ${count} ${type.toLowerCase()}s.` : `Choose ${Format.startsWithVowel(type) ? 'an' : 'a'} ${type.toLowerCase()}.`),
+				description: data.description || '',
 				type: FeatureType.ItemChoice,
 				data: {
 					types: data.types || [ ItemType.Artifact, ItemType.Consumable, ItemType.Leveled, ItemType.Trinket ],
@@ -742,7 +740,7 @@ export class FactoryLogic {
 			return {
 				id: data.id,
 				name: data.name || 'Kit',
-				description: data.description || (count > 1 ? `Choose ${count} kits.` : 'Choose a kit.'),
+				description: data.description || '',
 				type: FeatureType.Kit,
 				data: {
 					types: data.types || [],
@@ -755,7 +753,7 @@ export class FactoryLogic {
 			return {
 				id: data.id,
 				name: data.name || 'Kit Type',
-				description: data.description || `Allow ${data.types.join(', ')} kits.`,
+				description: data.description || '',
 				type: FeatureType.KitType,
 				data: {
 					types: data.types || []

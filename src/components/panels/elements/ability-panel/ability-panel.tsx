@@ -43,12 +43,14 @@ export const AbilityPanel = (props: Props) => {
 		},
 		[ props.cost, props.ability, props.hero ]
 	);
+
 	const headerRibbon = useMemo(
 		() => cost === 'signature'
 			? (<Badge>Signature</Badge>)
 			: cost > 0 ? (<HeroicResourceBadge value={cost} />) : null,
 		[ cost ]
 	);
+
 	const disabled = useMemo(
 		() => (props.options?.dimUnavailableAbilities ?? false)
 			&& props.hero
@@ -59,7 +61,7 @@ export const AbilityPanel = (props: Props) => {
 
 	try {
 		let className = 'ability-panel';
-		if (props.mode !== PanelMode.Compact) {
+		if (props.mode !== PanelMode.Full) {
 			className += ' compact';
 		}
 		if (disabled) {

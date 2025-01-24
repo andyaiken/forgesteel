@@ -38,7 +38,7 @@ export const devil: Ancestry = {
 					feature: FactoryLogic.feature.createSpeed({
 						id: 'devil-feature-2-2',
 						name: 'Beast Legs',
-						description: 'Your powerful legs improve your speed.',
+						description: 'Your powerful legs improve your speed. Your Speed is 6.',
 						speed: 6
 					}),
 					value: 1

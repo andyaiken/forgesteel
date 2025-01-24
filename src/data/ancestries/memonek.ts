@@ -71,7 +71,7 @@ export const memonek: Ancestry = {
 					feature: FactoryLogic.feature.createSpeed({
 						id: 'memonek-feature-3-6',
 						name: 'Lightning Nimbleness',
-						description: 'You can push your body to move at incredible speeds.',
+						description: 'You can push your body to move at incredible speeds. Your Speed is 7.',
 						speed: 7
 					}),
 					value: 2

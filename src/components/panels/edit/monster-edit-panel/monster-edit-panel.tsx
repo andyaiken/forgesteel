@@ -26,6 +26,7 @@ import './monster-edit-panel.scss';
 interface Props {
 	monster: Monster;
 	sourcebooks: Sourcebook[];
+	similarMonsters: Monster[];
 	onChange: (monster: Monster) => void;
 }
 

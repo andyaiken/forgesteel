@@ -146,15 +146,16 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getEditableChoice = (data: FeatureChoiceData) => {
-		const selectedIDs = data.selected.map(f => f.id);
-
-		const pointsUsed = Collections.sum(selectedIDs, id => {
-			const original = data.options.find(o => o.feature.id === id);
-			return original ? original.value : 0;
-		});
-		const pointsLeft = data.count - pointsUsed;
-
-		const availableOptions = data.options.filter(o => data.options.every(o => o.value === 1) || selectedIDs.includes(o.feature.id) || (o.value <= pointsLeft));
+		let availableOptions = [ ...data.options ];
+		if (availableOptions.some(opt => opt.feature.type === FeatureType.AncestryFeatureChoice)) {
+			availableOptions = availableOptions.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
+			const additionalOptions = HeroLogic.getFormerAncestries(props.hero!)
+				.flatMap(a => a.features)
+				.filter(f => f.type === FeatureType.Choice)
+				.flatMap(f => f.data.options)
+				.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
+			availableOptions.push(...additionalOptions);
+		}
 		const sortedOptions = Collections.sort(availableOptions, opt => opt.feature.name);
 
 		if (sortedOptions.length === 0) {
@@ -166,6 +167,14 @@ export const FeaturePanel = (props: Props) => {
 				/>
 			);
 		}
+
+		const selectedIDs = data.selected.map(f => f.id);
+		const pointsUsed = Collections.sum(selectedIDs, id => {
+			const original = availableOptions.find(o => o.feature.id === id);
+			return original ? original.value : 0;
+		});
+		const pointsLeft = data.count - pointsUsed;
+		const unavailableIDs = availableOptions.filter(opt => opt.value > pointsLeft).map(opt => opt.feature.id);
 
 		const showCosts = data.options.some(o => o.value > 1);
 
@@ -183,12 +192,13 @@ export const FeaturePanel = (props: Props) => {
 					style={{ width: '100%' }}
 					className={data.selected.length === 0 ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
-					maxCount={data.count === 1 ? undefined : data.count}
+					//maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder={data.count === 1 ? 'Select an option' : 'Select options'}
-					options={sortedOptions.map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description, cost: o.value }))}
+					options={sortedOptions.map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description, disabled: unavailableIDs.includes(o.feature.id), cost: o.value }))}
 					optionRender={option => (
 						<Field
+							disabled={option.data.disabled}
 							label={(
 								<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
 									<span>{option.data.label}</span>
@@ -208,7 +218,7 @@ export const FeaturePanel = (props: Props) => {
 						}
 						const features: Feature[] = [];
 						ids.forEach(id => {
-							const option = data.options.find(o => o.feature.id === id);
+							const option = availableOptions.find(o => o.feature.id === id);
 							if (option) {
 								const featureCopy = JSON.parse(JSON.stringify(option.feature)) as Feature;
 								features.push(featureCopy);
@@ -918,11 +928,9 @@ export const FeaturePanel = (props: Props) => {
 
 	const getExtraAncestryFeatureChoice = (data: FeatureAncestryFeatureChoiceData) => {
 		if (!data.selected) {
-			return <Alert
-				type='warning'
-				showIcon={true}
-				message='Not selected.'
-			/>;
+			return (
+				<div className='ds-text'>A {data.value}pt ancestry feature.</div>
+			);
 		}
 
 		return null;

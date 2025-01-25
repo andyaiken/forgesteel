@@ -1485,22 +1485,25 @@ export const LibraryEditPage = (props: Props) => {
 			<MonsterEditPanel
 				monster={monster}
 				sourcebooks={props.sourcebooks}
+				similarMonsters={getSimilarMonsters(monster)}
 				onChange={changeMonster}
 			/>
 		);
 	};
 
 	const getSimilarMonsters = (monster: Monster) => {
-		const monsters = props.sourcebooks
+		return props.sourcebooks
 			.flatMap(sb => sb.monsterGroups)
 			.flatMap(mg => mg.monsters)
 			.filter(m => m.id !== monster.id)
 			.filter(m => (m.level === monster.level) && (m.role.type === monster.role.type) && (m.role.organization === monster.role.organization));
+	};
 
+	const getSimilarMonstersSection = (monster: Monster) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
-					monsters.map(m => {
+					getSimilarMonsters(monster).map(m => {
 						const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id);
 						if (!monsterGroup) {
 							return null;
@@ -1944,7 +1947,7 @@ export const LibraryEditPage = (props: Props) => {
 								{
 									key: '2',
 									label: 'Similar Monsters',
-									children: getSimilarMonsters(monster)
+									children: getSimilarMonstersSection(monster)
 								}
 							]}
 						/>

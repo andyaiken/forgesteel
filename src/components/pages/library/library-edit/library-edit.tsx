@@ -1510,7 +1510,7 @@ export const LibraryEditPage = (props: Props) => {
 						}
 
 						return (
-							<SelectablePanel key={m.id} onSelect={() => props.showMonster(monster.id)}>
+							<SelectablePanel key={m.id} onSelect={() => props.showMonster(m.id)}>
 								<MonsterPanel
 									monster={m}
 									monsterGroup={monsterGroup}

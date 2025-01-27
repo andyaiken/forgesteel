@@ -252,6 +252,7 @@ export const MonsterEditPanel = (props: Props) => {
 							<HistogramPanel
 								min={0}
 								values={props.similarMonsters.map(m => m.encounterValue)}
+								onSelect={setEncounterValue}
 							/>
 						</Expander>
 						: null
@@ -283,6 +284,7 @@ export const MonsterEditPanel = (props: Props) => {
 							<HistogramPanel
 								min={0}
 								values={props.similarMonsters.map(m => m.speed.value)}
+								onSelect={setSpeed}
 							/>
 						</Expander>
 						: null
@@ -296,6 +298,7 @@ export const MonsterEditPanel = (props: Props) => {
 							<HistogramPanel
 								min={0}
 								values={props.similarMonsters.map(m => m.stamina)}
+								onSelect={setStamina}
 							/>
 						</Expander>
 						: null
@@ -309,6 +312,7 @@ export const MonsterEditPanel = (props: Props) => {
 							<HistogramPanel
 								min={0}
 								values={props.similarMonsters.map(m => m.stability)}
+								onSelect={setStability}
 							/>
 						</Expander>
 						: null
@@ -322,6 +326,7 @@ export const MonsterEditPanel = (props: Props) => {
 							<HistogramPanel
 								min={0}
 								values={props.similarMonsters.map(m => m.freeStrikeDamage)}
+								onSelect={setFreeStrikeDamage}
 							/>
 						</Expander>
 						: null
@@ -359,6 +364,7 @@ export const MonsterEditPanel = (props: Props) => {
 											min={-5}
 											max={5}
 											values={props.similarMonsters.map(m => MonsterLogic.getCharacteristic(m, ch))}
+											onSelect={value => setCharacteristic(ch, value)}
 										/>
 									</Expander>
 									: null

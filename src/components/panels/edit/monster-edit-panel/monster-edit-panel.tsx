@@ -1,5 +1,5 @@
-import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Alert, Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, ImportOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
@@ -7,9 +7,11 @@ import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Feature } from '../../../../models/feature';
 import { FeatureEditPanel } from '../feature-edit-panel/feature-edit-panel';
+import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
+import { HistogramPanel } from '../../histogram/histogram-panel';
 import { Monster } from '../../../../models/monster';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
@@ -17,6 +19,7 @@ import { MonsterRoleType } from '../../../../enums/monster-role-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
+import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
@@ -158,6 +161,16 @@ export const MonsterEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const importFeature = (feature: Feature) => {
+		const featureCopy = JSON.parse(JSON.stringify(feature)) as Feature;
+		featureCopy.id = Utils.guid();
+
+		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+		copy.features.push(featureCopy);
+		setMonster(copy);
+		props.onChange(copy);
+	};
+
 	const changeFeature = (feature: Feature) => {
 		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
 		const index = copy.features.findIndex(f => f.id === feature.id);
@@ -183,6 +196,250 @@ export const MonsterEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const getNameAndDescriptionSection = () => {
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Name</HeaderText>
+				<Input
+					className={monster.name === '' ? 'input-empty' : ''}
+					placeholder='Name'
+					allowClear={true}
+					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
+					value={monster.name}
+					onChange={e => setName(e.target.value)}
+				/>
+				<HeaderText>Description</HeaderText>
+				<MultiLine label='Description' value={monster.description} onChange={setDescription} />
+			</Space>
+		);
+	};
+
+	const getStatsSection = () => {
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Keywords</HeaderText>
+				<Input
+					placeholder='Keywords'
+					allowClear={true}
+					value={monster.keywords.join(' ')}
+					onChange={e => setKeywords(e.target.value)}
+				/>
+				<HeaderText>Level</HeaderText>
+				<NumberSpin min={1} max={10} value={monster.level} onChange={setLevel} />
+				<HeaderText>Role</HeaderText>
+				<Select
+					style={{ width: '100%' }}
+					placeholder='Select role'
+					options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(option => ({ value: option, desc: MonsterLogic.getRoleTypeDescription(option) }))}
+					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
+					value={monster.role.type}
+					onChange={setRoleType}
+				/>
+				<Select
+					style={{ width: '100%' }}
+					placeholder='Select organization'
+					options={[ MonsterOrganizationType.Minion, MonsterOrganizationType.Band, MonsterOrganizationType.Platoon, MonsterOrganizationType.Troop, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo ].map(option => ({ value: option, desc: MonsterLogic.getRoleOrganizationDescription(option) }))}
+					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
+					value={monster.role.organization}
+					onChange={setRoleOrganization}
+				/>
+				<HeaderText>Encounter Value</HeaderText>
+				<NumberSpin min={1} value={monster.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />
+				{
+					props.similarMonsters.length > 0 ?
+						<Expander title='Similar Monsters'>
+							<HeaderText>Encounter Value</HeaderText>
+							<HistogramPanel
+								min={0}
+								values={props.similarMonsters.map(m => m.encounterValue)}
+							/>
+						</Expander>
+						: null
+				}
+				<HeaderText>Size</HeaderText>
+				<NumberSpin min={1} value={monster.size.value} onChange={setSizeValue} />
+				{
+					monster.size.value === 1 ?
+						<Segmented
+							block={true}
+							options={[ 'T', 'S', 'M', 'L' ]}
+							value={monster.size.mod}
+							onChange={e => setSizeMod(e as 'T' | 'S' | 'M' | 'L')}
+						/>
+						: null
+				}
+				<HeaderText>Speed</HeaderText>
+				<NumberSpin min={0} value={monster.speed.value} onChange={setSpeed} />
+				<Input
+					placeholder='Movement mode'
+					allowClear={true}
+					value={monster.speed.modes}
+					onChange={e => setMovementMode(e.target.value)}
+				/>
+				{
+					props.similarMonsters.length > 0 ?
+						<Expander title='Similar Monsters'>
+							<HeaderText>Speed</HeaderText>
+							<HistogramPanel
+								min={0}
+								values={props.similarMonsters.map(m => m.speed.value)}
+							/>
+						</Expander>
+						: null
+				}
+				<HeaderText>Stamina</HeaderText>
+				<NumberSpin min={0} value={monster.stamina} steps={[ 1, 10 ]} onChange={setStamina} />
+				{
+					props.similarMonsters.length > 0 ?
+						<Expander title='Similar Monsters'>
+							<HeaderText>Stamina</HeaderText>
+							<HistogramPanel
+								min={0}
+								values={props.similarMonsters.map(m => m.stamina)}
+							/>
+						</Expander>
+						: null
+				}
+				<HeaderText>Stability</HeaderText>
+				<NumberSpin min={0} value={monster.stability} onChange={setStability} />
+				{
+					props.similarMonsters.length > 0 ?
+						<Expander title='Similar Monsters'>
+							<HeaderText>Stability</HeaderText>
+							<HistogramPanel
+								min={0}
+								values={props.similarMonsters.map(m => m.stability)}
+							/>
+						</Expander>
+						: null
+				}
+				<HeaderText>Free Strike Damage</HeaderText>
+				<NumberSpin min={0} value={monster.freeStrikeDamage} steps={[ 1, 10 ]} onChange={setFreeStrikeDamage} />
+				{
+					props.similarMonsters.length > 0 ?
+						<Expander title='Similar Monsters'>
+							<HeaderText>Free Strike Damage</HeaderText>
+							<HistogramPanel
+								min={0}
+								values={props.similarMonsters.map(m => m.freeStrikeDamage)}
+							/>
+						</Expander>
+						: null
+				}
+				<HeaderText>With Captain</HeaderText>
+				<MultiLine label='With Captain' value={monster.withCaptain} onChange={setWithCaptain} />
+			</Space>
+		);
+	};
+
+	const getCharacteristicsSection = () => {
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					[
+						Characteristic.Might,
+						Characteristic.Agility,
+						Characteristic.Reason,
+						Characteristic.Intuition,
+						Characteristic.Presence
+					].map(ch => (
+						<Space direction='vertical' style={{ width: '100%' }} key={ch}>
+							<HeaderText>{ch}</HeaderText>
+							<NumberSpin
+								min={-5}
+								max={5}
+								value={MonsterLogic.getCharacteristic(monster, ch)}
+								onChange={value => setCharacteristic(ch, value)}
+							/>
+							{
+								props.similarMonsters.length > 0 ?
+									<Expander title='Similar Monsters'>
+										<HeaderText>{ch}</HeaderText>
+										<HistogramPanel
+											min={-5}
+											max={5}
+											values={props.similarMonsters.map(m => MonsterLogic.getCharacteristic(m, ch))}
+										/>
+									</Expander>
+									: null
+							}
+						</Space>
+					))
+				}
+			</Space>
+		);
+	};
+
+	const getFeaturesSection = () => {
+		const similarFeatures: Feature[] = [];
+		props.similarMonsters.forEach(m => {
+			m.features.forEach(f => {
+				if (!monster.features.some(mf => mf.name === f.name) && !similarFeatures.some(sf => sf.name === f.name)) {
+					similarFeatures.push(f);
+				}
+			});
+		});
+		const sortedFeatures = Collections.sort(similarFeatures, f => f.name);
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					monster.features.map(f => (
+						<Expander
+							key={f.id}
+							title={f.name || 'Unnamed Feature'}
+							extra={[
+								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
+								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
+								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteFeature(f); }} />
+							]}
+						>
+							<FeatureEditPanel
+								feature={f}
+								sourcebooks={props.sourcebooks}
+								allowedTypes={[ FeatureType.Text, FeatureType.Ability, FeatureType.DamageModifier ]}
+								onChange={changeFeature}
+							/>
+						</Expander>
+					))
+				}
+				{
+					monster.features.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No features'
+						/>
+						: null
+				}
+				<Button block={true} onClick={addFeature}>Add a new feature</Button>
+				{sortedFeatures.length > 0 ? <Divider /> : null}
+				{
+					sortedFeatures.length > 0 ?
+						<Expander title='Similar Monsters'>
+							<HeaderText>Features from Similar Monsters</HeaderText>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								{
+									sortedFeatures.map(f => (
+										<Expander
+											key={f.id}
+											title={f.name}
+											extra={[
+												<Button key='up' type='text' icon={<ImportOutlined />} onClick={e => { e.stopPropagation(); importFeature(f); }} />
+											]}
+										>
+											<FeaturePanel feature={f} mode={PanelMode.Full} />
+										</Expander>
+									))
+								}
+							</Space>
+						</Expander>
+						: null
+				}
+			</Space>
+		);
+	};
+
 	try {
 		return (
 			<div className='monster-edit-panel'>
@@ -191,155 +448,22 @@ export const MonsterEditPanel = (props: Props) => {
 						{
 							key: '1',
 							label: 'Monster',
-							children: (
-								<div>
-									<HeaderText>Name</HeaderText>
-									<Input
-										className={monster.name === '' ? 'input-empty' : ''}
-										placeholder='Name'
-										allowClear={true}
-										addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-										value={monster.name}
-										onChange={e => setName(e.target.value)}
-									/>
-									<HeaderText>Description</HeaderText>
-									<MultiLine label='Description' value={monster.description} onChange={setDescription} />
-								</div>
-							)
+							children: getNameAndDescriptionSection()
 						},
 						{
 							key: '2',
 							label: 'Stats',
-							children: (
-								<div>
-									<HeaderText>Keywords</HeaderText>
-									<Input
-										placeholder='Keywords'
-										allowClear={true}
-										value={monster.keywords.join(' ')}
-										onChange={e => setKeywords(e.target.value)}
-									/>
-									<HeaderText>Level</HeaderText>
-									<NumberSpin min={1} max={10} value={monster.level} onChange={setLevel} />
-									<HeaderText>Role</HeaderText>
-									<Space direction='vertical' style={{ width: '100%' }}>
-										<Select
-											style={{ width: '100%' }}
-											placeholder='Select role'
-											options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(option => ({ value: option, desc: MonsterLogic.getRoleTypeDescription(option) }))}
-											optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
-											value={monster.role.type}
-											onChange={setRoleType}
-										/>
-										<Select
-											style={{ width: '100%' }}
-											placeholder='Select organization'
-											options={[ MonsterOrganizationType.Minion, MonsterOrganizationType.Band, MonsterOrganizationType.Platoon, MonsterOrganizationType.Troop, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo ].map(option => ({ value: option, desc: MonsterLogic.getRoleOrganizationDescription(option) }))}
-											optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
-											value={monster.role.organization}
-											onChange={setRoleOrganization}
-										/>
-									</Space>
-									<HeaderText>Encounter Value</HeaderText>
-									<NumberSpin min={1} value={monster.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />
-									<HeaderText>Size</HeaderText>
-									<Space direction='vertical' style={{ width: '100%' }}>
-										<NumberSpin min={1} value={monster.size.value} onChange={setSizeValue} />
-										{
-											monster.size.value === 1 ?
-												<Segmented
-													block={true}
-													options={[ 'T', 'S', 'M', 'L' ]}
-													value={monster.size.mod}
-													onChange={e => setSizeMod(e as 'T' | 'S' | 'M' | 'L')}
-												/>
-												: null
-										}
-									</Space>
-									<HeaderText>Speed</HeaderText>
-									<Space direction='vertical' style={{ width: '100%' }}>
-										<NumberSpin min={0} value={monster.speed.value} onChange={setSpeed} />
-										<Input
-											placeholder='Movement mode'
-											allowClear={true}
-											value={monster.speed.modes}
-											onChange={e => setMovementMode(e.target.value)}
-										/>
-									</Space>
-									<HeaderText>Stamina</HeaderText>
-									<NumberSpin min={0} value={monster.stamina} steps={[ 1, 10 ]} onChange={setStamina} />
-									<HeaderText>Stability</HeaderText>
-									<NumberSpin min={0} value={monster.stability} onChange={setStability} />
-									<HeaderText>Free Strike Damage</HeaderText>
-									<NumberSpin min={0} value={monster.freeStrikeDamage} steps={[ 1, 10 ]} onChange={setFreeStrikeDamage} />
-									<HeaderText>With Captain</HeaderText>
-									<MultiLine label='With Captain' value={monster.withCaptain} onChange={setWithCaptain} />
-								</div>
-							)
+							children: getStatsSection()
 						},
 						{
 							key: '3',
 							label: 'Characteristics',
-							children: (
-								<Space direction='vertical' style={{ width: '100%' }}>
-									{
-										[
-											Characteristic.Might,
-											Characteristic.Agility,
-											Characteristic.Reason,
-											Characteristic.Intuition,
-											Characteristic.Presence
-										].map(ch => (
-											<NumberSpin
-												key={ch}
-												label={ch}
-												min={-5}
-												max={5}
-												value={MonsterLogic.getCharacteristic(monster, ch)}
-												onChange={value => setCharacteristic(ch, value)}
-											/>
-										))
-									}
-								</Space>
-							)
+							children: getCharacteristicsSection()
 						},
 						{
 							key: '4',
 							label: 'Features',
-							children: (
-								<Space direction='vertical' style={{ width: '100%' }}>
-									{
-										monster.features.map(f => (
-											<Expander
-												key={f.id}
-												title={f.name || 'Unnamed Feature'}
-												extra={[
-													<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
-													<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
-													<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteFeature(f); }} />
-												]}
-											>
-												<FeatureEditPanel
-													feature={f}
-													sourcebooks={props.sourcebooks}
-													allowedTypes={[ FeatureType.Text, FeatureType.Ability, FeatureType.DamageModifier ]}
-													onChange={changeFeature}
-												/>
-											</Expander>
-										))
-									}
-									{
-										monster.features.length === 0 ?
-											<Alert
-												type='warning'
-												showIcon={true}
-												message='No features'
-											/>
-											: null
-									}
-									<Button block={true} onClick={addFeature}>Add a new feature</Button>
-								</Space>
-							)
+							children: getFeaturesSection()
 						}
 					]}
 				/>

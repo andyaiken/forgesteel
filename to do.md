@@ -60,6 +60,7 @@
     * Work out how retainers should be represented
     * Add retainer data
     * Add a retainer feature
+* Add a way for heroes to track their current projects
 * Hero Builder:
   * Auto-create heroes
   * Revenants should have 3 ancestry points if small
@@ -74,9 +75,7 @@
 
 * Similar monsters
   * Allow the user to define similarity (currently it's level, role, and organization)
-  * Add the ability to 'pull in' stuff from similar monsters
-  * Show stats breakdown for similar monsters
-* Allow the user to specify a working set of monsters
+  * Allow the user to specify a working set of monsters
 * Auto-create monsters
 
 ### Encounter Editor

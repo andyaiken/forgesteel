@@ -29,6 +29,7 @@ export class SourcebookLogic {
 		count += sourcebook.domains.length;
 		count += sourcebook.perks.length;
 		count += sourcebook.items.length;
+		count += sourcebook.monsterGroups.length;
 
 		return count;
 	};

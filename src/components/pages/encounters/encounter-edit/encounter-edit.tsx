@@ -41,8 +41,8 @@ interface Props {
 }
 
 export const EncounterEditPage = (props: Props) => {
-	const { encounterId } = useParams<{ encounterId: string }>();
-	const originalEncounter = useMemo(() => props.playbook.encounters.find(e => e.id === encounterId)!, [ encounterId, props.playbook ]);
+	const { encounterID } = useParams<{ encounterID: string }>();
+	const originalEncounter = useMemo(() => props.playbook.encounters.find(e => e.id === encounterID)!, [ encounterID, props.playbook ]);
 	const [ encounter, setEncounter ] = useState(JSON.parse(JSON.stringify(originalEncounter)) as Encounter);
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());

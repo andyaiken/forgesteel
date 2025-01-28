@@ -72,18 +72,18 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	showAbout: () => void;
  	showMonster: (monsterID: string) => void;
-	saveChanges: (sourcebookId: string, kind: SourcebookElementKind, element: Element) => void;
+	saveChanges: (sourcebookID: string, kind: SourcebookElementKind, element: Element) => void;
 }
 
 export const LibraryEditPage = (props: Props) => {
 	const navigation = useNavigation();
-	const { sourcebookId, kind, elementId } = useParams<{ sourcebookId: string, kind: SourcebookElementKind, elementId: string }>();
-	const [ subElementId, setSubElementId ] = useState<string>('');
-	const sourcebook = useMemo(() => props.sourcebooks.find(s => s.id === sourcebookId)!, [ sourcebookId, props.sourcebooks ]);
+	const { sourcebookID, kind, elementID, subElementID } = useParams<{ sourcebookID: string, kind: SourcebookElementKind, elementID: string, subElementID?: string }>();
+	const sourcebook = useMemo(() => props.sourcebooks.find(s => s.id === sourcebookID)!, [ sourcebookID, props.sourcebooks ]);
 	const sourcebookKey = useMemo(() => getSourcebookKey(kind!), [ kind ]);
-	const originalElement = useMemo(() => sourcebook[sourcebookKey].find(e => e.id === elementId)!, [ sourcebook, sourcebookKey, elementId ]);
+	const originalElement = useMemo(() => sourcebook[sourcebookKey].find(e => e.id === elementID)!, [ sourcebook, sourcebookKey, elementID ]);
 	const [ element, setElement ] = useState<Element>(JSON.parse(JSON.stringify(originalElement)) as Element);
 	const [ dirty, setDirty ] = useState<boolean>(false);
+	const [ showSimilarMonsters, setShowSimilarMonsters ] = useState<boolean>(false);
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
@@ -625,7 +625,7 @@ export const LibraryEditPage = (props: Props) => {
 							key={sc.id}
 							title={sc.name || 'Unnamed Subclass'}
 							extra={[
-								<Button key='edit' type='text' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); setSubElementId(sc.id); }} />,
+								<Button key='edit' type='text' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); navigation.goToLibraryEdit(sourcebookID!, kind!, elementID!, sc.id); }} />,
 								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'up'); }} />,
 								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'down'); }} />,
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSubclass(sc); }} />
@@ -651,7 +651,7 @@ export const LibraryEditPage = (props: Props) => {
 
 	const getSubclassEditSection = () => {
 		const heroClass = element as HeroClass;
-		const subclass = heroClass.subclasses.find(sc => sc.id === subElementId) as SubClass;
+		const subclass = heroClass.subclasses.find(sc => sc.id === subElementID) as SubClass;
 
 		const setName = (subclass: SubClass, value: string) => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
@@ -1425,8 +1425,8 @@ export const LibraryEditPage = (props: Props) => {
 			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
 			copy.monsters = copy.monsters.filter(m => m.id !== monster.id);
 			setElement(copy);
-			if (subElementId === monster.id) {
-				setSubElementId('');
+			if (subElementID === monster.id) {
+				navigation.goToLibraryEdit(sourcebookID!, kind!, elementID!);
 			}
 			setDirty(true);
 		};
@@ -1439,7 +1439,7 @@ export const LibraryEditPage = (props: Props) => {
 							key={m.id}
 							title={MonsterLogic.getMonsterName(m, monsterGroup)}
 							extra={[
-								<Button key='edit' type='text' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); setSubElementId(m.id); }} />,
+								<Button key='edit' type='text' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); navigation.goToLibraryEdit(sourcebookID!, kind!, elementID!, m.id); }} />,
 								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMonster(m, 'up'); }} />,
 								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMonster(m, 'down'); }} />,
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteMonster(m); }} />
@@ -1469,7 +1469,7 @@ export const LibraryEditPage = (props: Props) => {
 
 	const getMonsterEditSection = () => {
 		const monsterGroup = element as MonsterGroup;
-		const monster = monsterGroup.monsters.find(m => m.id === subElementId) as Monster;
+		const monster = monsterGroup.monsters.find(m => m.id === subElementID) as Monster;
 
 		const changeMonster = (monster: Monster) => {
 			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
@@ -1485,7 +1485,7 @@ export const LibraryEditPage = (props: Props) => {
 			<MonsterEditPanel
 				monster={monster}
 				sourcebooks={props.sourcebooks}
-				similarMonsters={getSimilarMonsters(monster)}
+				similarMonsters={showSimilarMonsters ? getSimilarMonsters(monster) : []}
 				onChange={changeMonster}
 			/>
 		);
@@ -1500,10 +1500,17 @@ export const LibraryEditPage = (props: Props) => {
 	};
 
 	const getSimilarMonstersSection = (monster: Monster) => {
+		const monsters = getSimilarMonsters(monster);
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
-					getSimilarMonsters(monster).map(m => {
+					monsters.length > 0 ?
+						<Toggle label='Show data from this list in the monster builder' value={showSimilarMonsters} onChange={setShowSimilarMonsters} />
+						: null
+				}
+				{
+					monsters.map(m => {
 						const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id);
 						if (!monsterGroup) {
 							return null;
@@ -1520,6 +1527,15 @@ export const LibraryEditPage = (props: Props) => {
 						);
 					})
 				}
+				{
+					monsters.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No similar monsters.'
+						/>
+						: null
+				}
 			</Space>
 		);
 	};
@@ -1535,8 +1551,8 @@ export const LibraryEditPage = (props: Props) => {
 								style={{ width: '100%' }}
 								options={[ null, ...heroClass.subclasses ].map(sc => ({ label: sc ? sc.name || 'Unnamed Subclass' : 'Class', value: sc ? sc.id : '' }))}
 								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-								value={subElementId}
-								onChange={setSubElementId}
+								value={subElementID || ''}
+								onChange={id => navigation.goToLibraryEdit(sourcebookID!, kind!, elementID!, id)}
 							/>
 						</div>
 					);
@@ -1552,8 +1568,8 @@ export const LibraryEditPage = (props: Props) => {
 								style={{ width: '100%' }}
 								options={[ null, ...monsterGroup.monsters ].map(m => ({ label: m ? MonsterLogic.getMonsterName(m, monsterGroup) : 'Monster Group', value: m ? m.id : '' }))}
 								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-								value={subElementId}
-								onChange={setSubElementId}
+								value={subElementID || ''}
+								onChange={id => navigation.goToLibraryEdit(sourcebookID!, kind!, elementID!, id)}
 							/>
 						</div>
 					);
@@ -1624,7 +1640,7 @@ export const LibraryEditPage = (props: Props) => {
 					/>
 				);
 			case 'class':
-				if (subElementId === '') {
+				if (!subElementID) {
 					return (
 						<Tabs
 							items={[
@@ -1792,7 +1808,7 @@ export const LibraryEditPage = (props: Props) => {
 					/>
 				);
 			case 'monster-group':
-				if (subElementId === '') {
+				if (!subElementID) {
 					return (
 						<Tabs
 							items={[
@@ -1830,19 +1846,19 @@ export const LibraryEditPage = (props: Props) => {
 	const getPreviewHeaderSection = () => {
 		switch (kind) {
 			case 'class':
-				if (subElementId !== '') {
+				if (!subElementID) {
 					return (
 						<div className='preview-header-section'>
-							<Button icon={<LeftOutlined />} onClick={() => setSubElementId('')}>Back to Class</Button>
+							<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryEdit(sourcebookID!, kind!, elementID!)}>Back to Class</Button>
 						</div>
 					);
 				}
 				break;
 			case 'monster-group':
-				if (subElementId !== '') {
+				if (!subElementID) {
 					return (
 						<div className='preview-header-section'>
-							<Button icon={<LeftOutlined />} onClick={() => setSubElementId('')}>Back to Monster Group</Button>
+							<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryEdit(sourcebookID!, kind!, elementID!)}>Back to Monster Group</Button>
 						</div>
 					);
 				}
@@ -1873,7 +1889,7 @@ export const LibraryEditPage = (props: Props) => {
 					</SelectablePanel>
 				);
 			case 'class':
-				if (subElementId === '') {
+				if (!subElementID) {
 					return (
 						<SelectablePanel>
 							<ClassPanel heroClass={element as HeroClass} mode={PanelMode.Full} />
@@ -1923,7 +1939,7 @@ export const LibraryEditPage = (props: Props) => {
 					</SelectablePanel>
 				);
 			case 'monster-group':
-				if (subElementId === '') {
+				if (!subElementID) {
 					return (
 						<SelectablePanel>
 							<MonsterGroupPanel monsterGroup={element as MonsterGroup} mode={PanelMode.Full} />
@@ -1931,7 +1947,7 @@ export const LibraryEditPage = (props: Props) => {
 					);
 				} else {
 					const monsterGroup = element as MonsterGroup;
-					const monster = monsterGroup.monsters.find(m => m.id === subElementId) as Monster;
+					const monster = monsterGroup.monsters.find(m => m.id === subElementID) as Monster;
 					return (
 						<Tabs
 							items={[
@@ -1960,12 +1976,14 @@ export const LibraryEditPage = (props: Props) => {
 
 	try {
 		let editing = Format.capitalize(kind!);
-		if ((kind === 'class') && !!subElementId) {
-			editing = 'Subclass';
+		if (kind === 'class') {
+			if (subElementID) {
+				editing = 'Subclass';
+			}
 		}
 		if (kind === 'monster-group') {
 			editing = 'Monster Group';
-			if (subElementId) {
+			if (subElementID) {
 				editing = 'Monster';
 			}
 		}
@@ -1973,7 +1991,7 @@ export const LibraryEditPage = (props: Props) => {
 		return (
 			<div className='library-edit-page'>
 				<AppHeader breadcrumbs={[ { label: `${editing} Builder` } ]} showAbout={props.showAbout}>
-					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(sourcebookId!, kind!, element)}>
+					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(sourcebookID!, kind!, element)}>
 						Save Changes
 					</Button>
 					<Button onClick={() => navigation.goToLibraryList(kind!)}>

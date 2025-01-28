@@ -148,15 +148,15 @@ export const Main = (props: Props) => {
 		setDrawer(null);
 	};
 
-	const exportHero = (heroId: string, format: 'image' | 'pdf' | 'json') => {
-		const hero = heroes.find(h => h.id === heroId)!;
-		const ids = (format === 'pdf') ? [ 'stats', 'actions', 'maneuvers', 'moves', 'triggers', 'others', 'none' ] : [ heroId ];
+	const exportHero = (heroID: string, format: 'image' | 'pdf' | 'json') => {
+		const hero = heroes.find(h => h.id === heroID)!;
+		const ids = (format === 'pdf') ? [ 'stats', 'actions', 'maneuvers', 'moves', 'triggers', 'others', 'none' ] : [ heroID ];
 		Utils.export(ids, hero.name || 'Unnamed Hero', hero, 'hero', format);
 	};
 
-	const deleteHero = async (heroId: string) => {
+	const deleteHero = async (heroID: string) => {
 		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
-		await persistHeroes(copy.filter(h => h.id !== heroId));
+		await persistHeroes(copy.filter(h => h.id !== heroID));
 		navigation.goToHeroList();
 	};
 
@@ -542,6 +542,7 @@ export const Main = (props: Props) => {
 	function editHomebrewElement(kind: 'title', element: Title, sourcebook: Sourcebook): void;
 	function editHomebrewElement(kind: 'item', element: Item, sourcebook: Sourcebook): void;
 	function editHomebrewElement(kind: 'monster-group', element: MonsterGroup, sourcebook: Sourcebook): void;
+
 	function editHomebrewElement(
 		kind: SourcebookElementKind,
 		element: Ancestry | Culture | Career | HeroClass | Complication | Domain | Kit | Perk | Title | Item | MonsterGroup,
@@ -595,19 +596,19 @@ export const Main = (props: Props) => {
 		editHomebrewElement('monster-group', monsterGroup, sourcebook);
 	};
 
-	const deleteSourcebookElement = async (kind: SourcebookElementKind, elementId: string) => {
+	const deleteSourcebookElement = async (kind: SourcebookElementKind, elementID: string) => {
 		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		const sourcebookKey = getSourcebookKey(kind);
 		copy.forEach((cs: Record<SourcebookElementsKey, Element[]>) => {
-			cs[sourcebookKey] = cs[sourcebookKey].filter(x => x.id !== elementId);
+			cs[sourcebookKey] = cs[sourcebookKey].filter(x => x.id !== elementID);
 		});
 		await persistHomebrewSourcebooks(copy);
 		setDrawer(null);
 	};
 
-	const saveEditElement = async (sourcebookId: string, kind: SourcebookElementKind, element: Element) => {
+	const saveEditElement = async (sourcebookID: string, kind: SourcebookElementKind, element: Element) => {
 		const list = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
-		const sourcebook = list.find(cs => cs.id === sourcebookId) as Record<SourcebookElementsKey, Element[]>;
+		const sourcebook = list.find(cs => cs.id === sourcebookID) as Record<SourcebookElementsKey, Element[]>;
 		if (sourcebook) {
 			const elementKey = getSourcebookKey(kind);
 			sourcebook[elementKey] = sourcebook[elementKey].map(x => x.id === element.id ? element : x);
@@ -653,8 +654,8 @@ export const Main = (props: Props) => {
 		setDrawer(null);
 	};
 
-	const editEncounter = (encounterId: string) => {
-		navigation.goToEncounterEdit(encounterId);
+	const editEncounter = (encounterID: string) => {
+		navigation.goToEncounterEdit(encounterID);
 		setDrawer(null);
 	};
 
@@ -1011,7 +1012,7 @@ export const Main = (props: Props) => {
 						}
 					/>
 					<Route
-						path='view/:heroId'
+						path='view/:heroID'
 						element={
 							<HeroPage
 								heroes={heroes}
@@ -1036,11 +1037,11 @@ export const Main = (props: Props) => {
 						}
 					/>
 					<Route
-						path='edit/:heroId'
+						path='edit/:heroID'
 						element={<Navigate to='ancestry' replace={true} />}
 					/>
 					<Route
-						path='edit/:heroId/:tab'
+						path='edit/:heroID/:tab'
 						element={
 							<HeroEditPage
 								heroes={heroes}
@@ -1081,7 +1082,7 @@ export const Main = (props: Props) => {
 						}
 					/>
 					<Route
-						path='edit/:sourcebookId/:kind/:elementId'
+						path='edit/:sourcebookID/:kind/:elementID/:subElementID?'
 						element={
 							<LibraryEditPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
@@ -1107,7 +1108,7 @@ export const Main = (props: Props) => {
 						}
 					/>
 					<Route
-						path='edit/:encounterId'
+						path='edit/:encounterID'
 						element={
 							<EncounterEditPage
 								playbook={playbook}

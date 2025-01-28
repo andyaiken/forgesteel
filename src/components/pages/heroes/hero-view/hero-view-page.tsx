@@ -30,8 +30,8 @@ interface Props {
 	options: Options;
 	showAbout: () => void;
 	setOptions: (options: Options) => void;
-	exportHero: (heroId: string, format: 'image' | 'pdf' | 'json') => void;
-	deleteHero: (heroId: string) => void;
+	exportHero: (heroID: string, format: 'image' | 'pdf' | 'json') => void;
+	deleteHero: (heroID: string) => void;
 	showAncestry: (ancestry: Ancestry) => void;
 	showCulture: (culture: Culture) => void;
 	showCareer: (career: Career) => void;
@@ -45,12 +45,12 @@ interface Props {
 	showRules: (hero: Hero) => void;
 }
 
-const getHero = (heroId: string, heroes: Hero[]) => heroes.find(h => h.id === heroId)!;
+const getHero = (heroID: string, heroes: Hero[]) => heroes.find(h => h.id === heroID)!;
 
 export const HeroPage = (props: Props) => {
 	const navigation = useNavigation();
-	const { heroId } = useParams<{ heroId: string }>();
-	const hero = useMemo(() => getHero(heroId!, props.heroes), [ heroId, props.heroes ]);
+	const { heroID } = useParams<{ heroID: string }>();
+	const hero = useMemo(() => getHero(heroID!, props.heroes), [ heroID, props.heroes ]);
 
 	try {
 		const setShowSkillsInGroups = (value: boolean) => {
@@ -115,10 +115,10 @@ export const HeroPage = (props: Props) => {
 											label: <div className='ds-text centered-text'>Export As Data</div>
 										}
 									]}
-									onClick={key => props.exportHero(heroId!, key as 'image' | 'pdf' | 'json')}
+									onClick={key => props.exportHero(heroID!, key as 'image' | 'pdf' | 'json')}
 								/>
-								<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroId!)}>Edit</Button>
-								<DangerButton block={true} onConfirm={() => { props.deleteHero(heroId!); navigation.goToHeroList(); }} />
+								<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!)}>Edit</Button>
+								<DangerButton block={true} onConfirm={() => { props.deleteHero(heroID!); navigation.goToHeroList(); }} />
 							</div>
 						)}
 					>

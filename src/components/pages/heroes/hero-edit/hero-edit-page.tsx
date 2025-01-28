@@ -65,12 +65,12 @@ interface Props {
 
 export const HeroEditPage = (props: Props) => {
 	const navigation = useNavigation();
-	const { heroId, tab } = useParams<{ heroId: string; tab: HeroTab }>();
+	const { heroID, tab } = useParams<{ heroID: string; tab: HeroTab }>();
 	const setTabKey = (tabKey: HeroTab) => {
-		navigation.goToHeroEdit(heroId!, tabKey);
+		navigation.goToHeroEdit(heroID!, tabKey);
 	};
 	const [ page, setPage ] = [ tab, setTabKey ];
-	const originalHero = useMemo(() => props.heroes.find(h => h.id === heroId)!, [ heroId, props.heroes ]);
+	const originalHero = useMemo(() => props.heroes.find(h => h.id === heroID)!, [ heroID, props.heroes ]);
 	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(originalHero)) as Hero);
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
@@ -465,7 +465,7 @@ export const HeroEditPage = (props: Props) => {
 					<Button type='primary' disabled={!dirty} onClick={saveChanges}>
 						Save Changes
 					</Button>
-					<Button onClick={() => navigation.goToHeroView(heroId!)}>
+					<Button onClick={() => navigation.goToHeroView(heroID!)}>
 						Cancel
 					</Button>
 				</AppHeader>

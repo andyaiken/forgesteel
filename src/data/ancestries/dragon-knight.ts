@@ -241,16 +241,16 @@ export const dragonKnight: Ancestry = {
 						description: `
 As a maneuver, you can recite the following oath. If you do, you succeed on saving throws when you roll a 4 or higher until the start of your next turn:
 
-Even should the sun stop in the sky
-Even should the night last a thousand years
-I will stand forever
-I shall not yield
-Those who suffer and yearn for justice
-I am your sword and shield
-I will yield no ground
-I will speak no lies
-I will stand against all tyrants
-Until the last villain dies.`
+> Even should the sun stop in the sky
+> Even should the night last a thousand years
+> I will stand forever
+> I shall not yield
+> Those who suffer and yearn for justice
+> I am your sword and shield
+> I will yield no ground
+> I will speak no lies
+> I will stand against all tyrants
+> Until the last villain dies.`
 					}),
 					value: 1
 				},

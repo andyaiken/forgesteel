@@ -112,7 +112,9 @@ export const revenant: Ancestry = {
 								name: 'Vengeance Mark',
 								description: `
 As a maneuver, you place a magic sigil on a creature within 10 squares of you. When you place a sigil, you can decide where it appears on the creature’s body, and whether the sigil is visible to only you or to all creatures.
+
 You always know the direction to the exact location of a creature who bears one of your sigils and is on the same world as you.
+
 You can have an active number of sigils equal to your level. You can remove a sigil from a creature harmlessly (no action required). If you are already using your maximum number of sigils and place a new one, your oldest sigil disappears with no other effect.`
 							}),
 							FactoryLogic.feature.createAbility({

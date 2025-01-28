@@ -208,11 +208,13 @@ export class ComplicationData {
 				name: 'Consuming Interest Benefit',
 				description: `
 You can use the following project up to three times for your chosen skill. Each time you use the project, you must use a different project source.
+
 **Study Lore**
 **Item Prerequisite**: None
 **Project Source**: A significant source of information on the topic, such as a major library or a world-renowned sage
 **Project Roll Characteristic**: Reason
 **Project Goal**: 120 the first time, 150 the second time, 180 the third time
+
 Your knowledge of your chosen field increases. When you finish this project, the bonus to tests provided by your skill increases from +2 to +3, +3 to +4, or +4 to +5.`
 			}),
 			FactoryLogic.feature.create({
@@ -508,6 +510,7 @@ Your knowledge of your chosen field increases. When you finish this project, the
 				name: 'Famous Relative Benefit',
 				description: `
 You have a piece of magic jewelry, such as a signet ring. As a maneuver, you can use the item to summon your relative to your aid. Your relative does their best to help you out of the current perilous situation, and disappears after 1 hour or after the perilous situation is resolved. Once you summon your relative, you can’t do so again until you gain a level.
+
 Your relative has the same statistics as you do except for Renown, doesn’t gain the benefit of any of your treasures, and makes all power rolls with an edge. Your relative starts with a Renown of 10.`
 			}),
 			FactoryLogic.feature.create({
@@ -670,7 +673,8 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 		id: 'comp-gnollBit',
 		name: 'Gnoll-Bit',
 		description: `
-As a child you survived a gnoll attack—but they left you with a toothy scar and the occasional fit of bloodlust.
+As a child you survived a gnoll attack — but they left you with a toothy scar and the occasional fit of bloodlust.
+
 You can’t take this complication if you can’t be dazed.`,
 		features: [
 			FactoryLogic.feature.create({
@@ -1786,6 +1790,7 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Slight Case of Lycanthropy',
 		description: `
 Maybe you were bitten as a child, or maybe it’s a family curse. Either way, you have a malady that is best not discussed in public, lest the torches and pitchforks make their appearance.
+
 Note: Stormwight furies can’t take this complication.`,
 		features: [
 			FactoryLogic.feature.create({
@@ -1889,6 +1894,7 @@ Note: Stormwight furies can’t take this complication.`,
 					target: '1 ally',
 					effect: `
 The target can use its triggered action to take an action, a move action, or a maneuver.
+
 Note: If you have the Strike Now tactician ability, the target can use a free triggered action instead of a triggered action to use this ability.`
 				})
 			}),

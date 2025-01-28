@@ -193,6 +193,7 @@ export class TitleData {
 				name: 'Academic Faction',
 				description: `
 When you’re negotiating with a member of your faction, their starting Patience increases by 2, up to a maximum of 5.
+
 You can find a sage who can make up to three Reason tests to recall lore or project rolls for research projects on your behalf. The sage has a +5 bonus to these tests. Research project rolls take 10 minutes each and don’t need to be made during a respite.`
 			}),
 			FactoryLogic.feature.create({
@@ -200,6 +201,7 @@ You can find a sage who can make up to three Reason tests to recall lore or proj
 				name: 'Guild Faction',
 				description: `
 When you’re negotiating with a member of your faction, their starting Patience increases by 2, up to a maximum of 5.
+
 You can find an expert craftsperson who can make up to three project rolls for crafting projects on your behalf. The craftsperson has a +5 bonus to these tests. These project rolls take 10 minutes each and don’t need to be made during a respite.`
 			}),
 			FactoryLogic.feature.create({
@@ -207,6 +209,7 @@ You can find an expert craftsperson who can make up to three project rolls for c
 				name: 'Martial Faction',
 				description: `
 When you’re negotiating with a member of your faction, their starting Patience increases by 2, up to a maximum of 5.
+
 You can recruit up to three minions with levels no greater than your own, of a type appropriate for the faction (such as human guards`
 			}),
 			FactoryLogic.feature.create({
@@ -214,6 +217,7 @@ You can recruit up to three minions with levels no greater than your own, of a t
 				name: 'Spy Faction',
 				description: `
 When you’re negotiating with a member of your faction, their starting Patience increases by 2, up to a maximum of 5.
+
 You can find an agent who can provide you with three pieces of information about a settlement you’re in, such as the location of a hidden person, a secret entrance into a guarded area, or the negotiation ideal or pitfall of an important person.`
 			})
 		],
@@ -339,7 +343,9 @@ You can find an agent who can provide you with three pieces of information about
 			FactoryLogic.feature.create({
 				id: 'title-owed-a-favor-1',
 				name: 'Owed a Favor',
-				description: `The faction will perform one favor for the party, provided it doesn’t interfere with the faction’s goals.
+				description: `
+The faction will perform one favor for the party, provided it doesn’t interfere with the faction’s goals.
+
 Additionally, the faction is a good source of information. The Director chooses a skill from the crafting or lore skill groups appropriate to the faction, such as the Criminal Underworld skill for an outlaw gang, the Blacksmith skill for a blacksmith’s guild, or the Society skill for a noble house. While in a settlement with the faction, you gain this skill if you don’t already have it. If you already have the skill, they gain an edge on tests made with the skill.`
 			})
 		],
@@ -358,6 +364,7 @@ Additionally, the faction is a good source of information. The Director chooses 
 				name: 'Presumed Dead',
 				description: `
 While it may appear that you died, in fact you did not. You regain 1 Stamina and can spend one or more Recoveries. In addition, you gain a 1st-echelon trinket of the Director’s choice.
+
 At a dramatic moment determined by the Director, you rejoin your party with an explanation for your narrow escape, and how you found your new trinket along the way.`
 			})
 		],

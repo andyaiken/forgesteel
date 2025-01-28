@@ -11,6 +11,7 @@ export const troubadour: HeroClass = {
 	name: 'Troubadour',
 	description: `
 The whole world's a stage and everyone on it, an actor. No one knows this better than the troubadour. You find energy in the drama of everyday life and know how to draw spectacle forth from even the most mundane of situations. You accent highs and deepen lows in service to whomever would witness your performance.
+
 And beyond the mundane, there are insurmountable dangers that cause many a hero to cower. But the troubadour must chase that drama. The troubadour takes the world stage not to die, but to find out if they are truly alive.`,
 	heroicResource: 'Drama',
 	subclassName: 'Class Act',
@@ -49,7 +50,9 @@ And beyond the mundane, there are insurmountable dangers that cause many a hero 
 					name: 'Drama',
 					description: `
 At the start of each of your turns during combat, you gain 1d3 drama.
+
 Additionally, you gain drama when certain events occur during battle:
+
 * **2 Drama**: Three or more heroes use an ability on the same turn for the first time.
 * **2 Drama**: A hero becomes winded for the first time (only once per encounter and not once per hero).
 * **3 Drama**: A creature within your line of effect rolls a natural 19 or 20.
@@ -116,7 +119,9 @@ You still gain drama during combat if you are dead as long as your body is intac
 					name: 'Appeal to the Muses',
 					description: `
 You can give a rousing speech, invoke your inspirations, or lift your fellows’ spirits to heighten the drama of your present circumstances. However, irony is eager to hand your fortune to the villain and achieve the same ends.
+
 Whenever you roll to gain 1d3 drama at the start of your turn, you can make your appeal to gain the following additional effects:
+
 * If the roll is a 1, you gain 1 additional drama. The Director also gains 1d3 Malice.
 * If the roll is a 2, you gain 1 Heroic Resource, which you can keep for yourself or give to an ally within the distance of your active routine. The Director also gains 1 Malice.
 * If the roll is a 3, you gain 2 Heroic Resources, which you can distribute among yourself and any allies within the distance of your active routine.`
@@ -146,6 +151,7 @@ Whenever you roll to gain 1d3 drama at the start of your turn, you can make your
 								name: 'Formal Introductions',
 								description: `
 As a respite activity, you can scribe a notice of your arrival, such as a calling card or a formal letter, addressed to an enemy and have it delivered. You can deliver the notice to the target personally if you are in the same general area, send it by courier, or leave it in a covert location for the target to find. You can have only one notice active at a time.
+
 The Director determines when the target receives your notice. Once the target receives the notice, they become alarmed and take desperate measures to stop you. The Director gains 1 additional Malice per round during future encounters involving the target. The heroes start each such encounter with 2 additional hero tokens. These hero tokens disappear at the end of the encounter.`
 							}),
 							value: 1
@@ -156,6 +162,7 @@ The Director determines when the target receives your notice. Once the target re
 								name: 'My Reputation Precedes Me',
 								description: `
 You can invoke your reputation at the start of a social interaction with a group of creatures who haven’t met you before, automatically creating a bond with a representative NPC as if using your Scene Partner feature. While the bond is active, all present heroes are treated as having Renown 2 higher than usual for the purpose of negotiations and influencing tests with the group.
+
 The Director can choose to award the heroes with 1 Hero Token to stop you from forming this bond, making you infamous with the community instead. Until actions are taken to improve your reputations, all present heroes take a bane on tests using skills from the interpersonal skill group with the group of creatures. You can still use your Scene Partner feature to find allies within the community.`
 							}),
 							value: 1
@@ -459,6 +466,7 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			cost: 7,
 			effect: `
 Until the end of the encounter, both you and the target can target each other with abilities even if you are beyond distance, with the distance of this ability replacing those abilities’ distances. Abilities that grapple or force move a target are ignored if the target isn’t within the distance of the ability.
+
 Additionally, on each of your turns, you can use a free maneuver to communicate a motivating or dispiriting message to the target, either giving them two surges or a bane on the next attack they use before the start of your next turn.`
 		})
 	],
@@ -615,6 +623,7 @@ Additionally, on each of your turns, you can use a free maneuver to communicate 
 								target: 'Special',
 								effect: `
 Choose one of the following effects:
+
 * You orate a rousing tale of victory. One ally within distance gains an edge on the next power roll they make before the start of your next turn.
 * You weave a tale of high stakes heroics. One ally within distance gains a surge.
 * You insult a foe where they’re most vulnerable. That foe takes a bane on the next power roll they make before the end of their next turn.`,

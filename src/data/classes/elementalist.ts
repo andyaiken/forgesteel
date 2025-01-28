@@ -12,6 +12,7 @@ export const elementalist: HeroClass = {
 	name: 'Elementalist',
 	description: `
 Air for movement. Earth for permanence. Fire for destruction. Water for change. Green for growth. Rot for death. Void for the mystery. Years of study and practice and poring over tomes brought you the revelations that allow you to manipulate these building blocks of reality. Now you use your mastery of the seven elements to destroy, create, and warp the world with magic.
+
 As an elementalist, you can unleash your wrath across a field of foes, put an enemy exactly where you want them, debilitate foes with harmful effects, ward yourself and allies against danger, manipulate terrain, warp space, and more. Your choice of elemental specialization determines which of these things you do best.`,
 	heroicResource: 'Essence',
 	subclassName: 'Elemental Specialization',
@@ -69,8 +70,11 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 					name: 'Persistent Magic',
 					description: `
 Some of your heroic abilities have a persistent effect entry. Whenever you use a persistent ability, you decide whether you want to maintain it, and start doing so immediately after you first use the ability. If you maintain a persistent ability in combat, you reduce the amount of essence you earn at the start of your turn by an amount equal to the ability’s persistent value, which enables the ability’s persistent effect. All your active persistent abilities end at the end of the encounter.
+
 You can’t maintain any abilities that would make you earn a negative amount of essence at the start of your turn or have a negative amount of essence outside of combat. You can stop maintaining an ability at any time (no action required).
+
 If you maintain the same ability on several targets and the effect includes a power roll, you make that roll once and apply the same effect to all targets. A creature can’t be affected by multiple instances of a persistent ability.
+
 If you take damage equal to or greater than 5 × your Reason score in one turn, you stop maintaining any persistent abilities. For instance, if you have a Reason score of 2 and are maintaining Instantaneous Excavation, taking 10 or more damage in one turn causes you to stop maintaining the ability.`
 				}),
 				FactoryLogic.feature.createAbility({
@@ -84,6 +88,7 @@ If you take damage equal to or greater than 5 × your Reason score in one turn, 
 						target: 'Self',
 						effect: `
 Choose one of the following effects:
+
 * You use the Knockback maneuver, but its distance becomes the range of your Hurl Element ability, and you use Reason instead of Might for the power roll.
 * You choose a creature within the distance of your Hurl Element ability and deal damage equal to your Reason score to them. The damage type can be acid, cold, corruption, fire, lightning, poison, or sonic.
 * You teleport up to a number of squares equal to your Reason score.`
@@ -562,6 +567,7 @@ Choose one of the following effects:
 			minLevel: 2,
 			effect: `
 Until the start of your next turn, the area gains the following effects:
+
 * You and each ally in the area can spend any number of Recoveries at the start of your turn once as a free maneuver.
 * The area is difficult terrain for enemies.
 * Any enemy who enters the area for the first time in a round or starts their turn there takes damage equal to your Reason score.`,
@@ -726,7 +732,9 @@ Until the start of your next turn, the area gains the following effects:
 								target: 'Special',
 								effect: `
 You touch a square containing mundane dirt, stone, or metal and create a 5 wall of the same material, which rises up out of the ground and must include the square you touched.
+
 Alternatively, you touch a structure made of mundane dirt, stone, or metal that takes up at least 2 squares. You can open a 1-square opening in the structure where you touched it.
+
 You can instead touch a doorway or other opening in a mundane dirt, stone, or metal surface that is no larger than 1 square. The opening is sealed by the same material that makes up the surface.`
 							})
 						}),
@@ -869,6 +877,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 							name: 'It Is the Soul Which Hears',
 							description: `
 You can speak with and understand Animals, Monstrosities, and Plant Creatures, even if they don’t share a language with you. Your ability to communicate with such creatures doesn’t make them inherently more intelligent, but you can use Reason in place of Presence while making tests to influence them.
+
 Additionally, whenever you touch a living plant that is not a Plant Creature, you can communicate with it telepathically. You can use words to communicate with the plant, but it communicates with you only by transmitting feelings and sensations that can’t be overly specific.`
 						}),
 						FactoryLogic.feature.createAbility({
@@ -900,8 +909,11 @@ Additionally, whenever you touch a living plant that is not a Plant Creature, yo
 							name: 'Disciple of the Green',
 							description: `
 You can use a maneuver to shapeshift into a type of creature on the Green Animal Forms table. While in animal form, you can speak, and you use your Reason score to make melee free strikes. Your statistics stay the same except as noted on the table.
+
 Each form has a prerequisite level that you must attain in this class before you can adopt it. Some animal forms grant you temporary Stamina. You lose this temporary Stamina when you revert back to your true form.
+
 You choose a specific animal and appearance while in animal form. For example, if you become a rodent, you might become a mouse, a rat, a shrew, or any other size 1T rodent who fits the animal type. When you take on animal form, your equipment either melds into your new form or falls unharmed to the ground, as you decide. When you return to your true form, any melded gear reappears on your person.
+
 You can revert back to your true form as a maneuver. You can’t enter an animal form unless you are in your true form. If you are dying, you revert to your true form and can’t turn back into an animal until you are no longer dying.
 
 | Animal Type | Level | Temporary Stamina | Speed         | Size | Stability Bonus | Melee Damage Bonus | Special                                                                                                                                                                                                      |
@@ -998,6 +1010,7 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 								target: 'Special',
 								effect: `
 You open two size 1 portals in unoccupied spaces in range, which last until you move beyond distance from any portal, end the effect as a maneuver, or are dying. Each portal must be placed at a height of no more than 1 square above the ground. When you or any ally touch a portal, that creature can choose to be instantly teleported to an unoccupied space of their choice within 1 square of the other portal. If an enemy is force moved into a portal, their forced movement ends and they emerge from the other portal in an unoccupied space chosen by the creature who force moved them.
+
 At the start of each of your turns while the portals are active, you can open a new portal connected to the others. If three or more portals are present, you and your allies choose which portal you emerge from when you enter a portal, and a creature who force moves an enemy into a portal chooses that enemy’s destination portal.`
 							})
 						})

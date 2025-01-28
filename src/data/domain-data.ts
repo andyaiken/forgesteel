@@ -163,6 +163,7 @@ export class DomainData {
 							cost: 5,
 							effect: `
 Choose one of the following effects, which lasts until the end of the encounter or until you are dying:
+
 * Whenever a target makes a power roll, they can roll three dice and choose which two to use.
 * Whenever a target makes a power roll, they must roll three dice and use the lowest two.`
 						})
@@ -445,6 +446,7 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 							cost: 5,
 							effect: `
 Until the end of the encounter, whenever one target takes damage, the other target can use a free triggered action to take the damage instead. The original target suffers any effects associated with the damage.
+
 Additionally, whenever one target spends a Recovery, the other target can use a free triggered action to spend a Recovery.`
 						})
 					})
@@ -476,7 +478,9 @@ Additionally, whenever one target spends a Recovery, the other target can use a 
 								name: 'Blessing of Fortunate Weather',
 								description: `
 When you finish a respite, you can decide the weather conditions within 100 squares of you. If you are in the same area as a creature using this or a similar feature, both features cancel each other where their areas overlap. Until you finish another respite, the weather conditions you establish follow you through any mundane outdoor locations.
+
 Choose one of the following types of weather, each of which grants a benefit to you and your allies:
+
 * **Clear**: You and each ally gain an edge on tests that use the Search or Navigate skills.
 * **Foggy**: You and each ally gain an edge on tests that use the Hide skill.
 * **Overcast**: You and each ally gain an edge on tests that use the Endurance skill.

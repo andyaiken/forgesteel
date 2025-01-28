@@ -12,7 +12,9 @@ export const nullClass: HeroClass = {
 	name: 'Null',
 	description: `
 The mind is not separate from the body. Perfection of one requires perfection of the other. You strive for perfect discipline, perfect order, mastery over mind and body. You require no weapons, no tools. Any tool can be turned against the hand that wields it. You suffice.
+
 As you strive for perfect order, you become an enemy of that ultimate expression of chaos: magic. Those who employ sorcery or psionics to break the laws of nature should fear you.
+
 The null is an unarmed psionic warrior who dampens and absorbs the effects of magic and psionics. You need no weapon because you are the weapon. Play a null if you want to resist the supernatural forces of the universe with expert calm and confidence.`,
 	heroicResource: 'Discipline',
 	subclassName: 'Tradition',
@@ -58,10 +60,13 @@ The null is an unarmed psionic warrior who dampens and absorbs the effects of ma
 						target: 'All enemies',
 						effect: `
 Each target reduces their potencies by 1.
+
 Once as a free maneuver on your turn, you can spend 1 discipline and give your Null Field has one of the following additional effects until the start of your next turn:
+
 * **Gravitic Disruption**: When a target takes damage, you can slide them 2.
 * **Inertial Anchor**: Each target who starts their turn in the area cannot shift.
 * **Synaptic Break**: When a target is subjected to a potency, the potency is increased by 1.
+
 This ability stays active even after encounters end. It ends if you are dying or if you willingly end it (no action required).`
 					})
 				}),
@@ -533,6 +538,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 							name: 'Chronokinetic Mastery',
 							description: `
 You can use the Disengage move action as a free maneuver when you use Inertial Shield.
+
 As your discipline grows, your psionic mastery of your body intensifies.
 
 | Discipline | Benefit                                                                                                                 |
@@ -620,6 +626,7 @@ As your discipline grows, your psionic mastery of your body intensifies.
 							name: 'Cryokinetic Mastery',
 							description: `
 You can use the Grab maneuver as a free triggered action whenever you use Inertial Shield.
+
 As your discipline grows, your psionic mastery of your body intensifies.
 
 | Discipline | Benefit                                                                                                                    |
@@ -707,6 +714,7 @@ As your discipline grows, your psionic mastery of your body intensifies.
 							name: 'Metakinetic Mastery',
 							description: `
 You can use the Knockback maneuver as a free triggered action whenever you use Inertial Shield.
+
 As your discipline grows, your psionic mastery of your body intensifies.
 
 | Discipline | Benefit                                                                                                              |
@@ -726,6 +734,7 @@ As your discipline grows, your psionic mastery of your body intensifies.
 							name: 'Inertial Sink',
 							description: `
 You add your Intuition score to your effective size for the purpose of interacting with creatures and objects, including determining whether you can lift an object, are affected by forced movement, and so forth. This has no effect on your ability to be grabbed.
+
 Additionally, you have forced movement damage immunity equal to your level and reduce the distance of your falls by an additional 5 squares.`
 						}),
 						FactoryLogic.feature.createChoice({

@@ -455,7 +455,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			id: 'talent-ability-13',
 			name: 'Flashback',
 			description: 'The target is thrown several seconds back through time, and gets to do it all again.',
-			type: FactoryLogic.type.createAction(),
+			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Chronopathy, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 			distance: [ FactoryLogic.distance.createRanged() ],
 			target: 'Self or one ally',

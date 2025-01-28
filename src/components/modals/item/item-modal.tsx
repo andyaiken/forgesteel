@@ -65,7 +65,7 @@ export const ItemModal = (props: Props) => {
 				}
 				content={
 					<div className='item-modal'>
-						<ItemPanel item={props.item} mode={PanelMode.Full} showCrafting={true} />
+						<ItemPanel item={props.item} mode={PanelMode.Full} />
 					</div>
 				}
 			/>

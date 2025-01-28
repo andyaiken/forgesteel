@@ -7,6 +7,7 @@ import { Culture } from './culture';
 import { Feature } from './feature';
 import { HeroClass } from './class';
 import { Item } from './item';
+import { Project } from './project';
 
 export interface Condition {
 	id: string;
@@ -28,6 +29,7 @@ export interface HeroState {
 	projectPoints: number;
 	conditions: Condition[];
 	inventory: Item[];
+	projects: Project[];
 }
 
 export interface AbilityCustomization {

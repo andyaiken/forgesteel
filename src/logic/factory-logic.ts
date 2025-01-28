@@ -3,6 +3,7 @@ import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
 import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
+import { Project, ProjectProgress } from '../models/project';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
@@ -13,7 +14,7 @@ import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { DamageModifier } from '../models/damage-modifier';
 import { Domain } from '../models/domain';
-import type { Element } from '../models/element';
+import { Element } from '../models/element';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Format } from '../utils/format';
@@ -33,7 +34,6 @@ import { Perk } from '../models/perk';
 import { PerkList } from '../enums/perk-list';
 import { Playbook } from '../models/playbook';
 import { PowerRoll } from '../models/power-roll';
-import { Project } from '../models/project';
 import { Size } from '../models/size';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
@@ -71,7 +71,8 @@ export class FactoryLogic {
 				wealth: 1,
 				projectPoints: 0,
 				conditions: [],
-				inventory: []
+				inventory: [],
+				projects: []
 			},
 			abilityCustomizations: []
 		};
@@ -95,7 +96,8 @@ export class FactoryLogic {
 			items: [],
 			monsterGroups: [],
 			skills: [],
-			languages: []
+			languages: [],
+			projects: []
 		};
 	};
 
@@ -252,14 +254,7 @@ export class FactoryLogic {
 			description: data.description,
 			type: data.type,
 			keywords: data.keywords || [],
-			crafting: data.crafting || this.createProject({
-				name: 'Crafting',
-				prerequisites: '',
-				source: '',
-				characteristic: [ Characteristic.Reason ],
-				goal: 50,
-				effect: ''
-			}),
+			crafting: data.crafting || null,
 			effect: data.effect || '',
 			featuresByLevel: data.featuresByLevel || [
 				{
@@ -296,8 +291,17 @@ export class FactoryLogic {
 			itemPrerequisites: data.prerequisites || '',
 			source: data.source || '',
 			characteristic: data.characteristic || [ Characteristic.Reason ],
-			goal: data.goal || 50,
-			effect: data.effect || ''
+			goal: data.goal || 0,
+			effect: data.effect || '',
+			progress: null
+		};
+	};
+
+	static createProjectProgress = (): ProjectProgress => {
+		return {
+			prerequisites: false,
+			source: false,
+			points: 0
 		};
 	};
 

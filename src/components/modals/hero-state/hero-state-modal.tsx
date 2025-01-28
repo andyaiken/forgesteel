@@ -8,11 +8,16 @@ import { ConditionPanel } from '../../panels/condition/condition-panel';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
 import { Expander } from '../../controls/expander/expander';
+import { FactoryLogic } from '../../../logic/factory-logic';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { InventoryPanel } from '../../panels/inventory-panel/inventory-panel';
 import { Item } from '../../../models/item';
 import { Modal } from '../modal/modal';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
+import { PanelMode } from '../../../enums/panel-mode';
+import { Project } from '../../../models/project';
+import { ProjectPanel } from '../../panels/elements/project-panel/project-panel';
+import { ProjectsModal } from '../projects/projects-modal';
 import { ShopModal } from '../shop/shop-modal';
 import { Sourcebook } from '../../../models/sourcebook';
 import { Utils } from '../../../utils/utils';
@@ -32,148 +37,84 @@ interface Props {
 export const HeroStateModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(props.hero)));
 	const [ shopVisible, setShopVisible ] = useState<boolean>(false);
-
-	const setHeroicResource = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.heroicResource = value;
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const setSurges = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.surges = value;
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const setVictories = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.victories = value;
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const setXP = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.xp = value;
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const setStaminaDamage = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.staminaDamage = value;
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const setRecoveriesUsed = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.recoveriesUsed = value;
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const setHeroTokens = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.heroTokens = value;
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const setRenown = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.renown = value;
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const setWealth = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.wealth = value;
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const setProjectPoints = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.projectPoints = value;
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const startEncounter = () => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.heroicResource = copy.state.victories;
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const endEncounter = () => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.heroicResource = 0;
-		copy.state.victories += 1;
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const endRespite = () => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.staminaDamage = 0;
-		copy.state.recoveriesUsed = 0;
-		copy.state.xp = copy.state.victories;
-		copy.state.victories = 0;
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const spendRecovery = () => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.recoveriesUsed += 1;
-		copy.state.staminaDamage = Math.max(copy.state.staminaDamage - HeroLogic.getRecoveryValue(hero), 0);
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const addItem = (item: Item) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.inventory.push(item);
-		setHero(copy);
-		setShopVisible(false);
-		props.onChange(copy);
-	};
-
-	const addCondition = (type: ConditionType) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.conditions.push({
-			id: Utils.guid(),
-			type: type,
-			ends: ConditionEndType.EndOfTurn,
-			resistCharacteristic: Characteristic.Might
-		});
-		setHero(copy);
-		props.onChange(copy);
-	};
-
-	const editCondition = (condition: Condition) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		const index = copy.state.conditions.findIndex(c => c.id === condition.id);
-		if (index !== -1) {
-			copy.state.conditions[index] = condition;
-			setHero(copy);
-			props.onChange(copy);
-		}
-	};
-
-	const deleteCondition = (condition: Condition) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-		copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
-		setHero(copy);
-		props.onChange(copy);
-	};
+	const [ projectsVisible, setProjectsVisible ] = useState<boolean>(false);
 
 	const getHeroSection = () => {
+		const setHeroicResource = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.heroicResource = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setSurges = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.surges = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setVictories = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.victories = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setXP = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.xp = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setStaminaDamage = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.staminaDamage = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setRecoveriesUsed = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.recoveriesUsed = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const startEncounter = () => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.heroicResource = copy.state.victories;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const endEncounter = () => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.heroicResource = 0;
+			copy.state.victories += 1;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const endRespite = () => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.staminaDamage = 0;
+			copy.state.recoveriesUsed = 0;
+			copy.state.xp = copy.state.victories;
+			copy.state.victories = 0;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const spendRecovery = () => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.recoveriesUsed += 1;
+			copy.state.staminaDamage = Math.max(copy.state.staminaDamage - HeroLogic.getRecoveryValue(hero), 0);
+			setHero(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<NumberSpin
@@ -299,6 +240,34 @@ export const HeroStateModal = (props: Props) => {
 	};
 
 	const getStatisticsSection = () => {
+		const setHeroTokens = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.heroTokens = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setRenown = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.renown = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setWealth = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.wealth = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setProjectPoints = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.projectPoints = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<NumberSpin
@@ -323,7 +292,7 @@ export const HeroStateModal = (props: Props) => {
 					label='Project Points'
 					value={hero.state.projectPoints}
 					min={0}
-					steps={[ 5 ]}
+					steps={[ 1, 10 ]}
 					onChange={setProjectPoints}
 				/>
 			</Space>
@@ -331,6 +300,14 @@ export const HeroStateModal = (props: Props) => {
 	};
 
 	const getInventorySection = () => {
+		const addItem = (item: Item) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.inventory.push(item);
+			setHero(copy);
+			setShopVisible(false);
+			props.onChange(copy);
+		};
+
 		const changeItem = (item: Item) => {
 			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
 			const index = copy.state.inventory.findIndex(i => i.id === item.id);
@@ -392,6 +369,35 @@ export const HeroStateModal = (props: Props) => {
 	};
 
 	const getConditionsSection = () => {
+		const addCondition = (type: ConditionType) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.conditions.push({
+				id: Utils.guid(),
+				type: type,
+				ends: ConditionEndType.EndOfTurn,
+				resistCharacteristic: Characteristic.Might
+			});
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const editCondition = (condition: Condition) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const index = copy.state.conditions.findIndex(c => c.id === condition.id);
+			if (index !== -1) {
+				copy.state.conditions[index] = condition;
+				setHero(copy);
+				props.onChange(copy);
+			}
+		};
+
+		const deleteCondition = (condition: Condition) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
+			setHero(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
@@ -403,6 +409,15 @@ export const HeroStateModal = (props: Props) => {
 							onDelete={deleteCondition}
 						/>
 					))
+				}
+				{
+					hero.state.conditions.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='You are not affected by any conditions.'
+						/>
+						: null
 				}
 				<DropdownButton
 					label='Add a new condition'
@@ -419,6 +434,80 @@ export const HeroStateModal = (props: Props) => {
 					].map(ct => ({ key: ct, label: <div className='ds-text centered-text'>{ct}</div> }))}
 					onClick={key => addCondition(key as ConditionType)}
 				/>
+			</Space>
+		);
+	};
+
+	const getProjectsSection = () => {
+		const addProject = (project: Project) => {
+			const projectCopy = JSON.parse(JSON.stringify(project)) as Project;
+			projectCopy.id = Utils.guid();
+			projectCopy.progress = FactoryLogic.createProjectProgress();
+
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.projects.push(projectCopy);
+			setHero(copy);
+			setProjectsVisible(false);
+			props.onChange(copy);
+		};
+
+		const changeProject = (project: Project) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const index = copy.state.projects.findIndex(p => p.id === project.id);
+			copy.state.projects[index] = project;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const moveProject = (project: Project, direction: 'up' | 'down') => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const index = copy.state.projects.findIndex(p => p.id ===  project.id);
+			copy.state.projects = Collections.move(copy.state.projects, index, direction);
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const deleteProject = (project: Project) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.projects = copy.state.projects.filter(p => p.id !== project.id);
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					hero.state.projects.map(project => (
+						<Expander
+							key={project.id}
+							title={project.name}
+							extra={[
+								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveProject(project, 'up'); }} />,
+								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveProject(project, 'down'); }} />,
+								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteProject(project); }} />
+							]}
+						>
+							<ProjectPanel
+								project={project}
+								mode={PanelMode.Full}
+								onChange={changeProject}
+							/>
+						</Expander>
+					))
+				}
+				{
+					hero.state.projects.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='You have no projects underway.'
+						/>
+						: null
+				}
+				<Button block={true} onClick={() => setProjectsVisible(true)}>Add a new project</Button>
+				<Drawer open={projectsVisible} onClose={() => setProjectsVisible(false)} closeIcon={null} width='500px'>
+					{projectsVisible ? <ProjectsModal sourcebooks={props.sourcebooks} onSelect={addProject} /> : null}
+				</Drawer>
 			</Space>
 		);
 	};
@@ -449,6 +538,11 @@ export const HeroStateModal = (props: Props) => {
 									key: 'conditions',
 									label: 'Conditions',
 									children: getConditionsSection()
+								},
+								{
+									key: 'projects',
+									label: 'Projects',
+									children: getProjectsSection()
 								}
 							]}
 							defaultActiveKey={props.startPage}

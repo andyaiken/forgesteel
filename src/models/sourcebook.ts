@@ -10,6 +10,7 @@ import { Kit } from './kit';
 import { Language } from './language';
 import { MonsterGroup } from './monster';
 import { Perk } from './perk';
+import { Project } from './project';
 import { Skill } from './skill';
 import { Title } from './title';
 
@@ -30,6 +31,7 @@ export interface Sourcebook extends Element {
 
 	skills: Skill[];
 	languages: Language[];
+	projects: Project[];
 }
 
 export type SourcebookElementsKey = 'ancestries' | 'cultures' | 'careers' | 'classes' | 'complications' | 'kits' | 'domains' | 'perks' | 'titles' | 'items' | 'monsterGroups';

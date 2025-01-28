@@ -2,10 +2,8 @@ import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Item } from '../../../../models/item';
-import { ItemType } from '../../../../enums/item-type';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { ProjectPanel } from '../project-panel/project-panel';
 import { Tag } from 'antd';
 
 import './item-panel.scss';
@@ -13,7 +11,6 @@ import './item-panel.scss';
 interface Props {
 	item: Item;
 	mode?: PanelMode;
-	showCrafting?: boolean;
 }
 
 export const ItemPanel = (props: Props) => {
@@ -26,7 +23,6 @@ export const ItemPanel = (props: Props) => {
 					props.mode === PanelMode.Full ?
 						<>
 							<Field label='Keywords' value={props.item.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} />
-							{props.showCrafting && (props.item.type !== ItemType.Artifact) ? <ProjectPanel project={props.item.crafting} mode={PanelMode.Full} /> : null}
 							<Markdown text={props.item.effect} />
 							{
 								props.item.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (

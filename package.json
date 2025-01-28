@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "5.108.0",
+	"version": "5.109.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -18,7 +18,7 @@
 	"dependencies": {
 		"@ant-design/icons": "^5.6.0",
 		"@types/showdown": "^2.0.6",
-		"antd": "^5.23.2",
+		"antd": "^5.23.3",
 		"gh-pages": "^6.3.0",
 		"html2canvas": "^1.4.1",
 		"jspdf": "^2.5.2",

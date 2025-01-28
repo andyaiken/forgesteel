@@ -9,7 +9,7 @@ import { Project } from './project';
 export interface Item extends Element {
 	type: ItemType;
 	keywords: (AbilityKeyword | KitArmor | KitWeapon)[];
-	crafting: Project;
+	crafting: Project | null;
 	effect: string;
 	featuresByLevel: {
 		level: number;

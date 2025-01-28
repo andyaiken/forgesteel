@@ -1,42 +1,18 @@
 import { ArtifactData, ConsumableData, LeveledArmorData, LeveledImplementData, LeveledOtherData, LeveledWeaponData, TrinketData } from './item-data';
 import { EnvironmentData, OrganizationData, UpbringingData } from './culture-data';
+import { AncestryData } from './ancestry-data';
 import { CareerData } from './career-data';
+import { ClassData } from './class-data';
 import { ComplicationData } from './complication-data';
 import { DomainData } from './domain-data';
 import { FactoryLogic } from '../logic/factory-logic';
 import { KitData } from './kit-data';
+import { MonsterData } from './monster-data';
 import { PerkData } from './perk-data';
+import { ProjectData } from './project-data';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
 import { TitleData } from './title-data';
-import { censor } from './classes/censor';
-import { conduit } from './classes/conduit';
-import { devil } from './ancestries/devil';
-import { dragonKnight } from './ancestries/dragon-knight';
-import { dwarf } from './ancestries/dwarf';
-import { dwarf as dwarfMonsterGroup } from './monsters/dwarf';
-import { elementalist } from './classes/elementalist';
-import { elfWode as elfWodeMonsterGroup } from './monsters/elf-wode';
-import { fury } from './classes/fury';
-import { goblin } from './monsters/goblin';
-import { hakaan } from './ancestries/hakaan';
-import { highElf } from './ancestries/elf-high';
-import { human } from './ancestries/human';
-import { kobold } from './monsters/kobold';
-import { lordSyuul } from './monsters/lord-syuul';
-import { memonek } from './ancestries/memonek';
-import { nullClass } from './classes/null';
-import { orc } from './ancestries/orc';
-import { polder } from './ancestries/polder';
-import { radenwight } from './monsters/radenwight';
-import { revenant } from './ancestries/revenant';
-import { shadow } from './classes/shadow';
-import { tactician } from './classes/tactician';
-import { talent } from './classes/talent';
-import { timeRaider } from './ancestries/time-raider';
-import { troubadour } from './classes/troubadour';
-import { werewolf } from './monsters/werewolf';
-import { wodeElf } from './ancestries/elf-wode';
 
 export class SourcebookData {
 	static core: Sourcebook = {
@@ -45,15 +21,15 @@ export class SourcebookData {
 		description: 'Core game elements.',
 		isHomebrew: false,
 		ancestries: [
-			devil,
-			dragonKnight,
-			dwarf,
-			wodeElf,
-			highElf,
-			human,
-			orc,
-			polder,
-			revenant
+			AncestryData.devil,
+			AncestryData.dragonKnight,
+			AncestryData.dwarf,
+			AncestryData.wodeElf,
+			AncestryData.highElf,
+			AncestryData.human,
+			AncestryData.orc,
+			AncestryData.polder,
+			AncestryData.revenant
 		],
 		cultures: [
 			FactoryLogic.createCulture('Artisan Guild', 'Urban, bureaucratic, creative.', [], EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.creative),
@@ -94,15 +70,15 @@ export class SourcebookData {
 			CareerData.watchOfficer
 		],
 		classes: [
-			censor,
-			conduit,
-			elementalist,
-			fury,
-			nullClass,
-			shadow,
-			tactician,
-			talent,
-			troubadour
+			ClassData.censor,
+			ClassData.conduit,
+			ClassData.elementalist,
+			ClassData.fury,
+			ClassData.nullClass,
+			ClassData.shadow,
+			ClassData.tactician,
+			ClassData.talent,
+			ClassData.troubadour
 		],
 		complications: [
 			ComplicationData.advancedStudies,
@@ -393,13 +369,13 @@ export class SourcebookData {
 			ArtifactData.mortalCoil
 		],
 		monsterGroups: [
-			dwarfMonsterGroup,
-			elfWodeMonsterGroup,
-			goblin,
-			kobold,
-			radenwight,
-			lordSyuul,
-			werewolf
+			MonsterData.dwarf,
+			MonsterData.elfWode,
+			MonsterData.goblin,
+			MonsterData.kobold,
+			MonsterData.radenwight,
+			MonsterData.lordSyuul,
+			MonsterData.werewolf
 		],
 		skills: [
 			{ name: 'Alchemy', description: 'Make bombs and potions.', list: SkillList.Crafting },
@@ -459,7 +435,25 @@ export class SourcebookData {
 			{ name: 'Society', description: 'Knowing noble etiquette and the leadership and power dynamics of noble families.', list: SkillList.Lore },
 			{ name: 'Strategy', description: 'Knowing about battle tactics and logistics.', list: SkillList.Lore }
 		],
-		languages: []
+		languages: [],
+		projects: [
+			ProjectData.buildAirship,
+			ProjectData.buildRoad,
+			ProjectData.craftTeleportationPlatform,
+			ProjectData.findCure,
+			ProjectData.imbueArmor,
+			ProjectData.imbueImplement,
+			ProjectData.imbueWeapon,
+			ProjectData.discoverLore,
+			ProjectData.goUndercover,
+			ProjectData.honeCareerSkills,
+			ProjectData.learnFromMaster,
+			ProjectData.learnNewLanguage,
+			ProjectData.learnNewRecipe,
+			ProjectData.communityService,
+			ProjectData.fishing,
+			ProjectData.spendTimeWithLovedOnes
+		]
 	};
 
 	static orden: Sourcebook = {
@@ -468,9 +462,9 @@ export class SourcebookData {
 		description: 'The default setting for Draw Steel.',
 		isHomebrew: false,
 		ancestries: [
-			hakaan,
-			memonek,
-			timeRaider
+			AncestryData.hakaan,
+			AncestryData.memonek,
+			AncestryData.timeRaider
 		],
 		cultures: [
 			FactoryLogic.createCulture('Devil', 'Urban, bureaucratic, academic.', [ 'Anjali' ], EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.academic),
@@ -666,6 +660,7 @@ export class SourcebookData {
 				name: 'Zaliac',
 				description: 'Spoken by dwarves; the language of engineering.'
 			}
-		]
+		],
+		projects: []
 	};
 }

@@ -1,4 +1,5 @@
 import { FactoryLogic } from './logic/factory-logic.ts';
+import { Format } from './utils/format.ts';
 import { HashRouter } from 'react-router';
 import { Hero } from './models/hero.ts';
 import { HeroLogic } from './logic/hero-logic.ts';
@@ -7,6 +8,7 @@ import { MonsterOrganizationType } from './enums/monster-organization-type.ts';
 import { Options } from './models/options.ts';
 import { Playbook } from './models/playbook.ts';
 import { Sourcebook } from './models/sourcebook.ts';
+import { SourcebookData } from './data/sourcebook-data.ts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import localforage from 'localforage';
@@ -52,6 +54,9 @@ Promise.all(promises).then(results => {
 		if (sourcebook.monsterGroups === undefined) {
 			sourcebook.monsterGroups = [];
 		}
+		if (sourcebook.projects === undefined) {
+			sourcebook.projects = [];
+		}
 
 		sourcebook.monsterGroups.forEach(group => {
 			group.monsters.forEach(monster => {
@@ -59,6 +64,16 @@ Promise.all(promises).then(results => {
 					monster.role.organization = MonsterOrganizationType.Platoon;
 				}
 			});
+		});
+	});
+
+	[ SourcebookData.core, SourcebookData.orden, ...sourcebooks ].forEach(sourcebook => {
+		sourcebook.items.forEach(item => {
+			if (item.crafting) {
+				item.crafting.id = `${item.id}-crafting`;
+				item.crafting.name = `Craft ${item.name}`;
+				item.crafting.description = `Craft ${Format.startsWithVowel(item.name) ? 'an' : 'a'} ${item.name}`;
+			}
 		});
 	});
 

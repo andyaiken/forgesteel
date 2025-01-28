@@ -54,6 +54,7 @@ import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
+import { ProjectPanel } from '../../../panels/elements/project-panel/project-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { SubClass } from '../../../../models/subclass';
@@ -89,6 +90,9 @@ export const LibraryEditPage = (props: Props) => {
 		const setName = (value: string) => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as Element;
 			elementCopy.name = value;
+			if ((elementCopy as Item).crafting) {
+				(elementCopy as Item).crafting!.name = `Craft ${value}`;
+			}
 			setElement(elementCopy);
 			setDirty(true);
 		};
@@ -1152,6 +1156,13 @@ export const LibraryEditPage = (props: Props) => {
 	const getCraftingEditSection = () => {
 		const item = element as Item;
 
+		const setCraftable = (value: boolean) => {
+			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			elementCopy.crafting = value ? FactoryLogic.createProject({ id: `${item.id}-crafting`, name: `Craft ${item.name}`, description: item.name }) : null;
+			setElement(elementCopy);
+			setDirty(true);
+		};
+
 		const setPrerequisites = (value: string) => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
 			if (elementCopy.crafting) {
@@ -1197,46 +1208,43 @@ export const LibraryEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		if (item.type === ItemType.Artifact) {
-			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='This item can&apos;t be crafted'
-				/>
-			);
-		}
-
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<HeaderText>Item Prerequisites</HeaderText>
-				<Input
-					placeholder='Prerequisites'
-					allowClear={true}
-					value={item.crafting.itemPrerequisites}
-					onChange={e => setPrerequisites(e.target.value)}
-				/>
-				<HeaderText>Source</HeaderText>
-				<Input
-					placeholder='Source'
-					allowClear={true}
-					value={item.crafting.source}
-					onChange={e => setSource(e.target.value)}
-				/>
-				<HeaderText>Characteristic</HeaderText>
-				<Select
-					style={{ width: '100%' }}
-					placeholder='Characteristic'
-					mode='multiple'
-					options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
-					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					value={item.crafting.characteristic}
-					onChange={setCharacteristic}
-				/>
-				<HeaderText>Goal</HeaderText>
-				<NumberSpin min={0} max={500} steps={[ 5 ]} value={item.crafting.goal} onChange={setGoal} />
-				<HeaderText>Effect</HeaderText>
-				<MultiLine label='Effect' value={item.crafting.effect} onChange={setEffect} />
+				<Toggle label='Can be crafted' value={!!item.crafting} onChange={setCraftable} />
+				{
+					item.crafting ?
+						<>
+							<HeaderText>Item Prerequisites</HeaderText>
+							<Input
+								placeholder='Prerequisites'
+								allowClear={true}
+								value={item.crafting.itemPrerequisites}
+								onChange={e => setPrerequisites(e.target.value)}
+							/>
+							<HeaderText>Source</HeaderText>
+							<Input
+								placeholder='Source'
+								allowClear={true}
+								value={item.crafting.source}
+								onChange={e => setSource(e.target.value)}
+							/>
+							<HeaderText>Characteristic</HeaderText>
+							<Select
+								style={{ width: '100%' }}
+								placeholder='Characteristic'
+								mode='multiple'
+								options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
+								optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+								value={item.crafting.characteristic}
+								onChange={setCharacteristic}
+							/>
+							<HeaderText>Goal</HeaderText>
+							<NumberSpin min={0} max={500} steps={[ 5 ]} value={item.crafting.goal} onChange={setGoal} />
+							<HeaderText>Effect</HeaderText>
+							<MultiLine label='Effect' value={item.crafting.effect} onChange={setEffect} />
+						</>
+						: null
+				}
 			</Space>
 		);
 	};
@@ -1934,9 +1942,18 @@ export const LibraryEditPage = (props: Props) => {
 				);
 			case 'item':
 				return (
-					<SelectablePanel>
-						<ItemPanel item={element as Item} mode={PanelMode.Full} showCrafting={true} />
-					</SelectablePanel>
+					<>
+						<SelectablePanel>
+							<ItemPanel item={element as Item} mode={PanelMode.Full} />
+						</SelectablePanel>
+						{
+							(element as Item).crafting ?
+								<SelectablePanel>
+									<ProjectPanel project={(element as Item).crafting!} mode={PanelMode.Full} />
+								</SelectablePanel>
+								: null
+						}
+					</>
 				);
 			case 'monster-group':
 				if (!subElementID) {

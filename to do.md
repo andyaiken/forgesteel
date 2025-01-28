@@ -60,7 +60,6 @@
     * Work out how retainers should be represented
     * Add retainer data
     * Add a retainer feature
-* Add a way for heroes to track their current projects
 * Hero Builder:
   * Auto-create heroes
   * Revenants should have 3 ancestry points if small

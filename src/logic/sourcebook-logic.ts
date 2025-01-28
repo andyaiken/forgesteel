@@ -10,6 +10,7 @@ import { Kit } from '../models/kit';
 import { Language } from '../models/language';
 import { MonsterGroup } from '../models/monster';
 import { Perk } from '../models/perk';
+import { Project } from '../models/project';
 import { Skill } from '../models/skill';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
@@ -216,6 +217,17 @@ export class SourcebookLogic {
 
 		sourcebooks.forEach(sourcebook => {
 			list.push(...sourcebook.languages);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getProjects = (sourcebooks: Sourcebook[]) => {
+		const list: Project[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.projects);
+			list.push(...sourcebook.items.map(i => i.crafting).filter(p => !!p));
 		});
 
 		return Collections.sort(list, item => item.name);

@@ -476,18 +476,7 @@ export const FeaturePanel = (props: Props) => {
 						}
 					}}
 				/>
-				{
-					data.selected.map(i => {
-						return (
-							<ItemPanel
-								key={i.id}
-								item={i}
-								mode={PanelMode.Full}
-								showCrafting={false}
-							/>
-						);
-					})
-				}
+				{data.selected.map(i => (<ItemPanel key={i.id} item={i} mode={PanelMode.Full} />))}
 			</Space>
 		);
 	};

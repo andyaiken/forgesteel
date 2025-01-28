@@ -2,12 +2,7 @@
 
 ## Add Monsters
 
-* [x] Radenwight
-* [x] Goblins
-* [x] Kobolds
-* [x] Dwarves
 * [ ] Elves, High
-* [x] Elves, Wode
 * [ ] Elves, Shadow
 * [ ] Gnolls
 * [ ] Hobgoblins
@@ -43,10 +38,8 @@
 * [ ] Shambling Mound
 * [ ] Time Raiders
 * [ ] Voiceless Talkers
-* [x] Lord Syuul
 * [ ] War Dogs
 * [ ] War Dogs - 2nd Echelon
-* [x] Werewolf
 * [ ] Wyverns
 * [ ] Xorannox the Tyract
 * [ ] Animals
@@ -55,11 +48,10 @@
 
 ### Heroes
 
-* Add a way for heroes to be modified
-  * Retainers
-    * Work out how retainers should be represented
-    * Add retainer data
-    * Add a retainer feature
+* Retainers
+  * Work out how retainers should be represented
+  * Add retainer data
+  * Add a retainer feature
 * Hero Builder:
   * Auto-create heroes
   * Revenants should have 3 ancestry points if small

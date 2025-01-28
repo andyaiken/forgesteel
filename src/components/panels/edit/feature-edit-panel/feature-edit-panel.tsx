@@ -260,12 +260,6 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
-		const setValueCharacteristics = (value: Characteristic[]) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
-			copy.valueCharacteristics = value;
-			setData(copy);
-		};
-
 		const setValuePerLevel = (value: number) => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
 			copy.valuePerLevel = value;
@@ -275,6 +269,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setValuePerEchelon = (value: number) => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
 			copy.valuePerEchelon = value;
+			setData(copy);
+		};
+
+		const setValueCharacteristics = (value: Characteristic[]) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
+			copy.valueCharacteristics = value;
 			setData(copy);
 		};
 
@@ -573,6 +573,8 @@ export const FeatureEditPanel = (props: Props) => {
 						/>
 						<HeaderText>Value</HeaderText>
 						<NumberSpin label='Value' min={0} value={data.value} onChange={setValue} />
+						<NumberSpin label='Per Level After 1st' min={0} value={data.valuePerLevel} onChange={setValuePerLevel} />
+						<NumberSpin label='Per Echelon' min={0} value={data.valuePerEchelon} onChange={setValuePerEchelon} />
 						<Select
 							style={{ width: '100%' }}
 							placeholder='Characteristics'
@@ -582,8 +584,6 @@ export const FeatureEditPanel = (props: Props) => {
 							value={data.valueCharacteristics}
 							onChange={setValueCharacteristics}
 						/>
-						<NumberSpin label='Per Level After 1st' min={0} value={data.valuePerLevel} onChange={setValuePerLevel} />
-						<NumberSpin label='Per Echelon' min={0} value={data.valuePerEchelon} onChange={setValuePerEchelon} />
 					</Space>
 				);
 			}

@@ -82,6 +82,12 @@ p,
 	&.small-text {
 		font-size: 10px;
 	}
+
+	br {
+		content: '';
+		display: block;
+		height: 10px;
+	}
 }
 
 b {

@@ -67,15 +67,19 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 		FactoryLogic.feature.createMalice({
 			id: 'dwarf-malice-1',
 			name: 'Breaching Charge',
-			description: 'A dwarf can destroy one adjacent object or square of wall for every 3 malice spent. Each enemy adjacent to the destroyed object or square takes the object’s Stamina in damage (3 wood / 6 stone / 9 metal).',
 			cost: 3,
-			repeatable: true
+			repeatable: true,
+			sections: [
+				'A dwarf can destroy one adjacent object or square of wall for every 3 malice spent. Each enemy adjacent to the destroyed object or square takes the object’s Stamina in damage (3 wood / 6 stone / 9 metal).'
+			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'dwarf-malice-2',
 			name: 'Rappelling Barrage',
-			description: 'All dwarves acting this turn gain the climb keyword to their movement. At any point during their movement, they can make a free strike.',
-			cost: 5
+			cost: 5,
+			sections: [
+				'All dwarves acting this turn gain the climb keyword to their movement. At any point during their movement, they can make a free strike.'
+			]
 		}),
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({

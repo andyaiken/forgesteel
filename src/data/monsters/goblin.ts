@@ -55,21 +55,25 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 		FactoryLogic.feature.createMalice({
 			id: 'goblin-malice-1',
 			name: 'Goblin Mode',
-			description: 'Each goblin in the encounter gains a +2 bonus to speed until the end of the round.',
-			cost: 3
+			cost: 3,
+			sections: [
+				'Each goblin in the encounter gains a +2 bonus to speed until the end of the round.'
+			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'goblin-malice-2',
 			name: 'Tiny Stabs',
-			description: 'Each enemy in the encounter takes 1 damage for each goblin adjacent to them.',
-			cost: 5
+			cost: 5,
+			sections: [
+				'Each enemy in the encounter takes 1 damage for each goblin adjacent to them.'
+			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'goblin-malice-3',
 			name: 'Swamp Stink',
-			description: 'The encounter map becomes covered in a green mist that lasts until the end of the round, and which can’t be dispersed by wind. All areas of the map become difficult terrain for non-goblins, and each non-goblin on the map must make a Might test.',
 			cost: 7,
 			sections: [
+				'The encounter map becomes covered in a green mist that lasts until the end of the round, and which can’t be dispersed by wind. All areas of the map become difficult terrain for non-goblins, and each non-goblin on the map must make a Might test.',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Might,
 					tier1: '5 poison damage; weakend until mist disappears',

@@ -61,15 +61,17 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 		FactoryLogic.feature.createMalice({
 			id: 'radenwight-malice-2',
 			name: 'Rat Race',
-			description: 'Each radenwight shifts up to their speed. Wherever a radenwight ends this movement adjacent to at least one other radenwight, they can make a melee free strike against each adjacent enemy.',
-			cost: 5
+			cost: 5,
+			sections: [
+				'Each radenwight shifts up to their speed. Wherever a radenwight ends this movement adjacent to at least one other radenwight, they can make a melee free strike against each adjacent enemy.'
+			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'radenwight-malice-3',
 			name: 'Rally the Rodents',
-			description: 'A radenwight uses music to coordinate rats to form a 10 wall of living rats scurrying atop one another into unoccupied spaces anywhere on the encounter map. The wall doesn’t block line of effect for radenwights and their allies, but it does for other creatures, as the rats coordinate their movements with the radenwights. Each square of the wall has 10 Stamina. If the last radenwight in the encounter dies and the wall is still standing, the rats let out a hideous screech as they disperse. Each enemy on the encounter map makes an Intuition test.',
 			cost: 7,
 			sections: [
+				'A radenwight uses music to coordinate rats to form a 10 wall of living rats scurrying atop one another into unoccupied spaces anywhere on the encounter map. The wall doesn’t block line of effect for radenwights and their allies, but it does for other creatures, as the rats coordinate their movements with the radenwights. Each square of the wall has 10 Stamina. If the last radenwight in the encounter dies and the wall is still standing, the rats let out a hideous screech as they disperse. Each enemy on the encounter map makes an Intuition test.',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Intuition,
 					tier1: '7 sonic damage; target can’t take a respite activity during their next respite',

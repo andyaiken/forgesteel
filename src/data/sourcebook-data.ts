@@ -369,12 +369,14 @@ export class SourcebookData {
 			ArtifactData.mortalCoil
 		],
 		monsterGroups: [
+			MonsterData.chimera,
 			MonsterData.dwarf,
 			MonsterData.elfWode,
 			MonsterData.goblin,
 			MonsterData.kobold,
-			MonsterData.radenwight,
 			MonsterData.lordSyuul,
+			MonsterData.manticore,
+			MonsterData.radenwight,
 			MonsterData.werewolf
 		],
 		skills: [

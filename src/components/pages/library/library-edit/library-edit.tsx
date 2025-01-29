@@ -86,6 +86,10 @@ export const LibraryEditPage = (props: Props) => {
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ showSimilarMonsters, setShowSimilarMonsters ] = useState<boolean>(false);
 
+	const [ similarLevel, setSimilarLevel ] = useState<boolean>(true);
+	const [ similarRole, setSimilarRole ] = useState<boolean>(true);
+	const [ similarOrganization, setSimilarOrganization ] = useState<boolean>(true);
+
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
 			const elementCopy = JSON.parse(JSON.stringify(element)) as Element;
@@ -1330,8 +1334,10 @@ export const LibraryEditPage = (props: Props) => {
 			copy.malice.push(FactoryLogic.feature.createMalice({
 				id: Utils.guid(),
 				name: '',
-				description: '',
-				cost: 3
+				cost: 3,
+				sections: [
+					''
+				]
 			}));
 			setElement(copy);
 			setDirty(true);
@@ -1504,7 +1510,9 @@ export const LibraryEditPage = (props: Props) => {
 			.flatMap(sb => sb.monsterGroups)
 			.flatMap(mg => mg.monsters)
 			.filter(m => m.id !== monster.id)
-			.filter(m => (m.level === monster.level) && (m.role.type === monster.role.type) && (m.role.organization === monster.role.organization));
+			.filter(m => !similarLevel || (m.level === monster.level))
+			.filter(m => !similarRole || (m.role.type === monster.role.type))
+			.filter(m => !similarOrganization || (m.role.organization === monster.role.organization));
 	};
 
 	const getSimilarMonstersSection = (monster: Monster) => {
@@ -1517,6 +1525,11 @@ export const LibraryEditPage = (props: Props) => {
 						<Toggle label='Show data from this list in the monster builder' value={showSimilarMonsters} onChange={setShowSimilarMonsters} />
 						: null
 				}
+				<Expander title='Similarity'>
+					<Toggle label={`Match level (${monster.level})`} value={similarLevel} onChange={setSimilarLevel} />
+					<Toggle label={`Match role (${monster.role.type})`} value={similarRole} onChange={setSimilarRole} />
+					<Toggle label={`Match organization (${monster.role.organization})`} value={similarOrganization} onChange={setSimilarOrganization} />
+				</Expander>
 				{
 					monsters.map(m => {
 						const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id);

@@ -2,47 +2,45 @@
 
 ## Add Monsters
 
-* [ ] Elves, High
-* [ ] Elves, Shadow
-* [ ] Gnolls
-* [ ] Hobgoblins
-* [ ] Humans
-* [ ] Lizardfolk
-* [ ] Orcs
-* [ ] Rivals
-* [ ] Trolls
-* [ ] Undead
-* [ ] Undead - 2nd Echelon
-* [ ] Angulotls
-* [ ] Ankheg
-* [ ] Ashen Hoarder
-* [ ] Basilisks
-* [ ] Bredbeddle
-* [ ] Bugbears
-* [ ] Chimera
-* [ ] Demons
-* [ ] Demons - 2nd Echelon
-* [ ] Devils
-* [ ] Draconians
-* [ ] Dragons
-* [ ] Elementals
-* [ ] Fossil Cryptic
-* [ ] Griffons
-* [ ] Hag
-* [ ] Lightbenders
-* [ ] Manticore
-* [ ] Medusa
-* [ ] Minotaurs
-* [ ] Ogres
-* [ ] Olothec
-* [ ] Shambling Mound
-* [ ] Time Raiders
-* [ ] Voiceless Talkers
-* [ ] War Dogs
-* [ ] War Dogs - 2nd Echelon
-* [ ] Wyverns
-* [ ] Xorannox the Tyract
-* [ ] Animals
+* Gnolls
+* Hobgoblins
+* Lizardfolk
+* Orcs
+* Trolls
+* Undead
+* Bugbears
+* Draconians
+* Dragons
+* Elves, High
+* Elves, Shadow
+* Humans
+* Rivals
+* Undead - 2nd Echelon
+* Angulotls
+* Ankheg
+* Ashen Hoarder
+* Basilisks
+* Bredbeddle
+* Demons
+* Demons - 2nd Echelon
+* Devils
+* Elementals
+* Fossil Cryptic
+* Griffons
+* Hag
+* Lightbenders
+* Medusa
+* Minotaurs
+* Ogres
+* Olothec
+* Shambling Mound
+* Time Raiders
+* Voiceless Talkers
+* War Dogs
+* War Dogs - 2nd Echelon
+* Wyverns
+* Xorannox the Tyract
+* Animals
 
 ## New Features
 
@@ -64,9 +62,7 @@
 
 ### Monster Editor
 
-* Similar monsters
-  * Allow the user to define similarity (currently it's level, role, and organization)
-  * Allow the user to specify a working set of monsters
+* Allow the user to manually add/remove from the set of similar monsters
 * Auto-create monsters
 
 ### Encounter Editor

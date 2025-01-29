@@ -189,6 +189,14 @@ td {
 	}
 }
 
+.ant-dropdown {
+	.ant-dropdown-menu {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+		gap: 10px;
+	}
+}
+
 .ant-input-affix-wrapper {
 	&.input-empty {
 		border-color: rgb(255, 160, 0);

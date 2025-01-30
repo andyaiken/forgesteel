@@ -854,6 +854,7 @@ export class KitData {
 				name: 'Hybrid Form: Bear',
 				description: `
 When you are in your hybrid form, your size becomes 2, and you gain a +2 bonus to speed and a +1 bonus to distance with melee weapon abilities.
+
 Once you reach 4th level, the first time you take hybrid form in an encounter you gain 10 Temporary Stamina.`
 			}),
 			FactoryLogic.feature.create({
@@ -922,6 +923,7 @@ Once you reach 4th level, the first time you take hybrid form in an encounter yo
 				name: 'Hybrid Form: Crow',
 				description: `
 When you are in your hybrid form, your size becomes your choice of 1S or 1M.
+
 Once you reach 4th level, your speed gains the Fly keyword.`
 			}),
 			FactoryLogic.feature.create({
@@ -990,6 +992,7 @@ Once you reach 4th level, your speed gains the Fly keyword.`
 				name: 'Hybrid Form: Rat',
 				description: `
 When you are in your hybrid form, your size becomes your choice of 1S or 1M.
+
 Once you reach 4th level, your speed gains the Climb keyword in hybrid form.`
 			}),
 			FactoryLogic.feature.create({
@@ -1057,6 +1060,7 @@ Once you reach 4th level, your speed gains the Climb keyword in hybrid form.`
 				name: 'Hybrid Form: Wolf',
 				description: `
 When you are in your hybrid form, your size becomes 1L if it isn’t already, you gain a +2 bonus to speed, and you ignore difficult terrain.
+
 Once you reach 4th level, the first time you take hybrid form in an encounter you gain 10 Temporary Stamina.`
 			}),
 			FactoryLogic.feature.create({

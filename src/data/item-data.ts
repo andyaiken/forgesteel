@@ -22,6 +22,7 @@ export class ConsumableData {
 		}),
 		effect: `
 As a maneuver, you can make a ranged free strike using a black ash dart. The attack deals 1 bonus damage and adds the following effects to the tier results of the power roll:
+
 * 11 or lower: You can teleport the target up to 2 squares.
 * 12–16: You can teleport the target up to 4 squares.
 * 17+: You can teleport the target up to 6 squares.`
@@ -71,6 +72,7 @@ As a maneuver, you can make a ranged free strike using a black ash dart. The att
 		}),
 		effect: `
 As a maneuver, you coat a weapon in this oil and ignite it. The weapon burns persistently and without harming itself until it is extinguished as a maneuver. Whenever you use a weapon that is ignited this way with a weapon ability, you deal an extra 2 fire damage with rolled damage.
+
 Alternatively, you can use a maneuver to throw the pot up to 5 squares, coating the square where it lands and any creatures or objects in that square with a sticky, flammable oil. If the oil takes any fire damage, it burns persistently and deals 5 fire damage at the end of each of your turns to anything it has coated. A creature covered in the oil or who can reach it can use an action to extinguish the flames and end the effect.`
 	});
 
@@ -169,7 +171,9 @@ As a maneuver, you attach a lachomp tooth to a weapon, allowing that weapon to s
 		}),
 		effect: `
 When activated as a maneuver, this item erupts in a bright flash, you can shift 1 square without your enemies noticing your movement, and a homunculus perfectly resembling you appears in a space adjacent to you. The homunculus is a creature with Stamina 15, a 0 in all their characteristics, and a speed and stability equal to yours.
+
 They appear indistinguishable from you, but can't use any abilities.
+
 While you have line of effect to your homunculus, you can use a maneuver to issue them a telepathic command. The homunculus performs the command to the best of their ability. If not commanded, the homunculus mimics your movements and speech. When you move, the homunculus moves with you, matching your pace. The homunculus crumbles to dust after 1 hour or if reduced to Stamina 0.`
 	});
 
@@ -265,6 +269,7 @@ export class TrinketData {
 		}),
 		effect: `
 While worn, a blue Color Cloak grants you cold immunity equal to your level.
+
 Additionally, when you are targeted by any effect that deals cold damage, you can use a triggered action to shift a number of squares equal to your level. If you do so, the cold immunity granted by the cloak becomes cold weakness with the same value until the end of the next round. You can't use this triggered action again until this weakness ends.`
 	});
 
@@ -282,6 +287,7 @@ Additionally, when you are targeted by any effect that deals cold damage, you ca
 		}),
 		effect: `
 While worn, a red Color Cloak grants you fire immunity equal to your level.
+
 Additionally, when you are targeted by any effect that deals fire damage, you can use a triggered action to reduce the damage to 0. If you do so, the fire immunity granted by this cloak becomes fire weakness with the same value until the end of the next round. You can't use this triggered action again until this weakness ends.`
 	});
 
@@ -299,6 +305,7 @@ Additionally, when you are targeted by any effect that deals fire damage, you ca
 		}),
 		effect: `
 While worn, a yellow Color Cloak grants you lightning immunity equal to your level.
+
 Additionally, when you are targeted by any effect that deals lightning damage, you can use a triggered action to cause the next damage-dealing ability you use to deal extra lightning damage equal to your level. Once you deal this extra damage, your lightning immunity becomes lightning weakness with the same value until the end of the next round. You can't use this triggered action again until this weakness ends.`
 	});
 
@@ -361,6 +368,7 @@ Additionally, when you are targeted by any effect that deals lightning damage, y
 		}),
 		effect: `
 When you use a move action while wearing these gloves, you can place one hand upon a mundane object as part of that move action. If the object is 1 square thick or less and has open space on the other side (for example, a door or wall), you pull your body through it as though the object wasn't there.
+
 If the object is too thick or has no open space on the other side, your hand becomes stuck inside the object. Removing your hand takes a successful hard Might test made as an action.`
 	});
 
@@ -2093,7 +2101,9 @@ export class LeveledOtherData {
 						name: '',
 						description: `
 While you wear this torc, you gain a bonus to Stamina equal to twice your highest characteristic score.
+
 Additionally, you can use a maneuver to choose a creature in your line of effect and learn their level. If their level is higher than yours, the torc grants you envy. If their level is equal to or lower than yours, the torc grants you disdain.
+
 You can have both envy and disdain, but not more than one instance of either. Whenever a creature within 10 squares of you deals damage to another creature, you can use a triggered action to expend your envy or disdain. If you expend envy, you deal damage equal to the triggering damage to a creature adjacent to you. If you expend disdain, you reduce the triggering damage by half. At the end of the encounter, you lose any envy or disdain granted by the torc.`
 					})
 				]
@@ -2131,6 +2141,7 @@ export class ArtifactData {
 		keywords: [ AbilityKeyword.Magic, KitWeapon.Light, KitWeapon.Medium, KitWeapon.Heavy ],
 		effect: `
 Whether drawn from a stone, gifted by a lake spirit, forged by a god, or used to kill one, there is a sword that exists outside of time and space. It is always where it needs to be precisely when it needs to be there--then is gone in a flash when the need for it has waned. The sword is depicted in art, song, and story across many living cultures--and even more frequently among those long buried, often after proving the deciding factor in a battle. It's been wielded by numerous heroes of legend, and even more who have slipped into the forgotten shadows of history.
+
 Though its size and make are often debated, the sword is consistently described as a hilt with no crossguard, made from pure starlight. When wielded, a brilliant metal blade springs forth from that hilt, suiting the holder's taste in weapons. Those who touch the blade are filled with the vigor and power of the heroes who have held it before.`,
 		featuresByLevel: [
 			{
@@ -2174,6 +2185,7 @@ Though its size and make are often debated, the sword is consistently described 
 		keywords: [ AbilityKeyword.Magic ],
 		effect: `
 This scepter waits high in the sky, resting within an endlessly raging cyclone. It waits for the one who will unify all people under its light. It awaits its champion.
+
 The Encepter is said to have first manifested in a young world doomed to apocalypse--unless every last inhabitant of that world could stand together. The scepter is said to impose either dominion or obliteration over any threat its light is drawn around. Today, it is most commonly known as a bad omen, and should the Encepter reveal itself, folk know that the world teeters on the brink of destruction. Whether any of the stories are true, few can say, for the only living eyes that have witnessed the Encepter belong to dragons deep in slumber.`,
 		featuresByLevel: [
 			{
@@ -2217,7 +2229,9 @@ The Encepter is said to have first manifested in a young world doomed to apocaly
 		keywords: [ AbilityKeyword.Psionic ],
 		effect: `
 Change is the engine of existence. Permanence begets stagnation. When the past refuses to relinquish control, a path must be cleared for the future. Energized by the flickering of minds and souls passing through the void, the Mortal Coil taps into the entropic potential inherent in every living creature to cast a shadow capable of felling even gods. For the true gift of life is death, and gifts are meant to be given.
+
 Only one destined for death can contain the power of the Mortal Coil. A mortal creature who carries this artifact serves as its host, gaining an additional action on each of their turns, aging at ten times the normal rate, and becoming unable to ever regain Stamina. A host with no natural maximum lifespan permanently reduces their maximum Stamina by 10 each year.
+
 When the Mortal Coil is left unattended or is in the possession of a creature who is not mortal, it activates and can't be deactivated until a mortal creature becomes its host once more. While active, the artifact extends a penumbra of influence for 10 miles in every direction. Every creature in the penumbra is subject to the following effects.`,
 		featuresByLevel: [
 			{

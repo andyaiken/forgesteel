@@ -12,6 +12,7 @@ export const conduit: HeroClass = {
 	name: 'Conduit',
 	description: `
 The power of the gods flows through you! As a vessel for divine magic, you don’t just keep your allies in the fight. You make those allies more effective, even as you rain divine energy down upon your foes. While the deity or saint you serve might have other faithful and clergy, you are special among worshippers, receiving your abilities from the highest source.
+
 As a conduit, you heal and buff your allies, and debuff your foes while smiting them with divine magic. The spark of divinity within you shines, aweing your enemies and granting you increased empathy.`,
 	heroicResource: 'Piety',
 	subclassName: '',
@@ -46,7 +47,9 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 					name: 'Piety',
 					description: `
 At the start of each of your turns during combat, you gain 1d3 piety.
+
 Additionally, you can gain more piety by praying to the gods — but beware! Doing so can easily draw their ire, as the gods hate to be annoyed. When you roll to gain 1d3 piety at the start of your turn, you can pray to gain the following additional effects (no action required):
+
 * If the roll is a 1, you gain 1 additional piety but anger the gods! You take psychic damage equal to 1d6 + your level, which can’t be reduced in any way.
 * If the roll is a 2, you gain 1 additional piety.
 * If the roll is a 3, you gain 2 additional piety and can activate a domain effect of your choice.`
@@ -71,10 +74,11 @@ Additionally, you can gain more piety by praying to the gods — but beware! Doi
 								repeatable: true,
 								effect: `
 For each piety spent, you can choose one of the following enhancements:
-• You can target one additional ally within distance.
-• You can end one effect on a target that is ended by a saving throw or that ends at the end of their turn.
-• A prone target can stand up.
-• A target can spend 1 additional Recovery.`
+
+* You can target one additional ally within distance.
+* You can end one effect on a target that is ended by a saving throw or that ends at the end of their turn.
+* A prone target can stand up.
+* A target can spend 1 additional Recovery.`
 							}
 						]
 					})
@@ -310,6 +314,7 @@ For each piety spent, you can choose one of the following enhancements:
 					name: 'Minor Miracle',
 					description: `
 As a respite activity, you perform a religious ritual and beseech the gods to restore a dead creature to life. You must have at least half the creature’s remains, and they must have died within the last 24 hours from an effect that isn’t age related. The creature’s soul must be willing to return to life for the ritual to work. If they are not willing, you instinctively understand that as you start the respite activity and can cease it immediately.
+
 A creature with a willing soul returns to life at the end of the respite with full Stamina and half their Recoveries. You regain only half your Recoveries at the end of the respite.`
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({

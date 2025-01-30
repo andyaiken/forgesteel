@@ -43,20 +43,26 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 		FactoryLogic.feature.createMalice({
 			id: 'werewolf-malice-1',
 			name: 'Blood in their Eyes',
-			description: 'The werewolf gains 10 temporary Stamina and their speed increases by 3 until the end of their turn. The werewolf can’t activate this power if they took any holy damage since the end of their previous turn.',
-			cost: 3
+			cost: 3,
+			sections: [
+				'The werewolf gains 10 temporary Stamina and their speed increases by 3 until the end of their turn. The werewolf can’t activate this power if they took any holy damage since the end of their previous turn.'
+			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'werewolf-malice-2',
 			name: 'Accursed Mist',
-			description: 'The encounter map becomes hazy until the end of the round. The werewolf has damage immunity 2 and is concealed while in the mist. Any Creatures that have 1 or more ferocity at the end of their turn while in the mist gains 2 ferocity.',
-			cost: 5
+			cost: 5,
+			sections: [
+				'The encounter map becomes hazy until the end of the round. The werewolf has damage immunity 2 and is concealed while in the mist. Any Creatures that have 1 or more ferocity at the end of their turn while in the mist gains 2 ferocity.'
+			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'werewolf-malice-3',
 			name: 'Moonfall',
-			description: 'The encounter map turns to night and the moon appears impossibly big in the sky until the end of the encounter. The werewolf can take an additional maneuver on each of their turns while they have line of effect to the moon.',
-			cost: 10
+			cost: 10,
+			sections: [
+				'The encounter map turns to night and the moon appears impossibly big in the sky until the end of the encounter. The werewolf can take an additional maneuver on each of their turns while they have line of effect to the moon.'
+			]
 		})
 	],
 	monsters: [
@@ -74,7 +80,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'werewolf-feature-1',
-					monsterName: 'the werewolf'
+					name: 'the werewolf'
 				}),
 				FactoryLogic.feature.create({
 					id: 'werewolf-feature-2',

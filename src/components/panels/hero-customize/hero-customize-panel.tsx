@@ -1,11 +1,14 @@
 import { Divider, Select } from 'antd';
-import { Feature, FeatureAncestryFeatureChoice, FeatureClassAbility, FeatureData, FeaturePerk, FeatureSkillChoice } from '../../../models/feature';
+import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureClassAbility, FeatureData, FeaturePerk, FeatureSkillChoice } from '../../../models/feature';
+import { Characteristic } from '../../../enums/characteristic';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
 import { Expander } from '../../controls/expander/expander';
 import { FactoryLogic } from '../../../logic/factory-logic';
+import { FeatureField } from '../../../enums/feature-field';
 import { FeaturePanel } from '../elements/feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
+import { FormatLogic } from '../../../logic/format-logic';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
@@ -23,6 +26,7 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	addFeature: (feature: Feature) => void;
 	deleteFeature: (feature: Feature) => void;
+	setFeature: (featureID: string, feature: Feature) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
@@ -31,28 +35,63 @@ export const HeroCustomizePanel = (props: Props) => {
 		const copy = JSON.parse(JSON.stringify(feature)) as FeatureAncestryFeatureChoice;
 		copy.data.value = value;
 		copy.data.selected = null;
-		props.setFeatureData(feature.id, copy.data);
+		props.setFeature(feature.id, copy);
+	};
+
+	const setValueField = (feature: Feature, value: FeatureField) => {
+		const copy = JSON.parse(JSON.stringify(feature)) as FeatureBonus;
+		copy.data.field = value;
+		copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
+		props.setFeature(feature.id, copy);
+	};
+
+	const setValueBonus = (feature: Feature, value: number) => {
+		const copy = JSON.parse(JSON.stringify(feature)) as FeatureBonus;
+		copy.data.value = value;
+		copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
+		props.setFeature(feature.id, copy);
+	};
+
+	const setValuePerLevel = (feature: Feature, value: number) => {
+		const copy = JSON.parse(JSON.stringify(feature)) as FeatureBonus;
+		copy.data.valuePerLevel = value;
+		copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
+		props.setFeature(feature.id, copy);
+	};
+
+	const setValuePerEchelon = (feature: Feature, value: number) => {
+		const copy = JSON.parse(JSON.stringify(feature)) as FeatureBonus;
+		copy.data.valuePerEchelon = value;
+		copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
+		props.setFeature(feature.id, copy);
+	};
+
+	const setValueCharacteristics = (feature: Feature, value: Characteristic[]) => {
+		const copy = JSON.parse(JSON.stringify(feature)) as FeatureBonus;
+		copy.data.valueCharacteristics = value;
+		copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
+		props.setFeature(feature.id, copy);
 	};
 
 	const setCost = (feature: Feature, value: number | 'signature') => {
 		const copy = JSON.parse(JSON.stringify(feature)) as FeatureClassAbility;
 		copy.data.cost = value;
 		copy.data.selectedIDs = [];
-		props.setFeatureData(feature.id, copy.data);
+		props.setFeature(feature.id, copy);
 	};
 
 	const setPerkLists = (feature: Feature, value: PerkList[]) => {
 		const copy = JSON.parse(JSON.stringify(feature)) as FeaturePerk;
 		copy.data.lists = value;
 		copy.data.selected = [];
-		props.setFeatureData(feature.id, copy.data);
+		props.setFeature(feature.id, copy);
 	};
 
 	const setSkillLists = (feature: Feature, value: SkillList[]) => {
 		const copy = JSON.parse(JSON.stringify(feature)) as FeatureSkillChoice;
 		copy.data.listOptions = value;
 		copy.data.selected = [];
-		props.setFeatureData(feature.id, copy.data);
+		props.setFeature(feature.id, copy);
 	};
 
 	const getEditSection = (feature: Feature) => {
@@ -62,6 +101,33 @@ export const HeroCustomizePanel = (props: Props) => {
 					<div>
 						<HeaderText>Point Cost</HeaderText>
 						<NumberSpin min={1} max={2} value={feature.data.value} onChange={value => setValue(feature, value)} />
+					</div>
+				);
+			case FeatureType.Bonus:
+				return (
+					<div>
+						<HeaderText>Field</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select field'
+							options={[ FeatureField.Disengage, FeatureField.ProjectPoints, FeatureField.Recoveries, FeatureField.RecoveryValue, FeatureField.Renown, FeatureField.Speed, FeatureField.Stability, FeatureField.Stamina, FeatureField.Wealth ].map(o => ({ value: o }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={feature.data.field}
+							onChange={field => setValueField(feature, field)}
+						/>
+						<HeaderText>Value</HeaderText>
+						<NumberSpin label='Value' min={0} value={feature.data.value} onChange={value => setValueBonus(feature, value)} />
+						<NumberSpin label='Per Level After 1st' min={0} value={feature.data.valuePerLevel} onChange={value => setValuePerLevel(feature, value)} />
+						<NumberSpin label='Per Echelon' min={0} value={feature.data.valuePerEchelon} onChange={value => setValuePerEchelon(feature, value)} />
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Characteristics'
+							mode='multiple'
+							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={feature.data.valueCharacteristics}
+							onChange={value => setValueCharacteristics(feature, value)}
+						/>
 					</div>
 				);
 			case FeatureType.ClassAbility:
@@ -122,13 +188,17 @@ export const HeroCustomizePanel = (props: Props) => {
 							]}
 						>
 							{getEditSection(f)}
-							<FeaturePanel
-								feature={f}
-								hero={props.hero}
-								sourcebooks={props.sourcebooks}
-								mode={PanelMode.Full}
-								setData={props.setFeatureData}
-							/>
+							{
+								f.type !== FeatureType.Bonus ?
+									<FeaturePanel
+										feature={f}
+										hero={props.hero}
+										sourcebooks={props.sourcebooks}
+										mode={PanelMode.Full}
+										setData={props.setFeatureData}
+									/>
+									: null
+							}
 						</Expander>
 					))
 				}
@@ -137,7 +207,8 @@ export const HeroCustomizePanel = (props: Props) => {
 					label='Add a new feature'
 					items={[
 						{ key: 'ancestry', label: <div className='ds-text centered-text'>Ancestry Feature</div> },
-						{ key: 'ability', label: <div className='ds-text centered-text'>Class Ability</div> },
+						{ key: 'bonus', label: <div className='ds-text centered-text'>Bonus</div> },
+						{ key: 'class-ability', label: <div className='ds-text centered-text'>Class Ability</div> },
 						{ key: 'language', label: <div className='ds-text centered-text'>Language</div> },
 						{ key: 'perk', label: <div className='ds-text centered-text'>Perk</div> },
 						{ key: 'skill', label: <div className='ds-text centered-text'>Skill</div> },
@@ -154,7 +225,15 @@ export const HeroCustomizePanel = (props: Props) => {
 									former: true
 								});
 								break;
-							case 'ability':
+							case 'bonus':
+								feature = FactoryLogic.feature.createBonus({
+									id: Utils.guid(),
+									name: `${FeatureField.Stamina} + 6`,
+									field: FeatureField.Stamina,
+									value: 6
+								});
+								break;
+							case 'class-ability':
 								feature = FactoryLogic.feature.createClassAbilityChoice({
 									id: Utils.guid(),
 									cost: 'signature'

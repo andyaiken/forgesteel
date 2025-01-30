@@ -11,7 +11,9 @@ export class ProjectData {
 		goal: 3000,
 		effect: `
 When you begin this project, you hire a crew of carpenters, mages, and shipwrights who work in the area where the project begins, with these artisans building the ship for you. You can make a project roll whenever you are overseeing the project, which you might be able to do remotely through the use of magic or psionics.
+
 When the project is completed, you have an airship. You and any creatures you designate can operate the ship by touching the wheel. During combat, a creature touching the wheel of the ship can use a maneuver to make the ship move up to 10 squares. The ship can be moved only once per round. Out of combat, the ship has a speed of 130 miles per day.
+
 An airship is an object (giving it immunity all to poison and psychic damage), and can take 200 damage before it is destroyed. If the damage the ship takes is not too severe (as the Director determines), as long as you have access to materials that can repair the ship, you can restore it back to its original condition as a respite activity.`
 	});
 
@@ -23,6 +25,7 @@ An airship is an object (giving it immunity all to poison and psychic damage), a
 		characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Presence ],
 		effect: `
 When you begin this project, you hire a crew of masons, engineers, and guards who work in the starting location where the project began and build or repair the road for you. You can make a project roll whenever you are overseeing the project, which you may be able to do remotely through the use of magic or psionics, provided you have the means.
+
 The project points required to complete work on the road equals 10 × the road’s length in miles. The goal is cut in half if you are repairing an existing road, or someone else begins work on a second road project starting from the second location connecting to your first location.
 
 | Project             | Renown Earned |
@@ -52,7 +55,9 @@ When you complete the project, you earn Renown with the people depending on the 
 		characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
 		effect: `
 You research a cure for a disease, curse, or supernatural affliction that references this project as a way to end it. If the affliction was caused by another creature, you need the remains of that creature or another creature of the same kind as an item prerequisite for making the cure. For example, you can research the cure for the affliction of a werewolf’s Accursed Bite by studying the corpse of any werewolf, not just the one who did the biting. The number of project points it takes to complete this project is equal to the creature’s level times 50.
+
 If the affliction is created by something other than a creature, such as an environmental effect, than the effect lists the item prerequisite and project points required to complete this project.
+
 When you complete this project, you craft one dose of an alchemical cure for that affliction. Once the project is completed, you can craft subsequent doses for the same affliction in half the number of project points the initial project took.`
 	});
 
@@ -193,7 +198,9 @@ A weapon imbued with an enhancement grants you special benefits while it is wiel
 		characteristic: [ Characteristic.Reason ],
 		effect: `
 If you want to track the location of a lost treasure, decipher a ritual, or trace the lineage of a royal family to find the next heir to the throne, you can start a project to delve into whatever mysteries you seek to unravel. You might start a project to discover lore because the information can’t be discovered through a regular test, or you could do so because you failed a test to recall information and now want to learn it through research.
+
 When you start a project to discover lore, you choose the lore you want investigated and the questions you want answered. The Director tells you if the lore you seek amounts to common, obscure, lost, or forbidden knowledge. The more esoteric the knowledge, the more project points are required to find the answers you seek.
+
 When you begin a Discover Lore project, other creatures can also work on the project, using their respite activity to contribute a project roll to it in order to get the work done faster.
 
 | Project             | Goal |
@@ -220,7 +227,9 @@ When you begin a Discover Lore project, other creatures can also work on the pro
 		goal: 15,
 		effect: `
 Going undercover to spy on a group of people is a cheap and easy way to find what you’re looking for. Choose an organization when you undertake this activity. Completing this project grants you access to maps, knowledge about an organization’s operations, or some other piece of knowledge that would be considered common or obscure. At the Director’s discretion, you must have a disguise, signet ring, tattoo, or some other indication that you belong to the organization in order to begin this project. Additionally, the Director can decide that the knowledge you seek may not be gained through this project but rather through adventuring.
+
 **Complications**: This project has its own special complications. The first time you complete this project within an organization, you have a 25% chance of being caught. Each time you complete this project with the same organization, the chance of you being caught the next time you use it within the same organization increases by 25% and the project goal increases by 30. If you are caught going undercover, you are ruthlessly pursued by the organization you were infiltrating.
+
 While your secret is safe, you may be called upon by the organization to complete a task you may not want to do. Failure to complete the task leads to you being caught.`
 	});
 
@@ -231,6 +240,7 @@ While your secret is safe, you may be called upon by the organization to complet
 		goal: 0,
 		effect: `
 You revisit your previous life and freshen up on the experience it provided you. When the project is complete, you have an edge on tests made with the skills provided by your career.
+
 Project goal is 240 if your career granted you two skills, or 360 if your career granted you three skills.
 `
 	});
@@ -274,6 +284,7 @@ When you start a project with a master, you choose the goal you wish to work on 
 		goal: 100,
 		effect: `
 You practice being able to reliably follow a recipe for a dish. The ingredients required depend on the recipe being followed, which may be easier or harder to acquire based on the degrees of separation you have from the recipe’s origin. When you complete this project, you can make 5 servings of the specific recipe as a respite activity whenever you have access to the ingredients. You and each creature taking a respite with you can a serving and gain its benefits until they take another respite. A creature can only benefit from one recipe at a time and can’t benefit from more than one serving of a recipe at a time.
+
 The recipes in the Recipes table detail the effects consuming a serving of the recipe confers.
 
 * **Comforting**: When you fail a saving throw, you can choose to succeed instead. This benefit then disappears.
@@ -296,6 +307,7 @@ You gain +3 to the project roll if it's a recipe from your culture.`
 		goal: 75,
 		effect: `
 When you begin this project, you must be in a settlement or other place where people gather, and you must be in that place each time you make a project roll for the project. You can undertake several Community Service projects, each one in a different community.
+
 While undertaking this project, you provide help to people in need, doing odd jobs, tutoring life skills, cleaning statues, finding lost valuables, or the like. The Director determines the characteristic that applies to the project roll based on the activities you undertake. When you complete this project, you receive a random consumable of the Director’s choice as thanks for your hard work.`
 	});
 

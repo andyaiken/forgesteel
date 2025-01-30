@@ -82,6 +82,12 @@ p,
 	&.small-text {
 		font-size: 10px;
 	}
+
+	br {
+		content: '';
+		display: block;
+		height: 10px;
+	}
 }
 
 b {
@@ -180,6 +186,14 @@ td {
 		.ant-drawer-body {
 			padding: 0;
 		}
+	}
+}
+
+.ant-dropdown {
+	.ant-dropdown-menu {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+		gap: 10px;
 	}
 }
 

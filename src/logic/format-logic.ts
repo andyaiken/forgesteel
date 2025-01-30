@@ -38,37 +38,27 @@ export class FormatLogic {
 	};
 
 	static getModifier = (mod: Modifier) => {
-		let desc = '';
-		if (mod.value && mod.valuePerLevel && !mod.valuePerEchelon && (mod.value === mod.valuePerLevel)) {
-			desc += `${mod.value >= 0 ? '+' : ''}${mod.value} per level`;
+		const sections: string[] = [];
+		if (mod.value && mod.valuePerLevel && (mod.value === mod.valuePerLevel)) {
+			sections.push(`${mod.value >= 0 ? '+' : ''} ${mod.value} per level`);
 		} else {
 			if (mod.value) {
-				desc += `${mod.value >= 0 ? '+' : ''}${mod.value}`;
-			}
-
-			if (mod.valueCharacteristics.length > 0) {
-				desc += `+${mod.valueCharacteristics.join(' or ')}`;
+				sections.push(`${mod.value >= 0 ? '+' : ''} ${mod.value}`);
 			}
 
 			if (mod.valuePerLevel) {
-				if (desc !== '') {
-					desc += ', ';
-				}
-				desc += `${mod.valuePerLevel >= 0 ? '+' : ''}${mod.valuePerLevel} per level after 1st`;
-			}
-
-			if (mod.valuePerEchelon) {
-				if (desc !== '') {
-					desc += ', ';
-				}
-				desc += `${mod.valuePerEchelon >= 0 ? '+' : ''}${mod.valuePerEchelon} per echelon`;
+				sections.push(`${mod.valuePerLevel >= 0 ? '+' : ''} ${mod.valuePerLevel} per level after 1st`);
 			}
 		}
 
-		if (desc === '') {
-			desc = '+0';
+		if (mod.valuePerEchelon) {
+			sections.push(`${mod.valuePerEchelon >= 0 ? '+' : ''} ${mod.valuePerEchelon} per echelon`);
 		}
 
-		return desc;
+		if (mod.valueCharacteristics.length > 0) {
+			sections.push(`+ ${mod.valueCharacteristics.join(' or ')}`);
+		}
+
+		return sections.join(' ') || '+0';
 	};
 }

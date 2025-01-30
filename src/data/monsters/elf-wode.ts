@@ -64,21 +64,25 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 		FactoryLogic.feature.createMalice({
 			id: 'elf-wode-malice-1',
 			name: 'Forest Network',
-			description: 'Each wode elf that ends this turn hidden can shift their speed while remaining hidden.',
-			cost: 3
+			cost: 3,
+			sections: [
+				'Each wode elf that ends this turn hidden can shift their speed while remaining hidden.'
+			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'elf-wode-malice-2',
 			name: 'Punishing Regrowth',
-			description: 'Until the end of the turn, each wode elf inflicts slide 2 with their strikes and they have an edge on their abilities. If a target force moved by one of these strikes ends the forced movement in difficult terrain, they are restrained (EoT).',
-			cost: 5
+			cost: 5,
+			sections: [
+				'Until the end of the turn, each wode elf inflicts slide 2 with their strikes and they have an edge on their abilities. If a target force moved by one of these strikes ends the forced movement in difficult terrain, they are restrained (EoT).'
+			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'elf-wode-malice-3',
 			name: 'Vines Everywhere',
-			description: 'Vines emerge and rapidly grow across the entire encounter map. Each enemy must make an **Agility test**.',
 			cost: 7,
 			sections: [
+				'Vines emerge and rapidly grow across the entire encounter map. Each enemy must make an **Agility test**.',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Agility,
 					tier1: '8 damage; restrained (save ends)',

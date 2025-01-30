@@ -12,6 +12,7 @@ export const shadow: HeroClass = {
 	name: 'Shadow',
 	description: `
 Subtlety is your art, the tip of the blade your brush. You studied at a secret college, specializing in alchemy, illusion, or shadow-magics. Your training and knowledge places you among the elite assassins, spies, and commandos. But more powerful than any weapon or sorcery is your insight into your enemies’ weaknesses.
+
 As a shadow, you have abilities that deal a lot of damage, let you move swiftly across the battlefield and away from hazards, and allow you to fade from notice even in the middle of the most heated combat encounter. You also possess more skills than any other hero.`,
 	heroicResource: 'Insight',
 	subclassName: 'Shadow College',
@@ -51,6 +52,7 @@ As a shadow, you have abilities that deal a lot of damage, let you move swiftly 
 					name: 'Insight',
 					description: `
 At the start of each of your turns during combat, you gain 1d3 insight. The first time each round that you deal damage with at least one surge, you gain 1 insight.
+
 When you use a heroic ability that has a power roll, that ability costs 1 less insight if you have an edge or double edge on it. If the ability has multiple targets, the cost is reduced even if the ability has an edge or double edge against only one target.`
 				}),
 				FactoryLogic.feature.createAbility({
@@ -639,6 +641,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 								target: 'Self',
 								effect: `
 When you use this ability, you cover yourself in an illusion that causes you to appear nonthreatening and harmless to your enemies. You might take on the appearance of a harmless animal of your size, such as a sheep or capybara, or you might appear as a less heroic, unarmed, and capable version of yourself. While this illusion lasts, your strikes made against other creatures gain an edge. If you use this ability in combat, you gain a surge when you use it.
+
 The illusion ends when you harm another creature, when you and any creature physically interact, when you use this ability again, or when you end the illusion (no action required).`,
 								spend: [
 									{

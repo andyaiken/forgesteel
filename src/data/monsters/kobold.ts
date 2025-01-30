@@ -54,20 +54,26 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 		FactoryLogic.feature.createMalice({
 			id: 'kobold-malice-1',
 			name: 'Maniple Tactics',
-			description: 'Up to 3 kobolds make a free strike, swaps positions with an adjacent kobold, and then that kobold makes a free strike.',
-			cost: 3
+			cost: 3,
+			sections: [
+				'Up to 3 kobolds make a free strike, swaps positions with an adjacent kobold, and then that kobold makes a free strike.'
+			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'kobold-malice-2',
 			name: 'Set the Initiative',
-			description: 'Two kobolds take their turns in a row.',
-			cost: 5
+			cost: 5,
+			sections: [
+				'Two kobolds take their turns in a row.'
+			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'kobold-malice-3',
 			name: 'Shield Wall',
-			description: 'Until the end of the round, all kobolds with Shield? Shield! impose an additional bane on incoming strikes and abilities.',
-			cost: 7
+			cost: 7,
+			sections: [
+				'Until the end of the round, all kobolds with Shield? Shield! impose an additional bane on incoming strikes and abilities.'
+			]
 		})
 	],
 	monsters: [

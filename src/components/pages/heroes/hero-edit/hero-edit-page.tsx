@@ -301,6 +301,16 @@ export const HeroEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const setFeature = (featureID: string, feature: Feature) => {
+			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const index = heroCopy.features.findIndex(f => f.id === featureID);
+			if (index !== -1) {
+				heroCopy.features[index] = feature;
+			}
+			setHero(heroCopy);
+			setDirty(true);
+		};
+
 		const setFeatureData = (featureID: string, data: FeatureData) => {
 			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
 			const feature = HeroLogic.getFeatures(heroCopy).find(f => f.id === featureID);
@@ -434,6 +444,7 @@ export const HeroEditPage = (props: Props) => {
 							setSettingIDs={setSettingIDs}
 							addFeature={addFeature}
 							deleteFeature={deleteFeature}
+							setFeature={setFeature}
 							setFeatureData={setFeatureData}
 						/>
 					);
@@ -1064,6 +1075,7 @@ interface DetailsSectionProps {
 	setSettingIDs: (settingIDs: string[]) => void;
 	addFeature: (feature: Feature) => void;
 	deleteFeature: (feature: Feature) => void;
+	setFeature: (featureID: string, feature: Feature) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
@@ -1110,6 +1122,7 @@ const DetailsSection = (props: DetailsSectionProps) => {
 						hero={props.hero}
 						sourcebooks={props.sourcebooks}
 						addFeature={props.addFeature}
+						setFeature={props.setFeature}
 						setFeatureData={props.setFeatureData}
 						deleteFeature={props.deleteFeature}
 					/>

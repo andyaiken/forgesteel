@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceData, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { Project, ProjectProgress } from '../models/project';
@@ -14,7 +14,6 @@ import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { DamageModifier } from '../models/damage-modifier';
 import { Domain } from '../models/domain';
-import { Element } from '../models/element';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Format } from '../utils/format';
@@ -789,15 +788,15 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createMalice: (data: Element & FeatureMaliceData): FeatureMalice => {
+		createMalice: (data: { id: string, name: string, cost: number, repeatable?: boolean, sections: (string | PowerRoll)[] }): FeatureMalice => {
 			return {
 				id: data.id,
 				name: data.name,
-				description: data.description,
+				description: '',
 				type: FeatureType.Malice,
 				data: {
 					cost: data.cost,
-					repeatable: data.repeatable,
+					repeatable: data.repeatable || false,
 					sections: data.sections
 				}
 			};
@@ -885,19 +884,19 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createSoloMonster: ({ id, monsterName, gender }: { id: string, monsterName: string, gender?: 'masc' | 'femme' | 'non-binary' }): FeatureText => {
-			const capitalizedName = monsterName.split(' ').map((n, i) => i === 0 ? Format.capitalize(n) : n).join(' ');
-			const genderWithDefault = gender ?? 'non-binary';
-			const heSheThey = ({ masc: 'he', femme: 'she', 'non-binary': 'they' } as const)[genderWithDefault];
-			const hisHerTheir = ({ masc: 'his', femme: 'her', 'non-binary': 'their' } as const)[genderWithDefault];
-			const himHerThem = ({ masc: 'him', femme: 'her', 'non-binary': 'them' } as const)[genderWithDefault];
+		createSoloMonster: (data: { id: string, name: string, gender?: 'm' | 'f' | 'n' , endEfect?: number }): FeatureText => {
+			const capitalizedName = data.name.split(' ').map((n, i) => i === 0 ? Format.capitalize(n) : n).join(' ');
+			const genderWithDefault = data.gender ?? 'n';
+			const heSheThey = ({ m: 'he', f: 'she', n: 'they' } as const)[ genderWithDefault ];
+			const hisHerTheir = ({ m: 'his', f: 'her', n: 'their' } as const)[ genderWithDefault ];
+			const himHerThem = ({ m: 'him', f: 'her', n: 'them' } as const)[ genderWithDefault ];
 			return {
-				id,
+				id: data.id,
 				name: 'Solo Monster',
 				description: `
-**Solo Turns** ${capitalizedName} takes up to two turns each round. ${Format.capitalize(heSheThey)} can’t take turns consecutively. ${Format.capitalize(heSheThey)} can use two actions on each of ${hisHerTheir} turns. While dazed, ${monsterName} can take one action and one maneuver per turn.
+**Solo Turns** ${capitalizedName} takes up to two turns each round. ${Format.capitalize(heSheThey)} can’t take turns consecutively. ${Format.capitalize(heSheThey)} can use two actions on each of ${hisHerTheir} turns. While dazed, ${data.name} can take one action and one maneuver per turn.
 
-**End Effect** At the end of ${hisHerTheir} turn, ${monsterName} can take 10 damage to end one save ends effect affecting ${himHerThem}. This damage can’t be reduced in any way.`,
+**End Effect** At the end of ${hisHerTheir} turn, ${data.name} can take ${data.endEfect || 5} damage to end one save ends effect affecting ${himHerThem}. This damage can’t be reduced in any way.`,
 				type: FeatureType.Text,
 				data: null
 			};

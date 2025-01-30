@@ -30,15 +30,17 @@ Syuul’s recent experiments have focused on isolating the trait that expresses 
 		FactoryLogic.feature.createMalice({
 			id: 'lord-syuul-malice-1',
 			name: 'Guise',
-			description: 'Lord Syuul projects a psionic image over their body, making him unable to be identified as an enemy until the end of his next turn.',
-			cost: 3
+			cost: 3,
+			sections: [
+				'Lord Syuul projects a psionic image over their body, making him unable to be identified as an enemy until the end of his next turn.'
+			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'lord-syuul-malice-2',
 			name: 'Do It For Me',
-			description: 'Lord Syuul psionically plunders the mind of all creatures within 2 of him. Each creature makes a **Reason test**.',
 			cost: 5,
 			sections: [
+				'Lord Syuul psionically plunders the mind of all creatures within 2 of him. Each creature makes a **Reason test**.',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Reason,
 					tier1: '13 psychic damage; makes a signature attack against a creature Lord Syuul chooses.',
@@ -50,9 +52,9 @@ Syuul’s recent experiments have focused on isolating the trait that expresses 
 		FactoryLogic.feature.createMalice({
 			id: 'lord-syuul-malice-3',
 			name: 'Overpower',
-			description: 'Lord Syuul sends out a psionic burst to completely overpower his greatest threats. He makes a **Reason Test** (2d10 + 4).',
 			cost: 7,
 			sections: [
+				'Lord Syuul sends out a psionic burst to completely overpower his greatest threats. He makes a **Reason Test** (2d10 + 4).',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Reason,
 					bonus: 4,
@@ -76,7 +78,7 @@ However, any hero who has at least one psionic ability can use their maneuver to
 	],
 	monsters: [
 		FactoryLogic.createMonster({
-			id: 'lord-syuul',
+			id: 'lord-syuul-1',
 			name: 'Lord Syuul',
 			level: 6,
 			role: FactoryLogic.createMonsterRole(MonsterRoleType.NoRole, MonsterOrganizationType.Solo),
@@ -90,8 +92,9 @@ However, any hero who has at least one psionic ability can use their maneuver to
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'lord-syuul-feature-1',
-					monsterName: 'Lord Syuul',
-					gender: 'masc'
+					name: 'Lord Syuul',
+					gender: 'm',
+					endEfect: 10
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

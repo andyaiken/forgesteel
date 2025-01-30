@@ -12,6 +12,7 @@ export const tactician: HeroClass = {
 	name: 'Tactician',
 	description: `
 Strategist. Defender. Leader. With sword in hand, you lead allies into the maw of battle, barking out commands that inspire your fellow heroes to move faster and strike more precisely. All the while, you stand between your compatriots and death, taunting the followers of evil to best you if they can.
+
 As a tactician, you have abilities that heal your allies and grant them increased damage, movement, and attacks.`,
 	heroicResource: 'Focus',
 	subclassName: 'Tactical Doctrine',
@@ -63,9 +64,13 @@ As a tactician, you have abilities that heal your allies and grant them increase
 						target: '1 creature',
 						effect: `
 The target is marked by you until the end of the encounter, you die, you use this ability again, or you willingly end this effect (no action required). If another tactician marks the target, then your mark on the target ends. You can have one target marked this way, but other tactician abilities can allow you to have multiple marked creatures.
+
 While the target is marked and within your line of effect, you and allies within your line of effect have an edge on power rolls made against the target.
+
 When the marked creature is reduced to 0 Stamina, you can use a free triggered action to move the mark to a new target within 10 squares.
+
 In addition, you can spend 1 focus to take one of the following free triggered actions whenever you or an ally damages a target with an ability. You can’t use more than one instance of a benefit per trigger:
+
 * The ability deals additional damage equal to twice your Reason score.
 * The damage dealer can spend a Recovery.
 * The damage dealer can shift up to a number of squares equal to your Reason score.`
@@ -366,6 +371,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 											cost: 5,
 											effect: `
 Each target is marked by you. You immediately force each targeted creature to make a free strike against a creature of your choice within 5 squares of the targeted creature.
+
 **Mark Benefit**: For the rest of the encounter whenever you or an ally attacks a marked target, you can spend 2 focus to make the marked target free strike a creature of your choice within 5 squares of the marked target.`
 										})
 									}),
@@ -515,6 +521,7 @@ You can only make this test once for each encounter and negotiation.`
 											cost: 5,
 											effect: `
 Each target is marked by you. You gain two surges.
+
 **Mark Benefit**: For the rest of the encounter whenever you or an ally attacks a marked target with a strike, you can spend 2 focus to add one additional target to the strike within the attack’s range.`
 										})
 									}),
@@ -576,6 +583,7 @@ Each target is marked by you. You gain two surges.
 							name: 'Melee Superiority',
 							description: `
 After constant drills you have improved your ability to anticipate an enemy’s attack and thwart their attempts to move freely across the battlefield. Whenever you make an opportunity attack, the target’s speed is reduced to 0 until the end of the current turn.
+
 **Mark Benefit**: You can spend 2 focus to make a melee free strike against a marked creature who attempts to move or Disengage within distance of your melee free strike as a free triggered action. If you do, the target’s speed is reduced to 0 until the end of the current turn.`
 						}),
 						FactoryLogic.feature.createChoice({

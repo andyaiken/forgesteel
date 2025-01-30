@@ -1,3 +1,4 @@
+import { ankheg } from './monsters/ankheg';
 import { dwarf } from './monsters/dwarf';
 import { elfWode } from './monsters/elf-wode';
 import { goblin } from './monsters/goblin';
@@ -7,6 +8,7 @@ import { radenwight } from './monsters/radenwight';
 import { werewolf } from './monsters/werewolf';
 
 export class MonsterData {
+	static ankheg = ankheg;
 	static dwarf = dwarf;
 	static elfWode = elfWode;
 	static goblin = goblin;

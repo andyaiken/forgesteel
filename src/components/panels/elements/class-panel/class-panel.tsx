@@ -34,7 +34,9 @@ export const ClassPanel = (props: Props) => {
 						props.heroClass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
 							<Space key={lvl.level} direction='vertical'>
 								<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
-								{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
+								<div className='features'>
+									{...lvl.features.map(f => <SelectablePanel key={f.id}><FeaturePanel feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /></SelectablePanel>)}
+								</div>
 							</Space>
 						))
 						: null
@@ -43,7 +45,9 @@ export const ClassPanel = (props: Props) => {
 					(props.mode === PanelMode.Full) && (props.heroClass.abilities.length > 0) ?
 						<Space direction='vertical'>
 							<HeaderText level={1}>Abilities</HeaderText>
-							{...props.heroClass.abilities.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} /></SelectablePanel>)}
+							<div className='abilities'>
+								{...props.heroClass.abilities.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} /></SelectablePanel>)}
+							</div>
 						</Space>
 						: null
 				}
@@ -51,7 +55,9 @@ export const ClassPanel = (props: Props) => {
 					(props.mode === PanelMode.Full) && (props.heroClass.subclasses.length > 0) ?
 						<Space direction='vertical'>
 							<HeaderText level={1}>Subclasses</HeaderText>
-							{...props.heroClass.subclasses.map(sc => <SubclassPanel key={sc.id} subclass={sc} hero={props.hero} mode={PanelMode.Full} />)}
+							<div className='subclasses'>
+								{...props.heroClass.subclasses.map(sc => <SubclassPanel key={sc.id} subclass={sc} hero={props.hero} mode={PanelMode.Full} />)}
+							</div>
 						</Space>
 						: null
 				}

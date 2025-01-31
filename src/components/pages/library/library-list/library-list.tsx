@@ -43,14 +43,12 @@ interface Props {
  	showAncestry: (ancestry: Ancestry) => void;
  	showCulture: (cultiure: Culture) => void;
  	showCareer: (career: Career) => void;
- 	showClass: (heroClass: HeroClass) => void;
  	showComplication: (complication: Complication) => void;
  	showDomain: (domain: Domain) => void;
  	showKit: (kit: Kit) => void;
  	showPerk: (perk: Perk) => void;
  	showTitle: (title: Title) => void;
  	showItem: (item: Item) => void;
- 	showMonsterGroup: (monsterGroup: MonsterGroup) => void;
 	onCreateHomebrew: (type: SourcebookElementKind, sourcebookID: string | null) => void;
 	onImportHomebrew: (type: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 }
@@ -65,6 +63,7 @@ const useTabKey = (): [SourcebookElementKind, (tabKey: SourcebookElementKind) =>
 };
 
 export const LibraryListPage = (props: Props) => {
+	const navigation = useNavigation();
 	const [ tabKey, setTabKey ] = useTabKey();
 	const [ previousTab, setPreviousTab ] = useState(tabKey);
 	const [ element, setElement ] = useState<SourcebookElementKind>(tabKey);
@@ -323,7 +322,7 @@ export const LibraryListPage = (props: Props) => {
 					list.map(c => {
 
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.showClass(c)}>
+							<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('class', c.id)}>
 								<ClassPanel heroClass={c} />
 							</SelectablePanel>
 						);
@@ -582,8 +581,8 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(mg => {
 						const item = (
-							<SelectablePanel key={mg.id} onSelect={() => props.showMonsterGroup(mg)}>
-								<MonsterGroupPanel monsterGroup={mg} sourcebooks={props.sourcebooks} />
+							<SelectablePanel key={mg.id} onSelect={() => navigation.goToLibraryView('monster-group', mg.id)}>
+								<MonsterGroupPanel monsterGroup={mg} />
 							</SelectablePanel>
 						);
 

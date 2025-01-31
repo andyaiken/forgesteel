@@ -117,7 +117,7 @@ export const HeroPage = (props: Props) => {
 									]}
 									onClick={key => props.exportHero(heroID!, key as 'image' | 'pdf' | 'json')}
 								/>
-								<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!)}>Edit</Button>
+								<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>Edit</Button>
 								<DangerButton block={true} onConfirm={() => { props.deleteHero(heroID!); navigation.goToHeroList(); }} />
 							</div>
 						)}

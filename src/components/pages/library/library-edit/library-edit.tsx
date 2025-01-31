@@ -78,7 +78,7 @@ interface Props {
 
 export const LibraryEditPage = (props: Props) => {
 	const navigation = useNavigation();
-	const { sourcebookID, kind, elementID, subElementID } = useParams<{ sourcebookID: string, kind: SourcebookElementKind, elementID: string, subElementID?: string }>();
+	const { kind, sourcebookID, elementID, subElementID } = useParams<{ kind: SourcebookElementKind, sourcebookID: string, elementID: string, subElementID?: string }>();
 	const sourcebook = useMemo(() => props.sourcebooks.find(s => s.id === sourcebookID)!, [ sourcebookID, props.sourcebooks ]);
 	const sourcebookKey = useMemo(() => getSourcebookKey(kind!), [ kind ]);
 	const originalElement = useMemo(() => sourcebook[sourcebookKey].find(e => e.id === elementID)!, [ sourcebook, sourcebookKey, elementID ]);
@@ -633,7 +633,7 @@ export const LibraryEditPage = (props: Props) => {
 							key={sc.id}
 							title={sc.name || 'Unnamed Subclass'}
 							extra={[
-								<Button key='edit' type='text' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); navigation.goToLibraryEdit(sourcebookID!, kind!, elementID!, sc.id); }} />,
+								<Button key='edit' type='text' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!, sc.id); }} />,
 								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'up'); }} />,
 								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'down'); }} />,
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSubclass(sc); }} />
@@ -1440,7 +1440,7 @@ export const LibraryEditPage = (props: Props) => {
 			copy.monsters = copy.monsters.filter(m => m.id !== monster.id);
 			setElement(copy);
 			if (subElementID === monster.id) {
-				navigation.goToLibraryEdit(sourcebookID!, kind!, elementID!);
+				navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!);
 			}
 			setDirty(true);
 		};
@@ -1453,7 +1453,7 @@ export const LibraryEditPage = (props: Props) => {
 							key={m.id}
 							title={MonsterLogic.getMonsterName(m, monsterGroup)}
 							extra={[
-								<Button key='edit' type='text' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); navigation.goToLibraryEdit(sourcebookID!, kind!, elementID!, m.id); }} />,
+								<Button key='edit' type='text' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!, m.id); }} />,
 								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMonster(m, 'up'); }} />,
 								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMonster(m, 'down'); }} />,
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteMonster(m); }} />
@@ -1573,7 +1573,7 @@ export const LibraryEditPage = (props: Props) => {
 								options={[ null, ...heroClass.subclasses ].map(sc => ({ label: sc ? sc.name || 'Unnamed Subclass' : 'Class', value: sc ? sc.id : '' }))}
 								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 								value={subElementID || ''}
-								onChange={id => navigation.goToLibraryEdit(sourcebookID!, kind!, elementID!, id)}
+								onChange={id => navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!, id)}
 							/>
 						</div>
 					);
@@ -1590,7 +1590,7 @@ export const LibraryEditPage = (props: Props) => {
 								options={[ null, ...monsterGroup.monsters ].map(m => ({ label: m ? MonsterLogic.getMonsterName(m, monsterGroup) : 'Monster Group', value: m ? m.id : '' }))}
 								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 								value={subElementID || ''}
-								onChange={id => navigation.goToLibraryEdit(sourcebookID!, kind!, elementID!, id)}
+								onChange={id => navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!, id)}
 							/>
 						</div>
 					);
@@ -1870,7 +1870,7 @@ export const LibraryEditPage = (props: Props) => {
 				if (!subElementID) {
 					return (
 						<div className='preview-header-section'>
-							<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryEdit(sourcebookID!, kind!, elementID!)}>Back to Class</Button>
+							<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!)}>Back to Class</Button>
 						</div>
 					);
 				}
@@ -1879,7 +1879,7 @@ export const LibraryEditPage = (props: Props) => {
 				if (!subElementID) {
 					return (
 						<div className='preview-header-section'>
-							<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryEdit(sourcebookID!, kind!, elementID!)}>Back to Monster Group</Button>
+							<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!)}>Back to Monster Group</Button>
 						</div>
 					);
 				}
@@ -2024,7 +2024,15 @@ export const LibraryEditPage = (props: Props) => {
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(sourcebookID!, kind!, element)}>
 						Save Changes
 					</Button>
-					<Button onClick={() => navigation.goToLibraryList(kind!)}>
+					<Button
+						onClick={() => {
+							if ((kind === 'class') || (kind === 'monster-group')) {
+								navigation.goToLibraryView(kind, elementID!);
+							} else {
+								navigation.goToLibraryList(kind!);
+							}
+						}}
+					>
 						Cancel
 					</Button>
 				</AppHeader>

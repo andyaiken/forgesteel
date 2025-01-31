@@ -1,3 +1,4 @@
+import { Divider } from 'antd';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -6,14 +7,11 @@ import { MonsterGroup } from '../../../../models/monster';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { Space } from 'antd';
 
 import './monster-group-panel.scss';
 
 interface Props {
 	monsterGroup: MonsterGroup;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 
@@ -35,26 +33,35 @@ export const MonsterGroupPanel = (props: Props) => {
 				}
 				{
 					(props.mode === PanelMode.Full) && (props.monsterGroup.malice.length > 0) ?
-						<SelectablePanel>
+						<div>
 							<HeaderText level={1}>{props.monsterGroup.name} Malice</HeaderText>
 							At the start of any {props.monsterGroup.name}'s turn, you can spend malice to activate one of the following features.
-							{props.monsterGroup.malice.map(m =>
-								<FeaturePanel
-									key={m.id}
-									feature={m}
-									mode={PanelMode.Full}
-									cost={m.type === FeatureType.Ability ? m.data.ability.cost : m.data.cost}
-									repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
-								/>
-							)}
-						</SelectablePanel>
+							<div className='malice'>
+								{props.monsterGroup.malice.map(m =>
+									<SelectablePanel>
+										<FeaturePanel
+											key={m.id}
+											feature={m}
+											mode={PanelMode.Full}
+											cost={m.type === FeatureType.Ability ? m.data.ability.cost : m.data.cost}
+											repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
+										/>
+									</SelectablePanel>
+								)}
+							</div>
+						</div>
+						: null
+				}
+				{
+					(props.mode === PanelMode.Full) && (props.monsterGroup.malice.length > 0) && (props.monsterGroup.monsters.length > 0) ?
+						<Divider />
 						: null
 				}
 				{
 					(props.mode === PanelMode.Full) && (props.monsterGroup.monsters.length > 0) ?
-						<Space direction='vertical' style={{ width: '100%', marginTop: '25px' }}>
+						<div className='monsters'>
 							{props.monsterGroup.monsters.map(m => <SelectablePanel key={m.id}><MonsterPanel monster={m} monsterGroup={props.monsterGroup} mode={PanelMode.Full} /></SelectablePanel>)}
-						</Space>
+						</div>
 						: null
 				}
 			</div>

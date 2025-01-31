@@ -11,6 +11,7 @@ import { CareerModal } from '../modals/career/career-modal';
 import { Characteristic } from '../../enums/characteristic';
 import { CharacteristicModal } from '../modals/characteristic/characteristic-modal';
 import { ClassModal } from '../modals/class/class-modal';
+import { ClassViewPage } from '../pages/library/class-view/class-view-page';
 import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
 import { ComplicationModal } from '../modals/complication/complication-modal';
@@ -41,6 +42,7 @@ import { LibraryListPage } from '../pages/library/library-list/library-list';
 import { MainLayout } from './main-layout';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterGroupModal } from '../modals/monster-group/monster-group-modal';
+import { MonsterGroupViewPage } from '../pages/library/monster-group-view/monster-group-view-page';
 import { MonsterModal } from '../modals/monster/monster-modal';
 import { Options } from '../../models/options';
 import { Perk } from '../../models/perk';
@@ -136,7 +138,7 @@ export const Main = (props: Props) => {
 		]);
 
 		await persistHero(hero);
-		navigation.goToHeroEdit(hero.id);
+		navigation.goToHeroEdit(hero.id, 'ancestry');
 	};
 
 	const importHero = async (hero: Hero) => {
@@ -223,7 +225,7 @@ export const Main = (props: Props) => {
 		Collections.sort<Element>(sourcebook[sourcebookKey], item => item.name);
 
 		await persistHomebrewSourcebooks(sourcebooks);
-		navigation.goToLibraryList();
+		navigation.goToLibraryList('ancestry');
 		setDrawer(null);
 	};
 
@@ -331,7 +333,7 @@ export const Main = (props: Props) => {
 		if (drawer) {
 			onSelectClass(heroClass);
 		} else {
-			editClass(heroClass, sourcebook);
+			navigation.goToLibraryView('class', heroClass.id);
 		}
 	};
 
@@ -527,7 +529,7 @@ export const Main = (props: Props) => {
 		if (drawer) {
 			onSelectMonsterGroup(monsterGroup);
 		} else {
-			editMonsterGroup(monsterGroup, sourcebook);
+			navigation.goToLibraryView('monster-group', monsterGroup.id);
 		}
 	};
 
@@ -543,12 +545,8 @@ export const Main = (props: Props) => {
 	function editHomebrewElement(kind: 'item', element: Item, sourcebook: Sourcebook): void;
 	function editHomebrewElement(kind: 'monster-group', element: MonsterGroup, sourcebook: Sourcebook): void;
 
-	function editHomebrewElement(
-		kind: SourcebookElementKind,
-		element: Ancestry | Culture | Career | HeroClass | Complication | Domain | Kit | Perk | Title | Item | MonsterGroup,
-		sourcebook: Sourcebook
-	) {
-		navigation.goToLibraryEdit(sourcebook.id, kind, element.id);
+	function editHomebrewElement(kind: SourcebookElementKind, element: Element, sourcebook: Sourcebook) {
+		navigation.goToLibraryEdit(kind, sourcebook.id, element.id);
 		setDrawer(null);
 	}
 
@@ -604,6 +602,7 @@ export const Main = (props: Props) => {
 		});
 		await persistHomebrewSourcebooks(copy);
 		setDrawer(null);
+		navigation.goToLibraryList(kind);
 	};
 
 	const saveEditElement = async (sourcebookID: string, kind: SourcebookElementKind, element: Element) => {
@@ -943,7 +942,7 @@ export const Main = (props: Props) => {
 					if (hero && hero.class) {
 						hero.class.level += 1;
 						await persistHero(hero);
-						navigation.goToHeroEdit(hero.id);
+						navigation.goToHeroEdit(hero.id, 'class');
 						setDrawer(null);
 					}
 				}}
@@ -993,7 +992,7 @@ export const Main = (props: Props) => {
 						<WelcomePage
 							showAbout={showAbout}
 							showHeroes={heroes.length === 0 ? addHero : navigation.goToHeroList}
-							showLibrary={() => navigation.goToLibraryList()}
+							showLibrary={() => navigation.goToLibraryList('ancestry')}
 							showEncounters={navigation.goToEncounterList}
 						/>
 					}
@@ -1068,21 +1067,46 @@ export const Main = (props: Props) => {
 								showAncestry={onSelectAncestry}
 								showCulture={onSelectCulture}
 								showCareer={onSelectCareer}
-								showClass={onSelectClass}
 								showComplication={onSelectComplication}
 								showDomain={onSelectDomain}
 								showKit={onSelectKit}
 								showPerk={onSelectPerk}
 								showTitle={onSelectTitle}
 								showItem={onSelectItem}
-								showMonsterGroup={onSelectMonsterGroup}
 								onCreateHomebrew={createHomebrewElement}
 								onImportHomebrew={importHomebrewElement}
 							/>
 						}
 					/>
+					<Route path='view'>
+						<Route
+							path='class/:elementID'
+							element={
+								<ClassViewPage
+									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+									showAbout={showAbout}
+									createHomebrew={createClass}
+									export={(heroClass, format) => Utils.export([ heroClass.id ], heroClass.name || 'Class', heroClass, 'class', format)}
+									delete={heroClass => deleteSourcebookElement('class', heroClass.id)}
+								/>
+							}
+						/>
+						<Route
+							path='monster-group/:elementID'
+							element={
+								<MonsterGroupViewPage
+									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+									showAbout={showAbout}
+									playbook={playbook}
+									createHomebrew={createMonsterGroup}
+									export={(monsterGroup, format) => Utils.export([ monsterGroup.id ], monsterGroup.name || 'Monster Group', monsterGroup, 'monster-group', format)}
+									delete={monsterGroup => deleteSourcebookElement('monster-group', monsterGroup.id)}
+								/>
+							}
+						/>
+					</Route>
 					<Route
-						path='edit/:sourcebookID/:kind/:elementID/:subElementID?'
+						path='edit/:kind/:sourcebookID/:elementID/:subElementID?'
 						element={
 							<LibraryEditPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}

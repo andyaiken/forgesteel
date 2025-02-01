@@ -1,4 +1,4 @@
-import { Flex, Space, Tag } from 'antd';
+import { Flex, Tag } from 'antd';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Characteristic } from '../../../../enums/characteristic';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
@@ -71,9 +71,9 @@ export const MonsterPanel = (props: Props) => {
 				{weaknesses.length > 0 ? <Field label='Weaknesses' value={weaknesses.map(mod => `${mod.type} ${mod.value}`).join(', ')} /> : null}
 				{
 					props.monster.features.length > 0 ?
-						<Space direction='vertical' style={{ width: '100%' }}>
+						<div className='monsters'>
 							{props.monster.features.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
-						</Space>
+						</div>
 						: null
 				}
 			</div>

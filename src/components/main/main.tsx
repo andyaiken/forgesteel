@@ -776,7 +776,7 @@ export const Main = (props: Props) => {
 						}
 					/>
 					<Route
-						path='view/:kind/:elementID'
+						path='view/:kind/:elementID/:subElementID?'
 						element={
 							<LibraryViewPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}

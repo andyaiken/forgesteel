@@ -29,16 +29,17 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 		FactoryLogic.feature.createMalice({
 			id: 'ankheg-malice-1',
 			name: 'Burning Maw',
-			description: 'The ankheg dribbles acid over their mandibles. Their next strike deals 6 acid damage until the end of their turn.',
 			cost: 3,
-			repeatable: true
+			sections: [
+				'The ankheg dribbles acid over their mandibles. Their next strike deals 6 acid damage until the end of their turn.'
+			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'ankheg-malice-2',
 			name: 'Geyser',
-			description: 'The ankheg tunnels underneath the encounter map cause a sudden influx of hot gas to burst from a 2-square-by-2-square area on the ground. Each enemy in an affected square must make an Agility test. ',
 			cost: 5,
 			sections: [
+				'The ankheg tunnels underneath the encounter map cause a sudden influx of hot gas to burst from a 2-square-by-2-square area on the ground. Each enemy in an affected square must make an **Agility test**.',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Agility,
 					tier1: '3 damage; vertical push 5; prone',
@@ -50,8 +51,10 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 		FactoryLogic.feature.createMalice({
 			id: 'ankheg-malice-3',
 			name: 'Geyser',
-			description: 'The area of the encounter map slowly sinks into the ground. Each creature who starts their turn on the ground and can’t burrow must spend 1 extra square of movement to leave their starting position, or 2 squares if they start their turn prone or restrained. A creature who starts and ends their turn in the same space and can’t burrow is restrained by the ground (save ends). ',
-			cost: 10
+			cost: 10,
+			sections: [
+				'The area of the encounter map slowly sinks into the ground. Each creature who starts their turn on the ground and can’t burrow must spend 1 extra square of movement to leave their starting position, or 2 squares if they start their turn prone or restrained. A creature who starts and ends their turn in the same space and can’t burrow is restrained by the ground (save ends).'
+			]
 		})
 	],
 	monsters: [
@@ -69,6 +72,10 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(3, 1, -3, 1, -4),
 			features: [
+				FactoryLogic.feature.createSoloMonster({
+					id: 'ankheg-1-feature-0',
+					name: 'the ankheg'
+				}),
 				FactoryLogic.feature.create({
 					id: 'ankheg-1-feature-1',
 					name: 'Soft Underbelly',

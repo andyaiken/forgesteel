@@ -9,6 +9,7 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Space } from 'antd';
+import { SubClass } from '../../../../models/subclass';
 import { SubclassPanel } from '../subclass-panel/subclass-panel';
 
 import './class-panel.scss';
@@ -18,6 +19,7 @@ interface Props {
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
+	onSelectSubclass?: (subclass: SubClass) => void;
 }
 
 export const ClassPanel = (props: Props) => {
@@ -56,7 +58,7 @@ export const ClassPanel = (props: Props) => {
 						<Space direction='vertical'>
 							<HeaderText level={1}>Subclasses</HeaderText>
 							<div className='subclasses'>
-								{...props.heroClass.subclasses.map(sc => <SubclassPanel key={sc.id} subclass={sc} hero={props.hero} mode={PanelMode.Full} />)}
+								{...props.heroClass.subclasses.map(sc => <SelectablePanel key={sc.id} onSelect={props.onSelectSubclass ? () => props.onSelectSubclass!(sc) : undefined}><SubclassPanel subclass={sc} hero={props.hero} mode={PanelMode.Full} /></SelectablePanel>)}
 							</div>
 						</Space>
 						: null

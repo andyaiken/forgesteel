@@ -17,7 +17,6 @@
 * Rivals
 * Undead - 2nd Echelon
 * Angulotls
-* Ankheg
 * Ashen Hoarder
 * Basilisks
 * Bredbeddle

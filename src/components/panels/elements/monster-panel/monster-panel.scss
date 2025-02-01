@@ -21,6 +21,12 @@
 			flex: 1 1 0;
 		}
 	}
+
+	.monsters {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 20px;
+	}
 }
 
 @media (prefers-color-scheme: dark) {

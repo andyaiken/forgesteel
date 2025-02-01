@@ -1,4 +1,5 @@
 import { Button, Popover } from 'antd';
+import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
@@ -19,13 +20,15 @@ import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
-import { MonsterGroup } from '../../../../models/monster';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
+import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { ReactNode } from 'react';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { SubClass } from '../../../../models/subclass';
+import { SubclassPanel } from '../../../panels/elements/subclass-panel/subclass-panel';
 import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { useNavigation } from '../../../../hooks/use-navigation';
@@ -43,7 +46,7 @@ interface Props {
 
 export const LibraryViewPage = (props: Props) => {
 	const navigation = useNavigation();
-	const { kind, elementID } = useParams<{ kind: SourcebookElementKind, elementID: string }>();
+	const { kind, elementID, subElementID } = useParams<{ kind: SourcebookElementKind, elementID: string, subElementID: string }>();
 
 	let element: Element | null = null;
 	let sourcebook: Sourcebook | null = null;
@@ -72,12 +75,23 @@ export const LibraryViewPage = (props: Props) => {
 		case 'class':
 			element = props.sourcebooks.flatMap(sb => sb.classes).find(x => x.id === elementID) as Element;
 			sourcebook = SourcebookLogic.getClassSourcebook(props.sourcebooks, element as HeroClass) as Sourcebook;
-			panel = (
-				<ClassPanel
-					heroClass={element as HeroClass}
-					mode={PanelMode.Full}
-				/>
-			);
+			if (subElementID) {
+				element = (element as HeroClass).subclasses.find(sc => sc.id === subElementID) as Element;
+				panel = (
+					<SubclassPanel
+						subclass={element as SubClass}
+						mode={PanelMode.Full}
+					/>
+				);
+			} else {
+				panel = (
+					<ClassPanel
+						heroClass={element as HeroClass}
+						mode={PanelMode.Full}
+						onSelectSubclass={sc => navigation.goToLibraryView(kind, element!.id, sc.id)}
+					/>
+				);
+			}
 			break;
 		case 'complication':
 			element = props.sourcebooks.flatMap(sb => sb.complications).find(x => x.id === elementID) as Element;
@@ -132,12 +146,24 @@ export const LibraryViewPage = (props: Props) => {
 		case 'monster-group':
 			element = props.sourcebooks.flatMap(sb => sb.monsterGroups).find(x => x.id === elementID) as Element;
 			sourcebook = SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, element as MonsterGroup) as Sourcebook;
-			panel = (
-				<MonsterGroupPanel
-					monsterGroup={element as MonsterGroup}
-					mode={PanelMode.Full}
-				/>
-			);
+			if (subElementID) {
+				element = (element as MonsterGroup).monsters.find(m => m.id === subElementID) as Element;
+				panel = (
+					<MonsterPanel
+						monster={element as Monster}
+						monsterGroup={element as MonsterGroup}
+						mode={PanelMode.Full}
+					/>
+				);
+			} else {
+				panel = (
+					<MonsterGroupPanel
+						monsterGroup={element as MonsterGroup}
+						mode={PanelMode.Full}
+						onSelectMonster={m => navigation.goToLibraryView(kind, element!.id, m.id)}
+					/>
+				);
+			}
 			break;
 		case 'perk':
 			element = props.sourcebooks.flatMap(sb => sb.perks).find(x => x.id === elementID) as Element;
@@ -169,33 +195,42 @@ export const LibraryViewPage = (props: Props) => {
 		return (
 			<div className='library-view-page'>
 				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showAbout={props.showAbout}>
-					<Button onClick={() => navigation.goToLibraryList(kind!)}>
-						Close
-					</Button>
 					{
-						sourcebook.isHomebrew ?
-							<Button onClick={() => navigation.goToLibraryEdit(kind!, sourcebook.id, element.id)}>
-								Edit
+						subElementID ?
+							<Button onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
+								Back
 							</Button>
 							:
-							<Popover
-								trigger='click'
-								placement='bottom'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										{
-											props.sourcebooks
-												.filter(sb => sb.isHomebrew)
-												.map(cs => <Button key={cs.id} onClick={() => props.createHomebrew(kind!, element, cs)}>In {cs.name || 'Unnamed Collection'}</Button>)
-										}
-										<Button onClick={() => props.createHomebrew(kind!, element, null)}>In a new collection</Button>
-									</div>
-								)}
-							>
-								<Button>
-									Create Homebrew Version
+							<Button onClick={() => navigation.goToLibraryList(kind!)}>
+								Close
+							</Button>
+					}
+					{
+						!subElementID ?
+							sourcebook.isHomebrew ?
+								<Button onClick={() => navigation.goToLibraryEdit(kind!, sourcebook.id, element.id)}>
+									Edit
 								</Button>
-							</Popover>
+								:
+								<Popover
+									trigger='click'
+									placement='bottom'
+									content={(
+										<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+											{
+												props.sourcebooks
+													.filter(sb => sb.isHomebrew)
+													.map(cs => <Button key={cs.id} onClick={() => props.createHomebrew(kind!, element, cs)}>In {cs.name || 'Unnamed Collection'}</Button>)
+											}
+											<Button onClick={() => props.createHomebrew(kind!, element, null)}>In a new collection</Button>
+										</div>
+									)}
+								>
+									<Button>
+										Create Homebrew Version
+									</Button>
+								</Popover>
+							: null
 					}
 					<Popover
 						trigger='click'
@@ -213,7 +248,7 @@ export const LibraryViewPage = (props: Props) => {
 						</Button>
 					</Popover>
 					{
-						sourcebook.isHomebrew ?
+						sourcebook.isHomebrew && !subElementID ?
 							<DangerButton
 								onConfirm={() => props.delete(kind!, element)}
 							/>

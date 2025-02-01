@@ -20,7 +20,10 @@ export const useNavigation = () => {
 		goToLibraryList: (kind: SourcebookElementKind) => {
 			return navigate(`/library/${kind}`);
 		},
-		goToLibraryView: (kind: SourcebookElementKind, elementID: string) => {
+		goToLibraryView: (kind: SourcebookElementKind, elementID: string, subElementID?: string) => {
+			if (subElementID) {
+				return navigate(`/library/view/${kind}/${elementID}/${subElementID}`);
+			}
 			return navigate(`/library/view/${kind}/${elementID}`);
 		},
 		goToLibraryEdit: (kind: SourcebookElementKind, sourcebookID: string, elementID: string, subElementID?: string) => {

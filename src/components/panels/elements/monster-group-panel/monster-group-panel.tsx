@@ -1,9 +1,9 @@
+import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Divider } from 'antd';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
-import { MonsterGroup } from '../../../../models/monster';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
@@ -13,6 +13,7 @@ import './monster-group-panel.scss';
 interface Props {
 	monsterGroup: MonsterGroup;
 	mode?: PanelMode;
+	onSelectMonster?: (monster: Monster) => void;
 }
 
 export const MonsterGroupPanel = (props: Props) => {
@@ -34,7 +35,7 @@ export const MonsterGroupPanel = (props: Props) => {
 				{
 					(props.mode === PanelMode.Full) && (props.monsterGroup.malice.length > 0) ?
 						<div>
-							<HeaderText level={1}>{props.monsterGroup.name} Malice</HeaderText>
+							<HeaderText level={1}>Malice</HeaderText>
 							At the start of any {props.monsterGroup.name}'s turn, you can spend malice to activate one of the following features.
 							<div className='malice'>
 								{props.monsterGroup.malice.map(m =>
@@ -59,7 +60,7 @@ export const MonsterGroupPanel = (props: Props) => {
 				{
 					(props.mode === PanelMode.Full) && (props.monsterGroup.monsters.length > 0) ?
 						<div className='monsters'>
-							{props.monsterGroup.monsters.map(m => <SelectablePanel key={m.id}><MonsterPanel monster={m} monsterGroup={props.monsterGroup} mode={PanelMode.Full} /></SelectablePanel>)}
+							{props.monsterGroup.monsters.map(m => <SelectablePanel key={m.id} onSelect={props.onSelectMonster ? () => props.onSelectMonster!(m) : undefined}><MonsterPanel monster={m} monsterGroup={props.monsterGroup} mode={PanelMode.Full} /></SelectablePanel>)}
 						</div>
 						: null
 				}

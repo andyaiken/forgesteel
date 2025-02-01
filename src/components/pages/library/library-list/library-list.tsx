@@ -30,8 +30,8 @@ import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
 import { useNavigation } from '../../../../hooks/use-navigation';
-import { useParams } from 'react-router';
 import { useState } from 'react';
+import { useTabKey } from '../../../../hooks/use-tab-key';
 
 import './library-list.scss';
 
@@ -40,31 +40,12 @@ interface Props {
 	hiddenSourcebookIDs: string[];
 	showAbout: () => void;
  	showSourcebooks: () => void;
- 	showAncestry: (ancestry: Ancestry) => void;
- 	showCulture: (cultiure: Culture) => void;
- 	showCareer: (career: Career) => void;
- 	showClass: (heroClass: HeroClass) => void;
- 	showComplication: (complication: Complication) => void;
- 	showDomain: (domain: Domain) => void;
- 	showKit: (kit: Kit) => void;
- 	showPerk: (perk: Perk) => void;
- 	showTitle: (title: Title) => void;
- 	showItem: (item: Item) => void;
- 	showMonsterGroup: (monsterGroup: MonsterGroup) => void;
 	onCreateHomebrew: (type: SourcebookElementKind, sourcebookID: string | null) => void;
 	onImportHomebrew: (type: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 }
 
-const useTabKey = (): [SourcebookElementKind, (tabKey: SourcebookElementKind) => void] => {
-	const navigation = useNavigation();
-	const { tab } = useParams<{ tab: SourcebookElementKind }>();
-	const setTabKey = (tabKey: SourcebookElementKind) => {
-		navigation.goToLibraryList(tabKey);
-	};
-	return [ tab ?? 'ancestry', setTabKey ];
-};
-
 export const LibraryListPage = (props: Props) => {
+	const navigation = useNavigation();
 	const [ tabKey, setTabKey ] = useTabKey();
 	const [ previousTab, setPreviousTab ] = useState(tabKey);
 	const [ element, setElement ] = useState<SourcebookElementKind>(tabKey);
@@ -211,7 +192,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(a => {
 						const item = (
-							<SelectablePanel key={a.id} onSelect={() => props.showAncestry(a)}>
+							<SelectablePanel key={a.id} onSelect={() => navigation.goToLibraryView('ancestry', a.id)}>
 								<AncestryPanel ancestry={a} />
 							</SelectablePanel>
 						);
@@ -248,7 +229,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.showCulture(c)}>
+							<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('culture', c.id)}>
 								<CulturePanel culture={c} />
 							</SelectablePanel>
 						);
@@ -285,7 +266,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.showCareer(c)}>
+							<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('career', c.id)}>
 								<CareerPanel career={c} />
 							</SelectablePanel>
 						);
@@ -323,7 +304,7 @@ export const LibraryListPage = (props: Props) => {
 					list.map(c => {
 
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.showClass(c)}>
+							<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('class', c.id)}>
 								<ClassPanel heroClass={c} />
 							</SelectablePanel>
 						);
@@ -360,7 +341,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(c => {
 						const item = (
-							<SelectablePanel key={c.id} onSelect={() => props.showComplication(c)}>
+							<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('complication', c.id)}>
 								<ComplicationPanel complication={c} />
 							</SelectablePanel>
 						);
@@ -397,7 +378,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(d => {
 						const item = (
-							<SelectablePanel key={d.id} onSelect={() => props.showDomain(d)}>
+							<SelectablePanel key={d.id} onSelect={() => navigation.goToLibraryView('domain', d.id)}>
 								<DomainPanel domain={d} />
 							</SelectablePanel>
 						);
@@ -434,7 +415,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(k => {
 						const item = (
-							<SelectablePanel key={k.id} onSelect={() => props.showKit(k)}>
+							<SelectablePanel key={k.id} onSelect={() => navigation.goToLibraryView('kit', k.id)}>
 								<KitPanel kit={k} />
 							</SelectablePanel>
 						);
@@ -471,7 +452,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(p => {
 						const item = (
-							<SelectablePanel key={p.id} onSelect={() => props.showPerk(p)}>
+							<SelectablePanel key={p.id} onSelect={() => navigation.goToLibraryView('perk', p.id)}>
 								<PerkPanel perk={p} />
 							</SelectablePanel>
 						);
@@ -508,7 +489,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(t => {
 						const item = (
-							<SelectablePanel key={t.id} onSelect={() => props.showTitle(t)}>
+							<SelectablePanel key={t.id} onSelect={() => navigation.goToLibraryView('title', t.id)}>
 								<TitlePanel title={t} />
 							</SelectablePanel>
 						);
@@ -545,7 +526,7 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(i => {
 						const item = (
-							<SelectablePanel key={i.id} onSelect={() => props.showItem(i)}>
+							<SelectablePanel key={i.id} onSelect={() => navigation.goToLibraryView('item', i.id)}>
 								<ItemPanel item={i} />
 							</SelectablePanel>
 						);
@@ -582,8 +563,8 @@ export const LibraryListPage = (props: Props) => {
 				{
 					list.map(mg => {
 						const item = (
-							<SelectablePanel key={mg.id} onSelect={() => props.showMonsterGroup(mg)}>
-								<MonsterGroupPanel monsterGroup={mg} sourcebooks={props.sourcebooks} />
+							<SelectablePanel key={mg.id} onSelect={() => navigation.goToLibraryView('monster-group', mg.id)}>
+								<MonsterGroupPanel monsterGroup={mg} />
 							</SelectablePanel>
 						);
 

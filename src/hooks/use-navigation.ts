@@ -14,20 +14,26 @@ export const useNavigation = () => {
 		goToHeroView: (heroID: string) => {
 			return navigate(`/hero/view/${heroID}`);
 		},
-		goToHeroEdit: (heroID: string, tab?: string) => {
-			return navigate(`/hero/edit/${heroID}${tab ? `/${tab}` : ''}`);
+		goToHeroEdit: (heroID: string, tab: string) => {
+			return navigate(`/hero/edit/${heroID}/${tab}`);
 		},
-		goToLibraryList: (tab?: SourcebookElementKind) => {
-			return navigate(`/library${tab ? `/${tab}` : ''}`);
+		goToLibraryList: (kind: SourcebookElementKind) => {
+			return navigate(`/library/${kind}`);
 		},
-		goToLibraryEdit: (sourcebookID: string, kind: SourcebookElementKind, elementID: string, subElementID?: string) => {
+		goToLibraryView: (kind: SourcebookElementKind, elementID: string) => {
+			return navigate(`/library/view/${kind}/${elementID}`);
+		},
+		goToLibraryEdit: (kind: SourcebookElementKind, sourcebookID: string, elementID: string, subElementID?: string) => {
 			if (subElementID) {
-				return navigate(`/library/edit/${sourcebookID}/${kind}/${elementID}/${subElementID}`);
+				return navigate(`/library/edit/${kind}/${sourcebookID}/${elementID}/${subElementID}`);
 			}
-			return navigate(`/library/edit/${sourcebookID}/${kind}/${elementID}`);
+			return navigate(`/library/edit/${kind}/${sourcebookID}/${elementID}`);
 		},
 		goToEncounterList: () => {
 			return navigate('/encounter');
+		},
+		goToEncounterView: (encounterID: string) => {
+			return navigate(`/encounter/view/${encounterID}`);
 		},
 		goToEncounterEdit: (encounterID: string) => {
 			return navigate(`/encounter/edit/${encounterID}`);

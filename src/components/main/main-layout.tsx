@@ -27,7 +27,7 @@ export const MainLayout = (props: Props) => {
 			   </div>
 			   <div className='main-footer-section navigation-buttons'>
 				   <Button type='text' title='Heroes' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()} />
-				   <Button type='text' title='Library' icon={<BookOutlined />} onClick={() => navigation.goToLibraryList()} />
+				   <Button type='text' title='Library' icon={<BookOutlined />} onClick={() => navigation.goToLibraryList('ancestry')} />
 					<Button type='text' title='Encounters' icon={<AimOutlined />} onClick={() => navigation.goToEncounterList()} />
 				</div>
 			</div>

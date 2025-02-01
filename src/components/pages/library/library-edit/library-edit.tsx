@@ -2024,15 +2024,7 @@ export const LibraryEditPage = (props: Props) => {
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(sourcebookID!, kind!, element)}>
 						Save Changes
 					</Button>
-					<Button
-						onClick={() => {
-							if ((kind === 'class') || (kind === 'monster-group')) {
-								navigation.goToLibraryView(kind, elementID!);
-							} else {
-								navigation.goToLibraryList(kind!);
-							}
-						}}
-					>
+					<Button onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
 						Cancel
 					</Button>
 				</AppHeader>

@@ -32,6 +32,9 @@ export const useNavigation = () => {
 		goToEncounterList: () => {
 			return navigate('/encounter');
 		},
+		goToEncounterView: (encounterID: string) => {
+			return navigate(`/encounter/view/${encounterID}`);
+		},
 		goToEncounterEdit: (encounterID: string) => {
 			return navigate(`/encounter/edit/${encounterID}`);
 		}

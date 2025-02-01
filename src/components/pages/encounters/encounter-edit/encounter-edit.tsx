@@ -27,6 +27,7 @@ import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
 import './encounter-edit.scss';
@@ -37,10 +38,10 @@ interface Props {
 	showAbout: () => void;
 	showMonster: (monsterID: string) => void;
 	saveChanges: (encounter: Encounter) => void;
-	cancelChanges: () => void;
 }
 
 export const EncounterEditPage = (props: Props) => {
+	const navigation = useNavigation();
 	const { encounterID } = useParams<{ encounterID: string }>();
 	const originalEncounter = useMemo(() => props.playbook.encounters.find(e => e.id === encounterID)!, [ encounterID, props.playbook ]);
 	const [ encounter, setEncounter ] = useState(JSON.parse(JSON.stringify(originalEncounter)) as Encounter);
@@ -455,7 +456,7 @@ export const EncounterEditPage = (props: Props) => {
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(encounter)}>
 						Save Changes
 					</Button>
-					<Button onClick={() => props.cancelChanges()}>
+					<Button onClick={() => navigation.goToEncounterView(encounter.id)}>
 						Cancel
 					</Button>
 				</AppHeader>

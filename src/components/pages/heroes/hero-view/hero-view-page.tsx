@@ -30,8 +30,8 @@ interface Props {
 	options: Options;
 	showAbout: () => void;
 	setOptions: (options: Options) => void;
-	exportHero: (heroID: string, format: 'image' | 'pdf' | 'json') => void;
-	deleteHero: (heroID: string) => void;
+	exportHero: (hero: Hero, format: 'image' | 'pdf' | 'json') => void;
+	deleteHero: (hero: Hero) => void;
 	showAncestry: (ancestry: Ancestry) => void;
 	showCulture: (culture: Culture) => void;
 	showCareer: (career: Career) => void;
@@ -47,7 +47,7 @@ interface Props {
 
 const getHero = (heroID: string, heroes: Hero[]) => heroes.find(h => h.id === heroID)!;
 
-export const HeroPage = (props: Props) => {
+export const HeroViewPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { heroID } = useParams<{ heroID: string }>();
 	const hero = useMemo(() => getHero(heroID!, props.heroes), [ heroID, props.heroes ]);
@@ -115,10 +115,10 @@ export const HeroPage = (props: Props) => {
 											label: <div className='ds-text centered-text'>Export As Data</div>
 										}
 									]}
-									onClick={key => props.exportHero(heroID!, key as 'image' | 'pdf' | 'json')}
+									onClick={key => props.exportHero(hero, key as 'image' | 'pdf' | 'json')}
 								/>
 								<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>Edit</Button>
-								<DangerButton block={true} onConfirm={() => { props.deleteHero(heroID!); navigation.goToHeroList(); }} />
+								<DangerButton block={true} onConfirm={() => props.deleteHero(hero)} />
 							</div>
 						)}
 					>

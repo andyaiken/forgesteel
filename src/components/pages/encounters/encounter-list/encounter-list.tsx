@@ -7,6 +7,7 @@ import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Utils } from '../../../../utils/utils';
+import { useNavigation } from '../../../../hooks/use-navigation';
 import { useState } from 'react';
 
 import './encounter-list.scss';
@@ -15,12 +16,12 @@ interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	showAbout: () => void;
- 	showEncounter: (encounter: Encounter) => void;
 	onCreateEncounter: () => void;
 	onImportEncounter: (encounter: Encounter) => void;
 }
 
 export const EncounterListPage = (props: Props) => {
+	const navigation = useNavigation();
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
 	const getEncounters = () => {
@@ -45,9 +46,9 @@ export const EncounterListPage = (props: Props) => {
 		return (
 			<div className='encounter-section-row'>
 				{
-					list.map(enc => (
-						<SelectablePanel key={enc.id} onSelect={() => props.showEncounter(enc)}>
-							<EncounterPanel encounter={enc} playbook={props.playbook} sourcebooks={props.sourcebooks} />
+					list.map(encounter => (
+						<SelectablePanel key={encounter.id} onSelect={() => navigation.goToEncounterView(encounter.id)}>
+							<EncounterPanel encounter={encounter} playbook={props.playbook} sourcebooks={props.sourcebooks} />
 						</SelectablePanel>
 					))
 				}

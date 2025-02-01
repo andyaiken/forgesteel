@@ -38,9 +38,8 @@ export const MonsterGroupPanel = (props: Props) => {
 							At the start of any {props.monsterGroup.name}'s turn, you can spend malice to activate one of the following features.
 							<div className='malice'>
 								{props.monsterGroup.malice.map(m =>
-									<SelectablePanel>
+									<SelectablePanel key={m.id}>
 										<FeaturePanel
-											key={m.id}
 											feature={m}
 											mode={PanelMode.Full}
 											cost={m.type === FeatureType.Ability ? m.data.ability.cost : m.data.cost}

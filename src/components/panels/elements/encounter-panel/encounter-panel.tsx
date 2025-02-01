@@ -10,6 +10,7 @@ import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Playbook } from '../../../../models/playbook';
+import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 
@@ -81,42 +82,46 @@ export const EncounterPanel = (props: Props) => {
 				{(props.mode === PanelMode.Full) && (monsterIDs.length > 0) ? <Divider /> : null}
 				{
 					(props.mode === PanelMode.Full) && (monsterIDs.length > 0) ?
-						<Space direction='vertical' style={{ width: '100%' }}>
+						<div className='monsters'>
 							{
 								monsterIDs.map(id => {
 									const monster = SourcebookLogic.getMonster(props.sourcebooks, id);
 									const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, id);
 									return (monster && monsterGroup) ?
-										<MonsterPanel
-											key={monster.id}
-											monster={monster}
-											monsterGroup={monsterGroup}
-											mode={PanelMode.Full}
-										/>
+										<SelectablePanel key={monster.id}>
+											<MonsterPanel
+												monster={monster}
+												monsterGroup={monsterGroup}
+												mode={PanelMode.Full}
+											/>
+										</SelectablePanel>
 										: null;
 								})
 							}
-						</Space>
+						</div>
 						: null
 				}
 				{
 					(props.mode === PanelMode.Full) && (monsterGroups.length > 0) ?
 						<Space direction='vertical' style={{ width: '100%' }}>
-							<HeaderText level={1}>Malice</HeaderText>
 							{
 								monsterGroups.map(group => (
 									<div key={group.id}>
-										{
-											group.malice.map(m => (
-												<FeaturePanel
-													key={m.id}
-													feature={m}
-													mode={PanelMode.Full}
-													cost={m.type === FeatureType.Ability ? m.data.ability.cost : m.data.cost}
-													repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
-												/>
-											))
-										}
+										<HeaderText level={1}>{group.name} Malice</HeaderText>
+										<div className='malice'>
+											{
+												group.malice.map(m => (
+													<SelectablePanel key={m.id}>
+														<FeaturePanel
+															feature={m}
+															mode={PanelMode.Full}
+															cost={m.type === FeatureType.Ability ? m.data.ability.cost : m.data.cost}
+															repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
+														/>
+													</SelectablePanel>
+												))
+											}
+										</div>
 									</div>
 								))
 							}

@@ -16,4 +16,20 @@
 			display: block;
 		}
 	}
+
+	.monsters {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 20px;
+
+		.monster-panel {
+			padding: 0;
+		}
+	}
+
+	.malice {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 20px;
+	}
 }

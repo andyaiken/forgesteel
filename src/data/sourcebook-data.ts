@@ -369,6 +369,7 @@ export class SourcebookData {
 			ArtifactData.mortalCoil
 		],
 		monsterGroups: [
+			MonsterData.ankheg,
 			MonsterData.chimera,
 			MonsterData.dwarf,
 			MonsterData.elfWode,

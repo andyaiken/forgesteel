@@ -56,7 +56,7 @@ Additionally, the first time each round that a creature judged by you (see Judgm
 						description: 'You utter a pray that outlines your foe in holy energy.',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.createRanged() ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 enemy',
 						effect: `
 The target is judged by you until the end of the encounter, you die, you use this ability again, or you willingly end this effect (no action required). If another censor judges the target, then your judgment on the target ends.
@@ -82,7 +82,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 						description: 'The first principle of the oath: defend the righteous.',
 						type: FactoryLogic.type.createTrigger('The target starts their turn or takes damage.'),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.createRanged() ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Self or one ally',
 						effect: 'You spend a Recovery and the target regains Stamina equal to your Recovery value.',
 						spend: [
@@ -158,7 +158,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			description: 'You show your foe a glimpse of their fate after death.',
 			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ FactoryLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature',
 			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
@@ -259,7 +259,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			description: 'You conjure memories of their sins.',
 			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-			distance: [ FactoryLogic.distance.createRanged() ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature',
 			cost: 3,
 			powerRoll: FactoryLogic.createPowerRoll({
@@ -432,7 +432,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 											description: 'I am but a vessel. Your own deeds weigh upon you.',
 											type: FactoryLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-											distance: [ FactoryLogic.distance.createRanged() ],
+											distance: [ FactoryLogic.distance.createRanged(10) ],
 											target: '1 creature',
 											cost: 5,
 											powerRoll: FactoryLogic.createPowerRoll({
@@ -516,7 +516,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 											description: '“Hah! I see your plan. It will not work!”',
 											type: FactoryLogic.type.createTrigger('An enemy within 10 squares starts their turn.'),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-											distance: [ FactoryLogic.distance.createRanged() ],
+											distance: [ FactoryLogic.distance.createRanged(10) ],
 											target: 'Self or one ally',
 											cost: 5,
 											effect: 'You can spend a Recovery to allow the target to regain Stamina equal to your Recovery value. The target can then take their turn immediately before the triggering enemy.'
@@ -532,7 +532,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 											description: 'A word in prayer, and the gods show the way.',
 											type: FactoryLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-											distance: [ FactoryLogic.distance.createRanged() ],
+											distance: [ FactoryLogic.distance.createRanged(10) ],
 											target: 'Self or one ally',
 											cost: 5,
 											effect: 'When you use this ability, the target can use a free triggered action to make a signature strike or a heroic ability that is a strike, and has a double edge on the power roll.'

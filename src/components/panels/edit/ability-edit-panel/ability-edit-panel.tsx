@@ -108,7 +108,7 @@ export const AbilityEditPanel = (props: Props) => {
 				copy.distance[index] = FactoryLogic.distance.createMelee();
 				break;
 			case 'Ranged':
-				copy.distance[index] = FactoryLogic.distance.createRanged();
+				copy.distance[index] = FactoryLogic.distance.createRanged(10);
 				break;
 			case 'Area':
 				copy.distance[index] = FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 });

@@ -240,7 +240,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createRanged() ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object per minion',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -353,7 +353,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [
 							FactoryLogic.distance.createMelee(),
-							FactoryLogic.distance.createRanged()
+							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({

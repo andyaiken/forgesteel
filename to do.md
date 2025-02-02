@@ -3,7 +3,6 @@
 ## Add Monsters
 
 * Gnolls
-* Hobgoblins
 * Lizardfolk
 * Orcs
 * Trolls
@@ -67,3 +66,9 @@
 * Encounters should pull in monsters - like how heroes pull in elements
 * Use encounter templates in encounter editor
 * Auto-create encounters
+
+### Director Tools
+
+* Negotiation tracker
+* Combat tracker
+* Montage test tracker

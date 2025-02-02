@@ -47,7 +47,7 @@ export class DomainData {
 							description: 'A marble statue of your patron rises from the earth.',
 							type: FactoryLogic.type.createManeuver(),
 							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-							distance: [ FactoryLogic.distance.createRanged() ],
+							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'Special',
 							cost: 5,
 							effect: 'A size 2 statue rises out of the ground in an unoccupied space within distance and lasts until the end of the encounter. While within 3 squares of the statue, you and your allies each gains a surge at the start of their turns. The statue is destroyed if it takes 20 or more damage. It is immune to poison and psychic damage.'
@@ -106,7 +106,7 @@ export class DomainData {
 							description: 'The gods reward those who smite their foes.',
 							type: FactoryLogic.type.createManeuver(),
 							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-							distance: [ FactoryLogic.distance.createRanged() ],
+							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'Each ally',
 							cost: 5,
 							effect: 'Until the start of your next turn, each time a target kills an enemy, they regain Stamina equal to 5 + your Intuition score.'
@@ -158,7 +158,7 @@ export class DomainData {
 							description: 'Your enemies suffer their fate; your allies embrace their destiny!',
 							type: FactoryLogic.type.createAction(),
 							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-							distance: [ FactoryLogic.distance.createRanged() ],
+							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'Three creatures, including self',
 							cost: 5,
 							effect: `
@@ -214,7 +214,7 @@ Choose one of the following effects, which lasts until the end of the encounter 
 							description: 'You speak with the voice of your saint, commanding your enemies.',
 							type: FactoryLogic.type.createAction(),
 							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-							distance: [ FactoryLogic.distance.createRanged() ],
+							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: '1 creature',
 							cost: 5,
 							powerRoll: FactoryLogic.createPowerRoll({
@@ -325,7 +325,7 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 							description: 'An ally gains strength from their friends.',
 							type: FactoryLogic.type.createManeuver(),
 							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-							distance: [ FactoryLogic.distance.createRanged() ],
+							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'Self and one ally',
 							cost: 5,
 							effect: 'Until the end of the encounter or the target is dying, whenever the target starts their turn, they gain a bonus to speed and damage equal to the number of allies within 10 squares of them. This bonus lasts until the start of their next turn.'
@@ -441,7 +441,7 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 							description: 'You forge a divine connection between two creatures.',
 							type: FactoryLogic.type.createManeuver(),
 							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-							distance: [ FactoryLogic.distance.createRanged() ],
+							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'Self and one ally',
 							cost: 5,
 							effect: `
@@ -671,7 +671,7 @@ Choose one of the following types of weather, each of which grants a benefit to 
 							description: 'The gods grant insight revealing where best to strike your enemies.',
 							type: FactoryLogic.type.createManeuver(),
 							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-							distance: [ FactoryLogic.distance.createRanged() ],
+							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'Self and each ally in the area',
 							cost: 5,
 							effect: 'Until the end of the encounter or until you are dying, each target gains a surge at the end of each of your turns.'

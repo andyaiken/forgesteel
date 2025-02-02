@@ -85,7 +85,7 @@ export const timeRaider: Ancestry = {
 							description: 'You slam an invisible force down upon the target.',
 							type: FactoryLogic.type.createAction(),
 							keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-							distance: [ FactoryLogic.distance.createRanged() ],
+							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: '1 creature or object',
 							powerRoll: FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
@@ -105,7 +105,7 @@ export const timeRaider: Ancestry = {
 							description: 'You shoot forth a beam of psychic purple force that grips your target.',
 							type: FactoryLogic.type.createAction(),
 							keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-							distance: [ FactoryLogic.distance.createRanged() ],
+							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: '1 creature or object',
 							powerRoll: FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],

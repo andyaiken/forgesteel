@@ -124,7 +124,7 @@ You can have an active number of sigils equal to your level. You can remove a si
 									description: 'A magical sigil you placed on a creature explodes with energy.',
 									type: FactoryLogic.type.createAction(),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-									distance: [ FactoryLogic.distance.createRanged() ],
+									distance: [ FactoryLogic.distance.createRanged(10) ],
 									target: '1 creature with your sigil',
 									powerRoll: FactoryLogic.createPowerRoll({
 										characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],

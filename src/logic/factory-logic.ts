@@ -559,7 +559,7 @@ export class FactoryLogic {
 				qualifier: ''
 			};
 		},
-		createRanged: (value = 10): AbilityDistance => {
+		createRanged: (value: number): AbilityDistance => {
 			return {
 				type: AbilityDistanceType.Ranged,
 				value: value,

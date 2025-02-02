@@ -56,7 +56,7 @@ export const wodeElf: Ancestry = {
 							description: 'Thorny vines erupt into existence and attempt to bind your foe.',
 							type: FactoryLogic.type.createAction(),
 							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-							distance: [ FactoryLogic.distance.createRanged() ],
+							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: '1 creature',
 							powerRoll: FactoryLogic.createPowerRoll({
 								characteristic: [],

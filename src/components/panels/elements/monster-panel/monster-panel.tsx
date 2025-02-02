@@ -3,6 +3,7 @@ import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Characteristic } from '../../../../enums/characteristic';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { FeaturePanel } from '../feature-panel/feature-panel';
+import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -39,6 +40,9 @@ export const MonsterPanel = (props: Props) => {
 		const weaknesses = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Weakness);
 		const speed = props.monster.speed.modes !== '' ? `${props.monster.speed.value} (${props.monster.speed.modes})` : props.monster.speed.value;
 
+		const types = [ FeatureType.Ability, FeatureType.Text ];
+		const features = props.monster.features.filter(f => types.includes(f.type));
+
 		return (
 			<div className='monster-panel' id={props.monster.id}>
 				<HeaderText level={1}>{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}</HeaderText>
@@ -70,9 +74,9 @@ export const MonsterPanel = (props: Props) => {
 				{immunities.length > 0 ? <Field label='Immunities' value={immunities.map(mod => `${mod.type} ${mod.value}`).join(', ')} /> : null}
 				{weaknesses.length > 0 ? <Field label='Weaknesses' value={weaknesses.map(mod => `${mod.type} ${mod.value}`).join(', ')} /> : null}
 				{
-					props.monster.features.length > 0 ?
-						<div className='monsters'>
-							{props.monster.features.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
+					features.length > 0 ?
+						<div className='features'>
+							{features.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
 						</div>
 						: null
 				}

@@ -113,7 +113,7 @@ export const manticore: MonsterGroup = {
 						name: 'Tail Spike',
 						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createRanged() ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Two creatures or objects',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 4,
@@ -151,7 +151,7 @@ export const manticore: MonsterGroup = {
 						name: 'Reflexive Instinct',
 						type: FactoryLogic.type.createTrigger('A creature deals damage to the manticore.'),
 						keywords: [ ],
-						distance: [ FactoryLogic.distance.createRanged() ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Triggering creature',
 						cost: 2,
 						effect: 'The manticore shifts up to 5 into the air, then uses their Tail Spike ability against the target.'

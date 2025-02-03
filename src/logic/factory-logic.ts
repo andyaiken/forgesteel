@@ -29,6 +29,7 @@ import { MonsterFilter } from '../models/monster-filter';
 import { MonsterLogic } from './monster-logic';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
+import { Negotiation } from '../models/negotiation';
 import { Perk } from '../models/perk';
 import { PerkList } from '../enums/perk-list';
 import { Playbook } from '../models/playbook';
@@ -102,7 +103,8 @@ export class FactoryLogic {
 
 	static createPlaybook = (): Playbook => {
 		return {
-			encounters: []
+			encounters: [],
+			negotiations: []
 		};
 	};
 
@@ -403,6 +405,18 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			monsterID: monsterID,
 			count: 1
+		};
+	};
+
+	static createNegotiation = (): Negotiation => {
+		return {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			interest: 1,
+			patience: 1,
+			motivations: [],
+			pitfalls: []
 		};
 	};
 

@@ -1,4 +1,4 @@
-import { AimOutlined, BookOutlined, TeamOutlined } from '@ant-design/icons';
+import { BookOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
 import { Button, Drawer } from 'antd';
 import { Outlet } from 'react-router';
 import { type ReactNode } from 'react';
@@ -28,7 +28,7 @@ export const MainLayout = (props: Props) => {
 			   <div className='main-footer-section navigation-buttons'>
 				   <Button type='text' title='Heroes' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()} />
 				   <Button type='text' title='Library' icon={<BookOutlined />} onClick={() => navigation.goToLibraryList('ancestry')} />
-					<Button type='text' title='Encounters' icon={<AimOutlined />} onClick={() => navigation.goToEncounterList()} />
+					<Button type='text' title='Playbook' icon={<ReadOutlined />} onClick={() => navigation.goToPlaybookList('encounter')} />
 				</div>
 			</div>
 			<Drawer open={props.drawer !== null} onClose={() => props.setDrawer(null)} closeIcon={null} width='500px'>

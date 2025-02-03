@@ -1,3 +1,4 @@
+import { PlaybookElementKind } from '../models/playbook';
 import { SourcebookElementKind } from '../models/sourcebook';
 import { useNavigate } from 'react-router';
 
@@ -32,14 +33,14 @@ export const useNavigation = () => {
 			}
 			return navigate(`/library/edit/${kind}/${sourcebookID}/${elementID}`);
 		},
-		goToEncounterList: () => {
-			return navigate('/encounter');
+		goToPlaybookList: (kind: PlaybookElementKind) => {
+			return navigate(`/playbook/${kind}`);
 		},
-		goToEncounterView: (encounterID: string) => {
-			return navigate(`/encounter/view/${encounterID}`);
+		goToPlaybookView: (kind: PlaybookElementKind, elementID: string) => {
+			return navigate(`/playbook/view/${kind}/${elementID}`);
 		},
-		goToEncounterEdit: (encounterID: string) => {
-			return navigate(`/encounter/edit/${encounterID}`);
+		goToPlaybookEdit: (kind: PlaybookElementKind, elementID: string) => {
+			return navigate(`/playbook/edit/${kind}/${elementID}`);
 		}
 	};
 };

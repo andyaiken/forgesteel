@@ -87,6 +87,10 @@ Promise.all(promises).then(results => {
 		playbook = FactoryLogic.createPlaybook();
 	}
 
+	if (playbook.negotiations === undefined) {
+		playbook.negotiations = [];
+	}
+
 	let options = results[4] as Options | null;
 	if (!options) {
 		options = {

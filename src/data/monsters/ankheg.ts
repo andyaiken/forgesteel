@@ -50,7 +50,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'ankheg-malice-3',
-			name: 'Geyser',
+			name: 'Earth Sink',
 			cost: 10,
 			sections: [
 				'The area of the encounter map slowly sinks into the ground. Each creature who starts their turn on the ground and can’t burrow must spend 1 extra square of movement to leave their starting position, or 2 squares if they start their turn prone or restrained. A creature who starts and ends their turn in the same space and can’t burrow is restrained by the ground (save ends).'

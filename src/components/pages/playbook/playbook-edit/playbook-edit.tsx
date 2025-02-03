@@ -1,18 +1,21 @@
 import { Alert, Button, Divider, Input, Select, Slider, Space, Tabs } from 'antd';
 import { Encounter, EncounterGroup } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
+import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { ReactNode, useMemo, useState } from 'react';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { DropdownButton } from '../../../controls/dropdown-button/dropdown-button';
+import { Element } from '../../../../models/element';
 import { EncounterDifficulty } from '../../../../enums/encounter-difficulty';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Field } from '../../../controls/field/field';
+import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { MonsterFilter } from '../../../../models/monster-filter';
 import { MonsterLogic } from '../../../../logic/monster-logic';
@@ -21,30 +24,34 @@ import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-pan
 import { MonsterRoleType } from '../../../../enums/monster-role-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
+import { Negotiation } from '../../../../models/negotiation';
+import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/negotiation-panel';
+import { NegotiationTrait } from '../../../../enums/negotiation-trait';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Playbook } from '../../../../models/playbook';
+import { PlaybookLogic } from '../../../../logic/playbook-logic';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
-import './encounter-edit.scss';
+import './playbook-edit.scss';
 
 interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	showAbout: () => void;
 	showMonster: (monsterID: string) => void;
-	saveChanges: (encounter: Encounter) => void;
+	saveChanges: (kind: PlaybookElementKind, element: Element) => void;
 }
 
-export const EncounterEditPage = (props: Props) => {
+export const PlaybookEditPage = (props: Props) => {
 	const navigation = useNavigation();
-	const { encounterID } = useParams<{ encounterID: string }>();
-	const originalEncounter = useMemo(() => props.playbook.encounters.find(e => e.id === encounterID)!, [ encounterID, props.playbook ]);
-	const [ encounter, setEncounter ] = useState(JSON.parse(JSON.stringify(originalEncounter)) as Encounter);
+	const { kind, elementID } = useParams<{ kind: PlaybookElementKind, elementID: string }>();
+	const playbookKey = useMemo(() => PlaybookLogic.getPlaybookKey(kind!), [ kind ]);
+	const originalElement = useMemo(() => props.playbook[playbookKey].find(e => e.id === elementID)!, [ props.playbook, playbookKey, elementID ]);
+	const [ element, setElement ] = useState<Element>(JSON.parse(JSON.stringify(originalElement)) as Element);
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ heroCount, setHeroCount ] = useState<number>(4);
@@ -55,16 +62,16 @@ export const EncounterEditPage = (props: Props) => {
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(encounter)) as Encounter;
+			const copy = JSON.parse(JSON.stringify(element)) as Element;
 			copy.name = value;
-			setEncounter(copy);
+			setElement(copy);
 			setDirty(true);
 		};
 
 		const setDescription = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(encounter)) as Encounter;
+			const copy = JSON.parse(JSON.stringify(element)) as Element;
 			copy.description = value;
-			setEncounter(copy);
+			setElement(copy);
 			setDirty(true);
 		};
 
@@ -72,36 +79,38 @@ export const EncounterEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Input
-					className={encounter.name === '' ? 'input-empty' : ''}
+					className={element.name === '' ? 'input-empty' : ''}
 					placeholder='Name'
 					allowClear={true}
 					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={encounter.name}
+					value={element.name}
 					onChange={e => setName(e.target.value)}
 				/>
 				<HeaderText>Description</HeaderText>
-				<MultiLine label='Description' value={encounter.description} onChange={setDescription} />
+				<MultiLine label='Description' value={element.description} onChange={setDescription} />
 			</Space>
 		);
 	};
 
-	const getEncounterMonstersSection = () => {
+	const getEncounterContentsSection = () => {
+		const encounter = element as Encounter;
+
 		const addGroup = () => {
-			const copy = JSON.parse(JSON.stringify(encounter)) as Encounter;
+			const copy = JSON.parse(JSON.stringify(element)) as Encounter;
 			copy.groups.push(FactoryLogic.createEncounterGroup());
-			setEncounter(copy);
+			setElement(copy);
 			setDirty(true);
 		};
 
 		const deleteGroup = (group: EncounterGroup) => {
-			const copy = JSON.parse(JSON.stringify(encounter)) as Encounter;
+			const copy = JSON.parse(JSON.stringify(element)) as Encounter;
 			copy.groups = copy.groups.filter(g => g.id !== group.id);
-			setEncounter(copy);
+			setElement(copy);
 			setDirty(true);
 		};
 
 		const setSlotCount = (groupID: string, slotID: string, value: number) => {
-			const copy = JSON.parse(JSON.stringify(encounter)) as Encounter;
+			const copy = JSON.parse(JSON.stringify(element)) as Encounter;
 			const group = copy.groups.find(g => g.id === groupID);
 			if (group) {
 				const slot = group.slots.find(s => s.id === slotID);
@@ -117,7 +126,7 @@ export const EncounterEditPage = (props: Props) => {
 					copy.groups = copy.groups.filter(g => g.id !== groupID);
 				}
 			}
-			setEncounter(copy);
+			setElement(copy);
 			setDirty(true);
 		};
 
@@ -172,40 +181,125 @@ export const EncounterEditPage = (props: Props) => {
 		);
 	};
 
-	const getEditSection = () => {
+	const getNegotiationDetailsSection = () => {
+		const negotiation = element as Negotiation;
+
+		const setInterest = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			copy.interest = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setPatience = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			copy.patience = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setMotivations = (value: NegotiationTrait[]) => {
+			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			copy.motivations = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setPitfalls = (value: NegotiationTrait[]) => {
+			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			copy.pitfalls = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
 		return (
-			<Tabs
-				items={[
-					{
-						key: '1',
-						label: 'Encounter',
-						children: getNameAndDescriptionSection()
-					},
-					{
-						key: '2',
-						label: 'Monsters',
-						children: getEncounterMonstersSection()
-					}
-				]}
-			/>
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Interest</HeaderText>
+				<NumberSpin min={0} max={5} value={negotiation.interest} onChange={setInterest} />
+				<HeaderText>Patience</HeaderText>
+				<NumberSpin min={0} max={5} value={negotiation.patience} onChange={setPatience} />
+				<HeaderText>Motivations</HeaderText>
+				<Select
+					style={{ width: '100%' }}
+					mode='multiple'
+					allowClear={true}
+					placeholder='Motivations'
+					options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt }))}
+					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+					value={negotiation.motivations}
+					onChange={setMotivations}
+				/>
+				<HeaderText>Motivations</HeaderText>
+				<Select
+					style={{ width: '100%' }}
+					mode='multiple'
+					allowClear={true}
+					placeholder='Pitfalls'
+					options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt }))}
+					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+					value={negotiation.pitfalls}
+					onChange={setPitfalls}
+				/>
+			</Space>
 		);
+	};
+
+	const getEditSection = () => {
+		switch (kind!) {
+			case 'encounter':
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Encounter',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Monsters',
+								children: getEncounterContentsSection()
+							}
+						]}
+					/>
+				);
+			case 'negotiation':
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Negotiation',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Details',
+								children: getNegotiationDetailsSection()
+							}
+						]}
+					/>
+				);
+		}
 	};
 
 	//#endregion
 
 	//#region Preview
 
-	const getPreviewSection = () => {
+	const getEncounterPreviewSection = () => {
 		return (
 			<div style={{ margin: '0 10px' }}>
 				<SelectablePanel>
-					<EncounterPanel encounter={encounter} playbook={props.playbook} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+					<EncounterPanel encounter={element as Encounter} playbook={props.playbook} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 				</SelectablePanel>
 			</div>
 		);
 	};
 
-	const getMonstersSection = () => {
+	const getEncounterMonstersSection = () => {
+		const encounter = element as Encounter;
+
 		const setFilterName = (value: string) => {
 			const copy = JSON.parse(JSON.stringify(monsterFilter)) as MonsterFilter;
 			copy.name = value;
@@ -237,7 +331,7 @@ export const EncounterEditPage = (props: Props) => {
 		};
 
 		const addMonster = (monster: Monster, groupID: string | null) => {
-			const copy = JSON.parse(JSON.stringify(encounter)) as Encounter;
+			const copy = JSON.parse(JSON.stringify(element)) as Encounter;
 
 			if (groupID) {
 				const group = copy.groups.find(g => g.id === groupID);
@@ -255,7 +349,7 @@ export const EncounterEditPage = (props: Props) => {
 				copy.groups.push(group);
 			}
 
-			setEncounter(copy);
+			setElement(copy);
 			setDirty(true);
 		};
 
@@ -362,7 +456,9 @@ export const EncounterEditPage = (props: Props) => {
 		);
 	};
 
-	const getDifficultySection = () => {
+	const getEncounterDifficultySection = () => {
+		const encounter = element as Encounter;
+
 		const budget = EncounterLogic.getBudget(heroCount, heroLevel, heroVictories);
 		const strength = EncounterLogic.getStrength(encounter, props.sourcebooks);
 		const difficulty = EncounterLogic.getDifficulty(strength, budget);
@@ -424,43 +520,52 @@ export const EncounterEditPage = (props: Props) => {
 	};
 
 	const getPreview = () => {
-		return (
-			<Tabs
-				items={[
-					{
-						key: '1',
-						label: 'Preview',
-						children: getPreviewSection()
-					},
-					{
-						key: '2',
-						label: 'Monsters',
-						children: getMonstersSection()
-					},
-					{
-						key: '3',
-						label: 'Difficulty',
-						children: getDifficultySection()
-					}
-				]}
-			/>
-		);
+		switch (kind!) {
+			case 'encounter':
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Preview',
+								children: getEncounterPreviewSection()
+							},
+							{
+								key: '2',
+								label: 'Monsters',
+								children: getEncounterMonstersSection()
+							},
+							{
+								key: '3',
+								label: 'Difficulty',
+								children: getEncounterDifficultySection()
+							}
+						]}
+					/>
+				);
+			case 'negotiation':
+				return (
+					<SelectablePanel>
+						<NegotiationPanel negotiation={element as Negotiation} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
+		}
 	};
 
 	//#endregion
 
 	try {
 		return (
-			<div className='encounter-edit-page'>
-				<AppHeader breadcrumbs={[ { label: 'Encounter Builder' } ]} showAbout={props.showAbout}>
-					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(encounter)}>
+			<div className='playbook-edit-page'>
+				<AppHeader breadcrumbs={[ { label: `${Format.capitalize(kind!)} Builder` } ]} showAbout={props.showAbout}>
+					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
 						Save Changes
 					</Button>
-					<Button onClick={() => navigation.goToEncounterView(encounter.id)}>
+					<Button onClick={() => navigation.goToPlaybookView(kind!, element.id)}>
 						Cancel
 					</Button>
 				</AppHeader>
-				<div className='encounter-edit-page-content'>
+				<div className='playbook-edit-page-content'>
 					<div className='edit-column'>
 						{getEditSection()}
 					</div>

@@ -39,9 +39,9 @@ import './library-view-page.scss';
 interface Props {
 	sourcebooks: Sourcebook[];
 	showAbout: () => void;
-	createHomebrew: (kind: SourcebookElementKind, element: Element, sourcebook: Sourcebook | null) => void;
+	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 	export: (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
-	delete: (kind: SourcebookElementKind, element: Element) => void;
+	delete: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 }
 
 export const LibraryViewPage = (props: Props) => {
@@ -220,9 +220,9 @@ export const LibraryViewPage = (props: Props) => {
 											{
 												props.sourcebooks
 													.filter(sb => sb.isHomebrew)
-													.map(cs => <Button key={cs.id} onClick={() => props.createHomebrew(kind!, element, cs)}>In {cs.name || 'Unnamed Collection'}</Button>)
+													.map(cs => <Button key={cs.id} onClick={() => props.createElement(kind!, cs.id, element)}>In {cs.name || 'Unnamed Collection'}</Button>)
 											}
-											<Button onClick={() => props.createHomebrew(kind!, element, null)}>In a new collection</Button>
+											<Button onClick={() => props.createElement(kind!, null, element)}>In a new collection</Button>
 										</div>
 									)}
 								>
@@ -250,7 +250,7 @@ export const LibraryViewPage = (props: Props) => {
 					{
 						sourcebook.isHomebrew && !subElementID ?
 							<DangerButton
-								onConfirm={() => props.delete(kind!, element)}
+								onConfirm={() => props.delete(kind!, sourcebook.id, element)}
 							/>
 							: null
 					}

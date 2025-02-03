@@ -1,21 +1,31 @@
-.encounter-list-page {
+.playbook-list-page {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 
-	.encounter-list-page-content {
+	.playbook-list-page-content {
 		background-color: rgba(0, 0, 0, 0.1);
 		flex: 1 1 0;
 		display: flex;
 		flex-direction: column;
 		gap: 20px;
-		padding: 20px;
+		padding: 10px 20px 20px 20px;
 		overflow-y: auto;
 
-		.encounter-section-row {
+		.section-header {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			.section-count {
+				opacity: 0.3;
+			}
+		}
+
+		.playbook-section-row {
 			display: grid;
 			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-			gap: 20px;
+			gap: 10px;
 		}
 	}
 }

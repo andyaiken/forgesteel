@@ -63,7 +63,6 @@ import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
-import { getSourcebookKey } from '../../../../utils/get-sourcebook-key';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
@@ -73,19 +72,18 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	showAbout: () => void;
  	showMonster: (monsterID: string) => void;
-	saveChanges: (sourcebookID: string, kind: SourcebookElementKind, element: Element) => void;
+	saveChanges: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 }
 
 export const LibraryEditPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { kind, sourcebookID, elementID, subElementID } = useParams<{ kind: SourcebookElementKind, sourcebookID: string, elementID: string, subElementID?: string }>();
 	const sourcebook = useMemo(() => props.sourcebooks.find(s => s.id === sourcebookID)!, [ sourcebookID, props.sourcebooks ]);
-	const sourcebookKey = useMemo(() => getSourcebookKey(kind!), [ kind ]);
+	const sourcebookKey = useMemo(() => SourcebookLogic.getSourcebookKey(kind!), [ kind ]);
 	const originalElement = useMemo(() => sourcebook[sourcebookKey].find(e => e.id === elementID)!, [ sourcebook, sourcebookKey, elementID ]);
 	const [ element, setElement ] = useState<Element>(JSON.parse(JSON.stringify(originalElement)) as Element);
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ showSimilarMonsters, setShowSimilarMonsters ] = useState<boolean>(false);
-
 	const [ similarLevel, setSimilarLevel ] = useState<boolean>(true);
 	const [ similarRole, setSimilarRole ] = useState<boolean>(true);
 	const [ similarOrganization, setSimilarOrganization ] = useState<boolean>(true);
@@ -2021,7 +2019,7 @@ export const LibraryEditPage = (props: Props) => {
 		return (
 			<div className='library-edit-page'>
 				<AppHeader breadcrumbs={[ { label: `${editing} Builder` } ]} showAbout={props.showAbout}>
-					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(sourcebookID!, kind!, element)}>
+					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
 						Save Changes
 					</Button>
 					<Button onClick={() => navigation.goToLibraryView(kind!, elementID!)}>

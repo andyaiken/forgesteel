@@ -1,9 +1,9 @@
-.encounter-edit-page {
+.playbook-edit-page {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 
-	.encounter-edit-page-content {
+	.playbook-edit-page-content {
 		background-color: rgba(0, 0, 0, 0.1);
 		flex: 1 1 0;
 		display: flex;
@@ -12,6 +12,7 @@
 		overflow: hidden;
 
 		.edit-column {
+			padding: 10px;
 			flex: 1 1 0;
 			overflow-x: hidden;
 			overflow-y: auto;
@@ -49,6 +50,7 @@
 		}
 
 		.preview-column {
+			padding: 10px;
 			flex: 1 1 0;
 			overflow-x: hidden;
 			overflow-y: auto;
@@ -82,8 +84,8 @@
 }
 
 @media (prefers-color-scheme: dark) {
-	.encounter-edit-page {
-		.encounter-edit-page-content {
+	.playbook-edit-page {
+		.playbook-edit-page-content {
 			.edit-column {
 				.random-btn {
 					color: rgba(255, 255, 255, 0.88);

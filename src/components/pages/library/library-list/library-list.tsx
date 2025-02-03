@@ -30,8 +30,8 @@ import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
 import { useNavigation } from '../../../../hooks/use-navigation';
+import { useSourcebookTabKey } from '../../../../hooks/use-sourcebook-tab-key';
 import { useState } from 'react';
-import { useTabKey } from '../../../../hooks/use-tab-key';
 
 import './library-list.scss';
 
@@ -40,13 +40,13 @@ interface Props {
 	hiddenSourcebookIDs: string[];
 	showAbout: () => void;
  	showSourcebooks: () => void;
-	onCreateHomebrew: (type: SourcebookElementKind, sourcebookID: string | null) => void;
-	onImportHomebrew: (type: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
+	createElement: (kind: SourcebookElementKind, sourcebookID: string | null) => void;
+	importElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 }
 
 export const LibraryListPage = (props: Props) => {
 	const navigation = useNavigation();
-	const [ tabKey, setTabKey ] = useTabKey();
+	const [ tabKey, setTabKey ] = useSourcebookTabKey();
 	const [ previousTab, setPreviousTab ] = useState(tabKey);
 	const [ element, setElement ] = useState<SourcebookElementKind>(tabKey);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
@@ -61,8 +61,8 @@ export const LibraryListPage = (props: Props) => {
 		return props.sourcebooks.filter(cs => !props.hiddenSourcebookIDs.includes(cs.id));
 	};
 
-	const createHomebrew = () => {
-		props.onCreateHomebrew(element, sourcebookID);
+	const createElement = () => {
+		props.createElement(element, sourcebookID);
 	};
 
 	const getAncestries = () => {
@@ -647,7 +647,7 @@ export const LibraryListPage = (props: Props) => {
 								}
 								<Divider />
 								<Space>
-									<Button block={true} icon={<PlusCircleOutlined />} onClick={createHomebrew}>Create</Button>
+									<Button block={true} icon={<PlusCircleOutlined />} onClick={createElement}>Create</Button>
 									<div className='ds-text'>or</div>
 									<Upload
 										style={{ width: '100%' }}
@@ -658,7 +658,7 @@ export const LibraryListPage = (props: Props) => {
 												.text()
 												.then(json => {
 													const e = (JSON.parse(json) as Element);
-													props.onImportHomebrew(element, sourcebookID, e);
+													props.importElement(element, sourcebookID, e);
 												});
 											return false;
 										}}

@@ -14,13 +14,11 @@
 * Elves, Shadow
 * Humans
 * Rivals
-* Undead - 2nd Echelon
 * Angulotls
 * Ashen Hoarder
 * Basilisks
 * Bredbeddle
 * Demons
-* Demons - 2nd Echelon
 * Devils
 * Elementals
 * Fossil Cryptic
@@ -35,7 +33,6 @@
 * Time Raiders
 * Voiceless Talkers
 * War Dogs
-* War Dogs - 2nd Echelon
 * Wyverns
 * Xorannox the Tyract
 * Animals
@@ -69,6 +66,6 @@
 
 ### Director Tools
 
+* Encounter tracker
 * Negotiation tracker
-* Combat tracker
 * Montage test tracker

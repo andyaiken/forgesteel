@@ -25,6 +25,7 @@ import { MonsterRoleType } from '../../../../enums/monster-role-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { Negotiation } from '../../../../models/negotiation';
+import { NegotiationLogic } from '../../../../logic/negotiation-logic';
 import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/negotiation-panel';
 import { NegotiationTrait } from '../../../../enums/negotiation-trait';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
@@ -41,6 +42,7 @@ import './playbook-edit.scss';
 interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
+	showNavigation: () => void;
 	showAbout: () => void;
 	showMonster: (monsterID: string) => void;
 	saveChanges: (kind: PlaybookElementKind, element: Element) => void;
@@ -224,19 +226,19 @@ export const PlaybookEditPage = (props: Props) => {
 					mode='multiple'
 					allowClear={true}
 					placeholder='Motivations'
-					options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt }))}
-					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+					options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getMotivationDescription(nt) }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={negotiation.motivations}
 					onChange={setMotivations}
 				/>
-				<HeaderText>Motivations</HeaderText>
+				<HeaderText>Pitfalls</HeaderText>
 				<Select
 					style={{ width: '100%' }}
 					mode='multiple'
 					allowClear={true}
 					placeholder='Pitfalls'
-					options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt }))}
-					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+					options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getPitfallDescription(nt) }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={negotiation.pitfalls}
 					onChange={setPitfalls}
 				/>
@@ -557,7 +559,7 @@ export const PlaybookEditPage = (props: Props) => {
 	try {
 		return (
 			<div className='playbook-edit-page'>
-				<AppHeader breadcrumbs={[ { label: `${Format.capitalize(kind!)} Builder` } ]} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: `${Format.capitalize(kind!)} Builder` } ]} showNavigation={props.showNavigation} showAbout={props.showAbout}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
 						Save Changes
 					</Button>

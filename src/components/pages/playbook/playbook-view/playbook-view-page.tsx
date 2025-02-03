@@ -2,6 +2,7 @@ import { Button, Popover } from 'antd';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
+import { DownOutlined } from '@ant-design/icons';
 import { Element } from '../../../../models/element';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
@@ -18,6 +19,7 @@ import './playbook-view-page.scss';
 interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
+	showNavigation: () => void;
 	showAbout: () => void;
 	export: (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	delete: (kind: PlaybookElementKind, element: Element) => void;
@@ -59,7 +61,7 @@ export const PlaybookViewPage = (props: Props) => {
 	try {
 		return (
 			<div className='playbook-view-page'>
-				<AppHeader breadcrumbs={[ { label: 'Playbook' } ]} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: 'Playbook' } ]} showNavigation={props.showNavigation} showAbout={props.showAbout}>
 					<Button onClick={() => navigation.goToPlaybookList(kind!)}>
 						Close
 					</Button>
@@ -79,6 +81,7 @@ export const PlaybookViewPage = (props: Props) => {
 					>
 						<Button>
 							Export
+							<DownOutlined />
 						</Button>
 					</Popover>
 					<DangerButton

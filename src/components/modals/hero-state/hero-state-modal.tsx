@@ -10,7 +10,7 @@ import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
 import { Expander } from '../../controls/expander/expander';
 import { FactoryLogic } from '../../../logic/factory-logic';
 import { HeroLogic } from '../../../logic/hero-logic';
-import { InventoryPanel } from '../../panels/inventory-panel/inventory-panel';
+import { InventoryPanel } from '../../panels/inventory/inventory-panel';
 import { Item } from '../../../models/item';
 import { Modal } from '../modal/modal';
 import { NumberSpin } from '../../controls/number-spin/number-spin';

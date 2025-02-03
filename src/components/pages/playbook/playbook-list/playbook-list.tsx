@@ -20,6 +20,7 @@ import './playbook-list.scss';
 interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
+	showNavigation: () => void;
 	showAbout: () => void;
 	createElement: (kind: PlaybookElementKind) => void;
 	importElement: (kind: PlaybookElementKind, element: Element) => void;
@@ -117,7 +118,7 @@ export const PlaybookListPage = (props: Props) => {
 
 		return (
 			<div className='playbook-list-page'>
-				<AppHeader breadcrumbs={[ { label: 'Playbook' } ]} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: 'Playbook' } ]} showNavigation={props.showNavigation} showAbout={props.showAbout}>
 					<Input
 						placeholder='Search'
 						allowClear={true}

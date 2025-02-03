@@ -12,6 +12,7 @@ import { CharacteristicModal } from '../modals/characteristic/characteristic-mod
 import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
 import { Culture } from '../../models/culture';
+import { DirectoryModal } from '../modals/directory/directory-modal';
 import { Domain } from '../../models/domain';
 import { Element } from '../../models/element';
 import { ElementModal } from '../modals/element/element-modal';
@@ -66,6 +67,7 @@ export const Main = (props: Props) => {
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
 	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(props.hiddenSourcebookIDs);
 	const [ options, setOptions ] = useState<Options>(props.options);
+	const [ nav, setNav ] = useState<ReactNode>(null);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 
 	//#region Persistence
@@ -748,6 +750,16 @@ export const Main = (props: Props) => {
 		);
 	};
 
+	const showNavigationPane = () => {
+		setNav(
+			<DirectoryModal
+				heroes={heroes}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+				playbook={playbook}
+			/>
+		);
+	};
+
 	const onSelectLibraryElement = (element: Element, kind: SourcebookElementKind) => {
 		setDrawer(
 			<ElementModal
@@ -835,7 +847,9 @@ export const Main = (props: Props) => {
 				element={
 					<MainLayout
 						section='hero'
+						nav={nav}
 						drawer={drawer}
+						setNav={setNav}
 						setDrawer={setDrawer}
 					/>
 				}
@@ -844,6 +858,7 @@ export const Main = (props: Props) => {
 					index={true}
 					element={
 						<WelcomePage
+							showNavigation={showNavigationPane}
 							showAbout={showAbout}
 							showHeroes={heroes.length === 0 ? createHero : navigation.goToHeroList}
 							showLibrary={() => navigation.goToLibraryList('ancestry')}
@@ -858,6 +873,7 @@ export const Main = (props: Props) => {
 							<HeroListPage
 								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								showNavigation={showNavigationPane}
 								showAbout={showAbout}
 								addHero={createHero}
 								importHero={importHero}
@@ -872,6 +888,7 @@ export const Main = (props: Props) => {
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								options={options}
 								setOptions={async options => await persistOptions(options)}
+								showNavigation={showNavigationPane}
 								showAbout={showAbout}
 								exportHero={exportHero}
 								deleteHero={deleteHero}
@@ -899,6 +916,7 @@ export const Main = (props: Props) => {
 							<HeroEditPage
 								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								showNavigation={showNavigationPane}
 								showAbout={showAbout}
 								saveChanges={saveHero}
 							/>
@@ -916,6 +934,7 @@ export const Main = (props: Props) => {
 							<LibraryListPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								hiddenSourcebookIDs={hiddenSourcebookIDs}
+								showNavigation={showNavigationPane}
 								showAbout={showAbout}
 								showSourcebooks={showSourcebooks}
 								createElement={(kind, sourcebookID) => createLibraryElement(kind, sourcebookID, null)}
@@ -928,6 +947,7 @@ export const Main = (props: Props) => {
 						element={
 							<LibraryViewPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								showNavigation={showNavigationPane}
 								showAbout={showAbout}
 								createElement={createLibraryElement}
 								export={exportLibraryElement}
@@ -940,6 +960,7 @@ export const Main = (props: Props) => {
 						element={
 							<LibraryEditPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								showNavigation={showNavigationPane}
 								showAbout={showAbout}
 								showMonster={onSelectMonster}
 								saveChanges={saveLibraryElement}
@@ -958,6 +979,7 @@ export const Main = (props: Props) => {
 							<PlaybookListPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								showNavigation={showNavigationPane}
 								showAbout={showAbout}
 								createElement={createPlaybookElement}
 								importElement={importPlaybookElement}
@@ -970,6 +992,7 @@ export const Main = (props: Props) => {
 							<PlaybookViewPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								showNavigation={showNavigationPane}
 								showAbout={showAbout}
 								export={exportPlaybookElement}
 								delete={deletePlaybookElement}
@@ -982,6 +1005,7 @@ export const Main = (props: Props) => {
 							<PlaybookEditPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								showNavigation={showNavigationPane}
 								showAbout={showAbout}
 								showMonster={onSelectMonster}
 								saveChanges={savePlaybookElement}

@@ -14,6 +14,7 @@ import { CulturePanel } from '../../../panels/elements/culture-panel/culture-pan
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel';
+import { DownOutlined } from '@ant-design/icons';
 import { Element } from '../../../../models/element';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
@@ -38,6 +39,7 @@ import './library-view-page.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
+	showNavigation: () => void;
 	showAbout: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 	export: (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
@@ -194,7 +196,7 @@ export const LibraryViewPage = (props: Props) => {
 	try {
 		return (
 			<div className='library-view-page'>
-				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showNavigation={props.showNavigation} showAbout={props.showAbout}>
 					{
 						subElementID ?
 							<Button onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
@@ -228,6 +230,7 @@ export const LibraryViewPage = (props: Props) => {
 								>
 									<Button>
 										Create Homebrew Version
+										<DownOutlined />
 									</Button>
 								</Popover>
 							: null
@@ -245,6 +248,7 @@ export const LibraryViewPage = (props: Props) => {
 					>
 						<Button>
 							Export
+							<DownOutlined />
 						</Button>
 					</Popover>
 					{

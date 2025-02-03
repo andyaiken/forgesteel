@@ -70,6 +70,7 @@ import './library-edit.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
+	showNavigation: () => void;
 	showAbout: () => void;
  	showMonster: (monsterID: string) => void;
 	saveChanges: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
@@ -2018,7 +2019,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<div className='library-edit-page'>
-				<AppHeader breadcrumbs={[ { label: `${editing} Builder` } ]} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: `${editing} Builder` } ]} showNavigation={props.showNavigation} showAbout={props.showAbout}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
 						Save Changes
 					</Button>

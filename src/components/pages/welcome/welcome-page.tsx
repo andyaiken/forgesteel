@@ -10,7 +10,7 @@ interface Props {
 	showHeroes: () => void;
 	showLibrary: () => void;
 	showPlaybook: () => void;
-	showNavigation: () => void;
+	showDirectory: () => void;
 	showAbout: () => void;
 }
 
@@ -18,7 +18,7 @@ export const WelcomePage = (props: Props) => {
 	try {
 		return (
 			<div className='welcome-page'>
-				<AppHeader breadcrumbs={[]} showNavigation={props.showNavigation} showAbout={props.showAbout}/>
+				<AppHeader breadcrumbs={[]} showDirectory={props.showDirectory} showAbout={props.showAbout}/>
 				<div className='welcome-page-content'>
 					<div className='welcome-column'>
 						<SelectablePanel>
@@ -35,6 +35,8 @@ export const WelcomePage = (props: Props) => {
 									<div className='ds-text'>
 										If you're playing offline, you can export your heroes as PNG or PDF.
 									</div>
+								</div>
+								<div>
 									<HeaderText>For Directors</HeaderText>
 									<div className='ds-text'>
 										In the <b>library</b>, you can browse the collections of ancestries, classes, kits - all of the elements you need to build a hero - and monsters.

@@ -88,7 +88,7 @@ Armor imbued with an enhancement grants you special benefits while it is worn. A
 
 **Damage Immunity I**: When you begin this project, select three damage types. You have immunity 5 to those damage types.
 
-**Disguise**: You can use a maneuver to cause this armor to appear as any type of clothing that you have been in the presence of—a noble’s dress, a guard’s uniform, a cultist’s robes, and so forth. The armor loses none of its protective qualities while transformed into other clothing.
+**Disguise**: You can use a maneuver to cause this armor to appear as any type of clothing that you have been in the presence of - a noble’s dress, a guard’s uniform, a cultist’s robes, and so forth. The armor loses none of its protective qualities while transformed into other clothing.
 
 **Iridescent**: When you are the sole target of an ability, you can use a free triggered action to reveal that the ability was targeting an afterimage of you in the same space as you. The power roll for the ability is treated as an 11. You can’t use this enhancement again until you earn a Victory.
 
@@ -176,7 +176,7 @@ A weapon imbued with an enhancement grants you special benefits while it is wiel
 
 **Disrupting I**: Whenever you damage an undead using this weapon and leave that undead with 15 Stamina or less, they drop to 0 Stamina.
 
-**Hungering I**: Whenever you damage a creature other than yourself using this weapon, you regain Stamina based on the tier result of the power roll—3 Stamina for tier 1, 5 for tier 2, and 8 for tier 3. You can’t regain this Stamina if you’re dying.
+**Hungering I**: Whenever you damage a creature other than yourself using this weapon, you regain Stamina based on the tier result of the power roll - 3 Stamina for tier 1, 5 for tier 2, and 8 for tier 3. You can’t regain this Stamina if you’re dying.
 
 **Hurling**: Whenever you use an ability with a melee distance using this weapon, you can throw the weapon by treating the ability’s distance as Ranged 3 instead. When the ability is resolved, the weapon returns to your hand. Any ability used when you throw this weapon can’t impose the grabbed or restrained conditions.
 
@@ -212,9 +212,9 @@ When you begin a Discover Lore project, other creatures can also work on the pro
 
 **Common Knowledge**: Common knowledge is generally easy to discover with a day or so of research. It’s not known by every passerby and takes time to uncover, but with plentiful local sources for the information, you don’t need to spend a lot of time searching. It could be that you need to question several members of a rumor mill to figure out who a noble is not-so-secretly courting, or you might need to spend a few hours in a temple to find the particular religious text that carries a seldom-used alternative name for a deity.
 
-**Obscure Knowledge**: Obscure knowledge is known only to specialized sages and is typically of interest only to those scholars. As such, precious few tomes are written on obscure subjects. Finding the right expert to interview or the best book to read typically requires several days of research. Uncovering the details of a ritual used to open and close a portal to the Sea of Stars isn’t easy information to come by, but there are people out there who know how to do it — and who wrote the instructions down.
+**Obscure Knowledge**: Obscure knowledge is known only to specialized sages and is typically of interest only to those scholars. As such, precious few tomes are written on obscure subjects. Finding the right expert to interview or the best book to read typically requires several days of research. Uncovering the details of a ritual used to open and close a portal to the Sea of Stars isn’t easy information to come by, but there are people out there who know how to do it  -  and who wrote the instructions down.
 
-**Lost Knowledge**: Lost knowledge is so esoteric that even among a field’s most dedicated scholars, there might be only one or two individuals who have dug deep enough to know that lore. Lost knowledge could come from a time so long ago that only a single text in a dead language now holds the lore you seek. Such lore often takes more than a week to hunt down. The location of a legendary steel dwarf’s workshop is most likely lore that is lost—except for one map hidden in a private collection.
+**Lost Knowledge**: Lost knowledge is so esoteric that even among a field’s most dedicated scholars, there might be only one or two individuals who have dug deep enough to know that lore. Lost knowledge could come from a time so long ago that only a single text in a dead language now holds the lore you seek. Such lore often takes more than a week to hunt down. The location of a legendary steel dwarf’s workshop is most likely lore that is lost - except for one map hidden in a private collection.
 
 **Forbidden Knowledge**: Forbidden knowledge is lore that a powerful individual or organization is attempting to keep secret. Those who know the secrets speak of them in whispered codes after passwords are exchanged, and write texts using ciphers. Hunting down leads and making sense of them typically takes weeks. The location of the dagger that slit the throat of the god of death is hidden behind layers of encoded text, and written in a dead language known only to that god’s most devout followers.`
 	});

@@ -41,7 +41,7 @@ export class CareerData {
 				{
 					id: 'career-agent-ii-2',
 					name: 'Faceless',
-					description: 'Your identity was always hidden. It was your way of protecting those around you because the work you did spying on powerful entities came with dangers. Then your world came crashing down when an enemy agent unmasked you, causing you to lose everything— your privacy, livelihood, loved ones, all gone in the blink of an eye. Instead of going into hiding, you became a public hero to protect the innocent in the name of those you lost.'
+					description: 'Your identity was always hidden. It was your way of protecting those around you because the work you did spying on powerful entities came with dangers. Then your world came crashing down when an enemy agent unmasked you, causing you to lose everything - your privacy, livelihood, loved ones, all gone in the blink of an eye. Instead of going into hiding, you became a public hero to protect the innocent in the name of those you lost.'
 				},
 				{
 					id: 'career-agent-ii-3',
@@ -51,7 +51,7 @@ export class CareerData {
 				{
 					id: 'career-agent-ii-4',
 					name: 'Informed',
-					description: 'After years of cultivating a rich list of informants, one of those informants risked everything to expose the heinous plans of powerful individuals. You promised to protect your informant, but your agency left them hanging—literally. You cut ties with your employer and swore to always make good on your word as a hero.'
+					description: 'After years of cultivating a rich list of informants, one of those informants risked everything to expose the heinous plans of powerful individuals. You promised to protect your informant, but your agency left them hanging - literally. You cut ties with your employer and swore to always make good on your word as a hero.'
 				},
 				{
 					id: 'career-agent-ii-5',
@@ -169,7 +169,7 @@ export class CareerData {
 				{
 					id: 'career-artisan-ii-2',
 					name: 'Inspired',
-					description: 'As you traveled the road selling your wares, troll bandits attacked you. One of the bandits claimed an item belonging to someone precious to you—or perhaps claimed that person’s life—but the rest were driven off or slain by a group of heroes. Seeing the quick work these heroes made of the bandits inspired you to follow in their footsteps.'
+					description: 'As you traveled the road selling your wares, troll bandits attacked you. One of the bandits claimed an item belonging to someone precious to you - or perhaps claimed that person’s life - but the rest were driven off or slain by a group of heroes. Seeing the quick work these heroes made of the bandits inspired you to follow in their footsteps.'
 				},
 				{
 					id: 'career-artisan-ii-3',
@@ -247,7 +247,7 @@ export class CareerData {
 				{
 					id: 'career-beggar-ii-5',
 					name: 'Strange Charity',
-					description: 'A passerby dropped something in your cup. When you counted your day’s collections, you found a magic coin among the coppers. You knew immediately that it was special. When the other beggars—your friends, you thought—were ready to murder you for it, you killed several of them in self- defense before you fled, leaving behind the only semblance of community you had.'
+					description: 'A passerby dropped something in your cup. When you counted your day’s collections, you found a magic coin among the coppers. You knew immediately that it was special. When the other beggars - your friends, you thought - were ready to murder you for it, you killed several of them in self- defense before you fled, leaving behind the only semblance of community you had.'
 				},
 				{
 					id: 'career-beggar-ii-6',
@@ -311,12 +311,12 @@ export class CareerData {
 				{
 					id: 'career-criminal-ii-5',
 					name: 'Simply Survival',
-					description: 'Stealing was a matter of survival for you and not what defined you—at least in your mind. But when your thieving actions lead to innocent folk being harmed, you knew you could be better. You turned your back on your old life, though your old skills come in handy.'
+					description: 'Stealing was a matter of survival for you and not what defined you - at least in your mind. But when your thieving actions lead to innocent folk being harmed, you knew you could be better. You turned your back on your old life, though your old skills come in handy.'
 				},
 				{
 					id: 'career-criminal-ii-6',
 					name: 'Stand Against Tyranny',
-					description: 'When a tyrant rose to power in your homeland, they began cracking down on all criminals with deadly raids and public executions. The nature of the crime didn’t matter—pickpockets and beggars were made to kneel before the axe alongside murderers. After losing enough friends, you stood up and joined the resistance—not just against this tyrant, but against authoritarians anywhere.'
+					description: 'When a tyrant rose to power in your homeland, they began cracking down on all criminals with deadly raids and public executions. The nature of the crime didn’t matter - pickpockets and beggars were made to kneel before the axe alongside murderers. After losing enough friends, you stood up and joined the resistance - not just against this tyrant, but against authoritarians anywhere.'
 				}
 			],
 			selectedID: null
@@ -372,7 +372,7 @@ export class CareerData {
 				{
 					id: 'career-disciple-ii-5',
 					name: 'Near-Death Experience',
-					description: 'While serving at a religious institution, you almost died in an accident. When you woke, you had lost all memory of ever having worked for the church or temple. Though the clergy encouraged you to stay, you left to forge a new path. Your sense of altruism—whether instilled in you by your past work or a part of who you naturally are—guides you in your life.'
+					description: 'While serving at a religious institution, you almost died in an accident. When you woke, you had lost all memory of ever having worked for the church or temple. Though the clergy encouraged you to stay, you left to forge a new path. Your sense of altruism - whether instilled in you by your past work or a part of who you naturally are - guides you in your life.'
 				},
 				{
 					id: 'career-disciple-ii-6',
@@ -432,7 +432,7 @@ export class CareerData {
 				{
 					id: 'career-explorer-ii-5',
 					name: 'Wanderlust',
-					description: 'You saw yourself as an observer and operated within a code of conduct. You swore to never interfere with a group by exposing them to your technology, knowledge, or values. When faced with a moral conundrum, you either broke your code or stood idly by—and suffered the consequences. During this incident, you lost your observation journal but became a hero who refuses to let evil stand unchecked.'
+					description: 'You saw yourself as an observer and operated within a code of conduct. You swore to never interfere with a group by exposing them to your technology, knowledge, or values. When faced with a moral conundrum, you either broke your code or stood idly by - and suffered the consequences. During this incident, you lost your observation journal but became a hero who refuses to let evil stand unchecked.'
 				},
 				{
 					id: 'career-explorer-ii-6',
@@ -501,7 +501,7 @@ export class CareerData {
 				{
 					id: 'career-farmer-ii-6',
 					name: 'Stolen',
-					description: 'Your family bred horses—beautiful creatures that few could rival on the track and in the jousting lists. When a local noble arrived with an offer to buy your prized stallion, your father refused. The noble struck him down where he stood and stole the horse. Without that stallion, the renowned bloodline would end. You intend to get them back—and get revenge.'
+					description: 'Your family bred horses - beautiful creatures that few could rival on the track and in the jousting lists. When a local noble arrived with an offer to buy your prized stallion, your father refused. The noble struck him down where he stood and stole the horse. Without that stallion, the renowned bloodline would end. You intend to get them back - and get revenge.'
 				}
 			],
 			selectedID: null
@@ -536,12 +536,12 @@ export class CareerData {
 				{
 					id: 'career-gladiator-ii-1',
 					name: 'Betrayed',
-					description: 'A local crime lord offered you money to throw your last bout, promising that you’d live through the ordeal and get a cut of all the wagers placed on the match. You upheld your end of the deal—which made the knife in your back after the bout so surprising. You woke in a shallow grave, barely alive, and ready to mete out justice.'
+					description: 'A local crime lord offered you money to throw your last bout, promising that you’d live through the ordeal and get a cut of all the wagers placed on the match. You upheld your end of the deal - which made the knife in your back after the bout so surprising. You woke in a shallow grave, barely alive, and ready to mete out justice.'
 				},
 				{
 					id: 'career-gladiator-ii-2',
 					name: 'Heckler',
-					description: 'As you stood victorious on the arena sands, a voice cried out among the cheering. “This violence is just for show. You should be ashamed. There are people who need you—who need your skills!” Why did that voice ring so clear? And why did it sound so familiar? You never saw the face of the person who uttered those words, but they weighed heavy on you. The next day, you fled the arena to begin a hero’s life.'
+					description: 'As you stood victorious on the arena sands, a voice cried out among the cheering. “This violence is just for show. You should be ashamed. There are people who need you - who need your skills!” Why did that voice ring so clear? And why did it sound so familiar? You never saw the face of the person who uttered those words, but they weighed heavy on you. The next day, you fled the arena to begin a hero’s life.'
 				},
 				{
 					id: 'career-gladiator-ii-3',
@@ -551,7 +551,7 @@ export class CareerData {
 				{
 					id: 'career-gladiator-ii-4',
 					name: 'New Challenges',
-					description: 'You earned every title you could. You beat every opponent willing to face you in the arena. Your final battle with your rival ended with you victorious—and still you were unsatisfied. There are other, greater foes out there—and you mean to find them.'
+					description: 'You earned every title you could. You beat every opponent willing to face you in the arena. Your final battle with your rival ended with you victorious - and still you were unsatisfied. There are other, greater foes out there - and you mean to find them.'
 				},
 				{
 					id: 'career-gladiator-ii-5',
@@ -610,7 +610,7 @@ export class CareerData {
 				{
 					id: 'career-laborer-ii-3',
 					name: 'Embarrassment',
-					description: 'A noble you worked for admonished you publicly for work done poorly—and more than once. Finally, you’d had enough. You vowed to take up a new path and show this noble you’re far more than what they make you out to be.'
+					description: 'A noble you worked for admonished you publicly for work done poorly - and more than once. Finally, you’d had enough. You vowed to take up a new path and show this noble you’re far more than what they make you out to be.'
 				},
 				{
 					id: 'career-laborer-ii-4',
@@ -674,7 +674,7 @@ export class CareerData {
 				{
 					id: 'career-mages-apprentice-ii-3',
 					name: 'Missing Mage',
-					description: 'One day you woke up and the mage you worked for was just gone. They didn’t take any of their belongings and there was no sign of any foul play—just the scent of sulfur in their bedchamber. You set out on your heroic journey in the aftermath and have been looking for them ever since.'
+					description: 'One day you woke up and the mage you worked for was just gone. They didn’t take any of their belongings and there was no sign of any foul play - just the scent of sulfur in their bedchamber. You set out on your heroic journey in the aftermath and have been looking for them ever since.'
 				},
 				{
 					id: 'career-mages-apprentice-ii-4',
@@ -730,12 +730,12 @@ export class CareerData {
 				{
 					id: 'career-performer-ii-2',
 					name: 'False Accolades',
-					description: 'After a poor performance, you found a script to a well-written play left in your dressing room. The accompanying note asked that if you performed the play, you should give the author credit. But after a commanding performance, you claimed to be star and playwright both—and the curse hidden on those pages activated. A small portion of your skin has begun to transform into undead flesh, and the only cure is to prove you have become selfless.'
+					description: 'After a poor performance, you found a script to a well-written play left in your dressing room. The accompanying note asked that if you performed the play, you should give the author credit. But after a commanding performance, you claimed to be star and playwright both - and the curse hidden on those pages activated. A small portion of your skin has begun to transform into undead flesh, and the only cure is to prove you have become selfless.'
 				},
 				{
 					id: 'career-performer-ii-3',
 					name: 'Fame and Fortune',
-					description: 'You thought you were famous—then that hero came to your show. Suddenly, all eyes were on the dragon-slaying brute instead of on the stage where they belonged. The audience even gave them a standing ovation when they entered the room. All you got was polite applause. Fine. If people want a hero so much, then a hero you shall be.'
+					description: 'You thought you were famous - then that hero came to your show. Suddenly, all eyes were on the dragon-slaying brute instead of on the stage where they belonged. The audience even gave them a standing ovation when they entered the room. All you got was polite applause. Fine. If people want a hero so much, then a hero you shall be.'
 				},
 				{
 					id: 'career-performer-ii-4',
@@ -850,7 +850,7 @@ export class CareerData {
 				{
 					id: 'career-sage-ii-1',
 					name: 'Bookish Ideas',
-					description: 'You were always content to live a peaceful life in your library, until you found that one book—the one that told the tale of heroes who had saved the timescape. They didn’t spend their days behind a desk. They made a real difference. It was time for you to do the same.'
+					description: 'You were always content to live a peaceful life in your library, until you found that one book - the one that told the tale of heroes who had saved the timescape. They didn’t spend their days behind a desk. They made a real difference. It was time for you to do the same.'
 				},
 				{
 					id: 'career-sage-ii-2',
@@ -860,7 +860,7 @@ export class CareerData {
 				{
 					id: 'career-sage-ii-3',
 					name: 'Lost Library',
-					description: 'An evil mage took all your books for themself, cackling at your impotence as they raided your shelves. Now, you’re off to search through ancient ruins and secret libraries to rebuild your collection of rare tomes—and to find the mage who stole from you.'
+					description: 'An evil mage took all your books for themself, cackling at your impotence as they raided your shelves. Now, you’re off to search through ancient ruins and secret libraries to rebuild your collection of rare tomes - and to find the mage who stole from you.'
 				},
 				{
 					id: 'career-sage-ii-4',
@@ -979,7 +979,7 @@ export class CareerData {
 				{
 					id: 'career-soldier-ii-2',
 					name: 'Out of Retirement',
-					description: 'You had a long and storied career as a soldier before deciding to retire to a simpler life. But when you returned to your old home, you found your enemies had laid waste to it. Now the skills you earned on the battlefield are helping you as you become a different kind of warrior—one seeking to save others from the fate you suffered.'
+					description: 'You had a long and storied career as a soldier before deciding to retire to a simpler life. But when you returned to your old home, you found your enemies had laid waste to it. Now the skills you earned on the battlefield are helping you as you become a different kind of warrior - one seeking to save others from the fate you suffered.'
 				},
 				{
 					id: 'career-soldier-ii-3',
@@ -1061,7 +1061,7 @@ export class CareerData {
 				{
 					id: 'career-warden-ii-5',
 					name: 'Portents',
-					description: 'There were signs. You tried to ignore them, but when a great beast died at your feet, you had to recognize the truth. You were meant to leave your home territory, meant to fight a battle for the fate of all lands—and so you gave up the only life you’ve ever known.'
+					description: 'There were signs. You tried to ignore them, but when a great beast died at your feet, you had to recognize the truth. You were meant to leave your home territory, meant to fight a battle for the fate of all lands - and so you gave up the only life you’ve ever known.'
 				},
 				{
 					id: 'career-warden-ii-6',
@@ -1121,7 +1121,7 @@ export class CareerData {
 				{
 					id: 'career-watch-officer-ii-5',
 					name: 'One That Got Away',
-					description: 'A particularly violent or depraved criminal began targeting you—perhaps stealing something personal or hurting someone you love—after slipping through your grasp. You left your career to pursue the criminal, but the trail has gone cold … for now. Might as well help folk in the meantime.'
+					description: 'A particularly violent or depraved criminal began targeting you - perhaps stealing something personal or hurting someone you love - after slipping through your grasp. You left your career to pursue the criminal, but the trail has gone cold … for now. Might as well help folk in the meantime.'
 				},
 				{
 					id: 'career-watch-officer-ii-6',

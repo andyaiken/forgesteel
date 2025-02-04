@@ -9,7 +9,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const elfWode: MonsterGroup = {
 	id: 'monster-group-elf-wode',
-	name: 'Elves, Wode',
+	name: 'Elf, Wode',
 	description: `
 Children of the Sylvan Celestials, masters of the elf-haunted forests called wodes, these elves see all forests as their domain by birthright. They know and enjoy their reputation among humans as snatching children who wander too far into the woods. Humans should fear the trees.
 

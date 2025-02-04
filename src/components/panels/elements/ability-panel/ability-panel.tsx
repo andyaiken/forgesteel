@@ -135,7 +135,7 @@ export const AbilityPanel = (props: Props) => {
 										key={n}
 										disabled={props.hero && (props.options?.dimUnavailableAbilities || false) && (spend.value > props.hero.state.heroicResource)}
 										label={(
-											<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
+											<div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
 												<span>{ spend.name || 'Spend' }</span>
 												{spend.value ? <HeroicResourceBadge value={spend.value} repeatable={spend.repeatable} /> : null}
 											</div>
@@ -149,7 +149,7 @@ export const AbilityPanel = (props: Props) => {
 									<Field
 										key={n}
 										label={(
-											<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
+											<div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
 												<span>Persist</span>
 												{persist.value ? <HeroicResourceBadge value={persist.value} /> : null}
 											</div>

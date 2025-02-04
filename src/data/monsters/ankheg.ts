@@ -17,7 +17,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 		{
 			id: 'ankheg-info-1',
 			name: 'Pastoral Pest',
-			description: 'Although ankhegs can be found anywhere, they are a particular plague in settled lands. Ankhegs hunt alone, lurking a few feet below roadways and pastures. When their sensitive antennae detect movement above, they burst from the earth, dragging living prey into their tunnels to be devoured. These hit-and-run tactics make ankhegs virtually impossible to eradicate—unless they have the bad luck to ambush a party of well-armed adventurers. Many communities pay a handsome bounty for a slain ankheg.'
+			description: 'Although ankhegs can be found anywhere, they are a particular plague in settled lands. Ankhegs hunt alone, lurking a few feet below roadways and pastures. When their sensitive antennae detect movement above, they burst from the earth, dragging living prey into their tunnels to be devoured. These hit-and-run tactics make ankhegs virtually impossible to eradicate - unless they have the bad luck to ambush a party of well-armed adventurers. Many communities pay a handsome bounty for a slain ankheg.'
 		},
 		{
 			id: 'dwarf-info-2',

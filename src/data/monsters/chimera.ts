@@ -15,7 +15,7 @@ export const chimera: MonsterGroup = {
 			id: 'chimera-info-1',
 			name: 'The First Chimera',
 			description: `
-The first chimera was a gift. A deity gave a devout queen this young guardian—one with the cunning of a dragon, the bravery of a lion, and the tenacity of a ram. The queen raised the chimera to be a strong protector of not just her person, but of her people, who loved the chimera and their ruler. But neighboring lands feared the beast. As a conquering force swept into the land, their first defilement of peace was slaughtering the chimera.
+The first chimera was a gift. A deity gave a devout queen this young guardian - one with the cunning of a dragon, the bravery of a lion, and the tenacity of a ram. The queen raised the chimera to be a strong protector of not just her person, but of her people, who loved the chimera and their ruler. But neighboring lands feared the beast. As a conquering force swept into the land, their first defilement of peace was slaughtering the chimera.
 
 The queen’s resulting fury was said to be felt by the gods. As she screamed, a nearby volcano erupted, spewing basalt and chimeras over the land. With fiery might, the chimeras overtook the opposing army and dispersed. Each found a new territory and claimed the role of divine protector over that place, its inhabitants, and its treasures.`
 		},

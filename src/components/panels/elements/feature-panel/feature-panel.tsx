@@ -9,6 +9,7 @@ import { Collections } from '../../../../utils/collections';
 import { DomainPanel } from '../domain-panel/domain-panel';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
+import { Format } from '../../../../utils/format';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
@@ -200,7 +201,7 @@ export const FeaturePanel = (props: Props) => {
 						<Field
 							disabled={option.data.disabled}
 							label={(
-								<div style={{ display: 'inline-flex',  alignItems: 'center', gap: '5px' }}>
+								<div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
 									<span>{option.data.label}</span>
 									{showCosts ? <HeroicResourceBadge value={option.data.cost} /> : null}
 								</div>
@@ -1050,8 +1051,18 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		if (!props.feature.description) {
+			let types = data.types.join(', ') || 'item';
+			if (data.count > 1) {
+				types = `${data.count} ${types}s`;
+			} else {
+				if (Format.startsWithVowel(types)) {
+					types = `an ${types}`;
+				} else {
+					types = `a ${types}`;
+				}
+			}
 			return (
-				<div className='ds-text'>Choose {data.count > 1 ? data.count : 'an'} {data.types.join(', ')} {data.count > 1 ? 'items' : 'item'}.</div>
+				<div className='ds-text'>Choose {types}.</div>
 			);
 		}
 

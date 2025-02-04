@@ -1,4 +1,3 @@
-import { Sourcebook, SourcebookElementKind, SourcebookElementsKey } from '../models/sourcebook';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
 import { Collections } from '../utils/collections';
@@ -14,26 +13,11 @@ import { Perk } from '../models/perk';
 import { Project } from '../models/project';
 import { Skill } from '../models/skill';
 import { SkillList } from '../enums/skill-list';
+import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
 import { Title } from '../models/title';
 
 export class SourcebookLogic {
-	static getSourcebookKey = (kind: SourcebookElementKind): SourcebookElementsKey => {
-		switch (kind) {
-			case 'ancestry': return 'ancestries';
-			case 'career': return 'careers';
-			case 'complication': return 'complications';
-			case 'culture': return 'cultures';
-			case 'domain': return 'domains';
-			case 'class': return 'classes';
-			case 'item': return 'items';
-			case 'kit': return 'kits';
-			case 'monster-group': return 'monsterGroups';
-			case 'perk': return 'perks';
-			case 'title': return 'titles';
-		}
-	};
-
 	static getElementCount = (sourcebook: Sourcebook) => {
 		let count = 0;
 

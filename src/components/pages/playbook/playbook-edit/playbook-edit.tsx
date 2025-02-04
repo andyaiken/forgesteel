@@ -3,7 +3,7 @@ import { Encounter, EncounterGroup } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { ReactNode, useMemo, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
@@ -30,7 +30,6 @@ import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/neg
 import { NegotiationTrait } from '../../../../enums/negotiation-trait';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { PlaybookLogic } from '../../../../logic/playbook-logic';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -42,7 +41,7 @@ import './playbook-edit.scss';
 interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
-	showNavigation: () => void;
+	showDirectory: () => void;
 	showAbout: () => void;
 	showMonster: (monsterID: string) => void;
 	saveChanges: (kind: PlaybookElementKind, element: Element) => void;
@@ -51,9 +50,18 @@ interface Props {
 export const PlaybookEditPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { kind, elementID } = useParams<{ kind: PlaybookElementKind, elementID: string }>();
-	const playbookKey = useMemo(() => PlaybookLogic.getPlaybookKey(kind!), [ kind ]);
-	const originalElement = useMemo(() => props.playbook[playbookKey].find(e => e.id === elementID)!, [ props.playbook, playbookKey, elementID ]);
-	const [ element, setElement ] = useState<Element>(JSON.parse(JSON.stringify(originalElement)) as Element);
+	const [ element, setElement ] = useState<Element>(() => {
+		let original: Element;
+		switch (kind!) {
+			case 'encounter':
+				original = props.playbook.encounters.find(e => e.id === elementID)! as Element;
+				break;
+			case 'negotiation':
+				original = props.playbook.negotiations.find(e => e.id === elementID)! as Element;
+				break;
+		}
+		return JSON.parse(JSON.stringify(original)) as Element;
+	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ heroCount, setHeroCount ] = useState<number>(4);
@@ -559,7 +567,7 @@ export const PlaybookEditPage = (props: Props) => {
 	try {
 		return (
 			<div className='playbook-edit-page'>
-				<AppHeader breadcrumbs={[ { label: `${Format.capitalize(kind!)} Builder` } ]} showNavigation={props.showNavigation} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: `${Format.capitalize(kind!)} Builder` } ]} showDirectory={props.showDirectory} showAbout={props.showAbout}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
 						Save Changes
 					</Button>

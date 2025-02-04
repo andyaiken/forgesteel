@@ -359,7 +359,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-15',
 			name: 'Pinning Shot',
-			description: 'One missile—placed well and placed hard.',
+			description: 'One missile - placed well and placed hard.',
 			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createRanged(5) ],

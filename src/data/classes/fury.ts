@@ -12,9 +12,9 @@ export const fury: HeroClass = {
 	id: 'class-fury',
 	name: 'Fury',
 	description: `
-You do not temper the heat of battle within you — you unleash it! Like a raptor, a panther, a wolf, your experience in the wild taught you the secret of channeling unfettered anger into martial prowess. Primordial chaos is your ally. Leave it to others to use finesse to clean up the pieces you leave behind.
+You do not temper the heat of battle within you - you unleash it! Like a raptor, a panther, a wolf, your experience in the wild taught you the secret of channeling unfettered anger into martial prowess. Primordial chaos is your ally. Leave it to others to use finesse to clean up the pieces you leave behind.
 
-As a fury, you have abilities that deal a lot of damage, move you around the battlefield, and grow in strength as your rage increases. Nature has no concept of fairness — and neither do you.`,
+As a fury, you have abilities that deal a lot of damage, move you around the battlefield, and grow in strength as your rage increases. Nature has no concept of fairness - and neither do you.`,
 	heroicResource: 'Rage',
 	subclassName: 'Primordial Aspect',
 	subclassCount: 1,
@@ -172,7 +172,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 		FactoryLogic.createAbility({
 			id: 'fury-ability-6',
 			name: 'Out of the Way!',
-			description: 'Your enemies will get out of your way—whether they want to or not.',
+			description: 'Your enemies will get out of your way - whether they want to or not.',
 			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],

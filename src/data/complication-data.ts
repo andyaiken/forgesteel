@@ -12,7 +12,7 @@ export class ComplicationData {
 	static advancedStudies: Complication = {
 		id: 'comp-advanced-studies',
 		name: 'Advanced Studies',
-		description: 'You somehow obtained the notebook of a brilliant but eccentric member of your class. It should help you unlock powerful new abilities—if you can ever figure out what it means.',
+		description: 'You somehow obtained the notebook of a brilliant but eccentric member of your class. It should help you unlock powerful new abilities - if you can ever figure out what it means.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-advanced-studies-b',
@@ -25,7 +25,7 @@ export class ComplicationData {
 	static animalForm: Complication = {
 		id: 'comp-animal-form',
 		name: 'Animal Form',
-		description: 'Due to a magical accident, your being has fused with a small, harmless animal. You turn into this animal when it’s convenient—and sometimes when it’s inconvenient as well.',
+		description: 'Due to a magical accident, your being has fused with a small, harmless animal. You turn into this animal when it’s convenient - and sometimes when it’s inconvenient as well.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-animal-form-b',
@@ -48,7 +48,7 @@ export class ComplicationData {
 			FactoryLogic.feature.createItemChoice({
 				id: 'comp-amnesia-b',
 				name: 'Amnesia Benefit',
-				description: 'You have a supernatural possession — a 1st echelon trinket. It might have some connection with your former life.',
+				description: 'You have a supernatural possession - a 1st echelon trinket. It might have some connection with your former life.',
 				types: [ ItemType.Trinket ]
 			}),
 			FactoryLogic.feature.create({
@@ -98,7 +98,7 @@ export class ComplicationData {
 	static bereaved: Complication = {
 		id: 'comp-bereaved',
 		name: 'Bereaved',
-		description: 'The most important person to you—perhaps a family member, mentor, or lover—was killed. The only thing that keeps you going is the faint connection you have with this person’s spirit, and the hope that one day you can tie up their unfinished business and let them rest.',
+		description: 'The most important person to you - perhaps a family member, mentor, or lover - was killed. The only thing that keeps you going is the faint connection you have with this person’s spirit, and the hope that one day you can tie up their unfinished business and let them rest.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-bereaved-b',
@@ -124,7 +124,7 @@ export class ComplicationData {
 	static betrothed: Complication = {
 		id: 'comp-betrothed',
 		name: 'Betrothed',
-		description: 'Your parents made a deal, and as part of that deal, you’re supposed to marry someone—or something—you didn’t choose. But no one is going to tell you what to do! They’ll be sorry when you run away and become a mighty adventurer.',
+		description: 'Your parents made a deal, and as part of that deal, you’re supposed to marry someone - or something - you didn’t choose. But no one is going to tell you what to do! They’ll be sorry when you run away and become a mighty adventurer.',
 		features: [
 			FactoryLogic.feature.createItemChoice({
 				id: 'comp-betrothed-b',
@@ -179,7 +179,7 @@ export class ComplicationData {
 	static chosenOne: Complication = {
 		id: 'comp-chosenOne',
 		name: 'Chosen One',
-		description: 'Maybe the stars marked you out at your birth, or maybe your name appears in an ancient prophecy. In any case, a sinister cult has decided that you’re very important to their plan—though you don’t particularly like the fate they have in mind for you.',
+		description: 'Maybe the stars marked you out at your birth, or maybe your name appears in an ancient prophecy. In any case, a sinister cult has decided that you’re very important to their plan - though you don’t particularly like the fate they have in mind for you.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-chosenOne-b',
@@ -228,7 +228,7 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static corruptedMentor: Complication = {
 		id: 'comp-corruptedMentor',
 		name: 'Corrupted Mentor',
-		description: 'Your mentor taught you everything, and you trusted them implicitly—until they went rogue, betraying you or your organization. Their current whereabouts and activities are unknown, although there are disturbing rumors—and you, as their former pupil, are under suspicion as well.',
+		description: 'Your mentor taught you everything, and you trusted them implicitly - until they went rogue, betraying you or your organization. Their current whereabouts and activities are unknown, although there are disturbing rumors - and you, as their former pupil, are under suspicion as well.',
 		features: [
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -271,7 +271,7 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static crashLanded: Complication = {
 		id: 'comp-crashLanded',
 		name: 'Crash Landed',
-		description: 'You used to flit around the stars in your own ship, but after an ugly run-in with a pirate (or a pirate hunter), you’re marooned on this backwater world. You’re prepared to carve out a life here—at least until you can hitch a ride.',
+		description: 'You used to flit around the stars in your own ship, but after an ugly run-in with a pirate (or a pirate hunter), you’re marooned on this backwater world. You’re prepared to carve out a life here - at least until you can hitch a ride.',
 		features: [
 			FactoryLogic.feature.createSkill({
 				id: 'comp-crashLanded-skill',
@@ -319,7 +319,7 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static curseOfImmortality: Complication = {
 		id: 'comp-curseOfImmortality',
 		name: 'Curse of Immortality',
-		description: 'As long as you can remember, you’ve never gotten older— you’ve just adventured through one age after another. Still, your memory of past events, even those you were involved with, is a little hazy—apparently your memory is not as long-lived as you are.',
+		description: 'As long as you can remember, you’ve never gotten older - you’ve just adventured through one age after another. Still, your memory of past events, even those you were involved with, is a little hazy - apparently your memory is not as long-lived as you are.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-curseOfImmortality-b',
@@ -350,7 +350,7 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static curseOfPoverty: Complication = {
 		id: 'comp-curseOfPoverty',
 		name: 'Curse of Poverty',
-		description: 'A soothsayer once told you you’d never be rich, but you’d survive the impossible—but you’re determined to prove ‘em wrong. You’ll get rich or die trying!',
+		description: 'A soothsayer once told you you’d never be rich, but you’d survive the impossible - but you’re determined to prove ‘em wrong. You’ll get rich or die trying!',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-curseOfPoverty-b',
@@ -363,11 +363,11 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static cursedWeapon: Complication = {
 		id: 'comp-cursedWeapon',
 		name: 'Cursed Weapon',
-		description: 'When you were young, you were given, or you found, a magic weapon. Since then, it’s stayed by your side, possibly even inspiring you to lead the life of a hero—but the weapon is cursed.',
+		description: 'When you were young, you were given, or you found, a magic weapon. Since then, it’s stayed by your side, possibly even inspiring you to lead the life of a hero - but the weapon is cursed.',
 		features: [
 			FactoryLogic.feature.createItemChoice({
 				id: 'comp-cursedWeapon-b',
-				types: [ ItemType.Leveled ]
+				types: [ ItemType.LeveledWeapon ]
 			}),
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-cursedWeapon-d',
@@ -428,7 +428,7 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static elementalInside: Complication = {
 		id: 'comp-elemental-inside',
 		name: 'Elemental Inside',
-		description: 'When an evil mage threatened someone you loved, you blocked your foe’s summoning of an elemental creature by absorbing their magic with your body. You are now infused with the power of that elemental—and they’re not happy about it.',
+		description: 'When an evil mage threatened someone you loved, you blocked your foe’s summoning of an elemental creature by absorbing their magic with your body. You are now infused with the power of that elemental - and they’re not happy about it.',
 		features: [
 			FactoryLogic.feature.createBonus({
 				id: 'comp-elemental-inside-b',
@@ -447,7 +447,7 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static evanesceria: Complication = {
 		id: 'comp-evanesceria',
 		name: 'Evanesceria',
-		description: 'You have contracted a rare magical disease called evanesceria. There are times when you’re not quite yourself—or anyone else either. You simply … vanish. You return later with no memory of your absence.',
+		description: 'You have contracted a rare magical disease called evanesceria. There are times when you’re not quite yourself - or anyone else either. You simply … vanish. You return later with no memory of your absence.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-evanesceria-b',
@@ -465,7 +465,7 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static exile: Complication = {
 		id: 'comp-exile',
 		name: 'Exile',
-		description: 'Whether you’re a convicted criminal, a noble stripped of their title, or just someone who made one too many enemies, you’ve been cast forth from your homeland, never to return—at least, until you’re strong enough to set things right.',
+		description: 'Whether you’re a convicted criminal, a noble stripped of their title, or just someone who made one too many enemies, you’ve been cast forth from your homeland, never to return - at least, until you’re strong enough to set things right.',
 		features: [
 			FactoryLogic.feature.createLanguageChoice({
 				id: 'comp-exile-lang'
@@ -503,7 +503,7 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static famousRelative: Complication = {
 		id: 'comp-famousRelative',
 		name: 'Famous Relative',
-		description: 'Sure, you’re a promising young hero in your own right— but people always ask you about your famous relative. Will you equal or surpass your relative’s accomplishments, or will you always live in their shadow?',
+		description: 'Sure, you’re a promising young hero in your own right - but people always ask you about your famous relative. Will you equal or surpass your relative’s accomplishments, or will you always live in their shadow?',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-famousRelative-b',
@@ -537,7 +537,7 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 	static fieryIdeal: Complication = {
 		id: 'comp-fieryIdeal',
 		name: 'Fiery Ideal',
-		description: 'A spirit beyond your comprehension chose you to be the guardian of a place, a cause, or another ideal. A flame burns in your soul, one that can burn your enemies—or yourself, if you fall short of your ideal.',
+		description: 'A spirit beyond your comprehension chose you to be the guardian of a place, a cause, or another ideal. A flame burns in your soul, one that can burn your enemies - or yourself, if you fall short of your ideal.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-fieryIdeal-b',
@@ -602,17 +602,17 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 	static forbiddenRomance: Complication = {
 		id: 'comp-forbiddenRomance',
 		name: 'Forbidden Romance',
-		description: 'You are in love with someone, but tragic circumstances keep you apart—perhaps your lover is from a feuding family, betrothed to another, or has some other animosity toward you.',
+		description: 'You are in love with someone, but tragic circumstances keep you apart - perhaps your lover is from a feuding family, betrothed to another, or has some other animosity toward you.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-forbiddenRomance-b',
 				name: 'Forbidden Romance Benefit',
-				description: 'You can secretly call on your betrothed for favors. They may be powerful, but they’re constrained—they can’t openly reveal their connection with you.'
+				description: 'You can secretly call on your betrothed for favors. They may be powerful, but they’re constrained - they can’t openly reveal their connection with you.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-forbiddenRomance-d',
 				name: 'Forbidden Romance Drawback',
-				description: 'When in trouble, your lover may call on you for help—and if your relationship is discovered, your lover’s family become dangerous enemies.'
+				description: 'When in trouble, your lover may call on you for help - and if your relationship is discovered, your lover’s family become dangerous enemies.'
 			})
 		]
 	};
@@ -620,7 +620,7 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 	static frostheart: Complication = {
 		id: 'comp-frostheart',
 		name: 'Frostheart',
-		description: 'At the edge of the world, you were lost in a winter storm and presumed dead—but returned with frosty skin and pale eyes.',
+		description: 'At the edge of the world, you were lost in a winter storm and presumed dead - but returned with frosty skin and pale eyes.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-frostheart-b',
@@ -673,7 +673,7 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 		id: 'comp-gnollBit',
 		name: 'Gnoll-Bit',
 		description: `
-As a child you survived a gnoll attack — but they left you with a toothy scar and the occasional fit of bloodlust.
+As a child you survived a gnoll attack - but they left you with a toothy scar and the occasional fit of bloodlust.
 
 You can’t take this complication if you can’t be dazed.`,
 		features: [
@@ -757,7 +757,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static guiltyConscience: Complication = {
 		id: 'comp-guiltyConscience',
 		name: 'Guilty Conscience',
-		description: 'The world is in trouble—and it’s partly your fault. Maybe you helped a villain rise to power or inadvertently released a demon from imprisonment. Now it’s your mission to repair the damage you caused.',
+		description: 'The world is in trouble - and it’s partly your fault. Maybe you helped a villain rise to power or inadvertently released a demon from imprisonment. Now it’s your mission to repair the damage you caused.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-guiltyConscience-b',
@@ -767,7 +767,7 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-guiltyConscience-d',
 				name: 'Guilty Conscience Drawback',
-				description: 'Many people blame you for the evils you caused. They may be unfriendly or hostile to you—and you can see their point of view. You have a bane on tests made to interact with or strike those who accuse you of the sin you have committed.'
+				description: 'Many people blame you for the evils you caused. They may be unfriendly or hostile to you - and you can see their point of view. You have a bane on tests made to interact with or strike those who accuse you of the sin you have committed.'
 			})
 		]
 	};
@@ -803,7 +803,7 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-hearsVoices-d',
 				name: 'Hears Voices Drawback',
-				description: 'Eventually, the voice may reveal that it wants something from you—something you may or may not want to provide. If the voice is displeased with you, it can prevent you from resting during a respite, causing you to regain 2 fewer Recoveries than normal.'
+				description: 'Eventually, the voice may reveal that it wants something from you - something you may or may not want to provide. If the voice is displeased with you, it can prevent you from resting during a respite, causing you to regain 2 fewer Recoveries than normal.'
 			})
 		]
 	};
@@ -842,7 +842,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static hunted: Complication = {
 		id: 'comp-hunted',
 		name: 'Hunted',
-		description: 'You’re one step ahead of a pursuer—perhaps a bounty hunter determined to bring you to justice, a revenant, or an assassin intent on your death. Someday, you’ll be strong enough to face your pursuer head to head, but for now you’re living your life on the run.',
+		description: 'You’re one step ahead of a pursuer - perhaps a bounty hunter determined to bring you to justice, a revenant, or an assassin intent on your death. Someday, you’ll be strong enough to face your pursuer head to head, but for now you’re living your life on the run.',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-hunted-skill',
@@ -864,7 +864,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static hunter: Complication = {
 		id: 'comp-hunter',
 		name: 'Hunter',
-		description: 'You’re hunting someone or something — perhaps a wanted criminal or someone who wronged you, or perhaps a dangerous monster or beast. You won’t rest until you meet your quarry face to face!',
+		description: 'You’re hunting someone or something - perhaps a wanted criminal or someone who wronged you, or perhaps a dangerous monster or beast. You won’t rest until you meet your quarry face to face!',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: '',
@@ -886,12 +886,12 @@ You can’t take this complication if you can’t be dazed.`,
 	static indebted: Complication = {
 		id: 'comp-indebted',
 		name: 'Indebted',
-		description: 'A deal went south, or you got involved with the wrong people, and now you owe a debt or a ransom—the kind that would bankrupt a minor noble. In order to pay it off, you’ll need to take some dangerous risks.',
+		description: 'A deal went south, or you got involved with the wrong people, and now you owe a debt or a ransom - the kind that would bankrupt a minor noble. In order to pay it off, you’ll need to take some dangerous risks.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-indebted-b',
 				name: 'Indebted Benefit',
-				description: 'You’re good with money — you’ve had to be. Whenever you would gain Wealth, you gain 1 more than what you’d normally earn.'
+				description: 'You’re good with money - you’ve had to be. Whenever you would gain Wealth, you gain 1 more than what you’d normally earn.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-indebted-d',
@@ -922,7 +922,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static infernalContractButLikeBad: Complication = {
 		id: 'comp-infernalContractButLikeBad',
 		name: 'Infernal Contract … But, Like, Bad',
-		description: 'You made a deal with a devil—not a very good deal, but it wasn’t a very good devil. Now it’s too late for regrets. Your soul is forfeit unless you find a loophole or convince the devil to void the deal.',
+		description: 'You made a deal with a devil - not a very good deal, but it wasn’t a very good devil. Now it’s too late for regrets. Your soul is forfeit unless you find a loophole or convince the devil to void the deal.',
 		features: [
 			FactoryLogic.feature.createChoice({
 				id: 'comp-infernalContractButLikeBad-b',
@@ -985,7 +985,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static lifebonded: Complication = {
 		id: 'comp-lifebonded',
 		name: 'Lifebonded',
-		description: 'In a sinister ritual, your soul has been bound to another’s. When they die, you die—making you the perfect bodyguard. Who is your life bonded to: a companion? A superior officer? An enemy?',
+		description: 'In a sinister ritual, your soul has been bound to another’s. When they die, you die - making you the perfect bodyguard. Who is your life bonded to: a companion? A superior officer? An enemy?',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-lifebonded-b',
@@ -1003,7 +1003,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static lightningSoul: Complication = {
 		id: 'comp-lightningSoul',
 		name: 'Lightning Soul',
-		description: 'You were caught in a storm and stuck by lightning—but you survived. Something saved you. Maybe it was a gods-given miracle, a latent psionic gift, or the magic of a helpful elementalist, but you absorbed the lightning into your body. It’s always there, simmering under the surface.',
+		description: 'You were caught in a storm and stuck by lightning - but you survived. Something saved you. Maybe it was a gods-given miracle, a latent psionic gift, or the magic of a helpful elementalist, but you absorbed the lightning into your body. It’s always there, simmering under the surface.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-lightningSoul-b',
@@ -1039,7 +1039,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static lostInTime: Complication = {
 		id: 'comp-lostInTime',
 		name: 'Lost in Time',
-		description: 'In a long-ago age, a cataclysm overtook your city. You weren’t killed, but through some arcane accident you were suspended in time—until now. Alone, you must navigate the modern world with a head full of outdated memories—and a few ancient secrets.',
+		description: 'In a long-ago age, a cataclysm overtook your city. You weren’t killed, but through some arcane accident you were suspended in time - until now. Alone, you must navigate the modern world with a head full of outdated memories - and a few ancient secrets.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-lostInTime-b',
@@ -1082,7 +1082,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static lucky: Complication = {
 		id: 'comp-lucky',
 		name: 'Lucky',
-		description: 'You’ve always had a lucky streak: when you leave things in the hands of fate, you tend to succeed more than you fail. But luck is fickle—when you don’t trust it, it deserts you.',
+		description: 'You’ve always had a lucky streak: when you leave things in the hands of fate, you tend to succeed more than you fail. But luck is fickle - when you don’t trust it, it deserts you.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-lucky-b',
@@ -1100,7 +1100,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static masterChef: Complication = {
 		id: 'comp-masterChef',
 		name: 'Master Chef',
-		description: 'Before you were a hero, you were a chef — and when you retire, you have big plans for your next restaurant or inn. In the meantime, you’re on the lookout for rare ingredients that only a traveler can find. After all, it’s food that makes the world go round.',
+		description: 'Before you were a hero, you were a chef - and when you retire, you have big plans for your next restaurant or inn. In the meantime, you’re on the lookout for rare ingredients that only a traveler can find. After all, it’s food that makes the world go round.',
 		features: [
 			FactoryLogic.feature.createSkill({
 				id: 'comp-masterChef-skill',
@@ -1122,7 +1122,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static meddlingButler: Complication = {
 		id: 'comp-meddlingButler',
 		name: 'Meddling Butler',
-		description: 'You’re not sure what you did to deserve it, but for some reason your family saddled you with an old and trusted — but irritating — family servant. They’re supremely competent, of course, but they sometimes seem to forget who’s in charge.',
+		description: 'You’re not sure what you did to deserve it, but for some reason your family saddled you with an old and trusted - but irritating - family servant. They’re supremely competent, of course, but they sometimes seem to forget who’s in charge.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-meddlingButler-b',
@@ -1132,7 +1132,7 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-meddlingButler-d',
 				name: 'Meddling Butler Drawback',
-				description: 'Outside of combat, your retainer is under the Director’s control. The retainer sometimes acts without orders—always with your best interests at heart, but often in embarrassing or inconvenient ways.'
+				description: 'Outside of combat, your retainer is under the Director’s control. The retainer sometimes acts without orders - always with your best interests at heart, but often in embarrassing or inconvenient ways.'
 			})
 		]
 	};
@@ -1140,7 +1140,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static medium: Complication = {
 		id: 'comp-medium',
 		name: 'Medium',
-		description: 'You can see ghosts and spirits that others just don’t sense. They’re constantly whispering unsettling secrets in your ear—when they’re not trying to kill you.',
+		description: 'You can see ghosts and spirits that others just don’t sense. They’re constantly whispering unsettling secrets in your ear - when they’re not trying to kill you.',
 		features: [
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -1169,13 +1169,13 @@ You can’t take this complication if you can’t be dazed.`,
 	static medusaBlood: Complication = {
 		id: 'comp-medusaBlood',
 		name: 'Medusa Blood',
-		description: 'Your mother and father never saw eye to eye—you know that because your father’s still alive. Your mother was a medusa. It made your childhood difficult, and now it’s making your adulthood complicated as well.',
+		description: 'Your mother and father never saw eye to eye - you know that because your father’s still alive. Your mother was a medusa. It made your childhood difficult, and now it’s making your adulthood complicated as well.',
 		features: [
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
 					id: 'comp-medusaBlood-b',
 					name: 'Stone Eyes',
-					description: 'These looks don’t kill—they petrify.',
+					description: 'These looks don’t kill - they petrify.',
 					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 					distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -1344,7 +1344,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static prisonerOfTheSynlirii: Complication = {
 		id: 'comp-prisonerOfTheSynlirii',
 		name: 'Prisoner of the Synlirii',
-		description: 'You were captured by the psionic beings known as voiceless talkers. You escaped them, but you can’t escape that feeling in the back of your mind—the feeling of being watched.',
+		description: 'You were captured by the psionic beings known as voiceless talkers. You escaped them, but you can’t escape that feeling in the back of your mind - the feeling of being watched.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-prisonerOfTheSynlirii-b',
@@ -1362,7 +1362,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static promisingApprentice: Complication = {
 		id: 'comp-promisingApprentice',
 		name: 'Promising Apprentice',
-		description: 'You were apprenticed to a trade. Your mentor said you had a special gift, and you could have become a master of your craft—but before your training was complete, your mentor was killed.',
+		description: 'You were apprenticed to a trade. Your mentor said you had a special gift, and you could have become a master of your craft - but before your training was complete, your mentor was killed.',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-promisingApprentice-skill',
@@ -1416,7 +1416,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static punishmentCurse: Complication = {
 		id: 'comp-punishment-curse',
 		name: 'Punishment Curse',
-		description: 'Through ignorance, fear, spite, or selfishness, you refused to help someone in need. To teach you a lesson, a deity offered you what seemed to be a blessing—extra power to help you heal yourself in times of need, but harsh consequences should your need become excessive. You took the deal, and now benefit from the blessing but also suffer from a curse.',
+		description: 'Through ignorance, fear, spite, or selfishness, you refused to help someone in need. To teach you a lesson, a deity offered you what seemed to be a blessing - extra power to help you heal yourself in times of need, but harsh consequences should your need become excessive. You took the deal, and now benefit from the blessing but also suffer from a curse.',
 		features: [
 			FactoryLogic.feature.createBonus({
 				id: 'comp-punishment-curse-b',
@@ -1457,7 +1457,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static refugee: Complication = {
 		id: 'comp-refugee',
 		name: 'Refugee',
-		description: 'A hostile army—perhaps the forces of Ajax, the Iron Saint—conquered your homeland. Your family escaped, but you can’t return home until your oppressors are defeated once and for all.',
+		description: 'A hostile army - perhaps the forces of Ajax, the Iron Saint - conquered your homeland. Your family escaped, but you can’t return home until your oppressors are defeated once and for all.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-refugee-b',
@@ -1493,7 +1493,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static rogueTalent: Complication = {
 		id: 'comp-rogueTalent',
 		name: 'Rogue Talent',
-		description: 'You are the only survivor of a cataclysmic psionic event— an experiment gone wrong, a voiceless talker attack, or some naturally occurring phenomenon of a far off part of the timescape. It left you with a psionic talent, but also made you vulnerable to telepathic attacks.',
+		description: 'You are the only survivor of a cataclysmic psionic event - an experiment gone wrong, a voiceless talker attack, or some naturally occurring phenomenon of a far off part of the timescape. It left you with a psionic talent, but also made you vulnerable to telepathic attacks.',
 		features: [
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -1532,7 +1532,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static runaway: Complication = {
 		id: 'comp-runaway',
 		name: 'Runaway',
-		description: 'To your embarrassment, no sinister omens attended your birth and your closet contains no skeletons. You’re just an ordinary person raised in a hardworking family. You’re expected to carry on the family business—but who can settle down to a boring job when adventure calls! That’s why you ran away.',
+		description: 'To your embarrassment, no sinister omens attended your birth and your closet contains no skeletons. You’re just an ordinary person raised in a hardworking family. You’re expected to carry on the family business - but who can settle down to a boring job when adventure calls! That’s why you ran away.',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-runaway-b',
@@ -1541,7 +1541,7 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-runaway-d',
 				name: 'Runaway Drawback',
-				description: 'Your extended family is looking for you to take you home—and you’ve never been able to stand up to them. That’s why you ran away in the first place!'
+				description: 'Your extended family is looking for you to take you home - and you’ve never been able to stand up to them. That’s why you ran away in the first place!'
 			})
 		]
 	};
@@ -1549,7 +1549,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static searchingForACure: Complication = {
 		id: 'comp-searchingForACure',
 		name: 'Searching for a Cure',
-		description: 'Your homeland has been corrupted by some terrible monster, and you’re the only one who escaped the plague. The rest of your family still exists, but in changed forms— perhaps as vampires or zombies. People tell you the situation is hopeless, but you’re determined to find a cure.',
+		description: 'Your homeland has been corrupted by some terrible monster, and you’re the only one who escaped the plague. The rest of your family still exists, but in changed forms - perhaps as vampires or zombies. People tell you the situation is hopeless, but you’re determined to find a cure.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-searchingForACure-b',
@@ -1567,7 +1567,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static secretIdentity: Complication = {
 		id: 'comp-secretIdentity',
 		name: 'Secret Identity',
-		description: 'You’re secretly very important—but it’s not safe for your true identity to be known. Perhaps you’re the witness to a crime or a royal on the run from a usurper. Until the appropriate villains are punished, you’ll maintain the guise of an ordinary adventurer.',
+		description: 'You’re secretly very important - but it’s not safe for your true identity to be known. Perhaps you’re the witness to a crime or a royal on the run from a usurper. Until the appropriate villains are punished, you’ll maintain the guise of an ordinary adventurer.',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-secretIdentity-skill',
@@ -1589,18 +1589,18 @@ You can’t take this complication if you can’t be dazed.`,
 	static secretTwin: Complication = {
 		id: 'comp-secretTwin',
 		name: 'Secret Twin',
-		description: 'You have an identical twin—either a sibling or someone who looks so much like you that none would ever know the difference. They had a life that you coveted, or they had obligations that couldn’t go unfulfilled. So when they went missing, you stepped in and started living their life. Most folks are none the wiser.',
+		description: 'You have an identical twin - either a sibling or someone who looks so much like you that none would ever know the difference. They had a life that you coveted, or they had obligations that couldn’t go unfulfilled. So when they went missing, you stepped in and started living their life. Most folks are none the wiser.',
 		features: [
 			FactoryLogic.feature.createItemChoice({
 				id: 'comp-secretTwin-b',
 				name: 'Secret Twin Benefit',
-				description: 'You claimed something that belonged to your twin as your own—a signature treasure that is now all yours. You gain a 1st echelon trinket of your choice. This treasure has their name or sigil written, sewn, or emblazoned on it somewhere.',
+				description: 'You claimed something that belonged to your twin as your own - a signature treasure that is now all yours. You gain a 1st echelon trinket of your choice. This treasure has their name or sigil written, sewn, or emblazoned on it somewhere.',
 				types: [ ItemType.Trinket ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-secretTwin-d',
 				name: 'Secret Twin Drawback',
-				description: 'Your twin disappeared for a reason — someone wanted them dead. Whenever you finish a respite, roll a d10. On a result of 1 or 2, the Director can decide that your past catches up with you at any point in the future in the form of an assassin or someone who knows your real identity and threatens to reveal it as part of a blackmail scheme.'
+				description: 'Your twin disappeared for a reason - someone wanted them dead. Whenever you finish a respite, roll a d10. On a result of 1 or 2, the Director can decide that your past catches up with you at any point in the future in the form of an assassin or someone who knows your real identity and threatens to reveal it as part of a blackmail scheme.'
 			})
 		]
 	};
@@ -1695,7 +1695,7 @@ You can’t take this complication if you can’t be dazed.`,
 				id: 'comp-shatteredLegacy-b',
 				name: 'Shattered Legacy Benefit',
 				description: 'You gain a leveled item of your choice.',
-				types: [ ItemType.Leveled ]
+				types: [ ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Leveled ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-shatteredLegacy-d',
@@ -1909,7 +1909,7 @@ Note: If you have the Strike Now tactician ability, the target can use a free tr
 	static thrillSeeker: Complication = {
 		id: 'comp-thrillSeeker',
 		name: 'Thrill Seeker',
-		description: 'You live for danger. In battle and peril, you can transcend your usual limits—and once you’ve tasted that excitement, you want more.',
+		description: 'You live for danger. In battle and peril, you can transcend your usual limits - and once you’ve tasted that excitement, you want more.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-thrillSeeker-b',
@@ -1927,7 +1927,7 @@ Note: If you have the Strike Now tactician ability, the target can use a free tr
 	static vampireSire: Complication = {
 		id: 'comp-vampireSire',
 		name: 'Vampire Sire',
-		description: 'A vampire has bitten you. You’re not undead—not yet anyway—but you have a connection with your vampire sire, and you feel urges you fight to control.',
+		description: 'A vampire has bitten you. You’re not undead - not yet anyway - but you have a connection with your vampire sire, and you feel urges you fight to control.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-vampireSire-b',
@@ -2067,7 +2067,7 @@ Whenever you take a respite, make a Reason power roll.
 	static waterborn: Complication = {
 		id: 'comp-waterborn',
 		name: 'Waterborn',
-		description: 'You nearly lost your life at sea, but then you heard the voice. Someone … something in the sea called out to you— telling you to swim. Suddenly the ocean wasn’t your doom. It was your parent, birthing you into something new. You emerge with a small piece of the ocean’s power. For what purpose—you can’t be sure.',
+		description: 'You nearly lost your life at sea, but then you heard the voice. Someone … something in the sea called out to you - telling you to swim. Suddenly the ocean wasn’t your doom. It was your parent, birthing you into something new. You emerge with a small piece of the ocean’s power. For what purpose - you can’t be sure.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-waterborn-b',
@@ -2095,7 +2095,7 @@ Whenever you take a respite, make a Reason power roll.
 			FactoryLogic.feature.create({
 				id: 'comp-waterborn-d',
 				name: 'Waterborn Drawback',
-				description: 'The sea, or one of its representatives, can assign you a quest. If you don’t do the sea’s bidding, it may temporarily deny you this complication’s benefits—including water breathing—at an inconvenient time.'
+				description: 'The sea, or one of its representatives, can assign you a quest. If you don’t do the sea’s bidding, it may temporarily deny you this complication’s benefits - including water breathing - at an inconvenient time.'
 			}),
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-waterborn-mod',
@@ -2116,7 +2116,7 @@ Whenever you take a respite, make a Reason power roll.
 	static wodewalker: Complication = {
 		id: 'comp-wodewalker',
 		name: 'Wodewalker',
-		description: 'You were dying in the wode—starving and wounded, you collapsed. When you woke, you found a group of green elementalists had saved your life by infusing the regenerative bark of a tree to your body.',
+		description: 'You were dying in the wode - starving and wounded, you collapsed. When you woke, you found a group of green elementalists had saved your life by infusing the regenerative bark of a tree to your body.',
 		features: [
 			FactoryLogic.feature.createBonus({
 				id: 'comp-wodewalker-b',

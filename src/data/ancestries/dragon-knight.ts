@@ -8,7 +8,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 export const dragonKnight: Ancestry = {
 	id: 'ancestry-dragon-knight',
 	name: 'Dragon Knight',
-	description: 'The Ritual of Dracogenesis that grants the power to create a generation of dragon knights—also known as draconians or wyrmwights—is obscure and supremely difficult for even an experienced sorcerer to master.',
+	description: 'The Ritual of Dracogenesis that grants the power to create a generation of dragon knights - also known as draconians or wyrmwights - is obscure and supremely difficult for even an experienced sorcerer to master.',
 	features: [
 		FactoryLogic.feature.createChoice({
 			id: 'dragon-knight-feature-1',

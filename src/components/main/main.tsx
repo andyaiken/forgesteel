@@ -67,7 +67,7 @@ export const Main = (props: Props) => {
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
 	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(props.hiddenSourcebookIDs);
 	const [ options, setOptions ] = useState<Options>(props.options);
-	const [ nav, setNav ] = useState<ReactNode>(null);
+	const [ directory, setDirectory ] = useState<ReactNode>(null);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 
 	//#region Persistence
@@ -750,12 +750,13 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const showNavigationPane = () => {
-		setNav(
+	const showDirectoryPane = () => {
+		setDirectory(
 			<DirectoryModal
 				heroes={heroes}
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				playbook={playbook}
+				closeDirectory={() => setDirectory(null)}
 			/>
 		);
 	};
@@ -847,9 +848,9 @@ export const Main = (props: Props) => {
 				element={
 					<MainLayout
 						section='hero'
-						nav={nav}
+						directory={directory}
 						drawer={drawer}
-						setNav={setNav}
+						setDirectory={setDirectory}
 						setDrawer={setDrawer}
 					/>
 				}
@@ -858,7 +859,7 @@ export const Main = (props: Props) => {
 					index={true}
 					element={
 						<WelcomePage
-							showNavigation={showNavigationPane}
+							showDirectory={showDirectoryPane}
 							showAbout={showAbout}
 							showHeroes={heroes.length === 0 ? createHero : navigation.goToHeroList}
 							showLibrary={() => navigation.goToLibraryList('ancestry')}
@@ -873,7 +874,7 @@ export const Main = (props: Props) => {
 							<HeroListPage
 								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								showNavigation={showNavigationPane}
+								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								addHero={createHero}
 								importHero={importHero}
@@ -888,7 +889,7 @@ export const Main = (props: Props) => {
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								options={options}
 								setOptions={async options => await persistOptions(options)}
-								showNavigation={showNavigationPane}
+								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								exportHero={exportHero}
 								deleteHero={deleteHero}
@@ -916,7 +917,7 @@ export const Main = (props: Props) => {
 							<HeroEditPage
 								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								showNavigation={showNavigationPane}
+								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								saveChanges={saveHero}
 							/>
@@ -934,7 +935,7 @@ export const Main = (props: Props) => {
 							<LibraryListPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								hiddenSourcebookIDs={hiddenSourcebookIDs}
-								showNavigation={showNavigationPane}
+								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showSourcebooks={showSourcebooks}
 								createElement={(kind, sourcebookID) => createLibraryElement(kind, sourcebookID, null)}
@@ -947,7 +948,7 @@ export const Main = (props: Props) => {
 						element={
 							<LibraryViewPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								showNavigation={showNavigationPane}
+								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								createElement={createLibraryElement}
 								export={exportLibraryElement}
@@ -960,7 +961,7 @@ export const Main = (props: Props) => {
 						element={
 							<LibraryEditPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								showNavigation={showNavigationPane}
+								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showMonster={onSelectMonster}
 								saveChanges={saveLibraryElement}
@@ -979,7 +980,7 @@ export const Main = (props: Props) => {
 							<PlaybookListPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								showNavigation={showNavigationPane}
+								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								createElement={createPlaybookElement}
 								importElement={importPlaybookElement}
@@ -992,7 +993,7 @@ export const Main = (props: Props) => {
 							<PlaybookViewPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								showNavigation={showNavigationPane}
+								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								export={exportPlaybookElement}
 								delete={deletePlaybookElement}
@@ -1005,7 +1006,7 @@ export const Main = (props: Props) => {
 							<PlaybookEditPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-								showNavigation={showNavigationPane}
+								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showMonster={onSelectMonster}
 								saveChanges={savePlaybookElement}

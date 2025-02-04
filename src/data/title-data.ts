@@ -97,7 +97,7 @@ export class TitleData {
 			FactoryLogic.feature.create({
 				id: 'title-city-rat-1',
 				name: 'Discerning Shopper',
-				description: 'When looking for an item prerequisite for a crafting project, you can remember meeting someone who might have the item—or at least information about it.'
+				description: 'When looking for an item prerequisite for a crafting project, you can remember meeting someone who might have the item - or at least information about it.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-city-rat-2',

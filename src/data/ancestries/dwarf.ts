@@ -5,7 +5,7 @@ import { FeatureField } from '../../enums/feature-field';
 export const dwarf: Ancestry = {
 	id: 'ancestry-dwarf',
 	name: 'Dwarf',
-	description: 'Possessed of a strength that belies their size, dwarves have flesh infused with stone—a silico-organic hybrid making them physically denser than other humanoids. They enjoy a reputation in Orden as savvy engineers and technologists thanks to the lore they inherited from their elder siblings, the long-extinct steel dwarves.',
+	description: 'Possessed of a strength that belies their size, dwarves have flesh infused with stone - a silico-organic hybrid making them physically denser than other humanoids. They enjoy a reputation in Orden as savvy engineers and technologists thanks to the lore they inherited from their elder siblings, the long-extinct steel dwarves.',
 	features: [
 		FactoryLogic.feature.create({
 			id: 'dwarf-feature-1',

@@ -38,7 +38,7 @@ import './library-list.scss';
 interface Props {
 	sourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
-	showNavigation: () => void;
+	showDirectory: () => void;
 	showAbout: () => void;
  	showSourcebooks: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null) => void;
@@ -560,28 +560,30 @@ export const LibraryListPage = (props: Props) => {
 		}
 
 		return (
-			<div className='library-section-row'>
-				{
-					list.map(mg => {
-						const item = (
-							<SelectablePanel key={mg.id} onSelect={() => navigation.goToLibraryView('monster-group', mg.id)}>
-								<MonsterGroupPanel monsterGroup={mg} />
-							</SelectablePanel>
-						);
-
-						const sourcebook = SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, mg);
-						if (sourcebook && sourcebook.id) {
-							return (
-								<Badge.Ribbon key={mg.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-									{item}
-								</Badge.Ribbon>
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<div className='library-section-row'>
+					{
+						list.map(mg => {
+							const item = (
+								<SelectablePanel key={mg.id} onSelect={() => navigation.goToLibraryView('monster-group', mg.id)}>
+									<MonsterGroupPanel monsterGroup={mg} />
+								</SelectablePanel>
 							);
-						}
 
-						return item;
-					})
-				}
-			</div>
+							const sourcebook = SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, mg);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={mg.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			</Space>
 		);
 	};
 
@@ -607,7 +609,7 @@ export const LibraryListPage = (props: Props) => {
 
 		return (
 			<div className='library-list-page'>
-				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showNavigation={props.showNavigation} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout}>
 					<Input
 						placeholder='Search'
 						allowClear={true}

@@ -468,7 +468,7 @@ export class LeveledArmorData {
 		id: 'item-adaptive-second-skin',
 		name: 'Adaptive Second Skin of Toxins',
 		description: 'This suit is shaped of tough leather and set with thousands of tiny barbs on the inside, all thankfully pain-free to the touch.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledArmor,
 		keywords: [ KitArmor.Light, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Five rabid honey badger pelts, the quills of a hedgehog',
@@ -514,7 +514,7 @@ export class LeveledArmorData {
 		id: 'item-chain-of-the-sea-and-sky',
 		name: 'Chain of the Sea and Sky',
 		description: 'This set of heavy chain mail is created to allow free movement in extreme environments without sacrificing protection.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledArmor,
 		keywords: [ KitArmor.Heavy, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A set of wings from a flying carp, a set of chain mail rusted by seawater',
@@ -560,7 +560,7 @@ export class LeveledArmorData {
 		id: 'item-grand-scarab',
 		name: 'Grand Scarab',
 		description: 'The bluish-purple carapace and wings of a gigantic scarab beetle have been formed into an ornate breastplate.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledArmor,
 		keywords: [ AbilityKeyword.Magic, KitArmor.Medium ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A giant scarab beetle carapace',
@@ -606,7 +606,7 @@ export class LeveledArmorData {
 		id: 'item-kings-roar',
 		name: 'King\'s Roar',
 		description: 'A sunmetal kite shield bears the face of a lion on its front, its mouth opening wider over the course of battle.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledArmor,
 		keywords: [ AbilityKeyword.Magic, KitArmor.Shield ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A ballad of heroism, two ingots of sunmetal',
@@ -652,7 +652,7 @@ export class LeveledArmorData {
 		id: 'item-kuranzoi-prismscale',
 		name: 'Kuran\'zoi Prismscale',
 		description: 'Each scale of this iridescent armor shimmers with the faint image of a frozen moment of time.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledArmor,
 		keywords: [ KitArmor.Medium, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The eyes of a time raider who died valiantly in battle',
@@ -698,7 +698,7 @@ export class LeveledArmorData {
 		id: 'item-paper-trappings',
 		name: 'Paper Trappings',
 		description: 'This delicate robe is made from thousands of pages torn from books, intricately folded together without a single thread to bind them.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledArmor,
 		keywords: [ KitArmor.Light, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Ten pages from each of a hundred different books',
@@ -744,7 +744,7 @@ export class LeveledArmorData {
 		id: 'item-shrouded-memory',
 		name: 'Shrouded Memory',
 		description: 'This midnight-dark leather coat is embossed with fractal patterns that appear different each time they are observed.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledArmor,
 		keywords: [ KitArmor.Light, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The will of a deceased person with no heirs',
@@ -790,7 +790,7 @@ export class LeveledArmorData {
 		id: 'item-spiny-turtle',
 		name: 'Spiny Turtle',
 		description: 'This heavy mechanized plate armor of gnomish make is designed to create its own cover on the battlefield.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledArmor,
 		keywords: [ KitArmor.Heavy, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Ten steel gears from an ancient construct',
@@ -836,7 +836,7 @@ export class LeveledArmorData {
 		id: 'item-star-hunter',
 		name: 'Star-Hunter',
 		description: 'Shimmering light flows like liquid along this suit of crystalline armor.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledArmor,
 		keywords: [ KitArmor.Heavy, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Fifty pounds of astral ice, one pint of supercooled mercury',
@@ -882,7 +882,7 @@ export class LeveledArmorData {
 		id: 'item-telekinetic-bulwark',
 		name: 'Telekinetic Bulwark',
 		description: 'An unseen force seems to draw this steel shield toward nearby creatures.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledArmor,
 		keywords: [ AbilityKeyword.Psionic, KitArmor.Shield ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Three ingots of steel, six crystals that resonate with psionic power',
@@ -930,7 +930,7 @@ export class LeveledImplementData {
 		id: 'item-abjurers-bastion',
 		name: 'Abjurer\'s Bastion',
 		description: 'An ornate ring is set with a large diamond that swirls with blue light, and whose inner surface is etched with protective runes.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledImplement,
 		keywords: [ AbilityKeyword.Implement, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A diamond ring',
@@ -976,7 +976,7 @@ export class LeveledImplementData {
 		id: 'item-brittlebreaker',
 		name: 'Brittlebreaker',
 		description: 'This crystal wand thrums with power, yet is so thin and brittle that it feels as if even a slight squeeze will shatter it.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledImplement,
 		keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Wand ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Three ounces of shattered quartz',
@@ -1022,7 +1022,7 @@ export class LeveledImplementData {
 		id: 'item-chaldorb',
 		name: 'Chaldorb',
 		description: 'A perfectly clear sphere is embossed with fine ivory and crystal that is frigid to the touch.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledImplement,
 		keywords: [ AbilityKeyword.Implement, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'An ounce of primordial ice, an ounce of mammoth-ivory shards',
@@ -1068,7 +1068,7 @@ export class LeveledImplementData {
 		id: 'item-ether-fueled-vessel',
 		name: 'Ether-Fueled Vessel',
 		description: 'This bronze bottle has been shaped into the form of a ghostly figure.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledImplement,
 		keywords: [ AbilityKeyword.Implement, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Incense distilled from the essence of ether',
@@ -1114,7 +1114,7 @@ export class LeveledImplementData {
 		id: 'item-foesense-lenses',
 		name: 'Foesense Lenses',
 		description: 'These spectacles feature pink-tinted glass lenses held in a silver frame.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledImplement,
 		keywords: [ AbilityKeyword.Implement, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Two clear lenses carved from volcanic glass',
@@ -1160,7 +1160,7 @@ export class LeveledImplementData {
 		id: 'item-geometric-manipulator',
 		name: 'Geometric Manipulator',
 		description: 'This tiny gold sphere is made up of intricately interlocking rings and plates.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledImplement,
 		keywords: [ AbilityKeyword.Magic, AbilityKeyword.Orb ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Fourteen gold rings each two inches in diameter',
@@ -1206,7 +1206,7 @@ export class LeveledImplementData {
 		id: 'item-words-become-wonders',
 		name: 'Words Become Wonders at Next Breath',
 		description: 'This ornate high elf tome seems to sigh each time it is opened.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledImplement,
 		keywords: [ AbilityKeyword.Implement, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Written permission from a high elf magistrate',
@@ -1254,7 +1254,7 @@ export class LeveledWeaponData {
 		id: 'item-authoritys-end',
 		name: 'Authority\'s End',
 		description: 'This twelve-foot chain is composed entirely of broken links held together by unseen power.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledWeapon,
 		keywords: [ AbilityKeyword.Psionic, KitWeapon.Whip ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A lash used to punish a mutineer',
@@ -1300,7 +1300,7 @@ export class LeveledWeaponData {
 		id: 'item-blade-of-quintessence',
 		name: 'Blade of Quintessence',
 		description: 'This blade exudes a faint hum that grows louder as its quarry weakens.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledWeapon,
 		keywords: [ KitWeapon.Heavy, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The skull of a convicted criminal',
@@ -1346,7 +1346,7 @@ export class LeveledWeaponData {
 		id: 'item-blade-of-the-luxurious-fop',
 		name: 'Blade of the Luxurious Fop',
 		description: 'Despite sporting an outrageously ornate hilt adorned with far too many jewels, this blade remains perfectly balanced.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledWeapon,
 		keywords: [ KitWeapon.Light, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A personal blessing from the greatest duelist in the land, six fake and extremely shiny gemstones',
@@ -1392,7 +1392,7 @@ export class LeveledWeaponData {
 		id: 'item-displacer',
 		name: 'Displacer',
 		description: 'This crystal battleaxe seems to pull at the hands that wield it, as if anxious to leap across the battlefield.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledWeapon,
 		keywords: [ KitWeapon.Medium, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'An ancient bronze gear covered in indecipherable runes',
@@ -1438,7 +1438,7 @@ export class LeveledWeaponData {
 		id: 'item-executioners-blade',
 		name: 'Executioner\'s Blade',
 		description: 'This blade exudes a faint hum that grows louder as its quarry weakens.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledWeapon,
 		keywords: [ KitWeapon.Heavy, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The skull of a convicted criminal',
@@ -1484,7 +1484,7 @@ export class LeveledWeaponData {
 		id: 'item-icemaker-maul',
 		name: 'Icemaker Maul',
 		description: 'The head of this platinum hammer is cold to the touch, and encases whatever it strikes in a thin layer of ice.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledWeapon,
 		keywords: [ KitWeapon.Heavy, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Eight iron bars cooled in a glacier, the branch of an ancient evergreen',
@@ -1530,7 +1530,7 @@ export class LeveledWeaponData {
 		id: 'item-knife-of-nine',
 		name: 'Knife of Nine',
 		description: 'This ivory dagger features nine faintly glowing indentations along the blade.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledWeapon,
 		keywords: [ KitWeapon.Light, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Eighteen daggers - nine taken from personal enemies and nine gifted by friends',
@@ -1576,7 +1576,7 @@ export class LeveledWeaponData {
 		id: 'item-lance-of-the-sundered-star',
 		name: 'Lance of the Sundered Star',
 		description: 'This needle-like lance is cast of shimmering metal, and induces a yearning for the skies in those who handle it.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledWeapon,
 		keywords: [ AbilityKeyword.Magic, KitWeapon.Polearm ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Night-blooming flower petals, a starmetal meteorite',
@@ -1622,7 +1622,7 @@ export class LeveledWeaponData {
 		id: 'item-molten-constrictor',
 		name: 'Molten Constrictor',
 		description: 'This flexible black-iron net burns with the heat of a volcano.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledWeapon,
 		keywords: [ AbilityKeyword.Magic, KitWeapon.Ensnaring ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Four iron bars coated in magma slag',
@@ -1668,7 +1668,7 @@ export class LeveledWeaponData {
 		id: 'item-onerous-bow',
 		name: 'Onerous Bow',
 		description: 'This mechanized bow is set with magical reservoirs that carry the faint tang of toxins.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledWeapon,
 		keywords: [ KitWeapon.Bow, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A venom sac from a giant spider, one valok gyroscope',
@@ -1714,7 +1714,7 @@ export class LeveledWeaponData {
 		id: 'item-steeltongue',
 		name: 'Steeltongue',
 		description: 'This sinuous whip reflects all light off its plated steel surfaces.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledWeapon,
 		keywords: [ AbilityKeyword.Magic, KitWeapon.Whip ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'One hundred steel arrowheads stained with blood',
@@ -1760,7 +1760,7 @@ export class LeveledWeaponData {
 		id: 'item-third-eye-seeker',
 		name: 'Third Eye Seeker',
 		description: 'The shifting patterns on this bow\'s crystalline grip resemble dozens of blinking eyes.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledWeapon,
 		keywords: [ KitWeapon.Bow, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Heart strings of a tapir, a pound of tiger\'s eye gemstones',
@@ -1806,7 +1806,7 @@ export class LeveledWeaponData {
 		id: 'item-thunderhead-bident',
 		name: 'Thunderhead Bident',
 		description: 'This bident is made from two pieces of moon metal twisted together, and hums like a tuning fork.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledWeapon,
 		keywords: [ AbilityKeyword.Magic, KitWeapon.Medium ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A jar of captured thunder, two ingots of moon metal',
@@ -1852,7 +1852,7 @@ export class LeveledWeaponData {
 		id: 'item-wetwork',
 		name: 'Wetwork',
 		description: 'When first held, this naginata whispers the names of its past victims.',
-		type: ItemType.Leveled,
+		type: ItemType.LeveledWeapon,
 		keywords: [ KitWeapon.Polearm, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A folded metal blade infused with blood',

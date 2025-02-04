@@ -4,7 +4,6 @@ import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../d
 import { Feature, FeatureAbility, FeatureMalice } from '../../../../models/feature';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
-import { useMemo, useState } from 'react';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../../../panels/edit/ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -65,12 +64,13 @@ import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
+import { useState } from 'react';
 
 import './library-edit.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
-	showNavigation: () => void;
+	showDirectory: () => void;
 	showAbout: () => void;
  	showMonster: (monsterID: string) => void;
 	saveChanges: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
@@ -79,10 +79,46 @@ interface Props {
 export const LibraryEditPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { kind, sourcebookID, elementID, subElementID } = useParams<{ kind: SourcebookElementKind, sourcebookID: string, elementID: string, subElementID?: string }>();
-	const sourcebook = useMemo(() => props.sourcebooks.find(s => s.id === sourcebookID)!, [ sourcebookID, props.sourcebooks ]);
-	const sourcebookKey = useMemo(() => SourcebookLogic.getSourcebookKey(kind!), [ kind ]);
-	const originalElement = useMemo(() => sourcebook[sourcebookKey].find(e => e.id === elementID)!, [ sourcebook, sourcebookKey, elementID ]);
-	const [ element, setElement ] = useState<Element>(JSON.parse(JSON.stringify(originalElement)) as Element);
+	const [ element, setElement ] = useState<Element>(() => {
+		const sourcebook = props.sourcebooks.find(s => s.id === sourcebookID)!;
+		let original: Element;
+		switch (kind!) {
+			case 'ancestry':
+				original = sourcebook.ancestries.find(e => e.id === elementID)!;
+				break;
+			case 'career':
+				original = sourcebook.careers.find(e => e.id === elementID)!;
+				break;
+			case 'class':
+				original = sourcebook.classes.find(e => e.id === elementID)!;
+				break;
+			case 'complication':
+				original = sourcebook.complications.find(e => e.id === elementID)!;
+				break;
+			case 'culture':
+				original = sourcebook.cultures.find(e => e.id === elementID)!;
+				break;
+			case 'domain':
+				original = sourcebook.domains.find(e => e.id === elementID)!;
+				break;
+			case 'item':
+				original = sourcebook.items.find(e => e.id === elementID)!;
+				break;
+			case 'kit':
+				original = sourcebook.kits.find(e => e.id === elementID)!;
+				break;
+			case 'monster-group':
+				original = sourcebook.monsterGroups.find(e => e.id === elementID)!;
+				break;
+			case 'perk':
+				original = sourcebook.perks.find(e => e.id === elementID)!;
+				break;
+			case 'title':
+				original = sourcebook.titles.find(e => e.id === elementID)!;
+				break;
+		}
+		return JSON.parse(JSON.stringify(original)) as Element;
+	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ showSimilarMonsters, setShowSimilarMonsters ] = useState<boolean>(false);
 	const [ similarLevel, setSimilarLevel ] = useState<boolean>(true);
@@ -224,7 +260,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		const moveIncident = (e: Element, direction: 'up' | 'down') => {
 			const careerCopy = JSON.parse(JSON.stringify(element)) as Career;
-			const index = careerCopy.incitingIncidents.options.findIndex(o => o.id ===  e.id);
+			const index = careerCopy.incitingIncidents.options.findIndex(o => o.id === e.id);
 			careerCopy.incitingIncidents.options = Collections.move(careerCopy.incitingIncidents.options, index, direction);
 			setElement(careerCopy);
 			setDirty(true);
@@ -611,7 +647,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		const moveSubclass = (subclass: SubClass, direction: 'up' | 'down') => {
 			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
-			const index = classCopy.subclasses.findIndex(sc => sc.id ===  subclass.id);
+			const index = classCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			classCopy.subclasses = Collections.move(classCopy.subclasses, index, direction);
 			setElement(classCopy);
 			setDirty(true);
@@ -1428,7 +1464,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		const moveMonster = (monster: Monster, direction: 'up' | 'down') => {
 			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
-			const index = copy.monsters.findIndex(m => m.id ===  monster.id);
+			const index = copy.monsters.findIndex(m => m.id === monster.id);
 			copy.monsters = Collections.move(copy.monsters, index, direction);
 			setElement(copy);
 			setDirty(true);
@@ -1866,7 +1902,7 @@ export const LibraryEditPage = (props: Props) => {
 	const getPreviewHeaderSection = () => {
 		switch (kind) {
 			case 'class':
-				if (!subElementID) {
+				if (subElementID) {
 					return (
 						<div className='preview-header-section'>
 							<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!)}>Back to Class</Button>
@@ -1875,7 +1911,7 @@ export const LibraryEditPage = (props: Props) => {
 				}
 				break;
 			case 'monster-group':
-				if (!subElementID) {
+				if (subElementID) {
 					return (
 						<div className='preview-header-section'>
 							<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!)}>Back to Monster Group</Button>
@@ -2019,7 +2055,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<div className='library-edit-page'>
-				<AppHeader breadcrumbs={[ { label: `${editing} Builder` } ]} showNavigation={props.showNavigation} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: `${editing} Builder` } ]} showDirectory={props.showDirectory} showAbout={props.showAbout}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
 						Save Changes
 					</Button>

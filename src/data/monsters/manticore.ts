@@ -10,12 +10,12 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 export const manticore: MonsterGroup = {
 	id: 'monster-group-manticore',
 	name: 'Manticore',
-	description: 'A weary traveler hears a clarion call through the forest or friendly voices from a rocky shelter, and their heart leaps at the promise of refuge—only to find themself at the mercy of serrated teeth and poisoned spikes. In a manticore’s territory, people go missing without a trace. These fearsome creatures carve out their hunting grounds in forests near small villages, mountain passes where caravans travel, and other locations with plentiful wildlife. While manticores can subsist on a carnivorous diet of any nearby prey, their choicest meal is humanoid flesh.',
+	description: 'A weary traveler hears a clarion call through the forest or friendly voices from a rocky shelter, and their heart leaps at the promise of refuge - only to find themself at the mercy of serrated teeth and poisoned spikes. In a manticore’s territory, people go missing without a trace. These fearsome creatures carve out their hunting grounds in forests near small villages, mountain passes where caravans travel, and other locations with plentiful wildlife. While manticores can subsist on a carnivorous diet of any nearby prey, their choicest meal is humanoid flesh.',
 	information: [
 		{
 			id: 'manticore-info-1',
 			name: 'Uncanny Appearances',
-			description: 'A manticore has a lion’s body, a dragon’s wings, and a scorpion’s tail barbed with spines, but their most unnerving trait is their humanoid face. Owing to a quirk of magical evolution, manticores develop the features of common ancestries that populate their region of birth. For example, a manticore in an area densely populated by devils inherits fiendish eyes and devilish horns. Manticores are born with an inherent understanding of a regional language, but they can speak only through mimicking that which they’ve heard—a talent manticores use to lure in prey.'
+			description: 'A manticore has a lion’s body, a dragon’s wings, and a scorpion’s tail barbed with spines, but their most unnerving trait is their humanoid face. Owing to a quirk of magical evolution, manticores develop the features of common ancestries that populate their region of birth. For example, a manticore in an area densely populated by devils inherits fiendish eyes and devilish horns. Manticores are born with an inherent understanding of a regional language, but they can speak only through mimicking that which they’ve heard - a talent manticores use to lure in prey.'
 		},
 		{
 			id: 'manticore-info-2',

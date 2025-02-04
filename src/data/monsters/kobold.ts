@@ -14,7 +14,7 @@ export const kobold: MonsterGroup = {
 		{
 			id: 'kobold-info-1',
 			name: 'Defensive Masters',
-			description:  `
+			description: `
 In a world filled with bigger, hungrier creatures, kobolds survived by becoming experts in collective defense. Kobold shield tactics are legendary; every warrior carries a shield into battle, and soldiers defend each other in tightly choreographed formations. More than a tool, a kobold’s shield is a symbol of their commitment to defending their legion, and they decorate these treasured possessions with battle trophies and illustrations of great deeds.
 
 Kobold legionaries may join worthy adventurers as retainers, lending their defensive prowess to their new allies as they ko-boldly go where no kobold has gone before.`
@@ -27,7 +27,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 		{
 			id: 'kobold-info-3',
 			name: 'Tiny Dragons',
-			description: 'Most kobolds believe their ancestors were created by powerful dragons—and with sharp, angular features and prominent dorsal crests, they certainly look the part! Newborn kobolds have brilliant, pearlescent scales; as kobolds age, their scales dim and mottle. Owing to a deep magical connection, a legion that lives in the domain of a dragon adopts the color of that dragon’s scales over several generations.'
+			description: 'Most kobolds believe their ancestors were created by powerful dragons - and with sharp, angular features and prominent dorsal crests, they certainly look the part! Newborn kobolds have brilliant, pearlescent scales; as kobolds age, their scales dim and mottle. Owing to a deep magical connection, a legion that lives in the domain of a dragon adopts the color of that dragon’s scales over several generations.'
 		},
 		{
 			id: 'kobold-info-4',

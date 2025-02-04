@@ -4,7 +4,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 export const hakaan: Ancestry = {
 	id: 'ancestry-hakaan',
 	name: 'Hakaan',
-	description: 'In spite of their friendly, outgoing nature, the rare presence of a hakaan in human society is considered a harbinger—an omen of dark times. Descended from a tribe of giants in upper Vanigar, the original Haka’an tribe made a bargain with Holkatja the Vanigar trickster god. They traded some of their gigantic size and strength for the ability to see the future.',
+	description: 'In spite of their friendly, outgoing nature, the rare presence of a hakaan in human society is considered a harbinger - an omen of dark times. Descended from a tribe of giants in upper Vanigar, the original Haka’an tribe made a bargain with Holkatja the Vanigar trickster god. They traded some of their gigantic size and strength for the ability to see the future.',
 	features: [
 		FactoryLogic.feature.createSize({
 			id: 'hakaan-feature-1',

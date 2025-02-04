@@ -7,7 +7,7 @@ import './app-header.scss';
 interface Props {
 	breadcrumbs: { label: string }[];
 	children?: ReactNode;
-	showNavigation: () => void;
+	showDirectory: () => void;
 	showAbout: () => void;
 }
 
@@ -15,7 +15,7 @@ export const AppHeader = (props: Props) => {
 	return (
 		<div className='app-header'>
 			<div className='left-section'>
-				<LogoPanel onClick={props.showNavigation} />
+				<LogoPanel onClick={props.showDirectory} />
 				{props.breadcrumbs.map((bc, n) => <div key={n} className='breadcrumb'>{bc.label}</div>)}
 			</div>
 			<div className='action-buttons'>

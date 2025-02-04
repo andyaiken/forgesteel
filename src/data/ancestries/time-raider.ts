@@ -7,7 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 export const timeRaider: Ancestry = {
 	id: 'ancestry-time-raider',
 	name: 'Time Raider',
-	description: 'The original servitor species of the synliiroi — evil psions with near god-like power — the kuran’zoi liberated themselves during the First Psychic War. In the centuries since, they built their own culture and civilization as nomads of the timescape. The exonym “time raiders” was given to them by denizens of the lower worlds who, seeing the advanced technology they wield, concluded they must be from the future.',
+	description: 'The original servitor species of the synliiroi - evil psions with near god-like power - the kuran’zoi liberated themselves during the First Psychic War. In the centuries since, they built their own culture and civilization as nomads of the timescape. The exonym “time raiders” was given to them by denizens of the lower worlds who, seeing the advanced technology they wield, concluded they must be from the future.',
 	features: [
 		FactoryLogic.feature.create({
 			id: 'time-raider-feature-1',

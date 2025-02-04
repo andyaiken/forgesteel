@@ -5,7 +5,7 @@ import { SkillList } from '../../enums/skill-list';
 export const devil: Ancestry = {
 	id: 'ancestry-devil',
 	name: 'Devil',
-	description: 'The native ancestry of the Seven Cities of Hell, devils are humanoids with red or blue skin expressed in a wide variety of hues, from bright crimson to deep purple. Each devil is born with some hellmark—horns, a tail, cloven hooves, a forked tongue, fanged incisors, or even wings.',
+	description: 'The native ancestry of the Seven Cities of Hell, devils are humanoids with red or blue skin expressed in a wide variety of hues, from bright crimson to deep purple. Each devil is born with some hellmark - horns, a tail, cloven hooves, a forked tongue, fanged incisors, or even wings.',
 	features: [
 		FactoryLogic.feature.createMultiple({
 			id: 'devil-feature-1',

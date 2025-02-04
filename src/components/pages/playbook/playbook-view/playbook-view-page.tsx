@@ -19,7 +19,7 @@ import './playbook-view-page.scss';
 interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
-	showNavigation: () => void;
+	showDirectory: () => void;
 	showAbout: () => void;
 	export: (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	delete: (kind: PlaybookElementKind, element: Element) => void;
@@ -61,7 +61,7 @@ export const PlaybookViewPage = (props: Props) => {
 	try {
 		return (
 			<div className='playbook-view-page'>
-				<AppHeader breadcrumbs={[ { label: 'Playbook' } ]} showNavigation={props.showNavigation} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: 'Playbook' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout}>
 					<Button onClick={() => navigation.goToPlaybookList(kind!)}>
 						Close
 					</Button>

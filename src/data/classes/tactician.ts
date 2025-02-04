@@ -57,7 +57,7 @@ As a tactician, you have abilities that heal your allies and grant them increase
 					ability: FactoryLogic.createAbility({
 						id: 'tactician-1-5',
 						name: 'Mark',
-						description: 'You draw your allies’ attention to a specific foe — with devastating effect.',
+						description: 'You draw your allies’ attention to a specific foe - with devastating effect.',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -245,7 +245,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 		FactoryLogic.createAbility({
 			id: 'tactician-ability-7',
 			name: 'Now!',
-			description: 'Your allies wait for your command — then unleash death!',
+			description: 'Your allies wait for your command - then unleash death!',
 			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createRanged(5) ],

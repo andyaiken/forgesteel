@@ -59,7 +59,7 @@ const matchElement = (element: Element, searchTerm: string) => {
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	showNavigation: () => void;
+	showDirectory: () => void;
 	showAbout: () => void;
 	saveChanges: (hero: Hero) => void;
 }
@@ -473,7 +473,7 @@ export const HeroEditPage = (props: Props) => {
 
 		return (
 			<div className='hero-edit-page'>
-				<AppHeader breadcrumbs={[ { label: 'Hero Builder' } ]} showNavigation={props.showNavigation} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: 'Hero Builder' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout}>
 					<Button type='primary' disabled={!dirty} onClick={saveChanges}>
 						Save Changes
 					</Button>

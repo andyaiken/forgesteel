@@ -39,7 +39,7 @@ import './library-view-page.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
-	showNavigation: () => void;
+	showDirectory: () => void;
 	showAbout: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 	export: (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
@@ -196,7 +196,7 @@ export const LibraryViewPage = (props: Props) => {
 	try {
 		return (
 			<div className='library-view-page'>
-				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showNavigation={props.showNavigation} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout}>
 					{
 						subElementID ?
 							<Button onClick={() => navigation.goToLibraryView(kind!, elementID!)}>

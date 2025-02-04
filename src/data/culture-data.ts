@@ -25,7 +25,7 @@ export class EnvironmentData {
 	static secluded = FactoryLogic.feature.createSkillChoice({
 		id: 'env-secluded',
 		name: 'Secluded',
-		description: 'A secluded culture is based in one relatively close-quarters structure — a building, a cavern, and so forth — and interacts with other cultures only rarely. Such places are often buildings or complexes such as monasteries, castles, or prisons. Folk in a secluded culture have little or no reason to leave their home or interact with other cultures on the outside, but might have an awareness of those cultures and of events happening outside their enclave.',
+		description: 'A secluded culture is based in one relatively close-quarters structure - a building, a cavern, and so forth - and interacts with other cultures only rarely. Such places are often buildings or complexes such as monasteries, castles, or prisons. Folk in a secluded culture have little or no reason to leave their home or interact with other cultures on the outside, but might have an awareness of those cultures and of events happening outside their enclave.',
 		listOptions: [
 			SkillList.Interpersonal,
 			SkillList.Lore
@@ -67,7 +67,7 @@ export class OrganizationData {
 	static anarchic = FactoryLogic.feature.createSkillChoice({
 		id: 'org-anarchic',
 		name: 'Anarchic',
-		description: 'In an anarchic culture, there are no rules and no one person leads the others. This might sound like complete chaos— people taking what they want when they want it—and some cultures that practice anarchy are. Other anarchic cultures are peaceful places where people mostly work for themselves, their friends, or their family, but rely on the whole group when times get tough.',
+		description: 'In an anarchic culture, there are no rules and no one person leads the others. This might sound like complete chaos - people taking what they want when they want it - and some cultures that practice anarchy are. Other anarchic cultures are peaceful places where people mostly work for themselves, their friends, or their family, but rely on the whole group when times get tough.',
 		listOptions: [
 			SkillList.Exploration,
 			SkillList.Intrigue
@@ -129,7 +129,7 @@ export class UpbringingData {
 	static illegal = FactoryLogic.feature.createSkillChoice({
 		id: 'up-illegal',
 		name: 'Illegal',
-		description: 'Heroes with an illegal upbringing had caregivers who performed activities that other folk—whether within or outside their culture—considered unlawful. A band of pirates, a guild of assassins, or an organization of spies all commit unlawful acts for money. People with illegal upbringings typically don’t mind breaking the rules when it suits them—and are good at making sure no one finds out they did.',
+		description: 'Heroes with an illegal upbringing had caregivers who performed activities that other folk - whether within or outside their culture - considered unlawful. A band of pirates, a guild of assassins, or an organization of spies all commit unlawful acts for money. People with illegal upbringings typically don’t mind breaking the rules when it suits them - and are good at making sure no one finds out they did.',
 		listOptions: [
 			SkillList.Intrigue
 		]
@@ -151,7 +151,7 @@ export class UpbringingData {
 	static martial = FactoryLogic.feature.createSkillChoice({
 		id: 'up-martial',
 		name: 'Martial',
-		description: 'Heroes who have a martial upbringing are raised by warriors. These might be the soldiers of an established army, a band of mercenaries, a guild of monster-slaying adventurers, or any other folk whose lives revolve around combat. Heroes with a martial upbringing are always ready for a fight—and they know how to finish that fight.',
+		description: 'Heroes who have a martial upbringing are raised by warriors. These might be the soldiers of an established army, a band of mercenaries, a guild of monster-slaying adventurers, or any other folk whose lives revolve around combat. Heroes with a martial upbringing are always ready for a fight - and they know how to finish that fight.',
 		options: [
 			'Alertness',
 			'Blacksmithing',

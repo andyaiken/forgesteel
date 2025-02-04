@@ -6,5 +6,4 @@ export interface Playbook {
 	negotiations: Negotiation[]
 }
 
-export type PlaybookElementsKey = 'encounters' | 'negotiations';
 export type PlaybookElementKind = 'encounter' | 'negotiation';

@@ -33,12 +33,12 @@ Like other humanoids, hobgoblins have no special inclination toward conquest, ba
 		{
 			id: 'hobgoblin-info-4',
 			name: 'Binding Bargains',
-			description: 'Many hobgoblins still hold to the infernal concept of being true to their word when entering into agreements. Even spoken contracts are considered unbreakable, and hobgoblin communities scorn any creature—hobgoblin or otherwise—who degrades themself by breaking their word.'
+			description: 'Many hobgoblins still hold to the infernal concept of being true to their word when entering into agreements. Even spoken contracts are considered unbreakable, and hobgoblin communities scorn any creature - hobgoblin or otherwise - who degrades themself by breaking their word.'
 		},
 		{
 			id: 'hobgoblin-info-5',
 			name: 'Grilp',
-			description: 'The grilp—a green-skinned devil about the size of a housecat—can change the color and texture of their skin to blend in with their surroundings. They often serve as scouts, spies, messengers, and errand-runners for high-ranking hobgoblins. Beyond these covert skills, however, hobgoblins value grilps most highly for their magic-laced saliva, which weakens the defenses of other creatures.'
+			description: 'The grilp - a green-skinned devil about the size of a housecat - can change the color and texture of their skin to blend in with their surroundings. They often serve as scouts, spies, messengers, and errand-runners for high-ranking hobgoblins. Beyond these covert skills, however, hobgoblins value grilps most highly for their magic-laced saliva, which weakens the defenses of other creatures.'
 		},
 		{
 			id: 'hobgoblin-info-6',

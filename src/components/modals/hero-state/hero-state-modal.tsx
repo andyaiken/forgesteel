@@ -318,7 +318,7 @@ export const HeroStateModal = (props: Props) => {
 
 		const moveItem = (item: Item, direction: 'up' | 'down') => {
 			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-			const index = copy.state.inventory.findIndex(i => i.id ===  item.id);
+			const index = copy.state.inventory.findIndex(i => i.id === item.id);
 			copy.state.inventory = Collections.move(copy.state.inventory, index, direction);
 			setHero(copy);
 			props.onChange(copy);
@@ -461,7 +461,7 @@ export const HeroStateModal = (props: Props) => {
 
 		const moveProject = (project: Project, direction: 'up' | 'down') => {
 			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-			const index = copy.state.projects.findIndex(p => p.id ===  project.id);
+			const index = copy.state.projects.findIndex(p => p.id === project.id);
 			copy.state.projects = Collections.move(copy.state.projects, index, direction);
 			setHero(copy);
 			props.onChange(copy);

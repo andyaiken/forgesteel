@@ -7,7 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 export const revenant: Ancestry = {
 	id: 'ancestry-revenant',
 	name: 'Revenant',
-	description: 'Unlike the necromantic rituals that produce wights and wraiths and zombies, revenants rise from the grave through a combination of an unjust death and a burning desire for vengeance. Creatures sustained on pure will, they have no need of food or water or air—and, unlike their zombified cousins, they retain all their memories and personality from life.',
+	description: 'Unlike the necromantic rituals that produce wights and wraiths and zombies, revenants rise from the grave through a combination of an unjust death and a burning desire for vengeance. Creatures sustained on pure will, they have no need of food or water or air - and, unlike their zombified cousins, they retain all their memories and personality from life.',
 	features: [
 		FactoryLogic.feature.createAncestry({
 			id: 'revenant-feature-1',

@@ -11,7 +11,7 @@ export const dwarf: MonsterGroup = {
 	id: 'monster-group-dwarf',
 	name: 'Dwarf',
 	description: `
-Possessed of a strength that belies their size, dwarven flesh is infused with stone—a silico-organic hybrid making them physically denser than humans or elves. They enjoy a reputation in Orden as savvy engineers and technologists thanks to the lore they inherited from their elder siblings, the long-extinct steel dwarves.
+Possessed of a strength that belies their size, dwarven flesh is infused with stone - a silico-organic hybrid making them physically denser than humans or elves. They enjoy a reputation in Orden as savvy engineers and technologists thanks to the lore they inherited from their elder siblings, the long-extinct steel dwarves.
 
 They are the children of the elder god Ord. A common phrase among the dwarves is “Ord made the world.” Their way of saying, “What will be, will be.” Dwarves take great pride in knowing that along with Aan, Eth, and Kul, their god created the mundane world, and many dwarves leave their homes to see the world and seek glory in Ord’s name.`,
 	information: [
@@ -21,7 +21,7 @@ They are the children of the elder god Ord. A common phrase among the dwarves is
 			description: `
 Those raised within dwarven enclaves have a relationship with technology not found in many other places on Orden. The gifts of the Steel Dwarves are many in number, but the most prominent is that of pneumatic steam power.
 
-Dwarves have incorporated steam into much of their warfare and weaponry, making them deadly opponents. But like all technology, it's a double headed hammer.  As much as they use it for destruction, construction is where they truly shine. Creating the formidable and brutalist facades common dwarven architecture is made much easier with the use of tools created to utilize pneumatic power. Some of the larger and more metropolitan dwarven cities are rumored to power wealthier districts using steam from geothermal vents.`
+Dwarves have incorporated steam into much of their warfare and weaponry, making them deadly opponents. But like all technology, it's a double headed hammer. As much as they use it for destruction, construction is where they truly shine. Creating the formidable and brutalist facades common dwarven architecture is made much easier with the use of tools created to utilize pneumatic power. Some of the larger and more metropolitan dwarven cities are rumored to power wealthier districts using steam from geothermal vents.`
 		},
 		{
 			id: 'dwarf-info-2',

@@ -798,7 +798,7 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onShowHeroState = (hero: Hero, page: 'hero' | 'stats' | 'conditions') => {
+	const onShowHeroState = (hero: Hero, page: 'hero' | 'health' | 'stats' | 'conditions') => {
 		setDrawer(
 			<HeroStateModal
 				hero={hero}

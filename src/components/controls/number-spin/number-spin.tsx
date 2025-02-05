@@ -1,4 +1,5 @@
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { ReactNode } from 'react';
 import { Statistic } from 'antd';
 
 import './number-spin.scss';
@@ -7,6 +8,7 @@ interface Props {
 	disabled?: boolean;
 	label?: string;
 	value: number;
+	suffix?: ReactNode;
 	steps?: number[];
 	min?: number;
 	max?: number;
@@ -59,6 +61,7 @@ export const NumberSpin = (props: Props) => {
 					className='spin-middle'
 					title={props.label}
 					value={props.format ? props.format(props.value) : props.value}
+					suffix={props.suffix}
 				/>
 				<div className='spin-buttons'>
 					{

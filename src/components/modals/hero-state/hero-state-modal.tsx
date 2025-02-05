@@ -9,6 +9,7 @@ import { DangerButton } from '../../controls/danger-button/danger-button';
 import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
 import { Expander } from '../../controls/expander/expander';
 import { FactoryLogic } from '../../../logic/factory-logic';
+import { HealthPanel } from '../../panels/health/health-panel';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { InventoryPanel } from '../../panels/inventory/inventory-panel';
 import { Item } from '../../../models/item';
@@ -29,7 +30,7 @@ import './hero-state-modal.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	startPage: 'hero' | 'stats' | 'conditions' | 'customize';
+	startPage: 'hero' | 'health' | 'stats' | 'conditions' | 'customize';
 	onChange: (hero: Hero) => void;
 	onLevelUp: () => void;
 }
@@ -68,20 +69,6 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setStaminaDamage = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-			copy.state.staminaDamage = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setRecoveriesUsed = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-			copy.state.recoveriesUsed = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
 		const startEncounter = () => {
 			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
 			copy.state.heroicResource = copy.state.victories;
@@ -93,24 +80,6 @@ export const HeroStateModal = (props: Props) => {
 			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
 			copy.state.heroicResource = 0;
 			copy.state.victories += 1;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const endRespite = () => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-			copy.state.staminaDamage = 0;
-			copy.state.recoveriesUsed = 0;
-			copy.state.xp = copy.state.victories;
-			copy.state.victories = 0;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const spendRecovery = () => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
-			copy.state.recoveriesUsed += 1;
-			copy.state.staminaDamage = Math.max(copy.state.staminaDamage - HeroLogic.getRecoveryValue(hero), 0);
 			setHero(copy);
 			props.onChange(copy);
 		};
@@ -152,6 +121,7 @@ export const HeroStateModal = (props: Props) => {
 						/>
 						: null
 				}
+				<Divider />
 				<Flex align='center' justify='space-between' gap='5px'>
 					<Button
 						className='tall-button'
@@ -180,20 +150,60 @@ export const HeroStateModal = (props: Props) => {
 						</div>
 					</Button>
 				</Flex>
+			</Space>
+		);
+	};
+
+	const getHealthSection = () => {
+		const setStaminaDamage = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.staminaDamage = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setRecoveriesUsed = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.recoveriesUsed = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const endRespite = () => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.staminaDamage = 0;
+			copy.state.recoveriesUsed = 0;
+			copy.state.xp = copy.state.victories;
+			copy.state.victories = 0;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const spendRecovery = () => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.recoveriesUsed += 1;
+			copy.state.staminaDamage = Math.max(copy.state.staminaDamage - HeroLogic.getRecoveryValue(hero), 0);
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HealthPanel hero={hero} />
 				<Divider />
 				<NumberSpin
 					label='Damage Taken'
 					value={hero.state.staminaDamage}
+					suffix={hero.state.staminaDamage > 0 ? `/ ${HeroLogic.getStamina(hero)}` : undefined}
 					min={0}
-					format={value => value > 0 ? `${value} / ${HeroLogic.getStamina(hero)}` : value.toString()}
 					onChange={setStaminaDamage}
 				/>
 				<NumberSpin
 					label='Recoveries Used'
 					value={hero.state.recoveriesUsed}
+					suffix={hero.state.recoveriesUsed > 0 ? `/ ${HeroLogic.getRecoveries(hero)}` : undefined}
 					min={0}
 					max={HeroLogic.getRecoveries(hero)}
-					format={value => value > 0 ? `${value} / ${HeroLogic.getRecoveries(hero)}` : value.toString()}
 					onChange={setRecoveriesUsed}
 				/>
 				{
@@ -206,6 +216,7 @@ export const HeroStateModal = (props: Props) => {
 						/>
 						: null
 				}
+				<Divider />
 				<Flex align='center' justify='space-between' gap='5px'>
 					<Button
 						className='tall-button'
@@ -523,6 +534,11 @@ export const HeroStateModal = (props: Props) => {
 									key: 'hero',
 									label: 'Hero',
 									children: getHeroSection()
+								},
+								{
+									key: 'health',
+									label: 'Health',
+									children: getHealthSection()
 								},
 								{
 									key: 'stats',

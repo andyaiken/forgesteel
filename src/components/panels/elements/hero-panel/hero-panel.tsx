@@ -45,7 +45,7 @@ interface Props {
  	onSelectKit?: (kit: Kit) => void;
  	onSelectCharacteristic?: (characteristic: Characteristic) => void;
  	onSelectAbility?: (ability: Ability) => void;
- 	onShowState?: (page: 'hero' | 'stats' | 'conditions') => void;
+ 	onShowState?: (page: 'hero' | 'health' | 'stats' | 'conditions') => void;
 }
 
 export const HeroPanel = (props: Props) => {
@@ -287,6 +287,12 @@ export const HeroPanel = (props: Props) => {
 			}
 		};
 
+		const onShowHealth = () => {
+			if (props.onShowState) {
+				props.onShowState('health');
+			}
+		};
+
 		const onShowStats = () => {
 			if (props.onShowState) {
 				props.onShowState('stats');
@@ -360,7 +366,7 @@ export const HeroPanel = (props: Props) => {
 					</div>
 				</Col>
 				<Col xs={sizeSmall.xs} sm={sizeSmall.sm} md={sizeSmall.md} lg={sizeSmall.lg} xl={sizeSmall.xl} xxl={sizeSmall.xxl}>
-					<div className='characteristics-box clickable' onClick={onShowHero}>
+					<div className='characteristics-box clickable' onClick={onShowHealth}>
 						<div className='characteristic'>
 							<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />
 						</div>

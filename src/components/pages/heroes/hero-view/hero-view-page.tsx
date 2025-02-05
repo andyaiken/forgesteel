@@ -42,7 +42,7 @@ interface Props {
 	showKit: (kit: Kit) => void;
 	showCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
-	showHeroState: (hero: Hero, page: 'hero' | 'stats' | 'conditions') => void;
+	showHeroState: (hero: Hero, page: 'hero' | 'health' | 'stats' | 'conditions') => void;
 	showRules: (hero: Hero) => void;
 }
 

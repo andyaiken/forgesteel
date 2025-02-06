@@ -181,7 +181,7 @@ export const PlaybookEditPage = (props: Props) => {
 									/>
 									: null
 							}
-							{encounter.groups.length > 1 ? <DangerButton block={true} label='Delete' onConfirm={() => deleteGroup(group)} /> : null}
+							{encounter.groups.length > 1 ? <DangerButton block={true} label='Delete Group' onConfirm={() => deleteGroup(group)} /> : null}
 						</div>
 					))
 				}
@@ -368,6 +368,7 @@ export const PlaybookEditPage = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Expander title='Filter'>
+					<HeaderText>Filter</HeaderText>
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<Input
 							placeholder='Name'
@@ -389,7 +390,7 @@ export const PlaybookEditPage = (props: Props) => {
 							style={{ width: '100%' }}
 							mode='multiple'
 							allowClear={true}
-							placeholder='Role'
+							placeholder='Organization'
 							options={[ MonsterOrganizationType.Minion, MonsterOrganizationType.Band, MonsterOrganizationType.Platoon, MonsterOrganizationType.Troop, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo ].map(r => ({ label: r, value: r }))}
 							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 							value={monsterFilter.organizations}

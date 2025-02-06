@@ -27,11 +27,11 @@ export const HealthPanel = (props: Props) => {
 			/>
 			<div className='gauge-info'>
 				<div>
-					S: {props.hero.state.staminaDamage ? `${HeroLogic.getStamina(props.hero) - props.hero.state.staminaDamage} / ${HeroLogic.getStamina(props.hero)}` : `${HeroLogic.getStamina(props.hero)}`}
+					Sta <b>{props.hero.state.staminaDamage ? `${HeroLogic.getStamina(props.hero) - props.hero.state.staminaDamage} / ${HeroLogic.getStamina(props.hero)}` : `${HeroLogic.getStamina(props.hero)}`}</b>
 				</div>
 				<Divider style={{ margin: '5px 0' }} />
 				<div>
-					R: {props.hero.state.recoveriesUsed ? `${HeroLogic.getRecoveries(props.hero) - props.hero.state.recoveriesUsed} / ${HeroLogic.getRecoveries(props.hero)}` : `${HeroLogic.getRecoveries(props.hero)}`}
+					Rec <b>{props.hero.state.recoveriesUsed ? `${HeroLogic.getRecoveries(props.hero) - props.hero.state.recoveriesUsed} / ${HeroLogic.getRecoveries(props.hero)}` : `${HeroLogic.getRecoveries(props.hero)}`}</b>
 				</div>
 			</div>
 		</div>

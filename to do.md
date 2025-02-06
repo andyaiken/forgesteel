@@ -2,40 +2,44 @@
 
 ## Add Monsters
 
-* Gnolls
+### Priority
+
+* Bugbear
+* Elemental
+* Demon
+* Devil
+* Gnoll
 * Lizardfolk
-* Orcs
-* Trolls
+* Minotaur
+* Ogre
+* Orc
+* Troll
 * Undead
-* Bugbears
-* Draconians
-* Dragons
-* Elves, High
-* Elves, Shadow
-* Humans
-* Rivals
-* Angulotls
+
+### Other Monsters
+
+* Angulotl
 * Ashen Hoarder
-* Basilisks
+* Basilisk
 * Bredbeddle
-* Demons
-* Devils
-* Elementals
+* Draconian
+* Dragon, Crucible / Gloom / Meteor / Omen / Thorn
+* Elf, High
+* Elf, Shadow
 * Fossil Cryptic
-* Griffons
+* Griffon
 * Hag
-* Lightbenders
+* Human
+* Lightbender
 * Medusa
-* Minotaurs
-* Ogres
 * Olothec
+* Rivals
 * Shambling Mound
-* Time Raiders
-* Voiceless Talkers
-* War Dogs
-* Wyverns
+* Time Raider
+* Voiceless Talker
+* War Dog
+* Wyvern
 * Xorannox the Tyract
-* Animals
 
 ## New Features
 
@@ -52,6 +56,7 @@
 ### Library
 
 * It should be possible to create a homebrew subclass / class ability / monster individually
+* Animals
 
 ### Monster Editor
 

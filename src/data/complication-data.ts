@@ -2120,7 +2120,7 @@ Whenever you take a respite, make a Reason power roll.
 		features: [
 			FactoryLogic.feature.createBonus({
 				id: 'comp-wodewalker-b',
-				field: FeatureField.Recoveries,
+				field: FeatureField.RecoveryValue,
 				valueCharacteristics: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
 			}),
 			FactoryLogic.feature.createDamageModifier({

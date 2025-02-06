@@ -11,6 +11,7 @@ import { Expander } from '../../controls/expander/expander';
 import { FactoryLogic } from '../../../logic/factory-logic';
 import { HealthPanel } from '../../panels/health/health-panel';
 import { HeroLogic } from '../../../logic/hero-logic';
+import { HeroStatePage } from '../../../enums/hero-state-page';
 import { InventoryPanel } from '../../panels/inventory/inventory-panel';
 import { Item } from '../../../models/item';
 import { Modal } from '../modal/modal';
@@ -30,7 +31,7 @@ import './hero-state-modal.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	startPage: 'hero' | 'health' | 'stats' | 'conditions' | 'customize';
+	startPage: HeroStatePage;
 	onChange: (hero: Hero) => void;
 	onLevelUp: () => void;
 }
@@ -154,7 +155,7 @@ export const HeroStateModal = (props: Props) => {
 		);
 	};
 
-	const getHealthSection = () => {
+	const getVitalsSection = () => {
 		const setStaminaDamage = (value: number) => {
 			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
 			copy.state.staminaDamage = value;
@@ -531,32 +532,32 @@ export const HeroStateModal = (props: Props) => {
 						<Tabs
 							items={[
 								{
-									key: 'hero',
+									key: HeroStatePage.Hero,
 									label: 'Hero',
 									children: getHeroSection()
 								},
 								{
-									key: 'health',
-									label: 'Health',
-									children: getHealthSection()
+									key: HeroStatePage.Vitals,
+									label: 'Vitals',
+									children: getVitalsSection()
 								},
 								{
-									key: 'stats',
+									key: HeroStatePage.Stats,
 									label: 'Statistics',
 									children: getStatisticsSection()
 								},
 								{
-									key: 'inventory',
+									key: HeroStatePage.Inventory,
 									label: 'Inventory',
 									children: getInventorySection()
 								},
 								{
-									key: 'conditions',
+									key: HeroStatePage.Conditions,
 									label: 'Conditions',
 									children: getConditionsSection()
 								},
 								{
-									key: 'projects',
+									key: HeroStatePage.Customize,
 									label: 'Projects',
 									children: getProjectsSection()
 								}

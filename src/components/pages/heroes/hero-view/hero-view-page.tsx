@@ -13,6 +13,7 @@ import { DropdownButton } from '../../../controls/dropdown-button/dropdown-butto
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
+import { HeroStatePage } from '../../../../enums/hero-state-page';
 import { Kit } from '../../../../models/kit';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
@@ -42,7 +43,7 @@ interface Props {
 	showKit: (kit: Kit) => void;
 	showCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
-	showHeroState: (hero: Hero, page: 'hero' | 'health' | 'stats' | 'conditions') => void;
+	showHeroState: (hero: Hero, page: HeroStatePage) => void;
 	showRules: (hero: Hero) => void;
 }
 
@@ -84,7 +85,7 @@ export const HeroViewPage = (props: Props) => {
 					<Button onClick={navigation.goToHeroList}>
 						Close
 					</Button>
-					<Button onClick={() => props.showHeroState(hero, 'hero')}>
+					<Button onClick={() => props.showHeroState(hero, HeroStatePage.Hero)}>
 						State
 					</Button>
 					<Button onClick={() => props.showRules(hero)}>

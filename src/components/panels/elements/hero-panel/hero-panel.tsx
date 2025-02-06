@@ -21,6 +21,7 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
+import { HeroStatePage } from '../../../../enums/hero-state-page';
 import { Kit } from '../../../../models/kit';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
@@ -45,7 +46,7 @@ interface Props {
  	onSelectKit?: (kit: Kit) => void;
  	onSelectCharacteristic?: (characteristic: Characteristic) => void;
  	onSelectAbility?: (ability: Ability) => void;
- 	onShowState?: (page: 'hero' | 'health' | 'stats' | 'conditions') => void;
+ 	onShowState?: (page: HeroStatePage) => void;
 }
 
 export const HeroPanel = (props: Props) => {
@@ -283,19 +284,19 @@ export const HeroPanel = (props: Props) => {
 
 		const onShowHero = () => {
 			if (props.onShowState) {
-				props.onShowState('hero');
+				props.onShowState(HeroStatePage.Hero);
 			}
 		};
 
-		const onShowHealth = () => {
+		const onShowVitals = () => {
 			if (props.onShowState) {
-				props.onShowState('health');
+				props.onShowState(HeroStatePage.Vitals);
 			}
 		};
 
 		const onShowStats = () => {
 			if (props.onShowState) {
-				props.onShowState('stats');
+				props.onShowState(HeroStatePage.Stats);
 			}
 		};
 
@@ -366,7 +367,7 @@ export const HeroPanel = (props: Props) => {
 					</div>
 				</Col>
 				<Col xs={sizeSmall.xs} sm={sizeSmall.sm} md={sizeSmall.md} lg={sizeSmall.lg} xl={sizeSmall.xl} xxl={sizeSmall.xxl}>
-					<div className='characteristics-box clickable' onClick={onShowHealth}>
+					<div className='characteristics-box clickable' onClick={onShowVitals}>
 						<div className='characteristic'>
 							<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />
 						</div>
@@ -389,7 +390,7 @@ export const HeroPanel = (props: Props) => {
 
 		const showConditions = () => {
 			if (props.onShowState) {
-				props.onShowState('conditions');
+				props.onShowState(HeroStatePage.Conditions);
 			}
 		};
 

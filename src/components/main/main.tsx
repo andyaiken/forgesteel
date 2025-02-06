@@ -24,6 +24,7 @@ import { HeroEditPage } from '../pages/heroes/hero-edit/hero-edit-page';
 import { HeroListPage } from '../pages/heroes/hero-list/hero-list-page';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
+import { HeroStatePage } from '../../enums/hero-state-page';
 import { HeroViewPage } from '../pages/heroes/hero-view/hero-view-page';
 import { Item } from '../../models/item';
 import { ItemType } from '../../enums/item-type';
@@ -798,7 +799,7 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onShowHeroState = (hero: Hero, page: 'hero' | 'health' | 'stats' | 'conditions') => {
+	const onShowHeroState = (hero: Hero, page: HeroStatePage) => {
 		setDrawer(
 			<HeroStateModal
 				hero={hero}

@@ -584,7 +584,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			description: 'Your divine magic makes a creature appear as what your enemies fear most.',
 			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-			distance: [ FactoryLogic.distance.createRanged(10) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
 			powerRoll: FactoryLogic.createPowerRoll({

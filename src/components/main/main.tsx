@@ -129,6 +129,7 @@ export const Main = (props: Props) => {
 			SourcebookData.orden.id
 		]);
 
+		setDrawer(null);
 		persistHero(hero).then(() => navigation.goToHeroEdit(hero.id, 'ancestry'));
 	};
 
@@ -757,6 +758,7 @@ export const Main = (props: Props) => {
 				heroes={heroes}
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				playbook={playbook}
+				createHero={() => createHero()}
 				closeDirectory={() => setDirectory(null)}
 			/>
 		);

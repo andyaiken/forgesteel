@@ -170,6 +170,7 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		let unavailableIDs: string[] = [];
+		let showCosts = false;
 		if (data.options.some(opt => opt.value > 1)) {
 			const selectedIDs = data.selected.map(f => f.id);
 			const pointsUsed = Collections.sum(selectedIDs, id => {
@@ -180,9 +181,9 @@ export const FeaturePanel = (props: Props) => {
 			unavailableIDs = availableOptions
 				.filter(opt => !selectedIDs.includes(opt.feature.id) && (opt.value > pointsLeft))
 				.map(opt => opt.feature.id);
-		}
 
-		const showCosts = data.options.some(o => o.value > 1);
+			showCosts = true;
+		}
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -198,7 +199,7 @@ export const FeaturePanel = (props: Props) => {
 					style={{ width: '100%' }}
 					className={data.selected.length === 0 ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
-					//maxCount={data.count === 1 ? undefined : data.count}
+					maxCount={(data.count === 1) && showCosts ? undefined : data.count}
 					allowClear={true}
 					placeholder={data.count === 1 ? 'Select an option' : 'Select options'}
 					options={sortedOptions.map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description, disabled: unavailableIDs.includes(o.feature.id), cost: o.value }))}
@@ -557,12 +558,18 @@ export const FeaturePanel = (props: Props) => {
 			HeroLogic.getFeatures(props.hero)
 				.filter(f => f.id !== props.feature.id)
 				.forEach(f => {
+					const addCurrent = (language: string) => {
+						if (!data.selected.includes(language)) {
+							currentLanguages.push(language);
+						}
+					};
+
 					switch (f.type) {
 						case FeatureType.Language:
-							currentLanguages.push(f.data.language);
+							addCurrent(f.data.language);
 							break;
 						case FeatureType.LanguageChoice:
-							currentLanguages.push(...f.data.selected);
+							currentLanguages.forEach(addCurrent);
 							break;
 					}
 				});
@@ -696,12 +703,18 @@ export const FeaturePanel = (props: Props) => {
 			HeroLogic.getFeatures(props.hero)
 				.filter(f => f.id !== props.feature.id)
 				.forEach(f => {
+					const addCurrent = (skill: string) => {
+						if (!data.selected.includes(skill)) {
+							currentSkills.push(skill);
+						}
+					};
+
 					switch (f.type) {
 						case FeatureType.Skill:
-							currentSkills.push(f.data.skill);
+							addCurrent(f.data.skill);
 							break;
 						case FeatureType.SkillChoice:
-							currentSkills.push(...f.data.selected);
+							currentSkills.forEach(addCurrent);
 							break;
 					}
 				});

@@ -12,6 +12,7 @@ interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[],
 	playbook: Playbook;
+	createHero: () => void;
 	closeDirectory: () => void;
 }
 
@@ -29,8 +30,8 @@ export const DirectoryModal = (props: Props) => {
 				content={
 					<div className='directory-modal'>
 						<HeaderText>Heroes</HeaderText>
-						{props.heroes.map(h => <div key={h.id} className='directory-btn' onClick={() => { navigation.goToHeroView(h.id); props.closeDirectory(); }}>{h.name}</div>)}
-						{props.heroes.length === 0 ? <div className='directory-btn' onClick={() => { navigation.goToHeroList(); props.closeDirectory(); }}>List</div> : null}
+						{props.heroes.map(h => <div key={h.id} className='directory-btn' onClick={() => { navigation.goToHeroView(h.id); props.closeDirectory(); }}>{h.name || 'Unnamed Hero'}</div>)}
+						<div className='directory-btn' onClick={() => { props.createHero(); props.closeDirectory(); }}>Create a New Hero</div>
 						<HeaderText>Library</HeaderText>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('ancestry'); props.closeDirectory(); }}>Ancestries</div>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('culture'); props.closeDirectory(); }}>Cultures</div>

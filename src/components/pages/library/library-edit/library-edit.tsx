@@ -1448,7 +1448,7 @@ export const LibraryEditPage = (props: Props) => {
 				id: Utils.guid(),
 				name: '',
 				level: 1,
-				role: FactoryLogic.createMonsterRole(MonsterRoleType.Ambusher, MonsterOrganizationType.Platoon),
+				role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Ambusher),
 				keywords: [],
 				encounterValue: 0,
 				size: FactoryLogic.createSize(1, 'M'),

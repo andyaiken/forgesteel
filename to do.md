@@ -4,7 +4,6 @@
 
 ### Priority
 
-* Bugbear
 * Elemental
 * Demon
 * Devil
@@ -33,7 +32,6 @@
 * Lightbender
 * Medusa
 * Olothec
-* Rivals
 * Shambling Mound
 * Time Raider
 * Voiceless Talker
@@ -57,6 +55,7 @@
 
 * It should be possible to create a homebrew subclass / class ability / monster individually
 * Animals
+* Rivals
 
 ### Monster Editor
 

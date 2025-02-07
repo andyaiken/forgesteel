@@ -5,7 +5,6 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const ankheg: MonsterGroup = {
 	id: 'monster-group-ankheg',
@@ -20,9 +19,9 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 			description: 'Although ankhegs can be found anywhere, they are a particular plague in settled lands. Ankhegs hunt alone, lurking a few feet below roadways and pastures. When their sensitive antennae detect movement above, they burst from the earth, dragging living prey into their tunnels to be devoured. These hit-and-run tactics make ankhegs virtually impossible to eradicate - unless they have the bad luck to ambush a party of well-armed adventurers. Many communities pay a handsome bounty for a slain ankheg.'
 		},
 		{
-			id: 'dwarf-info-2',
+			id: 'ankheg-info-2',
 			name: 'Terror of the Thaw',
-			description: 'Ankhegs are a year-round menace in the warmest lands. In temperate places, ankhegs hibernate during the winter, granting farmers a season of peace … but this respite is paid for on the first thaw of spring, when every ankheg awakens ravenous on the same day and bursts from the ground to feed. '
+			description: 'Ankhegs are a year-round menace in the warmest lands. In temperate places, ankhegs hibernate during the winter, granting farmers a season of peace … but this respite is paid for on the first thaw of spring, when every ankheg awakens ravenous on the same day and bursts from the ground to feed.'
 		}
 	],
 	malice: [
@@ -62,7 +61,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 			id: 'ankheg-1',
 			name: 'Ankheg',
 			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterRoleType.NoRole, MonsterOrganizationType.Solo),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Solo),
 			keywords: [ 'Ankheg', 'Beast' ],
 			encounterValue: 30,
 			speed: FactoryLogic.createSpeed(5, 'burrow'),
@@ -140,7 +139,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 							tier2: '8 acid damage',
 							tier3: '11 acid damage'
 						}),
-						effect: 'The affected area is covered in burning acid. An enemy who enters an affected square for the first time on their turn or starts their turn there takes 2 acid damage. '
+						effect: 'The affected area is covered in burning acid. An enemy who enters an affected square for the first time on their turn or starts their turn there takes 2 acid damage.'
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -171,7 +170,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 })
 						],
 						target: 'Special',
-						effect: 'The ankheg kicks up dust into the affected area that blocks line of effect for enemies. The ankheg then shifts or burrows up to their speed. '
+						effect: 'The ankheg kicks up dust into the affected area that blocks line of effect for enemies. The ankheg then shifts or burrows up to their speed.'
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -194,7 +193,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 				FactoryLogic.feature.create({
 					id: 'ankheg-1-feature-9',
 					name: 'Tunneler',
-					description: 'When the ankheg burrows, they create a size 2 tunnel. The tunnel remains stable for one day, then collapses. '
+					description: 'When the ankheg burrows, they create a size 2 tunnel. The tunnel remains stable for one day, then collapses.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "6.9.0",
+	"version": "6.10.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -16,7 +16,7 @@
 		"type:check": "tsc -p tsconfig.node.json && tsc -p tsconfig.app.json"
 	},
 	"dependencies": {
-		"@ant-design/icons": "^5.6.0",
+		"@ant-design/icons": "^5.6.1",
 		"@types/showdown": "^2.0.6",
 		"antd": "^5.23.4",
 		"gh-pages": "^6.3.0",

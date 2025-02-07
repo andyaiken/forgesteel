@@ -5,7 +5,6 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const lordSyuul: MonsterGroup = {
 	id: 'monster-group-lord-syuul',
@@ -81,7 +80,7 @@ However, any hero who has at least one psionic ability can use their maneuver to
 			id: 'lord-syuul-1',
 			name: 'Lord Syuul',
 			level: 6,
-			role: FactoryLogic.createMonsterRole(MonsterRoleType.NoRole, MonsterOrganizationType.Solo),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Solo),
 			keywords: [ 'Horror', 'Voiceless Talker' ],
 			encounterValue: 80,
 			speed: FactoryLogic.createSpeed(7, 'teleport, hover'),

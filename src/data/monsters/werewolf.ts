@@ -5,7 +5,6 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const werewolf: MonsterGroup = {
 	id: 'monster-group-werewolf',
@@ -70,7 +69,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 			id: 'werewolf',
 			name: 'Werewolf',
 			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterRoleType.NoRole, MonsterOrganizationType.Solo),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Solo),
 			keywords: [ 'Accursed', 'Humanoid', 'Werebeast' ],
 			encounterValue: 30,
 			speed: FactoryLogic.createSpeed(8),

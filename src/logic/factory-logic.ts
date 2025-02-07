@@ -339,7 +339,7 @@ export class FactoryLogic {
 			name: data.name || '',
 			description: data.description || '',
 			level: data.level || 1,
-			role: data.role || FactoryLogic.createMonsterRole(MonsterRoleType.Ambusher, MonsterOrganizationType.Platoon),
+			role: data.role || FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Ambusher),
 			keywords: data.keywords || [],
 			encounterValue: data.encounterValue || 0,
 			size: data.size || FactoryLogic.createSize(1, 'M'),
@@ -353,7 +353,7 @@ export class FactoryLogic {
 		};
 	};
 
-	static createMonsterRole = (type: MonsterRoleType, organization: MonsterOrganizationType): MonsterRole => {
+	static createMonsterRole = (organization: MonsterOrganizationType, type: MonsterRoleType = MonsterRoleType.NoRole): MonsterRole => {
 		return {
 			type: type,
 			organization: organization

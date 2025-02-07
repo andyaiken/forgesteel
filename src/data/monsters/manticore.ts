@@ -5,7 +5,6 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const manticore: MonsterGroup = {
 	id: 'monster-group-manticore',
@@ -70,7 +69,7 @@ export const manticore: MonsterGroup = {
 			id: 'manticore-1',
 			name: 'Manticore',
 			level: 4,
-			role: FactoryLogic.createMonsterRole(MonsterRoleType.NoRole, MonsterOrganizationType.Solo),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Solo),
 			keywords: [ 'Beast', 'Manticore' ],
 			encounterValue: 60,
 			size: FactoryLogic.createSize(2),

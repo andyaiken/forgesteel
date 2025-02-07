@@ -4,7 +4,6 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const chimera: MonsterGroup = {
 	id: 'monster-group-chimera',
@@ -61,7 +60,7 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 			id: 'chimera-1',
 			name: 'Chimera',
 			level: 3,
-			role: FactoryLogic.createMonsterRole(MonsterRoleType.NoRole, MonsterOrganizationType.Solo),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Solo),
 			keywords: [ 'Beast', 'Chimera' ],
 			encounterValue: 50,
 			size: FactoryLogic.createSize(2),

@@ -169,13 +169,18 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
-		const selectedIDs = data.selected.map(f => f.id);
-		const pointsUsed = Collections.sum(selectedIDs, id => {
-			const original = availableOptions.find(o => o.feature.id === id);
-			return original ? original.value : 0;
-		});
-		const pointsLeft = data.count - pointsUsed;
-		const unavailableIDs = availableOptions.filter(opt => opt.value > pointsLeft).map(opt => opt.feature.id);
+		let unavailableIDs: string[] = [];
+		if (data.options.some(opt => opt.value > 1)) {
+			const selectedIDs = data.selected.map(f => f.id);
+			const pointsUsed = Collections.sum(selectedIDs, id => {
+				const original = availableOptions.find(o => o.feature.id === id);
+				return original ? original.value : 0;
+			});
+			const pointsLeft = data.count - pointsUsed;
+			unavailableIDs = availableOptions
+				.filter(opt => !selectedIDs.includes(opt.feature.id) && (opt.value > pointsLeft))
+				.map(opt => opt.feature.id);
+		}
 
 		const showCosts = data.options.some(o => o.value > 1);
 

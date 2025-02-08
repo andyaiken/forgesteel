@@ -32,6 +32,7 @@ export const DirectoryModal = (props: Props) => {
 						<HeaderText>Heroes</HeaderText>
 						{props.heroes.map(h => <div key={h.id} className='directory-btn' onClick={() => { navigation.goToHeroView(h.id); props.closeDirectory(); }}>{h.name || 'Unnamed Hero'}</div>)}
 						<div className='directory-btn' onClick={() => { props.createHero(); props.closeDirectory(); }}>Create a New Hero</div>
+						<div className='directory-btn' onClick={() => { navigation.goToHeroList(); props.closeDirectory(); }}>Heroes</div>
 						<HeaderText>Library</HeaderText>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('ancestry'); props.closeDirectory(); }}>Ancestries</div>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('culture'); props.closeDirectory(); }}>Cultures</div>

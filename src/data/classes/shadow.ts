@@ -492,6 +492,11 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 									value: 1
 								}
 							]
+						}),
+						FactoryLogic.feature.create({
+							id: 'shadow-sub-1-2-2',
+							name: 'Burning Ash',
+							description: 'The ash you leave behind burns your foes. The first time on a turn that you use a shadow ability to teleport away from or into a space adjacent to an enemy, that enemy takes fire damage equal to your Reason score.'
 						})
 					]
 				},
@@ -608,6 +613,11 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 									value: 1
 								}
 							]
+						}),
+						FactoryLogic.feature.create({
+							id: 'shadow-sub-2-2-2',
+							name: 'Trained Assassin',
+							description: 'You know just where to cut your enemies. Whenever you make a strike with at least one surge and no banes, the strike gains an extra surge which you must use on that strike.'
 						})
 					]
 				},
@@ -711,6 +721,14 @@ The illusion ends when you harm another creature, when you and any creature phys
 									value: 1
 								}
 							]
+						}),
+						FactoryLogic.feature.create({
+							id: 'shadow-sub-3-2-2',
+							name: 'Friend!',
+							description: `
+Your illusions make your enemies believe you are their friend in critical moments. Whenever an enemy uses an ability or trait that targets multiple allies and you are within distance of the effect, you can choose to be a target of the effect as well.
+
+Additionally when you use your I’m No Threat ability, you can take the Disengage move action as part of that ability.`
 						})
 					]
 				},

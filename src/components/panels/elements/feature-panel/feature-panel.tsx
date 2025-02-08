@@ -199,7 +199,7 @@ export const FeaturePanel = (props: Props) => {
 					style={{ width: '100%' }}
 					className={data.selected.length === 0 ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
-					maxCount={(data.count === 1) && showCosts ? undefined : data.count}
+					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder={data.count === 1 ? 'Select an option' : 'Select options'}
 					options={sortedOptions.map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description, disabled: unavailableIDs.includes(o.feature.id), cost: o.value }))}

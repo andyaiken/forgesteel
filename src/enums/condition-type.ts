@@ -12,6 +12,5 @@ export enum ConditionType {
 
 export enum ConditionEndType {
 	EndOfTurn = 'End of turn',
-	EndOfEncounter = 'End of encounter',
 	SaveEnds = 'Save ends'
 }

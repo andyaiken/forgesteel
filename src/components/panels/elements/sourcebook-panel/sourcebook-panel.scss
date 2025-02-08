@@ -23,6 +23,10 @@
 
 @media (prefers-color-scheme: dark) {
 	.sourcebook-panel {
+		&:hover {
+			background-color: rgba(255, 255, 255, 0.1);
+		}
+
 		.action-buttons {
 			button {
 				color: rgb(255, 255, 255);

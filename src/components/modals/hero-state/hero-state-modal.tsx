@@ -2,11 +2,10 @@ import { Alert, Button, Divider, Drawer, Flex, Space, Tabs } from 'antd';
 import { ArrowUpOutlined, CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Condition, Hero } from '../../../models/hero';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
-import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
 import { ConditionPanel } from '../../panels/condition/condition-panel';
+import { ConditionsModal } from '../conditions/conditions-modal';
 import { DangerButton } from '../../controls/danger-button/danger-button';
-import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
 import { Expander } from '../../controls/expander/expander';
 import { FactoryLogic } from '../../../logic/factory-logic';
 import { HealthPanel } from '../../panels/health/health-panel';
@@ -39,6 +38,7 @@ interface Props {
 export const HeroStateModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(props.hero)));
 	const [ shopVisible, setShopVisible ] = useState<boolean>(false);
+	const [ conditionsVisible, setConditionsVisible ] = useState<boolean>(false);
 	const [ projectsVisible, setProjectsVisible ] = useState<boolean>(false);
 
 	const getHeroSection = () => {
@@ -373,8 +373,8 @@ export const HeroStateModal = (props: Props) => {
 						: null
 				}
 				<Button block={true} onClick={() => setShopVisible(true)}>Add a new item</Button>
-				<Drawer open={shopVisible} onClose={() => setShopVisible(false)} closeIcon={null} width='500px'>
-					{shopVisible ? <ShopModal sourcebooks={props.sourcebooks} onSelect={addItem} /> : null}
+				<Drawer open={shopVisible} closeIcon={null} width='500px'>
+					<ShopModal sourcebooks={props.sourcebooks} onSelect={addItem} />
 				</Drawer>
 			</Space>
 		);
@@ -386,10 +386,10 @@ export const HeroStateModal = (props: Props) => {
 			copy.state.conditions.push({
 				id: Utils.guid(),
 				type: type,
-				ends: ConditionEndType.EndOfTurn,
-				resistCharacteristic: Characteristic.Might
+				ends: ConditionEndType.EndOfTurn
 			});
 			setHero(copy);
+			setConditionsVisible(false);
 			props.onChange(copy);
 		};
 
@@ -431,21 +431,10 @@ export const HeroStateModal = (props: Props) => {
 						/>
 						: null
 				}
-				<DropdownButton
-					label='Add a new condition'
-					items={[
-						ConditionType.Bleeding,
-						ConditionType.Dazed,
-						ConditionType.Frightened,
-						ConditionType.Grabbed,
-						ConditionType.Prone,
-						ConditionType.Restrained,
-						ConditionType.Slowed,
-						ConditionType.Taunted,
-						ConditionType.Weakened
-					].map(ct => ({ key: ct, label: <div className='ds-text centered-text'>{ct}</div> }))}
-					onClick={key => addCondition(key as ConditionType)}
-				/>
+				<Button block={true} onClick={() => setConditionsVisible(true)}>Add a new condition</Button>
+				<Drawer open={conditionsVisible} closeIcon={null} width='500px'>
+					<ConditionsModal onSelect={addCondition} />
+				</Drawer>
 			</Space>
 		);
 	};
@@ -517,8 +506,8 @@ export const HeroStateModal = (props: Props) => {
 						: null
 				}
 				<Button block={true} onClick={() => setProjectsVisible(true)}>Add a new project</Button>
-				<Drawer open={projectsVisible} onClose={() => setProjectsVisible(false)} closeIcon={null} width='500px'>
-					{projectsVisible ? <ProjectsModal sourcebooks={props.sourcebooks} onSelect={addProject} /> : null}
+				<Drawer open={projectsVisible} closeIcon={null} width='500px'>
+					<ProjectsModal sourcebooks={props.sourcebooks} onSelect={addProject} />
 				</Drawer>
 			</Space>
 		);

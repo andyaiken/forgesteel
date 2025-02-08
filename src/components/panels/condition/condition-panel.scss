@@ -9,8 +9,13 @@
 	}
 
 	.action-buttons {
-		margin: 5px 0;
+		padding-top: 10px;
+		display: flex;
+		flex-direction: column;
+		border-left: 1px solid rgba(5, 5, 5, 0.06);
+		padding-left: 10px;
 	}
+
 }
 
 @media (prefers-color-scheme: dark) {

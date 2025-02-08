@@ -358,12 +358,9 @@ Complex or time-consuming tests might require an action if made in combat - or c
 				description: '',
 				type: FactoryLogic.type.createAction(),
 				keywords: [],
-				distance: [
-					FactoryLogic.distance.createSelf(),
-					FactoryLogic.distance.createMelee()
-				],
-				target: 'Self or 1 creature',
-				effect: 'You use your action to employ medicine or inspiring words to make an adjacent creature feel better and stay in the fight. The creature can spend a Recovery to regain Stamina, or can make a resistance roll against a “(resistance ends)” effect they are suffering.'
+				distance: [ FactoryLogic.distance.createMelee() ],
+				target: '1 creature',
+				effect: 'You use your action to employ medicine or inspiring words to make an adjacent creature feel better and stay in the fight. The creature can spend a Recovery to regain Stamina, or can make a saving throw against a “(save ends)” effect they are suffering.'
 			}));
 		}
 

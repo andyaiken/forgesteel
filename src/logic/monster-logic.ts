@@ -1,8 +1,9 @@
+import { Feature, FeatureDamageModifierData } from '../models/feature';
 import { Monster, MonsterGroup } from '../models/monster';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { DamageModifierType } from '../enums/damage-modifier-type';
-import { FeatureDamageModifierData } from '../models/feature';
+import { FactoryLogic } from './factory-logic';
 import { FeatureType } from '../enums/feature-type';
 import { MonsterFilter } from '../models/monster-filter';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
@@ -19,6 +20,245 @@ export class MonsterLogic {
 		}
 
 		return 'Unnamed Monster';
+	};
+
+	static getMonsterLevel = (monster: Monster) => {
+		if (monster.retainer && monster.retainer.level) {
+			return monster.retainer.level;
+		}
+
+		return monster.level;
+	};
+
+	static getStamina = (monster: Monster) => {
+		let stamina = monster.stamina;
+
+		if (monster.retainer && monster.retainer.level) {
+			stamina += 10 * (monster.retainer.level - monster.level);
+		}
+
+		return stamina;
+	};
+
+	static getSignatureDamageBonus = (monster: Monster) => {
+		let tier1 = 0;
+		let tier2 = 0;
+		let tier3 = 0;
+
+		if (monster.retainer && monster.retainer.level) {
+			const levels = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].filter(lvl => (lvl > monster.level) && (lvl <= monster.retainer!.level));
+			tier1 += levels.filter(lvl => lvl % 2 === 0).length;
+			tier2 += levels.length;
+			tier3 += levels.length;
+		}
+
+		if (tier1 + tier2 + tier3 === 0) {
+			return null;
+		}
+
+		return {
+			tier1: tier1,
+			tier2: tier2,
+			tier3: tier3
+		};
+	};
+
+	static getFreeStrikeDamage = (monster: Monster) => {
+		let damage = monster.freeStrikeDamage;
+
+		if (monster.retainer && monster.retainer.level) {
+			const levels = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].filter(lvl => (lvl > monster.level) && (lvl <= monster.retainer!.level));
+			damage += levels.filter(lvl => lvl % 3 === 0).length * 2;
+		}
+
+		return damage;
+	};
+
+	static getFeatures = (monster: Monster) => {
+		const features = [ ...monster.features ];
+
+		MonsterLogic.getRetainerAdvancementFeatures(monster)
+			.filter(lvl => lvl.level <= MonsterLogic.getMonsterLevel(monster))
+			.forEach(lvl => {
+				if (lvl.feature) {
+					switch (lvl.feature.type) {
+						case FeatureType.Choice:
+							features.push(...lvl.feature.data.selected);
+							break;
+						case FeatureType.Multiple:
+							features.push(...lvl.feature.data.features);
+							break;
+						default:
+							features.push(lvl.feature);
+							break;
+					}
+				}
+			});
+
+		return features;
+	};
+
+	static getRetainerAdvancementFeatures = (monster: Monster): { level: number, feature: Feature }[] => {
+		if (!monster.retainer) {
+			return [];
+		}
+
+		const options4 = monster.retainer.featuresByLevel.filter(lvl => lvl.level === 4).map(lvl => lvl.option).filter(f => !!f);
+		const options7 = monster.retainer.featuresByLevel.filter(lvl => lvl.level === 7).map(lvl => lvl.option).filter(f => !!f);
+		const options10 = monster.retainer.featuresByLevel.filter(lvl => lvl.level === 10).map(lvl => lvl.option).filter(f => !!f);
+
+		return [
+			{
+				level: 2,
+				feature: FactoryLogic.feature.createChoice({
+					id: 'retainer-2',
+					options: [
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'retainer-2-1',
+								characteristic: Characteristic.Might,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'retainer-2-2',
+								characteristic: Characteristic.Agility,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'retainer-2-3',
+								characteristic: Characteristic.Reason,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'retainer-2-4',
+								characteristic: Characteristic.Intuition,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'retainer-2-5',
+								characteristic: Characteristic.Presence,
+								value: 1
+							}),
+							value: 1
+						}
+					]
+				})
+			},
+			{
+				level: 4,
+				feature: FactoryLogic.feature.createChoice({
+					id: 'retainer-4',
+					options: options4.map(o => ({ feature: o, value: 1 }))
+				})
+			},
+			{
+				level: 5,
+				feature: FactoryLogic.feature.createMultiple({
+					id: 'retainer-5',
+					features: [
+						FactoryLogic.feature.createCharacteristicBonus({
+							id: 'retainer-5-1',
+							characteristic: Characteristic.Might,
+							value: 1
+						}),
+						FactoryLogic.feature.createCharacteristicBonus({
+							id: 'retainer-5-2',
+							characteristic: Characteristic.Agility,
+							value: 1
+						}),
+						FactoryLogic.feature.createCharacteristicBonus({
+							id: 'retainer-5-3',
+							characteristic: Characteristic.Reason,
+							value: 1
+						}),
+						FactoryLogic.feature.createCharacteristicBonus({
+							id: 'retainer-5-4',
+							characteristic: Characteristic.Intuition,
+							value: 1
+						}),
+						FactoryLogic.feature.createCharacteristicBonus({
+							id: 'retainer-5-5',
+							characteristic: Characteristic.Presence,
+							value: 1
+						})
+					]
+				})
+			},
+			{
+				level: 7,
+				feature: FactoryLogic.feature.createChoice({
+					id: 'retainer-7',
+					options: options7.map(o => ({ feature: o, value: 1 }))
+				})
+			},
+			{
+				level: 8,
+				feature: FactoryLogic.feature.createChoice({
+					id: 'retainer-8',
+					options: [
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'retainer-8-1',
+								characteristic: Characteristic.Might,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'retainer-8-2',
+								characteristic: Characteristic.Agility,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'retainer-8-3',
+								characteristic: Characteristic.Reason,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'retainer-8-4',
+								characteristic: Characteristic.Intuition,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'retainer-8-5',
+								characteristic: Characteristic.Presence,
+								value: 1
+							}),
+							value: 1
+						}
+					]
+				})
+			},
+			{
+				level: 10,
+				feature: FactoryLogic.feature.createChoice({
+					id: 'retainer-10',
+					options: options10.map(o => ({ feature: o, value: 1 }))
+				})
+			}
+		];
 	};
 
 	static matches = (monster: Monster, monsterGroup: MonsterGroup, filter: MonsterFilter) => {
@@ -75,14 +315,14 @@ export class MonsterLogic {
 		const immunities: { type: string, value: number }[] = [];
 
 		// Collate from features
-		monster.features
+		MonsterLogic.getFeatures(monster)
 			.filter(f => f.type === FeatureType.DamageModifier)
 			.forEach(f => {
 				const data = f.data as FeatureDamageModifierData;
 				data.modifiers
 					.filter(dm => dm.type === type)
 					.forEach(dm => {
-						const value = dm.value + (dm.valuePerLevel * (monster.level - 1)) + (dm.valuePerEchelon * MonsterLogic.getEchelon(monster.level));
+						const value = dm.value + (dm.valuePerLevel * (monster.level - 1)) + (dm.valuePerEchelon * MonsterLogic.getEchelon(monster));
 						immunities.push({
 							type: dm.damageType,
 							value: value
@@ -93,7 +333,9 @@ export class MonsterLogic {
 		return Collections.sort(immunities, i => i.type);
 	};
 
-	static getEchelon = (level: number) => {
+	static getEchelon = (monster: Monster) => {
+		const level = MonsterLogic.getMonsterLevel(monster);
+
 		switch (level) {
 			case 1:
 			case 2:

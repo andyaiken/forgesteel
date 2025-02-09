@@ -1,6 +1,6 @@
 import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -101,6 +101,12 @@ export const FeatureEditPanel = (props: Props) => {
 					valueCharacteristics: [],
 					valuePerLevel: 0,
 					valuePerEchelon: 0
+				};
+				break;
+			case FeatureType.CharacteristicBonus:
+				data = {
+					characteristic: Characteristic.Might,
+					value: 1
 				};
 				break;
 			case FeatureType.Choice:
@@ -255,7 +261,7 @@ export const FeatureEditPanel = (props: Props) => {
 		};
 
 		const setValue = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData | FeatureAncestryFeatureChoiceData;
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData | FeatureCharacteristicBonusData | FeatureAncestryFeatureChoiceData;
 			copy.value = value;
 			setData(copy);
 		};
@@ -275,6 +281,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setValueCharacteristics = (value: Characteristic[]) => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
 			copy.valueCharacteristics = value;
+			setData(copy);
+		};
+
+		const setCharacteristic = (value: Characteristic) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureCharacteristicBonusData;
+			copy.characteristic = value;
 			setData(copy);
 		};
 
@@ -584,6 +596,24 @@ export const FeatureEditPanel = (props: Props) => {
 							value={data.valueCharacteristics}
 							onChange={setValueCharacteristics}
 						/>
+					</Space>
+				);
+			}
+			case FeatureType.CharacteristicBonus: {
+				const data = feature.data as FeatureCharacteristicBonusData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Characteristic</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select field'
+							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(o => ({ value: o }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={data.characteristic}
+							onChange={setCharacteristic}
+						/>
+						<HeaderText>Value</HeaderText>
+						<NumberSpin label='Value' min={0} value={data.value} onChange={setValue} />
 					</Space>
 				);
 			}
@@ -999,7 +1029,7 @@ export const FeatureEditPanel = (props: Props) => {
 									<Select
 										style={{ width: '100%' }}
 										placeholder='Select type'
-										options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.AbilityCost, FeatureType.AncestryChoice, FeatureType.AncestryFeatureChoice, FeatureType.Bonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.TitleChoice ]).map(o => ({ value: o }))}
+										options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.AbilityCost, FeatureType.AncestryChoice, FeatureType.AncestryFeatureChoice, FeatureType.Bonus, FeatureType.CharacteristicBonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.TitleChoice ]).map(o => ({ value: o }))}
 										optionRender={option => <Field label={option.data.value} value={FeatureLogic.getFeatureTypeDescription(option.data.value)} />}
 										value={feature.type}
 										onChange={setType}

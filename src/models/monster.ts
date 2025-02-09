@@ -29,6 +29,14 @@ export interface Monster extends Element {
 	}[];
 	withCaptain: string;
 	features: Feature[];
+	retainer: {
+		level: number;
+		featuresByLevel: {
+			level: number,
+			option: Feature;
+			selected: Feature | null;
+		}[];
+	} | null;
 };
 
 export interface MonsterGroup extends Element {

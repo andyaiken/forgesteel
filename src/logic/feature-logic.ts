@@ -233,6 +233,8 @@ export class FeatureLogic {
 				return 'This feature allows you to select a feature from an ancestry.';
 			case FeatureType.Bonus:
 				return 'This feature modifies a statistic.';
+			case FeatureType.CharacteristicBonus:
+				return 'This feature modifies a characteristic.';
 			case FeatureType.Choice:
 				return 'This feature allows you to choose from a collection of features.';
 			case FeatureType.ClassAbility:

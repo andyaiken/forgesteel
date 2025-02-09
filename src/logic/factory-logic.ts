@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { Project, ProjectProgress } from '../models/project';
@@ -332,7 +332,8 @@ export class FactoryLogic {
 		freeStrikeDamage: number,
 		characteristics: { characteristic: Characteristic, value: number }[],
 		withCaptain?: string,
-		features: Feature[]
+		features: Feature[],
+		retainer?: { level: number, featuresByLevel: { level: number, option: Feature, selected: Feature }[] }
 	}): Monster => {
 		return {
 			id: data.id || Utils.guid(),
@@ -349,7 +350,8 @@ export class FactoryLogic {
 			freeStrikeDamage: data.freeStrikeDamage || 2,
 			characteristics: data.characteristics || MonsterLogic.createCharacteristics(0, 0, 0, 0, 0),
 			withCaptain: data.withCaptain || '',
-			features: data.features || []
+			features: data.features || [],
+			retainer: data.retainer || null
 		};
 	};
 
@@ -667,6 +669,18 @@ export class FactoryLogic {
 					valueCharacteristics: data.valueCharacteristics || [],
 					valuePerLevel: data.valuePerLevel || 0,
 					valuePerEchelon: data.valuePerEchelon || 0
+				}
+			};
+		},
+		createCharacteristicBonus: (data: { id: string, name?: string, description?: string, characteristic: Characteristic, value: number }): FeatureCharacteristicBonus => {
+			return {
+				id: data.id,
+				name: data.name || data.characteristic.toString(),
+				description: data.description || '',
+				type: FeatureType.CharacteristicBonus,
+				data: {
+					characteristic: data.characteristic,
+					value: data.value
 				}
 			};
 		},

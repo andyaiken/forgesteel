@@ -28,7 +28,7 @@ export const MonsterPanel = (props: Props) => {
 					<HeaderText>{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}</HeaderText>
 					<Flex justify='space-between'>
 						<div className='ds-text'>
-							Level {props.monster.level} {FormatLogic.getRole(props.monster.role)} {props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
+							Level {MonsterLogic.getMonsterLevel(props.monster)} {FormatLogic.getRole(props.monster.role)} {props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
 						</div>
 						<Field label='EV' value={(props.monster.role.organization === MonsterOrganizationType.Minion) ? `${props.monster.encounterValue} for 8 minions` : props.monster.encounterValue} />
 					</Flex>
@@ -36,12 +36,14 @@ export const MonsterPanel = (props: Props) => {
 			);
 		}
 
+		const signatureBonus = MonsterLogic.getSignatureDamageBonus(props.monster);
+
 		const immunities = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Immunity);
 		const weaknesses = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Weakness);
 		const speed = props.monster.speed.modes !== '' ? `${props.monster.speed.value} (${props.monster.speed.modes})` : props.monster.speed.value;
 
 		const types = [ FeatureType.Ability, FeatureType.Text ];
-		const features = props.monster.features.filter(f => types.includes(f.type));
+		const features = MonsterLogic.getFeatures(props.monster).filter(f => types.includes(f.type));
 
 		return (
 			<div className='monster-panel' id={props.monster.id}>
@@ -49,20 +51,25 @@ export const MonsterPanel = (props: Props) => {
 				<Markdown text={props.monster.description} />
 				<Flex justify='space-between'>
 					<div className='ds-text'>
-						Level {props.monster.level} {FormatLogic.getRole(props.monster.role)} {props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
+						Level {MonsterLogic.getMonsterLevel(props.monster)} {FormatLogic.getRole(props.monster.role)} {props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
 					</div>
 					<Field label='EV' value={(props.monster.role.organization === MonsterOrganizationType.Minion) ? `${props.monster.encounterValue} for 8 minions` : props.monster.encounterValue} />
 				</Flex>
 				<div className='stats'>
 					<Field orientation='vertical' label='Speed' value={speed} />
 					<Field orientation='vertical' label='Size' value={FormatLogic.getSize(props.monster.size)} />
-					<Field orientation='vertical' label='Stamina' value={props.monster.stamina} />
+					<Field orientation='vertical' label='Stamina' value={MonsterLogic.getStamina(props.monster)} />
 					<Field orientation='vertical' label='Stability' value={props.monster.stability} />
-					<Field orientation='vertical' label='Free Strike' value={props.monster.freeStrikeDamage} />
+					<Field orientation='vertical' label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(props.monster)} />
 				</div>
 				{
-					props.monster.withCaptain
-						? <Field label='With Captain' value={props.monster.withCaptain} />
+					signatureBonus ?
+						<Field label='Signature Ability Damage' value={`+${signatureBonus.tier1} / +${signatureBonus.tier2} / +${signatureBonus.tier3}`} />
+						: null
+				}
+				{
+					props.monster.withCaptain ?
+						<Field label='With Captain' value={props.monster.withCaptain} />
 						: null
 				}
 				<div className='stats'>

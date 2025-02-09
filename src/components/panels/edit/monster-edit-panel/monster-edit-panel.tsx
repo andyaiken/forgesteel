@@ -21,6 +21,7 @@ import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -192,6 +193,75 @@ export const MonsterEditPanel = (props: Props) => {
 	const deleteFeature = (feature: Feature) => {
 		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
 		copy.features = copy.features.filter(f => f.id !== feature.id);
+		setMonster(copy);
+		props.onChange(copy);
+	};
+
+	const setIsRetainer = (value: boolean) => {
+		const retainer: {
+			level: number,
+			featuresByLevel: {
+				level: number,
+				option: Feature,
+				selected: Feature | null
+			}[]
+		} = {
+			level: monster.level,
+			featuresByLevel: [
+				{
+					level: 4,
+					option: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: Utils.guid(),
+							name: 'Level 4',
+							type: FactoryLogic.type.createAction(),
+							distance: [],
+							target: ''
+						})
+					}),
+					selected: null
+				},
+				{
+					level: 7,
+					option: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: Utils.guid(),
+							name: 'Level 7',
+							type: FactoryLogic.type.createAction(),
+							distance: [],
+							target: ''
+						})
+					}),
+					selected: null
+				},
+				{
+					level: 10,
+					option: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: Utils.guid(),
+							name: 'Level 10',
+							type: FactoryLogic.type.createAction(),
+							distance: [],
+							target: ''
+						})
+					}),
+					selected: null
+				}
+			]
+		};
+
+		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+		copy.retainer = value ? retainer : null;
+		setMonster(copy);
+		props.onChange(copy);
+	};
+
+	const changeRetainerFeature = (feature: Feature, level: number) => {
+		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+		const data = copy.retainer!.featuresByLevel.find(lvl => lvl.level === level);
+		if (data) {
+			data.option = feature;
+		}
 		setMonster(copy);
 		props.onChange(copy);
 	};
@@ -446,6 +516,31 @@ export const MonsterEditPanel = (props: Props) => {
 		);
 	};
 
+	const getRetainerSection = () => {
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Toggle label='Is Retainer' value={!!monster.retainer} onChange={setIsRetainer} />
+				{
+					monster.retainer ?
+						monster.retainer.featuresByLevel.map(lvl => (
+							<Expander
+								key={lvl.level}
+								title={`Level ${lvl.level}`}
+							>
+								<FeatureEditPanel
+									feature={lvl.option}
+									sourcebooks={props.sourcebooks}
+									allowedTypes={[ FeatureType.Ability ]}
+									onChange={f => changeRetainerFeature(f, lvl.level)}
+								/>
+							</Expander>
+						))
+						: null
+				}
+			</Space>
+		);
+	};
+
 	try {
 		return (
 			<div className='monster-edit-panel'>
@@ -470,6 +565,11 @@ export const MonsterEditPanel = (props: Props) => {
 							key: '4',
 							label: 'Features',
 							children: getFeaturesSection()
+						},
+						{
+							key: '5',
+							label: 'Retainer',
+							children: getRetainerSection()
 						}
 					]}
 				/>

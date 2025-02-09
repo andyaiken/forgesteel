@@ -5,6 +5,7 @@ export enum FeatureType {
 	AncestryChoice = 'Ancestry Choice',
 	AncestryFeatureChoice = 'Ancestry Feature Choice',
 	Bonus = 'Bonus',
+	CharacteristicBonus = 'Characteristic Bonus',
 	Choice = 'Choice',
 	ClassAbility = 'Class Ability',
 	DamageModifier = 'Damage Modifier',

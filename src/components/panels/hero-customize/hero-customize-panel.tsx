@@ -1,5 +1,5 @@
 import { Divider, Select } from 'antd';
-import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureClassAbility, FeatureData, FeaturePerk, FeatureSkillChoice } from '../../../models/feature';
+import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureData, FeaturePerk, FeatureSkillChoice } from '../../../models/feature';
 import { Characteristic } from '../../../enums/characteristic';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
@@ -35,6 +35,20 @@ export const HeroCustomizePanel = (props: Props) => {
 		const copy = JSON.parse(JSON.stringify(feature)) as FeatureAncestryFeatureChoice;
 		copy.data.value = value;
 		copy.data.selected = null;
+		props.setFeature(feature.id, copy);
+	};
+
+	const setCharacteristic = (feature: Feature, value: Characteristic) => {
+		const copy = JSON.parse(JSON.stringify(feature)) as FeatureCharacteristicBonus;
+		copy.data.characteristic = value;
+		copy.name = `${copy.data.characteristic} + ${copy.data.value}`;
+		props.setFeature(feature.id, copy);
+	};
+
+	const setCharacteristicBonus = (feature: Feature, value: number) => {
+		const copy = JSON.parse(JSON.stringify(feature)) as FeatureCharacteristicBonus;
+		copy.data.value = value;
+		copy.name = `${copy.data.characteristic} + ${copy.data.value}`;
 		props.setFeature(feature.id, copy);
 	};
 
@@ -130,6 +144,22 @@ export const HeroCustomizePanel = (props: Props) => {
 						/>
 					</div>
 				);
+			case FeatureType.CharacteristicBonus:
+				return (
+					<div>
+						<HeaderText>Characteristic</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select characteristic'
+							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(o => ({ value: o }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={feature.data.characteristic}
+							onChange={ch => setCharacteristic(feature, ch)}
+						/>
+						<HeaderText>Value</HeaderText>
+						<NumberSpin label='Value' min={0} value={feature.data.value} onChange={value => setCharacteristicBonus(feature, value)} />
+					</div>
+				);
 			case FeatureType.ClassAbility:
 				return (
 					<div>
@@ -207,11 +237,12 @@ export const HeroCustomizePanel = (props: Props) => {
 					label='Add a new feature'
 					items={[
 						{ key: 'ancestry', label: <div className='ds-text centered-text'>Ancestry Feature</div> },
-						{ key: 'bonus', label: <div className='ds-text centered-text'>Bonus</div> },
+						{ key: 'characteristic-bonus', label: <div className='ds-text centered-text'>Characteristic Bonus</div> },
 						{ key: 'class-ability', label: <div className='ds-text centered-text'>Class Ability</div> },
 						{ key: 'language', label: <div className='ds-text centered-text'>Language</div> },
 						{ key: 'perk', label: <div className='ds-text centered-text'>Perk</div> },
 						{ key: 'skill', label: <div className='ds-text centered-text'>Skill</div> },
+						{ key: 'stat-bonus', label: <div className='ds-text centered-text'>Stat Bonus</div> },
 						{ key: 'title', label: <div className='ds-text centered-text'>Title</div> }
 					]}
 					onClick={key => {
@@ -225,12 +256,12 @@ export const HeroCustomizePanel = (props: Props) => {
 									former: true
 								});
 								break;
-							case 'bonus':
-								feature = FactoryLogic.feature.createBonus({
+							case 'characteristic-bonus':
+								feature = FactoryLogic.feature.createCharacteristicBonus({
 									id: Utils.guid(),
-									name: `${FeatureField.Stamina} + 6`,
-									field: FeatureField.Stamina,
-									value: 6
+									name: `${Characteristic.Might} + 1`,
+									characteristic: Characteristic.Might,
+									value: 1
 								});
 								break;
 							case 'class-ability':
@@ -254,6 +285,14 @@ export const HeroCustomizePanel = (props: Props) => {
 								feature = FactoryLogic.feature.createSkillChoice({
 									id: Utils.guid(),
 									listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+								});
+								break;
+							case 'stat-bonus':
+								feature = FactoryLogic.feature.createBonus({
+									id: Utils.guid(),
+									name: `${FeatureField.Stamina} + 6`,
+									field: FeatureField.Stamina,
+									value: 6
 								});
 								break;
 							case 'title':

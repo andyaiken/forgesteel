@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityCostData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Ancestry } from '../../../../models/ancestry';
@@ -950,6 +950,12 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
+	const getExtraCharacteristicBonus = (data: FeatureCharacteristicBonusData) => {
+		return (
+			<Field label={data.characteristic} value={data.value} />
+		);
+	};
+
 	const getExtraChoice = (data: FeatureChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
@@ -1284,6 +1290,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraAncestryFeatureChoice(props.feature.data);
 			case FeatureType.Bonus:
 				return getExtraBonus(props.feature.data);
+			case FeatureType.CharacteristicBonus:
+				return getExtraCharacteristicBonus(props.feature.data);
 			case FeatureType.Choice:
 				return getExtraChoice(props.feature.data);
 			case FeatureType.ClassAbility:

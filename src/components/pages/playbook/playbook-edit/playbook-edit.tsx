@@ -43,6 +43,7 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	showDirectory: () => void;
 	showAbout: () => void;
+	showRoll: () => void;
 	showMonster: (monsterID: string) => void;
 	saveChanges: (kind: PlaybookElementKind, element: Element) => void;
 }
@@ -568,7 +569,7 @@ export const PlaybookEditPage = (props: Props) => {
 	try {
 		return (
 			<div className='playbook-edit-page'>
-				<AppHeader breadcrumbs={[ { label: `${Format.capitalize(kind!)} Builder` } ]} showDirectory={props.showDirectory} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: `${Format.capitalize(kind!)} Builder` } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
 						Save Changes
 					</Button>

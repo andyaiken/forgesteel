@@ -5,6 +5,7 @@ import { DieRollPanel } from '../../panels/die-roll/die-roll-panel';
 import { Expander } from '../../controls/expander/expander';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
+import { HeroLogic } from '../../../logic/hero-logic';
 import { Modal } from '../modal/modal';
 import { MultiLine } from '../../controls/multi-line/multi-line';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -101,7 +102,9 @@ export const AbilityModal = (props: Props) => {
 											</SelectablePanel>
 											{
 												props.ability.powerRoll ?
-													<DieRollPanel hero={props.hero} characteristics={props.ability.powerRoll.characteristic} />
+													<DieRollPanel
+														modifier={Math.max(...props.ability.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero, ch)))}
+													/>
 													: null
 											}
 										</div>

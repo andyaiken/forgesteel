@@ -9,6 +9,7 @@ interface Props {
 	children?: ReactNode;
 	showDirectory: () => void;
 	showAbout: () => void;
+	showRoll?: () => void;
 }
 
 export const AppHeader = (props: Props) => {
@@ -21,6 +22,7 @@ export const AppHeader = (props: Props) => {
 			<div className='action-buttons'>
 				{props.children}
 				{props.children ? <div className='divider' /> : null}
+				{props.showRoll ? <Button onClick={props.showRoll}>Roll</Button> : null}
 				<Button onClick={props.showAbout}>About</Button>
 			</div>
 		</div>

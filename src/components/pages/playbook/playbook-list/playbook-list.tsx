@@ -22,6 +22,7 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	showDirectory: () => void;
 	showAbout: () => void;
+	showRoll: () => void;
 	createElement: (kind: PlaybookElementKind) => void;
 	importElement: (kind: PlaybookElementKind, element: Element) => void;
 }
@@ -118,7 +119,7 @@ export const PlaybookListPage = (props: Props) => {
 
 		return (
 			<div className='playbook-list-page'>
-				<AppHeader breadcrumbs={[ { label: 'Playbook' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: 'Playbook' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					<Input
 						placeholder='Search'
 						allowClear={true}

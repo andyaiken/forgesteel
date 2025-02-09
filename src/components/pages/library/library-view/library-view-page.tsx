@@ -41,6 +41,7 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	showDirectory: () => void;
 	showAbout: () => void;
+	showRoll: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 	export: (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	delete: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
@@ -196,7 +197,7 @@ export const LibraryViewPage = (props: Props) => {
 	try {
 		return (
 			<div className='library-view-page'>
-				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					{
 						subElementID ?
 							<Button onClick={() => navigation.goToLibraryView(kind!, elementID!)}>

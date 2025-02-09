@@ -61,6 +61,7 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	showDirectory: () => void;
 	showAbout: () => void;
+	showRoll: () => void;
 	saveChanges: (hero: Hero) => void;
 }
 
@@ -473,7 +474,7 @@ export const HeroEditPage = (props: Props) => {
 
 		return (
 			<div className='hero-edit-page'>
-				<AppHeader breadcrumbs={[ { label: 'Hero Builder' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: 'Hero Builder' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					<Button type='primary' disabled={!dirty} onClick={saveChanges}>
 						Save Changes
 					</Button>

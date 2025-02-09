@@ -72,6 +72,7 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	showDirectory: () => void;
 	showAbout: () => void;
+	showRoll: () => void;
  	showMonster: (monsterID: string) => void;
 	saveChanges: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 }
@@ -2055,7 +2056,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<div className='library-edit-page'>
-				<AppHeader breadcrumbs={[ { label: `${editing} Builder` } ]} showDirectory={props.showDirectory} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: `${editing} Builder` } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
 						Save Changes
 					</Button>

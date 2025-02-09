@@ -12,13 +12,14 @@ interface Props {
 	showPlaybook: () => void;
 	showDirectory: () => void;
 	showAbout: () => void;
+	showRoll: () => void;
 }
 
 export const WelcomePage = (props: Props) => {
 	try {
 		return (
 			<div className='welcome-page'>
-				<AppHeader breadcrumbs={[]} showDirectory={props.showDirectory} showAbout={props.showAbout}/>
+				<AppHeader breadcrumbs={[]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} />
 				<div className='welcome-page-content'>
 					<div className='welcome-column'>
 						<SelectablePanel>

@@ -1,18 +1,14 @@
 import { Alert, Button, Slider, Space, Statistic } from 'antd';
 import { ReactNode, useState } from 'react';
-import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
 import { Expander } from '../../controls/expander/expander';
-import { Hero } from '../../../models/hero';
-import { HeroLogic } from '../../../logic/hero-logic';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Random } from '../../../utils/random';
 
 import './die-roll-panel.scss';
 
 interface Props {
-	hero: Hero;
-	characteristics: Characteristic[];
+	modifier: number;
 }
 
 export const DieRollPanel = (props: Props) => {
@@ -61,9 +57,7 @@ export const DieRollPanel = (props: Props) => {
 				break;
 		}
 
-		const values = props.characteristics.map(ch => HeroLogic.getCharacteristic(props.hero as Hero, ch));
-		const modifier = Collections.max(values, v => v) ?? 0;
-		const total = Collections.sum([ ...results, modifier, bonus ], r => r);
+		const total = Collections.sum([ ...results, props.modifier, bonus ], r => r);
 
 		const marks: Record<string | number, ReactNode> = {};
 		marks[1] = <div className='ds-text dimmed-text small-text'>1</div>;
@@ -98,7 +92,7 @@ export const DieRollPanel = (props: Props) => {
 							{
 								results.map((r, n) => <Statistic key={n} title='d10' value={r} />)
 							}
-							<Statistic title='Modifier' value={`${modifier >= 0 ? '+' : ''}${modifier}`} />
+							{props.modifier ? <Statistic title='Modifier' value={`${props.modifier >= 0 ? '+' : ''}${props.modifier}`} /> : null}
 							{bonus ? <Statistic title={bonus > 0 ? 'Edge' : 'Bane'} value={`${bonus >= 0 ? '+' : ''}${bonus}`} /> : null}
 							<Statistic className='total' title='Total' value={total} />
 						</div>

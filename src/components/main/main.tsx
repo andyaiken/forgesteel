@@ -8,7 +8,6 @@ import { AboutModal } from '../modals/about/about-modal';
 import { Ancestry } from '../../models/ancestry';
 import { Career } from '../../models/career';
 import { Characteristic } from '../../enums/characteristic';
-import { CharacteristicModal } from '../modals/characteristic/characteristic-modal';
 import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
 import { Culture } from '../../models/culture';
@@ -41,6 +40,7 @@ import { Perk } from '../../models/perk';
 import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit';
 import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list';
 import { PlaybookViewPage } from '../pages/playbook/playbook-view/playbook-view-page';
+import { RollModal } from '../modals/roll/roll-modal';
 import { RulesModal } from '../modals/rules/rules-modal';
 import { SourcebookData } from '../../data/sourcebook-data';
 import { SourcebookLogic } from '../../logic/sourcebook-logic';
@@ -746,12 +746,6 @@ export const Main = (props: Props) => {
 
 	//#region Modals
 
-	const showAbout = () => {
-		setDrawer(
-			<AboutModal />
-		);
-	};
-
 	const showDirectoryPane = () => {
 		setDirectory(
 			<DirectoryModal
@@ -761,6 +755,18 @@ export const Main = (props: Props) => {
 				createHero={() => createHero()}
 				closeDirectory={() => setDirectory(null)}
 			/>
+		);
+	};
+
+	const showAbout = () => {
+		setDrawer(
+			<AboutModal />
+		);
+	};
+
+	const showRoll = () => {
+		setDrawer(
+			<RollModal />
 		);
 	};
 
@@ -791,7 +797,7 @@ export const Main = (props: Props) => {
 
 	const onSelectCharacteristic = (characteristic: Characteristic, hero: Hero) => {
 		setDrawer(
-			<CharacteristicModal characteristic={characteristic} hero={hero} />
+			<RollModal characteristics={[ characteristic ]} hero={hero} />
 		);
 	};
 
@@ -864,6 +870,7 @@ export const Main = (props: Props) => {
 						<WelcomePage
 							showDirectory={showDirectoryPane}
 							showAbout={showAbout}
+							showRoll={showRoll}
 							showHeroes={heroes.length === 0 ? createHero : navigation.goToHeroList}
 							showLibrary={() => navigation.goToLibraryList('ancestry')}
 							showPlaybook={() => navigation.goToPlaybookList('encounter')}
@@ -879,6 +886,7 @@ export const Main = (props: Props) => {
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
+								showRoll={showRoll}
 								addHero={createHero}
 								importHero={importHero}
 							/>
@@ -894,6 +902,7 @@ export const Main = (props: Props) => {
 								setOptions={async options => await persistOptions(options)}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
+								showRoll={showRoll}
 								exportHero={exportHero}
 								deleteHero={deleteHero}
 								showAncestry={ancestry => onSelectLibraryElement(ancestry, 'ancestry')}
@@ -922,6 +931,7 @@ export const Main = (props: Props) => {
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
+								showRoll={showRoll}
 								saveChanges={saveHero}
 							/>
 						}
@@ -940,6 +950,7 @@ export const Main = (props: Props) => {
 								hiddenSourcebookIDs={hiddenSourcebookIDs}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
+								showRoll={showRoll}
 								showSourcebooks={showSourcebooks}
 								createElement={(kind, sourcebookID) => createLibraryElement(kind, sourcebookID, null)}
 								importElement={importLibraryElement}
@@ -953,6 +964,7 @@ export const Main = (props: Props) => {
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
+								showRoll={showRoll}
 								createElement={createLibraryElement}
 								export={exportLibraryElement}
 								delete={deleteLibraryElement}
@@ -966,6 +978,7 @@ export const Main = (props: Props) => {
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
+								showRoll={showRoll}
 								showMonster={onSelectMonster}
 								saveChanges={saveLibraryElement}
 							/>
@@ -985,6 +998,7 @@ export const Main = (props: Props) => {
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
+								showRoll={showRoll}
 								createElement={createPlaybookElement}
 								importElement={importPlaybookElement}
 							/>
@@ -998,6 +1012,7 @@ export const Main = (props: Props) => {
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
+								showRoll={showRoll}
 								export={exportPlaybookElement}
 								delete={deletePlaybookElement}
 							/>
@@ -1011,6 +1026,7 @@ export const Main = (props: Props) => {
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
+								showRoll={showRoll}
 								showMonster={onSelectMonster}
 								saveChanges={savePlaybookElement}
 							/>

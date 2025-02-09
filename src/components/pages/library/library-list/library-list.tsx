@@ -40,6 +40,7 @@ interface Props {
 	hiddenSourcebookIDs: string[];
 	showDirectory: () => void;
 	showAbout: () => void;
+	showRoll: () => void;
  	showSourcebooks: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null) => void;
 	importElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
@@ -609,7 +610,7 @@ export const LibraryListPage = (props: Props) => {
 
 		return (
 			<div className='library-list-page'>
-				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					<Input
 						placeholder='Search'
 						allowClear={true}

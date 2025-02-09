@@ -31,6 +31,7 @@ interface Props {
 	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
+	showRoll: () => void;
 	setOptions: (options: Options) => void;
 	exportHero: (hero: Hero, format: 'image' | 'pdf' | 'json') => void;
 	deleteHero: (hero: Hero) => void;
@@ -81,7 +82,7 @@ export const HeroViewPage = (props: Props) => {
 
 		return (
 			<div className='hero-view-page'>
-				<AppHeader breadcrumbs={[ { label: 'Heroes' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout}>
+				<AppHeader breadcrumbs={[ { label: 'Heroes' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					<Button onClick={navigation.goToHeroList}>
 						Close
 					</Button>

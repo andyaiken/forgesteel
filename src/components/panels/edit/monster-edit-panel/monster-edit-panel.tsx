@@ -464,6 +464,7 @@ export const MonsterEditPanel = (props: Props) => {
 						<Expander
 							key={f.id}
 							title={f.name || 'Unnamed Feature'}
+							tags={[ f.type === FeatureType.Ability ? f.data.ability.type.usage : f.type ]}
 							extra={[
 								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
 								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
@@ -526,6 +527,7 @@ export const MonsterEditPanel = (props: Props) => {
 							<Expander
 								key={lvl.level}
 								title={`Level ${lvl.level}`}
+								tags={[ lvl.option.type === FeatureType.Ability ? lvl.option.data.ability.type.usage : lvl.option.type ]}
 							>
 								<FeatureEditPanel
 									feature={lvl.option}

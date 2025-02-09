@@ -207,6 +207,7 @@ export const LibraryEditPage = (props: Props) => {
 						<Expander
 							key={f.id}
 							title={f.name || 'Unnamed Feature'}
+							tags={[ f.type === FeatureType.Ability ? f.data.ability.type.usage : f.type ]}
 							extra={[
 								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
 								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
@@ -527,6 +528,7 @@ export const LibraryEditPage = (props: Props) => {
 										<Expander
 											key={f.id}
 											title={f.name || 'Unnamed Feature'}
+											tags={[ f.type === FeatureType.Ability ? f.data.ability.type.usage : f.type ]}
 											extra={[
 												<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'up'); }} />,
 												<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'down'); }} />,
@@ -609,6 +611,7 @@ export const LibraryEditPage = (props: Props) => {
 						<Expander
 							key={a.id}
 							title={a.name || 'Unnamed Ability'}
+							tags={[ a.type.usage ]}
 							extra={[
 								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'up'); }} />,
 								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'down'); }} />,
@@ -796,6 +799,7 @@ export const LibraryEditPage = (props: Props) => {
 							<Expander
 								key={f.id}
 								title={f.name || 'Unnamed Feature'}
+								tags={[ f.type === FeatureType.Ability ? f.data.ability.type.usage : f.type ]}
 								extra={[
 									<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(subclass, lvl.level, f, 'up'); }} />,
 									<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(subclass, lvl.level, f, 'down'); }} />,

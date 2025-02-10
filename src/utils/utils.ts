@@ -1,6 +1,7 @@
 import { Collections } from './collections';
 import { Converter } from 'showdown';
 import { Random } from './random';
+import { PDFExport } from './pdf';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -53,8 +54,10 @@ export class Utils {
 			case 'json':
 				Utils.saveFile(obj, name, ext);
 				break;
+      case 'pdf':
+        PDFExport.startExport(obj)
+        break;
 			case 'image':
-			case 'pdf':
 				Utils.takeScreenshot(elementIDs, name, format);
 				break;
 		}

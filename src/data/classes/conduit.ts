@@ -88,7 +88,7 @@ For each piety spent, you can choose one of the following enhancements:
 						id: 'conduit-1-6',
 						name: 'Ray of Wrath',
 						description: 'You unleash a blast of holy light upon your foe.',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createAction({ qualifiers: [ 'can be used as a ranged free strike' ] }),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature or object',

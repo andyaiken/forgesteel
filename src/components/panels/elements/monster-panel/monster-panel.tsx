@@ -86,6 +86,36 @@ export const MonsterPanel = (props: Props) => {
 						</div>
 						: null
 				}
+				{
+					props.monster.retainer ?
+						<>
+							{
+								props.monster.retainer.level4 && (props.monster.retainer.level < 4) ?
+									<>
+										<HeaderText level={1}>Level 4</HeaderText>
+										<FeaturePanel key={props.monster.retainer.level4.id} feature={props.monster.retainer.level4} mode={PanelMode.Full} />
+									</>
+									: null
+							}
+							{
+								props.monster.retainer.level7 && (props.monster.retainer.level < 7) ?
+									<>
+										<HeaderText level={1}>Level 7</HeaderText>
+										<FeaturePanel key={props.monster.retainer.level7.id} feature={props.monster.retainer.level7} mode={PanelMode.Full} />
+									</>
+									: null
+							}
+							{
+								props.monster.retainer.level10 && (props.monster.retainer.level < 10) ?
+									<>
+										<HeaderText level={1}>Level 10</HeaderText>
+										<FeaturePanel key={props.monster.retainer.level10.id} feature={props.monster.retainer.level10} mode={PanelMode.Full} />
+									</>
+									: null
+							}
+						</>
+						: null
+				}
 			</div>
 		);
 	} catch (ex) {

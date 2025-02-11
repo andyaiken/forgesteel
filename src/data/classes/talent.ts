@@ -61,7 +61,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 						id: 'talent-1-2',
 						name: 'Mind Spike',
 						description: 'A telepathic bolt instantly zaps a creature’s brain.',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createAction({ qualifiers: [ 'can be used as a ranged free strike' ] }),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Telepathy ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature',

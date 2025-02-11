@@ -7,8 +7,8 @@ import { PDFCheckBox, PDFDocument, PDFTextField, StandardFonts } from 'pdf-lib';
 import { Ability } from '../models/ability';
 import { AbilityUsage } from '../enums/ability-usage';
 import { ConditionEndType } from '../enums/condition-type';
-import { FeatureType } from '../enums/feature-type';
 import { FeatureField } from '../enums/feature-field';
+import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 import { Sourcebook } from '../models/sourcebook';
 import localforage from 'localforage';
@@ -18,7 +18,7 @@ fileInput.type = 'file';
 const downloader = document.createElement('a');
 
 export class PDFExport {
-	static startExport = async (obj: unknown) => {
+	static startExport = async (hero: Hero) => {
 		const pdfAsBytes = await fetch(
 			'/forgesteel/assets/character-sheet-backer-packet-2-modified.pdf'
 		).then(res => res.arrayBuffer());
@@ -27,10 +27,7 @@ export class PDFExport {
 		const HeroLogic = (await import('../logic/hero-logic')).HeroLogic;
 		const FeatureLogic = (await import('../logic/feature-logic')).FeatureLogic;
 		const AbilityLogic = (await import('../logic/ability-logic')).AbilityLogic;
-		const SourcebookData = (await import('../data/sourcebook-data'))
-			.SourcebookData;
-
-		const hero: Hero = obj as Hero;
+		const SourcebookData = (await import('../data/sourcebook-data')).SourcebookData;
 
 		const autoResizingFields: string[] = [];
 		const markMultiline: string[] = [];

@@ -20,7 +20,7 @@ const downloader = document.createElement('a');
 export class PDFExport {
 	static startExport = async (hero: Hero) => {
 		const pdfAsBytes = await fetch(
-			'/forgesteel/assets/character-sheet-backer-packet-2-modified.pdf'
+			'/forgesteel/src/assets/character-sheet-backer-packet-2-modified.pdf'
 		).then(res => res.arrayBuffer());
 		const pdfDoc = await PDFDocument.load(pdfAsBytes);
 

@@ -1,56 +1,41 @@
-import {
-	Feature,
-	FeatureBonusData,
-	FeatureChoiceData
-} from '../models/feature';
+import { Feature, FeatureBonusData, FeatureChoiceData } from '../models/feature';
 import { PDFCheckBox, PDFDocument, PDFTextField, StandardFonts } from 'pdf-lib';
 import { Ability } from '../models/ability';
+import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
 import { ConditionEndType } from '../enums/condition-type';
 import { FeatureField } from '../enums/feature-field';
+import { FeatureLogic } from '../logic/feature-logic';
 import { FeatureType } from '../enums/feature-type';
+import { FormatLogic } from '../logic/format-logic';
 import { Hero } from '../models/hero';
+import { HeroLogic } from '../logic/hero-logic';
 import { Sourcebook } from '../models/sourcebook';
+import { SourcebookData } from '../data/sourcebook-data';
 import localforage from 'localforage';
 import pdfFile from '../assets/character-sheet-backer-packet-2-modified.pdf';
 
-const fileInput = document.createElement('input');
-fileInput.type = 'file';
-const downloader = document.createElement('a');
-
 export class PDFExport {
 	static startExport = async (hero: Hero) => {
-		const pdfAsBytes = await fetch(
-			pdfFile
-		).then(res => res.arrayBuffer());
+		const pdfAsBytes = await fetch(pdfFile).then(res => res.arrayBuffer());
 		const pdfDoc = await PDFDocument.load(pdfAsBytes);
-
-		const HeroLogic = (await import('../logic/hero-logic')).HeroLogic;
-		const FeatureLogic = (await import('../logic/feature-logic')).FeatureLogic;
-		const AbilityLogic = (await import('../logic/ability-logic')).AbilityLogic;
-		const SourcebookData = (await import('../data/sourcebook-data')).SourcebookData;
 
 		const autoResizingFields: string[] = [];
 		const markMultiline: string[] = [];
 
-		const sizeData = HeroLogic.getSize(hero);
 		const texts: { [key: string]: string | number | null } = {
 			CharacterName: hero.name,
 			AncestryTop: hero.ancestry && hero.ancestry.name,
 			CareerTop: hero.career && hero.career.name,
 			ClassTop: hero.class && hero.class.name,
-			SubclassTop:
-				hero.class &&
-				hero.class.subclassName +
-					': ' +
-					hero.class.subclasses.filter(s => s.selected)[0].name,
+			SubclassTop: hero.class && hero.class.subclassName + ': ' + hero.class.subclasses.filter(s => s.selected)[0].name,
 			Level: hero.class && hero.class.level,
 			Wealth: hero.state.wealth,
 			Renown: hero.state.renown,
 			XP: hero.state.xp,
 			Speed: HeroLogic.getSpeed(hero),
 			Stability: HeroLogic.getStability(hero),
-			Size: sizeData.value + sizeData.mod,
+			Size: FormatLogic.getSize(HeroLogic.getSize(hero)),
 			CurrentStamina: HeroLogic.getStamina(hero) - hero.state.staminaDamage,
 			MaxStamina: HeroLogic.getStamina(hero),
 			WindedValue: Math.floor(HeroLogic.getStamina(hero) / 2),
@@ -62,8 +47,8 @@ export class PDFExport {
 			HeroicResource: hero.state.heroicResource,
 			Surges: hero.state.surges
 		};
-		const toggles: { [key: string]: boolean } = {};
 
+		const toggles: { [key: string]: boolean } = {};
 		const ignoredFeatures: { [key: string]: boolean } = {};
 
 		{
@@ -84,6 +69,7 @@ export class PDFExport {
 				autoResizingFields.push('SurgeDamage');
 			}
 		}
+
 		autoResizingFields.push(
 			...[
 				'CharacterName',
@@ -99,6 +85,7 @@ export class PDFExport {
 		);
 
 		const features = HeroLogic.getFeatures(hero) as Feature[];
+
 		{
 			const kits = HeroLogic.getKits(hero);
 			const modifiers = [
@@ -654,8 +641,11 @@ export class PDFExport {
 				field.check();
 			}
 		}
+
 		const data = await pdfDoc.saveAsBase64({ dataUri: true });
-		downloader.download = hero.name + '-character.pdf';
+
+		const downloader = document.createElement('a');
+		downloader.download = `${hero.name || 'Unnamed Hero'}.pdf`;
 		downloader.href = data;
 		downloader.click();
 	};

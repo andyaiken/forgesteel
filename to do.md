@@ -4,6 +4,7 @@
 
 ### Priority
 
+* Bugbear
 * Elemental
 * Demon
 * Devil

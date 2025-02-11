@@ -20,7 +20,7 @@ import { ItemPanel } from '../item-panel/item-panel';
 import { KitPanel } from '../kit-panel/kit-panel';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { Monster } from '../../../../models/monster';
-import { MonsterLogic } from '../../../../logic/monster-logic';
+import { MonsterLabel } from '../../monster-label/monster-label';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { MonsterRoleType } from '../../../../enums/monster-role-type';
@@ -353,7 +353,7 @@ export const FeaturePanel = (props: Props) => {
 					className={data.selected === null ? 'selection-empty' : ''}
 					allowClear={true}
 					placeholder='Select a companion'
-					options={sortedMonsters.map(m => ({ label: m.name, value: m.id, desc: MonsterLogic.getMonsterDescription(m) }))}
+					options={sortedMonsters.map(m => ({ label: m.name, value: m.id, desc: <MonsterLabel monster={m} /> }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={data.selected ? data.selected.id : null}
 					onChange={id => {

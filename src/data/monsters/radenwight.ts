@@ -630,7 +630,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-9-retainer-7',
 						name: 'Bug Bag',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 3 }) ],
 						target: 'All creatures',
@@ -646,7 +646,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-9-retainer-10',
 						name: 'Triumphant Squeak',
-						type: FactoryLogic.type.createManeuver(),
+						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',

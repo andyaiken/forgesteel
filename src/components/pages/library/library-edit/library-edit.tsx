@@ -43,6 +43,7 @@ import { KitType } from '../../../../enums/kit-type';
 import { KitWeapon } from '../../../../enums/kit-weapon';
 import { MonsterEditPanel } from '../../../panels/edit/monster-edit-panel/monster-edit-panel';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
+import { MonsterLabel } from '../../../panels/monster-label/monster-label';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
@@ -1495,7 +1496,7 @@ export const LibraryEditPage = (props: Props) => {
 							title={(
 								<div style={{ display: 'flex', flexDirection: 'column' }}>
 									<div><b>{MonsterLogic.getMonsterName(m, monsterGroup)}</b></div>
-									<div>{MonsterLogic.getMonsterDescription(m)}</div>
+									<MonsterLabel monster={m} />
 								</div>
 							)}
 							extra={[

@@ -6,6 +6,7 @@ import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
+import { MonsterLabel } from '../../monster-label/monster-label';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
@@ -42,7 +43,6 @@ export const EncounterPanel = (props: Props) => {
 									const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
 
 									let name = (monster && monsterGroup) ? MonsterLogic.getMonsterName(monster, monsterGroup) : 'Unknown Monster';
-									const desc = monster ? MonsterLogic.getMonsterDescription(monster) : '';
 
 									let count = slot.count;
 									if (monster) {
@@ -54,7 +54,7 @@ export const EncounterPanel = (props: Props) => {
 
 									return (
 										<div key={slot.id} className='encounter-slot'>
-											<Field label={name} value={desc} />
+											<Field label={name} value={monster ? <MonsterLabel monster={monster} /> : null} />
 										</div>
 									);
 								})

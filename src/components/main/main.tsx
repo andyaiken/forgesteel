@@ -36,7 +36,7 @@ import { MainLayout } from './main-layout';
 import { MonsterModal } from '../modals/monster/monster-modal';
 import { Negotiation } from '../../models/negotiation';
 import { Options } from '../../models/options';
-import { PDFExport } from '../../utils/pdf';
+//import { PDFExport } from '../../utils/pdf';
 import { Perk } from '../../models/perk';
 import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit';
 import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list';
@@ -152,11 +152,14 @@ export const Main = (props: Props) => {
 	};
 
 	const exportHero = (hero: Hero, format: 'image' | 'pdf' | 'json') => {
+		/*
 		if (format === 'pdf') {
 			PDFExport.startExport(hero);
 		} else {
 			Utils.export([ hero.id ], hero.name || 'Unnamed Hero', hero, 'hero', format);
 		}
+		*/
+		Utils.export([ hero.id ], hero.name || 'Unnamed Hero', hero, 'hero', format);
 	};
 
 	//#endregion

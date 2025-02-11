@@ -292,7 +292,7 @@ However, any hero who has at least one psionic ability can use their maneuver to
 					ability: FactoryLogic.createAbility({
 						id: 'lord-syull-2-retainer-7',
 						name: 'Psychic Toss',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Psionic, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 creature or object',
@@ -309,7 +309,7 @@ However, any hero who has at least one psionic ability can use their maneuver to
 					ability: FactoryLogic.createAbility({
 						id: 'lord-syull-2-retainer-10',
 						name: 'Cower Before Me',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies',

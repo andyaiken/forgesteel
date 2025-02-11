@@ -16,19 +16,19 @@ import './monster-panel.scss';
 
 interface Props {
 	monster: Monster;
-	monsterGroup: MonsterGroup;
+	monsterGroup?: MonsterGroup;
 	mode?: PanelMode;
 }
 
 export const MonsterPanel = (props: Props) => {
 	try {
-		if (props.mode === PanelMode.Compact) {
+		if (props.mode !== PanelMode.Full) {
 			return (
 				<div className='monster-panel compact'>
 					<HeaderText>{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}</HeaderText>
 					<Flex justify='space-between'>
 						<div className='ds-text'>
-							Level {MonsterLogic.getMonsterLevel(props.monster)} {FormatLogic.getRole(props.monster.role)} {props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
+							{MonsterLogic.getMonsterDescription(props.monster)} {props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
 						</div>
 						<Field label='EV' value={(props.monster.role.organization === MonsterOrganizationType.Minion) ? `${props.monster.encounterValue} for 8 minions` : props.monster.encounterValue} />
 					</Flex>
@@ -51,7 +51,7 @@ export const MonsterPanel = (props: Props) => {
 				<Markdown text={props.monster.description} />
 				<Flex justify='space-between'>
 					<div className='ds-text'>
-						Level {MonsterLogic.getMonsterLevel(props.monster)} {FormatLogic.getRole(props.monster.role)} {props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
+						{MonsterLogic.getMonsterDescription(props.monster)} {props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
 					</div>
 					<Field label='EV' value={(props.monster.role.organization === MonsterOrganizationType.Minion) ? `${props.monster.encounterValue} for 8 minions` : props.monster.encounterValue} />
 				</Flex>
@@ -61,6 +61,12 @@ export const MonsterPanel = (props: Props) => {
 					<Field orientation='vertical' label='Stamina' value={MonsterLogic.getStamina(props.monster)} />
 					<Field orientation='vertical' label='Stability' value={props.monster.stability} />
 					<Field orientation='vertical' label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(props.monster)} />
+				</div>
+				<div className='stats'>
+					{
+						[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
+							.map(ch => <Field key={ch} orientation='vertical' label={ch} value={MonsterLogic.getCharacteristic(props.monster, ch)} />)
+					}
 				</div>
 				{
 					signatureBonus ?
@@ -72,12 +78,6 @@ export const MonsterPanel = (props: Props) => {
 						<Field label='With Captain' value={props.monster.withCaptain} />
 						: null
 				}
-				<div className='stats'>
-					{
-						[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
-							.map(ch => <Field key={ch} orientation='vertical' label={ch} value={MonsterLogic.getCharacteristic(props.monster, ch)} />)
-					}
-				</div>
 				{immunities.length > 0 ? <Field label='Immunities' value={immunities.map(mod => `${mod.type} ${mod.value}`).join(', ')} /> : null}
 				{weaknesses.length > 0 ? <Field label='Weaknesses' value={weaknesses.map(mod => `${mod.type} ${mod.value}`).join(', ')} /> : null}
 				{

@@ -1,10 +1,12 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
+import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const lordSyuul: MonsterGroup = {
 	id: 'monster-group-lord-syuul',
@@ -83,6 +85,7 @@ However, any hero who has at least one psionic ability can use their maneuver to
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Solo),
 			keywords: [ 'Horror', 'Voiceless Talker' ],
 			encounterValue: 80,
+			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(7, 'teleport, hover'),
 			stamina: 450,
 			stability: 3,
@@ -221,6 +224,104 @@ However, any hero who has at least one psionic ability can use their maneuver to
 					})
 				})
 			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'lord-syull-2',
+			name: 'Voiceless Talker Exile',
+			level: 6,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Artillery),
+			keywords: [ 'Horror', 'Voiceless Talker' ],
+			encounterValue: 27,
+			size: FactoryLogic.createSize(1, 'M'),
+			speed: FactoryLogic.createSpeed(5, 'flying, teleport'),
+			stamina: 70,
+			stability: 2,
+			freeStrikeDamage: 6,
+			characteristics: MonsterLogic.createCharacteristics(0, 3, 1, 2, 1),
+			features: [
+				FactoryLogic.feature.createDamageModifier({
+					id: 'lord-syull-2-1',
+					modifiers: [
+						{
+							damageType: 'Psychic',
+							type: DamageModifierType.Immunity,
+							value: 3,
+							valueCharacteristics: [],
+							valuePerLevel: 0,
+							valuePerEchelon: 0
+						}
+					]
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'lord-syull-2-2',
+						name: 'Psychic Erasure',
+						type: FactoryLogic.type.createAction(),
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Psionic, AbilityKeyword.Strike ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: '1 creature or object',
+						cost: 'signature',
+						powerRoll: FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+							tier1: '7 psychic damage',
+							tier2: '12 psychic damage',
+							tier3: '15 psychic damage'
+						}),
+						effect: 'The exile is invisible to the target until the end of the target’s next turn.'
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'lord-syull-2-3',
+						name: 'Mindspace Jaunt',
+						type: FactoryLogic.type.createManeuver(),
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
+						target: 'Self and mentor',
+						effect: 'The exile and their mentor turn invisible until the start of their next turn. While this invisibility lasts, the exile and their mentor take half damage from all attacks and their attacks do half damage to enemies.'
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'lord-syull-2-4',
+					name: 'Psionic Conductor',
+					description: 'When an ally within 5 of the exile uses an ability with the Psionic keyword, they can do so as if they were in the exile’s space.'
+				})
+			],
+			retainer: {
+				level7: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'lord-syull-2-retainer-7',
+						name: 'Psychic Toss',
+						type: FactoryLogic.type.createAction(),
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Psionic, AbilityKeyword.Strike ],
+						distance: [ FactoryLogic.distance.createRanged(5) ],
+						target: '1 creature or object',
+						powerRoll: FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+							tier1: '6 damage; vertical slide 2',
+							tier2: '10 damage; vertical slide 3',
+							tier3: '14 damage; vertical slide 5'
+						}),
+						effect: 'The exile can forego dealing damage. If they do so, the slide distance is doubled.'
+					})
+				}),
+				level10: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'lord-syull-2-retainer-10',
+						name: 'Cower Before Me',
+						type: FactoryLogic.type.createAction(),
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
+						target: 'All enemies',
+						powerRoll: FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+							tier1: '8 damage; R (weak) frightened (save ends) and prone',
+							tier2: '10 damage; R (average) frightened (save ends) and prone',
+							tier3: '14 damage; R (strong) frightened (save ends) and prone'
+						})
+					})
+				})
+			}
 		})
 	]
 };

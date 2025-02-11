@@ -72,8 +72,10 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Solo),
 			keywords: [ 'Accursed', 'Humanoid', 'Werebeast' ],
 			encounterValue: 30,
+			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(8),
 			stamina: 200,
+			stability: 0,
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(3, 2, -1, 1, 1),
 			features: [

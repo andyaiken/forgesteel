@@ -1,3 +1,4 @@
+import { Monster, MonsterGroup } from '../../models/monster';
 import { Navigate, Route, Routes } from 'react-router';
 import { Playbook, PlaybookElementKind } from '../../models/playbook';
 import { ReactNode, useState } from 'react';
@@ -32,7 +33,6 @@ import { LibraryEditPage } from '../pages/library/library-edit/library-edit';
 import { LibraryListPage } from '../pages/library/library-list/library-list';
 import { LibraryViewPage } from '../pages/library/library-view/library-view-page';
 import { MainLayout } from './main-layout';
-import { MonsterGroup } from '../../models/monster';
 import { MonsterModal } from '../modals/monster/monster-modal';
 import { Negotiation } from '../../models/negotiation';
 import { Options } from '../../models/options';
@@ -780,19 +780,14 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onSelectMonster = (monsterID: string) => {
-		const monster = SourcebookLogic.getMonster([ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], monsterID);
-		const monsterGroup = SourcebookLogic.getMonsterGroup([ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], monsterID);
-
-		if (monster && monsterGroup) {
-			setDrawer(
-				<MonsterModal
-					monster={monster}
-					monsterGroup={monsterGroup}
-					export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
-				/>
-			);
-		}
+	const onSelectMonster = (monster: Monster, monsterGroup?: MonsterGroup) => {
+		setDrawer(
+			<MonsterModal
+				monster={monster}
+				monsterGroup={monsterGroup}
+				export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
+			/>
+		);
 	};
 
 	const onSelectCharacteristic = (characteristic: Characteristic, hero: Hero) => {
@@ -912,6 +907,7 @@ export const Main = (props: Props) => {
 								showComplication={complication => onSelectLibraryElement(complication, 'complication')}
 								showDomain={domain => onSelectLibraryElement(domain, 'domain')}
 								showKit={kit => onSelectLibraryElement(kit, 'kit')}
+								showCompanion={onSelectMonster}
 								showCharacteristic={onSelectCharacteristic}
 								showAbility={onSelectAbility}
 								showHeroState={onShowHeroState}

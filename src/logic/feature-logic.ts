@@ -170,6 +170,7 @@ export class FeatureLogic {
 			case FeatureType.AncestryFeatureChoice:
 			case FeatureType.Choice:
 			case FeatureType.ClassAbility:
+			case FeatureType.Companion:
 			case FeatureType.Domain:
 			case FeatureType.DomainFeature:
 			case FeatureType.ItemChoice:
@@ -198,6 +199,8 @@ export class FeatureLogic {
 			}
 			case FeatureType.ClassAbility:
 				return feature.data.selectedIDs.length >= feature.data.count;
+			case FeatureType.Companion:
+				return feature.data.selected !== null;
 			case FeatureType.Domain:
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.DomainFeature:

@@ -1,8 +1,6 @@
 import { DamageModifier, Modifier } from '../models/damage-modifier';
 import { AbilityType } from '../models/ability';
 import { AbilityUsage } from '../enums/ability-usage';
-import { MonsterRole } from '../models/monster';
-import { MonsterRoleType } from '../enums/monster-role-type';
 import { Size } from '../models/size';
 
 export class FormatLogic {
@@ -23,14 +21,6 @@ export class FormatLogic {
 		}
 
 		return `1${size.mod}`;
-	};
-
-	static getRole = (role: MonsterRole) => {
-		if (role.type === MonsterRoleType.NoRole) {
-			return role.organization;
-		}
-
-		return `${role.organization} ${role.type}`;
 	};
 
 	static getDamageModifier = (mod: DamageModifier) => {

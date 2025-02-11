@@ -28,7 +28,13 @@ export const PowerRollPanel = (props: Props) => {
 
 	const getHeader = () => {
 		if (props.test) {
-			return (props.powerRoll.characteristic.length > 0) ? `${props.powerRoll.characteristic.join(' or ')} Test` : 'Test';
+			if (props.powerRoll.characteristic.length === 0) {
+				return 'Test';
+			}
+			if (props.powerRoll.characteristic.length === 5) {
+				return 'Highest Characteristic Test';
+			}
+			return `${props.powerRoll.characteristic.join(' or ')} Test`;
 		}
 
 		if (props.hero && autoCalc) {
@@ -39,6 +45,12 @@ export const PowerRollPanel = (props: Props) => {
 		}
 
 		if (props.powerRoll.characteristic.length > 0) {
+			if (props.powerRoll.characteristic.length === 0) {
+				return 'Power Roll';
+			}
+			if (props.powerRoll.characteristic.length === 5) {
+				return 'Power Roll + Highest Characteristic';
+			}
 			return `Power Roll + ${props.powerRoll.characteristic.join(' or ')}`;
 		}
 

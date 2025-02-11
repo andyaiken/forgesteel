@@ -1124,10 +1124,9 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Meddling Butler',
 		description: 'You’re not sure what you did to deserve it, but for some reason your family saddled you with an old and trusted - but irritating - family servant. They’re supremely competent, of course, but they sometimes seem to forget who’s in charge.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createCompanion({
 				id: 'comp-meddlingButler-b',
-				name: 'Meddling Butler Benefit',
-				description: 'You gain a retainer, in addition to followers you acquire through Renown or other means.'
+				type: 'retainer'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-meddlingButler-d',

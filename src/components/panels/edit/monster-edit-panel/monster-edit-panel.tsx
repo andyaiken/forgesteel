@@ -198,60 +198,44 @@ export const MonsterEditPanel = (props: Props) => {
 	};
 
 	const setIsRetainer = (value: boolean) => {
-		const retainer: {
-			level: number,
-			featuresByLevel: {
-				level: number,
-				option: Feature,
-				selected: Feature | null
-			}[]
-		} = {
-			level: monster.level,
-			featuresByLevel: [
-				{
-					level: 4,
-					option: FactoryLogic.feature.createAbility({
-						ability: FactoryLogic.createAbility({
-							id: Utils.guid(),
-							name: 'Level 4',
-							type: FactoryLogic.type.createAction(),
-							distance: [],
-							target: ''
-						})
-					}),
-					selected: null
-				},
-				{
-					level: 7,
-					option: FactoryLogic.feature.createAbility({
-						ability: FactoryLogic.createAbility({
-							id: Utils.guid(),
-							name: 'Level 7',
-							type: FactoryLogic.type.createAction(),
-							distance: [],
-							target: ''
-						})
-					}),
-					selected: null
-				},
-				{
-					level: 10,
-					option: FactoryLogic.feature.createAbility({
-						ability: FactoryLogic.createAbility({
-							id: Utils.guid(),
-							name: 'Level 10',
-							type: FactoryLogic.type.createAction(),
-							distance: [],
-							target: ''
-						})
-					}),
-					selected: null
-				}
-			]
-		};
+		const lvl4 = FactoryLogic.feature.createAbility({
+			ability: FactoryLogic.createAbility({
+				id: Utils.guid(),
+				name: 'Level 4',
+				type: FactoryLogic.type.createAction(),
+				distance: [],
+				target: ''
+			})
+		});
+
+		const lvl7 = FactoryLogic.feature.createAbility({
+			ability: FactoryLogic.createAbility({
+				id: Utils.guid(),
+				name: 'Level 7',
+				type: FactoryLogic.type.createAction(),
+				distance: [],
+				target: ''
+			})
+		});
+
+		const lvl10 = FactoryLogic.feature.createAbility({
+			ability: FactoryLogic.createAbility({
+				id: Utils.guid(),
+				name: 'Level 10',
+				type: FactoryLogic.type.createAction(),
+				distance: [],
+				target: ''
+			})
+		});
 
 		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.retainer = value ? retainer : null;
+		copy.retainer = value ? {
+			level: monster.level,
+			level4: lvl4,
+			level7: lvl7,
+			level10: lvl10,
+			featuresByLevel: MonsterLogic.getRetainerAdvancementFeatures(monster.level, lvl4, lvl7, lvl10)
+		} : null;
 		setMonster(copy);
 		props.onChange(copy);
 	};
@@ -260,7 +244,7 @@ export const MonsterEditPanel = (props: Props) => {
 		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
 		const data = copy.retainer!.featuresByLevel.find(lvl => lvl.level === level);
 		if (data) {
-			data.option = feature;
+			data.feature = feature;
 		}
 		setMonster(copy);
 		props.onChange(copy);
@@ -300,7 +284,7 @@ export const MonsterEditPanel = (props: Props) => {
 				<Select
 					style={{ width: '100%' }}
 					placeholder='Select role'
-					options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(option => ({ value: option, desc: MonsterLogic.getRoleTypeDescription(option) }))}
+					options={[ MonsterRoleType.NoRole, MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(option => ({ value: option, desc: MonsterLogic.getRoleTypeDescription(option) }))}
 					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
 					value={monster.role.type}
 					onChange={setRoleType}
@@ -527,10 +511,10 @@ export const MonsterEditPanel = (props: Props) => {
 							<Expander
 								key={lvl.level}
 								title={`Level ${lvl.level}`}
-								tags={[ lvl.option.type === FeatureType.Ability ? lvl.option.data.ability.type.usage : lvl.option.type ]}
+								tags={[ lvl.feature.type === FeatureType.Ability ? lvl.feature.data.ability.type.usage : lvl.feature.type ]}
 							>
 								<FeatureEditPanel
-									feature={lvl.option}
+									feature={lvl.feature}
 									sourcebooks={props.sourcebooks}
 									allowedTypes={[ FeatureType.Ability ]}
 									onChange={f => changeRetainerFeature(f, lvl.level)}

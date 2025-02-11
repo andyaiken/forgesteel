@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { Project, ProjectProgress } from '../models/project';
@@ -325,16 +325,23 @@ export class FactoryLogic {
 		role: MonsterRole,
 		keywords: string[],
 		encounterValue: number,
-		size?: Size,
+		size: Size,
 		speed: { value: number, modes: string },
 		stamina: number,
-		stability?: number,
+		stability: number,
 		freeStrikeDamage: number,
 		characteristics: { characteristic: Characteristic, value: number }[],
-		withCaptain?: string,
 		features: Feature[],
-		retainer?: { level: number, featuresByLevel: { level: number, option: Feature, selected: Feature }[] }
+		withCaptain?: string,
+		retainer?: { level4?: Feature, level7?: Feature, level10?: Feature }
 	}): Monster => {
+		const retainer = data.retainer ? {
+			level: data.level,
+			level4: data.retainer.level4,
+			level7: data.retainer.level7,
+			level10: data.retainer.level10,
+			featuresByLevel: MonsterLogic.getRetainerAdvancementFeatures(data.level, data.retainer.level4, data.retainer.level7, data.retainer.level10)
+		} : null;
 		return {
 			id: data.id || Utils.guid(),
 			name: data.name || '',
@@ -351,7 +358,7 @@ export class FactoryLogic {
 			characteristics: data.characteristics || MonsterLogic.createCharacteristics(0, 0, 0, 0, 0),
 			withCaptain: data.withCaptain || '',
 			features: data.features || [],
-			retainer: data.retainer || null
+			retainer: retainer
 		};
 	};
 
@@ -710,6 +717,18 @@ export class FactoryLogic {
 					minLevel: data.minLevel || 1,
 					count: count,
 					selectedIDs: []
+				}
+			};
+		},
+		createCompanion: (data: {id: string, name?: string, description?: string, type: 'companion' | 'mount' | 'retainer' }): FeatureCompanion => {
+			return {
+				id: data.id,
+				name: data.name || Format.capitalize(data.type),
+				description: data.description || '',
+				type: FeatureType.Companion,
+				data: {
+					type: data.type,
+					selected: null
 				}
 			};
 		},

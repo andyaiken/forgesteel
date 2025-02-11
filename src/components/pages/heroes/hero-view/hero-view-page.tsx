@@ -15,6 +15,7 @@ import { HeroClass } from '../../../../models/class';
 import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
 import { HeroStatePage } from '../../../../enums/hero-state-page';
 import { Kit } from '../../../../models/kit';
+import { Monster } from '../../../../models/monster';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
@@ -42,6 +43,7 @@ interface Props {
 	showComplication: (complication: Complication) => void;
 	showDomain: (domain: Domain) => void;
 	showKit: (kit: Kit) => void;
+	showCompanion: (monster: Monster) => void;
 	showCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
 	showHeroState: (hero: Hero, page: HeroStatePage) => void;
@@ -144,6 +146,7 @@ export const HeroViewPage = (props: Props) => {
  						onSelectComplication={props.showComplication}
  						onSelectDomain={props.showDomain}
  						onSelectKit={props.showKit}
+						onSelectCompanion={props.showCompanion}
  						onSelectCharacteristic={characteristic => props.showCharacteristic(characteristic, hero)}
  						onSelectAbility={ability => props.showAbility(ability, hero)}
  						onShowState={page => props.showHeroState(hero, page)}

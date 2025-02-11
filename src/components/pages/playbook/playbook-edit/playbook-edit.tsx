@@ -44,7 +44,7 @@ interface Props {
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
-	showMonster: (monsterID: string) => void;
+	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	saveChanges: (kind: PlaybookElementKind, element: Element) => void;
 }
 
@@ -156,7 +156,7 @@ export const PlaybookEditPage = (props: Props) => {
 											<div key={slot.id} className='slot-row'>
 												<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Compact} />
 												<div className='actions'>
-													<Button block={true} onClick={() => props.showMonster(slot.monsterID)}>Details</Button>
+													<Button block={true} onClick={() => props.showMonster(monster, monsterGroup)}>Details</Button>
 													<NumberSpin
 														value={slot.count}
 														format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization)).toString()}
@@ -448,7 +448,7 @@ export const PlaybookEditPage = (props: Props) => {
 							<div key={m.id} className='monster-row'>
 								<MonsterPanel monster={m} monsterGroup={monsterGroup} mode={PanelMode.Compact} />
 								<div className='actions'>
-									<Button block={true} onClick={() => props.showMonster(m.id)}>Details</Button>
+									<Button block={true} onClick={() => props.showMonster(m, monsterGroup)}>Details</Button>
 									{addBtn}
 								</div>
 							</div>

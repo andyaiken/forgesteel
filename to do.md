@@ -43,14 +43,8 @@
 
 ### Heroes
 
-* Add a companion / mount / retainer feature
-  * Allows you to select a monster
-  * Allows you to set its name
-  * If retainer, automatically sets its level
-  * When setting hero level, automatically set level of any retainers
-  * If there are any choices, allow user to select
-  * On the hero sheet, list companions / mounts / retainers
-    * Clicking opens their stat block in a sidebar
+* Companion feature
+  * Allows the user to customize the name of their companions
   * Determine whether the encounter builder needs to take account of retainers
 * Hero Builder:
   * Auto-create heroes

@@ -8,7 +8,7 @@ import './monster-modal.scss';
 
 interface Props {
 	monster: Monster;
-	monsterGroup: MonsterGroup;
+	monsterGroup?: MonsterGroup;
 	export: (format: 'image' | 'pdf' | 'json') => void;
 }
 

@@ -371,6 +371,10 @@ Complex or time-consuming tests might require an action if made in combat - or c
 		return this.getFeatures(hero).filter(f => f.type === FeatureType.AncestryChoice).map(f => f.data.selected).filter(a => !!a);
 	};
 
+	static getCompanions = (hero: Hero) => {
+		return this.getFeatures(hero).filter(f => f.type === FeatureType.Companion).map(f => f.data.selected).filter(a => !!a);
+	};
+
 	static getCharacteristic = (hero: Hero, characteristic: Characteristic) => {
 		let value = 0;
 

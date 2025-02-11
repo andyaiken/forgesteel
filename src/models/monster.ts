@@ -31,10 +31,12 @@ export interface Monster extends Element {
 	features: Feature[];
 	retainer: {
 		level: number;
+		level4?: Feature;
+		level7?: Feature;
+		level10?: Feature;
 		featuresByLevel: {
 			level: number,
-			option: Feature;
-			selected: Feature | null;
+			feature: Feature;
 		}[];
 	} | null;
 };

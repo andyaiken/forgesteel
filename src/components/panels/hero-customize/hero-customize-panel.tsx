@@ -239,6 +239,7 @@ export const HeroCustomizePanel = (props: Props) => {
 						{ key: 'ancestry', label: <div className='ds-text centered-text'>Ancestry Feature</div> },
 						{ key: 'characteristic-bonus', label: <div className='ds-text centered-text'>Characteristic Bonus</div> },
 						{ key: 'class-ability', label: <div className='ds-text centered-text'>Class Ability</div> },
+						{ key: 'companion', label: <div className='ds-text centered-text'>Companion</div> },
 						{ key: 'language', label: <div className='ds-text centered-text'>Language</div> },
 						{ key: 'perk', label: <div className='ds-text centered-text'>Perk</div> },
 						{ key: 'skill', label: <div className='ds-text centered-text'>Skill</div> },
@@ -268,6 +269,12 @@ export const HeroCustomizePanel = (props: Props) => {
 								feature = FactoryLogic.feature.createClassAbilityChoice({
 									id: Utils.guid(),
 									cost: 'signature'
+								});
+								break;
+							case 'companion':
+								feature = FactoryLogic.feature.createCompanion({
+									id: Utils.guid(),
+									type: 'companion'
 								});
 								break;
 							case 'language':

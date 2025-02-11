@@ -1,5 +1,5 @@
 import { Alert, Select, Space } from 'antd';
-import { Feature, FeatureAbilityCostData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Ancestry } from '../../../../models/ancestry';
@@ -7,6 +7,7 @@ import { AncestryPanel } from '../ancestry-panel/ancestry-panel';
 import { Badge } from '../../../controls/badge/badge';
 import { Collections } from '../../../../utils/collections';
 import { DomainPanel } from '../domain-panel/domain-panel';
+import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
@@ -18,6 +19,11 @@ import { HeroicResourceBadge } from '../../../controls/heroic-resource-badge/her
 import { ItemPanel } from '../item-panel/item-panel';
 import { KitPanel } from '../kit-panel/kit-panel';
 import { Markdown } from '../../../controls/markdown/markdown';
+import { Monster } from '../../../../models/monster';
+import { MonsterLogic } from '../../../../logic/monster-logic';
+import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
+import { MonsterPanel } from '../monster-panel/monster-panel';
+import { MonsterRoleType } from '../../../../enums/monster-role-type';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
@@ -307,6 +313,96 @@ export const FeaturePanel = (props: Props) => {
 							<AbilityPanel key={ability.id} ability={ability} mode={PanelMode.Full} />
 						);
 					})
+				}
+			</Space>
+		);
+	};
+
+	const getEditableCompanion = (data: FeatureCompanionData) => {
+		const monsters = props.sourcebooks ?
+			props.sourcebooks
+				.flatMap(sb => sb.monsterGroups)
+				.flatMap(group => group.monsters)
+				.filter(m => {
+					switch (data.type) {
+						case 'mount':
+							return m.role.type === MonsterRoleType.Mount;
+						case 'retainer':
+							return m.role.organization === MonsterOrganizationType.Retainer;
+					}
+
+					return true;
+				})
+			: [];
+		const sortedMonsters = Collections.sort(monsters, m => m.name);
+
+		if (sortedMonsters.length === 0) {
+			return (
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='There are no options to choose for this feature.'
+				/>
+			);
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Select
+					style={{ width: '100%' }}
+					className={data.selected === null ? 'selection-empty' : ''}
+					allowClear={true}
+					placeholder='Select a companion'
+					options={sortedMonsters.map(m => ({ label: m.name, value: m.id, desc: MonsterLogic.getMonsterDescription(m) }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					value={data.selected ? data.selected.id : null}
+					onChange={id => {
+						const monster = monsters.find(m => m.id === id);
+						if (monster) {
+							const monsterCopy = JSON.parse(JSON.stringify(monster)) as Monster;
+							if (monsterCopy.retainer) {
+								// Retainers match hero level
+								monsterCopy.retainer.level = Math.max(monsterCopy.level, props.hero?.class?.level || 1);
+							}
+							const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureCompanionData;
+							dataCopy.selected = monsterCopy;
+							if (props.setData) {
+								props.setData(props.feature.id, dataCopy);
+							}
+						}
+					}}
+				/>
+				{
+					data.selected && data.selected.retainer ?
+						data.selected.retainer.featuresByLevel
+							.filter(lvl => data.selected!.retainer!.level >= lvl.level)
+							.filter(lvl => FeatureLogic.isChoice(lvl.feature))
+							.map(lvl => (
+								<FeaturePanel
+									key={lvl.level}
+									feature={lvl.feature}
+									hero={props.hero}
+									sourcebooks={props.sourcebooks}
+									mode={props.mode}
+									setData={(fID, d) => {
+										const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureCompanionData;
+										dataCopy.selected!.retainer!.featuresByLevel.forEach(l => {
+											if (l.feature.id === fID) {
+												l.feature.data = d;
+											}
+										});
+										if (props.setData) {
+											props.setData(props.feature.id, dataCopy);
+										}
+									}}
+								/>
+							))
+						: null
+				}
+				{
+					data.selected ?
+						<MonsterPanel monster={data.selected} />
+						: null
 				}
 			</Space>
 		);
@@ -893,6 +989,8 @@ export const FeaturePanel = (props: Props) => {
 				return getEditableChoice(props.feature.data);
 			case FeatureType.ClassAbility:
 				return getEditableClassAbility(props.feature.data);
+			case FeatureType.Companion:
+				return getEditableCompanion(props.feature.data);
 			case FeatureType.Domain:
 				return getEditableDomain(props.feature.data);
 			case FeatureType.DomainFeature:
@@ -1011,6 +1109,18 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		return null;
+	};
+
+	const getExtraCompanion = (data: FeatureCompanionData) => {
+		if (data.selected === null) {
+			return (
+				<div className='ds-text'>
+					Choose a {data.type}.
+				</div>
+			);
+		}
+
+		return <MonsterPanel monster={data.selected} />;
 	};
 
 	const getExtraDamageModifier = (data: FeatureDamageModifierData) => {
@@ -1296,6 +1406,8 @@ export const FeaturePanel = (props: Props) => {
 				return getExtraChoice(props.feature.data);
 			case FeatureType.ClassAbility:
 				return getExtraClassAbility(props.feature.data);
+			case FeatureType.Companion:
+				return getExtraCompanion(props.feature.data);
 			case FeatureType.DamageModifier:
 				return getExtraDamageModifier(props.feature.data);
 			case FeatureType.Domain:

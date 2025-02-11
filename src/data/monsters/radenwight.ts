@@ -92,6 +92,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(7, 'climb'),
 			stamina: 4,
+			stability: 0,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(-1, 2, 0, 1, 0),
 			withCaptain: 'Strike damage +1',
@@ -185,6 +186,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(7, 'climb'),
 			stamina: 4,
+			stability: 0,
 			freeStrikeDamage: 1,
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 0, -1),
 			withCaptain: 'Edge on strikes',
@@ -229,6 +231,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 3,
+			stability: 0,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(1, 2, -1, 0, 0),
 			withCaptain: 'Edge on strikes',
@@ -341,6 +344,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 30,
+			stability: 0,
 			freeStrikeDamage: 3,
 			characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 2, 1),
 			features: [
@@ -406,6 +410,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(7, 'climb'),
 			stamina: 30,
+			stability: 0,
 			freeStrikeDamage: 3,
 			characteristics: MonsterLogic.createCharacteristics(-1, 2, 0, 0, 1),
 			features: [
@@ -562,6 +567,93 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					})
 				})
 			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'radenwight-9',
+			name: 'Radenwight Sidekick',
+			level: 1,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Support),
+			keywords: [ 'Humanoid', 'Radenwight' ],
+			encounterValue: 13,
+			size: FactoryLogic.createSize(1, 'S'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
+			stamina: 30,
+			stability: 0,
+			freeStrikeDamage: 2,
+			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'radenwight-9-feature-1',
+						name: 'Dagger\'s Bite',
+						type: FactoryLogic.type.createAction(),
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [
+							FactoryLogic.distance.createMelee(),
+							FactoryLogic.distance.createRanged(5)
+						],
+						target: 'One creature or object',
+						cost: 'signature',
+						powerRoll: FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+							tier1: '3 damage',
+							tier2: '5 damage',
+							tier3: '7 damage'
+						})
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'radenwight-9-feature-2',
+						name: 'Ready Rodent',
+						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: 'One creature',
+						effect: 'The sidekick makes a free strike against the target.'
+					})
+				})
+			],
+			retainer: {
+				level4: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'radenwight-9-retainer-4',
+						name: 'Boost',
+						type: FactoryLogic.type.createManeuver(),
+						keywords: [],
+						distance: [ FactoryLogic.distance.createSelf() ],
+						target: 'Self',
+						effect: 'If the sidekick’s mentor comes within 1 of the sidekick at any point during their turn, the mentor’s speed increases by 1 and the mentor’s movement gains the climb keyword until the end of the turn.'
+					})
+				}),
+				level7: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'radenwight-9-retainer-7',
+						name: 'Bug Bag',
+						type: FactoryLogic.type.createAction(),
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 3 }) ],
+						target: 'All creatures',
+						powerRoll: FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+							tier1: '6 poison damage; (weak) M weakened (save ends)',
+							tier2: '9 poison damage (average) M weakened (save ends)',
+							tier3: '13 poison damage; (strong) M weakened (save ends)'
+						})
+					})
+				}),
+				level10: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'radenwight-9-retainer-10',
+						name: 'Triumphant Squeak',
+						type: FactoryLogic.type.createManeuver(),
+						keywords: [],
+						distance: [ FactoryLogic.distance.createSelf() ],
+						target: 'Self',
+						effect: 'The target can use a Recovery. The dazed, frightened, and weakened conditions end for the target. Allies within 3 can use Triumphant Squeak as a triggered action, targeting themselves.'
+					})
+				})
+			}
 		})
 	]
 };

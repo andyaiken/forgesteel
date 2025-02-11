@@ -1,5 +1,5 @@
 export enum MonsterRoleType {
-	NoRole = 'NoRole',
+	NoRole = 'No Role',
 	Ambusher = 'Ambusher',
 	Artillery = 'Artillery',
 	Brute = 'Brute',

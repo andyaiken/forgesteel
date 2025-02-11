@@ -1,6 +1,6 @@
 import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -302,6 +302,12 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
+		const setCompanionType = (value: 'companion' | 'mount' | 'retainer') => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureCompanionData;
+			copy.type = value;
+			setData(copy);
+		};
+
 		const setSizeValue = (value: number) => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureSizeData;
 			copy.size.value = value;
@@ -558,6 +564,9 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
+			case FeatureType.AncestryChoice: {
+				return null;
+			}
 			case FeatureType.AncestryFeatureChoice: {
 				const data = feature.data as FeatureAncestryFeatureChoiceData;
 				return (
@@ -678,6 +687,20 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
+			case FeatureType.Companion: {
+				const data = feature.data as FeatureCompanionData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Companion Type</HeaderText>
+						<Segmented
+							block={true}
+							options={[ 'companion', 'mount', 'retainer' ]}
+							value={data.type}
+							onChange={s => setCompanionType(s as 'companion' | 'mount' | 'retainer')}
+						/>
+					</Space>
+				);
+			}
 			case FeatureType.DamageModifier: {
 				const data = feature.data as FeatureDamageModifierData;
 				return (
@@ -795,6 +818,9 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
+			case FeatureType.KitType: {
+				return null;
+			}
 			case FeatureType.Language: {
 				const data = feature.data as FeatureLanguageData;
 				return (
@@ -879,6 +905,9 @@ export const FeatureEditPanel = (props: Props) => {
 						<Button block={true} onClick={() => addMultipleFeature(data)}>Add a feature</Button>
 					</Space>
 				);
+			}
+			case FeatureType.Package: {
+				return null;
 			}
 			case FeatureType.Perk: {
 				const data = feature.data as FeaturePerkData;
@@ -983,8 +1012,9 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
-			case FeatureType.Text:
+			case FeatureType.Text: {
 				return null;
+			}
 			case FeatureType.TitleChoice: {
 				const data = feature.data as FeatureTitleChoiceData;
 				return (
@@ -1029,7 +1059,7 @@ export const FeatureEditPanel = (props: Props) => {
 									<Select
 										style={{ width: '100%' }}
 										placeholder='Select type'
-										options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.AbilityCost, FeatureType.AncestryChoice, FeatureType.AncestryFeatureChoice, FeatureType.Bonus, FeatureType.CharacteristicBonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.TitleChoice ]).map(o => ({ value: o }))}
+										options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.AbilityCost, FeatureType.AncestryChoice, FeatureType.AncestryFeatureChoice, FeatureType.Bonus, FeatureType.CharacteristicBonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.Companion, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.TitleChoice ]).map(o => ({ value: o }))}
 										optionRender={option => <Field label={option.data.value} value={FeatureLogic.getFeatureTypeDescription(option.data.value)} />}
 										value={feature.type}
 										onChange={setType}

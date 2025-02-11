@@ -42,6 +42,7 @@ export const EncounterPanel = (props: Props) => {
 									const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
 
 									let name = (monster && monsterGroup) ? MonsterLogic.getMonsterName(monster, monsterGroup) : 'Unknown Monster';
+									const desc = monster ? MonsterLogic.getMonsterDescription(monster) : '';
 
 									let count = slot.count;
 									if (monster) {
@@ -53,7 +54,7 @@ export const EncounterPanel = (props: Props) => {
 
 									return (
 										<div key={slot.id} className='encounter-slot'>
-											<Field label='Monster' value={name} />
+											<Field label={name} value={desc} />
 										</div>
 									);
 								})

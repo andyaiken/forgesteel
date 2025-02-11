@@ -8,6 +8,7 @@ export enum FeatureType {
 	CharacteristicBonus = 'Characteristic Bonus',
 	Choice = 'Choice',
 	ClassAbility = 'Class Ability',
+	Companion = 'Companion',
 	DamageModifier = 'Damage Modifier',
 	Domain = 'Domain',
 	DomainFeature = 'Domain Feature',

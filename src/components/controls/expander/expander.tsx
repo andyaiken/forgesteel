@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import './expander.scss';
 
 interface Props {
-	title: string;
+	title: ReactNode;
 	tags?: string[];
 	children: ReactNode;
 	extra?: ReactNode[];

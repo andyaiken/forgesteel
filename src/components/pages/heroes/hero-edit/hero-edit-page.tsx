@@ -273,6 +273,13 @@ export const HeroEditPage = (props: Props) => {
 				heroCopy.class.level = level;
 				heroCopy.state.xp = HeroLogic.getMinXP(level);
 			}
+			HeroLogic
+				.getCompanions(heroCopy)
+				.forEach(m => {
+					if (m.retainer) {
+						m.retainer.level = Math.max(m.level, level);
+					}
+				});
 			setHero(heroCopy);
 			setDirty(true);
 		};

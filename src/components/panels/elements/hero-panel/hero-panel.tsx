@@ -23,6 +23,8 @@ import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroStatePage } from '../../../../enums/hero-state-page';
 import { Kit } from '../../../../models/kit';
+import { Monster } from '../../../../models/monster';
+import { MonsterLogic } from '../../../../logic/monster-logic';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
@@ -44,6 +46,7 @@ interface Props {
  	onSelectComplication?: (complication: Complication) => void;
  	onSelectDomain?: (domain: Domain) => void;
  	onSelectKit?: (kit: Kit) => void;
+ 	onSelectCompanion?: (monster: Monster) => void;
  	onSelectCharacteristic?: (characteristic: Characteristic) => void;
  	onSelectAbility?: (ability: Ability) => void;
  	onShowState?: (page: HeroStatePage) => void;
@@ -90,6 +93,12 @@ export const HeroPanel = (props: Props) => {
 		const onSelectKit = (kit: Kit) => {
 			if (props.onSelectKit) {
 				props.onSelectKit(kit);
+			}
+		};
+
+		const onSelectCompanion = (monster: Monster) => {
+			if (props.onSelectCompanion) {
+				props.onSelectCompanion(monster);
 			}
 		};
 
@@ -185,6 +194,17 @@ export const HeroPanel = (props: Props) => {
 							<HeaderText>Complication</HeaderText>
 							<Field label='Complication' value={props.hero.complication.name} />
 						</div>
+						:
+						null
+				}
+				{
+					HeroLogic.getCompanions(props.hero).length > 0 ?
+						HeroLogic.getCompanions(props.hero).map(monster => (
+							<div key={monster.id} className='overview-tile clickable' onClick={() => onSelectCompanion(monster)}>
+								<HeaderText>Companion</HeaderText>
+								<Field label={monster.name} value={MonsterLogic.getMonsterDescription(monster)} />
+							</div>
+						))
 						:
 						null
 				}

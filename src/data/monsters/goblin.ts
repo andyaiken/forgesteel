@@ -94,6 +94,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(6, 'climb'),
 			stamina: 4,
+			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: 'Edge on strikes',
 			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, -1),
@@ -132,6 +133,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 3,
+			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: 'Ranged distance +5',
 			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, -1),
@@ -171,6 +173,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 5,
+			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: 'Strike damage +1',
 			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, -1),
@@ -210,6 +213,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			size: FactoryLogic.createSize(1, 'T'),
 			speed: FactoryLogic.createSpeed(5, 'fly'),
 			stamina: 3,
+			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: 'Speed +3',
 			characteristics: MonsterLogic.createCharacteristics(-5, 2, -4, 0, -2),
@@ -244,6 +248,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(6, 'climb'),
 			stamina: 15,
+			stability: 0,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, -2),
 			features: [
@@ -304,6 +309,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 10,
+			stability: 0,
 			freeStrikeDamage: 1,
 			characteristics: MonsterLogic.createCharacteristics(-2, 1, 0, 2, 0),
 			features: [
@@ -358,6 +364,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 10,
+			stability: 0,
 			freeStrikeDamage: 1,
 			characteristics: MonsterLogic.createCharacteristics(-2, 1, 0, 0, 2),
 			features: [
@@ -409,6 +416,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 15,
+			stability: 0,
 			freeStrikeDamage: 1,
 			characteristics: MonsterLogic.createCharacteristics(-1, 2, 0, 0, 1),
 			features: [
@@ -461,6 +469,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(6, 'climb'),
 			stamina: 15,
+			stability: 0,
 			freeStrikeDamage: 1,
 			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, -1),
 			features: [

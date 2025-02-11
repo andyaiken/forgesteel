@@ -11,6 +11,7 @@ import { Item } from './item';
 import { ItemType } from '../enums/item-type';
 import { Kit } from './kit';
 import { KitType } from '../enums/kit-type';
+import { Monster } from './monster';
 import { Perk } from './perk';
 import { PerkList } from '../enums/perk-list';
 import { PowerRoll } from './power-roll';
@@ -74,6 +75,12 @@ export interface FeatureClassAbilityData extends _FeatureData {
 	selectedIDs: string[];
 }
 export type FeatureClassAbility = FeatureOf<FeatureType.ClassAbility, FeatureClassAbilityData>;
+
+export interface FeatureCompanionData extends _FeatureData {
+	type: 'companion' | 'mount' | 'retainer';
+	selected: Monster | null;
+}
+export type FeatureCompanion = FeatureOf<FeatureType.Companion, FeatureCompanionData>;
 
 export interface FeatureDamageModifierData extends _FeatureData {
 	modifiers: DamageModifier[];
@@ -188,6 +195,7 @@ export type Feature =
 	| FeatureCharacteristicBonus
 	| FeatureChoice
 	| FeatureClassAbility
+	| FeatureCompanion
 	| FeatureDamageModifier
 	| FeatureDomain
 	| FeatureDomainFeature

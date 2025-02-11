@@ -73,7 +73,7 @@ interface Props {
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
- 	showMonster: (monsterID: string) => void;
+ 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	saveChanges: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 }
 
@@ -1459,6 +1459,7 @@ export const LibraryEditPage = (props: Props) => {
 				size: FactoryLogic.createSize(1, 'M'),
 				speed: FactoryLogic.createSpeed(5),
 				stamina: 5,
+				stability: 0,
 				freeStrikeDamage: 2,
 				characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 0, 0),
 				features: []
@@ -1491,7 +1492,12 @@ export const LibraryEditPage = (props: Props) => {
 					monsterGroup.monsters.map(m => (
 						<Expander
 							key={m.id}
-							title={MonsterLogic.getMonsterName(m, monsterGroup)}
+							title={(
+								<div style={{ display: 'flex', flexDirection: 'column' }}>
+									<div><b>{MonsterLogic.getMonsterName(m, monsterGroup)}</b></div>
+									<div>{MonsterLogic.getMonsterDescription(m)}</div>
+								</div>
+							)}
 							extra={[
 								<Button key='edit' type='text' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!, m.id); }} />,
 								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMonster(m, 'up'); }} />,
@@ -1578,7 +1584,7 @@ export const LibraryEditPage = (props: Props) => {
 						}
 
 						return (
-							<SelectablePanel key={m.id} onSelect={() => props.showMonster(m.id)}>
+							<SelectablePanel key={m.id} onSelect={() => props.showMonster(m, monsterGroup)}>
 								<MonsterPanel
 									monster={m}
 									monsterGroup={monsterGroup}

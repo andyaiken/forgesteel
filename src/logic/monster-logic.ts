@@ -10,12 +10,12 @@ import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
 
 export class MonsterLogic {
-	static getMonsterName = (monster: Monster, group: MonsterGroup) => {
+	static getMonsterName = (monster: Monster, group?: MonsterGroup) => {
 		if (monster.name) {
 			return monster.name;
 		}
 
-		if (group.name) {
+		if (group && group.name) {
 			return `${group.name} ${monster.role.type}`;
 		}
 
@@ -28,6 +28,23 @@ export class MonsterLogic {
 		}
 
 		return monster.level;
+	};
+
+	static getMonsterDescription = (monster: Monster) => {
+		const lvl = MonsterLogic.getMonsterLevel(monster);
+
+		if (monster.role.type === MonsterRoleType.NoRole) {
+			return `Level ${lvl} ${monster.role.organization}`;
+		}
+
+		const orgGoesLast = [
+			MonsterOrganizationType.Retainer
+		].includes(monster.role.organization);
+		if (orgGoesLast) {
+			return `Level ${lvl} ${monster.role.type} ${monster.role.organization}`;
+		}
+
+		return `Level ${lvl} ${monster.role.organization} ${monster.role.type}`;
 	};
 
 	static getStamina = (monster: Monster) => {
@@ -77,37 +94,35 @@ export class MonsterLogic {
 	static getFeatures = (monster: Monster) => {
 		const features = [ ...monster.features ];
 
-		MonsterLogic.getRetainerAdvancementFeatures(monster)
-			.filter(lvl => lvl.level <= MonsterLogic.getMonsterLevel(monster))
-			.forEach(lvl => {
-				if (lvl.feature) {
-					switch (lvl.feature.type) {
-						case FeatureType.Choice:
-							features.push(...lvl.feature.data.selected);
-							break;
-						case FeatureType.Multiple:
-							features.push(...lvl.feature.data.features);
-							break;
-						default:
-							features.push(lvl.feature);
-							break;
+		if (monster.retainer) {
+			monster.retainer.featuresByLevel
+				.filter(lvl => lvl.level <= MonsterLogic.getMonsterLevel(monster))
+				.forEach(lvl => {
+					if (lvl.feature) {
+						switch (lvl.feature.type) {
+							case FeatureType.Choice:
+								features.push(...lvl.feature.data.selected);
+								break;
+							case FeatureType.Multiple:
+								features.push(...lvl.feature.data.features);
+								break;
+							default:
+								features.push(lvl.feature);
+								break;
+						}
 					}
-				}
-			});
+				});
+		}
 
 		return features;
 	};
 
-	static getRetainerAdvancementFeatures = (monster: Monster): { level: number, feature: Feature }[] => {
-		if (!monster.retainer) {
-			return [];
-		}
+	static getRetainerAdvancementFeatures = (level: number, level4?: Feature, level7?: Feature, level10?: Feature): { level: number, feature: Feature }[] => {
+		const options4 = level4 ? [ level4 ] : [];
+		const options7 = level7 ? [ level7 ] : [];
+		const options10 = level10 ? [ level10 ] : [];
 
-		const options4 = monster.retainer.featuresByLevel.filter(lvl => lvl.level === 4).map(lvl => lvl.option).filter(f => !!f);
-		const options7 = monster.retainer.featuresByLevel.filter(lvl => lvl.level === 7).map(lvl => lvl.option).filter(f => !!f);
-		const options10 = monster.retainer.featuresByLevel.filter(lvl => lvl.level === 10).map(lvl => lvl.option).filter(f => !!f);
-
-		return [
+		const levels = [
 			{
 				level: 2,
 				feature: FactoryLogic.feature.createChoice({
@@ -259,6 +274,8 @@ export class MonsterLogic {
 				})
 			}
 		];
+
+		return levels.filter(lvl => lvl.level > level);
 	};
 
 	static matches = (monster: Monster, monsterGroup: MonsterGroup, filter: MonsterFilter) => {
@@ -303,12 +320,22 @@ export class MonsterLogic {
 	};
 
 	static getCharacteristic = (monster: Monster, characteristic: Characteristic) => {
+		let value = 0;
+
 		const ch = monster.characteristics.find(ch => ch.characteristic === characteristic);
 		if (ch) {
-			return ch.value;
+			value = ch.value;
 		}
 
-		return 0;
+		MonsterLogic.getFeatures(monster).forEach(f => {
+			if (f.type === FeatureType.CharacteristicBonus) {
+				if (f.data.characteristic === characteristic) {
+					value += f.data.value;
+				}
+			}
+		});
+
+		return value;
 	};
 
 	static getDamageModifiers = (monster: Monster, type: DamageModifierType) => {
@@ -377,6 +404,8 @@ export class MonsterLogic {
 			case MonsterRoleType.Support:
 				return 'Support creatures specialize in aiding their allies, providing buffs, healing, movement, or action options.';
 		}
+
+		return '';
 	};
 
 	static getRoleOrganizationDescription = (organization: MonsterOrganizationType) => {
@@ -393,6 +422,8 @@ export class MonsterLogic {
 				return 'A leader is a powerful who buffs their allies and grants them extra actions.';
 			case MonsterOrganizationType.Solo:
 				return 'A creature under a solo organization is an encounter all on their own.';
+			case MonsterOrganizationType.Retainer:
+				return 'A retainer is a type of follower who fights alongside the heroes. A retainer can gain levels just as heroes do, so their battlefield contributions remain relevant as the heroes advance.';
 		}
 	};
 

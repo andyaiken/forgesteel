@@ -12,6 +12,7 @@ import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 import { Sourcebook } from '../models/sourcebook';
 import localforage from 'localforage';
+import pdfFile from '../assets/character-sheet-backer-packet-2-modified.pdf';
 
 const fileInput = document.createElement('input');
 fileInput.type = 'file';
@@ -20,7 +21,7 @@ const downloader = document.createElement('a');
 export class PDFExport {
 	static startExport = async (hero: Hero) => {
 		const pdfAsBytes = await fetch(
-			'/forgesteel/src/assets/character-sheet-backer-packet-2-modified.pdf'
+			pdfFile
 		).then(res => res.arrayBuffer());
 		const pdfDoc = await PDFDocument.load(pdfAsBytes);
 

@@ -58,7 +58,7 @@ export const memonek: Ancestry = {
 							id: 'memonek-feature-3-5',
 							name: 'Keeper of Order',
 							description: 'Your connection to Axiom, the plane of uttermost law, allows you manage chaos around you.',
-							type: FactoryLogic.type.createTrigger('You, or a creature adjacent to you, makes a power roll', true),
+							type: FactoryLogic.type.createTrigger('You, or a creature adjacent to you, makes a power roll', { free: true }),
 							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',

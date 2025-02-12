@@ -1,5 +1,6 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
+import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -182,7 +183,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -224,7 +225,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
-							FactoryLogic.distance.createMelee(1),
+							FactoryLogic.distance.createMelee(),
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object per minion',
@@ -377,7 +378,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -397,7 +398,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						name: 'Shield Bash',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -436,7 +437,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -496,7 +497,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -548,7 +549,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -616,7 +617,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -634,7 +635,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-trained-gelatinous-cube-feature-2',
 						name: 'You Didn’t Pay Attention!',
-						type: FactoryLogic.type.createTrigger('A creature moves or is force moved into the cube.', true),
+						type: FactoryLogic.type.createTrigger('A creature moves or is force moved into the cube.', { free: true }),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						effect: 'The cube uses Engulf with a double edge'
@@ -670,7 +671,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
-							FactoryLogic.distance.createMelee(1),
+							FactoryLogic.distance.createMelee(),
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'Two creatures or objects',
@@ -753,6 +754,92 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					description: 'The centurion has cover, a Stability of 3, and can act as cover for allies when adjacent to an ally who also has this trait.'
 				})
 			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'kobold-11',
+			name: 'Kobold Shieldbearer',
+			description: '',
+			level: 1,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Defender),
+			keywords: [ 'Humanoid', 'Kobold' ],
+			encounterValue: 15,
+			size: FactoryLogic.createSize(1, 'S'),
+			speed: FactoryLogic.createSpeed(5),
+			stamina: 40,
+			stability: 0,
+			freeStrikeDamage: 2,
+			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 0),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'kobold-11-feature-1',
+						name: 'Gladius',
+						type: FactoryLogic.type.createAction(),
+						cost: 'signature',
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: '1 creature or object',
+						powerRoll: FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+							tier1: '3 damage',
+							tier2: '5 damage',
+							tier3: '7 damage; taunted (EoT)'
+						})
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'kobold-11-feature-2',
+					name: 'Shield, Boss?',
+					description: 'The shieldbearer and their mentor has cover, their Stability increased by 1, and can act as cover for allies when the shieldbearer is adjacent to their mentor.'
+				})
+			],
+			retainer: {
+				level4: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'kobold-11-retainer-4',
+						name: 'Shield Block',
+						type: FactoryLogic.type.createTrigger('The shieldbearer’s mentor takes damage from an attack.', { qualifiers: [ 'encounter' ] }),
+						keywords: [],
+						distance: [
+							FactoryLogic.distance.createMelee(),
+							FactoryLogic.distance.createRanged(5)
+						],
+						target: 'The shieldbearer’s mentor',
+						effect: 'When the shieldbearer’s mentor takes damage from an attack, the shieldbearer can block the attack (if the shieldbearer is adjacent to the mentor) or throw their shield into the mentor’s space (if they are up to 5 away from the mentor). The triggering attack is reduced by half and any potency effects it has are reduced by 1. If the kobold threw their shield, it bounces back to their hand.'
+					})
+				}),
+				level7: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'kobold-11-retainer-7',
+						name: 'Living Backpack',
+						type: FactoryLogic.type.createAction(),
+						keywords: [],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: 'The shieldbearer’s mentor',
+						effect: `
+The shieldbearer straps their shield on their back and then climbs onto their mentor’s back. While clinging to their mentor, the shieldbearer enters the mentor’s space and loses their Shield, Boss? trait. They move along with the mentor and can’t use actions, moves, or maneuvers, except to end the effect as a maneuver. The effect also ends if the shieldbearer is force moved away or knocked prone. When the effect ends, the shieldbearer moves into an adjacent square if they’re still in the mentor’s space.
+
+While the shieldbearer is clinging to their mentor, both the shieldbearer and the mentor gain 10 Temporary Stamina and cover.`
+					})
+				}),
+				level10: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'kobold-11-retainer-10',
+						name: 'Let\'s Go Sledding',
+						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: '3 creatures',
+						powerRoll: FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+							tier1: '6 damage; M (weak) prone',
+							tier2: '10 damage; M (average) prone',
+							tier3: '14 damage; M (strong) prone'
+						}),
+						effect: 'If this ability is used as part of the Charge action, gain 2 surges.'
+					})
+				})
+			}
 		})
 	]
 };

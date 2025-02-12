@@ -1,6 +1,7 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
+import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 import { HeroClass } from '../../models/class';
@@ -200,7 +201,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 						id: 'null-3-2',
 						name: 'Reorder',
 						description: '',
-						type: FactoryLogic.type.createTrigger('You start your turn.', true),
+						type: FactoryLogic.type.createTrigger('You start your turn.', { free: true }),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						effect: 'You can end one effect on you or another creature in the area of your Null Field ability.'
@@ -644,7 +645,13 @@ As your discipline grows, your psionic mastery of your body intensifies.
 						FactoryLogic.feature.create({
 							id: 'null-sub-2-2-1',
 							name: 'Entropic Adaptability',
-							description: 'You ignore difficult terrain related to cold and ice, and you can automatically climb at full speed while moving. Additionally, you have cold immunity equal to twice your Intuition score.'
+							description: 'You ignore difficult terrain related to cold and ice, and you can automatically climb at full speed while moving.'
+						}),
+						FactoryLogic.feature.createDamageModifier({
+							id: 'null-sub-2-2-1b',
+							modifiers: [
+								FactoryLogic.damageModifier.createCharacteristic({ damageType: 'Cold', modifierType: DamageModifierType.Immunity, characteristics: [ Characteristic.Intuition ], multiplier: 2 })
+							]
 						}),
 						FactoryLogic.feature.createChoice({
 							id: 'null-sub-2-2-2',

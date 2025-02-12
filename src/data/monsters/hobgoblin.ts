@@ -1,5 +1,6 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
+import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
@@ -108,14 +109,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-1-1',
 					modifiers: [
-						{
-							type: DamageModifierType.Immunity,
-							damageType: 'Fire',
-							value: 2,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -166,14 +160,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-2-1',
 					modifiers: [
-						{
-							type: DamageModifierType.Immunity,
-							damageType: 'Fire',
-							value: 2,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -223,14 +210,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-3-1',
 					modifiers: [
-						{
-							type: DamageModifierType.Immunity,
-							damageType: 'Fire',
-							value: 2,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -279,14 +259,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-4-1',
 					modifiers: [
-						{
-							type: DamageModifierType.Immunity,
-							damageType: 'Fire',
-							value: 2,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -335,14 +308,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-5-1',
 					modifiers: [
-						{
-							type: DamageModifierType.Immunity,
-							damageType: 'Fire',
-							value: 4,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -401,14 +367,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-6-1',
 					modifiers: [
-						{
-							type: DamageModifierType.Immunity,
-							damageType: 'Fire',
-							value: 4,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -476,14 +435,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-7-1',
 					modifiers: [
-						{
-							type: DamageModifierType.Immunity,
-							damageType: 'Fire',
-							value: 6,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 6 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -556,14 +508,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-8-1',
 					modifiers: [
-						{
-							type: DamageModifierType.Immunity,
-							damageType: 'Fire',
-							value: 5,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -624,14 +569,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-9-1',
 					modifiers: [
-						{
-							type: DamageModifierType.Immunity,
-							damageType: 'Fire',
-							value: 5,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -698,14 +636,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-10-1',
 					modifiers: [
-						{
-							type: DamageModifierType.Immunity,
-							damageType: 'Fire',
-							value: 6,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 6 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -767,14 +698,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-11-1',
 					modifiers: [
-						{
-							type: DamageModifierType.Immunity,
-							damageType: 'Fire',
-							value: 5,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -842,14 +766,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-12-1',
 					modifiers: [
-						{
-							type: DamageModifierType.Immunity,
-							damageType: 'Fire',
-							value: 4,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -906,14 +823,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-13-1',
 					modifiers: [
-						{
-							type: DamageModifierType.Immunity,
-							damageType: 'Fire',
-							value: 5,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -999,14 +909,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-14-1',
 					modifiers: [
-						{
-							type: DamageModifierType.Immunity,
-							damageType: 'Fire',
-							value: 5,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1098,14 +1001,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-15-1',
 					modifiers: [
-						{
-							type: DamageModifierType.Immunity,
-							damageType: 'Fire',
-							value: 6,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 6 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1211,6 +1107,98 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					})
 				})
 			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'hobgoblin-16',
+			name: 'Hobgoblin Flameslinger',
+			level: 4,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Controller),
+			keywords: [ 'Goblin', 'Hobgoblin', 'Humanoid', 'Infernal' ],
+			encounterValue: 20,
+			size: FactoryLogic.createSize(1, 'M'),
+			speed: FactoryLogic.createSpeed(5),
+			stamina: 50,
+			stability: 0,
+			freeStrikeDamage: 5,
+			characteristics: MonsterLogic.createCharacteristics(1, 0, 2, 1, 3),
+			features: [
+				FactoryLogic.feature.createDamageModifier({
+					id: 'hobgoblin-16-1',
+					modifiers: [
+						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 4 })
+					]
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'hobgoblin-16-2',
+						name: 'Fire Curse',
+						type: FactoryLogic.type.createAction(),
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: '1 creature or object',
+						cost: 'signature',
+						powerRoll: FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+							tier1: '5 fire damage',
+							tier2: '9 fire damage',
+							tier3: '12 fire damage; A (strong) burning (save ends)'
+						}),
+						effect: 'A burning target takes 1d6 fire damage at the start of each of their turns until the condition ends.'
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'hobgoblin-16-3',
+						name: 'Fuel for the Fire',
+						type: FactoryLogic.type.createAction(),
+						keywords: [],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: '1 creature',
+						effect: 'The target gains fire weakness 10 until the end of the flameslinger’s next turn. If the target is the flameslinger’s mentor, they instead gain fire immunity 10.'
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'hobgoblin-16-5',
+					name: 'Infernal Ichor',
+					description: 'If the flameslinger’s Stamina drops to 0, they spray burning blood. Each creature within 1 of the flameslinger takes 3 fire damage.'
+				})
+			],
+			retainer: {
+				level7: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'hobgoblin-16-retainer-7',
+						name: 'Unholy Attraction',
+						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
+						target: 'All enemies',
+						powerRoll: FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+							tier1: '8 damage; pull 1',
+							tier2: '12 damage; pull 2',
+							tier3: '16 damage; pull 4'
+						}),
+						effect: 'A creature pulled adjacent to the flameslinger is P (medium) prone.'
+					})
+				}),
+				level10: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'hobgoblin-16-retainer-10',
+						name: 'Fire Spiral',
+						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
+						target: 'All enemies',
+						powerRoll: FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+							tier1: '8 fire damage; push 2',
+							tier2: '12 fire damage; push 3',
+							tier3: '16 fire damage; push 5'
+						}),
+						effect: 'If the fireslinger’s mentor is within 10, the mentor can be the source of the burst instead of the fireslinger.'
+					})
+				})
+			}
 		})
 	]
 };

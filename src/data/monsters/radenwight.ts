@@ -153,7 +153,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -520,7 +520,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-3',
 						name: 'Ever Ready Rodent',
-						type: FactoryLogic.type.createTrigger('The target deals damage to an ally or takes damage from an ally.', true),
+						type: FactoryLogic.type.createTrigger('The target deals damage to an ally or takes damage from an ally.', { free: true }),
 						cost: 2,
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],

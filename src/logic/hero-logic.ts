@@ -467,7 +467,7 @@ Complex or time-consuming tests might require an action if made in combat - or c
 					.filter(dm => dm.type === type)
 					.forEach(dm => {
 						let value = dm.value;
-						value += Collections.max(dm.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
+						value += (Collections.max(dm.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0) * dm.valueCharacteristicMultiplier;
 						if (hero.class) {
 							value += dm.valuePerLevel * (hero.class.level - 1);
 							value += dm.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);

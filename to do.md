@@ -45,7 +45,7 @@
 ### Heroes
 
 * Companion feature
-  * Allows the user to customize the name of their companions
+  * Allow the user to customize the name of their companions
   * Determine whether the encounter builder needs to take account of retainers
 * Hero Builder:
   * Auto-create heroes

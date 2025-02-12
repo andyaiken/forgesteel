@@ -449,14 +449,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 		const addDamageModifier = (data: FeatureDamageModifierData) => {
 			const copy = JSON.parse(JSON.stringify(data)) as FeatureDamageModifierData;
-			copy.modifiers.push({
-				damageType: 'Fire',
-				type: DamageModifierType.Immunity,
-				value: 0,
-				valueCharacteristics: [],
-				valuePerLevel: 0,
-				valuePerEchelon: 0
-			});
+			copy.modifiers.push(FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 0 }));
 			setData(copy);
 		};
 

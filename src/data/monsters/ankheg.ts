@@ -177,7 +177,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 					ability: FactoryLogic.createAbility({
 						id: 'ankheg-1-feature-7',
 						name: 'Skitter',
-						type: FactoryLogic.type.createTrigger('A creature damages the ankheg', false),
+						type: FactoryLogic.type.createTrigger('A creature damages the ankheg'),
 						distance: [
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Self, value: 0 })
 						],

@@ -160,7 +160,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
-							FactoryLogic.distance.createMelee(1),
+							FactoryLogic.distance.createMelee(),
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object per minion',
@@ -203,7 +203,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
-							FactoryLogic.distance.createMelee(1),
+							FactoryLogic.distance.createMelee(),
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object per minion',
@@ -366,7 +366,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-6-feature-3',
 						name: 'Foreseen Punishment',
-						type: FactoryLogic.type.createTrigger('A creature uses a triggered action targeting the green seer or an ally within distance.', true),
+						type: FactoryLogic.type.createTrigger('A creature uses a triggered action targeting the green seer or an ally within distance.', { free: true }),
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
 						effect: 'The green seer makes a free strike against the target.'
@@ -400,7 +400,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -508,7 +508,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
-							FactoryLogic.distance.createMelee(1),
+							FactoryLogic.distance.createMelee(),
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object',
@@ -567,7 +567,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
-							FactoryLogic.distance.createMelee(1),
+							FactoryLogic.distance.createMelee(),
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object',
@@ -587,7 +587,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-10-feature-2',
 						name: 'Do Not Hesitate in the wode',
-						type: FactoryLogic.type.createTrigger('An ally ends their turn while the tree guerilla hasn’t acted this round.', true),
+						type: FactoryLogic.type.createTrigger('An ally ends their turn while the tree guerilla hasn’t acted this round.', { free: true }),
 						distance: [
 							FactoryLogic.distance.createSelf(),
 							FactoryLogic.distance.createSpecial('Squad')
@@ -684,7 +684,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 3,
@@ -799,7 +799,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -837,6 +837,91 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					description: 'If the wodenelg’s rider has the Masking Glamor or Hunter’s Glamor trait, they also gain the trait’s benefits.'
 				})
 			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'elf-wode-14',
+			name: 'Wode Elf Arrowswift',
+			level: 1,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Artillery),
+			keywords: [ 'Fey', 'Humanoid', 'Wode Elf' ],
+			encounterValue: 12,
+			size: FactoryLogic.createSize(1, 'M'),
+			speed: FactoryLogic.createSpeed(7),
+			stamina: 20,
+			stability: 1,
+			freeStrikeDamage: 2,
+			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'elf-wode-14-feature-1',
+						name: 'Longshot',
+						type: FactoryLogic.type.createAction(),
+						cost: 'signature',
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createRanged(15) ],
+						target: 'One creature or object',
+						powerRoll: FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+							tier1: '4 damage',
+							tier2: '7 damage',
+							tier3: '10 damage'
+						}),
+						effect: 'The arrowswift can take a bane to increase the attack’s range by 5.'
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'elf-wode-14-feature-2',
+					name: 'Masking Glamor',
+					description: 'The arrowswift immediately hides at the end of their turn while in cover or concealment, even if they are observed.'
+				})
+			],
+			retainer: {
+				level4: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'elf-wode-14-retainer-4',
+						name: 'Snipe',
+						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createRanged(15) ],
+						target: '1 creature',
+						powerRoll: FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+							tier1: '7 damage',
+							tier2: '11 damage',
+							tier3: '16 damage'
+						}),
+						effect: 'If the arrowswift is hidden, gain 2 surges.'
+					})
+				}),
+				level7: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'elf-wode-14-retainer-7',
+						name: 'Magic Arrows',
+						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
+						keywords: [],
+						distance: [ FactoryLogic.distance.createSelf() ],
+						target: 'Self',
+						effect: 'Until the end of the encounter, ranged attacks made by the arrowswift have an edge and gain a surge. If the arrowswift’s mentor is within 1, they gain this benefit as well.'
+					})
+				}),
+				level10: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'elf-wode-14-retainer-10',
+						name: 'Double Shot',
+						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createRanged(15) ],
+						target: '2 creatures or objects',
+						powerRoll: FactoryLogic.createPowerRoll({
+							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+							tier1: '12 damage',
+							tier2: '17 damage',
+							tier3: '23 damage'
+						})
+					})
+				})
+			}
 		})
 	]
 };

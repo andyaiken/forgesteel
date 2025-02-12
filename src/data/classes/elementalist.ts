@@ -202,7 +202,7 @@ Choose one of the following effects:
 									id: 'elementalist-1-8c',
 									name: 'Ward of Nature\'s Affection',
 									description: 'You store green energy within your body that allows you to produce powerful vines when you’re in danger.',
-									type: FactoryLogic.type.createTrigger('A creature within a number of squares equal to your Reason score deals damage to you,', true),
+									type: FactoryLogic.type.createTrigger('A creature within a number of squares equal to your Reason score deals damage to you,', { free: true }),
 									distance: [ FactoryLogic.distance.createSelf() ],
 									target: 'Self',
 									effect: 'You slide the attacking creature up to a number of squares equal to your Reason score.'
@@ -216,7 +216,7 @@ Choose one of the following effects:
 									id: 'elementalist-1-8d',
 									name: 'Ward of Surprising Reactivity',
 									description: 'You use the magic of fire to create an invisible ward of explosive fire energy.',
-									type: FactoryLogic.type.createTrigger('An adjacent creature deals damage to you.', true),
+									type: FactoryLogic.type.createTrigger('An adjacent creature deals damage to you.', { free: true }),
 									distance: [ FactoryLogic.distance.createSelf() ],
 									target: 'Self',
 									effect: 'You push that creature a number of squares equal to twice your Reason score.'

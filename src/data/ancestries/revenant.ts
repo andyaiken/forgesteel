@@ -17,46 +17,11 @@ export const revenant: Ancestry = {
 		FactoryLogic.feature.createDamageModifier({
 			id: 'revenant-feature-2',
 			modifiers: [
-				{
-					damageType: 'Cold',
-					type: DamageModifierType.Immunity,
-					value: 1,
-					valueCharacteristics: [],
-					valuePerLevel: 1,
-					valuePerEchelon: 0
-				},
-				{
-					damageType: 'Corruption',
-					type: DamageModifierType.Immunity,
-					value: 1,
-					valueCharacteristics: [],
-					valuePerLevel: 1,
-					valuePerEchelon: 0
-				},
-				{
-					damageType: 'Lightning',
-					type: DamageModifierType.Immunity,
-					value: 1,
-					valueCharacteristics: [],
-					valuePerLevel: 1,
-					valuePerEchelon: 0
-				},
-				{
-					damageType: 'Poison',
-					type: DamageModifierType.Immunity,
-					value: 1,
-					valueCharacteristics: [],
-					valuePerLevel: 1,
-					valuePerEchelon: 0
-				},
-				{
-					damageType: 'Fire',
-					type: DamageModifierType.Weakness,
-					value: 5,
-					valueCharacteristics: [],
-					valuePerLevel: 0,
-					valuePerEchelon: 0
-				}
+				FactoryLogic.damageModifier.createPerLevel({ damageType: 'Cold', modifierType: DamageModifierType.Immunity, value: 1 }),
+				FactoryLogic.damageModifier.createPerLevel({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 }),
+				FactoryLogic.damageModifier.createPerLevel({ damageType: 'Lightning', modifierType: DamageModifierType.Immunity, value: 1 }),
+				FactoryLogic.damageModifier.createPerLevel({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 1 }),
+				FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Weakness, value: 5 })
 			]
 		}),
 		FactoryLogic.feature.create({

@@ -142,7 +142,7 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						type: FactoryLogic.type.createAction(),
 						cost: 7,
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Psionic ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One grabbed enemy',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 4,
@@ -242,14 +242,7 @@ However, any hero who has at least one psionic ability can use their maneuver to
 				FactoryLogic.feature.createDamageModifier({
 					id: 'lord-syull-2-1',
 					modifiers: [
-						{
-							damageType: 'Psychic',
-							type: DamageModifierType.Immunity,
-							value: 3,
-							valueCharacteristics: [],
-							valuePerLevel: 0,
-							valuePerEchelon: 0
-						}
+						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 3 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({

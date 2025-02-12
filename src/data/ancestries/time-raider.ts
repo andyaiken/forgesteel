@@ -65,14 +65,7 @@ export const timeRaider: Ancestry = {
 						id: 'time-raider-feature-2-3',
 						name: 'Psychic Scar',
 						modifiers: [
-							{
-								damageType: 'Psychic',
-								type: DamageModifierType.Immunity,
-								value: 0,
-								valueCharacteristics: [],
-								valuePerLevel: 1,
-								valuePerEchelon: 0
-							}
+							FactoryLogic.damageModifier.createPerLevel({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
 						]
 					}),
 					value: 1

@@ -46,7 +46,12 @@ export class FormatLogic {
 		}
 
 		if (mod.valueCharacteristics.length > 0) {
-			sections.push(`+ ${mod.valueCharacteristics.join(' or ')}`);
+			const ch = mod.valueCharacteristics.join(' or ');
+			if (mod.valueCharacteristicMultiplier === 1) {
+				sections.push(`+ ${ch}`);
+			} else {
+				sections.push(`+ ${ch} x ${mod.valueCharacteristicMultiplier}`);
+			}
 		}
 
 		return sections.join(' ') || '+0';

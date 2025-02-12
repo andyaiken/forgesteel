@@ -183,7 +183,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 									id: 'talent-1-6b',
 									name: 'Repulsive Ward',
 									description: 'You surround yourself with an invisible ward of telekinetic energy.',
-									type: FactoryLogic.type.createTrigger('An adjacent creature deals damage to you.', true),
+									type: FactoryLogic.type.createTrigger('An adjacent creature deals damage to you.', { free: true }),
 									keywords: [],
 									distance: [ FactoryLogic.distance.createSelf() ],
 									target: 'Self',
@@ -734,7 +734,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								id: 'talent-sub-2-2-1',
 								name: 'Ease their Fall',
 								description: '',
-								type: FactoryLogic.type.createTrigger('You land after a fall, or any falling creature lands within 2 squares of you.', true),
+								type: FactoryLogic.type.createTrigger('You land after a fall, or any falling creature lands within 2 squares of you.', { free: true }),
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You can reduce the falling damage by an amount equal to 2 + your Reason score.'

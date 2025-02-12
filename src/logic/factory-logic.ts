@@ -13,6 +13,7 @@ import { Characteristic } from '../enums/characteristic';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { DamageModifier } from '../models/damage-modifier';
+import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Domain } from '../models/domain';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
@@ -485,6 +486,75 @@ export class FactoryLogic {
 		};
 	};
 
+	static damageModifier = {
+		create: (data: { damageType: string, modifierType: DamageModifierType, value: number }): DamageModifier => {
+			return {
+				damageType: data.damageType,
+				type: data.modifierType,
+				value: data.value,
+				valueCharacteristics: [],
+				valueCharacteristicMultiplier: 1,
+				valuePerLevel: 0,
+				valuePerEchelon: 0
+			};
+		},
+		createPerLevel: (data: { damageType: string, modifierType: DamageModifierType, value: number }): DamageModifier => {
+			return {
+				damageType: data.damageType,
+				type: data.modifierType,
+				value: data.value,
+				valueCharacteristics: [],
+				valueCharacteristicMultiplier: 1,
+				valuePerLevel: data.value,
+				valuePerEchelon: 0
+			};
+		},
+		createValuePlusPerLevel: (data: { damageType: string, modifierType: DamageModifierType, value: number, perLevel: number }): DamageModifier => {
+			return {
+				damageType: data.damageType,
+				type: data.modifierType,
+				value: data.value + data.perLevel,
+				valueCharacteristics: [],
+				valueCharacteristicMultiplier: 1,
+				valuePerLevel: data.perLevel,
+				valuePerEchelon: 0
+			};
+		},
+		createFirstLevelHigherLevel: (data: { damageType: string, modifierType: DamageModifierType, first: number, higher: number }): DamageModifier => {
+			return {
+				damageType: data.damageType,
+				type: data.modifierType,
+				value: data.first,
+				valueCharacteristics: [],
+				valueCharacteristicMultiplier: 1,
+				valuePerLevel: data.higher,
+				valuePerEchelon: 0
+			};
+		},
+		createPerEchelon: (data: { damageType: string, modifierType: DamageModifierType, value: number }): DamageModifier => {
+			return {
+				damageType: data.damageType,
+				type: data.modifierType,
+				value: 0,
+				valueCharacteristics: [],
+				valueCharacteristicMultiplier: 1,
+				valuePerLevel: 0,
+				valuePerEchelon: data.value
+			};
+		},
+		createCharacteristic: (data: { damageType: string, modifierType: DamageModifierType, characteristics: Characteristic[], multiplier?: number }): DamageModifier => {
+			return {
+				damageType: data.damageType,
+				type: data.modifierType,
+				value: 0,
+				valueCharacteristics: data.characteristics,
+				valueCharacteristicMultiplier: data.multiplier || 1,
+				valuePerLevel: 0,
+				valuePerEchelon: 0
+			};
+		}
+	};
+
 	static type = {
 		createAction: (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
 			return {
@@ -492,7 +562,7 @@ export class FactoryLogic {
 				free: options?.free ?? false,
 				trigger: '',
 				time: '',
-				qualifiers: options?.qualifiers ?? []
+				qualifiers: options?.qualifiers || []
 			};
 		},
 		createManeuver: (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
@@ -501,25 +571,25 @@ export class FactoryLogic {
 				free: options?.free ?? false,
 				trigger: '',
 				time: '',
-				qualifiers: options?.qualifiers ?? []
+				qualifiers: options?.qualifiers || []
 			};
 		},
-		createMove: (free = false): AbilityType => {
+		createMove: (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
 			return {
 				usage: AbilityUsage.Move,
-				free: free,
+				free: options?.free ?? false,
 				trigger: '',
 				time: '',
-				qualifiers: []
+				qualifiers: options?.qualifiers || []
 			};
 		},
-		createTrigger: (trigger: string, free = false): AbilityType => {
+		createTrigger: (trigger: string, options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
 			return {
 				usage: AbilityUsage.Trigger,
-				free: free,
+				free: options?.free ?? false,
 				trigger: trigger,
 				time: '',
-				qualifiers: []
+				qualifiers: options?.qualifiers || []
 			};
 		},
 		createTime: (time: string): AbilityType => {
@@ -664,7 +734,7 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createBonus: (data: { id: string, name?: string, description?: string, field: FeatureField, value?: number, valueCharacteristics?: Characteristic[], valuePerLevel?: number, valuePerEchelon?: number }): FeatureBonus => {
+		createBonus: (data: { id: string, name?: string, description?: string, field: FeatureField, value?: number, valueCharacteristics?: Characteristic[], valueCharacteristicMultiplier?: number, valuePerLevel?: number, valuePerEchelon?: number }): FeatureBonus => {
 			return {
 				id: data.id,
 				name: data.name || data.field.toString(),
@@ -674,6 +744,7 @@ export class FactoryLogic {
 					field: data.field,
 					value: data.value || 0,
 					valueCharacteristics: data.valueCharacteristics || [],
+					valueCharacteristicMultiplier: data.valueCharacteristicMultiplier || 1,
 					valuePerLevel: data.valuePerLevel || 0,
 					valuePerEchelon: data.valuePerEchelon || 0
 				}

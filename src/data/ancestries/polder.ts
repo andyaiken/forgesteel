@@ -36,14 +36,7 @@ export const polder: Ancestry = {
 						id: 'polder-feature-3-1',
 						name: 'Corruption Immunity',
 						modifiers: [
-							{
-								damageType: 'Corruption',
-								type: DamageModifierType.Immunity,
-								value: 2,
-								valueCharacteristics: [],
-								valuePerLevel: 1,
-								valuePerEchelon: 0
-							}
+							FactoryLogic.damageModifier.createValuePlusPerLevel({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 2, perLevel: 1 })
 						]
 					}),
 					value: 1

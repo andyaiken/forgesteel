@@ -4,6 +4,7 @@ import { DamageModifierType } from '../enums/damage-modifier-type';
 export interface Modifier {
 	value: number,
 	valueCharacteristics: Characteristic[];
+	valueCharacteristicMultiplier: number;
 	valuePerLevel: number;
 	valuePerEchelon: number;
 }

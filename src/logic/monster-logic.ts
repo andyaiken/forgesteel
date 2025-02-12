@@ -349,7 +349,10 @@ export class MonsterLogic {
 				data.modifiers
 					.filter(dm => dm.type === type)
 					.forEach(dm => {
-						const value = dm.value + (dm.valuePerLevel * (monster.level - 1)) + (dm.valuePerEchelon * MonsterLogic.getEchelon(monster));
+						let value = dm.value;
+						value += (Collections.max(dm.valueCharacteristics.map(ch => MonsterLogic.getCharacteristic(monster, ch)), v => v) || 0) * dm.valueCharacteristicMultiplier;
+						value += dm.valuePerLevel * (monster.level - 1);
+						value += dm.valuePerEchelon * MonsterLogic.getEchelon(monster);
 						immunities.push({
 							type: dm.damageType,
 							value: value

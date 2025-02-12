@@ -100,7 +100,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 3,
@@ -120,7 +120,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						name: 'Claws',
 						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 3,
@@ -157,7 +157,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						name: 'Facepalm and Head Slam',
 						type: FactoryLogic.type.createTrigger('The target targets the werewolf with a melee ability after charging nor moving 3 or more squares in a straight line towards them.'),
 						cost: 2,
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
 						effect: 'The target is knocked prone and takes 5 damage before executing the ability.'
 					})

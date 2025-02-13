@@ -8,6 +8,7 @@ import { hobgoblin } from './monsters/hobgoblin';
 import { kobold } from './monsters/kobold';
 import { lordSyuul } from './monsters/lord-syuul';
 import { manticore } from './monsters/manticore';
+import { ogre } from './monsters/ogre';
 import { radenwight } from './monsters/radenwight';
 import { werewolf } from './monsters/werewolf';
 
@@ -22,6 +23,7 @@ export class MonsterData {
 	static kobold = kobold;
 	static lordSyuul = lordSyuul;
 	static manticore = manticore;
+	static ogre = ogre;
 	static radenwight = radenwight;
 	static werewolf = werewolf;
 }

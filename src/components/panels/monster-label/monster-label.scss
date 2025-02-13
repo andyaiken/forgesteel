@@ -1,49 +1,68 @@
+@use "sass:color";
+
+$default: rgb(217, 217, 217);
+$default-dark: rgb(20, 20, 20);
+
+$ambusher: rgb(242, 218, 109);
+$artillery: rgb(202, 192, 215);
+$brute: rgb(149, 178, 222);
+$controller: rgb(238, 132, 129);
+$defender: rgb(195, 188, 154);
+$harrier: rgb(222, 186, 184);
+$hexer: rgb(216, 226, 192);
+$mount: rgb(190, 220, 231);
+$support: rgb(245, 213, 184);
+
 .monster-label {
     margin: 5px 0;
 	border-radius: 5px;
     padding: 5px 10px;
-	background-color: rgb(217, 217, 217);
 	color: rgb(0, 0, 0);
+	background-color: $default;
+	border: 1px solid color.scale($default, $lightness: -10%);
 
 	&.ambusher {
-		background-color: rgb(242, 218, 109);
+		background-color: $ambusher;
+		border-color: color.scale($ambusher, $lightness: -10%);
 	}
 
 	&.artillery {
-		background-color: rgb(202, 192, 215);
+		background-color: $artillery;
+		border-color: color.scale($artillery, $lightness: -10%);
 	}
 
 	&.brute {
-		background-color: rgb(149, 178, 222);
+		background-color: $brute;
+		border-color: color.scale($brute, $lightness: -10%);
 	}
 
 	&.controller {
-		background-color: rgb(238, 132, 129);
+		background-color: $controller;
+		border-color: color.scale($controller, $lightness: -10%);
 	}
 
 	&.defender {
-		background-color: rgb(195, 188, 154);
+		background-color: $defender;
+		border-color: color.scale($defender, $lightness: -10%);
 	}
 
 	&.harrier {
-		background-color: rgb(222, 186, 184);
+		background-color: $harrier;
+		border-color: color.scale($harrier, $lightness: -10%);
 	}
 
 	&.hexer {
-		background-color: rgb(216, 226, 192);
+		background-color: $hexer;
+		border-color: color.scale($hexer, $lightness: -10%);
 	}
 
 	&.mount {
-		background-color: rgb(190, 220, 231);
+		background-color: $mount;
+		border-color: color.scale($mount, $lightness: -10%);
 	}
 
 	&.support {
-		background-color: rgb(245, 213, 184);
-	}
-}
-
-@media (prefers-color-scheme: dark) {
-	.monster-label {
-		background-color: rgb(0, 0, 0);
+		background-color: $support;
+		border-color: color.scale($support, $lightness: -10%);
 	}
 }

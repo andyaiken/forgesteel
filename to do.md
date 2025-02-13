@@ -4,22 +4,25 @@
 
 ### Priority
 
-* Gnoll
-* Lizardfolk
-* Minotaur
-* Ogre
-* Orc
-* Troll
-* Undead
+| Monster    | Minions | Monsters | Retainers |
+|:-----------|--------:|---------:|----------:|
+| Gnoll      | 4       | 7        | 1         |
+| Lizardfolk | 3       | 4        | 0         |
+| Minotaur   | 3       | 2        | 1         |
+| Orc        | 5       | 10       | 1         |
+| Troll      | 4       | 2        | 1         |
+| Undead     | 4       | 7        | 0         |
 
 ### Then
 
-* Demon
-* Devil
-* Elemental
-* Elf, High
-* Elf, Shadow
-* Human
+| Monster     | Minions | Monsters | Retainers |
+|:------------|--------:|---------:|----------:|
+| Demon       | 3       | 6        | 0         |
+| Devil       | 3       | 5        | 1         |
+| Elemental   | 5       | 0        | 0         |
+| Elf, High   | 4       | 9        | 1         |
+| Elf, Shadow | 4       | 10       | 1         |
+| Human       | 6       | 9        | 1         |
 
 ### Other Monsters
 

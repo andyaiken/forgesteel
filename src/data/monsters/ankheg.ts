@@ -87,7 +87,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: 'One creature or object per minion',
+						target: 'One creature or object',
 						cost: 'signature',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 3,
@@ -113,10 +113,12 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 							tier2: '11 damage; A<2 grabbed',
 							tier3: '14 damage; A<3 grabbed'
 						}),
-						spend: [ {
-							value:2,
-							effect:'The ankheg can vertical slide each target up to 5 squares.'
-						} ]
+						spend: [
+							{
+								value: 2,
+								effect: 'The ankheg can vertical slide each target up to 5 squares.'
+							}
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -144,7 +146,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 4 }) ],
 						target: 'Each enemy in the burst',
-						effect: 'The ankheg burrows up to their speed then creates the burst when they breach the surface.',
+						preEffect: 'The ankheg burrows up to their speed then creates the burst when they breach the surface.',
 						powerRoll: FactoryLogic.createPowerRoll({
 							tier1: '4 damage',
 							tier2: '6 damage',

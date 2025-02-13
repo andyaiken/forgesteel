@@ -891,7 +891,7 @@ export const LibraryListPage = (props: Props) => {
 								label: (
 									<div className='section-header'>
 										<div className='section-title'>Monsters</div>
-										<div className='section-count'>{monsterGroups.length}</div>
+										<div className='section-count'>{props.options.showMonstersInGroups ? monsterGroups.length : monsters.length}</div>
 									</div>
 								),
 								children: props.options.showMonstersInGroups ? getMonsterGroupsSection(monsterGroups) : getMonstersSection(monsters)

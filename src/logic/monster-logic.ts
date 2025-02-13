@@ -278,21 +278,25 @@ export class MonsterLogic {
 		return levels.filter(lvl => lvl.level > level);
 	};
 
-	static matches = (monster: Monster, monsterGroup: MonsterGroup, filter: MonsterFilter) => {
+	static matches = (monster: Monster, filter: MonsterFilter) => {
 		if (filter.name) {
 			const tokens = filter.name.toLowerCase().split(' ');
-			const monsterName = MonsterLogic.getMonsterName(monster, monsterGroup);
+			const monsterName = MonsterLogic.getMonsterName(monster);
 			if (!tokens.every(token => monsterName.toLowerCase().includes(token))) {
 				return false;
 			}
 		}
 
 		if (filter.roles.length > 0) {
-			return filter.roles.includes(monster.role.type);
+			if (!filter.roles.includes(monster.role.type)) {
+				return false;
+			}
 		}
 
 		if (filter.organizations.length > 0) {
-			return filter.organizations.includes(monster.role.organization);
+			if (!filter.organizations.includes(monster.role.organization)) {
+				return false;
+			}
 		}
 
 		const minLevel = Math.min(...filter.level);

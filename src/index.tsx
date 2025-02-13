@@ -109,10 +109,15 @@ Promise.all(promises).then(results => {
 	if (!options) {
 		options = {
 			showSkillsInGroups: false,
+			showMonstersInGroups: true,
 			showFreeStrikes: false,
 			showStandardAbilities: false,
 			dimUnavailableAbilities: false
 		};
+	}
+
+	if (options.showMonstersInGroups === undefined) {
+		options.showMonstersInGroups = true;
 	}
 
 	createRoot(document.getElementById('root')!).render(

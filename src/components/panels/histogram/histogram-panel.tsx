@@ -1,14 +1,15 @@
 import { Collections } from '../../../utils/collections';
+
 import './histogram-panel.scss';
 
-interface Props {
+interface HistogramPanelProps {
 	min?: number;
 	max?: number;
 	values: number[];
 	onSelect?: (value: number) => void;
 }
 
-export const HistogramPanel = (props: Props) => {
+export const HistogramPanel = (props: HistogramPanelProps) => {
 	const onSelect = (value: number) => {
 		if (props.onSelect) {
 			props.onSelect(value);
@@ -35,6 +36,53 @@ export const HistogramPanel = (props: Props) => {
 							<div style={{ height: `${height * (mode - v.value)}px` }} />
 							{v.value > 0 ? <div className='bar' style={{ height: `${height * v.value}px` }} /> : null}
 							<div className='label'>{v.x}</div>
+						</div>
+					))
+				}
+			</div>
+		);
+	} catch (ex) {
+		console.error(ex);
+		return null;
+	}
+};
+
+interface HistogramTextPanelProps {
+	values: string[];
+	onSelect?: (value: string) => void;
+}
+
+export const HistogramTextPanel = (props: HistogramTextPanelProps) => {
+	const onSelect = (value: string) => {
+		if (props.onSelect) {
+			props.onSelect(value);
+		}
+	};
+
+	try {
+		const data: { key: string, value: number }[] = [];
+		props.values.forEach(v => {
+			const pair = data.find(p => p.key === v);
+			if (pair) {
+				pair.value += 1;
+			} else {
+				data.push({ key: v, value: 1 });
+			}
+		});
+
+		const sortedData = Collections.sort(data, p => p.key);
+
+		const mode = Collections.max(data.map(v => v.value), v => v) || 0;
+		const height = 100 / mode;
+
+		return (
+			<div className={props.onSelect ? 'histogram-panel clickable' : 'histogram-panel'}>
+				{
+					sortedData.map(v => (
+						<div key={v.key} className='bar-section' onClick={() => onSelect(v.key)}>
+							<div style={{ height: `${height * (mode - v.value)}px` }} />
+							{v.value > 0 ? <div className='bar' style={{ height: `${height * v.value}px` }} /> : null}
+							<div className='label'>{v.key}</div>
 						</div>
 					))
 				}

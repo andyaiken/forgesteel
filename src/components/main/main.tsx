@@ -947,10 +947,12 @@ export const Main = (props: Props) => {
 						element={
 							<LibraryListPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								options={options}
 								hiddenSourcebookIDs={hiddenSourcebookIDs}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
+								setOptions={async options => await persistOptions(options)}
 								showSourcebooks={showSourcebooks}
 								createElement={(kind, sourcebookID) => createLibraryElement(kind, sourcebookID, null)}
 								importElement={importLibraryElement}

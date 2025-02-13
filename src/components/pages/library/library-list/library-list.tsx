@@ -1,5 +1,7 @@
 import { Alert, Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
+import { HistogramPanel, HistogramTextPanel } from '../../../panels/histogram/histogram-panel';
+import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
@@ -7,6 +9,7 @@ import { AppHeader } from '../../../panels/app-header/app-header';
 import { Career } from '../../../../models/career';
 import { CareerPanel } from '../../../panels/elements/career-panel/career-panel';
 import { ClassPanel } from '../../../panels/elements/class-panel/class-panel';
+import { Collections } from '../../../../utils/collections';
 import { Complication } from '../../../../models/complication';
 import { ComplicationPanel } from '../../../panels/elements/complication-panel/complication-panel';
 import { Culture } from '../../../../models/culture';
@@ -14,20 +17,28 @@ import { CulturePanel } from '../../../panels/elements/culture-panel/culture-pan
 import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
+import { Expander } from '../../../controls/expander/expander';
+import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Format } from '../../../../utils/format';
+import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
-import { MonsterGroup } from '../../../../models/monster';
+import { MonsterFilter } from '../../../../models/monster-filter';
+import { MonsterFilterPanel } from '../../../panels/monster-filter/monster-filter-panel';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
+import { MonsterLogic } from '../../../../logic/monster-logic';
+import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
+import { Options } from '../../../../models/options';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
+import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useSourcebookTabKey } from '../../../../hooks/use-sourcebook-tab-key';
@@ -37,10 +48,12 @@ import './library-list.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
+	options: Options;
 	hiddenSourcebookIDs: string[];
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
+	setOptions: (options: Options) => void;
  	showSourcebooks: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null) => void;
 	importElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
@@ -53,11 +66,18 @@ export const LibraryListPage = (props: Props) => {
 	const [ element, setElement ] = useState<SourcebookElementKind>(tabKey);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? props.sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
+	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 
 	if (tabKey !== previousTab) {
 		setElement(tabKey);
 		setPreviousTab(tabKey);
 	}
+
+	const setShowMonstersInGroups = (value: boolean) => {
+		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		copy.showMonstersInGroups = value;
+		props.setOptions(copy);
+	};
 
 	const getSourcebooks = () => {
 		return props.sourcebooks.filter(cs => !props.hiddenSourcebookIDs.includes(cs.id));
@@ -175,6 +195,17 @@ export const LibraryListPage = (props: Props) => {
 				item.name,
 				item.description,
 				...item.monsters.map(m => m.name)
+			], searchTerm));
+	};
+
+	const getMonsters = () => {
+		return SourcebookLogic
+			.getMonsterGroups(getSourcebooks())
+			.flatMap(mg => mg.monsters)
+			.filter(m => MonsterLogic.matches(m, monsterFilter))
+			.filter(item => Utils.textMatches([
+				item.name,
+				item.description
 			], searchTerm));
 	};
 
@@ -588,6 +619,60 @@ export const LibraryListPage = (props: Props) => {
 		);
 	};
 
+	const getMonstersSection = (list: Monster[]) => {
+		if (list.length === 0) {
+			return (
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No monsters'
+				/>
+			);
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Expander title='Filter'>
+					<HeaderText>Monster Filter</HeaderText>
+					<MonsterFilterPanel monsterFilter={monsterFilter} onChange={setMonsterFilter} />
+				</Expander>
+				<Expander title='Demographics'>
+					<HeaderText>By Level</HeaderText>
+					<HistogramPanel values={list.map(m => m.level)} />
+					<HeaderText>By Organization</HeaderText>
+					<HistogramTextPanel values={list.map(m => m.role.organization)} />
+					<HeaderText>By Role</HeaderText>
+					<HistogramTextPanel values={list.map(m => m.role.type)} />
+				</Expander>
+				<Divider />
+				<div className='library-section-row'>
+					{
+						list.map(m => {
+							const mg = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup;
+
+							const item = (
+								<SelectablePanel key={m.id} onSelect={() => navigation.goToLibraryView('monster-group', mg.id, m.id)}>
+									<MonsterPanel monster={m} monsterGroup={mg} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, mg);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={mg.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			</Space>
+		);
+	};
+
 	try {
 		const elementOptions = [ 'ancestry', 'culture', 'career', 'class', 'complication', 'domain', 'kit', 'perk', 'title', 'item', 'monster-group' ]
 			.map(e => ({
@@ -607,6 +692,7 @@ export const LibraryListPage = (props: Props) => {
 		const titles = getTitles();
 		const items = getItems();
 		const monsterGroups = getMonsterGroups();
+		const monsters = Collections.sort(getMonsters(), m => m.name);
 
 		return (
 			<div className='library-list-page'>
@@ -675,6 +761,20 @@ export const LibraryListPage = (props: Props) => {
 					>
 						<Button>
 							Create
+							<DownOutlined />
+						</Button>
+					</Popover>
+					<Popover
+						trigger='click'
+						placement='bottom'
+						content={(
+							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								<Toggle label='Show monsters in groups' value={props.options.showMonstersInGroups} onChange={setShowMonstersInGroups} />
+							</div>
+						)}
+					>
+						<Button>
+							Options
 							<DownOutlined />
 						</Button>
 					</Popover>
@@ -794,7 +894,7 @@ export const LibraryListPage = (props: Props) => {
 										<div className='section-count'>{monsterGroups.length}</div>
 									</div>
 								),
-								children: getMonsterGroupsSection(monsterGroups)
+								children: props.options.showMonstersInGroups ? getMonsterGroupsSection(monsterGroups) : getMonstersSection(monsters)
 							}
 						]}
 						onChange={tabKey => setTabKey(tabKey as SourcebookElementKind)}

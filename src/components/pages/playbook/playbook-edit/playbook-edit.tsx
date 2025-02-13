@@ -18,10 +18,9 @@ import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { MonsterFilter } from '../../../../models/monster-filter';
+import { MonsterFilterPanel } from '../../../panels/monster-filter/monster-filter-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
-import { MonsterRoleType } from '../../../../enums/monster-role-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { Negotiation } from '../../../../models/negotiation';
@@ -309,38 +308,6 @@ export const PlaybookEditPage = (props: Props) => {
 	};
 
 	const getEncounterMonstersSection = () => {
-		const encounter = element as Encounter;
-
-		const setFilterName = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(monsterFilter)) as MonsterFilter;
-			copy.name = value;
-			setMonsterFilter(copy);
-		};
-
-		const setFilterLevel = (value: number[]) => {
-			const copy = JSON.parse(JSON.stringify(monsterFilter)) as MonsterFilter;
-			copy.level = value;
-			setMonsterFilter(copy);
-		};
-
-		const setFilterRoles = (value: MonsterRoleType[]) => {
-			const copy = JSON.parse(JSON.stringify(monsterFilter)) as MonsterFilter;
-			copy.roles = value;
-			setMonsterFilter(copy);
-		};
-
-		const setFilterOrganizations = (value: MonsterOrganizationType[]) => {
-			const copy = JSON.parse(JSON.stringify(monsterFilter)) as MonsterFilter;
-			copy.organizations = value;
-			setMonsterFilter(copy);
-		};
-
-		const setFilterEV = (value: number[]) => {
-			const copy = JSON.parse(JSON.stringify(monsterFilter)) as MonsterFilter;
-			copy.ev = value;
-			setMonsterFilter(copy);
-		};
-
 		const addMonster = (monster: Monster, groupID: string | null) => {
 			const copy = JSON.parse(JSON.stringify(element)) as Encounter;
 
@@ -364,60 +331,14 @@ export const PlaybookEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const monsters = Collections.sort(props.sourcebooks.flatMap(s => s.monsterGroups.flatMap(mg => mg.monsters.filter(m => MonsterLogic.matches(m, mg, monsterFilter)))), m => m.name);
+		const encounter = element as Encounter;
+		const monsters = Collections.sort(props.sourcebooks.flatMap(s => s.monsterGroups.flatMap(mg => mg.monsters).filter(m => MonsterLogic.matches(m, monsterFilter))), m => m.name);
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Expander title='Filter'>
 					<HeaderText>Filter</HeaderText>
-					<Space direction='vertical' style={{ width: '100%' }}>
-						<Input
-							placeholder='Name'
-							allowClear={true}
-							value={monsterFilter.name}
-							onChange={e => setFilterName(e.target.value)}
-						/>
-						<Select
-							style={{ width: '100%' }}
-							mode='multiple'
-							allowClear={true}
-							placeholder='Role'
-							options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(r => ({ label: r, value: r }))}
-							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-							value={monsterFilter.roles}
-							onChange={setFilterRoles}
-						/>
-						<Select
-							style={{ width: '100%' }}
-							mode='multiple'
-							allowClear={true}
-							placeholder='Organization'
-							options={[ MonsterOrganizationType.Minion, MonsterOrganizationType.Band, MonsterOrganizationType.Platoon, MonsterOrganizationType.Troop, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo ].map(r => ({ label: r, value: r }))}
-							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-							value={monsterFilter.organizations}
-							onChange={setFilterOrganizations}
-						/>
-						<div>
-							<Slider
-								range={{ draggableTrack: true }}
-								min={1}
-								max={10}
-								value={monsterFilter.level}
-								onChange={setFilterLevel}
-							/>
-							<Field label='Level' value={`${Math.min(...monsterFilter.level)} to ${Math.max(...monsterFilter.level)}`} />
-						</div>
-						<div>
-							<Slider
-								range={{ draggableTrack: true }}
-								min={0}
-								max={120}
-								value={monsterFilter.ev}
-								onChange={setFilterEV}
-							/>
-							<Field label='EV' value={`${Math.min(...monsterFilter.ev)} to ${Math.max(...monsterFilter.ev)}`} />
-						</div>
-					</Space>
+					<MonsterFilterPanel monsterFilter={monsterFilter} onChange={setMonsterFilter} />
 				</Expander>
 				{
 					monsters.map(m => {

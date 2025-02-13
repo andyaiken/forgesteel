@@ -456,7 +456,7 @@ Complex or time-consuming tests might require an action if made in combat - or c
 	};
 
 	static getDamageModifiers = (hero: Hero, type: DamageModifierType) => {
-		const immunities: { type: string, value: number }[] = [];
+		const modifiers: { damageType: string, value: number }[] = [];
 
 		// Collate from features
 		this.getFeatures(hero)
@@ -472,14 +472,20 @@ Complex or time-consuming tests might require an action if made in combat - or c
 							value += dm.valuePerLevel * (hero.class.level - 1);
 							value += dm.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
 						}
-						immunities.push({
-							type: dm.damageType,
-							value: value
-						});
+
+						const existing = modifiers.find(x => x.damageType === dm.damageType);
+						if (existing) {
+							existing.value += dm.value;
+						} else {
+							modifiers.push({
+								damageType: dm.damageType,
+								value: value
+							});
+						}
 					});
 			});
 
-		return Collections.sort(immunities, i => i.type);
+		return Collections.sort(modifiers, dm => dm.damageType);
 	};
 
 	///////////////////////////////////////////////////////////////////////////
@@ -913,6 +919,9 @@ Complex or time-consuming tests might require an action if made in combat - or c
 			data.modifiers.forEach(dm => {
 				if (dm.valueCharacteristics === undefined) {
 					dm.valueCharacteristics = [];
+				}
+				if (dm.valueCharacteristicMultiplier === undefined) {
+					dm.valueCharacteristicMultiplier = 1;
 				}
 				if (dm.valuePerEchelon === undefined) {
 					dm.valuePerEchelon = 0;

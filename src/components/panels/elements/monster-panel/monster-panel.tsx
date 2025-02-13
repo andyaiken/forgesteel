@@ -77,8 +77,8 @@ export const MonsterPanel = (props: Props) => {
 						<Field label='With Captain' value={props.monster.withCaptain} />
 						: null
 				}
-				{immunities.length > 0 ? <Field label='Immunities' value={immunities.map(mod => `${mod.type} ${mod.value}`).join(', ')} /> : null}
-				{weaknesses.length > 0 ? <Field label='Weaknesses' value={weaknesses.map(mod => `${mod.type} ${mod.value}`).join(', ')} /> : null}
+				{immunities.length > 0 ? <Field label='Immunities' value={immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} /> : null}
+				{weaknesses.length > 0 ? <Field label='Weaknesses' value={weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} /> : null}
 				{
 					features.length > 0 ?
 						<div className='features'>

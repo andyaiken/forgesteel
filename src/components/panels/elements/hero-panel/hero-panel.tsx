@@ -237,7 +237,7 @@ export const HeroPanel = (props: Props) => {
 					immunities.length > 0 ?
 						<div className='overview-tile'>
 							<HeaderText>Immunities</HeaderText>
-							{immunities.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{dm.type}</span><span>{dm.value}</span></div>)}
+							{immunities.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{dm.damageType}</span><span>{dm.value}</span></div>)}
 						</div>
 						: null
 				}
@@ -245,7 +245,7 @@ export const HeroPanel = (props: Props) => {
 					weaknesses.length > 0 ?
 						<div className='overview-tile'>
 							<HeaderText>Weaknesses</HeaderText>
-							{weaknesses.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{dm.type}</span><span>{dm.value}</span></div>)}
+							{weaknesses.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{dm.damageType}</span><span>{dm.value}</span></div>)}
 						</div>
 						: null
 				}

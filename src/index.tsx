@@ -1,4 +1,5 @@
 import { FactoryLogic } from './logic/factory-logic.ts';
+import { FeatureType } from './enums/feature-type.ts';
 import { Format } from './utils/format.ts';
 import { HashRouter } from 'react-router';
 import { Hero } from './models/hero.ts';
@@ -63,6 +64,19 @@ Promise.all(promises).then(results => {
 				if (monster.role.organization === undefined) {
 					monster.role.organization = MonsterOrganizationType.Platoon;
 				}
+
+				monster.features
+					.filter(f => f.type === FeatureType.DamageModifier)
+					.forEach(f => {
+						f.data.modifiers.forEach(dm => {
+							if (dm.valueCharacteristics === undefined) {
+								dm.valueCharacteristics = [];
+							}
+							if (dm.valueCharacteristicMultiplier === undefined) {
+								dm.valueCharacteristicMultiplier = 1;
+							}
+						});
+					});
 			});
 		});
 	});

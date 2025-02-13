@@ -4,10 +4,6 @@
 
 ### Priority
 
-* Bugbear
-* Elemental
-* Demon
-* Devil
 * Gnoll
 * Lizardfolk
 * Minotaur
@@ -15,6 +11,15 @@
 * Orc
 * Troll
 * Undead
+
+### Then
+
+* Demon
+* Devil
+* Elemental
+* Elf, High
+* Elf, Shadow
+* Human
 
 ### Other Monsters
 
@@ -24,12 +29,9 @@
 * Bredbeddle
 * Draconian
 * Dragon, Crucible / Gloom / Meteor / Omen / Thorn
-* Elf, High
-* Elf, Shadow
 * Fossil Cryptic
 * Griffon
 * Hag
-* Human
 * Lightbender
 * Medusa
 * Olothec

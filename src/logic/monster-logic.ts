@@ -339,7 +339,7 @@ export class MonsterLogic {
 	};
 
 	static getDamageModifiers = (monster: Monster, type: DamageModifierType) => {
-		const immunities: { type: string, value: number }[] = [];
+		const modifiers: { damageType: string, value: number }[] = [];
 
 		// Collate from features
 		MonsterLogic.getFeatures(monster)
@@ -353,14 +353,20 @@ export class MonsterLogic {
 						value += (Collections.max(dm.valueCharacteristics.map(ch => MonsterLogic.getCharacteristic(monster, ch)), v => v) || 0) * dm.valueCharacteristicMultiplier;
 						value += dm.valuePerLevel * (monster.level - 1);
 						value += dm.valuePerEchelon * MonsterLogic.getEchelon(monster);
-						immunities.push({
-							type: dm.damageType,
-							value: value
-						});
+
+						const existing = modifiers.find(x => x.damageType === dm.damageType);
+						if (existing) {
+							existing.value += dm.value;
+						} else {
+							modifiers.push({
+								damageType: dm.damageType,
+								value: value
+							});
+						}
 					});
 			});
 
-		return Collections.sort(immunities, i => i.type);
+		return Collections.sort(modifiers, dm => dm.damageType);
 	};
 
 	static getEchelon = (monster: Monster) => {

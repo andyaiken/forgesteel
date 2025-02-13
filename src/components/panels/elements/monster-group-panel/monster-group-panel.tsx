@@ -60,7 +60,13 @@ export const MonsterGroupPanel = (props: Props) => {
 				{
 					(props.mode === PanelMode.Full) && (props.monsterGroup.monsters.length > 0) ?
 						<div className='monsters'>
-							{props.monsterGroup.monsters.map(m => <SelectablePanel key={m.id} onSelect={props.onSelectMonster ? () => props.onSelectMonster!(m) : undefined}><MonsterPanel monster={m} monsterGroup={props.monsterGroup} mode={PanelMode.Full} /></SelectablePanel>)}
+							{
+								props.monsterGroup.monsters.map(m =>
+									<SelectablePanel key={m.id} onSelect={props.onSelectMonster ? () => props.onSelectMonster!(m) : undefined}>
+										<MonsterPanel monster={m} monsterGroup={props.monsterGroup} />
+									</SelectablePanel>
+								)
+							}
 						</div>
 						: null
 				}

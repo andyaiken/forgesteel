@@ -85,12 +85,10 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 						id: 'ankheg-1-feature-2',
 						name: 'Bite',
 						type: FactoryLogic.type.createAction(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [
-							FactoryLogic.distance.createMelee(2)
-						],
+						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object per minion',
+						cost: 'signature',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 3,
 							tier1: '9 damage',
@@ -105,12 +103,10 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 						id: 'ankheg-1-feature-3',
 						name: 'Claws',
 						type: FactoryLogic.type.createAction(),
-						cost: 3,
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [
-							FactoryLogic.distance.createMelee(2)
-						],
+						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
+						cost: 3,
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 3,
 							tier1: '8 damage; A<1 grabbed',
@@ -129,9 +125,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 						name: 'Spitfire',
 						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
-						distance: [
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 1, within: 5 })
-						],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 1, within: 5 }) ],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 3,
@@ -148,9 +142,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 						name: 'Earth Eruption',
 						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
-						distance: [
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 4 })
-						],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 4 }) ],
 						target: 'Each enemy in the burst',
 						effect: 'The ankheg burrows up to their speed then creates the burst when they breach the surface.',
 						powerRoll: FactoryLogic.createPowerRoll({
@@ -166,9 +158,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 						name: 'Dust Cloud',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area ],
-						distance: [
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 })
-						],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'Special',
 						effect: 'The ankheg kicks up dust into the affected area that blocks line of effect for enemies. The ankheg then shifts or burrows up to their speed.'
 					})
@@ -178,9 +168,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 						id: 'ankheg-1-feature-7',
 						name: 'Skitter',
 						type: FactoryLogic.type.createTrigger('A creature damages the ankheg'),
-						distance: [
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Self, value: 0 })
-						],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Self, value: 0 }) ],
 						target: 'Self',
 						effect: 'The ankheg shifts up to 3 squares.'
 					})
@@ -201,9 +189,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 						name: 'Acid Spew',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
-						distance: [
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 10, within: 10 })
-						],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 10, within: 10 }) ],
 						target: 'Each creature in the line',
 						powerRoll: FactoryLogic.createPowerRoll({
 							tier1: '5 acid damage',
@@ -218,9 +204,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 						id: 'ankheg-1-feature-11',
 						name: 'Sinkhole',
 						type: FactoryLogic.type.createVillainAction(),
-						distance: [
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Self, value: 0 })
-						],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Self, value: 0 }) ],
 						target: 'Self',
 						effect: 'The ankheg shifts up to their speed by burrowing. If the ankheg ends this move underground and within 2 squares of a creature on the surface, the ankheg uses Bite against the creature.'
 					})
@@ -231,9 +215,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 						name: 'Acid and Claws',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
-						],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'Each creature in the burst',
 						powerRoll: FactoryLogic.createPowerRoll({
 							tier1: '5 acid damage, M<1 bleeding (save ends)',

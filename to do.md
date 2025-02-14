@@ -19,13 +19,10 @@
 | Devil       | 3       | 5        | 1         |
 | Elemental   | 5       | 0        | 0         |
 | Elf, High   | 4       | 9        | 1         |
-| Elf, Shadow | 4       | 10       | 1         |
-| Human       | 6       | 9        | 1         |
 
 ### Other Monsters
 
 * Angulotl
-* Ashen Hoarder
 * Basilisk
 * Bredbeddle
 * Draconian

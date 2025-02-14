@@ -99,6 +99,28 @@ export const HeroStateModal = (props: Props) => {
 					min={0}
 					onChange={setSurges}
 				/>
+				{
+					hero.state.surges > 0 ?
+						<div>
+							<Alert
+								style={{ margin: '10px 0' }}
+								type='info'
+								showIcon={true}
+								message={`Spend 1 - 3 surges to add ${hero.class ? Math.max(...hero.class.characteristics.map(ch => ch.value)) : 0} damage per surge to one target.`}
+							/>
+							{
+								(hero.state.surges >= 2) ?
+									<Alert
+										style={{ margin: '10px 0' }}
+										type='info'
+										showIcon={true}
+										message='Spend 2 surges to increase an ability’s potency by 1 for a single target.'
+									/>
+									: null
+							}
+						</div>
+						: null
+				}
 				<NumberSpin
 					label='Victories'
 					value={hero.state.victories}

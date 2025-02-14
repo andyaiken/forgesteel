@@ -1,12 +1,10 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-
 
 export const ashenHoarder: MonsterGroup = {
 	id: 'monster-group-ashen-hoarder',
@@ -78,11 +76,10 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 			freeStrikeDamage: 6,
 			characteristics: MonsterLogic.createCharacteristics(4, -2, -2, 0, -5),
 			features: [
-				
 				FactoryLogic.feature.createDamageModifier({
 					id: 'ashen-hoarder-feature-1',
-					modifiers: [FactoryLogic.damageModifier.create({damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 5})]
-				}),				
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 5 }) ]
+				}),
 				FactoryLogic.feature.createSoloMonster({
 					id: 'ashen-hoarder-feature-2',
 					name: 'the ashen hoarder'
@@ -111,7 +108,7 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						name: 'Corpse Bomb',
 						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({type: AbilityDistanceType.Cube, value: 4, within: 20}) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 20 }) ],
 						target: 'All enemies in the cube',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 4,
@@ -137,7 +134,7 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						name: 'Impale',
 						type: FactoryLogic.type.createAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.create({type: AbilityDistanceType.Line, value: 4, value2: 1, within: 1}) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 4, value2: 1, within: 1 }) ],
 						target: 'All creatures in the line',
 						cost: 3,
 						powerRoll: FactoryLogic.createPowerRoll({
@@ -160,7 +157,7 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						id: 'ashen-hoarder-feature-6',
 						name: 'Bone Dozer',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [ ],
+						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						effect: 'The ashen hoarder moves up to twice their speed in a straight line. Each creature and object in the ashen hoarder’s way is either moved into the nearest unoccupied square to the side or M<3 is pushed forward until the end of the ashen hoarder’s movement. A target that is force moved into an obstacle is dazed (save ends).'
@@ -171,33 +168,27 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						id: 'ashen-hoarder-feature-7',
 						name: 'Armor of Corpses',
 						type: FactoryLogic.type.createTrigger('The ashen hoarder takes damage.'),
-						keywords: [ ],
+						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						cost: 2,
 						effect: 'The ashen hoarder halves the incoming damage. If an impaled creature was used in place of spending Malice on this ability, the impaled creature takes the other half of the damage.'
 					})
 				}),
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.feature.create({
-						id: 'ashen-hoarder-feature-8',
-						name: 'Unshackled Rage',
-						description: 'The ashen hoarder is commanded by whoever holds its Soul Shackle. A Soul Shackle is a size 1T object with 5 Stamina.  If the Soul Shackle is destroyed, the ashen hoarder ﬂies into an unshackled rage. While raging, the ashen hoarder has a double edge on their abilities, damage Immunity 5, ignores all commands, and is hostile to all living creatures within line of eﬀect. At the start of each of their turns, the ashen hoarder takes 10 damage that can’t be reduced.'
-					})
+				FactoryLogic.feature.create({
+					id: 'ashen-hoarder-feature-8',
+					name: 'Unshackled Rage',
+					description: 'The ashen hoarder is commanded by whoever holds its Soul Shackle. A Soul Shackle is a size 1T object with 5 Stamina.  If the Soul Shackle is destroyed, the ashen hoarder ﬂies into an unshackled rage. While raging, the ashen hoarder has a double edge on their abilities, damage Immunity 5, ignores all commands, and is hostile to all living creatures within line of eﬀect. At the start of each of their turns, the ashen hoarder takes 10 damage that can’t be reduced.'
 				}),
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.feature.create({
-						id: 'ashen-hoarder-feature-9',
-						name: 'Bladed Body',
-						description: 'Whenever an enemy makes physical contact with the ashen hoarder or uses a melee ability against the ashen hoarder, they take 3 damage.'
-					})
+				FactoryLogic.feature.create({
+					id: 'ashen-hoarder-feature-9',
+					name: 'Bladed Body',
+					description: 'Whenever an enemy makes physical contact with the ashen hoarder or uses a melee ability against the ashen hoarder, they take 3 damage.'
 				}),
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.feature.create({
-						id: 'ashen-hoarder-feature-10',
-						name: 'Soul Singularity',
-						description: 'When the Ashen Hoarder is reduced to 0 Stamina it explodes in a swirling singularity of bone shards and soul energy. Each creature within 5 takes M<3 11 corruption damage. If a creature is killed by this explosion, their soul is sucked into the vortex and is lost somewhere on the plane of the dead. They cannot be resurrected until their soul is recovered.'
-					})
+				FactoryLogic.feature.create({
+					id: 'ashen-hoarder-feature-10',
+					name: 'Soul Singularity',
+					description: 'When the Ashen Hoarder is reduced to 0 Stamina it explodes in a swirling singularity of bone shards and soul energy. Each creature within 5 takes M<3 11 corruption damage. If a creature is killed by this explosion, their soul is sucked into the vortex and is lost somewhere on the plane of the dead. They cannot be resurrected until their soul is recovered.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -205,7 +196,7 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						name: 'Skeletal Eruption',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.create({type: AbilityDistanceType.Line, value: 8, value2: 3, within: 1}) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 8, value2: 3, within: 1 }) ],
 						target: 'All creatures in the line',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 4,
@@ -221,8 +212,8 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						id: 'ashen-hoarder-feature-12',
 						name: 'Mobile Mine Field',
 						type: FactoryLogic.type.createVillainAction(),
-						keywords: [  ],
-						distance: [ FactoryLogic.distance.create({type: AbilityDistanceType.Cube, value: 10, within: 20}) ],
+						keywords: [],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 10, within: 20 }) ],
 						target: 'Special',
 						effect: 'The Ashen Hoarder sprays out a rain of zombie mines brimming with necrotic energy. Six size 1M zombie mines appear in unoccupied squares within distance. An enemy that moves into a square adjacent to a zombie mine or starts their turn there causes the zombie mine to explode, dealing 4 corruption damage to each creature adjacent to the mine. A zombie explosion can trigger other zombie mines adjacent to it to also explode. At the start of each of the ashen hoarders’s turns, each zombie mine can be moved 2 squares.'
 					})

@@ -1,6 +1,7 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
+import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -10,10 +11,8 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 export const human: MonsterGroup = {
 	id: 'monster-group-human',
 	name: 'Humans',
-	description: `
-Humans flourish in every habitable part of the world, from inviting coastal cities to unforgiving mountainous terrain. While most humans live quietly in peaceful communities, some are drawn to adventure by an unquenchable thirst for excitement or power.`,
-
-information: [
+	description: 'Humans flourish in every habitable part of the world, from inviting coastal cities to unforgiving mountainous terrain. While most humans live quietly in peaceful communities, some are drawn to adventure by an unquenchable thirst for excitement or power.',
+	information: [
 		{
 			id: 'human-info-1',
 			name: 'Villains and Heroes',
@@ -37,8 +36,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 		{
 			id: 'human-info-3',
 			name: 'Swords for Hire',
-			description: `
-With an appetite for warfare and gold, human adventurers are well represented in most mercenary bands. A human mercenary makes a stout ally… if you can afford their price.`
+			description: 'With an appetite for warfare and gold, human adventurers are well represented in most mercenary bands. A human mercenary makes a stout ally… if you can afford their price.'
 		},
 		{
 			id: 'human-info-4',
@@ -52,7 +50,7 @@ With an appetite for warfare and gold, human adventurers are well represented in
 		}
 	],
 	malice: [
-    FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'human-malice-1',
 				name: 'Alchemical Device',
@@ -84,7 +82,6 @@ With an appetite for warfare and gold, human adventurers are well represented in
 				'Each non-minion human in the encounter regains Stamina equal to 5 times their level.'
 			]
 		})
-		
 	],
 	monsters: [
 		FactoryLogic.createMonster({
@@ -102,13 +99,13 @@ With an appetite for warfare and gold, human adventurers are well represented in
 			withCaptain: 'Ranged distance +5',
 			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-1-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-1-2',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 2 })
@@ -120,7 +117,7 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						name: 'Lightning Strike',
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike, AbilityKeyword.Ranged],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike, AbilityKeyword.Ranged ],
 						distance: [
 							FactoryLogic.distance.createRanged(10)
 						],
@@ -134,14 +131,14 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						effect: 'If the apprentice mage doesn’t use a maneuver or a move action this turn, the target is slowed (EoT).'
 					})
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-1-4',
 					name: 'Supernatural Insight',
 					description: 'The apprentice mage ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
-				}),
+				})
 			]
 		}),
-    FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'human-2',
 			name: 'Human Guard',
 			level: 1,
@@ -156,13 +153,13 @@ With an appetite for warfare and gold, human adventurers are well represented in
 			withCaptain: 'Speed +2',
 			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, 0),
 			features: [
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-2-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-2-2',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
@@ -174,7 +171,7 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						name: 'Halberd',
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon],
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.createMelee(2)
 						],
@@ -188,15 +185,14 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						effect: 'If the guard is flanked, they can make a free strike against an additional target adjacent to them.'
 					})
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-2-4',
 					name: 'Supernatural Insight',
 					description: 'The guard ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
 				})
 			]
 		}),
-    
-    FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'human-3',
 			name: 'Human Archer',
 			level: 1,
@@ -211,13 +207,13 @@ With an appetite for warfare and gold, human adventurers are well represented in
 			withCaptain: 'Ranged distance +5',
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 0),
 			features: [
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-3-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-3-2',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
@@ -229,7 +225,7 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						name: 'Crossbow',
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
-						keywords: [AbilityKeyword.Ranged,  AbilityKeyword.Strike, AbilityKeyword.Weapon],
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.createRanged(10)
 						],
@@ -239,17 +235,17 @@ With an appetite for warfare and gold, human adventurers are well represented in
 							tier1: '2 damage',
 							tier2: '4 damage',
 							tier3: '5 damage'
-						}),
 						})
+					})
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-3-4',
 					name: 'Supernatural Insight',
 					description: 'The archer ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
-				}),
+				})
 			]
 		}),
-    FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'human-4',
 			name: 'Human Raider',
 			level: 1,
@@ -264,13 +260,13 @@ With an appetite for warfare and gold, human adventurers are well represented in
 			withCaptain: 'Edge on strikes',
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 0),
 			features: [
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-4-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-4-2',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
@@ -282,10 +278,10 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						name: 'Handaxe',
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
-						keywords: [AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Ranged,  AbilityKeyword.Strike, AbilityKeyword.Weapon],
+						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.createMelee(1),
-              FactoryLogic.distance.createRanged(5)
+							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object per minion',
 						powerRoll: FactoryLogic.createPowerRoll({
@@ -294,17 +290,17 @@ With an appetite for warfare and gold, human adventurers are well represented in
 							tier2: '2 damage',
 							tier3: '3 damage'
 						}),
-            effect: 'If this ability is used while charging, the raider can make a ranged free strike before using the ability.'
-						})
+						effect: 'If this ability is used while charging, the raider can make a ranged free strike before using the ability.'
+					})
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-4-4',
 					name: 'Supernatural Insight',
 					description: 'The raider ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
-				}),
+				})
 			]
 		}),
-    FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'human-5',
 			name: 'Human Death Acolyte',
 			level: 1,
@@ -319,13 +315,13 @@ With an appetite for warfare and gold, human adventurers are well represented in
 			withCaptain: 'Ranged Distance +5',
 			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-5-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-5-2',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
@@ -337,9 +333,9 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						name: 'Necrotic Bolt',
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
-						keywords: [AbilityKeyword.Magic, AbilityKeyword.Ranged,  AbilityKeyword.Strike],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [
-              FactoryLogic.distance.createRanged(10)
+							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'One creature or object per minion',
 						powerRoll: FactoryLogic.createPowerRoll({
@@ -348,17 +344,17 @@ With an appetite for warfare and gold, human adventurers are well represented in
 							tier2: '2 corruption damage',
 							tier3: '3 corruption damage'
 						}),
-            effect: 'A creature within 5 squares of the death acolyte regains 1 Stamina.'
-						})
+						effect: 'A creature within 5 squares of the death acolyte regains 1 Stamina.'
+					})
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-5-4',
 					name: 'Supernatural Insight',
 					description: 'The death acolyte ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
-				}),
+				})
 			]
 		}),
-    FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'human-6',
 			name: 'Human Rogue',
 			level: 1,
@@ -373,13 +369,13 @@ With an appetite for warfare and gold, human adventurers are well represented in
 			withCaptain: 'Edge on strikes',
 			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-6-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-6-2',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
@@ -391,10 +387,10 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						name: 'Concealed Dagger',
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
-						keywords: [AbilityKeyword.Melee, AbilityKeyword.Ranged,  AbilityKeyword.Strike,  AbilityKeyword.Weapon],
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
-              FactoryLogic.distance.createMelee(1),
-              FactoryLogic.distance.createRanged(5)
+							FactoryLogic.distance.createMelee(1),
+							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object per minion',
 						powerRoll: FactoryLogic.createPowerRoll({
@@ -403,14 +399,14 @@ With an appetite for warfare and gold, human adventurers are well represented in
 							tier2: '4 corruption damage',
 							tier3: '5 corruption damage'
 						}),
-            effect: 'This ability deals an additional 3 damage if the spy was disguised or hidden before using it.'
-						})
+						effect: 'This ability deals an additional 3 damage if the spy was disguised or hidden before using it.'
+					})
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-6-4',
 					name: 'Supernatural Insight',
 					description: 'The rogue ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
-				}),
+				})
 			]
 		}),
 		FactoryLogic.createMonster({
@@ -427,13 +423,13 @@ With an appetite for warfare and gold, human adventurers are well represented in
 			freeStrikeDamage: 4,
 			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 0),
 			features: [
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-7-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-7-2',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
@@ -446,9 +442,9 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ 
-              FactoryLogic.distance.createMelee(1) 
-            ],
+						distance: [
+							FactoryLogic.distance.createMelee(1)
+						],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -465,9 +461,8 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						name: 'Throw',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 1,
-						keywords: [ ],
-						distance: [ FactoryLogic.distance.createMelee(1) 
-                      ],
+						keywords: [],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature grabbed by the brawler',
 						effect: 'Push 5.'
 					})
@@ -477,14 +472,14 @@ With an appetite for warfare and gold, human adventurers are well represented in
 					name: 'Shoot the Hostage',
 					description: 'The brawler takes half damage from strikes if they have a creature or object grabbed. The grabbed creature or object takes the other half of the damage.'
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-7-feature-6',
 					name: 'Supernatural Insight',
 					description: 'The brawler ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
 				})
 			]
 		}),
-    FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'human-8',
 			name: 'Human Knave',
 			level: 2,
@@ -498,13 +493,13 @@ With an appetite for warfare and gold, human adventurers are well represented in
 			freeStrikeDamage: 4,
 			characteristics: MonsterLogic.createCharacteristics(2, 0, 1, 0, 0),
 			features: [
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-8-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-8-2',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 2 })
@@ -517,10 +512,10 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ 
-              FactoryLogic.distance.createMelee(1),
-              FactoryLogic.distance.createRanged(5)
-            ],
+						distance: [
+							FactoryLogic.distance.createMelee(1),
+							FactoryLogic.distance.createRanged(5)
+						],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -532,23 +527,23 @@ With an appetite for warfare and gold, human adventurers are well represented in
 					})
 				}),
 				FactoryLogic.feature.create({
-						id: 'human-8-feature-4',
-						name: 'I'm Your Enemy',
-						description: 'The knave can make a free strike against an adjacent creature they have taunted whenever the creature deals damage to a creature other than the knave.'
+					id: 'human-8-feature-4',
+					name: 'I\'m Your Enemy',
+					description: 'The knave can make a free strike against an adjacent creature they have taunted whenever the creature deals damage to a creature other than the knave.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-8-feature-5',
 					name: 'Overwhelm',
 					description: 'An enemy who starts their turn adjacent to the knave can’t shift.'
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-8-feature-6',
 					name: 'Supernatural Insight',
 					description: 'The knave ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
 				})
 			]
 		}),
-    FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'human-9',
 			name: 'Human Death Cultist',
 			level: 2,
@@ -562,13 +557,13 @@ With an appetite for warfare and gold, human adventurers are well represented in
 			freeStrikeDamage: 4,
 			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-9-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-9-2',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 2 })
@@ -580,11 +575,11 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						name: 'Death Scythe',
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
-						keywords: [AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ 
-              FactoryLogic.distance.createMelee(1),
-              FactoryLogic.distance.createRanged(10)
-            ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [
+							FactoryLogic.distance.createMelee(1),
+							FactoryLogic.distance.createRanged(10)
+						],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -600,27 +595,26 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						]
 					})
 				}),
-        FactoryLogic.feature.createAbility({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'human-9-feature-4',
 						name: 'Throw',
-						type: FactoryLogic.type.createManeuver({qualifiers: ['1 malice per minion']}),
+						type: FactoryLogic.type.createManeuver({ qualifiers: [ '1 malice per minion' ] }),
 						cost: 1,
-						keywords: [AbilityKeyword.Area],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5, special: 'Each target must have died during this encounter.' }) 
-                      ],
-						target: 'One or more dead minions',
+						keywords: [ AbilityKeyword.Area ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
+						target: 'One or more dead minions (each target must have died during this encounter)',
 						effect: 'Each target revives with their full Stamina. They immediately die at the end of the encounter or if the death cultist is killed. A target can be revived multiple times by this ability.'
 					})
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-9-feature-5',
 					name: 'Supernatural Insight',
 					description: 'The death cultist ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
 				})
 			]
 		}),
-    FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'human-10',
 			name: 'Human Soundrel',
 			level: 1,
@@ -634,13 +628,13 @@ With an appetite for warfare and gold, human adventurers are well represented in
 			freeStrikeDamage: 4,
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-10-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-10-2',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
@@ -651,38 +645,41 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						id: 'human-10-feature-3',
 						name: 'Rapier & Dagger',
 						type: FactoryLogic.type.createAction(),
-						cost: 'signature',
-						keywords: [AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ 
-              FactoryLogic.distance.createMelee(1)
-            ],
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [
+							FactoryLogic.distance.createMelee(1)
+						],
 						target: 'One creature or object',
+						cost: 'signature',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
 							tier1: '6 damage',
 							tier2: '9 damage',
 							tier3: '12 damage'
 						}),
-							effect: 'This ability deals an additional 2 damage if the scoundrel has an edge on the power roll.'
+						effect: 'This ability deals an additional 2 damage if the scoundrel has an edge on the power roll.'
 					})
 				}),
-        FactoryLogic.feature.createAbility({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'human-10-feature-4',
 						name: 'Dagger Storm',
 						type: FactoryLogic.type.createAction(),
+						keywords: [],
+						distance: [],
+						target: '',
 						cost: 5,
 						effect: 'The scoundrel uses Rapier & Dagger targeting three creatures or objects. They can shift 2 before or after each strike.'
 					})
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-10-feature-5',
 					name: 'Supernatural Insight',
 					description: 'The scoundrel ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
 				})
 			]
 		}),
-    FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'human-11',
 			name: 'Human Storm Mage',
 			level: 3,
@@ -696,13 +693,13 @@ With an appetite for warfare and gold, human adventurers are well represented in
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(0, 0, 2, 0, 1),
 			features: [
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-11-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 3 })
 					]
 				}),
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-11-2',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 3 })
@@ -714,10 +711,10 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						name: 'Lightning Bolt',
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
-						keywords: [AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ 
-              FactoryLogic.distance.createRanged(15)
-            ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [
+							FactoryLogic.distance.createRanged(15)
+						],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -733,17 +730,16 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						]
 					})
 				}),
-        FactoryLogic.feature.createAbility({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'human-11-feature-4',
 						name: 'Gust of Wind',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
-						keywords: [AbilityKeyword.Area,AbilityKeyword.Magic],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 1 }) 
-                      ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 1 }) ],
 						target: 'All enemies and objects',
-            powerRoll: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
 							tier1: 'Slide 2; M<0 slowed (save ends)',
 							tier2: 'Slide 4; M<1 slowed (save ends)',
@@ -752,19 +748,19 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						effect: 'The gust of wind disperses gas or vapor and extinguishes any flames, including persistent effects.'
 					})
 				}),
-         FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-11-feature-5',
 					name: 'Arcane Shield',
 					description: 'The mage imposes a bane on incoming melee strikes and abilities. Whenever the mage takes damage from an adjacent enemy, the enemy takes 2 lightning damage and is R<1 pushed 2.'
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-11-feature-6',
 					name: 'Supernatural Insight',
 					description: 'The storm mage ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
 				})
 			]
 		}),
-    FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'human-12',
 			name: 'Human Trickshot',
 			level: 1,
@@ -778,13 +774,13 @@ With an appetite for warfare and gold, human adventurers are well represented in
 			freeStrikeDamage: 4,
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
 			features: [
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-12-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-12-2',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
@@ -796,11 +792,11 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						name: 'Trick Crossbow',
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
-						keywords: [AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ 
-              FactoryLogic.distance.createMelee(1),
-              FactoryLogic.distance.createRanged(10)
-            ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [
+							FactoryLogic.distance.createMelee(1),
+							FactoryLogic.distance.createRanged(10)
+						],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -808,7 +804,7 @@ With an appetite for warfare and gold, human adventurers are well represented in
 							tier2: '9 damage',
 							tier3: '12 damage'
 						}),
-            efect:'The trickshot ignores cover and concealment.',
+						effect: 'The trickshot ignores cover and concealment.',
 						spend: [
 							{
 								value: 3,
@@ -817,7 +813,7 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						]
 					})
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-12-feature-4',
 					name: 'Supernatural Insight',
 					description: 'The trickshot ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
@@ -838,13 +834,13 @@ With an appetite for warfare and gold, human adventurers are well represented in
 			freeStrikeDamage: 4,
 			characteristics: MonsterLogic.createCharacteristics(3, 2, 2, 0, 2),
 			features: [
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-13-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-13-2',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 2 })
@@ -858,7 +854,7 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1})
+							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 })
 						],
 						target: 'All enemies in the burst',
 						powerRoll: FactoryLogic.createPowerRoll({
@@ -878,19 +874,19 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						id: 'human-13-feature-4',
 						name: 'You!',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [ ],
+						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One enemy',
-						effect: 'The target is marked until the start of the blackguard’s next turn. The blackguard and each of their allies gain an edge on abilities used against targets marked by the blackguard.',
-		
+						effect: 'The target is marked until the start of the blackguard’s next turn. The blackguard and each of their allies gain an edge on abilities used against targets marked by the blackguard.'
+
 					})
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-13-feature-5',
 					name: 'End Effect',
 					description: 'At the end of their turn, the blackguard can take 5 damage to end one save ends effect affecting them. This damage can’t be reduced in any way.'
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-13-feature-6',
 					name: 'Supernatural Insight',
 					description: 'The blackguard ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
@@ -900,7 +896,7 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						id: 'human-13-feature-7',
 						name: 'Parry!',
 						type: FactoryLogic.type.createTrigger('A creature targets the blackguard or an ally adjacent to the blackguard with a strike.'),
-						keywords: [ ],
+						keywords: [],
 						distance: [
 							FactoryLogic.distance.createMelee(1)
 						],
@@ -913,7 +909,7 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						id: 'human-13-feature-8',
 						name: 'Advance!',
 						type: FactoryLogic.type.createVillainAction(),
-						keywords: [ ],
+						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						effect: 'The blackguard shifts up to their speed. During or after this movement, they can use their Zweihander Swing twice.'
@@ -925,7 +921,7 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						name: 'Back!',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5})],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies in the burst',
 						effect: 'Slide 5.'
 					})
@@ -936,14 +932,14 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						name: 'I Can Throw My Blade and So Should You!',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5}) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
 						target: 'Each enemy in the cube',
 						effect: 'The blackguard uses their Zweihander Swing against each enemy in the area. Each ally within 5 of the area can make a free strike against any enemy in the area.'
 					})
 				})
 			]
 		}),
-    FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'human-14',
 			name: 'Human Bandit Chief',
 			level: 3,
@@ -957,13 +953,13 @@ With an appetite for warfare and gold, human adventurers are well represented in
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(2, 3, 2, 3, 2),
 			features: [
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-14-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
-        FactoryLogic.feature.createDamageModifier({
+				FactoryLogic.feature.createDamageModifier({
 					id: 'human-14-2',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 4 })
@@ -997,10 +993,10 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						id: 'human-14-feature-4',
 						name: 'Kneel, Peasant!',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [AbilityKeyword.Melee, AbilityKeyword.Weapon, ],
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'One enemy or object',
-            powerRoll: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 3,
 							tier1: 'Push 1; M<1 prone',
 							tier2: 'Push 2; M<2 prone',
@@ -1011,12 +1007,12 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						]
 					})
 				}),
-        FactoryLogic.feature.createAbility({
+				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'human-14-feature-5',
 						name: 'Bloodstones',
 						type: FactoryLogic.type.createTrigger('The bandit chief makes a power roll.'),
-						keywords: [AbilityKeyword.Magic ],
+						keywords: [ AbilityKeyword.Magic ],
 						distance: [
 							FactoryLogic.distance.createSelf()
 						],
@@ -1024,24 +1020,23 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						effect: 'The bandit chief takes 4 corruption damage and increases the result of the power roll by one tier.'
 					})
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-14-feature-6',
 					name: 'End Effect',
 					description: 'At the end of their turn, the bandit chief can take 5 damage to end one save ends effect affecting them. This damage can’t be reduced in any way.'
 				}),
-        FactoryLogic.feature.create({
+				FactoryLogic.feature.create({
 					id: 'human-14-feature-7',
 					name: 'Supernatural Insight',
 					description: 'The blackguard ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
 				}),
-				
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'human-14-feature-8',
 						name: 'Shoot!',
 						type: FactoryLogic.type.createVillainAction(),
-						keywords: [AbilityKeyword.Area ],
-						distance: [  FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10} ],
+						keywords: [ AbilityKeyword.Area ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All allies in the hurst',
 						effect: 'Each target makes a ranged free strike'
 					})
@@ -1052,7 +1047,7 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						name: 'Form UP!',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10})],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All allies in the burst',
 						effect: 'Each target shifts up to their speed. Until the end of the encounter, the bandit chief and all allies have damage immunity 2 while adjacent to a target.'
 					})
@@ -1062,7 +1057,7 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						id: 'human-14-feature-10',
 						name: 'Lead From the Front',
 						type: FactoryLogic.type.createVillainAction(),
-						keywords: [ ],
+						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						effect: 'Shift 10. During or after this movement, the bandit chief can use their Whip & Magic Longsword against up to four targets. Each ally adjacent to a target can make a free strike against them.'
@@ -1070,7 +1065,7 @@ With an appetite for warfare and gold, human adventurers are well represented in
 				})
 			]
 		}),
-    FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'human-15',
 			name: 'Giant Hawk',
 			level: 1,
@@ -1089,12 +1084,12 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						id: 'human-15-feature-1',
 						name: 'Talons',
 						type: FactoryLogic.type.createAction(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ 
-              FactoryLogic.distance.createMelee(1) 
-            ],
+						distance: [
+							FactoryLogic.distance.createMelee(1)
+						],
 						target: 'One creature or object',
+						cost: 'signature',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
 							tier1: '5 damage',
@@ -1108,6 +1103,9 @@ With an appetite for warfare and gold, human adventurers are well represented in
 						id: 'human-15-feature-2',
 						name: 'Dive',
 						type: FactoryLogic.type.createManeuver(),
+						keywords: [],
+						distance: [],
+						target: '',
 						effect: 'The hawk moves up to their speed.'
 					})
 				}),
@@ -1115,10 +1113,9 @@ With an appetite for warfare and gold, human adventurers are well represented in
 					id: 'human-15-feature-3',
 					name: 'Mounted Platform',
 					description: 'Any creature riding the hawk can make a free strike during or after the hawk’s movement.'
-				}),
+				})
 			]
 		}),
-		
 		FactoryLogic.createMonster({
 			id: 'human-16',
 			name: 'Human Warrior',
@@ -1162,11 +1159,11 @@ With an appetite for warfare and gold, human adventurers are well represented in
 					ability: FactoryLogic.createAbility({
 						id: 'human-16-retainer-4',
 						name: '‘Scuse Me, Boss',
-						type:  FactoryLogic.type.createTrigger('The warrior’s mentor is targeted with an attack.',{ qualifiers: [ 'encounter' ]}),
-						keywords: [  ],
+						type: FactoryLogic.type.createTrigger('The warrior’s mentor is targeted with an attack.', { qualifiers: [ 'encounter' ] }),
+						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The warrior’s mentor',
-            effect: 'The warrior and the mentor switch places. The warrior becomes the attack’s new target and gains 2 shields against the attack.',
+						effect: 'The warrior and the mentor switch places. The warrior becomes the attack’s new target and gains 2 shields against the attack.'
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({

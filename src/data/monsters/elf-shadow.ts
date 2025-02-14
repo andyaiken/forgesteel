@@ -173,7 +173,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
 			encounterValue: 12,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5,'climb'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 8,
 			stability: 0,
 			freeStrikeDamage: 3,
@@ -286,8 +286,8 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						name: 'Splitbow',
 						type: FactoryLogic.type.createAction(),
 						cost: 2,
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon  ],
-						distance: [	FactoryLogic.distance.create({type: AbilityDistanceType.Line, value: 1, value2: 4, within: 10 }) ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 4, within: 10 }) ],
 						target: 'All enemies in the line',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 3,
@@ -313,7 +313,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
 			encounterValue: 12,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5,'climb'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 70,
 			stability: 0,
 			freeStrikeDamage: 5,
@@ -361,7 +361,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
 			encounterValue: 14,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5,'climb'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 60,
 			stability: 0,
 			freeStrikeDamage: 6,
@@ -393,8 +393,8 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 3 }) ],
 						target: 'Special',
 						effect: 'The affected area is covered in darkness and is considered concealment until the start of the duskcaller’s next turn.',
-						spend: [ 
-							{value: 2, effect: 'The area of the cube increases by 3'}
+						spend: [
+							{ value: 2, effect: 'The area of the cube increases by 3' }
 						]
 					})
 				}),
@@ -413,7 +413,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
 			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5,'climb'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 60,
 			stability: 0,
 			freeStrikeDamage: 5,
@@ -470,7 +470,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
 			encounterValue: 14,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(7,'climb'),
+			speed: FactoryLogic.createSpeed(7, 'climb'),
 			stamina: 70,
 			stability: 0,
 			freeStrikeDamage: 6,
@@ -483,7 +483,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [	FactoryLogic.distance.createMelee()	],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 3,
@@ -498,9 +498,9 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-9-feature-2',
 						name: 'Dissolve',
-						type:  FactoryLogic.type.createTrigger('The moondancer takes damage from a strike'),
-						keywords: [ ],
-						distance: [	FactoryLogic.distance.createSelf() ],
+						type: FactoryLogic.type.createTrigger('The moondancer takes damage from a strike'),
+						keywords: [],
+						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Special',
 						effect: 'The moondancer teleports to a square in concealment granted by darkness within 10.'
 					})
@@ -533,7 +533,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [	FactoryLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 3,
@@ -549,7 +549,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						id: 'elf-shadow-10-feature-2',
 						name: 'Shadow Step',
 						type: FactoryLogic.type.createManeuver(),
-						distance: [	FactoryLogic.distance.createSelf() ],
+						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Special',
 						effect: 'If the mournblade is concealed, they can teleport to another square in concealment granted by darkness within 10. '
 					})
@@ -569,7 +569,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
 			encounterValue: 16,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5,'climb'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 70,
 			stability: 0,
 			freeStrikeDamage: 6,
@@ -628,7 +628,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
 			encounterValue: 12,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5,'climb'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 70,
 			stability: 0,
 			freeStrikeDamage: 6,
@@ -743,7 +743,6 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					id: 'elf-shadow-13-feature-4',
 					name: 'End Effect',
 					description: 'At the end of their turn, the warleader can take 10 damage to end one save ends effecting them. This damage can’t be reduced in any way.'
-					
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-13-feature-5',
@@ -778,8 +777,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						name: 'Umbral Hunger',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [	FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 })
-						],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
 						target: 'All enemies in the cube',
 						effect: 'R<3 speed becomes zero (save ends). The affected area is shrouded in darkness and becomes concealment. When an enemy starts their turn in an affected square, they take 5 corruption damage.'
 					})
@@ -824,7 +822,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						type: FactoryLogic.type.createAction(),
 						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2}) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies in burst',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 3,
@@ -854,7 +852,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
 			encounterValue: 23,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5,'climb'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 60,
 			stability: 0,
 			freeStrikeDamage: 5,
@@ -867,7 +865,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ 
+						distance: [
 							FactoryLogic.distance.createMelee(),
 							FactoryLogic.distance.createRanged(3)
 						],
@@ -885,10 +883,9 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-15-feature-2',
 						name: 'Gathering Gloom',
-						type: FactoryLogic.type.createManeuver({qualifiers: [ 'encounter' ]}),
+						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 })
-						],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 						target: '-',
 						effect: 'Until the end of the next turn, the area is filled with darkness. The shade\'s mentor ignores concealment granted by the darkness.'
 					})

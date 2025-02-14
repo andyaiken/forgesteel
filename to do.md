@@ -4,41 +4,43 @@
 
 ### Priority
 
-| Monster    | Minions | Monsters | Retainers |
-|:-----------|--------:|---------:|----------:|
-| Gnoll      | 4       | 7        | 1         |
-| Orc        | 5       | 10       | 1         |
-| Troll      | 4       | 2        | 1         |
-| Undead     | 4       | 7        | 0         |
+| Monster             | Minions | Monsters | Retainers |
+|:--------------------|--------:|---------:|----------:|
+| Gnoll               | 4       | 7        | 1         |
+| Orc                 | 5       | 10       | 1         |
+| Troll               | 4       | 2        | 1         |
+| Undead              | 4       | 7        | 0         |
 
 ### Then
 
-| Monster     | Minions | Monsters | Retainers |
-|:------------|--------:|---------:|----------:|
-| Demon       | 3       | 6        | 0         |
-| Devil       | 3       | 5        | 1         |
-| Elemental   | 5       | 0        | 0         |
-| Elf, High   | 4       | 9        | 1         |
+| Monster             | Minions | Monsters | Retainers |
+|:--------------------|--------:|---------:|----------:|
+| Demon               | 3       | 6        | 0         |
+| Devil               | 3       | 5        | 1         |
+| Elemental           | 5       | 0        | 0         |
+| Elf, High           | 4       | 9        | 1         |
 
 ### Other Monsters
 
-* Angulotl
-* Basilisk
-* Bredbeddle
-* Draconian
-* Dragon, Crucible / Gloom / Meteor / Omen / Thorn
-* Fossil Cryptic
-* Griffon
-* Hag
-* Lightbender
-* Medusa
-* Olothec
-* Shambling Mound
-* Time Raider
-* Voiceless Talker
-* War Dog
-* Wyvern
-* Xorannox the Tyract
+| Monster             | Minions | Monsters | Retainers |
+|:--------------------|--------:|---------:|----------:|
+| Angulotl            | 4       | 4        | 1         |
+| Basilisk            | 0       | 2        | 0         |
+| Bredbeddle          | 0       | 1        | 0         |
+| Draconian           | 0       | 6        | 1         |
+| Dragon              | 0       | 5        | 0         |
+| Fossil Cryptic      | 0       | 1        | 0         |
+| Griffon             | 0       | 2        | 0         |
+| Hag                 | 0       | 1        | 0         |
+| Lightbender         | 0       | 2        | 0         |
+| Medusa              | 0       | 1        | 0         |
+| Olothec             | 0       | 1        | 0         |
+| Shambling Mound     | 0       | 1        | 0         |
+| Time Raider         | 2       | 8        | 1         |
+| Voiceless Talker    | 2       | 5        | 0         |
+| War Dog             | 4       | 9        | 0         |
+| Wyvern              | 0       | 2        | 0         |
+| Xorannox the Tyract | 6       | 1        | 0         |
 
 ## New Features
 

@@ -1,4 +1,5 @@
 import { ankheg } from './monsters/ankheg';
+import { ashenHoarder } from './monsters/ashen-hoarder';
 import { bugbear } from './monsters/bugbear';
 import { chimera } from './monsters/chimera';
 import { dwarf } from './monsters/dwarf';
@@ -16,6 +17,7 @@ import { werewolf } from './monsters/werewolf';
 
 export class MonsterData {
 	static ankheg = ankheg;
+	static ashenHoarder = ashenHoarder;
 	static bugbear = bugbear;
 	static chimera = chimera;
 	static dwarf = dwarf;

@@ -421,6 +421,7 @@ export const HeroStateModal = (props: Props) => {
 			copy.state.conditions.push({
 				id: Utils.guid(),
 				type: type,
+				text: '',
 				ends: ConditionEndType.EndOfTurn
 			});
 			setHero(copy);

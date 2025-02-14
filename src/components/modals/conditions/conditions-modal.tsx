@@ -15,6 +15,7 @@ interface Props {
 export const ConditionsModal = (props: Props) => {
 	try {
 		const conditions = [
+			ConditionType.Custom,
 			ConditionType.Bleeding,
 			ConditionType.Dazed,
 			ConditionType.Frightened,

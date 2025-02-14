@@ -878,6 +878,12 @@ Complex or time-consuming tests might require an action if made in combat - or c
 			hero.features = [];
 		}
 
+		hero.state.conditions.forEach(c => {
+			if (c.text === undefined) {
+				c.text = '';
+			}
+		});
+
 		if (hero.state.surges === undefined) {
 			hero.state.surges = 0;
 		}

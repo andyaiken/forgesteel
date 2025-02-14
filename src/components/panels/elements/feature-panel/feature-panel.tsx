@@ -665,7 +665,7 @@ export const FeaturePanel = (props: Props) => {
 							addCurrent(f.data.language);
 							break;
 						case FeatureType.LanguageChoice:
-							currentLanguages.forEach(addCurrent);
+							f.data.selected.forEach(addCurrent);
 							break;
 					}
 				});
@@ -810,7 +810,7 @@ export const FeaturePanel = (props: Props) => {
 							addCurrent(f.data.skill);
 							break;
 						case FeatureType.SkillChoice:
-							currentSkills.forEach(addCurrent);
+							f.data.selected.forEach(addCurrent);
 							break;
 					}
 				});

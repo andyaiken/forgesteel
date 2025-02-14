@@ -8,6 +8,7 @@ import { elfShadow } from './monsters/elf-shadow';
 import { goblin } from './monsters/goblin';
 import { hobgoblin } from './monsters/hobgoblin';
 import { kobold } from './monsters/kobold';
+import { lizardfolk } from './monsters/lizardfolk';
 import { lordSyuul } from './monsters/lord-syuul';
 import { manticore } from './monsters/manticore';
 import { minotaur } from './monsters/minotaur';
@@ -26,6 +27,7 @@ export class MonsterData {
 	static goblin = goblin;
 	static hobgoblin = hobgoblin;
 	static kobold = kobold;
+	static lizardfolk = lizardfolk;
 	static lordSyuul = lordSyuul;
 	static manticore = manticore;
 	static minotaur = minotaur;

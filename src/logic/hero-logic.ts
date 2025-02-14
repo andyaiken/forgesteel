@@ -882,6 +882,10 @@ Complex or time-consuming tests might require an action if made in combat - or c
 			hero.state.surges = 0;
 		}
 
+		if (hero.state.staminaTemp === undefined) {
+			hero.state.staminaTemp = 0;
+		}
+
 		if (hero.state.xp === undefined) {
 			hero.state.xp = 0;
 		}

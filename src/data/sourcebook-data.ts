@@ -379,6 +379,7 @@ export class SourcebookData {
 			MonsterData.goblin,
 			MonsterData.hobgoblin,
 			MonsterData.kobold,
+			MonsterData.lizardfolk,
 			MonsterData.lordSyuul,
 			MonsterData.manticore,
 			MonsterData.minotaur,

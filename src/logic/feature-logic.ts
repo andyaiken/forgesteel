@@ -118,7 +118,6 @@ export class FeatureLogic {
 
 	static simplifyFeatures = (features: Feature[], hero: Hero) => {
 		const list: Feature[] = [];
-		const heroLevel = hero.class?.level || 1;
 
 		const addFeature = (feature: Feature) => {
 			list.push(feature);
@@ -136,11 +135,7 @@ export class FeatureLogic {
 					feature.data.selected.forEach(addFeature);
 					break;
 				case FeatureType.ItemChoice:
-					feature.data.selected.forEach(item => {
-						item.featuresByLevel
-							.filter(lvl => lvl.level <= heroLevel)
-							.forEach(lvl => lvl.features.forEach(addFeature));
-					});
+					feature.data.selected.forEach(item => FeatureLogic.getFeaturesFromItem(item, hero).forEach(addFeature));
 					break;
 				case FeatureType.Kit:
 					feature.data.selected.forEach(kit => kit.features.forEach(addFeature));

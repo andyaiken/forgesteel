@@ -1,4 +1,4 @@
-import { Alert, Input, Space } from 'antd';
+import { Alert, Button, Input, Space } from 'antd';
 import { Item } from '../../../models/item';
 import { ItemPanel } from '../../panels/elements/item-panel/item-panel';
 import { Modal } from '../modal/modal';
@@ -14,6 +14,7 @@ import './shop-modal.scss';
 interface Props {
 	sourcebooks: Sourcebook[];
 	onSelect: (item: Item) => void;
+	onCancel: () => void;
 }
 
 export const ShopModal = (props: Props) => {
@@ -40,6 +41,7 @@ export const ShopModal = (props: Props) => {
 							suffix={<SearchOutlined />}
 							onChange={e => setSearchTerm(e.target.value)}
 						/>
+						<Button onClick={props.onCancel}>Cancel</Button>
 					</>
 				}
 				content={

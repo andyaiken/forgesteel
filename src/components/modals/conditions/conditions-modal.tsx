@@ -1,14 +1,15 @@
+import { Button, Space } from 'antd';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { ConditionType } from '../../../enums/condition-type';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Modal } from '../modal/modal';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
-import { Space } from 'antd';
 
 import './conditions-modal.scss';
 
 interface Props {
 	onSelect: (condition: ConditionType) => void;
+	onCancel: () => void;
 }
 
 export const ConditionsModal = (props: Props) => {
@@ -27,6 +28,11 @@ export const ConditionsModal = (props: Props) => {
 
 		return (
 			<Modal
+				toolbar={
+					<>
+						<Button onClick={props.onCancel}>Cancel</Button>
+					</>
+				}
 				content={
 					<div className='conditions-modal'>
 						<Space direction='vertical' style={{ width: '100%' }}>

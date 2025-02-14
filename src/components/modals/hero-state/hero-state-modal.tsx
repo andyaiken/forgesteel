@@ -163,6 +163,13 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const setStaminaTemp = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.staminaTemp = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
 		const setRecoveriesUsed = (value: number) => {
 			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
 			copy.state.recoveriesUsed = value;
@@ -217,6 +224,12 @@ export const HeroStateModal = (props: Props) => {
 						/>
 						: null
 				}
+				<NumberSpin
+					label='Temporary Stamina'
+					value={hero.state.staminaTemp}
+					min={0}
+					onChange={setStaminaTemp}
+				/>
 				<Divider />
 				<Flex align='center' justify='space-between' gap='5px'>
 					<Button

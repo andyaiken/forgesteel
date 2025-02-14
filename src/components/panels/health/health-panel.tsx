@@ -9,6 +9,8 @@ interface Props {
 }
 
 export const HealthPanel = (props: Props) => {
+	const isWinded = props.hero.state.staminaDamage >= (HeroLogic.getStamina(props.hero) / 2);
+
 	return (
 		<div className='health-panel'>
 			<Progress
@@ -16,7 +18,7 @@ export const HealthPanel = (props: Props) => {
 				type='dashboard'
 				percent={100 * (HeroLogic.getStamina(props.hero) - props.hero.state.staminaDamage) / HeroLogic.getStamina(props.hero)}
 				showInfo={false}
-				status='active'
+				status={isWinded ? 'exception' : 'active'}
 			/>
 			<Progress
 				className='recovery-progress'

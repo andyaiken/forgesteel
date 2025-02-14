@@ -62,6 +62,7 @@ export class FactoryLogic {
 			],
 			state: {
 				staminaDamage: 0,
+				staminaTemp: 0,
 				recoveriesUsed: 0,
 				surges: 0,
 				victories: 0,

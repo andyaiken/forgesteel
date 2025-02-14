@@ -16,6 +16,7 @@ export interface Condition {
 
 export interface HeroState {
 	staminaDamage: number;
+	staminaTemp: number;
 	recoveriesUsed: number;
 	surges: number;
 	victories: number;

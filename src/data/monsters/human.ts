@@ -58,7 +58,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				cost: 3,
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
-				target: 'Each enemy in the cubee',
+				target: 'Each enemy in the cube',
 				powerRoll: FactoryLogic.createPowerRoll({
 					tier1: '4 corruption damage; A<0 slowed (save ends)',
 					tier2: '6 corruption damage; A<1 slowed (save ends)',
@@ -367,7 +367,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: 'Edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
+			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-6-1',
@@ -399,7 +399,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							tier2: '4 corruption damage',
 							tier3: '5 corruption damage'
 						}),
-						effect: 'This ability deals an additional 3 damage if the spy was disguised or hidden before using it.'
+						effect: 'This ability deals an additional 3 damage if the rogue was disguised or hidden before using it.'
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -598,7 +598,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'human-9-feature-4',
-						name: 'Throw',
+						name: 'Rise, My Minions',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ '1 malice per minion' ] }),
 						cost: 1,
 						keywords: [ AbilityKeyword.Area ],
@@ -711,7 +711,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						name: 'Lightning Bolt',
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Magic,  AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [
 							FactoryLogic.distance.createRanged(15)
 						],
@@ -792,10 +792,10 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						name: 'Trick Crossbow',
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.createMelee(1),
-							FactoryLogic.distance.createRanged(10)
+							FactoryLogic.distance.createRanged(15)
 						],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({

@@ -61,7 +61,7 @@ With an appetite for warfare and gold, human adventurers are well represented in
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 				target: 'Each enemy in the cubee',
-				test: FactoryLogic.createPowerRoll({
+				powerRoll: FactoryLogic.createPowerRoll({
 					tier1: '4 corruption damage; A<0 slowed (save ends)',
 					tier2: '6 corruption damage; A<1 slowed (save ends)',
 					tier3: '9 corruption damage; A<2 restrained (save ends)'

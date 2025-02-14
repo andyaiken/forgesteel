@@ -370,10 +370,12 @@ export class SourcebookData {
 		],
 		monsterGroups: [
 			MonsterData.ankheg,
+			MonsterData.ashenHoarder,
 			MonsterData.bugbear,
 			MonsterData.chimera,
 			MonsterData.dwarf,
 			MonsterData.elfWode,
+			MonsterData.elfShadow,
 			MonsterData.goblin,
 			MonsterData.hobgoblin,
 			MonsterData.kobold,

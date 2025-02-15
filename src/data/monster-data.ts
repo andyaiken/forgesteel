@@ -14,6 +14,7 @@ import { lordSyuul } from './monsters/lord-syuul';
 import { manticore } from './monsters/manticore';
 import { minotaur } from './monsters/minotaur';
 import { ogre } from './monsters/ogre';
+import { orc } from './monsters/orc';
 import { radenwight } from './monsters/radenwight';
 import { werewolf } from './monsters/werewolf';
 
@@ -34,6 +35,7 @@ export class MonsterData {
 	static manticore = manticore;
 	static minotaur = minotaur;
 	static ogre = ogre;
+	static orc = orc;
 	static radenwight = radenwight;
 	static werewolf = werewolf;
 }

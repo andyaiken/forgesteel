@@ -640,7 +640,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							bonus: 2,
 							tier1: '7 poison damage',
 							tier2: '11 poison damage',
-							tier3: '14 poisoin damage; M<2 weakened (save ends)'
+							tier3: '14 poison damage; M<2 weakened (save ends)'
 						}),
 						spend: [
 							{ value: 2, effect: 'M<3 weakened (save ends)' }

@@ -1,9 +1,9 @@
+import { ConditionEndType, ConditionType } from '../enums/condition-type';
 import { PDFCheckBox, PDFDocument, PDFTextField, StandardFonts } from 'pdf-lib';
 import { Ability } from '../models/ability';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
-import { ConditionEndType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
@@ -89,7 +89,7 @@ export class PDFExport {
 		const features = HeroLogic.getFeatures(hero) as Feature[];
 
 		{
-			const heroicResourceFeature = features.find(f => f.name == hero.class.heroicResource);
+			const heroicResourceFeature = features.find(f => hero.class && f.name == hero.class.heroicResource);
 			if(heroicResourceFeature) {
 				const startup = /\s*At the start of each of your turns during combat, you gain (.+?) \w+?\.\s+/;
 				const startupAmount = heroicResourceFeature.description.match(startup);
@@ -346,13 +346,16 @@ export class PDFExport {
 					autoResizingFields.push(prefix + 'Keywords' + i);
 					autoResizingFields.push(prefix + 'Target' + i);
 					autoResizingFields.push(prefix + 'Tag' + i);
-					if(texts[prefix + 'Text' + i] && texts[prefix + 'Text' + i].length > 500) {
+					const abilityText = texts[prefix + 'Text' + i];
+					if(typeof(abilityText) == 'string' && abilityText.length > 500) {
 						autoResizingFields.push(prefix + 'Text' + i);
 					}
-					if(texts[prefix + 'Distance' + i] && texts[prefix + 'Distance' + i].length > 27) {
+					const distanceText = texts[prefix + 'Distance' + i];
+					if(typeof(distanceText) == 'string' && distanceText.length > 27) {
 						autoResizingFields.push(prefix + 'Distance' + i);
 					}
-					if(texts[prefix + 'Target' + i] && texts[prefix + 'Target' + i].length > 27) {
+					const targetText = texts[prefix + 'Target' + i];
+					if(typeof(targetText) == 'string' && targetText.length > 27) {
 						autoResizingFields.push(prefix + 'Target' + i);
 					}
 				});

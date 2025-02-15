@@ -1,4 +1,4 @@
-import { Alert, Input, Space } from 'antd';
+import { Alert, Button, Input, Space } from 'antd';
 import { Modal } from '../modal/modal';
 import { Project } from '../../../models/project';
 import { ProjectPanel } from '../../panels/elements/project-panel/project-panel';
@@ -14,6 +14,7 @@ import './projects-modal.scss';
 interface Props {
 	sourcebooks: Sourcebook[];
 	onSelect: (project: Project) => void;
+	onCancel: () => void;
 }
 
 export const ProjectsModal = (props: Props) => {
@@ -38,6 +39,7 @@ export const ProjectsModal = (props: Props) => {
 							suffix={<SearchOutlined />}
 							onChange={e => setSearchTerm(e.target.value)}
 						/>
+						<Button onClick={props.onCancel}>Cancel</Button>
 					</>
 				}
 				content={

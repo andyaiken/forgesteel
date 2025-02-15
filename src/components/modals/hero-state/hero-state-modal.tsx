@@ -409,7 +409,7 @@ export const HeroStateModal = (props: Props) => {
 				}
 				<Button block={true} onClick={() => setShopVisible(true)}>Add a new item</Button>
 				<Drawer open={shopVisible} closeIcon={null} width='500px'>
-					<ShopModal sourcebooks={props.sourcebooks} onSelect={addItem} />
+					<ShopModal sourcebooks={props.sourcebooks} onSelect={addItem} onCancel={() => setShopVisible(false)} />
 				</Drawer>
 			</Space>
 		);
@@ -421,6 +421,7 @@ export const HeroStateModal = (props: Props) => {
 			copy.state.conditions.push({
 				id: Utils.guid(),
 				type: type,
+				text: '',
 				ends: ConditionEndType.EndOfTurn
 			});
 			setHero(copy);
@@ -468,7 +469,7 @@ export const HeroStateModal = (props: Props) => {
 				}
 				<Button block={true} onClick={() => setConditionsVisible(true)}>Add a new condition</Button>
 				<Drawer open={conditionsVisible} closeIcon={null} width='500px'>
-					<ConditionsModal onSelect={addCondition} />
+					<ConditionsModal onSelect={addCondition} onCancel={() => setConditionsVisible(false)} />
 				</Drawer>
 			</Space>
 		);
@@ -542,7 +543,7 @@ export const HeroStateModal = (props: Props) => {
 				}
 				<Button block={true} onClick={() => setProjectsVisible(true)}>Add a new project</Button>
 				<Drawer open={projectsVisible} closeIcon={null} width='500px'>
-					<ProjectsModal sourcebooks={props.sourcebooks} onSelect={addProject} />
+					<ProjectsModal sourcebooks={props.sourcebooks} onSelect={addProject} onCancel={() => setProjectsVisible(false)} />
 				</Drawer>
 			</Space>
 		);

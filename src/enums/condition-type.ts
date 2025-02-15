@@ -1,4 +1,5 @@
 export enum ConditionType {
+	Custom = 'Custom Condition',
 	Bleeding = 'Bleeding',
 	Dazed = 'Dazed',
 	Frightened = 'Frightened',
@@ -7,7 +8,7 @@ export enum ConditionType {
 	Restrained = 'Restrained',
 	Slowed = 'Slowed',
 	Taunted = 'Taunted',
-	Weakened = 'Weakened'
+	Weakened = 'Weakened',
 }
 
 export enum ConditionEndType {

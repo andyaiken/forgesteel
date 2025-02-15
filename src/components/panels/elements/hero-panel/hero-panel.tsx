@@ -8,6 +8,7 @@ import { Career } from '../../../../models/career';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Complication } from '../../../../models/complication';
 import { ConditionLogic } from '../../../../logic/condition-logic';
+import { ConditionType } from '../../../../enums/condition-type';
 import { Culture } from '../../../../models/culture';
 import { CultureData } from '../../../../data/culture-data';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
@@ -422,7 +423,14 @@ export const HeroPanel = (props: Props) => {
 						props.hero.state.conditions.map(c => (
 							<div key={c.id} className='condition-tile' onClick={showConditions}>
 								<HeaderText>{c.type}: {c.ends}</HeaderText>
-								<div className='ds-text'>{ConditionLogic.getDescription(c.type)}</div>
+								<div className='ds-text'>
+									{
+										c.type === ConditionType.Custom ?
+											c.text || 'A custom condition.'
+											:
+											ConditionLogic.getDescription(c.type)
+									}
+								</div>
 							</div>
 						))
 					}

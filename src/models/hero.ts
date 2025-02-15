@@ -11,6 +11,7 @@ import { Project } from './project';
 export interface Condition {
 	id: string;
 	type: ConditionType;
+	text: string;
 	ends: ConditionEndType;
 }
 

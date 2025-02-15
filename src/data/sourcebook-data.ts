@@ -376,6 +376,7 @@ export class SourcebookData {
 			MonsterData.dwarf,
 			MonsterData.elfShadow,
 			MonsterData.elfWode,
+			MonsterData.giant,
 			MonsterData.goblin,
 			MonsterData.hobgoblin,
 			MonsterData.human,

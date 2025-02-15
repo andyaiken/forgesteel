@@ -5,6 +5,7 @@ import { chimera } from './monsters/chimera';
 import { dwarf } from './monsters/dwarf';
 import { elfShadow } from './monsters/elf-shadow';
 import { elfWode } from './monsters/elf-wode';
+import { giant } from './monsters/giant';
 import { goblin } from './monsters/goblin';
 import { hobgoblin } from './monsters/hobgoblin';
 import { human } from './monsters/human';
@@ -26,6 +27,7 @@ export class MonsterData {
 	static dwarf = dwarf;
 	static elfShadow = elfShadow;
 	static elfWode = elfWode;
+	static giant = giant;
 	static goblin = goblin;
 	static hobgoblin = hobgoblin;
 	static human = human;

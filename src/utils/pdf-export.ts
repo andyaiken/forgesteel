@@ -20,8 +20,10 @@ export class PDFExport {
 		const pdfAsBytes = await fetch(pdfFile).then(res => res.arrayBuffer());
 		const pdfDoc = await PDFDocument.load(pdfAsBytes);
 
+		const font = await pdfDoc.embedFont(StandardFonts.TimesRoman);
+		const fontSize = 9;
+
 		const autoResizingFields: string[] = [];
-		const markMultiline: string[] = [];
 
 		const texts: { [key: string]: string | number | null } = {
 			CharacterName: hero.name,
@@ -86,6 +88,38 @@ export class PDFExport {
 			]
 		);
 
+		const GetTitle = (text: string) => text + '\n' + ('¯'.repeat(Math.ceil(font.widthOfTextAtSize(text, fontSize)/font.widthOfTextAtSize('¯', fontSize))));
+
+		const CleanupOutput = (text: string) => {
+			text = text
+				.replace(/(\|:-+)+\|\n/g, '')
+				.replace(/\|\s+(.+?)\s+\| (.+?)\s+\|/g, '$1\t\t$2')
+				.replace(/11 -\t/g, '11 or less')
+				.replace(/17 \+/g, '17+\t');
+			// substitutions are for cleaning up lists to look better in the form
+			text = text.replace(/\* \*\*(.*?)\*\*(:) /g, '   • $1$2\t');
+			return text;
+		};
+
+		const ConvertFeatures = (features: Feature[]) => {
+			features = features.filter(f => !ignoredFeatures[f.id]);
+			features.forEach(f => (ignoredFeatures[f.id] = true));
+			let all = '';
+			for (const feature of features) {
+				if (all != '') {
+					all = all + '\n\n';
+				}
+				let text = GetTitle(feature.name) + '\n' + feature.description;
+				// substitution is to convert any tables into text that presents
+				// better in the PDF form
+				text = CleanupOutput(text);
+				if (feature.description !== '') {
+					all = all + text;
+				}
+			}
+			return all;
+		};
+
 		const features = HeroLogic.getFeatures(hero) as Feature[];
 
 		{
@@ -97,8 +131,7 @@ export class PDFExport {
 					texts['HeroicResourcesPerTurn'] = startupAmount[1];
 				}
 				ignoredFeatures[heroicResourceFeature.id] = true;
-				texts['HeroicResourceGains'] = heroicResourceFeature.description.replace(startup, '');
-				autoResizingFields.push('HeroicResourceGains');
+				texts['HeroicResourceGains'] = CleanupOutput(heroicResourceFeature.description.replace(startup, ''));
 			}
 		}
 
@@ -137,7 +170,6 @@ export class PDFExport {
 				if (benefit) {
 					ignoredFeatures[benefit.id] = true;
 					texts['ComplicationBenefit'] = benefit.description;
-					autoResizingFields.push('ComplicationBenefit');
 				}
 				const drawback = hero.complication.features.find(f =>
 					f.name.match(/Drawback/)
@@ -145,36 +177,11 @@ export class PDFExport {
 				if (drawback) {
 					ignoredFeatures[drawback.id] = true;
 					texts['ComplicationDrawback'] = drawback.description;
-					autoResizingFields.push('ComplicationDrawback');
 				}
 			}
 		}
 
-		const ConvertFeatures = (features: Feature[]) => {
-			features = features.filter(f => !ignoredFeatures[f.id]);
-			features.forEach(f => (ignoredFeatures[f.id] = true));
-			let all = '';
-			for (const feature of features) {
-				if (all != '') {
-					all = all + '\n\n';
-				}
-				let text = '==' + feature.name + '==' + '\n\n' + feature.description;
-				// substitution is to convert any tables into text that presents
-				// better in the PDF form
-				text = text
-					.replace(/(\|:-+)+\|\n/g, '')
-					.replace(/\|\s+(.+?)\s+\| (.+?)\s+\|/g, '$1 | $2');
-				// substitutions are for cleaning up lists to look better in the form
-				text = text.replace(/\* \*\*(.*?)\*\*/g, '[[$1]]');
-				if (feature.description !== '') {
-					all = all + text;
-				}
-			}
-			return all;
-		};
-
 		texts['Features'] = ConvertFeatures(features.filter(f => !ignoredFeatures[f.id] && f.type == 'Text'));
-		autoResizingFields.push('Features');
 
 		{
 			for (const c of hero.state.conditions) {
@@ -203,23 +210,21 @@ export class PDFExport {
 				);
 				if (incident) {
 					texts['CareerIncident'] =
-						'==' + incident.name + '==\n\n' + incident.description;
-					autoResizingFields.push('CareerIncident');
+						GetTitle(incident.name) + '\n' + incident.description;
 				}
 			}
 			if (hero.culture) {
 				const cultureUpbringingTexts = [];
 				if (hero.culture.environment) {
-					cultureUpbringingTexts.push('==' +hero.culture.environment.name + '==\n' + hero.culture.environment.description);
+					cultureUpbringingTexts.push(GetTitle(hero.culture.environment.name) + '\n' + hero.culture.environment.description);
 				}
 				if (hero.culture.organization) {
-					cultureUpbringingTexts.push('==' +hero.culture.organization.name + '==\n' + hero.culture.organization.description);
+					cultureUpbringingTexts.push(GetTitle(hero.culture.organization.name) + '\n' + hero.culture.organization.description);
 				}
 				if (hero.culture.upbringing) {
-					cultureUpbringingTexts.push('==' +hero.culture.upbringing.name + '==\n' + hero.culture.upbringing.description);
+					cultureUpbringingTexts.push(GetTitle(hero.culture.upbringing.name) + '\n' + hero.culture.upbringing.description);
 				}
 				texts['CultureFull'] = cultureUpbringingTexts.join('\n\n');
-				autoResizingFields.push('CultureFull');
 			}
 			const languages = HeroLogic.getLanguages(hero, books);
 			texts['Languages'] = languages.map(l => l.name).join('\n');
@@ -291,19 +296,19 @@ export class PDFExport {
 							)
 							.map(c => (c && c.value) || 0)
 						);
-						powerRollText = powerRollText + '\n    <= 11: ' + AbilityLogic.getTierEffect(
+						powerRollText = powerRollText + '\n   • 11 or less\t' + AbilityLogic.getTierEffect(
 							a.powerRoll.tier1,
 							1,
 							a,
 							hero
 						);
-						powerRollText = powerRollText + '\n    12-16: ' + AbilityLogic.getTierEffect(
+						powerRollText = powerRollText + '\n   • 12 - 16\t\t' + AbilityLogic.getTierEffect(
 							a.powerRoll.tier2,
 							2,
 							a,
 							hero
 						);
-						powerRollText = powerRollText + '\n    17+: ' + AbilityLogic.getTierEffect(
+						powerRollText = powerRollText + '\n   • 17 +\t\t\t' + AbilityLogic.getTierEffect(
 							a.powerRoll.tier3,
 							3,
 							a,
@@ -340,23 +345,6 @@ export class PDFExport {
 					} else if(a.type.usage == AbilityUsage.Action) {
 						texts[prefix + 'Tag' + i] = 'A';
 					}
-					autoResizingFields.push(prefix + 'Name' + i);
-					autoResizingFields.push(prefix + 'Type' + i);
-					autoResizingFields.push(prefix + 'Keywords' + i);
-					autoResizingFields.push(prefix + 'Target' + i);
-					autoResizingFields.push(prefix + 'Tag' + i);
-					const abilityText = texts[prefix + 'Text' + i];
-					if(typeof(abilityText) == 'string' && abilityText.length > 500) {
-						autoResizingFields.push(prefix + 'Text' + i);
-					}
-					const distanceText = texts[prefix + 'Distance' + i];
-					if(typeof(distanceText) == 'string' && distanceText.length > 27) {
-						autoResizingFields.push(prefix + 'Distance' + i);
-					}
-					const targetText = texts[prefix + 'Target' + i];
-					if(typeof(targetText) == 'string' && targetText.length > 27) {
-						autoResizingFields.push(prefix + 'Target' + i);
-					}
 				});
 			};
 			const abilities = HeroLogic.getAbilities(hero, true, true, false);
@@ -378,8 +366,6 @@ export class PDFExport {
 			}
 		}
 
-		const font = await pdfDoc.embedFont(StandardFonts.TimesRoman);
-
 		for (const [ key, value ] of Object.entries(texts)) {
 			const field = form.getField(key) as PDFTextField;
 			if (value !== null && value !== undefined) {
@@ -387,20 +373,44 @@ export class PDFExport {
 			}
 		}
 
+		const DoesTextFitFieldRectangle = (t: string, rect: { x: number; y: number; width: number; height: number }, size: number, multiline: boolean) => {
+			// offset of 20 for multiline and 5 for single found by testing different values
+			const offset = multiline && 20 || 0;
+			const width = rect.width - offset;
+			const height = rect.height - offset;
+			let area = width * height;
+			// eliminate tabstops as the text width calculator can't process it
+			const lines = t.replace(/\t/g, '    ').split('\n');
+			// lineHeight multiplier found by testing different values
+			const lineHeight = font.heightAtSize(size) * 1.2;
+			lines.forEach(l => {
+				area = area - Math.max(1, Math.ceil(font.widthOfTextAtSize(l, size)/width)) * lineHeight * width;
+			});
+
+			return area > 0;
+		};
+
 		form.getFields().forEach(field => {
 			if (field instanceof PDFTextField) {
 				field.defaultUpdateAppearances(font);
-				field.setFontSize(8);
+				const widget = field.acroField.getWidgets()[0];
+				const t = texts[field.getName()];
+				// Get the text to fit inside the field, done manually because some of
+				// the characters used mess up the auto-sizing done by the pdf library
+				if(widget && t && !DoesTextFitFieldRectangle(t.toString(), widget.getRectangle(), fontSize, field.isMultiline())) {
+					let altFontSize = fontSize - 0.5;
+					while(altFontSize > 1 && !DoesTextFitFieldRectangle(t.toString(), widget.getRectangle(), altFontSize, field.isMultiline())) {
+						altFontSize = altFontSize - 0.5;
+					}
+					field.setFontSize(altFontSize);
+				} else {
+					field.setFontSize(fontSize);
+				}
 				field.defaultUpdateAppearances(font);
 			}
 		});
 
 		{
-			markMultiline.forEach(f => {
-				const field = form.getField(f) as PDFTextField;
-				field.enableMultiline();
-				field.defaultUpdateAppearances(font);
-			});
 			autoResizingFields.forEach(f => {
 				const field = form.getField(f) as PDFTextField;
 				field.setFontSize(0);

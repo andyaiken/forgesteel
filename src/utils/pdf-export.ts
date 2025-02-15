@@ -1,11 +1,11 @@
-import { ConditionEndType, ConditionType } from '../enums/condition-type';
-import { Feature, FeatureBonusData, FeatureChoiceData } from '../models/feature';
 import { PDFCheckBox, PDFDocument, PDFTextField, StandardFonts } from 'pdf-lib';
 import { Ability } from '../models/ability';
+import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
-import { FeatureField } from '../enums/feature-field';
-import { FeatureLogic } from '../logic/feature-logic';
+import { ConditionEndType } from '../enums/condition-type';
+import { DamageModifierType } from '../enums/damage-modifier-type';
+import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { FormatLogic } from '../logic/format-logic';
 import { Hero } from '../models/hero';
@@ -13,8 +13,7 @@ import { HeroLogic } from '../logic/hero-logic';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
 import localforage from 'localforage';
-
-import pdfFile from '../assets/character-sheet-backer-packet-2-modified.pdf';
+import pdfFile from '../assets/custom-character-sheet-plusmouse.pdf';
 
 export class PDFExport {
 	static startExport = async (hero: Hero) => {
@@ -29,7 +28,7 @@ export class PDFExport {
 			AncestryTop: hero.ancestry && hero.ancestry.name,
 			CareerTop: hero.career && hero.career.name,
 			ClassTop: hero.class && hero.class.name,
-			SubclassTop: hero.class && hero.class.subclassName + ': ' + hero.class.subclasses.filter(s => s.selected)[0].name,
+			SubclassTop: hero.class && hero.class.subclassName !== '' && hero.class.subclassName + ': ' + hero.class.subclasses.filter(s => s.selected)[0].name || null,
 			Level: hero.class && hero.class.level,
 			Wealth: hero.state.wealth,
 			Renown: hero.state.renown,
@@ -37,26 +36,25 @@ export class PDFExport {
 			Speed: HeroLogic.getSpeed(hero),
 			Stability: HeroLogic.getStability(hero),
 			Size: FormatLogic.getSize(HeroLogic.getSize(hero)),
-			CurrentStamina: HeroLogic.getStamina(hero) - hero.state.staminaDamage,
+			Stamina: HeroLogic.getStamina(hero) - hero.state.staminaDamage,
 			MaxStamina: HeroLogic.getStamina(hero),
-			WindedValue: Math.floor(HeroLogic.getStamina(hero) / 2),
-			DeadValue: -Math.floor(HeroLogic.getStamina(hero) / 2),
 			RecoveryValue: HeroLogic.getRecoveryValue(hero),
 			MaxRecoveries: HeroLogic.getRecoveries(hero),
 			Recoveries: HeroLogic.getRecoveries(hero) - hero.state.recoveriesUsed,
-			HeroicResourceName: hero.class && hero.class.heroicResource,
 			HeroicResource: hero.state.heroicResource,
-			Surges: hero.state.surges
+			Surges: hero.state.surges,
+			Victories: hero.state.victories,
+			AncestryFull: hero.ancestry && hero.ancestry.description,
+			EnvironmentName: hero.culture && hero.culture.environment && hero.culture.environment.name,
+			OrganizationName: hero.culture && hero.culture.organization && hero.culture.organization.name,
+			UpbringingName: hero.culture && hero.culture.upbringing && hero.culture.upbringing.name,
+			TempStamina: hero.state.staminaTemp
 		};
 
 		const toggles: { [key: string]: boolean } = {};
 		const ignoredFeatures: { [key: string]: boolean } = {};
 
 		{
-			for (let i = 0; i < hero.state.victories && i < 15; ++i) {
-				toggles['Victories' + (i + 1)] = true;
-			}
-
 			if (hero.class) {
 				// might/agility/reason/intuition/presence
 				for (const details of hero.class.characteristics) {
@@ -67,7 +65,6 @@ export class PDFExport {
 					texts[details.characteristic] = details.value;
 					autoResizingFields.push(details.characteristic);
 				}
-				autoResizingFields.push('SurgeDamage');
 			}
 		}
 
@@ -77,119 +74,79 @@ export class PDFExport {
 				'Wealth',
 				'Renown',
 				'XP',
-				'CurrentStamina',
+				'Stamina',
 				'Recoveries',
 				'HeroicResource',
 				'Surges',
-				'Level'
+				'Level',
+				'ClassTop',
+				'SubclassTop',
+				'AncestryTop',
+				'CareerTop'
 			]
 		);
 
 		const features = HeroLogic.getFeatures(hero) as Feature[];
 
 		{
+			const heroicResourceFeature = features.find(f => f.name == hero.class.heroicResource);
+			if(heroicResourceFeature) {
+				const startup = /\s*At the start of each of your turns during combat, you gain (.+?) \w+?\.\s+/;
+				const startupAmount = heroicResourceFeature.description.match(startup);
+				if(startupAmount) {
+					texts['HeroicResourcesPerTurn'] = startupAmount[1];
+				}
+				ignoredFeatures[heroicResourceFeature.id] = true;
+				texts['HeroicResourceGains'] = heroicResourceFeature.description.replace(startup, '');
+				autoResizingFields.push('HeroicResourceGains');
+			}
+		}
+
+		{
 			const kits = HeroLogic.getKits(hero);
 			const modifiers = [
-				kits,
-				features.filter(f => f.name.match('Enchantment of')),
-				features.filter(f => f.name.match('Prayer of')),
 				features.filter(f => f.name.match(' Augmentation')),
-				features.filter(f => f.name.match('Ward of'))
+				features.filter(f => f.name.match('Enchantment of')),
+				kits,
+				features.filter(f => f.name.match('Prayer of')),
+				features.filter(f => f.name.match('Ward'))
 			];
-			texts['ModifierName'] = modifiers
+			texts['ModifiersDetails'] = modifiers
 				.filter(f => f.length > 0)
-				.map(n => n[0].name)
-				.join(', ');
-			autoResizingFields.push('ModifierName');
+				.map(n => n[n.length - 1].name)
+				.join(',\n');
 			const modifierFields = [
-				'ModifierKit',
-				'ModifierEnchantment',
-				'ModifierPrayer',
-				'ModifierAugmentation',
-				'ModifierWard'
+				'ModifiersAugmentation',
+				'ModifiersEnchantment',
+				'ModifiersKit',
+				'ModifiersPrayer',
+				'ModifiersWard'
 			];
-			let fullDescription = '';
-			let [ speed, area, stability, stamina ] = [ 0, 0, 0, 0 ];
 
 			for (let i = 0; i < modifiers.length; ++i) {
 				if (modifiers[i].length > 0) {
 					toggles[modifierFields[i]] = true;
-					for (const feature of modifiers[i]) {
-						if (feature.type == FeatureType.Text) {
-							ignoredFeatures[feature.id] = true;
-							if (fullDescription != '') {
-								fullDescription = fullDescription + '\n\n';
-							}
-							fullDescription =
-								fullDescription +
-								'==' +
-								feature.name +
-								'==' +
-								'\n' +
-								feature.description;
-						} else if (feature.type == FeatureType.Multiple) {
-							ignoredFeatures[feature.id] = true;
-							feature.data.features
-								.map(data => data.data as FeatureBonusData)
-								.filter(data => data.field == FeatureField.Speed)
-								.forEach(data => (speed = speed + data.value));
-							feature.data.features
-								.map(data => data.data as FeatureBonusData)
-								.filter(data => data.field == FeatureField.Disengage)
-								.forEach(data => (area = area + data.value));
-							feature.data.features
-								.map(data => data.data as FeatureBonusData)
-								.filter(data => data.field == FeatureField.Stability)
-								.forEach(data => (stability = stability + data.value));
-							feature.data.features
-								.map(data => data.data as FeatureBonusData)
-								.filter(data => data.field == FeatureField.Stamina)
-								.forEach(data => (stamina = stamina + data.value));
-						}
-					}
 				}
 			}
-			texts['ModifierBenefits'] = fullDescription;
-			autoResizingFields.push('ModifierBenefits');
 
-			if (kits.length > 0) {
-				texts['ModifierWeapon'] = kits[0].weapon.join('/');
-				texts['ModifierArmor'] = kits[0].armor.join('/');
-				speed = speed + kits[0].speed;
-				stability = stability + kits[0].stability;
-				stamina = stamina + kits[0].stamina;
-				area = area + kits[0].disengage;
-				if (kits[0].meleeDistance !== null) {
-					texts['ModifierMeleeRange'] = '+' + kits[0].meleeDistance;
+			if (hero.complication) {
+				texts['ComplicationName'] = hero.complication.name;
+				const benefit = hero.complication.features.find(f =>
+					f.name.match(/Benefit/)
+				);
+				if (benefit) {
+					ignoredFeatures[benefit.id] = true;
+					texts['ComplicationBenefit'] = benefit.description;
+					autoResizingFields.push('ComplicationBenefit');
 				}
-				if (kits[0].meleeDamage !== null) {
-					texts['ModifierMeleeTier1'] = '+' + kits[0].meleeDamage.tier1;
-					texts['ModifierMeleeTier2'] = '+' + kits[0].meleeDamage.tier2;
-					texts['ModifierMeleeTier3'] = '+' + kits[0].meleeDamage.tier3;
+				const drawback = hero.complication.features.find(f =>
+					f.name.match(/Drawback/)
+				);
+				if (drawback) {
+					ignoredFeatures[drawback.id] = true;
+					texts['ComplicationDrawback'] = drawback.description;
+					autoResizingFields.push('ComplicationDrawback');
 				}
-				if (kits[0].rangedDistance !== null) {
-					texts['ModifierRangedRange'] = '+' + kits[0].rangedDistance;
-				}
-				if (kits[0].rangedDamage !== null) {
-					texts['ModifierRangedTier1'] = '+' + kits[0].rangedDamage.tier1;
-					texts['ModifierRangedTier2'] = '+' + kits[0].rangedDamage.tier2;
-					texts['ModifierRangedTier3'] = '+' + kits[0].rangedDamage.tier3;
-				}
-			}
-			if (texts['ModifierArmor'] == '' || texts['ModifierArmor'] == undefined) {
-				texts['ModifierArmor'] = 'None';
-			}
-			if (speed > 0) {
-				texts['ModifierSpeed'] = '+' + speed;
-			}
-			if (area > 0) {
-				texts['ModifierAreaRange'] = '+' + area;
-			}
-			if (stability > 0) {
-				texts['ModifierStability'] = '+' + stability;
-			}
-			if (stamina > 0) {
-				texts['ModifierStamina'] = '+' + stamina;
 			}
 		}
 
@@ -216,54 +173,8 @@ export class PDFExport {
 			return all;
 		};
 
-		if (hero.class) {
-			// Roughly split the features between the boxes, with a bias for the
-			// first box, no abilities, only description-only features
-			const classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero);
-			const all = ConvertFeatures(
-				classFeatures.filter(f => f.type == FeatureType.Text)
-			);
-			const lines = all.split(/\n+/);
-			let splitPoint = 0;
-			let runningTotal = 0;
-			for (const l of lines) {
-				runningTotal = runningTotal + l.length;
-				if (runningTotal < all.length / 2) {
-					splitPoint = splitPoint + 1;
-				} else {
-					break;
-				}
-			}
-			// Ensure headers remain on the same line
-			if (lines[Math.max(splitPoint - 1, 0)].match(/^==/)) {
-				splitPoint = splitPoint - 1;
-			}
-			texts['ClassFeatures1'] = lines
-				.slice(0, splitPoint)
-				.join('\n\n')
-				.replace(/\n\n\[\[/g, '\n[[');
-			autoResizingFields.push('ClassFeatures1');
-			texts['ClassFeatures2'] = lines
-				.slice(splitPoint)
-				.join('\n\n')
-				.replace(/\n\n\[\[/g, '\n[[');
-			if (texts['ClassFeatures2'] != '') {
-				autoResizingFields.push('ClassFeatures2');
-			}
-		}
-
-		if (hero.ancestry) {
-			const ancestryTextFeatures = FeatureLogic.getFeaturesFromAncestry(
-				hero.ancestry,
-				hero
-			);
-			texts['AncestryTraits'] = ConvertFeatures(
-				ancestryTextFeatures.filter(
-					f =>
-						f.type == FeatureType.Text || f.type == FeatureType.DamageModifier
-				)
-			);
-		}
+		texts['Features'] = ConvertFeatures(features.filter(f => !ignoredFeatures[f.id] && f.type == 'Text'));
+		autoResizingFields.push('Features');
 
 		{
 			for (const c of hero.state.conditions) {
@@ -283,8 +194,7 @@ export class PDFExport {
 			)) as Sourcebook[];
 			const books = [ SourcebookData.core, SourcebookData.orden ];
 			if (homebrew) books.push(...homebrew);
-			const skills = HeroLogic.getSkills(hero, books);
-			skills.forEach(s => (toggles['Skill' + s.name.replace(' ', '')] = true));
+			texts['Skills'] = HeroLogic.getSkills(hero, books).map(s => s.name).join('\n');
 
 			if (hero.career) {
 				texts['CareerName'] = hero.career.name;
@@ -297,107 +207,33 @@ export class PDFExport {
 					autoResizingFields.push('CareerIncident');
 				}
 			}
-			if (hero.complication) {
-				texts['ComplicationName'] = hero.complication.name;
-				const benefit = hero.complication.features.find(f =>
-					f.name.match(/Benefit/)
-				);
-				if (benefit) {
-					texts['ComplicationBenefit'] = benefit.description;
-					autoResizingFields.push('ComplicationBenefit');
-				}
-				const drawback = hero.complication.features.find(f =>
-					f.name.match(/Drawback/)
-				);
-				if (drawback) {
-					texts['ComplicationDrawback'] = drawback.description;
-					autoResizingFields.push('ComplicationDrawback');
-				}
-			}
 			if (hero.culture) {
+				const cultureUpbringingTexts = [];
 				if (hero.culture.environment) {
-					texts['Environment'] = hero.culture.environment.name;
-					texts['EnvironmentDescription'] =
-						hero.culture.environment.description;
-					autoResizingFields.push('EnvironmentDescription');
+					cultureUpbringingTexts.push('==' +hero.culture.environment.name + '==\n' + hero.culture.environment.description);
 				}
 				if (hero.culture.organization) {
-					texts['Organization'] = hero.culture.organization.name;
-					texts['OrganizationDescription'] =
-						hero.culture.organization.description;
-					autoResizingFields.push('OrganizationDescription');
+					cultureUpbringingTexts.push('==' +hero.culture.organization.name + '==\n' + hero.culture.organization.description);
 				}
 				if (hero.culture.upbringing) {
-					texts['Upbringing'] = hero.culture.upbringing.name;
-					texts['UpbringingDescription'] = hero.culture.upbringing.description;
-					autoResizingFields.push('UpbringingDescription');
+					cultureUpbringingTexts.push('==' +hero.culture.upbringing.name + '==\n' + hero.culture.upbringing.description);
 				}
+				texts['CultureFull'] = cultureUpbringingTexts.join('\n\n');
+				autoResizingFields.push('CultureFull');
 			}
 			const languages = HeroLogic.getLanguages(hero, books);
 			texts['Languages'] = languages.map(l => l.name).join('\n');
 
-			const perks = features
-				.filter(
-					f =>
-						f.type == FeatureType.Perk && f.data && f.data.selected.length > 0
-				)
-				.map(f => f.data && (f.data as FeatureChoiceData).selected[0])
-				.filter(f => !!f);
-			const all = ConvertFeatures(perks);
-			const lines = all.split(/\n+/);
-			let splitPoint = 0;
-			let runningTotal = 0;
-			for (const l of lines) {
-				runningTotal = runningTotal + l.length;
-				if (runningTotal < all.length / 2) {
-					splitPoint = splitPoint + 1;
-				} else {
-					break;
-				}
-			}
-			// Ensure headers remain on the same line
-			if (lines[Math.max(splitPoint - 1, 0)].match(/^==/)) {
-				splitPoint = splitPoint - 1;
-			}
-			texts['Perks1'] = lines
-				.slice(0, splitPoint)
-				.join('\n\n')
-				.replace(/\n\n\[\[/g, '\n[[');
-			autoResizingFields.push('Perks1');
-			texts['Perks2'] = lines
-				.slice(splitPoint)
-				.join('\n\n')
-				.replace(/\n\n\[\[/g, '\n[[');
-			if (texts['Perks2'] != '') {
-				autoResizingFields.push('Perks2');
-			}
-
 			texts['Titles'] = features
 				.filter(f => f.type == FeatureType.TitleChoice)
 				.map(f => f.data.selected[0])
-				.map(f => {
-					let text = '==' + f.name + ', ';
-					const selected = f.features.find(
-						subF => subF.id == f.selectedFeatureID
-					);
-					if (selected) {
-						text = text + selected.name + '==\n' + selected.description;
-						return text;
-					}
-					return text + 'choice needed==';
-				})
+				.map(f => f.name)
 				.join('\n\n');
-			if (texts['Titles'] != '') {
-				autoResizingFields.push('Titles');
-			}
 
 			hero.state.projects.forEach((p, i) => {
-				texts['Project' + (i + 1)] = p.name;
+				texts['Project' + (i + 1) + 'Name'] = p.name;
 				if (p.progress && p.progress.prerequisites && p.progress.source) {
-					texts['Project' + (i + 1) + 'Required'] = p.goal;
-					autoResizingFields.push('Project' + (i + 1) + 'Required');
-					texts['Project' + (i + 1) + 'Current'] = p.progress.points;
-					autoResizingFields.push('Project' + (i + 1) + 'Current');
+					texts['Project' + (i + 1) + 'Progress'] = p.goal + '/' + p.progress.points;
 					texts['Project' + (i + 1) + 'Assigned'] = 'Yes';
 				} else if (p.progress) {
 					texts['Project' + (i + 1) + 'Assigned'] =
@@ -417,81 +253,16 @@ export class PDFExport {
 		}
 
 		{
-			const SetTiers = (ability: Ability, prefix: string) => {
-				if (ability.powerRoll) {
-					texts[prefix + 'Tier1'] = AbilityLogic.getTierEffect(
-						ability.powerRoll.tier1,
-						1,
-						ability,
-						hero
-					);
-					texts[prefix + 'Tier2'] = AbilityLogic.getTierEffect(
-						ability.powerRoll.tier2,
-						2,
-						ability,
-						hero
-					);
-					texts[prefix + 'Tier3'] = AbilityLogic.getTierEffect(
-						ability.powerRoll.tier3,
-						3,
-						ability,
-						hero
-					);
-					texts[prefix + 'PowerRoll'] = Math.max(
-						...ability.powerRoll.characteristic
-							.map(
-								c =>
-									hero.class &&
-									hero.class.characteristics.find(d => d.characteristic == c)
-							)
-							.map(c => (c && c.value) || 0)
-					);
-				}
-				texts[prefix + 'Distance'] = AbilityLogic.getDistance(
-					ability.distance[0],
-					hero,
-					ability
-				);
-			};
-			const CleanMelee = (ability: Ability, prefix: string) => {
-				if (ability.powerRoll) {
-					texts[prefix + 'Tier1'] = AbilityLogic.getTierEffect(
-						ability.powerRoll.tier1,
-						1,
-						ability,
-						hero
-					).replace(' damage', '');
-					texts[prefix + 'Tier2'] = AbilityLogic.getTierEffect(
-						ability.powerRoll.tier2,
-						2,
-						ability,
-						hero
-					).replace(' damage', '');
-					texts[prefix + 'Tier3'] = AbilityLogic.getTierEffect(
-						ability.powerRoll.tier3,
-						3,
-						ability,
-						hero
-					).replace(' damage', '');
-					texts[prefix + 'PowerRoll'] = Math.max(
-						...ability.powerRoll.characteristic
-							.map(
-								c =>
-									hero.class &&
-									hero.class.characteristics.find(d => d.characteristic == c)
-							)
-							.map(c => (c && c.value) || 0)
-					);
-				}
-				texts[prefix + 'Distance'] = AbilityLogic.getDistance(
-					ability.distance[0],
-					hero,
-					ability
-				).replace('Ranged ', '');
-			};
+			const immunities = HeroLogic.getDamageModifiers(hero, DamageModifierType.Immunity);
+			const weaknesses = HeroLogic.getDamageModifiers(hero, DamageModifierType.Weakness);
+			texts['Immunities'] = immunities.map(i => i.damageType + ' ' + i.value).join('\n');
+			texts['Weaknesses'] = weaknesses.map(i => i.damageType + ' ' + i.value).join('\n');
+		}
+
+		{
 			const ApplyGroup = (
 				abilities: Ability[],
-				groupPrefix: string,
+				prefix: string,
 				limit: number
 			) => {
 				abilities.forEach((a, i) => {
@@ -499,105 +270,102 @@ export class PDFExport {
 					if (i >= limit) {
 						return;
 					}
-					const prefix = groupPrefix + (i + 1);
-					SetTiers(a, prefix);
-					texts[prefix + 'Name'] = a.name;
-					texts[prefix + 'Target'] = a.target;
-					texts[prefix + 'Keywords'] = a.keywords.join(', ');
-					texts[prefix + 'Type'] = a.type.usage;
+					texts[prefix + 'Name' + i] = a.name;
+					texts[prefix + 'Target' + i] = a.target;
+					if(a.distance.length > 1 && a.distance[0].type == AbilityDistanceType.Melee && a.distance[1].type == AbilityDistanceType.Ranged) {
+						texts[prefix + 'Distance' + i] = AbilityLogic.getDistance(a.distance[0], hero, a).replace('Melee', 'M') + ' or ' + AbilityLogic.getDistance(a.distance[1], hero, a).replace('Ranged', 'R');
+					} else {
+						texts[prefix + 'Distance' + i] = AbilityLogic.getDistance(a.distance[0], hero, a);
+					}
+					texts[prefix + 'Keywords' + i] = a.keywords.join(', ');
+					texts[prefix + 'Type' + i] = a.type.usage;
+					const details = [];
+
+					if(a.powerRoll) {
+						let powerRollText = '';
+					  powerRollText = powerRollText + 'Power Roll: 2d10 + ' + Math.max(...a.powerRoll.characteristic
+							.map(
+								c =>
+									hero.class &&
+									hero.class.characteristics.find(d => d.characteristic == c)
+							)
+							.map(c => (c && c.value) || 0)
+						);
+						powerRollText = powerRollText + '\n    <= 11: ' + AbilityLogic.getTierEffect(
+							a.powerRoll.tier1,
+							1,
+							a,
+							hero
+						);
+						powerRollText = powerRollText + '\n    12-16: ' + AbilityLogic.getTierEffect(
+							a.powerRoll.tier2,
+							2,
+							a,
+							hero
+						);
+						powerRollText = powerRollText + '\n    17+: ' + AbilityLogic.getTierEffect(
+							a.powerRoll.tier3,
+							3,
+							a,
+							hero
+						);
+						details.push(powerRollText);
+					}
 					if (a.type.trigger !== '') {
-						texts[prefix + 'Trigger'] = a.type.trigger;
-						if (a.type.trigger.length > 90) {
-							autoResizingFields.push(prefix + 'Trigger');
-						}
+						details.push('Trigger:\n' + a.type.trigger);
 					}
-					let effect = a.effect;
+					if(a.effect && !a.powerRoll && !a.type.trigger)
+						details.push(a.effect);
+					else if(a.effect) {
+						details.push('Effect:\n' + a.effect);
+					}
 					if (a.spend.length > 0) {
-						if (a.effect.length > 0)
-							effect =
-								a.effect +
-								'\n\n[[Spend ' +
-								a.spend[0].value +
-								']] ' +
-								a.spend[0].effect;
-						else
-							effect =
-								'[[Spend ' + a.spend[0].value + ']] ' + a.spend[0].effect;
+						details.push(
+							a.effect +
+              '[[Spend ' +
+              a.spend[0].value +
+              ']] ' +
+              a.spend[0].effect
+						);
 					}
-					texts[prefix + 'Effect'] = effect;
+					texts[prefix + 'Text' + i] = details.join('\n\n');
 
 					if (typeof a.cost == 'number' && a.cost > 0) {
-						texts[prefix + 'Cost'] = a.cost;
+						texts[prefix + 'Tag' + i] = a.cost;
+					} else if(a.cost == 'signature') {
+						texts[prefix + 'Tag' + i] = 'S';
+					} else if(a.type.usage == AbilityUsage.Trigger) {
+						texts[prefix + 'Tag' + i] = 'T';
+					} else if(a.type.usage == AbilityUsage.Maneuver) {
+						texts[prefix + 'Tag' + i] = 'M';
+					} else if(a.type.usage == AbilityUsage.Action) {
+						texts[prefix + 'Tag' + i] = 'A';
 					}
-					if (effect.length > 145) {
-						autoResizingFields.push(prefix + 'Effect');
+					autoResizingFields.push(prefix + 'Name' + i);
+					autoResizingFields.push(prefix + 'Type' + i);
+					autoResizingFields.push(prefix + 'Keywords' + i);
+					autoResizingFields.push(prefix + 'Target' + i);
+					autoResizingFields.push(prefix + 'Tag' + i);
+					if(texts[prefix + 'Text' + i] && texts[prefix + 'Text' + i].length > 500) {
+						autoResizingFields.push(prefix + 'Text' + i);
 					}
-					autoResizingFields.push(prefix + 'Type');
-					autoResizingFields.push(prefix + 'Keywords');
-					autoResizingFields.push(prefix + 'Target');
-					autoResizingFields.push(
-						...[ 'Tier1', 'Tier2', 'Tier3' ]
-							.map(t => prefix + t)
-							.filter(t => texts[t])
-					);
-					markMultiline.push(
-						...[ 'Tier1', 'Tier2', 'Tier3' ]
-							.map(t => prefix + t)
-							.filter(
-								t =>
-									texts[t] &&
-									typeof texts[t] == 'string' &&
-									texts[t].length > 30
-							)
-					);
+					if(texts[prefix + 'Distance' + i] && texts[prefix + 'Distance' + i].length > 27) {
+						autoResizingFields.push(prefix + 'Distance' + i);
+					}
+					if(texts[prefix + 'Target' + i] && texts[prefix + 'Target' + i].length > 27) {
+						autoResizingFields.push(prefix + 'Target' + i);
+					}
 				});
 			};
 			const abilities = HeroLogic.getAbilities(hero, true, true, false);
-			const freeMelee = abilities.find(a => a.id == 'free-melee');
-			if (freeMelee) {
-				ignoredFeatures[freeMelee.id] = true;
-				CleanMelee(freeMelee, 'MeleeFreeStrike');
-			}
-			const freeRanged = abilities.find(a => a.id == 'free-ranged');
-			if (freeRanged) {
-				ignoredFeatures[freeRanged.id] = true;
-				CleanMelee(freeRanged, 'RangedFreeStrike');
-			}
+			texts['RegularActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Action && a.id !== 'free-melee' && a.id !== 'free-ranged').map(a => a.name).join('\n');
+			texts['Manoeuvres'] = abilities.filter(a => a.type.usage == AbilityUsage.Maneuver).map(a => a.name).join('\n');
+			texts['TriggeredActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Trigger).map(a => a.name).join('\n');
 
-			ApplyGroup(
-				abilities.filter(a => a.cost == 'signature'),
-				'Signature',
-				2
-			);
-
-			ApplyGroup(
-				abilities.filter(
-					a =>
-						typeof a.cost == 'number' &&
-						a.cost > 0 &&
-						a.type.usage == AbilityUsage.Trigger
-				),
-				'TriggeredHeroic',
-				1
-			);
-			ApplyGroup(
-				abilities.filter(
-					a => typeof a.cost == 'number' && a.cost > 0 && !ignoredFeatures[a.id]
-				),
-				'Heroic',
-				5
-			);
-			ApplyGroup(
-				abilities.filter(
-					a => a.type.usage == AbilityUsage.Trigger && !ignoredFeatures[a.id]
-				),
-				'Triggered',
-				2
-			);
 			ApplyGroup(
 				abilities.filter(a => !ignoredFeatures[a.id]),
 				'Ability',
-				6
+				18
 			);
 		}
 

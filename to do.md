@@ -51,7 +51,6 @@
 * Hero Builder:
   * Auto-create heroes
   * Revenants should have 3 ancestry points if small
-* Allow custom conditions
 
 ### Library
 

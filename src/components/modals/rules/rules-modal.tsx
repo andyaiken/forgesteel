@@ -1,4 +1,4 @@
-import { Space, Tabs } from 'antd';
+import { Segmented, Space } from 'antd';
 import { AbilityPanel } from '../../panels/elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
 import { Collections } from '../../../utils/collections';
@@ -16,6 +16,7 @@ import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
 import { StarFilled } from '@ant-design/icons';
+import { useState } from 'react';
 
 import './rules-modal.scss';
 
@@ -25,6 +26,8 @@ interface Props {
 }
 
 export const RulesModal = (props: Props) => {
+	const [ page, setPage ] = useState<string>('Conditions');
+
 	try {
 		const getConditionsSection = () => {
 			return (
@@ -133,34 +136,33 @@ export const RulesModal = (props: Props) => {
 			);
 		};
 
+		const getContent = () => {
+			switch (page) {
+				case 'Conditions':
+					return getConditionsSection();
+				case 'Skills':
+					return getSkillsSection();
+				case 'Languages':
+					return getLanguagesSection();
+				case 'Abilities':
+					return getAbilitiesSection();
+			}
+		};
+
 		return (
 			<Modal
+				toolbar={
+					<div style={{ width: '100%', textAlign: 'center' }}>
+						<Segmented
+							options={[ 'Conditions', 'Skills', 'Languages', 'Abilities' ]}
+							value={page}
+							onChange={setPage}
+						/>
+					</div>
+				}
 				content={
 					<div className='rules-modal'>
-						<Tabs
-							items={[
-								{
-									key: '1',
-									label: 'Conditions',
-									children: getConditionsSection()
-								},
-								{
-									key: '2',
-									label: 'Skills',
-									children: getSkillsSection()
-								},
-								{
-									key: '3',
-									label: 'Languages',
-									children: getLanguagesSection()
-								},
-								{
-									key: '4',
-									label: 'Abilities',
-									children: getAbilitiesSection()
-								}
-							]}
-						/>
+						{getContent()}
 					</div>
 				}
 			/>

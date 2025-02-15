@@ -1,9 +1,9 @@
+import { ConditionEndType, ConditionType } from '../enums/condition-type';
 import { Feature, FeatureBonusData, FeatureChoiceData } from '../models/feature';
 import { PDFCheckBox, PDFDocument, PDFTextField, StandardFonts } from 'pdf-lib';
 import { Ability } from '../models/ability';
 import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
-import { ConditionEndType } from '../enums/condition-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from '../logic/feature-logic';
 import { FeatureType } from '../enums/feature-type';
@@ -13,6 +13,7 @@ import { HeroLogic } from '../logic/hero-logic';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
 import localforage from 'localforage';
+
 import pdfFile from '../assets/character-sheet-backer-packet-2-modified.pdf';
 
 export class PDFExport {
@@ -266,10 +267,12 @@ export class PDFExport {
 
 		{
 			for (const c of hero.state.conditions) {
-				if (c.ends == ConditionEndType.EndOfTurn) {
-					toggles[c.type + 'EoT'] = true;
-				} else if (c.ends == ConditionEndType.SaveEnds) {
-					toggles[c.type + 'Save'] = true;
+				if (c.type !== ConditionType.Custom) {
+					if (c.ends == ConditionEndType.EndOfTurn) {
+						toggles[c.type + 'EoT'] = true;
+					} else if (c.ends == ConditionEndType.SaveEnds) {
+						toggles[c.type + 'Save'] = true;
+					}
 				}
 			}
 		}

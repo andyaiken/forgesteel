@@ -236,9 +236,10 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-						distance: [ 
+						distance: [
 							FactoryLogic.distance.createMelee(),
-							FactoryLogic.distance.createRanged(5)],
+							FactoryLogic.distance.createRanged(5)
+						],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -517,6 +518,9 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						id: 'orc-9-feature-3',
 						name: 'Chroma Cloak',
 						type: FactoryLogic.type.createManeuver(),
+						keywords: [],
+						distance: [],
+						target: '',
 						cost: 1,
 						effect: 'The garroter turns invisible. The eﬀect ends when the garroter uses an ability, takes damage, or at the end of their turn.'
 					})
@@ -549,15 +553,16 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-						distance: [ 
+						distance: [
 							FactoryLogic.distance.createMelee(),
-							FactoryLogic.distance.createRanged(10) ],
+							FactoryLogic.distance.createRanged(10)
+						],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
 							tier1: '5 sonic damage',
 							tier2: '7 sonic damage',
-							tier3: '9 sonic damage; P<2 weakened (save ends)' 
+							tier3: '9 sonic damage; P<2 weakened (save ends)'
 						})
 					})
 				}),
@@ -571,7 +576,8 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						target: 'One ally',
 						effect: 'The target moves up to their speed and uses an action.',
 						spend: [
-							{ value: 3, effect: 'The godcaller targets a second ally.' }]
+							{ value: 3, effect: 'The godcaller targets a second ally.' }
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -581,9 +587,10 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
 						keywords: [ AbilityKeyword.Magic ],
-						distance: [ 
+						distance: [
 							FactoryLogic.distance.createSelf(),
-							FactoryLogic.distance.createRanged(10) ],
+							FactoryLogic.distance.createRanged(10)
+						],
 						target: 'Self and up to three allies',
 						effect: 'Each target regains 15 Stamina and ignores difficult terrain until the end of the encounter.'
 					})
@@ -796,7 +803,8 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						effect: 'The target moves up to their speed and uses an action.',
 						spend: [
 							{ value: 1, effect: 'The warleader targets a second ally.' },
-							{ value: 3, effect: 'The warleader targets a squad instead of a second ally.' }]
+							{ value: 3, effect: 'The warleader targets a squad instead of a second ally.' }
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1009,9 +1017,10 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ 
+						distance: [
 							FactoryLogic.distance.createMelee(),
-							FactoryLogic.distance.createRanged(5)	],
+							FactoryLogic.distance.createRanged(5)
+						],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],

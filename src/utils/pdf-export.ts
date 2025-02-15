@@ -1,9 +1,9 @@
+import { ConditionEndType, ConditionType } from '../enums/condition-type';
 import { PDFCheckBox, PDFDocument, PDFTextField, StandardFonts } from 'pdf-lib';
 import { Ability } from '../models/ability';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
-import { ConditionEndType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
@@ -89,7 +89,7 @@ export class PDFExport {
 		const features = HeroLogic.getFeatures(hero) as Feature[];
 
 		{
-			const heroicResourceFeature = features.find(f => f.name == hero.class.heroicResource);
+			const heroicResourceFeature = features.find(f => hero.class && f.name == hero.class.heroicResource);
 			if(heroicResourceFeature) {
 				const startup = /\s*At the start of each of your turns during combat, you gain (.+?) \w+?\.\s+/;
 				const startupAmount = heroicResourceFeature.description.match(startup);
@@ -321,10 +321,9 @@ export class PDFExport {
 					}
 					if (a.spend.length > 0) {
 						details.push(
-							a.effect +
-              '[[Spend ' +
+							'Spend ' +
               a.spend[0].value +
-              ']] ' +
+              ':\n' +
               a.spend[0].effect
 						);
 					}
@@ -346,21 +345,24 @@ export class PDFExport {
 					autoResizingFields.push(prefix + 'Keywords' + i);
 					autoResizingFields.push(prefix + 'Target' + i);
 					autoResizingFields.push(prefix + 'Tag' + i);
-					if(texts[prefix + 'Text' + i] && texts[prefix + 'Text' + i].length > 500) {
+					const abilityText = texts[prefix + 'Text' + i];
+					if(typeof(abilityText) == 'string' && abilityText.length > 500) {
 						autoResizingFields.push(prefix + 'Text' + i);
 					}
-					if(texts[prefix + 'Distance' + i] && texts[prefix + 'Distance' + i].length > 27) {
+					const distanceText = texts[prefix + 'Distance' + i];
+					if(typeof(distanceText) == 'string' && distanceText.length > 27) {
 						autoResizingFields.push(prefix + 'Distance' + i);
 					}
-					if(texts[prefix + 'Target' + i] && texts[prefix + 'Target' + i].length > 27) {
+					const targetText = texts[prefix + 'Target' + i];
+					if(typeof(targetText) == 'string' && targetText.length > 27) {
 						autoResizingFields.push(prefix + 'Target' + i);
 					}
 				});
 			};
 			const abilities = HeroLogic.getAbilities(hero, true, true, false);
-			texts['RegularActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Action && a.id !== 'free-melee' && a.id !== 'free-ranged').map(a => a.name).join('\n');
-			texts['Manoeuvres'] = abilities.filter(a => a.type.usage == AbilityUsage.Maneuver).map(a => a.name).join('\n');
-			texts['TriggeredActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Trigger).map(a => a.name).join('\n');
+			texts['RegularActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Action && a.id !== 'free-melee' && a.id !== 'free-ranged').map(a => a.name + (typeof(a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n\n');
+			texts['Manoeuvres'] = abilities.filter(a => a.type.usage == AbilityUsage.Maneuver).map(a => a.name + (typeof(a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n\n');
+			texts['TriggeredActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Trigger).map(a => a.name + (typeof(a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n\n');
 
 			ApplyGroup(
 				abilities.filter(a => !ignoredFeatures[a.id]),

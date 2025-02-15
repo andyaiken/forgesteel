@@ -321,10 +321,9 @@ export class PDFExport {
 					}
 					if (a.spend.length > 0) {
 						details.push(
-							a.effect +
-              '[[Spend ' +
+							'Spend ' +
               a.spend[0].value +
-              ']] ' +
+              ':\n' +
               a.spend[0].effect
 						);
 					}
@@ -361,9 +360,9 @@ export class PDFExport {
 				});
 			};
 			const abilities = HeroLogic.getAbilities(hero, true, true, false);
-			texts['RegularActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Action && a.id !== 'free-melee' && a.id !== 'free-ranged').map(a => a.name).join('\n');
-			texts['Manoeuvres'] = abilities.filter(a => a.type.usage == AbilityUsage.Maneuver).map(a => a.name).join('\n');
-			texts['TriggeredActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Trigger).map(a => a.name).join('\n');
+			texts['RegularActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Action && a.id !== 'free-melee' && a.id !== 'free-ranged').map(a => a.name + (typeof(a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n\n');
+			texts['Manoeuvres'] = abilities.filter(a => a.type.usage == AbilityUsage.Maneuver).map(a => a.name + (typeof(a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n\n');
+			texts['TriggeredActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Trigger).map(a => a.name + (typeof(a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n\n');
 
 			ApplyGroup(
 				abilities.filter(a => !ignoredFeatures[a.id]),

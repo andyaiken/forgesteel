@@ -386,6 +386,7 @@ export class SourcebookData {
 			MonsterData.manticore,
 			MonsterData.minotaur,
 			MonsterData.ogre,
+			MonsterData.orc,
 			MonsterData.radenwight,
 			MonsterData.werewolf
 		],

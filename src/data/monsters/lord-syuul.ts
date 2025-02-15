@@ -222,7 +222,13 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						}),
 						effect: 'Each target gains damage weakness 3 until the end of the encounter.'
 					})
-				})
+				}),
+				FactoryLogic.feature.createDamageModifier({
+					id: 'lord-syull-feature-11',
+					modifiers: [
+						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 10 })
+					]
+				}),
 			]
 		}),
 		FactoryLogic.createMonster({

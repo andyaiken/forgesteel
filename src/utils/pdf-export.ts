@@ -38,6 +38,7 @@ export class PDFExport {
 			Speed: HeroLogic.getSpeed(hero),
 			Stability: HeroLogic.getStability(hero),
 			Size: FormatLogic.getSize(HeroLogic.getSize(hero)),
+			Disengage: HeroLogic.getDisengage(hero),
 			Stamina: HeroLogic.getStamina(hero) - hero.state.staminaDamage,
 			MaxStamina: HeroLogic.getStamina(hero),
 			RecoveryValue: HeroLogic.getRecoveryValue(hero),

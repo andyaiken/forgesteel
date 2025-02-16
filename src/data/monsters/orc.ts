@@ -853,7 +853,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All allies',
-						effect: 'Each target moves up to their speed. Each enemy within 1 of a target makes an **Intuition test**.',
+						preEffect: 'Each target moves up to their speed. Each enemy within 1 of a target makes an **Intuition test**.',
 						powerRoll: FactoryLogic.createPowerRoll({
 							tier1: 'Frightened of the warleader (save ends)',
 							tier2: 'Frightened of the warleader (EoT)',
@@ -958,7 +958,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Special',
-						effect: 'The scyza kicks up a sandstorm concealing themselves and each ally in the affected area until the end of the scyza\'s next turn. Each enemy in the burst makes an **Intuition test**.',
+						preEffect: 'The scyza kicks up a sandstorm concealing themselves and each ally in the affected area until the end of the scyza\'s next turn. Each enemy in the burst makes an **Intuition test**.',
 						powerRoll: FactoryLogic.createPowerRoll({
 							tier1: '10 damage; prone; slowed (EoT)',
 							tier2: '7 damage; slowed (EoT)',

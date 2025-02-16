@@ -373,6 +373,7 @@ export class SourcebookData {
 			MonsterData.ashenHoarder,
 			MonsterData.bugbear,
 			MonsterData.chimera,
+			MonsterData.dragonThorn,
 			MonsterData.dwarf,
 			MonsterData.elfShadow,
 			MonsterData.elfWode,

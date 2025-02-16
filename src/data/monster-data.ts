@@ -2,6 +2,7 @@ import { ankheg } from './monsters/ankheg';
 import { ashenHoarder } from './monsters/ashen-hoarder';
 import { bugbear } from './monsters/bugbear';
 import { chimera } from './monsters/chimera';
+import { dragonThorn } from './monsters/dragon-thorn';
 import { dwarf } from './monsters/dwarf';
 import { elfShadow } from './monsters/elf-shadow';
 import { elfWode } from './monsters/elf-wode';
@@ -24,6 +25,7 @@ export class MonsterData {
 	static ashenHoarder = ashenHoarder;
 	static bugbear = bugbear;
 	static chimera = chimera;
+	static dragonThorn = dragonThorn;
 	static dwarf = dwarf;
 	static elfShadow = elfShadow;
 	static elfWode = elfWode;

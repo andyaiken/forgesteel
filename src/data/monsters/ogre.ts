@@ -216,6 +216,7 @@ The goon hurls what’s in their hand down the line and rolls power. The hurled 
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All creatures in the burst',
+						preEffect: 'The juggernaut jumps up to 6 squares before using this ability.',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
 							tier1: '4 damage',

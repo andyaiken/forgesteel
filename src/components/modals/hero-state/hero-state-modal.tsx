@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Drawer, Flex, Space, Tabs } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, Segmented, Space } from 'antd';
 import { ArrowUpOutlined, CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Condition, Hero } from '../../../models/hero';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
@@ -37,6 +37,7 @@ interface Props {
 
 export const HeroStateModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(props.hero)));
+	const [ page, setPage ] = useState<HeroStatePage>(props.startPage);
 	const [ shopVisible, setShopVisible ] = useState<boolean>(false);
 	const [ conditionsVisible, setConditionsVisible ] = useState<boolean>(false);
 	const [ projectsVisible, setProjectsVisible ] = useState<boolean>(false);
@@ -549,46 +550,45 @@ export const HeroStateModal = (props: Props) => {
 		);
 	};
 
+	const getContent = () => {
+		switch (page) {
+			case HeroStatePage.Hero:
+				return getHeroSection();
+			case HeroStatePage.Vitals:
+				return getVitalsSection();
+			case HeroStatePage.Stats:
+				return getStatisticsSection();
+			case HeroStatePage.Inventory:
+				return getInventorySection();
+			case HeroStatePage.Conditions:
+				return getConditionsSection();
+			case HeroStatePage.Projects:
+				return getProjectsSection();
+		}
+	};
+
 	try {
 		return (
 			<Modal
+				toolbar={
+					<div style={{ width: '100%', textAlign: 'center' }}>
+						<Segmented
+							options={[
+								HeroStatePage.Hero,
+								HeroStatePage.Vitals,
+								HeroStatePage.Stats,
+								HeroStatePage.Inventory,
+								HeroStatePage.Conditions,
+								HeroStatePage.Projects
+							]}
+							value={page}
+							onChange={setPage}
+						/>
+					</div>
+				}
 				content={
 					<div className='hero-state-modal'>
-						<Tabs
-							items={[
-								{
-									key: HeroStatePage.Hero,
-									label: 'Hero',
-									children: getHeroSection()
-								},
-								{
-									key: HeroStatePage.Vitals,
-									label: 'Vitals',
-									children: getVitalsSection()
-								},
-								{
-									key: HeroStatePage.Stats,
-									label: 'Statistics',
-									children: getStatisticsSection()
-								},
-								{
-									key: HeroStatePage.Inventory,
-									label: 'Inventory',
-									children: getInventorySection()
-								},
-								{
-									key: HeroStatePage.Conditions,
-									label: 'Conditions',
-									children: getConditionsSection()
-								},
-								{
-									key: HeroStatePage.Customize,
-									label: 'Projects',
-									children: getProjectsSection()
-								}
-							]}
-							defaultActiveKey={props.startPage}
-						/>
+						{getContent()}
 					</div>
 				}
 			/>

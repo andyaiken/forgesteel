@@ -228,7 +228,7 @@ However, any hero who has at least one psionic ability can use their maneuver to
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 10 })
 					]
-				}),
+				})
 			]
 		}),
 		FactoryLogic.createMonster({

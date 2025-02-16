@@ -7,7 +7,6 @@
 | Monster             | Minions | Monsters | Retainers |
 |:--------------------|--------:|---------:|----------:|
 | Gnoll               | 4       | 7        | 1         |
-| Orc                 | 5       | 10       | 1         |
 | Troll               | 4       | 2        | 1         |
 | Undead              | 4       | 7        | 0         |
 
@@ -52,7 +51,6 @@
 * Hero Builder:
   * Auto-create heroes
   * Revenants should have 3 ancestry points if small
-* Allow custom conditions
 
 ### Library
 

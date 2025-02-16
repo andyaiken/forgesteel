@@ -1,4 +1,4 @@
-import { Input, Tabs } from 'antd';
+import { Input, Segmented } from 'antd';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../../panels/elements/ability-panel/ability-panel';
 import { DieRollPanel } from '../../panels/die-roll/die-roll-panel';
@@ -22,6 +22,7 @@ interface Props {
 
 export const AbilityModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(props.hero)) as Hero);
+	const [ page, setPage ] = useState<string>('Ability');
 
 	const setName = (value: string) => {
 		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
@@ -83,58 +84,63 @@ export const AbilityModal = (props: Props) => {
 		props.updateHero(copy);
 	};
 
+	const getContent = () => {
+		switch (page) {
+			case 'Ability':
+				return (
+					<div className='ability-section'>
+						<SelectablePanel>
+							<AbilityPanel ability={props.ability} hero={hero} mode={PanelMode.Full} />
+						</SelectablePanel>
+						{
+							props.ability.powerRoll ?
+								<DieRollPanel
+									modifier={Math.max(...props.ability.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero, ch)))}
+								/>
+								: null
+						}
+					</div>
+				);
+			case 'Customize':
+				return (
+					<div className='customize-section'>
+						<Expander title='Name and Description'>
+							<HeaderText>Name</HeaderText>
+							<Input
+								placeholder='Name'
+								allowClear={true}
+								value={customization?.name || ''}
+								onChange={e => setName(e.target.value)}
+							/>
+							<HeaderText>Description</HeaderText>
+							<MultiLine label='Description' value={customization?.description || ''} onChange={setDescription} />
+						</Expander>
+						<Expander title='Notes'>
+							<HeaderText>Notes</HeaderText>
+							<MultiLine label='Description' value={customization?.notes || ''} onChange={setNotes} />
+						</Expander>
+					</div>
+				);
+		}
+	};
+
 	const customization = hero.abilityCustomizations.find(ac => ac.abilityID === props.ability.id);
 
 	try {
 		return (
 			<Modal
+				toolbar={
+					<div style={{ width: '100%', textAlign: 'center' }}>
+						<Segmented
+							options={[ 'Ability', 'Customize' ]}
+							value={page}
+							onChange={setPage}
+						/>
+					</div>
+				}
 				content={
 					<div className='ability-modal'>
-						<Tabs
-							items={[
-								{
-									key: 'ability',
-									label: 'Ability',
-									children: (
-										<div className='ability-section'>
-											<SelectablePanel>
-												<AbilityPanel ability={props.ability} hero={hero} mode={PanelMode.Full} />
-											</SelectablePanel>
-											{
-												props.ability.powerRoll ?
-													<DieRollPanel
-														modifier={Math.max(...props.ability.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero, ch)))}
-													/>
-													: null
-											}
-										</div>
-									)
-								},
-								{
-									key: 'customize',
-									label: 'Customize',
-									children: (
-										<div className='customize-section'>
-											<Expander title='Name and Description'>
-												<HeaderText>Name</HeaderText>
-												<Input
-													placeholder='Name'
-													allowClear={true}
-													value={customization?.name || ''}
-													onChange={e => setName(e.target.value)}
-												/>
-												<HeaderText>Description</HeaderText>
-												<MultiLine label='Description' value={customization?.description || ''} onChange={setDescription} />
-											</Expander>
-											<Expander title='Notes'>
-												<HeaderText>Notes</HeaderText>
-												<MultiLine label='Description' value={customization?.notes || ''} onChange={setNotes} />
-											</Expander>
-										</div>
-									)
-								}
-							]}
-						/>
+						{getContent()}
 					</div>
 				}
 			/>

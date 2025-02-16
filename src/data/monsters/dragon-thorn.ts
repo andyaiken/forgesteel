@@ -153,7 +153,10 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 					ability: FactoryLogic.createAbility({
 						id: 'dragon-thorn-feature-7',
 						name: 'Provoking Nettles',
-						type: FactoryLogic.type.createManeuver( {free: true} ),
+						type: FactoryLogic.type.createManeuver({ free: true }),
+						keywords: [],
+						distance: [],
+						target: '',
 						effect: 'Once per turn, the dragon shifts 5 and can move through enemies at normal speed. The ﬁrst time the dragon passes through a creature’s space during this movement, the creature takes 3 damage.'
 					})
 				}),
@@ -172,7 +175,7 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 					ability: FactoryLogic.createAbility({
 						id: 'dragon-thorn-feature-9',
 						name: 'Thorny Scales',
-						type: FactoryLogic.type.createTrigger('A creature deals damage to the dragon with a melee strike.', {free: true}),
+						type: FactoryLogic.type.createTrigger('A creature deals damage to the dragon with a melee strike.', { free: true }),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Triggering creature',
 						effect: 'The dragon makes a free strike against the target. The target is M<2 bleeding (EoT).'

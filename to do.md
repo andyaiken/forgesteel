@@ -27,7 +27,7 @@
 | Basilisk            | 0       | 2        | 0         |
 | Bredbeddle          | 0       | 1        | 0         |
 | Draconian           | 0       | 6        | 1         |
-| Dragon              | 0       | 5        | 0         |
+| Dragon              | 0       | 4        | 0         |
 | Fossil Cryptic      | 0       | 1        | 0         |
 | Griffon             | 0       | 2        | 0         |
 | Hag                 | 0       | 1        | 0         |

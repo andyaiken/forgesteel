@@ -38,6 +38,7 @@ export class PDFExport {
 			Speed: HeroLogic.getSpeed(hero),
 			Stability: HeroLogic.getStability(hero),
 			Size: FormatLogic.getSize(HeroLogic.getSize(hero)),
+			Disengage: HeroLogic.getDisengage(hero),
 			Stamina: HeroLogic.getStamina(hero) - hero.state.staminaDamage,
 			MaxStamina: HeroLogic.getStamina(hero),
 			RecoveryValue: HeroLogic.getRecoveryValue(hero),
@@ -95,9 +96,10 @@ export class PDFExport {
 				.replace(/(\|:-+)+\|\n/g, '')
 				.replace(/\|\s+(.+?)\s+\| (.+?)\s+\|/g, '$1\t\t$2')
 				.replace(/11 -\t/g, '11 or less')
-				.replace(/17 \+/g, '17+\t');
+				.replace(/17 \+/g, '17+\t')
+				.replace(/\n\* \*\*(.*?)\*\*(:) /g, '\n   • $1$2\t')
+				.replace(/\n\* /g, '\n   • ');
 			// substitutions are for cleaning up lists to look better in the form
-			text = text.replace(/\* \*\*(.*?)\*\*(:) /g, '   • $1$2\t');
 			return text;
 		};
 
@@ -109,7 +111,7 @@ export class PDFExport {
 				if (all != '') {
 					all = all + '\n\n';
 				}
-				let text = GetTitle(feature.name) + '\n' + feature.description;
+				let text = GetTitle(feature.name) + '\n' + feature.description.replace(/^\s+/, '');
 				// substitution is to convert any tables into text that presents
 				// better in the PDF form
 				text = CleanupOutput(text);
@@ -124,14 +126,14 @@ export class PDFExport {
 
 		{
 			const heroicResourceFeature = features.find(f => hero.class && f.name == hero.class.heroicResource);
-			if(heroicResourceFeature) {
+			if(heroicResourceFeature && hero.class) {
 				const startup = /\s*At the start of each of your turns during combat, you gain (.+?) \w+?\.\s+/;
 				const startupAmount = heroicResourceFeature.description.match(startup);
 				if(startupAmount) {
 					texts['HeroicResourcesPerTurn'] = startupAmount[1];
 				}
 				ignoredFeatures[heroicResourceFeature.id] = true;
-				texts['HeroicResourceGains'] = CleanupOutput(heroicResourceFeature.description.replace(startup, ''));
+				texts['HeroicResourceGains'] = 'Your resource is ' + hero.class.heroicResource.toLowerCase() + '.\n\n' + CleanupOutput(heroicResourceFeature.description.replace(startup, ''));
 			}
 		}
 
@@ -146,7 +148,7 @@ export class PDFExport {
 			];
 			texts['ModifiersDetails'] = modifiers
 				.filter(f => f.length > 0)
-				.map(n => n[n.length - 1].name)
+				.map(n => '• ' + n[n.length - 1].name)
 				.join(',\n');
 			const modifierFields = [
 				'ModifiersAugmentation',
@@ -201,7 +203,7 @@ export class PDFExport {
 			)) as Sourcebook[];
 			const books = [ SourcebookData.core, SourcebookData.orden ];
 			if (homebrew) books.push(...homebrew);
-			texts['Skills'] = HeroLogic.getSkills(hero, books).map(s => s.name).join('\n');
+			texts['Skills'] = HeroLogic.getSkills(hero, books).map(s => '• ' + s.name).join('\n');
 
 			if (hero.career) {
 				texts['CareerName'] = hero.career.name;
@@ -227,7 +229,7 @@ export class PDFExport {
 				texts['CultureFull'] = cultureUpbringingTexts.join('\n\n');
 			}
 			const languages = HeroLogic.getLanguages(hero, books);
-			texts['Languages'] = languages.map(l => l.name).join('\n');
+			texts['Languages'] = languages.map(l => '• ' + l.name).join('\n');
 
 			texts['Titles'] = features
 				.filter(f => f.type == FeatureType.TitleChoice)
@@ -317,12 +319,12 @@ export class PDFExport {
 						details.push(powerRollText);
 					}
 					if (a.type.trigger !== '') {
-						details.push('Trigger:\n' + a.type.trigger);
+						details.push('Trigger:\n' + CleanupOutput(a.type.trigger));
 					}
 					if(a.effect && !a.powerRoll && !a.type.trigger)
-						details.push(a.effect);
+						details.push(CleanupOutput(a.effect.replace(/^\s+/, '')));
 					else if(a.effect) {
-						details.push('Effect:\n' + a.effect);
+						details.push('Effect:\n' + CleanupOutput(a.effect.replace(/^\s+/, '')));
 					}
 					if (a.spend.length > 0) {
 						details.push(
@@ -348,9 +350,9 @@ export class PDFExport {
 				});
 			};
 			const abilities = HeroLogic.getAbilities(hero, true, true, false);
-			texts['RegularActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Action && a.id !== 'free-melee' && a.id !== 'free-ranged').map(a => a.name + (typeof(a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n\n');
-			texts['Manoeuvres'] = abilities.filter(a => a.type.usage == AbilityUsage.Maneuver).map(a => a.name + (typeof(a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n\n');
-			texts['TriggeredActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Trigger).map(a => a.name + (typeof(a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n\n');
+			texts['RegularActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Action && a.id !== 'free-melee' && a.id !== 'free-ranged').map(a => ' • ' + a.name + (typeof(a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
+			texts['Maneuvers'] = abilities.filter(a => a.type.usage == AbilityUsage.Maneuver).map(a => ' • ' + a.name + (typeof(a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
+			texts['TriggeredActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Trigger).map(a => ' • ' + a.name + (typeof(a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
 
 			ApplyGroup(
 				abilities.filter(a => !ignoredFeatures[a.id]),
@@ -375,9 +377,10 @@ export class PDFExport {
 
 		const DoesTextFitFieldRectangle = (t: string, rect: { x: number; y: number; width: number; height: number }, size: number, multiline: boolean) => {
 			// offset of 20 for multiline and 5 for single found by testing different values
-			const offset = multiline && 20 || 0;
-			const width = rect.width - offset;
-			const height = rect.height - offset;
+			const widthOffset = multiline && 20 || 5;
+			const heightOffset = multiline && 20 || 0;
+			const width = rect.width - widthOffset;
+			const height = rect.height - heightOffset;
 			let area = width * height;
 			// eliminate tabstops as the text width calculator can't process it
 			const lines = t.replace(/\t/g, '    ').split('\n');

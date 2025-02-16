@@ -164,6 +164,9 @@ export class PDFExport {
 				}
 			}
 
+			texts['Weapon'] = kits.map(k => k.weapon[0]).filter(v => v).join(', ');
+			texts['Armor'] = [ ...new Set(kits.map(k => k.armor[0]).filter(v => v)) ].join(', ');
+
 			if (hero.complication) {
 				texts['ComplicationName'] = hero.complication.name;
 				const benefit = hero.complication.features.find(f =>
@@ -376,21 +379,26 @@ export class PDFExport {
 		}
 
 		const DoesTextFitFieldRectangle = (t: string, rect: { x: number; y: number; width: number; height: number }, size: number, multiline: boolean) => {
-			// offset of 20 for multiline and 5 for single found by testing different values
-			const widthOffset = multiline && 20 || 5;
-			const heightOffset = multiline && 20 || 0;
-			const width = rect.width - widthOffset;
-			const height = rect.height - heightOffset;
-			let area = width * height;
-			// eliminate tabstops as the text width calculator can't process it
-			const lines = t.replace(/\t/g, '    ').split('\n');
-			// lineHeight multiplier found by testing different values
-			const lineHeight = font.heightAtSize(size) * 1.2;
-			lines.forEach(l => {
-				area = area - Math.max(1, Math.ceil(font.widthOfTextAtSize(l, size)/width)) * lineHeight * width;
-			});
+			t = t.replace(/\t/g, '    ');
+			if(multiline) {
+				// offset of 20 for multiline and 5 for single found by testing different values
+				const widthOffset = 20;
+				const heightOffset = 20;
+				const width = rect.width - widthOffset;
+				const height = rect.height - heightOffset;
+				let area = width * height;
+				// eliminate tabstops as the text width calculator can't process it
+				const lines = t.split('\n');
+				// lineHeight multiplier found by testing different values
+				const lineHeight = font.heightAtSize(size) * 1.2;
+				lines.forEach(l => {
+					area = area - Math.max(1, Math.ceil(font.widthOfTextAtSize(l, size)/width)) * lineHeight * width;
+				});
+				return area > 0;
+			} else {
+				return font.widthOfTextAtSize(t, size) < rect.width - 5 && font.heightAtSize(size) < rect.height;
+			}
 
-			return area > 0;
 		};
 
 		form.getFields().forEach(field => {

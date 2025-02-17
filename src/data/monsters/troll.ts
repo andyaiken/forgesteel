@@ -181,7 +181,7 @@ export const troll: MonsterGroup = {
 							tier3: '17 damage; M<3 bleeding (save ends)'
 						}),
 						spend: [
-						{ value: 1, effect: 'The butcher regains Stamina equal to the damage.'}
+							{ value: 1, effect: 'The butcher regains Stamina equal to the damage.' }
 						]
 					})
 				}),
@@ -237,7 +237,7 @@ export const troll: MonsterGroup = {
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'troll-3-feature-7',
-					modifiers: [ 
+					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Acid', modifierType: DamageModifierType.Weakness, value: 5 }),
 						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Weakness, value: 5 })
 					]
@@ -274,7 +274,7 @@ export const troll: MonsterGroup = {
 							tier3: '18 damage'
 						}),
 						spend: [
-						{ value: 1, effect: 'The glutton regains Stamina equal to the damage.'}
+							{ value: 1, effect: 'The glutton regains Stamina equal to the damage.' }
 						]
 					})
 				}),
@@ -324,7 +324,7 @@ export const troll: MonsterGroup = {
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'troll-4-feature-7',
-					modifiers: [ 
+					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Acid', modifierType: DamageModifierType.Weakness, value: 5 }),
 						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Weakness, value: 5 })
 					]
@@ -386,7 +386,7 @@ export const troll: MonsterGroup = {
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'troll-5-feature-4',
-					modifiers: [ 
+					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: 'Acid', modifierType: DamageModifierType.Weakness, value: 5 }),
 						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Weakness, value: 5 })
 					]

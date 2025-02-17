@@ -148,29 +148,15 @@ export class PDFExport {
 		{
 			const kits = HeroLogic.getKits(hero);
 			const modifiers = [
-				features.filter(f => f.name.match(' Augmentation')),
-				features.filter(f => f.name.match('Enchantment of')),
-				kits,
-				features.filter(f => f.name.match('Prayer of')),
-				features.filter(f => f.name.match('Ward'))
+				features.filter(f => f.name.match(' Augmentation')).map(f => f.name),
+				features.filter(f => f.name.match('Enchantment of')).map(f => f.name),
+				kits.map(f => f.name + ' Kit'),
+				features.filter(f => f.name.match('Prayer of')).map(f => f.name),
+				features.filter(f => f.name.match('Ward')).map(f => f.name)
 			];
-			texts['ModifiersDetails'] = modifiers
-				.filter(f => f.length > 0)
-				.map(n => '• ' + n[n.length - 1].name)
-				.join(',\n');
-			const modifierFields = [
-				'ModifiersAugmentation',
-				'ModifiersEnchantment',
-				'ModifiersKit',
-				'ModifiersPrayer',
-				'ModifiersWard'
-			];
-
-			for (let i = 0; i < modifiers.length; ++i) {
-				if (modifiers[i].length > 0) {
-					toggles[modifierFields[i]] = true;
-				}
-			}
+			const names: string[] = [];
+			modifiers.forEach(fs => names.push(...fs));
+			texts['ModifiersDetails'] = names.map(n => '• ' + n).join('\n');
 
 			texts['Weapon'] = kits.map(k => k.weapon[0]).filter(v => v).join(', ');
 			texts['Armor'] = [ ...new Set(kits.map(k => k.armor[0]).filter(v => v)) ].join(', ');

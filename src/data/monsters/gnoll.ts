@@ -223,7 +223,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [	FactoryLogic.distance.createMelee()	],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -279,9 +279,10 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
 						keywords: [],
-						distance: [ 
+						distance: [
 							FactoryLogic.distance.createSelf(),
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })],
+							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
+						],
 						target: 'Self and all allies',
 						effect: 'Each target has an edge on their next strike before the end of their next turn. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.'
 					})
@@ -400,9 +401,10 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
 						keywords: [],
-						distance: [ 
+						distance: [
 							FactoryLogic.distance.createSelf(),
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })],
+							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
+						],
 						target: 'Self and all allies',
 						effect: 'Each target makes a free strike. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.'
 					})
@@ -493,7 +495,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [	FactoryLogic.distance.createMelee()	],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -513,9 +515,10 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
 						keywords: [],
-						distance: [ 
+						distance: [
 							FactoryLogic.distance.createSelf(),
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })],
+							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
+						],
 						target: 'Self and all allies',
 						effect: 'Each target shifts up to their speed. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.'
 					})
@@ -620,9 +623,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						type: FactoryLogic.type.createManeuver(),
 						cost: 4,
 						keywords: [],
-						distance: [ 
+						distance: [
 							FactoryLogic.distance.createSelf(),
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) 
+							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 })
 						],
 						target: 'Self and all allies',
 						effect: 'Each target deals an additional 3 damage with their strikes until the start of the carnage\'s next turn. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.'
@@ -655,9 +658,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						name: 'Edacity',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area ],
-						distance: [ 
+						distance: [
 							FactoryLogic.distance.createSelf(),
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) 
+							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 })
 						],
 						target: 'Self and all allies',
 						effect: 'Each target moves up to their speed and makes a free strike. A creature that takes damage from this villain action is also knocked prone.'
@@ -704,7 +707,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [	FactoryLogic.distance.createMelee()	],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],

@@ -6,17 +6,9 @@
 
 | Monster             | Minions | Monsters | Retainers |
 |:--------------------|--------:|---------:|----------:|
-| Gnoll               | 4       | 7        | 1         |
-| Troll               | 4       | 2        | 1         |
-
-### Medium Priority Monsters
-
-| Monster             | Minions | Monsters | Retainers |
-|:--------------------|--------:|---------:|----------:|
 | Demon               | 3       | 6        | 0         |
 | Devil               | 3       | 5        | 1         |
 | Elemental           | 5       | 0        | 0         |
-| Elf, High           | 4       | 9        | 1         |
 
 ### Low Priority Monsters
 

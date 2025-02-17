@@ -79,7 +79,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			ability: FactoryLogic.createAbility({
 				id: 'elf-high-malice-2',
 				name: 'Gift From an Accursed Tome',
-				type: FactoryLogic.type.createAction( {qualifiers: [ 'Non-minion' ] } ),
+				type: FactoryLogic.type.createAction({ qualifiers: [ 'Non-minion' ] }),
 				cost: 5,
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 1, within: 1 }) ],
@@ -164,7 +164,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-						distance: [	FactoryLogic.distance.createRanged(5) ],
+						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object per minion',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -558,7 +558,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						cost: 2,
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [],
-						distance: [	FactoryLogic.distance.createRanged(5) ],
+						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Special',
 						effect: 'The wyrd summons 2 **elemental motes** or 2 **soot crows** into unoccupied squares within distance.'
 					})

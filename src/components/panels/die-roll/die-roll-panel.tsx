@@ -8,6 +8,7 @@ import { Random } from '../../../utils/random';
 import './die-roll-panel.scss';
 
 interface Props {
+	type: 'Power Roll' | 'Saving Throw';
 	modifier: number;
 }
 
@@ -17,7 +18,14 @@ export const DieRollPanel = (props: Props) => {
 	const [ results, setResults ] = useState<number[]>([]);
 
 	const roll = () => {
-		setResults([ Random.die(10), Random.die(10) ]);
+		switch (props.type) {
+			case 'Power Roll':
+				setResults([ Random.die(10), Random.die(10) ]);
+				break;
+			case 'Saving Throw':
+				setResults([ Random.die(10) ]);
+				break;
+		}
 	};
 
 	try {
@@ -59,41 +67,55 @@ export const DieRollPanel = (props: Props) => {
 
 		const total = Collections.sum([ ...results, props.modifier, bonus ], r => r);
 
+		let max: number;
 		const marks: Record<string | number, ReactNode> = {};
-		marks[1] = <div className='ds-text dimmed-text small-text'>1</div>;
-		marks[12] = <div className='ds-text dimmed-text small-text'>12</div>;
-		marks[17] = <div className='ds-text dimmed-text small-text'>17</div>;
-		marks[20] = <div className='ds-text dimmed-text small-text'>20</div>;
+		switch (props.type) {
+			case 'Power Roll':
+				max = 20;
+				marks[1] = <div className='ds-text dimmed-text small-text'>1</div>;
+				marks[11.5] = <div className='ds-text dimmed-text small-text'>-</div>;
+				marks[16.5] = <div className='ds-text dimmed-text small-text'>-</div>;
+				marks[20] = <div className='ds-text dimmed-text small-text'>20</div>;
+				break;
+			case 'Saving Throw':
+				max = 10;
+				marks[1] = <div className='ds-text dimmed-text small-text'>1</div>;
+				marks[5.5] = <div className='ds-text dimmed-text small-text'>-</div>;
+				marks[10] = <div className='ds-text dimmed-text small-text'>10</div>;
+				break;
+		}
 
 		return (
 			<div className='die-roll-panel'>
-				<Expander title='Edges and Banes'>
-					<Space direction='vertical' style={{ width: '100%' }}>
-						<NumberSpin
-							label='Edges'
-							value={edges}
-							min={0}
-							max={2}
-							onChange={setEdges}
-						/>
-						<NumberSpin
-							label='Banes'
-							value={banes}
-							min={0}
-							max={2}
-							onChange={setBanes}
-						/>
-					</Space>
-				</Expander>
+				{
+					props.type === 'Power Roll' ?
+						<Expander title='Edges and Banes'>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								<NumberSpin
+									label='Edges'
+									value={edges}
+									min={0}
+									max={2}
+									onChange={setEdges}
+								/>
+								<NumberSpin
+									label='Banes'
+									value={banes}
+									min={0}
+									max={2}
+									onChange={setBanes}
+								/>
+							</Space>
+						</Expander>
+						: null
+				}
 				<Button type='primary' block={true} onClick={roll}>Roll</Button>
 				{
 					results.length > 0 ?
 						<div className='result-row'>
-							{
-								results.map((r, n) => <Statistic key={n} title='d10' value={r} />)
-							}
-							{props.modifier ? <Statistic title='Modifier' value={`${props.modifier >= 0 ? '+' : ''}${props.modifier}`} /> : null}
-							{bonus ? <Statistic title={bonus > 0 ? 'Edge' : 'Bane'} value={`${bonus >= 0 ? '+' : ''}${bonus}`} /> : null}
+							{(props.type === 'Power Roll') ? results.map((r, n) => <Statistic key={n} title='d10' value={r} />) : null}
+							{(props.type === 'Power Roll') ? <Statistic title='Modifier' value={`${props.modifier >= 0 ? '+' : ''}${props.modifier}`} /> : null}
+							{(props.type === 'Power Roll') && bonus ? <Statistic title={bonus > 0 ? 'Edge' : 'Bane'} value={`${bonus >= 0 ? '+' : ''}${bonus}`} /> : null}
 							<Statistic className='total' title='Total' value={total} />
 						</div>
 						: null
@@ -104,7 +126,7 @@ export const DieRollPanel = (props: Props) => {
 							range={true}
 							marks={marks}
 							min={Math.min(1, total)}
-							max={Math.max(20, total)}
+							max={Math.max(max, total)}
 							value={[ total ]}
 							styles={{
 								track: {
@@ -125,7 +147,7 @@ export const DieRollPanel = (props: Props) => {
 						: null
 				}
 				{
-					Collections.sum(results, r => r) >= 19 ?
+					(props.type === 'Power Roll') && (Collections.sum(results, r => r) >= 19) ?
 						<Alert
 							type='success'
 							showIcon={true}

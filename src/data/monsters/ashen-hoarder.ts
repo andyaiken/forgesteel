@@ -1,5 +1,6 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
+import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
@@ -54,6 +55,7 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 			sections: [
 				'The ashen hoarder launches several bone lances into the air, raining them down on enemies and impaling those unlucky enough to be on the receiving end. Each enemy within 20 of the ashen hoarder must make an **Agility test**.',
 				FactoryLogic.createPowerRoll({
+					characteristic: Characteristic.Agility,
 					tier1: '14 damage; restrained and bleeding (save ends)',
 					tier2: '11 damage; bleeding (EoT)',
 					tier3: '6 damage'

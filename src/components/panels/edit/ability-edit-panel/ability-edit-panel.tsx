@@ -195,6 +195,13 @@ export const AbilityEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const setRepeatable = (value: boolean) => {
+		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		copy.repeatable = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
 	const setPreEffect = (value: string) => {
 		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
 		copy.preEffect = value;
@@ -549,6 +556,8 @@ export const AbilityEditPanel = (props: Props) => {
 											<>
 												<HeaderText>Cost</HeaderText>
 												<NumberSpin min={0} value={ability.cost} onChange={setCost} />
+												<HeaderText>Repeatable</HeaderText>
+												<Toggle label='Repeatable' value={ability.repeatable} onChange={setRepeatable} />
 											</>
 											: null
 									}

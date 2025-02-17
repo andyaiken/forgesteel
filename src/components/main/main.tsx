@@ -155,7 +155,7 @@ export const Main = (props: Props) => {
 		Utils.export([ hero.id ], hero.name || 'Unnamed Hero', hero, 'hero', format);
 	};
 
-	const exportHeroPDF = (hero: Hero, format: 'portrait') => {
+	const exportHeroPDF = (hero: Hero, format: 'portrait' | 'landscape') => {
 		PDFExport.startExport(hero, format);
 	};
 
@@ -489,6 +489,22 @@ export const Main = (props: Props) => {
 		if (original) {
 			heroClass = JSON.parse(JSON.stringify(original)) as HeroClass;
 			heroClass.id = Utils.guid();
+
+			// Make sure this has 10 levels
+			while (heroClass.featuresByLevel.length < 10) {
+				heroClass.featuresByLevel.push({
+					level: heroClass.featuresByLevel.length + 1,
+					features: []
+				});
+			}
+			heroClass.subclasses.forEach(sc => {
+				while (sc.featuresByLevel.length < 10) {
+					sc.featuresByLevel.push({
+						level: sc.featuresByLevel.length + 1,
+						features: []
+					});
+				}
+			});
 		} else {
 			heroClass = FactoryLogic.createClass();
 		}
@@ -533,6 +549,14 @@ export const Main = (props: Props) => {
 		if (original) {
 			domain = JSON.parse(JSON.stringify(original)) as Domain;
 			domain.id = Utils.guid();
+
+			// Make sure this has 10 levels
+			while (domain.featuresByLevel.length < 10) {
+				domain.featuresByLevel.push({
+					level: domain.featuresByLevel.length + 1,
+					features: []
+				});
+			}
 		} else {
 			domain = FactoryLogic.createDomain();
 		}
@@ -756,21 +780,25 @@ export const Main = (props: Props) => {
 				heroes={heroes}
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				playbook={playbook}
+				onClose={() => setDirectory(null)}
 				createHero={() => createHero()}
-				closeDirectory={() => setDirectory(null)}
 			/>
 		);
 	};
 
 	const showAbout = () => {
 		setDrawer(
-			<AboutModal />
+			<AboutModal
+				onClose={() => setDrawer(null)}
+			/>
 		);
 	};
 
 	const showRoll = () => {
 		setDrawer(
-			<RollModal />
+			<RollModal
+				onClose={() => setDrawer(null)}
+			/>
 		);
 	};
 
@@ -779,6 +807,7 @@ export const Main = (props: Props) => {
 			<ElementModal
 				kind={kind}
 				element={element}
+				onClose={() => setDrawer(null)}
 				export={format => exportLibraryElement(kind, element, format)}
 			/>
 		);
@@ -789,6 +818,7 @@ export const Main = (props: Props) => {
 			<MonsterModal
 				monster={monster}
 				monsterGroup={monsterGroup}
+				onClose={() => setDrawer(null)}
 				export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
 			/>
 		);
@@ -796,13 +826,22 @@ export const Main = (props: Props) => {
 
 	const onSelectCharacteristic = (characteristic: Characteristic, hero: Hero) => {
 		setDrawer(
-			<RollModal characteristics={[ characteristic ]} hero={hero} />
+			<RollModal
+				characteristics={[ characteristic ]}
+				hero={hero}
+				onClose={() => setDrawer(null)}
+			/>
 		);
 	};
 
 	const onSelectAbility = (ability: Ability, hero: Hero) => {
 		setDrawer(
-			<AbilityModal ability={ability} hero={hero} updateHero={async hero => await persistHero(hero)} />
+			<AbilityModal
+				ability={ability}
+				hero={hero}
+				onClose={() => setDrawer(null)}
+				updateHero={async hero => await persistHero(hero)}
+			/>
 		);
 	};
 
@@ -812,6 +851,7 @@ export const Main = (props: Props) => {
 				hero={hero}
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
 				startPage={page}
+				onClose={() => setDrawer(null)}
 				onChange={async hero => await persistHero(hero)}
 				onLevelUp={async () => {
 					if (hero && hero.class) {
@@ -830,6 +870,7 @@ export const Main = (props: Props) => {
 			<RulesModal
 				hero={hero}
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				onClose={() => setDrawer(null)}
 			/>
 		);
 	};
@@ -841,6 +882,7 @@ export const Main = (props: Props) => {
 				officialSourcebooks={[ SourcebookData.core, SourcebookData.orden ]}
 				homebrewSourcebooks={homebrewSourcebooks}
 				hiddenSourcebookIDs={hiddenSourcebookIDs}
+				onClose={() => setDrawer(null)}
 				onHomebrewSourcebookChange={async sourcebooks => await persistHomebrewSourcebooks(sourcebooks)}
 				onHiddenSourcebookIDsChange={async ids => persistHiddenSourcebookIDs(ids)}
 			/>

@@ -13,8 +13,8 @@ import './projects-modal.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
+	onClose: () => void;
 	onSelect: (project: Project) => void;
-	onCancel: () => void;
 }
 
 export const ProjectsModal = (props: Props) => {
@@ -39,7 +39,7 @@ export const ProjectsModal = (props: Props) => {
 							suffix={<SearchOutlined />}
 							onChange={e => setSearchTerm(e.target.value)}
 						/>
-						<Button onClick={props.onCancel}>Cancel</Button>
+						<Button onClick={props.onClose}>Cancel</Button>
 					</>
 				}
 				content={
@@ -71,6 +71,7 @@ export const ProjectsModal = (props: Props) => {
 						</Space>
 					</div>
 				}
+				onClose={props.onClose}
 			/>
 		);
 	} catch (ex) {

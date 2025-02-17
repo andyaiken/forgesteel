@@ -11,6 +11,15 @@
 		gap: 20px;
 		padding: 20px;
 
+		&.small {
+			gap: 5px;
+			padding: 5px;
+
+			.hero-edit-content {
+				gap: 5px;
+			}
+		}
+
 		.page-selector {
 			flex: 0 0 auto;
 

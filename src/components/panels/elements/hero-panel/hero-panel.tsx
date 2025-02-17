@@ -1,4 +1,5 @@
-import { Col, Row, Statistic } from 'antd';
+import { Col, Row, Segmented, Statistic } from 'antd';
+import { ReactNode, useState } from 'react';
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityPanel } from '../ability-panel/ability-panel';
@@ -32,6 +33,7 @@ import { SelectablePanel } from '../../../controls/selectable-panel/selectable-p
 import { Skill } from '../../../../models/skill';
 import { SkillList } from '../../../../enums/skill-list';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { useMediaQuery } from '../../../../hooks/use-media-query';
 
 import './hero-panel.scss';
 
@@ -54,7 +56,10 @@ interface Props {
 }
 
 export const HeroPanel = (props: Props) => {
-	const getLeftColumn = () => {
+	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const [ tab, setTab ] = useState<string>('Hero');
+
+	const getLeftColumn = (showBorder: boolean) => {
 		const onSelectAncestry = () => {
 			if (props.hero.ancestry && props.onSelectAncestry) {
 				props.onSelectAncestry(props.hero.ancestry);
@@ -109,7 +114,7 @@ export const HeroPanel = (props: Props) => {
 		}
 
 		return (
-			<div className='hero-left-column'>
+			<div className={showBorder ? 'hero-left-column border' : 'hero-left-column'}>
 				{
 					props.hero.ancestry ?
 						<div className='overview-tile clickable' onClick={onSelectAncestry}>
@@ -213,7 +218,7 @@ export const HeroPanel = (props: Props) => {
 		);
 	};
 
-	const getRightColumn = () => {
+	const getRightColumn = (showBorder: boolean) => {
 		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
 		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
@@ -233,7 +238,7 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		return (
-			<div className='hero-right-column'>
+			<div className={showBorder ? 'hero-right-column border' : 'hero-right-column'}>
 				{
 					immunities.length > 0 ?
 						<div className='overview-tile'>
@@ -439,7 +444,7 @@ export const HeroPanel = (props: Props) => {
 		);
 	};
 
-	const getFeaturesSection = () => {
+	const getFeaturesSection = (showHeader: boolean) => {
 		const featureTypes = [ FeatureType.Text, FeatureType.Package ];
 
 		const features = HeroLogic.getFeatures(props.hero)
@@ -450,7 +455,7 @@ export const HeroPanel = (props: Props) => {
 
 		return (
 			<div className='features-section'>
-				<HeaderText level={1}>Features</HeaderText>
+				{showHeader ? <HeaderText level={1}>Features</HeaderText> : null}
 				<div className='features-grid'>
 					{
 						features.map(feature => (
@@ -468,7 +473,7 @@ export const HeroPanel = (props: Props) => {
 		);
 	};
 
-	const getAbilitiesSection = (type: AbilityUsage, abilities: Ability[]) => {
+	const getAbilitiesSection = (header: string, abilities: Ability[], showHeader: boolean) => {
 		if (abilities.length === 0) {
 			return null;
 		}
@@ -481,11 +486,11 @@ export const HeroPanel = (props: Props) => {
 
 		return (
 			<div className='abilities-section'>
-				<HeaderText level={1}>{type}s</HeaderText>
+				{showHeader ? <HeaderText level={1}>{header}</HeaderText> : null}
 				<div className='abilities-grid'>
 					{
 						abilities.map(ability => (
-							<SelectablePanel key={ability.id} style={{ gridColumn: `span ${AbilityLogic.panelWidth(ability)}` }} onSelect={() => showAbility(ability)}>
+							<SelectablePanel key={ability.id} style={ showHeader ? { gridColumn: `span ${AbilityLogic.panelWidth(ability)}` } : undefined} onSelect={() => showAbility(ability)}>
 								<AbilityPanel ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						))
@@ -523,63 +528,140 @@ export const HeroPanel = (props: Props) => {
 		const others = abilities.filter(a => a.type.usage === AbilityUsage.Other);
 		const noactions = abilities.filter(a => a.type.usage === AbilityUsage.NoAction);
 
+		if (isSmall) {
+			const tabs = [ 'Hero', 'Statistics', 'Features' ];
+			if (actions.length > 0) {
+				tabs.push('Actions');
+			}
+			if (maneuvers.length > 0) {
+				tabs.push('Maneuvers');
+			}
+			if (triggers.length > 0) {
+				tabs.push('Triggers');
+			}
+			if ((moves.length + others.length + noactions.length) > 0) {
+				tabs.push('Others');
+			}
+
+			let content: ReactNode;
+			switch (tab) {
+				case 'Hero':
+					content = (
+						<>
+							{getLeftColumn(false)}
+							{getRightColumn(false)}
+						</>
+					);
+					break;
+				case 'Statistics':
+					content = (
+						<>
+							{getStatsSection()}
+							{getConditionsSection()}
+						</>
+					);
+					break;
+				case 'Features':
+					content = getFeaturesSection(false);
+					break;
+				case 'Actions':
+					content = getAbilitiesSection('Actions', actions, false);
+					break;
+				case 'Maneuvers':
+					content = getAbilitiesSection('Maneuvers', maneuvers, false);
+					break;
+				case 'Triggers':
+					content = getAbilitiesSection('Triggered Actions', triggers, false);
+					break;
+				case 'Others':
+					content = getAbilitiesSection('Other Abilities', [ ...moves, ...others, ...noactions ], false);
+					break;
+			}
+
+			return (
+				<div className='hero-panel small' id={props.hero.id}>
+					<Segmented
+						options={
+							tabs.map(tab => ({
+								value: tab,
+								label: <div className='page-button-title'>{tab}</div>
+							}))
+						}
+						block={true}
+						value={tab}
+						onChange={setTab}
+					/>
+					<div className='hero-main-section'>
+						<div className='hero-main-column'>
+							{content}
+						</div>
+					</div>
+				</div>
+			);
+		}
+
 		return (
 			<div className='hero-panel' id={props.hero.id}>
 				<div className='hero-main-section' id='stats'>
-					{getLeftColumn()}
+					{getLeftColumn(true)}
 					<div className='hero-main-column'>
 						<HeaderText level={1}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
 						{getStatsSection()}
 						{getConditionsSection()}
-						{getFeaturesSection()}
+						{getFeaturesSection(true)}
 					</div>
-					{getRightColumn()}
+					{getRightColumn(true)}
 				</div>
 				{
 					actions.length > 0 ?
 						<div className='hero-main-section' id='actions'>
 							<div className='hero-main-column'>
-								{getAbilitiesSection(AbilityUsage.Action, actions)}
+								{getAbilitiesSection('Actions', actions, true)}
 							</div>
 						</div>
 						: null
-				}{
+				}
+				{
 					maneuvers.length > 0 ?
 						<div className='hero-main-section' id='maneuvers'>
 							<div className='hero-main-column'>
-								{getAbilitiesSection(AbilityUsage.Maneuver, maneuvers)}
+								{getAbilitiesSection('Maneuvers', maneuvers, true)}
 							</div>
 						</div>
 						: null
-				}{
+				}
+				{
 					moves.length > 0 ?
 						<div className='hero-main-section' id='moves'>
 							<div className='hero-main-column'>
-								{getAbilitiesSection(AbilityUsage.Move, moves)}
+								{getAbilitiesSection('Move Actions', moves, true)}
 							</div>
 						</div>
 						: null
-				}{
+				}
+				{
 					triggers.length > 0 ?
 						<div className='hero-main-section' id='triggers'>
 							<div className='hero-main-column'>
-								{getAbilitiesSection(AbilityUsage.Trigger, triggers)}
+								{getAbilitiesSection('Triggered Actions', triggers, true)}
 							</div>
 						</div>
 						: null
-				}{
+				}
+				{
 					others.length > 0 ?
 						<div className='hero-main-section' id='others'>
 							<div className='hero-main-column'>
-								{getAbilitiesSection(AbilityUsage.Other, others)}
+								{getAbilitiesSection('Other Actions', others, true)}
 							</div>
 						</div>
 						: null
-				}{
+				}
+				{
 					noactions.length > 0 ?
 						<div className='hero-main-section' id='none'>
 							<div className='hero-main-column'>
-								{getAbilitiesSection(AbilityUsage.NoAction, noactions)}
+								{getAbilitiesSection('No Action', noactions, true)}
 							</div>
 						</div>
 						: null

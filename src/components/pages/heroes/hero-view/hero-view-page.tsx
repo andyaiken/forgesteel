@@ -35,7 +35,7 @@ interface Props {
 	showRoll: () => void;
 	setOptions: (options: Options) => void;
 	exportHero: (hero: Hero, format: 'image' | 'pdf' | 'json') => void;
-	exportHeroPDF: (hero: Hero, format: 'portrait') => void;
+	exportHeroPDF: (hero: Hero, format: 'portrait' | 'landscape') => void;
 	deleteHero: (hero: Hero) => void;
 	showAncestry: (ancestry: Ancestry) => void;
 	showCulture: (culture: Culture) => void;
@@ -88,6 +88,9 @@ export const HeroViewPage = (props: Props) => {
 				case 'pdf-portrait':
 					props.exportHeroPDF(hero, 'portrait');
 					break;
+				case 'pdf-landscape':
+					props.exportHeroPDF(hero, 'landscape');
+					break;
 				default:
 					props.exportHero(hero, key as 'image' | 'json');
 					break;
@@ -125,7 +128,11 @@ export const HeroViewPage = (props: Props) => {
 										},
 										{
 											key: 'pdf-portrait',
-											label: <div className='ds-text centered-text'>Export As PDF</div>
+											label: <div className='ds-text centered-text'>Export As PDF (portrait)</div>
+										},
+										{
+											key: 'pdf-landscape',
+											label: <div className='ds-text centered-text'>Export As PDF (landscape)</div>
 										},
 										{
 											key: 'json',

@@ -9,6 +9,7 @@ import './monster-modal.scss';
 interface Props {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
+	onClose: () => void;
 	export: (format: 'image' | 'pdf' | 'json') => void;
 }
 
@@ -40,6 +41,7 @@ export const MonsterModal = (props: Props) => {
 						<MonsterPanel monster={props.monster} monsterGroup={props.monsterGroup} mode={PanelMode.Full} />
 					</div>
 				}
+				onClose={props.onClose}
 			/>
 		);
 	} catch (ex) {

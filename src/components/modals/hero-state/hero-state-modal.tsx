@@ -31,6 +31,7 @@ interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
 	startPage: HeroStatePage;
+	onClose: () => void;
 	onChange: (hero: Hero) => void;
 	onLevelUp: () => void;
 }
@@ -410,7 +411,7 @@ export const HeroStateModal = (props: Props) => {
 				}
 				<Button block={true} onClick={() => setShopVisible(true)}>Add a new item</Button>
 				<Drawer open={shopVisible} closeIcon={null} width='500px'>
-					<ShopModal sourcebooks={props.sourcebooks} onSelect={addItem} onCancel={() => setShopVisible(false)} />
+					<ShopModal sourcebooks={props.sourcebooks} onSelect={addItem} onClose={() => setShopVisible(false)} />
 				</Drawer>
 			</Space>
 		);
@@ -470,7 +471,7 @@ export const HeroStateModal = (props: Props) => {
 				}
 				<Button block={true} onClick={() => setConditionsVisible(true)}>Add a new condition</Button>
 				<Drawer open={conditionsVisible} closeIcon={null} width='500px'>
-					<ConditionsModal onSelect={addCondition} onCancel={() => setConditionsVisible(false)} />
+					<ConditionsModal onSelect={addCondition} onClose={() => setConditionsVisible(false)} />
 				</Drawer>
 			</Space>
 		);
@@ -544,7 +545,7 @@ export const HeroStateModal = (props: Props) => {
 				}
 				<Button block={true} onClick={() => setProjectsVisible(true)}>Add a new project</Button>
 				<Drawer open={projectsVisible} closeIcon={null} width='500px'>
-					<ProjectsModal sourcebooks={props.sourcebooks} onSelect={addProject} onCancel={() => setProjectsVisible(false)} />
+					<ProjectsModal sourcebooks={props.sourcebooks} onSelect={addProject} onClose={() => setProjectsVisible(false)} />
 				</Drawer>
 			</Space>
 		);
@@ -591,6 +592,7 @@ export const HeroStateModal = (props: Props) => {
 						{getContent()}
 					</div>
 				}
+				onClose={props.onClose}
 			/>
 		);
 	} catch (ex) {

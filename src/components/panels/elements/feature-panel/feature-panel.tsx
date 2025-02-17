@@ -1458,7 +1458,7 @@ export const FeaturePanel = (props: Props) => {
 
 		if (props.feature.type === FeatureType.Ability) {
 			return (
-				<AbilityPanel ability={props.feature.data.ability} hero={props.hero} cost={props.cost} mode={props.mode} tags={tags} />
+				<AbilityPanel ability={props.feature.data.ability} hero={props.hero} cost={props.cost} repeatable={props.repeatable} mode={props.mode} tags={tags} />
 			);
 		}
 

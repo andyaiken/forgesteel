@@ -17,12 +17,13 @@ import './ability-modal.scss';
 interface Props {
 	hero: Hero;
 	ability: Ability;
+	onClose: () => void;
 	updateHero: (hero: Hero) => void;
 }
 
 export const AbilityModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(props.hero)) as Hero);
-	const [ page, setPage ] = useState<string>('Ability');
+	const [ page, setPage ] = useState<string>('Ability Card');
 
 	const setName = (value: string) => {
 		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
@@ -86,7 +87,7 @@ export const AbilityModal = (props: Props) => {
 
 	const getContent = () => {
 		switch (page) {
-			case 'Ability':
+			case 'Ability Card':
 				return (
 					<div className='ability-section'>
 						<SelectablePanel>
@@ -95,6 +96,7 @@ export const AbilityModal = (props: Props) => {
 						{
 							props.ability.powerRoll ?
 								<DieRollPanel
+									type='Power Roll'
 									modifier={Math.max(...props.ability.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero, ch)))}
 								/>
 								: null
@@ -132,7 +134,7 @@ export const AbilityModal = (props: Props) => {
 				toolbar={
 					<div style={{ width: '100%', textAlign: 'center' }}>
 						<Segmented
-							options={[ 'Ability', 'Customize' ]}
+							options={[ 'Ability Card', 'Customize' ]}
 							value={page}
 							onChange={setPage}
 						/>
@@ -143,6 +145,7 @@ export const AbilityModal = (props: Props) => {
 						{getContent()}
 					</div>
 				}
+				onClose={props.onClose}
 			/>
 		);
 	} catch (ex) {

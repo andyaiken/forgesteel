@@ -13,8 +13,8 @@ import './shop-modal.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
+	onClose: () => void;
 	onSelect: (item: Item) => void;
-	onCancel: () => void;
 }
 
 export const ShopModal = (props: Props) => {
@@ -41,7 +41,7 @@ export const ShopModal = (props: Props) => {
 							suffix={<SearchOutlined />}
 							onChange={e => setSearchTerm(e.target.value)}
 						/>
-						<Button onClick={props.onCancel}>Cancel</Button>
+						<Button onClick={props.onClose}>Cancel</Button>
 					</>
 				}
 				content={
@@ -73,6 +73,7 @@ export const ShopModal = (props: Props) => {
 						</Space>
 					</div>
 				}
+				onClose={props.onClose}
 			/>
 		);
 	} catch (ex) {

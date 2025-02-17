@@ -14,6 +14,7 @@ interface Props {
 	homebrewSourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
 	heroes: Hero[];
+	onClose: () => void;
 	onHomebrewSourcebookChange: (Sourcebooks: Sourcebook[]) => void;
 	onHiddenSourcebookIDsChange: (ids: string[]) => void;
 }
@@ -106,6 +107,7 @@ export const SourcebooksModal = (props: Props) => {
 						</Space>
 					</div>
 				}
+				onClose={props.onClose}
 			/>
 		);
 	} catch (ex) {

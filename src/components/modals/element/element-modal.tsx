@@ -32,6 +32,7 @@ import './element-modal.scss';
 interface Props {
 	kind: SourcebookElementKind;
 	element: Element;
+	onClose: () => void;
 	export: (format: 'image' | 'pdf' | 'json') => void;
 }
 
@@ -155,6 +156,7 @@ export const ElementModal = (props: Props) => {
 						{panel}
 					</div>
 				}
+				onClose={props.onClose}
 			/>
 		);
 	} catch (ex) {

@@ -14,14 +14,18 @@ import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
 import localforage from 'localforage';
 
-import pdfFile from '../assets/custom-character-sheet-plusmouse.pdf';
+import pdfLandscape from '../assets/custom-character-sheet-landscape-plusmouse.pdf';
+import pdfPortrait from '../assets/custom-character-sheet-plusmouse.pdf';
 
 export class PDFExport {
-	static startExport = async (hero: Hero, format: 'portrait') => {
+	static startExport = async (hero: Hero, format: 'portrait' | 'landscape') => {
 		let file: string;
 		switch (format) {
 			case 'portrait':
-				file = pdfFile;
+				file = pdfPortrait;
+				break;
+			case 'landscape':
+				file = pdfLandscape;
 				break;
 		}
 
@@ -148,29 +152,15 @@ export class PDFExport {
 		{
 			const kits = HeroLogic.getKits(hero);
 			const modifiers = [
-				features.filter(f => f.name.match(' Augmentation')),
-				features.filter(f => f.name.match('Enchantment of')),
-				kits,
-				features.filter(f => f.name.match('Prayer of')),
-				features.filter(f => f.name.match('Ward'))
+				features.filter(f => f.name.match(' Augmentation') && f.type !== FeatureType.Choice).map(f => f.name),
+				features.filter(f => f.name.match('Enchantment of') && f.type !== FeatureType.Choice).map(f => f.name),
+				kits.map(f => f.name + ' Kit'),
+				features.filter(f => f.name.match('Prayer of') && f.type !== FeatureType.Choice).map(f => f.name),
+				features.filter(f => f.name.match('Ward') && f.type !== FeatureType.Choice).map(f => f.name)
 			];
-			texts['ModifiersDetails'] = modifiers
-				.filter(f => f.length > 0)
-				.map(n => '• ' + n[n.length - 1].name)
-				.join(',\n');
-			const modifierFields = [
-				'ModifiersAugmentation',
-				'ModifiersEnchantment',
-				'ModifiersKit',
-				'ModifiersPrayer',
-				'ModifiersWard'
-			];
-
-			for (let i = 0; i < modifiers.length; ++i) {
-				if (modifiers[i].length > 0) {
-					toggles[modifierFields[i]] = true;
-				}
-			}
+			const names: string[] = [];
+			modifiers.forEach(fs => names.push(...fs));
+			texts['ModifiersDetails'] = names.map(n => '• ' + n).join('\n');
 
 			texts['Weapon'] = kits.map(k => k.weapon[0]).filter(v => v).join(', ');
 			texts['Armor'] = [ ...new Set(kits.map(k => k.armor[0]).filter(v => v)) ].join(', ');
@@ -299,6 +289,9 @@ export class PDFExport {
 					texts[prefix + 'Type' + i] = a.type.usage;
 					const details = [];
 
+					if(a.preEffect) {
+						details.push(CleanupOutput(a.preEffect.replace(/^\s+/, '')));
+					}
 					if(a.powerRoll) {
 						let powerRollText = '';
 					  powerRollText = powerRollText + 'Power Roll: 2d10 + ' + Math.max(...a.powerRoll.characteristic
@@ -332,18 +325,28 @@ export class PDFExport {
 					if (a.type.trigger !== '') {
 						details.push('Trigger:\n' + CleanupOutput(a.type.trigger));
 					}
-					if(a.effect && !a.powerRoll && !a.type.trigger)
+					if(a.effect && details.length === 0)
 						details.push(CleanupOutput(a.effect.replace(/^\s+/, '')));
 					else if(a.effect) {
 						details.push('Effect:\n' + CleanupOutput(a.effect.replace(/^\s+/, '')));
 					}
+					if(a.alternateEffects.length > 0) {
+						details.push(
+							...a.alternateEffects.map(e => 'Alternate Effect:\n' + CleanupOutput(e))
+						);
+					}
 					if (a.spend.length > 0) {
 						details.push(
-							'Spend ' +
-              a.spend[0].value +
-              ':\n' +
-              a.spend[0].effect
+							...a.spend.map(s => 'Spend ' + s.value + ':\n' + CleanupOutput(s.effect))
 						);
+					}
+					if (a.persistence.length > 0) {
+						details.push(
+							...a.persistence.map(p => 'Persistent ' + p.value + ':\n' + CleanupOutput(p.effect))
+						);
+					}
+					if (a.strained !== '') {
+						details.push('Strained:\n' + CleanupOutput(a.strained));
 					}
 					texts[prefix + 'Text' + i] = details.join('\n\n');
 

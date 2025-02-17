@@ -23,6 +23,7 @@ import './rules-modal.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
+	onClose: () => void;
 }
 
 export const RulesModal = (props: Props) => {
@@ -165,6 +166,7 @@ export const RulesModal = (props: Props) => {
 						{getContent()}
 					</div>
 				}
+				onClose={props.onClose}
 			/>
 		);
 	} catch (ex) {

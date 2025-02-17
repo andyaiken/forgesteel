@@ -8,8 +8,8 @@ import { SelectablePanel } from '../../controls/selectable-panel/selectable-pane
 import './conditions-modal.scss';
 
 interface Props {
+	onClose: () => void;
 	onSelect: (condition: ConditionType) => void;
-	onCancel: () => void;
 }
 
 export const ConditionsModal = (props: Props) => {
@@ -31,7 +31,7 @@ export const ConditionsModal = (props: Props) => {
 			<Modal
 				toolbar={
 					<>
-						<Button onClick={props.onCancel}>Cancel</Button>
+						<Button onClick={props.onClose}>Cancel</Button>
 					</>
 				}
 				content={
@@ -51,6 +51,7 @@ export const ConditionsModal = (props: Props) => {
 						</Space>
 					</div>
 				}
+				onClose={props.onClose}
 			/>
 		);
 	} catch (ex) {

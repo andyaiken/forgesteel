@@ -21,6 +21,7 @@ interface Props {
 	ability: Ability;
 	hero?: Hero;
 	cost?: number | 'signature';
+	repeatable?: boolean;
 	options?: Options;
 	mode?: PanelMode;
 	tags?: string[];
@@ -44,11 +45,18 @@ export const AbilityPanel = (props: Props) => {
 		[ props.cost, props.ability, props.hero ]
 	);
 
+	const repeatable = useMemo(
+		() => {
+			return props.repeatable ?? props.ability.repeatable;
+		},
+		[ props.repeatable, props.ability ]
+	);
+
 	const headerRibbon = useMemo(
 		() => cost === 'signature'
 			? (<Badge>Signature</Badge>)
-			: cost > 0 ? (<HeroicResourceBadge value={cost} />) : null,
-		[ cost ]
+			: cost > 0 ? (<HeroicResourceBadge value={cost} repeatable={repeatable} />) : null,
+		[ cost, repeatable ]
 	);
 
 	const disabled = useMemo(

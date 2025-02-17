@@ -285,6 +285,9 @@ export class PDFExport {
 					texts[prefix + 'Type' + i] = a.type.usage;
 					const details = [];
 
+					if(a.preEffect) {
+						details.push(CleanupOutput(a.preEffect.replace(/^\s+/, '')));
+					}
 					if(a.powerRoll) {
 						let powerRollText = '';
 					  powerRollText = powerRollText + 'Power Roll: 2d10 + ' + Math.max(...a.powerRoll.characteristic

@@ -109,7 +109,7 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 						target: 'All enemies',
 						cost: 'signature',
 						preEffect: 'Each target makes a **Might test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
+						test: FactoryLogic.createPowerRoll({
 							tier1: '12 poison damage; P<4 dragonsealed (save ends)',
 							tier2: '9 poison damage; P<3 dragonsealed (save ends)',
 							tier3: '5 poison damage; P<2 dragonsealed (save ends)'

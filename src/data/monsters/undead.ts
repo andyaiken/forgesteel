@@ -89,7 +89,6 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 				'**Ravenous Horde (3 Malice)** Each living hero in the encounter is beset by two winded **rotting zombies** who burst out of unoccupied spaces 4 squares away. The number of rotting zombies increases to three per hero when three or fewer heroes remain alive in the encounter. The intensity tally resets to 0.'
 			]
 		})
-
 	],
 	monsters: [
 		FactoryLogic.createMonster({

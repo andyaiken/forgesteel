@@ -152,11 +152,11 @@ export class PDFExport {
 		{
 			const kits = HeroLogic.getKits(hero);
 			const modifiers = [
-				features.filter(f => f.name.match(' Augmentation')).map(f => f.name),
-				features.filter(f => f.name.match('Enchantment of')).map(f => f.name),
+				features.filter(f => f.name.match(' Augmentation') && f.type !== FeatureType.Choice).map(f => f.name),
+				features.filter(f => f.name.match('Enchantment of') && f.type !== FeatureType.Choice).map(f => f.name),
 				kits.map(f => f.name + ' Kit'),
-				features.filter(f => f.name.match('Prayer of')).map(f => f.name),
-				features.filter(f => f.name.match('Ward')).map(f => f.name)
+				features.filter(f => f.name.match('Prayer of') && f.type !== FeatureType.Choice).map(f => f.name),
+				features.filter(f => f.name.match('Ward') && f.type !== FeatureType.Choice).map(f => f.name)
 			];
 			const names: string[] = [];
 			modifiers.forEach(fs => names.push(...fs));
@@ -325,18 +325,28 @@ export class PDFExport {
 					if (a.type.trigger !== '') {
 						details.push('Trigger:\n' + CleanupOutput(a.type.trigger));
 					}
-					if(a.effect && !a.powerRoll && !a.type.trigger)
+					if(a.effect && details.length === 0)
 						details.push(CleanupOutput(a.effect.replace(/^\s+/, '')));
 					else if(a.effect) {
 						details.push('Effect:\n' + CleanupOutput(a.effect.replace(/^\s+/, '')));
 					}
+					if(a.alternateEffects.length > 0) {
+						details.push(
+							...a.alternateEffects.map(e => 'Alternate Effect:\n' + CleanupOutput(e))
+						);
+					}
 					if (a.spend.length > 0) {
 						details.push(
-							'Spend ' +
-              a.spend[0].value +
-              ':\n' +
-              a.spend[0].effect
+							...a.spend.map(s => 'Spend ' + s.value + ':\n' + CleanupOutput(s.effect))
 						);
+					}
+					if (a.persistence.length > 0) {
+						details.push(
+							...a.persistence.map(p => 'Persistent ' + p.value + ':\n' + CleanupOutput(p.effect))
+						);
+					}
+					if (a.strained !== '') {
+						details.push('Strained:\n' + CleanupOutput(a.strained));
 					}
 					texts[prefix + 'Text' + i] = details.join('\n\n');
 

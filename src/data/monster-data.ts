@@ -4,9 +4,11 @@ import { bugbear } from './monsters/bugbear';
 import { chimera } from './monsters/chimera';
 import { dragonThorn } from './monsters/dragon-thorn';
 import { dwarf } from './monsters/dwarf';
+import { elfHigh } from './monsters/elf-high';
 import { elfShadow } from './monsters/elf-shadow';
 import { elfWode } from './monsters/elf-wode';
 import { giant } from './monsters/giant';
+import { gnoll } from './monsters/gnoll';
 import { goblin } from './monsters/goblin';
 import { hobgoblin } from './monsters/hobgoblin';
 import { human } from './monsters/human';
@@ -18,6 +20,7 @@ import { minotaur } from './monsters/minotaur';
 import { ogre } from './monsters/ogre';
 import { orc } from './monsters/orc';
 import { radenwight } from './monsters/radenwight';
+import { troll } from './monsters/troll';
 import { undead } from './monsters/undead';
 import { werewolf } from './monsters/werewolf';
 
@@ -28,9 +31,11 @@ export class MonsterData {
 	static chimera = chimera;
 	static dragonThorn = dragonThorn;
 	static dwarf = dwarf;
+	static elfHigh = elfHigh;
 	static elfShadow = elfShadow;
 	static elfWode = elfWode;
 	static giant = giant;
+	static gnoll = gnoll;
 	static goblin = goblin;
 	static hobgoblin = hobgoblin;
 	static human = human;
@@ -42,6 +47,7 @@ export class MonsterData {
 	static ogre = ogre;
 	static orc = orc;
 	static radenwight = radenwight;
+	static troll = troll;
 	static undead = undead;
 	static werewolf = werewolf;
 }

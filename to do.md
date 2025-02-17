@@ -8,7 +8,6 @@
 |:--------------------|--------:|---------:|----------:|
 | Gnoll               | 4       | 7        | 1         |
 | Troll               | 4       | 2        | 1         |
-| Undead              | 4       | 7        | 0         |
 
 ### Then
 
@@ -42,6 +41,10 @@
 | Xorannox the Tyract | 6       | 1        | 0         |
 
 ## New Features
+
+### General
+
+* Small screen mode for phones
 
 ### Heroes
 

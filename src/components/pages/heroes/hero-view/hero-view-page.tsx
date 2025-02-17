@@ -35,6 +35,7 @@ interface Props {
 	showRoll: () => void;
 	setOptions: (options: Options) => void;
 	exportHero: (hero: Hero, format: 'image' | 'pdf' | 'json') => void;
+	exportHeroPDF: (hero: Hero, format: 'portrait') => void;
 	deleteHero: (hero: Hero) => void;
 	showAncestry: (ancestry: Ancestry) => void;
 	showCulture: (culture: Culture) => void;
@@ -82,6 +83,17 @@ export const HeroViewPage = (props: Props) => {
 			props.setOptions(copy);
 		};
 
+		const exportHero = (key: string) => {
+			switch (key) {
+				case 'pdf-portrait':
+					props.exportHeroPDF(hero, 'portrait');
+					break;
+				default:
+					props.exportHero(hero, key as 'image' | 'json');
+					break;
+			}
+		};
+
 		return (
 			<div className='hero-view-page'>
 				<AppHeader breadcrumbs={[ { label: 'Heroes' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
@@ -112,7 +124,7 @@ export const HeroViewPage = (props: Props) => {
 											label: <div className='ds-text centered-text'>Export As Image</div>
 										},
 										{
-											key: 'pdf',
+											key: 'pdf-portrait',
 											label: <div className='ds-text centered-text'>Export As PDF</div>
 										},
 										{
@@ -120,7 +132,7 @@ export const HeroViewPage = (props: Props) => {
 											label: <div className='ds-text centered-text'>Export As Data</div>
 										}
 									]}
-									onClick={key => props.exportHero(hero, key as 'image' | 'pdf' | 'json')}
+									onClick={exportHero}
 								/>
 								<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>Edit</Button>
 								<DangerButton block={true} onConfirm={() => props.deleteHero(hero)} />

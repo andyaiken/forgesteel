@@ -1,9 +1,23 @@
 .hero-panel {
-
 	&.compact {
 		margin-top: -10px;
 		padding: 0 20px 20px 20px;
 		padding: unset;
+	}
+
+	&.small {
+		.hero-main-section {
+			.hero-main-column {
+				margin-top: 0;
+			}
+		}
+	}
+
+	.page-button-title {
+		font-size: 12px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 
 	.hero-main-section {
@@ -32,8 +46,11 @@
 
 		.hero-left-column {
 			flex: 0 0 200px;
-			padding-right: 10px;
-			border-right: 5px solid rgb(0, 0, 0, 0.06);
+
+			&.border {
+				padding-right: 10px;
+				border-right: 5px solid rgb(0, 0, 0, 0.06);
+			}
 		}
 
 		.hero-main-column {
@@ -122,8 +139,11 @@
 
 		.hero-right-column {
 			flex: 0 0 200px;
-			padding-left: 10px;
-			border-left: 5px solid rgb(0, 0, 0, 0.06);
+
+			&.border {
+				padding-left: 10px;
+				border-left: 5px solid rgb(0, 0, 0, 0.06);
+			}
 
 			.damage-modifier {
 				display: flex;

@@ -6,7 +6,11 @@ import pkg from '../../../../package.json';
 
 import './about-modal.scss';
 
-export const AboutModal = () => {
+interface Props {
+	onClose: () => void;
+}
+
+export const AboutModal = (props: Props) => {
 	try {
 		return (
 			<Modal
@@ -35,11 +39,11 @@ export const AboutModal = () => {
 						<p>
 							If you really feel the need to show your appreciation, I'd be grateful if you would take whatever you feel the app is worth and donate it to a local mental health charity.
 						</p>
+						<Divider />
+						<Field label='Version' value={pkg.version} />
 					</div>
 				}
-				footer={
-					<Field label='Version' value={pkg.version} />
-				}
+				onClose={props.onClose}
 			/>
 		);
 	} catch (ex) {

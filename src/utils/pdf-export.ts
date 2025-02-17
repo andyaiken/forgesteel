@@ -14,14 +14,18 @@ import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
 import localforage from 'localforage';
 
-import pdfFile from '../assets/custom-character-sheet-plusmouse.pdf';
+import pdfLandscape from '../assets/custom-character-sheet-landscape-plusmouse.pdf';
+import pdfPortrait from '../assets/custom-character-sheet-plusmouse.pdf';
 
 export class PDFExport {
-	static startExport = async (hero: Hero, format: 'portrait') => {
+	static startExport = async (hero: Hero, format: 'portrait' | 'landscape') => {
 		let file: string;
 		switch (format) {
 			case 'portrait':
-				file = pdfFile;
+				file = pdfPortrait;
+				break;
+			case 'landscape':
+				file = pdfLandscape;
 				break;
 		}
 

@@ -2,14 +2,14 @@
 
 ## Add Monsters
 
-### Priority
+### High Priority Monsters
 
 | Monster             | Minions | Monsters | Retainers |
 |:--------------------|--------:|---------:|----------:|
 | Gnoll               | 4       | 7        | 1         |
 | Troll               | 4       | 2        | 1         |
 
-### Then
+### Medium Priority Monsters
 
 | Monster             | Minions | Monsters | Retainers |
 |:--------------------|--------:|---------:|----------:|
@@ -18,7 +18,7 @@
 | Elemental           | 5       | 0        | 0         |
 | Elf, High           | 4       | 9        | 1         |
 
-### Other Monsters
+### Low Priority Monsters
 
 | Monster             | Minions | Monsters | Retainers |
 |:--------------------|--------:|---------:|----------:|

@@ -33,6 +33,7 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { useMediaQuery } from '../../../../hooks/use-media-query';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
@@ -66,6 +67,7 @@ interface Props {
 }
 
 export const HeroEditPage = (props: Props) => {
+	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const navigation = useNavigation();
 	const { heroID, tab } = useParams<{ heroID: string; tab: HeroTab }>();
 	const setTabKey = (tabKey: HeroTab) => {
@@ -461,22 +463,24 @@ export const HeroEditPage = (props: Props) => {
 		};
 
 		let showSearchBar = false;
-		switch (page) {
-			case 'ancestry':
-				showSearchBar = !hero.ancestry;
-				break;
-			case 'culture':
-				showSearchBar = !hero.culture;
-				break;
-			case 'career':
-				showSearchBar = !hero.career;
-				break;
-			case 'class':
-				showSearchBar = !hero.class;
-				break;
-			case 'complication':
-				showSearchBar = !hero.complication;
-				break;
+		if (!isSmall) {
+			switch (page) {
+				case 'ancestry':
+					showSearchBar = !hero.ancestry;
+					break;
+				case 'culture':
+					showSearchBar = !hero.culture;
+					break;
+				case 'career':
+					showSearchBar = !hero.career;
+					break;
+				case 'class':
+					showSearchBar = !hero.class;
+					break;
+				case 'complication':
+					showSearchBar = !hero.complication;
+					break;
+			}
 		}
 
 		return (
@@ -489,7 +493,7 @@ export const HeroEditPage = (props: Props) => {
 						Cancel
 					</Button>
 				</AppHeader>
-				<div className='hero-edit-page-content'>
+				<div className={isSmall ? 'hero-edit-page-content small' : 'hero-edit-page-content'}>
 					<div className='page-selector'>
 						<Segmented<HeroTab>
 							options={([

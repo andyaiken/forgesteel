@@ -12,6 +12,7 @@ import './roll-modal.scss';
 interface Props {
 	characteristics?: Characteristic[];
 	hero?: Hero;
+	onClose: () => void;
 }
 
 export const RollModal = (props: Props) => {
@@ -31,6 +32,7 @@ export const RollModal = (props: Props) => {
 						<DieRollPanel modifier={modifier} />
 					</div>
 				}
+				onClose={props.onClose}
 			/>
 		);
 	} catch (ex) {

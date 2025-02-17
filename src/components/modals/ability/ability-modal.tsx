@@ -17,6 +17,7 @@ import './ability-modal.scss';
 interface Props {
 	hero: Hero;
 	ability: Ability;
+	onClose: () => void;
 	updateHero: (hero: Hero) => void;
 }
 
@@ -143,6 +144,7 @@ export const AbilityModal = (props: Props) => {
 						{getContent()}
 					</div>
 				}
+				onClose={props.onClose}
 			/>
 		);
 	} catch (ex) {

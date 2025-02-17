@@ -13,11 +13,19 @@ import { HeroLogic } from '../logic/hero-logic';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
 import localforage from 'localforage';
+
 import pdfFile from '../assets/custom-character-sheet-plusmouse.pdf';
 
 export class PDFExport {
-	static startExport = async (hero: Hero) => {
-		const pdfAsBytes = await fetch(pdfFile).then(res => res.arrayBuffer());
+	static startExport = async (hero: Hero, format: 'portrait') => {
+		let file: string;
+		switch (format) {
+			case 'portrait':
+				file = pdfFile;
+				break;
+		}
+
+		const pdfAsBytes = await fetch(file).then(res => res.arrayBuffer());
 		const pdfDoc = await PDFDocument.load(pdfAsBytes);
 
 		const font = await pdfDoc.embedFont(StandardFonts.TimesRoman);

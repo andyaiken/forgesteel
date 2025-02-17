@@ -152,11 +152,11 @@ export const Main = (props: Props) => {
 	};
 
 	const exportHero = (hero: Hero, format: 'image' | 'pdf' | 'json') => {
-		if (format === 'pdf') {
-			PDFExport.startExport(hero);
-		} else {
-			Utils.export([ hero.id ], hero.name || 'Unnamed Hero', hero, 'hero', format);
-		}
+		Utils.export([ hero.id ], hero.name || 'Unnamed Hero', hero, 'hero', format);
+	};
+
+	const exportHeroPDF = (hero: Hero, format: 'portrait') => {
+		PDFExport.startExport(hero, format);
 	};
 
 	//#endregion
@@ -903,6 +903,7 @@ export const Main = (props: Props) => {
 								showAbout={showAbout}
 								showRoll={showRoll}
 								exportHero={exportHero}
+								exportHeroPDF={exportHeroPDF}
 								deleteHero={deleteHero}
 								showAncestry={ancestry => onSelectLibraryElement(ancestry, 'ancestry')}
 								showCulture={culture => onSelectLibraryElement(culture, 'culture')}

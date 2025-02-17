@@ -812,7 +812,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						name: 'Buck',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
-						keyword: [],
+						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'The horse\'s rider',
 						effect: 'Vertical slide 3; The rider can use a ranged ability at any point during the movement and then fall without taking damage.'
@@ -887,7 +887,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						name: 'Magic Arrows',
 						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Blast, value: 3 }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All allies',
 						effect: 'Each target can spend a recovery. Additionally, they can turn the duration of one Save Ends effect they suffer from into EoT or end one EoT effect.'
 					})

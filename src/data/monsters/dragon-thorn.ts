@@ -1,5 +1,6 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
+import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
@@ -62,6 +63,7 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 			sections: [
 				'The dragon rapidly grows poisonous, biting thorns around their foes. Each enemy within the encounter map must make an **Agility test**.',
 				FactoryLogic.createPowerRoll({
+					characteristic: Characteristic.Agility,
 					tier1: '12 poison damage; restrained (save ends)',
 					tier2: '9 poison damage; bleeding (save ends)',
 					tier3: '5 poison damage; bleeding (EoT)'

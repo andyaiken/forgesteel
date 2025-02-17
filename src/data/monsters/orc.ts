@@ -82,12 +82,12 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'orc-malice-3',
-			name: 'Swamp Stink',
+			name: 'Mohler Cavity',
 			cost: 7,
 			sections: [
 				'The ground shakes as a group of mohlers dig a 5 cube pit beneath an area where at least one character is standing. The mohlers leave, and the area is considered diﬃcult terrain. Each orc in the area can shift into the nearest unoccupied square outside of the pit before it is completed. Each non-orc in the area makes an **Agility test**.',
 				FactoryLogic.createPowerRoll({
-					characteristic: Characteristic.Might,
+					characteristic: Characteristic.Agility,
 					tier1: '9 damage; target falls; prone can\'t stand (EoT)',
 					tier2: '6 damage; target falls',
 					tier3: 'Target can shift into the nearest unoccupied square outside of the pit'

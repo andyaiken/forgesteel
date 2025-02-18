@@ -1,0 +1,19 @@
+.encounter-difficulty-panel {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	.encounter-slider {
+		margin: 10px 0;
+	}
+
+	.encounter-stats {
+		display: flex;
+		align-items: flex-start;
+		gap: 10px;
+
+		.field {
+			flex: 1 1 0;
+		}
+	}
+}

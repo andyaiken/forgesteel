@@ -9,11 +9,24 @@
 		padding: unset;
 	}
 
-	.encounter-group {
-		display: block;
+	.encounter-groups {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 20px;
 
-		.encounter-slot {
+		.encounter-group {
 			display: block;
+
+			.encounter-slots {
+				display: block;
+		
+				.encounter-slot {
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: space-between;
+				}
+			}
 		}
 	}
 

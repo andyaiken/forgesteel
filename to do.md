@@ -35,6 +35,7 @@
 * It should be possible to create a homebrew subclass / class ability / monster individually
 * Animals
 * Rivals
+* Imbued items
 
 ### Monster Editor
 

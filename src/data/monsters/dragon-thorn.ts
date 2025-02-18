@@ -179,6 +179,7 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 						id: 'dragon-thorn-feature-9',
 						name: 'Thorny Scales',
 						type: FactoryLogic.type.createTrigger('A creature deals damage to the dragon with a melee strike.', { free: true }),
+						cost: 1,
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Triggering creature',
 						effect: 'The dragon makes a free strike against the target. The target is M<2 bleeding (EoT).'
@@ -212,7 +213,7 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 						type: FactoryLogic.type.createVillainAction(),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: ' The dragon grows longer, sharper thorns upon their scales. A creature who targets the dragon with a melee strike takes 3 damage.'
+						effect: 'The dragon grows longer, sharper thorns upon their scales. A creature who targets the dragon with a melee strike takes 3 damage.'
 					})
 				}),
 				FactoryLogic.feature.createAbility({

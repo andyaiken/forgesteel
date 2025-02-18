@@ -3,7 +3,10 @@ import { ashenHoarder } from './monsters/ashen-hoarder';
 import { bugbear } from './monsters/bugbear';
 import { chimera } from './monsters/chimera';
 import { demon } from './monsters/demon';
+import { demon2nd } from './monsters/demon-2nd';
 import { devil } from './monsters/devil';
+import { dragonCrucible } from './monsters/dragon-crucible';
+import { dragonGloom } from './monsters/dragon-gloom';
 import { dragonThorn } from './monsters/dragon-thorn';
 import { dwarf } from './monsters/dwarf';
 import { elemental } from './monsters/elemental';
@@ -24,6 +27,7 @@ import { orc } from './monsters/orc';
 import { radenwight } from './monsters/radenwight';
 import { troll } from './monsters/troll';
 import { undead } from './monsters/undead';
+import { undead2nd } from './monsters/undead-2nd';
 import { warDog } from './monsters/wardogs';
 import { werewolf } from './monsters/werewolf';
 
@@ -33,7 +37,10 @@ export class MonsterData {
 	static bugbear = bugbear;
 	static chimera = chimera;
 	static demon = demon;
+	static demon2nd = demon2nd;
 	static devil = devil;
+	static dragonCrucible = dragonCrucible;
+	static dragonGloom = dragonGloom;
 	static dragonThorn = dragonThorn;
 	static dwarf = dwarf;
 	static elemental = elemental;
@@ -55,6 +62,7 @@ export class MonsterData {
 	static radenwight = radenwight;
 	static troll = troll;
 	static undead = undead;
+	static undead2nd = undead2nd;
 	static warDog = warDog;
 	static werewolf = werewolf;
 }

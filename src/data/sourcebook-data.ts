@@ -374,7 +374,10 @@ export class SourcebookData {
 			MonsterData.bugbear,
 			MonsterData.chimera,
 			MonsterData.demon,
+			MonsterData.demon2nd,
 			MonsterData.devil,
+			MonsterData.dragonCrucible,
+			MonsterData.dragonGloom,
 			MonsterData.dragonThorn,
 			MonsterData.dwarf,
 			MonsterData.elemental,
@@ -396,6 +399,7 @@ export class SourcebookData {
 			MonsterData.radenwight,
 			MonsterData.troll,
 			MonsterData.undead,
+			MonsterData.undead2nd,
 			MonsterData.warDog,
 			MonsterData.werewolf
 		],

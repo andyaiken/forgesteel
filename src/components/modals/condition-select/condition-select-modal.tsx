@@ -5,14 +5,14 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { Modal } from '../modal/modal';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 
-import './conditions-modal.scss';
+import './condition-select-modal.scss';
 
 interface Props {
 	onClose: () => void;
 	onSelect: (condition: ConditionType) => void;
 }
 
-export const ConditionsModal = (props: Props) => {
+export const ConditionSelectModal = (props: Props) => {
 	try {
 		const conditions = [
 			ConditionType.Custom,
@@ -35,7 +35,7 @@ export const ConditionsModal = (props: Props) => {
 					</>
 				}
 				content={
-					<div className='conditions-modal'>
+					<div className='condition-select-modal'>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							{
 								conditions.map(c => (

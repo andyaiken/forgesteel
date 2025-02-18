@@ -43,7 +43,8 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 		FactoryLogic.feature.createMalice({
 			id: 'undead-2nd-malice-1',
 			name: 'Prior Malice Features',
-			cost: 'X',
+			cost: 1,
+			repeatable: true,
 			sections: [
 				'The undead activates a malice feature available to undead level 3 or lower.'
 			]
@@ -618,7 +619,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						type: FactoryLogic.type.createNoAction(),
 						effect: 'At the end of their turn, the mummy lord can take 10 damage to end one save ends effect affecting them. This damage can\'t be reduced in any way.',
 						spend: [
-							{ value: 5, effect: 'The effect is transferred to a creature within 10.'}
+							{ value: 5, effect: 'The effect is transferred to a creature within 10.' }
 						]
 					})
 				}),

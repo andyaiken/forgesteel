@@ -1,7 +1,8 @@
 import { Alert, Button, Input, Space } from 'antd';
+import { Item } from '../../../models/item';
+import { ItemPanel } from '../../panels/elements/item-panel/item-panel';
+import { ItemType } from '../../../enums/item-type';
 import { Modal } from '../modal/modal';
-import { Project } from '../../../models/project';
-import { ProjectPanel } from '../../panels/elements/project-panel/project-panel';
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../models/sourcebook';
@@ -9,23 +10,27 @@ import { SourcebookLogic } from '../../../logic/sourcebook-logic';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
-import './projects-modal.scss';
+import './item-select-modal.scss';
 
 interface Props {
+	types: ItemType[];
 	sourcebooks: Sourcebook[];
 	onClose: () => void;
-	onSelect: (project: Project) => void;
+	onSelect: (item: Item) => void;
 }
 
-export const ProjectsModal = (props: Props) => {
+export const ItemSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
 	try {
-		const projects = SourcebookLogic
-			.getProjects(props.sourcebooks)
+		const items = SourcebookLogic
+			.getItems(props.sourcebooks)
+			.filter(item => props.types.includes(item.type))
 			.filter(item => Utils.textMatches([
 				item.name,
-				item.description
+				item.description,
+				...item.keywords,
+				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
 			], searchTerm));
 
 		return (
@@ -43,28 +48,28 @@ export const ProjectsModal = (props: Props) => {
 					</>
 				}
 				content={
-					<div className='projects-modal'>
+					<div className='item-select-modal'>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							{
-								projects.map(project => (
+								items.map(item => (
 									<SelectablePanel
-										key={project.id}
+										key={item.id}
 										onSelect={() => {
-											const copy = JSON.parse(JSON.stringify(project)) as Project;
+											const copy = JSON.parse(JSON.stringify(item)) as Item;
 											copy.id = Utils.guid();
 											props.onSelect(copy);
 										}}
 									>
-										<ProjectPanel project={project} />
+										<ItemPanel item={item} />
 									</SelectablePanel>
 								))
 							}
 							{
-								projects.length === 0 ?
+								items.length === 0 ?
 									<Alert
 										type='warning'
 										showIcon={true}
-										message='No projects to show'
+										message='No items to show'
 									/>
 									: null
 							}

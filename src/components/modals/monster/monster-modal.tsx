@@ -9,6 +9,7 @@ import './monster-modal.scss';
 interface Props {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
+	onUpdate?: (monster: Monster) => void;
 	onClose: () => void;
 	export: (format: 'image' | 'pdf' | 'json') => void;
 }
@@ -19,6 +20,7 @@ export const MonsterModal = (props: Props) => {
 			<Modal
 				toolbar={
 					<>
+						{props.onUpdate ? 'Hello' : null}
 						<Popover
 							trigger='click'
 							placement='bottom'
@@ -38,7 +40,11 @@ export const MonsterModal = (props: Props) => {
 				}
 				content={
 					<div className='monster-modal'>
-						<MonsterPanel monster={props.monster} monsterGroup={props.monsterGroup} mode={PanelMode.Full} />
+						<MonsterPanel
+							monster={props.monster}
+							monsterGroup={props.monsterGroup}
+							mode={PanelMode.Full}
+						/>
 					</div>
 				}
 				onClose={props.onClose}

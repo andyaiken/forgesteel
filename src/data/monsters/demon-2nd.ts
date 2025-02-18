@@ -42,7 +42,8 @@ categories 4-6:
 		FactoryLogic.feature.createMalice({
 			id: 'demon-2nd-malice-1',
 			name: 'Prior Malice Features',
-			cost: 'X',
+			cost: 1,
+			repeatable: true,
 			sections: [
 				'The demon activates a malice feature available to demons level 3 or lower.'
 			]
@@ -566,7 +567,7 @@ categories 4-6:
 						target: 'Special',
 						effect: 'Four level 1 demon minions (**ensnarer**, **frenzied**, **pitling**) burst forth from the egress and appear in unoccupied squares.',
 						spend: [
-							{ value: 2, effect: 'A level 4 demon minion (**orflig**, **wobalas**, **grulqin**) also bursts forth and appears in an unoccupied square.'}
+							{ value: 2, effect: 'A level 4 demon minion (**orflig**, **wobalas**, **grulqin**) also bursts forth and appears in an unoccupied square.' }
 						]
 					})
 				}),

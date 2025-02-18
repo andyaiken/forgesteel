@@ -4,7 +4,7 @@ import { Condition, Hero } from '../../../models/hero';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { Collections } from '../../../utils/collections';
 import { ConditionPanel } from '../../panels/condition/condition-panel';
-import { ConditionsModal } from '../conditions/conditions-modal';
+import { ConditionSelectModal } from '../condition-select/condition-select-modal';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Expander } from '../../controls/expander/expander';
 import { FactoryLogic } from '../../../logic/factory-logic';
@@ -13,13 +13,14 @@ import { HeroLogic } from '../../../logic/hero-logic';
 import { HeroStatePage } from '../../../enums/hero-state-page';
 import { InventoryPanel } from '../../panels/inventory/inventory-panel';
 import { Item } from '../../../models/item';
+import { ItemSelectModal } from '../item-select/item-select-modal';
+import { ItemType } from '../../../enums/item-type';
 import { Modal } from '../modal/modal';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Project } from '../../../models/project';
 import { ProjectPanel } from '../../panels/elements/project-panel/project-panel';
-import { ProjectsModal } from '../projects/projects-modal';
-import { ShopModal } from '../shop/shop-modal';
+import { ProjectSelectModal } from '../project-select/project-select-modal';
 import { Sourcebook } from '../../../models/sourcebook';
 import { Utils } from '../../../utils/utils';
 import { talent } from '../../../data/classes/talent';
@@ -411,7 +412,12 @@ export const HeroStateModal = (props: Props) => {
 				}
 				<Button block={true} onClick={() => setShopVisible(true)}>Add a new item</Button>
 				<Drawer open={shopVisible} closeIcon={null} width='500px'>
-					<ShopModal sourcebooks={props.sourcebooks} onSelect={addItem} onClose={() => setShopVisible(false)} />
+					<ItemSelectModal
+						types={[ ItemType.Artifact, ItemType.Consumable, ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Trinket ]}
+						sourcebooks={props.sourcebooks}
+						onSelect={addItem}
+						onClose={() => setShopVisible(false)}
+					/>
 				</Drawer>
 			</Space>
 		);
@@ -471,7 +477,7 @@ export const HeroStateModal = (props: Props) => {
 				}
 				<Button block={true} onClick={() => setConditionsVisible(true)}>Add a new condition</Button>
 				<Drawer open={conditionsVisible} closeIcon={null} width='500px'>
-					<ConditionsModal onSelect={addCondition} onClose={() => setConditionsVisible(false)} />
+					<ConditionSelectModal onSelect={addCondition} onClose={() => setConditionsVisible(false)} />
 				</Drawer>
 			</Space>
 		);
@@ -545,7 +551,7 @@ export const HeroStateModal = (props: Props) => {
 				}
 				<Button block={true} onClick={() => setProjectsVisible(true)}>Add a new project</Button>
 				<Drawer open={projectsVisible} closeIcon={null} width='500px'>
-					<ProjectsModal sourcebooks={props.sourcebooks} onSelect={addProject} onClose={() => setProjectsVisible(false)} />
+					<ProjectSelectModal sourcebooks={props.sourcebooks} onSelect={addProject} onClose={() => setProjectsVisible(false)} />
 				</Drawer>
 			</Space>
 		);

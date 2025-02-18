@@ -385,12 +385,12 @@ export class FactoryLogic {
 		};
 	};
 
-	static createMonsterFilter = (): MonsterFilter => {
+	static createMonsterFilter = (minLevel: number, maxLevel: number): MonsterFilter => {
 		return {
 			name: '',
 			roles: [],
 			organizations: [],
-			level: [ 1, 10 ],
+			level: [ minLevel, maxLevel ],
 			ev: [ 0, 120 ]
 		};
 	};

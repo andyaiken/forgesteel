@@ -1,4 +1,4 @@
-import { Alert, Select, Space } from 'antd';
+import { Alert, Button, Drawer, Select, Space } from 'antd';
 import { Feature, FeatureAbilityCostData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
@@ -20,10 +20,8 @@ import { ItemPanel } from '../item-panel/item-panel';
 import { KitPanel } from '../kit-panel/kit-panel';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { Monster } from '../../../../models/monster';
-import { MonsterLabel } from '../../monster-label/monster-label';
-import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterPanel } from '../monster-panel/monster-panel';
-import { MonsterRoleType } from '../../../../enums/monster-role-type';
+import { MonsterSelectModal } from '../../../modals/monster-select/monster-select-modal';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
@@ -32,6 +30,7 @@ import { PowerRollPanel } from '../../power-roll/power-roll-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { TitlePanel } from '../title-panel/title-panel';
+import { useState } from 'react';
 
 import './feature-panel.scss';
 
@@ -46,6 +45,8 @@ interface Props {
 }
 
 export const FeaturePanel = (props: Props) => {
+	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
+
 	// #region Selection
 
 	const getSelectionAncestryChoice = (data: FeatureAncestryChoiceData) => {
@@ -319,59 +320,8 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getSelectionCompanion = (data: FeatureCompanionData) => {
-		const monsters = props.sourcebooks ?
-			props.sourcebooks
-				.flatMap(sb => sb.monsterGroups)
-				.flatMap(group => group.monsters)
-				.filter(m => {
-					switch (data.type) {
-						case 'mount':
-							return m.role.type === MonsterRoleType.Mount;
-						case 'retainer':
-							return m.role.organization === MonsterOrganizationType.Retainer;
-					}
-
-					return true;
-				})
-			: [];
-		const sortedMonsters = Collections.sort(monsters, m => m.name);
-
-		if (sortedMonsters.length === 0) {
-			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='There are no options to choose for this feature.'
-				/>
-			);
-		}
-
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<Select
-					style={{ width: '100%' }}
-					className={data.selected === null ? 'selection-empty' : ''}
-					allowClear={true}
-					placeholder='Select a companion'
-					options={sortedMonsters.map(m => ({ label: m.name, value: m.id, desc: <MonsterLabel monster={m} /> }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					value={data.selected ? data.selected.id : null}
-					onChange={id => {
-						const monster = monsters.find(m => m.id === id);
-						if (monster) {
-							const monsterCopy = JSON.parse(JSON.stringify(monster)) as Monster;
-							if (monsterCopy.retainer) {
-								// Retainers match hero level
-								monsterCopy.retainer.level = Math.max(monsterCopy.level, props.hero?.class?.level || 1);
-							}
-							const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureCompanionData;
-							dataCopy.selected = monsterCopy;
-							if (props.setData) {
-								props.setData(props.feature.id, dataCopy);
-							}
-						}
-					}}
-				/>
 				{
 					data.selected && data.selected.retainer ?
 						data.selected.retainer.featuresByLevel
@@ -404,6 +354,28 @@ export const FeaturePanel = (props: Props) => {
 						<MonsterPanel monster={data.selected} />
 						: null
 				}
+				<Button block={true} onClick={() => setDrawerOpen(true)}>{data.selected ? 'Change' : 'Select'}</Button>
+				<Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} closeIcon={null} width='500px'>
+					<MonsterSelectModal
+						type={data.type}
+						sourcebooks={props.sourcebooks || []}
+						onSelect={monster => {
+							setDrawerOpen(false);
+
+							const monsterCopy = JSON.parse(JSON.stringify(monster)) as Monster;
+							if (monsterCopy.retainer) {
+								// Retainers match hero level
+								monsterCopy.retainer.level = Math.max(monsterCopy.level, props.hero?.class?.level || 1);
+							}
+							const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureCompanionData;
+							dataCopy.selected = monsterCopy;
+							if (props.setData) {
+								props.setData(props.feature.id, dataCopy);
+							}
+						}}
+						onClose={() => setDrawerOpen(false)}
+					/>
+				</Drawer>
 			</Space>
 		);
 	};
@@ -555,7 +527,7 @@ export const FeaturePanel = (props: Props) => {
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
-					placeholder={data.count === 1 ? 'Select a kit' : 'Select kits'}
+					placeholder={data.count === 1 ? 'Select an item' : 'Select items'}
 					options={sortedItems.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(i => i.id)}
@@ -579,7 +551,7 @@ export const FeaturePanel = (props: Props) => {
 						}
 					}}
 				/>
-				{data.selected.map(i => (<ItemPanel key={i.id} item={i} mode={PanelMode.Full} />))}
+				{data.selected.map(i => (<ItemPanel key={i.id} item={i} />))}
 			</Space>
 		);
 	};

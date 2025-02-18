@@ -61,7 +61,7 @@ Being in the presence of a high elf ordinator inspires an ancient fear in your c
 The ordinator is not only an illuminating beacon of command for their platoon; they are spiritual beacon of hope for their people. Ordinators carry out their circles’ will, knowledge, and power, not unlike a conduit’s duty to their saint.`
 		},
 		{
-			id: 'elf-high-info-7',
+			id: 'elf-high-info-8',
 			name: 'High Elf Languages',
 			description: 'Most high elves speak Caelian and Hyrallic.'
 		}
@@ -105,7 +105,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 	monsters: [
 		FactoryLogic.createMonster({
 			id: 'elf-high-1',
-			name: 'Elemental mote',
+			name: 'Elemental Mote',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Hexer),
 			keywords: [ 'Elemental', 'High Elf' ],
@@ -480,7 +480,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-9-feature-1',
-						name: 'Instill ',
+						name: 'Instill Regret',
 						type: FactoryLogic.type.createAction(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],

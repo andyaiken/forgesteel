@@ -1,12 +1,12 @@
 import { Alert, Divider, Space } from 'antd';
+import { Badge } from '../../../controls/badge/badge';
 import { Encounter } from '../../../../models/encounter';
+import { EncounterDifficultyPanel } from '../../encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
-import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
-import { MonsterLabel } from '../../monster-label/monster-label';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
@@ -22,6 +22,7 @@ interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	mode?: PanelMode;
+	showDifficulty?: boolean;
 }
 
 export const EncounterPanel = (props: Props) => {
@@ -33,44 +34,51 @@ export const EncounterPanel = (props: Props) => {
 			<div className={props.mode === PanelMode.Full ? 'encounter-panel' : 'encounter-panel compact'} id={props.mode === PanelMode.Full ? props.encounter.id : undefined}>
 				<HeaderText level={1}>{props.encounter.name || 'Unnamed Encounter'}</HeaderText>
 				<Markdown text={props.encounter.description} />
-				{
-					props.encounter.groups.filter(g => g.slots.length > 0).map((group, n) => (
-						<div key={group.id} className='encounter-group'>
-							{props.encounter.groups.filter(g => g.slots.length > 0).length > 1 ? <HeaderText>Group {(n + 1).toString()}</HeaderText> : null}
-							{
-								group.slots.map(slot => {
-									const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
-									const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
+				<div className='encounter-groups'>
+					{
+						props.encounter.groups.filter(g => g.slots.length > 0).map((group, n) => (
+							<div key={group.id} className='encounter-group'>
+								{
+									props.encounter.groups.filter(g => g.slots.length > 0).length > 1 ?
+										<HeaderText>Group {(n + 1).toString()}</HeaderText>
+										:
+										<HeaderText>Monsters</HeaderText>
+								}
+								<div className='encounter-slots'>
+									{
+										group.slots.map(slot => {
+											const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
+											const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
 
-									let name = (monster && monsterGroup) ? MonsterLogic.getMonsterName(monster, monsterGroup) : 'Unknown Monster';
+											const name = (monster && monsterGroup) ? MonsterLogic.getMonsterName(monster, monsterGroup) : 'Unknown Monster';
 
-									let count = slot.count;
-									if (monster) {
-										count *= MonsterLogic.getRoleMultiplier(monster.role.organization);
+											let count = slot.count;
+											if (monster) {
+												count *= MonsterLogic.getRoleMultiplier(monster.role.organization);
+											}
+
+											return (
+												<div key={slot.id} className='encounter-slot'>
+													<div className='ds-text'>{name}</div>
+													{count > 1 ? <Badge>x{count}</Badge> : null}
+												</div>
+											);
+										})
 									}
-									if (count > 1) {
-										name += ` (x${count})`;
-									}
-
-									return (
-										<div key={slot.id} className='encounter-slot'>
-											<Field label={name} value={monster ? <MonsterLabel monster={monster} /> : null} />
-										</div>
-									);
-								})
-							}
-							{
-								group.slots.length === 0 ?
-									<Alert
-										type='warning'
-										showIcon={true}
-										message='No monsters'
-									/>
-									: null
-							}
-						</div>
-					))
-				}
+								</div>
+								{
+									group.slots.length === 0 ?
+										<Alert
+											type='warning'
+											showIcon={true}
+											message='No monsters'
+										/>
+										: null
+								}
+							</div>
+						))
+					}
+				</div>
 				{
 					props.encounter.groups.length === 0 ?
 						<Alert
@@ -80,7 +88,28 @@ export const EncounterPanel = (props: Props) => {
 						/>
 						: null
 				}
-				{(props.mode === PanelMode.Full) && (monsterIDs.length > 0) ? <Divider /> : null}
+				{
+					props.showDifficulty ?
+						<Divider />
+						: null
+				}
+				{
+					props.showDifficulty ?
+						<SelectablePanel>
+							<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} />
+						</SelectablePanel>
+						: null
+				}
+				{
+					(props.mode === PanelMode.Full) && (monsterIDs.length > 0) ?
+						<Divider />
+						: null
+				}
+				{
+					(props.mode === PanelMode.Full) && (monsterIDs.length > 0) ?
+						<HeaderText level={1}>Stat Blocks</HeaderText>
+						: null
+				}
 				{
 					(props.mode === PanelMode.Full) && (monsterIDs.length > 0) ?
 						<div className='monsters'>

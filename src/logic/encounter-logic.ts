@@ -1,14 +1,28 @@
 import { Collections } from '../utils/collections';
 import { Encounter } from '../models/encounter';
 import { EncounterDifficulty } from '../enums/encounter-difficulty';
+import { MonsterLogic } from './monster-logic';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookLogic } from './sourcebook-logic';
 
 export class EncounterLogic {
-	static getBudget = (heroCount: number, heroLevel: number, victories: number) => {
-		const effectiveHeroCount = heroCount + Math.floor(victories / 2);
-		const heroWorth = 4 + (2 * heroLevel);
-		return effectiveHeroCount * heroWorth;
+	static getMonsterCount = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
+		let total = 0;
+
+		encounter.groups.forEach(g => {
+			g.slots.forEach(s => {
+				let count = s.count;
+
+				const monster = SourcebookLogic.getMonster(sourcebooks, s.monsterID);
+				if (monster) {
+					count *= MonsterLogic.getRoleMultiplier(monster.role.organization);
+				}
+
+				total += count;
+			});
+		});
+
+		return total;
 	};
 
 	static getStrength = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
@@ -20,21 +34,81 @@ export class EncounterLogic {
 		});
 	};
 
-	static getDifficulty = (encounterStrength: number, encounterBudget: number) => {
-		const fraction = encounterStrength / encounterBudget;
-		if (fraction < 0.75) {
-			return EncounterDifficulty.Trivial;
+	static getBudgets = (heroCount: number, heroLevel: number, heroVictories: number) => {
+		const effectiveHeroCount = heroCount + Math.floor(heroVictories / 2);
+
+		const getBudget = (heroCount: number, heroLevel: number) => {
+			const heroWorth = 4 + (2 * heroLevel);
+			return heroCount * heroWorth;
+		};
+
+		return {
+			maxTrivial: getBudget(effectiveHeroCount - 1, heroLevel),
+			maxEasy: getBudget(effectiveHeroCount, heroLevel),
+			maxStandard: getBudget(effectiveHeroCount + 1, heroLevel),
+			maxHard: getBudget(effectiveHeroCount + 3, heroLevel)
+		};
+	};
+
+	static getDifficulty = (encounterStrength: number, heroCount: number, heroLevel: number, heroVictories: number) => {
+		const budgets = EncounterLogic.getBudgets(heroCount, heroLevel, heroVictories);
+
+		if (budgets.maxHard > 40) {
+			if (encounterStrength > budgets.maxHard * 500) {
+				return EncounterDifficulty.Death;
+			}
+
+			if (encounterStrength > budgets.maxHard * 400) {
+				return EncounterDifficulty.BlackGods;
+			}
+
+			if (encounterStrength > budgets.maxHard * 300) {
+				return EncounterDifficulty.Annihilation;
+			}
+
+			if (encounterStrength > budgets.maxHard * 200) {
+				return EncounterDifficulty.Silly;
+			}
+
+			if (encounterStrength > budgets.maxHard * 100) {
+				return EncounterDifficulty.SuperExtreme;
+			}
 		}
-		if (fraction < 0.9) {
-			return EncounterDifficulty.Easy;
+
+		if (encounterStrength > budgets.maxHard) {
+			return EncounterDifficulty.Extreme;
 		}
-		if (fraction < 1.1) {
-			return EncounterDifficulty.Standard;
-		}
-		if (fraction < 1.25) {
+
+		if (encounterStrength > budgets.maxStandard) {
 			return EncounterDifficulty.Hard;
 		}
-		return EncounterDifficulty.Extreme;
+
+		if (encounterStrength > budgets.maxEasy) {
+			return EncounterDifficulty.Standard;
+		}
+
+		if (encounterStrength > budgets.maxTrivial) {
+			return EncounterDifficulty.Easy;
+		}
+
+		if (encounterStrength > 0) {
+			return EncounterDifficulty.Trivial;
+		}
+
+		return EncounterDifficulty.Empty;
+	};
+
+	static getVictories = (difficulty: EncounterDifficulty) => {
+		switch (difficulty) {
+			case EncounterDifficulty.Empty:
+			case EncounterDifficulty.Trivial:
+				return 0;
+			case EncounterDifficulty.Easy:
+			case EncounterDifficulty.Standard:
+				return 1;
+		}
+
+		return 2;
 	};
 
 	static getMonsterIDs = (encounter: Encounter) => {

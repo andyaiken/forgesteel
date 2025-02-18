@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Input, Select, Slider, Space, Tabs } from 'antd';
+import { Alert, Button, Divider, Input, Select, Space, Tabs } from 'antd';
 import { Encounter, EncounterGroup } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
@@ -9,8 +9,7 @@ import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { DropdownButton } from '../../../controls/dropdown-button/dropdown-button';
 import { Element } from '../../../../models/element';
-import { EncounterDifficulty } from '../../../../enums/encounter-difficulty';
-import { EncounterLogic } from '../../../../logic/encounter-logic';
+import { EncounterDifficultyPanel } from '../../../panels/encounter-difficulty/encounter-difficulty-panel';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
@@ -64,9 +63,6 @@ export const PlaybookEditPage = (props: Props) => {
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
-	const [ heroCount, setHeroCount ] = useState<number>(4);
-	const [ heroLevel, setHeroLevel ] = useState<number>(1);
-	const [ heroVictories, setHeroVictories ] = useState<number>(0);
 
 	//#region Edit
 
@@ -359,7 +355,7 @@ export const PlaybookEditPage = (props: Props) => {
 							addBtn = (
 								<DropdownButton
 									label='Add'
-									items={encounter.groups.map((group, n) => ({ key: group.id, label: `Group ${n + 1}` }))}
+									items={encounter.groups.map((group, n) => ({ key: group.id, label: <div className='ds-text centered-text'>Group {n + 1}</div> }))}
 									onClick={groupID => addMonster(m, groupID)}
 								/>
 							);
@@ -390,65 +386,13 @@ export const PlaybookEditPage = (props: Props) => {
 	};
 
 	const getEncounterDifficultySection = () => {
-		const encounter = element as Encounter;
-
-		const budget = EncounterLogic.getBudget(heroCount, heroLevel, heroVictories);
-		const strength = EncounterLogic.getStrength(encounter, props.sourcebooks);
-		const difficulty = EncounterLogic.getDifficulty(strength, budget);
-
-		const marks: Record<string | number, ReactNode> = {};
-		marks[budget] = <div className='ds-text dimmed-text small-text'>Standard</div>;
-
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				<NumberSpin label='Heroes' min={1} value={heroCount} onChange={setHeroCount} />
-				<NumberSpin label='Level' min={1} max={10} value={heroLevel} onChange={setHeroLevel} />
-				<NumberSpin label='Victories' min={0} value={heroVictories} onChange={setHeroVictories} />
-				<div style={{ margin: '0 10px' }}>
-					<Slider
-						range={true}
-						marks={marks}
-						min={0}
-						max={budget * 2}
-						value={[ strength ]}
-						styles={{
-							track: {
-								background: 'transparent'
-							}
-						}}
-						tooltip={{ open: false }}
-					/>
-				</div>
-				<Field label='Strength' value={strength} />
-				<Field label='Difficulty' value={difficulty} />
-				{
-					(difficulty === EncounterDifficulty.Trivial) ?
-						<Alert
-							type='info'
-							showIcon={true}
-							message='This encounter does not warrant any Victories.'
-						/>
-						: null
-				}
-				{
-					(difficulty === EncounterDifficulty.Easy) || (difficulty === EncounterDifficulty.Standard) ?
-						<Alert
-							type='info'
-							showIcon={true}
-							message='This encounter warrants 1 Victory.'
-						/>
-						: null
-				}
-				{
-					(difficulty === EncounterDifficulty.Hard) || (difficulty === EncounterDifficulty.Extreme) ?
-						<Alert
-							type='info'
-							showIcon={true}
-							message='This encounter warrants 2 Victories.'
-						/>
-						: null
-				}
-			</Space>
+			<SelectablePanel>
+				<EncounterDifficultyPanel
+					encounter={element as Encounter}
+					sourcebooks={props.sourcebooks}
+				/>
+			</SelectablePanel>
 		);
 	};
 

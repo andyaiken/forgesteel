@@ -444,7 +444,7 @@ export const HeroPanel = (props: Props) => {
 		);
 	};
 
-	const getFeaturesSection = (showHeader: boolean) => {
+	const getFeaturesSection = (header?: string) => {
 		const featureTypes = [ FeatureType.Text, FeatureType.Package ];
 
 		const features = HeroLogic.getFeatures(props.hero)
@@ -455,7 +455,7 @@ export const HeroPanel = (props: Props) => {
 
 		return (
 			<div className='features-section'>
-				{showHeader ? <HeaderText level={1}>Features</HeaderText> : null}
+				{header ? <HeaderText level={1}>{header}</HeaderText> : null}
 				<div className='features-grid'>
 					{
 						features.map(feature => (
@@ -473,7 +473,7 @@ export const HeroPanel = (props: Props) => {
 		);
 	};
 
-	const getAbilitiesSection = (header: string, abilities: Ability[], showHeader: boolean) => {
+	const getAbilitiesSection = (abilities: Ability[], header?: string) => {
 		if (abilities.length === 0) {
 			return null;
 		}
@@ -486,11 +486,11 @@ export const HeroPanel = (props: Props) => {
 
 		return (
 			<div className='abilities-section'>
-				{showHeader ? <HeaderText level={1}>{header}</HeaderText> : null}
+				{header ? <HeaderText level={1}>{header}</HeaderText> : null}
 				<div className='abilities-grid'>
 					{
 						abilities.map(ability => (
-							<SelectablePanel key={ability.id} style={ showHeader ? { gridColumn: `span ${AbilityLogic.panelWidth(ability)}` } : undefined} onSelect={() => showAbility(ability)}>
+							<SelectablePanel key={ability.id} style={ header ? { gridColumn: `span ${AbilityLogic.panelWidth(ability)}` } : undefined} onSelect={() => showAbility(ability)}>
 								<AbilityPanel ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						))
@@ -548,6 +548,7 @@ export const HeroPanel = (props: Props) => {
 				case 'Hero':
 					content = (
 						<>
+							<HeaderText>{props.hero.name || 'Unnamed Hero'}</HeaderText>
 							{getLeftColumn(false)}
 							{getRightColumn(false)}
 						</>
@@ -562,19 +563,19 @@ export const HeroPanel = (props: Props) => {
 					);
 					break;
 				case 'Features':
-					content = getFeaturesSection(false);
+					content = getFeaturesSection();
 					break;
 				case 'Actions':
-					content = getAbilitiesSection('Actions', actions, false);
+					content = getAbilitiesSection(actions);
 					break;
 				case 'Maneuvers':
-					content = getAbilitiesSection('Maneuvers', maneuvers, false);
+					content = getAbilitiesSection(maneuvers);
 					break;
 				case 'Triggers':
-					content = getAbilitiesSection('Triggered Actions', triggers, false);
+					content = getAbilitiesSection(triggers);
 					break;
 				case 'Others':
-					content = getAbilitiesSection('Other Abilities', [ ...moves, ...others, ...noactions ], false);
+					content = getAbilitiesSection([ ...moves, ...others, ...noactions ]);
 					break;
 			}
 
@@ -608,7 +609,7 @@ export const HeroPanel = (props: Props) => {
 						<HeaderText level={1}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
 						{getStatsSection()}
 						{getConditionsSection()}
-						{getFeaturesSection(true)}
+						{getFeaturesSection('Features')}
 					</div>
 					{getRightColumn(true)}
 				</div>
@@ -616,7 +617,7 @@ export const HeroPanel = (props: Props) => {
 					actions.length > 0 ?
 						<div className='hero-main-section' id='actions'>
 							<div className='hero-main-column'>
-								{getAbilitiesSection('Actions', actions, true)}
+								{getAbilitiesSection(actions, 'Actions')}
 							</div>
 						</div>
 						: null
@@ -625,7 +626,7 @@ export const HeroPanel = (props: Props) => {
 					maneuvers.length > 0 ?
 						<div className='hero-main-section' id='maneuvers'>
 							<div className='hero-main-column'>
-								{getAbilitiesSection('Maneuvers', maneuvers, true)}
+								{getAbilitiesSection(maneuvers, 'Maneuvers')}
 							</div>
 						</div>
 						: null
@@ -634,7 +635,7 @@ export const HeroPanel = (props: Props) => {
 					moves.length > 0 ?
 						<div className='hero-main-section' id='moves'>
 							<div className='hero-main-column'>
-								{getAbilitiesSection('Move Actions', moves, true)}
+								{getAbilitiesSection(moves, 'Move Actions')}
 							</div>
 						</div>
 						: null
@@ -643,7 +644,7 @@ export const HeroPanel = (props: Props) => {
 					triggers.length > 0 ?
 						<div className='hero-main-section' id='triggers'>
 							<div className='hero-main-column'>
-								{getAbilitiesSection('Triggered Actions', triggers, true)}
+								{getAbilitiesSection(triggers, 'Triggered Actions')}
 							</div>
 						</div>
 						: null
@@ -652,7 +653,7 @@ export const HeroPanel = (props: Props) => {
 					others.length > 0 ?
 						<div className='hero-main-section' id='others'>
 							<div className='hero-main-column'>
-								{getAbilitiesSection('Other Actions', others, true)}
+								{getAbilitiesSection(others, 'Other Actions')}
 							</div>
 						</div>
 						: null
@@ -661,7 +662,7 @@ export const HeroPanel = (props: Props) => {
 					noactions.length > 0 ?
 						<div className='hero-main-section' id='none'>
 							<div className='hero-main-column'>
-								{getAbilitiesSection('No Action', noactions, true)}
+								{getAbilitiesSection(noactions, 'No Action')}
 							</div>
 						</div>
 						: null

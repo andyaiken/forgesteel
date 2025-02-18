@@ -2,16 +2,6 @@
 
 ## Add Monsters
 
-### High Priority Monsters
-
-| Monster             | Minions | Monsters | Retainers |
-|:--------------------|--------:|---------:|----------:|
-| Demon               | 3       | 6        | 0         |
-| Devil               | 3       | 5        | 1         |
-| Elemental           | 5       | 0        | 0         |
-
-### Low Priority Monsters
-
 | Monster             | Minions | Monsters | Retainers |
 |:--------------------|--------:|---------:|----------:|
 | Angulotl            | 4       | 4        | 1         |

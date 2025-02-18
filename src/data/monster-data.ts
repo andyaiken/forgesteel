@@ -10,7 +10,6 @@ import { elemental } from './monsters/elemental';
 import { elfHigh } from './monsters/elf-high';
 import { elfShadow } from './monsters/elf-shadow';
 import { elfWode } from './monsters/elf-wode';
-import { giant } from './monsters/giant';
 import { gnoll } from './monsters/gnoll';
 import { goblin } from './monsters/goblin';
 import { hobgoblin } from './monsters/hobgoblin';
@@ -40,7 +39,7 @@ export class MonsterData {
 	static elfHigh = elfHigh;
 	static elfShadow = elfShadow;
 	static elfWode = elfWode;
-	static giant = giant;
+	// static giant = giant;
 	static gnoll = gnoll;
 	static goblin = goblin;
 	static hobgoblin = hobgoblin;

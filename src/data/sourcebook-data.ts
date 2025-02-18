@@ -400,6 +400,7 @@ export class SourcebookData {
 			MonsterData.troll,
 			MonsterData.undead,
 			MonsterData.undead2nd,
+			MonsterData.warDog,
 			MonsterData.werewolf
 		],
 		skills: [

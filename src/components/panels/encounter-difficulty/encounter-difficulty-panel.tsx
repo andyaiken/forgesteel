@@ -30,13 +30,16 @@ export const EncounterDifficultyPanel = (props: Props) => {
 		};
 
 		const count = EncounterLogic.getMonsterCount(props.encounter, props.sourcebooks);
-		const budget = EncounterLogic.getBudget(heroCount, heroLevel, heroVictories);
+		const budgets = EncounterLogic.getBudgets(heroCount, heroLevel, heroVictories);
 		const strength = EncounterLogic.getStrength(props.encounter, props.sourcebooks);
-		const difficulty = EncounterLogic.getDifficulty(strength, budget);
+		const difficulty = EncounterLogic.getDifficulty(strength, heroCount, heroLevel, heroVictories);
 		const victories = EncounterLogic.getVictories(difficulty);
 
 		const marks: Record<string | number, ReactNode> = {};
-		marks[budget] = <div className='ds-text dimmed-text small-text'>Standard</div>;
+		marks[budgets.maxTrivial] = <div className='ds-text dimmed-text small-text'>Easy</div>;
+		marks[budgets.maxEasy] = <div className='ds-text dimmed-text small-text'>Standard</div>;
+		marks[budgets.maxStandard] = <div className='ds-text dimmed-text small-text'>Hard</div>;
+		marks[budgets.maxHard] = <div className='ds-text dimmed-text small-text'>Extreme</div>;
 
 		return (
 			<div className='encounter-difficulty-panel'>
@@ -46,7 +49,7 @@ export const EncounterDifficultyPanel = (props: Props) => {
 						range={true}
 						marks={marks}
 						min={0}
-						max={budget * 2}
+						max={Math.max(budgets.maxHard * 1.1, strength)}
 						value={[ strength ]}
 						styles={{
 							track: {

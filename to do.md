@@ -2,16 +2,6 @@
 
 ## Add Monsters
 
-### High Priority Monsters
-
-| Monster             | Minions | Monsters | Retainers |
-|:--------------------|--------:|---------:|----------:|
-| Demon               | 3       | 6        | 0         |
-| Devil               | 3       | 5        | 1         |
-| Elemental           | 5       | 0        | 0         |
-
-### Low Priority Monsters
-
 | Monster             | Minions | Monsters | Retainers |
 |:--------------------|--------:|---------:|----------:|
 | Angulotl            | 4       | 4        | 1         |
@@ -28,15 +18,8 @@
 | Shambling Mound     | 0       | 1        | 0         |
 | Time Raider         | 2       | 8        | 1         |
 | Voiceless Talker    | 2       | 5        | 0         |
-| War Dog             | 4       | 9        | 0         |
 | Wyvern              | 0       | 2        | 0         |
 | Xorannox the Tyract | 6       | 1        | 0         |
-
-## New Features
-
-### General
-
-* Small screen mode for phones
 
 ### Heroes
 

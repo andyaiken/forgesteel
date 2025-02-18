@@ -396,6 +396,7 @@ export class SourcebookData {
 			MonsterData.radenwight,
 			MonsterData.troll,
 			MonsterData.undead,
+			MonsterData.warDog,
 			MonsterData.werewolf
 		],
 		skills: [

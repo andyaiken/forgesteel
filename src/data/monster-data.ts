@@ -10,7 +10,6 @@ import { elemental } from './monsters/elemental';
 import { elfHigh } from './monsters/elf-high';
 import { elfShadow } from './monsters/elf-shadow';
 import { elfWode } from './monsters/elf-wode';
-import { giant } from './monsters/giant';
 import { gnoll } from './monsters/gnoll';
 import { goblin } from './monsters/goblin';
 import { hobgoblin } from './monsters/hobgoblin';
@@ -25,6 +24,7 @@ import { orc } from './monsters/orc';
 import { radenwight } from './monsters/radenwight';
 import { troll } from './monsters/troll';
 import { undead } from './monsters/undead';
+import { warDog } from './monsters/wardogs';
 import { werewolf } from './monsters/werewolf';
 
 export class MonsterData {
@@ -40,7 +40,7 @@ export class MonsterData {
 	static elfHigh = elfHigh;
 	static elfShadow = elfShadow;
 	static elfWode = elfWode;
-	static giant = giant;
+	// static giant = giant;
 	static gnoll = gnoll;
 	static goblin = goblin;
 	static hobgoblin = hobgoblin;
@@ -55,5 +55,6 @@ export class MonsterData {
 	static radenwight = radenwight;
 	static troll = troll;
 	static undead = undead;
+	static warDog = warDog;
 	static werewolf = werewolf;
 }

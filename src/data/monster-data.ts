@@ -24,6 +24,7 @@ import { orc } from './monsters/orc';
 import { radenwight } from './monsters/radenwight';
 import { troll } from './monsters/troll';
 import { undead } from './monsters/undead';
+import { warDog } from './monsters/wardogs';
 import { werewolf } from './monsters/werewolf';
 
 export class MonsterData {
@@ -54,5 +55,6 @@ export class MonsterData {
 	static radenwight = radenwight;
 	static troll = troll;
 	static undead = undead;
+	static warDog = warDog;
 	static werewolf = werewolf;
 }

@@ -582,6 +582,7 @@ export const HeroPanel = (props: Props) => {
 			return (
 				<div className='hero-panel small' id={props.hero.id}>
 					<Segmented
+						style={{ position: 'sticky', top: '0px', borderRadius: '0' }}
 						options={
 							tabs.map(tab => ({
 								value: tab,

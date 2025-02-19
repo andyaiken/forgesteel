@@ -74,7 +74,8 @@ export class FactoryLogic {
 				projectPoints: 0,
 				conditions: [],
 				inventory: [],
-				projects: []
+				projects: [],
+				notes: ''
 			},
 			abilityCustomizations: []
 		};

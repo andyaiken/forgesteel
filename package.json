@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "6.54.0",
+	"version": "6.55.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -40,6 +40,6 @@
 		"globals": "^15.15.0",
 		"typescript": "^5.7.3",
 		"typescript-eslint": "^8.24.1",
-		"vite": "^6.1.0"
+		"vite": "^6.1.1"
 	}
 }

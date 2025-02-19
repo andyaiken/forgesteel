@@ -20,14 +20,10 @@
 | Wyvern              | 0       | 2        | 0         |
 | Xorannox the Tyract | 6       | 1        | 0         |
 
-### Heroes
+### Hero Builder
 
-* Companions:
-  * Allow the user to customize the name of their companions
-  * Determine whether the encounter builder needs to take account of retainers
-* Hero Builder:
-  * Auto-create heroes
-  * Revenants should have 3 ancestry points if small
+* Auto-create heroes
+* Revenants should have 3 ancestry points if small
 
 ### Library
 
@@ -36,16 +32,17 @@
 * Rivals
 * Imbued items
 
-### Monster Editor
+### Monster Builder
 
 * Allow the user to manually add/remove from the set of similar monsters
 * Auto-create monsters
 
-### Encounter Editor
+### Encounter Builder
 
 * Warnings:
   * Monsters max hero level +2
   * Max 6 stat blocks
+* Determine whether the encounter builder needs to take account of retainers
 * Use encounter templates in encounter editor
 * Auto-create encounters
 

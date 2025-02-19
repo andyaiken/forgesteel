@@ -16,6 +16,7 @@ import { Item } from '../../../models/item';
 import { ItemSelectModal } from '../item-select/item-select-modal';
 import { ItemType } from '../../../enums/item-type';
 import { Modal } from '../modal/modal';
+import { MultiLine } from '../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Project } from '../../../models/project';
@@ -557,6 +558,27 @@ export const HeroStateModal = (props: Props) => {
 		);
 	};
 
+	const getNotesSection = () => {
+		const setNotes = (value: string) => {
+			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			copy.state.notes = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		return (
+			<div style={{ height: '100%' }}>
+				<MultiLine
+					style={{ height: '100%' }}
+					label='Notes'
+					value={hero.state.notes}
+					showMarkdownPrompt={false}
+					onChange={setNotes}
+				/>
+			</div>
+		);
+	};
+
 	const getContent = () => {
 		switch (page) {
 			case HeroStatePage.Hero:
@@ -571,6 +593,8 @@ export const HeroStateModal = (props: Props) => {
 				return getConditionsSection();
 			case HeroStatePage.Projects:
 				return getProjectsSection();
+			case HeroStatePage.Notes:
+				return getNotesSection();
 		}
 	};
 
@@ -586,7 +610,8 @@ export const HeroStateModal = (props: Props) => {
 								HeroStatePage.Stats,
 								HeroStatePage.Inventory,
 								HeroStatePage.Conditions,
-								HeroStatePage.Projects
+								HeroStatePage.Projects,
+								HeroStatePage.Notes
 							]}
 							value={page}
 							onChange={setPage}

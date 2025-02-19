@@ -30,6 +30,7 @@ export interface HeroState {
 	conditions: Condition[];
 	inventory: Item[];
 	projects: Project[];
+	notes: string;
 }
 
 export interface AbilityCustomization {

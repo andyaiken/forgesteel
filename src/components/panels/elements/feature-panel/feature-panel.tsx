@@ -1,4 +1,4 @@
-import { Alert, Button, Drawer, Select, Space } from 'antd';
+import { Alert, Button, Drawer, Input, Select, Space } from 'antd';
 import { Feature, FeatureAbilityCostData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
@@ -7,6 +7,7 @@ import { AncestryPanel } from '../ancestry-panel/ancestry-panel';
 import { Badge } from '../../../controls/badge/badge';
 import { Collections } from '../../../../utils/collections';
 import { DomainPanel } from '../domain-panel/domain-panel';
+import { Expander } from '../../../controls/expander/expander';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
@@ -22,6 +23,7 @@ import { Markdown } from '../../../controls/markdown/markdown';
 import { Monster } from '../../../../models/monster';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { MonsterSelectModal } from '../../../modals/monster-select/monster-select-modal';
+import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
@@ -29,6 +31,7 @@ import { PerkPanel } from '../perk-panel/perk-panel';
 import { PowerRollPanel } from '../../power-roll/power-roll-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { ThunderboltOutlined } from '@ant-design/icons';
 import { TitlePanel } from '../title-panel/title-panel';
 import { useState } from 'react';
 
@@ -320,6 +323,14 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getSelectionCompanion = (data: FeatureCompanionData) => {
+		const setName = (value: string) => {
+			const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureCompanionData;
+			dataCopy.selected!.name = value;
+			if (props.setData) {
+				props.setData(props.feature.id, dataCopy);
+			}
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
@@ -349,12 +360,27 @@ export const FeaturePanel = (props: Props) => {
 							))
 						: null
 				}
+				<Button block={true} onClick={() => setDrawerOpen(true)}>{data.selected ? 'Change' : 'Select'}</Button>
+				{
+					data.selected ?
+						<Expander title='Customize'>
+							<HeaderText>Customize</HeaderText>
+							<Input
+								className={data.selected.name === '' ? 'input-empty' : ''}
+								placeholder='Name'
+								allowClear={true}
+								addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
+								value={data.selected.name}
+								onChange={e => setName(e.target.value)}
+							/>
+						</Expander>
+						: null
+				}
 				{
 					data.selected ?
 						<MonsterPanel monster={data.selected} />
 						: null
 				}
-				<Button block={true} onClick={() => setDrawerOpen(true)}>{data.selected ? 'Change' : 'Select'}</Button>
 				<Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} closeIcon={null} width='500px'>
 					<MonsterSelectModal
 						type={data.type}

@@ -134,7 +134,7 @@ export type FeatureLanguageChoice = FeatureOf<FeatureType.LanguageChoice, Featur
 export interface FeatureMaliceData extends _FeatureData {
 	cost: number;
 	repeatable?: boolean;
-	sections?: (string | PowerRoll)[];
+	sections: (string | PowerRoll)[];
 };
 export type FeatureMalice = FeatureOf<FeatureType.Malice, FeatureMaliceData>;
 

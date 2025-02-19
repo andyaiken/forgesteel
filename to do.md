@@ -18,7 +18,6 @@
 | Time Raider         | 2       | 8        | 1         |
 | Voiceless Talker    | 2       | 5        | 0         |
 | Wyvern              | 0       | 2        | 0         |
-| Xorannox the Tyract | 6       | 1        | 0         |
 
 ### Hero Builder
 

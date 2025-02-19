@@ -1258,10 +1258,16 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getInformationMalice = (data: FeatureMaliceData) => {
-		return (data.sections ?? []).map((section, n) => (typeof section === 'string') ?
+		const sections = (data.sections ?? []).map((section, n) => (typeof section === 'string') ?
 			<Markdown key={n} text={section} />
 			:
 			<PowerRollPanel key={n} powerRoll={section} test={true} />
+		);
+
+		return (
+			<div>
+				{sections}
+			</div>
 		);
 	};
 

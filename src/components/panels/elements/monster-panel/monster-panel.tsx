@@ -1,5 +1,8 @@
-import { Flex, Tag } from 'antd';
+import { Drawer, Flex, Tag } from 'antd';
 import { Monster, MonsterGroup } from '../../../../models/monster';
+import { Ability } from '../../../../models/ability';
+import { AbilityModal } from '../../../modals/ability/ability-modal';
+import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Characteristic } from '../../../../enums/characteristic';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { FeaturePanel } from '../feature-panel/feature-panel';
@@ -12,6 +15,8 @@ import { MonsterLabel } from '../../monster-label/monster-label';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { useState } from 'react';
 
 import './monster-panel.scss';
 
@@ -19,9 +24,12 @@ interface Props {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
 	mode?: PanelMode;
+	canRoll?: boolean;
 }
 
 export const MonsterPanel = (props: Props) => {
+	const [ selectedAbility, setSelectedAbility ] = useState<Ability | null>(null);
+
 	try {
 		if (props.mode !== PanelMode.Full) {
 			return (
@@ -42,8 +50,8 @@ export const MonsterPanel = (props: Props) => {
 		const weaknesses = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Weakness);
 		const speed = props.monster.speed.modes !== '' ? `${props.monster.speed.value} (${props.monster.speed.modes})` : props.monster.speed.value;
 
-		const types = [ FeatureType.Ability, FeatureType.Text ];
-		const features = MonsterLogic.getFeatures(props.monster).filter(f => types.includes(f.type));
+		const features = MonsterLogic.getFeatures(props.monster).filter(f => f.type === FeatureType.Text);
+		const abilities = MonsterLogic.getFeatures(props.monster).filter(f => f.type === FeatureType.Ability).map(f => f.data.ability);
 
 		return (
 			<div className='monster-panel' id={props.monster.id}>
@@ -87,6 +95,13 @@ export const MonsterPanel = (props: Props) => {
 						: null
 				}
 				{
+					abilities.length > 0 ?
+						<div className='abilities'>
+							{abilities.map(a => <SelectablePanel key={a.id} onSelect={() => setSelectedAbility(a)}><AbilityPanel ability={a} mode={PanelMode.Full} /></SelectablePanel>)}
+						</div>
+						: null
+				}
+				{
 					props.monster.retainer ?
 						<>
 							{
@@ -116,6 +131,17 @@ export const MonsterPanel = (props: Props) => {
 						</>
 						: null
 				}
+				<Drawer open={selectedAbility !== null} onClose={() => setSelectedAbility(null)} closeIcon={null} width='500px'>
+					{
+						selectedAbility ?
+							<AbilityModal
+								ability={selectedAbility}
+								monster={props.monster}
+								onClose={() => setSelectedAbility(null)}
+							/>
+							: null
+					}
+				</Drawer>
 			</div>
 		);
 	} catch (ex) {

@@ -1,4 +1,4 @@
-import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
@@ -23,6 +23,7 @@ import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Perk } from '../../../../models/perk';
 import { PerkList } from '../../../../enums/perk-list';
+import { PowerRoll } from '../../../../models/power-roll';
 import { SkillList } from '../../../../enums/skill-list';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -495,6 +496,69 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
+		const addMaliceSectionText = (data: FeatureMaliceData) => {
+			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			copy.sections.push('');
+			setData(copy);
+		};
+
+		const addMaliceSectionPowerRoll = (data: FeatureMaliceData) => {
+			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			copy.sections.push(FactoryLogic.createPowerRoll({
+				characteristic: [ Characteristic.Might ],
+				tier1: '',
+				tier2: '',
+				tier3: ''
+			}));
+			setData(copy);
+		};
+
+		const moveMaliceSection = (data: FeatureMaliceData, index: number, direction: 'up' | 'down') => {
+			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			copy.sections = Collections.move(copy.sections, index, direction);
+			setData(copy);
+		};
+
+		const deleteMaliceSection = (data: FeatureMaliceData, index: number) => {
+			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			copy.sections.splice(index);
+			setData(copy);
+		};
+
+		const setMaliceSectionText = (data: FeatureMaliceData, index: number, value: string) => {
+			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			copy.sections[index] = value;
+			setData(copy);
+		};
+
+		const setMaliceSectionPowerRollCharacteristics = (data: FeatureMaliceData, index: number, value: Characteristic[]) => {
+			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			const pr = copy.sections[index] as PowerRoll;
+			pr.characteristic = value;
+			setData(copy);
+		};
+
+		const setMaliceSectionPowerRoll1 = (data: FeatureMaliceData, index: number, value: string) => {
+			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			const pr = copy.sections[index] as PowerRoll;
+			pr.tier1 = value;
+			setData(copy);
+		};
+
+		const setMaliceSectionPowerRoll2 = (data: FeatureMaliceData, index: number, value: string) => {
+			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			const pr = copy.sections[index] as PowerRoll;
+			pr.tier2 = value;
+			setData(copy);
+		};
+
+		const setMaliceSectionPowerRoll3 = (data: FeatureMaliceData, index: number, value: string) => {
+			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			const pr = copy.sections[index] as PowerRoll;
+			pr.tier3 = value;
+			setData(copy);
+		};
+
 		const addMultipleFeature = (data: FeatureMultipleData) => {
 			const copy = JSON.parse(JSON.stringify(data)) as FeatureMultipleData;
 			copy.features.push(FactoryLogic.feature.create({
@@ -859,6 +923,84 @@ export const FeatureEditPanel = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Cost</HeaderText>
 						<NumberSpin min={1} value={data.cost} onChange={setMaliceCost} />
+						<HeaderText>Sections</HeaderText>
+						<Space direction='vertical' style={{ width: '100%' }}>
+							{
+								data.sections.map((section, n) => (
+									<Expander
+										key={n}
+										title='Malice Section'
+										extra={[
+											<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMaliceSection(data, n, 'up'); }} />,
+											<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMaliceSection(data, n, 'down'); }} />,
+											<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteMaliceSection(data, n); }} />
+										]}
+									>
+										<Space direction='vertical' style={{ width: '100%' }}>
+											{
+												(typeof section === 'string') ?
+													<div>
+														<HeaderText>Text</HeaderText>
+														<MultiLine
+															label='Text'
+															value={section}
+															onChange={value => setMaliceSectionText(data, n, value)}
+														/>
+													</div>
+													:
+													<Space direction='vertical' style={{ width: '100%' }}>
+														<HeaderText>Power Roll</HeaderText>
+														<Select
+															style={{ width: '100%' }}
+															className={section.characteristic.length === 0 ? 'selection-empty' : ''}
+															placeholder='Characteristics'
+															mode='multiple'
+															options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
+															optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+															value={section.characteristic}
+															onChange={value => setMaliceSectionPowerRollCharacteristics(data, n, value)}
+														/>
+														<Input
+															className={section.tier1 === '' ? 'input-empty' : ''}
+															placeholder='Tier 1'
+															allowClear={true}
+															value={section.tier1}
+															onChange={e => setMaliceSectionPowerRoll1(data, n, e.target.value)}
+														/>
+														<Input
+															className={section.tier1 === '' ? 'input-empty' : ''}
+															placeholder='Tier 2'
+															allowClear={true}
+															value={section.tier2}
+															onChange={e => setMaliceSectionPowerRoll2(data, n, e.target.value)}
+														/>
+														<Input
+															className={section.tier1 === '' ? 'input-empty' : ''}
+															placeholder='Tier 3'
+															allowClear={true}
+															value={section.tier3}
+															onChange={e => setMaliceSectionPowerRoll3(data, n, e.target.value)}
+														/>
+													</Space>
+											}
+										</Space>
+									</Expander>
+								))
+							}
+							{
+								data.sections.length === 0 ?
+									<Alert
+										type='warning'
+										showIcon={true}
+										message='No sections'
+									/>
+									: null
+							}
+							<Flex gap='8px'>
+								<Button block={true} onClick={() => addMaliceSectionText(data)}>Add Text</Button>
+								<Button block={true} onClick={() => addMaliceSectionPowerRoll(data)}>Add a Power Roll</Button>
+							</Flex>
+						</Space>
 					</Space>
 				);
 			}

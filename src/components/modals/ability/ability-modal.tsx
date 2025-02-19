@@ -1,12 +1,15 @@
 import { Input, Segmented } from 'antd';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../../panels/elements/ability-panel/ability-panel';
+import { Characteristic } from '../../../enums/characteristic';
 import { DieRollPanel } from '../../panels/die-roll/die-roll-panel';
 import { Expander } from '../../controls/expander/expander';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { Modal } from '../modal/modal';
+import { Monster } from '../../../models/monster';
+import { MonsterLogic } from '../../../logic/monster-logic';
 import { MultiLine } from '../../controls/multi-line/multi-line';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
@@ -15,15 +18,30 @@ import { useState } from 'react';
 import './ability-modal.scss';
 
 interface Props {
-	hero: Hero;
 	ability: Ability;
+	hero?: Hero;
+	monster?: Monster;
 	onClose: () => void;
-	updateHero: (hero: Hero) => void;
+	updateHero?: (hero: Hero) => void;
 }
 
 export const AbilityModal = (props: Props) => {
-	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(props.hero)) as Hero);
+	const [ hero, setHero ] = useState<Hero | undefined>(props.hero ? JSON.parse(JSON.stringify(props.hero)) as Hero : undefined);
 	const [ page, setPage ] = useState<string>('Ability Card');
+
+	const customization = hero ? hero.abilityCustomizations.find(ac => ac.abilityID === props.ability.id) : undefined;
+
+	const getCharacteristic = (ch: Characteristic) => {
+		if (hero) {
+			return HeroLogic.getCharacteristic(hero, ch);
+		}
+
+		if (props.monster) {
+			return MonsterLogic.getCharacteristic(props.monster, ch);
+		}
+
+		return 0;
+	};
 
 	const setName = (value: string) => {
 		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
@@ -42,7 +60,9 @@ export const AbilityModal = (props: Props) => {
 		}
 
 		setHero(copy);
-		props.updateHero(copy);
+		if (props.updateHero) {
+			props.updateHero(copy);
+		}
 	};
 
 	const setDescription = (value: string) => {
@@ -62,7 +82,9 @@ export const AbilityModal = (props: Props) => {
 		}
 
 		setHero(copy);
-		props.updateHero(copy);
+		if (props.updateHero) {
+			props.updateHero(copy);
+		}
 	};
 
 	const setNotes = (value: string) => {
@@ -82,7 +104,9 @@ export const AbilityModal = (props: Props) => {
 		}
 
 		setHero(copy);
-		props.updateHero(copy);
+		if (props.updateHero) {
+			props.updateHero(copy);
+		}
 	};
 
 	const getContent = () => {
@@ -97,7 +121,11 @@ export const AbilityModal = (props: Props) => {
 							props.ability.powerRoll ?
 								<DieRollPanel
 									type='Power Roll'
-									modifier={Math.max(...props.ability.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero, ch)))}
+									modifier={
+										(props.ability.powerRoll.characteristic.length > 0) ?
+											Math.max(...props.ability.powerRoll.characteristic.map(getCharacteristic))
+											: props.ability.powerRoll.bonus
+									}
 								/>
 								: null
 						}
@@ -126,19 +154,19 @@ export const AbilityModal = (props: Props) => {
 		}
 	};
 
-	const customization = hero.abilityCustomizations.find(ac => ac.abilityID === props.ability.id);
-
 	try {
 		return (
 			<Modal
 				toolbar={
-					<div style={{ width: '100%', textAlign: 'center' }}>
-						<Segmented
-							options={[ 'Ability Card', 'Customize' ]}
-							value={page}
-							onChange={setPage}
-						/>
-					</div>
+					props.updateHero ?
+						<div style={{ width: '100%', textAlign: 'center' }}>
+							<Segmented
+								options={[ 'Ability Card', 'Customize' ]}
+								value={page}
+								onChange={setPage}
+							/>
+						</div>
+						: null
 				}
 				content={
 					<div className='ability-modal'>

@@ -30,6 +30,7 @@ import { undead } from './monsters/undead';
 import { undead2nd } from './monsters/undead-2nd';
 import { warDog } from './monsters/wardog';
 import { werewolf } from './monsters/werewolf';
+import { xorannox } from './monsters/xorannox';
 
 export class MonsterData {
 	static ankheg = ankheg;
@@ -65,4 +66,5 @@ export class MonsterData {
 	static undead2nd = undead2nd;
 	static warDog = warDog;
 	static werewolf = werewolf;
+	static xorannox = xorannox;
 }

@@ -34,7 +34,14 @@ export class MonsterLogic {
 		const lvl = MonsterLogic.getMonsterLevel(monster);
 
 		if (monster.role.type === MonsterRoleType.NoRole) {
-			return `Level ${lvl} ${monster.role.organization}`;
+			if (monster.role.organization === MonsterOrganizationType.NoOrganization) {
+				return `Level ${lvl}`;
+			} else {
+				return `Level ${lvl} ${monster.role.organization}`;
+			}
+		}
+		if (monster.role.organization === MonsterOrganizationType.NoOrganization) {
+			return `Level ${lvl} ${monster.role.type}`;
 		}
 
 		const orgGoesLast = [

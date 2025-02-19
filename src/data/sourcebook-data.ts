@@ -401,7 +401,8 @@ export class SourcebookData {
 			MonsterData.undead,
 			MonsterData.undead2nd,
 			MonsterData.warDog,
-			MonsterData.werewolf
+			MonsterData.werewolf,
+			MonsterData.xorannox
 		],
 		skills: [
 			{ name: 'Alchemy', description: 'Make bombs and potions.', list: SkillList.Crafting },

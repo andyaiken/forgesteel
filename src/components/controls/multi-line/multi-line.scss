@@ -1,5 +1,14 @@
 .multi-line {
+	height: 200px;
 	display: flex;
 	flex-direction: column;
 	gap: 5px;
+
+	.multi-line-input {
+		flex: 1 1 0;
+	}
+
+	.multi-line-alert {
+		flex: 0 0 auto;
+	}
 }

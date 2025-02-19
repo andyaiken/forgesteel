@@ -62,7 +62,7 @@ export const PlaybookEditPage = (props: Props) => {
 		return JSON.parse(JSON.stringify(original)) as Element;
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
-	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
+	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter(1, 3));
 
 	//#region Edit
 

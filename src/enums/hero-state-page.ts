@@ -4,5 +4,6 @@ export enum HeroStatePage {
 	Stats = 'Stats',
 	Inventory = 'Inventory',
 	Conditions = 'Conditions',
-	Projects = 'Projects'
+	Projects = 'Projects',
+	Notes = 'Notes'
 }

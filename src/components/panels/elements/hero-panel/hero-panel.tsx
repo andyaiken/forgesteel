@@ -1,4 +1,5 @@
 import { Col, Row, Segmented, Statistic } from 'antd';
+import { Monster, MonsterGroup } from '../../../../models/monster';
 import { ReactNode, useState } from 'react';
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
@@ -25,8 +26,7 @@ import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroStatePage } from '../../../../enums/hero-state-page';
 import { Kit } from '../../../../models/kit';
-import { Monster } from '../../../../models/monster';
-import { MonsterLabel } from '../../monster-label/monster-label';
+import { MonsterLogic } from '../../../../logic/monster-logic';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
@@ -49,7 +49,7 @@ interface Props {
  	onSelectComplication?: (complication: Complication) => void;
  	onSelectDomain?: (domain: Domain) => void;
  	onSelectKit?: (kit: Kit) => void;
- 	onSelectCompanion?: (monster: Monster) => void;
+ 	onSelectCompanion?: (monster: Monster, monsterGroup?: MonsterGroup) => void;
  	onSelectCharacteristic?: (characteristic: Characteristic) => void;
  	onSelectAbility?: (ability: Ability) => void;
  	onShowState?: (page: HeroStatePage) => void;
@@ -208,7 +208,7 @@ export const HeroPanel = (props: Props) => {
 						HeroLogic.getCompanions(props.hero).map(monster => (
 							<div key={monster.id} className='overview-tile clickable' onClick={() => onSelectCompanion(monster)}>
 								<HeaderText>Companion</HeaderText>
-								<Field label={monster.name} value={<MonsterLabel monster={monster} />} />
+								<Field label='Name' value={MonsterLogic.getMonsterName(monster)} />
 							</div>
 						))
 						:

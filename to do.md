@@ -8,7 +8,6 @@
 | Basilisk            | 0       | 2        | 0         |
 | Bredbeddle          | 0       | 1        | 0         |
 | Draconian           | 0       | 6        | 1         |
-| Dragon              | 0       | 4        | 0         |
 | Fossil Cryptic      | 0       | 1        | 0         |
 | Griffon             | 0       | 2        | 0         |
 | Hag                 | 0       | 1        | 0         |
@@ -21,14 +20,10 @@
 | Wyvern              | 0       | 2        | 0         |
 | Xorannox the Tyract | 6       | 1        | 0         |
 
-### Heroes
+### Hero Builder
 
-* Companion feature
-  * Allow the user to customize the name of their companions
-  * Determine whether the encounter builder needs to take account of retainers
-* Hero Builder:
-  * Auto-create heroes
-  * Revenants should have 3 ancestry points if small
+* Auto-create heroes
+* Revenants should have 3 ancestry points if small
 
 ### Library
 
@@ -37,14 +32,17 @@
 * Rivals
 * Imbued items
 
-### Monster Editor
+### Monster Builder
 
 * Allow the user to manually add/remove from the set of similar monsters
 * Auto-create monsters
 
-### Encounter Editor
+### Encounter Builder
 
-* Encounters should pull in monsters - like how heroes pull in elements
+* Warnings:
+  * Monsters max hero level +2
+  * Max 6 stat blocks
+* Determine whether the encounter builder needs to take account of retainers
 * Use encounter templates in encounter editor
 * Auto-create encounters
 

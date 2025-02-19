@@ -1,5 +1,6 @@
 import { Button, Divider, Popover } from 'antd';
 import { DownOutlined, EditOutlined } from '@ant-design/icons';
+import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Ability } from '../../../../models/ability';
 import { Ancestry } from '../../../../models/ancestry';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -15,7 +16,6 @@ import { HeroClass } from '../../../../models/class';
 import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
 import { HeroStatePage } from '../../../../enums/hero-state-page';
 import { Kit } from '../../../../models/kit';
-import { Monster } from '../../../../models/monster';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
@@ -44,7 +44,7 @@ interface Props {
 	showComplication: (complication: Complication) => void;
 	showDomain: (domain: Domain) => void;
 	showKit: (kit: Kit) => void;
-	showCompanion: (monster: Monster) => void;
+	showCompanion: (monster: Monster, monsterGroup?: MonsterGroup) => void;
 	showCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
 	showHeroState: (hero: Hero, page: HeroStatePage) => void;

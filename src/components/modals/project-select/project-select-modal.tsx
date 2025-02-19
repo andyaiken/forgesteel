@@ -1,7 +1,7 @@
 import { Alert, Button, Input, Space } from 'antd';
-import { Item } from '../../../models/item';
-import { ItemPanel } from '../../panels/elements/item-panel/item-panel';
 import { Modal } from '../modal/modal';
+import { Project } from '../../../models/project';
+import { ProjectPanel } from '../../panels/elements/project-panel/project-panel';
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../models/sourcebook';
@@ -9,25 +9,23 @@ import { SourcebookLogic } from '../../../logic/sourcebook-logic';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
-import './shop-modal.scss';
+import './project-select-modal.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
 	onClose: () => void;
-	onSelect: (item: Item) => void;
+	onSelect: (project: Project) => void;
 }
 
-export const ShopModal = (props: Props) => {
+export const ProjectSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
 	try {
-		const items = SourcebookLogic
-			.getItems(props.sourcebooks)
+		const projects = SourcebookLogic
+			.getProjects(props.sourcebooks)
 			.filter(item => Utils.textMatches([
 				item.name,
-				item.description,
-				...item.keywords,
-				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
+				item.description
 			], searchTerm));
 
 		return (
@@ -45,28 +43,28 @@ export const ShopModal = (props: Props) => {
 					</>
 				}
 				content={
-					<div className='shop-modal'>
+					<div className='project-select-modal'>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							{
-								items.map(item => (
+								projects.map(project => (
 									<SelectablePanel
-										key={item.id}
+										key={project.id}
 										onSelect={() => {
-											const copy = JSON.parse(JSON.stringify(item)) as Item;
+											const copy = JSON.parse(JSON.stringify(project)) as Project;
 											copy.id = Utils.guid();
 											props.onSelect(copy);
 										}}
 									>
-										<ItemPanel item={item} />
+										<ProjectPanel project={project} />
 									</SelectablePanel>
 								))
 							}
 							{
-								items.length === 0 ?
+								projects.length === 0 ?
 									<Alert
 										type='warning'
 										showIcon={true}
-										message='No items to show'
+										message='No projects to show'
 									/>
 									: null
 							}

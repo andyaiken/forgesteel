@@ -28,7 +28,7 @@ import { radenwight } from './monsters/radenwight';
 import { troll } from './monsters/troll';
 import { undead } from './monsters/undead';
 import { undead2nd } from './monsters/undead-2nd';
-import { warDog } from './monsters/wardogs';
+import { warDog } from './monsters/wardog';
 import { werewolf } from './monsters/werewolf';
 
 export class MonsterData {

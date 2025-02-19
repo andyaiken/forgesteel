@@ -241,7 +241,9 @@ export const HeroCustomizePanel = (props: Props) => {
 						{ key: 'class-ability', label: <div className='ds-text centered-text'>Class Ability</div> },
 						{ key: 'companion', label: <div className='ds-text centered-text'>Companion</div> },
 						{ key: 'language', label: <div className='ds-text centered-text'>Language</div> },
+						{ key: 'mount', label: <div className='ds-text centered-text'>Mount</div> },
 						{ key: 'perk', label: <div className='ds-text centered-text'>Perk</div> },
+						{ key: 'retainer', label: <div className='ds-text centered-text'>Retainer</div> },
 						{ key: 'skill', label: <div className='ds-text centered-text'>Skill</div> },
 						{ key: 'stat-bonus', label: <div className='ds-text centered-text'>Stat Bonus</div> },
 						{ key: 'title', label: <div className='ds-text centered-text'>Title</div> }
@@ -282,10 +284,22 @@ export const HeroCustomizePanel = (props: Props) => {
 									id: Utils.guid()
 								});
 								break;
+							case 'mount':
+								feature = FactoryLogic.feature.createCompanion({
+									id: Utils.guid(),
+									type: 'mount'
+								});
+								break;
 							case 'perk':
 								feature = FactoryLogic.feature.createPerk({
 									id: Utils.guid(),
 									lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ]
+								});
+								break;
+							case 'retainer':
+								feature = FactoryLogic.feature.createCompanion({
+									id: Utils.guid(),
+									type: 'retainer'
 								});
 								break;
 							case 'skill':

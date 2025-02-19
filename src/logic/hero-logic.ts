@@ -908,6 +908,10 @@ Complex or time-consuming tests might require an action if made in combat - or c
 			hero.state.projects = [];
 		}
 
+		if (hero.state.notes === undefined) {
+			hero.state.notes = '';
+		}
+
 		hero.state.inventory = hero.state.inventory.filter(i => (i as unknown as FeatureItemChoice).data === undefined);
 
 		if (hero.abilityCustomizations === undefined) {

@@ -1,8 +1,8 @@
 import { Alert, Button, Divider, Input, Select, Space, Tabs } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
-import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { ReactNode, useState } from 'react';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Collections } from '../../../../utils/collections';
@@ -190,6 +190,13 @@ export const PlaybookEditPage = (props: Props) => {
 	const getNegotiationDetailsSection = () => {
 		const negotiation = element as Negotiation;
 
+		const setImpression = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			copy.impression = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
 		const setInterest = (value: number) => {
 			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
 			copy.interest = value;
@@ -204,48 +211,181 @@ export const PlaybookEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const setMotivations = (value: NegotiationTrait[]) => {
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<NumberSpin label='Impression' min={0} max={12} value={negotiation.impression} onChange={setImpression} />
+				<NumberSpin label='Interest' min={0} max={5} value={negotiation.interest} onChange={setInterest} />
+				<NumberSpin label='Patience' min={0} max={5} value={negotiation.patience} onChange={setPatience} />
+			</Space>
+		);
+	};
+
+	const getNegotiationMotivationsSection = () => {
+		const negotiation = element as Negotiation;
+
+		const addMotivation = () => {
 			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
-			copy.motivations = value;
+			copy.motivations.push({
+				trait: NegotiationTrait.Benevolence,
+				description: ''
+			});
 			setElement(copy);
 			setDirty(true);
 		};
 
-		const setPitfalls = (value: NegotiationTrait[]) => {
+		const setMotivationTrait = (index: number, value: NegotiationTrait) => {
 			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
-			copy.pitfalls = value;
+			const m = copy.motivations[index];
+			m.trait = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setMotivationDescription = (index: number, value: string) => {
+			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const m = copy.motivations[index];
+			m.description = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const moveMotivation = (index: number, direction: 'up' | 'down') => {
+			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			copy.motivations = Collections.move(copy.motivations, index, direction);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const deleteMotivation = (trait: NegotiationTrait) => {
+			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			copy.motivations = copy.motivations.filter(m => m.trait !== trait);
 			setElement(copy);
 			setDirty(true);
 		};
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<HeaderText>Interest</HeaderText>
-				<NumberSpin min={0} max={5} value={negotiation.interest} onChange={setInterest} />
-				<HeaderText>Patience</HeaderText>
-				<NumberSpin min={0} max={5} value={negotiation.patience} onChange={setPatience} />
-				<HeaderText>Motivations</HeaderText>
-				<Select
-					style={{ width: '100%' }}
-					mode='multiple'
-					allowClear={true}
-					placeholder='Motivations'
-					options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getMotivationDescription(nt) }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					value={negotiation.motivations}
-					onChange={setMotivations}
-				/>
-				<HeaderText>Pitfalls</HeaderText>
-				<Select
-					style={{ width: '100%' }}
-					mode='multiple'
-					allowClear={true}
-					placeholder='Pitfalls'
-					options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getPitfallDescription(nt) }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					value={negotiation.pitfalls}
-					onChange={setPitfalls}
-				/>
+				{
+					negotiation.motivations.map((m, n) => (
+						<Expander
+							key={`m${n}`}
+							title={m.trait}
+							extra={[
+								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMotivation(n, 'up'); }} />,
+								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMotivation(n, 'down'); }} />,
+								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteMotivation(m.trait); }} />
+							]}
+						>
+							<HeaderText>Motivation</HeaderText>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								<Select
+									style={{ width: '100%' }}
+									placeholder='Trait'
+									options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getMotivationDescription(nt) }))}
+									optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+									value={m.trait}
+									onChange={t => setMotivationTrait(n, t)}
+								/>
+								<MultiLine label='Description' value={m.description} onChange={value => setMotivationDescription(n, value)} />
+							</Space>
+						</Expander>
+					))
+				}
+				{
+					negotiation.motivations.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No motivations'
+						/>
+						: null
+				}
+				<Button block={true} onClick={addMotivation}>Add a motivation</Button>
+			</Space>
+		);
+	};
+
+	const getNegotiationPitfallsSection = () => {
+		const negotiation = element as Negotiation;
+
+		const addPitfall = () => {
+			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			copy.pitfalls.push({
+				trait: NegotiationTrait.Benevolence,
+				description: ''
+			});
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setPitfallTrait = (index: number, value: NegotiationTrait) => {
+			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const m = copy.pitfalls[index];
+			m.trait = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setPitfallDescription = (index: number, value: string) => {
+			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const m = copy.pitfalls[index];
+			m.description = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const movePitfall = (index: number, direction: 'up' | 'down') => {
+			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			copy.pitfalls = Collections.move(copy.pitfalls, index, direction);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const deletePitfall = (trait: NegotiationTrait) => {
+			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			copy.pitfalls = copy.pitfalls.filter(m => m.trait !== trait);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					negotiation.pitfalls.map((p, n) => (
+						<Expander
+							key={`p${n}`}
+							title={p.trait}
+							extra={[
+								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); movePitfall(n, 'up'); }} />,
+								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); movePitfall(n, 'down'); }} />,
+								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deletePitfall(p.trait); }} />
+							]}
+						>
+							<HeaderText>Pitfall</HeaderText>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								<Select
+									style={{ width: '100%' }}
+									placeholder='Trait'
+									options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getMotivationDescription(nt) }))}
+									optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+									value={p.trait}
+									onChange={t => setPitfallTrait(n, t)}
+								/>
+								<MultiLine label='Description' value={p.description} onChange={value => setPitfallDescription(n, value)} />
+							</Space>
+						</Expander>
+					))
+				}
+				{
+					negotiation.pitfalls.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No pitfalls'
+						/>
+						: null
+				}
+				<Button block={true} onClick={addPitfall}>Add a pitfall</Button>
 			</Space>
 		);
 	};
@@ -282,6 +422,16 @@ export const PlaybookEditPage = (props: Props) => {
 								key: '2',
 								label: 'Details',
 								children: getNegotiationDetailsSection()
+							},
+							{
+								key: '3',
+								label: 'Motivations',
+								children: getNegotiationMotivationsSection()
+							},
+							{
+								key: '4',
+								label: 'Pitfalls',
+								children: getNegotiationPitfallsSection()
 							}
 						]}
 					/>

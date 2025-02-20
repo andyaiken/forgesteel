@@ -21,13 +21,14 @@ export const NegotiationPanel = (props: Props) => {
 				{
 					props.mode === PanelMode.Full ?
 						<>
+							<Field label='Impression' value={props.negotiation.impression} />
 							<Field label='Interest' value={props.negotiation.interest} />
 							<Field label='Patience' value={props.negotiation.patience} />
 							<HeaderText>Motivations</HeaderText>
-							{props.negotiation.motivations.map((nt, n) => <Field key={n} label={nt} value={NegotiationLogic.getMotivationDescription(nt)} />)}
+							{props.negotiation.motivations.map((t, n) => <Field key={n} label={t.trait} value={t.description || NegotiationLogic.getMotivationDescription(t.trait)} />)}
 							{props.negotiation.motivations.length === 0 ? <div className='ds-text dimmed-text'>None</div> : null}
 							<HeaderText>Pitfalls</HeaderText>
-							{props.negotiation.pitfalls.map((nt, n) => <Field key={n} label={nt} value={NegotiationLogic.getPitfallDescription(nt)} />)}
+							{props.negotiation.pitfalls.map((t, n) => <Field key={n} label={t.trait} value={t.description || NegotiationLogic.getPitfallDescription(t.trait)} />)}
 							{props.negotiation.pitfalls.length === 0 ? <div className='ds-text dimmed-text'>None</div> : null}
 						</>
 						: null

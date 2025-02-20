@@ -425,6 +425,7 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
+			impression: 0,
 			interest: 1,
 			patience: 1,
 			motivations: [],

@@ -40,6 +40,7 @@ export class MonsterLogic {
 				return `Level ${lvl} ${monster.role.organization}`;
 			}
 		}
+
 		if (monster.role.organization === MonsterOrganizationType.NoOrganization) {
 			return `Level ${lvl} ${monster.role.type}`;
 		}

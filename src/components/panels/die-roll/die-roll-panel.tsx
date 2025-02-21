@@ -9,7 +9,7 @@ import './die-roll-panel.scss';
 
 interface Props {
 	type: 'Power Roll' | 'Saving Throw';
-	modifier: number;
+	modifiers: number[];
 }
 
 export const DieRollPanel = (props: Props) => {
@@ -65,7 +65,7 @@ export const DieRollPanel = (props: Props) => {
 				break;
 		}
 
-		const total = Collections.sum([ ...results, props.modifier, bonus ], r => r);
+		const total = Collections.sum([ ...results, ...props.modifiers, bonus ], r => r);
 
 		let max: number;
 		const marks: Record<string | number, ReactNode> = {};
@@ -114,7 +114,7 @@ export const DieRollPanel = (props: Props) => {
 					results.length > 0 ?
 						<div className='result-row'>
 							{(props.type === 'Power Roll') ? results.map((r, n) => <Statistic key={n} title='d10' value={r} />) : null}
-							{(props.type === 'Power Roll') ? <Statistic title='Modifier' value={`${props.modifier >= 0 ? '+' : ''}${props.modifier}`} /> : null}
+							{(props.type === 'Power Roll') ? props.modifiers.filter(m => m !== 0).map((m, n) => <Statistic key={n} title='Modifier' value={`${m >= 0 ? '+' : ''}${m}`} />) : null}
 							{(props.type === 'Power Roll') && bonus ? <Statistic title={bonus > 0 ? 'Edge' : 'Bane'} value={`${bonus >= 0 ? '+' : ''}${bonus}`} /> : null}
 							<Statistic className='total' title='Total' value={total} />
 						</div>

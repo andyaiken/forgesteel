@@ -686,17 +686,27 @@ export const Main = (props: Props) => {
 
 	//#region Playbook
 
-	const createPlaybookElement = (kind: PlaybookElementKind) => {
+	const createPlaybookElement = (kind: PlaybookElementKind, original: Element | null) => {
 		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
 		let element: Element;
 
 		switch (kind) {
 			case 'encounter':
-				element = FactoryLogic.createEncounter();
+				if (original) {
+					element = JSON.parse(JSON.stringify(original)) as Negotiation;
+					element.id = Utils.guid();
+				} else {
+					element = FactoryLogic.createEncounter();
+				}
 				copy.encounters.push(element as Encounter);
 				break;
 			case 'negotiation':
-				element = FactoryLogic.createNegotiation();
+				if (original) {
+					element = JSON.parse(JSON.stringify(original)) as Negotiation;
+					element.id = Utils.guid();
+				} else {
+					element = FactoryLogic.createNegotiation();
+				}
 				copy.negotiations.push(element as Negotiation);
 				break;
 		}

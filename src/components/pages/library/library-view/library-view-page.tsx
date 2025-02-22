@@ -1,4 +1,5 @@
 import { Button, Popover } from 'antd';
+import { DownOutlined, EditOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
@@ -14,7 +15,6 @@ import { CulturePanel } from '../../../panels/elements/culture-panel/culture-pan
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel';
-import { DownOutlined } from '@ant-design/icons';
 import { Element } from '../../../../models/element';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
@@ -211,7 +211,7 @@ export const LibraryViewPage = (props: Props) => {
 					{
 						!subElementID ?
 							sourcebook.isHomebrew ?
-								<Button onClick={() => navigation.goToLibraryEdit(kind!, sourcebook.id, element.id)}>
+								<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(kind!, sourcebook.id, element.id)}>
 									Edit
 								</Button>
 								:

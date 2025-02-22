@@ -213,7 +213,7 @@ export const PlaybookEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<NumberSpin label='Impression' min={0} max={12} value={negotiation.impression} onChange={setImpression} />
+				<NumberSpin label='Impression' min={0} max={15} value={negotiation.impression} onChange={setImpression} />
 				<NumberSpin label='Interest' min={0} max={5} value={negotiation.interest} onChange={setInterest} />
 				<NumberSpin label='Patience' min={0} max={5} value={negotiation.patience} onChange={setPatience} />
 			</Space>

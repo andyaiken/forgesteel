@@ -129,7 +129,7 @@ export const lightbender: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.createAbility({
-					ability:FactoryLogic.createAbility({
+					ability: FactoryLogic.createAbility({
 						id: 'lightbender-1-feature-4',
 						name: 'Stalker\'s Afterimage',
 						type: FactoryLogic.type.createTrigger('The lightbender takes damage from a strike.'),
@@ -214,7 +214,7 @@ export const lightbender: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.createAbility({
-					ability:FactoryLogic.createAbility({
+					ability: FactoryLogic.createAbility({
 						id: 'lightbender-2-feature-4',
 						name: 'Striking Afterimage',
 						type: FactoryLogic.type.createTrigger('The pouncer takes damage from a strike.'),

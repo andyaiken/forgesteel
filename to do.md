@@ -5,19 +5,10 @@
 | Monster             | Minions | Monsters | Retainers |
 |:--------------------|--------:|---------:|----------:|
 | Angulotl            | 4       | 4        | 1         |
-| Basilisk            | 0       | 2        | 0         |
 | Bredbeddle          | 0       | 1        | 0         |
 | Draconian           | 0       | 6        | 1         |
-| Fossil Cryptic      | 0       | 1        | 0         |
-| Griffon             | 0       | 2        | 0         |
-| Hag                 | 0       | 1        | 0         |
-| Lightbender         | 0       | 2        | 0         |
-| Medusa              | 0       | 1        | 0         |
-| Olothec             | 0       | 1        | 0         |
-| Shambling Mound     | 0       | 1        | 0         |
 | Time Raider         | 2       | 8        | 1         |
 | Voiceless Talker    | 2       | 5        | 0         |
-| Wyvern              | 0       | 2        | 0         |
 
 ### Hero Builder
 
@@ -45,10 +36,6 @@
 * Determine whether the encounter builder needs to take account of retainers
 * Use encounter templates in encounter editor
 * Auto-create encounters
-
-### Negotiation Builder
-
-* Add sample negotiators
 
 ### Montage Builder
 

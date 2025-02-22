@@ -1,4 +1,4 @@
-import { Button, Divider, Popover } from 'antd';
+import { Button, Popover } from 'antd';
 import { DownOutlined, EditOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Ability } from '../../../../models/ability';
@@ -10,7 +10,6 @@ import { Complication } from '../../../../models/complication';
 import { Culture } from '../../../../models/culture';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
-import { DropdownButton } from '../../../controls/dropdown-button/dropdown-button';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
@@ -103,6 +102,25 @@ export const HeroViewPage = (props: Props) => {
 					<Button onClick={navigation.goToHeroList}>
 						Close
 					</Button>
+					<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>Edit</Button>
+					<Popover
+						trigger='click'
+						placement='bottom'
+						content={(
+							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								<Button onClick={() => exportHero('image')}>Export As Image</Button>
+								<Button onClick={() => exportHero('pdf-portrait')}>Export As PDF (portrait)</Button>
+								<Button onClick={() => exportHero('pdf-landscape')}>Export As PDF (landscape)</Button>
+								<Button onClick={() => exportHero('json')}>Export As Data</Button>
+							</div>
+						)}
+					>
+						<Button>
+							Export
+							<DownOutlined />
+						</Button>
+					</Popover>
+					<DangerButton block={true} onConfirm={() => props.deleteHero(hero)} />
 					<Button onClick={() => props.showHeroState(hero, HeroStatePage.Hero)}>
 						State
 					</Button>
@@ -118,31 +136,6 @@ export const HeroViewPage = (props: Props) => {
 								<Toggle label='Show free strikes' value={props.options.showFreeStrikes} onChange={setShowFreeStrikes} />
 								<Toggle label='Show standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
 								<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
-								<Divider />
-								<DropdownButton
-									label='Export'
-									items={[
-										{
-											key: 'image',
-											label: <div className='ds-text centered-text'>Export As Image</div>
-										},
-										{
-											key: 'pdf-portrait',
-											label: <div className='ds-text centered-text'>Export As PDF (portrait)</div>
-										},
-										{
-											key: 'pdf-landscape',
-											label: <div className='ds-text centered-text'>Export As PDF (landscape)</div>
-										},
-										{
-											key: 'json',
-											label: <div className='ds-text centered-text'>Export As Data</div>
-										}
-									]}
-									onClick={exportHero}
-								/>
-								<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>Edit</Button>
-								<DangerButton block={true} onConfirm={() => props.deleteHero(hero)} />
 							</div>
 						)}
 					>

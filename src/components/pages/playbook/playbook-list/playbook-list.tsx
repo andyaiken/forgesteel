@@ -7,6 +7,7 @@ import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { Format } from '../../../../utils/format';
 import { Negotiation } from '../../../../models/negotiation';
+import { NegotiationData } from '../../../../data/negotiation-data';
 import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/negotiation-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
@@ -23,7 +24,7 @@ interface Props {
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
-	createElement: (kind: PlaybookElementKind) => void;
+	createElement: (kind: PlaybookElementKind, original: Element | null) => void;
 	importElement: (kind: PlaybookElementKind, element: Element) => void;
 }
 
@@ -39,8 +40,8 @@ export const PlaybookListPage = (props: Props) => {
 		setPreviousTab(tabKey);
 	}
 
-	const createElement = () => {
-		props.createElement(element);
+	const createElement = (original: Element | null) => {
+		props.createElement(element, original);
 	};
 
 	const getEncounters = () => {
@@ -117,6 +118,21 @@ export const PlaybookListPage = (props: Props) => {
 		const encounters = getEncounters();
 		const negotiations = getNegotiations();
 
+		const exampleNegotiations = [
+			NegotiationData.banditChief,
+			NegotiationData.knight,
+			NegotiationData.guildmaster,
+			NegotiationData.warlord,
+			NegotiationData.burgomaster,
+			NegotiationData.virtuoso,
+			NegotiationData.highPriest,
+			NegotiationData.duke,
+			NegotiationData.dragon,
+			NegotiationData.monarch,
+			NegotiationData.lich,
+			NegotiationData.deity
+		];
+
 		return (
 			<div className='playbook-list-page'>
 				<AppHeader breadcrumbs={[ { label: 'Playbook' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
@@ -145,7 +161,7 @@ export const PlaybookListPage = (props: Props) => {
 								</div>
 								<Divider />
 								<Space>
-									<Button block={true} icon={<PlusCircleOutlined />} onClick={createElement}>Create</Button>
+									<Button block={true} icon={<PlusCircleOutlined />} onClick={() => createElement(null)}>Create</Button>
 									<div className='ds-text'>or</div>
 									<Upload
 										style={{ width: '100%' }}
@@ -164,6 +180,20 @@ export const PlaybookListPage = (props: Props) => {
 										<Button block={true} icon={<DownloadOutlined />}>Import</Button>
 									</Upload>
 								</Space>
+								{
+									element === 'negotiation' ?
+										<div>
+											<div className='ds-text centered-text'>or start with an example:</div>
+											<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
+												{
+													exampleNegotiations.map(n => (
+														<Button key={n.id} block={true} onClick={() => createElement(n)}>{n.name}</Button>
+													))
+												}
+											</div>
+										</div>
+										: null
+								}
 							</div>
 						)}
 					>

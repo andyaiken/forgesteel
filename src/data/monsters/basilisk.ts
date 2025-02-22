@@ -148,7 +148,7 @@ A target that ends two consecutive turns restrained by this ability is petrified
 					})
 				}),
 				FactoryLogic.feature.createAbility({
-					ability:FactoryLogic.createAbility({
+					ability: FactoryLogic.createAbility({
 						id: 'basilisk-1-feature-4',
 						name: 'Lash Out',
 						type: FactoryLogic.type.createTrigger('The basilisk takes melee damage.'),
@@ -249,7 +249,7 @@ A target that ends two consecutive turns restrained by this ability is petrified
 					})
 				}),
 				FactoryLogic.feature.createAbility({
-					ability:FactoryLogic.createAbility({
+					ability: FactoryLogic.createAbility({
 						id: 'basilisk-2-feature-4',
 						name: 'Neurotoxin Splash',
 						type: FactoryLogic.type.createTrigger('The tonguesnapper takes melee damage.'),

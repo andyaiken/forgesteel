@@ -134,7 +134,7 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 					})
 				}),
 				FactoryLogic.feature.createAbility({
-					ability:FactoryLogic.createAbility({
+					ability: FactoryLogic.createAbility({
 						id: 'wyvern-1-feature-4',
 						name: 'Retaliatory Dive',
 						type: FactoryLogic.type.createTrigger('A creature deals damage to the lurker with a ranged ability.'),
@@ -229,7 +229,7 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 					})
 				}),
 				FactoryLogic.feature.createAbility({
-					ability:FactoryLogic.createAbility({
+					ability: FactoryLogic.createAbility({
 						id: 'wyvern-2-feature-4',
 						name: 'Deterring Sting',
 						cost: 1,

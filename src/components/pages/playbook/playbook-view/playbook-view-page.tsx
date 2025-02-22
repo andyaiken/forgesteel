@@ -1,8 +1,8 @@
 import { Button, Popover } from 'antd';
+import { DownOutlined, EditOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
-import { DownOutlined } from '@ant-design/icons';
 import { Element } from '../../../../models/element';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
@@ -67,7 +67,7 @@ export const PlaybookViewPage = (props: Props) => {
 					<Button onClick={() => navigation.goToPlaybookList(kind!)}>
 						Close
 					</Button>
-					<Button onClick={() => navigation.goToPlaybookEdit(kind!, elementID!)}>
+					<Button icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit(kind!, elementID!)}>
 						Edit
 					</Button>
 					<Popover

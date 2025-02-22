@@ -138,7 +138,7 @@ The griffon flies up to half their speed towards the ground and then sends the c
 					})
 				}),
 				FactoryLogic.feature.createAbility({
-					ability:FactoryLogic.createAbility({
+					ability: FactoryLogic.createAbility({
 						id: 'griffon-1-feature-4',
 						name: 'Zephyr Feint',
 						type: FactoryLogic.type.createTrigger('The griffon takes damage.'),
@@ -220,7 +220,7 @@ The griffon flies up to half their speed towards the ground and then sends the c
 					})
 				}),
 				FactoryLogic.feature.createAbility({
-					ability:FactoryLogic.createAbility({
+					ability: FactoryLogic.createAbility({
 						id: 'griffon-2-feature-4',
 						name: 'Circle and Strike',
 						type: FactoryLogic.type.createTrigger('The griffon flies above a creature on the ground within 5.', { free: true }),

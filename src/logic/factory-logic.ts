@@ -627,13 +627,13 @@ export class FactoryLogic {
 	};
 
 	static distance = {
-		create: (data: { type: AbilityDistanceType, value: number, value2?: number, within?: number, qualifier?: string }): AbilityDistance => {
+		create: (data: { type: AbilityDistanceType, value: number, value2?: number, within?: number, qualifier?: string, special?: string }): AbilityDistance => {
 			return {
 				type: data.type,
 				value: data.value,
 				value2: data.value2 || 0,
 				within: data.within || 0,
-				special: '',
+				special: data.special || '',
 				qualifier: data.qualifier ?? ''
 			};
 		},

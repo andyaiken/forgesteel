@@ -137,15 +137,16 @@ export class PDFExport {
 		const features = HeroLogic.getFeatures(hero) as Feature[];
 
 		{
-			const heroicResourceFeature = features.find(f => hero.class && f.name == hero.class.heroicResource);
-			if(heroicResourceFeature && hero.class) {
-				const startup = /\s*At the start of each of your turns during combat, you gain (.+?) \w+?\.\s+/;
+			const resource = hero.class && hero.class.heroicResource.toLowerCase() || 'XXX';
+			const startup = new RegExp(String.raw`\s*At the start of each of your turns during combat, you gain (.+?) ${resource}\.\s*`, 'g');
+			const heroicResourceFeature = features.find(f => f.description.match(startup));
+			if(heroicResourceFeature) {
 				const startupAmount = heroicResourceFeature.description.match(startup);
 				if(startupAmount) {
 					texts['HeroicResourcesPerTurn'] = startupAmount[1];
 				}
 				ignoredFeatures[heroicResourceFeature.id] = true;
-				texts['HeroicResourceGains'] = 'Your resource is ' + hero.class.heroicResource.toLowerCase() + '.\n\n' + CleanupOutput(heroicResourceFeature.description.replace(startup, ''));
+				texts['HeroicResourceGains'] = 'Your resource is ' + resource + '.\n\n' + CleanupOutput(heroicResourceFeature.description.replace(startup, ''));
 			}
 		}
 

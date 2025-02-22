@@ -121,11 +121,11 @@ export const AbilityModal = (props: Props) => {
 							props.ability.powerRoll ?
 								<DieRollPanel
 									type='Power Roll'
-									modifier={
+									modifiers={[
 										(props.ability.powerRoll.characteristic.length > 0) ?
 											Math.max(...props.ability.powerRoll.characteristic.map(getCharacteristic))
 											: props.ability.powerRoll.bonus
-									}
+									]}
 								/>
 								: null
 						}

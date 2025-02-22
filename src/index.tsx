@@ -105,6 +105,12 @@ Promise.all(promises).then(results => {
 		playbook.negotiations = [];
 	}
 
+	playbook.negotiations.forEach(n => {
+		if (n.impression === undefined) {
+			n.impression = 1;
+		}
+	});
+
 	let options = results[4] as Options | null;
 	if (!options) {
 		options = {

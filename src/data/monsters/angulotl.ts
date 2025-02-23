@@ -288,7 +288,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 							tier2: '6 poison damage',
 							tier3: '7 poison damage'
 						}),
-						spend:[
+						spend: [
 							{ value: 2, effect: 'M<2 weakened (save ends). The target takes 2 poison damage at the start of each of their turns while they are weakened by this ability.' }
 						]
 					})

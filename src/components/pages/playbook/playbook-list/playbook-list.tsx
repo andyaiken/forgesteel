@@ -6,6 +6,9 @@ import { Element } from '../../../../models/element';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { Format } from '../../../../utils/format';
+import { Montage } from '../../../../models/montage';
+import { MontageData } from '../../../../data/montage-data';
+import { MontagePanel } from '../../../panels/elements/montage-panel/montage-panel';
 import { Negotiation } from '../../../../models/negotiation';
 import { NegotiationData } from '../../../../data/negotiation-data';
 import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/negotiation-panel';
@@ -60,6 +63,14 @@ export const PlaybookListPage = (props: Props) => {
 			], searchTerm));
 	};
 
+	const getMontages = () => {
+		return props.playbook.montages
+			.filter(item => Utils.textMatches([
+				item.name,
+				item.description
+			], searchTerm));
+	};
+
 	const getEncountersSection = (list: Encounter[]) => {
 		if (list.length === 0) {
 			return (
@@ -108,8 +119,32 @@ export const PlaybookListPage = (props: Props) => {
 		);
 	};
 
+	const getMontagesSection = (list: Montage[]) => {
+		if (list.length === 0) {
+			return (
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No montages'
+				/>
+			);
+		}
+
+		return (
+			<div className='playbook-section-row'>
+				{
+					list.map(m => (
+						<SelectablePanel key={m.id} onSelect={() => navigation.goToPlaybookView('montage', m.id)}>
+							<MontagePanel montage={m} />
+						</SelectablePanel>
+					))
+				}
+			</div>
+		);
+	};
+
 	try {
-		const elementOptions = [ 'encounter', 'negotiation' ]
+		const elementOptions = [ 'encounter', 'negotiation', 'montage' ]
 			.map(e => ({
 				value: e,
 				label: Format.capitalize(e, '-')
@@ -117,6 +152,7 @@ export const PlaybookListPage = (props: Props) => {
 
 		const encounters = getEncounters();
 		const negotiations = getNegotiations();
+		const montages = getMontages();
 
 		const exampleNegotiations = [
 			NegotiationData.banditChief,
@@ -131,6 +167,14 @@ export const PlaybookListPage = (props: Props) => {
 			NegotiationData.monarch,
 			NegotiationData.lich,
 			NegotiationData.deity
+		];
+
+		const exampleMontages = [
+			MontageData.fightFire,
+			MontageData.infiltrateThePalace,
+			MontageData.prepareForBattle,
+			MontageData.trackTheFugitive,
+			MontageData.wildernessRace
 		];
 
 		return (
@@ -194,6 +238,20 @@ export const PlaybookListPage = (props: Props) => {
 										</div>
 										: null
 								}
+								{
+									element === 'montage' ?
+										<div>
+											<div className='ds-text centered-text'>or start with an example:</div>
+											<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '10px' }}>
+												{
+													exampleMontages.map(m => (
+														<Button key={m.id} block={true} onClick={() => createElement(m)}>{m.name}</Button>
+													))
+												}
+											</div>
+										</div>
+										: null
+								}
 							</div>
 						)}
 					>
@@ -226,6 +284,16 @@ export const PlaybookListPage = (props: Props) => {
 									</div>
 								),
 								children: getNegotiationsSection(negotiations)
+							},
+							{
+								key: 'montage',
+								label: (
+									<div className='section-header'>
+										<div className='section-title'>Montages</div>
+										<div className='section-count'>{montages.length}</div>
+									</div>
+								),
+								children: getMontagesSection(montages)
 							}
 						]}
 						onChange={tabKey => setTabKey(tabKey as PlaybookElementKind)}

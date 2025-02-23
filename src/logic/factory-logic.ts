@@ -3,6 +3,7 @@ import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
 import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
+import { Montage, MontageChallenge, MontageSection } from '../models/montage';
 import { Project, ProjectProgress } from '../models/project';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
@@ -107,7 +108,8 @@ export class FactoryLogic {
 	static createPlaybook = (): Playbook => {
 		return {
 			encounters: [],
-			negotiations: []
+			negotiations: [],
+			montages: []
 		};
 	};
 
@@ -430,6 +432,54 @@ export class FactoryLogic {
 			patience: 1,
 			motivations: [],
 			pitfalls: []
+		};
+	};
+
+	static createMontage = (): Montage => {
+		return {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			scene: '',
+			sections: [ FactoryLogic.createMontageSection() ],
+			outcomes: {
+				totalSuccess: '',
+				partialSuccess: '',
+				totalFailure: ''
+			}
+		};
+	};
+
+	static createMontageSection = (): MontageSection => {
+		return {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			challenges: [],
+			twistInfo: '',
+			twists: []
+		};
+	};
+
+	static createMontageChallenge = (data: {
+		id: string,
+		name: string,
+		description: string,
+		characteristics?: Characteristic[],
+		skills?: string,
+		abilities?: string,
+		uses?: number
+	}): MontageChallenge => {
+		return {
+			id: data.id,
+			name: data.name,
+			description: data.description,
+			characteristics: data.characteristics || [],
+			skills: data.skills || '',
+			abilities: data.abilities || '',
+			uses: data.uses ?? 1,
+			successes: 0,
+			failures: 0
 		};
 	};
 

@@ -1,13 +1,13 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "6.59.0",
+	"version": "6.60.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
 	"scripts": {
 		"update": "npx npm-check-updates --interactive --format group",
-		"dev": "vite",
+		"start": "vite --host",
 		"lint": "npm run type:check && eslint .",
 		"preview": "vite preview",
 		"build": "vite build",

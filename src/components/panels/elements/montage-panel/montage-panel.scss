@@ -1,0 +1,11 @@
+.montage-panel {
+	display: flex;
+	flex-direction: column;
+	padding: 0 20px 20px 20px;
+	overflow: hidden;
+
+	&.compact {
+		margin-top: -10px;
+		padding: unset;
+	}
+}

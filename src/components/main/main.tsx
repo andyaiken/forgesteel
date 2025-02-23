@@ -18,6 +18,7 @@ import { Element } from '../../models/element';
 import { ElementModal } from '../modals/element/element-modal';
 import { Encounter } from '../../models/encounter';
 import { FactoryLogic } from '../../logic/factory-logic';
+import { Format } from '../../utils/format';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
 import { HeroEditPage } from '../pages/heroes/hero-edit/hero-edit-page';
@@ -34,6 +35,7 @@ import { LibraryListPage } from '../pages/library/library-list/library-list';
 import { LibraryViewPage } from '../pages/library/library-view/library-view-page';
 import { MainLayout } from './main-layout';
 import { MonsterModal } from '../modals/monster/monster-modal';
+import { Montage } from '../../models/montage';
 import { Negotiation } from '../../models/negotiation';
 import { Options } from '../../models/options';
 import { PDFExport } from '../../utils/pdf-export';
@@ -709,6 +711,15 @@ export const Main = (props: Props) => {
 				}
 				copy.negotiations.push(element as Negotiation);
 				break;
+			case 'montage':
+				if (original) {
+					element = JSON.parse(JSON.stringify(original)) as Montage;
+					element.id = Utils.guid();
+				} else {
+					element = FactoryLogic.createMontage();
+				}
+				copy.montages.push(element as Montage);
+				break;
 		}
 
 		persistPlaybook(copy).then(() => navigation.goToPlaybookView(kind, element.id));
@@ -722,6 +733,9 @@ export const Main = (props: Props) => {
 				break;
 			case 'negotiation':
 				copy.negotiations = copy.negotiations.filter(x => x.id !== element.id);
+				break;
+			case 'montage':
+				copy.montages = copy.montages.filter(x => x.id !== element.id);
 				break;
 		}
 
@@ -737,6 +751,9 @@ export const Main = (props: Props) => {
 				break;
 			case 'negotiation':
 				copy.negotiations = copy.negotiations.map(x => x.id === element.id ? element : x) as Negotiation[];
+				break;
+			case 'montage':
+				copy.montages = copy.montages.map(x => x.id === element.id ? element : x) as Montage[];
 				break;
 		}
 
@@ -756,6 +773,10 @@ export const Main = (props: Props) => {
 				copy.negotiations = copy.negotiations.map(x => x.id === element.id ? element : x) as Negotiation[];
 				copy.negotiations = Collections.sort<Negotiation>(copy.negotiations, item => item.name);
 				break;
+			case 'montage':
+				copy.montages = copy.montages.map(x => x.id === element.id ? element : x) as Montage[];
+				copy.montages = Collections.sort<Montage>(copy.montages, item => item.name);
+				break;
 		}
 
 		setDrawer(null);
@@ -763,21 +784,7 @@ export const Main = (props: Props) => {
 	};
 
 	const exportPlaybookElement = (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => {
-		let name: string;
-		let extension: string;
-
-		switch (kind) {
-			case 'encounter':
-				name = 'Encounter';
-				extension = 'encounter';
-				break;
-			case 'negotiation':
-				name = 'Negotiation';
-				extension = 'negotiation';
-				break;
-		};
-
-		Utils.export([ element.id ], element.name || name, element, extension, format);
+		Utils.export([ element.id ], element.name || Format.capitalize(kind), element, kind, format);
 	};
 
 	//#endregion

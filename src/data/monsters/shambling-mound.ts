@@ -8,7 +8,7 @@ import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const shamblingMound: MonsterGroup = {
 	id: 'monster-group-shambling-mound',
-	name: 'Ashen Hoarder',
+	name: 'Shambling Mound',
 	description: `
 The lush ground squelches under every footstep. Curtains of menacing vines block the way, and muffled groans echo distantly under the darkening canopy. By the time you realize the ground is moving, it’s too late— the shambling mound has devoured you.
 

@@ -1,6 +1,7 @@
 import { ankheg } from './monsters/ankheg';
 import { ashenHoarder } from './monsters/ashen-hoarder';
 import { basilisk } from './monsters/basilisk';
+import { bredbeddle } from './monsters/bredbeddle';
 import { bugbear } from './monsters/bugbear';
 import { chimera } from './monsters/chimera';
 import { demon } from './monsters/demon';
@@ -33,6 +34,7 @@ import { olothec } from './monsters/olothec';
 import { orc } from './monsters/orc';
 import { radenwight } from './monsters/radenwight';
 import { shamblingMound } from './monsters/shambling-mound';
+import { timeRaider } from './monsters/time-raider';
 import { troll } from './monsters/troll';
 import { undead } from './monsters/undead';
 import { undead2nd } from './monsters/undead-2nd';
@@ -45,6 +47,7 @@ export class MonsterData {
 	static ankheg = ankheg;
 	static ashenHoarder = ashenHoarder;
 	static basilisk = basilisk;
+	static bredbeddle = bredbeddle;
 	static bugbear = bugbear;
 	static chimera = chimera;
 	static demon = demon;
@@ -78,6 +81,7 @@ export class MonsterData {
 	static orc = orc;
 	static radenwight = radenwight;
 	static shamblingMound = shamblingMound;
+	static timeRaider = timeRaider;
 	static troll = troll;
 	static undead = undead;
 	static undead2nd = undead2nd;

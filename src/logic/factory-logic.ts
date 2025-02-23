@@ -687,14 +687,14 @@ export class FactoryLogic {
 				qualifier: data.qualifier ?? ''
 			};
 		},
-		createSelf: (): AbilityDistance => {
+		createSelf: (qualifier=''): AbilityDistance => {
 			return {
 				type: AbilityDistanceType.Self,
 				value: 0,
 				value2: 0,
 				within: 0,
 				special: '',
-				qualifier: ''
+				qualifier: qualifier
 			};
 		},
 		createMelee: (value = 1): AbilityDistance => {

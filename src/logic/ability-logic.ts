@@ -65,7 +65,11 @@ export class AbilityLogic {
 
 	static getDistance = (distance: AbilityDistance, hero?: Hero, ability?: Ability) => {
 		if (distance.type === AbilityDistanceType.Self) {
-			return 'Self';
+			if (distance.qualifier) {
+				return `Self (${distance.qualifier})`;
+			} else {
+				return 'Self';
+			}
 		}
 
 		if (distance.type === AbilityDistanceType.Special) {

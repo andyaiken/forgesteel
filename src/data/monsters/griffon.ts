@@ -197,7 +197,7 @@ The griffon flies up to half their speed towards the ground and then sends the c
 						name: 'Bound Ahead',
 						type: FactoryLogic.type.createAction(),
 						keywords: [],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Self, value: 0, qualifier: 'while grounded' }) ],
+						distance: [ FactoryLogic.distance.createSelf('while grounded') ],
 						target: 'Self',
 						effect: 'The griffon shifts up to their speed in a straight line. Each enemy who comes within 1 of the griffon during the move can choose to either take 5 damage or be knocked prone.'
 					})

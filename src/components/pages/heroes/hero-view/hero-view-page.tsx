@@ -102,7 +102,9 @@ export const HeroViewPage = (props: Props) => {
 					<Button onClick={navigation.goToHeroList}>
 						Close
 					</Button>
-					<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>Edit</Button>
+					<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>
+						Edit
+					</Button>
 					<Popover
 						trigger='click'
 						placement='bottom'

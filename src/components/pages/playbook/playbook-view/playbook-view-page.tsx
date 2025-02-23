@@ -6,6 +6,8 @@ import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Element } from '../../../../models/element';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
+import { Montage } from '../../../../models/montage';
+import { MontagePanel } from '../../../panels/elements/montage-panel/montage-panel';
 import { Negotiation } from '../../../../models/negotiation';
 import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/negotiation-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
@@ -50,6 +52,15 @@ export const PlaybookViewPage = (props: Props) => {
 			panel = (
 				<NegotiationPanel
 					negotiation={element as Negotiation}
+					mode={PanelMode.Full}
+				/>
+			);
+			break;
+		case 'montage':
+			element = props.playbook.montages.find(x => x.id === elementID) as Montage;
+			panel = (
+				<MontagePanel
+					montage={element as Montage}
 					mode={PanelMode.Full}
 				/>
 			);

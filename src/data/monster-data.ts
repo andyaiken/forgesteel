@@ -1,3 +1,4 @@
+import { angulotl } from './monsters/angulotl';
 import { ankheg } from './monsters/ankheg';
 import { ashenHoarder } from './monsters/ashen-hoarder';
 import { basilisk } from './monsters/basilisk';
@@ -7,6 +8,7 @@ import { chimera } from './monsters/chimera';
 import { demon } from './monsters/demon';
 import { demon2nd } from './monsters/demon-2nd';
 import { devil } from './monsters/devil';
+import { draconian } from './monsters/draconian';
 import { dragonCrucible } from './monsters/dragon-crucible';
 import { dragonGloom } from './monsters/dragon-gloom';
 import { dragonThorn } from './monsters/dragon-thorn';
@@ -38,12 +40,14 @@ import { timeRaider } from './monsters/time-raider';
 import { troll } from './monsters/troll';
 import { undead } from './monsters/undead';
 import { undead2nd } from './monsters/undead-2nd';
+import { voicelessTalker } from './monsters/voiceless-talker';
 import { warDog } from './monsters/wardog';
 import { werewolf } from './monsters/werewolf';
 import { wyvern } from './monsters/wyvern';
 import { xorannox } from './monsters/xorannox';
 
 export class MonsterData {
+	static angulotl = angulotl;
 	static ankheg = ankheg;
 	static ashenHoarder = ashenHoarder;
 	static basilisk = basilisk;
@@ -53,6 +57,7 @@ export class MonsterData {
 	static demon = demon;
 	static demon2nd = demon2nd;
 	static devil = devil;
+	static draconian = draconian;
 	static dragonCrucible = dragonCrucible;
 	static dragonGloom = dragonGloom;
 	static dragonThorn = dragonThorn;
@@ -85,6 +90,7 @@ export class MonsterData {
 	static troll = troll;
 	static undead = undead;
 	static undead2nd = undead2nd;
+	static voicelessTalker = voicelessTalker;
 	static warDog = warDog;
 	static werewolf = werewolf;
 	static wyvern = wyvern;

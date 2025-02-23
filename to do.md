@@ -1,15 +1,5 @@
 # Development Plans
 
-## Add Monsters
-
-| Monster             | Minions | Monsters | Retainers |
-|:--------------------|--------:|---------:|----------:|
-| Angulotl            | 4       | 4        | 1         |
-| Bredbeddle          | 0       | 1        | 0         |
-| Draconian           | 0       | 6        | 1         |
-| Time Raider         | 2       | 8        | 1         |
-| Voiceless Talker    | 2       | 5        | 0         |
-
 ### Hero Builder
 
 * Auto-create heroes

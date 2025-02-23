@@ -369,6 +369,7 @@ export class SourcebookData {
 			ArtifactData.mortalCoil
 		],
 		monsterGroups: [
+			MonsterData.angulotl,
 			MonsterData.ankheg,
 			MonsterData.ashenHoarder,
 			MonsterData.basilisk,
@@ -378,6 +379,7 @@ export class SourcebookData {
 			MonsterData.demon,
 			MonsterData.demon2nd,
 			MonsterData.devil,
+			MonsterData.draconian,
 			MonsterData.dragonCrucible,
 			MonsterData.dragonGloom,
 			MonsterData.dragonThorn,
@@ -410,6 +412,7 @@ export class SourcebookData {
 			MonsterData.troll,
 			MonsterData.undead,
 			MonsterData.undead2nd,
+			MonsterData.voicelessTalker,
 			MonsterData.warDog,
 			MonsterData.werewolf,
 			MonsterData.wyvern,

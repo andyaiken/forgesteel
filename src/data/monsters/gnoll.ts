@@ -89,7 +89,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			name: 'Abyssal Hyena',
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
-			keywords: [ 'Animal', 'Orc' ],
+			keywords: [ 'Abyssal','Animal', 'Gnoll' ],
 			encounterValue: 8,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(8),
@@ -242,7 +242,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 		}),
 		FactoryLogic.createMonster({
 			id: 'gnoll-5',
-			name: 'Gnoll Bloodrunner',
+			name: 'Gnoll Abyssal Archer',
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Band, MonsterRoleType.Artillery),
 			keywords: [ 'Abyssal', 'Gnoll' ],
@@ -265,9 +265,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
-							tier1: '7 corruption damage',
-							tier2: '10 corruption damage',
-							tier3: '13 corruption damage; M<2 slowed (save ends)'
+							tier1: '5 corruption damage',
+							tier2: '6 corruption damage',
+							tier3: '8 corruption damage; M<2 slowed (save ends)'
 						}),
 						effect: 'This ability has an edge against creatures not at full Stamina.'
 					})
@@ -301,7 +301,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 		}),
 		FactoryLogic.createMonster({
 			id: 'gnoll-6',
-			name: 'Gnoll Chainlock',
+			name: 'Gnoll Abyssal Summoner',
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Band, MonsterRoleType.Support),
 			keywords: [ 'Abyssal', 'Gnoll' ],
@@ -324,9 +324,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
-							tier1: '5 fire damage',
-							tier2: '7 fire damage',
-							tier3: '9 fire damage; I<2 burning (save ends)'
+							tier1: '4 fire damage',
+							tier2: '5 fire damage',
+							tier3: '7 fire damage; I<2 burning (save ends)'
 						}),
 						effect: 'A burning target takes 1d6 fire damage at the start of each of their turns until the condition ends.'
 					})
@@ -388,8 +388,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
 							tier1: '5 damage; push 2',
-							tier2: '7 damage; push 2',
-							tier3: '9 damage; grabbed M<2 target has a bane on escaping the grab'
+							tier2: '6 damage; push 2',
+							tier3: '8 damage; grabbed M<2 target has a bane on escaping the grab'
 						}),
 						effect: 'The bone splitter can\'t use three-tail flail on another target while the current target is grabbed.'
 					})
@@ -499,9 +499,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						target: 'One creature or object',
 						powerRoll: FactoryLogic.createPowerRoll({
 							bonus: 2,
-							tier1: '5 damage',
-							tier2: '7 damage',
-							tier3: '9 damage; A<2 bleeding (save ends)'
+							tier1: '4 damage',
+							tier2: '5 damage',
+							tier3: '7 damage; A<2 bleeding (save ends)'
 						}),
 						spend: [
 							{ value: 2, repeatable: true, effect: 'The marauder targets an additional creature or object for every 2 malice spent.' }
@@ -557,7 +557,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							bonus: 2,
 							tier1: '5 damage; push 1',
 							tier2: '6 damage; push 2',
-							tier3: '8 damage; push3; prone'
+							tier3: '8 damage; push 3; prone'
 						}),
 						effect: 'This ability deals an additional 4 damage while charging.'
 					})

@@ -5,6 +5,7 @@ import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
 import { DamageModifierType } from '../enums/damage-modifier-type';
+import { Domain } from '../models/domain';
 import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { FormatLogic } from '../logic/format-logic';
@@ -69,6 +70,8 @@ export class PDFExport {
 		const toggles: { [key: string]: boolean } = {};
 		const ignoredFeatures: { [key: string]: boolean } = {};
 
+		const features = HeroLogic.getFeatures(hero) as Feature[];
+
 		{
 			if (hero.class) {
 				// might/agility/reason/intuition/presence
@@ -81,6 +84,11 @@ export class PDFExport {
 					autoResizingFields.push(details.characteristic);
 				}
 			}
+		}
+
+		const domains = features.find(f => f.type == FeatureType.Domain)?.data?.selected as Domain[];
+		if(domains) {
+			texts['SubclassTop'] = domains.map(d => d.name).join(', ');
 		}
 
 		autoResizingFields.push(
@@ -134,18 +142,21 @@ export class PDFExport {
 			return all;
 		};
 
-		const features = HeroLogic.getFeatures(hero) as Feature[];
-
 		{
-			const heroicResourceFeature = features.find(f => hero.class && f.name == hero.class.heroicResource);
-			if(heroicResourceFeature && hero.class) {
-				const startup = /\s*At the start of each of your turns during combat, you gain (.+?) \w+?\.\s+/;
+			const resource = hero.class && hero.class.heroicResource.toLowerCase() || 'XXX';
+			const startup = new RegExp(String.raw`\s*At the start of each of your turns during combat, you gain (.+?) ${resource}\.\s*`);
+			const heroicResourceFeature = features.find(f => f.description.match(startup));
+			if(heroicResourceFeature) {
 				const startupAmount = heroicResourceFeature.description.match(startup);
 				if(startupAmount) {
 					texts['HeroicResourcesPerTurn'] = startupAmount[1];
 				}
 				ignoredFeatures[heroicResourceFeature.id] = true;
-				texts['HeroicResourceGains'] = 'Your resource is ' + hero.class.heroicResource.toLowerCase() + '.\n\n' + CleanupOutput(heroicResourceFeature.description.replace(startup, ''));
+				let resourceGainText = 'Your resource is ' + resource + '.\n\n' + heroicResourceFeature.description.replace(startup, '');
+				if(domains) {
+					resourceGainText = resourceGainText + '\n' + domains.map(d => d.piety).join('');
+				}
+				texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
 			}
 		}
 

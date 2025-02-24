@@ -31,6 +31,7 @@ import { FeatureEditPanel } from '../../../panels/edit/feature-edit-panel/featur
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
+import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
@@ -126,6 +127,7 @@ export const LibraryEditPage = (props: Props) => {
 	const [ similarLevel, setSimilarLevel ] = useState<boolean>(true);
 	const [ similarRole, setSimilarRole ] = useState<boolean>(true);
 	const [ similarOrganization, setSimilarOrganization ] = useState<boolean>(true);
+	const [ similarSize, setSimilarSize ] = useState<boolean>(true);
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
@@ -1559,7 +1561,8 @@ export const LibraryEditPage = (props: Props) => {
 			.filter(m => m.id !== monster.id)
 			.filter(m => !similarLevel || (m.level === monster.level))
 			.filter(m => !similarRole || (m.role.type === monster.role.type))
-			.filter(m => !similarOrganization || (m.role.organization === monster.role.organization));
+			.filter(m => !similarOrganization || (m.role.organization === monster.role.organization))
+			.filter(m => !similarSize || ((m.size.value === monster.size.value) && (m.size.mod === monster.size.mod)));
 	};
 
 	const getSimilarMonstersSection = (monster: Monster) => {
@@ -1573,9 +1576,11 @@ export const LibraryEditPage = (props: Props) => {
 						: null
 				}
 				<Expander title='Similarity'>
+					<HeaderText>Similarity</HeaderText>
 					<Toggle label={`Match level (${monster.level})`} value={similarLevel} onChange={setSimilarLevel} />
 					<Toggle label={`Match role (${monster.role.type})`} value={similarRole} onChange={setSimilarRole} />
 					<Toggle label={`Match organization (${monster.role.organization})`} value={similarOrganization} onChange={setSimilarOrganization} />
+					<Toggle label={`Match size (${FormatLogic.getSize(monster.size)})`} value={similarSize} onChange={setSimilarSize} />
 				</Expander>
 				{
 					monsters.map(m => {
@@ -2033,7 +2038,7 @@ export const LibraryEditPage = (props: Props) => {
 									label: 'Preview',
 									children: (
 										<SelectablePanel>
-											<MonsterPanel monster={monster} monsterGroup={monsterGroup} />
+											<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Full} />
 										</SelectablePanel>
 									)
 								},

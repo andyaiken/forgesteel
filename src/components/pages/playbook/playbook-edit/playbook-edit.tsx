@@ -143,8 +143,22 @@ export const PlaybookEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const warnings = [];
+		const statblocks = Collections.distinct(encounter.groups.flatMap(g => g.slots).map(s => s.monsterID), s => s).length;
+		if (statblocks > 6) {
+			warnings.push(
+				<Alert
+					key='too-many-statblocks'
+					type='warning'
+					showIcon={true}
+					message={`You shouldn't generally have more than 6 different types of monster in an encounter (this encounter has ${statblocks}).`}
+				/>
+			);
+		}
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				{warnings}
 				{
 					encounter.groups.map((group, n) => (
 						<div key={group.id} className='group-row'>
@@ -935,11 +949,9 @@ export const PlaybookEditPage = (props: Props) => {
 
 	const getEncounterPreviewSection = () => {
 		return (
-			<div style={{ margin: '0 10px' }}>
-				<SelectablePanel>
-					<EncounterPanel encounter={element as Encounter} playbook={props.playbook} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
-				</SelectablePanel>
-			</div>
+			<SelectablePanel>
+				<EncounterPanel encounter={element as Encounter} playbook={props.playbook} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+			</SelectablePanel>
 		);
 	};
 

@@ -890,7 +890,7 @@ export const LibraryListPage = (props: Props) => {
 								key: 'monster-group',
 								label: (
 									<div className='section-header'>
-										<div className='section-title'>{props.options.showMonstersInGroups ? 'Monster Groups' : 'Monsters'}</div>
+										<div className='section-title'>Monsters</div>
 										<div className='section-count'>{props.options.showMonstersInGroups ? monsterGroups.length : monsters.length}</div>
 									</div>
 								),

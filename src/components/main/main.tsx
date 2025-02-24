@@ -76,48 +76,48 @@ export const Main = (props: Props) => {
 
 	//#region Persistence
 
-	const persistHeroes = async (heroes: Hero[]) => {
-		await localforage
+	const persistHeroes = (heroes: Hero[]) => {
+		return localforage
 			.setItem<Hero[]>('forgesteel-heroes', Collections.sort(heroes, h => h.name))
 			.then(setHeroes);
 	};
 
-	const persistHero = async (hero: Hero) => {
+	const persistHero = (hero: Hero) => {
 		if (heroes.some(h => h.id === hero.id)) {
 			const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
 			const list = copy.map(h => h.id === hero.id ? hero : h);
 
-			await persistHeroes(list);
+			return persistHeroes(list);
 		}
 		else {
 			const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
 			copy.push(hero);
 			Collections.sort(copy, h => h.name);
 
-			await persistHeroes(copy);
+			return persistHeroes(copy);
 		}
 	};
 
-	const persistPlaybook = async (playbook: Playbook) => {
-		await localforage
+	const persistPlaybook = (playbook: Playbook) => {
+		return localforage
 			.setItem<Playbook>('forgesteel-playbook', playbook)
 			.then(setPlaybook);
 	};
 
-	const persistHomebrewSourcebooks = async (homebrew: Sourcebook[]) => {
-		await localforage
+	const persistHomebrewSourcebooks = (homebrew: Sourcebook[]) => {
+		return localforage
 			.setItem<Sourcebook[]>('forgesteel-homebrew-settings', homebrew)
 			.then(setHomebrewSourcebooks);
 	};
 
-	const persistHiddenSourcebookIDs = async (ids: string[]) => {
-		await localforage
+	const persistHiddenSourcebookIDs = (ids: string[]) => {
+		return localforage
 			.setItem<string[]>('forgesteel-hidden-setting-ids', ids)
 			.then(setHiddenSourcebookIDs);
 	};
 
-	const persistOptions = async (options: Options) => {
-		await localforage
+	const persistOptions = (options: Options) => {
+		return localforage
 			.setItem<Options>('forgesteel-options', options)
 			.then(setOptions);
 	};
@@ -857,7 +857,7 @@ export const Main = (props: Props) => {
 				ability={ability}
 				hero={hero}
 				onClose={() => setDrawer(null)}
-				updateHero={async hero => await persistHero(hero)}
+				updateHero={persistHero}
 			/>
 		);
 	};
@@ -869,13 +869,12 @@ export const Main = (props: Props) => {
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
 				startPage={page}
 				onClose={() => setDrawer(null)}
-				onChange={async hero => await persistHero(hero)}
-				onLevelUp={async () => {
+				onChange={persistHero}
+				onLevelUp={() => {
 					if (hero && hero.class) {
 						hero.class.level += 1;
-						await persistHero(hero);
-						navigation.goToHeroEdit(hero.id, 'class');
 						setDrawer(null);
+						persistHero(hero).then(() => navigation.goToHeroEdit(hero.id, 'class'));
 					}
 				}}
 			/>
@@ -900,8 +899,8 @@ export const Main = (props: Props) => {
 				homebrewSourcebooks={homebrewSourcebooks}
 				hiddenSourcebookIDs={hiddenSourcebookIDs}
 				onClose={() => setDrawer(null)}
-				onHomebrewSourcebookChange={async sourcebooks => await persistHomebrewSourcebooks(sourcebooks)}
-				onHiddenSourcebookIDsChange={async ids => persistHiddenSourcebookIDs(ids)}
+				onHomebrewSourcebookChange={persistHomebrewSourcebooks}
+				onHiddenSourcebookIDsChange={persistHiddenSourcebookIDs}
 			/>
 		);
 	};
@@ -957,7 +956,7 @@ export const Main = (props: Props) => {
 								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								options={options}
-								setOptions={async options => await persistOptions(options)}
+								setOptions={persistOptions}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
@@ -1012,7 +1011,7 @@ export const Main = (props: Props) => {
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
-								setOptions={async options => await persistOptions(options)}
+								setOptions={persistOptions}
 								showSourcebooks={showSourcebooks}
 								createElement={(kind, sourcebookID) => createLibraryElement(kind, sourcebookID, null)}
 								importElement={importLibraryElement}

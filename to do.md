@@ -2,8 +2,8 @@
 
 ### Hero Builder
 
-* Auto-create heroes
 * Revenants should have 3 ancestry points if small
+* Auto-create heroes
 
 ### Library
 
@@ -15,23 +15,14 @@
 ### Monster Builder
 
 * Allow the user to manually add/remove from the set of similar monsters
-* Auto-create monsters
 * Create monsters by splicing other monsters together
+* Auto-create monsters
 
 ### Encounter Builder
 
-* Warnings:
-  * Monsters max hero level +2
-  * Max 6 stat blocks
-* Determine whether the encounter builder needs to take account of retainers
-* Use encounter templates in encounter editor
+* Use encounter templates
+* Add victory conditions
 * Auto-create encounters
-
-### Montage Builder
-
-* Add montages to the playbook
-* Add a montage builder
-* Add sample montages
 
 ### Director Tools
 

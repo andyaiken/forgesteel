@@ -6,6 +6,7 @@ interface HistogramPanelProps {
 	min?: number;
 	max?: number;
 	values: number[];
+	selected?: number;
 	onSelect?: (value: number) => void;
 }
 
@@ -32,7 +33,7 @@ export const HistogramPanel = (props: HistogramPanelProps) => {
 			<div className={props.onSelect ? 'histogram-panel clickable' : 'histogram-panel'}>
 				{
 					data.map(v => (
-						<div key={v.x} className='bar-section' onClick={() => onSelect(v.x)}>
+						<div key={v.x} className={v.x === props.selected ? 'bar-section selected' : 'bar-section'} onClick={() => onSelect(v.x)}>
 							<div style={{ height: `${height * (mode - v.value)}px` }} />
 							{v.value > 0 ? <div className='bar' style={{ height: `${height * v.value}px` }} /> : null}
 							<div className='label'>{v.x}</div>
@@ -49,6 +50,7 @@ export const HistogramPanel = (props: HistogramPanelProps) => {
 
 interface HistogramTextPanelProps {
 	values: string[];
+	selected?: string;
 	onSelect?: (value: string) => void;
 }
 
@@ -79,7 +81,7 @@ export const HistogramTextPanel = (props: HistogramTextPanelProps) => {
 			<div className={props.onSelect ? 'histogram-panel clickable' : 'histogram-panel'}>
 				{
 					sortedData.map(v => (
-						<div key={v.key} className='bar-section' onClick={() => onSelect(v.key)}>
+						<div key={v.key} className={v.key === props.selected ? 'bar-section selected' : 'bar-section'} onClick={() => onSelect(v.key)}>
 							<div style={{ height: `${height * (mode - v.value)}px` }} />
 							{v.value > 0 ? <div className='bar' style={{ height: `${height * v.value}px` }} /> : null}
 							<div className='label'>{v.key}</div>

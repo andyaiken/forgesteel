@@ -123,12 +123,6 @@ export const HeroViewPage = (props: Props) => {
 						</Button>
 					</Popover>
 					<DangerButton block={true} onConfirm={() => props.deleteHero(hero)} />
-					<Button onClick={() => props.showHeroState(hero, HeroStatePage.Hero)}>
-						State
-					</Button>
-					<Button onClick={() => props.showRules(hero)}>
-						Rules
-					</Button>
 					<Popover
 						trigger='click'
 						placement='bottom'
@@ -146,6 +140,13 @@ export const HeroViewPage = (props: Props) => {
 							<DownOutlined />
 						</Button>
 					</Popover>
+					<div className='divider' />
+					<Button onClick={() => props.showHeroState(hero, HeroStatePage.Hero)}>
+						State
+					</Button>
+					<Button onClick={() => props.showRules(hero)}>
+						Rules
+					</Button>
 				</AppHeader>
 				<div className='hero-view-page-content'>
 					<HeroPanel

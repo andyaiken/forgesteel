@@ -345,7 +345,7 @@ export class FactoryLogic {
 			level4: data.retainer.level4,
 			level7: data.retainer.level7,
 			level10: data.retainer.level10,
-			featuresByLevel: MonsterLogic.getRetainerAdvancementFeatures(data.level, data.retainer.level4, data.retainer.level7, data.retainer.level10)
+			featuresByLevel: MonsterLogic.getRetainerAdvancementFeatures(data.level, data.role.type, data.retainer.level4, data.retainer.level7, data.retainer.level10)
 		} : null;
 		return {
 			id: data.id || Utils.guid(),

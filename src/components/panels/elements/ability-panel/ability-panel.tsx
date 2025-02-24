@@ -101,7 +101,14 @@ export const AbilityPanel = (props: Props) => {
 							{props.ability.type.trigger ? <Field label='Trigger' value={props.ability.type.trigger} /> : null}
 							{props.ability.distance.length > 0 ? <Field label='Distance' value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.hero, props.ability)).join(' or ')} /> : null}
 							{props.ability.target ? <Field label='Target' value={props.ability.target} /> : null}
-							<Markdown text={props.ability.preEffect} />
+							{
+								props.ability.preEffect ?
+									<Field
+										label='Effect'
+										value={<Markdown text={props.ability.preEffect} useSpan={true} />}
+									/>
+									: null
+							}
 							{
 								props.ability.powerRoll ?
 									<PowerRollPanel
@@ -119,7 +126,14 @@ export const AbilityPanel = (props: Props) => {
 									/>
 									: null
 							}
-							<Markdown text={props.ability.effect} />
+							{
+								props.ability.effect ?
+									<Field
+										label='Effect'
+										value={<Markdown text={props.ability.effect} useSpan={true} />}
+									/>
+									: null
+							}
 							{
 								props.ability.strained ?
 									<Field

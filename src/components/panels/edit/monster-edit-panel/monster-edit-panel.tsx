@@ -1,5 +1,7 @@
 import { Alert, Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, ImportOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { AbilityUsage } from '../../../../enums/ability-usage';
+import { Badge } from '../../../controls/badge/badge';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
@@ -13,6 +15,7 @@ import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HistogramPanel } from '../../histogram/histogram-panel';
 import { Monster } from '../../../../models/monster';
+import { MonsterFeatureCategory } from '../../../../enums/monster-feature-category';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../../enums/monster-role-type';
@@ -21,7 +24,6 @@ import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
-import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -36,221 +38,23 @@ interface Props {
 
 export const MonsterEditPanel = (props: Props) => {
 	const [ monster, setMonster ] = useState<Monster>(props.monster);
-
-	const setName = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.name = value;
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setDescription = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.description = value;
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setKeywords = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.keywords = value.split(' ');
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setLevel = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.level = value;
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setRoleType = (value: MonsterRoleType) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.role.type = value;
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setRoleOrganization = (value: MonsterOrganizationType) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.role.organization = value;
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setEncounterValue = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.encounterValue = value;
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setSizeValue = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.size.value = value;
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setSizeMod = (value: 'T' | 'S' | 'M' | 'L') => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.size.mod = value;
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setSpeed = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.speed.value = value;
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setMovementMode = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.speed.modes = value;
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setStamina = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.stamina = value;
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setStability = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.stability = value;
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setFreeStrikeDamage = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.freeStrikeDamage = value;
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setWithCaptain = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.withCaptain = value;
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setCharacteristic = (ch: Characteristic, value: number) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.characteristics
-			.filter(c => c.characteristic === ch)
-			.forEach(c => c.value = value);
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const addFeature = () => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.features.push(FactoryLogic.feature.create({
-			id: Utils.guid(),
-			name: '',
-			description: ''
-		}));
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const importFeature = (feature: Feature) => {
-		const featureCopy = JSON.parse(JSON.stringify(feature)) as Feature;
-		featureCopy.id = Utils.guid();
-
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.features.push(featureCopy);
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const changeFeature = (feature: Feature) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		const index = copy.features.findIndex(f => f.id === feature.id);
-		if (index !== -1) {
-			copy.features[index] = feature;
-		}
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const moveFeature = (feature: Feature, direction: 'up' | 'down') => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		const index = copy.features.findIndex(f => f.id === feature.id);
-		copy.features = Collections.move(copy.features, index, direction);
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const deleteFeature = (feature: Feature) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.features = copy.features.filter(f => f.id !== feature.id);
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const setIsRetainer = (value: boolean) => {
-		const lvl4 = FactoryLogic.feature.createAbility({
-			ability: FactoryLogic.createAbility({
-				id: Utils.guid(),
-				name: 'Level 4',
-				type: FactoryLogic.type.createAction(),
-				distance: [],
-				target: ''
-			})
-		});
-
-		const lvl7 = FactoryLogic.feature.createAbility({
-			ability: FactoryLogic.createAbility({
-				id: Utils.guid(),
-				name: 'Level 7',
-				type: FactoryLogic.type.createAction(),
-				distance: [],
-				target: ''
-			})
-		});
-
-		const lvl10 = FactoryLogic.feature.createAbility({
-			ability: FactoryLogic.createAbility({
-				id: Utils.guid(),
-				name: 'Level 10',
-				type: FactoryLogic.type.createAction(),
-				distance: [],
-				target: ''
-			})
-		});
-
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		copy.retainer = value ? {
-			level: monster.level,
-			level4: lvl4,
-			level7: lvl7,
-			level10: lvl10,
-			featuresByLevel: MonsterLogic.getRetainerAdvancementFeatures(monster.level, lvl4, lvl7, lvl10)
-		} : null;
-		setMonster(copy);
-		props.onChange(copy);
-	};
-
-	const changeRetainerFeature = (feature: Feature, level: number) => {
-		const copy = JSON.parse(JSON.stringify(monster)) as Monster;
-		const data = copy.retainer!.featuresByLevel.find(lvl => lvl.level === level);
-		if (data) {
-			data.feature = feature;
-		}
-		setMonster(copy);
-		props.onChange(copy);
-	};
+	const [ selectedCategory, setSelectedCategory ] = useState<MonsterFeatureCategory>(MonsterFeatureCategory.Text);
 
 	const getNameAndDescriptionSection = () => {
+		const setName = (value: string) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.name = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const setDescription = (value: string) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.description = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
@@ -268,7 +72,104 @@ export const MonsterEditPanel = (props: Props) => {
 		);
 	};
 
-	const getStatsSection = () => {
+	const getTypeSection = () => {
+		const setKeywords = (value: string) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.keywords = value.split(' ');
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const setLevel = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.level = value;
+			if (copy.retainer) {
+				if (copy.level >= 4) {
+					copy.retainer.level4 = undefined;
+					copy.retainer.featuresByLevel = MonsterLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
+				}
+				if (copy.level >= 7) {
+					copy.retainer.level7 = undefined;
+					copy.retainer.featuresByLevel = MonsterLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
+				}
+				if (copy.level >= 10) {
+					copy.retainer.level10 = undefined;
+					copy.retainer.featuresByLevel = MonsterLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
+				}
+			}
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const setRoleType = (value: MonsterRoleType) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.role.type = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const setRoleOrganization = (value: MonsterOrganizationType) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.role.organization = value;
+			if (copy.role.organization === MonsterOrganizationType.Retainer) {
+				const lvl4 = FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: Utils.guid(),
+						name: 'Level 4',
+						type: FactoryLogic.type.createAction(),
+						distance: [],
+						target: ''
+					})
+				});
+
+				const lvl7 = FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: Utils.guid(),
+						name: 'Level 7',
+						type: FactoryLogic.type.createAction(),
+						distance: [],
+						target: ''
+					})
+				});
+
+				const lvl10 = FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: Utils.guid(),
+						name: 'Level 10',
+						type: FactoryLogic.type.createAction(),
+						distance: [],
+						target: ''
+					})
+				});
+
+				copy.retainer = {
+					level: copy.level,
+					level4: lvl4,
+					level7: lvl7,
+					level10: lvl10,
+					featuresByLevel: MonsterLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, lvl4, lvl7, lvl10)
+				};
+			} else {
+				copy.retainer = null;
+			}
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const setSizeValue = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.size.value = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const setSizeMod = (value: 'T' | 'S' | 'M' | 'L') => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.size.mod = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Keywords</HeaderText>
@@ -292,25 +193,11 @@ export const MonsterEditPanel = (props: Props) => {
 				<Select
 					style={{ width: '100%' }}
 					placeholder='Select organization'
-					options={[ MonsterOrganizationType.Minion, MonsterOrganizationType.Band, MonsterOrganizationType.Platoon, MonsterOrganizationType.Troop, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo ].map(option => ({ value: option, desc: MonsterLogic.getRoleOrganizationDescription(option) }))}
+					options={[ MonsterOrganizationType.NoOrganization, MonsterOrganizationType.Minion, MonsterOrganizationType.Band, MonsterOrganizationType.Platoon, MonsterOrganizationType.Troop, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo, MonsterOrganizationType.Retainer ].map(option => ({ value: option, desc: MonsterLogic.getRoleOrganizationDescription(option) }))}
 					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
 					value={monster.role.organization}
 					onChange={setRoleOrganization}
 				/>
-				<HeaderText>Encounter Value</HeaderText>
-				<NumberSpin min={1} value={monster.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />
-				{
-					props.similarMonsters.length > 0 ?
-						<Expander title='Similar Monsters'>
-							<HeaderText>Encounter Value</HeaderText>
-							<HistogramPanel
-								min={0}
-								values={props.similarMonsters.map(m => m.encounterValue)}
-								onSelect={setEncounterValue}
-							/>
-						</Expander>
-						: null
-				}
 				<HeaderText>Size</HeaderText>
 				<NumberSpin min={1} value={monster.size.value} onChange={setSizeValue} />
 				{
@@ -321,6 +208,70 @@ export const MonsterEditPanel = (props: Props) => {
 							value={monster.size.mod}
 							onChange={e => setSizeMod(e as 'T' | 'S' | 'M' | 'L')}
 						/>
+						: null
+				}
+			</Space>
+		);
+	};
+
+	const getStatsSection = () => {
+		const setEncounterValue = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.encounterValue = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const setSpeed = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.speed.value = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const setMovementMode = (value: string) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.speed.modes = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const setStamina = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.stamina = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const setStability = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.stability = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const setFreeStrikeDamage = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.freeStrikeDamage = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Encounter Value</HeaderText>
+				<NumberSpin min={1} value={monster.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />
+				{
+					props.similarMonsters.length > 0 ?
+						<Expander title='Similar Monsters'>
+							<HeaderText>Encounter Value</HeaderText>
+							<HistogramPanel
+								min={0}
+								values={props.similarMonsters.map(m => m.encounterValue)}
+								selected={monster.encounterValue}
+								onSelect={setEncounterValue}
+							/>
+						</Expander>
 						: null
 				}
 				<HeaderText>Speed</HeaderText>
@@ -338,6 +289,7 @@ export const MonsterEditPanel = (props: Props) => {
 							<HistogramPanel
 								min={0}
 								values={props.similarMonsters.map(m => m.speed.value)}
+								selected={monster.speed.value}
 								onSelect={setSpeed}
 							/>
 						</Expander>
@@ -350,8 +302,8 @@ export const MonsterEditPanel = (props: Props) => {
 						<Expander title='Similar Monsters'>
 							<HeaderText>Stamina</HeaderText>
 							<HistogramPanel
-								min={0}
 								values={props.similarMonsters.map(m => m.stamina)}
+								selected={monster.stamina}
 								onSelect={setStamina}
 							/>
 						</Expander>
@@ -366,6 +318,7 @@ export const MonsterEditPanel = (props: Props) => {
 							<HistogramPanel
 								min={0}
 								values={props.similarMonsters.map(m => m.stability)}
+								selected={monster.stability}
 								onSelect={setStability}
 							/>
 						</Expander>
@@ -380,18 +333,26 @@ export const MonsterEditPanel = (props: Props) => {
 							<HistogramPanel
 								min={0}
 								values={props.similarMonsters.map(m => m.freeStrikeDamage)}
+								selected={monster.freeStrikeDamage}
 								onSelect={setFreeStrikeDamage}
 							/>
 						</Expander>
 						: null
 				}
-				<HeaderText>With Captain</HeaderText>
-				<MultiLine label='With Captain' value={monster.withCaptain} onChange={setWithCaptain} />
 			</Space>
 		);
 	};
 
 	const getCharacteristicsSection = () => {
+		const setCharacteristic = (ch: Characteristic, value: number) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.characteristics
+				.filter(c => c.characteristic === ch)
+				.forEach(c => c.value = value);
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
@@ -418,6 +379,7 @@ export const MonsterEditPanel = (props: Props) => {
 											min={-5}
 											max={5}
 											values={props.similarMonsters.map(m => MonsterLogic.getCharacteristic(m, ch))}
+											selected={MonsterLogic.getCharacteristic(monster, ch)}
 											onSelect={value => setCharacteristic(ch, value)}
 										/>
 									</Expander>
@@ -431,15 +393,88 @@ export const MonsterEditPanel = (props: Props) => {
 	};
 
 	const getFeaturesSection = () => {
-		const similarFeatures: Feature[] = [];
+		const addFeature = () => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.features.push(FactoryLogic.feature.create({
+				id: Utils.guid(),
+				name: '',
+				description: ''
+			}));
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const importFeature = (feature: Feature) => {
+			const featureCopy = JSON.parse(JSON.stringify(feature)) as Feature;
+			featureCopy.id = Utils.guid();
+
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.features.push(featureCopy);
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const changeFeature = (feature: Feature) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const index = copy.features.findIndex(f => f.id === feature.id);
+			if (index !== -1) {
+				copy.features[index] = feature;
+			}
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const moveFeature = (feature: Feature, direction: 'up' | 'down') => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const index = copy.features.findIndex(f => f.id === feature.id);
+			copy.features = Collections.move(copy.features, index, direction);
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const deleteFeature = (feature: Feature) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.features = copy.features.filter(f => f.id !== feature.id);
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const similar: { category: MonsterFeatureCategory, feature: Feature, count: number }[] = [];
 		props.similarMonsters.forEach(m => {
-			m.features.forEach(f => {
-				if (!monster.features.some(mf => mf.name === f.name) && !similarFeatures.some(sf => sf.name === f.name)) {
-					similarFeatures.push(f);
-				}
-			});
+			m.features
+				.filter(f => !monster.features.some(mf => mf.name === f.name))
+				.forEach(f => {
+					const current = similar.find(sf => sf.feature.name === f.name);
+					if (current) {
+						current.count += 1;
+					} else {
+						let category = MonsterFeatureCategory.Text;
+						switch (f.type) {
+							case FeatureType.Ability:
+								category = MonsterFeatureCategory.Other;
+								switch (f.data.ability.type.usage) {
+									case AbilityUsage.Action:
+										category = MonsterFeatureCategory.Action;
+										break;
+									case AbilityUsage.Maneuver:
+										category = MonsterFeatureCategory.Maneuver;
+										break;
+									case AbilityUsage.Trigger:
+										category = MonsterFeatureCategory.Trigger;
+								}
+								break;
+							case FeatureType.DamageModifier:
+								category = MonsterFeatureCategory.DamageMod;
+								break;
+						}
+						similar.push({
+							category: category,
+							feature: f,
+							count: 1
+						});
+					}
+				});
 		});
-		const sortedFeatures = Collections.sort(similarFeatures, f => f.name);
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -474,23 +509,83 @@ export const MonsterEditPanel = (props: Props) => {
 						: null
 				}
 				<Button block={true} onClick={addFeature}>Add a new feature</Button>
-				{sortedFeatures.length > 0 ? <Divider /> : null}
+				{similar.length > 0 ? <Divider /> : null}
 				{
-					sortedFeatures.length > 0 ?
+					similar.length > 0 ?
 						<Expander title='Similar Monsters'>
 							<HeaderText>Features from Similar Monsters</HeaderText>
 							<Space direction='vertical' style={{ width: '100%' }}>
+								<Segmented
+									block={true}
+									options={
+										[ MonsterFeatureCategory.Text, MonsterFeatureCategory.DamageMod, MonsterFeatureCategory.Action, MonsterFeatureCategory.Maneuver, MonsterFeatureCategory.Trigger, MonsterFeatureCategory.Other ]
+											.map(tab => ({
+												value: tab,
+												label: <div className='category-selector'>{tab}</div>
+											}))
+									}
+									value={selectedCategory}
+									onChange={setSelectedCategory}
+								/>
 								{
-									sortedFeatures.map(f => (
+									similar.filter(s => s.category === selectedCategory).map(s => (
 										<Expander
-											key={f.id}
-											title={f.name}
+											key={s.feature.id}
+											title={s.feature.name}
+											tags={[ s.feature.type === FeatureType.Ability ? s.feature.data.ability.type.usage : s.feature.type ]}
 											extra={[
-												<Button key='up' type='text' icon={<ImportOutlined />} onClick={e => { e.stopPropagation(); importFeature(f); }} />
+												<Button key='up' type='text' icon={<ImportOutlined />} onClick={e => { e.stopPropagation(); importFeature(s.feature); }} />
 											]}
 										>
-											<FeaturePanel feature={f} mode={PanelMode.Full} />
+											<FeaturePanel feature={s.feature} mode={PanelMode.Full} />
 										</Expander>
+									))
+								}
+								{
+									similar.filter(s => s.category === selectedCategory).length === 0 ?
+										<Alert
+											type='warning'
+											showIcon={true}
+											message='None in similar monsters'
+										/>
+										: null
+								}
+							</Space>
+						</Expander>
+						: null
+				}
+			</Space>
+		);
+	};
+
+	const getMinionSection = () => {
+		const setWithCaptain = (value: string) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			copy.withCaptain = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const values = props.similarMonsters.map(m => m.withCaptain).filter(text => !!text);
+		const options = Collections.distinct(values, k => k).sort().map(text => ({
+			text: text,
+			count: values.filter(v => v === text).length
+		}));
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>With Captain</HeaderText>
+				<MultiLine label='With Captain' value={monster.withCaptain} onChange={setWithCaptain} />
+				{
+					props.similarMonsters.length > 0 ?
+						<Expander title='Similar Monsters'>
+							<HeaderText>With Captain</HeaderText>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								{
+									options.map((opt, n) => (
+										<Button key={n} block={true} onClick={() => setWithCaptain(opt.text)}>
+											{opt.text} {opt.count > 1 ? <Badge>x{opt.count}</Badge> : null}
+										</Button>
 									))
 								}
 							</Space>
@@ -502,25 +597,69 @@ export const MonsterEditPanel = (props: Props) => {
 	};
 
 	const getRetainerSection = () => {
+		const changeRetainerFeature = (feature: Feature, level: 4 | 7 | 10) => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			switch (level) {
+				case 4:
+					copy.retainer!.level4 = feature;
+					break;
+				case 7:
+					copy.retainer!.level7 = feature;
+					break;
+				case 10:
+					copy.retainer!.level10 = feature;
+					break;
+			}
+			copy.retainer!.featuresByLevel = MonsterLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer!.level4, copy.retainer!.level7, copy.retainer!.level10);
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<Toggle label='Is Retainer' value={!!monster.retainer} onChange={setIsRetainer} />
 				{
-					monster.retainer ?
-						monster.retainer.featuresByLevel.map(lvl => (
-							<Expander
-								key={lvl.level}
-								title={`Level ${lvl.level}`}
-								tags={[ lvl.feature.type === FeatureType.Ability ? lvl.feature.data.ability.type.usage : lvl.feature.type ]}
-							>
-								<FeatureEditPanel
-									feature={lvl.feature}
-									sourcebooks={props.sourcebooks}
-									allowedTypes={[ FeatureType.Ability ]}
-									onChange={f => changeRetainerFeature(f, lvl.level)}
-								/>
-							</Expander>
-						))
+					monster.retainer && monster.retainer.level4 ?
+						<Expander
+							title='Level 4'
+							tags={[ monster.retainer.level4.type === FeatureType.Ability ? monster.retainer.level4.data.ability.type.usage : monster.retainer.level4.type ]}
+						>
+							<FeatureEditPanel
+								feature={monster.retainer.level4}
+								sourcebooks={props.sourcebooks}
+								allowedTypes={[ FeatureType.Ability ]}
+								onChange={f => changeRetainerFeature(f, 4)}
+							/>
+						</Expander>
+						: null
+				}
+				{
+					monster.retainer && monster.retainer.level7 ?
+						<Expander
+							title='Level 7'
+							tags={[ monster.retainer.level7.type === FeatureType.Ability ? monster.retainer.level7.data.ability.type.usage : monster.retainer.level7.type ]}
+						>
+							<FeatureEditPanel
+								feature={monster.retainer.level7}
+								sourcebooks={props.sourcebooks}
+								allowedTypes={[ FeatureType.Ability ]}
+								onChange={f => changeRetainerFeature(f, 7)}
+							/>
+						</Expander>
+						: null
+				}
+				{
+					monster.retainer && monster.retainer.level10 ?
+						<Expander
+							title='Level 10'
+							tags={[ monster.retainer.level10.type === FeatureType.Ability ? monster.retainer.level10.data.ability.type.usage : monster.retainer.level10.type ]}
+						>
+							<FeatureEditPanel
+								feature={monster.retainer.level10}
+								sourcebooks={props.sourcebooks}
+								allowedTypes={[ FeatureType.Ability ]}
+								onChange={f => changeRetainerFeature(f, 10)}
+							/>
+						</Expander>
 						: null
 				}
 			</Space>
@@ -528,37 +667,53 @@ export const MonsterEditPanel = (props: Props) => {
 	};
 
 	try {
+		const tabs = [
+			{
+				key: 'monster',
+				label: 'Monster',
+				children: getNameAndDescriptionSection()
+			},
+			{
+				key: 'type',
+				label: 'Type',
+				children: getTypeSection()
+			},
+			{
+				key: 'stats',
+				label: 'Stats',
+				children: getStatsSection()
+			},
+			{
+				key: 'characteristics',
+				label: 'Characteristics',
+				children: getCharacteristicsSection()
+			},
+			{
+				key: 'features',
+				label: 'Features',
+				children: getFeaturesSection()
+			}
+		];
+
+		if (monster.role.organization === MonsterOrganizationType.Minion) {
+			tabs.push({
+				key: 'minion',
+				label: 'Minion',
+				children: getMinionSection()
+			});
+		}
+
+		if (monster.role.organization === MonsterOrganizationType.Retainer) {
+			tabs.push({
+				key: 'retainer',
+				label: 'Retainer',
+				children: getRetainerSection()
+			});
+		}
+
 		return (
 			<div className='monster-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Monster',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Stats',
-							children: getStatsSection()
-						},
-						{
-							key: '3',
-							label: 'Characteristics',
-							children: getCharacteristicsSection()
-						},
-						{
-							key: '4',
-							label: 'Features',
-							children: getFeaturesSection()
-						},
-						{
-							key: '5',
-							label: 'Retainer',
-							children: getRetainerSection()
-						}
-					]}
-				/>
+				<Tabs items={tabs} />
 			</div>
 		);
 	} catch (ex) {

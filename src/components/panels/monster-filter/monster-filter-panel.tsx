@@ -46,7 +46,7 @@ export const MonsterFilterPanel = (props: Props) => {
 		<div className='monster-filter-panel'>
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Input
-					placeholder='Name'
+					placeholder='Name, keywords'
 					allowClear={true}
 					value={props.monsterFilter.name}
 					onChange={e => setFilterName(e.target.value)}

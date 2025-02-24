@@ -89,7 +89,7 @@ export class ComplicationData {
 			FactoryLogic.feature.create({
 				id: 'comp-artifactBonded-b2',
 				name: 'Artifact Bonded Benefit',
-				description: 'Choose an artifact. The first time in an encounter that you are reduced to 0 Stamina against your will, the artifact appears on your person and then disappears at the end of your next turn.'
+				description: 'The first time in an encounter that you are reduced to 0 Stamina against your will, the artifact appears on your person and then disappears at the end of your next turn.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-artifactBonded-d',

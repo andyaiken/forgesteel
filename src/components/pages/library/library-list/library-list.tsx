@@ -1,5 +1,5 @@
 import { Alert, Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
-import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
+import { DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
 import { HistogramPanel, HistogramTextPanel } from '../../../panels/histogram/histogram-panel';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
@@ -704,6 +704,7 @@ export const LibraryListPage = (props: Props) => {
 						suffix={<SearchOutlined />}
 						onChange={e => setSearchTerm(e.target.value)}
 					/>
+					<div className='divider' />
 					<Popover
 						trigger='click'
 						placement='bottom'
@@ -737,7 +738,7 @@ export const LibraryListPage = (props: Props) => {
 								}
 								<Divider />
 								<Space>
-									<Button block={true} icon={<PlusCircleOutlined />} onClick={createElement}>Create</Button>
+									<Button block={true} icon={<PlusOutlined />} onClick={createElement}>Create</Button>
 									<div className='ds-text'>or</div>
 									<Upload
 										style={{ width: '100%' }}
@@ -759,11 +760,14 @@ export const LibraryListPage = (props: Props) => {
 							</div>
 						)}
 					>
-						<Button>
-							Create
-							<DownOutlined />
+						<Button icon={<PlusOutlined />}>
+							Add
 						</Button>
 					</Popover>
+					<div className='divider' />
+					<Button onClick={props.showSourcebooks}>
+						Sourcebooks
+					</Button>
 					<Popover
 						trigger='click'
 						placement='bottom'
@@ -773,14 +777,10 @@ export const LibraryListPage = (props: Props) => {
 							</div>
 						)}
 					>
-						<Button>
+						<Button icon={<SettingOutlined />}>
 							Options
-							<DownOutlined />
 						</Button>
 					</Popover>
-					<Button onClick={props.showSourcebooks}>
-						Sourcebooks
-					</Button>
 				</AppHeader>
 				<div className='library-list-page-content'>
 					<Tabs

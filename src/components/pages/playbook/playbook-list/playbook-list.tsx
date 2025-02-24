@@ -1,5 +1,5 @@
 import { Alert, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
-import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
+import { DownloadOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Element } from '../../../../models/element';
@@ -187,6 +187,7 @@ export const PlaybookListPage = (props: Props) => {
 						suffix={<SearchOutlined />}
 						onChange={e => setSearchTerm(e.target.value)}
 					/>
+					<div className='divider' />
 					<Popover
 						trigger='click'
 						placement='bottom'
@@ -205,7 +206,7 @@ export const PlaybookListPage = (props: Props) => {
 								</div>
 								<Divider />
 								<Space>
-									<Button block={true} icon={<PlusCircleOutlined />} onClick={() => createElement(null)}>Create</Button>
+									<Button block={true} icon={<PlusOutlined />} onClick={() => createElement(null)}>Create</Button>
 									<div className='ds-text'>or</div>
 									<Upload
 										style={{ width: '100%' }}
@@ -255,9 +256,8 @@ export const PlaybookListPage = (props: Props) => {
 							</div>
 						)}
 					>
-						<Button>
-							Create
-							<DownOutlined />
+						<Button icon={<PlusOutlined />}>
+							Add
 						</Button>
 					</Popover>
 				</AppHeader>

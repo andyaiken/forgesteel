@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { DownOutlined, EditOutlined } from '@ant-design/icons';
+import { CloseOutlined, EditOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Ability } from '../../../../models/ability';
 import { Ancestry } from '../../../../models/ancestry';
@@ -99,9 +99,10 @@ export const HeroViewPage = (props: Props) => {
 		return (
 			<div className='hero-view-page'>
 				<AppHeader breadcrumbs={[ { label: 'Heroes' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
-					<Button onClick={navigation.goToHeroList}>
+					<Button icon={<CloseOutlined />} onClick={navigation.goToHeroList}>
 						Close
 					</Button>
+					<div className='divider' />
 					<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>
 						Edit
 					</Button>
@@ -117,12 +118,18 @@ export const HeroViewPage = (props: Props) => {
 							</div>
 						)}
 					>
-						<Button>
+						<Button icon={<UploadOutlined />}>
 							Export
-							<DownOutlined />
 						</Button>
 					</Popover>
 					<DangerButton block={true} onConfirm={() => props.deleteHero(hero)} />
+					<div className='divider' />
+					<Button onClick={() => props.showHeroState(hero, HeroStatePage.Hero)}>
+						State
+					</Button>
+					<Button onClick={() => props.showRules(hero)}>
+						Rules
+					</Button>
 					<Popover
 						trigger='click'
 						placement='bottom'
@@ -135,18 +142,10 @@ export const HeroViewPage = (props: Props) => {
 							</div>
 						)}
 					>
-						<Button>
+						<Button icon={<SettingOutlined />}>
 							Options
-							<DownOutlined />
 						</Button>
 					</Popover>
-					<div className='divider' />
-					<Button onClick={() => props.showHeroState(hero, HeroStatePage.Hero)}>
-						State
-					</Button>
-					<Button onClick={() => props.showRules(hero)}>
-						Rules
-					</Button>
 				</AppHeader>
 				<div className='hero-view-page-content'>
 					<HeroPanel

@@ -1,5 +1,5 @@
 import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, EditOutlined, LeftOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, EditOutlined, LeftOutlined, SaveOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureAbility, FeatureMalice } from '../../../../models/feature';
 import { Monster, MonsterGroup } from '../../../../models/monster';
@@ -2073,10 +2073,10 @@ export const LibraryEditPage = (props: Props) => {
 		return (
 			<div className='library-edit-page'>
 				<AppHeader breadcrumbs={[ { label: `${editing} Builder` } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
-					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
+					<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
 						Save Changes
 					</Button>
-					<Button onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
+					<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
 						Cancel
 					</Button>
 				</AppHeader>

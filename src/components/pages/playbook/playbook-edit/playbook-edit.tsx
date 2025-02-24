@@ -1,5 +1,5 @@
 import { Alert, Button, Divider, Input, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, PlusOutlined, SaveOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
@@ -1093,10 +1093,10 @@ export const PlaybookEditPage = (props: Props) => {
 		return (
 			<div className='playbook-edit-page'>
 				<AppHeader breadcrumbs={[ { label: `${Format.capitalize(kind!)} Builder` } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
-					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
+					<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
 						Save Changes
 					</Button>
-					<Button onClick={() => navigation.goToPlaybookView(kind!, element.id)}>
+					<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybookView(kind!, element.id)}>
 						Cancel
 					</Button>
 				</AppHeader>

@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { DownOutlined, EditOutlined } from '@ant-design/icons';
+import { CloseOutlined, EditOutlined, LeftOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
@@ -200,14 +200,15 @@ export const LibraryViewPage = (props: Props) => {
 				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					{
 						subElementID ?
-							<Button onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
+							<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
 								Back
 							</Button>
 							:
-							<Button onClick={() => navigation.goToLibraryList(kind!)}>
+							<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibraryList(kind!)}>
 								Close
 							</Button>
 					}
+					<div className='divider' />
 					{
 						!subElementID ?
 							sourcebook.isHomebrew ?
@@ -229,9 +230,8 @@ export const LibraryViewPage = (props: Props) => {
 										</div>
 									)}
 								>
-									<Button>
+									<Button icon={<PlusOutlined />}>
 										Create Homebrew Version
-										<DownOutlined />
 									</Button>
 								</Popover>
 							: null
@@ -247,16 +247,13 @@ export const LibraryViewPage = (props: Props) => {
 							</div>
 						)}
 					>
-						<Button>
+						<Button icon={<UploadOutlined />}>
 							Export
-							<DownOutlined />
 						</Button>
 					</Popover>
 					{
 						sourcebook.isHomebrew && !subElementID ?
-							<DangerButton
-								onConfirm={() => props.delete(kind!, sourcebook.id, element)}
-							/>
+							<DangerButton onConfirm={() => props.delete(kind!, sourcebook.id, element)} />
 							: null
 					}
 				</AppHeader>

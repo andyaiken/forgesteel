@@ -1,8 +1,8 @@
 import { Alert, Button, Input, Radio, Segmented, Select, Space } from 'antd';
+import { CloseOutlined, RightOutlined, SaveOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureBonusData, FeatureData } from '../../../../models/feature';
 import { ReactNode, useMemo, useState } from 'react';
-import { RightOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -486,10 +486,10 @@ export const HeroEditPage = (props: Props) => {
 		return (
 			<div className='hero-edit-page'>
 				<AppHeader breadcrumbs={[ { label: 'Hero Builder' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
-					<Button type='primary' disabled={!dirty} onClick={saveChanges}>
+					<Button icon={<SaveOutlined />} type='primary' disabled={!dirty} onClick={saveChanges}>
 						Save Changes
 					</Button>
-					<Button onClick={() => navigation.goToHeroView(heroID!)}>
+					<Button icon={<CloseOutlined />} onClick={() => navigation.goToHeroView(heroID!)}>
 						Cancel
 					</Button>
 				</AppHeader>

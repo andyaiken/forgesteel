@@ -1,5 +1,5 @@
-import { Button, Upload } from 'antd';
-import { DownloadOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { Button, Popover, Space, Upload } from 'antd';
+import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Hero } from '../../../../models/hero';
 import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
@@ -25,26 +25,38 @@ export const HeroListPage = (props: Props) => {
 		return (
 			<div className='hero-list-page'>
 				<AppHeader breadcrumbs={[ { label: 'Heroes' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
-					<Button type='primary' icon={<PlusCircleOutlined />} onClick={props.addHero}>
-						Create A New Hero
-					</Button>
-					<Upload
-						style={{ width: '100%' }}
-						accept='.drawsteel-hero'
-						showUploadList={false}
-						beforeUpload={file => {
-							file
-								.text()
-								.then(async json => {
-									const hero = (JSON.parse(json) as Hero);
-									await props.importHero(hero);
-									navigation.goToHeroView(hero.id);
-								});
-							return false;
-						}}
+					<Popover
+						trigger='click'
+						placement='bottom'
+						content={(
+							<div style={{ display: 'flex', flexDirection: 'column' }}>
+								<Space>
+									<Button block={true} icon={<PlusOutlined />} onClick={props.addHero}>Create</Button>
+									<div className='ds-text'>or</div>
+									<Upload
+										style={{ width: '100%' }}
+										accept='.drawsteel-hero'
+										showUploadList={false}
+										beforeUpload={file => {
+											file
+												.text()
+												.then(json => {
+													const hero = (JSON.parse(json) as Hero);
+													props.importHero(hero);
+												});
+											return false;
+										}}
+									>
+										<Button block={true} icon={<DownloadOutlined />}>Import</Button>
+									</Upload>
+								</Space>
+							</div>
+						)}
 					>
-						<Button block={true} icon={<DownloadOutlined />}>Import a Hero</Button>
-					</Upload>
+						<Button icon={<PlusOutlined />}>
+							Add
+						</Button>
+					</Popover>
 				</AppHeader>
 				<div className='hero-list-page-content'>
 					{

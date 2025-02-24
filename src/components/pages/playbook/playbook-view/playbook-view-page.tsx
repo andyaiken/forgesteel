@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { DownOutlined, EditOutlined } from '@ant-design/icons';
+import { CloseOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
@@ -75,9 +75,10 @@ export const PlaybookViewPage = (props: Props) => {
 		return (
 			<div className='playbook-view-page'>
 				<AppHeader breadcrumbs={[ { label: 'Playbook' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
-					<Button onClick={() => navigation.goToPlaybookList(kind!)}>
+					<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybookList(kind!)}>
 						Close
 					</Button>
+					<div className='divider' />
 					<Button icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit(kind!, elementID!)}>
 						Edit
 					</Button>
@@ -92,14 +93,11 @@ export const PlaybookViewPage = (props: Props) => {
 							</div>
 						)}
 					>
-						<Button>
+						<Button icon={<UploadOutlined />}>
 							Export
-							<DownOutlined />
 						</Button>
 					</Popover>
-					<DangerButton
-						onConfirm={() => props.delete(kind!, element)}
-					/>
+					<DangerButton onConfirm={() => props.delete(kind!, element)} />
 				</AppHeader>
 				<div className='playbook-view-page-content'>
 					{panel}

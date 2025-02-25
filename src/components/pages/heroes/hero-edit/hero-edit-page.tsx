@@ -568,7 +568,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 				{
 					props.hero.ancestry ?
 						<div className='hero-edit-content-column selected' id='ancestry-selected'>
-							<SelectablePanel showShadow={false} onUnselect={() => props.selectAncestry(null)}>
+							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectAncestry(null) }}>
 								<AncestryPanel ancestry={props.hero.ancestry} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
@@ -699,7 +699,7 @@ const CultureSection = (props: CultureSectionProps) => {
 				{
 					props.hero.culture ?
 						<div className='hero-edit-content-column selected' id='culture-selected'>
-							<SelectablePanel showShadow={false} onUnselect={() => props.selectCulture(null)}>
+							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectCulture(null) }}>
 								<CulturePanel culture={props.hero.culture} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
@@ -787,7 +787,7 @@ const CareerSection = (props: CareerSectionProps) => {
 				{
 					props.hero.career ?
 						<div className='hero-edit-content-column selected' id='career-selected'>
-							<SelectablePanel showShadow={false} onUnselect={() => props.selectCareer(null)}>
+							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectCareer(null) }}>
 								<CareerPanel career={props.hero.career} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
@@ -969,7 +969,7 @@ const ClassSection = (props: ClassSectionProps) => {
 				{
 					props.hero.class ?
 						<div className='hero-edit-content-column selected' id='class-selected'>
-							<SelectablePanel showShadow={false} onUnselect={() => props.selectClass(null)}>
+							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectClass(null) }}>
 								<ClassPanel heroClass={props.hero.class} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
@@ -1038,7 +1038,7 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 				{
 					props.hero.complication ?
 						<div className='hero-edit-content-column selected' id='complication-selected'>
-							<SelectablePanel showShadow={false} onUnselect={() => props.selectComplication(null)}>
+							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectComplication(null) }}>
 								<ComplicationPanel complication={props.hero.complication} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>

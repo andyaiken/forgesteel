@@ -1,4 +1,4 @@
-import { Alert, Button, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Drawer, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, EditOutlined, LeftOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureAbility, FeatureMalice } from '../../../../models/feature';
@@ -49,6 +49,7 @@ import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
 import { MonsterRoleType } from '../../../../enums/monster-role-type';
+import { MonsterSelectModal } from '../../../modals/monster-select/monster-select-modal';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
@@ -127,6 +128,9 @@ export const LibraryEditPage = (props: Props) => {
 		return JSON.parse(JSON.stringify(original)) as Element;
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
+	const [ scratchpadMonsters, setScratchpadMonsters ] = useState<Monster[]>([]);
+	const [ hiddenMonsterIDs, setHiddenMonsterIDs ] = useState<string[]>([]);
+	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
@@ -1555,14 +1559,21 @@ export const LibraryEditPage = (props: Props) => {
 	};
 
 	const getSimilarMonsters = (monster: Monster) => {
-		return props.sourcebooks
+		const monsters = props.sourcebooks
 			.flatMap(sb => sb.monsterGroups)
 			.flatMap(mg => mg.monsters)
 			.filter(m => m.id !== monster.id)
 			.filter(m => !props.options.similarLevel || (m.level === monster.level))
 			.filter(m => !props.options.similarRole || (m.role.type === monster.role.type))
 			.filter(m => !props.options.similarOrganization || (m.role.organization === monster.role.organization))
-			.filter(m => !props.options.similarSize || ((m.size.value === monster.size.value) && (m.size.mod === monster.size.mod)));
+			.filter(m => !props.options.similarSize || ((m.size.value === monster.size.value) && (m.size.mod === monster.size.mod)))
+			.filter(m => !hiddenMonsterIDs.includes(m.id));
+
+		scratchpadMonsters
+			.filter(m => !monsters.map(monster => monster.id).includes(m.id))
+			.forEach(m => monsters.push(m));
+
+		return Collections.sort(monsters, m => MonsterLogic.getMonsterName(m));
 	};
 
 	const getSimilarMonstersSection = (monster: Monster) => {
@@ -1570,6 +1581,12 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<Expander title='Modify This List'>
+					<Space direction='vertical' style={{ paddingTop: '15px', width: '100%' }}>
+						<Button block={true} onClick={() => setDrawerOpen(true)}>Add a Monster</Button>
+						<Button block={true} disabled={hiddenMonsterIDs.length === 0} onClick={() => setHiddenMonsterIDs([])}>Restore Hidden Monsters</Button>
+					</Space>
+				</Expander>
 				{
 					monsters.map(m => {
 						const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id);
@@ -1578,11 +1595,27 @@ export const LibraryEditPage = (props: Props) => {
 						}
 
 						return (
-							<SelectablePanel key={m.id} onSelect={() => props.showMonster(m, monsterGroup)}>
+							<SelectablePanel
+								key={m.id}
+								action={{
+									label: 'Hide',
+									onClick: () => {
+										if (scratchpadMonsters.map(spm => spm.id).includes(m.id)) {
+											let copy = JSON.parse(JSON.stringify(scratchpadMonsters)) as Monster[];
+											copy = copy.filter(cm => cm.id !== m.id);
+											setScratchpadMonsters(copy);
+										} else {
+											const copy = JSON.parse(JSON.stringify(hiddenMonsterIDs)) as string[];
+											copy.push(m.id);
+											setHiddenMonsterIDs(copy);
+										}
+									}
+								}}
+								onSelect={() => props.showMonster(m, monsterGroup)}
+							>
 								<MonsterPanel
 									monster={m}
 									monsterGroup={monsterGroup}
-									mode={PanelMode.Compact}
 								/>
 							</SelectablePanel>
 						);
@@ -1597,6 +1630,20 @@ export const LibraryEditPage = (props: Props) => {
 						/>
 						: null
 				}
+				<Drawer open={drawerOpen} closeIcon={null} width='500px'>
+					<MonsterSelectModal
+						type='companion'
+						sourcebooks={props.sourcebooks}
+						selectOriginal={true}
+						onSelect={monster => {
+							const copy = JSON.parse(JSON.stringify(scratchpadMonsters)) as Monster[];
+							copy.push(monster);
+							setScratchpadMonsters(copy);
+							setDrawerOpen(false);
+						}}
+						onClose={() => setDrawerOpen(false)}
+					/>
+				</Drawer>
 			</Space>
 		);
 	};

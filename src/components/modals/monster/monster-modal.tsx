@@ -3,6 +3,7 @@ import { Monster, MonsterGroup } from '../../../models/monster';
 import { Modal } from '../modal/modal';
 import { MonsterPanel } from '../../panels/elements/monster-panel/monster-panel';
 import { PanelMode } from '../../../enums/panel-mode';
+import { UploadOutlined } from '@ant-design/icons';
 
 import './monster-modal.scss';
 
@@ -32,7 +33,7 @@ export const MonsterModal = (props: Props) => {
 								</div>
 							)}
 						>
-							<Button>
+							<Button icon={<UploadOutlined />}>
 								Export
 							</Button>
 						</Popover>

@@ -538,7 +538,7 @@ export const MonsterEditPanel = (props: Props) => {
 									onChange={setSelectedCategory}
 								/>
 								{
-									similar.filter(s => s.category === selectedCategory).map(s => (
+									Collections.sort(similar, f => f.feature.name).filter(s => s.category === selectedCategory).map(s => (
 										<Expander
 											key={s.feature.id}
 											title={s.feature.name}

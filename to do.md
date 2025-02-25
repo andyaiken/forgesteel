@@ -14,7 +14,6 @@
 
 ### Monster Builder
 
-* Allow the user to manually add/remove from the set of similar monsters
 * Create monsters by splicing other monsters together
 * Auto-create monsters
 

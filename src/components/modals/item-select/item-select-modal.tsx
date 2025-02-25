@@ -1,9 +1,9 @@
 import { Alert, Button, Input, Space } from 'antd';
+import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
 import { Item } from '../../../models/item';
 import { ItemPanel } from '../../panels/elements/item-panel/item-panel';
 import { ItemType } from '../../../enums/item-type';
 import { Modal } from '../modal/modal';
-import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
@@ -15,6 +15,7 @@ import './item-select-modal.scss';
 interface Props {
 	types: ItemType[];
 	sourcebooks: Sourcebook[];
+	selectOriginal?: boolean;
 	onClose: () => void;
 	onSelect: (item: Item) => void;
 }
@@ -44,7 +45,7 @@ export const ItemSelectModal = (props: Props) => {
 							suffix={<SearchOutlined />}
 							onChange={e => setSearchTerm(e.target.value)}
 						/>
-						<Button onClick={props.onClose}>Cancel</Button>
+						<Button icon={<CloseOutlined />} onClick={props.onClose}>Cancel</Button>
 					</>
 				}
 				content={
@@ -55,9 +56,13 @@ export const ItemSelectModal = (props: Props) => {
 									<SelectablePanel
 										key={item.id}
 										onSelect={() => {
-											const copy = JSON.parse(JSON.stringify(item)) as Item;
-											copy.id = Utils.guid();
-											props.onSelect(copy);
+											if (props.selectOriginal) {
+												props.onSelect(item);
+											} else {
+												const copy = JSON.parse(JSON.stringify(item)) as Item;
+												copy.id = Utils.guid();
+												props.onSelect(copy);
+											}
 										}}
 									>
 										<ItemPanel item={item} />

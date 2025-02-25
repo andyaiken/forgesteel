@@ -1,8 +1,8 @@
 import { Alert, Button, Input, Space } from 'antd';
+import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
 import { Modal } from '../modal/modal';
 import { Project } from '../../../models/project';
 import { ProjectPanel } from '../../panels/elements/project-panel/project-panel';
-import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
@@ -13,6 +13,7 @@ import './project-select-modal.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
+	selectOriginal?: boolean;
 	onClose: () => void;
 	onSelect: (project: Project) => void;
 }
@@ -39,7 +40,7 @@ export const ProjectSelectModal = (props: Props) => {
 							suffix={<SearchOutlined />}
 							onChange={e => setSearchTerm(e.target.value)}
 						/>
-						<Button onClick={props.onClose}>Cancel</Button>
+						<Button icon={<CloseOutlined />} onClick={props.onClose}>Cancel</Button>
 					</>
 				}
 				content={
@@ -50,9 +51,13 @@ export const ProjectSelectModal = (props: Props) => {
 									<SelectablePanel
 										key={project.id}
 										onSelect={() => {
-											const copy = JSON.parse(JSON.stringify(project)) as Project;
-											copy.id = Utils.guid();
-											props.onSelect(copy);
+											if (props.selectOriginal) {
+												props.onSelect(project);
+											} else {
+												const copy = JSON.parse(JSON.stringify(project)) as Project;
+												copy.id = Utils.guid();
+												props.onSelect(copy);
+											}
 										}}
 									>
 										<ProjectPanel project={project} />

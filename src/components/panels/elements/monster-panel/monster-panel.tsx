@@ -34,7 +34,7 @@ export const MonsterPanel = (props: Props) => {
 		if (props.mode !== PanelMode.Full) {
 			return (
 				<div className='monster-panel compact'>
-					<HeaderText>{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}</HeaderText>
+					<HeaderText level={1}>{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}</HeaderText>
 					<MonsterLabel monster={props.monster} />
 					<Flex align='center' justify='space-between'>
 						<div>{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>

@@ -1,10 +1,12 @@
 import { Alert, Button, Input, Space } from 'antd';
+import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
+import { Collections } from '../../../utils/collections';
 import { Modal } from '../modal/modal';
 import { Monster } from '../../../models/monster';
+import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterPanel } from '../../panels/elements/monster-panel/monster-panel';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
-import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
@@ -16,6 +18,7 @@ import './monster-select-modal.scss';
 interface Props {
 	type: 'companion' | 'mount' | 'retainer';
 	sourcebooks: Sourcebook[];
+	selectOriginal?: boolean;
 	onClose: () => void;
 	onSelect: (monster: Monster) => void;
 }
@@ -43,6 +46,8 @@ export const MonsterSelectModal = (props: Props) => {
 				...m.keywords
 			], searchTerm));
 
+		const sortedMonsters = Collections.sort(monsters, m => MonsterLogic.getMonsterName(m));
+
 		return (
 			<Modal
 				toolbar={
@@ -54,20 +59,24 @@ export const MonsterSelectModal = (props: Props) => {
 							suffix={<SearchOutlined />}
 							onChange={e => setSearchTerm(e.target.value)}
 						/>
-						<Button onClick={props.onClose}>Cancel</Button>
+						<Button icon={<CloseOutlined />} onClick={props.onClose}>Cancel</Button>
 					</>
 				}
 				content={
 					<div className='monster-select-modal'>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							{
-								monsters.map(m => (
+								sortedMonsters.map(m => (
 									<SelectablePanel
 										key={m.id}
 										onSelect={() => {
-											const copy = JSON.parse(JSON.stringify(m)) as Monster;
-											copy.id = Utils.guid();
-											props.onSelect(copy);
+											if (props.selectOriginal) {
+												props.onSelect(m);
+											} else {
+												const copy = JSON.parse(JSON.stringify(m)) as Monster;
+												copy.id = Utils.guid();
+												props.onSelect(copy);
+											}
 										}}
 									>
 										<MonsterPanel monster={m} />
@@ -75,7 +84,7 @@ export const MonsterSelectModal = (props: Props) => {
 								))
 							}
 							{
-								monsters.length === 0 ?
+								sortedMonsters.length === 0 ?
 									<Alert
 										type='warning'
 										showIcon={true}

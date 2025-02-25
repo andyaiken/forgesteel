@@ -342,7 +342,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 		}),
 		FactoryLogic.createMonster({
 			id: 'xorannox-5',
-			name: ' Necrotic Eye',
+			name: 'Necrotic Eye',
 			level: 6,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.NoOrganization, MonsterRoleType.Hexer),
 			keywords: [ 'Eyestalk', 'Overmind' ],

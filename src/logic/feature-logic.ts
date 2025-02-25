@@ -219,6 +219,19 @@ export class FeatureLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
+	static getFeatureTag = (feature: Feature) => {
+		if (feature.type === FeatureType.Ability) {
+			const ability = feature.data.ability;
+			if (ability.cost === 'signature') {
+				return 'Signature';
+			}
+
+			return ability.type.usage;
+		}
+
+		return feature.type;
+	};
+
 	static getFeatureTypeDescription = (type: FeatureType) => {
 		switch (type) {
 			case FeatureType.Ability:

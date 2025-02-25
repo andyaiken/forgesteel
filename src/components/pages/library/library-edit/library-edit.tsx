@@ -1,5 +1,5 @@
-import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, EditOutlined, LeftOutlined, SaveOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Alert, Button, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, EditOutlined, LeftOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureAbility, FeatureMalice } from '../../../../models/feature';
 import { Monster, MonsterGroup } from '../../../../models/monster';
@@ -28,10 +28,10 @@ import { ElementEditPanel } from '../../../panels/edit/element-edit-panel/elemen
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeatureEditPanel } from '../../../panels/edit/feature-edit-panel/feature-edit-panel';
+import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
-import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
@@ -52,6 +52,8 @@ import { MonsterRoleType } from '../../../../enums/monster-role-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
+import { Options } from '../../../../models/options';
+import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
@@ -72,11 +74,13 @@ import './library-edit.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
+	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
  	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	saveChanges: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
+	setOptions: (options: Options) => void;
 }
 
 export const LibraryEditPage = (props: Props) => {
@@ -123,11 +127,6 @@ export const LibraryEditPage = (props: Props) => {
 		return JSON.parse(JSON.stringify(original)) as Element;
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
-	const [ showSimilarMonsters, setShowSimilarMonsters ] = useState<boolean>(false);
-	const [ similarLevel, setSimilarLevel ] = useState<boolean>(true);
-	const [ similarRole, setSimilarRole ] = useState<boolean>(true);
-	const [ similarOrganization, setSimilarOrganization ] = useState<boolean>(true);
-	const [ similarSize, setSimilarSize ] = useState<boolean>(true);
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
@@ -210,7 +209,7 @@ export const LibraryEditPage = (props: Props) => {
 						<Expander
 							key={f.id}
 							title={f.name || 'Unnamed Feature'}
-							tags={[ f.type === FeatureType.Ability ? f.data.ability.type.usage : f.type ]}
+							tags={[ FeatureLogic.getFeatureTag(f) ]}
 							extra={[
 								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
 								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
@@ -531,7 +530,7 @@ export const LibraryEditPage = (props: Props) => {
 										<Expander
 											key={f.id}
 											title={f.name || 'Unnamed Feature'}
-											tags={[ f.type === FeatureType.Ability ? f.data.ability.type.usage : f.type ]}
+											tags={[ FeatureLogic.getFeatureTag(f) ]}
 											extra={[
 												<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'up'); }} />,
 												<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'down'); }} />,
@@ -802,7 +801,7 @@ export const LibraryEditPage = (props: Props) => {
 							<Expander
 								key={f.id}
 								title={f.name || 'Unnamed Feature'}
-								tags={[ f.type === FeatureType.Ability ? f.data.ability.type.usage : f.type ]}
+								tags={[ FeatureLogic.getFeatureTag(f) ]}
 								extra={[
 									<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(subclass, lvl.level, f, 'up'); }} />,
 									<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(subclass, lvl.level, f, 'down'); }} />,
@@ -1547,8 +1546,9 @@ export const LibraryEditPage = (props: Props) => {
 		return (
 			<MonsterEditPanel
 				monster={monster}
+				monsterGroup={monsterGroup}
 				sourcebooks={props.sourcebooks}
-				similarMonsters={showSimilarMonsters ? getSimilarMonsters(monster) : []}
+				similarMonsters={props.options.showSimilarMonsters ? getSimilarMonsters(monster) : []}
 				onChange={changeMonster}
 			/>
 		);
@@ -1559,10 +1559,10 @@ export const LibraryEditPage = (props: Props) => {
 			.flatMap(sb => sb.monsterGroups)
 			.flatMap(mg => mg.monsters)
 			.filter(m => m.id !== monster.id)
-			.filter(m => !similarLevel || (m.level === monster.level))
-			.filter(m => !similarRole || (m.role.type === monster.role.type))
-			.filter(m => !similarOrganization || (m.role.organization === monster.role.organization))
-			.filter(m => !similarSize || ((m.size.value === monster.size.value) && (m.size.mod === monster.size.mod)));
+			.filter(m => !props.options.similarLevel || (m.level === monster.level))
+			.filter(m => !props.options.similarRole || (m.role.type === monster.role.type))
+			.filter(m => !props.options.similarOrganization || (m.role.organization === monster.role.organization))
+			.filter(m => !props.options.similarSize || ((m.size.value === monster.size.value) && (m.size.mod === monster.size.mod)));
 	};
 
 	const getSimilarMonstersSection = (monster: Monster) => {
@@ -1570,18 +1570,6 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					monsters.length > 0 ?
-						<Toggle label='Show data from this list in the monster builder' value={showSimilarMonsters} onChange={setShowSimilarMonsters} />
-						: null
-				}
-				<Expander title='Similarity'>
-					<HeaderText>Similarity</HeaderText>
-					<Toggle label={`Match level (${monster.level})`} value={similarLevel} onChange={setSimilarLevel} />
-					<Toggle label={`Match role (${monster.role.type})`} value={similarRole} onChange={setSimilarRole} />
-					<Toggle label={`Match organization (${monster.role.organization})`} value={similarOrganization} onChange={setSimilarOrganization} />
-					<Toggle label={`Match size (${FormatLogic.getSize(monster.size)})`} value={similarSize} onChange={setSimilarSize} />
-				</Expander>
 				{
 					monsters.map(m => {
 						const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id);
@@ -2030,26 +2018,35 @@ export const LibraryEditPage = (props: Props) => {
 				} else {
 					const monsterGroup = element as MonsterGroup;
 					const monster = monsterGroup.monsters.find(m => m.id === subElementID) as Monster;
-					return (
-						<Tabs
-							items={[
-								{
-									key: '1',
-									label: 'Preview',
-									children: (
-										<SelectablePanel>
-											<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Full} />
-										</SelectablePanel>
-									)
-								},
-								{
-									key: '2',
-									label: 'Similar Monsters',
-									children: getSimilarMonstersSection(monster)
-								}
-							]}
-						/>
-					);
+
+					if (props.options.showSimilarMonsters) {
+						return (
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Preview',
+										children: (
+											<SelectablePanel>
+												<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Full} />
+											</SelectablePanel>
+										)
+									},
+									{
+										key: '2',
+										label: 'Similar Monsters',
+										children: getSimilarMonstersSection(monster)
+									}
+								]}
+							/>
+						);
+					} else {
+						return (
+							<SelectablePanel>
+								<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Full} />
+							</SelectablePanel>
+						);
+					}
 				}
 		}
 
@@ -2070,6 +2067,11 @@ export const LibraryEditPage = (props: Props) => {
 			}
 		}
 
+		let monster: Monster | null = null;
+		if ((kind === 'monster-group') && !!subElementID) {
+			monster = (element as MonsterGroup).monsters.find(m => m.id === subElementID) || null;
+		}
+
 		return (
 			<div className='library-edit-page'>
 				<AppHeader breadcrumbs={[ { label: `${editing} Builder` } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
@@ -2079,6 +2081,28 @@ export const LibraryEditPage = (props: Props) => {
 					<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
 						Cancel
 					</Button>
+					{
+						monster ?
+							<div className='divider' />
+							: null
+					}
+					{
+						monster ?
+							<Popover
+								trigger='click'
+								placement='bottom'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										<OptionsPanel mode='monster' options={props.options} setOptions={props.setOptions} />
+									</div>
+								)}
+							>
+								<Button icon={<SettingOutlined />}>
+									Options
+								</Button>
+							</Popover>
+							: null
+					}
 				</AppHeader>
 				<div className='library-edit-page-content'>
 					<div className='edit-column'>

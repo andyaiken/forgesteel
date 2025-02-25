@@ -394,6 +394,7 @@ export class FactoryLogic {
 			roles: [],
 			organizations: [],
 			level: [ minLevel, maxLevel ],
+			size: 1,
 			ev: [ 0, 120 ]
 		};
 	};

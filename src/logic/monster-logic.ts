@@ -788,6 +788,10 @@ export class MonsterLogic {
 			}
 		}
 
+		if (filter.size !== monster.size.value) {
+			return false;
+		}
+
 		const minLevel = Math.min(...filter.level);
 		const maxLevel = Math.max(...filter.level);
 		if ((monster.level < minLevel) || (monster.level > maxLevel)) {

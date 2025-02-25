@@ -56,3 +56,5 @@ export interface Hero {
 	state: HeroState;
 	abilityCustomizations: AbilityCustomization[];
 }
+
+export type HeroEditTab = 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'details';

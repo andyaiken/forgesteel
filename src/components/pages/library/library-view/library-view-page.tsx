@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { CloseOutlined, EditOutlined, LeftOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, CopyOutlined, EditOutlined, LeftOutlined, UploadOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
@@ -210,30 +210,32 @@ export const LibraryViewPage = (props: Props) => {
 					}
 					<div className='divider' />
 					{
-						!subElementID ?
-							sourcebook.isHomebrew ?
-								<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(kind!, sourcebook.id, element.id)}>
-									Edit
+						sourcebook.isHomebrew ?
+							<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(kind!, sourcebook.id, elementID!, subElementID)}>
+								Edit
+							</Button>
+							: null
+					}
+					{
+						!sourcebook.isHomebrew && !subElementID ?
+							<Popover
+								trigger='click'
+								placement='bottom'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										{
+											props.sourcebooks
+												.filter(sb => sb.isHomebrew)
+												.map(cs => <Button key={cs.id} onClick={() => props.createElement(kind!, cs.id, element)}>In {cs.name || 'Unnamed Collection'}</Button>)
+										}
+										<Button onClick={() => props.createElement(kind!, null, element)}>In a new collection</Button>
+									</div>
+								)}
+							>
+								<Button icon={<CopyOutlined />}>
+									Create Homebrew Version
 								</Button>
-								:
-								<Popover
-									trigger='click'
-									placement='bottom'
-									content={(
-										<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-											{
-												props.sourcebooks
-													.filter(sb => sb.isHomebrew)
-													.map(cs => <Button key={cs.id} onClick={() => props.createElement(kind!, cs.id, element)}>In {cs.name || 'Unnamed Collection'}</Button>)
-											}
-											<Button onClick={() => props.createElement(kind!, null, element)}>In a new collection</Button>
-										</div>
-									)}
-								>
-									<Button icon={<PlusOutlined />}>
-										Create Homebrew Version
-									</Button>
-								</Popover>
+							</Popover>
 							: null
 					}
 					<Popover

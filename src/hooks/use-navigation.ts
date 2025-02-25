@@ -1,3 +1,4 @@
+import { HeroEditTab } from '../models/hero';
 import { PlaybookElementKind } from '../models/playbook';
 import { SourcebookElementKind } from '../models/sourcebook';
 import { useNavigate } from 'react-router';
@@ -15,8 +16,8 @@ export const useNavigation = () => {
 		goToHeroView: (heroID: string) => {
 			return navigate(`/hero/view/${heroID}`);
 		},
-		goToHeroEdit: (heroID: string, tab: string) => {
-			return navigate(`/hero/edit/${heroID}/${tab}`);
+		goToHeroEdit: (heroID: string, page: HeroEditTab) => {
+			return navigate(`/hero/edit/${heroID}/${page}`);
 		},
 		goToLibraryList: (kind: SourcebookElementKind) => {
 			return navigate(`/library/${kind}`);

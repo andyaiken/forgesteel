@@ -218,7 +218,7 @@ td {
 
 .ant-popover {
 	.ant-divider {
-		margin: 15px 0;
+		margin: 10px 0;
 	}
 }
 
@@ -277,6 +277,10 @@ td {
 	&.ant-tabs-top >div>.ant-tabs-nav::before,
 	&.ant-tabs-bottom >div>.ant-tabs-nav::before {
 		border-color: rgba(5, 5, 5, 0.06);
+	}
+
+	.ant-tabs-tab+.ant-tabs-tab {
+		margin-left: 20px;
 	}
 }
 

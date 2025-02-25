@@ -16,9 +16,9 @@ import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
 import { HeroStatePage } from '../../../../enums/hero-state-page';
 import { Kit } from '../../../../models/kit';
 import { Options } from '../../../../models/options';
+import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
-import { Toggle } from '../../../controls/toggle/toggle';
 import { useMemo } from 'react';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
@@ -58,30 +58,6 @@ export const HeroViewPage = (props: Props) => {
 	const hero = useMemo(() => getHero(heroID!, props.heroes), [ heroID, props.heroes ]);
 
 	try {
-		const setShowSkillsInGroups = (value: boolean) => {
-			const copy = JSON.parse(JSON.stringify(props.options)) as Options;
-			copy.showSkillsInGroups = value;
-			props.setOptions(copy);
-		};
-
-		const setShowFreeStrikes = (value: boolean) => {
-			const copy = JSON.parse(JSON.stringify(props.options)) as Options;
-			copy.showFreeStrikes = value;
-			props.setOptions(copy);
-		};
-
-		const setShowStandardAbilities = (value: boolean) => {
-			const copy = JSON.parse(JSON.stringify(props.options)) as Options;
-			copy.showStandardAbilities = value;
-			props.setOptions(copy);
-		};
-
-		const setDimUnavailableAbilities = (value: boolean) => {
-			const copy = JSON.parse(JSON.stringify(props.options)) as Options;
-			copy.dimUnavailableAbilities = value;
-			props.setOptions(copy);
-		};
-
 		const exportHero = (key: string) => {
 			switch (key) {
 				case 'pdf-portrait':
@@ -135,10 +111,7 @@ export const HeroViewPage = (props: Props) => {
 						placement='bottom'
 						content={(
 							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Toggle label='Show skills in groups' value={props.options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
-								<Toggle label='Show free strikes' value={props.options.showFreeStrikes} onChange={setShowFreeStrikes} />
-								<Toggle label='Show standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
-								<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
+								<OptionsPanel mode='hero' options={props.options} setOptions={props.setOptions} />
 							</div>
 						)}
 					>

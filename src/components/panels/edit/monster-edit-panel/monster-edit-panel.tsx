@@ -1,5 +1,6 @@
 import { Alert, Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, ImportOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Monster, MonsterGroup } from '../../../../models/monster';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { Badge } from '../../../controls/badge/badge';
 import { Characteristic } from '../../../../enums/characteristic';
@@ -9,12 +10,12 @@ import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Feature } from '../../../../models/feature';
 import { FeatureEditPanel } from '../feature-edit-panel/feature-edit-panel';
+import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HistogramPanel } from '../../histogram/histogram-panel';
-import { Monster } from '../../../../models/monster';
 import { MonsterFeatureCategory } from '../../../../enums/monster-feature-category';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
@@ -31,6 +32,7 @@ import './monster-edit-panel.scss';
 
 interface Props {
 	monster: Monster;
+	monsterGroup: MonsterGroup;
 	sourcebooks: Sourcebook[];
 	similarMonsters: Monster[];
 	onChange: (monster: Monster) => void;
@@ -55,6 +57,14 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const setRandomName = () => {
+			if (props.monsterGroup.name) {
+				setName(`${props.monsterGroup.name} ${NameGenerator.generateName()}`);
+			} else {
+				setName(NameGenerator.generateName());
+			}
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
@@ -62,7 +72,7 @@ export const MonsterEditPanel = (props: Props) => {
 					className={monster.name === '' ? 'input-empty' : ''}
 					placeholder='Name'
 					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
+					addonAfter={<ThunderboltOutlined className='random-btn' onClick={setRandomName} />}
 					value={monster.name}
 					onChange={e => setName(e.target.value)}
 				/>
@@ -483,7 +493,7 @@ export const MonsterEditPanel = (props: Props) => {
 						<Expander
 							key={f.id}
 							title={f.name || 'Unnamed Feature'}
-							tags={[ f.type === FeatureType.Ability ? f.data.ability.type.usage : f.type ]}
+							tags={[ FeatureLogic.getFeatureTag(f) ]}
 							extra={[
 								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
 								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
@@ -532,7 +542,7 @@ export const MonsterEditPanel = (props: Props) => {
 										<Expander
 											key={s.feature.id}
 											title={s.feature.name}
-											tags={[ s.feature.type === FeatureType.Ability ? s.feature.data.ability.type.usage : s.feature.type ]}
+											tags={[ FeatureLogic.getFeatureTag(s.feature) ]}
 											extra={[
 												<Button key='up' type='text' icon={<ImportOutlined />} onClick={e => { e.stopPropagation(); importFeature(s.feature); }} />
 											]}
@@ -621,7 +631,7 @@ export const MonsterEditPanel = (props: Props) => {
 					monster.retainer && monster.retainer.level4 ?
 						<Expander
 							title='Level 4'
-							tags={[ monster.retainer.level4.type === FeatureType.Ability ? monster.retainer.level4.data.ability.type.usage : monster.retainer.level4.type ]}
+							tags={[ FeatureLogic.getFeatureTag(monster.retainer.level4) ]}
 						>
 							<FeatureEditPanel
 								feature={monster.retainer.level4}
@@ -636,7 +646,7 @@ export const MonsterEditPanel = (props: Props) => {
 					monster.retainer && monster.retainer.level7 ?
 						<Expander
 							title='Level 7'
-							tags={[ monster.retainer.level7.type === FeatureType.Ability ? monster.retainer.level7.data.ability.type.usage : monster.retainer.level7.type ]}
+							tags={[ FeatureLogic.getFeatureTag(monster.retainer.level7) ]}
 						>
 							<FeatureEditPanel
 								feature={monster.retainer.level7}
@@ -651,7 +661,7 @@ export const MonsterEditPanel = (props: Props) => {
 					monster.retainer && monster.retainer.level10 ?
 						<Expander
 							title='Level 10'
-							tags={[ monster.retainer.level10.type === FeatureType.Ability ? monster.retainer.level10.data.ability.type.usage : monster.retainer.level10.type ]}
+							tags={[ FeatureLogic.getFeatureTag(monster.retainer.level10) ]}
 						>
 							<FeatureEditPanel
 								feature={monster.retainer.level10}

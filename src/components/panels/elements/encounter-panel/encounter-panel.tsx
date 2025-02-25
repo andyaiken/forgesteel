@@ -9,6 +9,7 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../monster-panel/monster-panel';
+import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
@@ -21,6 +22,7 @@ interface Props {
 	encounter: Encounter;
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
+	options: Options;
 	mode?: PanelMode;
 	showDifficulty?: boolean;
 }
@@ -30,9 +32,12 @@ export const EncounterPanel = (props: Props) => {
 		const monsterIDs = EncounterLogic.getMonsterIDs(props.encounter);
 		const monsterGroups = EncounterLogic.getMonsterGroups(props.encounter, props.sourcebooks);
 
+		const strength = EncounterLogic.getStrength(props.encounter, props.sourcebooks);
+		const difficulty = EncounterLogic.getDifficulty(strength, props.options);
+
 		return (
 			<div className={props.mode === PanelMode.Full ? 'encounter-panel' : 'encounter-panel compact'} id={props.mode === PanelMode.Full ? props.encounter.id : undefined}>
-				<HeaderText level={1}>{props.encounter.name || 'Unnamed Encounter'}</HeaderText>
+				<HeaderText level={1} tags={[ difficulty ]}>{props.encounter.name || 'Unnamed Encounter'}</HeaderText>
 				<Markdown text={props.encounter.description} />
 				<div className='encounter-groups'>
 					{
@@ -96,7 +101,7 @@ export const EncounterPanel = (props: Props) => {
 				{
 					props.showDifficulty ?
 						<SelectablePanel>
-							<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} />
+							<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} options={props.options} />
 						</SelectablePanel>
 						: null
 				}

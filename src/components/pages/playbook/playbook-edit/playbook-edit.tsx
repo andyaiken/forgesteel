@@ -1,5 +1,5 @@
-import { Alert, Button, Divider, Input, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, PlusOutlined, SaveOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Alert, Button, Divider, Input, Popover, Select, Space, Tabs } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, PlusOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
@@ -30,6 +30,8 @@ import { NegotiationLogic } from '../../../../logic/negotiation-logic';
 import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/negotiation-panel';
 import { NegotiationTrait } from '../../../../enums/negotiation-trait';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
+import { Options } from '../../../../models/options';
+import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
@@ -43,11 +45,13 @@ import './playbook-edit.scss';
 interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
+	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	saveChanges: (kind: PlaybookElementKind, element: Element) => void;
+	setOptions: (options: Options) => void;
 }
 
 export const PlaybookEditPage = (props: Props) => {
@@ -950,7 +954,7 @@ export const PlaybookEditPage = (props: Props) => {
 	const getEncounterPreviewSection = () => {
 		return (
 			<SelectablePanel>
-				<EncounterPanel encounter={element as Encounter} playbook={props.playbook} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+				<EncounterPanel encounter={element as Encounter} playbook={props.playbook} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 			</SelectablePanel>
 		);
 	};
@@ -1043,6 +1047,7 @@ export const PlaybookEditPage = (props: Props) => {
 				<EncounterDifficultyPanel
 					encounter={element as Encounter}
 					sourcebooks={props.sourcebooks}
+					options={props.options}
 				/>
 			</SelectablePanel>
 		);
@@ -1099,6 +1104,28 @@ export const PlaybookEditPage = (props: Props) => {
 					<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybookView(kind!, element.id)}>
 						Cancel
 					</Button>
+					{
+						(kind === 'encounter') ?
+							<div className='divider' />
+							: null
+					}
+					{
+						(kind === 'encounter') ?
+							<Popover
+								trigger='click'
+								placement='bottom'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										<OptionsPanel mode='encounter' options={props.options} setOptions={props.setOptions} />
+									</div>
+								)}
+							>
+								<Button icon={<SettingOutlined />}>
+									Options
+								</Button>
+							</Popover>
+							: null
+					}
 				</AppHeader>
 				<div className='playbook-edit-page-content'>
 					<div className='edit-column'>

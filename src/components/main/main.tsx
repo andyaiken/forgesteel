@@ -137,8 +137,10 @@ export const Main = (props: Props) => {
 	};
 
 	const deleteHero = (hero: Hero) => {
+		navigation.goToHeroList();
+
 		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
-		persistHeroes(copy.filter(h => h.id !== hero.id)).then(() => navigation.goToHeroList());
+		persistHeroes(copy.filter(h => h.id !== hero.id));
 	};
 
 	const saveHero = (hero: Hero) => {
@@ -205,6 +207,8 @@ export const Main = (props: Props) => {
 	};
 
 	const deleteLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
+		navigation.goToLibraryList(kind);
+
 		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
 		const sourcebook = copy.find(cs => cs.id === sourcebookID);
 		if (sourcebook) {
@@ -245,7 +249,7 @@ export const Main = (props: Props) => {
 			}
 		}
 		setDrawer(null);
-		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibraryList(kind));
+		persistHomebrewSourcebooks(copy);
 	};
 
 	const saveLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
@@ -726,6 +730,8 @@ export const Main = (props: Props) => {
 	};
 
 	const deletePlaybookElement = (kind: PlaybookElementKind, element: Element) => {
+		navigation.goToPlaybookList(kind);
+
 		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
 		switch (kind) {
 			case 'encounter':
@@ -740,7 +746,7 @@ export const Main = (props: Props) => {
 		}
 
 		setDrawer(null);
-		persistPlaybook(copy).then(() => navigation.goToPlaybookList(kind));
+		persistPlaybook(copy);
 	};
 
 	const savePlaybookElement = (kind: PlaybookElementKind, element: Element) => {
@@ -983,7 +989,7 @@ export const Main = (props: Props) => {
 						element={<Navigate to='ancestry' replace={true} />}
 					/>
 					<Route
-						path='edit/:heroID/:tab'
+						path='edit/:heroID/:page'
 						element={
 							<HeroEditPage
 								heroes={heroes}
@@ -1002,7 +1008,7 @@ export const Main = (props: Props) => {
 						element={<Navigate to='ancestry' replace={true} />}
 					/>
 					<Route
-						path=':tab'
+						path=':kind'
 						element={
 							<LibraryListPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
@@ -1037,11 +1043,13 @@ export const Main = (props: Props) => {
 						element={
 							<LibraryEditPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								options={options}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
 								showMonster={onSelectMonster}
 								saveChanges={saveLibraryElement}
+								setOptions={persistOptions}
 							/>
 						}
 					/>
@@ -1052,16 +1060,18 @@ export const Main = (props: Props) => {
 						element={<Navigate to='encounter' replace={true} />}
 					/>
 					<Route
-						path=':tab'
+						path=':kind'
 						element={
 							<PlaybookListPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								options={options}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
 								createElement={createPlaybookElement}
 								importElement={importPlaybookElement}
+								setOptions={persistOptions}
 							/>
 						}
 					/>
@@ -1071,11 +1081,13 @@ export const Main = (props: Props) => {
 							<PlaybookViewPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								options={options}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
 								export={exportPlaybookElement}
 								delete={deletePlaybookElement}
+								setOptions={persistOptions}
 							/>
 						}
 					/>
@@ -1085,11 +1097,13 @@ export const Main = (props: Props) => {
 							<PlaybookEditPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								options={options}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
 								showMonster={onSelectMonster}
 								saveChanges={savePlaybookElement}
+								setOptions={persistOptions}
 							/>
 						}
 					/>

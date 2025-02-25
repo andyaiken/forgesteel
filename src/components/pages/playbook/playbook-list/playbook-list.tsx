@@ -1,22 +1,23 @@
-import { Alert, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
-import { DownloadOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { Alert, Button, Input, Popover, Space, Tabs, Upload } from 'antd';
+import { DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Element } from '../../../../models/element';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
-import { Format } from '../../../../utils/format';
 import { Montage } from '../../../../models/montage';
 import { MontageData } from '../../../../data/montage-data';
 import { MontagePanel } from '../../../panels/elements/montage-panel/montage-panel';
 import { Negotiation } from '../../../../models/negotiation';
 import { NegotiationData } from '../../../../data/negotiation-data';
 import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/negotiation-panel';
+import { Options } from '../../../../models/options';
+import { OptionsPanel } from '../../../panels/options/options-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Utils } from '../../../../utils/utils';
 import { useNavigation } from '../../../../hooks/use-navigation';
-import { usePlaybookTabKey } from '../../../../hooks/use-playbook-tab-key';
+import { useParams } from 'react-router';
 import { useState } from 'react';
 
 import './playbook-list.scss';
@@ -24,23 +25,25 @@ import './playbook-list.scss';
 interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
+	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	createElement: (kind: PlaybookElementKind, original: Element | null) => void;
 	importElement: (kind: PlaybookElementKind, element: Element) => void;
+	setOptions: (options: Options) => void;
 }
 
 export const PlaybookListPage = (props: Props) => {
 	const navigation = useNavigation();
-	const [ tabKey, setTabKey ] = usePlaybookTabKey();
-	const [ previousTab, setPreviousTab ] = useState(tabKey);
-	const [ element, setElement ] = useState<PlaybookElementKind>(tabKey);
+	const { kind } = useParams<{ kind: PlaybookElementKind }>();
+	const [ previousTab, setPreviousTab ] = useState(kind);
+	const [ element, setElement ] = useState<PlaybookElementKind>(kind ?? 'encounter');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
-	if (tabKey !== previousTab) {
-		setElement(tabKey);
-		setPreviousTab(tabKey);
+	if (kind !== previousTab) {
+		setElement(kind ?? 'encounter');
+		setPreviousTab(kind);
 	}
 
 	const createElement = (original: Element | null) => {
@@ -87,7 +90,7 @@ export const PlaybookListPage = (props: Props) => {
 				{
 					list.map(e => (
 						<SelectablePanel key={e.id} onSelect={() => navigation.goToPlaybookView('encounter', e.id)}>
-							<EncounterPanel encounter={e} playbook={props.playbook} sourcebooks={props.sourcebooks} />
+							<EncounterPanel encounter={e} playbook={props.playbook} sourcebooks={props.sourcebooks} options={props.options} />
 						</SelectablePanel>
 					))
 				}
@@ -144,12 +147,6 @@ export const PlaybookListPage = (props: Props) => {
 	};
 
 	try {
-		const elementOptions = [ 'encounter', 'negotiation', 'montage' ]
-			.map(e => ({
-				value: e,
-				label: Format.capitalize(e, '-')
-			}));
-
 		const encounters = getEncounters();
 		const negotiations = getNegotiations();
 		const montages = getMontages();
@@ -193,18 +190,6 @@ export const PlaybookListPage = (props: Props) => {
 						placement='bottom'
 						content={(
 							<div style={{ display: 'flex', flexDirection: 'column' }}>
-								<div>
-									<div className='ds-text'>What do you want to add?</div>
-									<Select
-										style={{ width: '100%' }}
-										placeholder='Select'
-										options={elementOptions}
-										optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-										value={element}
-										onChange={setElement}
-									/>
-								</div>
-								<Divider />
 								<Space>
 									<Button block={true} icon={<PlusOutlined />} onClick={() => createElement(null)}>Create</Button>
 									<div className='ds-text'>or</div>
@@ -260,10 +245,32 @@ export const PlaybookListPage = (props: Props) => {
 							Add
 						</Button>
 					</Popover>
+					{
+						(kind === 'encounter') ?
+							<div className='divider' />
+							: null
+					}
+					{
+						(kind === 'encounter') ?
+							<Popover
+								trigger='click'
+								placement='bottom'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										<OptionsPanel mode='encounter' options={props.options} setOptions={props.setOptions} />
+									</div>
+								)}
+							>
+								<Button icon={<SettingOutlined />}>
+									Options
+								</Button>
+							</Popover>
+							: null
+					}
 				</AppHeader>
 				<div className='playbook-list-page-content'>
 					<Tabs
-						activeKey={tabKey}
+						activeKey={kind}
 						items={[
 							{
 								key: 'encounter',
@@ -296,7 +303,7 @@ export const PlaybookListPage = (props: Props) => {
 								children: getMontagesSection(montages)
 							}
 						]}
-						onChange={tabKey => setTabKey(tabKey as PlaybookElementKind)}
+						onChange={k => navigation.goToPlaybookList(k as PlaybookElementKind)}
 					/>
 				</div>
 			</div>

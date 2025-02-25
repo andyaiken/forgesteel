@@ -2,6 +2,7 @@ import { Collections } from '../utils/collections';
 import { Encounter } from '../models/encounter';
 import { EncounterDifficulty } from '../enums/encounter-difficulty';
 import { MonsterLogic } from './monster-logic';
+import { Options } from '../models/options';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookLogic } from './sourcebook-logic';
 
@@ -34,8 +35,8 @@ export class EncounterLogic {
 		});
 	};
 
-	static getBudgets = (heroCount: number, heroLevel: number, heroVictories: number) => {
-		const effectiveHeroCount = heroCount + Math.floor(heroVictories / 2);
+	static getBudgets = (options: Options) => {
+		const effectiveHeroCount = options.heroCount + Math.floor(options.heroVictories / 2);
 
 		const getBudget = (heroCount: number, heroLevel: number) => {
 			const heroWorth = 4 + (2 * heroLevel);
@@ -43,15 +44,15 @@ export class EncounterLogic {
 		};
 
 		return {
-			maxTrivial: getBudget(effectiveHeroCount - 1, heroLevel),
-			maxEasy: getBudget(effectiveHeroCount, heroLevel),
-			maxStandard: getBudget(effectiveHeroCount + 1, heroLevel),
-			maxHard: getBudget(effectiveHeroCount + 3, heroLevel)
+			maxTrivial: getBudget(effectiveHeroCount - 1, options.heroLevel),
+			maxEasy: getBudget(effectiveHeroCount, options.heroLevel),
+			maxStandard: getBudget(effectiveHeroCount + 1, options.heroLevel),
+			maxHard: getBudget(effectiveHeroCount + 3, options.heroLevel)
 		};
 	};
 
-	static getDifficulty = (encounterStrength: number, heroCount: number, heroLevel: number, heroVictories: number) => {
-		const budgets = EncounterLogic.getBudgets(heroCount, heroLevel, heroVictories);
+	static getDifficulty = (encounterStrength: number, options: Options) => {
+		const budgets = EncounterLogic.getBudgets(options);
 
 		if (budgets.maxHard > 40) {
 			if (encounterStrength > budgets.maxHard * 500) {

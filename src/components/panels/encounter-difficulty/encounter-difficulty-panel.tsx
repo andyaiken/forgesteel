@@ -1,11 +1,10 @@
 import { Alert, Slider } from 'antd';
-import { ReactNode, useState } from 'react';
 import { Encounter } from '../../../models/encounter';
 import { EncounterLogic } from '../../../logic/encounter-logic';
-import { Expander } from '../../controls/expander/expander';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
-import { NumberSpin } from '../../controls/number-spin/number-spin';
+import { Options } from '../../../models/options';
+import { ReactNode } from 'react';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
 
@@ -13,27 +12,16 @@ import './encounter-difficulty-panel.scss';
 
 interface Props {
 	encounter: Encounter;
-	sourcebooks: Sourcebook[]
+	sourcebooks: Sourcebook[];
+	options: Options;
 }
 
 export const EncounterDifficultyPanel = (props: Props) => {
-	const [ heroCount, setHeroCount ] = useState<number>(4);
-	const [ heroLevel, setHeroLevel ] = useState<number>(1);
-	const [ heroVictories, setHeroVictories ] = useState<number>(0);
-
 	try {
-		const getPartyDescription = () => {
-			if (heroVictories > 0) {
-				return `${heroCount} heroes at level ${heroLevel} with ${heroVictories} victories`;
-			}
-
-			return `${heroCount} heroes at level ${heroLevel}`;
-		};
-
 		const count = EncounterLogic.getMonsterCount(props.encounter, props.sourcebooks);
-		const budgets = EncounterLogic.getBudgets(heroCount, heroLevel, heroVictories);
+		const budgets = EncounterLogic.getBudgets(props.options);
 		const strength = EncounterLogic.getStrength(props.encounter, props.sourcebooks);
-		const difficulty = EncounterLogic.getDifficulty(strength, heroCount, heroLevel, heroVictories);
+		const difficulty = EncounterLogic.getDifficulty(strength, props.options);
 		const victories = EncounterLogic.getVictories(difficulty);
 
 		const marks: Record<string | number, ReactNode> = {};
@@ -48,13 +36,13 @@ export const EncounterDifficultyPanel = (props: Props) => {
 			.map(s => SourcebookLogic.getMonster(props.sourcebooks, s.monsterID))
 			.filter(m => !!m)
 			.map(m => m.level);
-		if (Math.max(...levels) > heroLevel + 2) {
+		if (Math.max(...levels) > props.options.heroLevel + 2) {
 			warnings.push(
 				<Alert
 					key='too-high-level'
 					type='warning'
 					showIcon={true}
-					message={`This encounter contains a monster of level ${Math.max(...levels)}; for this party, anything above level ${heroLevel + 2} may cause problems.`}
+					message={`This encounter contains a monster of level ${Math.max(...levels)}; for this party, anything above level ${props.options.heroLevel + 2} may cause problems.`}
 				/>
 			);
 		}
@@ -84,12 +72,6 @@ export const EncounterDifficultyPanel = (props: Props) => {
 					<Field orientation='vertical' label='Victories' value={victories} />
 				</div>
 				{warnings}
-				<Expander title={getPartyDescription()}>
-					<HeaderText>Heroes</HeaderText>
-					<NumberSpin label='Heroes' min={1} value={heroCount} onChange={setHeroCount} />
-					<NumberSpin label='Level' min={1} max={10} value={heroLevel} onChange={setHeroLevel} />
-					<NumberSpin label='Victories' min={0} value={heroVictories} onChange={setHeroVictories} />
-				</Expander>
 			</div>
 		);
 	} catch (ex) {

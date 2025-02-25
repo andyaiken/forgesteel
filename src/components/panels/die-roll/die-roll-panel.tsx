@@ -90,7 +90,7 @@ export const DieRollPanel = (props: Props) => {
 				{
 					props.type === 'Power Roll' ?
 						<Expander title='Edges and Banes'>
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space direction='vertical' style={{ paddingTop: '15px', width: '100%' }}>
 								<NumberSpin
 									label='Edges'
 									value={edges}

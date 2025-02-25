@@ -2,6 +2,7 @@ import { Alert, Button, Input, Radio, Segmented, Select, Space } from 'antd';
 import { CloseOutlined, RightOutlined, SaveOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureBonusData, FeatureData } from '../../../../models/feature';
+import { Hero, HeroEditTab } from '../../../../models/hero';
 import { ReactNode, useMemo, useState } from 'react';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
@@ -23,7 +24,6 @@ import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
-import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroCustomizePanel } from '../../../panels/hero-customize/hero-customize-panel';
 import { HeroLogic } from '../../../../logic/hero-logic';
@@ -46,8 +46,6 @@ enum PageState {
 	Completed = 'Completed'
 }
 
-type HeroTab = 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'details';
-
 const matchElement = (element: Element, searchTerm: string) => {
 	const name = element.name.toLowerCase();
 	const desc = element.description.toLowerCase();
@@ -69,18 +67,14 @@ interface Props {
 export const HeroEditPage = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const navigation = useNavigation();
-	const { heroID, tab } = useParams<{ heroID: string; tab: HeroTab }>();
-	const setTabKey = (tabKey: HeroTab) => {
-		navigation.goToHeroEdit(heroID!, tabKey);
-	};
-	const [ page, setPage ] = [ tab, setTabKey ];
+	const { heroID, page } = useParams<{ heroID: string; page: HeroEditTab }>();
 	const originalHero = useMemo(() => props.heroes.find(h => h.id === heroID)!, [ heroID, props.heroes ]);
 	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(originalHero)) as Hero);
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
 	try {
-		const getPageState = (page: HeroTab) => {
+		const getPageState = (page: HeroEditTab) => {
 			switch (page) {
 				case 'ancestry':
 					if (hero.ancestry) {
@@ -495,7 +489,7 @@ export const HeroEditPage = (props: Props) => {
 				</AppHeader>
 				<div className={isSmall ? 'hero-edit-page-content small' : 'hero-edit-page-content'}>
 					<div className='page-selector'>
-						<Segmented<HeroTab>
+						<Segmented<HeroEditTab>
 							options={([
 								'ancestry',
 								'culture',
@@ -514,7 +508,7 @@ export const HeroEditPage = (props: Props) => {
 							}))}
 							block={true}
 							value={page}
-							onChange={setPage}
+							onChange={value => navigation.goToHeroEdit(heroID!, value)}
 						/>
 					</div>
 					{

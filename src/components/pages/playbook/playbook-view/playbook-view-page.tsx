@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { CloseOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, EditOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
@@ -10,6 +10,8 @@ import { Montage } from '../../../../models/montage';
 import { MontagePanel } from '../../../panels/elements/montage-panel/montage-panel';
 import { Negotiation } from '../../../../models/negotiation';
 import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/negotiation-panel';
+import { Options } from '../../../../models/options';
+import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { ReactNode } from 'react';
 import { Sourcebook } from '../../../../models/sourcebook';
@@ -21,11 +23,13 @@ import './playbook-view-page.scss';
 interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
+	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	export: (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	delete: (kind: PlaybookElementKind, element: Element) => void;
+	setOptions: (options: Options) => void;
 }
 
 export const PlaybookViewPage = (props: Props) => {
@@ -42,6 +46,7 @@ export const PlaybookViewPage = (props: Props) => {
 					encounter={element as Encounter}
 					playbook={props.playbook}
 					sourcebooks={props.sourcebooks}
+					options={props.options}
 					mode={PanelMode.Full}
 					showDifficulty={true}
 				/>
@@ -98,6 +103,28 @@ export const PlaybookViewPage = (props: Props) => {
 						</Button>
 					</Popover>
 					<DangerButton onConfirm={() => props.delete(kind!, element)} />
+					{
+						(kind === 'encounter') ?
+							<div className='divider' />
+							: null
+					}
+					{
+						(kind === 'encounter') ?
+							<Popover
+								trigger='click'
+								placement='bottom'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										<OptionsPanel mode='encounter' options={props.options} setOptions={props.setOptions} />
+									</div>
+								)}
+							>
+								<Button icon={<SettingOutlined />}>
+									Options
+								</Button>
+							</Popover>
+							: null
+					}
 				</AppHeader>
 				<div className='playbook-view-page-content'>
 					{panel}

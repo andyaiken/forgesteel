@@ -119,15 +119,55 @@ Promise.all(promises).then(results => {
 	if (!options) {
 		options = {
 			showSkillsInGroups: false,
-			showMonstersInGroups: true,
 			showFreeStrikes: false,
 			showStandardAbilities: false,
-			dimUnavailableAbilities: false
+			dimUnavailableAbilities: false,
+			showMonstersInGroups: true,
+			showSimilarMonsters: false,
+			similarLevel: true,
+			similarRole: true,
+			similarOrganization: true,
+			similarSize: true,
+			heroCount: 4,
+			heroLevel: 1,
+			heroVictories: 0
 		};
 	}
 
 	if (options.showMonstersInGroups === undefined) {
 		options.showMonstersInGroups = true;
+	}
+
+	if (options.showSimilarMonsters === undefined) {
+		options.showSimilarMonsters = true;
+	}
+
+	if (options.similarLevel === undefined) {
+		options.similarLevel = true;
+	}
+
+	if (options.similarRole === undefined) {
+		options.similarRole = true;
+	}
+
+	if (options.similarOrganization === undefined) {
+		options.similarOrganization = true;
+	}
+
+	if (options.similarSize === undefined) {
+		options.similarSize = true;
+	}
+
+	if (options.heroCount === undefined) {
+		options.heroCount = 4;
+	}
+
+	if (options.heroLevel === undefined) {
+		options.heroLevel = 1;
+	}
+
+	if (options.heroVictories === undefined) {
+		options.heroVictories = 0;
 	}
 
 	createRoot(document.getElementById('root')!).render(

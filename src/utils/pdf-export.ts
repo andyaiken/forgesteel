@@ -458,11 +458,14 @@ export class PDFExport {
 			}
 		}
 
-		const data = await pdfDoc.saveAsBase64({ dataUri: true });
+		const data = await pdfDoc.save();;
+		const url = window.URL.createObjectURL(new Blob([ data ], { type: 'application/pdf' }));
 
 		const downloader = document.createElement('a');
 		downloader.download = `${hero.name || 'Unnamed Hero'}.pdf`;
-		downloader.href = data;
+		downloader.href = url;
 		downloader.click();
+
+		window.URL.revokeObjectURL(url);
 	};
 }

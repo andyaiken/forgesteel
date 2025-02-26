@@ -6,10 +6,14 @@ import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FactoryLogic } from './factory-logic';
+import { FeatureLogic } from './feature-logic';
 import { FeatureType } from '../enums/feature-type';
+import { MonsterFeatureCategory } from '../enums/monster-feature-category';
 import { MonsterFilter } from '../models/monster-filter';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
+import { Random } from '../utils/random';
+import { Utils } from '../utils/utils';
 
 export class MonsterLogic {
 	static getMonsterName = (monster: Monster, group?: MonsterGroup) => {
@@ -943,5 +947,74 @@ export class MonsterLogic {
 			{ characteristic: Characteristic.Intuition, value: intuition },
 			{ characteristic: Characteristic.Presence, value: presence }
 		];
+	};
+
+	///////////////////////////////////////////////////////////////////////////
+
+	static genesplice = (target: Monster, source: Monster[]) => {
+		// We don't touch ID, name, or description
+
+		target.level = Collections.draw(source.map(m => m.level));
+		target.role.type = Collections.draw(source.map(m => m.role.type));
+		target.role.organization = Collections.draw(source.map(m => m.role.organization));
+		target.encounterValue = Collections.draw(source.map(m => m.encounterValue));
+		target.size.value = Collections.draw(source.map(m => m.size.value));
+		target.size.mod = Collections.draw(source.map(m => m.size.mod));
+		target.speed.value = Collections.draw(source.map(m => m.speed.value));
+		target.speed.modes = Collections.draw(source.map(m => m.speed.modes));
+		target.stamina = Collections.draw(source.map(m => m.stamina));
+		target.stability = Collections.draw(source.map(m => m.stability));
+		target.freeStrikeDamage = Collections.draw(source.map(m => m.freeStrikeDamage));
+
+		if (target.role.organization === MonsterOrganizationType.Minion) {
+			target.withCaptain = Collections.draw(source.map(m => m.withCaptain).filter(v => !!v));
+		} else {
+			target.withCaptain = '';
+		}
+
+		const keywordMap: { keyword: string, count: number }[] = [];
+		source.flatMap(m => m.keywords).forEach(kw => {
+			const current = keywordMap.find(pair => pair.keyword === kw);
+			if (current) {
+				current.count += 1;
+			} else {
+				keywordMap.push({
+					keyword: kw,
+					count: 1
+				});
+			}
+		});
+		target.keywords = keywordMap
+			.filter(pair => Random.die(source.length) <= pair.count)
+			.map(pair => pair.keyword)
+			.sort();
+
+		target.characteristics = MonsterLogic.createCharacteristics(
+			Collections.draw(source.map(m => MonsterLogic.getCharacteristic(m, Characteristic.Might))),
+			Collections.draw(source.map(m => MonsterLogic.getCharacteristic(m, Characteristic.Agility))),
+			Collections.draw(source.map(m => MonsterLogic.getCharacteristic(m, Characteristic.Reason))),
+			Collections.draw(source.map(m => MonsterLogic.getCharacteristic(m, Characteristic.Intuition))),
+			Collections.draw(source.map(m => MonsterLogic.getCharacteristic(m, Characteristic.Presence)))
+		);
+
+		target.features = [];
+		[
+			MonsterFeatureCategory.Text,
+			MonsterFeatureCategory.DamageMod,
+			MonsterFeatureCategory.Signature,
+			MonsterFeatureCategory.Action,
+			MonsterFeatureCategory.Maneuver,
+			MonsterFeatureCategory.Trigger,
+			MonsterFeatureCategory.Other
+		].forEach(category => {
+			const candidates = source.flatMap(m => m.features).filter(f => FeatureLogic.getFeatureCategory(f) === category);
+			const count = Math.round(candidates.length / source.length);
+			for (let n = 0; n < count; ++n) {
+				const f = Collections.draw(candidates);
+				const copy = JSON.parse(JSON.stringify(f)) as Feature;
+				copy.id = Utils.guid();
+				target.features.push(copy);
+			}
+		});
 	};
 }

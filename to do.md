@@ -14,7 +14,6 @@
 
 ### Monster Builder
 
-* Create monsters by splicing other monsters together
 * Auto-create monsters
 
 ### Encounter Builder

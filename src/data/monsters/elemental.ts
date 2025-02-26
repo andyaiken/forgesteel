@@ -451,12 +451,12 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'elemental-4-feature-4',
+					id: 'elemental-5-feature-4',
 					name: 'Primordial Strength',
 					description: 'The force deals an additional 6 damage with strikes targeting objects.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'elemental-4-feature-5',
+					id: 'elemental-5-feature-5',
 					name: 'Fickle and Free',
 					description: 'The force can’t be restrained, slowed, or knocked prone, and they ignore diﬃcult terrain.'
 				})

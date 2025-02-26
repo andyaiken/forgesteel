@@ -223,12 +223,11 @@ export class FeatureLogic {
 
 	static getFeatureTag = (feature: Feature) => {
 		if (feature.type === FeatureType.Ability) {
-			const ability = feature.data.ability;
-			if (ability.cost === 'signature') {
+			if (feature.data.ability.cost === 'signature') {
 				return 'Signature';
 			}
 
-			return ability.type.usage;
+			return feature.data.ability.type.usage;
 		}
 
 		return feature.type;
@@ -237,6 +236,9 @@ export class FeatureLogic {
 	static getFeatureCategory = (feature: Feature) => {
 		switch (feature.type) {
 			case FeatureType.Ability:
+				if (feature.data.ability.cost === 'signature') {
+					return MonsterFeatureCategory.Signature;
+				}
 				switch (feature.data.ability.type.usage) {
 					case AbilityUsage.Action:
 						return MonsterFeatureCategory.Action;

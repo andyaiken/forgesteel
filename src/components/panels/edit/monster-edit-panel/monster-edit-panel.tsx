@@ -508,9 +508,10 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const similar: { category: MonsterFeatureCategory, feature: Feature, count: number }[] = [];
+		const similar: { feature: Feature, count: number }[] = [];
 		props.similarMonsters.forEach(m => {
 			m.features
+				.filter(f => FeatureLogic.getFeatureCategory(f) === selectedCategory)
 				.filter(f => !monster.features.some(mf => mf.name === f.name))
 				.forEach(f => {
 					const current = similar.find(sf => sf.feature.name === f.name);
@@ -518,13 +519,13 @@ export const MonsterEditPanel = (props: Props) => {
 						current.count += 1;
 					} else {
 						similar.push({
-							category: FeatureLogic.getFeatureCategory(f),
 							feature: f,
 							count: 1
 						});
 					}
 				});
 		});
+		const sortedSimilar = Collections.sort(similar, s => s.feature.name);
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -559,16 +560,16 @@ export const MonsterEditPanel = (props: Props) => {
 						: null
 				}
 				<Button block={true} onClick={addFeature}>Add a new feature</Button>
-				{similar.length > 0 ? <Divider /> : null}
+				{sortedSimilar.length > 0 ? <Divider /> : null}
 				{
-					similar.length > 0 ?
+					sortedSimilar.length > 0 ?
 						<Expander title='Similar Monsters'>
 							<HeaderText>Features from Similar Monsters</HeaderText>
 							<Space direction='vertical' style={{ width: '100%' }}>
 								<Segmented
 									block={true}
 									options={
-										[ MonsterFeatureCategory.Text, MonsterFeatureCategory.DamageMod, MonsterFeatureCategory.Action, MonsterFeatureCategory.Maneuver, MonsterFeatureCategory.Trigger, MonsterFeatureCategory.Other ]
+										[ MonsterFeatureCategory.Text, MonsterFeatureCategory.DamageMod, MonsterFeatureCategory.Signature, MonsterFeatureCategory.Action, MonsterFeatureCategory.Maneuver, MonsterFeatureCategory.Trigger, MonsterFeatureCategory.Other ]
 											.map(tab => ({
 												value: tab,
 												label: <div className='category-selector'>{tab}</div>
@@ -578,7 +579,7 @@ export const MonsterEditPanel = (props: Props) => {
 									onChange={setSelectedCategory}
 								/>
 								{
-									Collections.sort(similar, f => f.feature.name).filter(s => s.category === selectedCategory).map(s => (
+									sortedSimilar.map(s => (
 										<Expander
 											key={s.feature.id}
 											title={s.feature.name}
@@ -592,7 +593,7 @@ export const MonsterEditPanel = (props: Props) => {
 									))
 								}
 								{
-									similar.filter(s => s.category === selectedCategory).length === 0 ?
+									sortedSimilar.length === 0 ?
 										<Alert
 											type='warning'
 											showIcon={true}
@@ -717,6 +718,13 @@ export const MonsterEditPanel = (props: Props) => {
 	};
 
 	try {
+		const genesplice = () => {
+			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			MonsterLogic.genesplice(copy, props.similarMonsters);
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
 		const tabs = [
 			{
 				key: 'monster',
@@ -763,7 +771,18 @@ export const MonsterEditPanel = (props: Props) => {
 
 		return (
 			<div className='monster-edit-panel'>
-				<Tabs items={tabs} />
+				<Tabs
+					items={tabs}
+					tabBarExtraContent={
+						props.similarMonsters.length > 1 ?
+							<Button
+								type='text'
+								icon={<ThunderboltOutlined />}
+								onClick={genesplice}
+							/>
+							: null
+					}
+				/>
 			</div>
 		);
 	} catch (ex) {

@@ -529,7 +529,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'angulotl-8-feature-6',
+						id: 'angulotl-8-feature-7',
 						name: 'It Is Day',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [],
@@ -539,12 +539,12 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'angulotl-8-feature-7',
+					id: 'angulotl-8-feature-8',
 					name: 'Toxiferous',
 					description: 'When an adjacent enemy grabs or uses a melee ability against the daybringer, they take 3 poison damage.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'angulotl-8-feature-8',
+					id: 'angulotl-8-feature-9',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 3 }) ]
 				})
 			]

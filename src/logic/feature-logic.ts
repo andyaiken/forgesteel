@@ -1,14 +1,16 @@
+import { AbilityUsage } from '../enums/ability-usage';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
 import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { FactoryLogic } from './factory-logic';
-import type { Feature } from '../models/feature';
+import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
+import { MonsterFeatureCategory } from '../enums/monster-feature-category';
 
 export class FeatureLogic {
 	static getFeaturesFromAncestry = (ancestry: Ancestry, hero: Hero) => {
@@ -230,6 +232,25 @@ export class FeatureLogic {
 		}
 
 		return feature.type;
+	};
+
+	static getFeatureCategory = (feature: Feature) => {
+		switch (feature.type) {
+			case FeatureType.Ability:
+				switch (feature.data.ability.type.usage) {
+					case AbilityUsage.Action:
+						return MonsterFeatureCategory.Action;
+					case AbilityUsage.Maneuver:
+						return MonsterFeatureCategory.Maneuver;
+					case AbilityUsage.Trigger:
+						return MonsterFeatureCategory.Trigger;
+				}
+				return MonsterFeatureCategory.Other;
+			case FeatureType.DamageModifier:
+				return MonsterFeatureCategory.DamageMod;
+		}
+
+		return MonsterFeatureCategory.Text;
 	};
 
 	static getFeatureTypeDescription = (type: FeatureType) => {

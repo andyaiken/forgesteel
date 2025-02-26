@@ -516,7 +516,7 @@ export class SourcebookData {
 			FactoryLogic.createCulture('Hakaan', 'Rural, communal, labor.', [ 'Vhoric' ], EnvironmentData.rural, OrganizationData.communal, UpbringingData.labor),
 			FactoryLogic.createCulture('Human', 'Urban, communal, labor.', [ 'Vaslorian' ], EnvironmentData.urban, OrganizationData.communal, UpbringingData.labor),
 			FactoryLogic.createCulture('Memonek', 'Nomadic, communal, academic.', [ 'Axiomatic' ], EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.academic),
-			FactoryLogic.createCulture('Orc', 'Wilderness, anarchic, creative.', [ 'Kaliac' ], EnvironmentData.wilderness, OrganizationData.anarchic, UpbringingData.creative),
+			FactoryLogic.createCulture('Orc', 'Wilderness, anarchic, creative.', [ 'Kalliac' ], EnvironmentData.wilderness, OrganizationData.anarchic, UpbringingData.creative),
 			FactoryLogic.createCulture('Polder', 'Urban, communal, creative.', [ 'Khoursirian' ], EnvironmentData.urban, OrganizationData.communal, UpbringingData.creative),
 			FactoryLogic.createCulture('Time Raider', 'Nomadic, anarchic, martial.', [ 'Voll' ], EnvironmentData.nomadic, OrganizationData.anarchic, UpbringingData.martial)
 		],

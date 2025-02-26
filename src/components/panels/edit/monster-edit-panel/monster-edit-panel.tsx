@@ -1,7 +1,6 @@
 import { Alert, Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, ImportOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
-import { AbilityUsage } from '../../../../enums/ability-usage';
 import { Badge } from '../../../controls/badge/badge';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
@@ -267,13 +266,43 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const selectRandomEncounterValue = () => {
+			const values = props.similarMonsters.map(m => m.encounterValue);
+			setEncounterValue(Collections.draw(values));
+		};
+
+		const selectRandomSpeed = () => {
+			const values = props.similarMonsters.map(m => m.speed.value);
+			setSpeed(Collections.draw(values));
+		};
+
+		const selectRandomStamina = () => {
+			const values = props.similarMonsters.map(m => m.stamina);
+			setStamina(Collections.draw(values));
+		};
+
+		const selectRandomStability = () => {
+			const values = props.similarMonsters.map(m => m.stability);
+			setStability(Collections.draw(values));
+		};
+
+		const selectRandomFreeStrikeDamage = () => {
+			const values = props.similarMonsters.map(m => m.freeStrikeDamage);
+			setFreeStrikeDamage(Collections.draw(values));
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Encounter Value</HeaderText>
 				<NumberSpin min={1} value={monster.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />
 				{
 					props.similarMonsters.length > 0 ?
-						<Expander title='Similar Monsters'>
+						<Expander
+							title='Similar Monsters'
+							extra={[
+								<Button key='random' type='text' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomEncounterValue(); }} />
+							]}
+						>
 							<HeaderText>Encounter Value</HeaderText>
 							<HistogramPanel
 								min={0}
@@ -294,7 +323,12 @@ export const MonsterEditPanel = (props: Props) => {
 				/>
 				{
 					props.similarMonsters.length > 0 ?
-						<Expander title='Similar Monsters'>
+						<Expander
+							title='Similar Monsters'
+							extra={[
+								<Button key='random' type='text' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomSpeed(); }} />
+							]}
+						>
 							<HeaderText>Speed</HeaderText>
 							<HistogramPanel
 								min={0}
@@ -309,7 +343,12 @@ export const MonsterEditPanel = (props: Props) => {
 				<NumberSpin min={0} value={monster.stamina} steps={[ 1, 10 ]} onChange={setStamina} />
 				{
 					props.similarMonsters.length > 0 ?
-						<Expander title='Similar Monsters'>
+						<Expander
+							title='Similar Monsters'
+							extra={[
+								<Button key='random' type='text' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomStamina(); }} />
+							]}
+						>
 							<HeaderText>Stamina</HeaderText>
 							<HistogramPanel
 								values={props.similarMonsters.map(m => m.stamina)}
@@ -323,7 +362,12 @@ export const MonsterEditPanel = (props: Props) => {
 				<NumberSpin min={0} value={monster.stability} onChange={setStability} />
 				{
 					props.similarMonsters.length > 0 ?
-						<Expander title='Similar Monsters'>
+						<Expander
+							title='Similar Monsters'
+							extra={[
+								<Button key='random' type='text' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomStability(); }} />
+							]}
+						>
 							<HeaderText>Stability</HeaderText>
 							<HistogramPanel
 								min={0}
@@ -338,7 +382,12 @@ export const MonsterEditPanel = (props: Props) => {
 				<NumberSpin min={0} value={monster.freeStrikeDamage} steps={[ 1, 10 ]} onChange={setFreeStrikeDamage} />
 				{
 					props.similarMonsters.length > 0 ?
-						<Expander title='Similar Monsters'>
+						<Expander
+							title='Similar Monsters'
+							extra={[
+								<Button key='random' type='text' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomFreeStrikeDamage(); }} />
+							]}
+						>
 							<HeaderText>Free Strike Damage</HeaderText>
 							<HistogramPanel
 								min={0}
@@ -363,6 +412,11 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const selectRandom = (ch: Characteristic) => {
+			const values = props.similarMonsters.map(m => MonsterLogic.getCharacteristic(m, ch));
+			setCharacteristic(ch, Collections.draw(values));
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
@@ -383,7 +437,12 @@ export const MonsterEditPanel = (props: Props) => {
 							/>
 							{
 								props.similarMonsters.length > 0 ?
-									<Expander title='Similar Monsters'>
+									<Expander
+										title='Similar Monsters'
+										extra={[
+											<Button key='random' type='text' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandom(ch); }} />
+										]}
+									>
 										<HeaderText>{ch}</HeaderText>
 										<HistogramPanel
 											min={-5}
@@ -458,27 +517,8 @@ export const MonsterEditPanel = (props: Props) => {
 					if (current) {
 						current.count += 1;
 					} else {
-						let category = MonsterFeatureCategory.Text;
-						switch (f.type) {
-							case FeatureType.Ability:
-								category = MonsterFeatureCategory.Other;
-								switch (f.data.ability.type.usage) {
-									case AbilityUsage.Action:
-										category = MonsterFeatureCategory.Action;
-										break;
-									case AbilityUsage.Maneuver:
-										category = MonsterFeatureCategory.Maneuver;
-										break;
-									case AbilityUsage.Trigger:
-										category = MonsterFeatureCategory.Trigger;
-								}
-								break;
-							case FeatureType.DamageModifier:
-								category = MonsterFeatureCategory.DamageMod;
-								break;
-						}
 						similar.push({
-							category: category,
+							category: FeatureLogic.getFeatureCategory(f),
 							feature: f,
 							count: 1
 						});

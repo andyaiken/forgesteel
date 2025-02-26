@@ -172,7 +172,7 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setSizeMod = (value: 'T' | 'S' | 'M' | 'L') => {
+		const setSizeMod = (value: ''| 'T' | 'S' | 'M' | 'L') => {
 			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
 			copy.size.mod = value;
 			setMonster(copy);
@@ -211,11 +211,12 @@ export const MonsterEditPanel = (props: Props) => {
 				<NumberSpin min={1} value={monster.size.value} onChange={setSizeValue} />
 				{
 					monster.size.value === 1 ?
-						<Segmented
+						<Segmented<'' | 'T' | 'S' | 'M' | 'L'>
+							name='sizemodtypes'
 							block={true}
 							options={[ 'T', 'S', 'M', 'L' ]}
 							value={monster.size.mod}
-							onChange={e => setSizeMod(e as 'T' | 'S' | 'M' | 'L')}
+							onChange={setSizeMod}
 						/>
 						: null
 				}
@@ -567,6 +568,7 @@ export const MonsterEditPanel = (props: Props) => {
 							<HeaderText>Features from Similar Monsters</HeaderText>
 							<Space direction='vertical' style={{ width: '100%' }}>
 								<Segmented
+									name='categories'
 									block={true}
 									options={
 										[ MonsterFeatureCategory.Text, MonsterFeatureCategory.DamageMod, MonsterFeatureCategory.Signature, MonsterFeatureCategory.Action, MonsterFeatureCategory.Maneuver, MonsterFeatureCategory.Trigger, MonsterFeatureCategory.Other ]

@@ -315,7 +315,7 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
-		const setSizeMod = (value: 'T' | 'S' | 'M' | 'L') => {
+		const setSizeMod = (value: '' | 'T' | 'S' | 'M' | 'L') => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureSizeData;
 			copy.size.mod = value;
 			setData(copy);
@@ -750,6 +750,7 @@ export const FeatureEditPanel = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Companion Type</HeaderText>
 						<Segmented
+							name='companiontypes'
 							block={true}
 							options={[ 'companion', 'mount', 'retainer' ]}
 							value={data.type}
@@ -1078,11 +1079,12 @@ export const FeatureEditPanel = (props: Props) => {
 						}
 						{
 							data.size.value === 1 ?
-								<Segmented
+								<Segmented<'' | 'T' | 'S' | 'M' | 'L'>
+									name='sizemodtypes'
 									block={true}
 									options={[ 'T', 'S', 'M', 'L' ]}
 									value={data.size.mod}
-									onChange={s => setSizeMod(s as 'T' | 'S' | 'M' | 'L')}
+									onChange={setSizeMod}
 								/>
 								: null
 						}

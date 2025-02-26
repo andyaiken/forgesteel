@@ -43,6 +43,7 @@ export const ConditionPanel = (props: Props) => {
 				<Space direction='vertical' style={{ width: '100%', margin: '5px 0' }}>
 					<HeaderText>{condition.type}</HeaderText>
 					<Segmented
+						name='endtypes'
 						block={true}
 						options={[ ConditionEndType.EndOfTurn, ConditionEndType.SaveEnds ]}
 						value={condition.ends}

@@ -91,6 +91,7 @@ export const RollModal = (props: Props) => {
 				toolbar={
 					<div style={{ width: '100%', textAlign: 'center' }}>
 						<Segmented
+							name='tabs'
 							options={[ 'Power Roll', 'Saving Throw' ]}
 							value={type}
 							onChange={setType}

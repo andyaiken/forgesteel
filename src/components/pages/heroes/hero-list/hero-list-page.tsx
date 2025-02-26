@@ -31,7 +31,7 @@ export const HeroListPage = (props: Props) => {
 						content={(
 							<div style={{ display: 'flex', flexDirection: 'column' }}>
 								<Space>
-									<Button block={true} icon={<PlusOutlined />} onClick={props.addHero}>Create</Button>
+									<Button type='primary' block={true} icon={<PlusOutlined />} onClick={props.addHero}>Create</Button>
 									<div className='ds-text'>or</div>
 									<Upload
 										style={{ width: '100%' }}

@@ -1181,6 +1181,7 @@ export const LibraryEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Item Type</HeaderText>
 				<Segmented
+					name='itemtypes'
 					block={true}
 					options={[ ItemType.Consumable, ItemType.Trinket, ItemType.Leveled, ItemType.Artifact ]}
 					value={item.type}

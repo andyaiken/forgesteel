@@ -191,7 +191,7 @@ export const PlaybookListPage = (props: Props) => {
 						content={(
 							<div style={{ display: 'flex', flexDirection: 'column' }}>
 								<Space>
-									<Button block={true} icon={<PlusOutlined />} onClick={() => createElement(null)}>Create</Button>
+									<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => createElement(null)}>Create</Button>
 									<div className='ds-text'>or</div>
 									<Upload
 										style={{ width: '100%' }}

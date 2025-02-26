@@ -177,6 +177,10 @@ td {
 	}
 }
 
+.ant-collapse > .ant-collapse-item > .ant-collapse-header > .ant-collapse-extra {
+	padding-inline-start: 12px;
+}
+
 .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
 	padding: 5px 20px 20px 20px;
 }

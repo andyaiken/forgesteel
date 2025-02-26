@@ -604,6 +604,7 @@ export const HeroStateModal = (props: Props) => {
 				toolbar={
 					<div style={{ width: '100%', textAlign: 'center' }}>
 						<Segmented
+							name='tabs'
 							options={[
 								HeroStatePage.Hero,
 								HeroStatePage.Vitals,

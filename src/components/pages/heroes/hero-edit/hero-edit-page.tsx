@@ -490,6 +490,7 @@ export const HeroEditPage = (props: Props) => {
 				<div className={isSmall ? 'hero-edit-page-content small' : 'hero-edit-page-content'}>
 					<div className='page-selector'>
 						<Segmented<HeroEditTab>
+							name='sections'
 							options={([
 								'ancestry',
 								'culture',

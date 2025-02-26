@@ -457,6 +457,7 @@ export const AbilityEditPanel = (props: Props) => {
 													<Space direction='vertical' style={{ width: '100%' }}>
 														<HeaderText>Distance Type</HeaderText>
 														<Segmented
+															name='distancetypes'
 															block={true}
 															options={[ 'Self', 'Melee', 'Ranged', 'Area', 'Line', 'Special' ]}
 															value={getDistanceMainType(n)}

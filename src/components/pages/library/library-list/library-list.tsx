@@ -715,7 +715,7 @@ export const LibraryListPage = (props: Props) => {
 								}
 								{sourcebookOptions.length > 1 ? <Divider /> : null}
 								<Space>
-									<Button block={true} icon={<PlusOutlined />} onClick={createElement}>Create</Button>
+									<Button type='primary' block={true} icon={<PlusOutlined />} onClick={createElement}>Create</Button>
 									<div className='ds-text'>or</div>
 									<Upload
 										style={{ width: '100%' }}

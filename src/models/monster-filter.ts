@@ -5,7 +5,7 @@ export interface MonsterFilter {
 	name: string;
 	roles: MonsterRoleType[];
 	organizations: MonsterOrganizationType[];
-	size: number;
+	size: number[];
 	level: number[];
 	ev: number[];
 }

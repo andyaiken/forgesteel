@@ -792,7 +792,9 @@ export class MonsterLogic {
 			}
 		}
 
-		if (filter.size !== monster.size.value) {
+		const minSize = Math.min(...filter.size);
+		const maxSize = Math.max(...filter.size);
+		if ((monster.size.value < minSize) || (monster.size.value > maxSize)) {
 			return false;
 		}
 

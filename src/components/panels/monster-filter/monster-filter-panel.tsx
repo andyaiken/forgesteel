@@ -3,7 +3,6 @@ import { Field } from '../../controls/field/field';
 import { MonsterFilter } from '../../../models/monster-filter';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
-import { NumberSpin } from '../../controls/number-spin/number-spin';
 
 import './monster-filter-panel.scss';
 
@@ -31,7 +30,7 @@ export const MonsterFilterPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setFilterSize = (value: number) => {
+	const setFilterSize = (value: number[]) => {
 		const copy = JSON.parse(JSON.stringify(props.monsterFilter)) as MonsterFilter;
 		copy.size = value;
 		props.onChange(copy);
@@ -78,7 +77,16 @@ export const MonsterFilterPanel = (props: Props) => {
 					value={props.monsterFilter.organizations}
 					onChange={setFilterOrganizations}
 				/>
-				<NumberSpin label='Size' min={1} value={props.monsterFilter.size} onChange={setFilterSize} />
+				<div>
+					<Slider
+						range={{ draggableTrack: true }}
+						min={1}
+						max={10}
+						value={props.monsterFilter.size}
+						onChange={setFilterSize}
+					/>
+					<Field label='Size' value={`${Math.min(...props.monsterFilter.size)} to ${Math.max(...props.monsterFilter.size)}`} />
+				</div>
 				<div>
 					<Slider
 						range={{ draggableTrack: true }}

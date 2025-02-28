@@ -4,13 +4,16 @@
 	flex-direction: column;
 
 	.hero-list-page-content {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: 20px;
 		background-color: rgba(0, 0, 0, 0.1);
 		flex: 1 1 0;
 		padding: 20px;
 		overflow-x: hidden;
 		overflow-y: auto;
+
+		.hero-section-row {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+			gap: 10px;
+		}
 	}
 }

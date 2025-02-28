@@ -59,13 +59,15 @@ export const HeroListPage = (props: Props) => {
 					</Popover>
 				</AppHeader>
 				<div className='hero-list-page-content'>
-					{
-						props.heroes.map(hero => (
-							<SelectablePanel key={hero.id} onSelect={() => navigation.goToHeroView(hero.id)}>
-								<HeroPanel hero={hero} sourcebooks={props.sourcebooks} />
-							</SelectablePanel>
-						))
-					}
+					<div className='hero-section-row'>
+						{
+							props.heroes.map(hero => (
+								<SelectablePanel key={hero.id} onSelect={() => navigation.goToHeroView(hero.id)}>
+									<HeroPanel hero={hero} sourcebooks={props.sourcebooks} />
+								</SelectablePanel>
+							))
+						}
+					</div>
 				</div>
 			</div>
 		);

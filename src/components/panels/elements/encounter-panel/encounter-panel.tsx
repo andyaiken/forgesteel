@@ -15,6 +15,7 @@ import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { Token } from '../../../controls/token/token';
 
 import './encounter-panel.scss';
 
@@ -57,14 +58,19 @@ export const EncounterPanel = (props: Props) => {
 
 											const name = (monster && monsterGroup) ? MonsterLogic.getMonsterName(monster, monsterGroup) : 'Unknown Monster';
 
+											let token = null;
 											let count = slot.count;
 											if (monster) {
+												token = <Token monster={monster} monsterGroup={monsterGroup || undefined} />;
 												count *= MonsterLogic.getRoleMultiplier(monster.role.organization);
 											}
 
 											return (
 												<div key={slot.id} className='encounter-slot'>
-													<div className='ds-text'>{name}</div>
+													<div className='encounter-slot-name'>
+														{token}
+														<div className='ds-text'>{name}</div>
+													</div>
 													{count > 1 ? <Badge>x{count}</Badge> : null}
 												</div>
 											);

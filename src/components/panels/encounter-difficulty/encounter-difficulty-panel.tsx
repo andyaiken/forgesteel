@@ -49,7 +49,7 @@ export const EncounterDifficultyPanel = (props: Props) => {
 
 		return (
 			<div className='encounter-difficulty-panel'>
-				<HeaderText>Encounter Difficulty</HeaderText>
+				<HeaderText level={1}>Encounter Difficulty</HeaderText>
 				<div className='encounter-slider'>
 					<Slider
 						range={true}

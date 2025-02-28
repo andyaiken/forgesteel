@@ -11,11 +11,9 @@ $monster-hexer: rgb(216, 226, 192);
 $monster-mount: rgb(190, 220, 231);
 $monster-support: rgb(245, 213, 184);
 
-.monster-label {
-    margin: 5px 0;
-	border-radius: 5px;
-    padding: 5px 10px;
-	color: rgb(0, 0, 0);
+.token {
+	aspect-ratio: 1/1;
+	border-radius: 50%;
 	background-color: $monster-default;
 	border: 1px solid color.scale($monster-default, $lightness: -20%);
 
@@ -62,5 +60,18 @@ $monster-support: rgb(245, 213, 184);
 	&.support {
 		background-color: $monster-support;
 		border-color: color.scale($monster-support, $lightness: -20%);
+	}
+
+	.inner-token {
+		height: 100%;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: black;
+		border-radius: 50%;
+		color: white;
+		font-weight: 600;
+		user-select: none;
 	}
 }

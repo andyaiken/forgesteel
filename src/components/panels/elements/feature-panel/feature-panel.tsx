@@ -1102,7 +1102,9 @@ export const FeaturePanel = (props: Props) => {
 
 		if (!props.feature.description) {
 			return (
-				<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {(data.cost === 'signature') || (data.cost === 0) ? 'signature' : `${data.cost}pt`} {data.count > 1 ? 'abilities' : 'ability'}.</div>
+				<div className='ds-text'>
+					Choose {data.count > 1 ? data.count : 'a'} {(data.cost === 'signature') || (data.cost === 0) ? 'signature' : `${data.cost}pt`} {data.count > 1 ? 'abilities' : 'ability'}.
+				</div>
 			);
 		}
 

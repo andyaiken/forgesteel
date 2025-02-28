@@ -59,6 +59,26 @@ Promise.all(promises).then(results => {
 			sourcebook.projects = [];
 		}
 
+		sourcebook.classes.forEach(c => {
+			c.featuresByLevel.forEach(lvl => {
+				lvl.features
+					.filter(f => f.type === FeatureType.ClassAbility)
+					.forEach(f => {
+						f.data.minLevel = 1;
+					});
+			});
+
+			c.subclasses.forEach(sc => {
+				sc.featuresByLevel.forEach(lvl => {
+					lvl.features
+						.filter(f => f.type === FeatureType.ClassAbility)
+						.forEach(f => {
+							f.data.minLevel = 1;
+						});
+				});
+			});
+		});
+
 		sourcebook.monsterGroups.forEach(group => {
 			group.monsters.forEach(monster => {
 				if (monster.role.organization === undefined) {

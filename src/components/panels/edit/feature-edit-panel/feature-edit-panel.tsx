@@ -121,6 +121,7 @@ export const FeatureEditPanel = (props: Props) => {
 				data = {
 					cost: 1,
 					count: 1,
+					minLevel: 1,
 					selectedIDs: []
 				};
 				break;
@@ -294,6 +295,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setAbilityCost = (value: number | 'signature') => {
 			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureClassAbilityData;
 			copy.cost = value;
+			setData(copy);
+		};
+
+		const setMinLevel = (value: number) => {
+			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureClassAbilityData;
+			copy.minLevel = value;
 			setData(copy);
 		};
 
@@ -741,6 +748,8 @@ export const FeatureEditPanel = (props: Props) => {
 						}
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
+						<HeaderText>Minimum Level</HeaderText>
+						<NumberSpin min={1} value={data.minLevel} onChange={setMinLevel} />
 					</Space>
 				);
 			}

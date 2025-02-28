@@ -1156,7 +1156,7 @@ const EmptyMessage = (props: EmptyMessageProps) => {
 				type='warning'
 				showIcon={true}
 				message='If you&apos;re looking for something specific, make sure you&apos;ve included the sourcebook it&apos;s in.'
-				action={<Button type='text' icon={<RightOutlined />} onClick={() => navigation.goToHeroEdit(props.hero.id, 'details')} />}
+				action={<Button type='text' title='Details' icon={<RightOutlined />} onClick={() => navigation.goToHeroEdit(props.hero.id, 'details')} />}
 			/>
 		);
 	} catch (ex) {

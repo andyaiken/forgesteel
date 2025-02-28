@@ -160,8 +160,8 @@ export const SourcebookPanel = (props: Props) => {
 										key={n}
 										title={lang.name || 'Unnamed Language'}
 										extra={[
-											<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'up'); }} />,
-											<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'down'); }} />,
+											<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'up'); }} />,
+											<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'down'); }} />,
 											<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteLanguage(n); }} />
 										]}
 									>
@@ -200,8 +200,8 @@ export const SourcebookPanel = (props: Props) => {
 										key={n}
 										title={skill.name || 'Unnamed Skill'}
 										extra={[
-											<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'up'); }} />,
-											<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'down'); }} />,
+											<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'up'); }} />,
+											<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'down'); }} />,
 											<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSkill(n); }} />
 										]}
 									>
@@ -245,7 +245,6 @@ export const SourcebookPanel = (props: Props) => {
 				buttons = (
 					<>
 						<Button type='text' title='OK' icon={<CheckCircleOutlined />} onClick={toggleEditing} />
-						<DangerButton disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='icon' onConfirm={onDelete} />
 					</>
 				);
 			}
@@ -261,6 +260,7 @@ export const SourcebookPanel = (props: Props) => {
 					<Button type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(sourcebook, !props.visible)} />
 					{sourcebook.isHomebrew ? <Button type='text' title='Edit' icon={<EditOutlined />} onClick={toggleEditing} /> : null}
 					{sourcebook.isHomebrew ? <Button type='text' title='Export' icon={<UploadOutlined />} onClick={onExport} /> : null}
+					{sourcebook.isHomebrew ? <DangerButton disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='icon' onConfirm={onDelete} /> : null}
 				</>
 			);
 		}

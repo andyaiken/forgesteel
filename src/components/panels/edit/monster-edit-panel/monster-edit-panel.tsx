@@ -301,7 +301,7 @@ export const MonsterEditPanel = (props: Props) => {
 						<Expander
 							title='Similar Monsters'
 							extra={[
-								<Button key='random' type='text' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomEncounterValue(); }} />
+								<Button key='random' type='text' title='Random' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomEncounterValue(); }} />
 							]}
 						>
 							<HeaderText>Encounter Value</HeaderText>
@@ -327,7 +327,7 @@ export const MonsterEditPanel = (props: Props) => {
 						<Expander
 							title='Similar Monsters'
 							extra={[
-								<Button key='random' type='text' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomSpeed(); }} />
+								<Button key='random' type='text' title='Random' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomSpeed(); }} />
 							]}
 						>
 							<HeaderText>Speed</HeaderText>
@@ -347,7 +347,7 @@ export const MonsterEditPanel = (props: Props) => {
 						<Expander
 							title='Similar Monsters'
 							extra={[
-								<Button key='random' type='text' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomStamina(); }} />
+								<Button key='random' type='text' title='Random' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomStamina(); }} />
 							]}
 						>
 							<HeaderText>Stamina</HeaderText>
@@ -366,7 +366,7 @@ export const MonsterEditPanel = (props: Props) => {
 						<Expander
 							title='Similar Monsters'
 							extra={[
-								<Button key='random' type='text' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomStability(); }} />
+								<Button key='random' type='text' title='Random' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomStability(); }} />
 							]}
 						>
 							<HeaderText>Stability</HeaderText>
@@ -386,7 +386,7 @@ export const MonsterEditPanel = (props: Props) => {
 						<Expander
 							title='Similar Monsters'
 							extra={[
-								<Button key='random' type='text' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomFreeStrikeDamage(); }} />
+								<Button key='random' type='text' title='Random' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomFreeStrikeDamage(); }} />
 							]}
 						>
 							<HeaderText>Free Strike Damage</HeaderText>
@@ -441,7 +441,7 @@ export const MonsterEditPanel = (props: Props) => {
 									<Expander
 										title='Similar Monsters'
 										extra={[
-											<Button key='random' type='text' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandom(ch); }} />
+											<Button key='random' type='text' title='Random' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandom(ch); }} />
 										]}
 									>
 										<HeaderText>{ch}</HeaderText>
@@ -537,8 +537,8 @@ export const MonsterEditPanel = (props: Props) => {
 							title={f.name || 'Unnamed Feature'}
 							tags={[ FeatureLogic.getFeatureTag(f) ]}
 							extra={[
-								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
-								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteFeature(f); }} />
 							]}
 						>
@@ -587,7 +587,7 @@ export const MonsterEditPanel = (props: Props) => {
 											title={s.feature.name}
 											tags={[ FeatureLogic.getFeatureTag(s.feature) ]}
 											extra={[
-												<Button key='up' type='text' icon={<ImportOutlined />} onClick={e => { e.stopPropagation(); importFeature(s.feature); }} />
+												<Button key='up' type='text' title='Import' icon={<ImportOutlined />} onClick={e => { e.stopPropagation(); importFeature(s.feature); }} />
 											]}
 										>
 											<FeaturePanel feature={s.feature} mode={PanelMode.Full} />
@@ -777,11 +777,7 @@ export const MonsterEditPanel = (props: Props) => {
 					items={tabs}
 					tabBarExtraContent={
 						props.similarMonsters.length > 1 ?
-							<Button
-								type='text'
-								icon={<ThunderboltOutlined />}
-								onClick={genesplice}
-							/>
+							<Button type='text' title='Genesplice' icon={<ThunderboltOutlined />} onClick={genesplice} />
 							: null
 					}
 				/>

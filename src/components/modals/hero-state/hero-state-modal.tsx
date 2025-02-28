@@ -144,7 +144,7 @@ export const HeroStateModal = (props: Props) => {
 							type='info'
 							showIcon={true}
 							message='You have enough XP to level up.'
-							action={<Button title='Level Up' type='text' icon={<ArrowUpOutlined />} onClick={props.onLevelUp} />}
+							action={<Button type='text' title='Level Up' icon={<ArrowUpOutlined />} onClick={props.onLevelUp} />}
 						/>
 						: null
 				}
@@ -390,8 +390,8 @@ export const HeroStateModal = (props: Props) => {
 							key={item.id}
 							title={item.count === 1 ? item.name : `${item.name} (x${item.count})`}
 							extra={[
-								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveItem(item, 'up'); }} />,
-								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveItem(item, 'down'); }} />,
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveItem(item, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveItem(item, 'down'); }} />,
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteItem(item); }} />
 							]}
 						>
@@ -528,8 +528,8 @@ export const HeroStateModal = (props: Props) => {
 							key={project.id}
 							title={project.name}
 							extra={[
-								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveProject(project, 'up'); }} />,
-								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveProject(project, 'down'); }} />,
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveProject(project, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveProject(project, 'down'); }} />,
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteProject(project); }} />
 							]}
 						>

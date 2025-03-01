@@ -37,7 +37,7 @@ interface Props {
 export const PlaybookListPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { kind } = useParams<{ kind: PlaybookElementKind }>();
-	const [ previousTab, setPreviousTab ] = useState(kind);
+	const [ previousTab, setPreviousTab ] = useState<PlaybookElementKind | undefined>(kind);
 	const [ element, setElement ] = useState<PlaybookElementKind>(kind ?? 'encounter');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
@@ -246,12 +246,12 @@ export const PlaybookListPage = (props: Props) => {
 						</Button>
 					</Popover>
 					{
-						(kind === 'encounter') ?
+						(element === 'encounter') ?
 							<div className='divider' />
 							: null
 					}
 					{
-						(kind === 'encounter') ?
+						(element === 'encounter') ?
 							<Popover
 								trigger='click'
 								placement='bottom'
@@ -270,7 +270,7 @@ export const PlaybookListPage = (props: Props) => {
 				</AppHeader>
 				<div className='playbook-list-page-content'>
 					<Tabs
-						activeKey={kind}
+						activeKey={element}
 						items={[
 							{
 								key: 'encounter',

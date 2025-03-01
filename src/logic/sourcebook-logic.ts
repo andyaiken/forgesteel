@@ -4,11 +4,13 @@ import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { Domain } from '../models/domain';
+import { FeatureType } from '../enums/feature-type';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 import { Kit } from '../models/kit';
 import { Language } from '../models/language';
 import { MonsterGroup } from '../models/monster';
+import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { Perk } from '../models/perk';
 import { Project } from '../models/project';
 import { Skill } from '../models/skill';
@@ -263,5 +265,77 @@ export class SourcebookLogic {
 				const ids = mg.monsters.map(m => m.id);
 				return ids.includes(monsterID);
 			}) || null;
+	};
+
+	///////////////////////////////////////////////////////////////////////////
+
+	static updateSourcebook = (sourcebook: Sourcebook) => {
+		if (sourcebook.domains === undefined) {
+			sourcebook.domains = [];
+		}
+		if (sourcebook.items === undefined) {
+			sourcebook.items = [];
+		}
+		if (sourcebook.perks === undefined) {
+			sourcebook.perks = [];
+		}
+		if (sourcebook.titles === undefined) {
+			sourcebook.titles = [];
+		}
+		if (sourcebook.monsterGroups === undefined) {
+			sourcebook.monsterGroups = [];
+		}
+		if (sourcebook.projects === undefined) {
+			sourcebook.projects = [];
+		}
+
+		sourcebook.classes.forEach(c => {
+			c.featuresByLevel.forEach(lvl => {
+				lvl.features
+					.filter(f => f.type === FeatureType.ClassAbility)
+					.forEach(f => {
+						f.data.minLevel = 1;
+					});
+			});
+
+			c.subclasses.forEach(sc => {
+				sc.featuresByLevel.forEach(lvl => {
+					lvl.features
+						.filter(f => f.type === FeatureType.ClassAbility)
+						.forEach(f => {
+							f.data.minLevel = 1;
+						});
+				});
+			});
+		});
+
+		sourcebook.monsterGroups.forEach(group => {
+			group.monsters.forEach(monster => {
+				if (monster.role.organization === undefined) {
+					monster.role.organization = MonsterOrganizationType.Platoon;
+				}
+
+				if (monster.state === undefined) {
+					monster.state = {
+						staminaDamage: 0,
+						staminaTemp: 0,
+						conditions: []
+					};
+				}
+
+				monster.features
+					.filter(f => f.type === FeatureType.DamageModifier)
+					.forEach(f => {
+						f.data.modifiers.forEach(dm => {
+							if (dm.valueCharacteristics === undefined) {
+								dm.valueCharacteristics = [];
+							}
+							if (dm.valueCharacteristicMultiplier === undefined) {
+								dm.valueCharacteristicMultiplier = 1;
+							}
+						});
+					});
+			});
+		});
 	};
 }

@@ -1,9 +1,11 @@
 import { Element } from './element';
+import { Monster } from './monster';
 
 export interface EncounterSlot {
 	id: string;
 	monsterID: string;
 	count: number;
+	monsters: Monster[]
 }
 
 export interface EncounterGroup {
@@ -13,4 +15,5 @@ export interface EncounterGroup {
 
 export interface Encounter extends Element {
 	groups: EncounterGroup[];
+	malice: number;
 }

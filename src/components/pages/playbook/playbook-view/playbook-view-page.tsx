@@ -6,6 +6,7 @@ import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Element } from '../../../../models/element';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
+import { Format } from '../../../../utils/format';
 import { Montage } from '../../../../models/montage';
 import { MontagePanel } from '../../../panels/elements/montage-panel/montage-panel';
 import { Negotiation } from '../../../../models/negotiation';
@@ -79,7 +80,7 @@ export const PlaybookViewPage = (props: Props) => {
 	try {
 		return (
 			<div className='playbook-view-page'>
-				<AppHeader breadcrumbs={[ { label: 'Playbook' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader breadcrumbs={[ { label: Format.capitalize(kind!) } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybookList(kind!)}>
 						Close
 					</Button>

@@ -16,6 +16,7 @@ import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
+import { Format } from '../../../../utils/format';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
@@ -197,7 +198,7 @@ export const LibraryViewPage = (props: Props) => {
 	try {
 		return (
 			<div className='library-view-page'>
-				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader breadcrumbs={[ { label: Format.capitalize(kind!) } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					{
 						subElementID ?
 							<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryView(kind!, elementID!)}>

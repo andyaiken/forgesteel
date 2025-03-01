@@ -363,7 +363,12 @@ export class FactoryLogic {
 			characteristics: data.characteristics || MonsterLogic.createCharacteristics(0, 0, 0, 0, 0),
 			withCaptain: data.withCaptain || '',
 			features: data.features || [],
-			retainer: retainer
+			retainer: retainer,
+			state: {
+				staminaDamage: 0,
+				staminaTemp: 0,
+				conditions: []
+			}
 		};
 	};
 
@@ -404,7 +409,8 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
-			groups: []
+			groups: [],
+			malice: 0
 		};
 	};
 
@@ -419,7 +425,8 @@ export class FactoryLogic {
 		return {
 			id: Utils.guid(),
 			monsterID: monsterID,
-			count: 1
+			count: 1,
+			monsters: []
 		};
 	};
 
@@ -432,7 +439,11 @@ export class FactoryLogic {
 			interest: 1,
 			patience: 1,
 			motivations: [],
-			pitfalls: []
+			pitfalls: [],
+			state: {
+				deltaInterest: 0,
+				deltaPatience: 0
+			}
 		};
 	};
 
@@ -480,7 +491,11 @@ export class FactoryLogic {
 			abilities: data.abilities || '',
 			uses: data.uses ?? 1,
 			successes: 0,
-			failures: 0
+			failures: 0,
+			state: {
+				successes: 0,
+				failures: 0
+			}
 		};
 	};
 

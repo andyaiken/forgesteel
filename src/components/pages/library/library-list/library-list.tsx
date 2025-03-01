@@ -61,7 +61,7 @@ interface Props {
 export const LibraryListPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { kind } = useParams<{ kind: SourcebookElementKind }>();
-	const [ previousTab, setPreviousTab ] = useState(kind);
+	const [ previousTab, setPreviousTab ] = useState<SourcebookElementKind | undefined>(kind);
 	const [ element, setElement ] = useState<SourcebookElementKind>(kind ?? 'ancestry');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? props.sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
@@ -761,7 +761,7 @@ export const LibraryListPage = (props: Props) => {
 				</AppHeader>
 				<div className='library-list-page-content'>
 					<Tabs
-						activeKey={kind}
+						activeKey={element}
 						items={[
 							{
 								key: 'ancestry',

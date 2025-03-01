@@ -39,6 +39,11 @@ export interface Monster extends Element {
 			feature: Feature;
 		}[];
 	} | null;
+	state: {
+		staminaDamage: number;
+		staminaTemp: number;
+		conditions: string[];
+	}
 };
 
 export interface MonsterGroup extends Element {

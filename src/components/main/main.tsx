@@ -958,7 +958,7 @@ export const Main = (props: Props) => {
 							showRoll={showRoll}
 							showHeroes={heroes.length === 0 ? createHero : navigation.goToHeroList}
 							showLibrary={() => navigation.goToLibraryList('ancestry')}
-							showPlaybook={() => navigation.goToPlaybookList('encounter')}
+							showPlaybook={() => navigation.goToPlaybookList('adventure')}
 						/>
 					}
 				/>
@@ -1080,7 +1080,7 @@ export const Main = (props: Props) => {
 				<Route path='playbook'>
 					<Route
 						index={true}
-						element={<Navigate to='encounter' replace={true} />}
+						element={<Navigate to='adventure' replace={true} />}
 					/>
 					<Route
 						path=':kind'

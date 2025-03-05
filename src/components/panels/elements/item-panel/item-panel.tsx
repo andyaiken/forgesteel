@@ -1,15 +1,18 @@
+import { Alert, Tag } from 'antd';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
+import { Hero } from '../../../../models/hero';
+import { HeroLogic } from '../../../../logic/hero-logic';
 import { Item } from '../../../../models/item';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Tag } from 'antd';
 
 import './item-panel.scss';
 
 interface Props {
 	item: Item;
+	hero?: Hero;
 	mode?: PanelMode;
 }
 
@@ -18,6 +21,15 @@ export const ItemPanel = (props: Props) => {
 		return (
 			<div className={props.mode === PanelMode.Full ? 'item-panel' : 'item-panel compact'} id={props.mode === PanelMode.Full ? props.item.id : undefined}>
 				<HeaderText level={1} tags={[ props.item.type ]}>{props.item.name || 'Unnamed Item'}</HeaderText>
+				{
+					props.hero && HeroLogic.canUseItem(props.hero, props.item) ?
+						null :
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='Your kit does not allow you to use this item.'
+						/>
+				}
 				<Markdown text={props.item.description} />
 				{
 					props.mode === PanelMode.Full ?

@@ -11,6 +11,8 @@ import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from './feature-logic';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
+import { Item } from '../models/item';
+import { ItemType } from '../enums/item-type';
 import { Kit } from '../models/kit';
 import { KitType } from '../enums/kit-type';
 import { Language } from '../models/language';
@@ -746,6 +748,17 @@ Complex or time-consuming tests might require an action if made in combat - or c
 	};
 
 	///////////////////////////////////////////////////////////////////////////
+
+	static canUseItem = (hero: Hero, item: Item) => {
+		switch (item.type) {
+			case ItemType.LeveledArmor:
+				return HeroLogic.getKits(hero).flatMap(k => k.armor).some(a => item.keywords.includes(a));
+			case ItemType.LeveledWeapon:
+				return HeroLogic.getKits(hero).flatMap(k => k.weapon).some(w => item.keywords.includes(w));
+		}
+
+		return true;
+	};
 
 	static getEchelon = (level: number) => {
 		switch (level) {

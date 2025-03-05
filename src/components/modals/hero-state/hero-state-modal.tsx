@@ -397,6 +397,7 @@ export const HeroStateModal = (props: Props) => {
 						>
 							<InventoryPanel
 								item={item}
+								hero={hero}
 								onChange={changeItem}
 							/>
 						</Expander>
@@ -416,6 +417,7 @@ export const HeroStateModal = (props: Props) => {
 					<ItemSelectModal
 						types={[ ItemType.Artifact, ItemType.Consumable, ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Trinket ]}
 						sourcebooks={props.sourcebooks}
+						hero={hero}
 						onSelect={addItem}
 						onClose={() => setShopVisible(false)}
 					/>

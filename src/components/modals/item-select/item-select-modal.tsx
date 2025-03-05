@@ -1,5 +1,6 @@
 import { Alert, Button, Input, Space } from 'antd';
 import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
+import { Hero } from '../../../models/hero';
 import { Item } from '../../../models/item';
 import { ItemPanel } from '../../panels/elements/item-panel/item-panel';
 import { ItemType } from '../../../enums/item-type';
@@ -15,6 +16,7 @@ import './item-select-modal.scss';
 interface Props {
 	types: ItemType[];
 	sourcebooks: Sourcebook[];
+	hero: Hero;
 	selectOriginal?: boolean;
 	onClose: () => void;
 	onSelect: (item: Item) => void;
@@ -65,7 +67,7 @@ export const ItemSelectModal = (props: Props) => {
 											}
 										}}
 									>
-										<ItemPanel item={item} />
+										<ItemPanel item={item} hero={props.hero} />
 									</SelectablePanel>
 								))
 							}

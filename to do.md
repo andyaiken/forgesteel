@@ -2,8 +2,7 @@
 
 ### Hero Sheet
 
-* Make sure multiple melee damage bonuses are handled correctly
-* Make sure items the hero is not proficient with are labelled as such
+* Make sure multiple melee / ranged damage bonuses are handled correctly
 
 ### Hero Builder
 
@@ -26,6 +25,10 @@
 ### Monster Builder
 
 * Auto-create monsters
+
+### Adventure Builder
+
+* Allow subplots
 
 ### Encounter Builder
 

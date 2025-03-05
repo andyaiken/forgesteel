@@ -1,7 +1,9 @@
-import { Divider, Tag } from 'antd';
+import { Alert, Divider, Tag } from 'antd';
 import { FeaturePanel } from '../elements/feature-panel/feature-panel';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
+import { Hero } from '../../../models/hero';
+import { HeroLogic } from '../../../logic/hero-logic';
 import { Item } from '../../../models/item';
 import { ItemType } from '../../../enums/item-type';
 import { Markdown } from '../../controls/markdown/markdown';
@@ -13,6 +15,7 @@ import './inventory-panel.scss';
 
 interface Props {
 	item: Item;
+	hero: Hero;
 	onChange: (item: Item) => void;
 }
 
@@ -32,6 +35,15 @@ export const InventoryPanel = (props: Props) => {
 		return (
 			<div className='inventory-panel' id={props.item.id}>
 				<HeaderText level={1} tags={[ props.item.type ]}>{props.item.name || 'Unnamed Item'}</HeaderText>
+				{
+					HeroLogic.canUseItem(props.hero, item) ?
+						null :
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='Your kit does not allow you to use this item.'
+						/>
+				}
 				<Markdown text={props.item.description} />
 				<Field label='Keywords' value={props.item.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} />
 				<Markdown text={props.item.effect} />

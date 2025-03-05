@@ -1,6 +1,8 @@
 import { Button, Popover } from 'antd';
 import { CloseOutlined, EditOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
+import { Adventure } from '../../../../models/adventure';
+import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Element } from '../../../../models/element';
@@ -14,6 +16,7 @@ import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/neg
 import { Options } from '../../../../models/options';
 import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { PlaybookLogic } from '../../../../logic/playbook-logic';
 import { ReactNode } from 'react';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { useNavigation } from '../../../../hooks/use-navigation';
@@ -40,6 +43,19 @@ export const PlaybookViewPage = (props: Props) => {
 	let element: Element | null = null;
 	let panel: ReactNode | null = null;
 	switch (kind) {
+		case 'adventure':
+			element = props.playbook.adventures.find(x => x.id === elementID) as Adventure;
+			panel = (
+				<AdventurePanel
+					adventure={element as Adventure}
+					mode={PanelMode.Full}
+					playbook={props.playbook}
+					sourcebooks={props.sourcebooks}
+					options={props.options}
+					allowSelection={true}
+				/>
+			);
+			break;
 		case 'encounter':
 			element = props.playbook.encounters.find(x => x.id === elementID) as Element;
 			panel = (
@@ -53,20 +69,20 @@ export const PlaybookViewPage = (props: Props) => {
 				/>
 			);
 			break;
-		case 'negotiation':
-			element = props.playbook.negotiations.find(x => x.id === elementID) as Negotiation;
-			panel = (
-				<NegotiationPanel
-					negotiation={element as Negotiation}
-					mode={PanelMode.Full}
-				/>
-			);
-			break;
 		case 'montage':
 			element = props.playbook.montages.find(x => x.id === elementID) as Montage;
 			panel = (
 				<MontagePanel
 					montage={element as Montage}
+					mode={PanelMode.Full}
+				/>
+			);
+			break;
+		case 'negotiation':
+			element = props.playbook.negotiations.find(x => x.id === elementID) as Negotiation;
+			panel = (
+				<NegotiationPanel
+					negotiation={element as Negotiation}
 					mode={PanelMode.Full}
 				/>
 			);
@@ -103,7 +119,10 @@ export const PlaybookViewPage = (props: Props) => {
 							Export
 						</Button>
 					</Popover>
-					<DangerButton onConfirm={() => props.delete(kind!, element)} />
+					<DangerButton
+						disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
+						onConfirm={() => props.delete(kind!, element)}
+					/>
 					{
 						(kind === 'encounter') ?
 							<div className='divider' />

@@ -27,6 +27,8 @@ import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-pan
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
+import { Playbook } from '../../../../models/playbook';
+import { PlaybookLogic } from '../../../../logic/playbook-logic';
 import { ReactNode } from 'react';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { SubClass } from '../../../../models/subclass';
@@ -40,6 +42,7 @@ import './library-view-page.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
+	playbook: Playbook;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -256,7 +259,10 @@ export const LibraryViewPage = (props: Props) => {
 					</Popover>
 					{
 						sourcebook.isHomebrew && !subElementID ?
-							<DangerButton onConfirm={() => props.delete(kind!, sourcebook.id, element)} />
+							<DangerButton
+								disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
+								onConfirm={() => props.delete(kind!, sourcebook.id, element)}
+							/>
 							: null
 					}
 				</AppHeader>

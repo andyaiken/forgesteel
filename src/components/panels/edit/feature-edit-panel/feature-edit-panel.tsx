@@ -15,6 +15,7 @@ import { FeatureField } from '../../../../enums/feature-field';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
+import { Format } from '../../../../utils/format';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { ItemType } from '../../../../enums/item-type';
@@ -761,7 +762,7 @@ export const FeatureEditPanel = (props: Props) => {
 						<Segmented
 							name='companiontypes'
 							block={true}
-							options={[ 'companion', 'mount', 'retainer' ]}
+							options={[ 'companion', 'mount', 'retainer' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
 							value={data.type}
 							onChange={s => setCompanionType(s as 'companion' | 'mount' | 'retainer')}
 						/>

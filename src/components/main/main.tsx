@@ -6,6 +6,7 @@ import { Sourcebook, SourcebookElementKind } from '../../models/sourcebook';
 import { Ability } from '../../models/ability';
 import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
+import { Adventure } from '../../models/adventure';
 import { Ancestry } from '../../models/ancestry';
 import { Career } from '../../models/career';
 import { Characteristic } from '../../enums/characteristic';
@@ -391,8 +392,8 @@ export const Main = (props: Props) => {
 				extension = 'domain';
 				break;
 			case 'item':
-				name = 'Ancestry';
-				extension = 'ancestry';
+				name = 'Item';
+				extension = 'item';
 				break;
 			case 'kit':
 				name = 'Kit';
@@ -697,23 +698,25 @@ export const Main = (props: Props) => {
 		let element: Element;
 
 		switch (kind) {
+			case 'adventure':
+				if (original) {
+					element = JSON.parse(JSON.stringify(original)) as Adventure;
+					element.id = Utils.guid();
+				} else {
+					element = FactoryLogic.createAdventure();
+					(element as Adventure).party.count = options.heroCount;
+					(element as Adventure).party.level = options.heroLevel;
+				}
+				copy.adventures.push(element as Adventure);
+				break;
 			case 'encounter':
 				if (original) {
-					element = JSON.parse(JSON.stringify(original)) as Negotiation;
+					element = JSON.parse(JSON.stringify(original)) as Encounter;
 					element.id = Utils.guid();
 				} else {
 					element = FactoryLogic.createEncounter();
 				}
 				copy.encounters.push(element as Encounter);
-				break;
-			case 'negotiation':
-				if (original) {
-					element = JSON.parse(JSON.stringify(original)) as Negotiation;
-					element.id = Utils.guid();
-				} else {
-					element = FactoryLogic.createNegotiation();
-				}
-				copy.negotiations.push(element as Negotiation);
 				break;
 			case 'montage':
 				if (original) {
@@ -723,6 +726,15 @@ export const Main = (props: Props) => {
 					element = FactoryLogic.createMontage();
 				}
 				copy.montages.push(element as Montage);
+				break;
+			case 'negotiation':
+				if (original) {
+					element = JSON.parse(JSON.stringify(original)) as Negotiation;
+					element.id = Utils.guid();
+				} else {
+					element = FactoryLogic.createNegotiation();
+				}
+				copy.negotiations.push(element as Negotiation);
 				break;
 		}
 
@@ -734,14 +746,17 @@ export const Main = (props: Props) => {
 
 		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
 		switch (kind) {
+			case 'adventure':
+				copy.adventures = copy.adventures.filter(x => x.id !== element.id);
+				break;
 			case 'encounter':
 				copy.encounters = copy.encounters.filter(x => x.id !== element.id);
 				break;
-			case 'negotiation':
-				copy.negotiations = copy.negotiations.filter(x => x.id !== element.id);
-				break;
 			case 'montage':
 				copy.montages = copy.montages.filter(x => x.id !== element.id);
+				break;
+			case 'negotiation':
+				copy.negotiations = copy.negotiations.filter(x => x.id !== element.id);
 				break;
 		}
 
@@ -752,14 +767,17 @@ export const Main = (props: Props) => {
 	const savePlaybookElement = (kind: PlaybookElementKind, element: Element) => {
 		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
 		switch (kind) {
+			case 'adventure':
+				copy.adventures = copy.adventures.map(x => x.id === element.id ? element : x) as Adventure[];
+				break;
 			case 'encounter':
 				copy.encounters = copy.encounters.map(x => x.id === element.id ? element : x) as Encounter[];
 				break;
-			case 'negotiation':
-				copy.negotiations = copy.negotiations.map(x => x.id === element.id ? element : x) as Negotiation[];
-				break;
 			case 'montage':
 				copy.montages = copy.montages.map(x => x.id === element.id ? element : x) as Montage[];
+				break;
+			case 'negotiation':
+				copy.negotiations = copy.negotiations.map(x => x.id === element.id ? element : x) as Negotiation[];
 				break;
 		}
 
@@ -771,6 +789,10 @@ export const Main = (props: Props) => {
 
 		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
 		switch (kind) {
+			case 'adventure':
+				copy.adventures = copy.adventures.map(x => x.id === element.id ? element : x) as Adventure[];
+				copy.adventures = Collections.sort<Adventure>(copy.adventures, item => item.name);
+				break;
 			case 'encounter':
 				copy.encounters = copy.encounters.map(x => x.id === element.id ? element : x) as Encounter[];
 				copy.encounters = Collections.sort<Encounter>(copy.encounters, item => item.name);
@@ -1029,6 +1051,7 @@ export const Main = (props: Props) => {
 						element={
 							<LibraryViewPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								playbook={playbook}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}

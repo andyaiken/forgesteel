@@ -1,6 +1,8 @@
 import { Alert, Button, Input, Popover, Space, Tabs, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
+import { Adventure } from '../../../../models/adventure';
+import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Element } from '../../../../models/element';
 import { Encounter } from '../../../../models/encounter';
@@ -50,8 +52,24 @@ export const PlaybookListPage = (props: Props) => {
 		props.createElement(element, original);
 	};
 
+	const getAdventures = () => {
+		return props.playbook.adventures
+			.filter(item => Utils.textMatches([
+				item.name,
+				item.description
+			], searchTerm));
+	};
+
 	const getEncounters = () => {
 		return props.playbook.encounters
+			.filter(item => Utils.textMatches([
+				item.name,
+				item.description
+			], searchTerm));
+	};
+
+	const getMontages = () => {
+		return props.playbook.montages
 			.filter(item => Utils.textMatches([
 				item.name,
 				item.description
@@ -66,12 +84,33 @@ export const PlaybookListPage = (props: Props) => {
 			], searchTerm));
 	};
 
-	const getMontages = () => {
-		return props.playbook.montages
-			.filter(item => Utils.textMatches([
-				item.name,
-				item.description
-			], searchTerm));
+	const getAdventuresSection = (list: Adventure[]) => {
+		if (list.length === 0) {
+			return (
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No adventures'
+				/>
+			);
+		}
+
+		return (
+			<div className='playbook-section-row'>
+				{
+					list.map(a => (
+						<SelectablePanel key={a.id} onSelect={() => navigation.goToPlaybookView('adventure', a.id)}>
+							<AdventurePanel
+								adventure={a}
+								playbook={props.playbook}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+							/>
+						</SelectablePanel>
+					))
+				}
+			</div>
+		);
 	};
 
 	const getEncountersSection = (list: Encounter[]) => {
@@ -91,30 +130,6 @@ export const PlaybookListPage = (props: Props) => {
 					list.map(e => (
 						<SelectablePanel key={e.id} onSelect={() => navigation.goToPlaybookView('encounter', e.id)}>
 							<EncounterPanel encounter={e} playbook={props.playbook} sourcebooks={props.sourcebooks} options={props.options} />
-						</SelectablePanel>
-					))
-				}
-			</div>
-		);
-	};
-
-	const getNegotiationsSection = (list: Negotiation[]) => {
-		if (list.length === 0) {
-			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No negotiations'
-				/>
-			);
-		}
-
-		return (
-			<div className='playbook-section-row'>
-				{
-					list.map(n => (
-						<SelectablePanel key={n.id} onSelect={() => navigation.goToPlaybookView('negotiation', n.id)}>
-							<NegotiationPanel negotiation={n} />
 						</SelectablePanel>
 					))
 				}
@@ -146,7 +161,32 @@ export const PlaybookListPage = (props: Props) => {
 		);
 	};
 
+	const getNegotiationsSection = (list: Negotiation[]) => {
+		if (list.length === 0) {
+			return (
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No negotiations'
+				/>
+			);
+		}
+
+		return (
+			<div className='playbook-section-row'>
+				{
+					list.map(n => (
+						<SelectablePanel key={n.id} onSelect={() => navigation.goToPlaybookView('negotiation', n.id)}>
+							<NegotiationPanel negotiation={n} />
+						</SelectablePanel>
+					))
+				}
+			</div>
+		);
+	};
+
 	try {
+		const adventures = getAdventures();
 		const encounters = getEncounters();
 		const negotiations = getNegotiations();
 		const montages = getMontages();
@@ -273,6 +313,16 @@ export const PlaybookListPage = (props: Props) => {
 						activeKey={element}
 						items={[
 							{
+								key: 'adventure',
+								label: (
+									<div className='section-header'>
+										<div className='section-title'>Adventures</div>
+										<div className='section-count'>{adventures.length}</div>
+									</div>
+								),
+								children: getAdventuresSection(adventures)
+							},
+							{
 								key: 'encounter',
 								label: (
 									<div className='section-header'>
@@ -283,16 +333,6 @@ export const PlaybookListPage = (props: Props) => {
 								children: getEncountersSection(encounters)
 							},
 							{
-								key: 'negotiation',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Negotiations</div>
-										<div className='section-count'>{negotiations.length}</div>
-									</div>
-								),
-								children: getNegotiationsSection(negotiations)
-							},
-							{
 								key: 'montage',
 								label: (
 									<div className='section-header'>
@@ -301,6 +341,16 @@ export const PlaybookListPage = (props: Props) => {
 									</div>
 								),
 								children: getMontagesSection(montages)
+							},
+							{
+								key: 'negotiation',
+								label: (
+									<div className='section-header'>
+										<div className='section-title'>Negotiations</div>
+										<div className='section-count'>{negotiations.length}</div>
+									</div>
+								),
+								children: getNegotiationsSection(negotiations)
 							}
 						]}
 						onChange={k => navigation.goToPlaybookList(k as PlaybookElementKind)}

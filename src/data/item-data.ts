@@ -1,5 +1,6 @@
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
+import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FactoryLogic } from '../logic/factory-logic';
 import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
@@ -1299,12 +1300,12 @@ export class LeveledWeaponData {
 	static bladeOfQuintessence: Item = FactoryLogic.createItem({
 		id: 'item-blade-of-quintessence',
 		name: 'Blade of Quintessence',
-		description: 'This blade exudes a faint hum that grows louder as its quarry weakens.',
+		description: 'This crystal blade houses a stormy vortex of fire, ice, and lightning.',
 		type: ItemType.LeveledWeapon,
-		keywords: [ KitWeapon.Heavy, AbilityKeyword.Psionic ],
+		keywords: [ KitWeapon.Medium, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
-			prerequisites: 'The skull of a convicted criminal',
-			source: 'Texts or lore in Caelian',
+			prerequisites: 'A ruby hardened in the fires of the City of Brass, a sapphire that has been struck by lightning',
+			source: 'Texts or lore in Zaliac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 450
 		}),
@@ -1315,7 +1316,7 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-blade-of-quintessence-1',
 						name: '',
-						description: 'Any damage-dealing weapon ability using this weapon deals an extra 1 rolled psychic damage, or an extra 2 psychic damage if the target is winded. Additionally, the first time in an encounter that you cause an enemy to become winded with an ability using the weapon, you gain 10 temporary Stamina.'
+						description: 'Any damage-dealing weapon ability using this weapon gains a +1 rolled damage bonus. Additionally, you can change the damage type of such abilities to cold, fire, lightning, or sonic.'
 					})
 				]
 			},
@@ -1325,7 +1326,7 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-blade-of-quintessence-5',
 						name: '',
-						description: 'The weapon\'s extra psychic damage increases to 2, or to 4 if the target is winded. Additionally, whenever you cause an enemy to become winded with an ability using the weapon, you gain two surges that you can immediately spend.'
+						description: 'The weapon’s damage bonus increases to +2. Additionally, the weapon can be used with ranged weapon abilities, and returns to you when a ranged ability is resolved. Ranged abilities used with the weapon increase their distance by 3, and must deal cold, fire, lightning, or sonic damage (chosen when you use the ability).'
 					})
 				]
 			},
@@ -1335,7 +1336,32 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-blade-of-quintessence-9',
 						name: '',
-						description: 'The weapon\'s extra psychic damage increases to 3, or to 6 if the target is winded. Additionally, you gain an edge on any ability using the weapon against any winded target.'
+						description: 'The weapon’s damage bonus increases to +3.'
+					}),
+					FactoryLogic.feature.createDamageModifier({
+						id: 'item-blade-of-quintessence-9b',
+						modifiers: [
+							FactoryLogic.damageModifier.create({
+								damageType: 'Cold',
+								modifierType: DamageModifierType.Immunity,
+								value: 10
+							}),
+							FactoryLogic.damageModifier.create({
+								damageType: 'Fire',
+								modifierType: DamageModifierType.Immunity,
+								value: 10
+							}),
+							FactoryLogic.damageModifier.create({
+								damageType: 'Lightning',
+								modifierType: DamageModifierType.Immunity,
+								value: 10
+							}),
+							FactoryLogic.damageModifier.create({
+								damageType: 'Sonic',
+								modifierType: DamageModifierType.Immunity,
+								value: 10
+							})
+						]
 					})
 				]
 			}

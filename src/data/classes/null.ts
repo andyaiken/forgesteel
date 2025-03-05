@@ -54,7 +54,7 @@ The null is an unarmed psionic warrior who dampens and absorbs the effects of ma
 					ability: FactoryLogic.createAbility({
 						id: 'null-1-4',
 						name: 'Null Field',
-						description: 'You intuit where an incoming attack will strike, reducing its effects.',
+						description: 'You project a psionic field of order around your body, dampening the effects of supernatural abilities harmful to you and your allies.',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 1 }) ],
@@ -75,7 +75,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 					ability: FactoryLogic.createAbility({
 						id: 'null-1-5',
 						name: 'Inertial Shield',
-						description: 'You intuit where an incoming attack will strike, reducing its effects.',
+						description: 'Your instincts for danger let you predict attacks before they happen.',
 						type: FactoryLogic.type.createTrigger('You take damage.'),
 						keywords: [ AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.createSelf() ],

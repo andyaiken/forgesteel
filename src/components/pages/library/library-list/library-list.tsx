@@ -774,16 +774,6 @@ export const LibraryListPage = (props: Props) => {
 								children: getAncestriesSection(ancestries)
 							},
 							{
-								key: 'culture',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Cultures</div>
-										<div className='section-count'>{cultures.length}</div>
-									</div>
-								),
-								children: getCulturesSection(cultures)
-							},
-							{
 								key: 'career',
 								label: (
 									<div className='section-header'>
@@ -814,14 +804,14 @@ export const LibraryListPage = (props: Props) => {
 								children: getComplicationsSection(complications)
 							},
 							{
-								key: 'kit',
+								key: 'culture',
 								label: (
 									<div className='section-header'>
-										<div className='section-title'>Kits</div>
-										<div className='section-count'>{kits.length}</div>
+										<div className='section-title'>Cultures</div>
+										<div className='section-count'>{cultures.length}</div>
 									</div>
 								),
-								children: getKitsSection(kits)
+								children: getCulturesSection(cultures)
 							},
 							{
 								key: 'domain',
@@ -832,6 +822,36 @@ export const LibraryListPage = (props: Props) => {
 									</div>
 								),
 								children: getDomainsSection(domains)
+							},
+							{
+								key: 'item',
+								label: (
+									<div className='section-header'>
+										<div className='section-title'>Items</div>
+										<div className='section-count'>{items.length}</div>
+									</div>
+								),
+								children: getItemsSection(items)
+							},
+							{
+								key: 'kit',
+								label: (
+									<div className='section-header'>
+										<div className='section-title'>Kits</div>
+										<div className='section-count'>{kits.length}</div>
+									</div>
+								),
+								children: getKitsSection(kits)
+							},
+							{
+								key: 'monster-group',
+								label: (
+									<div className='section-header'>
+										<div className='section-title'>Monsters</div>
+										<div className='section-count'>{props.options.showMonstersInGroups ? monsterGroups.length : monsters.length}</div>
+									</div>
+								),
+								children: props.options.showMonstersInGroups ? getMonsterGroupsSection(monsterGroups) : getMonstersSection(monsters)
 							},
 							{
 								key: 'perk',
@@ -852,26 +872,6 @@ export const LibraryListPage = (props: Props) => {
 									</div>
 								),
 								children: getTitlesSection(titles)
-							},
-							{
-								key: 'item',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Items</div>
-										<div className='section-count'>{items.length}</div>
-									</div>
-								),
-								children: getItemsSection(items)
-							},
-							{
-								key: 'monster-group',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Monsters</div>
-										<div className='section-count'>{props.options.showMonstersInGroups ? monsterGroups.length : monsters.length}</div>
-									</div>
-								),
-								children: props.options.showMonstersInGroups ? getMonsterGroupsSection(monsterGroups) : getMonstersSection(monsters)
 							}
 						]}
 						onChange={k => navigation.goToLibraryList(k as SourcebookElementKind)}

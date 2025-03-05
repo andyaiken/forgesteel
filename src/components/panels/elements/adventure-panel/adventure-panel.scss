@@ -1,0 +1,20 @@
+.adventure-panel {
+	display: flex;
+	flex-direction: column;
+	padding: 0 20px 20px 20px;
+	overflow: hidden;
+
+	&.compact {
+		margin-top: -10px;
+		padding: unset;
+	}
+
+	.plot-display-container {
+		display: flex;
+		gap: 20px;
+
+		.plot-details {
+			flex: 0 0 350px;
+		}
+	}
+}

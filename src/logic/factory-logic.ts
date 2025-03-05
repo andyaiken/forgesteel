@@ -8,6 +8,7 @@ import { Project, ProjectProgress } from '../models/project';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
+import { Adventure } from '../models/adventure';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
 import { Characteristic } from '../enums/characteristic';
@@ -16,6 +17,7 @@ import { Culture } from '../models/culture';
 import { DamageModifier } from '../models/damage-modifier';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Domain } from '../models/domain';
+import { Element } from '../models/element';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Format } from '../utils/format';
@@ -35,6 +37,7 @@ import { Negotiation } from '../models/negotiation';
 import { Perk } from '../models/perk';
 import { PerkList } from '../enums/perk-list';
 import { Playbook } from '../models/playbook';
+import { Plot } from '../models/plot';
 import { PowerRoll } from '../models/power-roll';
 import { Size } from '../models/size';
 import { SkillList } from '../enums/skill-list';
@@ -44,6 +47,14 @@ import { Title } from '../models/title';
 import { Utils } from '../utils/utils';
 
 export class FactoryLogic {
+	static createElement = (name?: string): Element => {
+		return {
+			id: Utils.guid(),
+			name: name || '',
+			description: ''
+		};
+	};
+
 	static createHero = (sourcebookIDs: string[]): Hero => {
 		return {
 			id: Utils.guid(),
@@ -107,9 +118,10 @@ export class FactoryLogic {
 
 	static createPlaybook = (): Playbook => {
 		return {
+			adventures: [],
 			encounters: [],
-			negotiations: [],
-			montages: []
+			montages: [],
+			negotiations: []
 		};
 	};
 
@@ -496,6 +508,34 @@ export class FactoryLogic {
 				successes: 0,
 				failures: 0
 			}
+		};
+	};
+
+	static createAdventure = (): Adventure => {
+		return {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			party: {
+				count: 4,
+				level: 1
+			},
+			introduction: [
+				FactoryLogic.createElement('Introduction'),
+				FactoryLogic.createElement('Hooks')
+			],
+			plot: FactoryLogic.createAdventurePlot()
+		};
+	};
+
+	static createAdventurePlot = (name?: string): Plot => {
+		return {
+			id: Utils.guid(),
+			name: name || '',
+			description: '',
+			content: [],
+			plots: [],
+			links: []
 		};
 	};
 

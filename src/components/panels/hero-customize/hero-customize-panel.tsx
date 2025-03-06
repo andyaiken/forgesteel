@@ -240,6 +240,7 @@ export const HeroCustomizePanel = (props: Props) => {
 						{ key: 'characteristic-bonus', label: <div className='ds-text centered-text'>Characteristic Bonus</div> },
 						{ key: 'class-ability', label: <div className='ds-text centered-text'>Class Ability</div> },
 						{ key: 'companion', label: <div className='ds-text centered-text'>Companion</div> },
+						{ key: 'kit', label: <div className='ds-text centered-text'>Kit</div> },
 						{ key: 'language', label: <div className='ds-text centered-text'>Language</div> },
 						{ key: 'mount', label: <div className='ds-text centered-text'>Mount</div> },
 						{ key: 'perk', label: <div className='ds-text centered-text'>Perk</div> },
@@ -277,6 +278,11 @@ export const HeroCustomizePanel = (props: Props) => {
 								feature = FactoryLogic.feature.createCompanion({
 									id: Utils.guid(),
 									type: 'companion'
+								});
+								break;
+							case 'kit':
+								feature = FactoryLogic.feature.createKitChoice({
+									id: Utils.guid()
 								});
 								break;
 							case 'language':

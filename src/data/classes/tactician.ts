@@ -166,9 +166,9 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			cost: 3,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
-				tier1: '3 + M damage; M < weak, dazed (save ends)',
-				tier2: '5 + M damage; M < average, dazed (save ends)',
-				tier3: '8 + M damage; M < strong, dazed (save ends)'
+				tier1: '3 + M damage; M < [weak], dazed (save ends)',
+				tier2: '5 + M damage; M < [average], dazed (save ends)',
+				tier3: '8 + M damage; M < [strong], dazed (save ends)'
 			})
 		}),
 		FactoryLogic.createAbility({
@@ -236,9 +236,9 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			preEffect: 'You mark the target.',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
-				tier1: '4 + M damage; R < weak, weakened (save ends)',
-				tier2: '6 + M damage; R < average, weakened (save ends)',
-				tier3: '10 + M damage; R < strong, weakened (save ends)'
+				tier1: '4 + M damage; R < [weak], weakened (save ends)',
+				tier2: '6 + M damage; R < [average], weakened (save ends)',
+				tier3: '10 + M damage; R < [strong], weakened (save ends)'
 			}),
 			effect: 'The first time any ally deals damage any target you’ve marked before the start of your next turn, that ally can spend a Recovery.'
 		}),
@@ -295,11 +295,11 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
-			effect: 'Until the end of the encounter or you are dying, whenever you or any ally deals damage to a target marked by you, if that target has R < average, they are frightened of the damage dealer (save ends).'
+			effect: 'Until the end of the encounter or you are dying, whenever you or any ally deals damage to a target marked by you, if that target has R < [average], they are frightened of the damage dealer (save ends).'
 		}),
 		FactoryLogic.createAbility({
 			id: 'tactician-ability-12',
-			name: 'Stay Strong, and Focus',
+			name: 'Stay [strong], and Focus',
 			description: 'We can do this! Keep faith and hold fast!',
 			type: FactoryLogic.type.createManeuver(),
 			keywords: [],
@@ -391,9 +391,9 @@ Each target is marked by you. You immediately force each targeted creature to ma
 											preEffect: 'You shift your speed directly toward an ally adjacent to the target, then swap locations with the ally as long as you can each fit into the other’s space. The ally can spend a Recovery, and you make a power roll against the target.',
 											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Reason ],
-												tier1: '2 + R damage; R < weak, frightened (save ends)',
-												tier2: '3 + R damage; R < average, frightened (save ends)',
-												tier3: '4 + R damage; R < strong, frightened (save ends)'
+												tier1: '2 + R damage; R < [weak], frightened (save ends)',
+												tier2: '3 + R damage; R < [average], frightened (save ends)',
+												tier3: '4 + R damage; R < [strong], frightened (save ends)'
 											})
 										})
 									}),
@@ -461,7 +461,7 @@ You can only make this test once for each encounter and negotiation.`
 								spend: [
 									{
 										value: 1,
-										effect: 'If the target has R < average, they are also slowed (EoT).'
+										effect: 'If the target has R < [average], they are also slowed (EoT).'
 									}
 								]
 							})
@@ -499,9 +499,9 @@ You can only make this test once for each encounter and negotiation.`
 											cost: 5,
 											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Reason ],
-												tier1: '2 + R damage; R < weak, the target is frightened of an ally of your choice within range (save ends)',
-												tier2: '3 + R damage; R < average, the target is frightened of an ally of your choice within range (save ends)',
-												tier3: '5 + R damage; R < strong, the target is frightened of an ally of your choice within range (save ends)'
+												tier1: '2 + R damage; R < [weak], the target is frightened of an ally of your choice within range (save ends)',
+												tier2: '3 + R damage; R < [average], the target is frightened of an ally of your choice within range (save ends)',
+												tier3: '5 + R damage; R < [strong], the target is frightened of an ally of your choice within range (save ends)'
 											}),
 											effect: 'One ally adjacent to the target can spend a Recovery.'
 										})
@@ -603,9 +603,9 @@ After constant drills you have improved your ability to anticipate an enemy’s 
 											preEffect: 'You move up to your speed toward the target, ending your move in the nearest square adjacent to them if you can. The triggering ally can spend a Recovery, and gains 5 Temporary Stamina for each enemy you move past while moving to the target. You then make a power roll against the target.',
 											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Might ],
-												tier1: 'R < weak, frightened of the triggering ally (save ends)',
-												tier2: ' R < average, frightened of the triggering ally (save ends)',
-												tier3: 'R < strong, frightened of the triggering ally (save ends)'
+												tier1: 'R < [weak], frightened of the triggering ally (save ends)',
+												tier2: ' R < [average], frightened of the triggering ally (save ends)',
+												tier3: 'R < [strong], frightened of the triggering ally (save ends)'
 											})
 										})
 									}),

@@ -126,7 +126,7 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 				FactoryLogic.feature.create({
 					id: 'censor-3-1',
 					name: 'Look on My Work and Despair',
-					description: 'Your judgment has grown in divine power, manifesting your deity’s ire against blasphemers, causing them to fear your actions, especially when their allies are smited. Whenever you judge a creature you can spend 1 wrath to channel your divine power to make them afraid. If the target has P < average, they are frightened of you (save ends). Whenever a creature judged by you to is reduced to 0 Stamina and you judge a new target as a free triggered action, if that new target has P < strong, they are frightened of you (save ends). If the target is already frightened of you, they take damage equal to twice your Presence score instead.'
+					description: 'Your judgment has grown in divine power, manifesting your deity’s ire against blasphemers, causing them to fear your actions, especially when their allies are smited. Whenever you judge a creature you can spend 1 wrath to channel your divine power to make them afraid. If the target has P < [average], they are frightened of you (save ends). Whenever a creature judged by you to is reduced to 0 Stamina and you judge a new target as a free triggered action, if that new target has P < [strong], they are frightened of you (save ends). If the target is already frightened of you, they take damage equal to twice your Presence score instead.'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'censor-3-2',
@@ -180,9 +180,9 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
-				tier1: '2 + M holy damage; P < weak, slowed (save ends)',
-				tier2: '5 + M holy damage; P < average, slowed (save ends)',
-				tier3: '7 + M holy damage; P < strong, slowed (save ends)'
+				tier1: '2 + M holy damage; P < [weak], slowed (save ends)',
+				tier2: '5 + M holy damage; P < [average], slowed (save ends)',
+				tier3: '7 + M holy damage; P < [strong], slowed (save ends)'
 			})
 		}),
 		FactoryLogic.createAbility({
@@ -264,9 +264,9 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			cost: 3,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
-				tier1: '5 + P holy damage; I < weak, dazed (save ends)',
-				tier2: '8 + P holy damage; I < average, dazed (save ends)',
-				tier3: '11 + P holy damage; I < strong, dazed (save ends)'
+				tier1: '5 + P holy damage; I < [weak], dazed (save ends)',
+				tier2: '8 + P holy damage; I < [average], dazed (save ends)',
+				tier3: '11 + P holy damage; I < [strong], dazed (save ends)'
 			})
 		}),
 		FactoryLogic.createAbility({
@@ -300,9 +300,9 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			cost: 5,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
-				tier1: '3 + M holy damage; if the target has P < weak, each enemy within 2 squares of them is frightened of you (save ends)',
-				tier2: '5 + M holy damage; if the target has P < average, each enemy within 2 squares of them is frightened of you (save ends)',
-				tier3: '8 + M holy damage; if the target has P < strong, each enemy within 2 squares of them is frightened of you (save ends)'
+				tier1: '3 + M holy damage; if the target has P < [weak], each enemy within 2 squares of them is frightened of you (save ends)',
+				tier2: '5 + M holy damage; if the target has P < [average], each enemy within 2 squares of them is frightened of you (save ends)',
+				tier3: '8 + M holy damage; if the target has P < [strong], each enemy within 2 squares of them is frightened of you (save ends)'
 			}),
 			effect: 'Each enemy frightened by this ability is pushed 2 squares away from the target and takes psychic damage equal to your Presence score.'
 		}),
@@ -337,9 +337,9 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 			cost: 5,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
-				tier1: '5 + M holy damage; M < weak, the target has fire weakness 3 (save ends)',
-				tier2: '9 + M holy damage; M < average, the target has fire weakness 5 (save ends)',
-				tier3: '12 + M holy damage; M < strong, the target has fire weakness 7 (save ends)'
+				tier1: '5 + M holy damage; M < [weak], the target has fire weakness 3 (save ends)',
+				tier2: '9 + M holy damage; M < [average], the target has fire weakness 5 (save ends)',
+				tier3: '12 + M holy damage; M < [strong], the target has fire weakness 7 (save ends)'
 			}),
 			effect: 'While the target has fire weakness from this ability, you can choose to have your abilities deal fire damage to the target instead of holy damage.'
 		}),
@@ -437,9 +437,9 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 											cost: 5,
 											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Presence ],
-												tier1: '8 + M holy damage; P < weak, frightened (save ends)',
-												tier2: '12 + M holy damage; P < average, frightened (save ends)',
-												tier3: '15 + M holy damage; P < strong, frightened (save ends)'
+												tier1: '8 + M holy damage; P < [weak], frightened (save ends)',
+												tier2: '12 + M holy damage; P < [average], frightened (save ends)',
+												tier3: '15 + M holy damage; P < [strong], frightened (save ends)'
 											}),
 											effect: 'If the target is already frightened of you or another creature when you use this ability and it would frighten them again, they take psychic damage equal to twice your Presence score instead.'
 										})
@@ -615,9 +615,9 @@ In addition, you can spend 1 judgment to take one of the following free triggere
 											cost: 5,
 											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Presence ],
-												tier1: '5 + P damage; P < weak, restrained (save ends)',
-												tier2: '9 + P damage; P < average, restrained (save ends)',
-												tier3: '12 + P damage; P < strong, restrained (save ends)'
+												tier1: '5 + P damage; P < [weak], restrained (save ends)',
+												tier2: '9 + P damage; P < [average], restrained (save ends)',
+												tier3: '12 + P damage; P < [strong], restrained (save ends)'
 											}),
 											effect: 'Any of your abilities that impose forced movement can move the target while they are restrained this way.'
 										})

@@ -129,7 +129,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				characteristic: [ Characteristic.Agility ],
 				tier1: '3 + A damage',
 				tier2: '5 + A damage',
-				tier3: '8 + A damage; I < strong, prone'
+				tier3: '8 + A damage; I < [strong], prone'
 			}),
 			effect: 'An ally of your choice within 5 squares of the target gains a surge.'
 		}),
@@ -221,9 +221,9 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			cost: 3,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
-				tier1: '4 + A damage; A < weak, bleeding (save ends)',
-				tier2: '6 + A damage; A < average, bleeding (save ends)',
-				tier3: '10 + A damage; A < strong, bleeding (save ends)'
+				tier1: '4 + A damage; A < [weak], bleeding (save ends)',
+				tier2: '6 + A damage; A < [average], bleeding (save ends)',
+				tier3: '10 + A damage; A < [strong], bleeding (save ends)'
 			})
 		}),
 		FactoryLogic.createAbility({
@@ -309,9 +309,9 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			cost: 5,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
-				tier1: '6 + A damage; R < weak, the target has damage weakness 5 (save ends)',
-				tier2: '9 + A damage; R < average, the target has damage weakness 5 (save ends)',
-				tier3: '13 + A damage; R < strong, the target has damage weakness 5 (save ends)'
+				tier1: '6 + A damage; R < [weak], the target has damage weakness 5 (save ends)',
+				tier2: '9 + A damage; R < [average], the target has damage weakness 5 (save ends)',
+				tier3: '13 + A damage; R < [strong], the target has damage weakness 5 (save ends)'
 			})
 		}),
 		FactoryLogic.createAbility({
@@ -367,9 +367,9 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			cost: 7,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
-				tier1: '8 + A damage; A < weak, restrained (save ends)',
-				tier2: '12 + A damage; A < average, restrained (save ends)',
-				tier3: '16 + A damage; A < strong, restrained (save ends)'
+				tier1: '8 + A damage; A < [weak], restrained (save ends)',
+				tier2: '12 + A damage; A < [average], restrained (save ends)',
+				tier3: '16 + A damage; A < [strong], restrained (save ends)'
 			})
 		}),
 		FactoryLogic.createAbility({
@@ -386,9 +386,9 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 			cost: 7,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
-				tier1: '7 + A damage; M < weak, slowed (save ends)',
-				tier2: '11 + A damage; M < average, prone and can’t stand (save ends)',
-				tier3: '16 + A damage; M < strong, prone and can’t stand (save ends)'
+				tier1: '7 + A damage; M < [weak], slowed (save ends)',
+				tier2: '11 + A damage; M < [average], prone and can’t stand (save ends)',
+				tier3: '16 + A damage; M < [strong], prone and can’t stand (save ends)'
 			})
 		})
 	],

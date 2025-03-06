@@ -1755,7 +1755,7 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-steeltongue-1',
 						name: '',
-						description: 'You gain a +1 bonus to melee distance with weapon abilities using this weapon. Additionally, when you use a damage-dealing weapon ability using the weapon against a target who has A < average, that target is bleeding (save ends).'
+						description: 'You gain a +1 bonus to melee distance with weapon abilities using this weapon. Additionally, when you use a damage-dealing weapon ability using the weapon against a target who has A < [average], that target is bleeding (save ends).'
 					})
 				]
 			},

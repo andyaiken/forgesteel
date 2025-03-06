@@ -219,9 +219,9 @@ Choose one of the following effects, which lasts until the end of the encounter 
 							cost: 5,
 							powerRoll: FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Intuition ],
-								tier1: '4 + I holy damage; P < weak, before taking damage, the target makes a free strike against a target you choose',
-								tier2: '7 + I holy damage; P < average, before taking damage, the target uses an ability of your choice and you choose any targets for that ability',
-								tier3: '11 + I holy damage; P < strong, before taking damage, the target shifts up to their speed, uses an ability of your choice, and you choose any targets for that ability'
+								tier1: '4 + I holy damage; P < [weak], before taking damage, the target makes a free strike against a target you choose',
+								tier2: '7 + I holy damage; P < [average], before taking damage, the target uses an ability of your choice and you choose any targets for that ability',
+								tier3: '11 + I holy damage; P < [strong], before taking damage, the target shifts up to their speed, uses an ability of your choice, and you choose any targets for that ability'
 							})
 						})
 					})
@@ -389,9 +389,9 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 							cost: 5,
 							powerRoll: FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Intuition ],
-								tier1: '2 damage; A < weak, restrained (save ends)',
-								tier2: '3 damage; A < average, restrained (save ends)',
-								tier3: '7 damage; A < strong, restrained (save ends)'
+								tier1: '2 damage; A < [weak], restrained (save ends)',
+								tier2: '3 damage; A < [average], restrained (save ends)',
+								tier3: '7 damage; A < [strong], restrained (save ends)'
 							})
 						})
 					})

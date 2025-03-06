@@ -235,7 +235,7 @@ The burgomaster archetype can be used for any other local ruler, such as a baron
 			},
 			{
 				trait: NegotiationTrait.Protection,
-				description: 'The weak, the helpless … they depend upon me and, to a lesser extent, civic-minded heroes like yourselves. Together we’ll make sure the people come to no harm.'
+				description: 'The [weak], the helpless … they depend upon me and, to a lesser extent, civic-minded heroes like yourselves. Together we’ll make sure the people come to no harm.'
 			}
 		],
 		pitfalls: [

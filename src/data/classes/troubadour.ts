@@ -220,9 +220,9 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
-				tier1: '2 + P psychic damage; P < weak, bleeding (save ends)',
-				tier2: '5 + P psychic damage; P < average, bleeding (save ends)',
-				tier3: '7 + P psychic damage; P < strong, bleeding (save ends)'
+				tier1: '2 + P psychic damage; P < [weak], bleeding (save ends)',
+				tier2: '5 + P psychic damage; P < [average], bleeding (save ends)',
+				tier3: '7 + P psychic damage; P < [strong], bleeding (save ends)'
 			})
 		}),
 		FactoryLogic.createAbility({
@@ -300,9 +300,9 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			preEffect: '',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
-				tier1: 'Slide 1; I < weak, dazed (save ends)',
-				tier2: 'Slide 1; I < average, dazed (save ends)',
-				tier3: 'Slide 2; I < strong, dazed (save ends)'
+				tier1: 'Slide 1; I < [weak], dazed (save ends)',
+				tier2: 'Slide 1; I < [average], dazed (save ends)',
+				tier3: 'Slide 2; I < [strong], dazed (save ends)'
 			}),
 			spend: [
 				{
@@ -323,9 +323,9 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			cost: 3,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
-				tier1: '4 damage; P < weak, slowed (save ends)',
-				tier2: '5 damage; P < average, slowed (save ends)',
-				tier3: '6 damage; P < strong, restrained (save ends)'
+				tier1: '4 damage; P < [weak], slowed (save ends)',
+				tier2: '5 damage; P < [average], slowed (save ends)',
+				tier3: '6 damage; P < [strong], restrained (save ends)'
 			}),
 			effect: 'The area becomes difficult terrain for enemies.'
 		}),
@@ -341,9 +341,9 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			preEffect: 'You shift up to your speed. You make one power roll that targets each enemy who becomes adjacent to you during the shift.',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility, Characteristic.Presence ],
-				tier1: 'Taunted (EoT); A < weak, prone',
-				tier2: 'Taunted (EoT); A < average, prone',
-				tier3: 'Taunted (EoT); A < strong, prone and can’t stand (EoT)'
+				tier1: 'Taunted (EoT); A < [weak], prone',
+				tier2: 'Taunted (EoT); A < [average], prone',
+				tier3: 'Taunted (EoT); A < [strong], prone and can’t stand (EoT)'
 			})
 		}),
 		FactoryLogic.createAbility({
@@ -395,9 +395,9 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			cost: 5,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Agility ],
-				tier1: '6 + A damage; P < weak, weakened (save ends)',
-				tier2: '10 + A damage; P < average, weakened (save ends)',
-				tier3: '14 + A damage; P < strong, weakened (save ends)'
+				tier1: '6 + A damage; P < [weak], weakened (save ends)',
+				tier2: '10 + A damage; P < [average], weakened (save ends)',
+				tier3: '14 + A damage; P < [strong], weakened (save ends)'
 			}),
 			effect: 'You can become bleeding (save ends) to deal an additional 5 corruption damage to the target.'
 		}),
@@ -412,9 +412,9 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			cost: 7,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
-				tier1: 'Slide 3; P < weak, this slide ignores the target’s stability.',
-				tier2: 'Slide 5; P < average, this slide ignores the target’s stability.',
-				tier3: 'Slide 7; P < strong, this slide ignores the target’s stability.'
+				tier1: 'Slide 3; P < [weak], this slide ignores the target’s stability.',
+				tier2: 'Slide 5; P < [average], this slide ignores the target’s stability.',
+				tier3: 'Slide 7; P < [strong], this slide ignores the target’s stability.'
 			}),
 			effect: 'Instead of sliding a target, you can swap their location with another target as long as each can fit into the other’s space. You can’t slide targets into other creatures or objects using this ability.'
 		}),
@@ -429,9 +429,9 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			cost: 7,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
-				tier1: '5 fire damage; A < weak, weakened (save ends)',
-				tier2: '7 fire damage; A < average, weakened (save ends)',
-				tier3: '10 fire damage; A < strong, weakened (save ends)'
+				tier1: '5 fire damage; A < [weak], weakened (save ends)',
+				tier2: '7 fire damage; A < [average], weakened (save ends)',
+				tier3: '10 fire damage; A < [strong], weakened (save ends)'
 			}),
 			effect: 'Each ally in the area can shift up to 2 squares.'
 		}),
@@ -826,9 +826,9 @@ Choose one of the following effects:
 											preEffect: 'The affected area becomes haunted by a swirling horde of phantoms until the end of the encounter. Any ally can enter any square of the area without spending movement. At the end of each of your turns, you can make a power roll against each enemy in the area.',
 											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Presence ],
-												tier1: '5 corruption damage; M < weak, pull 1 toward the center of the area',
-												tier2: '9 corruption damage; M < average, pull 2 toward the center of the area',
-												tier3: '12 corruption damage; M < strong, pull 3 toward the center of the area'
+												tier1: '5 corruption damage; M < [weak], pull 1 toward the center of the area',
+												tier2: '9 corruption damage; M < [average], pull 2 toward the center of the area',
+												tier3: '12 corruption damage; M < [strong], pull 3 toward the center of the area'
 											})
 										})
 									}),

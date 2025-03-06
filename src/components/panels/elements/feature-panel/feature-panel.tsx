@@ -33,6 +33,7 @@ import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { ThunderboltOutlined } from '@ant-design/icons';
 import { TitlePanel } from '../title-panel/title-panel';
+import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
 import './feature-panel.scss';
@@ -77,7 +78,7 @@ export const FeaturePanel = (props: Props) => {
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={data.selected ? data.selected.id : null}
 					onChange={value => {
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureAncestryChoiceData;
+						const dataCopy = Utils.copy(data);
 						dataCopy.selected = SourcebookLogic.getAncestries(props.sourcebooks || []).find(a => a.id === value) || null;
 						if (props.setData) {
 							props.setData(props.feature.id, dataCopy);
@@ -140,7 +141,7 @@ export const FeaturePanel = (props: Props) => {
 					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
 					value={data.selected ? data.selected.id : null}
 					onChange={value => {
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureAncestryFeatureChoiceData;
+						const dataCopy = Utils.copy(data);
 						dataCopy.selected = features.find(f => f.id === value) || null;
 						if (props.setData) {
 							props.setData(props.feature.id, dataCopy);
@@ -237,11 +238,11 @@ export const FeaturePanel = (props: Props) => {
 						ids.forEach(id => {
 							const option = availableOptions.find(o => o.feature.id === id);
 							if (option) {
-								const featureCopy = JSON.parse(JSON.stringify(option.feature)) as Feature;
+								const featureCopy = Utils.copy(option.feature) as Feature;
 								features.push(featureCopy);
 							}
 						});
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
+						const dataCopy = Utils.copy(data);
 						dataCopy.selected = features;
 						if (props.setData) {
 							props.setData(props.feature.id, dataCopy);
@@ -303,7 +304,7 @@ export const FeaturePanel = (props: Props) => {
 						} else {
 							ids = value as string[];
 						}
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureClassAbilityData;
+						const dataCopy = Utils.copy(data);
 						dataCopy.selectedIDs = ids;
 						if (props.setData) {
 							props.setData(props.feature.id, dataCopy);
@@ -324,7 +325,7 @@ export const FeaturePanel = (props: Props) => {
 
 	const getSelectionCompanion = (data: FeatureCompanionData) => {
 		const setName = (value: string) => {
-			const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureCompanionData;
+			const dataCopy = Utils.copy(data);
 			dataCopy.selected!.name = value;
 			if (props.setData) {
 				props.setData(props.feature.id, dataCopy);
@@ -346,7 +347,7 @@ export const FeaturePanel = (props: Props) => {
 									sourcebooks={props.sourcebooks}
 									mode={props.mode}
 									setData={(fID, d) => {
-										const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureCompanionData;
+										const dataCopy = Utils.copy(data);
 										dataCopy.selected!.retainer!.featuresByLevel.forEach(l => {
 											if (l.feature.id === fID) {
 												l.feature.data = d;
@@ -388,12 +389,12 @@ export const FeaturePanel = (props: Props) => {
 						onSelect={monster => {
 							setDrawerOpen(false);
 
-							const monsterCopy = JSON.parse(JSON.stringify(monster)) as Monster;
+							const monsterCopy = Utils.copy(monster) as Monster;
 							if (monsterCopy.retainer) {
 								// Retainers match hero level
 								monsterCopy.retainer.level = Math.max(monsterCopy.level, props.hero?.class?.level || 1);
 							}
-							const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureCompanionData;
+							const dataCopy = Utils.copy(data);
 							dataCopy.selected = monsterCopy;
 							if (props.setData) {
 								props.setData(props.feature.id, dataCopy);
@@ -443,7 +444,7 @@ export const FeaturePanel = (props: Props) => {
 						} else {
 							ids = value as string[];
 						}
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureDomainData;
+						const dataCopy = Utils.copy(data);
 						dataCopy.selected = [];
 						ids.forEach(id => {
 							const domain = domains.find(k => k.id === id);
@@ -505,11 +506,11 @@ export const FeaturePanel = (props: Props) => {
 						ids.forEach(id => {
 							const option = options.find(o => o.id === id);
 							if (option) {
-								const featureCopy = JSON.parse(JSON.stringify(option)) as Feature;
+								const featureCopy = Utils.copy(option) as Feature;
 								features.push(featureCopy);
 							}
 						});
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
+						const dataCopy = Utils.copy(data);
 						dataCopy.selected = features;
 						if (props.setData) {
 							props.setData(props.feature.id, dataCopy);
@@ -564,7 +565,7 @@ export const FeaturePanel = (props: Props) => {
 						} else {
 							ids = value as string[];
 						}
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureItemChoiceData;
+						const dataCopy = Utils.copy(data);
 						dataCopy.selected = [];
 						ids.forEach(id => {
 							const item = items.find(i => i.id === id);
@@ -622,7 +623,7 @@ export const FeaturePanel = (props: Props) => {
 						} else {
 							ids = value as string[];
 						}
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureKitData;
+						const dataCopy = Utils.copy(data);
 						dataCopy.selected = [];
 						ids.forEach(id => {
 							const kit = kits.find(k => k.id === id);
@@ -705,7 +706,7 @@ export const FeaturePanel = (props: Props) => {
 						} else {
 							ids = value as string[];
 						}
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureLanguageChoiceData;
+						const dataCopy = Utils.copy(data);
 						dataCopy.selected = ids;
 						if (props.setData) {
 							props.setData(props.feature.id, dataCopy);
@@ -771,7 +772,7 @@ export const FeaturePanel = (props: Props) => {
 						} else {
 							ids = value as string[];
 						}
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeaturePerkData;
+						const dataCopy = Utils.copy(data);
 						dataCopy.selected = [];
 						ids.forEach(id => {
 							const perk = perks.find(p => p.id === id);
@@ -848,7 +849,7 @@ export const FeaturePanel = (props: Props) => {
 						} else {
 							ids = value as string[];
 						}
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureSkillChoiceData;
+						const dataCopy = Utils.copy(data);
 						dataCopy.selected = ids;
 						if (props.setData) {
 							props.setData(props.feature.id, dataCopy);
@@ -893,7 +894,7 @@ export const FeaturePanel = (props: Props) => {
 					max={4}
 					value={data.echelon}
 					onChange={value => {
-						const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureTitleChoiceData;
+						const dataCopy = Utils.copy(data);
 						dataCopy.echelon = value;
 						dataCopy.selected = [];
 						if (props.setData) {
@@ -920,7 +921,7 @@ export const FeaturePanel = (props: Props) => {
 								} else {
 									ids = value as string[];
 								}
-								const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureTitleChoiceData;
+								const dataCopy = Utils.copy(data);
 								dataCopy.selected = [];
 								ids.forEach(id => {
 									const title = titles.find(t => t.id === id);
@@ -952,7 +953,7 @@ export const FeaturePanel = (props: Props) => {
 							optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 							value={title.selectedFeatureID || null}
 							onChange={value => {
-								const dataCopy = JSON.parse(JSON.stringify(data)) as FeatureTitleChoiceData;
+								const dataCopy = Utils.copy(data);
 								dataCopy.selected[n].selectedFeatureID = value;
 								if (props.setData) {
 									props.setData(props.feature.id, dataCopy);

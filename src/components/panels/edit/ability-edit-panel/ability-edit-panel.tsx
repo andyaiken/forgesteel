@@ -14,6 +14,7 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Toggle } from '../../../controls/toggle/toggle';
+import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
 import './ability-edit-panel.scss';
@@ -27,49 +28,49 @@ export const AbilityEditPanel = (props: Props) => {
 	const [ ability, setAbility ] = useState<Ability>(props.ability);
 
 	const setName = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.name = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setDescription = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.description = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setTypeUsage = (value: AbilityUsage) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.type.usage = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setTypeFree = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.type.free = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setTypeTrigger = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.type.trigger = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setTypeTime = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.type.time = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setKeywords = (value: AbilityKeyword[]) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.keywords = value;
 		setAbility(copy);
 		props.onChange(copy);
@@ -98,7 +99,7 @@ export const AbilityEditPanel = (props: Props) => {
 	};
 
 	const setDistanceMainType = (index: number, value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 
 		switch (value) {
 			case 'Self':
@@ -126,98 +127,98 @@ export const AbilityEditPanel = (props: Props) => {
 	};
 
 	const addDistance = () => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.distance.push(FactoryLogic.distance.createMelee());
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setDistanceType = (index: number, value: AbilityDistanceType) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.distance[index].type = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setDistanceValue = (index: number, value: number) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.distance[index].value = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setDistanceValue2 = (index: number, value: number) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.distance[index].value2 = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setDistanceWithin = (index: number, value: number) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.distance[index].within = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setDistanceSpecial = (index: number, value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.distance[index].special = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const moveDistance = (index: number, direction: 'up' | 'down') => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.distance = Collections.move(copy.distance, index, direction);
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const deleteDistance = (index: number) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.distance.splice(index, 1);
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setTarget = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.target = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setCost = (value: number | 'signature') => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.cost = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setRepeatable = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.repeatable = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setPreEffect = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.preEffect = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setPowerRoll = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.powerRoll = value ? FactoryLogic.createPowerRoll({ characteristic: [], tier1: '', tier2: '', tier3: '' }) : null;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setPowerRollCharacteristics = (value: Characteristic[]) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		if (copy.powerRoll) {
 			copy.powerRoll.characteristic = value;
 		}
@@ -226,7 +227,7 @@ export const AbilityEditPanel = (props: Props) => {
 	};
 
 	const setPowerRoll1 = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		if (copy.powerRoll) {
 			copy.powerRoll.tier1 = value;
 		}
@@ -235,7 +236,7 @@ export const AbilityEditPanel = (props: Props) => {
 	};
 
 	const setPowerRoll2 = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		if (copy.powerRoll) {
 			copy.powerRoll.tier2 = value;
 		}
@@ -244,7 +245,7 @@ export const AbilityEditPanel = (props: Props) => {
 	};
 
 	const setPowerRoll3 = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		if (copy.powerRoll) {
 			copy.powerRoll.tier3 = value;
 		}
@@ -253,112 +254,112 @@ export const AbilityEditPanel = (props: Props) => {
 	};
 
 	const setEffect = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.effect = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const addAlternateEffect = () => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.alternateEffects.push('');
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setAlternateEffect = (index: number, value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.alternateEffects[index] = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const moveAlternateEffect = (index: number, direction: 'up' | 'down') => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.alternateEffects = Collections.move(copy.alternateEffects, index, direction);
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const deleteAlternateEffect = (index: number) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.alternateEffects.splice(index, 1);
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const addSpend = () => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.spend.push({ name: '', effect: '', value: 1, repeatable: false });
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setSpendValue = (index: number, value: number) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.spend[index].value = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setSpendEffect = (index: number, value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.spend[index].effect = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const moveSpend = (index: number, direction: 'up' | 'down') => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.spend = Collections.move(copy.spend, index, direction);
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const deleteSpend = (index: number) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.spend.splice(index, 1);
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const addPersistence = () => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.persistence.push({ effect: '', value: 1 });
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setPersistenceValue = (index: number, value: number) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.persistence[index].value = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setPersistenceEffect = (index: number, value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.persistence[index].effect = value;
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const movePersistence = (index: number, direction: 'up' | 'down') => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.persistence = Collections.move(copy.persistence, index, direction);
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const deletePersistence = (index: number) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.persistence.splice(index, 1);
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
 	const setStrained = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(ability)) as Ability;
+		const copy = Utils.copy(ability);
 		copy.strained = value;
 		setAbility(copy);
 		props.onChange(copy);

@@ -31,14 +31,14 @@ export const PlotEditPanel = (props: Props) => {
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(plot)) as Plot;
+			const copy = Utils.copy(plot);
 			copy.name = value;
 			setPlot(copy);
 			props.onChange(copy);
 		};
 
 		const setDescription = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(plot)) as Plot;
+			const copy = Utils.copy(plot);
 			copy.description = value;
 			setPlot(copy);
 			props.onChange(copy);
@@ -62,7 +62,7 @@ export const PlotEditPanel = (props: Props) => {
 
 	const getContentSection = () => {
 		const addContent = () => {
-			const copy = JSON.parse(JSON.stringify(plot)) as Plot;
+			const copy = Utils.copy(plot);
 			copy.content.push({
 				id: Utils.guid(),
 				type: 'encounter',
@@ -73,7 +73,7 @@ export const PlotEditPanel = (props: Props) => {
 		};
 
 		const setContentType = (content: PlotContent, value: 'encounter' | 'montage' | 'negotiation' | 'item' | 'monster') => {
-			const copy = JSON.parse(JSON.stringify(plot)) as Plot;
+			const copy = Utils.copy(plot);
 			const index = copy.content.findIndex(c => c.id === content.id);
 			if (index !== -1) {
 				copy.content[index].type = value;
@@ -84,7 +84,7 @@ export const PlotEditPanel = (props: Props) => {
 		};
 
 		const setContentID = (content: PlotContent, value: string) => {
-			const copy = JSON.parse(JSON.stringify(plot)) as Plot;
+			const copy = Utils.copy(plot);
 			const index = copy.content.findIndex(c => c.id === content.id);
 			if (index !== -1) {
 				copy.content[index].contentID = value;
@@ -94,7 +94,7 @@ export const PlotEditPanel = (props: Props) => {
 		};
 
 		const moveContent = (content: PlotContent, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(plot)) as Plot;
+			const copy = Utils.copy(plot);
 			const index = copy.content.findIndex(c => c.id === content.id);
 			copy.content = Collections.move(copy.content, index, direction);
 			setPlot(copy);
@@ -102,7 +102,7 @@ export const PlotEditPanel = (props: Props) => {
 		};
 
 		const deleteContent = (content: PlotContent) => {
-			const copy = JSON.parse(JSON.stringify(plot)) as Plot;
+			const copy = Utils.copy(plot);
 			copy.content = copy.content.filter(c => c.id !== content.id);
 			setPlot(copy);
 			props.onChange(copy);
@@ -173,7 +173,7 @@ export const PlotEditPanel = (props: Props) => {
 
 	const getLinksSection = () => {
 		const addLink = () => {
-			const copy = JSON.parse(JSON.stringify(plot)) as Plot;
+			const copy = Utils.copy(plot);
 			copy.links.push({
 				id: Utils.guid(),
 				plotID: '',
@@ -184,7 +184,7 @@ export const PlotEditPanel = (props: Props) => {
 		};
 
 		const setLinkPlotID = (link: PlotLink, value: string) => {
-			const copy = JSON.parse(JSON.stringify(plot)) as Plot;
+			const copy = Utils.copy(plot);
 			const index = copy.links.findIndex(l => l.id === link.id);
 			if (index !== -1) {
 				copy.links[index].plotID = value;
@@ -194,7 +194,7 @@ export const PlotEditPanel = (props: Props) => {
 		};
 
 		const setLinkLabel = (link: PlotLink, value: string) => {
-			const copy = JSON.parse(JSON.stringify(plot)) as Plot;
+			const copy = Utils.copy(plot);
 			const index = copy.links.findIndex(l => l.id === link.id);
 			if (index !== -1) {
 				copy.links[index].label = value;
@@ -204,7 +204,7 @@ export const PlotEditPanel = (props: Props) => {
 		};
 
 		const moveLink = (link: PlotLink, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(plot)) as Plot;
+			const copy = Utils.copy(plot);
 			const index = copy.links.findIndex(l => l.id === link.id);
 			copy.links = Collections.move(copy.links, index, direction);
 			setPlot(copy);
@@ -212,7 +212,7 @@ export const PlotEditPanel = (props: Props) => {
 		};
 
 		const deleteLink = (link: PlotLink) => {
-			const copy = JSON.parse(JSON.stringify(plot)) as Plot;
+			const copy = Utils.copy(plot);
 			copy.links = copy.links.filter(l => l.id !== link.id);
 			setPlot(copy);
 			props.onChange(copy);

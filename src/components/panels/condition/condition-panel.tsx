@@ -6,6 +6,7 @@ import { DangerButton } from '../../controls/danger-button/danger-button';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Markdown } from '../../controls/markdown/markdown';
 import { MultiLine } from '../../controls/multi-line/multi-line';
+import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
 import './condition-panel.scss';
@@ -17,11 +18,11 @@ interface Props {
 }
 
 export const ConditionPanel = (props: Props) => {
-	const [ condition, setCondition ] = useState<Condition>(JSON.parse(JSON.stringify(props.condition)));
+	const [ condition, setCondition ] = useState<Condition>(Utils.copy(props.condition));
 
 	const setConditionText = (value: string) => {
 		if (props.onChange) {
-			const copy = JSON.parse(JSON.stringify(condition)) as Condition;
+			const copy = Utils.copy(condition);
 			copy.text = value;
 			setCondition(copy);
 			props.onChange(copy);
@@ -30,7 +31,7 @@ export const ConditionPanel = (props: Props) => {
 
 	const setConditionEndType = (value: ConditionEndType) => {
 		if (props.onChange) {
-			const copy = JSON.parse(JSON.stringify(condition)) as Condition;
+			const copy = Utils.copy(condition);
 			copy.ends = value;
 			setCondition(copy);
 			props.onChange(copy);

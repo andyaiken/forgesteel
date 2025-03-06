@@ -1013,7 +1013,7 @@ export class MonsterLogic {
 			const count = Math.round(candidates.length / source.length);
 			for (let n = 0; n < count; ++n) {
 				const f = Collections.draw(candidates);
-				const copy = JSON.parse(JSON.stringify(f)) as Feature;
+				const copy = Utils.copy(f);
 				copy.id = Utils.guid();
 				target.features.push(copy);
 			}

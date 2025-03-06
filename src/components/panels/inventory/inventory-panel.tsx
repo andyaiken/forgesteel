@@ -9,6 +9,7 @@ import { ItemType } from '../../../enums/item-type';
 import { Markdown } from '../../controls/markdown/markdown';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../enums/panel-mode';
+import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
 import './inventory-panel.scss';
@@ -20,10 +21,10 @@ interface Props {
 }
 
 export const InventoryPanel = (props: Props) => {
-	const [ item, setItem ] = useState<Item>(JSON.parse(JSON.stringify(props.item)) as Item);
+	const [ item, setItem ] = useState<Item>(Utils.copy(props.item));
 
 	const setCount = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(item)) as Item;
+		const copy = Utils.copy(item);
 		copy.count = value;
 		if (props.onChange) {
 			props.onChange(copy);

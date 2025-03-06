@@ -85,13 +85,13 @@ export const Main = (props: Props) => {
 
 	const persistHero = (hero: Hero) => {
 		if (heroes.some(h => h.id === hero.id)) {
-			const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
+			const copy = Utils.copy(heroes);
 			const list = copy.map(h => h.id === hero.id ? hero : h);
 
 			return persistHeroes(list);
 		}
 		else {
-			const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
+			const copy = Utils.copy(heroes);
 			copy.push(hero);
 			Collections.sort(copy, h => h.name);
 
@@ -140,7 +140,7 @@ export const Main = (props: Props) => {
 	const deleteHero = (hero: Hero) => {
 		navigation.goToHeroList();
 
-		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
+		const copy = Utils.copy(heroes);
 		persistHeroes(copy.filter(h => h.id !== hero.id));
 	};
 
@@ -210,7 +210,7 @@ export const Main = (props: Props) => {
 	const deleteLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
 		navigation.goToLibraryList(kind);
 
-		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const copy = Utils.copy(homebrewSourcebooks);
 		const sourcebook = copy.find(cs => cs.id === sourcebookID);
 		if (sourcebook) {
 			switch (kind) {
@@ -254,7 +254,7 @@ export const Main = (props: Props) => {
 	};
 
 	const saveLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
-		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const copy = Utils.copy(homebrewSourcebooks);
 		const sourcebook = copy.find(cs => cs.id === sourcebookID);
 		if (sourcebook) {
 			switch (kind) {
@@ -304,7 +304,7 @@ export const Main = (props: Props) => {
 			group.monsters.forEach(m => m.id === Utils.guid());
 		}
 
-		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const copy = Utils.copy(homebrewSourcebooks);
 		let sourcebook = copy.find(cs => cs.id === sourcebookID);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
@@ -417,7 +417,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createAncestry = (original: Ancestry | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -428,7 +428,7 @@ export const Main = (props: Props) => {
 
 		let ancestry: Ancestry;
 		if (original) {
-			ancestry = JSON.parse(JSON.stringify(original)) as Ancestry;
+			ancestry = Utils.copy(original);
 			ancestry.id = Utils.guid();
 		} else {
 			ancestry = FactoryLogic.createAncestry();
@@ -439,7 +439,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createCulture = (original: Culture | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -450,7 +450,7 @@ export const Main = (props: Props) => {
 
 		let culture: Culture;
 		if (original) {
-			culture = JSON.parse(JSON.stringify(original)) as Culture;
+			culture = Utils.copy(original);
 			culture.id = Utils.guid();
 		} else {
 			culture = FactoryLogic.createCulture();
@@ -461,7 +461,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createCareer = (original: Career | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -472,7 +472,7 @@ export const Main = (props: Props) => {
 
 		let career: Career;
 		if (original) {
-			career = JSON.parse(JSON.stringify(original)) as Career;
+			career = Utils.copy(original);
 			career.id = Utils.guid();
 		} else {
 			career = FactoryLogic.createCareer();
@@ -483,7 +483,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createClass = (original: HeroClass | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -494,7 +494,7 @@ export const Main = (props: Props) => {
 
 		let heroClass: HeroClass;
 		if (original) {
-			heroClass = JSON.parse(JSON.stringify(original)) as HeroClass;
+			heroClass = Utils.copy(original);
 			heroClass.id = Utils.guid();
 
 			// Make sure this has 10 levels
@@ -521,7 +521,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createComplication = (original: Complication | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -532,7 +532,7 @@ export const Main = (props: Props) => {
 
 		let complication: Complication;
 		if (original) {
-			complication = JSON.parse(JSON.stringify(original)) as Complication;
+			complication = Utils.copy(original);
 			complication.id = Utils.guid();
 		} else {
 			complication = FactoryLogic.createComplication();
@@ -543,7 +543,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createDomain = (original: Domain | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -554,7 +554,7 @@ export const Main = (props: Props) => {
 
 		let domain: Domain;
 		if (original) {
-			domain = JSON.parse(JSON.stringify(original)) as Domain;
+			domain = Utils.copy(original);
 			domain.id = Utils.guid();
 
 			// Make sure this has 10 levels
@@ -573,7 +573,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createKit = (original: Kit | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -584,7 +584,7 @@ export const Main = (props: Props) => {
 
 		let kit: Kit;
 		if (original) {
-			kit = JSON.parse(JSON.stringify(original)) as Kit;
+			kit = Utils.copy(original);
 			kit.id = Utils.guid();
 		} else {
 			kit = FactoryLogic.createKit();
@@ -595,7 +595,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createPerk = (original: Perk | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -606,7 +606,7 @@ export const Main = (props: Props) => {
 
 		let perk: Perk;
 		if (original) {
-			perk = JSON.parse(JSON.stringify(original)) as Perk;
+			perk = Utils.copy(original);
 			perk.id = Utils.guid();
 		} else {
 			perk = FactoryLogic.createPerk();
@@ -617,7 +617,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createTitle = (original: Title | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -628,7 +628,7 @@ export const Main = (props: Props) => {
 
 		let title: Title;
 		if (original) {
-			title = JSON.parse(JSON.stringify(original)) as Title;
+			title = Utils.copy(original);
 			title.id = Utils.guid();
 		} else {
 			title = FactoryLogic.createTitle();
@@ -639,7 +639,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createItem = (original: Item | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -650,7 +650,7 @@ export const Main = (props: Props) => {
 
 		let item: Item;
 		if (original) {
-			item = JSON.parse(JSON.stringify(original)) as Item;
+			item = Utils.copy(original);
 			item.id = Utils.guid();
 		} else {
 			item = FactoryLogic.createItem({
@@ -667,7 +667,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createMonsterGroup = (original: MonsterGroup | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -678,7 +678,7 @@ export const Main = (props: Props) => {
 
 		let monsterGroup: MonsterGroup;
 		if (original) {
-			monsterGroup = JSON.parse(JSON.stringify(original)) as MonsterGroup;
+			monsterGroup = Utils.copy(original);
 			monsterGroup.id = Utils.guid();
 			monsterGroup.monsters.forEach(m => m.id = Utils.guid());
 		} else {
@@ -694,13 +694,13 @@ export const Main = (props: Props) => {
 	//#region Playbook
 
 	const createPlaybookElement = (kind: PlaybookElementKind, original: Element | null) => {
-		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
+		const copy = Utils.copy(playbook);
 		let element: Element;
 
 		switch (kind) {
 			case 'adventure':
 				if (original) {
-					element = JSON.parse(JSON.stringify(original)) as Adventure;
+					element = Utils.copy(original);
 					element.id = Utils.guid();
 				} else {
 					element = FactoryLogic.createAdventure();
@@ -711,7 +711,7 @@ export const Main = (props: Props) => {
 				break;
 			case 'encounter':
 				if (original) {
-					element = JSON.parse(JSON.stringify(original)) as Encounter;
+					element = Utils.copy(original);
 					element.id = Utils.guid();
 				} else {
 					element = FactoryLogic.createEncounter();
@@ -720,7 +720,7 @@ export const Main = (props: Props) => {
 				break;
 			case 'montage':
 				if (original) {
-					element = JSON.parse(JSON.stringify(original)) as Montage;
+					element = Utils.copy(original);
 					element.id = Utils.guid();
 				} else {
 					element = FactoryLogic.createMontage();
@@ -729,7 +729,7 @@ export const Main = (props: Props) => {
 				break;
 			case 'negotiation':
 				if (original) {
-					element = JSON.parse(JSON.stringify(original)) as Negotiation;
+					element = Utils.copy(original);
 					element.id = Utils.guid();
 				} else {
 					element = FactoryLogic.createNegotiation();
@@ -744,7 +744,7 @@ export const Main = (props: Props) => {
 	const deletePlaybookElement = (kind: PlaybookElementKind, element: Element) => {
 		navigation.goToPlaybookList(kind);
 
-		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
+		const copy = Utils.copy(playbook);
 		switch (kind) {
 			case 'adventure':
 				copy.adventures = copy.adventures.filter(x => x.id !== element.id);
@@ -765,7 +765,7 @@ export const Main = (props: Props) => {
 	};
 
 	const savePlaybookElement = (kind: PlaybookElementKind, element: Element) => {
-		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
+		const copy = Utils.copy(playbook);
 		switch (kind) {
 			case 'adventure':
 				copy.adventures = copy.adventures.map(x => x.id === element.id ? element : x) as Adventure[];
@@ -787,7 +787,7 @@ export const Main = (props: Props) => {
 	const importPlaybookElement = (kind: PlaybookElementKind, element: Element) => {
 		element.id = Utils.guid();
 
-		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
+		const copy = Utils.copy(playbook);
 		switch (kind) {
 			case 'adventure':
 				copy.adventures = copy.adventures.map(x => x.id === element.id ? element : x) as Adventure[];

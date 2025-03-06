@@ -43,14 +43,14 @@ export const MonsterEditPanel = (props: Props) => {
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.name = value;
 			setMonster(copy);
 			props.onChange(copy);
 		};
 
 		const setDescription = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.description = value;
 			setMonster(copy);
 			props.onChange(copy);
@@ -83,14 +83,14 @@ export const MonsterEditPanel = (props: Props) => {
 
 	const getTypeSection = () => {
 		const setKeywords = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.keywords = value.split(' ');
 			setMonster(copy);
 			props.onChange(copy);
 		};
 
 		const setLevel = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.level = value;
 			if (copy.retainer) {
 				if (copy.level >= 4) {
@@ -111,14 +111,14 @@ export const MonsterEditPanel = (props: Props) => {
 		};
 
 		const setRoleType = (value: MonsterRoleType) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.role.type = value;
 			setMonster(copy);
 			props.onChange(copy);
 		};
 
 		const setRoleOrganization = (value: MonsterOrganizationType) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.role.organization = value;
 			if (copy.role.organization === MonsterOrganizationType.Retainer) {
 				const lvl4 = FactoryLogic.feature.createAbility({
@@ -166,14 +166,14 @@ export const MonsterEditPanel = (props: Props) => {
 		};
 
 		const setSizeValue = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.size.value = value;
 			setMonster(copy);
 			props.onChange(copy);
 		};
 
 		const setSizeMod = (value: ''| 'T' | 'S' | 'M' | 'L') => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.size.mod = value;
 			setMonster(copy);
 			props.onChange(copy);
@@ -226,42 +226,42 @@ export const MonsterEditPanel = (props: Props) => {
 
 	const getStatsSection = () => {
 		const setEncounterValue = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.encounterValue = value;
 			setMonster(copy);
 			props.onChange(copy);
 		};
 
 		const setSpeed = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.speed.value = value;
 			setMonster(copy);
 			props.onChange(copy);
 		};
 
 		const setMovementMode = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.speed.modes = value;
 			setMonster(copy);
 			props.onChange(copy);
 		};
 
 		const setStamina = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.stamina = value;
 			setMonster(copy);
 			props.onChange(copy);
 		};
 
 		const setStability = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.stability = value;
 			setMonster(copy);
 			props.onChange(copy);
 		};
 
 		const setFreeStrikeDamage = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.freeStrikeDamage = value;
 			setMonster(copy);
 			props.onChange(copy);
@@ -405,7 +405,7 @@ export const MonsterEditPanel = (props: Props) => {
 
 	const getCharacteristicsSection = () => {
 		const setCharacteristic = (ch: Characteristic, value: number) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.characteristics
 				.filter(c => c.characteristic === ch)
 				.forEach(c => c.value = value);
@@ -464,7 +464,7 @@ export const MonsterEditPanel = (props: Props) => {
 
 	const getFeaturesSection = () => {
 		const addFeature = () => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.features.push(FactoryLogic.feature.create({
 				id: Utils.guid(),
 				name: '',
@@ -475,17 +475,17 @@ export const MonsterEditPanel = (props: Props) => {
 		};
 
 		const importFeature = (feature: Feature) => {
-			const featureCopy = JSON.parse(JSON.stringify(feature)) as Feature;
+			const featureCopy = Utils.copy(feature);
 			featureCopy.id = Utils.guid();
 
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.features.push(featureCopy);
 			setMonster(copy);
 			props.onChange(copy);
 		};
 
 		const changeFeature = (feature: Feature) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			const index = copy.features.findIndex(f => f.id === feature.id);
 			if (index !== -1) {
 				copy.features[index] = feature;
@@ -495,7 +495,7 @@ export const MonsterEditPanel = (props: Props) => {
 		};
 
 		const moveFeature = (feature: Feature, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			const index = copy.features.findIndex(f => f.id === feature.id);
 			copy.features = Collections.move(copy.features, index, direction);
 			setMonster(copy);
@@ -503,7 +503,7 @@ export const MonsterEditPanel = (props: Props) => {
 		};
 
 		const deleteFeature = (feature: Feature) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.features = copy.features.filter(f => f.id !== feature.id);
 			setMonster(copy);
 			props.onChange(copy);
@@ -613,7 +613,7 @@ export const MonsterEditPanel = (props: Props) => {
 
 	const getMinionSection = () => {
 		const setWithCaptain = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			copy.withCaptain = value;
 			setMonster(copy);
 			props.onChange(copy);
@@ -651,7 +651,7 @@ export const MonsterEditPanel = (props: Props) => {
 
 	const getRetainerSection = () => {
 		const changeRetainerFeature = (feature: Feature, level: 4 | 7 | 10) => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			switch (level) {
 				case 4:
 					copy.retainer!.level4 = feature;
@@ -721,7 +721,7 @@ export const MonsterEditPanel = (props: Props) => {
 
 	try {
 		const genesplice = () => {
-			const copy = JSON.parse(JSON.stringify(monster)) as Monster;
+			const copy = Utils.copy(monster);
 			MonsterLogic.genesplice(copy, props.similarMonsters);
 			setMonster(copy);
 			props.onChange(copy);

@@ -17,6 +17,12 @@ export class Utils {
 		return id;
 	};
 
+	static copy = <T>(object: T) => {
+		return JSON.parse(
+			JSON.stringify(object)
+		) as T;
+	};
+
 	static debounce = (func: () => void, delay = 500) => {
 		let timeout: number;
 		return () => {

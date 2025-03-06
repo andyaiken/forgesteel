@@ -6,6 +6,7 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { Progress } from 'antd';
 import { Project } from '../../../../models/project';
 import { Toggle } from '../../../controls/toggle/toggle';
+import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
 import './project-panel.scss';
@@ -17,10 +18,10 @@ interface Props {
 }
 
 export const ProjectPanel = (props: Props) => {
-	const [ project, setProject ] = useState<Project>(JSON.parse(JSON.stringify(props.project)) as Project);
+	const [ project, setProject ] = useState<Project>(Utils.copy(props.project));
 
 	const setPrerequisites = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(project)) as Project;
+		const copy = Utils.copy(project);
 		copy.progress!.prerequisites = value;
 		setProject(copy);
 		if (props.onChange) {
@@ -29,7 +30,7 @@ export const ProjectPanel = (props: Props) => {
 	};
 
 	const setSource = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(project)) as Project;
+		const copy = Utils.copy(project);
 		copy.progress!.source = value;
 		setProject(copy);
 		if (props.onChange) {
@@ -38,7 +39,7 @@ export const ProjectPanel = (props: Props) => {
 	};
 
 	const setPoints = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(project)) as Project;
+		const copy = Utils.copy(project);
 		copy.progress!.points = value;
 		setProject(copy);
 		if (props.onChange) {

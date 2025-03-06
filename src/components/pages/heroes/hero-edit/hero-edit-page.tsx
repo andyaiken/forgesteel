@@ -33,6 +33,7 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { Utils } from '../../../../utils/utils';
 import { useMediaQuery } from '../../../../hooks/use-media-query';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
@@ -69,7 +70,7 @@ export const HeroEditPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { heroID, page } = useParams<{ heroID: string; page: HeroEditTab }>();
 	const originalHero = useMemo(() => props.heroes.find(h => h.id === heroID)!, [ heroID, props.heroes ]);
-	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(originalHero)) as Hero);
+	const [ hero, setHero ] = useState<Hero>(Utils.copy(originalHero));
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
@@ -150,23 +151,23 @@ export const HeroEditPage = (props: Props) => {
 		};
 
 		const setAncestry = (ancestry: Ancestry | null) => {
-			const ancestryCopy = JSON.parse(JSON.stringify(ancestry)) as Ancestry | null;
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const ancestryCopy = Utils.copy(ancestry) as Ancestry | null;
+			const heroCopy = Utils.copy(hero);
 			heroCopy.ancestry = ancestryCopy;
 			setHero(heroCopy);
 			setDirty(true);
 		};
 
 		const setCulture = (culture: Culture | null) => {
-			const cultureCopy = JSON.parse(JSON.stringify(culture)) as Culture | null;
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const cultureCopy = Utils.copy(culture) as Culture | null;
+			const heroCopy = Utils.copy(hero);
 			heroCopy.culture = cultureCopy;
 			setHero(heroCopy);
 			setDirty(true);
 		};
 
 		const setLanguages = (languages: string[]) => {
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const heroCopy = Utils.copy(hero);
 			if (heroCopy.culture) {
 				heroCopy.culture.languages = languages;
 			}
@@ -175,11 +176,11 @@ export const HeroEditPage = (props: Props) => {
 		};
 
 		const setEnvironment = (id: string | null) => {
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const heroCopy = Utils.copy(hero);
 			if (heroCopy.culture) {
 				const env = EnvironmentData.getEnvironments().find(e => e.id === id);
 				if (env) {
-					const envCopy = JSON.parse(JSON.stringify(env)) as Feature;
+					const envCopy = Utils.copy(env) as Feature;
 					heroCopy.culture.environment = envCopy;
 				} else {
 					heroCopy.culture.environment = null;
@@ -190,11 +191,11 @@ export const HeroEditPage = (props: Props) => {
 		};
 
 		const setOrganization = (id: string | null) => {
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const heroCopy = Utils.copy(hero);
 			if (heroCopy.culture) {
 				const org = OrganizationData.getOrganizations().find(o => o.id === id);
 				if (org) {
-					const orgCopy = JSON.parse(JSON.stringify(org)) as Feature;
+					const orgCopy = Utils.copy(org) as Feature;
 					heroCopy.culture.organization = orgCopy;
 				} else {
 					heroCopy.culture.organization = null;
@@ -205,11 +206,11 @@ export const HeroEditPage = (props: Props) => {
 		};
 
 		const setUpbringing = (id: string | null) => {
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const heroCopy = Utils.copy(hero);
 			if (heroCopy.culture) {
 				const ub = UpbringingData.getUpbringings().find(u => u.id === id);
 				if (ub) {
-					const ubCopy = JSON.parse(JSON.stringify(ub)) as Feature;
+					const ubCopy = Utils.copy(ub) as Feature;
 					heroCopy.culture.upbringing = ubCopy;
 				} else {
 					heroCopy.culture.upbringing = null;
@@ -220,8 +221,8 @@ export const HeroEditPage = (props: Props) => {
 		};
 
 		const setCareer = (career: Career | null) => {
-			const careerCopy = JSON.parse(JSON.stringify(career)) as Career | null;
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const careerCopy = Utils.copy(career) as Career | null;
+			const heroCopy = Utils.copy(hero);
 			heroCopy.career = careerCopy;
 			if (careerCopy) {
 				heroCopy.state.projectPoints = 0;
@@ -247,7 +248,7 @@ export const HeroEditPage = (props: Props) => {
 		};
 
 		const setIncitingIncident = (id: string | null) => {
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const heroCopy = Utils.copy(hero);
 			if (heroCopy.career) {
 				heroCopy.career.incitingIncidents.selectedID = id;
 			}
@@ -256,15 +257,15 @@ export const HeroEditPage = (props: Props) => {
 		};
 
 		const setClass = (heroClass: HeroClass | null) => {
-			const classCopy = JSON.parse(JSON.stringify(heroClass)) as HeroClass | null;
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const classCopy = Utils.copy(heroClass) as HeroClass | null;
+			const heroCopy = Utils.copy(hero);
 			heroCopy.class = classCopy;
 			setHero(heroCopy);
 			setDirty(true);
 		};
 
 		const setLevel = (level: number) => {
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const heroCopy = Utils.copy(hero);
 			if (heroCopy.class) {
 				heroCopy.class.level = level;
 				heroCopy.state.xp = HeroLogic.getMinXP(level);
@@ -281,7 +282,7 @@ export const HeroEditPage = (props: Props) => {
 		};
 
 		const setCharacteristics = (array: { characteristic: Characteristic, value: number }[]) => {
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const heroCopy = Utils.copy(hero);
 			if (heroCopy.class) {
 				heroCopy.class.characteristics = array;
 			}
@@ -290,7 +291,7 @@ export const HeroEditPage = (props: Props) => {
 		};
 
 		const setSubclasses = (subclassIDs: string[]) => {
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const heroCopy = Utils.copy(hero);
 			if (heroCopy.class) {
 				heroCopy.class.subclasses.forEach(sc => sc.selected = subclassIDs.includes(sc.id));
 			}
@@ -299,15 +300,15 @@ export const HeroEditPage = (props: Props) => {
 		};
 
 		const setComplication = (complication: Complication | null) => {
-			const complicationCopy = JSON.parse(JSON.stringify(complication)) as Complication | null;
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const complicationCopy = Utils.copy(complication) as Complication | null;
+			const heroCopy = Utils.copy(hero);
 			heroCopy.complication = complicationCopy;
 			setHero(heroCopy);
 			setDirty(true);
 		};
 
 		const setFeature = (featureID: string, feature: Feature) => {
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const heroCopy = Utils.copy(hero);
 			const index = heroCopy.features.findIndex(f => f.id === featureID);
 			if (index !== -1) {
 				heroCopy.features[index] = feature;
@@ -317,7 +318,7 @@ export const HeroEditPage = (props: Props) => {
 		};
 
 		const setFeatureData = (featureID: string, data: FeatureData) => {
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const heroCopy = Utils.copy(hero);
 			const feature = HeroLogic.getFeatures(heroCopy).find(f => f.id === featureID);
 			if (feature) {
 				feature.data = data;
@@ -327,28 +328,28 @@ export const HeroEditPage = (props: Props) => {
 		};
 
 		const setName = (value: string) => {
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const heroCopy = Utils.copy(hero);
 			heroCopy.name = value;
 			setHero(heroCopy);
 			setDirty(true);
 		};
 
 		const setSettingIDs = (settingIDs: string[]) => {
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const heroCopy = Utils.copy(hero);
 			heroCopy.settingIDs = settingIDs;
 			setHero(heroCopy);
 			setDirty(true);
 		};
 
 		const addFeature = (feature: Feature) => {
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const heroCopy = Utils.copy(hero);
 			heroCopy.features.push(feature);
 			setHero(heroCopy);
 			setDirty(true);
 		};
 
 		const deleteFeature = (feature: Feature) => {
-			const heroCopy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const heroCopy = Utils.copy(hero);
 			heroCopy.features = heroCopy.features.filter(f => f.id !== feature.id);
 			setHero(heroCopy);
 			setDirty(true);

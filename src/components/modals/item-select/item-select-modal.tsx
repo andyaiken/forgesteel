@@ -61,7 +61,7 @@ export const ItemSelectModal = (props: Props) => {
 											if (props.selectOriginal) {
 												props.onSelect(item);
 											} else {
-												const copy = JSON.parse(JSON.stringify(item)) as Item;
+												const copy = Utils.copy(item);
 												copy.id = Utils.guid();
 												props.onSelect(copy);
 											}

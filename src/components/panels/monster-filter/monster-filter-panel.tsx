@@ -3,6 +3,7 @@ import { Field } from '../../controls/field/field';
 import { MonsterFilter } from '../../../models/monster-filter';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
+import { Utils } from '../../../utils/utils';
 
 import './monster-filter-panel.scss';
 
@@ -13,37 +14,37 @@ interface Props {
 
 export const MonsterFilterPanel = (props: Props) => {
 	const setFilterName = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(props.monsterFilter)) as MonsterFilter;
+		const copy = Utils.copy(props.monsterFilter);
 		copy.name = value;
 		props.onChange(copy);
 	};
 
 	const setFilterRoles = (value: MonsterRoleType[]) => {
-		const copy = JSON.parse(JSON.stringify(props.monsterFilter)) as MonsterFilter;
+		const copy = Utils.copy(props.monsterFilter);
 		copy.roles = value;
 		props.onChange(copy);
 	};
 
 	const setFilterOrganizations = (value: MonsterOrganizationType[]) => {
-		const copy = JSON.parse(JSON.stringify(props.monsterFilter)) as MonsterFilter;
+		const copy = Utils.copy(props.monsterFilter);
 		copy.organizations = value;
 		props.onChange(copy);
 	};
 
 	const setFilterSize = (value: number[]) => {
-		const copy = JSON.parse(JSON.stringify(props.monsterFilter)) as MonsterFilter;
+		const copy = Utils.copy(props.monsterFilter);
 		copy.size = value;
 		props.onChange(copy);
 	};
 
 	const setFilterLevel = (value: number[]) => {
-		const copy = JSON.parse(JSON.stringify(props.monsterFilter)) as MonsterFilter;
+		const copy = Utils.copy(props.monsterFilter);
 		copy.level = value;
 		props.onChange(copy);
 	};
 
 	const setFilterEV = (value: number[]) => {
-		const copy = JSON.parse(JSON.stringify(props.monsterFilter)) as MonsterFilter;
+		const copy = Utils.copy(props.monsterFilter);
 		copy.ev = value;
 		props.onChange(copy);
 	};

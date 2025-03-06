@@ -13,6 +13,7 @@ import { MonsterLogic } from '../../../logic/monster-logic';
 import { MultiLine } from '../../controls/multi-line/multi-line';
 import { PanelMode } from '../../../enums/panel-mode';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
+import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
 import './ability-modal.scss';
@@ -26,7 +27,7 @@ interface Props {
 }
 
 export const AbilityModal = (props: Props) => {
-	const [ hero, setHero ] = useState<Hero | undefined>(props.hero ? JSON.parse(JSON.stringify(props.hero)) as Hero : undefined);
+	const [ hero, setHero ] = useState<Hero | undefined>(props.hero ? Utils.copy(props.hero) : undefined);
 	const [ page, setPage ] = useState<string>('Ability Card');
 
 	const customization = hero ? hero.abilityCustomizations.find(ac => ac.abilityID === props.ability.id) : undefined;
@@ -44,7 +45,7 @@ export const AbilityModal = (props: Props) => {
 	};
 
 	const setName = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		const copy = Utils.copy(hero) as Hero;
 
 		let ac = copy.abilityCustomizations.find(ac => ac.abilityID === props.ability.id);
 		if (!ac) {
@@ -66,7 +67,7 @@ export const AbilityModal = (props: Props) => {
 	};
 
 	const setDescription = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		const copy = Utils.copy(hero) as Hero;
 
 		let ac = copy.abilityCustomizations.find(ac => ac.abilityID === props.ability.id);
 		if (!ac) {
@@ -88,7 +89,7 @@ export const AbilityModal = (props: Props) => {
 	};
 
 	const setNotes = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+		const copy = Utils.copy(hero) as Hero;
 
 		let ac = copy.abilityCustomizations.find(ac => ac.abilityID === props.ability.id);
 		if (!ac) {

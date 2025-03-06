@@ -54,7 +54,7 @@ export const ProjectSelectModal = (props: Props) => {
 											if (props.selectOriginal) {
 												props.onSelect(project);
 											} else {
-												const copy = JSON.parse(JSON.stringify(project)) as Project;
+												const copy = Utils.copy(project);
 												copy.id = Utils.guid();
 												props.onSelect(copy);
 											}

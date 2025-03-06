@@ -5,6 +5,7 @@ import { Hero } from '../../../models/hero';
 import { Modal } from '../modal/modal';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookPanel } from '../../panels/elements/sourcebook-panel/sourcebook-panel';
+import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
 import './sourcebooks-modal.scss';
@@ -20,12 +21,12 @@ interface Props {
 }
 
 export const SourcebooksModal = (props: Props) => {
-	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(JSON.parse(JSON.stringify(props.homebrewSourcebooks)) as Sourcebook[]);
-	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(JSON.parse(JSON.stringify(props.hiddenSourcebookIDs)) as string[]);
+	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(Utils.copy(props.homebrewSourcebooks));
+	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(Utils.copy(props.hiddenSourcebookIDs));
 
 	try {
 		const createSourcebook = () => {
-			const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+			const copy = Utils.copy(homebrewSourcebooks);
 			const sourcebook = FactoryLogic.createSourcebook();
 			copy.push(sourcebook);
 			setHomebrewSourcebooks(copy);
@@ -33,7 +34,7 @@ export const SourcebooksModal = (props: Props) => {
 		};
 
 		const changeSourcebook = (sourcebook: Sourcebook) => {
-			const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+			const copy = Utils.copy(homebrewSourcebooks);
 			const index = copy.findIndex(s => s.id === sourcebook.id);
 			if (index !== -1) {
 				copy[index] = sourcebook;
@@ -43,13 +44,13 @@ export const SourcebooksModal = (props: Props) => {
 		};
 
 		const deleteSourcebook = (sourcebook: Sourcebook) => {
-			const copy = JSON.parse(JSON.stringify(homebrewSourcebooks.filter(s => s.id !== sourcebook.id))) as Sourcebook[];
+			const copy = Utils.copy(homebrewSourcebooks.filter(s => s.id !== sourcebook.id));
 			setHomebrewSourcebooks(copy);
 			props.onHomebrewSourcebookChange(copy);
 		};
 
 		const importSourcebook = (sourcebook: Sourcebook) => {
-			const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+			const copy = Utils.copy(homebrewSourcebooks);
 			copy.push(sourcebook);
 			setHomebrewSourcebooks(copy);
 			props.onHomebrewSourcebookChange(copy);
@@ -57,11 +58,11 @@ export const SourcebooksModal = (props: Props) => {
 
 		const setVisibility = (sourcebook: Sourcebook, visible: boolean) => {
 			if (visible) {
-				const copy = JSON.parse(JSON.stringify(hiddenSourcebookIDs.filter(id => id !== sourcebook.id))) as string[];
+				const copy = Utils.copy(hiddenSourcebookIDs.filter(id => id !== sourcebook.id));
 				setHiddenSourcebookIDs(copy);
 				props.onHiddenSourcebookIDsChange(copy);
 			} else {
-				const copy = JSON.parse(JSON.stringify(hiddenSourcebookIDs)) as string[];
+				const copy = Utils.copy(hiddenSourcebookIDs);
 				copy.push(sourcebook.id);
 				setHiddenSourcebookIDs(copy);
 				props.onHiddenSourcebookIDsChange(copy);

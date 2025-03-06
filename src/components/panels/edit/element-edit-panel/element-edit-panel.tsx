@@ -2,6 +2,7 @@ import { Element } from '../../../../models/element';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Input } from 'antd';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
+import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
 import './element-edit-panel.scss';
@@ -15,14 +16,14 @@ export const ElementEditPanel = (props: Props) => {
 	const [ element, setElement ] = useState<Element>(props.element);
 
 	const setName = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(element)) as Element;
+		const copy = Utils.copy(element);
 		copy.name = value;
 		setElement(copy);
 		props.onChange(copy);
 	};
 
 	const setDescription = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(element)) as Element;
+		const copy = Utils.copy(element);
 		copy.description = value;
 		setElement(copy);
 		props.onChange(copy);

@@ -39,7 +39,7 @@ interface Props {
 }
 
 export const HeroStateModal = (props: Props) => {
-	const [ hero, setHero ] = useState<Hero>(JSON.parse(JSON.stringify(props.hero)));
+	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ page, setPage ] = useState<HeroStatePage>(props.startPage);
 	const [ shopVisible, setShopVisible ] = useState<boolean>(false);
 	const [ conditionsVisible, setConditionsVisible ] = useState<boolean>(false);
@@ -47,42 +47,42 @@ export const HeroStateModal = (props: Props) => {
 
 	const getHeroSection = () => {
 		const setHeroicResource = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.heroicResource = value;
 			setHero(copy);
 			props.onChange(copy);
 		};
 
 		const setSurges = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.surges = value;
 			setHero(copy);
 			props.onChange(copy);
 		};
 
 		const setVictories = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.victories = value;
 			setHero(copy);
 			props.onChange(copy);
 		};
 
 		const setXP = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.xp = value;
 			setHero(copy);
 			props.onChange(copy);
 		};
 
 		const startEncounter = () => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.heroicResource = copy.state.victories;
 			setHero(copy);
 			props.onChange(copy);
 		};
 
 		const endEncounter = () => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.heroicResource = 0;
 			copy.state.victories += 1;
 			setHero(copy);
@@ -183,28 +183,28 @@ export const HeroStateModal = (props: Props) => {
 
 	const getVitalsSection = () => {
 		const setStaminaDamage = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.staminaDamage = value;
 			setHero(copy);
 			props.onChange(copy);
 		};
 
 		const setStaminaTemp = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.staminaTemp = value;
 			setHero(copy);
 			props.onChange(copy);
 		};
 
 		const setRecoveriesUsed = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.recoveriesUsed = value;
 			setHero(copy);
 			props.onChange(copy);
 		};
 
 		const endRespite = () => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.staminaDamage = 0;
 			copy.state.recoveriesUsed = 0;
 			copy.state.xp = copy.state.victories;
@@ -214,7 +214,7 @@ export const HeroStateModal = (props: Props) => {
 		};
 
 		const spendRecovery = () => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.recoveriesUsed += 1;
 			copy.state.staminaDamage = Math.max(copy.state.staminaDamage - HeroLogic.getRecoveryValue(hero), 0);
 			setHero(copy);
@@ -292,28 +292,28 @@ export const HeroStateModal = (props: Props) => {
 
 	const getStatisticsSection = () => {
 		const setHeroTokens = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.heroTokens = value;
 			setHero(copy);
 			props.onChange(copy);
 		};
 
 		const setRenown = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.renown = value;
 			setHero(copy);
 			props.onChange(copy);
 		};
 
 		const setWealth = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.wealth = value;
 			setHero(copy);
 			props.onChange(copy);
 		};
 
 		const setProjectPoints = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.projectPoints = value;
 			setHero(copy);
 			props.onChange(copy);
@@ -352,7 +352,7 @@ export const HeroStateModal = (props: Props) => {
 
 	const getInventorySection = () => {
 		const addItem = (item: Item) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.inventory.push(item);
 			setHero(copy);
 			setShopVisible(false);
@@ -360,7 +360,7 @@ export const HeroStateModal = (props: Props) => {
 		};
 
 		const changeItem = (item: Item) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			const index = copy.state.inventory.findIndex(i => i.id === item.id);
 			copy.state.inventory[index] = item;
 			setHero(copy);
@@ -368,7 +368,7 @@ export const HeroStateModal = (props: Props) => {
 		};
 
 		const moveItem = (item: Item, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			const index = copy.state.inventory.findIndex(i => i.id === item.id);
 			copy.state.inventory = Collections.move(copy.state.inventory, index, direction);
 			setHero(copy);
@@ -376,7 +376,7 @@ export const HeroStateModal = (props: Props) => {
 		};
 
 		const deleteItem = (item: Item) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.inventory = copy.state.inventory.filter(i => i.id !== item.id);
 			setHero(copy);
 			props.onChange(copy);
@@ -428,7 +428,7 @@ export const HeroStateModal = (props: Props) => {
 
 	const getConditionsSection = () => {
 		const addCondition = (type: ConditionType) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.conditions.push({
 				id: Utils.guid(),
 				type: type,
@@ -441,7 +441,7 @@ export const HeroStateModal = (props: Props) => {
 		};
 
 		const editCondition = (condition: Condition) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			const index = copy.state.conditions.findIndex(c => c.id === condition.id);
 			if (index !== -1) {
 				copy.state.conditions[index] = condition;
@@ -451,7 +451,7 @@ export const HeroStateModal = (props: Props) => {
 		};
 
 		const deleteCondition = (condition: Condition) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
 			setHero(copy);
 			props.onChange(copy);
@@ -488,11 +488,11 @@ export const HeroStateModal = (props: Props) => {
 
 	const getProjectsSection = () => {
 		const addProject = (project: Project) => {
-			const projectCopy = JSON.parse(JSON.stringify(project)) as Project;
+			const projectCopy = Utils.copy(project);
 			projectCopy.id = Utils.guid();
 			projectCopy.progress = FactoryLogic.createProjectProgress();
 
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.projects.push(projectCopy);
 			setHero(copy);
 			setProjectsVisible(false);
@@ -500,7 +500,7 @@ export const HeroStateModal = (props: Props) => {
 		};
 
 		const changeProject = (project: Project) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			const index = copy.state.projects.findIndex(p => p.id === project.id);
 			copy.state.projects[index] = project;
 			setHero(copy);
@@ -508,7 +508,7 @@ export const HeroStateModal = (props: Props) => {
 		};
 
 		const moveProject = (project: Project, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			const index = copy.state.projects.findIndex(p => p.id === project.id);
 			copy.state.projects = Collections.move(copy.state.projects, index, direction);
 			setHero(copy);
@@ -516,7 +516,7 @@ export const HeroStateModal = (props: Props) => {
 		};
 
 		const deleteProject = (project: Project) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.projects = copy.state.projects.filter(p => p.id !== project.id);
 			setHero(copy);
 			props.onChange(copy);
@@ -562,7 +562,7 @@ export const HeroStateModal = (props: Props) => {
 
 	const getNotesSection = () => {
 		const setNotes = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(hero)) as Hero;
+			const copy = Utils.copy(hero);
 			copy.state.notes = value;
 			setHero(copy);
 			props.onChange(copy);

@@ -79,7 +79,7 @@ export const PlaybookEditPage = (props: Props) => {
 				original = props.playbook.negotiations.find(e => e.id === elementID)!;
 				break;
 		}
-		return JSON.parse(JSON.stringify(original)) as Element;
+		return Utils.copy(original);
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter(1, 3));
@@ -88,14 +88,14 @@ export const PlaybookEditPage = (props: Props) => {
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Element;
+			const copy = Utils.copy(element);
 			copy.name = value;
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const setDescription = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Element;
+			const copy = Utils.copy(element);
 			copy.description = value;
 			setElement(copy);
 			setDirty(true);
@@ -122,14 +122,14 @@ export const PlaybookEditPage = (props: Props) => {
 		const adventure = element as Adventure;
 
 		const setCount = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Adventure;
+			const copy = Utils.copy(element) as Adventure;
 			copy.party.count = value;
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const setLevel = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Adventure;
+			const copy = Utils.copy(element) as Adventure;
 			copy.party.level = value;
 			setElement(copy);
 			setDirty(true);
@@ -149,14 +149,14 @@ export const PlaybookEditPage = (props: Props) => {
 		const adventure = element as Adventure;
 
 		const addSection = () => {
-			const copy = JSON.parse(JSON.stringify(element)) as Adventure;
+			const copy = Utils.copy(element) as Adventure;
 			copy.introduction.push(FactoryLogic.createElement());
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const setSectionName = (index: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Adventure;
+			const copy = Utils.copy(element) as Adventure;
 			const m = copy.introduction[index];
 			m.name = value;
 			setElement(copy);
@@ -164,7 +164,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setSectionDescription = (index: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Adventure;
+			const copy = Utils.copy(element) as Adventure;
 			const m = copy.introduction[index];
 			m.description = value;
 			setElement(copy);
@@ -172,14 +172,14 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const moveSection = (index: number, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(element)) as Adventure;
+			const copy = Utils.copy(element) as Adventure;
 			copy.introduction = Collections.move(copy.introduction, index, direction);
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const deleteSection = (id: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Adventure;
+			const copy = Utils.copy(element) as Adventure;
 			copy.introduction = copy.introduction.filter(section => section.id !== id);
 			setElement(copy);
 			setDirty(true);
@@ -230,14 +230,14 @@ export const PlaybookEditPage = (props: Props) => {
 		const adventure = element as Adventure;
 
 		const addPlotPoint = () => {
-			const copy = JSON.parse(JSON.stringify(element)) as Adventure;
+			const copy = Utils.copy(element) as Adventure;
 			copy.plot.plots.push(FactoryLogic.createAdventurePlot());
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const changePlotPoint = (plot: Plot) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Adventure;
+			const copy = Utils.copy(element) as Adventure;
 			const parent = PlaybookLogic.getPlotPointParent(copy.plot, plot.id);
 			if (parent) {
 				const index = parent.plots.findIndex(p => p.id === plot.id);
@@ -250,14 +250,14 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const movePlotPoint = (index: number, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(element)) as Adventure;
+			const copy = Utils.copy(element) as Adventure;
 			copy.plot.plots = Collections.move(copy.plot.plots, index, direction);
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const deletePlotPoint = (id: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Adventure;
+			const copy = Utils.copy(element) as Adventure;
 			copy.plot.plots = copy.plot.plots.filter(p => p.id !== id);
 			setElement(copy);
 			setDirty(true);
@@ -304,21 +304,21 @@ export const PlaybookEditPage = (props: Props) => {
 		const encounter = element as Encounter;
 
 		const addGroup = () => {
-			const copy = JSON.parse(JSON.stringify(element)) as Encounter;
+			const copy = Utils.copy(element) as Encounter;
 			copy.groups.push(FactoryLogic.createEncounterGroup());
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const deleteGroup = (group: EncounterGroup) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Encounter;
+			const copy = Utils.copy(element) as Encounter;
 			copy.groups = copy.groups.filter(g => g.id !== group.id);
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const moveSlot = (slotID: string, fromGroupID: string, toGroupID: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Encounter;
+			const copy = Utils.copy(element) as Encounter;
 			const fromGroup = copy.groups.find(g => g.id === fromGroupID);
 			let toGroup = copy.groups.find(g => g.id === toGroupID);
 			if (!toGroup) {
@@ -337,7 +337,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setSlotCount = (groupID: string, slotID: string, value: number) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Encounter;
+			const copy = Utils.copy(element) as Encounter;
 			const group = copy.groups.find(g => g.id === groupID);
 			if (group) {
 				const slot = group.slots.find(s => s.id === slotID);
@@ -455,21 +455,21 @@ export const PlaybookEditPage = (props: Props) => {
 		const negotiation = element as Negotiation;
 
 		const setImpression = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const copy = Utils.copy(element) as Negotiation;
 			copy.impression = value;
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const setInterest = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const copy = Utils.copy(element) as Negotiation;
 			copy.interest = value;
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const setPatience = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const copy = Utils.copy(element) as Negotiation;
 			copy.patience = value;
 			setElement(copy);
 			setDirty(true);
@@ -488,7 +488,7 @@ export const PlaybookEditPage = (props: Props) => {
 		const negotiation = element as Negotiation;
 
 		const addMotivation = () => {
-			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const copy = Utils.copy(element) as Negotiation;
 			copy.motivations.push({
 				trait: NegotiationTrait.Benevolence,
 				description: ''
@@ -498,7 +498,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setMotivationTrait = (index: number, value: NegotiationTrait) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const copy = Utils.copy(element) as Negotiation;
 			const m = copy.motivations[index];
 			m.trait = value;
 			setElement(copy);
@@ -506,7 +506,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setMotivationDescription = (index: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const copy = Utils.copy(element) as Negotiation;
 			const m = copy.motivations[index];
 			m.description = value;
 			setElement(copy);
@@ -514,14 +514,14 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const moveMotivation = (index: number, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const copy = Utils.copy(element) as Negotiation;
 			copy.motivations = Collections.move(copy.motivations, index, direction);
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const deleteMotivation = (trait: NegotiationTrait) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const copy = Utils.copy(element) as Negotiation;
 			copy.motivations = copy.motivations.filter(m => m.trait !== trait);
 			setElement(copy);
 			setDirty(true);
@@ -573,7 +573,7 @@ export const PlaybookEditPage = (props: Props) => {
 		const negotiation = element as Negotiation;
 
 		const addPitfall = () => {
-			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const copy = Utils.copy(element) as Negotiation;
 			copy.pitfalls.push({
 				trait: NegotiationTrait.Benevolence,
 				description: ''
@@ -583,7 +583,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setPitfallTrait = (index: number, value: NegotiationTrait) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const copy = Utils.copy(element) as Negotiation;
 			const m = copy.pitfalls[index];
 			m.trait = value;
 			setElement(copy);
@@ -591,7 +591,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setPitfallDescription = (index: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const copy = Utils.copy(element) as Negotiation;
 			const m = copy.pitfalls[index];
 			m.description = value;
 			setElement(copy);
@@ -599,14 +599,14 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const movePitfall = (index: number, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const copy = Utils.copy(element) as Negotiation;
 			copy.pitfalls = Collections.move(copy.pitfalls, index, direction);
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const deletePitfall = (trait: NegotiationTrait) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Negotiation;
+			const copy = Utils.copy(element) as Negotiation;
 			copy.pitfalls = copy.pitfalls.filter(m => m.trait !== trait);
 			setElement(copy);
 			setDirty(true);
@@ -658,7 +658,7 @@ export const PlaybookEditPage = (props: Props) => {
 		const montage = element as Montage;
 
 		const setScene = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			copy.scene = value;
 			setElement(copy);
 			setDirty(true);
@@ -676,14 +676,14 @@ export const PlaybookEditPage = (props: Props) => {
 		const montage = element as Montage;
 
 		const addSection = () => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			copy.sections.push(FactoryLogic.createMontageSection());
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const setSectionName = (index: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[index];
 			s.name = value;
 			setElement(copy);
@@ -691,7 +691,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setSectionDescription = (index: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[index];
 			s.description = value;
 			setElement(copy);
@@ -699,7 +699,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setSectionTwistInfo = (index: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[index];
 			s.twistInfo = value;
 			setElement(copy);
@@ -707,21 +707,21 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const moveSection = (index: number, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			copy.sections = Collections.move(copy.sections, index, direction);
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const deleteSection = (id: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			copy.sections = copy.sections.filter(s => s.id !== id);
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const addChallenge = (sectionIndex: number) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			s.challenges.push(FactoryLogic.createMontageChallenge({
 				id: Utils.guid(),
@@ -733,7 +733,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setChallengeName = (sectionIndex: number, challengeIndex: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			const c = s.challenges[challengeIndex];
 			c.name = value;
@@ -742,7 +742,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setChallengeDescription = (sectionIndex: number, challengeIndex: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			const c = s.challenges[challengeIndex];
 			c.description = value;
@@ -751,7 +751,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setChallengeCharacteristics = (sectionIndex: number, challengeIndex: number, value: Characteristic[]) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			const c = s.challenges[challengeIndex];
 			c.characteristics = value;
@@ -760,7 +760,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setChallengeSkills = (sectionIndex: number, challengeIndex: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			const c = s.challenges[challengeIndex];
 			c.skills = value;
@@ -769,7 +769,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setChallengeAbilities = (sectionIndex: number, challengeIndex: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			const c = s.challenges[challengeIndex];
 			c.abilities = value;
@@ -778,7 +778,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setChallengeUses = (sectionIndex: number, challengeIndex: number, value: number) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			const c = s.challenges[challengeIndex];
 			c.uses = value;
@@ -787,7 +787,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const moveChallenge = (sectionIndex: number, challengeIndex: number, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			s.challenges = Collections.move(s.challenges, challengeIndex, direction);
 			setElement(copy);
@@ -795,7 +795,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const deleteChallenge = (sectionIndex: number, id: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			s.challenges = s.challenges.filter(c => c.id !== id);
 			setElement(copy);
@@ -803,7 +803,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const addTwist = (sectionIndex: number) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			s.twists.push(FactoryLogic.createMontageChallenge({
 				id: Utils.guid(),
@@ -815,7 +815,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setTwistName = (sectionIndex: number, twistIndex: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			const t = s.twists[twistIndex];
 			t.name = value;
@@ -824,7 +824,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setTwistDescription = (sectionIndex: number, twistIndex: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			const t = s.twists[twistIndex];
 			t.description = value;
@@ -833,7 +833,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setTwistCharacteristics = (sectionIndex: number, twistIndex: number, value: Characteristic[]) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			const t = s.twists[twistIndex];
 			t.characteristics = value;
@@ -842,7 +842,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setTwistSkills = (sectionIndex: number, twistIndex: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			const t = s.twists[twistIndex];
 			t.skills = value;
@@ -851,7 +851,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setTwistAbilities = (sectionIndex: number, twistIndex: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			const t = s.twists[twistIndex];
 			t.abilities = value;
@@ -860,7 +860,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const setTwistUses = (sectionIndex: number, twistIndex: number, value: number) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			const t = s.twists[twistIndex];
 			t.uses = value;
@@ -869,7 +869,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const moveTwist = (sectionIndex: number, twistIndex: number, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			s.twists = Collections.move(s.twists, twistIndex, direction);
 			setElement(copy);
@@ -877,7 +877,7 @@ export const PlaybookEditPage = (props: Props) => {
 		};
 
 		const deleteTwist = (sectionIndex: number, id: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			const s = copy.sections[sectionIndex];
 			s.twists = s.twists.filter(t => t.id !== id);
 			setElement(copy);
@@ -1078,21 +1078,21 @@ export const PlaybookEditPage = (props: Props) => {
 		const montage = element as Montage;
 
 		const setSuccess = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			copy.outcomes.totalSuccess = value;
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const setPartial = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			copy.outcomes.partialSuccess = value;
 			setElement(copy);
 			setDirty(true);
 		};
 
 		const setFailure = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Montage;
+			const copy = Utils.copy(element) as Montage;
 			copy.outcomes.totalFailure = value;
 			setElement(copy);
 			setDirty(true);
@@ -1227,7 +1227,7 @@ export const PlaybookEditPage = (props: Props) => {
 
 	const getEncounterMonstersSection = () => {
 		const addMonster = (monster: Monster, groupID: string | null) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Encounter;
+			const copy = Utils.copy(element) as Encounter;
 
 			if (groupID) {
 				const group = copy.groups.find(g => g.id === groupID);

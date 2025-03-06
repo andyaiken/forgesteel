@@ -1,6 +1,7 @@
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Options } from '../../../models/options';
 import { Toggle } from '../../controls/toggle/toggle';
+import { Utils } from '../../../utils/utils';
 
 import './options-panel.scss';
 
@@ -12,79 +13,79 @@ interface Props {
 
 export const OptionsPanel = (props: Props) => {
 	const setShowSkillsInGroups = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const copy = Utils.copy(props.options);
 		copy.showSkillsInGroups = value;
 		props.setOptions(copy);
 	};
 
 	const setShowFreeStrikes = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const copy = Utils.copy(props.options);
 		copy.showFreeStrikes = value;
 		props.setOptions(copy);
 	};
 
 	const setShowStandardAbilities = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const copy = Utils.copy(props.options);
 		copy.showStandardAbilities = value;
 		props.setOptions(copy);
 	};
 
 	const setDimUnavailableAbilities = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const copy = Utils.copy(props.options);
 		copy.dimUnavailableAbilities = value;
 		props.setOptions(copy);
 	};
 
 	const setShowMonstersInGroups = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const copy = Utils.copy(props.options);
 		copy.showMonstersInGroups = value;
 		props.setOptions(copy);
 	};
 
 	const setShowSimilarMonsters = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const copy = Utils.copy(props.options);
 		copy.showSimilarMonsters = value;
 		props.setOptions(copy);
 	};
 
 	const setSimilarLevel = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const copy = Utils.copy(props.options);
 		copy.similarLevel = value;
 		props.setOptions(copy);
 	};
 
 	const setSimilarRole = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const copy = Utils.copy(props.options);
 		copy.similarRole = value;
 		props.setOptions(copy);
 	};
 
 	const setSimilarOrganization = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const copy = Utils.copy(props.options);
 		copy.similarOrganization = value;
 		props.setOptions(copy);
 	};
 
 	const setSimilarSize = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const copy = Utils.copy(props.options);
 		copy.similarSize = value;
 		props.setOptions(copy);
 	};
 
 	const setHeroCount = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const copy = Utils.copy(props.options);
 		copy.heroCount = value;
 		props.setOptions(copy);
 	};
 
 	const setHeroLevel = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const copy = Utils.copy(props.options);
 		copy.heroLevel = value;
 		props.setOptions(copy);
 	};
 
 	const setHeroVictories = (value: number) => {
-		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
+		const copy = Utils.copy(props.options);
 		copy.heroVictories = value;
 		props.setOptions(copy);
 	};

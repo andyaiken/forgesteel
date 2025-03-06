@@ -73,7 +73,7 @@ export const MonsterSelectModal = (props: Props) => {
 											if (props.selectOriginal) {
 												props.onSelect(m);
 											} else {
-												const copy = JSON.parse(JSON.stringify(m)) as Monster;
+												const copy = Utils.copy(m);
 												copy.id = Utils.guid();
 												props.onSelect(copy);
 											}

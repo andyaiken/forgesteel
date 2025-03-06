@@ -125,7 +125,7 @@ export const LibraryEditPage = (props: Props) => {
 				original = sourcebook.titles.find(e => e.id === elementID)!;
 				break;
 		}
-		return JSON.parse(JSON.stringify(original)) as Element;
+		return Utils.copy(original) as Element;
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ scratchpadMonsters, setScratchpadMonsters ] = useState<Monster[]>([]);
@@ -134,7 +134,7 @@ export const LibraryEditPage = (props: Props) => {
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Element;
+			const elementCopy = Utils.copy(element) as Element;
 			elementCopy.name = value;
 			if ((elementCopy as Item).crafting) {
 				(elementCopy as Item).crafting!.name = `Craft ${value}`;
@@ -144,7 +144,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setDescription = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Element;
+			const elementCopy = Utils.copy(element) as Element;
 			elementCopy.description = value;
 			setElement(elementCopy);
 			setDirty(true);
@@ -171,7 +171,7 @@ export const LibraryEditPage = (props: Props) => {
 		const el = element as Ancestry | Career | Complication | Kit;
 
 		const addFeature = () => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit;
+			const elementCopy = Utils.copy(element) as Ancestry | Career | Complication | Kit;
 			elementCopy.features.push(FactoryLogic.feature.create({
 				id: Utils.guid(),
 				name: '',
@@ -182,7 +182,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeFeature = (feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit;
+			const elementCopy = Utils.copy(element) as Ancestry | Career | Complication | Kit;
 			const index = elementCopy.features.findIndex(f => f.id === feature.id);
 			if (index !== -1) {
 				elementCopy.features[index] = feature;
@@ -192,7 +192,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveFeature = (feature: Feature, direction: 'up' | 'down') => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit;
+			const elementCopy = Utils.copy(element) as Ancestry | Career | Complication | Kit;
 			const index = elementCopy.features.findIndex(f => f.id === feature.id);
 			elementCopy.features = Collections.move(elementCopy.features, index, direction);
 			setElement(elementCopy);
@@ -200,7 +200,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteFeature = (feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit;
+			const elementCopy = Utils.copy(element) as Ancestry | Career | Complication | Kit;
 			elementCopy.features = elementCopy.features.filter(f => f.id !== feature.id);
 			setElement(elementCopy);
 			setDirty(true);
@@ -246,7 +246,7 @@ export const LibraryEditPage = (props: Props) => {
 		const career = element as Career;
 
 		const addIncident = () => {
-			const careerCopy = JSON.parse(JSON.stringify(element)) as Career;
+			const careerCopy = Utils.copy(element) as Career;
 			careerCopy.incitingIncidents.options.push({
 				id: Utils.guid(),
 				name: '',
@@ -257,7 +257,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeIncident = (e: Element) => {
-			const careerCopy = JSON.parse(JSON.stringify(element)) as Career;
+			const careerCopy = Utils.copy(element) as Career;
 			const index = careerCopy.incitingIncidents.options.findIndex(o => o.id === e.id);
 			if (index !== -1) {
 				careerCopy.incitingIncidents.options[index] = e;
@@ -267,7 +267,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveIncident = (e: Element, direction: 'up' | 'down') => {
-			const careerCopy = JSON.parse(JSON.stringify(element)) as Career;
+			const careerCopy = Utils.copy(element) as Career;
 			const index = careerCopy.incitingIncidents.options.findIndex(o => o.id === e.id);
 			careerCopy.incitingIncidents.options = Collections.move(careerCopy.incitingIncidents.options, index, direction);
 			setElement(careerCopy);
@@ -275,7 +275,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteIncident = (e: Element) => {
-			const careerCopy = JSON.parse(JSON.stringify(element)) as Career;
+			const careerCopy = Utils.copy(element) as Career;
 			careerCopy.incitingIncidents.options = careerCopy.incitingIncidents.options.filter(o => o.id !== e.id);
 			setElement(careerCopy);
 			setDirty(true);
@@ -329,7 +329,7 @@ export const LibraryEditPage = (props: Props) => {
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={culture.languages.length > 0 ? culture.languages[0] : null}
 					onChange={value => {
-						const copy = JSON.parse(JSON.stringify(element)) as Culture;
+						const copy = Utils.copy(element) as Culture;
 						copy.languages = value ? [ value ] : [];
 						setElement(copy);
 						setDirty(true);
@@ -344,10 +344,10 @@ export const LibraryEditPage = (props: Props) => {
 					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 					value={culture.environment ? culture.environment.id : null}
 					onChange={value => {
-						const copy = JSON.parse(JSON.stringify(element)) as Culture;
+						const copy = Utils.copy(element) as Culture;
 						const env = EnvironmentData.getEnvironments().find(e => e.id === value);
 						if (env) {
-							const envCopy = JSON.parse(JSON.stringify(env)) as Feature;
+							const envCopy = Utils.copy(env) as Feature;
 							copy.environment = envCopy;
 						}
 						setElement(copy);
@@ -363,10 +363,10 @@ export const LibraryEditPage = (props: Props) => {
 					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 					value={culture.organization ? culture.organization.id : null}
 					onChange={value => {
-						const copy = JSON.parse(JSON.stringify(element)) as Culture;
+						const copy = Utils.copy(element) as Culture;
 						const org = OrganizationData.getOrganizations().find(o => o.id === value);
 						if (org) {
-							const orgCopy = JSON.parse(JSON.stringify(org)) as Feature;
+							const orgCopy = Utils.copy(org) as Feature;
 							copy.organization = orgCopy;
 						}
 						setElement(copy);
@@ -382,10 +382,10 @@ export const LibraryEditPage = (props: Props) => {
 					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 					value={culture.upbringing ? culture.upbringing.id : null}
 					onChange={value => {
-						const copy = JSON.parse(JSON.stringify(element)) as Culture;
+						const copy = Utils.copy(element) as Culture;
 						const ub = UpbringingData.getUpbringings().find(u => u.id === value);
 						if (ub) {
-							const ubCopy = JSON.parse(JSON.stringify(ub)) as Feature;
+							const ubCopy = Utils.copy(ub) as Feature;
 							copy.upbringing = ubCopy;
 						}
 						setElement(copy);
@@ -400,28 +400,28 @@ export const LibraryEditPage = (props: Props) => {
 		const heroClass = element as HeroClass;
 
 		const setHeroicResource = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			elementCopy.heroicResource = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setSubclassName = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			elementCopy.subclassName = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setSubclassCount = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			elementCopy.subclassCount = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setPrimaryCharacteristics = (value: Characteristic[]) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			elementCopy.primaryCharacteristics = value;
 			setElement(elementCopy);
 			setDirty(true);
@@ -471,7 +471,7 @@ export const LibraryEditPage = (props: Props) => {
 		const heroClass = element as HeroClass | Domain | Item;
 
 		const addFeature = (level: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass | Domain | Item;
+			const elementCopy = Utils.copy(element) as HeroClass | Domain | Item;
 			elementCopy.featuresByLevel
 				.filter(lvl => lvl.level === level)
 				.forEach(lvl => {
@@ -486,7 +486,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeFeature = (level: number, feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass | Domain | Item;
+			const elementCopy = Utils.copy(element) as HeroClass | Domain | Item;
 			elementCopy.featuresByLevel
 				.filter(lvl => lvl.level === level)
 				.forEach(lvl => {
@@ -500,7 +500,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveFeature = (level: number, feature: Feature, direction: 'up' | 'down') => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass | Domain | Item;
+			const elementCopy = Utils.copy(element) as HeroClass | Domain | Item;
 			elementCopy.featuresByLevel
 				.filter(lvl => lvl.level === level)
 				.forEach(lvl => {
@@ -512,7 +512,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteFeature = (level: number, feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass | Domain | Item;
+			const elementCopy = Utils.copy(element) as HeroClass | Domain | Item;
 			elementCopy.featuresByLevel
 				.filter(lvl => lvl.level === level)
 				.forEach(lvl => {
@@ -571,7 +571,7 @@ export const LibraryEditPage = (props: Props) => {
 		const heroClass = element as HeroClass;
 
 		const addAbility = () => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			elementCopy.abilities.push(FactoryLogic.createAbility({
 				id: Utils.guid(),
 				name: '',
@@ -586,7 +586,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeAbility = (ability: Ability) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.abilities.findIndex(a => a.id === ability.id);
 			if (index !== -1) {
 				elementCopy.abilities[index] = ability;
@@ -596,7 +596,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveAbility = (ability: Ability, direction: 'up' | 'down') => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.abilities.findIndex(a => a.id === ability.id);
 			elementCopy.abilities = Collections.move(elementCopy.abilities, index, direction);
 			setElement(elementCopy);
@@ -604,7 +604,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteAbility = (ability: Ability) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			elementCopy.abilities = elementCopy.abilities.filter(a => a.id !== ability.id);
 			setElement(elementCopy);
 			setDirty(true);
@@ -649,14 +649,14 @@ export const LibraryEditPage = (props: Props) => {
 		const heroClass = element as HeroClass;
 
 		const addSubclass = () => {
-			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const classCopy = Utils.copy(element) as HeroClass;
 			classCopy.subclasses.push(FactoryLogic.createSubclass());
 			setElement(classCopy);
 			setDirty(true);
 		};
 
 		const moveSubclass = (subclass: SubClass, direction: 'up' | 'down') => {
-			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const classCopy = Utils.copy(element) as HeroClass;
 			const index = classCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			classCopy.subclasses = Collections.move(classCopy.subclasses, index, direction);
 			setElement(classCopy);
@@ -664,7 +664,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteSubclass = (subclass: SubClass) => {
-			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const classCopy = Utils.copy(element) as HeroClass;
 			classCopy.subclasses = classCopy.subclasses.filter(o => o.id !== subclass.id);
 			setElement(classCopy);
 			setDirty(true);
@@ -707,7 +707,7 @@ export const LibraryEditPage = (props: Props) => {
 		const subclass = heroClass.subclasses.find(sc => sc.id === subElementID) as SubClass;
 
 		const setName = (subclass: SubClass, value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			if (index !== -1) {
 				const sc = elementCopy.subclasses[index];
@@ -718,7 +718,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setDescription = (subclass: SubClass, value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			if (index !== -1) {
 				const sc = elementCopy.subclasses[index];
@@ -729,7 +729,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const addFeature = (subclass: SubClass, level: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			if (index !== -1) {
 				const sc = elementCopy.subclasses[index];
@@ -748,7 +748,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeFeature = (subclass: SubClass, level: number, feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			if (index !== -1) {
 				const sc = elementCopy.subclasses[index];
@@ -766,7 +766,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveFeature = (subclass: SubClass, level: number, feature: Feature, direction: 'up' | 'down') => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			if (index !== -1) {
 				const sc = elementCopy.subclasses[index];
@@ -782,7 +782,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteFeature = (subclass: SubClass, level: number, feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			if (index !== -1) {
 				const sc = elementCopy.subclasses[index];
@@ -869,7 +869,7 @@ export const LibraryEditPage = (props: Props) => {
 		const domain = element as Domain;
 
 		const setPiety = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Domain;
+			const copy = Utils.copy(element) as Domain;
 			copy.piety = value;
 			setElement(copy);
 			setDirty(true);
@@ -887,21 +887,21 @@ export const LibraryEditPage = (props: Props) => {
 		const kit = element as Kit;
 
 		const setType = (value: KitType) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.type = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setArmor = (value: KitArmor[]) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.armor = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setWeapon = (value: KitWeapon[]) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.weapon = value;
 			setElement(elementCopy);
 			setDirty(true);
@@ -950,42 +950,42 @@ export const LibraryEditPage = (props: Props) => {
 		const kit = element as Kit;
 
 		const setStamina = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.stamina = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setSpeed = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.speed = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setStability = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.stability = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setMeleeDistance = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.meleeDistance = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setRangedDistance = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.rangedDistance = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setDisengage = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.disengage = value;
 			setElement(elementCopy);
 			setDirty(true);
@@ -1038,14 +1038,14 @@ export const LibraryEditPage = (props: Props) => {
 		const kit = element as Kit;
 
 		const setMeleeDamage = (value: boolean) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.meleeDamage = value ? { tier1: 0, tier2: 0, tier3: 0 } : null;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setMeleeDamage1 = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			if (elementCopy.meleeDamage) {
 				elementCopy.meleeDamage.tier1 = value;
 			}
@@ -1054,7 +1054,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setMeleeDamage2 = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			if (elementCopy.meleeDamage) {
 				elementCopy.meleeDamage.tier2 = value;
 			}
@@ -1063,7 +1063,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setMeleeDamage3 = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			if (elementCopy.meleeDamage) {
 				elementCopy.meleeDamage.tier3 = value;
 			}
@@ -1072,14 +1072,14 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setRangedDamage = (value: boolean) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.rangedDamage = value ? { tier1: 0, tier2: 0, tier3: 0 } : null;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setRangedDamage1 = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			if (elementCopy.rangedDamage) {
 				elementCopy.rangedDamage.tier1 = value;
 			}
@@ -1088,7 +1088,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setRangedDamage2 = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			if (elementCopy.rangedDamage) {
 				elementCopy.rangedDamage.tier2 = value;
 			}
@@ -1097,7 +1097,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setRangedDamage3 = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			if (elementCopy.rangedDamage) {
 				elementCopy.rangedDamage.tier3 = value;
 			}
@@ -1125,14 +1125,14 @@ export const LibraryEditPage = (props: Props) => {
 		const title = element as Title;
 
 		const setEchelon = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Title;
+			const elementCopy = Utils.copy(element) as Title;
 			elementCopy.echelon = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setPrerequisites = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Title;
+			const elementCopy = Utils.copy(element) as Title;
 			elementCopy.prerequisites = value;
 			setElement(elementCopy);
 			setDirty(true);
@@ -1157,21 +1157,21 @@ export const LibraryEditPage = (props: Props) => {
 		const item = element as Item;
 
 		const setType = (value: ItemType) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			elementCopy.type = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setKeywords = (value: (AbilityKeyword | KitArmor | KitWeapon)[]) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			elementCopy.keywords = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setEffect = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			elementCopy.effect = value;
 			setElement(elementCopy);
 			setDirty(true);
@@ -1208,14 +1208,14 @@ export const LibraryEditPage = (props: Props) => {
 		const item = element as Item;
 
 		const setCraftable = (value: boolean) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			elementCopy.crafting = value ? FactoryLogic.createProject({ id: `${item.id}-crafting`, name: `Craft ${item.name}`, description: item.name }) : null;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setPrerequisites = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			if (elementCopy.crafting) {
 				elementCopy.crafting.itemPrerequisites = value;
 			}
@@ -1224,7 +1224,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setSource = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			if (elementCopy.crafting) {
 				elementCopy.crafting.source = value;
 			}
@@ -1233,7 +1233,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setCharacteristic = (value: Characteristic[]) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			if (elementCopy.crafting) {
 				elementCopy.crafting.characteristic = value;
 			}
@@ -1242,7 +1242,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setGoal = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			if (elementCopy.crafting) {
 				elementCopy.crafting.goal = value;
 			}
@@ -1251,7 +1251,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setEffect = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			if (elementCopy.crafting) {
 				elementCopy.crafting.effect = value;
 			}
@@ -1304,7 +1304,7 @@ export const LibraryEditPage = (props: Props) => {
 		const monsterGroup = element as MonsterGroup;
 
 		const addInformation = () => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			copy.information.push({
 				id: Utils.guid(),
 				name: '',
@@ -1315,7 +1315,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeInformation = (information: Element) => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			const index = copy.information.findIndex(i => i.id === information.id);
 			if (index !== -1) {
 				copy.information[index] = information;
@@ -1325,7 +1325,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveInformation = (information: Element, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			const index = copy.information.findIndex(i => i.id === information.id);
 			copy.information = Collections.move(copy.information, index, direction);
 			setElement(copy);
@@ -1333,7 +1333,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteInformation = (information: Element) => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			copy.information = copy.information.filter(i => i.id !== information.id);
 			setElement(copy);
 			setDirty(true);
@@ -1377,7 +1377,7 @@ export const LibraryEditPage = (props: Props) => {
 		const monsterGroup = element as MonsterGroup;
 
 		const addMaliceFeature = () => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			copy.malice.push(FactoryLogic.feature.createMalice({
 				id: Utils.guid(),
 				name: '',
@@ -1391,7 +1391,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeMaliceFeature = (feature: FeatureMalice | FeatureAbility) => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			const index = copy.malice.findIndex(f => f.id === feature.id);
 			if (index !== -1) {
 				copy.malice[index] = feature;
@@ -1401,7 +1401,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveMaliceFeature = (feature: FeatureMalice | FeatureAbility, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			const index = copy.malice.findIndex(f => f.id === feature.id);
 			copy.malice = Collections.move(copy.malice, index, direction);
 			setElement(copy);
@@ -1409,7 +1409,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteMaliceFeature = (feature: FeatureMalice | FeatureAbility) => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			copy.malice = copy.malice.filter(f => f.id !== feature.id);
 			setElement(copy);
 			setDirty(true);
@@ -1455,7 +1455,7 @@ export const LibraryEditPage = (props: Props) => {
 		const monsterGroup = element as MonsterGroup;
 
 		const addMonster = () => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			copy.monsters.push(FactoryLogic.createMonster({
 				id: Utils.guid(),
 				name: '',
@@ -1476,7 +1476,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveMonster = (monster: Monster, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			const index = copy.monsters.findIndex(m => m.id === monster.id);
 			copy.monsters = Collections.move(copy.monsters, index, direction);
 			setElement(copy);
@@ -1484,7 +1484,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteMonster = (monster: Monster) => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			copy.monsters = copy.monsters.filter(m => m.id !== monster.id);
 			setElement(copy);
 			if (subElementID === monster.id) {
@@ -1539,7 +1539,7 @@ export const LibraryEditPage = (props: Props) => {
 		const monster = monsterGroup.monsters.find(m => m.id === subElementID) as Monster;
 
 		const changeMonster = (monster: Monster) => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			const index = copy.monsters.findIndex(m => m.id === monster.id);
 			if (index !== -1) {
 				copy.monsters[index] = monster;
@@ -1602,11 +1602,11 @@ export const LibraryEditPage = (props: Props) => {
 									label: 'Hide',
 									onClick: () => {
 										if (scratchpadMonsters.map(spm => spm.id).includes(m.id)) {
-											let copy = JSON.parse(JSON.stringify(scratchpadMonsters)) as Monster[];
+											let copy = Utils.copy(scratchpadMonsters) as Monster[];
 											copy = copy.filter(cm => cm.id !== m.id);
 											setScratchpadMonsters(copy);
 										} else {
-											const copy = JSON.parse(JSON.stringify(hiddenMonsterIDs)) as string[];
+											const copy = Utils.copy(hiddenMonsterIDs) as string[];
 											copy.push(m.id);
 											setHiddenMonsterIDs(copy);
 										}
@@ -1637,7 +1637,7 @@ export const LibraryEditPage = (props: Props) => {
 						sourcebooks={props.sourcebooks}
 						selectOriginal={true}
 						onSelect={monster => {
-							const copy = JSON.parse(JSON.stringify(scratchpadMonsters)) as Monster[];
+							const copy = Utils.copy(scratchpadMonsters) as Monster[];
 							copy.push(monster);
 							setScratchpadMonsters(copy);
 							setDrawerOpen(false);
@@ -1861,7 +1861,7 @@ export const LibraryEditPage = (props: Props) => {
 						feature={element as Perk}
 						sourcebooks={props.sourcebooks}
 						onChange={perk => {
-							const copy = JSON.parse(JSON.stringify(perk)) as Perk;
+							const copy = Utils.copy(perk) as Perk;
 							setElement(copy);
 							setDirty(true);
 						}}

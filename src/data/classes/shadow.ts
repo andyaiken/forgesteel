@@ -155,7 +155,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-3',
-			name: 'Teamwork Has It\'s Place',
+			name: 'Teamwork Has Its Place',
 			description: 'You attack an enemy, distracting them long enough for an ally to stab them.',
 			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],

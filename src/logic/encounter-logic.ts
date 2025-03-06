@@ -1,5 +1,5 @@
+import { Encounter, EncounterGroup } from '../models/encounter';
 import { Collections } from '../utils/collections';
-import { Encounter } from '../models/encounter';
 import { EncounterDifficulty } from '../enums/encounter-difficulty';
 import { MonsterLogic } from './monster-logic';
 import { Options } from '../models/options';
@@ -27,27 +27,29 @@ export class EncounterLogic {
 	};
 
 	static getStrength = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
-		return Collections.sum(encounter.groups, group => {
-			return Collections.sum(group.slots, slot => {
-				const monster = SourcebookLogic.getMonster(sourcebooks, slot.monsterID);
-				return monster ? monster.encounterValue * slot.count : 0;
-			});
+		return Collections.sum(encounter.groups, g => EncounterLogic.getGroupStrength(g, sourcebooks));
+	};
+
+	static getGroupStrength = (group: EncounterGroup, sourcebooks: Sourcebook[]) => {
+		return Collections.sum(group.slots, slot => {
+			const monster = SourcebookLogic.getMonster(sourcebooks, slot.monsterID);
+			return monster ? monster.encounterValue * slot.count : 0;
 		});
+	};
+
+	static getHeroValue = (level: number) => {
+		return 4 + (2 * level);
 	};
 
 	static getBudgets = (options: Options) => {
 		const effectiveHeroCount = options.heroCount + Math.floor(options.heroVictories / 2);
-
-		const getBudget = (heroCount: number, heroLevel: number) => {
-			const heroWorth = 4 + (2 * heroLevel);
-			return heroCount * heroWorth;
-		};
+		const heroValue = EncounterLogic.getHeroValue(options.heroLevel);
 
 		return {
-			maxTrivial: getBudget(effectiveHeroCount - 1, options.heroLevel),
-			maxEasy: getBudget(effectiveHeroCount, options.heroLevel),
-			maxStandard: getBudget(effectiveHeroCount + 1, options.heroLevel),
-			maxHard: getBudget(effectiveHeroCount + 3, options.heroLevel)
+			maxTrivial: (effectiveHeroCount - 1) * heroValue,
+			maxEasy: effectiveHeroCount * heroValue,
+			maxStandard: (effectiveHeroCount + 1) * heroValue,
+			maxHard: (effectiveHeroCount + 3) * heroValue
 		};
 	};
 

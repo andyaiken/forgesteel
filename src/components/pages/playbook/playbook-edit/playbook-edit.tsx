@@ -13,6 +13,7 @@ import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { DropdownButton } from '../../../controls/dropdown-button/dropdown-button';
 import { Element } from '../../../../models/element';
 import { EncounterDifficultyPanel } from '../../../panels/encounter-difficulty/encounter-difficulty-panel';
+import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
@@ -316,6 +317,25 @@ export const PlaybookEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const moveSlot = (slotID: string, fromGroupID: string, toGroupID: string) => {
+			const copy = JSON.parse(JSON.stringify(element)) as Encounter;
+			const fromGroup = copy.groups.find(g => g.id === fromGroupID);
+			let toGroup = copy.groups.find(g => g.id === toGroupID);
+			if (!toGroup) {
+				toGroup = FactoryLogic.createEncounterGroup();
+				copy.groups.push(toGroup);
+			}
+			if (fromGroup && toGroup) {
+				const slot = fromGroup.slots.find(s => s.id === slotID);
+				if (slot) {
+					fromGroup.slots = fromGroup.slots.filter(s => s.id !== slotID);
+					toGroup.slots.push(slot);
+				}
+			}
+			setElement(copy);
+			setDirty(true);
+		};
+
 		const setSlotCount = (groupID: string, slotID: string, value: number) => {
 			const copy = JSON.parse(JSON.stringify(element)) as Encounter;
 			const group = copy.groups.find(g => g.id === groupID);
@@ -367,6 +387,17 @@ export const PlaybookEditPage = (props: Props) => {
 												<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Compact} />
 												<div className='actions'>
 													<Button block={true} onClick={() => props.showMonster(monster, monsterGroup)}>Details</Button>
+													<DropdownButton
+														label='Move To'
+														items={[
+															...encounter.groups
+																.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
+																.filter(g => g.id !== group.id)
+																.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
+															{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
+														]}
+														onClick={toGroupID => moveSlot(slot.id, group.id, toGroupID)}
+													/>
 													<NumberSpin
 														value={slot.count}
 														format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization)).toString()}
@@ -389,6 +420,24 @@ export const PlaybookEditPage = (props: Props) => {
 										type='warning'
 										showIcon={true}
 										message='No monsters in this group'
+									/>
+									: null
+							}
+							{
+								EncounterLogic.getGroupStrength(group, props.sourcebooks) < EncounterLogic.getHeroValue(props.options.heroLevel) ?
+									<Alert
+										type='warning'
+										showIcon={true}
+										message='This group is probably not strong enough; you might want to add more monsters'
+									/>
+									: null
+							}
+							{
+								EncounterLogic.getGroupStrength(group, props.sourcebooks) > (EncounterLogic.getHeroValue(props.options.heroLevel) * 2) ?
+									<Alert
+										type='warning'
+										showIcon={true}
+										message='This group is probably too strong; you might want to split it into smaller groups'
 									/>
 									: null
 							}

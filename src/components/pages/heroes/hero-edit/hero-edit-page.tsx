@@ -1,5 +1,5 @@
-import { Alert, Button, Input, Radio, Segmented, Select, Space } from 'antd';
-import { CloseOutlined, RightOutlined, SaveOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Alert, Button, Divider, Input, Radio, Segmented, Select, Space } from 'antd';
+import { CloseOutlined, SaveOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureBonusData, FeatureData } from '../../../../models/feature';
 import { Hero, HeroEditTab } from '../../../../models/hero';
@@ -1154,10 +1154,17 @@ const EmptyMessage = (props: EmptyMessageProps) => {
 	try {
 		return (
 			<Alert
-				type='warning'
+				type='info'
 				showIcon={true}
-				message='If you&apos;re looking for something specific, make sure you&apos;ve included the sourcebook it&apos;s in.'
-				action={<Button type='text' title='Details' icon={<RightOutlined />} onClick={() => navigation.goToHeroEdit(props.hero.id, 'details')} />}
+				message={
+					<div>
+						Looking for something specific? If it's homebrew, make sure you&apos;ve included the sourcebook it&apos;s in.
+						<Divider type='vertical' />
+						<Button type='primary' onClick={() => navigation.goToHeroEdit(props.hero.id, 'details')}>
+							Click Here
+						</Button>
+					</div>
+				}
 			/>
 		);
 	} catch (ex) {

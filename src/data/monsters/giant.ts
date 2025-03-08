@@ -1227,8 +1227,6 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 				})
 			]
 		})
-
-	]
+	],
+	addOns: []
 };
-
-

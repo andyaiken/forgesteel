@@ -370,6 +370,7 @@ export class SourcebookData {
 		],
 		monsterGroups: [
 			MonsterData.angulotl,
+			MonsterData.animal,
 			MonsterData.ankheg,
 			MonsterData.ashenHoarder,
 			MonsterData.basilisk,

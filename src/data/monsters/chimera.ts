@@ -199,5 +199,6 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

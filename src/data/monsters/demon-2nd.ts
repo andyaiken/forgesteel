@@ -643,5 +643,6 @@ categories 4-6:
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

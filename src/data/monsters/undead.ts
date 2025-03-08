@@ -778,5 +778,6 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

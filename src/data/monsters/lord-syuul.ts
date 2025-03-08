@@ -322,5 +322,6 @@ However, any hero who has at least one psionic ability can use their maneuver to
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

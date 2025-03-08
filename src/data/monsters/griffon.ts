@@ -247,5 +247,6 @@ The griffon flies up to half their speed towards the ground and then sends the c
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

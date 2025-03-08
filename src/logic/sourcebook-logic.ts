@@ -310,6 +310,10 @@ export class SourcebookLogic {
 		});
 
 		sourcebook.monsterGroups.forEach(group => {
+			if (group.addOns === undefined) {
+				group.addOns = [];
+			}
+
 			group.monsters.forEach(monster => {
 				if (monster.role.organization === undefined) {
 					monster.role.organization = MonsterOrganizationType.Platoon;
@@ -319,7 +323,8 @@ export class SourcebookLogic {
 					monster.state = {
 						staminaDamage: 0,
 						staminaTemp: 0,
-						conditions: []
+						conditions: [],
+						reactionUsed: false
 					};
 				}
 

@@ -232,5 +232,6 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

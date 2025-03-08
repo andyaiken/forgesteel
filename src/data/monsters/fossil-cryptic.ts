@@ -244,5 +244,6 @@ export const fossilCryptic: MonsterGroup = {
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

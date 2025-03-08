@@ -228,5 +228,6 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

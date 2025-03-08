@@ -4,8 +4,12 @@ import { Monster } from './monster';
 export interface EncounterSlot {
 	id: string;
 	monsterID: string;
+	monsterGroupID: string;
 	count: number;
-	monsters: Monster[]
+	customization: {
+		addOnIDs: string[];
+	};
+	monsters: Monster[];
 }
 
 export interface EncounterGroup {

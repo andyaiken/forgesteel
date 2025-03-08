@@ -462,5 +462,6 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

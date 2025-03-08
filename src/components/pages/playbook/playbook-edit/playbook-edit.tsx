@@ -17,6 +17,7 @@ import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
+import { FeaturePanel } from '../../../panels/elements/feature-panel/feature-panel';
 import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -317,7 +318,7 @@ export const PlaybookEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const moveSlot = (slotID: string, fromGroupID: string, toGroupID: string) => {
+		const moveSlot = (slotID: string, fromGroupID: string, toGroupID: string, remove: boolean) => {
 			const copy = Utils.copy(element) as Encounter;
 			const fromGroup = copy.groups.find(g => g.id === fromGroupID);
 			let toGroup = copy.groups.find(g => g.id === toGroupID);
@@ -328,7 +329,9 @@ export const PlaybookEditPage = (props: Props) => {
 			if (fromGroup && toGroup) {
 				const slot = fromGroup.slots.find(s => s.id === slotID);
 				if (slot) {
-					fromGroup.slots = fromGroup.slots.filter(s => s.id !== slotID);
+					if (remove) {
+						fromGroup.slots = fromGroup.slots.filter(s => s.id !== slotID);
+					}
 					toGroup.slots.push(slot);
 				}
 			}
@@ -357,6 +360,19 @@ export const PlaybookEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const setSlotAddOnIDs = (groupID: string, slotID: string, value: string[]) => {
+			const copy = Utils.copy(element) as Encounter;
+			const group = copy.groups.find(g => g.id === groupID);
+			if (group) {
+				const slot = group.slots.find(s => s.id === slotID);
+				if (slot) {
+					slot.customization.addOnIDs = value;
+				}
+			}
+			setElement(copy);
+			setDirty(true);
+		};
+
 		const warnings = [];
 		const statblocks = Collections.distinct(encounter.groups.flatMap(g => g.slots).map(s => s.monsterID), s => s).length;
 		if (statblocks > 6) {
@@ -379,12 +395,30 @@ export const PlaybookEditPage = (props: Props) => {
 							{encounter.groups.length > 1 ? <HeaderText>Group {(n + 1).toString()}</HeaderText> : null}
 							{
 								group.slots.map(slot => {
-									const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
+									const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization.addOnIDs, props.sourcebooks);
 									const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
 									if (monster && monsterGroup) {
 										return (
 											<div key={slot.id} className='slot-row'>
-												<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Compact} />
+												<div className='content'>
+													<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Compact} />
+													{
+														monsterGroup.addOns.length > 0 ?
+															<Expander title='Customize'>
+																<HeaderText>Customize</HeaderText>
+																<Select
+																	style={{ width: '100%' }}
+																	placeholder='Select'
+																	mode='multiple'
+																	options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
+																	optionRender={option => <FeaturePanel feature={option.data.feature} cost={option.data.cost} mode={PanelMode.Full} />}
+																	value={slot.customization.addOnIDs}
+																	onChange={ids => setSlotAddOnIDs(group.id, slot.id, ids)}
+																/>
+															</Expander>
+															: null
+													}
+												</div>
 												<div className='actions'>
 													<Button block={true} onClick={() => props.showMonster(monster, monsterGroup)}>Details</Button>
 													<DropdownButton
@@ -396,7 +430,18 @@ export const PlaybookEditPage = (props: Props) => {
 																.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
 															{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
 														]}
-														onClick={toGroupID => moveSlot(slot.id, group.id, toGroupID)}
+														onClick={toGroupID => moveSlot(slot.id, group.id, toGroupID, true)}
+													/>
+													<DropdownButton
+														label='Copy To'
+														items={[
+															...encounter.groups
+																.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
+																.filter(g => g.id !== group.id)
+																.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
+															{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
+														]}
+														onClick={toGroupID => moveSlot(slot.id, group.id, toGroupID, false)}
 													/>
 													<NumberSpin
 														value={slot.count}
@@ -1226,22 +1271,24 @@ export const PlaybookEditPage = (props: Props) => {
 	};
 
 	const getEncounterMonstersSection = () => {
-		const addMonster = (monster: Monster, groupID: string | null) => {
+		const addMonster = (monster: Monster, encounterGroupID: string | null) => {
 			const copy = Utils.copy(element) as Encounter;
 
-			if (groupID) {
-				const group = copy.groups.find(g => g.id === groupID);
+			const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, monster.id);
+
+			if (encounterGroupID) {
+				const group = copy.groups.find(g => g.id === encounterGroupID);
 				if (group) {
 					const slot = group.slots.find(s => s.monsterID === monster.id);
 					if (slot) {
 						slot.count += 1;
 					} else {
-						group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
+						group.slots.push(FactoryLogic.createEncounterSlot(monster.id, monsterGroup!.id));
 					}
 				};
 			} else {
 				const group = FactoryLogic.createEncounterGroup();
-				group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
+				group.slots.push(FactoryLogic.createEncounterSlot(monster.id, monsterGroup!.id));
 				copy.groups.push(group);
 			}
 

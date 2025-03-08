@@ -796,5 +796,6 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

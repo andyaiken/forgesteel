@@ -43,6 +43,7 @@ import { PDFExport } from '../../utils/pdf-export';
 import { Perk } from '../../models/perk';
 import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit';
 import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list';
+import { PlaybookLogic } from '../../logic/playbook-logic';
 import { PlaybookViewPage } from '../pages/playbook/playbook-view/playbook-view-page';
 import { RollModal } from '../modals/roll/roll-modal';
 import { RulesModal } from '../modals/rules/rules-modal';
@@ -357,6 +358,8 @@ export const Main = (props: Props) => {
 				sourcebook.monsterGroups = Collections.sort<Element>(sourcebook.monsterGroups, item => item.name) as MonsterGroup[];
 				break;
 		}
+
+		SourcebookLogic.updateSourcebook(sourcebook);
 
 		setDrawer(null);
 		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibraryList(kind));
@@ -790,22 +793,24 @@ export const Main = (props: Props) => {
 		const copy = Utils.copy(playbook);
 		switch (kind) {
 			case 'adventure':
-				copy.adventures = copy.adventures.map(x => x.id === element.id ? element : x) as Adventure[];
-				copy.adventures = Collections.sort<Adventure>(copy.adventures, item => item.name);
+				copy.adventures.push(element as Adventure);
+				copy.adventures = Collections.sort<Element>(copy.adventures, item => item.name) as Adventure[];
 				break;
 			case 'encounter':
-				copy.encounters = copy.encounters.map(x => x.id === element.id ? element : x) as Encounter[];
-				copy.encounters = Collections.sort<Encounter>(copy.encounters, item => item.name);
-				break;
-			case 'negotiation':
-				copy.negotiations = copy.negotiations.map(x => x.id === element.id ? element : x) as Negotiation[];
-				copy.negotiations = Collections.sort<Negotiation>(copy.negotiations, item => item.name);
+				copy.encounters.push(element as Encounter);
+				copy.encounters = Collections.sort<Element>(copy.encounters, item => item.name) as Encounter[];
 				break;
 			case 'montage':
-				copy.montages = copy.montages.map(x => x.id === element.id ? element : x) as Montage[];
-				copy.montages = Collections.sort<Montage>(copy.montages, item => item.name);
+				copy.montages.push(element as Montage);
+				copy.montages = Collections.sort<Element>(copy.montages, item => item.name) as Montage[];
+				break;
+			case 'negotiation':
+				copy.negotiations.push(element as Negotiation);
+				copy.negotiations = Collections.sort<Element>(copy.negotiations, item => item.name) as Negotiation[];
 				break;
 		}
+
+		PlaybookLogic.updatePlaybook(copy);
 
 		setDrawer(null);
 		persistPlaybook(copy).then(() => navigation.goToPlaybookList(kind));

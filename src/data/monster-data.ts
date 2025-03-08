@@ -1,4 +1,5 @@
 import { angulotl } from './monsters/angulotl';
+import { animal } from './monsters/animal';
 import { ankheg } from './monsters/ankheg';
 import { ashenHoarder } from './monsters/ashen-hoarder';
 import { basilisk } from './monsters/basilisk';
@@ -48,6 +49,7 @@ import { xorannox } from './monsters/xorannox';
 
 export class MonsterData {
 	static angulotl = angulotl;
+	static animal = animal;
 	static ankheg = ankheg;
 	static ashenHoarder = ashenHoarder;
 	static basilisk = basilisk;

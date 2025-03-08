@@ -417,5 +417,6 @@ export const troll: MonsterGroup = {
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

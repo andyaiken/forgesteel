@@ -5,7 +5,7 @@ import { Plot } from '../models/plot';
 export class PlaybookLogic {
 	static getUsedIn = (playbook: Playbook, elementID: string) => {
 		return [
-			...playbook.encounters.filter(enc => EncounterLogic.getMonsterIDs(enc).includes(elementID)),
+			...playbook.encounters.filter(enc => EncounterLogic.getMonsterData(enc).map(data => data.monsterID).includes(elementID)),
 			...playbook.adventures.filter(adv => PlaybookLogic.getContentIDs(adv.plot).includes(elementID))
 		];
 	};
@@ -71,6 +71,12 @@ export class PlaybookLogic {
 		playbook.encounters.forEach(e => {
 			e.groups.forEach(g => {
 				g.slots.forEach(s => {
+					if (s.customization === undefined) {
+						s.customization = {
+							addOnIDs: []
+						};
+					}
+
 					if (s.monsters === undefined) {
 						s.monsters = [];
 					}

@@ -697,5 +697,6 @@ When bugbears are compelled to take action, they take to the high ground and use
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

@@ -910,5 +910,6 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

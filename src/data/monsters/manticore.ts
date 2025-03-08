@@ -196,5 +196,6 @@ export const manticore: MonsterGroup = {
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

@@ -257,5 +257,6 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

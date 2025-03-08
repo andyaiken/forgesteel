@@ -655,5 +655,6 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

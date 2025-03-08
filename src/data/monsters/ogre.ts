@@ -386,5 +386,6 @@ The goon hurls what’s in their hand down the line and rolls power. The hurled 
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

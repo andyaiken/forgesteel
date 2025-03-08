@@ -841,5 +841,6 @@ While the shieldbearer is clinging to their mentor, both the shieldbearer and th
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

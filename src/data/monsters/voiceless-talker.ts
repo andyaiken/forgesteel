@@ -661,5 +661,6 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

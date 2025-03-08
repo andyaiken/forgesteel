@@ -254,5 +254,6 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

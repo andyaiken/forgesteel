@@ -804,5 +804,6 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

@@ -1462,6 +1462,9 @@ export const FeaturePanel = (props: Props) => {
 		if (list !== undefined) {
 			tags.push(list);
 		}
+		if (props.feature.type === FeatureType.AddOn) {
+			tags.push(props.feature.data.category);
+		}
 
 		if (props.feature.type === FeatureType.Ability) {
 			return (

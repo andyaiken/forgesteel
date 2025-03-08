@@ -32,14 +32,14 @@
 					padding: 10px 10px 10px 20px;
 					display: flex;
 					flex-direction: row;
-					align-items: center;
 					gap: 20px;
 	
-					.monster-panel {
+					.content {
 						flex: 1 1 0;
 					}
 
 					.actions {
+						margin-top: 10px;
 						flex: 0 0 130px;
 						display: flex;
 						flex-direction: column;

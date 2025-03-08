@@ -456,5 +456,6 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

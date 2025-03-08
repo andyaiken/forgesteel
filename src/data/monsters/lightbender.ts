@@ -231,5 +231,6 @@ export const lightbender: MonsterGroup = {
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

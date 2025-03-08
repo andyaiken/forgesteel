@@ -5,6 +5,7 @@ import { MonsterLogic } from './monster-logic';
 import { Options } from '../models/options';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookLogic } from './sourcebook-logic';
+import { Utils } from '../utils/utils';
 
 export class EncounterLogic {
 	static getMonsterCount = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
@@ -33,7 +34,12 @@ export class EncounterLogic {
 	static getGroupStrength = (group: EncounterGroup, sourcebooks: Sourcebook[]) => {
 		return Collections.sum(group.slots, slot => {
 			const monster = SourcebookLogic.getMonster(sourcebooks, slot.monsterID);
-			return monster ? monster.encounterValue * slot.count : 0;
+
+			const group = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
+			const addOns = group ? group.addOns.filter(a => slot.customization.addOnIDs.includes(a.id)) : [];
+			const addOnCost = addOns.length > 4 ? (addOns.length - 4) * 2 : 0;
+
+			return monster ? (monster.encounterValue + addOnCost) * slot.count : 0;
 		});
 	};
 
@@ -114,12 +120,58 @@ export class EncounterLogic {
 		return 2;
 	};
 
-	static getMonsterIDs = (encounter: Encounter) => {
-		return Collections.distinct(encounter.groups.flatMap(g => g.slots.flatMap(s => s.monsterID)), item => item);
+	static getMonsterData = (encounter: Encounter) => {
+		const list: {
+			key: string;
+			monsterID: string;
+			monsterGroupID: string;
+			addOnIDs: string[];
+		}[] = [];
+
+		encounter.groups.flatMap(g => g.slots).forEach(s => {
+			const key = s.monsterID + s.monsterGroupID + s.customization.addOnIDs.join('');
+			const item = list.find(i => i.key === key);
+			if (!item) {
+				list.push({
+					key: key,
+					monsterID: s.monsterID,
+					monsterGroupID: s.monsterGroupID,
+					addOnIDs: [ ... s.customization.addOnIDs ]
+				});
+			}
+		});
+
+		return list;
 	};
 
 	static getMonsterGroups = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
-		const groups = this.getMonsterIDs(encounter).map(id => SourcebookLogic.getMonsterGroup(sourcebooks, id)).filter(group => !!group);
+		const groups = this.getMonsterData(encounter).map(data => SourcebookLogic.getMonsterGroup(sourcebooks, data.monsterID)).filter(group => !!group);
 		return Collections.distinct(groups, item => item.id);
+	};
+
+	static getCustomizedMonster = (monsterID: string, addOnIDs: string[], sourcebooks: Sourcebook[]) => {
+		const monster = SourcebookLogic.getMonster(sourcebooks, monsterID);
+		const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, monsterID);
+
+		if (monster && monsterGroup) {
+			const copy = Utils.copy(monster);
+			copy.id = Utils.guid();
+
+			let points = 0;
+			addOnIDs.forEach(id => {
+				const addOn = monsterGroup.addOns.find(a => a.id === id);
+				if (addOn) {
+					copy.features.push(addOn);
+					points += addOn.data.cost;
+				}
+			});
+			if (points > 4) {
+				copy.encounterValue += (points - 4) * 2;
+			}
+
+			return copy;
+		}
+
+		return null;
 	};
 }

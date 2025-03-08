@@ -249,5 +249,6 @@ When such an understanding is not reached, gloom dragons are feared for their co
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

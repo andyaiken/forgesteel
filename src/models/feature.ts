@@ -19,6 +19,13 @@ import { Size } from './size';
 import { SkillList } from '../enums/skill-list';
 import { Title } from './title';
 
+export enum FeatureAddOnType {
+	Mobility = 'Mobility',
+	Defensive = 'Defensive',
+	Offensive = 'Offensive',
+	Supernatural = 'Supernatural'
+};
+
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface _FeatureData { }
 
@@ -34,6 +41,12 @@ export interface FeatureAbilityCostData extends _FeatureData {
 	modifier: number;
 };
 export type FeatureAbilityCost = FeatureOf<FeatureType.AbilityCost, FeatureAbilityCostData>
+
+export interface FeatureAddOnData extends _FeatureData {
+	category: FeatureAddOnType;
+	cost: number;
+};
+export type FeatureAddOn = FeatureOf<FeatureType.AddOn, FeatureAddOnData>
 
 export interface FeatureAncestryChoiceData extends _FeatureData {
 	selected: Ancestry | null;
@@ -189,6 +202,7 @@ export type FeatureTitleChoice = FeatureOf<FeatureType.TitleChoice, FeatureTitle
 export type Feature =
 	| FeatureAbility
 	| FeatureAbilityCost
+	| FeatureAddOn
 	| FeatureAncestryChoice
 	| FeatureAncestryFeatureChoice
 	| FeatureBonus

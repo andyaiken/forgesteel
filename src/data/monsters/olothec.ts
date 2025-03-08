@@ -248,5 +248,6 @@ Each time a creature is transformed, the Director chooses one of the following t
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

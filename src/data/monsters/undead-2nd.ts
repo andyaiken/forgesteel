@@ -675,5 +675,6 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

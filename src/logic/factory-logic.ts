@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { Montage, MontageChallenge, MontageSection } from '../models/montage';
@@ -330,6 +330,7 @@ export class FactoryLogic {
 			description: '',
 			information: [],
 			malice: [],
+			addOns: [],
 			monsters: []
 		};
 	};
@@ -379,7 +380,8 @@ export class FactoryLogic {
 			state: {
 				staminaDamage: 0,
 				staminaTemp: 0,
-				conditions: []
+				conditions: [],
+				reactionUsed: false
 			}
 		};
 	};
@@ -433,11 +435,15 @@ export class FactoryLogic {
 		};
 	};
 
-	static createEncounterSlot = (monsterID: string): EncounterSlot => {
+	static createEncounterSlot = (monsterID: string, monsterGroupID: string): EncounterSlot => {
 		return {
 			id: Utils.guid(),
 			monsterID: monsterID,
+			monsterGroupID: monsterGroupID,
 			count: 1,
+			customization: {
+				addOnIDs: []
+			},
 			monsters: []
 		};
 	};
@@ -815,6 +821,18 @@ export class FactoryLogic {
 				data: {
 					keywords: data.keywords,
 					modifier: data.modifier
+				}
+			};
+		},
+		createAddOn: (data: { id: string, name: string, description: string, category: FeatureAddOnType, cost?: number }): FeatureAddOn => {
+			return {
+				id: data.id,
+				name: data.name,
+				description: data.description,
+				type: FeatureType.AddOn,
+				data: {
+					category: data.category,
+					cost: data.cost || 1
 				}
 			};
 		},

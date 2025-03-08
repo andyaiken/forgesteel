@@ -228,5 +228,6 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

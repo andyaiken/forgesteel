@@ -256,5 +256,6 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

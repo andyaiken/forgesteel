@@ -420,6 +420,12 @@ export const PlaybookEditPage = (props: Props) => {
 													}
 												</div>
 												<div className='actions'>
+													<NumberSpin
+														value={slot.count}
+														format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization)).toString()}
+														onChange={value => setSlotCount(group.id, slot.id, value)}
+													/>
+													<Divider />
 													<Button block={true} onClick={() => props.showMonster(monster, monsterGroup)}>Details</Button>
 													<DropdownButton
 														label='Move To'
@@ -442,11 +448,6 @@ export const PlaybookEditPage = (props: Props) => {
 															{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
 														]}
 														onClick={toGroupID => moveSlot(slot.id, group.id, toGroupID, false)}
-													/>
-													<NumberSpin
-														value={slot.count}
-														format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization)).toString()}
-														onChange={value => setSlotCount(group.id, slot.id, value)}
 													/>
 												</div>
 											</div>

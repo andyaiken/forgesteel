@@ -81,21 +81,29 @@ export const MonsterPanel = (props: Props) => {
 					}
 				</div>
 				{
-					signatureBonus ?
-						<Field label='Signature Ability Damage' value={`+${signatureBonus.tier1} / +${signatureBonus.tier2} / +${signatureBonus.tier3}`} />
-						: null
-				}
-				{
-					props.monster.withCaptain ?
-						<Field label='With Captain' value={props.monster.withCaptain} />
-						: null
-				}
-				{immunities.length > 0 ? <Field label='Immunities' value={immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} /> : null}
-				{weaknesses.length > 0 ? <Field label='Weaknesses' value={weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} /> : null}
-				{
 					features.length > 0 ?
 						<div className='features'>
-							{features.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
+							{
+								signatureBonus ?
+									<Field label='Signature Ability Damage' value={`+${signatureBonus.tier1} / +${signatureBonus.tier2} / +${signatureBonus.tier3}`} />
+									: null
+							}
+							{
+								props.monster.withCaptain ?
+									<Field label='With Captain' value={props.monster.withCaptain} />
+									: null
+							}
+							{
+								immunities.length > 0 ?
+									<Field label='Immunities' value={immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} />
+									: null
+							}
+							{
+								weaknesses.length > 0 ?
+									<Field label='Weaknesses' value={weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} />
+									: null
+							}
+							{features.map(f => <Field key={f.id} label={f.name} value={f.description} />)}
 						</div>
 						: null
 				}

@@ -30,6 +30,7 @@ export const Token = (props: Props) => {
 				<div
 					className='inner-token'
 					style={{ fontSize: `${size * 0.35}px`, letterSpacing: `-${size * 0.01}px` }}
+					title={name}
 				>
 					{initials}
 				</div>

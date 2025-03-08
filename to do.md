@@ -12,7 +12,6 @@
 ### Library
 
 * It should be possible to create a homebrew subclass / class ability / monster individually
-* Animals
 * Rivals
 * Imbued items
 
@@ -33,9 +32,9 @@
 ### Encounter Builder
 
 * Show mini checklist
-* Use encounter templates
 * Add victory conditions
 * Add dynamic terrain
+* Use encounter templates
 * Auto-create encounters
 
 ### Director Tools

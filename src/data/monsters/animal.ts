@@ -604,11 +604,10 @@ The animal gains the following ability.
 **Keywords** Area, Weapon
 **Distance** 3 cube within 1
 **Target** All creatures in the cube
-**≤11** A<0 restrained (save ends)
+**11-** A<0 restrained (save ends)
 **12–16** A<1 restrained (save ends)
 **17+** A<2 restrained (save ends)
-**Effect** The affected area is considered difficult terrain for
-enemies.`,
+**Effect** The affected area is considered difficult terrain for enemies.`,
 			category: FeatureAddOnType.Offensive,
 			cost: 2
 		}),

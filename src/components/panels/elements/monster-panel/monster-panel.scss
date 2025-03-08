@@ -22,7 +22,10 @@
 		}
 	}
 
-	.features,
+	.features {
+		margin: 10px;
+	}
+
 	.abilities {
 		margin: 10px;
 		display: grid;

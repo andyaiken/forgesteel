@@ -130,13 +130,12 @@ export const EncounterPanel = (props: Props) => {
 									const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, data.monsterID);
 									if (monster && monsterGroup) {
 										return (
-											<SelectablePanel key={monster.id}>
-												<MonsterPanel
-													monster={monster}
-													monsterGroup={monsterGroup}
-													mode={PanelMode.Full}
-												/>
-											</SelectablePanel>
+											<MonsterPanel
+												key={monster.id}
+												monster={monster}
+												monsterGroup={monsterGroup}
+												mode={PanelMode.Full}
+											/>
 										);
 									}
 

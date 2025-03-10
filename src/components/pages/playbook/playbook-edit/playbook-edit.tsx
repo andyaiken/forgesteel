@@ -1,6 +1,6 @@
 import { Alert, Button, Divider, Input, Popover, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, PlusOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { Encounter, EncounterGroup } from '../../../../models/encounter';
+import { Encounter, EncounterGroup, EncounterSlot } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { ReactNode, useState } from 'react';
@@ -373,6 +373,72 @@ export const PlaybookEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const getSlot = (slot: EncounterSlot, group: EncounterGroup) => {
+			const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization.addOnIDs, props.sourcebooks);
+			const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
+			if (monster && monsterGroup) {
+				return (
+					<div key={slot.id} className='slot-row'>
+						<div className='content'>
+							<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Compact} />
+							{
+								monsterGroup.addOns.length > 0 ?
+									<Expander title='Customize'>
+										<HeaderText>Customize</HeaderText>
+										<Select
+											style={{ width: '100%' }}
+											placeholder='Select'
+											mode='multiple'
+											options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
+											optionRender={option => <FeaturePanel feature={option.data.feature} cost={option.data.cost} mode={PanelMode.Full} />}
+											value={slot.customization.addOnIDs}
+											onChange={ids => setSlotAddOnIDs(group.id, slot.id, ids)}
+										/>
+									</Expander>
+									: null
+							}
+						</div>
+						<div className='actions'>
+							<NumberSpin
+								value={slot.count}
+								format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization)).toString()}
+								onChange={value => setSlotCount(group.id, slot.id, value)}
+							/>
+							<Divider />
+							<Button block={true} onClick={() => props.showMonster(monster, monsterGroup)}>Details</Button>
+							<DropdownButton
+								label='Move To'
+								items={[
+									...encounter.groups
+										.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
+										.filter(g => g.id !== group.id)
+										.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
+									{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
+								]}
+								onClick={toGroupID => moveSlot(slot.id, group.id, toGroupID, true)}
+							/>
+							<DropdownButton
+								label='Copy To'
+								items={[
+									...encounter.groups
+										.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
+										.filter(g => g.id !== group.id)
+										.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
+									{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
+								]}
+								onClick={toGroupID => moveSlot(slot.id, group.id, toGroupID, false)}
+							/>
+						</div>
+					</div>
+				);
+			}
+			return (
+				<div key={slot.id} className='slot-row'>
+					Unknown monster
+				</div>
+			);
+		};
+
 		const warnings = [];
 		const statblocks = Collections.distinct(encounter.groups.flatMap(g => g.slots).map(s => s.monsterID), s => s).length;
 		if (statblocks > 6) {
@@ -393,73 +459,7 @@ export const PlaybookEditPage = (props: Props) => {
 					encounter.groups.map((group, n) => (
 						<div key={group.id} className='group-row'>
 							{encounter.groups.length > 1 ? <HeaderText>Group {(n + 1).toString()}</HeaderText> : null}
-							{
-								group.slots.map(slot => {
-									const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization.addOnIDs, props.sourcebooks);
-									const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
-									if (monster && monsterGroup) {
-										return (
-											<div key={slot.id} className='slot-row'>
-												<div className='content'>
-													<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Compact} />
-													{
-														monsterGroup.addOns.length > 0 ?
-															<Expander title='Customize'>
-																<HeaderText>Customize</HeaderText>
-																<Select
-																	style={{ width: '100%' }}
-																	placeholder='Select'
-																	mode='multiple'
-																	options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
-																	optionRender={option => <FeaturePanel feature={option.data.feature} cost={option.data.cost} mode={PanelMode.Full} />}
-																	value={slot.customization.addOnIDs}
-																	onChange={ids => setSlotAddOnIDs(group.id, slot.id, ids)}
-																/>
-															</Expander>
-															: null
-													}
-												</div>
-												<div className='actions'>
-													<NumberSpin
-														value={slot.count}
-														format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization)).toString()}
-														onChange={value => setSlotCount(group.id, slot.id, value)}
-													/>
-													<Divider />
-													<Button block={true} onClick={() => props.showMonster(monster, monsterGroup)}>Details</Button>
-													<DropdownButton
-														label='Move To'
-														items={[
-															...encounter.groups
-																.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
-																.filter(g => g.id !== group.id)
-																.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
-															{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
-														]}
-														onClick={toGroupID => moveSlot(slot.id, group.id, toGroupID, true)}
-													/>
-													<DropdownButton
-														label='Copy To'
-														items={[
-															...encounter.groups
-																.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
-																.filter(g => g.id !== group.id)
-																.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
-															{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
-														]}
-														onClick={toGroupID => moveSlot(slot.id, group.id, toGroupID, false)}
-													/>
-												</div>
-											</div>
-										);
-									}
-									return (
-										<div key={slot.id} className='slot-row'>
-											Unknown monster
-										</div>
-									);
-								})
-							}
+							{group.slots.map(slot => getSlot(slot, group))}
 							{
 								group.slots.length === 0 ?
 									<Alert

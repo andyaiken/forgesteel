@@ -1,6 +1,6 @@
 import { Alert, Button, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -73,18 +73,18 @@ export const FeatureEditPanel = (props: Props) => {
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: ''
 					})
-				};
+				} as FeatureAbilityData;
 				break;
 			case FeatureType.AbilityCost:
 				data = {
 					keywords: [],
 					modifier: -1
-				};
+				} as FeatureAbilityCostData;
 				break;
 			case FeatureType.AncestryChoice:
 				data = {
 					selected: null
-				};
+				} as FeatureAncestryChoiceData;
 				break;
 			case FeatureType.AncestryFeatureChoice:
 				data = {
@@ -94,29 +94,30 @@ export const FeatureEditPanel = (props: Props) => {
 					},
 					value: 1,
 					selected: null
-				};
+				} as FeatureAncestryFeatureChoiceData;
 				break;
 			case FeatureType.Bonus:
 				data = {
 					field: FeatureField.Recoveries,
 					value: 0,
 					valueCharacteristics: [],
+					valueCharacteristicMultiplier: 1,
 					valuePerLevel: 0,
 					valuePerEchelon: 0
-				};
+				} as FeatureBonusData;
 				break;
 			case FeatureType.CharacteristicBonus:
 				data = {
 					characteristic: Characteristic.Might,
 					value: 1
-				};
+				} as FeatureCharacteristicBonusData;
 				break;
 			case FeatureType.Choice:
 				data = {
 					options: [],
 					count: 1,
 					selected: []
-				};
+				} as FeatureChoiceData;
 				break;
 			case FeatureType.ClassAbility:
 				data = {
@@ -124,76 +125,78 @@ export const FeatureEditPanel = (props: Props) => {
 					count: 1,
 					minLevel: 1,
 					selectedIDs: []
-				};
+				} as FeatureClassAbilityData;
 				break;
 			case FeatureType.DamageModifier:
 				data = {
 					modifiers: []
-				};
+				} as FeatureDamageModifierData;
 				break;
 			case FeatureType.Domain:
 				data = {
 					count: 1,
 					selected: []
-				};
+				} as FeatureDomainData;
 				break;
 			case FeatureType.DomainFeature:
 				data = {
 					level: 1,
 					count: 1,
 					selected: []
-				};
+				} as FeatureDomainFeatureData;
 				break;
 			case FeatureType.ItemChoice:
 				data = {
 					types: [],
 					count: 1,
 					selected: []
-				};
+				} as FeatureItemChoiceData;
 				break;
 			case FeatureType.Kit:
 				data = {
 					types: [],
 					count: 1,
 					selected: []
-				};
+				} as FeatureKitData;
 				break;
 			case FeatureType.KitType:
 				data = {
 					types: []
-				};
+				} as FeatureKitTypeData;
 				break;
 			case FeatureType.Language:
+				data = {
+					language: ''
+				} as FeatureLanguageData;
+				break;
+			case FeatureType.LanguageChoice:
 				data = {
 					options: [],
 					count: 1,
 					selected: []
-				};
-				break;
-			case FeatureType.LanguageChoice:
-				data = {
-					language: ''
-				};
+				} as FeatureLanguageChoiceData;
 				break;
 			case FeatureType.Malice:
 				data = {
 					cost: 3
-				};
+				} as FeatureMaliceData;
 				break;
 			case FeatureType.Multiple:
 				data = {
 					features: []
-				};
+				} as FeatureMultipleData;
 				break;
 			case FeatureType.Package:
-				data = {};
+				data = {
+					//
+				} as FeaturePackageData;
 				break;
 			case FeatureType.Perk:
 				data = {
-					types: [],
+					lists: [],
 					count: 1,
 					selected: []
-				};
+				} as FeaturePerkData;
 				break;
 			case FeatureType.Size:
 				data = {
@@ -201,12 +204,12 @@ export const FeatureEditPanel = (props: Props) => {
 						value: 1,
 						mod: 'M'
 					}
-				};
+				} as FeatureSizeData;
 				break;
 			case FeatureType.Skill:
 				data = {
 					skill: ''
-				};
+				} as FeatureSkillData;
 				break;
 			case FeatureType.SkillChoice:
 				data = {
@@ -214,18 +217,19 @@ export const FeatureEditPanel = (props: Props) => {
 					listOptions: [],
 					count: 1,
 					selected: []
-				};
+				} as FeatureSkillChoiceData;
 				break;
 			case FeatureType.Speed:
 				data = {
 					speed: 5
-				};
+				} as FeatureSpeedData;
 				break;
 			case FeatureType.TitleChoice:
 				data = {
+					echelon: 1,
 					count: 1,
 					selected: []
-				};
+				} as FeatureTitleChoiceData;
 				break;
 		}
 

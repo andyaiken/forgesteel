@@ -41,7 +41,12 @@ export const HeroListPage = (props: Props) => {
 		return props.heroes
 			.filter(h => h.folder === folder)
 			.filter(h => Utils.textMatches([
-				h.name
+				h.name,
+				h.ancestry?.name || '',
+				h.culture?.name || '',
+				h.career?.name || '',
+				h.class?.name || '',
+				h.complication?.name || ''
 			], searchTerm));
 	};
 

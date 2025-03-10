@@ -62,13 +62,13 @@ export const LibraryListPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { kind } = useParams<{ kind: SourcebookElementKind }>();
 	const [ previousTab, setPreviousTab ] = useState<SourcebookElementKind | undefined>(kind);
-	const [ element, setElement ] = useState<SourcebookElementKind>(kind ?? 'ancestry');
+	const [ currentTab, setCurrentTab ] = useState<SourcebookElementKind>(kind ?? 'ancestry');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? props.sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter(1, 10));
 
 	if (kind !== previousTab) {
-		setElement(kind ?? 'ancestry');
+		setCurrentTab(kind ?? 'ancestry');
 		setPreviousTab(kind);
 	}
 
@@ -77,7 +77,7 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const createElement = () => {
-		props.createElement(element, sourcebookID);
+		props.createElement(currentTab, sourcebookID);
 	};
 
 	const getAncestries = () => {
@@ -684,7 +684,7 @@ export const LibraryListPage = (props: Props) => {
 
 		return (
 			<div className='library-list-page'>
-				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader subheader='Library' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					<Input
 						placeholder='Search'
 						allowClear={true}
@@ -719,14 +719,14 @@ export const LibraryListPage = (props: Props) => {
 									<div className='ds-text'>or</div>
 									<Upload
 										style={{ width: '100%' }}
-										accept={`.drawsteel-${element.toLowerCase()}`}
+										accept={`.drawsteel-${currentTab.toLowerCase()}`}
 										showUploadList={false}
 										beforeUpload={file => {
 											file
 												.text()
 												.then(json => {
 													const e = (JSON.parse(json) as Element);
-													props.importElement(element, sourcebookID, e);
+													props.importElement(currentTab, sourcebookID, e);
 												});
 											return false;
 										}}
@@ -761,7 +761,7 @@ export const LibraryListPage = (props: Props) => {
 				</AppHeader>
 				<div className='library-list-page-content'>
 					<Tabs
-						activeKey={element}
+						activeKey={currentTab}
 						items={[
 							{
 								key: 'ancestry',

@@ -96,7 +96,7 @@ export const PlaybookViewPage = (props: Props) => {
 	try {
 		return (
 			<div className='playbook-view-page'>
-				<AppHeader breadcrumbs={[ { label: Format.capitalize(kind!) } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader subheader={Format.capitalize(kind!)} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybookList(kind!)}>
 						Close
 					</Button>

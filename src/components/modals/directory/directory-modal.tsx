@@ -1,3 +1,4 @@
+import { Collections } from '../../../utils/collections';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { LogoPanel } from '../../panels/logo/logo-panel';
@@ -13,13 +14,14 @@ interface Props {
 	sourcebooks: Sourcebook[],
 	playbook: Playbook;
 	onClose: () => void;
-	createHero: () => void;
 }
 
 export const DirectoryModal = (props: Props) => {
 	const navigation = useNavigation();
 
 	try {
+		const folders = Collections.distinct(props.heroes.map(h => h.folder).sort(), f => f);
+
 		return (
 			<Modal
 				toolbar={
@@ -30,9 +32,11 @@ export const DirectoryModal = (props: Props) => {
 				content={
 					<div className='directory-modal'>
 						<HeaderText>Heroes</HeaderText>
-						{props.heroes.map(h => <div key={h.id} className='directory-btn' onClick={() => { navigation.goToHeroView(h.id); props.onClose(); }}>{h.name || 'Unnamed Hero'}</div>)}
-						<div className='directory-btn' onClick={() => { props.createHero(); props.onClose(); }}>Create a New Hero</div>
-						<div className='directory-btn' onClick={() => { navigation.goToHeroList(); props.onClose(); }}>Heroes</div>
+						{
+							folders.map(f =>
+								<div key={f} className='directory-btn' onClick={() => { navigation.goToHeroList(f); props.onClose(); }}>{f || 'Heroes'}</div>
+							)
+						}
 						<HeaderText>Library</HeaderText>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('ancestry'); props.onClose(); }}>Ancestries</div>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('career'); props.onClose(); }}>Careers</div>

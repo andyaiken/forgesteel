@@ -10,7 +10,10 @@ export const useNavigation = () => {
 		goToWelcome: () => {
 			return navigate('/');
 		},
-		goToHeroList: () => {
+		goToHeroList: (folder?: string) => {
+			if (folder) {
+				return navigate(`/hero/${folder}`);
+			}
 			return navigate('/hero');
 		},
 		goToHeroView: (heroID: string) => {

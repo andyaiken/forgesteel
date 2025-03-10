@@ -12,7 +12,7 @@ import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
-import { HeroPanel } from '../../../panels/elements/hero-panel/hero-panel';
+import { HeroPanel } from '../../../panels/hero/hero-panel';
 import { HeroStatePage } from '../../../../enums/hero-state-page';
 import { Kit } from '../../../../models/kit';
 import { Options } from '../../../../models/options';
@@ -74,8 +74,8 @@ export const HeroViewPage = (props: Props) => {
 
 		return (
 			<div className='hero-view-page'>
-				<AppHeader breadcrumbs={[ { label: 'Heroes' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
-					<Button icon={<CloseOutlined />} onClick={navigation.goToHeroList}>
+				<AppHeader subheader='Hero' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+					<Button icon={<CloseOutlined />} onClick={() => navigation.goToHeroList(hero.folder)}>
 						Close
 					</Button>
 					<div className='divider' />

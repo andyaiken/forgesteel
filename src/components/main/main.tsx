@@ -831,7 +831,6 @@ export const Main = (props: Props) => {
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				playbook={playbook}
 				onClose={() => setDirectory(null)}
-				createHero={() => createHero()}
 			/>
 		);
 	};
@@ -961,7 +960,7 @@ export const Main = (props: Props) => {
 							showDirectory={showDirectoryPane}
 							showAbout={showAbout}
 							showRoll={showRoll}
-							showHeroes={heroes.length === 0 ? createHero : navigation.goToHeroList}
+							showHeroes={heroes.length === 0 ? createHero : () => navigation.goToHeroList()}
 							showLibrary={() => navigation.goToLibraryList('ancestry')}
 							showPlaybook={() => navigation.goToPlaybookList('adventure')}
 						/>
@@ -970,6 +969,7 @@ export const Main = (props: Props) => {
 				<Route path='hero'>
 					<Route
 						index={true}
+						path=':folder?'
 						element={
 							<HeroListPage
 								heroes={heroes}

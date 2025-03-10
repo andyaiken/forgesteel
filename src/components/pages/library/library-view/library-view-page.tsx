@@ -201,7 +201,7 @@ export const LibraryViewPage = (props: Props) => {
 	try {
 		return (
 			<div className='library-view-page'>
-				<AppHeader breadcrumbs={[ { label: Format.capitalize(kind!) } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader subheader={Format.capitalize(kind!)} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					{
 						subElementID ?
 							<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryView(kind!, elementID!)}>

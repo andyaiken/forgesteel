@@ -7,7 +7,7 @@ import { useMediaQuery } from '../../../hooks/use-media-query';
 import './app-header.scss';
 
 interface Props {
-	breadcrumbs: { label: string }[];
+	subheader?: string;
 	children?: ReactNode;
 	showDirectory: () => void;
 	showAbout: () => void;
@@ -31,11 +31,7 @@ export const AppHeader = (props: Props) => {
 			<div className='left-section'>
 				<LogoPanel onClick={props.showDirectory} />
 				{
-					isSmall ?
-						null :
-						<div className='breadcrumbs'>
-							{props.breadcrumbs.map((bc, n) => <div key={n} className='breadcrumb'>{bc.label}</div>)}
-						</div>
+					props.subheader && !isSmall ? <div className='breadcrumbs'>{props.subheader}</div> : null
 				}
 			</div>
 			{

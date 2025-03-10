@@ -59,6 +59,7 @@ export class FactoryLogic {
 		return {
 			id: Utils.guid(),
 			name: '',
+			folder: '',
 			settingIDs: sourcebookIDs,
 			ancestry: null,
 			culture: null,

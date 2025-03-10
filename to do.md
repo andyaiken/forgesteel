@@ -2,8 +2,6 @@
 
 ### Hero Sheet
 
-* Search for heroes
-* Allow heroes in folders / categories
 * Make sure multiple melee / ranged damage bonuses are handled correctly
 
 ### Hero Builder

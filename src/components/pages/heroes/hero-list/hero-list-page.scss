@@ -6,9 +6,21 @@
 	.hero-list-page-content {
 		background-color: rgba(0, 0, 0, 0.1);
 		flex: 1 1 0;
-		padding: 20px;
-		overflow-x: hidden;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		padding: 10px 20px 20px 20px;
 		overflow-y: auto;
+
+		.section-header {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			.section-count {
+				opacity: 0.3;
+			}
+		}
 
 		.hero-section-row {
 			display: grid;

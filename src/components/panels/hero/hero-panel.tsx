@@ -1,39 +1,39 @@
 import { Col, Row, Segmented, Statistic } from 'antd';
-import { Monster, MonsterGroup } from '../../../../models/monster';
+import { Monster, MonsterGroup } from '../../../models/monster';
 import { ReactNode, useState } from 'react';
-import { Ability } from '../../../../models/ability';
-import { AbilityLogic } from '../../../../logic/ability-logic';
-import { AbilityPanel } from '../ability-panel/ability-panel';
-import { AbilityUsage } from '../../../../enums/ability-usage';
-import { Ancestry } from '../../../../models/ancestry';
-import { Career } from '../../../../models/career';
-import { Characteristic } from '../../../../enums/characteristic';
-import { Complication } from '../../../../models/complication';
-import { ConditionLogic } from '../../../../logic/condition-logic';
-import { ConditionType } from '../../../../enums/condition-type';
-import { Culture } from '../../../../models/culture';
-import { CultureData } from '../../../../data/culture-data';
-import { DamageModifierType } from '../../../../enums/damage-modifier-type';
-import { Domain } from '../../../../models/domain';
-import { Element } from '../../../../models/element';
-import { FeaturePanel } from '../feature-panel/feature-panel';
-import { FeatureType } from '../../../../enums/feature-type';
-import { Field } from '../../../controls/field/field';
-import { FormatLogic } from '../../../../logic/format-logic';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Hero } from '../../../../models/hero';
-import { HeroClass } from '../../../../models/class';
-import { HeroLogic } from '../../../../logic/hero-logic';
-import { HeroStatePage } from '../../../../enums/hero-state-page';
-import { Kit } from '../../../../models/kit';
-import { MonsterLogic } from '../../../../logic/monster-logic';
-import { Options } from '../../../../models/options';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Skill } from '../../../../models/skill';
-import { SkillList } from '../../../../enums/skill-list';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { useMediaQuery } from '../../../../hooks/use-media-query';
+import { Ability } from '../../../models/ability';
+import { AbilityLogic } from '../../../logic/ability-logic';
+import { AbilityPanel } from '../elements/ability-panel/ability-panel';
+import { AbilityUsage } from '../../../enums/ability-usage';
+import { Ancestry } from '../../../models/ancestry';
+import { Career } from '../../../models/career';
+import { Characteristic } from '../../../enums/characteristic';
+import { Complication } from '../../../models/complication';
+import { ConditionLogic } from '../../../logic/condition-logic';
+import { ConditionType } from '../../../enums/condition-type';
+import { Culture } from '../../../models/culture';
+import { CultureData } from '../../../data/culture-data';
+import { DamageModifierType } from '../../../enums/damage-modifier-type';
+import { Domain } from '../../../models/domain';
+import { Element } from '../../../models/element';
+import { FeaturePanel } from '../elements/feature-panel/feature-panel';
+import { FeatureType } from '../../../enums/feature-type';
+import { Field } from '../../controls/field/field';
+import { FormatLogic } from '../../../logic/format-logic';
+import { HeaderText } from '../../controls/header-text/header-text';
+import { Hero } from '../../../models/hero';
+import { HeroClass } from '../../../models/class';
+import { HeroLogic } from '../../../logic/hero-logic';
+import { HeroStatePage } from '../../../enums/hero-state-page';
+import { Kit } from '../../../models/kit';
+import { MonsterLogic } from '../../../logic/monster-logic';
+import { Options } from '../../../models/options';
+import { PanelMode } from '../../../enums/panel-mode';
+import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
+import { Skill } from '../../../models/skill';
+import { SkillList } from '../../../enums/skill-list';
+import { Sourcebook } from '../../../models/sourcebook';
+import { useMediaQuery } from '../../../hooks/use-media-query';
 
 import './hero-panel.scss';
 
@@ -508,7 +508,7 @@ export const HeroPanel = (props: Props) => {
 
 			return (
 				<div className='hero-panel compact'>
-					<HeaderText level={1}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
+					<HeaderText level={1} tags={props.hero.folder ? [ props.hero.folder ] : []}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
 					<Field label='Ancestry' value={props.hero.ancestry?.name || 'No ancestry'} />
 					<Field label='Career' value={props.hero.career?.name || 'No career'} />
 					<Field label='Class' value={props.hero.class?.name || 'No class'} />
@@ -548,7 +548,7 @@ export const HeroPanel = (props: Props) => {
 				case 'Hero':
 					content = (
 						<>
-							<HeaderText>{props.hero.name || 'Unnamed Hero'}</HeaderText>
+							<HeaderText tags={props.hero.folder ? [ props.hero.folder ] : []}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
 							{getLeftColumn(false)}
 							{getRightColumn(false)}
 						</>
@@ -608,7 +608,7 @@ export const HeroPanel = (props: Props) => {
 				<div className='hero-main-section' id='stats'>
 					{getLeftColumn(true)}
 					<div className='hero-main-column'>
-						<HeaderText level={1}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
+						<HeaderText level={1} tags={props.hero.folder ? [ props.hero.folder ] : []}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
 						{getStatsSection()}
 						{getConditionsSection()}
 						{getFeaturesSection('Features')}

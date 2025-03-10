@@ -874,6 +874,10 @@ Complex or time-consuming tests might require an action if made in combat - or c
 	///////////////////////////////////////////////////////////////////////////
 
 	static updateHero = (hero: Hero) => {
+		if (hero.folder === undefined) {
+			hero.folder = '';
+		}
+
 		if (hero.settingIDs === undefined) {
 			hero.settingIDs = [ SourcebookData.core.id, SourcebookData.orden.id ];
 		}

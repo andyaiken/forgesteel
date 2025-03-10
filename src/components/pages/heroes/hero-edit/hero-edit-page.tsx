@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Input, Radio, Segmented, Select, Space } from 'antd';
+import { Alert, AutoComplete, Button, Divider, Input, Radio, Segmented, Select, Space } from 'antd';
 import { CloseOutlined, SaveOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureBonusData, FeatureData } from '../../../../models/feature';
@@ -334,6 +334,13 @@ export const HeroEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const setFolder = (value: string) => {
+			const heroCopy = Utils.copy(hero);
+			heroCopy.folder = value;
+			setHero(heroCopy);
+			setDirty(true);
+		};
+
 		const setSettingIDs = (settingIDs: string[]) => {
 			const heroCopy = Utils.copy(hero);
 			heroCopy.settingIDs = settingIDs;
@@ -444,9 +451,11 @@ export const HeroEditPage = (props: Props) => {
 					return (
 						<DetailsSection
 							hero={hero}
+							allHeroes={props.heroes}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
 							allSourcebooks={props.sourcebooks}
 							setName={setName}
+							setFolder={setFolder}
 							setSettingIDs={setSettingIDs}
 							addFeature={addFeature}
 							deleteFeature={deleteFeature}
@@ -480,7 +489,7 @@ export const HeroEditPage = (props: Props) => {
 
 		return (
 			<div className='hero-edit-page'>
-				<AppHeader breadcrumbs={[ { label: 'Hero Builder' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader subheader='Hero Builder' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					<Button icon={<SaveOutlined />} type='primary' disabled={!dirty} onClick={saveChanges}>
 						Save Changes
 					</Button>
@@ -1078,9 +1087,11 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 
 interface DetailsSectionProps {
 	hero: Hero;
+	allHeroes: Hero[];
 	sourcebooks: Sourcebook[];
 	allSourcebooks: Sourcebook[];
 	setName: (value: string) => void;
+	setFolder: (value: string) => void;
 	setSettingIDs: (settingIDs: string[]) => void;
 	addFeature: (feature: Feature) => void;
 	deleteFeature: (feature: Feature) => void;
@@ -1089,6 +1100,11 @@ interface DetailsSectionProps {
 }
 
 const DetailsSection = (props: DetailsSectionProps) => {
+	const folders = props.allHeroes
+		.map(h => h.folder)
+		.filter(f => !!f)
+		.sort();
+
 	try {
 		return (
 			<div className='hero-edit-content'>
@@ -1101,6 +1117,15 @@ const DetailsSection = (props: DetailsSectionProps) => {
 						addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => props.setName(NameGenerator.generateName())} />}
 						value={props.hero.name}
 						onChange={e => props.setName(e.target.value)}
+					/>
+					<HeaderText>Folder</HeaderText>
+					<AutoComplete
+						value={props.hero.folder}
+						options={Collections.distinct(folders, f => f).map(option => ({ value: option, label: <div className='ds-text'>{option}</div> }))}
+						placeholder='Folder'
+						onSelect={value => props.setFolder(value)}
+						onChange={value => props.setFolder(value)}
+						filterOption={(value, option) => value.toLowerCase().split(' ').every(token => option!.value.toLowerCase().indexOf(token.toLowerCase()) !== -1)}
 					/>
 					<HeaderText>Sourcebooks</HeaderText>
 					<Select

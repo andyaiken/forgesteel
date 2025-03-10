@@ -44,6 +44,7 @@ export interface Hero {
 	id: string;
 	name: string;
 
+	folder: string;
 	settingIDs: string[];
 
 	ancestry: Ancestry | null;

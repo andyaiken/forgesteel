@@ -40,16 +40,16 @@ export const PlaybookListPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { kind } = useParams<{ kind: PlaybookElementKind }>();
 	const [ previousTab, setPreviousTab ] = useState<PlaybookElementKind | undefined>(kind);
-	const [ element, setElement ] = useState<PlaybookElementKind>(kind ?? 'encounter');
+	const [ currentTab, setCurrentTab ] = useState<PlaybookElementKind>(kind ?? 'encounter');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
 	if (kind !== previousTab) {
-		setElement(kind ?? 'encounter');
+		setCurrentTab(kind ?? 'encounter');
 		setPreviousTab(kind);
 	}
 
 	const createElement = (original: Element | null) => {
-		props.createElement(element, original);
+		props.createElement(currentTab, original);
 	};
 
 	const getAdventures = () => {
@@ -216,7 +216,7 @@ export const PlaybookListPage = (props: Props) => {
 
 		return (
 			<div className='playbook-list-page'>
-				<AppHeader breadcrumbs={[ { label: 'Playbook' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader subheader='Playbook' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					<Input
 						placeholder='Search'
 						allowClear={true}
@@ -235,14 +235,14 @@ export const PlaybookListPage = (props: Props) => {
 									<div className='ds-text'>or</div>
 									<Upload
 										style={{ width: '100%' }}
-										accept={`.drawsteel-${element.toLowerCase()}`}
+										accept={`.drawsteel-${currentTab.toLowerCase()}`}
 										showUploadList={false}
 										beforeUpload={file => {
 											file
 												.text()
 												.then(json => {
 													const e = (JSON.parse(json) as Element);
-													props.importElement(element, e);
+													props.importElement(currentTab, e);
 												});
 											return false;
 										}}
@@ -251,7 +251,7 @@ export const PlaybookListPage = (props: Props) => {
 									</Upload>
 								</Space>
 								{
-									element === 'negotiation' ?
+									currentTab === 'negotiation' ?
 										<div>
 											<div className='ds-text centered-text'>or start with an example:</div>
 											<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
@@ -265,7 +265,7 @@ export const PlaybookListPage = (props: Props) => {
 										: null
 								}
 								{
-									element === 'montage' ?
+									currentTab === 'montage' ?
 										<div>
 											<div className='ds-text centered-text'>or start with an example:</div>
 											<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '10px' }}>
@@ -286,12 +286,12 @@ export const PlaybookListPage = (props: Props) => {
 						</Button>
 					</Popover>
 					{
-						(element === 'encounter') ?
+						(currentTab === 'encounter') ?
 							<div className='divider' />
 							: null
 					}
 					{
-						(element === 'encounter') ?
+						(currentTab === 'encounter') ?
 							<Popover
 								trigger='click'
 								placement='bottom'
@@ -310,7 +310,7 @@ export const PlaybookListPage = (props: Props) => {
 				</AppHeader>
 				<div className='playbook-list-page-content'>
 					<Tabs
-						activeKey={element}
+						activeKey={currentTab}
 						items={[
 							{
 								key: 'adventure',

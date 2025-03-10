@@ -2122,7 +2122,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<div className='library-edit-page'>
-				<AppHeader breadcrumbs={[ { label: `${editing} Builder` } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader subheader={`${editing} Builder`} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
 						Save Changes
 					</Button>

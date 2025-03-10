@@ -1423,7 +1423,7 @@ export const PlaybookEditPage = (props: Props) => {
 	try {
 		return (
 			<div className='playbook-edit-page'>
-				<AppHeader breadcrumbs={[ { label: `${Format.capitalize(kind!)} Builder` } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader subheader={`${Format.capitalize(kind!)} Builder`} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
 						Save Changes
 					</Button>

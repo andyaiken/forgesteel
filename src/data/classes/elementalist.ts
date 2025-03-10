@@ -1,6 +1,7 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
+import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 import { HeroClass } from '../../models/class';
@@ -189,10 +190,37 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createDamageModifier({
 								id: 'elementalist-1-8b',
 								name: 'Ward of Excellent Protection',
-								description: 'The protective shield you weave around yourself is made of all the elements to channel their full protective power. You have immunity to acid, cold, corruption, fire, and lightning damage equal to your Reason score.'
+								description: 'The protective shield you weave around yourself is made of all the elements to channel their full protective power.',
+								modifiers: [
+									FactoryLogic.damageModifier.createCharacteristic({
+										damageType: 'Acid',
+										modifierType: DamageModifierType.Immunity,
+										characteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.damageModifier.createCharacteristic({
+										damageType: 'Cold',
+										modifierType: DamageModifierType.Immunity,
+										characteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.damageModifier.createCharacteristic({
+										damageType: 'Corruption',
+										modifierType: DamageModifierType.Immunity,
+										characteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.damageModifier.createCharacteristic({
+										damageType: 'Fire',
+										modifierType: DamageModifierType.Immunity,
+										characteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.damageModifier.createCharacteristic({
+										damageType: 'Lightning',
+										modifierType: DamageModifierType.Immunity,
+										characteristics: [ Characteristic.Reason ]
+									})
+								]
 							}),
 							value: 1
 						},

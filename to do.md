@@ -31,7 +31,6 @@
 
 ### Encounter Builder
 
-* Show mini checklist
 * Add victory conditions
 * Add dynamic terrain
 * Use encounter templates

@@ -31,6 +31,7 @@ interface Props {
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
+	showMiniChecklist: (encounter: Encounter) => void;
 	export: (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	delete: (kind: PlaybookElementKind, element: Element) => void;
 	setOptions: (options: Options) => void;
@@ -126,6 +127,13 @@ export const PlaybookViewPage = (props: Props) => {
 					{
 						(kind === 'encounter') ?
 							<div className='divider' />
+							: null
+					}
+					{
+						(kind === 'encounter') ?
+							<Button onClick={() => props.showMiniChecklist(element as Encounter)}>
+								Mini Checklist
+							</Button>
 							: null
 					}
 					{

@@ -35,6 +35,7 @@ import { LibraryEditPage } from '../pages/library/library-edit/library-edit';
 import { LibraryListPage } from '../pages/library/library-list/library-list';
 import { LibraryViewPage } from '../pages/library/library-view/library-view-page';
 import { MainLayout } from './main-layout';
+import { MiniChecklistModal } from '../modals/mini-checklist/mini-checklist-modal';
 import { MonsterModal } from '../modals/monster/monster-modal';
 import { Montage } from '../../models/montage';
 import { Negotiation } from '../../models/negotiation';
@@ -937,6 +938,16 @@ export const Main = (props: Props) => {
 		);
 	};
 
+	const showMiniChecklist = (encounter: Encounter) => {
+		setDrawer(
+			<MiniChecklistModal
+				encounter={encounter}
+				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				onClose={() => setDrawer(null)}
+			/>
+		);
+	};
+
 	//#endregion
 
 	return (
@@ -1113,6 +1124,7 @@ export const Main = (props: Props) => {
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
+								showMiniChecklist={showMiniChecklist}
 								export={exportPlaybookElement}
 								delete={deletePlaybookElement}
 								setOptions={persistOptions}

@@ -17,6 +17,17 @@ interface Props {
 }
 
 export const EncounterDifficultyPanel = (props: Props) => {
+	const getPartyDescription = () => {
+		const heroes = `${props.options.heroCount === 1 ? 'hero' : 'heroes'}`;
+		const victories = `${props.options.heroVictories === 1 ? 'victory' : 'victories'}`;
+
+		if (props.options.heroVictories > 0) {
+			return `${props.options.heroCount} ${heroes} at level ${props.options.heroLevel} with ${props.options.heroVictories} ${victories}`;
+		}
+
+		return `${props.options.heroCount} ${heroes} at level ${props.options.heroLevel}`;
+	};
+
 	try {
 		const count = EncounterLogic.getMonsterCount(props.encounter, props.sourcebooks);
 		const budgets = EncounterLogic.getBudgets(props.options);
@@ -25,6 +36,7 @@ export const EncounterDifficultyPanel = (props: Props) => {
 		const victories = EncounterLogic.getVictories(difficulty);
 
 		const marks: Record<string | number, ReactNode> = {};
+		marks[0] = <div className='ds-text dimmed-text small-text'>Trivial</div>;
 		marks[budgets.maxTrivial] = <div className='ds-text dimmed-text small-text'>Easy</div>;
 		marks[budgets.maxEasy] = <div className='ds-text dimmed-text small-text'>Standard</div>;
 		marks[budgets.maxStandard] = <div className='ds-text dimmed-text small-text'>Hard</div>;
@@ -50,6 +62,7 @@ export const EncounterDifficultyPanel = (props: Props) => {
 		return (
 			<div className='encounter-difficulty-panel'>
 				<HeaderText level={1}>Encounter Difficulty</HeaderText>
+				<div className='ds-text'>Difficulty for {getPartyDescription()}</div>
 				<div className='encounter-slider'>
 					<Slider
 						range={true}

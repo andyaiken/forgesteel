@@ -1,5 +1,6 @@
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Ancestry } from '../../models/ancestry';
+import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 
 export const wodeElf: Ancestry = {
@@ -59,7 +60,7 @@ export const wodeElf: Ancestry = {
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: '1 creature',
 							powerRoll: FactoryLogic.createPowerRoll({
-								characteristic: [],
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
 								tier1: '2 + M or A damage; A < [weak] slowed (save ends)',
 								tier2: '3 + M or A damage; A < [average] slowed (save ends)',
 								tier3: '5 + M or A damage; A < [strong] restrained (save ends)'

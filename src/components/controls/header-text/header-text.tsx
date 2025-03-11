@@ -4,10 +4,10 @@ import { Tag } from 'antd';
 import './header-text.scss';
 
 interface Props {
-	children: string | string[];
+	children: ReactNode;
 	level?: number;
 	ribbon?: ReactNode;
-	tags?: string[];
+	tags?: ReactNode[];
 }
 
 export const HeaderText = (props: Props) => {

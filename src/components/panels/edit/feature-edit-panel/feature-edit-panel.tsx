@@ -1,6 +1,6 @@
 import { Alert, Button, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -15,6 +15,7 @@ import { FeatureField } from '../../../../enums/feature-field';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
+import { Format } from '../../../../utils/format';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { ItemType } from '../../../../enums/item-type';
@@ -44,14 +45,14 @@ export const FeatureEditPanel = (props: Props) => {
 	const [ feature, setFeature ] = useState<Feature | Perk>(props.feature);
 
 	const setName = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(feature)) as Feature;
+		const copy = Utils.copy(feature);
 		copy.name = value;
 		setFeature(copy);
 		props.onChange(copy);
 	};
 
 	const setDescription = (value: string) => {
-		const copy = JSON.parse(JSON.stringify(feature)) as Feature;
+		const copy = Utils.copy(feature);
 		copy.description = value;
 		setFeature(copy);
 		props.onChange(copy);
@@ -72,18 +73,18 @@ export const FeatureEditPanel = (props: Props) => {
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: ''
 					})
-				};
+				} as FeatureAbilityData;
 				break;
 			case FeatureType.AbilityCost:
 				data = {
 					keywords: [],
 					modifier: -1
-				};
+				} as FeatureAbilityCostData;
 				break;
 			case FeatureType.AncestryChoice:
 				data = {
 					selected: null
-				};
+				} as FeatureAncestryChoiceData;
 				break;
 			case FeatureType.AncestryFeatureChoice:
 				data = {
@@ -93,105 +94,109 @@ export const FeatureEditPanel = (props: Props) => {
 					},
 					value: 1,
 					selected: null
-				};
+				} as FeatureAncestryFeatureChoiceData;
 				break;
 			case FeatureType.Bonus:
 				data = {
 					field: FeatureField.Recoveries,
 					value: 0,
 					valueCharacteristics: [],
+					valueCharacteristicMultiplier: 1,
 					valuePerLevel: 0,
 					valuePerEchelon: 0
-				};
+				} as FeatureBonusData;
 				break;
 			case FeatureType.CharacteristicBonus:
 				data = {
 					characteristic: Characteristic.Might,
 					value: 1
-				};
+				} as FeatureCharacteristicBonusData;
 				break;
 			case FeatureType.Choice:
 				data = {
 					options: [],
 					count: 1,
 					selected: []
-				};
+				} as FeatureChoiceData;
 				break;
 			case FeatureType.ClassAbility:
 				data = {
 					cost: 1,
 					count: 1,
+					minLevel: 1,
 					selectedIDs: []
-				};
+				} as FeatureClassAbilityData;
 				break;
 			case FeatureType.DamageModifier:
 				data = {
 					modifiers: []
-				};
+				} as FeatureDamageModifierData;
 				break;
 			case FeatureType.Domain:
 				data = {
 					count: 1,
 					selected: []
-				};
+				} as FeatureDomainData;
 				break;
 			case FeatureType.DomainFeature:
 				data = {
 					level: 1,
 					count: 1,
 					selected: []
-				};
+				} as FeatureDomainFeatureData;
 				break;
 			case FeatureType.ItemChoice:
 				data = {
 					types: [],
 					count: 1,
 					selected: []
-				};
+				} as FeatureItemChoiceData;
 				break;
 			case FeatureType.Kit:
 				data = {
 					types: [],
 					count: 1,
 					selected: []
-				};
+				} as FeatureKitData;
 				break;
 			case FeatureType.KitType:
 				data = {
 					types: []
-				};
+				} as FeatureKitTypeData;
 				break;
 			case FeatureType.Language:
+				data = {
+					language: ''
+				} as FeatureLanguageData;
+				break;
+			case FeatureType.LanguageChoice:
 				data = {
 					options: [],
 					count: 1,
 					selected: []
-				};
-				break;
-			case FeatureType.LanguageChoice:
-				data = {
-					language: ''
-				};
+				} as FeatureLanguageChoiceData;
 				break;
 			case FeatureType.Malice:
 				data = {
 					cost: 3
-				};
+				} as FeatureMaliceData;
 				break;
 			case FeatureType.Multiple:
 				data = {
 					features: []
-				};
+				} as FeatureMultipleData;
 				break;
 			case FeatureType.Package:
-				data = {};
+				data = {
+					//
+				} as FeaturePackageData;
 				break;
 			case FeatureType.Perk:
 				data = {
-					types: [],
+					lists: [],
 					count: 1,
 					selected: []
-				};
+				} as FeaturePerkData;
 				break;
 			case FeatureType.Size:
 				data = {
@@ -199,12 +204,12 @@ export const FeatureEditPanel = (props: Props) => {
 						value: 1,
 						mod: 'M'
 					}
-				};
+				} as FeatureSizeData;
 				break;
 			case FeatureType.Skill:
 				data = {
 					skill: ''
-				};
+				} as FeatureSkillData;
 				break;
 			case FeatureType.SkillChoice:
 				data = {
@@ -212,22 +217,23 @@ export const FeatureEditPanel = (props: Props) => {
 					listOptions: [],
 					count: 1,
 					selected: []
-				};
+				} as FeatureSkillChoiceData;
 				break;
 			case FeatureType.Speed:
 				data = {
 					speed: 5
-				};
+				} as FeatureSpeedData;
 				break;
 			case FeatureType.TitleChoice:
 				data = {
+					echelon: 1,
 					count: 1,
 					selected: []
-				};
+				} as FeatureTitleChoiceData;
 				break;
 		}
 
-		const copy = JSON.parse(JSON.stringify(feature)) as Feature;
+		const copy = Utils.copy(feature);
 		copy.type = value;
 		copy.data = data;
 		setFeature(copy);
@@ -235,14 +241,14 @@ export const FeatureEditPanel = (props: Props) => {
 	};
 
 	const setList = (value: PerkList) => {
-		const copy = JSON.parse(JSON.stringify(feature)) as Perk;
+		const copy = Utils.copy(feature) as Perk;
 		copy.list = value;
 		setFeature(copy);
 		props.onChange(copy);
 	};
 
 	const setData = (value: FeatureData) => {
-		const copy = JSON.parse(JSON.stringify(feature)) as Feature;
+		const copy = Utils.copy(feature);
 		copy.data = value;
 		setFeature(copy);
 		props.onChange(copy);
@@ -250,169 +256,175 @@ export const FeatureEditPanel = (props: Props) => {
 
 	const getDataSection = () => {
 		const setCount = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureItemChoiceData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureTitleChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureItemChoiceData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureTitleChoiceData;
 			copy.count = value;
 			setData(copy);
 		};
 
 		const setLevel = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureDomainFeatureData;
+			const copy = Utils.copy(feature.data) as FeatureDomainFeatureData;
 			copy.level = value;
 			setData(copy);
 		};
 
 		const setValue = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData | FeatureCharacteristicBonusData | FeatureAncestryFeatureChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureBonusData | FeatureCharacteristicBonusData | FeatureAncestryFeatureChoiceData;
 			copy.value = value;
 			setData(copy);
 		};
 
 		const setValuePerLevel = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
+			const copy = Utils.copy(feature.data) as FeatureBonusData;
 			copy.valuePerLevel = value;
 			setData(copy);
 		};
 
 		const setValuePerEchelon = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
+			const copy = Utils.copy(feature.data) as FeatureBonusData;
 			copy.valuePerEchelon = value;
 			setData(copy);
 		};
 
 		const setValueCharacteristics = (value: Characteristic[]) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
+			const copy = Utils.copy(feature.data) as FeatureBonusData;
 			copy.valueCharacteristics = value;
 			setData(copy);
 		};
 
 		const setCharacteristic = (value: Characteristic) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureCharacteristicBonusData;
+			const copy = Utils.copy(feature.data) as FeatureCharacteristicBonusData;
 			copy.characteristic = value;
 			setData(copy);
 		};
 
 		const setAbilityCost = (value: number | 'signature') => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureClassAbilityData;
+			const copy = Utils.copy(feature.data) as FeatureClassAbilityData;
 			copy.cost = value;
 			setData(copy);
 		};
 
+		const setMinLevel = (value: number) => {
+			const copy = Utils.copy(feature.data) as FeatureClassAbilityData;
+			copy.minLevel = value;
+			setData(copy);
+		};
+
 		const setMaliceCost = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureMaliceData;
+			const copy = Utils.copy(feature.data) as FeatureMaliceData;
 			copy.cost = value;
 			setData(copy);
 		};
 
 		const setCompanionType = (value: 'companion' | 'mount' | 'retainer') => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureCompanionData;
+			const copy = Utils.copy(feature.data) as FeatureCompanionData;
 			copy.type = value;
 			setData(copy);
 		};
 
 		const setSizeValue = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureSizeData;
+			const copy = Utils.copy(feature.data) as FeatureSizeData;
 			copy.size.value = value;
 			setData(copy);
 		};
 
-		const setSizeMod = (value: 'T' | 'S' | 'M' | 'L') => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureSizeData;
+		const setSizeMod = (value: '' | 'T' | 'S' | 'M' | 'L') => {
+			const copy = Utils.copy(feature.data) as FeatureSizeData;
 			copy.size.mod = value;
 			setData(copy);
 		};
 
 		const setField = (value: FeatureField) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureBonusData;
+			const copy = Utils.copy(feature.data) as FeatureBonusData;
 			copy.field = value;
 			setData(copy);
 		};
 
 		const setItemTypes = (value: ItemType[]) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureItemChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureItemChoiceData;
 			copy.types = value;
 			setData(copy);
 		};
 
 		const setKitTypes = (value: KitType[]) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureKitData;
+			const copy = Utils.copy(feature.data) as FeatureKitData;
 			copy.types = value;
 			setData(copy);
 		};
 
 		const setPerkLists = (value: PerkList[]) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeaturePerkData;
+			const copy = Utils.copy(feature.data) as FeaturePerkData;
 			copy.lists = value;
 			setData(copy);
 		};
 
 		const setLanguage = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureLanguageData;
+			const copy = Utils.copy(feature.data) as FeatureLanguageData;
 			copy.language = value;
 			setData(copy);
 		};
 
 		const setLanguageOptions = (value: string[]) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureLanguageChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureLanguageChoiceData;
 			copy.options = value;
 			setData(copy);
 		};
 
 		const setSkillOptions = (value: string[]) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureSkillChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureSkillChoiceData;
 			copy.options = value;
 			setData(copy);
 		};
 
 		const setSkillListOptions = (value: SkillList[]) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureSkillChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureSkillChoiceData;
 			copy.listOptions = value;
 			setData(copy);
 		};
 
 		const setSkill = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureSkillData;
+			const copy = Utils.copy(feature.data) as FeatureSkillData;
 			copy.skill = value;
 			setData(copy);
 		};
 
 		const setAbility = (value: Ability) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureAbilityData;
+			const copy = Utils.copy(feature.data) as FeatureAbilityData;
 			copy.ability = value;
 			setData(copy);
 		};
 
 		const setKeywords = (value: AbilityKeyword[]) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureAbilityCostData;
+			const copy = Utils.copy(feature.data) as FeatureAbilityCostData;
 			copy.keywords = value;
 			setData(copy);
 		};
 
 		const setModifier = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureAbilityCostData;
+			const copy = Utils.copy(feature.data) as FeatureAbilityCostData;
 			copy.modifier = value;
 			setData(copy);
 		};
 
 		const setSourceCurrent = (value: boolean) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureAncestryFeatureChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureAncestryFeatureChoiceData;
 			copy.source.current = value;
 			setData(copy);
 		};
 
 		const setSourceFormer = (value: boolean) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureAncestryFeatureChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureAncestryFeatureChoiceData;
 			copy.source.former = value;
 			setData(copy);
 		};
 
 		const setSpeed = (value: number) => {
-			const copy = JSON.parse(JSON.stringify(feature.data)) as FeatureSpeedData;
+			const copy = Utils.copy(feature.data) as FeatureSpeedData;
 			copy.speed = value;
 			setData(copy);
 		};
 
 		const addChoice = (data: FeatureChoiceData) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
+			const copy = Utils.copy(data);
 			copy.options.push({
 				feature: FactoryLogic.feature.create({
 					id: Utils.guid(),
@@ -425,85 +437,85 @@ export const FeatureEditPanel = (props: Props) => {
 		};
 
 		const moveChoice = (data: FeatureChoiceData, index: number, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
+			const copy = Utils.copy(data);
 			copy.options = Collections.move(copy.options, index, direction);
 			setData(copy);
 		};
 
 		const deleteChoice = (data: FeatureChoiceData, index: number) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
+			const copy = Utils.copy(data);
 			copy.options.splice(index);
 			setData(copy);
 		};
 
 		const setChoiceFeature = (data: FeatureChoiceData, index: number, value: Feature) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
+			const copy = Utils.copy(data);
 			copy.options[index].feature = value;
 			setData(copy);
 		};
 
 		const setChoiceValue = (data: FeatureChoiceData, index: number, value: number) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureChoiceData;
+			const copy = Utils.copy(data);
 			copy.options[index].value = value;
 			setData(copy);
 		};
 
 		const addDamageModifier = (data: FeatureDamageModifierData) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureDamageModifierData;
+			const copy = Utils.copy(data);
 			copy.modifiers.push(FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 0 }));
 			setData(copy);
 		};
 
 		const deleteDamageModifier = (data: FeatureDamageModifierData, index: number) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureDamageModifierData;
+			const copy = Utils.copy(data);
 			copy.modifiers.splice(index);
 			setData(copy);
 		};
 
 		const setDamageModifierDamageType = (data: FeatureDamageModifierData, index: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureDamageModifierData;
+			const copy = Utils.copy(data);
 			copy.modifiers[index].damageType = value;
 			setData(copy);
 		};
 
 		const setDamageModifierType = (data: FeatureDamageModifierData, index: number, value: DamageModifierType) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureDamageModifierData;
+			const copy = Utils.copy(data);
 			copy.modifiers[index].type = value;
 			setData(copy);
 		};
 
 		const setDamageModifierValue = (data: FeatureDamageModifierData, index: number, value: number) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureDamageModifierData;
+			const copy = Utils.copy(data);
 			copy.modifiers[index].value = value;
 			setData(copy);
 		};
 
 		const setDamageModifierValueCharacteristics = (data: FeatureDamageModifierData, index: number, value: Characteristic[]) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureDamageModifierData;
+			const copy = Utils.copy(data);
 			copy.modifiers[index].valueCharacteristics = value;
 			setData(copy);
 		};
 
 		const setDamageModifierValuePerLevel = (data: FeatureDamageModifierData, index: number, value: number) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureDamageModifierData;
+			const copy = Utils.copy(data);
 			copy.modifiers[index].valuePerLevel = value;
 			setData(copy);
 		};
 
 		const setDamageModifierValuePerEchelon = (data: FeatureDamageModifierData, index: number, value: number) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureDamageModifierData;
+			const copy = Utils.copy(data);
 			copy.modifiers[index].valuePerEchelon = value;
 			setData(copy);
 		};
 
 		const addMaliceSectionText = (data: FeatureMaliceData) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			const copy = Utils.copy(data);
 			copy.sections.push('');
 			setData(copy);
 		};
 
 		const addMaliceSectionPowerRoll = (data: FeatureMaliceData) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			const copy = Utils.copy(data);
 			copy.sections.push(FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
 				tier1: '',
@@ -514,53 +526,53 @@ export const FeatureEditPanel = (props: Props) => {
 		};
 
 		const moveMaliceSection = (data: FeatureMaliceData, index: number, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			const copy = Utils.copy(data);
 			copy.sections = Collections.move(copy.sections, index, direction);
 			setData(copy);
 		};
 
 		const deleteMaliceSection = (data: FeatureMaliceData, index: number) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			const copy = Utils.copy(data);
 			copy.sections.splice(index);
 			setData(copy);
 		};
 
 		const setMaliceSectionText = (data: FeatureMaliceData, index: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			const copy = Utils.copy(data);
 			copy.sections[index] = value;
 			setData(copy);
 		};
 
 		const setMaliceSectionPowerRollCharacteristics = (data: FeatureMaliceData, index: number, value: Characteristic[]) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			const copy = Utils.copy(data);
 			const pr = copy.sections[index] as PowerRoll;
 			pr.characteristic = value;
 			setData(copy);
 		};
 
 		const setMaliceSectionPowerRoll1 = (data: FeatureMaliceData, index: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			const copy = Utils.copy(data);
 			const pr = copy.sections[index] as PowerRoll;
 			pr.tier1 = value;
 			setData(copy);
 		};
 
 		const setMaliceSectionPowerRoll2 = (data: FeatureMaliceData, index: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			const copy = Utils.copy(data);
 			const pr = copy.sections[index] as PowerRoll;
 			pr.tier2 = value;
 			setData(copy);
 		};
 
 		const setMaliceSectionPowerRoll3 = (data: FeatureMaliceData, index: number, value: string) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureMaliceData;
+			const copy = Utils.copy(data);
 			const pr = copy.sections[index] as PowerRoll;
 			pr.tier3 = value;
 			setData(copy);
 		};
 
 		const addMultipleFeature = (data: FeatureMultipleData) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureMultipleData;
+			const copy = Utils.copy(data);
 			copy.features.push(FactoryLogic.feature.create({
 				id: Utils.guid(),
 				name: '',
@@ -570,19 +582,19 @@ export const FeatureEditPanel = (props: Props) => {
 		};
 
 		const moveMultipleFeature = (data: FeatureMultipleData, index: number, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureMultipleData;
+			const copy = Utils.copy(data);
 			copy.features = Collections.move(copy.features, index, direction);
 			setData(copy);
 		};
 
 		const deleteMultipleFeature = (data: FeatureMultipleData, index: number) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureMultipleData;
+			const copy = Utils.copy(data);
 			copy.features.splice(index);
 			setData(copy);
 		};
 
 		const setMultipleFeature = (data: FeatureMultipleData, index: number, value: Feature) => {
-			const copy = JSON.parse(JSON.stringify(data)) as FeatureMultipleData;
+			const copy = Utils.copy(data);
 			copy.features[index] = value;
 			setData(copy);
 		};
@@ -694,8 +706,8 @@ export const FeatureEditPanel = (props: Props) => {
 									key={n}
 									title={option.feature.name || 'Unnamed Feature'}
 									extra={[
-										<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveChoice(data, n, 'up'); }} />,
-										<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveChoice(data, n, 'down');}} />,
+										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveChoice(data, n, 'up'); }} />,
+										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveChoice(data, n, 'down');}} />,
 										<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteChoice(data, n); }} />
 									]}
 								>
@@ -741,6 +753,8 @@ export const FeatureEditPanel = (props: Props) => {
 						}
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
+						<HeaderText>Minimum Level</HeaderText>
+						<NumberSpin min={1} value={data.minLevel} onChange={setMinLevel} />
 					</Space>
 				);
 			}
@@ -750,8 +764,9 @@ export const FeatureEditPanel = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Companion Type</HeaderText>
 						<Segmented
+							name='companiontypes'
 							block={true}
-							options={[ 'companion', 'mount', 'retainer' ]}
+							options={[ 'companion', 'mount', 'retainer' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
 							value={data.type}
 							onChange={s => setCompanionType(s as 'companion' | 'mount' | 'retainer')}
 						/>
@@ -931,8 +946,8 @@ export const FeatureEditPanel = (props: Props) => {
 										key={n}
 										title='Malice Section'
 										extra={[
-											<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMaliceSection(data, n, 'up'); }} />,
-											<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMaliceSection(data, n, 'down'); }} />,
+											<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMaliceSection(data, n, 'up'); }} />,
+											<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMaliceSection(data, n, 'down'); }} />,
 											<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteMaliceSection(data, n); }} />
 										]}
 									>
@@ -1015,8 +1030,8 @@ export const FeatureEditPanel = (props: Props) => {
 									key={feature.id}
 									title={feature.name}
 									extra={[
-										<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMultipleFeature(data, n, 'up'); }} />,
-										<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMultipleFeature(data, n, 'down'); }} />,
+										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMultipleFeature(data, n, 'up'); }} />,
+										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMultipleFeature(data, n, 'down'); }} />,
 										<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteMultipleFeature(data, n); }} />
 									]}
 								>
@@ -1078,11 +1093,12 @@ export const FeatureEditPanel = (props: Props) => {
 						}
 						{
 							data.size.value === 1 ?
-								<Segmented
+								<Segmented<'' | 'T' | 'S' | 'M' | 'L'>
+									name='sizemodtypes'
 									block={true}
 									options={[ 'T', 'S', 'M', 'L' ]}
 									value={data.size.mod}
-									onChange={s => setSizeMod(s as 'T' | 'S' | 'M' | 'L')}
+									onChange={setSizeMod}
 								/>
 								: null
 						}

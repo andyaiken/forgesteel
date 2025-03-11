@@ -1079,5 +1079,6 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

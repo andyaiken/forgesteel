@@ -6,6 +6,7 @@ import { Sourcebook, SourcebookElementKind } from '../../models/sourcebook';
 import { Ability } from '../../models/ability';
 import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
+import { Adventure } from '../../models/adventure';
 import { Ancestry } from '../../models/ancestry';
 import { Career } from '../../models/career';
 import { Characteristic } from '../../enums/characteristic';
@@ -34,6 +35,7 @@ import { LibraryEditPage } from '../pages/library/library-edit/library-edit';
 import { LibraryListPage } from '../pages/library/library-list/library-list';
 import { LibraryViewPage } from '../pages/library/library-view/library-view-page';
 import { MainLayout } from './main-layout';
+import { MiniChecklistModal } from '../modals/mini-checklist/mini-checklist-modal';
 import { MonsterModal } from '../modals/monster/monster-modal';
 import { Montage } from '../../models/montage';
 import { Negotiation } from '../../models/negotiation';
@@ -42,6 +44,7 @@ import { PDFExport } from '../../utils/pdf-export';
 import { Perk } from '../../models/perk';
 import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit';
 import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list';
+import { PlaybookLogic } from '../../logic/playbook-logic';
 import { PlaybookViewPage } from '../pages/playbook/playbook-view/playbook-view-page';
 import { RollModal } from '../modals/roll/roll-modal';
 import { RulesModal } from '../modals/rules/rules-modal';
@@ -76,48 +79,48 @@ export const Main = (props: Props) => {
 
 	//#region Persistence
 
-	const persistHeroes = async (heroes: Hero[]) => {
-		await localforage
+	const persistHeroes = (heroes: Hero[]) => {
+		return localforage
 			.setItem<Hero[]>('forgesteel-heroes', Collections.sort(heroes, h => h.name))
 			.then(setHeroes);
 	};
 
-	const persistHero = async (hero: Hero) => {
+	const persistHero = (hero: Hero) => {
 		if (heroes.some(h => h.id === hero.id)) {
-			const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
+			const copy = Utils.copy(heroes);
 			const list = copy.map(h => h.id === hero.id ? hero : h);
 
-			await persistHeroes(list);
+			return persistHeroes(list);
 		}
 		else {
-			const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
+			const copy = Utils.copy(heroes);
 			copy.push(hero);
 			Collections.sort(copy, h => h.name);
 
-			await persistHeroes(copy);
+			return persistHeroes(copy);
 		}
 	};
 
-	const persistPlaybook = async (playbook: Playbook) => {
-		await localforage
+	const persistPlaybook = (playbook: Playbook) => {
+		return localforage
 			.setItem<Playbook>('forgesteel-playbook', playbook)
 			.then(setPlaybook);
 	};
 
-	const persistHomebrewSourcebooks = async (homebrew: Sourcebook[]) => {
-		await localforage
+	const persistHomebrewSourcebooks = (homebrew: Sourcebook[]) => {
+		return localforage
 			.setItem<Sourcebook[]>('forgesteel-homebrew-settings', homebrew)
 			.then(setHomebrewSourcebooks);
 	};
 
-	const persistHiddenSourcebookIDs = async (ids: string[]) => {
-		await localforage
+	const persistHiddenSourcebookIDs = (ids: string[]) => {
+		return localforage
 			.setItem<string[]>('forgesteel-hidden-setting-ids', ids)
 			.then(setHiddenSourcebookIDs);
 	};
 
-	const persistOptions = async (options: Options) => {
-		await localforage
+	const persistOptions = (options: Options) => {
+		return localforage
 			.setItem<Options>('forgesteel-options', options)
 			.then(setOptions);
 	};
@@ -137,8 +140,10 @@ export const Main = (props: Props) => {
 	};
 
 	const deleteHero = (hero: Hero) => {
-		const copy = JSON.parse(JSON.stringify(heroes)) as Hero[];
-		persistHeroes(copy.filter(h => h.id !== hero.id)).then(() => navigation.goToHeroList());
+		navigation.goToHeroList();
+
+		const copy = Utils.copy(heroes);
+		persistHeroes(copy.filter(h => h.id !== hero.id));
 	};
 
 	const saveHero = (hero: Hero) => {
@@ -205,7 +210,9 @@ export const Main = (props: Props) => {
 	};
 
 	const deleteLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
-		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		navigation.goToLibraryList(kind);
+
+		const copy = Utils.copy(homebrewSourcebooks);
 		const sourcebook = copy.find(cs => cs.id === sourcebookID);
 		if (sourcebook) {
 			switch (kind) {
@@ -245,11 +252,11 @@ export const Main = (props: Props) => {
 			}
 		}
 		setDrawer(null);
-		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibraryList(kind));
+		persistHomebrewSourcebooks(copy);
 	};
 
 	const saveLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
-		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const copy = Utils.copy(homebrewSourcebooks);
 		const sourcebook = copy.find(cs => cs.id === sourcebookID);
 		if (sourcebook) {
 			switch (kind) {
@@ -299,7 +306,7 @@ export const Main = (props: Props) => {
 			group.monsters.forEach(m => m.id === Utils.guid());
 		}
 
-		const copy = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const copy = Utils.copy(homebrewSourcebooks);
 		let sourcebook = copy.find(cs => cs.id === sourcebookID);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
@@ -353,6 +360,8 @@ export const Main = (props: Props) => {
 				break;
 		}
 
+		SourcebookLogic.updateSourcebook(sourcebook);
+
 		setDrawer(null);
 		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibraryList(kind));
 	};
@@ -387,8 +396,8 @@ export const Main = (props: Props) => {
 				extension = 'domain';
 				break;
 			case 'item':
-				name = 'Ancestry';
-				extension = 'ancestry';
+				name = 'Item';
+				extension = 'item';
 				break;
 			case 'kit':
 				name = 'Kit';
@@ -412,7 +421,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createAncestry = (original: Ancestry | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -423,7 +432,7 @@ export const Main = (props: Props) => {
 
 		let ancestry: Ancestry;
 		if (original) {
-			ancestry = JSON.parse(JSON.stringify(original)) as Ancestry;
+			ancestry = Utils.copy(original);
 			ancestry.id = Utils.guid();
 		} else {
 			ancestry = FactoryLogic.createAncestry();
@@ -434,7 +443,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createCulture = (original: Culture | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -445,7 +454,7 @@ export const Main = (props: Props) => {
 
 		let culture: Culture;
 		if (original) {
-			culture = JSON.parse(JSON.stringify(original)) as Culture;
+			culture = Utils.copy(original);
 			culture.id = Utils.guid();
 		} else {
 			culture = FactoryLogic.createCulture();
@@ -456,7 +465,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createCareer = (original: Career | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -467,7 +476,7 @@ export const Main = (props: Props) => {
 
 		let career: Career;
 		if (original) {
-			career = JSON.parse(JSON.stringify(original)) as Career;
+			career = Utils.copy(original);
 			career.id = Utils.guid();
 		} else {
 			career = FactoryLogic.createCareer();
@@ -478,7 +487,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createClass = (original: HeroClass | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -489,7 +498,7 @@ export const Main = (props: Props) => {
 
 		let heroClass: HeroClass;
 		if (original) {
-			heroClass = JSON.parse(JSON.stringify(original)) as HeroClass;
+			heroClass = Utils.copy(original);
 			heroClass.id = Utils.guid();
 
 			// Make sure this has 10 levels
@@ -516,7 +525,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createComplication = (original: Complication | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -527,7 +536,7 @@ export const Main = (props: Props) => {
 
 		let complication: Complication;
 		if (original) {
-			complication = JSON.parse(JSON.stringify(original)) as Complication;
+			complication = Utils.copy(original);
 			complication.id = Utils.guid();
 		} else {
 			complication = FactoryLogic.createComplication();
@@ -538,7 +547,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createDomain = (original: Domain | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -549,7 +558,7 @@ export const Main = (props: Props) => {
 
 		let domain: Domain;
 		if (original) {
-			domain = JSON.parse(JSON.stringify(original)) as Domain;
+			domain = Utils.copy(original);
 			domain.id = Utils.guid();
 
 			// Make sure this has 10 levels
@@ -568,7 +577,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createKit = (original: Kit | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -579,7 +588,7 @@ export const Main = (props: Props) => {
 
 		let kit: Kit;
 		if (original) {
-			kit = JSON.parse(JSON.stringify(original)) as Kit;
+			kit = Utils.copy(original);
 			kit.id = Utils.guid();
 		} else {
 			kit = FactoryLogic.createKit();
@@ -590,7 +599,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createPerk = (original: Perk | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -601,7 +610,7 @@ export const Main = (props: Props) => {
 
 		let perk: Perk;
 		if (original) {
-			perk = JSON.parse(JSON.stringify(original)) as Perk;
+			perk = Utils.copy(original);
 			perk.id = Utils.guid();
 		} else {
 			perk = FactoryLogic.createPerk();
@@ -612,7 +621,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createTitle = (original: Title | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -623,7 +632,7 @@ export const Main = (props: Props) => {
 
 		let title: Title;
 		if (original) {
-			title = JSON.parse(JSON.stringify(original)) as Title;
+			title = Utils.copy(original);
 			title.id = Utils.guid();
 		} else {
 			title = FactoryLogic.createTitle();
@@ -634,7 +643,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createItem = (original: Item | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -645,7 +654,7 @@ export const Main = (props: Props) => {
 
 		let item: Item;
 		if (original) {
-			item = JSON.parse(JSON.stringify(original)) as Item;
+			item = Utils.copy(original);
 			item.id = Utils.guid();
 		} else {
 			item = FactoryLogic.createItem({
@@ -662,7 +671,7 @@ export const Main = (props: Props) => {
 	};
 
 	const createMonsterGroup = (original: MonsterGroup | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = JSON.parse(JSON.stringify(homebrewSourcebooks)) as Sourcebook[];
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -673,7 +682,7 @@ export const Main = (props: Props) => {
 
 		let monsterGroup: MonsterGroup;
 		if (original) {
-			monsterGroup = JSON.parse(JSON.stringify(original)) as MonsterGroup;
+			monsterGroup = Utils.copy(original);
 			monsterGroup.id = Utils.guid();
 			monsterGroup.monsters.forEach(m => m.id = Utils.guid());
 		} else {
@@ -689,36 +698,47 @@ export const Main = (props: Props) => {
 	//#region Playbook
 
 	const createPlaybookElement = (kind: PlaybookElementKind, original: Element | null) => {
-		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
+		const copy = Utils.copy(playbook);
 		let element: Element;
 
 		switch (kind) {
+			case 'adventure':
+				if (original) {
+					element = Utils.copy(original);
+					element.id = Utils.guid();
+				} else {
+					element = FactoryLogic.createAdventure();
+					(element as Adventure).party.count = options.heroCount;
+					(element as Adventure).party.level = options.heroLevel;
+				}
+				copy.adventures.push(element as Adventure);
+				break;
 			case 'encounter':
 				if (original) {
-					element = JSON.parse(JSON.stringify(original)) as Negotiation;
+					element = Utils.copy(original);
 					element.id = Utils.guid();
 				} else {
 					element = FactoryLogic.createEncounter();
 				}
 				copy.encounters.push(element as Encounter);
 				break;
-			case 'negotiation':
-				if (original) {
-					element = JSON.parse(JSON.stringify(original)) as Negotiation;
-					element.id = Utils.guid();
-				} else {
-					element = FactoryLogic.createNegotiation();
-				}
-				copy.negotiations.push(element as Negotiation);
-				break;
 			case 'montage':
 				if (original) {
-					element = JSON.parse(JSON.stringify(original)) as Montage;
+					element = Utils.copy(original);
 					element.id = Utils.guid();
 				} else {
 					element = FactoryLogic.createMontage();
 				}
 				copy.montages.push(element as Montage);
+				break;
+			case 'negotiation':
+				if (original) {
+					element = Utils.copy(original);
+					element.id = Utils.guid();
+				} else {
+					element = FactoryLogic.createNegotiation();
+				}
+				copy.negotiations.push(element as Negotiation);
 				break;
 		}
 
@@ -726,34 +746,42 @@ export const Main = (props: Props) => {
 	};
 
 	const deletePlaybookElement = (kind: PlaybookElementKind, element: Element) => {
-		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
+		navigation.goToPlaybookList(kind);
+
+		const copy = Utils.copy(playbook);
 		switch (kind) {
+			case 'adventure':
+				copy.adventures = copy.adventures.filter(x => x.id !== element.id);
+				break;
 			case 'encounter':
 				copy.encounters = copy.encounters.filter(x => x.id !== element.id);
-				break;
-			case 'negotiation':
-				copy.negotiations = copy.negotiations.filter(x => x.id !== element.id);
 				break;
 			case 'montage':
 				copy.montages = copy.montages.filter(x => x.id !== element.id);
 				break;
+			case 'negotiation':
+				copy.negotiations = copy.negotiations.filter(x => x.id !== element.id);
+				break;
 		}
 
 		setDrawer(null);
-		persistPlaybook(copy).then(() => navigation.goToPlaybookList(kind));
+		persistPlaybook(copy);
 	};
 
 	const savePlaybookElement = (kind: PlaybookElementKind, element: Element) => {
-		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
+		const copy = Utils.copy(playbook);
 		switch (kind) {
+			case 'adventure':
+				copy.adventures = copy.adventures.map(x => x.id === element.id ? element : x) as Adventure[];
+				break;
 			case 'encounter':
 				copy.encounters = copy.encounters.map(x => x.id === element.id ? element : x) as Encounter[];
 				break;
-			case 'negotiation':
-				copy.negotiations = copy.negotiations.map(x => x.id === element.id ? element : x) as Negotiation[];
-				break;
 			case 'montage':
 				copy.montages = copy.montages.map(x => x.id === element.id ? element : x) as Montage[];
+				break;
+			case 'negotiation':
+				copy.negotiations = copy.negotiations.map(x => x.id === element.id ? element : x) as Negotiation[];
 				break;
 		}
 
@@ -763,21 +791,27 @@ export const Main = (props: Props) => {
 	const importPlaybookElement = (kind: PlaybookElementKind, element: Element) => {
 		element.id = Utils.guid();
 
-		const copy = JSON.parse(JSON.stringify(playbook)) as Playbook;
+		const copy = Utils.copy(playbook);
 		switch (kind) {
-			case 'encounter':
-				copy.encounters = copy.encounters.map(x => x.id === element.id ? element : x) as Encounter[];
-				copy.encounters = Collections.sort<Encounter>(copy.encounters, item => item.name);
+			case 'adventure':
+				copy.adventures.push(element as Adventure);
+				copy.adventures = Collections.sort<Element>(copy.adventures, item => item.name) as Adventure[];
 				break;
-			case 'negotiation':
-				copy.negotiations = copy.negotiations.map(x => x.id === element.id ? element : x) as Negotiation[];
-				copy.negotiations = Collections.sort<Negotiation>(copy.negotiations, item => item.name);
+			case 'encounter':
+				copy.encounters.push(element as Encounter);
+				copy.encounters = Collections.sort<Element>(copy.encounters, item => item.name) as Encounter[];
 				break;
 			case 'montage':
-				copy.montages = copy.montages.map(x => x.id === element.id ? element : x) as Montage[];
-				copy.montages = Collections.sort<Montage>(copy.montages, item => item.name);
+				copy.montages.push(element as Montage);
+				copy.montages = Collections.sort<Element>(copy.montages, item => item.name) as Montage[];
+				break;
+			case 'negotiation':
+				copy.negotiations.push(element as Negotiation);
+				copy.negotiations = Collections.sort<Element>(copy.negotiations, item => item.name) as Negotiation[];
 				break;
 		}
+
+		PlaybookLogic.updatePlaybook(copy);
 
 		setDrawer(null);
 		persistPlaybook(copy).then(() => navigation.goToPlaybookList(kind));
@@ -798,7 +832,6 @@ export const Main = (props: Props) => {
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				playbook={playbook}
 				onClose={() => setDirectory(null)}
-				createHero={() => createHero()}
 			/>
 		);
 	};
@@ -857,7 +890,7 @@ export const Main = (props: Props) => {
 				ability={ability}
 				hero={hero}
 				onClose={() => setDrawer(null)}
-				updateHero={async hero => await persistHero(hero)}
+				updateHero={persistHero}
 			/>
 		);
 	};
@@ -869,13 +902,12 @@ export const Main = (props: Props) => {
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
 				startPage={page}
 				onClose={() => setDrawer(null)}
-				onChange={async hero => await persistHero(hero)}
-				onLevelUp={async () => {
+				onChange={persistHero}
+				onLevelUp={() => {
 					if (hero && hero.class) {
 						hero.class.level += 1;
-						await persistHero(hero);
-						navigation.goToHeroEdit(hero.id, 'class');
 						setDrawer(null);
+						persistHero(hero).then(() => navigation.goToHeroEdit(hero.id, 'class'));
 					}
 				}}
 			/>
@@ -900,8 +932,18 @@ export const Main = (props: Props) => {
 				homebrewSourcebooks={homebrewSourcebooks}
 				hiddenSourcebookIDs={hiddenSourcebookIDs}
 				onClose={() => setDrawer(null)}
-				onHomebrewSourcebookChange={async sourcebooks => await persistHomebrewSourcebooks(sourcebooks)}
-				onHiddenSourcebookIDsChange={async ids => persistHiddenSourcebookIDs(ids)}
+				onHomebrewSourcebookChange={persistHomebrewSourcebooks}
+				onHiddenSourcebookIDsChange={persistHiddenSourcebookIDs}
+			/>
+		);
+	};
+
+	const showMiniChecklist = (encounter: Encounter) => {
+		setDrawer(
+			<MiniChecklistModal
+				encounter={encounter}
+				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				onClose={() => setDrawer(null)}
 			/>
 		);
 	};
@@ -929,15 +971,16 @@ export const Main = (props: Props) => {
 							showDirectory={showDirectoryPane}
 							showAbout={showAbout}
 							showRoll={showRoll}
-							showHeroes={heroes.length === 0 ? createHero : navigation.goToHeroList}
+							showHeroes={heroes.length === 0 ? createHero : () => navigation.goToHeroList()}
 							showLibrary={() => navigation.goToLibraryList('ancestry')}
-							showPlaybook={() => navigation.goToPlaybookList('encounter')}
+							showPlaybook={() => navigation.goToPlaybookList('adventure')}
 						/>
 					}
 				/>
 				<Route path='hero'>
 					<Route
 						index={true}
+						path=':folder?'
 						element={
 							<HeroListPage
 								heroes={heroes}
@@ -957,7 +1000,7 @@ export const Main = (props: Props) => {
 								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								options={options}
-								setOptions={async options => await persistOptions(options)}
+								setOptions={persistOptions}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
@@ -984,7 +1027,7 @@ export const Main = (props: Props) => {
 						element={<Navigate to='ancestry' replace={true} />}
 					/>
 					<Route
-						path='edit/:heroID/:tab'
+						path='edit/:heroID/:page'
 						element={
 							<HeroEditPage
 								heroes={heroes}
@@ -1003,7 +1046,7 @@ export const Main = (props: Props) => {
 						element={<Navigate to='ancestry' replace={true} />}
 					/>
 					<Route
-						path=':tab'
+						path=':kind'
 						element={
 							<LibraryListPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
@@ -1012,7 +1055,7 @@ export const Main = (props: Props) => {
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
-								setOptions={async options => await persistOptions(options)}
+								setOptions={persistOptions}
 								showSourcebooks={showSourcebooks}
 								createElement={(kind, sourcebookID) => createLibraryElement(kind, sourcebookID, null)}
 								importElement={importLibraryElement}
@@ -1024,6 +1067,7 @@ export const Main = (props: Props) => {
 						element={
 							<LibraryViewPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								playbook={playbook}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
@@ -1038,11 +1082,13 @@ export const Main = (props: Props) => {
 						element={
 							<LibraryEditPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								options={options}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
 								showMonster={onSelectMonster}
 								saveChanges={saveLibraryElement}
+								setOptions={persistOptions}
 							/>
 						}
 					/>
@@ -1050,19 +1096,21 @@ export const Main = (props: Props) => {
 				<Route path='playbook'>
 					<Route
 						index={true}
-						element={<Navigate to='encounter' replace={true} />}
+						element={<Navigate to='adventure' replace={true} />}
 					/>
 					<Route
-						path=':tab'
+						path=':kind'
 						element={
 							<PlaybookListPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								options={options}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
 								createElement={createPlaybookElement}
 								importElement={importPlaybookElement}
+								setOptions={persistOptions}
 							/>
 						}
 					/>
@@ -1072,11 +1120,14 @@ export const Main = (props: Props) => {
 							<PlaybookViewPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								options={options}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
+								showMiniChecklist={showMiniChecklist}
 								export={exportPlaybookElement}
 								delete={deletePlaybookElement}
+								setOptions={persistOptions}
 							/>
 						}
 					/>
@@ -1086,11 +1137,13 @@ export const Main = (props: Props) => {
 							<PlaybookEditPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								options={options}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
 								showMonster={onSelectMonster}
 								saveChanges={savePlaybookElement}
+								setOptions={persistOptions}
 							/>
 						}
 					/>

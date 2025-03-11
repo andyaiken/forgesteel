@@ -1,37 +1,40 @@
 # Development Plans
 
+### Hero Sheet
+
+* Make sure multiple melee / ranged damage bonuses are handled correctly
+
 ### Hero Builder
 
-* Auto-create heroes
 * Revenants should have 3 ancestry points if small
+* Auto-create heroes
 
 ### Library
 
 * It should be possible to create a homebrew subclass / class ability / monster individually
-* Animals
 * Rivals
 * Imbued items
 
+### Playbook
+
+* Add maps
+  * Tactical
+  * Regional
+
 ### Monster Builder
 
-* Allow the user to manually add/remove from the set of similar monsters
 * Auto-create monsters
-* Create monsters by splicing other monsters together
+
+### Adventure Builder
+
+* Allow subplots
 
 ### Encounter Builder
 
-* Warnings:
-  * Monsters max hero level +2
-  * Max 6 stat blocks
-* Determine whether the encounter builder needs to take account of retainers
-* Use encounter templates in encounter editor
+* Add victory conditions
+* Add dynamic terrain
+* Use encounter templates
 * Auto-create encounters
-
-### Montage Builder
-
-* Add montages to the playbook
-* Add a montage builder
-* Add sample montages
 
 ### Director Tools
 

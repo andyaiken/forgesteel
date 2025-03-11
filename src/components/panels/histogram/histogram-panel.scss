@@ -8,16 +8,22 @@
 		flex-direction: column;
 		padding: 5px 0;
 		border-radius: 5px;
+		overflow: hidden;
+
+		&.selected {
+			background-color: rgba(5, 5, 5, 0.06);
+			font-weight: 600;
+		}
 
 		.bar {
 			margin: 0 3px;
 			background-color: rgb(180, 220, 255);
 			border: 1px solid rgb(64, 150, 255);
-			border-radius: 5px;
+			border-radius: 3px 3px 0 0;
 		}
 
 		.label {
-			margin-top: 5px;
+			margin-top: -1px;
 			border-top: 1px solid rgba(5, 5, 5, 0.06);
 			padding-top: 5px;
 			font-size: 10px;

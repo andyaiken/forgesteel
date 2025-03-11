@@ -1,4 +1,5 @@
 import { Button, Space } from 'antd';
+import { CloseOutlined } from '@ant-design/icons';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { ConditionType } from '../../../enums/condition-type';
 import { HeaderText } from '../../controls/header-text/header-text';
@@ -31,7 +32,7 @@ export const ConditionSelectModal = (props: Props) => {
 			<Modal
 				toolbar={
 					<>
-						<Button onClick={props.onClose}>Cancel</Button>
+						<Button icon={<CloseOutlined />} onClick={props.onClose}>Cancel</Button>
 					</>
 				}
 				content={

@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureMalice } from './feature';
+import { Feature, FeatureAbility, FeatureAddOn, FeatureMalice } from './feature';
 import { Characteristic } from '../enums/characteristic';
 import { Element } from './element';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
@@ -39,10 +39,17 @@ export interface Monster extends Element {
 			feature: Feature;
 		}[];
 	} | null;
+	state: {
+		staminaDamage: number;
+		staminaTemp: number;
+		conditions: string[];
+		reactionUsed: boolean;
+	}
 };
 
 export interface MonsterGroup extends Element {
 	information: Element[];
 	malice: (FeatureMalice | FeatureAbility)[];
 	monsters: Monster[];
+	addOns: FeatureAddOn[];
 };

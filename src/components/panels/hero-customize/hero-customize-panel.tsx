@@ -32,77 +32,77 @@ interface Props {
 
 export const HeroCustomizePanel = (props: Props) => {
 	const setValue = (feature: Feature, value: number) => {
-		const copy = JSON.parse(JSON.stringify(feature)) as FeatureAncestryFeatureChoice;
+		const copy = Utils.copy(feature) as FeatureAncestryFeatureChoice;
 		copy.data.value = value;
 		copy.data.selected = null;
 		props.setFeature(feature.id, copy);
 	};
 
 	const setCharacteristic = (feature: Feature, value: Characteristic) => {
-		const copy = JSON.parse(JSON.stringify(feature)) as FeatureCharacteristicBonus;
+		const copy = Utils.copy(feature) as FeatureCharacteristicBonus;
 		copy.data.characteristic = value;
 		copy.name = `${copy.data.characteristic} + ${copy.data.value}`;
 		props.setFeature(feature.id, copy);
 	};
 
 	const setCharacteristicBonus = (feature: Feature, value: number) => {
-		const copy = JSON.parse(JSON.stringify(feature)) as FeatureCharacteristicBonus;
+		const copy = Utils.copy(feature) as FeatureCharacteristicBonus;
 		copy.data.value = value;
 		copy.name = `${copy.data.characteristic} + ${copy.data.value}`;
 		props.setFeature(feature.id, copy);
 	};
 
 	const setValueField = (feature: Feature, value: FeatureField) => {
-		const copy = JSON.parse(JSON.stringify(feature)) as FeatureBonus;
+		const copy = Utils.copy(feature) as FeatureBonus;
 		copy.data.field = value;
 		copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
 		props.setFeature(feature.id, copy);
 	};
 
 	const setValueBonus = (feature: Feature, value: number) => {
-		const copy = JSON.parse(JSON.stringify(feature)) as FeatureBonus;
+		const copy = Utils.copy(feature) as FeatureBonus;
 		copy.data.value = value;
 		copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
 		props.setFeature(feature.id, copy);
 	};
 
 	const setValuePerLevel = (feature: Feature, value: number) => {
-		const copy = JSON.parse(JSON.stringify(feature)) as FeatureBonus;
+		const copy = Utils.copy(feature) as FeatureBonus;
 		copy.data.valuePerLevel = value;
 		copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
 		props.setFeature(feature.id, copy);
 	};
 
 	const setValuePerEchelon = (feature: Feature, value: number) => {
-		const copy = JSON.parse(JSON.stringify(feature)) as FeatureBonus;
+		const copy = Utils.copy(feature) as FeatureBonus;
 		copy.data.valuePerEchelon = value;
 		copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
 		props.setFeature(feature.id, copy);
 	};
 
 	const setValueCharacteristics = (feature: Feature, value: Characteristic[]) => {
-		const copy = JSON.parse(JSON.stringify(feature)) as FeatureBonus;
+		const copy = Utils.copy(feature) as FeatureBonus;
 		copy.data.valueCharacteristics = value;
 		copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
 		props.setFeature(feature.id, copy);
 	};
 
 	const setCost = (feature: Feature, value: number | 'signature') => {
-		const copy = JSON.parse(JSON.stringify(feature)) as FeatureClassAbility;
+		const copy = Utils.copy(feature) as FeatureClassAbility;
 		copy.data.cost = value;
 		copy.data.selectedIDs = [];
 		props.setFeature(feature.id, copy);
 	};
 
 	const setPerkLists = (feature: Feature, value: PerkList[]) => {
-		const copy = JSON.parse(JSON.stringify(feature)) as FeaturePerk;
+		const copy = Utils.copy(feature) as FeaturePerk;
 		copy.data.lists = value;
 		copy.data.selected = [];
 		props.setFeature(feature.id, copy);
 	};
 
 	const setSkillLists = (feature: Feature, value: SkillList[]) => {
-		const copy = JSON.parse(JSON.stringify(feature)) as FeatureSkillChoice;
+		const copy = Utils.copy(feature) as FeatureSkillChoice;
 		copy.data.listOptions = value;
 		copy.data.selected = [];
 		props.setFeature(feature.id, copy);
@@ -240,6 +240,7 @@ export const HeroCustomizePanel = (props: Props) => {
 						{ key: 'characteristic-bonus', label: <div className='ds-text centered-text'>Characteristic Bonus</div> },
 						{ key: 'class-ability', label: <div className='ds-text centered-text'>Class Ability</div> },
 						{ key: 'companion', label: <div className='ds-text centered-text'>Companion</div> },
+						{ key: 'kit', label: <div className='ds-text centered-text'>Kit</div> },
 						{ key: 'language', label: <div className='ds-text centered-text'>Language</div> },
 						{ key: 'mount', label: <div className='ds-text centered-text'>Mount</div> },
 						{ key: 'perk', label: <div className='ds-text centered-text'>Perk</div> },
@@ -277,6 +278,11 @@ export const HeroCustomizePanel = (props: Props) => {
 								feature = FactoryLogic.feature.createCompanion({
 									id: Utils.guid(),
 									type: 'companion'
+								});
+								break;
+							case 'kit':
+								feature = FactoryLogic.feature.createKitChoice({
+									id: Utils.guid()
 								});
 								break;
 							case 'language':

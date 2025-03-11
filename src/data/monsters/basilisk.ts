@@ -273,5 +273,6 @@ A target that ends two consecutive turns restrained by this ability is petrified
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

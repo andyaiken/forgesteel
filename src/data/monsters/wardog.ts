@@ -861,8 +861,8 @@ Most war dogs speak Caelian and one Vaslorian human language.
 				})
 			]
 		})
-
-	]
+	],
+	addOns: []
 };
 
 

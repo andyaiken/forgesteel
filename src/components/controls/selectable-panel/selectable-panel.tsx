@@ -7,8 +7,11 @@ interface Props {
 	children: ReactNode;
 	showShadow?: boolean;
 	style?: CSSProperties;
+	action?: {
+		label: string;
+		onClick: () => void;
+	};
 	onSelect?: () => void;
-	onUnselect?: () => void;
 };
 
 export const SelectablePanel = (props: Props) => {
@@ -24,7 +27,7 @@ export const SelectablePanel = (props: Props) => {
 		return (
 			<div className={className} style={props.style} onClick={props.onSelect}>
 				{props.children}
-				{props.onUnselect ? <Button className='unselect-button' onClick={props.onUnselect}>Unselect</Button> : null}
+				{props.action ? <Button className='unselect-button' onClick={e => { e.stopPropagation(); props.action!.onClick(); }}>{props.action.label}</Button> : null}
 			</div>
 		);
 	} catch (ex) {

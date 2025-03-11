@@ -155,6 +155,7 @@ export const RulesModal = (props: Props) => {
 				toolbar={
 					<div style={{ width: '100%', textAlign: 'center' }}>
 						<Segmented
+							name='tabs'
 							options={[ 'Conditions', 'Skills', 'Languages', 'Abilities' ]}
 							value={page}
 							onChange={setPage}

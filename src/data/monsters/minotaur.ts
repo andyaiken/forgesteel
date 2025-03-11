@@ -446,5 +446,6 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

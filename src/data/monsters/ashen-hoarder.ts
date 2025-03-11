@@ -233,5 +233,6 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

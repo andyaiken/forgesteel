@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { Montage, MontageChallenge, MontageSection } from '../models/montage';
@@ -8,6 +8,7 @@ import { Project, ProjectProgress } from '../models/project';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
+import { Adventure } from '../models/adventure';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
 import { Characteristic } from '../enums/characteristic';
@@ -16,6 +17,7 @@ import { Culture } from '../models/culture';
 import { DamageModifier } from '../models/damage-modifier';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Domain } from '../models/domain';
+import { Element } from '../models/element';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Format } from '../utils/format';
@@ -35,6 +37,7 @@ import { Negotiation } from '../models/negotiation';
 import { Perk } from '../models/perk';
 import { PerkList } from '../enums/perk-list';
 import { Playbook } from '../models/playbook';
+import { Plot } from '../models/plot';
 import { PowerRoll } from '../models/power-roll';
 import { Size } from '../models/size';
 import { SkillList } from '../enums/skill-list';
@@ -44,10 +47,19 @@ import { Title } from '../models/title';
 import { Utils } from '../utils/utils';
 
 export class FactoryLogic {
+	static createElement = (name?: string): Element => {
+		return {
+			id: Utils.guid(),
+			name: name || '',
+			description: ''
+		};
+	};
+
 	static createHero = (sourcebookIDs: string[]): Hero => {
 		return {
 			id: Utils.guid(),
 			name: '',
+			folder: '',
 			settingIDs: sourcebookIDs,
 			ancestry: null,
 			culture: null,
@@ -107,9 +119,10 @@ export class FactoryLogic {
 
 	static createPlaybook = (): Playbook => {
 		return {
+			adventures: [],
 			encounters: [],
-			negotiations: [],
-			montages: []
+			montages: [],
+			negotiations: []
 		};
 	};
 
@@ -318,6 +331,7 @@ export class FactoryLogic {
 			description: '',
 			information: [],
 			malice: [],
+			addOns: [],
 			monsters: []
 		};
 	};
@@ -345,7 +359,7 @@ export class FactoryLogic {
 			level4: data.retainer.level4,
 			level7: data.retainer.level7,
 			level10: data.retainer.level10,
-			featuresByLevel: MonsterLogic.getRetainerAdvancementFeatures(data.level, data.retainer.level4, data.retainer.level7, data.retainer.level10)
+			featuresByLevel: MonsterLogic.getRetainerAdvancementFeatures(data.level, data.role.type, data.retainer.level4, data.retainer.level7, data.retainer.level10)
 		} : null;
 		return {
 			id: data.id || Utils.guid(),
@@ -363,7 +377,13 @@ export class FactoryLogic {
 			characteristics: data.characteristics || MonsterLogic.createCharacteristics(0, 0, 0, 0, 0),
 			withCaptain: data.withCaptain || '',
 			features: data.features || [],
-			retainer: retainer
+			retainer: retainer,
+			state: {
+				staminaDamage: 0,
+				staminaTemp: 0,
+				conditions: [],
+				reactionUsed: false
+			}
 		};
 	};
 
@@ -394,6 +414,7 @@ export class FactoryLogic {
 			roles: [],
 			organizations: [],
 			level: [ minLevel, maxLevel ],
+			size: [ 1, 3 ],
 			ev: [ 0, 120 ]
 		};
 	};
@@ -403,7 +424,8 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
-			groups: []
+			groups: [],
+			malice: 0
 		};
 	};
 
@@ -414,11 +436,16 @@ export class FactoryLogic {
 		};
 	};
 
-	static createEncounterSlot = (monsterID: string): EncounterSlot => {
+	static createEncounterSlot = (monsterID: string, monsterGroupID: string): EncounterSlot => {
 		return {
 			id: Utils.guid(),
 			monsterID: monsterID,
-			count: 1
+			monsterGroupID: monsterGroupID,
+			count: 1,
+			customization: {
+				addOnIDs: []
+			},
+			monsters: []
 		};
 	};
 
@@ -431,7 +458,11 @@ export class FactoryLogic {
 			interest: 1,
 			patience: 1,
 			motivations: [],
-			pitfalls: []
+			pitfalls: [],
+			state: {
+				deltaInterest: 0,
+				deltaPatience: 0
+			}
 		};
 	};
 
@@ -479,7 +510,39 @@ export class FactoryLogic {
 			abilities: data.abilities || '',
 			uses: data.uses ?? 1,
 			successes: 0,
-			failures: 0
+			failures: 0,
+			state: {
+				successes: 0,
+				failures: 0
+			}
+		};
+	};
+
+	static createAdventure = (): Adventure => {
+		return {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			party: {
+				count: 4,
+				level: 1
+			},
+			introduction: [
+				FactoryLogic.createElement('Introduction'),
+				FactoryLogic.createElement('Hooks')
+			],
+			plot: FactoryLogic.createAdventurePlot()
+		};
+	};
+
+	static createAdventurePlot = (name?: string): Plot => {
+		return {
+			id: Utils.guid(),
+			name: name || '',
+			description: '',
+			content: [],
+			plots: [],
+			links: []
 		};
 	};
 
@@ -759,6 +822,18 @@ export class FactoryLogic {
 				data: {
 					keywords: data.keywords,
 					modifier: data.modifier
+				}
+			};
+		},
+		createAddOn: (data: { id: string, name: string, description: string, category: FeatureAddOnType, cost?: number }): FeatureAddOn => {
+			return {
+				id: data.id,
+				name: data.name,
+				description: data.description,
+				type: FeatureType.AddOn,
+				data: {
+					category: data.category,
+					cost: data.cost || 1
 				}
 			};
 		},

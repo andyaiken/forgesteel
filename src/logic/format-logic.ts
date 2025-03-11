@@ -1,4 +1,5 @@
 import { DamageModifier, Modifier } from '../models/damage-modifier';
+import { Plot, PlotLink } from '../models/plot';
 import { AbilityType } from '../models/ability';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Size } from '../models/size';
@@ -55,5 +56,18 @@ export class FormatLogic {
 		}
 
 		return sections.join(' ') || '+0';
+	};
+
+	static getPlotLinkTitle = (link: PlotLink, parentPlot: Plot) => {
+		let plotPointName = 'Link';
+
+		if (parentPlot) {
+			const plot = parentPlot.plots.find(p => p.id === link.plotID);
+			if (plot && plot.name) {
+				plotPointName = plot.name;
+			}
+		}
+
+		return link.label ? `${link.label}: ${plotPointName}` : plotPointName;
 	};
 }

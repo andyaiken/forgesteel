@@ -852,5 +852,6 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

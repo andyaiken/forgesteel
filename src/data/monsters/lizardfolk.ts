@@ -487,5 +487,6 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

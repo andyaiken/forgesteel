@@ -923,5 +923,6 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

@@ -70,6 +70,25 @@ export const MonsterGroupPanel = (props: Props) => {
 						</div>
 						: null
 				}
+				{
+					(props.mode === PanelMode.Full) && (props.monsterGroup.monsters.length > 0) && (props.monsterGroup.addOns.length > 0) ?
+						<Divider />
+						: null
+				}
+				{
+					(props.mode === PanelMode.Full) && (props.monsterGroup.addOns.length > 0) ?
+						<div className='add-ons'>
+							<HeaderText level={1}>Add-Ons</HeaderText>
+							{
+								props.monsterGroup.addOns.map(a =>
+									<SelectablePanel key={a.id}>
+										<FeaturePanel feature={a} mode={PanelMode.Full} />
+									</SelectablePanel>
+								)
+							}
+						</div>
+						: null
+				}
 			</div>
 		);
 	} catch (ex) {

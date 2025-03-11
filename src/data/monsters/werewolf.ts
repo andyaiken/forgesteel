@@ -213,5 +213,6 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

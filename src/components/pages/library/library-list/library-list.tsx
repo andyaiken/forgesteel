@@ -1,5 +1,5 @@
 import { Alert, Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
-import { DownOutlined, DownloadOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
+import { DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
 import { HistogramPanel, HistogramTextPanel } from '../../../panels/histogram/histogram-panel';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
@@ -19,7 +19,6 @@ import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel'
 import { Element } from '../../../../models/element';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
-import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
@@ -32,16 +31,16 @@ import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
 import { Options } from '../../../../models/options';
+import { OptionsPanel } from '../../../panels/options/options-panel';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
-import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { useNavigation } from '../../../../hooks/use-navigation';
-import { useSourcebookTabKey } from '../../../../hooks/use-sourcebook-tab-key';
+import { useParams } from 'react-router';
 import { useState } from 'react';
 
 import './library-list.scss';
@@ -61,30 +60,24 @@ interface Props {
 
 export const LibraryListPage = (props: Props) => {
 	const navigation = useNavigation();
-	const [ tabKey, setTabKey ] = useSourcebookTabKey();
-	const [ previousTab, setPreviousTab ] = useState(tabKey);
-	const [ element, setElement ] = useState<SourcebookElementKind>(tabKey);
+	const { kind } = useParams<{ kind: SourcebookElementKind }>();
+	const [ previousTab, setPreviousTab ] = useState<SourcebookElementKind | undefined>(kind);
+	const [ currentTab, setCurrentTab ] = useState<SourcebookElementKind>(kind ?? 'ancestry');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? props.sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter(1, 10));
 
-	if (tabKey !== previousTab) {
-		setElement(tabKey);
-		setPreviousTab(tabKey);
+	if (kind !== previousTab) {
+		setCurrentTab(kind ?? 'ancestry');
+		setPreviousTab(kind);
 	}
-
-	const setShowMonstersInGroups = (value: boolean) => {
-		const copy = JSON.parse(JSON.stringify(props.options)) as Options;
-		copy.showMonstersInGroups = value;
-		props.setOptions(copy);
-	};
 
 	const getSourcebooks = () => {
 		return props.sourcebooks.filter(cs => !props.hiddenSourcebookIDs.includes(cs.id));
 	};
 
 	const createElement = () => {
-		props.createElement(element, sourcebookID);
+		props.createElement(currentTab, sourcebookID);
 	};
 
 	const getAncestries = () => {
@@ -674,11 +667,6 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	try {
-		const elementOptions = [ 'ancestry', 'culture', 'career', 'class', 'complication', 'domain', 'kit', 'perk', 'title', 'item', 'monster-group' ]
-			.map(e => ({
-				value: e,
-				label: Format.capitalize(e, '-')
-			}));
 		const sourcebookOptions = props.sourcebooks.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
 
 		const ancestries = getAncestries();
@@ -696,7 +684,7 @@ export const LibraryListPage = (props: Props) => {
 
 		return (
 			<div className='library-list-page'>
-				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader subheader='Library' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					<Input
 						placeholder='Search'
 						allowClear={true}
@@ -704,22 +692,12 @@ export const LibraryListPage = (props: Props) => {
 						suffix={<SearchOutlined />}
 						onChange={e => setSearchTerm(e.target.value)}
 					/>
+					<div className='divider' />
 					<Popover
 						trigger='click'
 						placement='bottom'
 						content={(
 							<div style={{ display: 'flex', flexDirection: 'column' }}>
-								<div>
-									<div className='ds-text'>What do you want to add?</div>
-									<Select
-										style={{ width: '100%' }}
-										placeholder='Select'
-										options={elementOptions}
-										optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-										value={element}
-										onChange={setElement}
-									/>
-								</div>
 								{
 									sourcebookOptions.length > 1 ?
 										<div>
@@ -735,20 +713,20 @@ export const LibraryListPage = (props: Props) => {
 										</div>
 										: null
 								}
-								<Divider />
+								{sourcebookOptions.length > 1 ? <Divider /> : null}
 								<Space>
-									<Button block={true} icon={<PlusCircleOutlined />} onClick={createElement}>Create</Button>
+									<Button type='primary' block={true} icon={<PlusOutlined />} onClick={createElement}>Create</Button>
 									<div className='ds-text'>or</div>
 									<Upload
 										style={{ width: '100%' }}
-										accept={`.drawsteel-${element.toLowerCase()}`}
+										accept={`.drawsteel-${currentTab.toLowerCase()}`}
 										showUploadList={false}
 										beforeUpload={file => {
 											file
 												.text()
 												.then(json => {
 													const e = (JSON.parse(json) as Element);
-													props.importElement(element, sourcebookID, e);
+													props.importElement(currentTab, sourcebookID, e);
 												});
 											return false;
 										}}
@@ -759,32 +737,31 @@ export const LibraryListPage = (props: Props) => {
 							</div>
 						)}
 					>
-						<Button>
-							Create
-							<DownOutlined />
+						<Button icon={<PlusOutlined />}>
+							Add
 						</Button>
 					</Popover>
+					<div className='divider' />
+					<Button onClick={props.showSourcebooks}>
+						Sourcebooks
+					</Button>
 					<Popover
 						trigger='click'
 						placement='bottom'
 						content={(
 							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Toggle label='Show monsters in groups' value={props.options.showMonstersInGroups} onChange={setShowMonstersInGroups} />
+								<OptionsPanel mode='library' options={props.options} setOptions={props.setOptions} />
 							</div>
 						)}
 					>
-						<Button>
+						<Button icon={<SettingOutlined />}>
 							Options
-							<DownOutlined />
 						</Button>
 					</Popover>
-					<Button onClick={props.showSourcebooks}>
-						Sourcebooks
-					</Button>
 				</AppHeader>
 				<div className='library-list-page-content'>
 					<Tabs
-						activeKey={tabKey}
+						activeKey={currentTab}
 						items={[
 							{
 								key: 'ancestry',
@@ -795,16 +772,6 @@ export const LibraryListPage = (props: Props) => {
 									</div>
 								),
 								children: getAncestriesSection(ancestries)
-							},
-							{
-								key: 'culture',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Cultures</div>
-										<div className='section-count'>{cultures.length}</div>
-									</div>
-								),
-								children: getCulturesSection(cultures)
 							},
 							{
 								key: 'career',
@@ -837,14 +804,14 @@ export const LibraryListPage = (props: Props) => {
 								children: getComplicationsSection(complications)
 							},
 							{
-								key: 'kit',
+								key: 'culture',
 								label: (
 									<div className='section-header'>
-										<div className='section-title'>Kits</div>
-										<div className='section-count'>{kits.length}</div>
+										<div className='section-title'>Cultures</div>
+										<div className='section-count'>{cultures.length}</div>
 									</div>
 								),
-								children: getKitsSection(kits)
+								children: getCulturesSection(cultures)
 							},
 							{
 								key: 'domain',
@@ -855,6 +822,36 @@ export const LibraryListPage = (props: Props) => {
 									</div>
 								),
 								children: getDomainsSection(domains)
+							},
+							{
+								key: 'item',
+								label: (
+									<div className='section-header'>
+										<div className='section-title'>Items</div>
+										<div className='section-count'>{items.length}</div>
+									</div>
+								),
+								children: getItemsSection(items)
+							},
+							{
+								key: 'kit',
+								label: (
+									<div className='section-header'>
+										<div className='section-title'>Kits</div>
+										<div className='section-count'>{kits.length}</div>
+									</div>
+								),
+								children: getKitsSection(kits)
+							},
+							{
+								key: 'monster-group',
+								label: (
+									<div className='section-header'>
+										<div className='section-title'>Monsters</div>
+										<div className='section-count'>{props.options.showMonstersInGroups ? monsterGroups.length : monsters.length}</div>
+									</div>
+								),
+								children: props.options.showMonstersInGroups ? getMonsterGroupsSection(monsterGroups) : getMonstersSection(monsters)
 							},
 							{
 								key: 'perk',
@@ -875,29 +872,9 @@ export const LibraryListPage = (props: Props) => {
 									</div>
 								),
 								children: getTitlesSection(titles)
-							},
-							{
-								key: 'item',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Items</div>
-										<div className='section-count'>{items.length}</div>
-									</div>
-								),
-								children: getItemsSection(items)
-							},
-							{
-								key: 'monster-group',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>{props.options.showMonstersInGroups ? 'Monster Groups' : 'Monsters'}</div>
-										<div className='section-count'>{props.options.showMonstersInGroups ? monsterGroups.length : monsters.length}</div>
-									</div>
-								),
-								children: props.options.showMonstersInGroups ? getMonsterGroupsSection(monsterGroups) : getMonstersSection(monsters)
 							}
 						]}
-						onChange={tabKey => setTabKey(tabKey as SourcebookElementKind)}
+						onChange={k => navigation.goToLibraryList(k as SourcebookElementKind)}
 					/>
 				</div>
 			</div>

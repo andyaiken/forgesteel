@@ -853,5 +853,6 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

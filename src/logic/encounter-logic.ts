@@ -1,9 +1,11 @@
+import { Encounter, EncounterGroup } from '../models/encounter';
 import { Collections } from '../utils/collections';
-import { Encounter } from '../models/encounter';
 import { EncounterDifficulty } from '../enums/encounter-difficulty';
 import { MonsterLogic } from './monster-logic';
+import { Options } from '../models/options';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookLogic } from './sourcebook-logic';
+import { Utils } from '../utils/utils';
 
 export class EncounterLogic {
 	static getMonsterCount = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
@@ -26,32 +28,39 @@ export class EncounterLogic {
 	};
 
 	static getStrength = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
-		return Collections.sum(encounter.groups, group => {
-			return Collections.sum(group.slots, slot => {
-				const monster = SourcebookLogic.getMonster(sourcebooks, slot.monsterID);
-				return monster ? monster.encounterValue * slot.count : 0;
-			});
+		return Collections.sum(encounter.groups, g => EncounterLogic.getGroupStrength(g, sourcebooks));
+	};
+
+	static getGroupStrength = (group: EncounterGroup, sourcebooks: Sourcebook[]) => {
+		return Collections.sum(group.slots, slot => {
+			const monster = SourcebookLogic.getMonster(sourcebooks, slot.monsterID);
+
+			const group = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
+			const addOns = group ? group.addOns.filter(a => slot.customization.addOnIDs.includes(a.id)) : [];
+			const addOnCost = addOns.length > 4 ? (addOns.length - 4) * 2 : 0;
+
+			return monster ? (monster.encounterValue + addOnCost) * slot.count : 0;
 		});
 	};
 
-	static getBudgets = (heroCount: number, heroLevel: number, heroVictories: number) => {
-		const effectiveHeroCount = heroCount + Math.floor(heroVictories / 2);
+	static getHeroValue = (level: number) => {
+		return 4 + (2 * level);
+	};
 
-		const getBudget = (heroCount: number, heroLevel: number) => {
-			const heroWorth = 4 + (2 * heroLevel);
-			return heroCount * heroWorth;
-		};
+	static getBudgets = (options: Options) => {
+		const effectiveHeroCount = options.heroCount + Math.floor(options.heroVictories / 2);
+		const heroValue = EncounterLogic.getHeroValue(options.heroLevel);
 
 		return {
-			maxTrivial: getBudget(effectiveHeroCount - 1, heroLevel),
-			maxEasy: getBudget(effectiveHeroCount, heroLevel),
-			maxStandard: getBudget(effectiveHeroCount + 1, heroLevel),
-			maxHard: getBudget(effectiveHeroCount + 3, heroLevel)
+			maxTrivial: (effectiveHeroCount - 1) * heroValue,
+			maxEasy: effectiveHeroCount * heroValue,
+			maxStandard: (effectiveHeroCount + 1) * heroValue,
+			maxHard: (effectiveHeroCount + 3) * heroValue
 		};
 	};
 
-	static getDifficulty = (encounterStrength: number, heroCount: number, heroLevel: number, heroVictories: number) => {
-		const budgets = EncounterLogic.getBudgets(heroCount, heroLevel, heroVictories);
+	static getDifficulty = (encounterStrength: number, options: Options) => {
+		const budgets = EncounterLogic.getBudgets(options);
 
 		if (budgets.maxHard > 40) {
 			if (encounterStrength > budgets.maxHard * 500) {
@@ -111,12 +120,58 @@ export class EncounterLogic {
 		return 2;
 	};
 
-	static getMonsterIDs = (encounter: Encounter) => {
-		return Collections.distinct(encounter.groups.flatMap(g => g.slots.flatMap(s => s.monsterID)), item => item);
+	static getMonsterData = (encounter: Encounter) => {
+		const list: {
+			key: string;
+			monsterID: string;
+			monsterGroupID: string;
+			addOnIDs: string[];
+		}[] = [];
+
+		encounter.groups.flatMap(g => g.slots).forEach(s => {
+			const key = s.monsterID + s.monsterGroupID + s.customization.addOnIDs.join('');
+			const item = list.find(i => i.key === key);
+			if (!item) {
+				list.push({
+					key: key,
+					monsterID: s.monsterID,
+					monsterGroupID: s.monsterGroupID,
+					addOnIDs: [ ... s.customization.addOnIDs ]
+				});
+			}
+		});
+
+		return list;
 	};
 
 	static getMonsterGroups = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
-		const groups = this.getMonsterIDs(encounter).map(id => SourcebookLogic.getMonsterGroup(sourcebooks, id)).filter(group => !!group);
+		const groups = this.getMonsterData(encounter).map(data => SourcebookLogic.getMonsterGroup(sourcebooks, data.monsterID)).filter(group => !!group);
 		return Collections.distinct(groups, item => item.id);
+	};
+
+	static getCustomizedMonster = (monsterID: string, addOnIDs: string[], sourcebooks: Sourcebook[]) => {
+		const monster = SourcebookLogic.getMonster(sourcebooks, monsterID);
+		const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, monsterID);
+
+		if (monster && monsterGroup) {
+			const copy = Utils.copy(monster);
+			copy.id = Utils.guid();
+
+			let points = 0;
+			addOnIDs.forEach(id => {
+				const addOn = monsterGroup.addOns.find(a => a.id === id);
+				if (addOn) {
+					copy.features.push(addOn);
+					points += addOn.data.cost;
+				}
+			});
+			if (points > 4) {
+				copy.encounterValue += (points - 4) * 2;
+			}
+
+			return copy;
+		}
+
+		return null;
 	};
 }

@@ -453,9 +453,9 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
-				tier1: '3 + I corruption damage; P < weak, the target takes a bane on their next power roll',
-				tier2: '5 + I corruption damage; P < average, the target takes a bane on their next power roll',
-				tier3: '8 + I corruption damage; P < strong, the target takes a bane on their next power roll'
+				tier1: '3 + I corruption damage; P < [weak], the target takes a bane on their next power roll',
+				tier2: '5 + I corruption damage; P < [average], the target takes a bane on their next power roll',
+				tier3: '8 + I corruption damage; P < [strong], the target takes a bane on their next power roll'
 			})
 		}),
 		FactoryLogic.createAbility({
@@ -497,9 +497,9 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			cost: 3,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
-				tier1: '3 + I holy damage; A < weak, prone',
-				tier2: '6 + I holy damage; A < average, prone',
-				tier3: '9 + I holy damage; A < strong, prone and can’t stand (save ends)'
+				tier1: '3 + I holy damage; A < [weak], prone',
+				tier2: '6 + I holy damage; A < [average], prone',
+				tier3: '9 + I holy damage; A < [strong], prone and can’t stand (save ends)'
 			})
 		}),
 		FactoryLogic.createAbility({
@@ -530,9 +530,9 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			cost: 5,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
-				tier1: '3 + I corruption damage; M < weak, damage weakness 5 (save ends)',
-				tier2: '6 + I corruption damage; M < average, damage weakness 5 (save ends)',
-				tier3: '9 + I corruption damage; M < strong, damage weakness 5 (save ends)'
+				tier1: '3 + I corruption damage; M < [weak], damage weakness 5 (save ends)',
+				tier2: '6 + I corruption damage; M < [average], damage weakness 5 (save ends)',
+				tier3: '9 + I corruption damage; M < [strong], damage weakness 5 (save ends)'
 			})
 		}),
 		FactoryLogic.createAbility({
@@ -546,9 +546,9 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			cost: 5,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
-				tier1: '6 + I holy damage; I < weak, frightened (save ends)',
-				tier2: '9 + I holy damage; I < average, frightened (save ends)',
-				tier3: '13 + I holy damage; I < strong, frightened (save ends)'
+				tier1: '6 + I holy damage; I < [weak], frightened (save ends)',
+				tier2: '9 + I holy damage; I < [average], frightened (save ends)',
+				tier3: '13 + I holy damage; I < [strong], frightened (save ends)'
 			})
 		}),
 		FactoryLogic.createAbility({
@@ -589,9 +589,9 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			cost: 7,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Intuition ],
-				tier1: '6 psychic damage; I < weak, frightened (save ends)',
-				tier2: '9 psychic damage; I < average, frightened (save ends)',
-				tier3: '13 psychic damage; I < strong, frightened (save ends)'
+				tier1: '6 psychic damage; I < [weak], frightened (save ends)',
+				tier2: '9 psychic damage; I < [average], frightened (save ends)',
+				tier3: '13 psychic damage; I < [strong], frightened (save ends)'
 			}),
 			effect: 'The targets are frightened of you or a creature you choose within 10 squares.'
 		}),

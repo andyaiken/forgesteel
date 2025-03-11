@@ -26,6 +26,7 @@ import { ReactNode } from 'react';
 import { SourcebookElementKind } from '../../../models/sourcebook';
 import { Title } from '../../../models/title';
 import { TitlePanel } from '../../panels/elements/title-panel/title-panel';
+import { UploadOutlined } from '@ant-design/icons';
 
 import './element-modal.scss';
 
@@ -145,7 +146,7 @@ export const ElementModal = (props: Props) => {
 								</div>
 							)}
 						>
-							<Button>
+							<Button icon={<UploadOutlined />}>
 								Export
 							</Button>
 						</Popover>

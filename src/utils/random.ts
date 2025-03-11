@@ -19,33 +19,6 @@ export class Random {
 		return Random.randomNumber(100, rng) / 100;
 	};
 
-	static randomBonus = (rng: () => number = Math.random) => {
-		switch (Random.randomNumber(15, rng)) {
-			case 0:
-			case 1:
-			case 2:
-			case 3:
-			case 4:
-				return 1;
-			case 5:
-			case 6:
-			case 7:
-			case 8:
-				return 2;
-			case 9:
-			case 10:
-			case 11:
-				return 3;
-			case 12:
-			case 13:
-				return 4;
-			case 14:
-				return 5;
-		}
-
-		return 1;
-	};
-
 	static randomColor = (min = 0, max = 256, rng: () => number = Math.random) => {
 		const r = Random.randomNumber(max - min, rng) + min;
 		const g = Random.randomNumber(max - min, rng) + min;

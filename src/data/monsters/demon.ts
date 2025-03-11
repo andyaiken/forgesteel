@@ -635,5 +635,6 @@ The following demons have been identified across categories 1-3:
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

@@ -29,7 +29,7 @@ export const MultiLine = (props: Props) => {
 							type='info'
 							showIcon={true}
 							message='You can use markdown here.'
-							action={<Button type='text' icon={<InfoCircleOutlined />} onClick={() => window.open('https://www.markdownguide.org/cheat-sheet/', '_blank')} />}
+							action={<Button type='text' title='Info' icon={<InfoCircleOutlined />} onClick={() => window.open('https://www.markdownguide.org/cheat-sheet/', '_blank')} />}
 						/>
 						: null
 				}

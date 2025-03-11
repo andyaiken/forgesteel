@@ -44,6 +44,7 @@ export interface Hero {
 	id: string;
 	name: string;
 
+	folder: string;
 	settingIDs: string[];
 
 	ancestry: Ancestry | null;
@@ -56,3 +57,5 @@ export interface Hero {
 	state: HeroState;
 	abilityCustomizations: AbilityCustomization[];
 }
+
+export type HeroEditTab = 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'details';

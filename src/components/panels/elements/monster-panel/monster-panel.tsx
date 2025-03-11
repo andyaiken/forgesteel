@@ -16,6 +16,7 @@ import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { Token } from '../../../controls/token/token';
 import { useState } from 'react';
 
 import './monster-panel.scss';
@@ -34,7 +35,9 @@ export const MonsterPanel = (props: Props) => {
 		if (props.mode !== PanelMode.Full) {
 			return (
 				<div className='monster-panel compact'>
-					<HeaderText>{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}</HeaderText>
+					<HeaderText level={1} ribbon={<Token monster={props.monster} monsterGroup={props.monsterGroup} size={28} />}>
+						{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
+					</HeaderText>
 					<MonsterLabel monster={props.monster} />
 					<Flex align='center' justify='space-between'>
 						<div>{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
@@ -50,12 +53,14 @@ export const MonsterPanel = (props: Props) => {
 		const weaknesses = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Weakness);
 		const speed = props.monster.speed.modes !== '' ? `${props.monster.speed.value} (${props.monster.speed.modes})` : props.monster.speed.value;
 
-		const features = MonsterLogic.getFeatures(props.monster).filter(f => f.type === FeatureType.Text);
+		const features = MonsterLogic.getFeatures(props.monster).filter(f => (f.type === FeatureType.Text) || (f.type === FeatureType.AddOn));
 		const abilities = MonsterLogic.getFeatures(props.monster).filter(f => f.type === FeatureType.Ability).map(f => f.data.ability);
 
 		return (
 			<div className='monster-panel' id={props.monster.id}>
-				<HeaderText level={1}>{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}</HeaderText>
+				<HeaderText level={1} ribbon={<Token monster={props.monster} monsterGroup={props.monsterGroup} size={28} />}>
+					{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
+				</HeaderText>
 				<MonsterLabel monster={props.monster} />
 				<Markdown text={props.monster.description} />
 				<Flex align='center' justify='space-between'>
@@ -76,21 +81,29 @@ export const MonsterPanel = (props: Props) => {
 					}
 				</div>
 				{
-					signatureBonus ?
-						<Field label='Signature Ability Damage' value={`+${signatureBonus.tier1} / +${signatureBonus.tier2} / +${signatureBonus.tier3}`} />
-						: null
-				}
-				{
-					props.monster.withCaptain ?
-						<Field label='With Captain' value={props.monster.withCaptain} />
-						: null
-				}
-				{immunities.length > 0 ? <Field label='Immunities' value={immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} /> : null}
-				{weaknesses.length > 0 ? <Field label='Weaknesses' value={weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} /> : null}
-				{
 					features.length > 0 ?
 						<div className='features'>
-							{features.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
+							{
+								signatureBonus ?
+									<Field label='Signature Ability Damage' value={`+${signatureBonus.tier1} / +${signatureBonus.tier2} / +${signatureBonus.tier3}`} />
+									: null
+							}
+							{
+								props.monster.withCaptain ?
+									<Field label='With Captain' value={props.monster.withCaptain} />
+									: null
+							}
+							{
+								immunities.length > 0 ?
+									<Field label='Immunities' value={immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} />
+									: null
+							}
+							{
+								weaknesses.length > 0 ?
+									<Field label='Weaknesses' value={weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} />
+									: null
+							}
+							{features.map(f => <Field key={f.id} label={f.name} value={f.description} />)}
 						</div>
 						: null
 				}

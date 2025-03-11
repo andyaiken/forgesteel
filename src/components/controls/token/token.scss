@@ -1,0 +1,77 @@
+@use "sass:color";
+
+$monster-default: rgb(217, 217, 217);
+$monster-ambusher: rgb(242, 218, 109);
+$monster-artillery: rgb(202, 192, 215);
+$monster-brute: rgb(149, 178, 222);
+$monster-controller: rgb(238, 132, 129);
+$monster-defender: rgb(195, 188, 154);
+$monster-harrier: rgb(222, 186, 184);
+$monster-hexer: rgb(216, 226, 192);
+$monster-mount: rgb(190, 220, 231);
+$monster-support: rgb(245, 213, 184);
+
+.token {
+	aspect-ratio: 1/1;
+	border-radius: 50%;
+	background-color: $monster-default;
+	border: 1px solid color.scale($monster-default, $lightness: -20%);
+
+	&.ambusher {
+		background-color: $monster-ambusher;
+		border-color: color.scale($monster-ambusher, $lightness: -20%);
+	}
+
+	&.artillery {
+		background-color: $monster-artillery;
+		border-color: color.scale($monster-artillery, $lightness: -20%);
+	}
+
+	&.brute {
+		background-color: $monster-brute;
+		border-color: color.scale($monster-brute, $lightness: -20%);
+	}
+
+	&.controller {
+		background-color: $monster-controller;
+		border-color: color.scale($monster-controller, $lightness: -20%);
+	}
+
+	&.defender {
+		background-color: $monster-defender;
+		border-color: color.scale($monster-defender, $lightness: -20%);
+	}
+
+	&.harrier {
+		background-color: $monster-harrier;
+		border-color: color.scale($monster-harrier, $lightness: -20%);
+	}
+
+	&.hexer {
+		background-color: $monster-hexer;
+		border-color: color.scale($monster-hexer, $lightness: -20%);
+	}
+
+	&.mount {
+		background-color: $monster-mount;
+		border-color: color.scale($monster-mount, $lightness: -20%);
+	}
+
+	&.support {
+		background-color: $monster-support;
+		border-color: color.scale($monster-support, $lightness: -20%);
+	}
+
+	.inner-token {
+		height: 100%;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: black;
+		border-radius: 50%;
+		color: white;
+		font-weight: 600;
+		user-select: none;
+	}
+}

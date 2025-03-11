@@ -36,7 +36,7 @@ export const DangerButton = (props: Props) => {
 						props.mode === 'icon' ?
 							<DeleteOutlined style={{ color: '#ff4d4f', pointerEvents: disabled ? 'none' : 'auto', opacity: disabled ? 0.6 : 1 }} />
 							:
-							<Button block={props.block || false} disabled={disabled} danger={true}>
+							<Button icon={<DeleteOutlined />} block={props.block || false} disabled={disabled} danger={true}>
 								{props.label || 'Delete'}
 							</Button>
 					}

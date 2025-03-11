@@ -1,6 +1,7 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
+import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 import { HeroClass } from '../../models/class';
@@ -189,10 +190,37 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createDamageModifier({
 								id: 'elementalist-1-8b',
 								name: 'Ward of Excellent Protection',
-								description: 'The protective shield you weave around yourself is made of all the elements to channel their full protective power. You have immunity to acid, cold, corruption, fire, and lightning damage equal to your Reason score.'
+								description: 'The protective shield you weave around yourself is made of all the elements to channel their full protective power.',
+								modifiers: [
+									FactoryLogic.damageModifier.createCharacteristic({
+										damageType: 'Acid',
+										modifierType: DamageModifierType.Immunity,
+										characteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.damageModifier.createCharacteristic({
+										damageType: 'Cold',
+										modifierType: DamageModifierType.Immunity,
+										characteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.damageModifier.createCharacteristic({
+										damageType: 'Corruption',
+										modifierType: DamageModifierType.Immunity,
+										characteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.damageModifier.createCharacteristic({
+										damageType: 'Fire',
+										modifierType: DamageModifierType.Immunity,
+										characteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.damageModifier.createCharacteristic({
+										damageType: 'Lightning',
+										modifierType: DamageModifierType.Immunity,
+										characteristics: [ Characteristic.Reason ]
+									})
+								]
 							}),
 							value: 1
 						},
@@ -360,9 +388,9 @@ Choose one of the following effects:
 			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
-				tier1: '2 + R corruption damage; R < weak, slowed (save ends)',
-				tier2: '4 + R corruption damage; R < average, slowed (save ends)',
-				tier3: '6 + R corruption damage; R < strong, slowed (save ends)'
+				tier1: '2 + R corruption damage; R < [weak], slowed (save ends)',
+				tier2: '4 + R corruption damage; R < [average], slowed (save ends)',
+				tier3: '6 + R corruption damage; R < [strong], slowed (save ends)'
 			})
 		}),
 		FactoryLogic.createAbility({
@@ -472,7 +500,7 @@ Choose one of the following effects:
 				characteristic: [ Characteristic.Reason ],
 				tier1: '3 damage',
 				tier2: '5 damage',
-				tier3: '8 damage; M < strong, prone'
+				tier3: '8 damage; M < [strong], prone'
 			}),
 			effect: 'You must be touching the ground to use this ability. Choose a square of ground in the area that is unoccupied or occupied by your or an ally. A pillar of earth that is 1 square wide and long and is up to as many squares tall as your Reason score rises out of the ground. The pillar can’t collide with any creatures or objects nor can it force any creatures being raised by it to collide with other creatures or objects.'
 		}),
@@ -626,9 +654,9 @@ Until the start of your next turn, the area gains the following effects:
 			minLevel: 2,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Reason ],
-				tier1: '5 + R fire damage; A < weak, restrained (save ends)',
-				tier2: '9 + R fire damage; A < average, restrained (save ends)',
-				tier3: '12 + R fire damage; A < strong, restrained (save ends)'
+				tier1: '5 + R fire damage; A < [weak], restrained (save ends)',
+				tier2: '9 + R fire damage; A < [average], restrained (save ends)',
+				tier3: '12 + R fire damage; A < [strong], restrained (save ends)'
 			})
 		}),
 		FactoryLogic.createAbility({

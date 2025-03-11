@@ -219,5 +219,6 @@ If the target accepts, the bredbeddle shifts to a space adjacent to the target, 
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

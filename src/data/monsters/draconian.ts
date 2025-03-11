@@ -758,5 +758,6 @@ The draconians presented in this section aren’t a band, but five individual dr
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

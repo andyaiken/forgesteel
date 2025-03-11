@@ -1,5 +1,5 @@
-import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, EditOutlined, LeftOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Alert, Button, Drawer, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, EditOutlined, LeftOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureAbility, FeatureMalice } from '../../../../models/feature';
 import { Monster, MonsterGroup } from '../../../../models/monster';
@@ -28,6 +28,7 @@ import { ElementEditPanel } from '../../../panels/edit/element-edit-panel/elemen
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeatureEditPanel } from '../../../panels/edit/feature-edit-panel/feature-edit-panel';
+import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
@@ -48,9 +49,12 @@ import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
 import { MonsterRoleType } from '../../../../enums/monster-role-type';
+import { MonsterSelectModal } from '../../../modals/monster-select/monster-select-modal';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
+import { Options } from '../../../../models/options';
+import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
@@ -71,11 +75,13 @@ import './library-edit.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
+	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
  	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	saveChanges: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
+	setOptions: (options: Options) => void;
 }
 
 export const LibraryEditPage = (props: Props) => {
@@ -119,17 +125,16 @@ export const LibraryEditPage = (props: Props) => {
 				original = sourcebook.titles.find(e => e.id === elementID)!;
 				break;
 		}
-		return JSON.parse(JSON.stringify(original)) as Element;
+		return Utils.copy(original) as Element;
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
-	const [ showSimilarMonsters, setShowSimilarMonsters ] = useState<boolean>(false);
-	const [ similarLevel, setSimilarLevel ] = useState<boolean>(true);
-	const [ similarRole, setSimilarRole ] = useState<boolean>(true);
-	const [ similarOrganization, setSimilarOrganization ] = useState<boolean>(true);
+	const [ scratchpadMonsters, setScratchpadMonsters ] = useState<Monster[]>([]);
+	const [ hiddenMonsterIDs, setHiddenMonsterIDs ] = useState<string[]>([]);
+	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Element;
+			const elementCopy = Utils.copy(element) as Element;
 			elementCopy.name = value;
 			if ((elementCopy as Item).crafting) {
 				(elementCopy as Item).crafting!.name = `Craft ${value}`;
@@ -139,7 +144,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setDescription = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Element;
+			const elementCopy = Utils.copy(element) as Element;
 			elementCopy.description = value;
 			setElement(elementCopy);
 			setDirty(true);
@@ -166,7 +171,7 @@ export const LibraryEditPage = (props: Props) => {
 		const el = element as Ancestry | Career | Complication | Kit;
 
 		const addFeature = () => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit;
+			const elementCopy = Utils.copy(element) as Ancestry | Career | Complication | Kit;
 			elementCopy.features.push(FactoryLogic.feature.create({
 				id: Utils.guid(),
 				name: '',
@@ -177,7 +182,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeFeature = (feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit;
+			const elementCopy = Utils.copy(element) as Ancestry | Career | Complication | Kit;
 			const index = elementCopy.features.findIndex(f => f.id === feature.id);
 			if (index !== -1) {
 				elementCopy.features[index] = feature;
@@ -187,7 +192,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveFeature = (feature: Feature, direction: 'up' | 'down') => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit;
+			const elementCopy = Utils.copy(element) as Ancestry | Career | Complication | Kit;
 			const index = elementCopy.features.findIndex(f => f.id === feature.id);
 			elementCopy.features = Collections.move(elementCopy.features, index, direction);
 			setElement(elementCopy);
@@ -195,7 +200,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteFeature = (feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Ancestry | Career | Complication | Kit;
+			const elementCopy = Utils.copy(element) as Ancestry | Career | Complication | Kit;
 			elementCopy.features = elementCopy.features.filter(f => f.id !== feature.id);
 			setElement(elementCopy);
 			setDirty(true);
@@ -208,10 +213,10 @@ export const LibraryEditPage = (props: Props) => {
 						<Expander
 							key={f.id}
 							title={f.name || 'Unnamed Feature'}
-							tags={[ f.type === FeatureType.Ability ? f.data.ability.type.usage : f.type ]}
+							tags={[ FeatureLogic.getFeatureTag(f) ]}
 							extra={[
-								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
-								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteFeature(f); }} />
 							]}
 						>
@@ -241,7 +246,7 @@ export const LibraryEditPage = (props: Props) => {
 		const career = element as Career;
 
 		const addIncident = () => {
-			const careerCopy = JSON.parse(JSON.stringify(element)) as Career;
+			const careerCopy = Utils.copy(element) as Career;
 			careerCopy.incitingIncidents.options.push({
 				id: Utils.guid(),
 				name: '',
@@ -252,7 +257,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeIncident = (e: Element) => {
-			const careerCopy = JSON.parse(JSON.stringify(element)) as Career;
+			const careerCopy = Utils.copy(element) as Career;
 			const index = careerCopy.incitingIncidents.options.findIndex(o => o.id === e.id);
 			if (index !== -1) {
 				careerCopy.incitingIncidents.options[index] = e;
@@ -262,7 +267,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveIncident = (e: Element, direction: 'up' | 'down') => {
-			const careerCopy = JSON.parse(JSON.stringify(element)) as Career;
+			const careerCopy = Utils.copy(element) as Career;
 			const index = careerCopy.incitingIncidents.options.findIndex(o => o.id === e.id);
 			careerCopy.incitingIncidents.options = Collections.move(careerCopy.incitingIncidents.options, index, direction);
 			setElement(careerCopy);
@@ -270,7 +275,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteIncident = (e: Element) => {
-			const careerCopy = JSON.parse(JSON.stringify(element)) as Career;
+			const careerCopy = Utils.copy(element) as Career;
 			careerCopy.incitingIncidents.options = careerCopy.incitingIncidents.options.filter(o => o.id !== e.id);
 			setElement(careerCopy);
 			setDirty(true);
@@ -284,8 +289,8 @@ export const LibraryEditPage = (props: Props) => {
 							key={o.id}
 							title={o.name || 'Unnamed Incident'}
 							extra={[
-								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveIncident(o, 'up'); }} />,
-								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveIncident(o, 'down'); }} />,
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveIncident(o, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveIncident(o, 'down'); }} />,
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteIncident(o); }} />
 							]}
 						>
@@ -324,7 +329,7 @@ export const LibraryEditPage = (props: Props) => {
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={culture.languages.length > 0 ? culture.languages[0] : null}
 					onChange={value => {
-						const copy = JSON.parse(JSON.stringify(element)) as Culture;
+						const copy = Utils.copy(element) as Culture;
 						copy.languages = value ? [ value ] : [];
 						setElement(copy);
 						setDirty(true);
@@ -339,10 +344,10 @@ export const LibraryEditPage = (props: Props) => {
 					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 					value={culture.environment ? culture.environment.id : null}
 					onChange={value => {
-						const copy = JSON.parse(JSON.stringify(element)) as Culture;
+						const copy = Utils.copy(element) as Culture;
 						const env = EnvironmentData.getEnvironments().find(e => e.id === value);
 						if (env) {
-							const envCopy = JSON.parse(JSON.stringify(env)) as Feature;
+							const envCopy = Utils.copy(env) as Feature;
 							copy.environment = envCopy;
 						}
 						setElement(copy);
@@ -358,10 +363,10 @@ export const LibraryEditPage = (props: Props) => {
 					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 					value={culture.organization ? culture.organization.id : null}
 					onChange={value => {
-						const copy = JSON.parse(JSON.stringify(element)) as Culture;
+						const copy = Utils.copy(element) as Culture;
 						const org = OrganizationData.getOrganizations().find(o => o.id === value);
 						if (org) {
-							const orgCopy = JSON.parse(JSON.stringify(org)) as Feature;
+							const orgCopy = Utils.copy(org) as Feature;
 							copy.organization = orgCopy;
 						}
 						setElement(copy);
@@ -377,10 +382,10 @@ export const LibraryEditPage = (props: Props) => {
 					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 					value={culture.upbringing ? culture.upbringing.id : null}
 					onChange={value => {
-						const copy = JSON.parse(JSON.stringify(element)) as Culture;
+						const copy = Utils.copy(element) as Culture;
 						const ub = UpbringingData.getUpbringings().find(u => u.id === value);
 						if (ub) {
-							const ubCopy = JSON.parse(JSON.stringify(ub)) as Feature;
+							const ubCopy = Utils.copy(ub) as Feature;
 							copy.upbringing = ubCopy;
 						}
 						setElement(copy);
@@ -395,28 +400,28 @@ export const LibraryEditPage = (props: Props) => {
 		const heroClass = element as HeroClass;
 
 		const setHeroicResource = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			elementCopy.heroicResource = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setSubclassName = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			elementCopy.subclassName = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setSubclassCount = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			elementCopy.subclassCount = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setPrimaryCharacteristics = (value: Characteristic[]) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			elementCopy.primaryCharacteristics = value;
 			setElement(elementCopy);
 			setDirty(true);
@@ -466,7 +471,7 @@ export const LibraryEditPage = (props: Props) => {
 		const heroClass = element as HeroClass | Domain | Item;
 
 		const addFeature = (level: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass | Domain | Item;
+			const elementCopy = Utils.copy(element) as HeroClass | Domain | Item;
 			elementCopy.featuresByLevel
 				.filter(lvl => lvl.level === level)
 				.forEach(lvl => {
@@ -481,7 +486,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeFeature = (level: number, feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass | Domain | Item;
+			const elementCopy = Utils.copy(element) as HeroClass | Domain | Item;
 			elementCopy.featuresByLevel
 				.filter(lvl => lvl.level === level)
 				.forEach(lvl => {
@@ -495,7 +500,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveFeature = (level: number, feature: Feature, direction: 'up' | 'down') => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass | Domain | Item;
+			const elementCopy = Utils.copy(element) as HeroClass | Domain | Item;
 			elementCopy.featuresByLevel
 				.filter(lvl => lvl.level === level)
 				.forEach(lvl => {
@@ -507,7 +512,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteFeature = (level: number, feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass | Domain | Item;
+			const elementCopy = Utils.copy(element) as HeroClass | Domain | Item;
 			elementCopy.featuresByLevel
 				.filter(lvl => lvl.level === level)
 				.forEach(lvl => {
@@ -529,10 +534,10 @@ export const LibraryEditPage = (props: Props) => {
 										<Expander
 											key={f.id}
 											title={f.name || 'Unnamed Feature'}
-											tags={[ f.type === FeatureType.Ability ? f.data.ability.type.usage : f.type ]}
+											tags={[ FeatureLogic.getFeatureTag(f) ]}
 											extra={[
-												<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'up'); }} />,
-												<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'down'); }} />,
+												<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'up'); }} />,
+												<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'down'); }} />,
 												<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteFeature(lvl.level, f); }} />
 											]}
 										>
@@ -566,7 +571,7 @@ export const LibraryEditPage = (props: Props) => {
 		const heroClass = element as HeroClass;
 
 		const addAbility = () => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			elementCopy.abilities.push(FactoryLogic.createAbility({
 				id: Utils.guid(),
 				name: '',
@@ -581,7 +586,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeAbility = (ability: Ability) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.abilities.findIndex(a => a.id === ability.id);
 			if (index !== -1) {
 				elementCopy.abilities[index] = ability;
@@ -591,7 +596,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveAbility = (ability: Ability, direction: 'up' | 'down') => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.abilities.findIndex(a => a.id === ability.id);
 			elementCopy.abilities = Collections.move(elementCopy.abilities, index, direction);
 			setElement(elementCopy);
@@ -599,7 +604,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteAbility = (ability: Ability) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			elementCopy.abilities = elementCopy.abilities.filter(a => a.id !== ability.id);
 			setElement(elementCopy);
 			setDirty(true);
@@ -614,8 +619,8 @@ export const LibraryEditPage = (props: Props) => {
 							title={a.name || 'Unnamed Ability'}
 							tags={[ a.type.usage ]}
 							extra={[
-								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'up'); }} />,
-								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'down'); }} />,
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'down'); }} />,
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteAbility(a); }} />
 							]}
 						>
@@ -644,14 +649,14 @@ export const LibraryEditPage = (props: Props) => {
 		const heroClass = element as HeroClass;
 
 		const addSubclass = () => {
-			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const classCopy = Utils.copy(element) as HeroClass;
 			classCopy.subclasses.push(FactoryLogic.createSubclass());
 			setElement(classCopy);
 			setDirty(true);
 		};
 
 		const moveSubclass = (subclass: SubClass, direction: 'up' | 'down') => {
-			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const classCopy = Utils.copy(element) as HeroClass;
 			const index = classCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			classCopy.subclasses = Collections.move(classCopy.subclasses, index, direction);
 			setElement(classCopy);
@@ -659,7 +664,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteSubclass = (subclass: SubClass) => {
-			const classCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const classCopy = Utils.copy(element) as HeroClass;
 			classCopy.subclasses = classCopy.subclasses.filter(o => o.id !== subclass.id);
 			setElement(classCopy);
 			setDirty(true);
@@ -673,9 +678,9 @@ export const LibraryEditPage = (props: Props) => {
 							key={sc.id}
 							title={sc.name || 'Unnamed Subclass'}
 							extra={[
-								<Button key='edit' type='text' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!, sc.id); }} />,
-								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'up'); }} />,
-								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'down'); }} />,
+								<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!, sc.id); }} />,
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'down'); }} />,
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSubclass(sc); }} />
 							]}
 						>
@@ -702,7 +707,7 @@ export const LibraryEditPage = (props: Props) => {
 		const subclass = heroClass.subclasses.find(sc => sc.id === subElementID) as SubClass;
 
 		const setName = (subclass: SubClass, value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			if (index !== -1) {
 				const sc = elementCopy.subclasses[index];
@@ -713,7 +718,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setDescription = (subclass: SubClass, value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			if (index !== -1) {
 				const sc = elementCopy.subclasses[index];
@@ -724,7 +729,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const addFeature = (subclass: SubClass, level: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			if (index !== -1) {
 				const sc = elementCopy.subclasses[index];
@@ -743,7 +748,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeFeature = (subclass: SubClass, level: number, feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			if (index !== -1) {
 				const sc = elementCopy.subclasses[index];
@@ -761,7 +766,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveFeature = (subclass: SubClass, level: number, feature: Feature, direction: 'up' | 'down') => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			if (index !== -1) {
 				const sc = elementCopy.subclasses[index];
@@ -777,7 +782,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteFeature = (subclass: SubClass, level: number, feature: Feature) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as HeroClass;
+			const elementCopy = Utils.copy(element) as HeroClass;
 			const index = elementCopy.subclasses.findIndex(sc => sc.id === subclass.id);
 			if (index !== -1) {
 				const sc = elementCopy.subclasses[index];
@@ -800,10 +805,10 @@ export const LibraryEditPage = (props: Props) => {
 							<Expander
 								key={f.id}
 								title={f.name || 'Unnamed Feature'}
-								tags={[ f.type === FeatureType.Ability ? f.data.ability.type.usage : f.type ]}
+								tags={[ FeatureLogic.getFeatureTag(f) ]}
 								extra={[
-									<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(subclass, lvl.level, f, 'up'); }} />,
-									<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(subclass, lvl.level, f, 'down'); }} />,
+									<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(subclass, lvl.level, f, 'up'); }} />,
+									<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(subclass, lvl.level, f, 'down'); }} />,
 									<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteFeature(subclass, lvl.level, f); }} />
 								]}
 							>
@@ -864,7 +869,7 @@ export const LibraryEditPage = (props: Props) => {
 		const domain = element as Domain;
 
 		const setPiety = (value: string) => {
-			const copy = JSON.parse(JSON.stringify(element)) as Domain;
+			const copy = Utils.copy(element) as Domain;
 			copy.piety = value;
 			setElement(copy);
 			setDirty(true);
@@ -882,21 +887,21 @@ export const LibraryEditPage = (props: Props) => {
 		const kit = element as Kit;
 
 		const setType = (value: KitType) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.type = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setArmor = (value: KitArmor[]) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.armor = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setWeapon = (value: KitWeapon[]) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.weapon = value;
 			setElement(elementCopy);
 			setDirty(true);
@@ -945,42 +950,42 @@ export const LibraryEditPage = (props: Props) => {
 		const kit = element as Kit;
 
 		const setStamina = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.stamina = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setSpeed = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.speed = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setStability = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.stability = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setMeleeDistance = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.meleeDistance = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setRangedDistance = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.rangedDistance = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setDisengage = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.disengage = value;
 			setElement(elementCopy);
 			setDirty(true);
@@ -1033,14 +1038,14 @@ export const LibraryEditPage = (props: Props) => {
 		const kit = element as Kit;
 
 		const setMeleeDamage = (value: boolean) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.meleeDamage = value ? { tier1: 0, tier2: 0, tier3: 0 } : null;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setMeleeDamage1 = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			if (elementCopy.meleeDamage) {
 				elementCopy.meleeDamage.tier1 = value;
 			}
@@ -1049,7 +1054,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setMeleeDamage2 = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			if (elementCopy.meleeDamage) {
 				elementCopy.meleeDamage.tier2 = value;
 			}
@@ -1058,7 +1063,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setMeleeDamage3 = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			if (elementCopy.meleeDamage) {
 				elementCopy.meleeDamage.tier3 = value;
 			}
@@ -1067,14 +1072,14 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setRangedDamage = (value: boolean) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.rangedDamage = value ? { tier1: 0, tier2: 0, tier3: 0 } : null;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setRangedDamage1 = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			if (elementCopy.rangedDamage) {
 				elementCopy.rangedDamage.tier1 = value;
 			}
@@ -1083,7 +1088,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setRangedDamage2 = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			if (elementCopy.rangedDamage) {
 				elementCopy.rangedDamage.tier2 = value;
 			}
@@ -1092,7 +1097,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setRangedDamage3 = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Kit;
+			const elementCopy = Utils.copy(element) as Kit;
 			if (elementCopy.rangedDamage) {
 				elementCopy.rangedDamage.tier3 = value;
 			}
@@ -1120,14 +1125,14 @@ export const LibraryEditPage = (props: Props) => {
 		const title = element as Title;
 
 		const setEchelon = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Title;
+			const elementCopy = Utils.copy(element) as Title;
 			elementCopy.echelon = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setPrerequisites = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Title;
+			const elementCopy = Utils.copy(element) as Title;
 			elementCopy.prerequisites = value;
 			setElement(elementCopy);
 			setDirty(true);
@@ -1152,21 +1157,21 @@ export const LibraryEditPage = (props: Props) => {
 		const item = element as Item;
 
 		const setType = (value: ItemType) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			elementCopy.type = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setKeywords = (value: (AbilityKeyword | KitArmor | KitWeapon)[]) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			elementCopy.keywords = value;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setEffect = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			elementCopy.effect = value;
 			setElement(elementCopy);
 			setDirty(true);
@@ -1176,6 +1181,7 @@ export const LibraryEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Item Type</HeaderText>
 				<Segmented
+					name='itemtypes'
 					block={true}
 					options={[ ItemType.Consumable, ItemType.Trinket, ItemType.Leveled, ItemType.Artifact ]}
 					value={item.type}
@@ -1202,14 +1208,14 @@ export const LibraryEditPage = (props: Props) => {
 		const item = element as Item;
 
 		const setCraftable = (value: boolean) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			elementCopy.crafting = value ? FactoryLogic.createProject({ id: `${item.id}-crafting`, name: `Craft ${item.name}`, description: item.name }) : null;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
 		const setPrerequisites = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			if (elementCopy.crafting) {
 				elementCopy.crafting.itemPrerequisites = value;
 			}
@@ -1218,7 +1224,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setSource = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			if (elementCopy.crafting) {
 				elementCopy.crafting.source = value;
 			}
@@ -1227,7 +1233,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setCharacteristic = (value: Characteristic[]) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			if (elementCopy.crafting) {
 				elementCopy.crafting.characteristic = value;
 			}
@@ -1236,7 +1242,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setGoal = (value: number) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			if (elementCopy.crafting) {
 				elementCopy.crafting.goal = value;
 			}
@@ -1245,7 +1251,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const setEffect = (value: string) => {
-			const elementCopy = JSON.parse(JSON.stringify(element)) as Item;
+			const elementCopy = Utils.copy(element) as Item;
 			if (elementCopy.crafting) {
 				elementCopy.crafting.effect = value;
 			}
@@ -1298,7 +1304,7 @@ export const LibraryEditPage = (props: Props) => {
 		const monsterGroup = element as MonsterGroup;
 
 		const addInformation = () => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			copy.information.push({
 				id: Utils.guid(),
 				name: '',
@@ -1309,7 +1315,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeInformation = (information: Element) => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			const index = copy.information.findIndex(i => i.id === information.id);
 			if (index !== -1) {
 				copy.information[index] = information;
@@ -1319,7 +1325,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveInformation = (information: Element, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			const index = copy.information.findIndex(i => i.id === information.id);
 			copy.information = Collections.move(copy.information, index, direction);
 			setElement(copy);
@@ -1327,7 +1333,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteInformation = (information: Element) => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			copy.information = copy.information.filter(i => i.id !== information.id);
 			setElement(copy);
 			setDirty(true);
@@ -1341,8 +1347,8 @@ export const LibraryEditPage = (props: Props) => {
 							key={i.id}
 							title={i.name || 'Unnamed Information'}
 							extra={[
-								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveInformation(i, 'up'); }} />,
-								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveInformation(i, 'down'); }} />,
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveInformation(i, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveInformation(i, 'down'); }} />,
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteInformation(i); }} />
 							]}
 						>
@@ -1371,7 +1377,7 @@ export const LibraryEditPage = (props: Props) => {
 		const monsterGroup = element as MonsterGroup;
 
 		const addMaliceFeature = () => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			copy.malice.push(FactoryLogic.feature.createMalice({
 				id: Utils.guid(),
 				name: '',
@@ -1385,7 +1391,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const changeMaliceFeature = (feature: FeatureMalice | FeatureAbility) => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			const index = copy.malice.findIndex(f => f.id === feature.id);
 			if (index !== -1) {
 				copy.malice[index] = feature;
@@ -1395,7 +1401,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveMaliceFeature = (feature: FeatureMalice | FeatureAbility, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			const index = copy.malice.findIndex(f => f.id === feature.id);
 			copy.malice = Collections.move(copy.malice, index, direction);
 			setElement(copy);
@@ -1403,7 +1409,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteMaliceFeature = (feature: FeatureMalice | FeatureAbility) => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			copy.malice = copy.malice.filter(f => f.id !== feature.id);
 			setElement(copy);
 			setDirty(true);
@@ -1417,8 +1423,8 @@ export const LibraryEditPage = (props: Props) => {
 							key={f.id}
 							title={f.name || 'Unnamed Malice Feature'}
 							extra={[
-								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMaliceFeature(f, 'up'); }} />,
-								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMaliceFeature(f, 'down'); }} />,
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMaliceFeature(f, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMaliceFeature(f, 'down'); }} />,
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteMaliceFeature(f); }} />
 							]}
 						>
@@ -1449,7 +1455,7 @@ export const LibraryEditPage = (props: Props) => {
 		const monsterGroup = element as MonsterGroup;
 
 		const addMonster = () => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			copy.monsters.push(FactoryLogic.createMonster({
 				id: Utils.guid(),
 				name: '',
@@ -1470,7 +1476,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const moveMonster = (monster: Monster, direction: 'up' | 'down') => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			const index = copy.monsters.findIndex(m => m.id === monster.id);
 			copy.monsters = Collections.move(copy.monsters, index, direction);
 			setElement(copy);
@@ -1478,7 +1484,7 @@ export const LibraryEditPage = (props: Props) => {
 		};
 
 		const deleteMonster = (monster: Monster) => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			copy.monsters = copy.monsters.filter(m => m.id !== monster.id);
 			setElement(copy);
 			if (subElementID === monster.id) {
@@ -1500,9 +1506,9 @@ export const LibraryEditPage = (props: Props) => {
 								</div>
 							)}
 							extra={[
-								<Button key='edit' type='text' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!, m.id); }} />,
-								<Button key='up' type='text' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMonster(m, 'up'); }} />,
-								<Button key='down' type='text' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMonster(m, 'down'); }} />,
+								<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!, m.id); }} />,
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMonster(m, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMonster(m, 'down'); }} />,
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteMonster(m); }} />
 							]}
 						>
@@ -1533,7 +1539,7 @@ export const LibraryEditPage = (props: Props) => {
 		const monster = monsterGroup.monsters.find(m => m.id === subElementID) as Monster;
 
 		const changeMonster = (monster: Monster) => {
-			const copy = JSON.parse(JSON.stringify(monsterGroup)) as MonsterGroup;
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
 			const index = copy.monsters.findIndex(m => m.id === monster.id);
 			if (index !== -1) {
 				copy.monsters[index] = monster;
@@ -1545,21 +1551,30 @@ export const LibraryEditPage = (props: Props) => {
 		return (
 			<MonsterEditPanel
 				monster={monster}
+				monsterGroup={monsterGroup}
 				sourcebooks={props.sourcebooks}
-				similarMonsters={showSimilarMonsters ? getSimilarMonsters(monster) : []}
+				similarMonsters={props.options.showSimilarMonsters ? getSimilarMonsters(monster) : []}
 				onChange={changeMonster}
 			/>
 		);
 	};
 
 	const getSimilarMonsters = (monster: Monster) => {
-		return props.sourcebooks
+		const monsters = props.sourcebooks
 			.flatMap(sb => sb.monsterGroups)
 			.flatMap(mg => mg.monsters)
 			.filter(m => m.id !== monster.id)
-			.filter(m => !similarLevel || (m.level === monster.level))
-			.filter(m => !similarRole || (m.role.type === monster.role.type))
-			.filter(m => !similarOrganization || (m.role.organization === monster.role.organization));
+			.filter(m => !props.options.similarLevel || (m.level === monster.level))
+			.filter(m => !props.options.similarRole || (m.role.type === monster.role.type))
+			.filter(m => !props.options.similarOrganization || (m.role.organization === monster.role.organization))
+			.filter(m => !props.options.similarSize || ((m.size.value === monster.size.value) && (m.size.mod === monster.size.mod)))
+			.filter(m => !hiddenMonsterIDs.includes(m.id));
+
+		scratchpadMonsters
+			.filter(m => !monsters.map(monster => monster.id).includes(m.id))
+			.forEach(m => monsters.push(m));
+
+		return Collections.sort(monsters, m => MonsterLogic.getMonsterName(m));
 	};
 
 	const getSimilarMonstersSection = (monster: Monster) => {
@@ -1567,15 +1582,11 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					monsters.length > 0 ?
-						<Toggle label='Show data from this list in the monster builder' value={showSimilarMonsters} onChange={setShowSimilarMonsters} />
-						: null
-				}
-				<Expander title='Similarity'>
-					<Toggle label={`Match level (${monster.level})`} value={similarLevel} onChange={setSimilarLevel} />
-					<Toggle label={`Match role (${monster.role.type})`} value={similarRole} onChange={setSimilarRole} />
-					<Toggle label={`Match organization (${monster.role.organization})`} value={similarOrganization} onChange={setSimilarOrganization} />
+				<Expander title='Modify This List'>
+					<Space direction='vertical' style={{ paddingTop: '15px', width: '100%' }}>
+						<Button block={true} onClick={() => setDrawerOpen(true)}>Add a Monster</Button>
+						<Button block={true} disabled={hiddenMonsterIDs.length === 0} onClick={() => setHiddenMonsterIDs([])}>Restore Hidden Monsters</Button>
+					</Space>
 				</Expander>
 				{
 					monsters.map(m => {
@@ -1585,11 +1596,27 @@ export const LibraryEditPage = (props: Props) => {
 						}
 
 						return (
-							<SelectablePanel key={m.id} onSelect={() => props.showMonster(m, monsterGroup)}>
+							<SelectablePanel
+								key={m.id}
+								action={{
+									label: 'Hide',
+									onClick: () => {
+										if (scratchpadMonsters.map(spm => spm.id).includes(m.id)) {
+											let copy = Utils.copy(scratchpadMonsters) as Monster[];
+											copy = copy.filter(cm => cm.id !== m.id);
+											setScratchpadMonsters(copy);
+										} else {
+											const copy = Utils.copy(hiddenMonsterIDs) as string[];
+											copy.push(m.id);
+											setHiddenMonsterIDs(copy);
+										}
+									}
+								}}
+								onSelect={() => props.showMonster(m, monsterGroup)}
+							>
 								<MonsterPanel
 									monster={m}
 									monsterGroup={monsterGroup}
-									mode={PanelMode.Compact}
 								/>
 							</SelectablePanel>
 						);
@@ -1604,6 +1631,20 @@ export const LibraryEditPage = (props: Props) => {
 						/>
 						: null
 				}
+				<Drawer open={drawerOpen} closeIcon={null} width='500px'>
+					<MonsterSelectModal
+						type='companion'
+						sourcebooks={props.sourcebooks}
+						selectOriginal={true}
+						onSelect={monster => {
+							const copy = Utils.copy(scratchpadMonsters) as Monster[];
+							copy.push(monster);
+							setScratchpadMonsters(copy);
+							setDrawerOpen(false);
+						}}
+						onClose={() => setDrawerOpen(false)}
+					/>
+				</Drawer>
 			</Space>
 		);
 	};
@@ -1820,7 +1861,7 @@ export const LibraryEditPage = (props: Props) => {
 						feature={element as Perk}
 						sourcebooks={props.sourcebooks}
 						onChange={perk => {
-							const copy = JSON.parse(JSON.stringify(perk)) as Perk;
+							const copy = Utils.copy(perk) as Perk;
 							setElement(copy);
 							setDirty(true);
 						}}
@@ -2025,26 +2066,35 @@ export const LibraryEditPage = (props: Props) => {
 				} else {
 					const monsterGroup = element as MonsterGroup;
 					const monster = monsterGroup.monsters.find(m => m.id === subElementID) as Monster;
-					return (
-						<Tabs
-							items={[
-								{
-									key: '1',
-									label: 'Preview',
-									children: (
-										<SelectablePanel>
-											<MonsterPanel monster={monster} monsterGroup={monsterGroup} />
-										</SelectablePanel>
-									)
-								},
-								{
-									key: '2',
-									label: 'Similar Monsters',
-									children: getSimilarMonstersSection(monster)
-								}
-							]}
-						/>
-					);
+
+					if (props.options.showSimilarMonsters) {
+						return (
+							<Tabs
+								items={[
+									{
+										key: '1',
+										label: 'Preview',
+										children: (
+											<SelectablePanel>
+												<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Full} />
+											</SelectablePanel>
+										)
+									},
+									{
+										key: '2',
+										label: 'Similar Monsters',
+										children: getSimilarMonstersSection(monster)
+									}
+								]}
+							/>
+						);
+					} else {
+						return (
+							<SelectablePanel>
+								<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Full} />
+							</SelectablePanel>
+						);
+					}
 				}
 		}
 
@@ -2065,15 +2115,42 @@ export const LibraryEditPage = (props: Props) => {
 			}
 		}
 
+		let monster: Monster | null = null;
+		if ((kind === 'monster-group') && !!subElementID) {
+			monster = (element as MonsterGroup).monsters.find(m => m.id === subElementID) || null;
+		}
+
 		return (
 			<div className='library-edit-page'>
-				<AppHeader breadcrumbs={[ { label: `${editing} Builder` } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
-					<Button type='primary' disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
+				<AppHeader subheader={`${editing} Builder`} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+					<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
 						Save Changes
 					</Button>
-					<Button onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
+					<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
 						Cancel
 					</Button>
+					{
+						monster ?
+							<div className='divider' />
+							: null
+					}
+					{
+						monster ?
+							<Popover
+								trigger='click'
+								placement='bottom'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										<OptionsPanel mode='monster' options={props.options} setOptions={props.setOptions} />
+									</div>
+								)}
+							>
+								<Button icon={<SettingOutlined />}>
+									Options
+								</Button>
+							</Popover>
+							: null
+					}
 				</AppHeader>
 				<div className='library-edit-page-content'>
 					<div className='edit-column'>

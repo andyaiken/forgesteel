@@ -228,5 +228,6 @@ One must also be wary of the area around a shambling mound—their vines reach o
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

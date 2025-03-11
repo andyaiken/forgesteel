@@ -9,11 +9,13 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../monster-panel/monster-panel';
+import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { Token } from '../../../controls/token/token';
 
 import './encounter-panel.scss';
 
@@ -21,18 +23,22 @@ interface Props {
 	encounter: Encounter;
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
+	options: Options;
 	mode?: PanelMode;
 	showDifficulty?: boolean;
 }
 
 export const EncounterPanel = (props: Props) => {
 	try {
-		const monsterIDs = EncounterLogic.getMonsterIDs(props.encounter);
+		const monsterData = EncounterLogic.getMonsterData(props.encounter);
 		const monsterGroups = EncounterLogic.getMonsterGroups(props.encounter, props.sourcebooks);
+
+		const strength = EncounterLogic.getStrength(props.encounter, props.sourcebooks);
+		const difficulty = EncounterLogic.getDifficulty(strength, props.options);
 
 		return (
 			<div className={props.mode === PanelMode.Full ? 'encounter-panel' : 'encounter-panel compact'} id={props.mode === PanelMode.Full ? props.encounter.id : undefined}>
-				<HeaderText level={1}>{props.encounter.name || 'Unnamed Encounter'}</HeaderText>
+				<HeaderText level={1} tags={[ difficulty ]}>{props.encounter.name || 'Unnamed Encounter'}</HeaderText>
 				<Markdown text={props.encounter.description} />
 				<div className='encounter-groups'>
 					{
@@ -52,14 +58,19 @@ export const EncounterPanel = (props: Props) => {
 
 											const name = (monster && monsterGroup) ? MonsterLogic.getMonsterName(monster, monsterGroup) : 'Unknown Monster';
 
+											let token = null;
 											let count = slot.count;
 											if (monster) {
+												token = <Token monster={monster} monsterGroup={monsterGroup || undefined} />;
 												count *= MonsterLogic.getRoleMultiplier(monster.role.organization);
 											}
 
 											return (
 												<div key={slot.id} className='encounter-slot'>
-													<div className='ds-text'>{name}</div>
+													<div className='encounter-slot-name'>
+														{token}
+														<div className='ds-text'>{name}</div>
+													</div>
 													{count > 1 ? <Badge>x{count}</Badge> : null}
 												</div>
 											);
@@ -96,36 +107,39 @@ export const EncounterPanel = (props: Props) => {
 				{
 					props.showDifficulty ?
 						<SelectablePanel>
-							<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} />
+							<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} options={props.options} />
 						</SelectablePanel>
 						: null
 				}
 				{
-					(props.mode === PanelMode.Full) && (monsterIDs.length > 0) ?
+					(props.mode === PanelMode.Full) && (monsterData.length > 0) ?
 						<Divider />
 						: null
 				}
 				{
-					(props.mode === PanelMode.Full) && (monsterIDs.length > 0) ?
+					(props.mode === PanelMode.Full) && (monsterData.length > 0) ?
 						<HeaderText level={1}>Stat Blocks</HeaderText>
 						: null
 				}
 				{
-					(props.mode === PanelMode.Full) && (monsterIDs.length > 0) ?
+					(props.mode === PanelMode.Full) && (monsterData.length > 0) ?
 						<div className='monsters'>
 							{
-								monsterIDs.map(id => {
-									const monster = SourcebookLogic.getMonster(props.sourcebooks, id);
-									const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, id);
-									return (monster && monsterGroup) ?
-										<SelectablePanel key={monster.id}>
+								monsterData.map(data => {
+									const monster = EncounterLogic.getCustomizedMonster(data.monsterID, data.addOnIDs, props.sourcebooks);
+									const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, data.monsterID);
+									if (monster && monsterGroup) {
+										return (
 											<MonsterPanel
+												key={monster.id}
 												monster={monster}
 												monsterGroup={monsterGroup}
 												mode={PanelMode.Full}
 											/>
-										</SelectablePanel>
-										: null;
+										);
+									}
+
+									return null;
 								})
 							}
 						</div>
@@ -135,7 +149,7 @@ export const EncounterPanel = (props: Props) => {
 					(props.mode === PanelMode.Full) && (monsterGroups.length > 0) ?
 						<Space direction='vertical' style={{ width: '100%' }}>
 							{
-								monsterGroups.map(group => (
+								monsterGroups.filter(group => group.malice.length > 0).map(group => (
 									<div key={group.id}>
 										<HeaderText level={1}>{group.name} Malice</HeaderText>
 										<div className='malice'>

@@ -1200,5 +1200,6 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

@@ -833,16 +833,16 @@ export class KitData {
 					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
-						tier1: '2 + M damage; M < weak, grabbed',
-						tier2: '5 + M damage; M < average, grabbed',
-						tier3: '7 + M damage; M < strong, grabbed'
+						tier1: '2 + M damage; M < [weak], grabbed',
+						tier2: '5 + M damage; M < [average], grabbed',
+						tier3: '7 + M damage; M < [strong], grabbed'
 					})
 				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-1',
 				name: 'Aspect Benefits',
-				description: 'Whenever you use forced movement to push a creature, you can pull that creature instead. Whenever you pull a creature adjacent to you and that creature has M < average, you can use a free triggered action to grab that creature.'
+				description: 'Whenever you use forced movement to push a creature, you can pull that creature instead. Whenever you pull a creature adjacent to you and that creature has M < [average], you can use a free triggered action to grab that creature.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'kit-boren-feature-2a',
@@ -1039,9 +1039,9 @@ Once you reach 4th level, your speed gains the Climb keyword in hybrid form.`
 					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might ],
-						tier1: '2 + M damage; A < weak, prone',
-						tier2: '5 + M damage; A < average, prone',
-						tier3: '7 + M damage; A < strong, prone'
+						tier1: '2 + M damage; A < [weak], prone',
+						tier2: '5 + M damage; A < [average], prone',
+						tier3: '7 + M damage; A < [strong], prone'
 					})
 				})
 			}),

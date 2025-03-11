@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { DownOutlined, EditOutlined } from '@ant-design/icons';
+import { CloseOutlined, CopyOutlined, EditOutlined, LeftOutlined, UploadOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
@@ -16,6 +16,7 @@ import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
+import { Format } from '../../../../utils/format';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
@@ -26,6 +27,8 @@ import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-pan
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
+import { Playbook } from '../../../../models/playbook';
+import { PlaybookLogic } from '../../../../logic/playbook-logic';
 import { ReactNode } from 'react';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { SubClass } from '../../../../models/subclass';
@@ -39,6 +42,7 @@ import './library-view-page.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
+	playbook: Playbook;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -197,43 +201,45 @@ export const LibraryViewPage = (props: Props) => {
 	try {
 		return (
 			<div className='library-view-page'>
-				<AppHeader breadcrumbs={[ { label: 'Library' } ]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader subheader={Format.capitalize(kind!)} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
 					{
 						subElementID ?
-							<Button onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
+							<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
 								Back
 							</Button>
 							:
-							<Button onClick={() => navigation.goToLibraryList(kind!)}>
+							<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibraryList(kind!)}>
 								Close
 							</Button>
 					}
+					<div className='divider' />
 					{
-						!subElementID ?
-							sourcebook.isHomebrew ?
-								<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(kind!, sourcebook.id, element.id)}>
-									Edit
+						sourcebook.isHomebrew ?
+							<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(kind!, sourcebook.id, elementID!, subElementID)}>
+								Edit
+							</Button>
+							: null
+					}
+					{
+						!sourcebook.isHomebrew && !subElementID ?
+							<Popover
+								trigger='click'
+								placement='bottom'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										{
+											props.sourcebooks
+												.filter(sb => sb.isHomebrew)
+												.map(cs => <Button key={cs.id} onClick={() => props.createElement(kind!, cs.id, element)}>In {cs.name || 'Unnamed Collection'}</Button>)
+										}
+										<Button onClick={() => props.createElement(kind!, null, element)}>In a new collection</Button>
+									</div>
+								)}
+							>
+								<Button icon={<CopyOutlined />}>
+									Create Homebrew Version
 								</Button>
-								:
-								<Popover
-									trigger='click'
-									placement='bottom'
-									content={(
-										<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-											{
-												props.sourcebooks
-													.filter(sb => sb.isHomebrew)
-													.map(cs => <Button key={cs.id} onClick={() => props.createElement(kind!, cs.id, element)}>In {cs.name || 'Unnamed Collection'}</Button>)
-											}
-											<Button onClick={() => props.createElement(kind!, null, element)}>In a new collection</Button>
-										</div>
-									)}
-								>
-									<Button>
-										Create Homebrew Version
-										<DownOutlined />
-									</Button>
-								</Popover>
+							</Popover>
 							: null
 					}
 					<Popover
@@ -247,14 +253,14 @@ export const LibraryViewPage = (props: Props) => {
 							</div>
 						)}
 					>
-						<Button>
+						<Button icon={<UploadOutlined />}>
 							Export
-							<DownOutlined />
 						</Button>
 					</Popover>
 					{
 						sourcebook.isHomebrew && !subElementID ?
 							<DangerButton
+								disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
 								onConfirm={() => props.delete(kind!, sourcebook.id, element)}
 							/>
 							: null

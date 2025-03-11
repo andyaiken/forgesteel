@@ -19,7 +19,7 @@ export const WelcomePage = (props: Props) => {
 	try {
 		return (
 			<div className='welcome-page'>
-				<AppHeader breadcrumbs={[]} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} />
+				<AppHeader showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} />
 				<div className='welcome-page-content'>
 					<div className='welcome-column'>
 						<SelectablePanel>
@@ -45,6 +45,7 @@ export const WelcomePage = (props: Props) => {
 									</div>
 									<div className='ds-text'>
 										In your <b>playbook</b>, you can build encounters, ensuring that they're perfectly balanced for your heroes, and craft negotiations and montage tests.
+										You can then combine all these into an adventure.
 									</div>
 								</div>
 								<div className='welcome-actions'>

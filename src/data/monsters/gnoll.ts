@@ -764,5 +764,6 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

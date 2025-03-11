@@ -105,7 +105,7 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'hag-feature-1',
-					name: 'thorn dragon'
+					name: 'the hag'
 				}),
 				FactoryLogic.feature.create({
 					id: 'hag-feature-2',
@@ -232,5 +232,6 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 				})
 			]
 		})
-	]
+	],
+	addOns: []
 };

@@ -933,5 +933,6 @@ In many shadow elf societies, all people are given at least basic combat trainin
 				})
 			}
 		})
-	]
+	],
+	addOns: []
 };

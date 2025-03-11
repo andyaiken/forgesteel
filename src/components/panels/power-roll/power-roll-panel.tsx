@@ -141,15 +141,7 @@ export const PowerRollPanel = (props: Props) => {
 				{footer ? <div className='power-roll-row power-roll-footer'>{footer}</div> : null}
 				{
 					props.ability && props.hero ?
-						<Button
-							className='autocalc-btn'
-							type='text'
-							icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
-							onClick={e => {
-								e.stopPropagation();
-								setAutoCalc(!autoCalc);
-							}}
-						/>
+						<Button className='autocalc-btn' type='text' title='Calculate' icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />} onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }} />
 						: null
 				}
 			</div>

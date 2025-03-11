@@ -116,7 +116,7 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 				characteristic: [ Characteristic.Might ],
 				tier1: '2 + M damage',
 				tier2: '5 + M damage',
-				tier3: '7 + M damage; A < strong, slowed (save ends)'
+				tier3: '7 + M damage; A < [strong], slowed (save ends)'
 			}),
 			effect: 'You can shift 1 square.'
 		}),
@@ -131,9 +131,9 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			cost: 'signature',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
-				tier1: '2 + M damage; M < weak, grabbed',
-				tier2: '5 + M damage; M < average, grabbed',
-				tier3: '7 + M damage; M < strong, grabbed'
+				tier1: '2 + M damage; M < [weak], grabbed',
+				tier2: '5 + M damage; M < [average], grabbed',
+				tier3: '7 + M damage; M < [strong], grabbed'
 			})
 		}),
 		FactoryLogic.createAbility({
@@ -215,9 +215,9 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			cost: 3,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
-				tier1: '3 + M damage; M < weak, bleeding (save ends)',
-				tier2: '5 + M damage; M < average, bleeding (save ends)',
-				tier3: '8 + M damage; M < strong, bleeding (save ends)'
+				tier1: '3 + M damage; M < [weak], bleeding (save ends)',
+				tier2: '5 + M damage; M < [average], bleeding (save ends)',
+				tier3: '8 + M damage; M < [strong], bleeding (save ends)'
 			}),
 			effect: 'While bleeding, the target takes damage equal to your Might score at the end of your turns.'
 		}),
@@ -232,9 +232,9 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			cost: 5,
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Might ],
-				tier1: '4 + M damage; M < weak, bleeding and weakened (save ends)',
-				tier2: '6 + M damage; M < average, bleeding and weakened (save ends)',
-				tier3: '10 + M damage; M < strong, bleeding and weakened (save ends)'
+				tier1: '4 + M damage; M < [weak], bleeding and weakened (save ends)',
+				tier2: '6 + M damage; M < [average], bleeding and weakened (save ends)',
+				tier3: '10 + M damage; M < [strong], bleeding and weakened (save ends)'
 			}),
 			effect: 'You can deal 1d6 damage to yourself to deal 1d6 bonus damage to the target.'
 		}),
@@ -536,9 +536,9 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 											preEffect: 'You shift up to your speed. You make one power roll that targets up to three enemies you come adjacent to during the shift.',
 											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Might ],
-												tier1: '2 damage; A < weak, dazed (save ends)',
-												tier2: '4 damage; A < average, dazed (save ends)',
-												tier3: '6 damage; A < strong, dazed (save ends)'
+												tier1: '2 damage; A < [weak], dazed (save ends)',
+												tier2: '4 damage; A < [average], dazed (save ends)',
+												tier3: '6 damage; A < [strong], dazed (save ends)'
 											})
 										})
 									}),
@@ -557,9 +557,9 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 											cost: 5,
 											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Might ],
-												tier1: '3 + M damage; P < weak, dazed and frightened (save ends)',
-												tier2: '5 + M damage; P < average, dazed and frightened (save ends)',
-												tier3: '8 + M damage; P < strong, dazed and frightened (save ends)'
+												tier1: '3 + M damage; P < [weak], dazed and frightened (save ends)',
+												tier2: '5 + M damage; P < [average], dazed and frightened (save ends)',
+												tier3: '8 + M damage; P < [strong], dazed and frightened (save ends)'
 											})
 										})
 									}),
@@ -668,9 +668,9 @@ While in animal form or hybrid form, you can speak normally and can speak to ani
 											cost: 5,
 											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Might ],
-												tier1: '4 + M damage; I < weak, slowed (save ends)',
-												tier2: '6 + M damage; I < average, slowed (save ends)',
-												tier3: '10 + M damage; I < strong, slowed (save ends)'
+												tier1: '4 + M damage; I < [weak], slowed (save ends)',
+												tier2: '6 + M damage; I < [average], slowed (save ends)',
+												tier3: '10 + M damage; I < [strong], slowed (save ends)'
 											}),
 											effect: 'The target can’t be hidden from you for 24 hours. For the rest of the encounter, whenever the target moves, you can use a free triggered action to move.'
 										})
@@ -690,9 +690,9 @@ While in animal form or hybrid form, you can speak normally and can speak to ani
 											cost: 5,
 											powerRoll: FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Might ],
-												tier1: '2 damage; push 1; M < weak, dazed (save ends)',
-												tier2: '5 damage; push 2; M < average, dazed (save ends)',
-												tier3: '7 damage; push 3; M < strong, dazed (save ends)'
+												tier1: '2 damage; push 1; M < [weak], dazed (save ends)',
+												tier2: '5 damage; push 2; M < [average], dazed (save ends)',
+												tier3: '7 damage; push 3; M < [strong], dazed (save ends)'
 											}),
 											effect: 'This ability deals damage of your primordial storm type.'
 										})

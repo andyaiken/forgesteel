@@ -98,7 +98,7 @@ export class PerkData {
 	static friendCatapult: Perk = {
 		id: 'perk-friend-catapult',
 		name: 'Friend Catapult',
-		description: '',
+		description: 'You hurl your ally through the air.',
 		type: FeatureType.Ability,
 		data: {
 			ability: FactoryLogic.createAbility({
@@ -118,7 +118,7 @@ export class PerkData {
 	static iveGotYou: Perk = {
 		id: 'perk-ive-got-you',
 		name: 'I\'ve Got You',
-		description: '',
+		description: 'You catch a falling ally at the last possible moment.',
 		type: FeatureType.Ability,
 		data: {
 			ability: FactoryLogic.createAbility({
@@ -334,7 +334,7 @@ For you, music is a universal language.
 	static gumUpTheWorks: Perk = {
 		id: 'perk-gum-up-the-works',
 		name: 'Gum Up The Works',
-		description: '',
+		description: 'You prevent a trap from activating.',
 		type: FeatureType.Ability,
 		data: {
 			ability: FactoryLogic.createAbility({
@@ -501,7 +501,7 @@ Choose one of the following effects:
 	static creatureSense: Perk = {
 		id: 'perk-creature-sense',
 		name: 'Creature Sense',
-		description: '',
+		description: 'You intuit a creature\'s keywords.',
 		type: FeatureType.Ability,
 		data: {
 			ability: FactoryLogic.createAbility({
@@ -533,7 +533,7 @@ If the familiar is destroyed, you can restore them as a respite activity or by s
 	static invisibleForce: Perk = {
 		id: 'perk-invisible-force',
 		name: 'Invisible Force',
-		description: '',
+		description: 'You manipulate a tiny object with your mind.',
 		type: FeatureType.Ability,
 		data: {
 			ability: FactoryLogic.createAbility({
@@ -553,7 +553,7 @@ If the familiar is destroyed, you can restore them as a respite activity or by s
 	static psychicWhisper: Perk = {
 		id: 'perk-psychic-whisper',
 		name: 'Psychic Whisper',
-		description: '',
+		description: 'You send a one-way telepathic message to a friend.',
 		type: FeatureType.Ability,
 		data: {
 			ability: FactoryLogic.createAbility({

@@ -205,16 +205,13 @@ export class AbilityLogic {
 					return `${total} ${damage}`;
 				}
 
-				if (section.toLowerCase().includes('weak') || section.toLowerCase().includes('average') || section.toLowerCase().includes('avg') || section.toLowerCase().includes('strong')) {
+				if ([ 'weak', 'average', 'avg', 'strong' ].some(p => section.toLowerCase().includes(p))) {
 					// Modify text to remove weak / average / strong
-					const weak = HeroLogic.calculatePotency(hero, 'weak').toString();
-					const avg = HeroLogic.calculatePotency(hero, 'average').toString();
-					const strong = HeroLogic.calculatePotency(hero, 'strong').toString();
 					return section
-						.replace(/weak,/, `${weak},`)
-						.replace(/average,/, `${avg},`)
-						.replace(/avg,/, `${avg},`)
-						.replace(/strong,/, `${strong},`);
+						.replace(/[[({]weak[\])}]/, `${HeroLogic.calculatePotency(hero, 'weak')}`)
+						.replace(/[[({]average[\])}]/, `${HeroLogic.calculatePotency(hero, 'average')}`)
+						.replace(/[[({]avg[\])}]/, `${HeroLogic.calculatePotency(hero, 'average')}`)
+						.replace(/[[({]strong[\])}]/, `${HeroLogic.calculatePotency(hero, 'strong')}`);
 				}
 
 				return section;

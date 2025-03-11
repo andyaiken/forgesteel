@@ -1,15 +1,15 @@
 import { FactoryLogic } from './logic/factory-logic.ts';
-import { FeatureType } from './enums/feature-type.ts';
 import { Format } from './utils/format.ts';
 import { HashRouter } from 'react-router';
 import { Hero } from './models/hero.ts';
 import { HeroLogic } from './logic/hero-logic.ts';
 import { Main } from './components/main/main.tsx';
-import { MonsterOrganizationType } from './enums/monster-organization-type.ts';
 import { Options } from './models/options.ts';
 import { Playbook } from './models/playbook.ts';
+import { PlaybookLogic } from './logic/playbook-logic.ts';
 import { Sourcebook } from './models/sourcebook.ts';
 import { SourcebookData } from './data/sourcebook-data.ts';
+import { SourcebookLogic } from './logic/sourcebook-logic.ts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import localforage from 'localforage';
@@ -40,45 +40,7 @@ Promise.all(promises).then(results => {
 	}
 
 	sourcebooks.forEach(sourcebook => {
-		if (sourcebook.domains === undefined) {
-			sourcebook.domains = [];
-		}
-		if (sourcebook.items === undefined) {
-			sourcebook.items = [];
-		}
-		if (sourcebook.perks === undefined) {
-			sourcebook.perks = [];
-		}
-		if (sourcebook.titles === undefined) {
-			sourcebook.titles = [];
-		}
-		if (sourcebook.monsterGroups === undefined) {
-			sourcebook.monsterGroups = [];
-		}
-		if (sourcebook.projects === undefined) {
-			sourcebook.projects = [];
-		}
-
-		sourcebook.monsterGroups.forEach(group => {
-			group.monsters.forEach(monster => {
-				if (monster.role.organization === undefined) {
-					monster.role.organization = MonsterOrganizationType.Platoon;
-				}
-
-				monster.features
-					.filter(f => f.type === FeatureType.DamageModifier)
-					.forEach(f => {
-						f.data.modifiers.forEach(dm => {
-							if (dm.valueCharacteristics === undefined) {
-								dm.valueCharacteristics = [];
-							}
-							if (dm.valueCharacteristicMultiplier === undefined) {
-								dm.valueCharacteristicMultiplier = 1;
-							}
-						});
-					});
-			});
-		});
+		SourcebookLogic.updateSourcebook(sourcebook);
 	});
 
 	[ SourcebookData.core, SourcebookData.orden, ...sourcebooks ].forEach(sourcebook => {
@@ -101,33 +63,61 @@ Promise.all(promises).then(results => {
 		playbook = FactoryLogic.createPlaybook();
 	}
 
-	if (playbook.negotiations === undefined) {
-		playbook.negotiations = [];
-	}
-
-	playbook.negotiations.forEach(n => {
-		if (n.impression === undefined) {
-			n.impression = 1;
-		}
-	});
-
-	if (playbook.montages === undefined) {
-		playbook.montages = [];
-	}
+	PlaybookLogic.updatePlaybook(playbook);
 
 	let options = results[4] as Options | null;
 	if (!options) {
 		options = {
 			showSkillsInGroups: false,
-			showMonstersInGroups: true,
 			showFreeStrikes: false,
 			showStandardAbilities: false,
-			dimUnavailableAbilities: false
+			dimUnavailableAbilities: false,
+			showMonstersInGroups: true,
+			showSimilarMonsters: false,
+			similarLevel: true,
+			similarRole: true,
+			similarOrganization: true,
+			similarSize: true,
+			heroCount: 4,
+			heroLevel: 1,
+			heroVictories: 0
 		};
 	}
 
 	if (options.showMonstersInGroups === undefined) {
 		options.showMonstersInGroups = true;
+	}
+
+	if (options.showSimilarMonsters === undefined) {
+		options.showSimilarMonsters = true;
+	}
+
+	if (options.similarLevel === undefined) {
+		options.similarLevel = true;
+	}
+
+	if (options.similarRole === undefined) {
+		options.similarRole = true;
+	}
+
+	if (options.similarOrganization === undefined) {
+		options.similarOrganization = true;
+	}
+
+	if (options.similarSize === undefined) {
+		options.similarSize = true;
+	}
+
+	if (options.heroCount === undefined) {
+		options.heroCount = 4;
+	}
+
+	if (options.heroLevel === undefined) {
+		options.heroLevel = 1;
+	}
+
+	if (options.heroVictories === undefined) {
+		options.heroVictories = 0;
 	}
 
 	createRoot(document.getElementById('root')!).render(

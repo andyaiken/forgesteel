@@ -22,13 +22,13 @@ export const ItemPanel = (props: Props) => {
 			<div className={props.mode === PanelMode.Full ? 'item-panel' : 'item-panel compact'} id={props.mode === PanelMode.Full ? props.item.id : undefined}>
 				<HeaderText level={1} tags={[ props.item.type ]}>{props.item.name || 'Unnamed Item'}</HeaderText>
 				{
-					props.hero && HeroLogic.canUseItem(props.hero, props.item) ?
-						null :
+					props.hero && !HeroLogic.canUseItem(props.hero, props.item) ?
 						<Alert
 							type='warning'
 							showIcon={true}
 							message='Your kit does not allow you to use this item.'
 						/>
+						: null
 				}
 				<Markdown text={props.item.description} />
 				{

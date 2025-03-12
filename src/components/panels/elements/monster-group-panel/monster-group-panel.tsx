@@ -71,22 +71,13 @@ export const MonsterGroupPanel = (props: Props) => {
 						: null
 				}
 				{
-					(props.mode === PanelMode.Full) && (props.monsterGroup.monsters.length > 0) && (props.monsterGroup.addOns.length > 0) ?
-						<Divider />
-						: null
-				}
-				{
 					(props.mode === PanelMode.Full) && (props.monsterGroup.addOns.length > 0) ?
-						<div className='add-ons'>
-							<HeaderText level={1}>Add-Ons</HeaderText>
-							{
-								props.monsterGroup.addOns.map(a =>
-									<SelectablePanel key={a.id}>
-										<FeaturePanel feature={a} mode={PanelMode.Full} />
-									</SelectablePanel>
-								)
-							}
-						</div>
+						<>
+							<HeaderText level={1}>Customization</HeaderText>
+							<div className='add-ons'>
+								{props.monsterGroup.addOns.map(a => <FeaturePanel key={a.id} feature={a} mode={PanelMode.Full} />)}
+							</div>
+						</>
 						: null
 				}
 			</div>

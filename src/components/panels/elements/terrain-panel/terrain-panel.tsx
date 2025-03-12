@@ -81,7 +81,7 @@ export const TerrainPanel = (props: Props) => {
 										))
 									: null
 							}
-							{props.showUpgrades && (props.terrain.upgrades.length > 0) ? <HeaderText level={1}>Upgrades</HeaderText> : null}
+							{props.showUpgrades && (props.terrain.upgrades.length > 0) ? <HeaderText level={1}>Customization</HeaderText> : null}
 							{
 								props.showUpgrades ?
 									props.terrain.upgrades.map((upgrade, n) => (

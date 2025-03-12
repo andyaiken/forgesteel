@@ -1,7 +1,7 @@
 import { Alert, Button, Drawer, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, EditOutlined, LeftOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
-import { Feature, FeatureAbility, FeatureMalice, FeatureText } from '../../../../models/feature';
+import { Feature, FeatureAbility, FeatureAddOn, FeatureAddOnType, FeatureMalice, FeatureText } from '../../../../models/feature';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ability } from '../../../../models/ability';
@@ -46,7 +46,6 @@ import { KitType } from '../../../../enums/kit-type';
 import { KitWeapon } from '../../../../enums/kit-weapon';
 import { MonsterEditPanel } from '../../../panels/edit/monster-edit-panel/monster-edit-panel';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
-import { MonsterLabel } from '../../../panels/monster-label/monster-label';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
@@ -1654,7 +1653,7 @@ export const LibraryEditPage = (props: Props) => {
 		);
 	};
 
-	const getTerrainUpgradesSection = () => {
+	const getTerrainCustomizationSection = () => {
 		const terrain = element as Terrain;
 
 		const addUpgrade = () => {
@@ -1775,7 +1774,7 @@ export const LibraryEditPage = (props: Props) => {
 					terrain.upgrades.map((upgrade, upgradeIndex) => (
 						<Expander
 							key={upgrade.id}
-							title={upgrade.label || 'Unnamed Upgrade'}
+							title={upgrade.label || 'Unnamed Customization'}
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveUpgrade(upgradeIndex, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveUpgrade(upgradeIndex, 'down'); }} />,
@@ -1861,11 +1860,11 @@ export const LibraryEditPage = (props: Props) => {
 						<Alert
 							type='warning'
 							showIcon={true}
-							message='No upgrades'
+							message='No customizations'
 						/>
 						: null
 				}
-				<Button block={true} onClick={addUpgrade}>Add a new upgrade</Button>
+				<Button block={true} onClick={addUpgrade}>Add a new customization</Button>
 			</Space>
 		);
 	};
@@ -2069,12 +2068,7 @@ export const LibraryEditPage = (props: Props) => {
 					monsterGroup.monsters.map(m => (
 						<Expander
 							key={m.id}
-							title={(
-								<div style={{ display: 'flex', flexDirection: 'column' }}>
-									<div><b>{MonsterLogic.getMonsterName(m, monsterGroup)}</b></div>
-									<MonsterLabel monster={m} />
-								</div>
-							)}
+							title={MonsterLogic.getMonsterName(m, monsterGroup)}
 							extra={[
 								<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!, m.id); }} />,
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMonster(m, 'up'); }} />,
@@ -2099,6 +2093,82 @@ export const LibraryEditPage = (props: Props) => {
 						: null
 				}
 				<Button block={true} onClick={addMonster}>Add a new monster</Button>
+			</Space>
+		);
+	};
+
+	const getMonstersCustomizationSection = () => {
+		const monsterGroup = element as MonsterGroup;
+
+		const addAddOn = () => {
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
+			copy.addOns.push(FactoryLogic.feature.createAddOn({
+				id: Utils.guid(),
+				name: '',
+				description: '',
+				category: FeatureAddOnType.Defensive
+			}));
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const changeAddOn = (addOn: FeatureAddOn) => {
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
+			const index = copy.addOns.findIndex(i => i.id === addOn.id);
+			if (index !== -1) {
+				copy.addOns[index] = addOn;
+			}
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const moveAddOn = (addOn: FeatureAddOn, direction: 'up' | 'down') => {
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
+			const index = copy.addOns.findIndex(i => i.id === addOn.id);
+			copy.addOns = Collections.move(copy.addOns, index, direction);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const deleteAddOn = (addOn: FeatureAddOn) => {
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
+			copy.addOns = copy.addOns.filter(i => i.id !== addOn.id);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					monsterGroup.addOns.map(i => (
+						<Expander
+							key={i.id}
+							title={i.name || 'Unnamed Customization'}
+							extra={[
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveAddOn(i, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveAddOn(i, 'down'); }} />,
+								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteAddOn(i); }} />
+							]}
+						>
+							<FeatureEditPanel
+								feature={i}
+								allowedTypes={[ FeatureType.AddOn ]}
+								sourcebooks={props.sourcebooks}
+								onChange={f => changeAddOn(f as FeatureAddOn)}
+							/>
+						</Expander>
+					))
+				}
+				{
+					monsterGroup.addOns.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No customizations'
+						/>
+						: null
+				}
+				<Button block={true} onClick={addAddOn}>Add a new customization</Button>
 			</Space>
 		);
 	};
@@ -2462,8 +2532,8 @@ export const LibraryEditPage = (props: Props) => {
 							},
 							{
 								key: '5',
-								label: 'Upgrades',
-								children: getTerrainUpgradesSection()
+								label: 'Customization',
+								children: getTerrainCustomizationSection()
 							}
 						]}
 					/>
@@ -2541,6 +2611,11 @@ export const LibraryEditPage = (props: Props) => {
 									key: '4',
 									label: 'Monsters',
 									children: getMonstersEditSection()
+								},
+								{
+									key: '5',
+									label: 'Customization',
+									children: getMonstersCustomizationSection()
 								}
 							]}
 						/>

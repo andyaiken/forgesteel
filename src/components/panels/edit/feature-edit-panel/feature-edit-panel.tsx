@@ -1,6 +1,6 @@
 import { Alert, Button, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -80,6 +80,12 @@ export const FeatureEditPanel = (props: Props) => {
 					keywords: [],
 					modifier: -1
 				} as FeatureAbilityCostData;
+				break;
+			case FeatureType.AddOn:
+				data = {
+					category: FeatureAddOnType.Defensive,
+					cost: 1
+				} as FeatureAddOnData;
 				break;
 			case FeatureType.AncestryChoice:
 				data = {
@@ -309,8 +315,8 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
-		const setMaliceCost = (value: number) => {
-			const copy = Utils.copy(feature.data) as FeatureMaliceData;
+		const setCost = (value: number) => {
+			const copy = Utils.copy(feature.data) as FeatureAddOnData | FeatureMaliceData;
 			copy.cost = value;
 			setData(copy);
 		};
@@ -318,6 +324,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setCompanionType = (value: 'companion' | 'mount' | 'retainer') => {
 			const copy = Utils.copy(feature.data) as FeatureCompanionData;
 			copy.type = value;
+			setData(copy);
+		};
+
+		const setAddOnType = (value: FeatureAddOnType) => {
+			const copy = Utils.copy(feature.data) as FeatureAddOnData;
+			copy.category = value;
 			setData(copy);
 		};
 
@@ -633,6 +645,24 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
+			case FeatureType.AddOn: {
+				const data = feature.data as FeatureAddOnData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Category</HeaderText>
+						<Segmented
+							name='categorytypes'
+							block={true}
+							options={[ FeatureAddOnType.Mobility, FeatureAddOnType.Defensive, FeatureAddOnType.Offensive, FeatureAddOnType.Supernatural ].map(o => ({ value: o, label: o }))}
+							value={data.category}
+							onChange={setAddOnType}
+						/>
+
+						<HeaderText>Cost</HeaderText>
+						<NumberSpin min={1} value={data.cost} onChange={setCost} />
+					</Space>
+				);
+			}
 			case FeatureType.AncestryChoice: {
 				return null;
 			}
@@ -937,7 +967,7 @@ export const FeatureEditPanel = (props: Props) => {
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Cost</HeaderText>
-						<NumberSpin min={1} value={data.cost} onChange={setMaliceCost} />
+						<NumberSpin min={1} value={data.cost} onChange={setCost} />
 						<HeaderText>Sections</HeaderText>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							{
@@ -1206,15 +1236,21 @@ export const FeatureEditPanel = (props: Props) => {
 							label: 'Details',
 							children: (
 								<div>
-									<HeaderText>Feature Type</HeaderText>
-									<Select
-										style={{ width: '100%' }}
-										placeholder='Select type'
-										options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.AbilityCost, FeatureType.AncestryChoice, FeatureType.AncestryFeatureChoice, FeatureType.Bonus, FeatureType.CharacteristicBonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.Companion, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.TitleChoice ]).map(o => ({ value: o }))}
-										optionRender={option => <Field label={option.data.value} value={FeatureLogic.getFeatureTypeDescription(option.data.value)} />}
-										value={feature.type}
-										onChange={setType}
-									/>
+									{
+										(props.allowedTypes || []).length !== 1 ?
+											<>
+												<HeaderText>Feature Type</HeaderText>
+												<Select
+													style={{ width: '100%' }}
+													placeholder='Select type'
+													options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.AbilityCost, FeatureType.AncestryChoice, FeatureType.AncestryFeatureChoice, FeatureType.Bonus, FeatureType.CharacteristicBonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.Companion, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.TitleChoice ]).map(o => ({ value: o }))}
+													optionRender={option => <Field label={option.data.value} value={FeatureLogic.getFeatureTypeDescription(option.data.value)} />}
+													value={feature.type}
+													onChange={setType}
+												/>
+											</>
+											: null
+									}
 									{
 										(feature as Perk).list !== undefined ?
 											<div>

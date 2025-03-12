@@ -45,7 +45,7 @@ export const PlotPanel = (props: Props) => {
 	try {
 		if (props.plot.plots.length === 0) {
 			return (
-				<div className='ds-text centered-text'>Empty</div>
+				<div className='ds-text dimmed-text centered-text'>Empty</div>
 			);
 		};
 

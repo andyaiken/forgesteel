@@ -17,6 +17,7 @@ import { Skill } from '../models/skill';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
+import { Terrain } from '../models/terrain';
 import { Title } from '../models/title';
 
 export class SourcebookLogic {
@@ -33,6 +34,7 @@ export class SourcebookLogic {
 		count += sourcebook.perks.length;
 		count += sourcebook.items.length;
 		count += sourcebook.monsterGroups.length;
+		count += sourcebook.terrain.length;
 
 		return count;
 	};
@@ -79,6 +81,10 @@ export class SourcebookLogic {
 
 	static getMonsterGroupSourcebook = (sourcebooks: Sourcebook[], monsterGroup: MonsterGroup) => {
 		return sourcebooks.find(s => s.monsterGroups.find(mg => mg.id === monsterGroup.id));
+	};
+
+	static getTerrainSourcebook = (sourcebooks: Sourcebook[], terrain: Terrain) => {
+		return sourcebooks.find(s => s.terrain.find(t => t.id === terrain.id));
 	};
 
 	///////////////////////////////////////////////////////////////////////////
@@ -235,6 +241,16 @@ export class SourcebookLogic {
 		return Collections.sort(list, item => item.name);
 	};
 
+	static getTerrains = (sourcebooks: Sourcebook[]) => {
+		const list: Terrain[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.terrain);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
 	///////////////////////////////////////////////////////////////////////////
 
 	static getSkill = (skillName: string, sourcebooks: Sourcebook[]) => {
@@ -287,6 +303,9 @@ export class SourcebookLogic {
 		}
 		if (sourcebook.projects === undefined) {
 			sourcebook.projects = [];
+		}
+		if (sourcebook.terrain === undefined) {
+			sourcebook.terrain = [];
 		}
 
 		sourcebook.classes.forEach(c => {

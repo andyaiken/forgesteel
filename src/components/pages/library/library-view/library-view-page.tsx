@@ -33,6 +33,8 @@ import { ReactNode } from 'react';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { SubClass } from '../../../../models/subclass';
 import { SubclassPanel } from '../../../panels/elements/subclass-panel/subclass-panel';
+import { Terrain } from '../../../../models/terrain';
+import { TerrainPanel } from '../../../panels/elements/terrain-panel/terrain-panel';
 import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { useNavigation } from '../../../../hooks/use-navigation';
@@ -178,6 +180,17 @@ export const LibraryViewPage = (props: Props) => {
 			panel = (
 				<PerkPanel
 					perk={element as Perk}
+					mode={PanelMode.Full}
+				/>
+			);
+			break;
+		case 'terrain':
+			element = props.sourcebooks.flatMap(sb => sb.terrain).find(x => x.id === elementID) as Element;
+			sourcebook = SourcebookLogic.getTerrainSourcebook(props.sourcebooks, element as Terrain) as Sourcebook;
+			panel = (
+				<TerrainPanel
+					terrain={element as Terrain}
+					showUpgrades={true}
 					mode={PanelMode.Full}
 				/>
 			);

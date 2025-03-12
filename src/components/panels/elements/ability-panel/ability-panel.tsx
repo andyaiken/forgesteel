@@ -1,13 +1,12 @@
 import { AbilityCustomization, Hero } from '../../../../models/hero';
+import { Badge, HeroicResourceBadge } from '../../../controls/badge/badge';
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
-import { Badge } from '../../../controls/badge/badge';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroLogic } from '../../../../logic/hero-logic';
-import { HeroicResourceBadge } from '../../../controls/heroic-resource-badge/heroic-resource-badge';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';

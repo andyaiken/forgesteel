@@ -17,7 +17,15 @@ export interface EncounterGroup {
 	slots: EncounterSlot[];
 }
 
+export interface TerrainSlot {
+	id: string;
+	terrainID: string;
+	upgradeIDs: string[];
+	count: number;
+}
+
 export interface Encounter extends Element {
 	groups: EncounterGroup[];
+	terrain: TerrainSlot[];
 	malice: number;
 }

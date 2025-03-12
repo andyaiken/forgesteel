@@ -3,8 +3,10 @@ import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
 import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
+import { MonsterFilter, TerrainFilter } from '../models/filter';
 import { Montage, MontageChallenge, MontageSection } from '../models/montage';
 import { Project, ProjectProgress } from '../models/project';
+import { Terrain, TerrainRole } from '../models/terrain';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
@@ -29,7 +31,6 @@ import { ItemType } from '../enums/item-type';
 import { KitArmor } from '../enums/kit-armor';
 import { KitType } from '../enums/kit-type';
 import { KitWeapon } from '../enums/kit-weapon';
-import { MonsterFilter } from '../models/monster-filter';
 import { MonsterLogic } from './monster-logic';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
@@ -43,6 +44,8 @@ import { Size } from '../models/size';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
 import { SubClass } from '../models/subclass';
+import { TerrainCategory } from '../enums/terrain-category';
+import { TerrainRoleType } from '../enums/terrain-role-type';
 import { Title } from '../models/title';
 import { Utils } from '../utils/utils';
 
@@ -113,7 +116,8 @@ export class FactoryLogic {
 			monsterGroups: [],
 			skills: [],
 			languages: [],
-			projects: []
+			projects: [],
+			terrain: []
 		};
 	};
 
@@ -242,6 +246,34 @@ export class FactoryLogic {
 			type: FeatureType.Text,
 			data: null,
 			list: PerkList.Crafting
+		};
+	};
+
+	static createTerrain = (): Terrain => {
+		return {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			category: TerrainCategory.Environmental,
+			level: 1,
+			role: FactoryLogic.createTerrainRole(MonsterRoleType.Ambusher, TerrainRoleType.Fortification),
+			encounterValue: 0,
+			area: '',
+			stamina: {
+				base: 0,
+				perSquare: 0
+			},
+			size: '',
+			damageMods: [],
+			sections: [],
+			upgrades: []
+		};
+	};
+
+	static createTerrainRole = (type: MonsterRoleType, terrainType: TerrainRoleType): TerrainRole => {
+		return {
+			type: type,
+			terrainType: terrainType
 		};
 	};
 
@@ -419,12 +451,23 @@ export class FactoryLogic {
 		};
 	};
 
+	static createTerrainFilter = (minLevel: number, maxLevel: number): TerrainFilter => {
+		return {
+			name: '',
+			roles: [],
+			terrainRoles: [],
+			level: [ minLevel, maxLevel ],
+			ev: [ 0, 120 ]
+		};
+	};
+
 	static createEncounter = (): Encounter => {
 		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
 			groups: [],
+			terrain: [],
 			malice: 0
 		};
 	};

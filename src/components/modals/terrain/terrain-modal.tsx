@@ -1,20 +1,20 @@
 import { Button, Popover } from 'antd';
-import { Monster, MonsterGroup } from '../../../models/monster';
 import { Modal } from '../modal/modal';
-import { MonsterPanel } from '../../panels/elements/monster-panel/monster-panel';
 import { PanelMode } from '../../../enums/panel-mode';
+import { Terrain } from '../../../models/terrain';
+import { TerrainPanel } from '../../panels/elements/terrain-panel/terrain-panel';
 import { UploadOutlined } from '@ant-design/icons';
 
-import './monster-modal.scss';
+import './terrain-modal.scss';
 
 interface Props {
-	monster: Monster;
-	monsterGroup?: MonsterGroup;
+	terrain: Terrain;
+	upgradeIDs: string[];
 	onClose: () => void;
 	export: (format: 'image' | 'pdf' | 'json') => void;
 }
 
-export const MonsterModal = (props: Props) => {
+export const TerrainModal = (props: Props) => {
 	try {
 		return (
 			<Modal
@@ -38,10 +38,10 @@ export const MonsterModal = (props: Props) => {
 					</>
 				}
 				content={
-					<div className='monster-modal'>
-						<MonsterPanel
-							monster={props.monster}
-							monsterGroup={props.monsterGroup}
+					<div className='terrain-modal'>
+						<TerrainPanel
+							terrain={props.terrain}
+							showUpgrades={true}
 							mode={PanelMode.Full}
 						/>
 					</div>

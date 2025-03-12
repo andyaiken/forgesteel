@@ -9,7 +9,7 @@ import { FactoryLogic } from './factory-logic';
 import { FeatureLogic } from './feature-logic';
 import { FeatureType } from '../enums/feature-type';
 import { MonsterFeatureCategory } from '../enums/monster-feature-category';
-import { MonsterFilter } from '../models/monster-filter';
+import { MonsterFilter } from '../models/filter';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Random } from '../utils/random';

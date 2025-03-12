@@ -11,7 +11,8 @@ $monster-hexer: rgb(216, 226, 192);
 $monster-mount: rgb(190, 220, 231);
 $monster-support: rgb(245, 213, 184);
 
-.monster-label {
+.monster-label,
+.terrain-label {
     margin: 5px 0;
 	border-radius: 5px;
     padding: 5px 10px;

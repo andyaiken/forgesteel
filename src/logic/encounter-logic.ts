@@ -1,4 +1,4 @@
-import { Encounter, EncounterGroup } from '../models/encounter';
+import { Encounter, EncounterGroup, TerrainSlot } from '../models/encounter';
 import { Collections } from '../utils/collections';
 import { EncounterDifficulty } from '../enums/encounter-difficulty';
 import { MonsterLogic } from './monster-logic';
@@ -28,7 +28,9 @@ export class EncounterLogic {
 	};
 
 	static getStrength = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
-		return Collections.sum(encounter.groups, g => EncounterLogic.getGroupStrength(g, sourcebooks));
+		const monsters = Collections.sum(encounter.groups, g => EncounterLogic.getGroupStrength(g, sourcebooks));
+		const terrain = Collections.sum(encounter.terrain, t => EncounterLogic.getTerrainStrength(t, sourcebooks));
+		return monsters + terrain;
 	};
 
 	static getGroupStrength = (group: EncounterGroup, sourcebooks: Sourcebook[]) => {
@@ -37,10 +39,18 @@ export class EncounterLogic {
 
 			const group = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
 			const addOns = group ? group.addOns.filter(a => slot.customization.addOnIDs.includes(a.id)) : [];
-			const addOnCost = addOns.length > 4 ? (addOns.length - 4) * 2 : 0;
+			const addOnPoints = Collections.sum(addOns, a => a.data.cost);
+			const addOnCost = addOnPoints > 4 ? (addOnPoints - 4) * 2 : 0;
 
 			return monster ? (monster.encounterValue + addOnCost) * slot.count : 0;
 		});
+	};
+
+	static getTerrainStrength = (slot: TerrainSlot, sourcebooks: Sourcebook[]) => {
+		const terrain = SourcebookLogic.getTerrains(sourcebooks).find(t => t.id === slot.terrainID);
+		const upgrades = terrain ? terrain.upgrades.filter(a => slot.upgradeIDs.includes(a.id)) : [];
+		const upgradeCost = Collections.sum(upgrades, a => a.cost);
+		return terrain ? (terrain.encounterValue + upgradeCost) * slot.count : 0;
 	};
 
 	static getHeroValue = (level: number) => {

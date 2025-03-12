@@ -1,7 +1,7 @@
 import { Alert, Button, Drawer, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, EditOutlined, LeftOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
-import { Feature, FeatureAbility, FeatureMalice } from '../../../../models/feature';
+import { Feature, FeatureAbility, FeatureMalice, FeatureText } from '../../../../models/feature';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ability } from '../../../../models/ability';
@@ -20,6 +20,7 @@ import { Complication } from '../../../../models/complication';
 import { ComplicationPanel } from '../../../panels/elements/complication-panel/complication-panel';
 import { Culture } from '../../../../models/culture';
 import { CulturePanel } from '../../../panels/elements/culture-panel/culture-panel';
+import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel';
@@ -32,6 +33,7 @@ import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
+import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
@@ -63,6 +65,10 @@ import { SelectablePanel } from '../../../controls/selectable-panel/selectable-p
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { SubClass } from '../../../../models/subclass';
 import { SubclassPanel } from '../../../panels/elements/subclass-panel/subclass-panel';
+import { Terrain } from '../../../../models/terrain';
+import { TerrainCategory } from '../../../../enums/terrain-category';
+import { TerrainPanel } from '../../../panels/elements/terrain-panel/terrain-panel';
+import { TerrainRoleType } from '../../../../enums/terrain-role-type';
 import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Toggle } from '../../../controls/toggle/toggle';
@@ -71,7 +77,7 @@ import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
 
-import './library-edit.scss';
+import './library-edit-page.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
@@ -120,6 +126,9 @@ export const LibraryEditPage = (props: Props) => {
 				break;
 			case 'perk':
 				original = sourcebook.perks.find(e => e.id === elementID)!;
+				break;
+			case 'terrain':
+				original = sourcebook.terrain.find(e => e.id === elementID)!;
 				break;
 			case 'title':
 				original = sourcebook.titles.find(e => e.id === elementID)!;
@@ -684,7 +693,7 @@ export const LibraryEditPage = (props: Props) => {
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSubclass(sc); }} />
 							]}
 						>
-							<SubclassPanel subclass={sc} mode={PanelMode.Compact} />
+							<SubclassPanel subclass={sc} />
 						</Expander>
 					))
 				}
@@ -883,7 +892,7 @@ export const LibraryEditPage = (props: Props) => {
 		);
 	};
 
-	const getKitEditSection = () => {
+	const getKitDetailsSection = () => {
 		const kit = element as Kit;
 
 		const setType = (value: KitType) => {
@@ -1300,6 +1309,567 @@ export const LibraryEditPage = (props: Props) => {
 		);
 	};
 
+	const getTerrainStatsSection = () => {
+		const terrain = element as Terrain;
+
+		const setCategory = (value: TerrainCategory) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.category = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setLevel = (value: number) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.level = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setRoleType = (value: MonsterRoleType) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.role.type = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setTerrainRoleType = (value: TerrainRoleType) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.role.terrainType = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setEncounterValue = (value: number) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.encounterValue = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setArea = (value: string) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.area = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setStaminaBase = (value: number) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.stamina.base = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setStaminaPerSquare = (value: number) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.stamina.perSquare = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setSize = (value: string) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.size = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Category</HeaderText>
+				<Select
+					style={{ width: '100%' }}
+					options={[ TerrainCategory.ArcaneObject, TerrainCategory.Environmental, TerrainCategory.Fieldwork, TerrainCategory.Mechanism, TerrainCategory.PowerFixture, TerrainCategory.SiegeEngine ].map(c => ({ label: c, value: c }))}
+					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+					value={terrain.category}
+					onChange={setCategory}
+				/>
+				<HeaderText>Level</HeaderText>
+				<NumberSpin
+					min={1}
+					max={10}
+					value={terrain.level}
+					onChange={setLevel}
+				/>
+				<HeaderText>Role</HeaderText>
+				<Select
+					style={{ width: '100%' }}
+					options={[ MonsterRoleType.NoRole, MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(type => ({ label: type, value: type, desc: MonsterLogic.getRoleTypeDescription(type) }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					value={terrain.role.type}
+					onChange={setRoleType}
+				/>
+				<Select
+					style={{ width: '100%' }}
+					options={[ TerrainRoleType.Fortification, TerrainRoleType.Hazard, TerrainRoleType.Relic, TerrainRoleType.SiegeEngine, TerrainRoleType.Trap, TerrainRoleType.Trigger ].map(type => ({ label: type, value: type }))}
+					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+					value={terrain.role.terrainType}
+					onChange={setTerrainRoleType}
+				/>
+				<HeaderText>Encounter Value</HeaderText>
+				<NumberSpin min={1} value={terrain.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />
+				<Input
+					placeholder='Area'
+					allowClear={true}
+					value={terrain.area}
+					onChange={e => setArea(e.target.value)}
+				/>
+				<HeaderText>Stamina</HeaderText>
+				<NumberSpin label='Base Stamina' min={0} value={terrain.stamina.base} steps={[ 1, 10 ]} onChange={setStaminaBase} />
+				<NumberSpin label='Per Square' min={0} value={terrain.stamina.perSquare} steps={[ 1, 10 ]} onChange={setStaminaPerSquare} />
+				<HeaderText>Size</HeaderText>
+				<Input
+					placeholder='Size'
+					allowClear={true}
+					value={terrain.size}
+					onChange={e => setSize(e.target.value)}
+				/>
+			</Space>
+		);
+	};
+
+	const getTerrainDamageSection = () => {
+		const terrain = element as Terrain;
+
+		const addDamageMod = () => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.damageMods.push(FactoryLogic.damageModifier.create({
+				damageType: '',
+				modifierType: DamageModifierType.Immunity,
+				value: 0
+			}));
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setModifierType = (index: number, value: DamageModifierType) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.damageMods[index].type = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setDamageType = (index: number, value: string) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.damageMods[index].damageType = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setValue = (index: number, value: number) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.damageMods[index].value = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const moveDamageMod = (index: number, direction: 'up' | 'down') => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.damageMods = Collections.move(copy.damageMods, index, direction);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const deleteDamageMod = (index: number) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.damageMods.splice(index, 1);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					terrain.damageMods.map((dm, n) => (
+						<Expander
+							key={n}
+							title={FormatLogic.getDamageModifier(dm)}
+							extra={[
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveDamageMod(n, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveDamageMod(n, 'down'); }} />,
+								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteDamageMod(n); }} />
+							]}
+						>
+							<HeaderText>Modifier Type</HeaderText>
+							<Segmented
+								name='modifiertypes'
+								block={true}
+								options={[ DamageModifierType.Immunity, DamageModifierType.Weakness ]}
+								value={dm.type}
+								onChange={value => setModifierType(n, value)}
+							/>
+							<HeaderText>Damage Type</HeaderText>
+							<Input
+								placeholder='Damage type'
+								allowClear={true}
+								value={dm.damageType}
+								onChange={e => setDamageType(n, e.target.value)}
+							/>
+							<HeaderText>Value</HeaderText>
+							<NumberSpin min={0} value={dm.value} onChange={value => setValue(n, value)} />
+						</Expander>
+					))
+				}
+				{
+					terrain.damageMods.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No damage modifiers'
+						/>
+						: null
+				}
+				<Button block={true} onClick={addDamageMod}>Add a new damage modifier</Button>
+			</Space>
+		);
+	};
+
+	const getTerrainSectionsSection = () => {
+		const terrain = element as Terrain;
+
+		const addSection = () => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.sections.push({
+				id: Utils.guid(),
+				content: [
+					FactoryLogic.feature.create({
+						id: Utils.guid(),
+						name: '',
+						description: ''
+					})
+				]
+			});
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const moveSection = (sectionIndex: number, direction: 'up' | 'down') => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.sections = Collections.move(copy.sections, sectionIndex, direction);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const deleteSection = (sectionIndex: number) => {
+			const copy = Utils.copy(terrain) as Terrain;
+			copy.sections.splice(sectionIndex);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const addSectionContent = (sectionIndex: number) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.sections[sectionIndex].content.push(
+				FactoryLogic.feature.create({
+					id: Utils.guid(),
+					name: '',
+					description: ''
+				})
+			);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const moveSectionContent = (sectionIndex: number, contentIndex: number, direction: 'up' | 'down') => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.sections[sectionIndex].content = Collections.move(copy.sections[sectionIndex].content, contentIndex, direction);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const deleteSectionContent = (sectionIndex: number, contentIndex: number) => {
+			const copy = Utils.copy(terrain) as Terrain;
+			copy.sections[sectionIndex].content.splice(contentIndex);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setSectionContentFeature = (sectionIndex: number, contentIndex: number, value: FeatureText | FeatureAbility) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.sections[sectionIndex].content[contentIndex] = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					terrain.sections.map((section, sectionIndex) => (
+						<Expander
+							key={section.id}
+							title='Section'
+							extra={[
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSection(sectionIndex, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSection(sectionIndex, 'down'); }} />,
+								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSection(sectionIndex); }} />
+							]}
+						>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								{
+									section.content.map((feature, contentIndex) => (
+										<Expander
+											key={feature.id}
+											title={feature.name}
+											extra={[
+												<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSectionContent(sectionIndex, contentIndex, 'up'); }} />,
+												<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSectionContent(sectionIndex, contentIndex, 'down'); }} />,
+												<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSectionContent(sectionIndex, contentIndex); }} />
+											]}
+										>
+											<FeatureEditPanel
+												feature={feature}
+												allowedTypes={[ FeatureType.Text, FeatureType.Ability ]}
+												sourcebooks={props.sourcebooks}
+												onChange={f => setSectionContentFeature(sectionIndex, contentIndex, f as FeatureText | FeatureAbility)}
+											/>
+										</Expander>
+									))
+								}
+								{
+									section.content.length === 0 ?
+										<Alert
+											type='warning'
+											showIcon={true}
+											message='No content'
+										/>
+										: null
+								}
+								<Button block={true} onClick={() => addSectionContent(sectionIndex)}>Add a new content item</Button>
+							</Space>
+						</Expander>
+					))
+				}
+				{
+					terrain.sections.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No sections'
+						/>
+						: null
+				}
+				<Button block={true} onClick={addSection}>Add a new section</Button>
+			</Space>
+		);
+	};
+
+	const getTerrainUpgradesSection = () => {
+		const terrain = element as Terrain;
+
+		const addUpgrade = () => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.upgrades.push({
+				id: Utils.guid(),
+				label: '',
+				cost: 1,
+				text: '',
+				sections: []
+			});
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const moveUpgrade = (upgradeIndex: number, direction: 'up' | 'down') => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.upgrades = Collections.move(copy.upgrades, upgradeIndex, direction);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const deleteUpgrade = (upgradeIndex: number) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.upgrades.splice(upgradeIndex);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setUpgradeLabel = (upgradeIndex: number, value: string) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.upgrades[upgradeIndex].label = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setUpgradeText = (upgradeIndex: number, value: string) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.upgrades[upgradeIndex].text = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setUpgradeCost = (upgradeIndex: number, value: number) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.upgrades[upgradeIndex].cost = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const addUpgradeSection = (upgradeIndex: number) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.upgrades[upgradeIndex].sections.push({
+				id: Utils.guid(),
+				content: [
+					FactoryLogic.feature.create({
+						id: Utils.guid(),
+						name: '',
+						description: ''
+					})
+				]
+			});
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const moveUpgradeSection = (upgradeIndex: number, sectionIndex: number, direction: 'up' | 'down') => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.upgrades[upgradeIndex].sections = Collections.move(copy.sections, sectionIndex, direction);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const deleteUpgradeSection = (upgradeIndex: number, sectionIndex: number) => {
+			const copy = Utils.copy(terrain) as Terrain;
+			copy.upgrades[upgradeIndex].sections.splice(sectionIndex);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const addUpgradeSectionContent = (upgradeIndex: number, sectionIndex: number) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.upgrades[upgradeIndex].sections[sectionIndex].content.push(
+				FactoryLogic.feature.create({
+					id: Utils.guid(),
+					name: '',
+					description: ''
+				})
+			);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const moveUpgradeSectionContent = (upgradeIndex: number, sectionIndex: number, contentIndex: number, direction: 'up' | 'down') => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.upgrades[upgradeIndex].sections[sectionIndex].content = Collections.move(copy.sections[sectionIndex].content, contentIndex, direction);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const deleteUpgradeSectionContent = (upgradeIndex: number, sectionIndex: number, contentIndex: number) => {
+			const copy = Utils.copy(terrain) as Terrain;
+			copy.upgrades[upgradeIndex].sections[sectionIndex].content.splice(contentIndex);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setUpgradeSectionContentFeature = (upgradeIndex: number, sectionIndex: number, contentIndex: number, value: FeatureText | FeatureAbility) => {
+			const copy = Utils.copy(element) as Terrain;
+			copy.upgrades[upgradeIndex].sections[sectionIndex].content[contentIndex] = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					terrain.upgrades.map((upgrade, upgradeIndex) => (
+						<Expander
+							key={upgrade.id}
+							title={upgrade.label || 'Unnamed Upgrade'}
+							extra={[
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveUpgrade(upgradeIndex, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveUpgrade(upgradeIndex, 'down'); }} />,
+								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteUpgrade(upgradeIndex); }} />
+							]}
+						>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								<HeaderText>Label</HeaderText>
+								<Input
+									className={upgrade.label === '' ? 'input-empty' : ''}
+									placeholder='Label'
+									allowClear={true}
+									value={upgrade.label}
+									onChange={e => setUpgradeLabel(upgradeIndex, e.target.value)}
+								/>
+								<HeaderText>Text</HeaderText>
+								<MultiLine label='Text' value={upgrade.text} onChange={value => setUpgradeText(upgradeIndex, value)} />
+								<HeaderText>Cost</HeaderText>
+								<NumberSpin min={1} value={upgrade.cost} onChange={value => setUpgradeCost(upgradeIndex, value)} />
+								<HeaderText>Sections</HeaderText>
+								{
+									upgrade.sections.map((section, sectionIndex) => (
+										<Expander
+											key={section.id}
+											title='Section'
+											extra={[
+												<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveUpgradeSection(upgradeIndex, sectionIndex, 'up'); }} />,
+												<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveUpgradeSection(upgradeIndex, sectionIndex, 'down'); }} />,
+												<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteUpgradeSection(upgradeIndex, sectionIndex); }} />
+											]}
+										>
+											<Space direction='vertical' style={{ width: '100%' }}>
+												{
+													section.content.map((feature, contentIndex) => (
+														<Expander
+															key={feature.id}
+															title={feature.name}
+															extra={[
+																<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveUpgradeSectionContent(upgradeIndex, sectionIndex, contentIndex, 'up'); }} />,
+																<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveUpgradeSectionContent(upgradeIndex, sectionIndex, contentIndex, 'down'); }} />,
+																<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteUpgradeSectionContent(upgradeIndex, sectionIndex, contentIndex); }} />
+															]}
+														>
+															<FeatureEditPanel
+																feature={feature}
+																allowedTypes={[ FeatureType.Text, FeatureType.Ability ]}
+																sourcebooks={props.sourcebooks}
+																onChange={f => setUpgradeSectionContentFeature(upgradeIndex, sectionIndex, contentIndex, f as FeatureText | FeatureAbility)}
+															/>
+														</Expander>
+													))
+												}
+												{
+													section.content.length === 0 ?
+														<Alert
+															type='warning'
+															showIcon={true}
+															message='No content'
+														/>
+														: null
+												}
+												<Button block={true} onClick={() => addUpgradeSectionContent(upgradeIndex, sectionIndex)}>Add a new content item</Button>
+											</Space>
+										</Expander>
+									))
+								}
+								{
+									upgrade.sections.length === 0 ?
+										<Alert
+											type='warning'
+											showIcon={true}
+											message='No sections'
+										/>
+										: null
+								}
+								<Button block={true} onClick={() => addUpgradeSection(upgradeIndex)}>Add a new section</Button>
+							</Space>
+						</Expander>
+					))
+				}
+				{
+					terrain.upgrades.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No upgrades'
+						/>
+						: null
+				}
+				<Button block={true} onClick={addUpgrade}>Add a new upgrade</Button>
+			</Space>
+		);
+	};
+
 	const getInformationEditSection = () => {
 		const monsterGroup = element as MonsterGroup;
 
@@ -1515,7 +2085,6 @@ export const LibraryEditPage = (props: Props) => {
 							<MonsterPanel
 								monster={m}
 								monsterGroup={monsterGroup}
-								mode={PanelMode.Compact}
 							/>
 						</Expander>
 					))
@@ -1835,7 +2404,7 @@ export const LibraryEditPage = (props: Props) => {
 							{
 								key: '2',
 								label: 'Details',
-								children: getKitEditSection()
+								children: getKitDetailsSection()
 							},
 							{
 								key: '3',
@@ -1865,6 +2434,38 @@ export const LibraryEditPage = (props: Props) => {
 							setElement(copy);
 							setDirty(true);
 						}}
+					/>
+				);
+			case 'terrain':
+				return (
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Terrain',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Stats',
+								children: getTerrainStatsSection()
+							},
+							{
+								key: '3',
+								label: 'Damage',
+								children: getTerrainDamageSection()
+							},
+							{
+								key: '4',
+								label: 'Sections',
+								children: getTerrainSectionsSection()
+							},
+							{
+								key: '5',
+								label: 'Upgrades',
+								children: getTerrainUpgradesSection()
+							}
+						]}
 					/>
 				);
 			case 'title':
@@ -2033,6 +2634,12 @@ export const LibraryEditPage = (props: Props) => {
 				return (
 					<SelectablePanel>
 						<PerkPanel perk={element as Perk} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
+			case 'terrain':
+				return (
+					<SelectablePanel>
+						<TerrainPanel terrain={element as Terrain} showUpgrades={true} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'title':

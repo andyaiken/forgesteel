@@ -20,12 +20,14 @@
 			flex-direction: column;
 			gap: 10px;
 
-			.group-row {
+			.group-row,
+			.terrain-container-row {
 				display: flex;
 				flex-direction: column;
 				gap: 8px;
 
-				.slot-row {
+				.slot-row,
+				.terrain-row {
 					border: 1px solid rgb(220, 220, 220);
 					border-radius: 10px;
 					background-color: rgba(255, 255, 255);
@@ -65,7 +67,8 @@
 			flex-direction: column;
 			gap: 10px;
 
-			.monster-row {
+			.monster-row,
+			.terrain-row {
 				border: 1px solid rgb(220, 220, 220);
 				border-radius: 10px;
 				background-color: rgba(255, 255, 255);
@@ -75,7 +78,8 @@
 				align-items: center;
 				gap: 20px;
 
-				.monster-panel {
+				.monster-panel,
+				.terrain-panel {
 					flex: 1 1 0;
 				}
 

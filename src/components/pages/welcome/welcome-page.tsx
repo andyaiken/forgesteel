@@ -32,19 +32,17 @@ export const WelcomePage = (props: Props) => {
 									<HeaderText>For Players</HeaderText>
 									<div className='ds-text'>
 										With this app you can create heroes for <b>DRAW STEEL</b>.
-									</div>
-									<div className='ds-text'>
-										If you're playing offline, you can export your heroes as PNG or PDF.
+										If you're playing offline, you can export your heroes in PNG or PDF formats.
 									</div>
 								</div>
 								<div>
 									<HeaderText>For Directors</HeaderText>
 									<div className='ds-text'>
-										In the <b>library</b>, you can browse the collections of ancestries, classes, kits - all of the elements you need to build a hero - and monsters.
+										In the <b>LIBRARY</b>, you can browse the collections of ancestries, classes, kits - all of the elements you need to build a hero - and other useful elements like monsters and terrain objects.
 										You can use these as a base from which to design your own homebrew elements, or create them from whole cloth.
 									</div>
 									<div className='ds-text'>
-										In your <b>playbook</b>, you can build encounters, ensuring that they're perfectly balanced for your heroes, and craft negotiations and montage tests.
+										In your <b>PLAYBOOK</b>, you can build encounters, ensuring that they're perfectly balanced for your heroes, and craft negotiations and montage tests.
 										You can then combine all these into an adventure.
 									</div>
 								</div>

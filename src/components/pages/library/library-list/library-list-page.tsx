@@ -25,7 +25,7 @@ import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
-import { MonsterFilter } from '../../../../models/monster-filter';
+import { MonsterFilter } from '../../../../models/filter';
 import { MonsterFilterPanel } from '../../../panels/monster-filter/monster-filter-panel';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
@@ -36,6 +36,8 @@ import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { Terrain } from '../../../../models/terrain';
+import { TerrainPanel } from '../../../panels/elements/terrain-panel/terrain-panel';
 import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
@@ -43,7 +45,7 @@ import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
 
-import './library-list.scss';
+import './library-list-page.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
@@ -196,6 +198,15 @@ export const LibraryListPage = (props: Props) => {
 			.getMonsterGroups(getSourcebooks())
 			.flatMap(mg => mg.monsters)
 			.filter(m => MonsterLogic.matches(m, monsterFilter))
+			.filter(item => Utils.textMatches([
+				item.name,
+				item.description
+			], searchTerm));
+	};
+
+	const getTerrains = () => {
+		return SourcebookLogic
+			.getTerrains(getSourcebooks())
 			.filter(item => Utils.textMatches([
 				item.name,
 				item.description
@@ -666,6 +677,43 @@ export const LibraryListPage = (props: Props) => {
 		);
 	};
 
+	const getTerrainsSection = (list: Terrain[]) => {
+		if (list.length === 0) {
+			return (
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='No terrain'
+				/>
+			);
+		}
+
+		return (
+			<div className='library-section-row'>
+				{
+					list.map(t => {
+						const item = (
+							<SelectablePanel key={t.id} onSelect={() => navigation.goToLibraryView('terrain', t.id)}>
+								<TerrainPanel terrain={t} />
+							</SelectablePanel>
+						);
+
+						const sourcebook = SourcebookLogic.getTerrainSourcebook(props.sourcebooks, t);
+						if (sourcebook && sourcebook.id) {
+							return (
+								<Badge.Ribbon key={t.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+									{item}
+								</Badge.Ribbon>
+							);
+						}
+
+						return item;
+					})
+				}
+			</div>
+		);
+	};
+
 	try {
 		const sourcebookOptions = props.sourcebooks.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
 
@@ -681,6 +729,7 @@ export const LibraryListPage = (props: Props) => {
 		const items = getItems();
 		const monsterGroups = getMonsterGroups();
 		const monsters = Collections.sort(getMonsters(), m => m.name);
+		const terrains = getTerrains();
 
 		return (
 			<div className='library-list-page'>
@@ -862,6 +911,16 @@ export const LibraryListPage = (props: Props) => {
 									</div>
 								),
 								children: getPerksSection(perks)
+							},
+							{
+								key: 'terrain',
+								label: (
+									<div className='section-header'>
+										<div className='section-title'>Terrain</div>
+										<div className='section-count'>{terrains.length}</div>
+									</div>
+								),
+								children: getTerrainsSection(terrains)
 							},
 							{
 								key: 'title',

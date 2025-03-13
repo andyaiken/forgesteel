@@ -22,7 +22,7 @@ import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
 
-import './playbook-list.scss';
+import './playbook-list-page.scss';
 
 interface Props {
 	playbook: Playbook;

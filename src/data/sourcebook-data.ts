@@ -12,6 +12,7 @@ import { PerkData } from './perk-data';
 import { ProjectData } from './project-data';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
+import { TerrainData } from './terrain-data';
 import { TitleData } from './title-data';
 
 export class SourcebookData {
@@ -495,6 +496,15 @@ export class SourcebookData {
 			ProjectData.communityService,
 			ProjectData.fishing,
 			ProjectData.spendTimeWithLovedOnes
+		],
+		terrain: [
+			TerrainData.angryBeehive,
+			TerrainData.brambles,
+			TerrainData.corrosivePool,
+			TerrainData.frozenPond,
+			TerrainData.lava,
+			TerrainData.quicksand,
+			TerrainData.toxicPlants
 		]
 	};
 
@@ -703,6 +713,7 @@ export class SourcebookData {
 				description: 'Spoken by dwarves; the language of engineering.'
 			}
 		],
-		projects: []
+		projects: [],
+		terrain: []
 	};
 }

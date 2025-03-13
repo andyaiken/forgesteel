@@ -116,6 +116,10 @@ export const AdventurePanel = (props: Props) => {
 	};
 
 	const getPlotInfo = () => {
+		if (props.adventure.plot.plots.length === 0) {
+			return null;
+		}
+
 		if (selectedPlot) {
 			return (
 				<div className='plot-details'>

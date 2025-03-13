@@ -26,7 +26,19 @@ export const TitlePanel = (props: Props) => {
 				{props.mode === PanelMode.Full ? <Field label='Prerequisites' value={props.title.prerequisites} /> : null}
 				{
 					props.mode === PanelMode.Full ?
-						props.title.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)
+						<div className='features'>
+							{
+								props.title.features.map(f => (
+									<FeaturePanel
+										key={f.id}
+										feature={f}
+										hero={props.hero}
+										sourcebooks={props.sourcebooks}
+										mode={PanelMode.Full}
+									/>
+								))
+							}
+						</div>
 						: null
 				}
 			</div>

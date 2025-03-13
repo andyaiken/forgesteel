@@ -14,35 +14,35 @@
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		gap: 20px;
 
-		.encounter-group {
+		.encounter-group,
+		.terrain-group {
 			display: block;
-
-			.encounter-slots {
-				display: block;
 		
-				.encounter-slot {
+				.encounter-slot,
+				.terrain-slot {
 					display: flex;
 					flex-direction: row;
 					align-items: center;
 					justify-content: space-between;
 
-					.encounter-slot-name {
+					.encounter-slot-name,
+					.terrain-slot-name {
 						display: flex;
 						flex-direction: row;
 						align-items: center;
 						gap: 8px;
 					}
 				}
-			}
 		}
 	}
 
-	.monsters {
+	.encounter-stat-blocks {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		gap: 20px;
 
-		.monster-panel {
+		.monster-panel,
+		.terrain-panel {
 			padding: 0;
 		}
 	}

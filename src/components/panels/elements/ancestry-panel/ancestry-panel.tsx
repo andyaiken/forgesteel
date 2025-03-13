@@ -24,8 +24,7 @@ export const AncestryPanel = (props: Props) => {
 				{
 					props.mode === PanelMode.Full ?
 						props.ancestry.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)
-						:
-						null
+						: null
 				}
 			</div>
 		);

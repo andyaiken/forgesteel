@@ -1,6 +1,6 @@
 import { Input, Select, Slider, Space } from 'antd';
 import { Field } from '../../controls/field/field';
-import { MonsterFilter } from '../../../models/monster-filter';
+import { MonsterFilter } from '../../../models/filter';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
 import { Utils } from '../../../utils/utils';

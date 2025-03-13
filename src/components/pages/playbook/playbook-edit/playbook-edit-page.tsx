@@ -1,12 +1,14 @@
-import { Alert, Button, Divider, Input, Popover, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Divider, Flex, Input, Popover, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, PlusOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { Encounter, EncounterGroup, EncounterSlot } from '../../../../models/encounter';
+import { Encounter, EncounterGroup, EncounterSlot, TerrainSlot } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
+import { MonsterFilter, TerrainFilter } from '../../../../models/filter';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { ReactNode, useState } from 'react';
 import { Adventure } from '../../../../models/adventure';
 import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
+import { Badge } from '../../../controls/badge/badge';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
@@ -21,7 +23,6 @@ import { FeaturePanel } from '../../../panels/elements/feature-panel/feature-pan
 import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
-import { MonsterFilter } from '../../../../models/monster-filter';
 import { MonsterFilterPanel } from '../../../panels/monster-filter/monster-filter-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
@@ -43,11 +44,15 @@ import { PlotEditPanel } from '../../../panels/edit/plot-edit-panel/plot-edit-pa
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { Terrain } from '../../../../models/terrain';
+import { TerrainFilterPanel } from '../../../panels/terrain-filter/terrain-filter-panel';
+import { TerrainLogic } from '../../../../logic/terrain-logic';
+import { TerrainPanel } from '../../../panels/elements/terrain-panel/terrain-panel';
 import { Utils } from '../../../../utils/utils';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
-import './playbook-edit.scss';
+import './playbook-edit-page.scss';
 
 interface Props {
 	playbook: Playbook;
@@ -57,6 +62,7 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
+	showTerrain: (terrain: Terrain, upgradeIDs: string[]) => void;
 	saveChanges: (kind: PlaybookElementKind, element: Element) => void;
 	setOptions: (options: Options) => void;
 }
@@ -84,6 +90,7 @@ export const PlaybookEditPage = (props: Props) => {
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter(1, 3));
+	const [ terrainFilter, setTerrainFilter ] = useState<TerrainFilter>(FactoryLogic.createTerrainFilter(1, 3));
 
 	//#region Edit
 
@@ -301,15 +308,8 @@ export const PlaybookEditPage = (props: Props) => {
 		);
 	};
 
-	const getEncounterContentsSection = () => {
+	const getEncounterMonstersSection = () => {
 		const encounter = element as Encounter;
-
-		const addGroup = () => {
-			const copy = Utils.copy(element) as Encounter;
-			copy.groups.push(FactoryLogic.createEncounterGroup());
-			setElement(copy);
-			setDirty(true);
-		};
 
 		const deleteGroup = (group: EncounterGroup) => {
 			const copy = Utils.copy(element) as Encounter;
@@ -380,7 +380,7 @@ export const PlaybookEditPage = (props: Props) => {
 				return (
 					<div key={slot.id} className='slot-row'>
 						<div className='content'>
-							<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Compact} />
+							<MonsterPanel monster={monster} monsterGroup={monsterGroup} />
 							{
 								monsterGroup.addOns.length > 0 ?
 									<Expander title='Customize'>
@@ -491,8 +491,98 @@ export const PlaybookEditPage = (props: Props) => {
 						</div>
 					))
 				}
-				{encounter.groups.length > 0 ? <Divider /> : null}
-				<Button block={true} onClick={addGroup}>Add a new encounter group</Button>
+				{
+					encounter.groups.length === 0 ?
+						<div className='ds-text dimmed-text centered-text'>None</div>
+						: null
+				}
+			</Space>
+		);
+	};
+
+	const getEncounterTerrainSection = () => {
+		const encounter = element as Encounter;
+
+		const setTerrainCount = (id: string, value: number) => {
+			const copy = Utils.copy(element) as Encounter;
+			const slot = copy.terrain.find(t => t.id === id);
+			if (slot) {
+				slot.count = value;
+
+				if (slot.count === 0) {
+					copy.terrain = copy.terrain.filter(t => t.id !== id);
+				}
+			}
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setTerrainUpgradeIDs = (id: string, value: string[]) => {
+			const copy = Utils.copy(element) as Encounter;
+			const slot = copy.terrain.find(t => t.id === id);
+			if (slot) {
+				slot.upgradeIDs = value;
+			}
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const getTerrain = (slot: TerrainSlot) => {
+			const terrain = SourcebookLogic.getTerrains(props.sourcebooks).find(t => t.id === slot.terrainID);
+			if (terrain) {
+				return (
+					<div key={slot.id} className='terrain-row'>
+						<div className='content'>
+							<TerrainPanel terrain={terrain} />
+							{
+								terrain.upgrades.length > 0 ?
+									<Expander title='Customize'>
+										<HeaderText>Customize</HeaderText>
+										<Select
+											style={{ width: '100%' }}
+											placeholder='Select'
+											mode='multiple'
+											options={Collections.sort(terrain.upgrades, a => a.label).map(a => ({ value: a.id, label: a.label, cost: a.cost }))}
+											optionRender={option => <Flex align='center' gap={8}><div className='ds-text'>{option.data.label}</div><Badge>+{option.data.cost} EV</Badge></Flex>}
+											value={slot.upgradeIDs}
+											onChange={ids => setTerrainUpgradeIDs(slot.id, ids)}
+										/>
+									</Expander>
+									: null
+							}
+						</div>
+						<div className='actions'>
+							<NumberSpin
+								value={slot.count}
+								onChange={value => setTerrainCount(slot.id, value)}
+							/>
+							<Divider />
+							<Button block={true} onClick={() => props.showTerrain(terrain, slot.upgradeIDs)}>Details</Button>
+						</div>
+					</div>
+				);
+			}
+			return (
+				<div key={slot.terrainID} className='terrain-row'>
+					Unknown terrain
+				</div>
+			);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					encounter.terrain.map(slot => (
+						<div key={`${slot.terrainID}-container`} className='terrain-container-row'>
+							{getTerrain(slot)}
+						</div>
+					))
+				}
+				{
+					encounter.terrain.length === 0 ?
+						<div className='ds-text dimmed-text centered-text'>None</div>
+						: null
+				}
 			</Space>
 		);
 	};
@@ -1197,7 +1287,12 @@ export const PlaybookEditPage = (props: Props) => {
 							{
 								key: '2',
 								label: 'Monsters',
-								children: getEncounterContentsSection()
+								children: getEncounterMonstersSection()
+							},
+							{
+								key: '3',
+								label: 'Terrain',
+								children: getEncounterTerrainSection()
 							}
 						]}
 					/>
@@ -1271,7 +1366,7 @@ export const PlaybookEditPage = (props: Props) => {
 		);
 	};
 
-	const getEncounterMonstersSection = () => {
+	const getEncounterPreviewMonstersSection = () => {
 		const addMonster = (monster: Monster, encounterGroupID: string | null) => {
 			const copy = Utils.copy(element) as Encounter;
 
@@ -1333,7 +1428,7 @@ export const PlaybookEditPage = (props: Props) => {
 
 						return (
 							<div key={m.id} className='monster-row'>
-								<MonsterPanel monster={m} monsterGroup={monsterGroup} mode={PanelMode.Compact} />
+								<MonsterPanel monster={m} monsterGroup={monsterGroup} />
 								<div className='actions'>
 									<Button block={true} onClick={() => props.showMonster(m, monsterGroup)}>Details</Button>
 									{addBtn}
@@ -1355,7 +1450,61 @@ export const PlaybookEditPage = (props: Props) => {
 		);
 	};
 
-	const getEncounterDifficultySection = () => {
+	const getEncounterPreviewTerrainSection = () => {
+		const addTerrain = (terrain: Terrain) => {
+			const copy = Utils.copy(element) as Encounter;
+
+			const data = copy.terrain.find(t => t.terrainID === terrain.id);
+			if (data) {
+				data.count += 1;
+			} else {
+				copy.terrain.push({
+					id: Utils.guid(),
+					terrainID: terrain.id,
+					upgradeIDs: [],
+					count: 1
+				});
+			}
+
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const terrains = Collections.sort(SourcebookLogic.getTerrains(props.sourcebooks).filter(m => TerrainLogic.matches(m, terrainFilter)), t => t.name);
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Expander title='Filter'>
+					<HeaderText>Filter</HeaderText>
+					<TerrainFilterPanel terrainFilter={terrainFilter} onChange={setTerrainFilter} />
+				</Expander>
+				{
+					terrains.map(t => {
+						return (
+							<div key={t.id} className='terrain-row'>
+								<TerrainPanel terrain={t} />
+								<div className='actions'>
+									<Button block={true} onClick={() => props.showTerrain(t, [])}>Details</Button>
+									<Button icon={<PlusOutlined />} onClick={() => addTerrain(t)}>Add</Button>
+								</div>
+							</div>
+						);
+					})
+				}
+				{
+					terrains.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='No terrain'
+						/>
+						: null
+				}
+			</Space>
+		);
+	};
+
+	const getEncounterPreviewDifficultySection = () => {
 		return (
 			<SelectablePanel>
 				<EncounterDifficultyPanel
@@ -1393,12 +1542,17 @@ export const PlaybookEditPage = (props: Props) => {
 							{
 								key: '2',
 								label: 'Monsters',
-								children: getEncounterMonstersSection()
+								children: getEncounterPreviewMonstersSection()
 							},
 							{
 								key: '3',
+								label: 'Terrain',
+								children: getEncounterPreviewTerrainSection()
+							},
+							{
+								key: '4',
 								label: 'Difficulty',
-								children: getEncounterDifficultySection()
+								children: getEncounterPreviewDifficultySection()
 							}
 						]}
 					/>

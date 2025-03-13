@@ -31,8 +31,8 @@ import { HeroViewPage } from '../pages/heroes/hero-view/hero-view-page';
 import { Item } from '../../models/item';
 import { ItemType } from '../../enums/item-type';
 import { Kit } from '../../models/kit';
-import { LibraryEditPage } from '../pages/library/library-edit/library-edit';
-import { LibraryListPage } from '../pages/library/library-list/library-list';
+import { LibraryEditPage } from '../pages/library/library-edit/library-edit-page';
+import { LibraryListPage } from '../pages/library/library-list/library-list-page';
 import { LibraryViewPage } from '../pages/library/library-view/library-view-page';
 import { MainLayout } from './main-layout';
 import { MiniChecklistModal } from '../modals/mini-checklist/mini-checklist-modal';
@@ -42,8 +42,8 @@ import { Negotiation } from '../../models/negotiation';
 import { Options } from '../../models/options';
 import { PDFExport } from '../../utils/pdf-export';
 import { Perk } from '../../models/perk';
-import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit';
-import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list';
+import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit-page';
+import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list-page';
 import { PlaybookLogic } from '../../logic/playbook-logic';
 import { PlaybookViewPage } from '../pages/playbook/playbook-view/playbook-view-page';
 import { RollModal } from '../modals/roll/roll-modal';
@@ -51,6 +51,8 @@ import { RulesModal } from '../modals/rules/rules-modal';
 import { SourcebookData } from '../../data/sourcebook-data';
 import { SourcebookLogic } from '../../logic/sourcebook-logic';
 import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
+import { Terrain } from '../../models/terrain';
+import { TerrainModal } from '../modals/terrain/terrain-modal';
 import { Title } from '../../models/title';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
@@ -197,6 +199,9 @@ export const Main = (props: Props) => {
 			case 'perk':
 				createPerk(original as Perk | null, sourcebook);
 				break;
+			case 'terrain':
+				createTerrain(original as Terrain | null, sourcebook);
+				break;
 			case 'title':
 				createTitle(original as Title | null, sourcebook);
 				break;
@@ -239,6 +244,9 @@ export const Main = (props: Props) => {
 					break;
 				case 'perk':
 					sourcebook.perks = sourcebook.perks.filter(x => x.id !== element.id);
+					break;
+				case 'terrain':
+					sourcebook.terrain = sourcebook.terrain.filter(x => x.id !== element.id);
 					break;
 				case 'title':
 					sourcebook.titles = sourcebook.titles.filter(x => x.id !== element.id);
@@ -283,6 +291,9 @@ export const Main = (props: Props) => {
 					break;
 				case 'perk':
 					sourcebook.perks = sourcebook.perks.map(x => x.id === element.id ? element : x) as Perk[];
+					break;
+				case 'terrain':
+					sourcebook.terrain = sourcebook.terrain.map(x => x.id === element.id ? element : x) as Terrain[];
 					break;
 				case 'title':
 					sourcebook.titles = sourcebook.titles.map(x => x.id === element.id ? element : x) as Title[];
@@ -346,6 +357,10 @@ export const Main = (props: Props) => {
 				sourcebook.perks.push(element as Perk);
 				sourcebook.perks = Collections.sort<Element>(sourcebook.perks, item => item.name) as Perk[];
 				break;
+			case 'terrain':
+				sourcebook.terrain.push(element as Terrain);
+				sourcebook.terrain = Collections.sort<Element>(sourcebook.terrain, item => item.name) as Terrain[];
+				break;
 			case 'title':
 				sourcebook.titles.push(element as Title);
 				sourcebook.titles = Collections.sort<Element>(sourcebook.titles, item => item.name) as Title[];
@@ -371,49 +386,13 @@ export const Main = (props: Props) => {
 		let extension: string;
 
 		switch (kind) {
-			case 'ancestry':
-				name = 'Ancestry';
-				extension = 'ancestry';
-				break;
-			case 'career':
-				name = 'Career';
-				extension = 'career';
-				break;
-			case 'class':
-				name = 'Class';
-				extension = 'class';
-				break;
-			case 'complication':
-				name = 'Complication';
-				extension = 'complication';
-				break;
-			case 'culture':
-				name = 'Culture';
-				extension = 'culture';
-				break;
-			case 'domain':
-				name = 'Domain';
-				extension = 'domain';
-				break;
-			case 'item':
-				name = 'Item';
-				extension = 'item';
-				break;
-			case 'kit':
-				name = 'Kit';
-				extension = 'kit';
-				break;
 			case 'monster-group':
 				name = 'Monster Group';
 				extension = 'monster-group';
 				break;
-			case 'perk':
-				name = 'Perk';
-				extension = 'perk';
-				break;
-			case 'title':
-				name = 'Title';
-				extension = 'title';
+			default:
+				name = Format.capitalize(kind);
+				extension = kind;
 				break;
 		};
 
@@ -693,6 +672,28 @@ export const Main = (props: Props) => {
 		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('monster-group', sourcebook.id, monsterGroup.id));
 	};
 
+	const createTerrain = (original: Terrain | null, sourcebook: Sourcebook | null) => {
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
+		} else {
+			const id = sourcebook.id;
+			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+		}
+
+		let terrain: Terrain;
+		if (original) {
+			terrain = Utils.copy(original);
+			terrain.id = Utils.guid();
+		} else {
+			terrain = FactoryLogic.createTerrain();
+		}
+
+		sourcebook.terrain.push(terrain);
+		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('terrain', sourcebook.id, terrain.id));
+	};
+
 	//#endregion
 
 	//#region Playbook
@@ -870,6 +871,17 @@ export const Main = (props: Props) => {
 				monsterGroup={monsterGroup}
 				onClose={() => setDrawer(null)}
 				export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
+			/>
+		);
+	};
+
+	const onSelectTerrain = (terrain: Terrain, upgradeIDs: string[]) => {
+		setDrawer(
+			<TerrainModal
+				terrain={terrain}
+				upgradeIDs={upgradeIDs}
+				onClose={() => setDrawer(null)}
+				export={format => Utils.export([ terrain.id ], terrain.name || 'Terrain', terrain, 'terrain', format)}
 			/>
 		);
 	};
@@ -1142,6 +1154,7 @@ export const Main = (props: Props) => {
 								showAbout={showAbout}
 								showRoll={showRoll}
 								showMonster={onSelectMonster}
+								showTerrain={onSelectTerrain}
 								saveChanges={savePlaybookElement}
 								setOptions={persistOptions}
 							/>

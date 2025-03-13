@@ -15,6 +15,7 @@ import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { TerrainPanel } from '../terrain-panel/terrain-panel';
 import { Token } from '../../../controls/token/token';
 
 import './encounter-panel.scss';
@@ -50,33 +51,31 @@ export const EncounterPanel = (props: Props) => {
 										:
 										<HeaderText>Monsters</HeaderText>
 								}
-								<div className='encounter-slots'>
-									{
-										group.slots.map(slot => {
-											const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
-											const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
+								{
+									group.slots.map(slot => {
+										const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
+										const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
 
-											const name = (monster && monsterGroup) ? MonsterLogic.getMonsterName(monster, monsterGroup) : 'Unknown Monster';
+										const name = (monster && monsterGroup) ? MonsterLogic.getMonsterName(monster, monsterGroup) : 'Unknown Monster';
 
-											let token = null;
-											let count = slot.count;
-											if (monster) {
-												token = <Token monster={monster} monsterGroup={monsterGroup || undefined} />;
-												count *= MonsterLogic.getRoleMultiplier(monster.role.organization);
-											}
+										let token = null;
+										let count = slot.count;
+										if (monster) {
+											token = <Token monster={monster} monsterGroup={monsterGroup || undefined} />;
+											count *= MonsterLogic.getRoleMultiplier(monster.role.organization);
+										}
 
-											return (
-												<div key={slot.id} className='encounter-slot'>
-													<div className='encounter-slot-name'>
-														{token}
-														<div className='ds-text'>{name}</div>
-													</div>
-													{count > 1 ? <Badge>x{count}</Badge> : null}
+										return (
+											<div key={slot.id} className='encounter-slot'>
+												<div className='encounter-slot-name'>
+													{token}
+													<div className='ds-text'>{name}</div>
 												</div>
-											);
-										})
-									}
-								</div>
+												{count > 1 ? <Badge>x{count}</Badge> : null}
+											</div>
+										);
+									})
+								}
 								{
 									group.slots.length === 0 ?
 										<Alert
@@ -89,13 +88,33 @@ export const EncounterPanel = (props: Props) => {
 							</div>
 						))
 					}
+					{
+						props.encounter.terrain.length > 0 ?
+							<div key='terrain' className='terrain-group'>
+								<HeaderText>Terrain</HeaderText>
+								{
+									props.encounter.terrain.map(slot => {
+										const terrain = SourcebookLogic.getTerrains(props.sourcebooks).find(t => t.id === slot.terrainID);
+										return (
+											<div key={slot.id} className='terrain-slot'>
+												<div className='terrain-slot-name'>
+													<div className='ds-text'>{terrain ? terrain.name : 'Unnamed Terrain'}</div>
+												</div>
+												{slot.count > 1 ? <Badge>x{slot.count}</Badge> : null}
+											</div>
+										);
+									})
+								}
+							</div>
+							: null
+					}
 				</div>
 				{
-					props.encounter.groups.length === 0 ?
+					(props.encounter.groups.length === 0) && (props.encounter.terrain.length === 0) ?
 						<Alert
 							type='warning'
 							showIcon={true}
-							message='No monsters'
+							message='No monsters or terrain'
 						/>
 						: null
 				}
@@ -112,18 +131,18 @@ export const EncounterPanel = (props: Props) => {
 						: null
 				}
 				{
-					(props.mode === PanelMode.Full) && (monsterData.length > 0) ?
+					(props.mode === PanelMode.Full) && ((monsterData.length > 0) || (props.encounter.terrain.length > 0)) ?
 						<Divider />
 						: null
 				}
 				{
-					(props.mode === PanelMode.Full) && (monsterData.length > 0) ?
+					(props.mode === PanelMode.Full) && ((monsterData.length > 0) || (props.encounter.terrain.length > 0)) ?
 						<HeaderText level={1}>Stat Blocks</HeaderText>
 						: null
 				}
 				{
 					(props.mode === PanelMode.Full) && (monsterData.length > 0) ?
-						<div className='monsters'>
+						<div className='encounter-stat-blocks'>
 							{
 								monsterData.map(data => {
 									const monster = EncounterLogic.getCustomizedMonster(data.monsterID, data.addOnIDs, props.sourcebooks);
@@ -139,6 +158,22 @@ export const EncounterPanel = (props: Props) => {
 										);
 									}
 
+									return null;
+								})
+							}
+							{
+								props.encounter.terrain.map(slot => {
+									const terrain = SourcebookLogic.getTerrains(props.sourcebooks).find(t => t.id === slot.terrainID);
+									if (terrain) {
+										return (
+											<TerrainPanel
+												key={terrain.id}
+												terrain={terrain}
+												upgradeIDs={slot.upgradeIDs}
+												mode={PanelMode.Full}
+											/>
+										);
+									}
 									return null;
 								})
 							}

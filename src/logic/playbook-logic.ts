@@ -83,6 +83,10 @@ export class PlaybookLogic {
 				});
 			});
 
+			if (e.terrain === undefined) {
+				e.terrain = [];
+			}
+
 			if (e.malice === undefined) {
 				e.malice = 0;
 			}

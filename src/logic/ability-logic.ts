@@ -208,10 +208,10 @@ export class AbilityLogic {
 				if ([ 'weak', 'average', 'avg', 'strong' ].some(p => section.toLowerCase().includes(p))) {
 					// Modify text to remove weak / average / strong
 					return section
-						.replace(/[[({]weak[\])}]/, `${HeroLogic.calculatePotency(hero, 'weak')}`)
-						.replace(/[[({]average[\])}]/, `${HeroLogic.calculatePotency(hero, 'average')}`)
-						.replace(/[[({]avg[\])}]/, `${HeroLogic.calculatePotency(hero, 'average')}`)
-						.replace(/[[({]strong[\])}]/, `${HeroLogic.calculatePotency(hero, 'strong')}`);
+						.replace(/<\s*[[({]?weak[\])}]?/, `< ${HeroLogic.calculatePotency(hero, 'weak')}`)
+						.replace(/<\s*[[({]?average[\])}]?/, `< ${HeroLogic.calculatePotency(hero, 'average')}`)
+						.replace(/<\s*[[({]?avg[\])}]?/, `< ${HeroLogic.calculatePotency(hero, 'average')}`)
+						.replace(/<\s*[[({]?strong[\])}]?/, `< ${HeroLogic.calculatePotency(hero, 'strong')}`);
 				}
 
 				return section;

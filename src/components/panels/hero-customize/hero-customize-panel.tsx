@@ -8,6 +8,7 @@ import { FactoryLogic } from '../../../logic/factory-logic';
 import { FeatureField } from '../../../enums/feature-field';
 import { FeaturePanel } from '../elements/feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
+import { Field } from '../../controls/field/field';
 import { FormatLogic } from '../../../logic/format-logic';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
@@ -16,6 +17,7 @@ import { PanelMode } from '../../../enums/panel-mode';
 import { PerkList } from '../../../enums/perk-list';
 import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
+import { SourcebookLogic } from '../../../logic/sourcebook-logic';
 import { Toggle } from '../../controls/toggle/toggle';
 import { Utils } from '../../../utils/utils';
 
@@ -84,6 +86,13 @@ export const HeroCustomizePanel = (props: Props) => {
 		const copy = Utils.copy(feature) as FeatureBonus;
 		copy.data.valueCharacteristics = value;
 		copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
+		props.setFeature(feature.id, copy);
+	};
+
+	const setClassID = (feature: Feature, value: string) => {
+		const copy = Utils.copy(feature) as FeatureClassAbility;
+		copy.data.classID = value === '' ? undefined : value;
+		copy.data.selectedIDs = [];
 		props.setFeature(feature.id, copy);
 	};
 
@@ -163,6 +172,15 @@ export const HeroCustomizePanel = (props: Props) => {
 			case FeatureType.ClassAbility:
 				return (
 					<div>
+						<HeaderText>Class</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select class'
+							options={[ { id: '', name: 'Your Class', description: 'An ability from your own class.' }, ...SourcebookLogic.getClasses(props.sourcebooks) ].map(o => ({ value: o.id, label: o.name, description: o.description }))}
+							optionRender={option => <Field label={option.data.label} value={option.data.description} />}
+							value={feature.data.classID || ''}
+							onChange={id => setClassID(feature, id)}
+						/>
 						<HeaderText>Ability Cost</HeaderText>
 						<Toggle label='Signature' value={feature.data.cost === 'signature'} onChange={value => setCost(feature, value ? 'signature' : 3)} />
 						{feature.data.cost !== 'signature' ? <NumberSpin min={3} max={7} steps={[ 2 ]} value={feature.data.cost} onChange={value => setCost(feature, value)} /> : null}

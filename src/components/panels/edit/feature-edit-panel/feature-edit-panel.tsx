@@ -127,6 +127,7 @@ export const FeatureEditPanel = (props: Props) => {
 				break;
 			case FeatureType.ClassAbility:
 				data = {
+					classID: undefined,
 					cost: 1,
 					count: 1,
 					minLevel: 1,
@@ -300,6 +301,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setCharacteristic = (value: Characteristic) => {
 			const copy = Utils.copy(feature.data) as FeatureCharacteristicBonusData;
 			copy.characteristic = value;
+			setData(copy);
+		};
+
+		const setAbilityClassID = (value: string) => {
+			const copy = Utils.copy(feature.data) as FeatureClassAbilityData;
+			copy.classID = value === '' ? undefined : value;
 			setData(copy);
 		};
 
@@ -771,6 +778,15 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureClassAbilityData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Class</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select class'
+							options={[ { id: '', name: 'Your Class', description: 'An ability from your own class.' }, ...SourcebookLogic.getClasses(props.sourcebooks) ].map(o => ({ value: o.id, label: o.name, description: o.description }))}
+							optionRender={option => <Field label={option.data.label} value={option.data.description} />}
+							value={data.classID || ''}
+							onChange={setAbilityClassID}
+						/>
 						<HeaderText>Signature</HeaderText>
 						<Toggle label='Signature' value={data.cost === 'signature'} onChange={value => setAbilityCost(value ? 'signature' : 0)} />
 						{

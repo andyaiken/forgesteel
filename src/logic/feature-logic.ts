@@ -261,6 +261,8 @@ export class FeatureLogic {
 				return 'This feature grants you an ability.';
 			case FeatureType.AbilityCost:
 				return 'This feature modifies the cost to use an ability.';
+			case FeatureType.AddOn:
+				return 'This feature grants you a monster customization.';
 			case FeatureType.AncestryChoice:
 				return 'This feature sets the hero\' ancestry.';
 			case FeatureType.AncestryFeatureChoice:
@@ -273,6 +275,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose from a collection of features.';
 			case FeatureType.ClassAbility:
 				return 'This feature allows you to choose an ability from your class.';
+			case FeatureType.Companion:
+				return 'This feature grants you a companion, mount, or retainer.';
 			case FeatureType.DamageModifier:
 				return 'This feature grants you an immunity or a weakness.';
 			case FeatureType.Domain:

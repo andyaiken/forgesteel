@@ -957,6 +957,7 @@ export class FactoryLogic {
 				description: data.description || '',
 				type: FeatureType.ClassAbility,
 				data: {
+					classID: undefined,
 					cost: data.cost,
 					minLevel: data.minLevel || 1,
 					count: count,

@@ -23,6 +23,7 @@ import { Format } from '../../utils/format';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
 import { HeroEditPage } from '../pages/heroes/hero-edit/hero-edit-page';
+import { HeroExportPage } from '../pages/heroes/hero-export/hero-export-page';
 import { HeroListPage } from '../pages/heroes/hero-list/hero-list-page';
 import { HeroLogic } from '../../logic/hero-logic';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
@@ -1050,6 +1051,10 @@ export const Main = (props: Props) => {
 								saveChanges={saveHero}
 							/>
 						}
+					/>
+					<Route
+						path='export/:heroID'
+						element={<HeroExportPage heroes={heroes} />}
 					/>
 				</Route>
 				<Route path='library'>

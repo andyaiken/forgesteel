@@ -11,8 +11,8 @@ import { FactoryLogic } from '../../../logic/factory-logic';
 import { HealthPanel } from '../../panels/health/health-panel';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { HeroStatePage } from '../../../enums/hero-state-page';
-import { InventoryPanel } from '../../panels/inventory/inventory-panel';
 import { Item } from '../../../models/item';
+import { ItemPanel } from '../../panels/elements/item-panel/item-panel';
 import { ItemSelectModal } from '../item-select/item-select-modal';
 import { ItemType } from '../../../enums/item-type';
 import { Modal } from '../modal/modal';
@@ -395,9 +395,10 @@ export const HeroStateModal = (props: Props) => {
 								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteItem(item); }} />
 							]}
 						>
-							<InventoryPanel
+							<ItemPanel
 								item={item}
 								hero={hero}
+								mode={PanelMode.Full}
 								onChange={changeItem}
 							/>
 						</Expander>

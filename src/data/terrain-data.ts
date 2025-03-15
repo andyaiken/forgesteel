@@ -2730,7 +2730,7 @@ A creature seated in the throne becomes the Hierophant of A’An and gains the f
 						ability: FactoryLogic.createAbility({
 							id: 'solar-accretion',
 							name: 'Solar Accretion',
-							type: FactoryLogic.type.createTrigger('A target within distance is winded or reduced to 0 Stamina by fire damage.',{ free: true }),
+							type: FactoryLogic.type.createTrigger('A target within distance is winded or reduced to 0 Stamina by fire damage.', { free: true }),
 							keywords: [ AbilityKeyword.Magic ],
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'One creature or object',

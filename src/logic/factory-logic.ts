@@ -299,7 +299,8 @@ export class FactoryLogic {
 		keywords?: (AbilityKeyword | KitArmor | KitWeapon)[],
 		crafting?: Project,
 		effect?: string,
-		featuresByLevel?: { level: number, features: Feature[] }[]
+		featuresByLevel?: { level: number, features: Feature[] }[],
+		customizationsByLevel?: { level: number, features: { feature: Feature, selected: boolean }[] }[]
 	}): Item => {
 		return {
 			id: data.id,
@@ -310,6 +311,20 @@ export class FactoryLogic {
 			crafting: data.crafting || null,
 			effect: data.effect || '',
 			featuresByLevel: data.featuresByLevel || [
+				{
+					level: 1,
+					features: []
+				},
+				{
+					level: 5,
+					features: []
+				},
+				{
+					level: 9,
+					features: []
+				}
+			],
+			customizationsByLevel: data.customizationsByLevel || [
 				{
 					level: 1,
 					features: []

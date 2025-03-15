@@ -41,7 +41,7 @@ export const TerrainModal = (props: Props) => {
 					<div className='terrain-modal'>
 						<TerrainPanel
 							terrain={props.terrain}
-							showUpgrades={true}
+							showCustomizations={true}
 							mode={PanelMode.Full}
 						/>
 					</div>

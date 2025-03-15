@@ -416,7 +416,7 @@ export const HeroStateModal = (props: Props) => {
 				<Button block={true} onClick={() => setShopVisible(true)}>Add a new item</Button>
 				<Drawer open={shopVisible} closeIcon={null} width='500px'>
 					<ItemSelectModal
-						types={[ ItemType.Artifact, ItemType.Consumable, ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Trinket ]}
+						types={[ ItemType.Artifact, ItemType.Consumable, ItemType.ImbuedArmor, ItemType.ImbuedImplement, ItemType.ImbuedWeapon, ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Trinket ]}
 						sourcebooks={props.sourcebooks}
 						hero={hero}
 						onSelect={addItem}

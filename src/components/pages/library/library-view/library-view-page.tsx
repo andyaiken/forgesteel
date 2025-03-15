@@ -138,6 +138,7 @@ export const LibraryViewPage = (props: Props) => {
 			panel = (
 				<ItemPanel
 					item={element as Item}
+					showCustomizations={true}
 					mode={PanelMode.Full}
 				/>
 			);
@@ -190,7 +191,7 @@ export const LibraryViewPage = (props: Props) => {
 			panel = (
 				<TerrainPanel
 					terrain={element as Terrain}
-					showUpgrades={true}
+					showCustomizations={true}
 					mode={PanelMode.Full}
 				/>
 			);

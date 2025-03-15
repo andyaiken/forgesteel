@@ -24,6 +24,8 @@ import { Perk } from '../../../models/perk';
 import { PerkPanel } from '../../panels/elements/perk-panel/perk-panel';
 import { ReactNode } from 'react';
 import { SourcebookElementKind } from '../../../models/sourcebook';
+import { Terrain } from '../../../models/terrain';
+import { TerrainPanel } from '../../panels/elements/terrain-panel/terrain-panel';
 import { Title } from '../../../models/title';
 import { TitlePanel } from '../../panels/elements/title-panel/title-panel';
 import { UploadOutlined } from '@ant-design/icons';
@@ -92,6 +94,7 @@ export const ElementModal = (props: Props) => {
 			panel = (
 				<ItemPanel
 					item={props.element as Item}
+					showCustomizations={true}
 					mode={PanelMode.Full}
 				/>
 			);
@@ -116,6 +119,15 @@ export const ElementModal = (props: Props) => {
 			panel = (
 				<PerkPanel
 					perk={props.element as Perk}
+					mode={PanelMode.Full}
+				/>
+			);
+			break;
+		case 'terrain':
+			panel = (
+				<TerrainPanel
+					terrain={props.element as Terrain}
+					showCustomizations={true}
 					mode={PanelMode.Full}
 				/>
 			);

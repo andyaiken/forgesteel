@@ -1,4 +1,4 @@
-import { ArtifactData, ConsumableData, LeveledArmorData, LeveledImplementData, LeveledOtherData, LeveledWeaponData, TrinketData } from './item-data';
+import { ArtifactData, ConsumableData, ImbuedData, LeveledArmorData, LeveledImplementData, LeveledOtherData, LeveledWeaponData, TrinketData } from './item-data';
 import { EnvironmentData, OrganizationData, UpbringingData } from './culture-data';
 import { AncestryData } from './ancestry-data';
 import { CareerData } from './career-data';
@@ -367,7 +367,10 @@ export class SourcebookData {
 			LeveledOtherData.thiefOfJoy,
 			ArtifactData.bladeOfAThousandYears,
 			ArtifactData.encepter,
-			ArtifactData.mortalCoil
+			ArtifactData.mortalCoil,
+			ImbuedData.imbuedArmor,
+			ImbuedData.imbuedImplement,
+			ImbuedData.imbuedWeapon
 		],
 		monsterGroups: [
 			MonsterData.angulotl,

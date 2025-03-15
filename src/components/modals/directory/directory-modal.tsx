@@ -21,6 +21,9 @@ export const DirectoryModal = (props: Props) => {
 
 	try {
 		const folders = Collections.distinct(props.heroes.map(h => h.folder).sort(), f => f);
+		if (folders.length === 0) {
+			folders.push('');
+		}
 
 		return (
 			<Modal

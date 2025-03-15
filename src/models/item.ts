@@ -15,5 +15,9 @@ export interface Item extends Element {
 		level: number;
 		features: Feature[];
 	}[];
+	customizationsByLevel: {
+		level: number;
+		features: { feature: Feature, selected: boolean }[];
+	}[],
 	count: number;
 }

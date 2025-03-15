@@ -16,7 +16,7 @@ import './terrain-panel.scss';
 interface Props {
 	terrain: Terrain;
 	upgradeIDs?: string[];
-	showUpgrades?: boolean;
+	showCustomizations?: boolean;
 	mode?: PanelMode;
 }
 
@@ -91,9 +91,9 @@ export const TerrainPanel = (props: Props) => {
 										))
 									: null
 							}
-							{props.showUpgrades && (props.terrain.upgrades.length > 0) ? <HeaderText level={1}>Customization</HeaderText> : null}
+							{props.showCustomizations && (props.terrain.upgrades.length > 0) ? <HeaderText level={1}>Customization</HeaderText> : null}
 							{
-								props.showUpgrades ?
+								props.showCustomizations ?
 									props.terrain.upgrades.map((upgrade, n) => (
 										<div key={n}>
 											{

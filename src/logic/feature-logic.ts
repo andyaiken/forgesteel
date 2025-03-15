@@ -115,6 +115,27 @@ export class FeatureLogic {
 				});
 			});
 
+		item.customizationsByLevel
+			.forEach(lvl => {
+				lvl.features
+					.filter(f => f.selected)
+					.map(f => f.feature)
+					.forEach(f => {
+						if (f.type === FeatureType.Text) {
+							if (f.description) {
+								if (f.name) {
+									ft.description += '\n\n';
+									ft.description += `**${f.name}**`;
+								}
+								ft.description += '\n\n';
+								ft.description += f.description;
+							}
+						} else {
+							features.push(f);
+						}
+					});
+			});
+
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 

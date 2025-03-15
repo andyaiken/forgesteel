@@ -2714,7 +2714,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'terrain':
 				return (
 					<SelectablePanel>
-						<TerrainPanel terrain={element as Terrain} showUpgrades={true} mode={PanelMode.Full} />
+						<TerrainPanel terrain={element as Terrain} showCustomizations={true} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'title':
@@ -2727,7 +2727,7 @@ export const LibraryEditPage = (props: Props) => {
 				return (
 					<>
 						<SelectablePanel>
-							<ItemPanel item={element as Item} mode={PanelMode.Full} />
+							<ItemPanel item={element as Item} showCustomizations={true} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
 							(element as Item).crafting ?

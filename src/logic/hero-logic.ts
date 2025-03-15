@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureItemChoice, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureItemChoice, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
@@ -930,6 +930,24 @@ Complex or time-consuming tests might require an action if made in combat - or c
 		}
 
 		hero.state.inventory = hero.state.inventory.filter(i => (i as unknown as FeatureItemChoice).data === undefined);
+		hero.state.inventory.forEach(item => {
+			if (item.customizationsByLevel === undefined) {
+				item.customizationsByLevel = [
+					{
+						level: 1,
+						features: []
+					},
+					{
+						level: 5,
+						features: []
+					},
+					{
+						level: 9,
+						features: []
+					}
+				];
+			}
+		});
 
 		if (hero.abilityCustomizations === undefined) {
 			hero.abilityCustomizations = [];
@@ -956,6 +974,28 @@ Complex or time-consuming tests might require an action if made in combat - or c
 				}
 				if (dm.valuePerEchelon === undefined) {
 					dm.valuePerEchelon = 0;
+				}
+			});
+		});
+
+		this.getFeatures(hero).filter(f => f.type === FeatureType.ItemChoice).forEach(f => {
+			const data = f.data as FeatureItemChoiceData;
+			data.selected.forEach(item => {
+				if (item.customizationsByLevel === undefined) {
+					item.customizationsByLevel = [
+						{
+							level: 1,
+							features: []
+						},
+						{
+							level: 5,
+							features: []
+						},
+						{
+							level: 9,
+							features: []
+						}
+					];
 				}
 			});
 		});

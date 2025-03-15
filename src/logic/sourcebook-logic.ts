@@ -361,5 +361,24 @@ export class SourcebookLogic {
 					});
 			});
 		});
+
+		sourcebook.items.forEach(item => {
+			if (item.customizationsByLevel === undefined) {
+				item.customizationsByLevel = [
+					{
+						level: 1,
+						features: []
+					},
+					{
+						level: 5,
+						features: []
+					},
+					{
+						level: 9,
+						features: []
+					}
+				];
+			}
+		});
 	};
 }

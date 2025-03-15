@@ -530,10 +530,10 @@ export class SourcebookData {
 			TerrainData.theChronalHypercube,
 			TerrainData.theThroneOfAAn,
 			TerrainData.psionicShard,
-			TerrainData.holyIdol,			
+			TerrainData.holyIdol,
 			TerrainData.treeOfMight
-			
-			
+
+
 		]
 	};
 

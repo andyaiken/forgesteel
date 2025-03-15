@@ -9,7 +9,7 @@ import { TerrainRoleType } from '../enums/terrain-role-type';
 
 export class TerrainData {
 	//#region Environmental Hazards
-	
+
 	static angryBeehive: Terrain = {
 		id: 'terrain-angry-beehive',
 		name: 'Angry Beehive',
@@ -19,6 +19,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Hexer, TerrainRoleType.Hazard),
 		encounterValue: 2,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 3,
 			perSquare: 0
@@ -79,6 +81,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Defender, TerrainRoleType.Fortification),
 		encounterValue: 1,
 		area: '10x10',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 0,
 			perSquare: 3
@@ -132,6 +136,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Hexer, TerrainRoleType.Hazard),
 		encounterValue: 3,
 		area: '10x10',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 12,
 			perSquare: 0
@@ -220,6 +226,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Hexer, TerrainRoleType.Hazard),
 		encounterValue: 1,
 		area: '10x10',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 0,
 			perSquare: 3
@@ -333,6 +341,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Hexer, TerrainRoleType.Hazard),
 		encounterValue: 4,
 		area: '10x10',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 0,
 			perSquare: 12
@@ -409,6 +419,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Hexer, TerrainRoleType.Hazard),
 		encounterValue: 3,
 		area: '10x10',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 0,
 			perSquare: 0
@@ -481,6 +493,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Hexer, TerrainRoleType.Hazard),
 		encounterValue: 2,
 		area: '10x10',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 0,
 			perSquare: 3
@@ -552,7 +566,7 @@ export class TerrainData {
 	//#endregion
 
 	//#region Fieldwork
-	
+
 	// Archer's Stakes
 	static archersStakes: Terrain = {
 		id: 'terrain-archers-stakes',
@@ -563,6 +577,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Defender, TerrainRoleType.Fortification),
 		encounterValue: 1,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 0,
 			perSquare: 3
@@ -644,7 +660,7 @@ export class TerrainData {
 				]
 			}
 		]
-	};	
+	};
 
 	// Bear Trap
 	static bearTrap: Terrain = {
@@ -656,6 +672,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Ambusher, TerrainRoleType.Trap),
 		encounterValue: 2,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 6,
 			perSquare: 0
@@ -736,6 +754,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Ambusher, TerrainRoleType.Trap),
 		encounterValue: 2,
 		area: '10x10',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 0,
 			perSquare: 0
@@ -790,6 +810,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Ambusher, TerrainRoleType.Trap),
 		encounterValue: 1,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 0,
 			perSquare: 0
@@ -844,6 +866,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Defender, TerrainRoleType.Fortification),
 		encounterValue: 1,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 9,
 			perSquare: 0
@@ -895,6 +919,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Ambusher, TerrainRoleType.Trap),
 		encounterValue: 1,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 1,
 			perSquare: 0
@@ -981,6 +1007,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Ambusher, TerrainRoleType.Trap),
 		encounterValue: 3,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 6,
 			perSquare: 0
@@ -1048,7 +1076,7 @@ export class TerrainData {
 		],
 		upgrades: []
 	};
-	
+
 	//#endregion
 
 	//#region Mechanisms
@@ -1063,6 +1091,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Defender, TerrainRoleType.Fortification),
 		encounterValue: 3,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 5,
 			perSquare: 0
@@ -1175,7 +1205,7 @@ export class TerrainData {
 			}
 		]
 	};
-	
+
 	// Dart Trap
 	static dartTrap: Terrain = {
 		id: 'terrain-dart-trap',
@@ -1186,6 +1216,7 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Ambusher, TerrainRoleType.Trap),
 		encounterValue: 1,
 		area: '',
+		link: '',
 		stamina: {
 			base: 3,
 			perSquare: 0
@@ -1270,7 +1301,7 @@ export class TerrainData {
 			}
 		]
 	};
-	
+
 	// Hidden Portcullis
 	static hiddenPortcullis: Terrain = {
 		id: 'terrain-hidden-portcullis',
@@ -1281,6 +1312,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Ambusher, TerrainRoleType.Trap),
 		encounterValue: 4,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 0,
 			perSquare: 9
@@ -1317,7 +1350,7 @@ export class TerrainData {
 							name: 'Heavy Gate',
 							type: FactoryLogic.type.createTrigger(''),
 							keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Area ],
-							distance: [ FactoryLogic.distance.createSpecial({ special: 'Squares under the mechanism' }) ],
+							distance: [ FactoryLogic.distance.createSpecial('Squares under the mechanism') ],
 							target: 'All creatures and objects',
 							powerRoll: FactoryLogic.createPowerRoll({
 								bonus: 2,
@@ -1333,7 +1366,7 @@ export class TerrainData {
 		],
 		upgrades: []
 	};
-	
+
 	// Pillar
 	static pillar: Terrain = {
 		id: 'terrain-pillar',
@@ -1344,6 +1377,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Hexer, TerrainRoleType.Hazard),
 		encounterValue: 3,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 6,
 			perSquare: 0
@@ -1411,7 +1446,7 @@ export class TerrainData {
 			}
 		]
 	};
-	
+
 	// Pressure Plate
 	static pressurePlate: Terrain = {
 		id: 'terrain-pressure-plate',
@@ -1422,6 +1457,7 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Support, TerrainRoleType.Trigger),
 		encounterValue: 2,
 		area: '',
+		direction: '',
 		stamina: {
 			base: 0,
 			perSquare: 0
@@ -1471,7 +1507,7 @@ export class TerrainData {
 			}
 		]
 	};
-	
+
 	// Pulley
 	static pulley: Terrain = {
 		id: 'terrain-pulley',
@@ -1482,6 +1518,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Support, TerrainRoleType.Trigger),
 		encounterValue: 1,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 1,
 			perSquare: 0
@@ -1535,7 +1573,7 @@ export class TerrainData {
 			}
 		]
 	};
-	
+
 	// Ram
 	static ram: Terrain = {
 		id: 'terrain-ram',
@@ -1546,6 +1584,7 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Ambusher, TerrainRoleType.Trap),
 		encounterValue: 3,
 		area: '',
+		link: '',
 		stamina: {
 			base: 0,
 			perSquare: 3
@@ -1645,7 +1684,7 @@ export class TerrainData {
 			}
 		]
 	};
-	
+
 	// Switch
 	static switch: Terrain = {
 		id: 'terrain-switch',
@@ -1656,6 +1695,7 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Support, TerrainRoleType.Trigger),
 		encounterValue: 1,
 		area: '',
+		direction: '',
 		stamina: {
 			base: 3,
 			perSquare: 0
@@ -1715,6 +1755,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Artillery, TerrainRoleType.SiegeEngine),
 		encounterValue: 8,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 30,
 			perSquare: 0
@@ -1854,6 +1896,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Defender, TerrainRoleType.Fortification),
 		encounterValue: 10,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 50,
 			perSquare: 0
@@ -1923,6 +1967,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Artillery, TerrainRoleType.SiegeEngine),
 		encounterValue: 10,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 50,
 			perSquare: 0
@@ -2039,6 +2085,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Artillery, TerrainRoleType.SiegeEngine),
 		encounterValue: 10,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 25,
 			perSquare: 0
@@ -2138,6 +2186,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Artillery, TerrainRoleType.SiegeEngine),
 		encounterValue: 8,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 40,
 			perSquare: 0
@@ -2294,6 +2344,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Artillery, TerrainRoleType.SiegeEngine),
 		encounterValue: 12,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 60,
 			perSquare: 0
@@ -2395,6 +2447,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Defender, TerrainRoleType.Fortification),
 		encounterValue: 8,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 50,
 			perSquare: 0
@@ -2476,6 +2530,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Controller, TerrainRoleType.Relic),
 		encounterValue: 20,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 100,
 			perSquare: 0
@@ -2539,6 +2595,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Controller, TerrainRoleType.Relic),
 		encounterValue: 20,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 80,
 			perSquare: 0
@@ -2590,6 +2648,8 @@ export class TerrainData {
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Controller, TerrainRoleType.Relic),
 		encounterValue: 24,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 140,
 			perSquare: 0
@@ -2713,6 +2773,8 @@ A creature seated in the throne becomes the Hierophant of A’An and gains the f
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Defender, TerrainRoleType.Fortification),
 		encounterValue: 7,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 40,
 			perSquare: 0
@@ -2769,6 +2831,8 @@ A creature seated in the throne becomes the Hierophant of A’An and gains the f
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Support, TerrainRoleType.Relic),
 		encounterValue: 7,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 35,
 			perSquare: 0
@@ -2810,6 +2874,8 @@ A creature seated in the throne becomes the Hierophant of A’An and gains the f
 		role: FactoryLogic.createTerrainRole(MonsterRoleType.Hexer, TerrainRoleType.Hazard),
 		encounterValue: 14,
 		area: '',
+		direction: '',
+		link: '',
 		stamina: {
 			base: 60,
 			perSquare: 0

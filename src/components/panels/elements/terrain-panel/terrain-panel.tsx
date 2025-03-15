@@ -98,10 +98,10 @@ export const TerrainPanel = (props: Props) => {
 										<div key={n}>
 											{
 												upgrade.cost >= 0 ?
-												<HeaderText ribbon={<Badge>+{upgrade.cost} EV</Badge>}>{upgrade.label}</HeaderText>
-												: <HeaderText ribbon={<Badge>{upgrade.cost} EV</Badge>}>{upgrade.label}</HeaderText>
+													<HeaderText ribbon={<Badge>+{upgrade.cost} EV</Badge>}>{upgrade.label}</HeaderText>
+													: <HeaderText ribbon={<Badge>{upgrade.cost} EV</Badge>}>{upgrade.label}</HeaderText>
 											}
-											
+
 											{upgrade.text ? <div className='ds-text'>{upgrade.text}</div> : null}
 											{upgrade.sections.map((section, n) => getSection(section, n))}
 										</div>

@@ -17,6 +17,7 @@ export enum AbilityKeyword {
 	Melee = 'Melee',
 	Metamorphosis = 'Metamorphosis',
 	Neck = 'Neck',
+	Object = 'Object',
 	Oil = 'Oil',
 	Orb = 'Orb',
 	Persistent = 'Persistent',

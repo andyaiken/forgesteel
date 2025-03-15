@@ -58,6 +58,16 @@ export const TerrainPanel = (props: Props) => {
 							<Field label='Size' value={props.terrain.size} />
 							<Field label='Stamina' value={TerrainLogic.getStamina(props.terrain)} />
 							{
+								props.terrain.direction  ?
+									<Field label='Direction' value={props.terrain.direction} />
+									: null
+							}
+							{
+								props.terrain.link  ?
+									<Field label='Link' value={props.terrain.link} />
+									: null
+							}
+							{
 								immunities.length > 0 ?
 									<Field label='Immunities' value={immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} />
 									: null
@@ -86,7 +96,12 @@ export const TerrainPanel = (props: Props) => {
 								props.showUpgrades ?
 									props.terrain.upgrades.map((upgrade, n) => (
 										<div key={n}>
-											<HeaderText ribbon={<Badge>+{upgrade.cost} EV</Badge>}>{upgrade.label}</HeaderText>
+											{
+												upgrade.cost >= 0 ?
+													<HeaderText ribbon={<Badge>+{upgrade.cost} EV</Badge>}>{upgrade.label}</HeaderText>
+													: <HeaderText ribbon={<Badge>{upgrade.cost} EV</Badge>}>{upgrade.label}</HeaderText>
+											}
+
 											{upgrade.text ? <div className='ds-text'>{upgrade.text}</div> : null}
 											{upgrade.sections.map((section, n) => getSection(section, n))}
 										</div>

@@ -259,6 +259,8 @@ export class FactoryLogic {
 			role: FactoryLogic.createTerrainRole(MonsterRoleType.Ambusher, TerrainRoleType.Fortification),
 			encounterValue: 0,
 			area: '',
+			direction: '',
+			link: '',
 			stamina: {
 				base: 0,
 				perSquare: 0

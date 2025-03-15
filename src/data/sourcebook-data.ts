@@ -504,7 +504,36 @@ export class SourcebookData {
 			TerrainData.frozenPond,
 			TerrainData.lava,
 			TerrainData.quicksand,
-			TerrainData.toxicPlants
+			TerrainData.archersStakes,
+			TerrainData.bearTrap,
+			TerrainData.flammableOil,
+			TerrainData.hideyHole,
+			TerrainData.paviseShield,
+			TerrainData.snareTrap,
+			TerrainData.spikeTrap,
+			TerrainData.columnOfBlades,
+			TerrainData.dartTrap,
+			TerrainData.hiddenPortcullis,
+			TerrainData.pillar,
+			TerrainData.pressurePlate,
+			TerrainData.pulley,
+			TerrainData.ram,
+			TerrainData.switch,
+			TerrainData.arrowLauncher,
+			TerrainData.boilingOilCauldron,
+			TerrainData.catapult,
+			TerrainData.explodingMillWheel,
+			TerrainData.fieldBallista,
+			TerrainData.ironDragon,
+			TerrainData.watchtower,
+			TerrainData.theBlackObelisk,
+			TerrainData.theChronalHypercube,
+			TerrainData.theThroneOfAAn,
+			TerrainData.psionicShard,
+			TerrainData.holyIdol,
+			TerrainData.treeOfMight
+
+
 		]
 	};
 

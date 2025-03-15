@@ -259,7 +259,7 @@ export const SourcebookPanel = (props: Props) => {
 				<>
 					<Button type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(sourcebook, !props.visible)} />
 					{sourcebook.isHomebrew ? <Button type='text' title='Edit' icon={<EditOutlined />} onClick={toggleEditing} /> : null}
-					{sourcebook.isHomebrew ? <Button type='text' title='Export' icon={<UploadOutlined />} onClick={onExport} /> : null}
+					<Button type='text' title='Export' icon={<UploadOutlined />} onClick={onExport} />
 					{sourcebook.isHomebrew ? <DangerButton disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='icon' onConfirm={onDelete} /> : null}
 				</>
 			);

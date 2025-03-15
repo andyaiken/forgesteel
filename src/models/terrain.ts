@@ -26,6 +26,8 @@ export interface Terrain extends Element {
 		perSquare: number;
 	};
 	size: string;
+	direction: string | null;
+	link: string | null;
 	damageMods: DamageModifier[];
 	sections: TerrainSection[];
 	upgrades: {

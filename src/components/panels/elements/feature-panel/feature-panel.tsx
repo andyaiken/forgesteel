@@ -15,6 +15,7 @@ import { Format } from '../../../../utils/format';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
+import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { ItemPanel } from '../item-panel/item-panel';
 import { KitPanel } from '../kit-panel/kit-panel';
@@ -267,7 +268,13 @@ export const FeaturePanel = (props: Props) => {
 			.filter(f => f.type === FeatureType.ClassAbility)
 			.flatMap(f => f.data.selectedIDs);
 
-		const abilities = props.hero?.class?.abilities
+		let heroClass: HeroClass | null = props.hero.class;
+		if (data.classID) {
+			// You get an ability from a different class
+			heroClass = SourcebookLogic.getClasses(props.sourcebooks || []).find(c => c.id === data.classID) || null;
+		}
+
+		const abilities = heroClass?.abilities
 			.filter(a => a.cost === data.cost)
 			.filter(a => a.minLevel <= data.minLevel) || [];
 

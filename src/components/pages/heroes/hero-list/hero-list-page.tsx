@@ -36,6 +36,9 @@ export const HeroListPage = (props: Props) => {
 	}
 
 	const folders = Collections.distinct(props.heroes.map(h => h.folder).sort(), f => f);
+	if (folders.length === 0) {
+		folders.push('');
+	}
 
 	const getHeroes = (folder: string) => {
 		return props.heroes

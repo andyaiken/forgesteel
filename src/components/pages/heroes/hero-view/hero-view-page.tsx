@@ -50,12 +50,13 @@ interface Props {
 	showRules: (hero: Hero) => void;
 }
 
-const getHero = (heroID: string, heroes: Hero[]) => heroes.find(h => h.id === heroID)!;
-
 export const HeroViewPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { heroID } = useParams<{ heroID: string }>();
-	const hero = useMemo(() => getHero(heroID!, props.heroes), [ heroID, props.heroes ]);
+	const hero = useMemo(
+		() => props.heroes.find(h => h.id === heroID)!,
+		[ heroID, props.heroes ]
+	);
 
 	try {
 		const exportHero = (key: string) => {

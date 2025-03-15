@@ -15,8 +15,8 @@ import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
 import localforage from 'localforage';
 
-import pdfLandscape from '../assets/custom-character-sheet-landscape-plusmouse.pdf';
-import pdfPortrait from '../assets/custom-character-sheet-plusmouse.pdf';
+import pdfLandscape from '../assets/character-sheet-landscape.pdf';
+import pdfPortrait from '../assets/character-sheet-portrait.pdf';
 
 export class PDFExport {
 	static startExport = async (hero: Hero, format: 'portrait' | 'landscape') => {
@@ -37,6 +37,15 @@ export class PDFExport {
 		const fontSize = 9;
 
 		const autoResizingFields: string[] = [];
+
+		const sanitize = (str: string) => {
+			// This replaces characters the PDF doesn't support
+			return str
+				.toString()
+				.replace(/ź/g, 'z')
+				.replace(/ń/g, 'n')
+				.replace(/č/g, 'c');
+		};
 
 		const texts: { [key: string]: string | number | null } = {
 			CharacterName: hero.name,
@@ -396,12 +405,13 @@ export class PDFExport {
 		for (const [ key, value ] of Object.entries(texts)) {
 			const field = form.getField(key) as PDFTextField;
 			if (value !== null && value !== undefined) {
-				field.setText(value.toString());
+				field.setText(sanitize(value.toString()));
 			}
 		}
 
 		const DoesTextFitFieldRectangle = (t: string, rect: { x: number; y: number; width: number; height: number }, size: number, multiline: boolean) => {
 			t = t.replace(/\t/g, '    ');
+			t = sanitize(t);
 			if(multiline) {
 				// offset of 20 for multiline and 5 for single found by testing different values
 				const widthOffset = 20;
@@ -462,7 +472,7 @@ export class PDFExport {
 		const url = window.URL.createObjectURL(new Blob([ data ], { type: 'application/pdf' }));
 
 		const downloader = document.createElement('a');
-		downloader.download = `${hero.name || 'Unnamed Hero'}.pdf`;
+		downloader.download = `${CleanupOutput(hero.name || 'Unnamed Hero')}.pdf`;
 		downloader.href = url;
 		downloader.click();
 

@@ -104,21 +104,21 @@ table {
 	width: 100%;
 	border-collapse: collapse;
 	background-color: rgb(250, 250, 250);
-}
 
-th {
-	font-weight: 600;
+	th {
+		font-weight: 600;
+	}
+
+	th,
+	td {
+		padding: 5px;
+	}
 }
 
 table,
 th,
 td {
 	border: 1px solid rgba(5, 5, 5, 0.06);
-}
-
-th,
-td {
-	padding: 5px;
 }
 
 .ant-alert {
@@ -311,6 +311,7 @@ td {
 	table {
 		border-color: rgba(250, 250, 250, 0.6);
 		background-color: rgb(30, 30, 30);
+		color: rgba(255, 255, 255, 0.88);
 	}
 
 	.ant-collapse {
@@ -325,8 +326,8 @@ td {
 		}
 
 		&:hover {
-			.ant-collapse-item {
-				.ant-collapse-header {
+			>.ant-collapse-item {
+				>.ant-collapse-header {
 					color: rgba(0, 0, 0, 0.88) !important;
 				}
 			}
@@ -355,7 +356,7 @@ td {
 	.ant-popover {
 		.ant-popover-arrow:after,
 		.ant-popover-inner {
-			background-color: rgb(150, 150, 150);
+			background-color: rgb(100, 100, 100);
 		}
 	}
 

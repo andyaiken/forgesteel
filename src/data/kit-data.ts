@@ -147,7 +147,7 @@ export class KitData {
 					type: FactoryLogic.type.createAction(),
 					keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 					distance: [ FactoryLogic.distance.createMelee() ],
-					target: '1 creature',
+					target: '2 creatures or objects',
 					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Agility ],

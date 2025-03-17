@@ -30,7 +30,7 @@ export const TerrainPanel = (props: Props) => {
 						section.content.map((content, n) => {
 							switch (content.type) {
 								case FeatureType.Text:
-									return <Field key={n} label={content.name} value={content.description} />;
+									return <Field key={n} label={content.name} value={<Markdown text={content.description} useSpan={true} />} />;
 								case FeatureType.Ability:
 									return <AbilityPanel key={n} ability={content.data.ability} mode={PanelMode.Full} />;
 							}

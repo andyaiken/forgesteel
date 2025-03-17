@@ -523,7 +523,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			id: 'conduit-ability-13',
 			name: 'Corruption\'s Curse',
 			description: 'Cursed by you, your enemy takes more damage from your allies.',
-			type: FactoryLogic.type.createManeuver(),
+			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature or object',

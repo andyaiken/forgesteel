@@ -32,6 +32,7 @@ export const WelcomePage = (props: Props) => {
 									<HeaderText>For Players</HeaderText>
 									<div className='ds-text'>
 										With this app you can create heroes for <b>DRAW STEEL</b>.
+										You can use the app to track your hero's stamina, conditions, surges, etc.
 										If you're playing offline, you can export your heroes in PNG or PDF formats.
 									</div>
 								</div>

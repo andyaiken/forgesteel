@@ -24,7 +24,6 @@ import { Monster } from '../../../../models/monster';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { MonsterSelectModal } from '../../../modals/monster-select/monster-select-modal';
 import { NameGenerator } from '../../../../utils/name-generator';
-import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../perk-panel/perk-panel';
@@ -208,7 +207,7 @@ export const FeaturePanel = (props: Props) => {
 				</div>
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length === 0 ? 'selection-empty' : ''}
+					className={data.selected.length < data.count ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -293,9 +292,10 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selectedIDs.length === 0 ? 'selection-empty' : ''}
+					className={data.selectedIDs.length < data.count ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -433,9 +433,10 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length === 0 ? 'selection-empty' : ''}
+					className={data.selected.length < data.count ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -491,9 +492,10 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length === 0 ? 'selection-empty' : ''}
+					className={data.selected.length < data.count ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -554,9 +556,10 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length === 0 ? 'selection-empty' : ''}
+					className={data.selected.length < data.count ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -612,9 +615,10 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length === 0 ? 'selection-empty' : ''}
+					className={data.selected.length < data.count ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -694,10 +698,10 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<div>
-				<div className='ds-text'>{data.count === 1 ? 'Select a language:' : `Select ${data.count} languages:`}</div>
+				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length === 0 ? 'selection-empty' : ''}
+					className={data.selected.length < data.count ? 'selection-empty' : ''}
 					mode={data.count == 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -761,9 +765,10 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length === 0 ? 'selection-empty' : ''}
+					className={data.selected.length < data.count ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -837,10 +842,10 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<div>
-				<div className='ds-text'>{data.count === 1 ? 'Select a skill:' : `Select ${data.count} skills:`}</div>
+				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length === 0 ? 'selection-empty' : ''}
+					className={data.selected.length < data.count ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -894,25 +899,12 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<NumberSpin
-					label='Echelon'
-					min={1}
-					max={4}
-					value={data.echelon}
-					onChange={value => {
-						const dataCopy = Utils.copy(data);
-						dataCopy.echelon = value;
-						dataCopy.selected = [];
-						if (props.setData) {
-							props.setData(props.feature.id, dataCopy);
-						}
-					}}
-				/>
+				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
 					sortedTitles.length > 0 ?
 						<Select
 							style={{ width: '100%' }}
-							className={data.selected.length === 0 ? 'selection-empty' : ''}
+							className={data.selected.length < data.count ? 'selection-empty' : ''}
 							mode={data.count === 1 ? undefined : 'multiple'}
 							maxCount={data.count === 1 ? undefined : data.count}
 							allowClear={true}

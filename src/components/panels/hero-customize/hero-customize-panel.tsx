@@ -1,5 +1,5 @@
 import { Divider, Select } from 'antd';
-import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureData, FeaturePerk, FeatureSkillChoice } from '../../../models/feature';
+import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureData, FeaturePerk, FeatureSkillChoice, FeatureTitleChoice } from '../../../models/feature';
 import { Characteristic } from '../../../enums/characteristic';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
@@ -117,6 +117,13 @@ export const HeroCustomizePanel = (props: Props) => {
 		props.setFeature(feature.id, copy);
 	};
 
+	const setEchelon = (feature: Feature, value: number) => {
+		const copy = Utils.copy(feature) as FeatureTitleChoice;
+		copy.data.echelon = value;
+		copy.data.selected = [];
+		props.setFeature(feature.id, copy);
+	};
+
 	const getEditSection = (feature: Feature) => {
 		switch (feature.type) {
 			case FeatureType.AncestryFeatureChoice:
@@ -215,6 +222,18 @@ export const HeroCustomizePanel = (props: Props) => {
 							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 							value={feature.data.listOptions}
 							onChange={lists => setSkillLists(feature, lists)}
+						/>
+					</div>
+				);
+			case FeatureType.TitleChoice:
+				return (
+					<div>
+						<HeaderText>Echelon</HeaderText>
+						<NumberSpin
+							min={1}
+							max={4}
+							value={feature.data.echelon}
+							onChange={value => setEchelon(feature, value)}
 						/>
 					</div>
 				);

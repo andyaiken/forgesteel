@@ -35,10 +35,20 @@
 
 ### Director Tools
 
+* Session page
 * Encounter tracker
+  * Choose heroes
+  * Show monster initiative groups / heroes / terrain
+  * Set captain for minions
+  * Malice
+  * Stamina / conditions
 * Montage tracker
+  * Show progress
+  * Show challenge usage
 * Negotiation tracker
+  * Show progress
 
 ### Ideas
 
 * Add guides for specific features
+* Add options for hero sheet feature / ability sizing

@@ -5,6 +5,7 @@ import { Hero } from './models/hero.ts';
 import { HeroLogic } from './logic/hero-logic.ts';
 import { Main } from './components/main/main.tsx';
 import { Options } from './models/options.ts';
+import { PanelWidth } from './enums/panel-width.ts';
 import { Playbook } from './models/playbook.ts';
 import { PlaybookLogic } from './logic/playbook-logic.ts';
 import { Sourcebook } from './models/sourcebook.ts';
@@ -72,6 +73,8 @@ Promise.all(promises).then(results => {
 			showFreeStrikes: false,
 			showStandardAbilities: false,
 			dimUnavailableAbilities: false,
+			featureWidth: PanelWidth.Medium,
+			abilityWidth: PanelWidth.Medium,
 			showMonstersInGroups: true,
 			showSimilarMonsters: false,
 			similarLevel: true,
@@ -82,6 +85,14 @@ Promise.all(promises).then(results => {
 			heroLevel: 1,
 			heroVictories: 0
 		};
+	}
+
+	if (options.featureWidth === undefined) {
+		options.featureWidth = PanelWidth.Medium;
+	}
+
+	if (options.abilityWidth === undefined) {
+		options.abilityWidth = PanelWidth.Medium;
 	}
 
 	if (options.showMonstersInGroups === undefined) {

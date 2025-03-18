@@ -4,6 +4,7 @@ import { AppHeader } from '../../../panels/app-header/app-header';
 import { Collections } from '../../../../utils/collections';
 import { Hero } from '../../../../models/hero';
 import { HeroPanel } from '../../../panels/hero/hero-panel';
+import { Options } from '../../../../models/options';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Utils } from '../../../../utils/utils';
@@ -16,6 +17,7 @@ import './hero-list-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
+	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -69,7 +71,7 @@ export const HeroListPage = (props: Props) => {
 				{
 					list.map(hero => (
 						<SelectablePanel key={hero.id} onSelect={() => navigation.goToHeroView(hero.id)}>
-							<HeroPanel hero={hero} sourcebooks={props.sourcebooks} />
+							<HeroPanel hero={hero} sourcebooks={props.sourcebooks} options={props.options} />
 						</SelectablePanel>
 					))
 				}

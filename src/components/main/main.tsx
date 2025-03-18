@@ -998,6 +998,7 @@ export const Main = (props: Props) => {
 							<HeroListPage
 								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								options={props.options}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}

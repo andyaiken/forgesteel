@@ -1,5 +1,7 @@
+import { Divider, Segmented } from 'antd';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Options } from '../../../models/options';
+import { PanelWidth } from '../../../enums/panel-width';
 import { Toggle } from '../../controls/toggle/toggle';
 import { Utils } from '../../../utils/utils';
 
@@ -33,6 +35,18 @@ export const OptionsPanel = (props: Props) => {
 	const setDimUnavailableAbilities = (value: boolean) => {
 		const copy = Utils.copy(props.options);
 		copy.dimUnavailableAbilities = value;
+		props.setOptions(copy);
+	};
+
+	const setFeatureWidth = (value: PanelWidth) => {
+		const copy = Utils.copy(props.options);
+		copy.featureWidth = value;
+		props.setOptions(copy);
+	};
+
+	const setAbilityWidth = (value: PanelWidth) => {
+		const copy = Utils.copy(props.options);
+		copy.abilityWidth = value;
 		props.setOptions(copy);
 	};
 
@@ -110,6 +124,21 @@ export const OptionsPanel = (props: Props) => {
 						<Toggle label='Show free strikes' value={props.options.showFreeStrikes} onChange={setShowFreeStrikes} />
 						<Toggle label='Show standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
 						<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
+						<Divider />
+						<div className='ds-text bold-text'>Features</div>
+						<Segmented
+							name='featurewidth'
+							options={[ PanelWidth.Narrow, PanelWidth.Medium, PanelWidth.Wide, PanelWidth.ExtraWide ]}
+							value={props.options.featureWidth}
+							onChange={setFeatureWidth}
+						/>
+						<div className='ds-text bold-text'>Abilities</div>
+						<Segmented
+							name='abilitywidth'
+							options={[ PanelWidth.Narrow, PanelWidth.Medium, PanelWidth.Wide, PanelWidth.ExtraWide ]}
+							value={props.options.abilityWidth}
+							onChange={setAbilityWidth}
+						/>
 					</>
 				);
 			case 'library':

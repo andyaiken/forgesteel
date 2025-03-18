@@ -124,16 +124,23 @@
 				}
 			}
 
-			.features-grid {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-				gap: 0 20px;
-			}
-
+			.features-grid,
 			.abilities-grid {
 				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 				gap: 10px;
+
+				&.narrow {
+					grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+				}
+				&.medium {
+					grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+				}
+				&.wide {
+					grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+				}
+				&.extra-wide {
+					grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+				}
 			}
 		}
 

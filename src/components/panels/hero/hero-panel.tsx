@@ -40,7 +40,7 @@ import './hero-panel.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options?: Options;
+	options: Options;
 	mode?: PanelMode;
 	onSelectAncestry?: (ancestry: Ancestry) => void;
  	onSelectCulture?: (culture: Culture) => void;
@@ -265,7 +265,7 @@ export const HeroPanel = (props: Props) => {
 					}
 				</div>
 				{
-					(props.options?.showSkillsInGroups || false) ?
+					(props.options.showSkillsInGroups || false) ?
 						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
 							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, sourcebooks).filter(s => s.list === list)))
 						:
@@ -456,7 +456,7 @@ export const HeroPanel = (props: Props) => {
 		return (
 			<div className='features-section'>
 				{header ? <HeaderText level={1}>{header}</HeaderText> : null}
-				<div className='features-grid'>
+				<div className={`features-grid ${props.options.featureWidth.toLowerCase().replace(' ', '-')}`}>
 					{
 						features.map(feature => (
 							<FeaturePanel
@@ -487,7 +487,7 @@ export const HeroPanel = (props: Props) => {
 		return (
 			<div className='abilities-section'>
 				{header ? <HeaderText level={1}>{header}</HeaderText> : null}
-				<div className='abilities-grid'>
+				<div className={`abilities-grid ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
 					{
 						abilities.map(ability => (
 							<SelectablePanel key={ability.id} style={ header ? { gridColumn: `span ${AbilityLogic.panelWidth(ability)}` } : undefined} onSelect={() => showAbility(ability)}>
@@ -520,7 +520,7 @@ export const HeroPanel = (props: Props) => {
 			);
 		}
 
-		const abilities = HeroLogic.getAbilities(props.hero, true, props.options?.showFreeStrikes || false, props.options?.showStandardAbilities || false);
+		const abilities = HeroLogic.getAbilities(props.hero, true, props.options.showFreeStrikes, props.options.showStandardAbilities);
 		const actions = abilities.filter(a => a.type.usage === AbilityUsage.Action);
 		const maneuvers = abilities.filter(a => a.type.usage === AbilityUsage.Maneuver);
 		const moves = abilities.filter(a => a.type.usage === AbilityUsage.Move);

@@ -379,6 +379,10 @@ td {
 		}
 	}
 
+	.ant-slider .ant-slider-rail {
+		background-color: rgba(250, 250, 250, 0.6);
+	}
+
 	.ant-tabs {
 		&.ant-tabs-top >.ant-tabs-nav::before,
 		&.ant-tabs-bottom >.ant-tabs-nav::before,

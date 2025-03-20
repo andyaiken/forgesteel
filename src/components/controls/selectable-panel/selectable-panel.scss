@@ -10,11 +10,12 @@
 
 	&.selectable {
 		cursor: pointer;
+	}
 
-		&:hover {
-			border-color: rgb(22, 119, 255);
-			background: rgb(180, 220, 255);
-		}
+	&.selectable:hover,
+	&.selected {
+		border-color: rgb(22, 119, 255);
+		background: rgb(180, 220, 255);
 	}
 
 	&.shadow {
@@ -33,10 +34,9 @@
 		border: 1px solid rgba(250, 250, 250, 0.6);
 		background: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
 	
-		&.selectable {
-			&:hover {
-				background: rgb(60, 60, 60);
-			}
+		&.selectable:hover,
+		&.selected {
+			background: rgb(60, 60, 60);
 		}
 	}
 }

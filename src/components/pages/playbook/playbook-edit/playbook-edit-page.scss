@@ -102,15 +102,18 @@
 					color: rgba(255, 255, 255, 0.88);
 				}
 
-				.group-row {
-					.slot-row {
+				.group-row,
+				.terrain-container-row {
+					.slot-row,
+					.terrain-row {
 						background-color: rgba(0, 0, 0);
 					}
 				}
 			}
 
 			.preview-column {
-				.monster-row {
+				.monster-row,
+				.terrain-row {
 					background-color: rgba(0, 0, 0);
 				}
 			}

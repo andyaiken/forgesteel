@@ -4,6 +4,7 @@ import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
+import { ConditionEndType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FactoryLogic } from './factory-logic';
 import { FeatureLogic } from './feature-logic';
@@ -951,7 +952,15 @@ export class MonsterLogic {
 	};
 
 	static getConditionsDescription = (monster: Monster) => {
-		return monster.state.conditions.map(c => `${c.type} (${c.ends.toLowerCase()}`).join(', ');
+		return monster.state.conditions
+			.map(c => {
+				let end = c.ends.toLowerCase();
+				if (c.ends === ConditionEndType.EndOfTurn) {
+					end = 'EoT';
+				}
+				return `${c.type} (${end})`;
+			})
+			.join(', ');
 	};
 
 	///////////////////////////////////////////////////////////////////////////

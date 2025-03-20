@@ -65,28 +65,28 @@ export const SessionPage = (props: Props) => {
 			<>
 				{
 					session.encounters.map(e => (
-						<SelectablePanel key={e.id} onSelect={() => navigation.goToSession(e.id)}>
+						<SelectablePanel key={e.id} selected={selectedElementID === e.id} onSelect={() => navigation.goToSession(e.id)}>
 							<EncounterPanel encounter={e} sourcebooks={props.sourcebooks} options={props.options} />
 						</SelectablePanel>
 					))
 				}
 				{
 					session.montages.map(m => (
-						<SelectablePanel key={m.id} onSelect={() => navigation.goToSession(m.id)}>
+						<SelectablePanel key={m.id} selected={selectedElementID === m.id} onSelect={() => navigation.goToSession(m.id)}>
 							<MontagePanel montage={m} />
 						</SelectablePanel>
 					))
 				}
 				{
 					session.negotiations.map(n => (
-						<SelectablePanel key={n.id} onSelect={() => navigation.goToSession(n.id)}>
+						<SelectablePanel key={n.id} selected={selectedElementID === n.id} onSelect={() => navigation.goToSession(n.id)}>
 							<NegotiationPanel negotiation={n} />
 						</SelectablePanel>
 					))
 				}
 				{
 					session.counters.map(c => (
-						<SelectablePanel key={c.id} onSelect={() => navigation.goToSession(c.id)}>
+						<SelectablePanel key={c.id} selected={selectedElementID === c.id} onSelect={() => navigation.goToSession(c.id)}>
 							<CounterPanel counter={c} />
 						</SelectablePanel>
 					))

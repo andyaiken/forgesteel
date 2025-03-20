@@ -40,6 +40,7 @@
   * Set captain for minions
   * Set 'used reaction' flag on monsters
   * Ability to add new monsters / terrain / heroes
+  * Should track minion health as a pool
 * Player view
   * Ability to show certain information to players using a second window
 

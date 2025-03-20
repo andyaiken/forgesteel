@@ -27,7 +27,7 @@ export const DirectoryModal = (props: Props) => {
 		return (
 			<Modal
 				toolbar={
-					<div style={{ width: '100%', textAlign: 'center' }}>
+					<div style={{ width: '100%', textAlign: 'center', cursor: 'pointer' }} onClick={() => { navigation.goToWelcome(); props.onClose(); }}>
 						<LogoPanel />
 					</div>
 				}

@@ -343,7 +343,8 @@ export class SourcebookLogic {
 						staminaDamage: 0,
 						staminaTemp: 0,
 						conditions: [],
-						reactionUsed: false
+						reactionUsed: false,
+						defeated: false
 					};
 				}
 
@@ -378,6 +379,15 @@ export class SourcebookLogic {
 						features: []
 					}
 				];
+			}
+		});
+
+		sourcebook.terrain.forEach(terrain => {
+			if (terrain.state === undefined) {
+				terrain.state = {
+					squares: 1,
+					staminaDamage: 0
+				};
 			}
 		});
 	};

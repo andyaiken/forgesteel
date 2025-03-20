@@ -1,4 +1,5 @@
 import { Alert, Button, Divider, Segmented, Space, Tag } from 'antd';
+import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../../controls/field/field';
@@ -143,11 +144,7 @@ export const ItemPanel = (props: Props) => {
 								}
 								{
 									item.customizationsByLevel.filter(lvl => lvl.level === customizationLevel).flatMap(lvl => lvl.features).length === 0 ?
-										<Alert
-											type='warning'
-											showIcon={true}
-											message='No customizations for this level.'
-										/>
+										<Empty />
 										: null
 								}
 							</Space>

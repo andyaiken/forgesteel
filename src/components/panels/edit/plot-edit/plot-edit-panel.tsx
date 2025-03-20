@@ -1,9 +1,10 @@
-import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Plot, PlotContent, PlotLink } from '../../../../models/plot';
 import { Adventure } from '../../../../models/adventure';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
+import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
 import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
@@ -159,11 +160,7 @@ export const PlotEditPanel = (props: Props) => {
 				}
 				{
 					plot.content.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No content'
-						/>
+						<Empty text='No content' />
 						: null
 				}
 				<Button block={true} onClick={addContent}>Add a new piece of content</Button>
@@ -264,11 +261,7 @@ export const PlotEditPanel = (props: Props) => {
 				}
 				{
 					plot.links.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No links'
-						/>
+						<Empty text='No links' />
 						: null
 				}
 				<Button block={true} onClick={addLink}>Add a new link</Button>

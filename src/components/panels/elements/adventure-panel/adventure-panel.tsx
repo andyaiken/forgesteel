@@ -1,6 +1,8 @@
 import { Button, Space, Tabs } from 'antd';
+import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { Plot, PlotContent } from '../../../../models/plot';
 import { Adventure } from '../../../../models/adventure';
+import { Element } from '../../../../models/element';
 import { EncounterPanel } from '../encounter-panel/encounter-panel';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -11,7 +13,7 @@ import { MontagePanel } from '../montage-panel/montage-panel';
 import { NegotiationPanel } from '../negotiation-panel/negotiation-panel';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Playbook } from '../../../../models/playbook';
+import { PlayCircleOutlined } from '@ant-design/icons';
 import { PlotPanel } from '../plot-panel/plot-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
@@ -27,7 +29,8 @@ interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	options: Options;
-	allowSelection?: boolean
+	allowSelection?: boolean;
+	start?: (kind: PlaybookElementKind, element: Element) => void;
 }
 
 export const AdventurePanel = (props: Props) => {
@@ -47,7 +50,6 @@ export const AdventurePanel = (props: Props) => {
 						<SelectablePanel onSelect={() => navigation.goToPlaybookView('encounter', encounter.id)}>
 							<EncounterPanel
 								encounter={encounter}
-								playbook={props.playbook}
 								sourcebooks={props.sourcebooks}
 								options={props.options}
 							/>
@@ -115,6 +117,50 @@ export const AdventurePanel = (props: Props) => {
 		return null;
 	};
 
+	const getActions = (content: PlotContent) => {
+		if (!content.contentID) {
+			return null;
+		}
+
+		switch (content.type) {
+			case 'encounter': {
+				const encounter = props.playbook.encounters.find(e => e.id === content.contentID);
+				if (encounter) {
+					return (
+						<>
+							{props.start ? <Button icon={<PlayCircleOutlined />} onClick={() => props.start!('encounter', encounter)} /> : null}
+						</>
+					);
+				}
+				break;
+			}
+			case 'montage': {
+				const montage = props.playbook.montages.find(m => m.id === content.contentID);
+				if (montage) {
+					return (
+						<>
+							{props.start ? <Button icon={<PlayCircleOutlined />} onClick={() => props.start!('montage', montage)} /> : null}
+						</>
+					);
+				}
+				break;
+			}
+			case 'negotiation': {
+				const negotiation = props.playbook.negotiations.find(n => n.id === content.contentID);
+				if (negotiation) {
+					return (
+						<>
+							{props.start ? <Button icon={<PlayCircleOutlined />} onClick={() => props.start!('negotiation', negotiation)} /> : null}
+						</>
+					);
+				}
+				break;
+			}
+		}
+
+		return null;
+	};
+
 	const getPlotInfo = () => {
 		if (props.adventure.plot.plots.length === 0) {
 			return null;
@@ -133,8 +179,9 @@ export const AdventurePanel = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						{
 							selectedPlot.content.map(c => (
-								<div key={c.id}>
+								<div key={c.id} className='plot-content-row'>
 									{getContent(c)}
+									{getActions(c)}
 								</div>
 							))
 						}

@@ -13,6 +13,7 @@ interface Props {
 	steps?: number[];
 	min?: number;
 	max?: number;
+	children?: ReactNode;
 	format?: (value: number) => string;
 	onChange: (value: number) => void;
 }
@@ -58,12 +59,17 @@ export const NumberSpin = (props: Props) => {
 						))
 					}
 				</div>
-				<Statistic
-					className='spin-middle'
-					title={props.label}
-					value={props.format ? props.format(props.value) : props.value}
-					suffix={props.suffix}
-				/>
+				{
+					props.children ?
+						props.children
+						:
+						<Statistic
+							className='spin-middle'
+							title={props.label}
+							value={props.format ? props.format(props.value) : props.value}
+							suffix={props.suffix}
+						/>
+				}
 				<div className='spin-buttons'>
 					{
 						ascending.map((step, n) => (

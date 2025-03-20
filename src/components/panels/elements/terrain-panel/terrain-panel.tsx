@@ -7,9 +7,12 @@ import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
+import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { TerrainLabel } from '../../monster-label/monster-label';
 import { TerrainLogic } from '../../../../logic/terrain-logic';
+import { Utils } from '../../../../utils/utils';
+import { useState } from 'react';
 
 import './terrain-panel.scss';
 
@@ -18,9 +21,30 @@ interface Props {
 	upgradeIDs?: string[];
 	showCustomizations?: boolean;
 	mode?: PanelMode;
+	updateTerrain?: (terrain: Terrain) => void;
 }
 
 export const TerrainPanel = (props: Props) => {
+	const [ terrain, setTerrain ] = useState<Terrain>(Utils.copy(props.terrain));
+
+	const setSquares = (value: number) => {
+		const copy = Utils.copy(terrain);
+		copy.state.squares = value;
+		setTerrain(copy);
+		if (props.updateTerrain) {
+			props.updateTerrain(copy);
+		}
+	};
+
+	const setStaminaDamage = (value: number) => {
+		const copy = Utils.copy(terrain);
+		copy.state.staminaDamage = value;
+		setTerrain(copy);
+		if (props.updateTerrain) {
+			props.updateTerrain(copy);
+		}
+	};
+
 	try {
 		const getSection = (section: TerrainSection, index: number) => {
 			return (
@@ -40,31 +64,47 @@ export const TerrainPanel = (props: Props) => {
 			);
 		};
 
-		const immunities = TerrainLogic.getDamageModifiers(props.terrain, DamageModifierType.Immunity);
-		const weaknesses = TerrainLogic.getDamageModifiers(props.terrain, DamageModifierType.Weakness);
+		const immunities = TerrainLogic.getDamageModifiers(terrain, DamageModifierType.Immunity);
+		const weaknesses = TerrainLogic.getDamageModifiers(terrain, DamageModifierType.Weakness);
 
 		return (
-			<div className={props.mode === PanelMode.Full ? 'terrain-panel' : 'terrain-panel compact'} id={props.mode === PanelMode.Full ? props.terrain.id : undefined}>
-				<HeaderText level={1}>{props.terrain.name || 'Unnamed Ancestry'}</HeaderText>
-				<Markdown text={props.terrain.description} />
-				<TerrainLabel terrain={props.terrain} />
+			<div className={props.mode === PanelMode.Full ? 'terrain-panel' : 'terrain-panel compact'} id={props.mode === PanelMode.Full ? terrain.id : undefined}>
+				<HeaderText level={1}>{terrain.name || 'Unnamed Ancestry'}</HeaderText>
+				<Markdown text={terrain.description} />
+				<TerrainLabel terrain={terrain} />
 				<Flex align='center' justify='space-between'>
-					<Tag>{props.terrain.category}</Tag>
-					<Field label='EV' value={props.terrain.area ? `${props.terrain.encounterValue} / ${props.terrain.area}` : ((props.terrain.encounterValue === 0) ? '-': props.terrain.encounterValue)} />
+					<Tag>{terrain.category}</Tag>
+					<Field label='EV' value={terrain.area ? `${terrain.encounterValue} / ${terrain.area}` : ((terrain.encounterValue === 0) ? '-': terrain.encounterValue)} />
 				</Flex>
 				{
 					props.mode === PanelMode.Full ?
 						<div>
-							<Field label='Size' value={props.terrain.size} />
-							<Field label='Stamina' value={TerrainLogic.getStamina(props.terrain)} />
 							{
-								props.terrain.direction  ?
-									<Field label='Direction' value={props.terrain.direction} />
+								props.updateTerrain ?
+									<div className='stats'>
+										{
+											terrain.stamina.perSquare ?
+												<NumberSpin min={0} value={terrain.state.squares} onChange={setSquares}>
+													<Field orientation='vertical' label='Squares' value={terrain.state.squares} />
+												</NumberSpin>
+												: null
+										}
+										<NumberSpin min={0} value={terrain.state.staminaDamage} onChange={setStaminaDamage}>
+											<Field orientation='vertical' label='Damage' value={terrain.state.staminaDamage} />
+										</NumberSpin>
+									</div>
+									: null
+							}
+							<Field label='Size' value={terrain.size} />
+							<Field label='Stamina' value={props.updateTerrain ? TerrainLogic.getStaminaValue(terrain) : TerrainLogic.getStaminaDescription(terrain)} />
+							{
+								terrain.direction  ?
+									<Field label='Direction' value={terrain.direction} />
 									: null
 							}
 							{
-								props.terrain.link  ?
-									<Field label='Link' value={props.terrain.link} />
+								terrain.link  ?
+									<Field label='Link' value={terrain.link} />
 									: null
 							}
 							{
@@ -77,10 +117,10 @@ export const TerrainPanel = (props: Props) => {
 									<Field label='Weaknesses' value={weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} />
 									: null
 							}
-							{props.terrain.sections.map((section, n) => getSection(section, n))}
+							{terrain.sections.map((section, n) => getSection(section, n))}
 							{
 								props.upgradeIDs ?
-									props.terrain.upgrades
+									terrain.upgrades
 										.filter(u => (props.upgradeIDs|| []).includes(u.id))
 										.map((upgrade, n) => (
 											<div key={n}>
@@ -91,10 +131,10 @@ export const TerrainPanel = (props: Props) => {
 										))
 									: null
 							}
-							{props.showCustomizations && (props.terrain.upgrades.length > 0) ? <HeaderText level={1}>Customization</HeaderText> : null}
+							{props.showCustomizations && (terrain.upgrades.length > 0) ? <HeaderText level={1}>Customization</HeaderText> : null}
 							{
 								props.showCustomizations ?
-									props.terrain.upgrades.map((upgrade, n) => (
+									terrain.upgrades.map((upgrade, n) => (
 										<div key={n}>
 											{
 												upgrade.cost >= 0 ?

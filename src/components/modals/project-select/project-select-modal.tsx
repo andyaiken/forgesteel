@@ -1,5 +1,6 @@
-import { Alert, Button, Input, Space } from 'antd';
+import { Button, Input, Space } from 'antd';
 import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
+import { Empty } from '../../controls/empty/empty';
 import { Modal } from '../modal/modal';
 import { Project } from '../../../models/project';
 import { ProjectPanel } from '../../panels/elements/project-panel/project-panel';
@@ -66,11 +67,7 @@ export const ProjectSelectModal = (props: Props) => {
 							}
 							{
 								projects.length === 0 ?
-									<Alert
-										type='warning'
-										showIcon={true}
-										message='No projects to show'
-									/>
+									<Empty />
 									: null
 							}
 						</Space>

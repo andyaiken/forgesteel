@@ -1,11 +1,11 @@
-import { Alert, Button, Drawer, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
+import { Button, Drawer, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, EditOutlined, LeftOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureAbility, FeatureAddOn, FeatureAddOnType, FeatureMalice, FeatureText } from '../../../../models/feature';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ability } from '../../../../models/ability';
-import { AbilityEditPanel } from '../../../panels/edit/ability-edit-panel/ability-edit-panel';
+import { AbilityEditPanel } from '../../../panels/edit/ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { Ancestry } from '../../../../models/ancestry';
@@ -25,10 +25,11 @@ import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
-import { ElementEditPanel } from '../../../panels/edit/element-edit-panel/element-edit-panel';
+import { ElementEditPanel } from '../../../panels/edit/element-edit/element-edit-panel';
+import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
-import { FeatureEditPanel } from '../../../panels/edit/feature-edit-panel/feature-edit-panel';
+import { FeatureEditPanel } from '../../../panels/edit/feature-edit/feature-edit-panel';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
@@ -44,7 +45,7 @@ import { KitArmor } from '../../../../enums/kit-armor';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
 import { KitType } from '../../../../enums/kit-type';
 import { KitWeapon } from '../../../../enums/kit-weapon';
-import { MonsterEditPanel } from '../../../panels/edit/monster-edit-panel/monster-edit-panel';
+import { MonsterEditPanel } from '../../../panels/edit/monster-edit/monster-edit-panel';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
@@ -238,11 +239,7 @@ export const LibraryEditPage = (props: Props) => {
 				}
 				{
 					el.features.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No features'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addFeature}>Add a new feature</Button>
@@ -311,11 +308,7 @@ export const LibraryEditPage = (props: Props) => {
 				}
 				{
 					career.incitingIncidents.options.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No inciting incidents'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addIncident}>Add a new inciting incident</Button>
@@ -559,11 +552,7 @@ export const LibraryEditPage = (props: Props) => {
 								}
 								{
 									lvl.features.length === 0 ?
-										<Alert
-											type='warning'
-											showIcon={true}
-											message='No features'
-										/>
+										<Empty />
 										: null
 								}
 								<Button block={true} onClick={() => addFeature(lvl.level)}>Add a new level {lvl.level} feature</Button>
@@ -641,11 +630,7 @@ export const LibraryEditPage = (props: Props) => {
 				}
 				{
 					heroClass.abilities.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No abilities'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addAbility}>Add a new ability</Button>
@@ -698,11 +683,7 @@ export const LibraryEditPage = (props: Props) => {
 				}
 				{
 					heroClass.subclasses.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No subclasses'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addSubclass}>Add a new subclass</Button>
@@ -830,11 +811,7 @@ export const LibraryEditPage = (props: Props) => {
 					}
 					{
 						lvl.features.length === 0 ?
-							<Alert
-								type='warning'
-								showIcon={true}
-								message='No features'
-							/>
+							<Empty />
 							: null
 					}
 					<Button block={true} onClick={() => addFeature(subclass, lvl.level)}>Add a new level {lvl.level} feature</Button>
@@ -1299,11 +1276,7 @@ export const LibraryEditPage = (props: Props) => {
 								}
 								{
 									lvl.features.length === 0 ?
-										<Alert
-											type='warning'
-											showIcon={true}
-											message='No features'
-										/>
+										<Empty />
 										: null
 								}
 								<Button block={true} onClick={() => addFeature(lvl.level)}>Add a new level {lvl.level} feature</Button>
@@ -1615,11 +1588,7 @@ export const LibraryEditPage = (props: Props) => {
 				}
 				{
 					terrain.damageMods.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No damage modifiers'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addDamageMod}>Add a new damage modifier</Button>
@@ -1730,11 +1699,7 @@ export const LibraryEditPage = (props: Props) => {
 								}
 								{
 									section.content.length === 0 ?
-										<Alert
-											type='warning'
-											showIcon={true}
-											message='No content'
-										/>
+										<Empty />
 										: null
 								}
 								<Button block={true} onClick={() => addSectionContent(sectionIndex)}>Add a new content item</Button>
@@ -1744,11 +1709,7 @@ export const LibraryEditPage = (props: Props) => {
 				}
 				{
 					terrain.sections.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No sections'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addSection}>Add a new section</Button>
@@ -1932,11 +1893,7 @@ export const LibraryEditPage = (props: Props) => {
 												}
 												{
 													section.content.length === 0 ?
-														<Alert
-															type='warning'
-															showIcon={true}
-															message='No content'
-														/>
+														<Empty />
 														: null
 												}
 												<Button block={true} onClick={() => addUpgradeSectionContent(upgradeIndex, sectionIndex)}>Add a new content item</Button>
@@ -1946,11 +1903,7 @@ export const LibraryEditPage = (props: Props) => {
 								}
 								{
 									upgrade.sections.length === 0 ?
-										<Alert
-											type='warning'
-											showIcon={true}
-											message='No sections'
-										/>
+										<Empty />
 										: null
 								}
 								<Button block={true} onClick={() => addUpgradeSection(upgradeIndex)}>Add a new section</Button>
@@ -1960,11 +1913,7 @@ export const LibraryEditPage = (props: Props) => {
 				}
 				{
 					terrain.upgrades.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No customizations'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addUpgrade}>Add a new customization</Button>
@@ -2033,11 +1982,7 @@ export const LibraryEditPage = (props: Props) => {
 				}
 				{
 					monsterGroup.information.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No information pieces'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addInformation}>Add a new information piece</Button>
@@ -2111,11 +2056,7 @@ export const LibraryEditPage = (props: Props) => {
 				}
 				{
 					monsterGroup.malice.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No malice features'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addMaliceFeature}>Add a new malice feature</Button>
@@ -2188,11 +2129,7 @@ export const LibraryEditPage = (props: Props) => {
 				}
 				{
 					monsterGroup.monsters.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No monsters'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addMonster}>Add a new monster</Button>
@@ -2264,11 +2201,7 @@ export const LibraryEditPage = (props: Props) => {
 				}
 				{
 					monsterGroup.addOns.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No customizations'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addAddOn}>Add a new customization</Button>
@@ -2366,11 +2299,7 @@ export const LibraryEditPage = (props: Props) => {
 				}
 				{
 					monsters.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No similar monsters.'
-						/>
+						<Empty text='No similar monsters.' />
 						: null
 				}
 				<Drawer open={drawerOpen} closeIcon={null} width='500px'>

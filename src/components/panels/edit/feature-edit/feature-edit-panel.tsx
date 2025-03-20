@@ -1,14 +1,15 @@
-import { Alert, Button, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { Button, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
-import { AbilityEditPanel } from '../ability-edit-panel/ability-edit-panel';
+import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
+import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeatureField } from '../../../../enums/feature-field';
@@ -761,11 +762,7 @@ export const FeatureEditPanel = (props: Props) => {
 						}
 						{
 							data.options.length === 0 ?
-								<Alert
-									type='warning'
-									showIcon={true}
-									message='No options'
-								/>
+								<Empty />
 								: null
 						}
 						<Button block={true} onClick={() => addChoice(data)}>Add an option</Button>
@@ -863,11 +860,7 @@ export const FeatureEditPanel = (props: Props) => {
 						}
 						{
 							data.modifiers.length === 0 ?
-								<Alert
-									type='warning'
-									showIcon={true}
-									message='No modifiers'
-								/>
+								<Empty />
 								: null
 						}
 						<Button block={true} onClick={() => addDamageModifier(data)}>Add a modifier</Button>
@@ -1050,11 +1043,7 @@ export const FeatureEditPanel = (props: Props) => {
 							}
 							{
 								data.sections.length === 0 ?
-									<Alert
-										type='warning'
-										showIcon={true}
-										message='No sections'
-									/>
+									<Empty />
 									: null
 							}
 							<Flex gap='8px'>
@@ -1091,11 +1080,7 @@ export const FeatureEditPanel = (props: Props) => {
 						}
 						{
 							data.features.length === 0 ?
-								<Alert
-									type='warning'
-									showIcon={true}
-									message='No features'
-								/>
+								<Empty />
 								: null
 						}
 						<Button block={true} onClick={() => addMultipleFeature(data)}>Add a feature</Button>

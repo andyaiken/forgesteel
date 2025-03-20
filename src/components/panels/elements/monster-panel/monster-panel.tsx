@@ -1,9 +1,13 @@
-import { Drawer, Flex, Tag } from 'antd';
+import { Button, Drawer, Flex, Segmented, Tag } from 'antd';
+import { ConditionEndType, ConditionType } from '../../../../enums/condition-type';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Ability } from '../../../../models/ability';
 import { AbilityModal } from '../../../modals/ability/ability-modal';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Characteristic } from '../../../../enums/characteristic';
+import { Condition } from '../../../../models/hero';
+import { ConditionPanel } from '../../condition/condition-panel';
+import { ConditionSelectModal } from '../../../modals/condition-select/condition-select-modal';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
@@ -14,9 +18,11 @@ import { Markdown } from '../../../controls/markdown/markdown';
 import { MonsterLabel } from '../../monster-label/monster-label';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
+import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Token } from '../../../controls/token/token';
+import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
 import './monster-panel.scss';
@@ -26,58 +32,164 @@ interface Props {
 	monsterGroup?: MonsterGroup;
 	mode?: PanelMode;
 	canRoll?: boolean;
+	updateMonster?: (monster: Monster) => void;
 }
 
 export const MonsterPanel = (props: Props) => {
+	const [ monster, setMonster ] = useState<Monster>(Utils.copy(props.monster));
 	const [ selectedAbility, setSelectedAbility ] = useState<Ability | null>(null);
+	const [ addingCondition, setAddingCondition ] = useState<boolean>(false);
+
+	const setStaminaDamage = (value: number) => {
+		const copy = Utils.copy(monster);
+		copy.state.staminaDamage = value;
+		setMonster(copy);
+		if (props.updateMonster) {
+			props.updateMonster(copy);
+		}
+	};
+
+	const setStaminaTemp = (value: number) => {
+		const copy = Utils.copy(monster);
+		copy.state.staminaTemp = value;
+		setMonster(copy);
+		if (props.updateMonster) {
+			props.updateMonster(copy);
+		}
+	};
+
+	const setDefeated = (value: boolean) => {
+		const copy = Utils.copy(monster);
+		copy.state.defeated = value;
+		setMonster(copy);
+		if (props.updateMonster) {
+			props.updateMonster(copy);
+		}
+	};
+
+	const addCondition = (value: ConditionType) => {
+		const copy = Utils.copy(monster);
+		copy.state.conditions.push({
+			id: Utils.guid(),
+			type: value,
+			text: '',
+			ends: ConditionEndType.EndOfTurn
+		});
+		setMonster(copy);
+		setAddingCondition(false);
+		if (props.updateMonster) {
+			props.updateMonster(copy);
+		}
+	};
+
+	const changeCondition = (condition: Condition) => {
+		const copy = Utils.copy(monster);
+		const index = copy.state.conditions.findIndex(c => c.id === condition.id);
+		if (index !== -1) {
+			copy.state.conditions[index] = condition;
+		}
+		setMonster(copy);
+		if (props.updateMonster) {
+			props.updateMonster(copy);
+		}
+	};
+
+	const deleteCondition = (condition: Condition) => {
+		const copy = Utils.copy(monster);
+		copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
+		setMonster(copy);
+		if (props.updateMonster) {
+			props.updateMonster(copy);
+		}
+	};
 
 	try {
 		if (props.mode !== PanelMode.Full) {
 			return (
 				<div className='monster-panel compact'>
-					<HeaderText level={1} ribbon={<Token monster={props.monster} monsterGroup={props.monsterGroup} size={28} />}>
-						{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
+					<HeaderText level={1} ribbon={<Token monster={monster} monsterGroup={props.monsterGroup} size={28} />}>
+						{MonsterLogic.getMonsterName(monster, props.monsterGroup)}
 					</HeaderText>
-					<MonsterLabel monster={props.monster} />
+					<MonsterLabel monster={monster} />
 					<Flex align='center' justify='space-between'>
-						<div>{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
-						<Field label='EV' value={(props.monster.role.organization === MonsterOrganizationType.Minion) ? `${props.monster.encounterValue} for 8 minions` : ((props.monster.encounterValue === 0) ? '-': props.monster.encounterValue)} />
+						<div>{monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
+						<Field label='EV' value={(monster.role.organization === MonsterOrganizationType.Minion) ? `${monster.encounterValue} for 8 minions` : ((monster.encounterValue === 0) ? '-': monster.encounterValue)} />
 					</Flex>
 				</div>
 			);
 		}
 
-		const signatureBonus = MonsterLogic.getSignatureDamageBonus(props.monster);
+		const signatureBonus = MonsterLogic.getSignatureDamageBonus(monster);
 
-		const immunities = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Immunity);
-		const weaknesses = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Weakness);
-		const speed = props.monster.speed.modes !== '' ? `${props.monster.speed.value} (${props.monster.speed.modes})` : props.monster.speed.value;
+		const immunities = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Immunity);
+		const weaknesses = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Weakness);
+		const speed = monster.speed.modes !== '' ? `${monster.speed.value} (${monster.speed.modes})` : monster.speed.value;
 
-		const features = MonsterLogic.getFeatures(props.monster).filter(f => (f.type === FeatureType.Text) || (f.type === FeatureType.AddOn));
-		const abilities = MonsterLogic.getFeatures(props.monster).filter(f => f.type === FeatureType.Ability).map(f => f.data.ability);
+		const features = MonsterLogic.getFeatures(monster).filter(f => (f.type === FeatureType.Text) || (f.type === FeatureType.AddOn));
+		const abilities = MonsterLogic.getFeatures(monster).filter(f => f.type === FeatureType.Ability).map(f => f.data.ability);
 
 		return (
-			<div className='monster-panel' id={props.monster.id}>
-				<HeaderText level={1} ribbon={<Token monster={props.monster} monsterGroup={props.monsterGroup} size={28} />}>
-					{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
+			<div className='monster-panel' id={monster.id}>
+				<HeaderText level={1} ribbon={<Token monster={monster} monsterGroup={props.monsterGroup} size={28} />}>
+					{MonsterLogic.getMonsterName(monster, props.monsterGroup)}
 				</HeaderText>
-				<MonsterLabel monster={props.monster} />
-				<Markdown text={props.monster.description} />
+				<MonsterLabel monster={monster} />
+				<Markdown text={monster.description} />
 				<Flex align='center' justify='space-between'>
-					<div>{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
-					<Field label='EV' value={(props.monster.role.organization === MonsterOrganizationType.Minion) ? `${props.monster.encounterValue} for 8 minions` : ((props.monster.encounterValue === 0) ? '-': props.monster.encounterValue)} />
+					<div>{monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
+					<Field label='EV' value={(monster.role.organization === MonsterOrganizationType.Minion) ? `${monster.encounterValue} for 8 minions` : ((monster.encounterValue === 0) ? '-': monster.encounterValue)} />
 				</Flex>
+				{
+					props.updateMonster ?
+						<div className='stats'>
+							<NumberSpin min={0} value={monster.state.staminaDamage} onChange={setStaminaDamage}>
+								<Field orientation='vertical' label='Damage' value={monster.state.staminaDamage} />
+							</NumberSpin>
+							<NumberSpin min={0} value={monster.state.staminaTemp} onChange={setStaminaTemp}>
+								<Field orientation='vertical' label='Temp' value={monster.state.staminaTemp} />
+							</NumberSpin>
+							<Button onClick={() => setAddingCondition(true)}>Add a condition</Button>
+						</div>
+						: null
+				}
+				{
+					props.updateMonster ?
+						<div style={{ textAlign: 'center' }}>
+							<Segmented
+								options={[ 'Active', 'Defeated' ]}
+								value={monster.state.defeated ? 'Defeated' : 'Active'}
+								onChange={value => setDefeated(value === 'Defeated')}
+							/>
+						</div>
+						: null
+				}
+				{
+					props.updateMonster ?
+						<div>
+							{
+								monster.state.conditions.map(c => (
+									<ConditionPanel
+										key={c.id}
+										condition={c}
+										onChange={changeCondition}
+										onDelete={deleteCondition}
+									/>
+								))
+							}
+						</div>
+						: null
+				}
 				<div className='stats'>
 					<Field orientation='vertical' label='Speed' value={speed} />
-					<Field orientation='vertical' label='Size' value={FormatLogic.getSize(props.monster.size)} />
-					<Field orientation='vertical' label='Stamina' value={MonsterLogic.getStamina(props.monster)} />
-					<Field orientation='vertical' label='Stability' value={props.monster.stability} />
-					<Field orientation='vertical' label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(props.monster)} />
+					<Field orientation='vertical' label='Size' value={FormatLogic.getSize(monster.size)} />
+					<Field orientation='vertical' label='Stamina' value={MonsterLogic.getStaminaDescription(monster)} />
+					<Field orientation='vertical' label='Stability' value={monster.stability} />
+					<Field orientation='vertical' label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(monster)} />
 				</div>
 				<div className='stats'>
 					{
 						[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
-							.map(ch => <Field key={ch} orientation='vertical' label={ch} value={MonsterLogic.getCharacteristic(props.monster, ch)} />)
+							.map(ch => <Field key={ch} orientation='vertical' label={ch} value={MonsterLogic.getCharacteristic(monster, ch)} />)
 					}
 				</div>
 				{
@@ -89,8 +201,8 @@ export const MonsterPanel = (props: Props) => {
 									: null
 							}
 							{
-								props.monster.withCaptain ?
-									<Field label='With Captain' value={props.monster.withCaptain} />
+								monster.withCaptain ?
+									<Field label='With Captain' value={monster.withCaptain} />
 									: null
 							}
 							{
@@ -103,7 +215,7 @@ export const MonsterPanel = (props: Props) => {
 									<Field label='Weaknesses' value={weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} />
 									: null
 							}
-							{features.map(f => <Field key={f.id} label={f.name} value={f.description} />)}
+							{features.map(f => <Field key={f.id} label={f.name} value={<Markdown text={f.description} useSpan={true} />} />)}
 						</div>
 						: null
 				}
@@ -115,29 +227,29 @@ export const MonsterPanel = (props: Props) => {
 						: null
 				}
 				{
-					props.monster.retainer ?
+					monster.retainer ?
 						<>
 							{
-								props.monster.retainer.level4 && (props.monster.retainer.level < 4) ?
+								monster.retainer.level4 && (monster.retainer.level < 4) ?
 									<>
 										<HeaderText level={1}>Level 4</HeaderText>
-										<FeaturePanel key={props.monster.retainer.level4.id} feature={props.monster.retainer.level4} mode={PanelMode.Full} />
+										<FeaturePanel key={monster.retainer.level4.id} feature={monster.retainer.level4} mode={PanelMode.Full} />
 									</>
 									: null
 							}
 							{
-								props.monster.retainer.level7 && (props.monster.retainer.level < 7) ?
+								monster.retainer.level7 && (monster.retainer.level < 7) ?
 									<>
 										<HeaderText level={1}>Level 7</HeaderText>
-										<FeaturePanel key={props.monster.retainer.level7.id} feature={props.monster.retainer.level7} mode={PanelMode.Full} />
+										<FeaturePanel key={monster.retainer.level7.id} feature={monster.retainer.level7} mode={PanelMode.Full} />
 									</>
 									: null
 							}
 							{
-								props.monster.retainer.level10 && (props.monster.retainer.level < 10) ?
+								monster.retainer.level10 && (monster.retainer.level < 10) ?
 									<>
 										<HeaderText level={1}>Level 10</HeaderText>
-										<FeaturePanel key={props.monster.retainer.level10.id} feature={props.monster.retainer.level10} mode={PanelMode.Full} />
+										<FeaturePanel key={monster.retainer.level10.id} feature={monster.retainer.level10} mode={PanelMode.Full} />
 									</>
 									: null
 							}
@@ -149,11 +261,17 @@ export const MonsterPanel = (props: Props) => {
 						selectedAbility ?
 							<AbilityModal
 								ability={selectedAbility}
-								monster={props.monster}
+								monster={monster}
 								onClose={() => setSelectedAbility(null)}
 							/>
 							: null
 					}
+				</Drawer>
+				<Drawer open={addingCondition} onClose={() => setAddingCondition(false)} closeIcon={null} width='500px'>
+					<ConditionSelectModal
+						onSelect={addCondition}
+						onClose={() => setAddingCondition(false)}
+					/>
 				</Drawer>
 			</div>
 		);

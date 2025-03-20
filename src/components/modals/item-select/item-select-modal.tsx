@@ -1,5 +1,6 @@
-import { Alert, Button, Input, Space } from 'antd';
+import { Button, Input, Space } from 'antd';
 import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
+import { Empty } from '../../controls/empty/empty';
 import { Hero } from '../../../models/hero';
 import { Item } from '../../../models/item';
 import { ItemPanel } from '../../panels/elements/item-panel/item-panel';
@@ -73,11 +74,7 @@ export const ItemSelectModal = (props: Props) => {
 							}
 							{
 								items.length === 0 ?
-									<Alert
-										type='warning'
-										showIcon={true}
-										message='No items to show'
-									/>
+									<Empty />
 									: null
 							}
 						</Space>

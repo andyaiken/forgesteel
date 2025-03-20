@@ -1,5 +1,6 @@
 import { Element } from './element';
 import { Monster } from './monster';
+import { Terrain } from './terrain';
 
 export interface EncounterSlot {
 	id: string;
@@ -15,6 +16,7 @@ export interface EncounterSlot {
 export interface EncounterGroup {
 	id: string;
 	slots: EncounterSlot[];
+	acted: boolean;
 }
 
 export interface TerrainSlot {
@@ -22,10 +24,12 @@ export interface TerrainSlot {
 	terrainID: string;
 	upgradeIDs: string[];
 	count: number;
+	terrain: Terrain[];
 }
 
 export interface Encounter extends Element {
 	groups: EncounterGroup[];
 	terrain: TerrainSlot[];
+	round: number;
 	malice: number;
 }

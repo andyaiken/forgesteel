@@ -1,6 +1,7 @@
-import { Alert, Button, Input, Space } from 'antd';
+import { Button, Input, Space } from 'antd';
 import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
 import { Collections } from '../../../utils/collections';
+import { Empty } from '../../controls/empty/empty';
 import { Modal } from '../modal/modal';
 import { Monster } from '../../../models/monster';
 import { MonsterLogic } from '../../../logic/monster-logic';
@@ -85,11 +86,7 @@ export const MonsterSelectModal = (props: Props) => {
 							}
 							{
 								sortedMonsters.length === 0 ?
-									<Alert
-										type='warning'
-										showIcon={true}
-										message='No monsters to show'
-									/>
+									<Empty />
 									: null
 							}
 						</Space>

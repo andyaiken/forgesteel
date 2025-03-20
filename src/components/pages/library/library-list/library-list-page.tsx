@@ -1,4 +1,4 @@
-import { Alert, Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
+import { Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
 import { HistogramPanel, HistogramTextPanel } from '../../../panels/histogram/histogram-panel';
 import { Monster, MonsterGroup } from '../../../../models/monster';
@@ -17,6 +17,7 @@ import { CulturePanel } from '../../../panels/elements/culture-panel/culture-pan
 import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
+import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -216,11 +217,7 @@ export const LibraryListPage = (props: Props) => {
 	const getAncestriesSection = (list: Ancestry[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No ancestries'
-				/>
+				<Empty />
 			);
 		}
 
@@ -253,11 +250,7 @@ export const LibraryListPage = (props: Props) => {
 	const getCulturesSection = (list: Culture[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No cultures'
-				/>
+				<Empty />
 			);
 		}
 
@@ -290,11 +283,7 @@ export const LibraryListPage = (props: Props) => {
 	const getCareersSection = (list: Career[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No careers'
-				/>
+				<Empty />
 			);
 		}
 
@@ -327,11 +316,7 @@ export const LibraryListPage = (props: Props) => {
 	const getClassesSection = (list: HeroClass[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No classes'
-				/>
+				<Empty />
 			);
 		}
 
@@ -365,11 +350,7 @@ export const LibraryListPage = (props: Props) => {
 	const getComplicationsSection = (list: Complication[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No complications'
-				/>
+				<Empty />
 			);
 		}
 
@@ -402,11 +383,7 @@ export const LibraryListPage = (props: Props) => {
 	const getDomainsSection = (list: Domain[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No domains'
-				/>
+				<Empty />
 			);
 		}
 
@@ -439,11 +416,7 @@ export const LibraryListPage = (props: Props) => {
 	const getKitsSection = (list: Kit[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No kits'
-				/>
+				<Empty />
 			);
 		}
 
@@ -476,11 +449,7 @@ export const LibraryListPage = (props: Props) => {
 	const getPerksSection = (list: Perk[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No perks'
-				/>
+				<Empty />
 			);
 		}
 
@@ -513,11 +482,7 @@ export const LibraryListPage = (props: Props) => {
 	const getTitlesSection = (list: Title[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No titles'
-				/>
+				<Empty />
 			);
 		}
 
@@ -550,11 +515,7 @@ export const LibraryListPage = (props: Props) => {
 	const getItemsSection = (list: Item[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No items'
-				/>
+				<Empty />
 			);
 		}
 
@@ -587,11 +548,7 @@ export const LibraryListPage = (props: Props) => {
 	const getMonsterGroupsSection = (list: MonsterGroup[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No monster groups'
-				/>
+				<Empty />
 			);
 		}
 
@@ -624,18 +581,8 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getMonstersSection = (list: Monster[]) => {
-		if (list.length === 0) {
-			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No monsters'
-				/>
-			);
-		}
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+		const tools = (
+			<>
 				<Expander title='Filter'>
 					<HeaderText>Monster Filter</HeaderText>
 					<MonsterFilterPanel monsterFilter={monsterFilter} onChange={setMonsterFilter} />
@@ -648,6 +595,22 @@ export const LibraryListPage = (props: Props) => {
 					<HeaderText>By Role</HeaderText>
 					<HistogramTextPanel values={list.map(m => m.role.type)} />
 				</Expander>
+			</>
+		);
+
+		if (list.length === 0) {
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					{tools}
+					<Divider />
+					<Empty />
+				</Space>
+			);
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{tools}
 				<Divider />
 				<div className='library-section-row'>
 					{
@@ -680,11 +643,7 @@ export const LibraryListPage = (props: Props) => {
 	const getTerrainsSection = (list: Terrain[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No terrain'
-				/>
+				<Empty />
 			);
 		}
 
@@ -786,7 +745,7 @@ export const LibraryListPage = (props: Props) => {
 							</div>
 						)}
 					>
-						<Button icon={<PlusOutlined />}>
+						<Button type='primary' icon={<PlusOutlined />}>
 							Add
 						</Button>
 					</Popover>

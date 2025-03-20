@@ -1,10 +1,11 @@
-import { Alert, Button, Input, Popover, Space, Tabs, Upload } from 'antd';
+import { Button, Input, Popover, Space, Tabs, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { Adventure } from '../../../../models/adventure';
 import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Element } from '../../../../models/element';
+import { Empty } from '../../../controls/empty/empty';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { Montage } from '../../../../models/montage';
@@ -87,11 +88,7 @@ export const PlaybookListPage = (props: Props) => {
 	const getAdventuresSection = (list: Adventure[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No adventures'
-				/>
+				<Empty />
 			);
 		}
 
@@ -116,11 +113,7 @@ export const PlaybookListPage = (props: Props) => {
 	const getEncountersSection = (list: Encounter[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No encounters'
-				/>
+				<Empty />
 			);
 		}
 
@@ -129,7 +122,7 @@ export const PlaybookListPage = (props: Props) => {
 				{
 					list.map(e => (
 						<SelectablePanel key={e.id} onSelect={() => navigation.goToPlaybookView('encounter', e.id)}>
-							<EncounterPanel encounter={e} playbook={props.playbook} sourcebooks={props.sourcebooks} options={props.options} />
+							<EncounterPanel encounter={e} sourcebooks={props.sourcebooks} options={props.options} />
 						</SelectablePanel>
 					))
 				}
@@ -140,11 +133,7 @@ export const PlaybookListPage = (props: Props) => {
 	const getMontagesSection = (list: Montage[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No montages'
-				/>
+				<Empty />
 			);
 		}
 
@@ -164,11 +153,7 @@ export const PlaybookListPage = (props: Props) => {
 	const getNegotiationsSection = (list: Negotiation[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No negotiations'
-				/>
+				<Empty />
 			);
 		}
 
@@ -253,7 +238,7 @@ export const PlaybookListPage = (props: Props) => {
 								{
 									currentTab === 'negotiation' ?
 										<div>
-											<div className='ds-text centered-text'>or start with an example:</div>
+											<div className='ds-text centered-text'>or start with a premade example:</div>
 											<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
 												{
 													exampleNegotiations.map(n => (
@@ -267,7 +252,7 @@ export const PlaybookListPage = (props: Props) => {
 								{
 									currentTab === 'montage' ?
 										<div>
-											<div className='ds-text centered-text'>or start with an example:</div>
+											<div className='ds-text centered-text'>or start with a premade example:</div>
 											<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '10px' }}>
 												{
 													exampleMontages.map(m => (
@@ -281,7 +266,7 @@ export const PlaybookListPage = (props: Props) => {
 							</div>
 						)}
 					>
-						<Button icon={<PlusOutlined />}>
+						<Button type='primary' icon={<PlusOutlined />}>
 							Add
 						</Button>
 					</Popover>

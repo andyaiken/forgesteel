@@ -37,4 +37,8 @@ export interface Terrain extends Element {
 		text: string;
 		sections: TerrainSection[];
 	}[];
+	state: {
+		squares: number;
+		staminaDamage: number;
+	};
 }

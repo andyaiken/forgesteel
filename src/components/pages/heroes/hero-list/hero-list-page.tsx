@@ -1,7 +1,8 @@
-import { Alert, Button, Input, Popover, Space, Tabs, Upload } from 'antd';
+import { Button, Input, Popover, Space, Tabs, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Collections } from '../../../../utils/collections';
+import { Empty } from '../../../controls/empty/empty';
 import { Hero } from '../../../../models/hero';
 import { HeroPanel } from '../../../panels/hero/hero-panel';
 import { Options } from '../../../../models/options';
@@ -58,11 +59,7 @@ export const HeroListPage = (props: Props) => {
 	const getHeroesSection = (list: Hero[]) => {
 		if (list.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='No heroes'
-				/>
+				<Empty />
 			);
 		}
 
@@ -119,7 +116,7 @@ export const HeroListPage = (props: Props) => {
 							</div>
 						)}
 					>
-						<Button icon={<PlusOutlined />}>
+						<Button type='primary' icon={<PlusOutlined />}>
 							Add
 						</Button>
 					</Popover>

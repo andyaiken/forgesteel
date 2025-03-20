@@ -8,10 +8,6 @@ export interface MontageChallenge extends Element {
 	uses: number;
 	successes: number;
 	failures: number;
-	state: {
-		successes: number;
-		failures: number;
-	}
 };
 
 export interface MontageSection extends Element {

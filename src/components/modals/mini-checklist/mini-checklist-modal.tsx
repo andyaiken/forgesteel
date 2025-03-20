@@ -7,6 +7,7 @@ import { FormatLogic } from '../../../logic/format-logic';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Modal } from '../modal/modal';
 import { Monster } from '../../../models/monster';
+import { MonsterLogic } from '../../../logic/monster-logic';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
 
@@ -32,7 +33,7 @@ export const MiniChecklistModal = (props: Props) => {
 					if (monster) {
 						monsters.push({
 							monster: monster,
-							count: slot.count
+							count: slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization)
 						});
 					}
 				}

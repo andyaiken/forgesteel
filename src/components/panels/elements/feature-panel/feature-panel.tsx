@@ -7,6 +7,7 @@ import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../ancestry-panel/ancestry-panel';
 import { Collections } from '../../../../utils/collections';
 import { DomainPanel } from '../domain-panel/domain-panel';
+import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
@@ -58,11 +59,7 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedAncestries.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='There are no options to choose for this feature.'
-				/>
+				<Empty text='There are no options to choose for this feature.' />
 			);
 		}
 
@@ -121,11 +118,7 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedFeatures.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='There are no options to choose for this feature.'
-				/>
+				<Empty text='There are no options to choose for this feature.' />
 			);
 		}
 
@@ -171,23 +164,20 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedOptions.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='There are no options to choose for this feature.'
-				/>
+				<Empty text='There are no options to choose for this feature.' />
 			);
 		}
 
 		let unavailableIDs: string[] = [];
 		let showCosts = false;
+		let pointsLeft = 0;
 		if (data.options.some(opt => opt.value > 1)) {
 			const selectedIDs = data.selected.map(f => f.id);
 			const pointsUsed = Collections.sum(selectedIDs, id => {
 				const original = availableOptions.find(o => o.feature.id === id);
 				return original ? original.value : 0;
 			});
-			const pointsLeft = data.count - pointsUsed;
+			pointsLeft = data.count - pointsUsed;
 			unavailableIDs = availableOptions
 				.filter(opt => !selectedIDs.includes(opt.feature.id) && (opt.value > pointsLeft))
 				.map(opt => opt.feature.id);
@@ -207,7 +197,7 @@ export const FeaturePanel = (props: Props) => {
 				</div>
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length < data.count ? 'selection-empty' : ''}
+					className={pointsLeft > 0 ? 'selection-empty' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -282,11 +272,7 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedAbilities.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='There are no options to choose for this feature.'
-				/>
+				<Empty text='There are no options to choose for this feature.' />
 			);
 		}
 
@@ -423,11 +409,7 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedDomains.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='There are no options to choose for this feature.'
-				/>
+				<Empty text='There are no options to choose for this feature.' />
 			);
 		}
 
@@ -546,11 +528,7 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedItems.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='There are no options to choose for this feature.'
-				/>
+				<Empty text='There are no options to choose for this feature.' />
 			);
 		}
 
@@ -605,11 +583,7 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedKits.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='There are no options to choose for this feature.'
-				/>
+				<Empty text='There are no options to choose for this feature.' />
 			);
 		}
 
@@ -688,11 +662,7 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedLanguages.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='There are no options to choose for this feature.'
-				/>
+				<Empty text='There are no options to choose for this feature.' />
 			);
 		}
 
@@ -727,12 +697,7 @@ export const FeaturePanel = (props: Props) => {
 					data.selected
 						.filter(l => currentLanguages.includes(l))
 						.map((l, n) => (
-							<Alert
-								key={n}
-								type='warning'
-								showIcon={true}
-								message={`You have already chosen ${l}.`}
-							/>
+							<Empty key={n} text={`You have already chosen ${l}.`} />
 						))
 				}
 			</div>
@@ -755,11 +720,7 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedPerks.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='There are no options to choose for this feature.'
-				/>
+				<Empty text='There are no options to choose for this feature.' />
 			);
 		}
 
@@ -832,11 +793,7 @@ export const FeaturePanel = (props: Props) => {
 
 		if (sortedSkills.length === 0) {
 			return (
-				<Alert
-					type='warning'
-					showIcon={true}
-					message='There are no options to choose for this feature.'
-				/>
+				<Empty text='There are no options to choose for this feature.' />
 			);
 		}
 
@@ -871,12 +828,7 @@ export const FeaturePanel = (props: Props) => {
 					data.selected
 						.filter(s => currentSkills.includes(s))
 						.map((s, n) => (
-							<Alert
-								key={n}
-								type='warning'
-								showIcon={true}
-								message={`You have already chosen ${s}.`}
-							/>
+							<Empty key={n} text={`You have already chosen ${s}.`} />
 						))
 				}
 			</div>
@@ -933,11 +885,7 @@ export const FeaturePanel = (props: Props) => {
 							}}
 						/>
 						:
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='There are no options to choose for this feature.'
-						/>
+						<Empty text='There are no options to choose for this feature.' />
 				}
 				{
 					data.selected.map((title, n) => (

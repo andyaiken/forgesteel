@@ -3,7 +3,7 @@ import { Segmented, Space } from 'antd';
 import { Condition } from '../../../models/hero';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { DangerButton } from '../../controls/danger-button/danger-button';
-import { HeaderText } from '../../controls/header-text/header-text';
+import { Field } from '../../controls/field/field';
 import { Markdown } from '../../controls/markdown/markdown';
 import { MultiLine } from '../../controls/multi-line/multi-line';
 import { Utils } from '../../../utils/utils';
@@ -42,7 +42,20 @@ export const ConditionPanel = (props: Props) => {
 		return (
 			<div className='condition-panel'>
 				<Space direction='vertical' style={{ width: '100%', margin: '5px 0' }}>
-					<HeaderText>{condition.type}</HeaderText>
+					{
+						condition.type === ConditionType.Custom ?
+							<MultiLine label='Custom Condition Text' value={condition.text} onChange={setConditionText} />
+							:
+							<Field
+								label={condition.type}
+								value={
+									<Markdown
+										text={ConditionLogic.getDescription(condition.type)}
+										useSpan={true}
+									/>
+								}
+							/>
+					}
 					<Segmented
 						name='endtypes'
 						block={true}
@@ -50,12 +63,6 @@ export const ConditionPanel = (props: Props) => {
 						value={condition.ends}
 						onChange={setConditionEndType}
 					/>
-					{
-						condition.type === ConditionType.Custom ?
-							<MultiLine label='Custom Condition Text' value={condition.text} onChange={setConditionText} />
-							:
-							<Markdown text={ConditionLogic.getDescription(condition.type)} />
-					}
 				</Space>
 				<div className='action-buttons'>
 					<DangerButton mode='icon' onConfirm={() => props.onDelete(condition)} />

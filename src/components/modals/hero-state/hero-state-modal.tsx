@@ -6,6 +6,7 @@ import { Collections } from '../../../utils/collections';
 import { ConditionPanel } from '../../panels/condition/condition-panel';
 import { ConditionSelectModal } from '../condition-select/condition-select-modal';
 import { DangerButton } from '../../controls/danger-button/danger-button';
+import { Empty } from '../../controls/empty/empty';
 import { Expander } from '../../controls/expander/expander';
 import { FactoryLogic } from '../../../logic/factory-logic';
 import { HealthPanel } from '../../panels/health/health-panel';
@@ -406,11 +407,7 @@ export const HeroStateModal = (props: Props) => {
 				}
 				{
 					hero.state.inventory.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='Your inventory is empty.'
-						/>
+						<Empty text='Your inventory is empty.' />
 						: null
 				}
 				<Button block={true} onClick={() => setShopVisible(true)}>Add a new item</Button>
@@ -472,11 +469,7 @@ export const HeroStateModal = (props: Props) => {
 				}
 				{
 					hero.state.conditions.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='You are not affected by any conditions.'
-						/>
+						<Empty text='You are not affected by any conditions.' />
 						: null
 				}
 				<Button block={true} onClick={() => setConditionsVisible(true)}>Add a new condition</Button>
@@ -546,11 +539,7 @@ export const HeroStateModal = (props: Props) => {
 				}
 				{
 					hero.state.projects.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='You have no projects underway.'
-						/>
+						<Empty text='You have no projects underway.' />
 						: null
 				}
 				<Button block={true} onClick={() => setProjectsVisible(true)}>Add a new project</Button>

@@ -939,6 +939,21 @@ export class MonsterLogic {
 		}
 	};
 
+	static getStaminaDescription = (monster: Monster) => {
+		let str = `${monster.stamina}`;
+		if (monster.state.staminaDamage > 0) {
+			str = `${monster.stamina - monster.state.staminaDamage} / ${monster.stamina}`;
+		}
+		if (monster.state.staminaTemp > 0) {
+			str += ` +${monster.state.staminaTemp}`;
+		}
+		return str;
+	};
+
+	static getConditionsDescription = (monster: Monster) => {
+		return monster.state.conditions.map(c => `${c.type} (${c.ends.toLowerCase()}`).join(', ');
+	};
+
 	///////////////////////////////////////////////////////////////////////////
 
 	static createCharacteristics = (might: number, agility: number, reason: number, intuition: number, presence: number) => {

@@ -22,10 +22,13 @@ const promises = [
 	localforage.getItem<Sourcebook[]>('forgesteel-homebrew-settings'),
 	localforage.getItem<string[]>('forgesteel-hidden-setting-ids'),
 	localforage.getItem<Playbook>('forgesteel-playbook'),
+	localforage.getItem<Playbook>('forgesteel-session'),
 	localforage.getItem<Options[]>('forgesteel-options')
 ];
 
 Promise.all(promises).then(results => {
+	//#region Heroes
+
 	let heroes = results[0] as Hero[] | null;
 	if (!heroes) {
 		heroes = [];
@@ -34,6 +37,10 @@ Promise.all(promises).then(results => {
 	heroes.forEach(hero => {
 		HeroLogic.updateHero(hero);
 	});
+
+	//#endregion
+
+	//#region Homebrew sourcebooks
 
 	let sourcebooks = results[1] as Sourcebook[] | null;
 	if (!sourcebooks) {
@@ -54,10 +61,18 @@ Promise.all(promises).then(results => {
 		});
 	});
 
+	//#endregion
+
+	//#region Hidden sourcebook IDs
+
 	let hiddenSourcebookIDs = results[2] as string[] | null;
 	if (!hiddenSourcebookIDs) {
 		hiddenSourcebookIDs = [];
 	}
+
+	//#endregion
+
+	//#region Playbook
 
 	let playbook = results[3] as Playbook | null;
 	if (!playbook) {
@@ -66,7 +81,22 @@ Promise.all(promises).then(results => {
 
 	PlaybookLogic.updatePlaybook(playbook);
 
-	let options = results[4] as Options | null;
+	//#endregion
+
+	//#region Session
+
+	let session = results[4] as Playbook | null;
+	if (!session) {
+		session = FactoryLogic.createPlaybook();
+	}
+
+	PlaybookLogic.updatePlaybook(session);
+
+	//#endregion
+
+	//#region Options
+
+	let options = results[5] as Options | null;
 	if (!options) {
 		options = {
 			showSkillsInGroups: false,
@@ -131,6 +161,8 @@ Promise.all(promises).then(results => {
 		options.heroVictories = 0;
 	}
 
+	//#endregion
+
 	createRoot(document.getElementById('root')!).render(
 		<StrictMode>
 			<HashRouter>
@@ -139,6 +171,7 @@ Promise.all(promises).then(results => {
 					homebrewSourcebooks={sourcebooks}
 					hiddenSourcebookIDs={hiddenSourcebookIDs}
 					playbook={playbook}
+					session={session}
 					options={options}
 				/>
 			</HashRouter>

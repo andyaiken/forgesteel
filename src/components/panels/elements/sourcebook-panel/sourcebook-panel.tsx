@@ -1,7 +1,8 @@
-import { Alert, Button, Input, Select, Space } from 'antd';
+import { Button, Input, Select, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
+import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
@@ -181,11 +182,7 @@ export const SourcebookPanel = (props: Props) => {
 							}
 							{
 								sourcebook.languages.length === 0 ?
-									<Alert
-										type='warning'
-										showIcon={true}
-										message='No languages'
-									/>
+									<Empty />
 									: null
 							}
 							<Button block={true} onClick={addLanguage}>Add a new language</Button>
@@ -229,11 +226,7 @@ export const SourcebookPanel = (props: Props) => {
 							}
 							{
 								sourcebook.skills.length === 0 ?
-									<Alert
-										type='warning'
-										showIcon={true}
-										message='No skills'
-									/>
+									<Empty />
 									: null
 							}
 							<Button block={true} onClick={addSkill}>Add a new skill</Button>

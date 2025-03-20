@@ -1,5 +1,4 @@
 import { Collections } from '../../../utils/collections';
-import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { LogoPanel } from '../../panels/logo/logo-panel';
 import { Modal } from '../modal/modal';
@@ -28,19 +27,19 @@ export const DirectoryModal = (props: Props) => {
 		return (
 			<Modal
 				toolbar={
-					<div style={{ width: '100%' }}>
-						<LogoPanel onClick={() => { navigation.goToWelcome(); props.onClose(); }} />
+					<div style={{ width: '100%', textAlign: 'center' }}>
+						<LogoPanel />
 					</div>
 				}
 				content={
 					<div className='directory-modal'>
-						<HeaderText>Heroes</HeaderText>
+						<div className='ds-text bold-text'>Heroes</div>
 						{
 							folders.map(f =>
 								<div key={f} className='directory-btn' onClick={() => { navigation.goToHeroList(f); props.onClose(); }}>{f || 'Heroes'}</div>
 							)
 						}
-						<HeaderText>Library</HeaderText>
+						<div className='ds-text bold-text'>Library</div>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('ancestry'); props.onClose(); }}>Ancestries</div>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('career'); props.onClose(); }}>Careers</div>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('class'); props.onClose(); }}>Classes</div>
@@ -53,11 +52,13 @@ export const DirectoryModal = (props: Props) => {
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('perk'); props.onClose(); }}>Perks</div>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('terrain'); props.onClose(); }}>Terrain</div>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('title'); props.onClose(); }}>Titles</div>
-						<HeaderText>Playbook</HeaderText>
+						<div className='ds-text bold-text'>Playbook</div>
 						<div className='directory-btn' onClick={() => { navigation.goToPlaybookList('adventure'); props.onClose(); }}>Adventures</div>
 						<div className='directory-btn' onClick={() => { navigation.goToPlaybookList('encounter'); props.onClose(); }}>Encounters</div>
 						<div className='directory-btn' onClick={() => { navigation.goToPlaybookList('montage'); props.onClose(); }}>Montages</div>
 						<div className='directory-btn' onClick={() => { navigation.goToPlaybookList('negotiation'); props.onClose(); }}>Negotiations</div>
+						<div className='ds-text bold-text'>Session</div>
+						<div className='directory-btn' onClick={() => { navigation.goToSession(); props.onClose(); }}>Session</div>
 					</div>
 				}
 				onClose={props.onClose}

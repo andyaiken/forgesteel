@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, MenuOutlined } from '@ant-design/icons';
 import { LogoPanel } from '../logo/logo-panel';
 import { ReactNode } from 'react';
 import { useMediaQuery } from '../../../hooks/use-media-query';
@@ -29,10 +29,8 @@ export const AppHeader = (props: Props) => {
 	return (
 		<div className='app-header'>
 			<div className='left-section'>
-				<LogoPanel onClick={props.showDirectory} />
-				{
-					props.subheader && !isSmall ? <div className='breadcrumbs'>{props.subheader}</div> : null
-				}
+				<Button type='text' icon={<MenuOutlined />} onClick={props.showDirectory} />
+				{!isSmall ? <LogoPanel text={props.subheader} /> : null}
 			</div>
 			{
 				isSmall ?

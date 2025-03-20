@@ -33,22 +33,19 @@
   * Use encounter templates
   * Auto-create encounters
 
-### Director Tools
+### Session
 
-* Session page
 * Encounter tracker
   * Choose heroes
-  * Show monster initiative groups / heroes / terrain
   * Set captain for minions
-  * Malice
-  * Stamina / conditions
-* Montage tracker
-  * Show progress
-  * Show challenge usage
-* Negotiation tracker
-  * Show progress
+  * Set 'used reaction' flag on monsters
+  * Ability to add new monsters / terrain / heroes
+* Player view
+  * Ability to show certain information to players using a second window
 
 ### Ideas
 
+* Add a way to load / save data from a remote folder / OneDrive / Google Docs / iCloud etc
 * Add guides for specific features
-* Add options for hero sheet feature / ability sizing
+  * Monster building / genesplice
+  * Encounter building

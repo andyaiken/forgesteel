@@ -11,7 +11,8 @@ interface Props {
 	terrain: Terrain;
 	upgradeIDs: string[];
 	onClose: () => void;
-	export: (format: 'image' | 'pdf' | 'json') => void;
+	export?: (format: 'image' | 'pdf' | 'json') => void;
+	updateTerrain?: (terrain: Terrain) => void;
 }
 
 export const TerrainModal = (props: Props) => {
@@ -20,21 +21,25 @@ export const TerrainModal = (props: Props) => {
 			<Modal
 				toolbar={
 					<>
-						<Popover
-							trigger='click'
-							placement='bottom'
-							content={(
-								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<Button onClick={() => props.export('image')}>Export As Image</Button>
-									<Button onClick={() => props.export('pdf')}>Export As PDF</Button>
-									<Button onClick={() => props.export('json')}>Export as Data</Button>
-								</div>
-							)}
-						>
-							<Button icon={<UploadOutlined />}>
-								Export
-							</Button>
-						</Popover>
+						{
+							props.export ?
+								<Popover
+									trigger='click'
+									placement='bottom'
+									content={(
+										<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+											<Button onClick={() => props.export!('image')}>Export As Image</Button>
+											<Button onClick={() => props.export!('pdf')}>Export As PDF</Button>
+											<Button onClick={() => props.export!('json')}>Export as Data</Button>
+										</div>
+									)}
+								>
+									<Button icon={<UploadOutlined />}>
+										Export
+									</Button>
+								</Popover>
+								: null
+						}
 					</>
 				}
 				content={
@@ -43,6 +48,7 @@ export const TerrainModal = (props: Props) => {
 							terrain={props.terrain}
 							showCustomizations={true}
 							mode={PanelMode.Full}
+							updateTerrain={props.updateTerrain}
 						/>
 					</div>
 				}

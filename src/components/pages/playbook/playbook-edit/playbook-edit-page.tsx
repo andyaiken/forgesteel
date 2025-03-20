@@ -14,6 +14,7 @@ import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { DropdownButton } from '../../../controls/dropdown-button/dropdown-button';
 import { Element } from '../../../../models/element';
+import { Empty } from '../../../controls/empty/empty';
 import { EncounterDifficultyPanel } from '../../../panels/encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
@@ -40,7 +41,7 @@ import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { PlaybookLogic } from '../../../../logic/playbook-logic';
 import { Plot } from '../../../../models/plot';
-import { PlotEditPanel } from '../../../panels/edit/plot-edit-panel/plot-edit-panel';
+import { PlotEditPanel } from '../../../panels/edit/plot-edit/plot-edit-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -222,11 +223,7 @@ export const PlaybookEditPage = (props: Props) => {
 				}
 				{
 					adventure.introduction.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No introduction sections'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addSection}>Add a section</Button>
@@ -296,11 +293,7 @@ export const PlaybookEditPage = (props: Props) => {
 				}
 				{
 					adventure.introduction.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No plot points'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addPlotPoint}>Add a plot point</Button>
@@ -462,11 +455,7 @@ export const PlaybookEditPage = (props: Props) => {
 							{group.slots.map(slot => getSlot(slot, group))}
 							{
 								group.slots.length === 0 ?
-									<Alert
-										type='warning'
-										showIcon={true}
-										message='No monsters in this group'
-									/>
+									<Empty />
 									: null
 							}
 							{
@@ -693,11 +682,7 @@ export const PlaybookEditPage = (props: Props) => {
 				}
 				{
 					negotiation.motivations.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No motivations'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addMotivation}>Add a motivation</Button>
@@ -778,11 +763,7 @@ export const PlaybookEditPage = (props: Props) => {
 				}
 				{
 					negotiation.pitfalls.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No pitfalls'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addPitfall}>Add a pitfall</Button>
@@ -1107,11 +1088,7 @@ export const PlaybookEditPage = (props: Props) => {
 												}
 												{
 													s.challenges.length === 0 ?
-														<Alert
-															type='warning'
-															showIcon={true}
-															message='No challenges'
-														/>
+														<Empty />
 														: null
 												}
 												<Button block={true} onClick={() => addChallenge(sectionIndex)}>Add a challenge</Button>
@@ -1180,11 +1157,7 @@ export const PlaybookEditPage = (props: Props) => {
 												}
 												{
 													s.challenges.length === 0 ?
-														<Alert
-															type='warning'
-															showIcon={true}
-															message='No challenges'
-														/>
+														<Empty />
 														: null
 												}
 												<Button block={true} onClick={() => addTwist(sectionIndex)}>Add a twist</Button>
@@ -1198,11 +1171,7 @@ export const PlaybookEditPage = (props: Props) => {
 				}
 				{
 					montage.sections.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No sections'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addSection}>Add a section</Button>
@@ -1361,7 +1330,7 @@ export const PlaybookEditPage = (props: Props) => {
 	const getEncounterPreviewSection = () => {
 		return (
 			<SelectablePanel>
-				<EncounterPanel encounter={element as Encounter} playbook={props.playbook} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+				<EncounterPanel encounter={element as Encounter} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 			</SelectablePanel>
 		);
 	};
@@ -1439,11 +1408,7 @@ export const PlaybookEditPage = (props: Props) => {
 				}
 				{
 					monsters.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No monsters'
-						/>
+						<Empty />
 						: null
 				}
 			</Space>
@@ -1462,7 +1427,8 @@ export const PlaybookEditPage = (props: Props) => {
 					id: Utils.guid(),
 					terrainID: terrain.id,
 					upgradeIDs: [],
-					count: 1
+					count: 1,
+					terrain: []
 				});
 			}
 
@@ -1493,11 +1459,7 @@ export const PlaybookEditPage = (props: Props) => {
 				}
 				{
 					terrains.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No terrain'
-						/>
+						<Empty />
 						: null
 				}
 			</Space>

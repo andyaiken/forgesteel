@@ -126,7 +126,8 @@ export class FactoryLogic {
 			adventures: [],
 			encounters: [],
 			montages: [],
-			negotiations: []
+			negotiations: [],
+			counters: []
 		};
 	};
 
@@ -268,7 +269,11 @@ export class FactoryLogic {
 			size: '',
 			damageMods: [],
 			sections: [],
-			upgrades: []
+			upgrades: [],
+			state: {
+				squares: 1,
+				staminaDamage: 0
+			}
 		};
 	};
 
@@ -431,7 +436,8 @@ export class FactoryLogic {
 				staminaDamage: 0,
 				staminaTemp: 0,
 				conditions: [],
-				reactionUsed: false
+				reactionUsed: false,
+				defeated: false
 			}
 		};
 	};
@@ -485,6 +491,7 @@ export class FactoryLogic {
 			description: '',
 			groups: [],
 			terrain: [],
+			round: 1,
 			malice: 0
 		};
 	};
@@ -492,7 +499,8 @@ export class FactoryLogic {
 	static createEncounterGroup = (): EncounterGroup => {
 		return {
 			id: Utils.guid(),
-			slots: []
+			slots: [],
+			acted: false
 		};
 	};
 
@@ -518,11 +526,7 @@ export class FactoryLogic {
 			interest: 1,
 			patience: 1,
 			motivations: [],
-			pitfalls: [],
-			state: {
-				deltaInterest: 0,
-				deltaPatience: 0
-			}
+			pitfalls: []
 		};
 	};
 
@@ -570,11 +574,7 @@ export class FactoryLogic {
 			abilities: data.abilities || '',
 			uses: data.uses ?? 1,
 			successes: 0,
-			failures: 0,
-			state: {
-				successes: 0,
-				failures: 0
-			}
+			failures: 0
 		};
 	};
 

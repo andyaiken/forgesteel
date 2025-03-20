@@ -1,8 +1,9 @@
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 
 import './field.scss';
 
 interface Props {
+	style?: CSSProperties;
 	label: ReactNode;
 	value: ReactNode;
 	orientation?: 'horizontal' | 'vertical';
@@ -17,7 +18,7 @@ export const Field = (props: Props) => {
 		}
 
 		return (
-			<div className={className}>
+			<div className={className} style={props.style}>
 				<span className='field-label'>{props.label}</span>
 				<span className='field-value'>{props.value}</span>
 			</div>

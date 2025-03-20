@@ -69,7 +69,11 @@ export class TerrainData {
 				text: 'The bees are a particularly aggressive and dangerous species. The hive triggers even if a creature shifts adjacent to the hive. The swarm also deals +1D6 poison damage.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	static brambles: Terrain = {
@@ -124,7 +128,11 @@ export class TerrainData {
 				text: 'The brambles are poisonous. A creature who takes damage from a square gains bleeding (save ends).',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	static corrosivePool: Terrain = {
@@ -214,7 +222,11 @@ export class TerrainData {
 				]
 			}
 		],
-		upgrades: []
+		upgrades: [],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	static frozenPond: Terrain = {
@@ -329,7 +341,11 @@ export class TerrainData {
 					}
 				]
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	static lava: Terrain = {
@@ -407,7 +423,11 @@ export class TerrainData {
 				text: 'The lava is flowing! At the beginning of each round of combat add one square of lava adjacent to an existing square of lava.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	static quicksand: Terrain = {
@@ -481,7 +501,11 @@ export class TerrainData {
 				]
 			}
 		],
-		upgrades: []
+		upgrades: [],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	static toxicPlants: Terrain = {
@@ -560,7 +584,11 @@ export class TerrainData {
 				text: 'The plants are carnivorous and will try to slowly digest anyone who was unfortunate enough to lay among them. Anyone who is prone in a toxic plants square will take 4 acid damage at the beginning of their turn.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	//#endregion
@@ -659,7 +687,11 @@ export class TerrainData {
 					}
 				]
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Bear Trap
@@ -741,7 +773,11 @@ export class TerrainData {
 				text: 'The bear trap is attached to the ground by a steel chain. The target becomes restrained instead of slowed.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Flammable Oil
@@ -797,7 +833,11 @@ export class TerrainData {
 				text: 'The oil is concealed.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Hidey-Hole
@@ -853,7 +893,11 @@ export class TerrainData {
 				text: 'The hidey-hole is connected to a tunnel network. A creature familiar with the network can move to any square adjacent to another connected hidey-hole if they have movement available equal to the straight-line distance to that square. Creatures unfamiliar with the network can use a maneuver to make a hard Intuition test to discover a connected hidey-hole.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Pavise Shield
@@ -906,7 +950,11 @@ export class TerrainData {
 				]
 			}
 		],
-		upgrades: []
+		upgrades: [],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Snare Trap
@@ -994,7 +1042,11 @@ export class TerrainData {
 				text: 'Upgrade the snare to a net. Increase the Stamina to 3 and the size to 2x2, the Snare attack gains the area keyword, when triggered, it will attack anyone in the trap area. Any creature who makes their save to end the restrained effect will end it for all affected creatures.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Spike Trap
@@ -1074,7 +1126,11 @@ export class TerrainData {
 				]
 			}
 		],
-		upgrades: []
+		upgrades: [],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	//#endregion
@@ -1203,7 +1259,11 @@ export class TerrainData {
 					}
 				]
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Dart Trap
@@ -1299,7 +1359,11 @@ export class TerrainData {
 				text: 'The dart trap is equipped with multiple barrels capable of launching darts at a high rate of fire. The Dart ability becomes Area 5x1 within 1 line instead of a Strike and does +1d6 damage.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Hidden Portcullis
@@ -1364,7 +1428,11 @@ export class TerrainData {
 				]
 			}
 		],
-		upgrades: []
+		upgrades: [],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Pillar
@@ -1444,7 +1512,11 @@ export class TerrainData {
 				text: 'Multiple pillars can be bought together to represent a larger toppling object, like a wall. All pillars need to be destroyed before it falls if this is the case, and toppling direction is predefined when the objects are placed.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Pressure Plate
@@ -1505,7 +1577,11 @@ export class TerrainData {
 				text: 'The pressure plate is a tripwire, which only triggers once. It is still concealed, but can be discovered with an easy test.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Pulley
@@ -1571,7 +1647,11 @@ export class TerrainData {
 				text: 'Instead of a rope and pulley the system uses a chain. The pulley is not disabled after use.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Ram
@@ -1682,7 +1762,11 @@ export class TerrainData {
 				text: 'The ram can be mounted in the ceiling and ram the squares below it when it is triggered. Creatures are pushed away by the ram’s squares. This can be used to create chain reactions with other terrain objects that trigger when creatures are moved into them. For example, when a ceiling ram drops onto a creature in a spike trap the spike trap ability is triggered again.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Switch
@@ -1738,7 +1822,11 @@ export class TerrainData {
 				text: 'The switch is hidden, requiring a hard Intuition test to find before it can be attacked or used.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	//#endregion
@@ -1883,7 +1971,11 @@ export class TerrainData {
 					}
 				]
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Boiling Oil Cauldron
@@ -1954,7 +2046,11 @@ export class TerrainData {
 				]
 			}
 		],
-		upgrades: []
+		upgrades: [],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Catapult
@@ -2072,7 +2168,11 @@ export class TerrainData {
 				text: 'The arcing shot does fire damage. Any squares targeted by the arcing shot are burning until the end of the encounter. When a creature begins their turn in a square or first enters a square that’s burning on a turn, they take 2 fire damage.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Exploding Mill Wheel
@@ -2173,7 +2273,11 @@ export class TerrainData {
 				text: 'The wheel has been fitted with a control mechanism and a pilot’s seat for an ally of size 1M or smaller. This allows the wheel to be turned in any direction while it is moving. At any time during its movement, the pilot may take an action to eject out of the wheel landing in an adjacent space while the wheel continues moving in a straight line.  Piloting the wheel takes knowledge and some skill but a player could figure it out and pilot it with a hard reason test. On a success the character may pilot the wheel. Failure with a consequence means the wheel immediately explodes. Success with a reward means that the player has even figured out how to disarm the explosives and may disable that aspect of the wheel.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Field Ballista
@@ -2331,7 +2435,11 @@ export class TerrainData {
 					}
 				]
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Iron Dragon
@@ -2434,7 +2542,11 @@ export class TerrainData {
 				]
 			}
 		],
-		upgrades: []
+		upgrades: [],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Watchtower
@@ -2513,7 +2625,11 @@ export class TerrainData {
 				text: 'The watchtower is reinforced with stone and iron. Increase stamina to 100.',
 				sections: []
 			}
-		]
+		],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	//#endregion
@@ -2582,7 +2698,11 @@ export class TerrainData {
 				]
 			}
 		],
-		upgrades: []
+		upgrades: [],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// The Chronal Hypercube
@@ -2635,7 +2755,11 @@ export class TerrainData {
 				]
 			}
 		],
-		upgrades: []
+		upgrades: [],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// The Throne of A'An
@@ -2756,7 +2880,11 @@ A creature seated in the throne becomes the Hierophant of A’An and gains the f
 				]
 			}
 		],
-		upgrades: []
+		upgrades: [],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	//#endregion
@@ -2818,7 +2946,11 @@ A creature seated in the throne becomes the Hierophant of A’An and gains the f
 				]
 			}
 		],
-		upgrades: []
+		upgrades: [],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Holy Idol
@@ -2861,7 +2993,11 @@ A creature seated in the throne becomes the Hierophant of A’An and gains the f
 				]
 			}
 		],
-		upgrades: []
+		upgrades: [],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	// Tree of Might
@@ -2920,7 +3056,11 @@ A creature seated in the throne becomes the Hierophant of A’An and gains the f
 				]
 			}
 		],
-		upgrades: []
+		upgrades: [],
+		state: {
+			squares: 1,
+			staminaDamage: 0
+		}
 	};
 
 	//#endregion

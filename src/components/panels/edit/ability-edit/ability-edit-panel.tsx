@@ -1,4 +1,4 @@
-import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
@@ -8,6 +8,7 @@ import { AbilityUsage } from '../../../../enums/ability-usage';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
+import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -534,11 +535,7 @@ export const AbilityEditPanel = (props: Props) => {
 										}
 										{
 											ability.distance.length === 0 ?
-												<Alert
-													type='warning'
-													showIcon={true}
-													message='No distances'
-												/>
+												<Empty />
 												: null
 										}
 										<Button block={true} onClick={addDistance}>Add a new distance</Button>
@@ -659,11 +656,7 @@ export const AbilityEditPanel = (props: Props) => {
 										}
 										{
 											ability.alternateEffects.length === 0 ?
-												<Alert
-													type='warning'
-													showIcon={true}
-													message='No alternate effects'
-												/>
+												<Empty />
 												: null
 										}
 										<Button block={true} onClick={addAlternateEffect}>Add an alternate effect</Button>
@@ -696,11 +689,7 @@ export const AbilityEditPanel = (props: Props) => {
 										}
 										{
 											ability.spend.length === 0 ?
-												<Alert
-													type='warning'
-													showIcon={true}
-													message='No spend effects'
-												/>
+												<Empty />
 												: null
 										}
 										<Button block={true} onClick={addSpend}>Add a spend effect</Button>
@@ -733,11 +722,7 @@ export const AbilityEditPanel = (props: Props) => {
 										}
 										{
 											ability.persistence.length === 0 ?
-												<Alert
-													type='warning'
-													showIcon={true}
-													message='No persistence effects'
-												/>
+												<Empty />
 												: null
 										}
 										<Button block={true} onClick={addPersistence}>Add a persistence effect</Button>

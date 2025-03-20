@@ -1,14 +1,15 @@
-import { Alert, Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, ImportOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Badge } from '../../../controls/badge/badge';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
+import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Feature } from '../../../../models/feature';
-import { FeatureEditPanel } from '../feature-edit-panel/feature-edit-panel';
+import { FeatureEditPanel } from '../feature-edit/feature-edit-panel';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
@@ -553,11 +554,7 @@ export const MonsterEditPanel = (props: Props) => {
 				}
 				{
 					monster.features.length === 0 ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='No features'
-						/>
+						<Empty />
 						: null
 				}
 				<Button block={true} onClick={addFeature}>Add a new feature</Button>
@@ -596,11 +593,7 @@ export const MonsterEditPanel = (props: Props) => {
 								}
 								{
 									sortedSimilar.length === 0 ?
-										<Alert
-											type='warning'
-											showIcon={true}
-											message='None in similar monsters'
-										/>
+										<Empty text='None in similar monsters' />
 										: null
 								}
 							</Space>

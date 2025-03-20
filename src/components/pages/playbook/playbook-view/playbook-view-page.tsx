@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { CloseOutlined, EditOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, EditOutlined, PlayCircleOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { Adventure } from '../../../../models/adventure';
 import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
@@ -33,6 +33,7 @@ interface Props {
 	showRoll: () => void;
 	showMiniChecklist: (encounter: Encounter) => void;
 	export: (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
+	start: (kind: PlaybookElementKind, element: Element) => void;
 	delete: (kind: PlaybookElementKind, element: Element) => void;
 	setOptions: (options: Options) => void;
 }
@@ -54,6 +55,7 @@ export const PlaybookViewPage = (props: Props) => {
 					sourcebooks={props.sourcebooks}
 					options={props.options}
 					allowSelection={true}
+					start={props.start}
 				/>
 			);
 			break;
@@ -62,7 +64,6 @@ export const PlaybookViewPage = (props: Props) => {
 			panel = (
 				<EncounterPanel
 					encounter={element as Encounter}
-					playbook={props.playbook}
 					sourcebooks={props.sourcebooks}
 					options={props.options}
 					mode={PanelMode.Full}
@@ -125,14 +126,21 @@ export const PlaybookViewPage = (props: Props) => {
 						onConfirm={() => props.delete(kind!, element)}
 					/>
 					{
-						(kind === 'encounter') ?
+						(kind !== 'adventure') ?
 							<div className='divider' />
+							: null
+					}
+					{
+						(kind !== 'adventure') ?
+							<Button icon={<PlayCircleOutlined />} onClick={() => props.start(kind!, element)}>
+								Run
+							</Button>
 							: null
 					}
 					{
 						(kind === 'encounter') ?
 							<Button onClick={() => props.showMiniChecklist(element as Encounter)}>
-								Mini Checklist
+								Minis
 							</Button>
 							: null
 					}

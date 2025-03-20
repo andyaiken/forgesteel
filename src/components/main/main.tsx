@@ -49,6 +49,7 @@ import { PlaybookLogic } from '../../logic/playbook-logic';
 import { PlaybookViewPage } from '../pages/playbook/playbook-view/playbook-view-page';
 import { RollModal } from '../modals/roll/roll-modal';
 import { RulesModal } from '../modals/rules/rules-modal';
+import { SessionPage } from '../pages/session/session-page';
 import { SourcebookData } from '../../data/sourcebook-data';
 import { SourcebookLogic } from '../../logic/sourcebook-logic';
 import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
@@ -65,6 +66,7 @@ import './main.scss';
 interface Props {
 	heroes: Hero[];
 	playbook: Playbook;
+	session: Playbook;
 	homebrewSourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
 	options: Options;
@@ -74,6 +76,7 @@ export const Main = (props: Props) => {
 	const navigation = useNavigation();
 	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
 	const [ playbook, setPlaybook ] = useState<Playbook>(props.playbook);
+	const [ session, setSession ] = useState<Playbook>(props.session);
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
 	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(props.hiddenSourcebookIDs);
 	const [ options, setOptions ] = useState<Options>(props.options);
@@ -108,6 +111,12 @@ export const Main = (props: Props) => {
 		return localforage
 			.setItem<Playbook>('forgesteel-playbook', playbook)
 			.then(setPlaybook);
+	};
+
+	const persistSession = (session: Playbook) => {
+		return localforage
+			.setItem<Playbook>('forgesteel-session', session)
+			.then(setSession);
 	};
 
 	const persistHomebrewSourcebooks = (homebrew: Sourcebook[]) => {
@@ -823,6 +832,37 @@ export const Main = (props: Props) => {
 		Utils.export([ element.id ], element.name || Format.capitalize(kind), element, kind, format);
 	};
 
+	const startPlaybookElement = (kind: PlaybookElementKind, element: Element) => {
+		const sessionCopy = Utils.copy(session);
+		let e: Element;
+
+		switch (kind) {
+			case 'encounter': {
+				e = PlaybookLogic.startEncounter(element as Encounter, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]);
+				sessionCopy.encounters.push(e as Encounter);
+				break;
+			}
+			case 'montage': {
+				e = PlaybookLogic.startMontage(element as Montage);
+				sessionCopy.montages.push(e as Montage);
+				break;
+			}
+			case 'negotiation': {
+				e = PlaybookLogic.startNegotiation(element as Negotiation);
+				sessionCopy.negotiations.push(e as Negotiation);
+				break;
+			}
+		}
+
+		persistSession(sessionCopy).then(() => navigation.goToSession(e.id));
+	};
+
+	//#endregion
+
+	//#region Session
+
+	//
+
 	//#endregion
 
 	//#region Modals
@@ -984,9 +1024,6 @@ export const Main = (props: Props) => {
 							showDirectory={showDirectoryPane}
 							showAbout={showAbout}
 							showRoll={showRoll}
-							showHeroes={heroes.length === 0 ? createHero : () => navigation.goToHeroList()}
-							showLibrary={() => navigation.goToLibraryList('ancestry')}
-							showPlaybook={() => navigation.goToPlaybookList('adventure')}
 						/>
 					}
 				/>
@@ -1144,6 +1181,7 @@ export const Main = (props: Props) => {
 								showRoll={showRoll}
 								showMiniChecklist={showMiniChecklist}
 								export={exportPlaybookElement}
+								start={startPlaybookElement}
 								delete={deletePlaybookElement}
 								setOptions={persistOptions}
 							/>
@@ -1167,6 +1205,21 @@ export const Main = (props: Props) => {
 						}
 					/>
 				</Route>
+				<Route
+					path='session/:elementID?'
+					element={
+						<SessionPage
+							session={session}
+							playbook={playbook}
+							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+							options={options}
+							showDirectory={showDirectoryPane}
+							showAbout={showAbout}
+							showRoll={showRoll}
+							updateSession={persistSession}
+						/>
+					}
+				/>
 			</Route>
 		</Routes>
 	);

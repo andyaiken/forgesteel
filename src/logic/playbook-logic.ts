@@ -1,6 +1,14 @@
+import { Counter } from '../models/counter';
+import { Encounter } from '../models/encounter';
 import { EncounterLogic } from './encounter-logic';
+import { MonsterLogic } from './monster-logic';
+import { Montage } from '../models/montage';
+import { Negotiation } from '../models/negotiation';
 import { Playbook } from '../models/playbook';
 import { Plot } from '../models/plot';
+import { Sourcebook } from '../models/sourcebook';
+import { SourcebookLogic } from './sourcebook-logic';
+import { Utils } from '../utils/utils';
 
 export class PlaybookLogic {
 	static getUsedIn = (playbook: Playbook, elementID: string) => {
@@ -63,6 +71,65 @@ export class PlaybookLogic {
 		});
 	};
 
+	static startEncounter = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
+		const copy = Utils.copy(encounter);
+		copy.id = Utils.guid();
+
+		copy.groups.forEach(group => {
+			group.slots.forEach(slot => {
+				const monster = SourcebookLogic.getMonster(sourcebooks, slot.monsterID);
+				const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
+				if (monster && monsterGroup) {
+					const name = MonsterLogic.getMonsterName(monster, monsterGroup);
+					const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization);
+					for (let n = 1; n <= count; ++n) {
+						const monsterCopy = Utils.copy(monster);
+						monsterCopy.id = Utils.guid();
+						monsterCopy.name = count === 1 ? name : `${name} ${n}`;
+						slot.monsters.push(monsterCopy);
+					}
+				}
+			});
+		});
+
+		copy.terrain.forEach(slot => {
+			const terrain = SourcebookLogic.getTerrains(sourcebooks).find(t => t.id === slot.terrainID);
+			if (terrain) {
+				const name = terrain.name || 'Unnamed Terrain';
+				const count = slot.count;
+				for (let n = 1; n <= count; ++n) {
+					const terrainCopy = Utils.copy(terrain);
+					terrainCopy.id = Utils.guid();
+					terrainCopy.name = count === 1 ? name : `${name} ${n}`;
+					slot.terrain.push(terrainCopy);
+				}
+			}
+		});
+
+		return copy;
+	};
+
+	static startMontage = (montage: Montage) => {
+		const copy = Utils.copy(montage);
+		copy.id = Utils.guid();
+
+		return copy;
+	};
+
+	static startNegotiation = (negotiation: Negotiation) => {
+		const copy = Utils.copy(negotiation);
+		copy.id = Utils.guid();
+
+		return copy;
+	};
+
+	static startCounter = (counter: Counter) => {
+		const copy = Utils.copy(counter);
+		copy.id = Utils.guid();
+
+		return copy;
+	};
+
 	static updatePlaybook = (playbook: Playbook) => {
 		if (playbook.adventures === undefined) {
 			playbook.adventures = [];
@@ -87,6 +154,25 @@ export class PlaybookLogic {
 				e.terrain = [];
 			}
 
+			e.terrain.forEach(slot => {
+				if (slot.terrain === undefined) {
+					slot.terrain = [];
+				}
+
+				slot.terrain.forEach(t => {
+					if (t.state === undefined) {
+						t.state = {
+							squares: 1,
+							staminaDamage: 0
+						};
+					}
+				});
+			});
+
+			if (e.round === undefined) {
+				e.round = 1;
+			}
+
 			if (e.malice === undefined) {
 				e.malice = 0;
 			}
@@ -96,15 +182,6 @@ export class PlaybookLogic {
 			playbook.montages = [];
 		}
 
-		playbook.montages.forEach(m => {
-			m.sections.forEach(s => {
-				s.challenges.forEach(c => {
-					if (c.state === undefined) {
-						c.state = { successes: 0, failures: 0 };
-					}
-				});
-			});
-		});
 		if (playbook.negotiations === undefined) {
 			playbook.negotiations = [];
 		}
@@ -113,11 +190,10 @@ export class PlaybookLogic {
 			if (n.impression === undefined) {
 				n.impression = 1;
 			}
-
-			if (n.state === undefined) {
-				n.state = { deltaInterest: 0, deltaPatience: 0 };
-			}
 		});
 
+		if (playbook.counters === undefined) {
+			playbook.counters = [];
+		}
 	};
 }

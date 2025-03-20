@@ -1,5 +1,14 @@
 .directory-modal {
-	padding: 0 20px 10px 20px;
+	padding: 10px;
+
+	.directory-header {
+		margin: 5px;
+		padding: 5px;
+		font-weight: 600;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+	}
 
 	.directory-btn {
 		padding: 5px 10px;

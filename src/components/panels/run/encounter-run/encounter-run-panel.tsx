@@ -1,4 +1,4 @@
-import { Button, Divider, Drawer, Progress, Segmented, Space, Tabs } from 'antd';
+import { Alert, Button, Divider, Drawer, Progress, Segmented, Space, Tabs } from 'antd';
 import { Encounter, EncounterGroup, EncounterSlot } from '../../../../models/encounter';
 import { HeartFilled, InfoCircleOutlined } from '@ant-design/icons';
 import { Monster, MonsterState } from '../../../../models/monster';
@@ -98,6 +98,29 @@ export const EncounterRunPanel = (props: Props) => {
 				return str;
 			};
 
+			const getMinionMessage = () => {
+				if (!isMinionSlot) {
+					return null;
+				}
+
+				const staminaRemaining = Collections.sum(slot.monsters, m => MonsterLogic.getStamina(m)) - slot.state.staminaDamage;
+				const staminaPerMinion = Collections.mean(slot.monsters, m => MonsterLogic.getStamina(m));
+				const minionsExpected = Math.ceil(staminaRemaining / staminaPerMinion);
+				const minionsAlive = slot.monsters.filter(m => !m.state.defeated).length;
+
+				if (minionsAlive !== minionsExpected) {
+					return (
+						<Alert
+							type='warning'
+							showIcon={true}
+							message={`There should be ${minionsExpected} active minions, not ${minionsAlive}.`}
+						/>
+					);
+				}
+
+				return null;
+			};
+
 			return (
 				<div key={slot.id} className='encounter-slot'>
 					{
@@ -116,6 +139,9 @@ export const EncounterRunPanel = (props: Props) => {
 								<Button type='text' icon={<InfoCircleOutlined />} onClick={() => setSelectedSlot(slot)} />
 							</div>
 							: null
+					}
+					{
+						isMinionSlot ? getMinionMessage() : null
 					}
 					{
 						isMinionSlot ? <Divider /> : null
@@ -345,7 +371,7 @@ export const EncounterRunPanel = (props: Props) => {
 					<NumberSpin min={0} value={encounter.malice} onChange={setMalice}>
 						<Field orientation='vertical' label='Malice' value={encounter.malice} />
 					</NumberSpin>
-					<div style={{ textAlign: 'center' }}>
+					<div style={{ textAlign: 'center', marginTop: '-5px', marginBottom: '5px' }}>
 						<Field label='Round' value={encounter.round} />
 						<Button onClick={nextRound}>Next Round</Button>
 					</div>

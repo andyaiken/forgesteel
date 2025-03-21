@@ -1,13 +1,7 @@
-.monster-panel {
+.monster-state-panel {
 	display: flex;
 	flex-direction: column;
-	padding: 0 20px 20px 20px;
-	overflow: hidden;
-
-	&.compact {
-		margin-top: -10px;
-		padding: unset;
-	}
+	gap: 10px;
 
 	.stats {
 		margin: 5px 0;
@@ -17,22 +11,15 @@
 		border: 1px solid rgba(5, 5, 5, 0.06);
 		border-radius: 10px;
 		background-color: rgb(250, 250, 250);
-	}
 
-	.features {
-		margin: 10px;
-	}
-
-	.abilities {
-		margin: 10px;
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: 20px;
+		.field {
+			flex: 1 1 0;
+		}
 	}
 }
 
 @media (prefers-color-scheme: dark) {
-	.monster-panel {
+	.monster-state-panel {
 		.stats {
 			border-color: rgba(250, 250, 250, 0.6);
 			background-color: rgb(30, 30, 30);

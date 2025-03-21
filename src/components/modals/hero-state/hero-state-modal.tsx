@@ -1,8 +1,8 @@
 import { Alert, Button, Divider, Drawer, Flex, Segmented, Space } from 'antd';
 import { ArrowUpOutlined, CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Condition, Hero } from '../../../models/hero';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { Collections } from '../../../utils/collections';
+import { Condition } from '../../../models/condition';
 import { ConditionPanel } from '../../panels/condition/condition-panel';
 import { ConditionSelectModal } from '../condition-select/condition-select-modal';
 import { DangerButton } from '../../controls/danger-button/danger-button';
@@ -10,6 +10,7 @@ import { Empty } from '../../controls/empty/empty';
 import { Expander } from '../../controls/expander/expander';
 import { FactoryLogic } from '../../../logic/factory-logic';
 import { HealthPanel } from '../../panels/health/health-panel';
+import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { HeroStatePage } from '../../../enums/hero-state-page';
 import { Item } from '../../../models/item';

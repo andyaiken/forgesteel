@@ -29,7 +29,6 @@
 * Adventure Builder:
   * Allow subplots
 * Encounter Builder:
-  * Add victory conditions
   * Use encounter templates
   * Auto-create encounters
 
@@ -37,10 +36,12 @@
 
 * Encounter tracker
   * Choose heroes
-  * Set captain for minions
-  * Set 'used reaction' flag on monsters
+  * Monster state:
+    * Set captain for minion groups
+    * Set 'used reaction' flag on monsters / minions
   * Ability to add new monsters / terrain / heroes
-  * Should track minion health as a pool
+  * On end turn, handle EoT conditions
+  * Handle 'save ends' conditions
 * Player view
   * Ability to show certain information to players using a second window
 

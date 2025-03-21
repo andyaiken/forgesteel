@@ -515,7 +515,14 @@ export class FactoryLogic {
 			customization: {
 				addOnIDs: []
 			},
-			monsters: []
+			monsters: [],
+			state: {
+				staminaDamage: 0,
+				staminaTemp: 0,
+				conditions: [],
+				reactionUsed: false,
+				defeated: false
+			}
 		};
 	};
 

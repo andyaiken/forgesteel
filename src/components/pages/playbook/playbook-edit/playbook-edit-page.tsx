@@ -1441,7 +1441,12 @@ export const PlaybookEditPage = (props: Props) => {
 	const getEncounterPreviewSection = () => {
 		return (
 			<SelectablePanel>
-				<EncounterPanel encounter={element as Encounter} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+				<EncounterPanel
+					encounter={element as Encounter}
+					sourcebooks={props.sourcebooks}
+					options={props.options}
+					mode={PanelMode.Full}
+				/>
 			</SelectablePanel>
 		);
 	};
@@ -1633,13 +1638,19 @@ export const PlaybookEditPage = (props: Props) => {
 			case 'montage':
 				return (
 					<SelectablePanel>
-						<MontagePanel montage={element as Montage} mode={PanelMode.Full} />
+						<MontagePanel
+							montage={element as Montage}
+							mode={PanelMode.Full}
+						/>
 					</SelectablePanel>
 				);
 			case 'negotiation':
 				return (
 					<SelectablePanel>
-						<NegotiationPanel negotiation={element as Negotiation} mode={PanelMode.Full} />
+						<NegotiationPanel
+							negotiation={element as Negotiation}
+							mode={PanelMode.Full}
+						/>
 					</SelectablePanel>
 				);
 		}

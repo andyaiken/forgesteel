@@ -1,4 +1,5 @@
-import { ConditionType } from '../enums/condition-type';
+import { ConditionEndType, ConditionType } from '../enums/condition-type';
+import { Condition } from '../models/condition';
 
 export class ConditionLogic {
 	static getDescription = (condition: ConditionType) => {
@@ -31,5 +32,15 @@ If you teleport while restrained, the condition ends.`;
 			case ConditionType.Weakened:
 				return 'While you are weakened, all your power rolls take a bane.';
 		}
+	};
+
+	static getFullDescription = (condition: Condition) => {
+		let end = condition.ends.toLowerCase();
+
+		if (condition.ends === ConditionEndType.EndOfTurn) {
+			end = 'EoT';
+		}
+
+		return `${condition.type} (${end})`;
 	};
 }

@@ -1,13 +1,9 @@
-import { Button, Drawer, Flex, Segmented, Tag } from 'antd';
-import { ConditionEndType, ConditionType } from '../../../../enums/condition-type';
-import { Monster, MonsterGroup } from '../../../../models/monster';
+import { Drawer, Flex, Tag } from 'antd';
+import { Monster, MonsterGroup, MonsterState } from '../../../../models/monster';
 import { Ability } from '../../../../models/ability';
 import { AbilityModal } from '../../../modals/ability/ability-modal';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Characteristic } from '../../../../enums/characteristic';
-import { Condition } from '../../../../models/hero';
-import { ConditionPanel } from '../../condition/condition-panel';
-import { ConditionSelectModal } from '../../../modals/condition-select/condition-select-modal';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
@@ -18,7 +14,7 @@ import { Markdown } from '../../../controls/markdown/markdown';
 import { MonsterLabel } from '../../monster-label/monster-label';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
-import { NumberSpin } from '../../../controls/number-spin/number-spin';
+import { MonsterStatePanel } from '../../monster-state/monster-state-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Token } from '../../../controls/token/token';
@@ -38,65 +34,10 @@ interface Props {
 export const MonsterPanel = (props: Props) => {
 	const [ monster, setMonster ] = useState<Monster>(Utils.copy(props.monster));
 	const [ selectedAbility, setSelectedAbility ] = useState<Ability | null>(null);
-	const [ addingCondition, setAddingCondition ] = useState<boolean>(false);
 
-	const setStaminaDamage = (value: number) => {
+	const updateState = (state: MonsterState) => {
 		const copy = Utils.copy(monster);
-		copy.state.staminaDamage = value;
-		setMonster(copy);
-		if (props.updateMonster) {
-			props.updateMonster(copy);
-		}
-	};
-
-	const setStaminaTemp = (value: number) => {
-		const copy = Utils.copy(monster);
-		copy.state.staminaTemp = value;
-		setMonster(copy);
-		if (props.updateMonster) {
-			props.updateMonster(copy);
-		}
-	};
-
-	const setDefeated = (value: boolean) => {
-		const copy = Utils.copy(monster);
-		copy.state.defeated = value;
-		setMonster(copy);
-		if (props.updateMonster) {
-			props.updateMonster(copy);
-		}
-	};
-
-	const addCondition = (value: ConditionType) => {
-		const copy = Utils.copy(monster);
-		copy.state.conditions.push({
-			id: Utils.guid(),
-			type: value,
-			text: '',
-			ends: ConditionEndType.EndOfTurn
-		});
-		setMonster(copy);
-		setAddingCondition(false);
-		if (props.updateMonster) {
-			props.updateMonster(copy);
-		}
-	};
-
-	const changeCondition = (condition: Condition) => {
-		const copy = Utils.copy(monster);
-		const index = copy.state.conditions.findIndex(c => c.id === condition.id);
-		if (index !== -1) {
-			copy.state.conditions[index] = condition;
-		}
-		setMonster(copy);
-		if (props.updateMonster) {
-			props.updateMonster(copy);
-		}
-	};
-
-	const deleteCondition = (condition: Condition) => {
-		const copy = Utils.copy(monster);
-		copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
+		copy.state = state;
 		setMonster(copy);
 		if (props.updateMonster) {
 			props.updateMonster(copy);
@@ -141,42 +82,11 @@ export const MonsterPanel = (props: Props) => {
 				</Flex>
 				{
 					props.updateMonster ?
-						<div className='stats'>
-							<NumberSpin min={0} value={monster.state.staminaDamage} onChange={setStaminaDamage}>
-								<Field orientation='vertical' label='Damage' value={monster.state.staminaDamage} />
-							</NumberSpin>
-							<NumberSpin min={0} value={monster.state.staminaTemp} onChange={setStaminaTemp}>
-								<Field orientation='vertical' label='Temp' value={monster.state.staminaTemp} />
-							</NumberSpin>
-							<Button onClick={() => setAddingCondition(true)}>Add a condition</Button>
-						</div>
-						: null
-				}
-				{
-					props.updateMonster ?
-						<div style={{ textAlign: 'center' }}>
-							<Segmented
-								options={[ 'Active', 'Defeated' ]}
-								value={monster.state.defeated ? 'Defeated' : 'Active'}
-								onChange={value => setDefeated(value === 'Defeated')}
-							/>
-						</div>
-						: null
-				}
-				{
-					props.updateMonster ?
-						<div>
-							{
-								monster.state.conditions.map(c => (
-									<ConditionPanel
-										key={c.id}
-										condition={c}
-										onChange={changeCondition}
-										onDelete={deleteCondition}
-									/>
-								))
-							}
-						</div>
+						<MonsterStatePanel
+							state={monster.state}
+							source={monster.role.organization === MonsterOrganizationType.Minion ? 'minion' : 'monster'}
+							updateState={updateState}
+						/>
 						: null
 				}
 				<div className='stats'>
@@ -266,12 +176,6 @@ export const MonsterPanel = (props: Props) => {
 							/>
 							: null
 					}
-				</Drawer>
-				<Drawer open={addingCondition} onClose={() => setAddingCondition(false)} closeIcon={null} width='500px'>
-					<ConditionSelectModal
-						onSelect={addCondition}
-						onClose={() => setAddingCondition(false)}
-					/>
 				</Drawer>
 			</div>
 		);

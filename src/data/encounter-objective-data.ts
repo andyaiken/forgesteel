@@ -33,7 +33,7 @@ Choose one of the following success conditions:
 		description: `
 Classic heroic fantasy is full of important objects that the heroes must protect from the forces of evil: magic rings, royal birth certificates, dragon eggs, and the like. Heroes often find themselves at violent odds with their enemies as they race to collect a valuable or important item from a guarded temple or castle, or when they need to steal the item from a group of enemies already in possession of it. Objectives in this category work well when paired with other objectives, such as Defeat a Specific Foe. For instance, the heroes must steal a ledger containing a record of criminal activity from an overmind and her lackeys. However, even if they obtain the ledger, the battle won’t be over until they also defeat the overmind, who won’t let the book go without a fight!
 
-# THE THING
+### THE THING
 
 The thing the heroes need to get is typically a 1T object. (If the thing is a creature or a bulky object that must be carried past enemies, this might instead be an Escort encounter!) Most or all approach routes to the thing are guarded by enemies, and often a trap or a particularly powerful monster stands guard over the object.
 
@@ -57,7 +57,7 @@ Combat doesn’t always have to be about destroying your enemies. Sometimes it�
 
 Sometimes the thing is actually multiple things, all of which must be destroyed.
 
-# THE THING
+### THE THING
 
 A typical thing is an object with Stamina equal to the heroes’ level times 20. Most objects have poison and psychic immunity. Additionally, the thing may have immunities or vulnerabilities to one or more damage types, for instance, a magic statue might be immune to fire damage but vulnerable to thunder damage.
 
@@ -81,7 +81,7 @@ No one earns the mantle of hero without saving a few lives. Sometimes the point 
 
 If the heroes rescue powerful allies from the clutches of their foes during combat, the added strength of those allies might be enough to make the remainder of the encounter trivial. When you and your companions save a griffon from a crew of poachers, the hunters become the … well, you know the rest.
 
-# ALLIES AND POTENTIAL ALLIES
+### ALLIES AND POTENTIAL ALLIES
 
 Some Save Another encounters feature willing allies (creatures that are able and willing to fight alongside the heroes), and some feature potential allies (creatures that can’t or won’t join the heroes right away—but might later in the battle). In combat, willing allies can be controlled by the heroes (and might use retainer stat blocks), while potential allies are controlled by the Director.
 
@@ -100,19 +100,19 @@ Surprising as it may seem, sometimes the fate of the mission doesn’t rest on t
 
 Not every Escort encounter is on behalf of a wise or mighty ally. Sometimes the heroes are tasked with protecting a helpless or even an actively troublesome creature, such as a hapless noble or a wayward child. They might even have to protect a bulky or inconvenient inanimate object. Whatever the case, the enemies just keep coming until the heroes get their charge to their destination.
 
-# WARD
+### WARD
 
 The creature or object to be protected is called the ward. At the start of each round, choose a hero. The ward moves on that hero’s turn and is controlled by that hero. Most wards can take a move action or a maneuver on their turn, but not both. A ward’s characteristics and speed are determined by the Director. Most humanoid wards have a speed of 5.
 
 A sturdy ward, such as an able-bodied citizen, typically has Stamina equal to 10 times the heroes’ level. A delicate ward, such as an elderly diplomat or an important object, typically has Stamina equal to 5 times the heroes’ level.
 
-# DESTINATION
+### DESTINATION
 
 Every Escort encounter has a destination: a place of safety beyond which the enemies won’t follow.
 
 Typically, when the encounter begins, the ward’s distance from the destination is at least three times the ward’s Speed (though they can start closer if difficult terrain or other obstacles complicate the route). The heroes’ enemies can be placed anywhere on the encounter map, including between the ward and the destination, but not within 5 squares of the destination.
 
-# REINFORCEMENTS
+### REINFORCEMENTS
 
 At the start of each round, any minion that was killed during the last round is replaced by a reinforcement. The Director chooses their position, which can’t be within 5 squares of the ward, the destination, or any hero.`,
 		difficultyModifier: 'A combat encounter’s difficulty is one stage harder with a delicate ward.',
@@ -127,17 +127,17 @@ At the start of each round, any minion that was killed during the last round is 
 		description: `
 Sometimes the heroes just need to buy time. They might need to battle a conquering tyrant’s army to allow innocent villagers time to escape. They might need to hold off wave after wave of zombies while a group of priests completes a ritual to lay the undead to rest for good. To achieve this objective, the heroes need to stay alive and protect a particular position for a number of rounds determined by the Director.
 
-# DEFENSIVE POSITION
+### DEFENSIVE POSITION
 
 The Director (or the heroes) choose a defensive position, an area that must be held and controlled by the heroes. The fewer of the heroes’ enemies that get passed the defensive position, the better their chances of success. The area can be any size. The defensive position blocks entry to a vulnerable area the heroes are defending.
 
 Often, a defensive position grants bonuses to its defenders. The approach to the position might be narrow, over difficult terrain, or require climbing, or anyone inside the position might have the benefit of higher ground against anyone outside it.
 
-# ENCOUNTER DURATION
+### ENCOUNTER DURATION
 
 The Director determines the encounter duration, the number of rounds that the heroes must defend the area in order to be successful. A typical encounter duration is 3 rounds.
 
-# REINFORCEMENTS
+### REINFORCEMENTS
 
 At the end of each round, the Director adds more enemies for the heroes to battle on the map. The new group should have an EV of all the enemies killed during that round plus the EV value of one hero. If the Director doesn’t spend all of their EV in a round, the remainder can be added to a future round.
 
@@ -156,7 +156,7 @@ The enemy holds a strategically important position and the heroes want it. In a 
 
 Sometimes, and Assault the Defenses encounter is part of a combined objective. First you’ve got to assault the defenses, then you’ve got to hold off against counterattack.
 
-# DEFENSIVE POSITION
+### DEFENSIVE POSITION
 
 The Director choose a defensive position, an area that must be captured by the heroes. The area can be any size. Not all of the heroes’ enemies in the encounter are in this position, as some are outside attempting to stop heroes before they get close.
 
@@ -173,15 +173,15 @@ Often, a defensive position grants bonuses to its defenders. The approach to the
 		description: `
 Sometimes combat is complicated by the fact that the heroes need to stop the villainous actions of their foes. It’s not enough to simply defeat the warriors in a cult. The heroes must also stop the zealots’ archdevil-summoning ritual! Or it might be that the heroes need to interrupt a wedding and make sure an evil mage doesn’t marry the heir to the throne. Despite combat, the mage forces the ceremony to continue! Objectives in this category often have a timer associated with them. If the heroes don’t achieve the objective in a certain number of rounds, the conditions of the battle often change. For instance, if the cultists summon the archdevil, defeating the devil suddenly becomes the heroes’ new objective!
 
-# ENCOUNTER DURATION
+### ENCOUNTER DURATION
 
 The Director determines the encounter duration, the number of rounds before the villains complete their plans. A typical encounter duration is 3 rounds. Sometimes, events can change the encounter duration Succeeding on a hard Reason test to dispute the wedding’s legality increases the encounter duration by 1, or allowing zealots to sacrifice an innocent creature as part of their ritual decreases it by 1.
 
-# STOPPING THE ACTION
+### STOPPING THE ACTION
 
 The villain’s evil plan has certain requirements, and if those requirements aren’t met, the action is stopped and the heroes are victorious. For instance, to complete a ritual, during each round at least one zealot priest might be required to spend an action to further the ritual. A wedding can’t be completed if a participant or the officiant is killed or captured.
 
-# FAILURE CONSEQUENCES
+### FAILURE CONSEQUENCES
 
 If the villains’ plan succeeds, there may be additional consequences within the encounter. For instance, if the zealots summon a demon, or if a newly-crowned evil mage uses their new royal authority to summon guards, the heroes may face extra enemies. These potential reinforcements aren’t counted towards the encounter’s difficulty, since they only appear once the heroes have failed the encounter. This is an entirely new battle now!`,
 		difficultyModifier: 'A Stop the Action encounter’s difficulty is one step harder if the encounter duration is 2 or less, and one Step easier if the action can be stopped by killing or removing any single creature.',
@@ -196,11 +196,11 @@ If the villains’ plan succeeds, there may be additional consequences within th
 		description: `
 The opposite of a Stop the Action encounter, this objective ending sees the characters charged with initiating an event, performing a ritual, and so forth. For instance, if the heroes are attempting to launch an airship while repelling a time raider boarding party, the encounter could be over the moment the heroes manage to activate the vessel and take off with just a few time raiders actually aboard.
 
-# ENCOUNTER DURATION
+### ENCOUNTER DURATION
 
 The Director determines the encounter duration, the number of rounds before the heroes can complete their plans. A typical encounter duration is 3 rounds.
 
-# TASKS AND FAILURES
+### TASKS AND FAILURES
 
 During each round, at least half the heroes must spend a maneuver performing a task that advances their plans. Each round, the Director decides what tasks are available and where they must be performed. For instance, to launch an airship, one hero might have to cast off an anchor on deck while another unfurls a sail at the top of a mast. The list of available tasks may change each turn.
 

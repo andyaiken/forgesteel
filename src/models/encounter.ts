@@ -1,5 +1,5 @@
+import { Monster, MonsterState } from './monster';
 import { Element } from './element';
-import { Monster } from './monster';
 import { Terrain } from './terrain';
 
 export interface EncounterSlot {
@@ -11,6 +11,7 @@ export interface EncounterSlot {
 		addOnIDs: string[];
 	};
 	monsters: Monster[];
+	state: MonsterState;
 }
 
 export interface EncounterGroup {

@@ -1,6 +1,6 @@
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { Segmented, Space } from 'antd';
-import { Condition } from '../../../models/hero';
+import { Condition } from '../../../models/condition';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Field } from '../../controls/field/field';

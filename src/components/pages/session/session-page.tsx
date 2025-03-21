@@ -2,21 +2,24 @@ import { Alert, Button, Input, Popover, Segmented, Space } from 'antd';
 import { PlusOutlined, ReadOutlined } from '@ant-design/icons';
 import { AppHeader } from '../../panels/app-header/app-header';
 import { CounterPanel } from '../../panels/elements/counter-panel/counter-panel';
+import { CounterRunPanel } from '../../panels/run/counter-run/counter-run-panel';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Empty } from '../../controls/empty/empty';
 import { Encounter } from '../../../models/encounter';
 import { EncounterPanel } from '../../panels/elements/encounter-panel/encounter-panel';
+import { EncounterRunPanel } from '../../panels/run/encounter-run/encounter-run-panel';
 import { Format } from '../../../utils/format';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Montage } from '../../../models/montage';
 import { MontageData } from '../../../data/montage-data';
 import { MontagePanel } from '../../panels/elements/montage-panel/montage-panel';
+import { MontageRunPanel } from '../../panels/run/montage-run/montage-run-panel';
 import { Negotiation } from '../../../models/negotiation';
 import { NegotiationData } from '../../../data/negotiation-data';
 import { NegotiationPanel } from '../../panels/elements/negotiation-panel/negotiation-panel';
+import { NegotiationRunPanel } from '../../panels/run/negotiation-run/negotiation-run-panel';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Options } from '../../../models/options';
-import { PanelMode } from '../../../enums/panel-mode';
 import { Playbook } from '../../../models/playbook';
 import { PlaybookLogic } from '../../../logic/playbook-logic';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
@@ -104,11 +107,9 @@ export const SessionPage = (props: Props) => {
 			const encounter = session.encounters.find(e => e.id === selectedElementID);
 			if (encounter) {
 				return (
-					<EncounterPanel
+					<EncounterRunPanel
 						encounter={encounter}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
-						mode={PanelMode.Full}
 						onChange={encounter => {
 							const copy = Utils.copy(session);
 
@@ -127,9 +128,8 @@ export const SessionPage = (props: Props) => {
 			const montage = session.montages.find(m => m.id === selectedElementID);
 			if (montage) {
 				return (
-					<MontagePanel
+					<MontageRunPanel
 						montage={montage}
-						mode={PanelMode.Full}
 						onChange={montage => {
 							const copy = Utils.copy(session);
 
@@ -148,9 +148,8 @@ export const SessionPage = (props: Props) => {
 			const negotiation = session.negotiations.find(n => n.id === selectedElementID);
 			if (negotiation) {
 				return (
-					<NegotiationPanel
+					<NegotiationRunPanel
 						negotiation={negotiation}
-						mode={PanelMode.Full}
 						onChange={negotiation => {
 							const copy = Utils.copy(session);
 
@@ -169,9 +168,8 @@ export const SessionPage = (props: Props) => {
 			const counter = session.counters.find(c => c.id === selectedElementID);
 			if (counter) {
 				return (
-					<CounterPanel
+					<CounterRunPanel
 						counter={counter}
-						mode={PanelMode.Full}
 						onChange={counter => {
 							const copy = Utils.copy(session);
 

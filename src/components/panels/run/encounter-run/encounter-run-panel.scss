@@ -1,0 +1,134 @@
+.encounter-run-panel {
+	display: flex;
+	flex-direction: column;
+	padding: 0 20px 20px 20px;
+	overflow: hidden;
+
+	.stats {
+		margin: 10px 0;
+		padding: 10px 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-evenly;
+		border: 1px solid rgba(5, 5, 5, 0.06);
+		border-radius: 10px;
+		background-color: rgb(250, 250, 250);
+	}
+
+	.encounter-groups {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+
+		.encounter-group {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: 10px;
+
+			&.defeated {
+				opacity: 0.3;
+			}
+
+			.group-name {
+				flex: 0 0 75px;
+				font-weight: 600;
+			}
+
+			.encounter-slots {
+				flex: 1 1 0;
+				background-color: white;
+				border-radius: 5px;
+				padding: 5px 5px 5px 10px;
+
+				&.defeated {
+					background-color: unset;
+				}
+
+				.encounter-slot {
+					.encounter-slot-row {
+						display: flex;
+						flex-direction: row;
+						align-items: center;
+						gap: 10px;
+
+						&.defeated {
+							.name-column {
+								text-decoration: line-through;
+							}
+
+							.name-column,
+							.stamina-column,
+							.conditions-column {
+								opacity: 0.3;
+							}
+						}
+
+						.name-column {
+							flex: 1 1 0;
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+							gap: 5px;
+						}
+
+						.stamina-column {
+							flex: 0 0 90px;
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+							justify-content: flex-end;
+							gap: 5px;
+						}
+
+						.conditions-column {
+							flex: 1 1 0;
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+							gap: 5px;
+						}
+					}
+
+					.ant-divider-horizontal {
+						margin: 5px 0;
+					}
+				}
+			}
+
+			.group-acted {
+				flex: 0 0 auto;
+			}
+		}
+	}
+
+	.malice {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 20px;
+
+		.malice-progress {
+			height: 32px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.encounter-run-panel {
+		.stats {
+			border-color: rgba(250, 250, 250, 0.6);
+			background-color: rgb(30, 30, 30);
+		}
+
+		.encounter-groups {
+			.encounter-group {
+				.group-name {
+					color: rgba(255, 255, 255, 0.88);
+				}
+			}
+		}
+	}	
+}

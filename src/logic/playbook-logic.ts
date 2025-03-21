@@ -148,6 +148,16 @@ export class PlaybookLogic {
 					if (s.monsters === undefined) {
 						s.monsters = [];
 					}
+
+					if (s.state === undefined) {
+						s.state = {
+							staminaDamage: 0,
+							staminaTemp: 0,
+							conditions: [],
+							reactionUsed: false,
+							defeated: false
+						};
+					}
 				});
 			});
 

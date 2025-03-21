@@ -1,6 +1,6 @@
 import { Feature, FeatureAbility, FeatureAddOn, FeatureMalice } from './feature';
 import { Characteristic } from '../enums/characteristic';
-import { Condition } from './hero';
+import { Condition } from './condition';
 import { Element } from './element';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
@@ -9,6 +9,14 @@ import { Size } from './size';
 export interface MonsterRole {
 	type: MonsterRoleType;
 	organization: MonsterOrganizationType;
+};
+
+export interface MonsterState {
+	staminaDamage: number;
+	staminaTemp: number;
+	conditions: Condition[];
+	reactionUsed: boolean;
+	defeated: boolean;
 };
 
 export interface Monster extends Element {
@@ -40,13 +48,7 @@ export interface Monster extends Element {
 			feature: Feature;
 		}[];
 	} | null;
-	state: {
-		staminaDamage: number;
-		staminaTemp: number;
-		conditions: Condition[];
-		reactionUsed: boolean;
-		defeated: boolean;
-	}
+	state: MonsterState;
 };
 
 export interface MonsterGroup extends Element {

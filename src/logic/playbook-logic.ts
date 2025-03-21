@@ -1,6 +1,7 @@
 import { Counter } from '../models/counter';
 import { Encounter } from '../models/encounter';
 import { EncounterLogic } from './encounter-logic';
+import { EncounterObjectiveData } from '../data/encounter-objective-data';
 import { MonsterLogic } from './monster-logic';
 import { Montage } from '../models/montage';
 import { Negotiation } from '../models/negotiation';
@@ -168,6 +169,10 @@ export class PlaybookLogic {
 					}
 				});
 			});
+
+			if (e.objective === undefined) {
+				e.objective = EncounterObjectiveData.diminishNumbers;
+			}
 
 			if (e.round === undefined) {
 				e.round = 1;

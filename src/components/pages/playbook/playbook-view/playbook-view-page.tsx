@@ -67,7 +67,6 @@ export const PlaybookViewPage = (props: Props) => {
 					sourcebooks={props.sourcebooks}
 					options={props.options}
 					mode={PanelMode.Full}
-					showDifficulty={true}
 				/>
 			);
 			break;

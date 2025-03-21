@@ -47,6 +47,12 @@
 		}
 	}
 
+	.encounter-meta {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+		gap: 20px;
+	}
+
 	.active-encounter-groups {
 		display: flex;
 		flex-direction: column;

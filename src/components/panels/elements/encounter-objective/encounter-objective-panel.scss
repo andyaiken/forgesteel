@@ -1,0 +1,10 @@
+.encounter-objective-panel {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+
+	&.compact {
+		margin-top: -10px;
+		padding: unset;
+	}
+}

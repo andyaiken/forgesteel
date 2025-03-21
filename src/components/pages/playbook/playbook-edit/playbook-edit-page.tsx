@@ -1,6 +1,6 @@
 import { Alert, Button, Divider, Flex, Input, Popover, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, PlusOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { Encounter, EncounterGroup, EncounterSlot, TerrainSlot } from '../../../../models/encounter';
+import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot, TerrainSlot } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { MonsterFilter, TerrainFilter } from '../../../../models/filter';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
@@ -17,6 +17,7 @@ import { Element } from '../../../../models/element';
 import { Empty } from '../../../controls/empty/empty';
 import { EncounterDifficultyPanel } from '../../../panels/encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
+import { EncounterObjectiveData } from '../../../../data/encounter-objective-data';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
@@ -572,6 +573,111 @@ export const PlaybookEditPage = (props: Props) => {
 						<div className='ds-text dimmed-text centered-text'>None</div>
 						: null
 				}
+			</Space>
+		);
+	};
+
+	const getEncounterObjectiveSection = () => {
+		const encounter = element as Encounter;
+
+		const setObjective = (value: EncounterObjective) => {
+			const copy = Utils.copy(element) as Encounter;
+			copy.objective = Utils.copy(value);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setObjectiveName = (value: string) => {
+			const copy = Utils.copy(element) as Encounter;
+			copy.objective.name = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setObjectiveDescription = (value: string) => {
+			const copy = Utils.copy(element) as Encounter;
+			copy.objective.description = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setObjectiveDifficultyModifier = (value: string) => {
+			const copy = Utils.copy(element) as Encounter;
+			copy.objective.difficultyModifier = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setObjectiveSuccessCondition = (value: string) => {
+			const copy = Utils.copy(element) as Encounter;
+			copy.objective.successCondition = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setObjectiveFailureCondition = (value: string) => {
+			const copy = Utils.copy(element) as Encounter;
+			copy.objective.failureCondition = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setObjectiveVictories = (value: string) => {
+			const copy = Utils.copy(element) as Encounter;
+			copy.objective.victories = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Flex justify='end'>
+					<Popover
+						trigger='click'
+						placement='bottom'
+						content={(
+							<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '10px' }}>
+								{
+									[
+										EncounterObjectiveData.diminishNumbers,
+										EncounterObjectiveData.defeatFoe,
+										EncounterObjectiveData.getThing,
+										EncounterObjectiveData.destroyThing,
+										EncounterObjectiveData.saveAnother,
+										EncounterObjectiveData.escort,
+										EncounterObjectiveData.holdThemOff,
+										EncounterObjectiveData.assaultDefenses,
+										EncounterObjectiveData.stopAction,
+										EncounterObjectiveData.completeAction
+									].map(o => (
+										<Button key={o.id} block={true} onClick={() => setObjective(o)}>{o.name}</Button>
+									))
+								}
+							</div>
+						)}
+					>
+						<Button>
+							Common Objectives
+						</Button>
+					</Popover>
+				</Flex>
+				<HeaderText>Name</HeaderText>
+				<Input
+					placeholder='Name'
+					allowClear={true}
+					value={encounter.objective.name}
+					onChange={e => setObjectiveName(e.target.value)}
+				/>
+				<HeaderText>Description</HeaderText>
+				<MultiLine label='Description' value={encounter.objective.description} onChange={setObjectiveDescription} />
+				<HeaderText>Difficulty Modifier</HeaderText>
+				<MultiLine label='Difficulty Modifier' value={encounter.objective.difficultyModifier} onChange={setObjectiveDifficultyModifier} />
+				<HeaderText>Success Condition</HeaderText>
+				<MultiLine label='Success Condition' value={encounter.objective.successCondition} onChange={setObjectiveSuccessCondition} />
+				<HeaderText>Failure Condition</HeaderText>
+				<MultiLine label='Failure Condition' value={encounter.objective.failureCondition} onChange={setObjectiveFailureCondition} />
+				<HeaderText>Victories</HeaderText>
+				<MultiLine label='Victories' value={encounter.objective.victories} onChange={setObjectiveVictories} />
 			</Space>
 		);
 	};
@@ -1262,6 +1368,11 @@ export const PlaybookEditPage = (props: Props) => {
 								key: '3',
 								label: 'Terrain',
 								children: getEncounterTerrainSection()
+							},
+							{
+								key: '4',
+								label: 'Objective',
+								children: getEncounterObjectiveSection()
 							}
 						]}
 					/>

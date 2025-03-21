@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
-import { Encounter, EncounterGroup, EncounterSlot } from '../models/encounter';
+import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot } from '../models/encounter';
 import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
@@ -20,6 +20,7 @@ import { DamageModifier } from '../models/damage-modifier';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Domain } from '../models/domain';
 import { Element } from '../models/element';
+import { EncounterObjectiveData } from '../data/encounter-objective-data';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Format } from '../utils/format';
@@ -491,6 +492,7 @@ export class FactoryLogic {
 			description: '',
 			groups: [],
 			terrain: [],
+			objective: EncounterObjectiveData.diminishNumbers,
 			round: 1,
 			malice: 0
 		};
@@ -514,6 +516,18 @@ export class FactoryLogic {
 				addOnIDs: []
 			},
 			monsters: []
+		};
+	};
+
+	static createEncounterObjective = (): EncounterObjective => {
+		return {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			difficultyModifier: '',
+			successCondition: '',
+			failureCondition: '',
+			victories: ''
 		};
 	};
 

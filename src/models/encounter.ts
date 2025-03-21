@@ -27,9 +27,17 @@ export interface TerrainSlot {
 	terrain: Terrain[];
 }
 
+export interface EncounterObjective extends Element {
+	difficultyModifier: string;
+	successCondition: string;
+	failureCondition: string;
+	victories: string;
+};
+
 export interface Encounter extends Element {
 	groups: EncounterGroup[];
 	terrain: TerrainSlot[];
+	objective: EncounterObjective;
 	round: number;
 	malice: number;
 }

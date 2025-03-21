@@ -1,4 +1,4 @@
-import { Button, Divider, Drawer, Segmented, Space, Tabs } from 'antd';
+import { Button, Drawer, Segmented, Space, Tabs } from 'antd';
 import { HeartFilled, InfoCircleOutlined } from '@ant-design/icons';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { AbilityUsage } from '../../../../enums/ability-usage';
@@ -7,6 +7,7 @@ import { Empty } from '../../../controls/empty/empty';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterDifficultyPanel } from '../../encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
+import { EncounterObjectivePanel } from '../encounter-objective/encounter-objective-panel';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
@@ -36,7 +37,6 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	mode?: PanelMode;
-	showDifficulty?: boolean;
 	onChange?: (encounter: Encounter) => void;
 }
 
@@ -143,19 +143,17 @@ export const EncounterPanel = (props: Props) => {
 		);
 	};
 
-	const getDifficulty = () => {
-		if (props.showDifficulty) {
-			return (
-				<>
-					<Divider />
-					<SelectablePanel>
-						<EncounterDifficultyPanel encounter={encounter} sourcebooks={props.sourcebooks} options={props.options} />
-					</SelectablePanel>
-				</>
-			);
+	const getMeta = () => {
+		if (props.mode !== PanelMode.Full) {
+			return null;
 		}
 
-		return null;
+		return (
+			<div className='encounter-meta'>
+				<EncounterObjectivePanel objective={encounter.objective} mode={PanelMode.Full} />
+				<EncounterDifficultyPanel encounter={encounter} sourcebooks={props.sourcebooks} options={props.options} />
+			</div>
+		);
 	};
 
 	const getStatBlocks = () => {
@@ -170,7 +168,6 @@ export const EncounterPanel = (props: Props) => {
 
 		return (
 			<>
-				<Divider />
 				<HeaderText level={1}>Stat Blocks</HeaderText>
 				<div className='encounter-stat-blocks'>
 					{
@@ -468,6 +465,11 @@ export const EncounterPanel = (props: Props) => {
 								},
 								{
 									key: '4',
+									label: 'Objective',
+									children: <EncounterObjectivePanel objective={encounter.objective} mode={PanelMode.Full} />
+								},
+								{
+									key: '5',
 									label: 'Reminders',
 									children: getReminders()
 								}
@@ -476,7 +478,7 @@ export const EncounterPanel = (props: Props) => {
 						:
 						<>
 							{getEncounterGroups()}
-							{getDifficulty()}
+							{getMeta()}
 							{getStatBlocks()}
 							{getMaliceDetails()}
 						</>

@@ -1495,18 +1495,20 @@ export const PlaybookEditPage = (props: Props) => {
 							addBtn = (
 								<Button icon={<PlusOutlined />} onClick={() => addMonster(m, null)}>Add</Button>
 							);
-						}
-						if (encounter.groups.length === 1) {
-							addBtn = (
-								<Button icon={<PlusOutlined />} onClick={() => addMonster(m, encounter.groups[0].id)}>Add</Button>
-							);
-						}
-						if (encounter.groups.length > 1) {
+						} else {
+							const groups = encounter.groups.map((group, n) => ({
+								key: group.id,
+								label: <div className='ds-text centered-text'>Group {n + 1}</div>
+							}));
+							groups.push({
+								key: '',
+								label: <div className='ds-text centered-text'>New Group</div>
+							});
 							addBtn = (
 								<DropdownButton
 									label='Add'
-									items={encounter.groups.map((group, n) => ({ key: group.id, label: <div className='ds-text centered-text'>Group {n + 1}</div> }))}
-									onClick={groupID => addMonster(m, groupID)}
+									items={groups}
+									onClick={groupID => addMonster(m, groupID !== '' ? groupID : null)}
 								/>
 							);
 						}

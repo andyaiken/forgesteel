@@ -943,7 +943,7 @@ export class MonsterLogic {
 		let str = `${monster.stamina}`;
 
 		if (monster.state.staminaDamage > 0) {
-			str = `${monster.stamina - monster.state.staminaDamage} / ${monster.stamina}`;
+			str = `${Math.max(monster.stamina - monster.state.staminaDamage, 0)} / ${monster.stamina}`;
 		}
 		if (monster.state.staminaTemp > 0) {
 			str += ` +${monster.state.staminaTemp}`;

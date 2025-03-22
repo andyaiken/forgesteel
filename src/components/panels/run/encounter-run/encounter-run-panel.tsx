@@ -89,7 +89,7 @@ export const EncounterRunPanel = (props: Props) => {
 
 				let str = `${max}`;
 				if (slot.state.staminaDamage > 0) {
-					str = `${max - slot.state.staminaDamage} / ${max}`;
+					str = `${Math.max(max - slot.state.staminaDamage, 0)} / ${max}`;
 				}
 				if (slot.state.staminaTemp > 0) {
 					str += ` +${slot.state.staminaTemp}`;
@@ -113,7 +113,7 @@ export const EncounterRunPanel = (props: Props) => {
 						<Alert
 							type='warning'
 							showIcon={true}
-							message={`There should be ${minionsExpected} active minions, not ${minionsAlive}.`}
+							message={`There should be ${Math.max(minionsExpected, 0)} active minions, not ${minionsAlive}.`}
 						/>
 					);
 				}

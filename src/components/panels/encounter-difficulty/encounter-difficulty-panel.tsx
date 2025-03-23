@@ -37,10 +37,10 @@ export const EncounterDifficultyPanel = (props: Props) => {
 
 		const marks: Record<string | number, ReactNode> = {};
 		marks[0] = <div className='ds-text dimmed-text small-text'>Trivial</div>;
-		marks[budgets.maxTrivial] = <div className='ds-text dimmed-text small-text'>Easy</div>;
-		marks[budgets.maxEasy] = <div className='ds-text dimmed-text small-text'>Standard</div>;
-		marks[budgets.maxStandard] = <div className='ds-text dimmed-text small-text'>Hard</div>;
-		marks[budgets.maxHard] = <div className='ds-text dimmed-text small-text'>Extreme</div>;
+		marks[budgets.maxTrivial + 1] = <div className='ds-text dimmed-text small-text'>Easy</div>;
+		marks[budgets.maxEasy + 1] = <div className='ds-text dimmed-text small-text'>Standard</div>;
+		marks[budgets.maxStandard + 1] = <div className='ds-text dimmed-text small-text'>Hard</div>;
+		marks[budgets.maxHard + 1] = <div className='ds-text dimmed-text small-text'>Extreme</div>;
 
 		const warnings = [];
 		const levels = props.encounter.groups

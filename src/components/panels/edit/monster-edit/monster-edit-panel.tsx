@@ -558,9 +558,9 @@ export const MonsterEditPanel = (props: Props) => {
 						: null
 				}
 				<Button block={true} onClick={addFeature}>Add a new feature</Button>
-				{sortedSimilar.length > 0 ? <Divider /> : null}
+				{props.similarMonsters.length > 0 ? <Divider /> : null}
 				{
-					sortedSimilar.length > 0 ?
+					props.similarMonsters.length > 0 ?
 						<Expander title='Similar Monsters'>
 							<HeaderText>Features from Similar Monsters</HeaderText>
 							<Space direction='vertical' style={{ width: '100%' }}>

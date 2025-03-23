@@ -43,7 +43,7 @@ export const WelcomePage = (props: Props) => {
 							</div>
 							<Button type='primary' block={true} icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>Heroes</Button>
 						</div>
-						<HeaderText>For Directors</HeaderText>
+						<HeaderText>For Homebrewers</HeaderText>
 						<div className='welcome-row'>
 							<div>
 								In the <b>LIBRARY</b>, you can browse the collections of ancestries, classes, kits - all of the elements you need to build a hero - and other useful elements like monsters and terrain objects.
@@ -51,6 +51,7 @@ export const WelcomePage = (props: Props) => {
 							</div>
 							<Button block={true} icon={<BookOutlined />} onClick={() => navigation.goToLibraryList('ancestry')}>Library</Button>
 						</div>
+						<HeaderText>For Directors</HeaderText>
 						<div className='welcome-row'>
 							<div>
 								In your <b>PLAYBOOK</b>, you can build encounters, ensuring that they're perfectly balanced for your heroes, and craft negotiations and montage tests.

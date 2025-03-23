@@ -21,7 +21,7 @@ export const Modal = (props: Props) => {
 					{props.content}
 				</div>
 				<div className='modal-footer'>
-					<Button className='close-btn' icon={<CloseOutlined />} onClick={props.onClose}>Close</Button>
+					<Button className='close-btn' block={true} icon={<CloseOutlined />} onClick={props.onClose}>Close</Button>
 				</div>
 			</div>
 		);

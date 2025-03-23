@@ -17,6 +17,7 @@ export interface MonsterState {
 	conditions: Condition[];
 	reactionUsed: boolean;
 	defeated: boolean;
+	captainID: string | undefined;
 };
 
 export interface Monster extends Element {

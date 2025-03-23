@@ -3,9 +3,13 @@ import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { Condition } from '../../../models/condition';
 import { ConditionPanel } from '../condition/condition-panel';
 import { ConditionSelectModal } from '../../modals/condition-select/condition-select-modal';
+import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
+import { Encounter } from '../../../models/encounter';
 import { Field } from '../../controls/field/field';
+import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterState } from '../../../models/monster';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
+import { Token } from '../../controls/token/token';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
@@ -14,6 +18,7 @@ import './monster-state-panel.scss';
 interface Props {
 	state: MonsterState;
 	source: 'monster' | 'minion-group' | 'minion';
+	encounter?: Encounter;
 	updateState: (state: MonsterState) => void;
 }
 
@@ -38,6 +43,13 @@ export const MonsterStatePanel = (props: Props) => {
 	const setDefeated = (value: boolean) => {
 		const copy = Utils.copy(state);
 		copy.defeated = value;
+		setState(copy);
+		props.updateState(copy);
+	};
+
+	const setCaptainID = (value: string) => {
+		const copy = Utils.copy(state);
+		copy.captainID = value;
 		setState(copy);
 		props.updateState(copy);
 	};
@@ -84,6 +96,39 @@ export const MonsterStatePanel = (props: Props) => {
 					onChange={setDefeated}
 				/>
 				<Button onClick={() => setAddingCondition(true)}>Add a condition</Button>
+				{
+					(props.source === 'minion-group') && props.encounter ?
+						<DropdownButton
+							label='Captain'
+							items={
+								props.encounter.groups
+									.flatMap(g => g.slots)
+									.flatMap(s => s.monsters)
+									.filter(m => m.role.organization !== MonsterOrganizationType.Minion)
+									.filter(m => !m.state.defeated)
+									.map(m => ({
+										key: m.id,
+										label: (
+											<div
+												style={{
+													display: 'flex',
+													alignItems: 'center',
+													gap: '10px',
+													padding: '5px',
+													borderRadius: '5px',
+													background: (m.id === state.captainID ? 'rgb(64, 150, 255)' : undefined),
+													color: (m.id === state.captainID ? 'rgb(255, 255, 255)' : undefined)
+												}}>
+												<Token monster={m} />
+												{m.name}
+											</div>
+										)
+									}))
+							}
+							onClick={setCaptainID}
+						/>
+						: null
+				}
 			</Flex>
 			{
 				state.conditions.map(c => (

@@ -438,7 +438,8 @@ export class FactoryLogic {
 				staminaTemp: 0,
 				conditions: [],
 				reactionUsed: false,
-				defeated: false
+				defeated: false,
+				captainID: undefined
 			}
 		};
 	};
@@ -521,7 +522,8 @@ export class FactoryLogic {
 				staminaTemp: 0,
 				conditions: [],
 				reactionUsed: false,
-				defeated: false
+				defeated: false,
+				captainID: undefined
 			}
 		};
 	};

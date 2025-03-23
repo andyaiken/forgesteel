@@ -344,7 +344,8 @@ export class SourcebookLogic {
 						staminaTemp: 0,
 						conditions: [],
 						reactionUsed: false,
-						defeated: false
+						defeated: false,
+						captainID: undefined
 					};
 				}
 

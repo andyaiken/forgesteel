@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Drawer, Progress, Segmented, Space, Tabs } from 'antd';
+import { Alert, Button, Divider, Drawer, Progress, Segmented, Space, Tabs, Tag } from 'antd';
 import { Encounter, EncounterGroup, EncounterSlot } from '../../../../models/encounter';
 import { HeartFilled, InfoCircleOutlined } from '@ant-design/icons';
 import { Monster, MonsterState } from '../../../../models/monster';
@@ -59,12 +59,12 @@ export const EncounterRunPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const updateSlotState = (state: MonsterState) => {
+	const updateSlotState = (slot: EncounterSlot, state: MonsterState) => {
 		const copy = Utils.copy(encounter);
 		if (selectedSlot) {
 			copy.groups
 				.flatMap(g => g.slots)
-				.filter(s => s.id === selectedSlot.id)
+				.filter(s => s.id === slot.id)
 				.forEach(s => {
 					s.state = state;
 				});
@@ -98,7 +98,7 @@ export const EncounterRunPanel = (props: Props) => {
 				return str;
 			};
 
-			const getMinionMessage = () => {
+			const getMinionCountMessage = () => {
 				if (!isMinionSlot) {
 					return null;
 				}
@@ -121,6 +121,27 @@ export const EncounterRunPanel = (props: Props) => {
 				return null;
 			};
 
+			const getMinionCaptainTag = () => {
+				if (!isMinionSlot) {
+					return null;
+				}
+
+				if (slot.state.captainID) {
+					const captain = encounter.groups.flatMap(g => g.slots).flatMap(s => s.monsters).find(m => m.id === slot.state.captainID);
+					if (captain) {
+						return (
+							<Tag>
+								Captain: {captain.name}
+							</Tag>
+						);
+					}
+				}
+
+				return (
+					<Tag>No captain</Tag>
+				);
+			};
+
 			return (
 				<div key={slot.id} className='encounter-slot'>
 					{
@@ -134,14 +155,15 @@ export const EncounterRunPanel = (props: Props) => {
 									<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
 								</div>
 								<div className='conditions-column'>
-									{slot.state.conditions.map(ConditionLogic.getFullDescription).join(', ')}
+									{getMinionCaptainTag()}
+									{slot.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
 								</div>
 								<Button type='text' icon={<InfoCircleOutlined />} onClick={() => setSelectedSlot(slot)} />
 							</div>
 							: null
 					}
 					{
-						isMinionSlot ? getMinionMessage() : null
+						isMinionSlot ? getMinionCountMessage() : null
 					}
 					{
 						isMinionSlot ? <Divider /> : null
@@ -163,7 +185,7 @@ export const EncounterRunPanel = (props: Props) => {
 										</div>
 								}
 								<div className='conditions-column'>
-									{monster.state.conditions.map(ConditionLogic.getFullDescription).join(', ')}
+									{monster.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
 								</div>
 								<Button type='text' icon={<InfoCircleOutlined />} onClick={() => setSelectedMonster(monster)} />
 							</div>
@@ -421,6 +443,22 @@ export const EncounterRunPanel = (props: Props) => {
 											}
 										});
 									});
+
+									// Make sure no minion groups have a dead captain
+									const captainIDs = copy.groups
+										.flatMap(g => g.slots)
+										.flatMap(s => s.monsters)
+										.filter(m => m.role.organization !== MonsterOrganizationType.Minion)
+										.filter(m => !m.state.defeated)
+										.map(m => m.id);
+									copy.groups.forEach(g => {
+										g.slots.forEach(s => {
+											if (s.state.captainID && !captainIDs.includes(s.state.captainID)) {
+												s.state.captainID = undefined;
+											}
+										});
+									});
+
 									setEncounter(copy);
 								}}
 							/>
@@ -454,7 +492,8 @@ export const EncounterRunPanel = (props: Props) => {
 							<MonsterStateModal
 								state={selectedSlot.state}
 								source='minion-group'
-								updateState={updateSlotState}
+								encounter={encounter}
+								updateState={state => updateSlotState(selectedSlot, state)}
 								onClose={() => setSelectedSlot(null)}
 							/>
 							: null

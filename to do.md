@@ -29,7 +29,7 @@
 * Adventure Builder:
   * Allow subplots
 * Encounter Builder:
-  * Set squares for per-square terrain
+  * Set number of squares for per-square terrain
   * Use encounter templates
   * Auto-create encounters
 
@@ -37,9 +37,7 @@
 
 * Encounter tracker
   * Choose heroes
-  * Monster state:
-    * Set captain for minion groups
-    * Set 'used reaction' flag on monsters / minions
+  * Set 'used reaction' flag on monsters / minions
   * Show number of squares on terrain encounter row
   * Show 'should be N squares' for terrain
   * Ability to add new monsters / terrain / heroes

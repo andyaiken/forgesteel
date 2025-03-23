@@ -103,7 +103,7 @@ export const MonsterPanel = (props: Props) => {
 					}
 				</div>
 				{
-					features.length > 0 ?
+					signatureBonus || monster.withCaptain || (immunities.length > 0) || (weaknesses.length > 0) || (features.length > 0) ?
 						<div className='features'>
 							{
 								signatureBonus ?

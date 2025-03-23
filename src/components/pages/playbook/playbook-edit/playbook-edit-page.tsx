@@ -1484,7 +1484,11 @@ export const PlaybookEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Expander title='Filter'>
 					<HeaderText>Filter</HeaderText>
-					<MonsterFilterPanel monsterFilter={monsterFilter} onChange={setMonsterFilter} />
+					<MonsterFilterPanel
+						monsterFilter={monsterFilter}
+						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
+						onChange={setMonsterFilter}
+					/>
 				</Expander>
 				{
 					monsters.map(m => {

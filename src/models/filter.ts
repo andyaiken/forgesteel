@@ -4,6 +4,7 @@ import { TerrainRoleType } from '../enums/terrain-role-type';
 
 export interface MonsterFilter {
 	name: string;
+	keywords: string[];
 	roles: MonsterRoleType[];
 	organizations: MonsterOrganizationType[];
 	size: number[];

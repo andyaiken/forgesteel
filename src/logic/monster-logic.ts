@@ -775,7 +775,13 @@ export class MonsterLogic {
 		if (filter.name) {
 			const tokens = filter.name.toLowerCase().split(' ');
 			const monsterName = MonsterLogic.getMonsterName(monster);
-			if (!tokens.every(token => monsterName.toLowerCase().includes(token) || monster.keywords.some(k => k.toLowerCase().includes(token)))) {
+			if (!tokens.every(token => monsterName.toLowerCase().includes(token))) {
+				return false;
+			}
+		}
+
+		if (filter.keywords.length > 0) {
+			if (!filter.keywords.every(k => monster.keywords.includes(k))) {
 				return false;
 			}
 		}

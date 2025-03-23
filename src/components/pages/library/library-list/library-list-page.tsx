@@ -585,7 +585,11 @@ export const LibraryListPage = (props: Props) => {
 			<>
 				<Expander title='Filter'>
 					<HeaderText>Monster Filter</HeaderText>
-					<MonsterFilterPanel monsterFilter={monsterFilter} onChange={setMonsterFilter} />
+					<MonsterFilterPanel
+						monsterFilter={monsterFilter}
+						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
+						onChange={setMonsterFilter}
+					/>
 				</Expander>
 				<Expander title='Demographics'>
 					<HeaderText>By Level</HeaderText>

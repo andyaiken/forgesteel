@@ -2718,9 +2718,12 @@ export const LibraryEditPage = (props: Props) => {
 						</SelectablePanel>
 					);
 				} else {
+					const heroClass = element as HeroClass;
+					const subclass = heroClass.subclasses.find(sc => sc.id === subElementID) as SubClass;
+
 					return (
 						<SelectablePanel>
-							<SubclassPanel subclass={element as SubClass} mode={PanelMode.Full} />
+							<SubclassPanel subclass={subclass} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
 				}
@@ -2795,7 +2798,7 @@ export const LibraryEditPage = (props: Props) => {
 										label: 'Preview',
 										children: (
 											<SelectablePanel>
-												<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Full} />
+												<MonsterPanel key={JSON.stringify(monster)} monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Full} />
 											</SelectablePanel>
 										)
 									},
@@ -2810,7 +2813,7 @@ export const LibraryEditPage = (props: Props) => {
 					} else {
 						return (
 							<SelectablePanel>
-								<MonsterPanel monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Full} />
+								<MonsterPanel key={JSON.stringify(monster)} monster={monster} monsterGroup={monsterGroup} mode={PanelMode.Full} />
 							</SelectablePanel>
 						);
 					}

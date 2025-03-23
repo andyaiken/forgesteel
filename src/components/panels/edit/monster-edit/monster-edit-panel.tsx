@@ -85,7 +85,7 @@ export const MonsterEditPanel = (props: Props) => {
 	const getTypeSection = () => {
 		const setKeywords = (value: string) => {
 			const copy = Utils.copy(monster);
-			copy.keywords = value.split(' ');
+			copy.keywords = value.split(', ');
 			setMonster(copy);
 			props.onChange(copy);
 		};
@@ -186,7 +186,7 @@ export const MonsterEditPanel = (props: Props) => {
 				<Input
 					placeholder='Keywords'
 					allowClear={true}
-					value={monster.keywords.join(' ')}
+					value={monster.keywords.join(', ')}
 					onChange={e => setKeywords(e.target.value)}
 				/>
 				<HeaderText>Level</HeaderText>

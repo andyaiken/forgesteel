@@ -468,6 +468,7 @@ export class FactoryLogic {
 	static createMonsterFilter = (minLevel: number, maxLevel: number): MonsterFilter => {
 		return {
 			name: '',
+			keywords: [],
 			roles: [],
 			organizations: [],
 			level: [ minLevel, maxLevel ],

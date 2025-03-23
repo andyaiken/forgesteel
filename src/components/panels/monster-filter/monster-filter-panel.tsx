@@ -1,5 +1,7 @@
 import { Input, Select, Slider, Space } from 'antd';
+import { Collections } from '../../../utils/collections';
 import { Field } from '../../controls/field/field';
+import { Monster } from '../../../models/monster';
 import { MonsterFilter } from '../../../models/filter';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
@@ -9,6 +11,7 @@ import './monster-filter-panel.scss';
 
 interface Props {
 	monsterFilter: MonsterFilter;
+	monsters: Monster[];
 	onChange: (monsterFilter: MonsterFilter) => void;
 }
 
@@ -16,6 +19,12 @@ export const MonsterFilterPanel = (props: Props) => {
 	const setFilterName = (value: string) => {
 		const copy = Utils.copy(props.monsterFilter);
 		copy.name = value;
+		props.onChange(copy);
+	};
+
+	const setFilterKeywords = (value: string[]) => {
+		const copy = Utils.copy(props.monsterFilter);
+		copy.keywords = value;
 		props.onChange(copy);
 	};
 
@@ -49,14 +58,26 @@ export const MonsterFilterPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const keywords = Collections.distinct(props.monsters.flatMap(m => m.keywords), k => k).sort();
+
 	return (
 		<div className='monster-filter-panel'>
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Input
-					placeholder='Name, keywords'
+					placeholder='Name'
 					allowClear={true}
 					value={props.monsterFilter.name}
 					onChange={e => setFilterName(e.target.value)}
+				/>
+				<Select
+					style={{ width: '100%' }}
+					mode='multiple'
+					allowClear={true}
+					placeholder='Keywords'
+					options={keywords.map(k => ({ label: k, value: k }))}
+					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+					value={props.monsterFilter.keywords}
+					onChange={setFilterKeywords}
 				/>
 				<Select
 					style={{ width: '100%' }}

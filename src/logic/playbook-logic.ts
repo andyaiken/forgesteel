@@ -5,6 +5,7 @@ import { EncounterObjectiveData } from '../data/encounter-objective-data';
 import { MonsterLogic } from './monster-logic';
 import { Montage } from '../models/montage';
 import { Negotiation } from '../models/negotiation';
+import { Options } from '../models/options';
 import { Playbook } from '../models/playbook';
 import { Plot } from '../models/plot';
 import { Sourcebook } from '../models/sourcebook';
@@ -72,7 +73,7 @@ export class PlaybookLogic {
 		});
 	};
 
-	static startEncounter = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
+	static startEncounter = (encounter: Encounter, sourcebooks: Sourcebook[], options: Options) => {
 		const copy = Utils.copy(encounter);
 		copy.id = Utils.guid();
 
@@ -82,7 +83,7 @@ export class PlaybookLogic {
 				const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
 				if (monster && monsterGroup) {
 					const name = MonsterLogic.getMonsterName(monster, monsterGroup);
-					const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization);
+					const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, options);
 					for (let n = 1; n <= count; ++n) {
 						const monsterCopy = Utils.copy(monster);
 						monsterCopy.id = Utils.guid();

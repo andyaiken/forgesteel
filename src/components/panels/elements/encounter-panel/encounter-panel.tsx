@@ -61,7 +61,7 @@ export const EncounterPanel = (props: Props) => {
 									}
 
 									const name = MonsterLogic.getMonsterName(monster, monsterGroup);
-									const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization);
+									const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options);
 
 									return (
 										<div key={slot.id} className='encounter-slot'>

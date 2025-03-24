@@ -12,6 +12,7 @@ import { MonsterFeatureCategory } from '../enums/monster-feature-category';
 import { MonsterFilter } from '../models/filter';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
+import { Options } from '../models/options';
 import { Random } from '../utils/random';
 import { Utils } from '../utils/utils';
 
@@ -819,10 +820,10 @@ export class MonsterLogic {
 		return true;
 	};
 
-	static getRoleMultiplier = (organization: MonsterOrganizationType) => {
+	static getRoleMultiplier = (organization: MonsterOrganizationType, options: Options) => {
 		switch (organization) {
 			case MonsterOrganizationType.Minion:
-				return 8;
+				return options.minionCount;
 		}
 
 		return 1;

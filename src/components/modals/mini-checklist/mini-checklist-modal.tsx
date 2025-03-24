@@ -8,6 +8,7 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { Modal } from '../modal/modal';
 import { Monster } from '../../../models/monster';
 import { MonsterLogic } from '../../../logic/monster-logic';
+import { Options } from '../../../models/options';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
 
@@ -15,7 +16,8 @@ import './mini-checklist-modal.scss';
 
 interface Props {
 	encounter: Encounter;
-	sourcebooks: Sourcebook[]
+	sourcebooks: Sourcebook[];
+	options: Options
 	onClose: () => void;
 }
 
@@ -33,7 +35,7 @@ export const MiniChecklistModal = (props: Props) => {
 					if (monster) {
 						monsters.push({
 							monster: monster,
-							count: slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization)
+							count: slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options)
 						});
 					}
 				}

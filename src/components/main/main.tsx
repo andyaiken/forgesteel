@@ -838,7 +838,7 @@ export const Main = (props: Props) => {
 
 		switch (kind) {
 			case 'encounter': {
-				e = PlaybookLogic.startEncounter(element as Encounter, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]);
+				e = PlaybookLogic.startEncounter(element as Encounter, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], options);
 				sessionCopy.encounters.push(e as Encounter);
 				break;
 			}
@@ -996,6 +996,7 @@ export const Main = (props: Props) => {
 			<MiniChecklistModal
 				encounter={encounter}
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				options={options}
 				onClose={() => setDrawer(null)}
 			/>
 		);

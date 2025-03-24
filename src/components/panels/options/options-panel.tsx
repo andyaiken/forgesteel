@@ -86,6 +86,12 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
+	const setMinionCount = (value: number) => {
+		const copy = Utils.copy(props.options);
+		copy.minionCount = value;
+		props.setOptions(copy);
+	};
+
 	const setHeroCount = (value: number) => {
 		const copy = Utils.copy(props.options);
 		copy.heroCount = value;
@@ -166,7 +172,8 @@ export const OptionsPanel = (props: Props) => {
 			case 'encounter':
 				return (
 					<>
-						<div className='ds-text'>Calculate encounter difficulty for {getPartyDescription()}.</div>
+						<NumberSpin label='Minions per group' min={1} value={props.options.minionCount} onChange={setMinionCount} />
+						<div className='ds-text'>Calculating encounter difficulty based on a party of {getPartyDescription()}.</div>
 						<NumberSpin label='Number of heroes' min={1} value={props.options.heroCount} onChange={setHeroCount} />
 						<NumberSpin label='Hero level' min={1} max={10} value={props.options.heroLevel} onChange={setHeroLevel} />
 						<NumberSpin label='Number of victories' min={0} value={props.options.heroVictories} onChange={setHeroVictories} />

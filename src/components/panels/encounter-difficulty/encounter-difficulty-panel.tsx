@@ -29,7 +29,7 @@ export const EncounterDifficultyPanel = (props: Props) => {
 	};
 
 	try {
-		const count = EncounterLogic.getMonsterCount(props.encounter, props.sourcebooks);
+		const count = EncounterLogic.getMonsterCount(props.encounter, props.sourcebooks, props.options);
 		const budgets = EncounterLogic.getBudgets(props.options);
 		const strength = EncounterLogic.getStrength(props.encounter, props.sourcebooks);
 		const difficulty = EncounterLogic.getDifficulty(strength, props.options);

@@ -193,7 +193,7 @@ export const SessionPage = (props: Props) => {
 
 	const getStartContent = () => {
 		const startEncounter = (encounter: Encounter) => {
-			const copy = PlaybookLogic.startEncounter(encounter, props.sourcebooks);
+			const copy = PlaybookLogic.startEncounter(encounter, props.sourcebooks, props.options);
 
 			const sessionCopy = Utils.copy(session);
 			sessionCopy.encounters.push(copy);

@@ -16,6 +16,8 @@ export interface Options {
 	similarRole: boolean;
 	similarOrganization: boolean;
 	similarSize: boolean;
+	// Encounter
+	minionCount: number;
 	// Encounter Difficulty
 	heroCount: number;
 	heroLevel: number;

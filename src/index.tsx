@@ -111,6 +111,7 @@ Promise.all(promises).then(results => {
 			similarRole: true,
 			similarOrganization: true,
 			similarSize: true,
+			minionCount: 8,
 			heroCount: 4,
 			heroLevel: 1,
 			heroVictories: 0
@@ -147,6 +148,10 @@ Promise.all(promises).then(results => {
 
 	if (options.similarSize === undefined) {
 		options.similarSize = true;
+	}
+
+	if (options.minionCount === undefined) {
+		options.minionCount = 8;
 	}
 
 	if (options.heroCount === undefined) {

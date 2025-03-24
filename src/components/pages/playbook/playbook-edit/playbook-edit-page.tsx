@@ -395,7 +395,7 @@ export const PlaybookEditPage = (props: Props) => {
 						<div className='actions'>
 							<NumberSpin
 								value={slot.count}
-								format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization)).toString()}
+								format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options)).toString()}
 								onChange={value => setSlotCount(group.id, slot.id, value)}
 							/>
 							<Divider />

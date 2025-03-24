@@ -463,7 +463,7 @@ export class HeroLogic {
 	};
 
 	static getRenown = (hero: Hero) => {
-		let value = 0;
+		let value = hero.state.renown;
 
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Bonus)

@@ -2,6 +2,7 @@ import { Button, Popover } from 'antd';
 import { Monster, MonsterGroup } from '../../../models/monster';
 import { Modal } from '../modal/modal';
 import { MonsterPanel } from '../../panels/elements/monster-panel/monster-panel';
+import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { UploadOutlined } from '@ant-design/icons';
 
@@ -10,6 +11,7 @@ import './monster-modal.scss';
 interface Props {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
+	options: Options;
 	onClose: () => void;
 	export?: (format: 'image' | 'pdf' | 'json') => void;
 	updateMonster?: (monster: Monster) => void;
@@ -47,6 +49,7 @@ export const MonsterModal = (props: Props) => {
 						<MonsterPanel
 							monster={props.monster}
 							monsterGroup={props.monsterGroup}
+							options={props.options}
 							mode={PanelMode.Full}
 							updateMonster={props.updateMonster}
 						/>

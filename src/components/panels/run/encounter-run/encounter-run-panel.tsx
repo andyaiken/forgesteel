@@ -19,6 +19,7 @@ import { MonsterModal } from '../../../modals/monster/monster-modal';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterStateModal } from '../../../modals/monster-state/monster-state-modal';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
+import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
@@ -33,6 +34,7 @@ import './encounter-run-panel.scss';
 interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
+	options: Options;
 	onChange: (encounter: Encounter) => void;
 }
 
@@ -288,6 +290,7 @@ export const EncounterRunPanel = (props: Props) => {
 											<SelectablePanel key={m.id}>
 												<FeaturePanel
 													feature={m}
+													options={props.options}
 													mode={PanelMode.Full}
 													cost={cost}
 													repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
@@ -368,7 +371,7 @@ export const EncounterRunPanel = (props: Props) => {
 										const copy = Utils.copy(f);
 										copy.name = `${t.name}: ${f.name}`;
 										return (
-											<FeaturePanel key={copy.id} feature={copy} mode={PanelMode.Full} />
+											<FeaturePanel key={copy.id} feature={copy} options={props.options} mode={PanelMode.Full} />
 										);
 									})
 							}
@@ -432,6 +435,7 @@ export const EncounterRunPanel = (props: Props) => {
 						selectedMonster ?
 							<MonsterModal
 								monster={selectedMonster}
+								options={props.options}
 								onClose={() => setSelectedMonster(null)}
 								updateMonster={monster => {
 									const copy = Utils.copy(encounter);

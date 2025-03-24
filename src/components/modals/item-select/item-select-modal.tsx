@@ -6,6 +6,7 @@ import { Item } from '../../../models/item';
 import { ItemPanel } from '../../panels/elements/item-panel/item-panel';
 import { ItemType } from '../../../enums/item-type';
 import { Modal } from '../modal/modal';
+import { Options } from '../../../models/options';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
@@ -17,6 +18,7 @@ import './item-select-modal.scss';
 interface Props {
 	types: ItemType[];
 	sourcebooks: Sourcebook[];
+	options: Options;
 	hero: Hero;
 	selectOriginal?: boolean;
 	onClose: () => void;
@@ -68,7 +70,7 @@ export const ItemSelectModal = (props: Props) => {
 											}
 										}}
 									>
-										<ItemPanel item={item} hero={props.hero} />
+										<ItemPanel item={item} options={props.options} hero={props.hero} />
 									</SelectablePanel>
 								))
 							}

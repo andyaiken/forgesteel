@@ -8,6 +8,7 @@ import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterPanel } from '../../panels/elements/monster-panel/monster-panel';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
+import { Options } from '../../../models/options';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
@@ -19,6 +20,7 @@ import './monster-select-modal.scss';
 interface Props {
 	type: 'companion' | 'mount' | 'retainer';
 	sourcebooks: Sourcebook[];
+	options: Options
 	selectOriginal?: boolean;
 	onClose: () => void;
 	onSelect: (monster: Monster) => void;
@@ -80,7 +82,7 @@ export const MonsterSelectModal = (props: Props) => {
 											}
 										}}
 									>
-										<MonsterPanel monster={m} />
+										<MonsterPanel monster={m} options={props.options} />
 									</SelectablePanel>
 								))
 							}

@@ -29,6 +29,7 @@ import { HeroCustomizePanel } from '../../../panels/hero-customize/hero-customiz
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
+import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
@@ -59,6 +60,7 @@ const matchElement = (element: Element, searchTerm: string) => {
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
+	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -394,6 +396,7 @@ export const HeroEditPage = (props: Props) => {
 						<AncestrySection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							options={props.options}
 							searchTerm={searchTerm}
 							selectAncestry={setAncestry}
 							setFeatureData={setFeatureData}
@@ -404,6 +407,7 @@ export const HeroEditPage = (props: Props) => {
 						<CultureSection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							options={props.options}
 							searchTerm={searchTerm}
 							selectCulture={setCulture}
 							selectLanguages={setLanguages}
@@ -418,6 +422,7 @@ export const HeroEditPage = (props: Props) => {
 						<CareerSection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							options={props.options}
 							searchTerm={searchTerm}
 							selectCareer={setCareer}
 							selectIncitingIncident={setIncitingIncident}
@@ -429,6 +434,7 @@ export const HeroEditPage = (props: Props) => {
 						<ClassSection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							options={props.options}
 							searchTerm={searchTerm}
 							selectClass={setClass}
 							setLevel={setLevel}
@@ -442,6 +448,7 @@ export const HeroEditPage = (props: Props) => {
 						<ComplicationSection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							options={props.options}
 							searchTerm={searchTerm}
 							selectComplication={setComplication}
 							setFeatureData={setFeatureData}
@@ -453,6 +460,7 @@ export const HeroEditPage = (props: Props) => {
 							hero={hero}
 							allHeroes={props.heroes}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+							options={props.options}
 							allSourcebooks={props.sourcebooks}
 							setName={setName}
 							setFolder={setFolder}
@@ -549,6 +557,7 @@ export const HeroEditPage = (props: Props) => {
 interface AncestrySectionProps {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
+	options: Options;
 	searchTerm: string;
 	selectAncestry: (ancestry: Ancestry | null) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
@@ -559,7 +568,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks).filter(a => matchElement(a, props.searchTerm));
 		const options = ancestries.map(a => (
 			<SelectablePanel key={a.id} onSelect={() => props.selectAncestry(a)}>
-				<AncestryPanel ancestry={a} />
+				<AncestryPanel ancestry={a} options={props.options} />
 			</SelectablePanel>
 		));
 
@@ -569,7 +578,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+						<FeaturePanel feature={f} options={props.options} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 		}
@@ -580,7 +589,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 					props.hero.ancestry ?
 						<div className='hero-edit-content-column selected' id='ancestry-selected'>
 							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectAncestry(null) }}>
-								<AncestryPanel ancestry={props.hero.ancestry} mode={PanelMode.Full} />
+								<AncestryPanel ancestry={props.hero.ancestry} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
 						: null
@@ -618,6 +627,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 interface CultureSectionProps {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
+	options: Options;
 	searchTerm: string;
 	selectCulture: (culture: Culture | null) => void;
 	selectLanguages: (languages: string[]) => void;
@@ -632,7 +642,7 @@ const CultureSection = (props: CultureSectionProps) => {
 		const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks) ].filter(c => matchElement(c, props.searchTerm));
 		const options = cultures.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
-				<CulturePanel culture={c} />
+				<CulturePanel culture={c} options={props.options} />
 			</SelectablePanel>
 		));
 
@@ -642,7 +652,7 @@ const CultureSection = (props: CultureSectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+						<FeaturePanel feature={f} options={props.options} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 
@@ -711,7 +721,7 @@ const CultureSection = (props: CultureSectionProps) => {
 					props.hero.culture ?
 						<div className='hero-edit-content-column selected' id='culture-selected'>
 							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectCulture(null) }}>
-								<CulturePanel culture={props.hero.culture} mode={PanelMode.Full} />
+								<CulturePanel culture={props.hero.culture} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
 						: null
@@ -749,6 +759,7 @@ const CultureSection = (props: CultureSectionProps) => {
 interface CareerSectionProps {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
+	options: Options;
 	searchTerm: string;
 	selectCareer: (career: Career | null) => void;
 	selectIncitingIncident: (id: string | null) => void;
@@ -760,7 +771,7 @@ const CareerSection = (props: CareerSectionProps) => {
 		const careers = SourcebookLogic.getCareers(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
 		const options = careers.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectCareer(c)}>
-				<CareerPanel career={c} />
+				<CareerPanel career={c} options={props.options} />
 			</SelectablePanel>
 		));
 
@@ -770,7 +781,7 @@ const CareerSection = (props: CareerSectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+						<FeaturePanel feature={f} options={props.options} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 
@@ -799,7 +810,7 @@ const CareerSection = (props: CareerSectionProps) => {
 					props.hero.career ?
 						<div className='hero-edit-content-column selected' id='career-selected'>
 							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectCareer(null) }}>
-								<CareerPanel career={props.hero.career} mode={PanelMode.Full} />
+								<CareerPanel career={props.hero.career} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
 						: null
@@ -837,6 +848,7 @@ const CareerSection = (props: CareerSectionProps) => {
 interface ClassSectionProps {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
+	options: Options;
 	searchTerm: string;
 	selectClass: (heroClass: HeroClass | null) => void;
 	setLevel: (level: number) => void;
@@ -862,7 +874,7 @@ const ClassSection = (props: ClassSectionProps) => {
 		const classes = SourcebookLogic.getClasses(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
 		const options = classes.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectClass(c)}>
-				<ClassPanel heroClass={c} />
+				<ClassPanel heroClass={c} options={props.options} />
 			</SelectablePanel>
 		));
 
@@ -872,7 +884,7 @@ const ClassSection = (props: ClassSectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+						<FeaturePanel feature={f} options={props.options} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 
@@ -981,7 +993,7 @@ const ClassSection = (props: ClassSectionProps) => {
 					props.hero.class ?
 						<div className='hero-edit-content-column selected' id='class-selected'>
 							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectClass(null) }}>
-								<ClassPanel heroClass={props.hero.class} mode={PanelMode.Full} />
+								<ClassPanel heroClass={props.hero.class} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
 						: null
@@ -1019,6 +1031,7 @@ const ClassSection = (props: ClassSectionProps) => {
 interface ComplicationSectionProps {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
+	options: Options;
 	searchTerm: string;
 	selectComplication: (complication: Complication | null) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
@@ -1029,7 +1042,7 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 		const complications = SourcebookLogic.getComplications(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
 		const options = complications.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectComplication(c)}>
-				<ComplicationPanel complication={c} />
+				<ComplicationPanel complication={c} options={props.options} />
 			</SelectablePanel>
 		));
 
@@ -1039,7 +1052,7 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+						<FeaturePanel feature={f} options={props.options} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 		}
@@ -1050,7 +1063,7 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 					props.hero.complication ?
 						<div className='hero-edit-content-column selected' id='complication-selected'>
 							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectComplication(null) }}>
-								<ComplicationPanel complication={props.hero.complication} mode={PanelMode.Full} />
+								<ComplicationPanel complication={props.hero.complication} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
 						: null
@@ -1090,6 +1103,7 @@ interface DetailsSectionProps {
 	allHeroes: Hero[];
 	sourcebooks: Sourcebook[];
 	allSourcebooks: Sourcebook[];
+	options: Options;
 	setName: (value: string) => void;
 	setFolder: (value: string) => void;
 	setSettingIDs: (settingIDs: string[]) => void;
@@ -1142,6 +1156,7 @@ const DetailsSection = (props: DetailsSectionProps) => {
 							<FeaturePanel
 								key={f.id}
 								feature={f}
+								options={props.options}
 								hero={props.hero}
 								sourcebooks={props.sourcebooks}
 								mode={PanelMode.Full}
@@ -1155,6 +1170,7 @@ const DetailsSection = (props: DetailsSectionProps) => {
 					<HeroCustomizePanel
 						hero={props.hero}
 						sourcebooks={props.sourcebooks}
+						options={props.options}
 						addFeature={props.addFeature}
 						setFeature={props.setFeature}
 						setFeatureData={props.setFeatureData}

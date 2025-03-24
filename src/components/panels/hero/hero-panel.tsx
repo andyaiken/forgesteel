@@ -462,6 +462,7 @@ export const HeroPanel = (props: Props) => {
 							<FeaturePanel
 								key={feature.id}
 								feature={feature}
+								options={props.options}
 								hero={props.hero}
 								sourcebooks={props.sourcebooks}
 								mode={PanelMode.Full}

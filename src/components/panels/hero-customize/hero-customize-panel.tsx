@@ -13,6 +13,7 @@ import { FormatLogic } from '../../../logic/format-logic';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
+import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { PerkList } from '../../../enums/perk-list';
 import { SkillList } from '../../../enums/skill-list';
@@ -26,6 +27,7 @@ import './hero-customize-panel.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
+	options: Options;
 	addFeature: (feature: Feature) => void;
 	deleteFeature: (feature: Feature) => void;
 	setFeature: (featureID: string, feature: Feature) => void;
@@ -259,6 +261,7 @@ export const HeroCustomizePanel = (props: Props) => {
 								f.type !== FeatureType.Bonus ?
 									<FeaturePanel
 										feature={f}
+										options={props.options}
 										hero={props.hero}
 										sourcebooks={props.sourcebooks}
 										mode={PanelMode.Full}

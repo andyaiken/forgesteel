@@ -110,6 +110,7 @@ export const SessionPage = (props: Props) => {
 					<EncounterRunPanel
 						encounter={encounter}
 						sourcebooks={props.sourcebooks}
+						options={props.options}
 						onChange={encounter => {
 							const copy = Utils.copy(session);
 

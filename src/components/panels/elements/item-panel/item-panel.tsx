@@ -10,6 +10,7 @@ import { Item } from '../../../../models/item';
 import { ItemType } from '../../../../enums/item-type';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
+import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
@@ -18,6 +19,7 @@ import './item-panel.scss';
 
 interface Props {
 	item: Item;
+	options: Options;
 	hero?: Hero;
 	showCustomizations?: boolean;
 	mode?: PanelMode;
@@ -75,7 +77,7 @@ export const ItemPanel = (props: Props) => {
 						.map(f => f.feature)
 						.map(f => (
 							<div key={f.id} style={{ margin: '10px 0' }}>
-								<FeaturePanel feature={f} mode={PanelMode.Full} />
+								<FeaturePanel feature={f} options={props.options} mode={PanelMode.Full} />
 								{
 									props.onChange ?
 										<Button block={true} onClick={() => toggleCustomization(f.id)}>Unselect</Button>
@@ -93,7 +95,7 @@ export const ItemPanel = (props: Props) => {
 								item.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
 									<div key={lvl.level}>
 										<HeaderText>Level {lvl.level.toString()}</HeaderText>
-										{lvl.features.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
+										{lvl.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={PanelMode.Full} />)}
 									</div>
 								))
 							}
@@ -105,7 +107,7 @@ export const ItemPanel = (props: Props) => {
 						props.item.customizationsByLevel.map(lvl => (
 							<div key={lvl.level}>
 								<HeaderText level={1}>Customization: Level {lvl.level}</HeaderText>
-								{lvl.features.map(f => <FeaturePanel key={f.feature.id} feature={f.feature} mode={PanelMode.Full} />)}
+								{lvl.features.map(f => <FeaturePanel key={f.feature.id} feature={f.feature} options={props.options} mode={PanelMode.Full} />)}
 							</div>
 						))
 						: null
@@ -128,7 +130,7 @@ export const ItemPanel = (props: Props) => {
 										.flatMap(lvl => lvl.features)
 										.map(f => (
 											<div key={f.feature.id}>
-												<FeaturePanel feature={f.feature} mode={PanelMode.Full} />
+												<FeaturePanel feature={f.feature} options={props.options} mode={PanelMode.Full} />
 												{
 													f.selected ?
 														<Alert

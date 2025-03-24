@@ -5,6 +5,7 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { Markdown } from '../../../controls/markdown/markdown';
+import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
@@ -16,6 +17,7 @@ import './class-panel.scss';
 
 interface Props {
 	heroClass: HeroClass;
+	options: Options;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
@@ -37,7 +39,7 @@ export const ClassPanel = (props: Props) => {
 							<Space key={lvl.level} direction='vertical'>
 								<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
 								<div className='features'>
-									{...lvl.features.map(f => <SelectablePanel key={f.id}><FeaturePanel feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /></SelectablePanel>)}
+									{...lvl.features.map(f => <SelectablePanel key={f.id}><FeaturePanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /></SelectablePanel>)}
 								</div>
 							</Space>
 						))
@@ -58,7 +60,7 @@ export const ClassPanel = (props: Props) => {
 						<Space direction='vertical'>
 							<HeaderText level={1}>Subclasses</HeaderText>
 							<div className='subclasses'>
-								{...props.heroClass.subclasses.map(sc => <SelectablePanel key={sc.id} onSelect={props.onSelectSubclass ? () => props.onSelectSubclass!(sc) : undefined}><SubclassPanel subclass={sc} hero={props.hero} mode={PanelMode.Full} /></SelectablePanel>)}
+								{...props.heroClass.subclasses.map(sc => <SelectablePanel key={sc.id} onSelect={props.onSelectSubclass ? () => props.onSelectSubclass!(sc) : undefined}><SubclassPanel subclass={sc} options={props.options} hero={props.hero} mode={PanelMode.Full} /></SelectablePanel>)}
 							</div>
 						</Space>
 						: null

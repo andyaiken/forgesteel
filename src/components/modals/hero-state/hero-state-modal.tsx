@@ -20,6 +20,7 @@ import { ItemType } from '../../../enums/item-type';
 import { Modal } from '../modal/modal';
 import { MultiLine } from '../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
+import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Project } from '../../../models/project';
 import { ProjectPanel } from '../../panels/elements/project-panel/project-panel';
@@ -34,6 +35,7 @@ import './hero-state-modal.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
+	options: Options;
 	startPage: HeroStatePage;
 	onClose: () => void;
 	onChange: (hero: Hero) => void;
@@ -399,6 +401,7 @@ export const HeroStateModal = (props: Props) => {
 						>
 							<ItemPanel
 								item={item}
+								options={props.options}
 								hero={hero}
 								mode={PanelMode.Full}
 								onChange={changeItem}
@@ -416,6 +419,7 @@ export const HeroStateModal = (props: Props) => {
 					<ItemSelectModal
 						types={[ ItemType.Artifact, ItemType.Consumable, ItemType.ImbuedArmor, ItemType.ImbuedImplement, ItemType.ImbuedWeapon, ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Trinket ]}
 						sourcebooks={props.sourcebooks}
+						options={props.options}
 						hero={hero}
 						onSelect={addItem}
 						onClose={() => setShopVisible(false)}

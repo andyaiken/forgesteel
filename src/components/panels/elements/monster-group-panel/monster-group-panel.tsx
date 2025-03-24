@@ -5,6 +5,7 @@ import { FeatureType } from '../../../../enums/feature-type';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { MonsterPanel } from '../monster-panel/monster-panel';
+import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 
@@ -12,6 +13,7 @@ import './monster-group-panel.scss';
 
 interface Props {
 	monsterGroup: MonsterGroup;
+	options: Options;
 	mode?: PanelMode;
 	onSelectMonster?: (monster: Monster) => void;
 }
@@ -42,6 +44,7 @@ export const MonsterGroupPanel = (props: Props) => {
 									<SelectablePanel key={m.id}>
 										<FeaturePanel
 											feature={m}
+											options={props.options}
 											mode={PanelMode.Full}
 											cost={m.type === FeatureType.Ability ? m.data.ability.cost : m.data.cost}
 											repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
@@ -63,7 +66,7 @@ export const MonsterGroupPanel = (props: Props) => {
 							{
 								props.monsterGroup.monsters.map(m =>
 									<SelectablePanel key={m.id} onSelect={props.onSelectMonster ? () => props.onSelectMonster!(m) : undefined}>
-										<MonsterPanel monster={m} monsterGroup={props.monsterGroup} />
+										<MonsterPanel monster={m} monsterGroup={props.monsterGroup} options={props.options} />
 									</SelectablePanel>
 								)
 							}
@@ -75,7 +78,7 @@ export const MonsterGroupPanel = (props: Props) => {
 						<>
 							<HeaderText level={1}>Customization</HeaderText>
 							<div className='add-ons'>
-								{props.monsterGroup.addOns.map(a => <FeaturePanel key={a.id} feature={a} mode={PanelMode.Full} />)}
+								{props.monsterGroup.addOns.map(a => <FeaturePanel key={a.id} feature={a} options={props.options} mode={PanelMode.Full} />)}
 							</div>
 						</>
 						: null

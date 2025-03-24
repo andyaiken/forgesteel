@@ -143,6 +143,7 @@ export const EncounterPanel = (props: Props) => {
 										key={monster.id}
 										monster={monster}
 										monsterGroup={monsterGroup}
+										options={props.options}
 										mode={PanelMode.Full}
 									/>
 								);
@@ -194,6 +195,7 @@ export const EncounterPanel = (props: Props) => {
 										<SelectablePanel key={m.id}>
 											<FeaturePanel
 												feature={m}
+												options={props.options}
 												mode={PanelMode.Full}
 												cost={m.type === FeatureType.Ability ? m.data.ability.cost : m.data.cost}
 												repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}

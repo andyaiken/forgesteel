@@ -15,6 +15,7 @@ import { MonsterLabel } from '../../monster-label/monster-label';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterStatePanel } from '../../monster-state/monster-state-panel';
+import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Token } from '../../../controls/token/token';
@@ -26,6 +27,7 @@ import './monster-panel.scss';
 interface Props {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
+	options: Options
 	mode?: PanelMode;
 	canRoll?: boolean;
 	updateMonster?: (monster: Monster) => void;
@@ -54,7 +56,7 @@ export const MonsterPanel = (props: Props) => {
 					<MonsterLabel monster={monster} />
 					<Flex align='center' justify='space-between'>
 						<div>{monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
-						<Field label='EV' value={(monster.role.organization === MonsterOrganizationType.Minion) ? `${monster.encounterValue} for 8 minions` : ((monster.encounterValue === 0) ? '-': monster.encounterValue)} />
+						<Field label='EV' value={(monster.role.organization === MonsterOrganizationType.Minion) ? `${monster.encounterValue} for ${props.options.minionCount} minions` : ((monster.encounterValue === 0) ? '-': monster.encounterValue)} />
 					</Flex>
 				</div>
 			);
@@ -78,7 +80,7 @@ export const MonsterPanel = (props: Props) => {
 				<Markdown text={monster.description} />
 				<Flex align='center' justify='space-between'>
 					<div>{monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
-					<Field label='EV' value={(monster.role.organization === MonsterOrganizationType.Minion) ? `${monster.encounterValue} for 8 minions` : ((monster.encounterValue === 0) ? '-': monster.encounterValue)} />
+					<Field label='EV' value={(monster.role.organization === MonsterOrganizationType.Minion) ? `${monster.encounterValue} ${props.options.minionCount} minions` : ((monster.encounterValue === 0) ? '-': monster.encounterValue)} />
 				</Flex>
 				{
 					props.updateMonster ?
@@ -143,7 +145,7 @@ export const MonsterPanel = (props: Props) => {
 								monster.retainer.level4 && (monster.retainer.level < 4) ?
 									<>
 										<HeaderText level={1}>Level 4</HeaderText>
-										<FeaturePanel key={monster.retainer.level4.id} feature={monster.retainer.level4} mode={PanelMode.Full} />
+										<FeaturePanel key={monster.retainer.level4.id} feature={monster.retainer.level4}options={props.options} mode={PanelMode.Full} />
 									</>
 									: null
 							}
@@ -151,7 +153,7 @@ export const MonsterPanel = (props: Props) => {
 								monster.retainer.level7 && (monster.retainer.level < 7) ?
 									<>
 										<HeaderText level={1}>Level 7</HeaderText>
-										<FeaturePanel key={monster.retainer.level7.id} feature={monster.retainer.level7} mode={PanelMode.Full} />
+										<FeaturePanel key={monster.retainer.level7.id} feature={monster.retainer.level7}options={props.options} mode={PanelMode.Full} />
 									</>
 									: null
 							}
@@ -159,7 +161,7 @@ export const MonsterPanel = (props: Props) => {
 								monster.retainer.level10 && (monster.retainer.level < 10) ?
 									<>
 										<HeaderText level={1}>Level 10</HeaderText>
-										<FeaturePanel key={monster.retainer.level10.id} feature={monster.retainer.level10} mode={PanelMode.Full} />
+										<FeaturePanel key={monster.retainer.level10.id} feature={monster.retainer.level10}options={props.options} mode={PanelMode.Full} />
 									</>
 									: null
 							}

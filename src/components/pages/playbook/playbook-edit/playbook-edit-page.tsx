@@ -374,7 +374,7 @@ export const PlaybookEditPage = (props: Props) => {
 				return (
 					<div key={slot.id} className='slot-row'>
 						<div className='content'>
-							<MonsterPanel monster={monster} monsterGroup={monsterGroup} />
+							<MonsterPanel monster={monster} monsterGroup={monsterGroup} options={props.options} />
 							{
 								monsterGroup.addOns.length > 0 ?
 									<Expander title='Customize'>
@@ -384,7 +384,7 @@ export const PlaybookEditPage = (props: Props) => {
 											placeholder='Select'
 											mode='multiple'
 											options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
-											optionRender={option => <FeaturePanel feature={option.data.feature} cost={option.data.cost} mode={PanelMode.Full} />}
+											optionRender={option => <FeaturePanel feature={option.data.feature} options={props.options} cost={option.data.cost} mode={PanelMode.Full} />}
 											value={slot.customization.addOnIDs}
 											onChange={ids => setSlotAddOnIDs(group.id, slot.id, ids)}
 										/>
@@ -1519,7 +1519,7 @@ export const PlaybookEditPage = (props: Props) => {
 
 						return (
 							<div key={m.id} className='monster-row'>
-								<MonsterPanel monster={m} monsterGroup={monsterGroup} />
+								<MonsterPanel monster={m} monsterGroup={monsterGroup} options={props.options} />
 								<div className='actions'>
 									<Button block={true} onClick={() => props.showMonster(m, monsterGroup)}>Details</Button>
 									{addBtn}

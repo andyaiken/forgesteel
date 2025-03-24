@@ -23,6 +23,7 @@ import { MonsterRoleType } from '../../../../enums/monster-role-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
+import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Utils } from '../../../../utils/utils';
@@ -34,6 +35,7 @@ interface Props {
 	monster: Monster;
 	monsterGroup: MonsterGroup;
 	sourcebooks: Sourcebook[];
+	options: Options;
 	similarMonsters: Monster[];
 	onChange: (monster: Monster) => void;
 }
@@ -587,7 +589,7 @@ export const MonsterEditPanel = (props: Props) => {
 												<Button key='up' type='text' title='Import' icon={<ImportOutlined />} onClick={e => { e.stopPropagation(); importFeature(s.feature); }} />
 											]}
 										>
-											<FeaturePanel feature={s.feature} mode={PanelMode.Full} />
+											<FeaturePanel feature={s.feature} options={props.options} mode={PanelMode.Full} />
 										</Expander>
 									))
 								}

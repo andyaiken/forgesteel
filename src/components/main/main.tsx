@@ -899,6 +899,7 @@ export const Main = (props: Props) => {
 			<ElementModal
 				kind={kind}
 				element={element}
+				options={options}
 				onClose={() => setDrawer(null)}
 				export={format => exportLibraryElement(kind, element, format)}
 			/>
@@ -910,6 +911,7 @@ export const Main = (props: Props) => {
 			<MonsterModal
 				monster={monster}
 				monsterGroup={monsterGroup}
+				options={options}
 				onClose={() => setDrawer(null)}
 				export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
 			/>
@@ -953,6 +955,7 @@ export const Main = (props: Props) => {
 			<HeroStateModal
 				hero={hero}
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				options={options}
 				startPage={page}
 				onClose={() => setDrawer(null)}
 				onChange={persistHero}
@@ -1084,6 +1087,7 @@ export const Main = (props: Props) => {
 							<HeroEditPage
 								heroes={heroes}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								options={options}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
@@ -1124,6 +1128,7 @@ export const Main = (props: Props) => {
 							<LibraryViewPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 								playbook={playbook}
+								options={options}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}

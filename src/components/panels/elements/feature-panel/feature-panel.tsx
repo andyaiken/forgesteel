@@ -25,6 +25,7 @@ import { Monster } from '../../../../models/monster';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { MonsterSelectModal } from '../../../modals/monster-select/monster-select-modal';
 import { NameGenerator } from '../../../../utils/name-generator';
+import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../perk-panel/perk-panel';
@@ -40,6 +41,7 @@ import './feature-panel.scss';
 
 interface Props {
 	feature: Feature | Perk;
+	options: Options;
 	cost?: number | 'signature';
 	repeatable?: boolean;
 	hero?: Hero;
@@ -83,7 +85,7 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected ?
-						<AncestryPanel ancestry={data.selected} />
+						<AncestryPanel ancestry={data.selected} options={props.options} />
 						: null
 				}
 			</Space>
@@ -142,7 +144,7 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected ?
-						<FeaturePanel feature={data.selected} />
+						<FeaturePanel feature={data.selected} options={props.options} />
 						: null
 				}
 			</Space>
@@ -240,7 +242,7 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected.map(f => (
-						<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+						<FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 					))
 				}
 			</Space>
@@ -335,6 +337,7 @@ export const FeaturePanel = (props: Props) => {
 								<FeaturePanel
 									key={lvl.level}
 									feature={lvl.feature}
+									options={props.options}
 									hero={props.hero}
 									sourcebooks={props.sourcebooks}
 									mode={props.mode}
@@ -371,13 +374,14 @@ export const FeaturePanel = (props: Props) => {
 				}
 				{
 					data.selected ?
-						<MonsterPanel monster={data.selected} />
+						<MonsterPanel monster={data.selected} options={props.options} />
 						: null
 				}
 				<Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} closeIcon={null} width='500px'>
 					<MonsterSelectModal
 						type={data.type}
 						sourcebooks={props.sourcebooks || []}
+						options={props.options}
 						onSelect={monster => {
 							setDrawerOpen(false);
 
@@ -509,7 +513,7 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected.map(f => (
-						<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+						<FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 					))
 				}
 			</Space>
@@ -565,7 +569,7 @@ export const FeaturePanel = (props: Props) => {
 						}
 					}}
 				/>
-				{data.selected.map(i => (<ItemPanel key={i.id} item={i} />))}
+				{data.selected.map(i => (<ItemPanel key={i.id} item={i} options={props.options} />))}
 			</Space>
 		);
 	};
@@ -623,7 +627,7 @@ export const FeaturePanel = (props: Props) => {
 				{
 					data.selected.map(k => {
 						return (
-							<KitPanel key={k.id} kit={k} mode={PanelMode.Full} />
+							<KitPanel key={k.id} kit={k} options={props.options} mode={PanelMode.Full} />
 						);
 					})
 				}
@@ -758,7 +762,7 @@ export const FeaturePanel = (props: Props) => {
 					}}
 				/>
 				{
-					data.selected.map(p => <PerkPanel key={p.id} perk={p} mode={PanelMode.Full} />)
+					data.selected.map(p => <PerkPanel key={p.id} perk={p} options={props.options} mode={PanelMode.Full} />)
 				}
 			</Space>
 		);
@@ -913,7 +917,7 @@ export const FeaturePanel = (props: Props) => {
 						const f = title.features.find(ft => ft.id === title.selectedFeatureID);
 						if (f) {
 							return (
-								<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+								<FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 							);
 						}
 
@@ -973,7 +977,7 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		return (
-			<AncestryPanel ancestry={data.selected} />
+			<AncestryPanel ancestry={data.selected} options={props.options} />
 		);
 	};
 
@@ -1003,7 +1007,7 @@ export const FeaturePanel = (props: Props) => {
 		if (data.selected.length > 0) {
 			return (
 				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
-					{data.selected.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
+					{data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={PanelMode.Full} />)}
 				</Space>
 			);
 		}
@@ -1024,7 +1028,7 @@ export const FeaturePanel = (props: Props) => {
 					}
 				</div>
 				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
-					{data.options.map(o => <FeaturePanel key={o.feature.id} feature={o.feature} cost={showCosts ? o.value : undefined} mode={PanelMode.Full} />)}
+					{data.options.map(o => <FeaturePanel key={o.feature.id} feature={o.feature} options={props.options} cost={showCosts ? o.value : undefined} mode={PanelMode.Full} />)}
 				</Space>
 			</div>
 		);
@@ -1067,7 +1071,7 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
-		return <MonsterPanel monster={data.selected} />;
+		return <MonsterPanel monster={data.selected} options={props.options} />;
 	};
 
 	const getInformationDamageModifier = (data: FeatureDamageModifierData) => {
@@ -1087,7 +1091,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(d => <DomainPanel key={d.id} domain={d} mode={PanelMode.Full} />)
+						data.selected.map(d => <DomainPanel key={d.id} domain={d} options={props.options} mode={PanelMode.Full} />)
 					}
 				</Space>
 			);
@@ -1111,7 +1115,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)
+						data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={PanelMode.Full} />)
 					}
 				</Space>
 			);
@@ -1125,7 +1129,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(i => <ItemPanel key={i.id} item={i} mode={PanelMode.Full} />)
+						data.selected.map(i => <ItemPanel key={i.id} item={i} options={props.options} mode={PanelMode.Full} />)
 					}
 				</Space>
 			);
@@ -1155,7 +1159,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(k => <KitPanel key={k.id} kit={k} mode={PanelMode.Full} />)
+						data.selected.map(k => <KitPanel key={k.id} kit={k} options={props.options} mode={PanelMode.Full} />)
 					}
 				</Space>
 			);
@@ -1228,7 +1232,7 @@ export const FeaturePanel = (props: Props) => {
 		return (
 			<div>
 				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
-					{data.features.map(f => <FeaturePanel key={f.id} feature={f} mode={PanelMode.Full} />)}
+					{data.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={PanelMode.Full} />)}
 				</Space>
 			</div>
 		);
@@ -1258,7 +1262,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(p => <PerkPanel key={p.id} perk={p} mode={PanelMode.Full} />)
+						data.selected.map(p => <PerkPanel key={p.id} perk={p} options={props.options} mode={PanelMode.Full} />)
 					}
 				</Space>
 			);
@@ -1328,7 +1332,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(t => <TitlePanel key={t.id} title={t} mode={PanelMode.Full} />)
+						data.selected.map(t => <TitlePanel key={t.id} title={t} options={props.options} mode={PanelMode.Full} />)
 					}
 				</Space>
 			);
@@ -1421,7 +1425,7 @@ export const FeaturePanel = (props: Props) => {
 		if (props.feature.type === FeatureType.AncestryFeatureChoice) {
 			if (props.feature.data.selected) {
 				return (
-					<FeaturePanel feature={props.feature.data.selected} />
+					<FeaturePanel feature={props.feature.data.selected} options={props.options} />
 				);
 			}
 		}

@@ -91,6 +91,7 @@ export const AdventurePanel = (props: Props) => {
 						<SelectablePanel onSelect={() => navigation.goToLibraryView('item', item.id)}>
 							<ItemPanel
 								item={item}
+								options={props.options}
 							/>
 						</SelectablePanel>
 					);
@@ -106,6 +107,7 @@ export const AdventurePanel = (props: Props) => {
 							<MonsterPanel
 								monster={monster}
 								monsterGroup={monsterGroup}
+								options={props.options}
 							/>
 						</SelectablePanel>
 					);

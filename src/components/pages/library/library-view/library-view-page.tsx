@@ -24,6 +24,7 @@ import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
+import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
@@ -45,6 +46,7 @@ import './library-view-page.scss';
 interface Props {
 	sourcebooks: Sourcebook[];
 	playbook: Playbook;
+	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -67,6 +69,7 @@ export const LibraryViewPage = (props: Props) => {
 			panel = (
 				<AncestryPanel
 					ancestry={element as Ancestry}
+					options={props.options}
 					mode={PanelMode.Full}
 				/>
 			);
@@ -77,6 +80,7 @@ export const LibraryViewPage = (props: Props) => {
 			panel = (
 				<CareerPanel
 					career={element as Career}
+					options={props.options}
 					mode={PanelMode.Full}
 				/>
 			);
@@ -89,6 +93,7 @@ export const LibraryViewPage = (props: Props) => {
 				panel = (
 					<SubclassPanel
 						subclass={element as SubClass}
+						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -96,6 +101,7 @@ export const LibraryViewPage = (props: Props) => {
 				panel = (
 					<ClassPanel
 						heroClass={element as HeroClass}
+						options={props.options}
 						mode={PanelMode.Full}
 						onSelectSubclass={sc => navigation.goToLibraryView(kind, element!.id, sc.id)}
 					/>
@@ -108,6 +114,7 @@ export const LibraryViewPage = (props: Props) => {
 			panel = (
 				<ComplicationPanel
 					complication={element as Complication}
+					options={props.options}
 					mode={PanelMode.Full}
 				/>
 			);
@@ -118,6 +125,7 @@ export const LibraryViewPage = (props: Props) => {
 			panel = (
 				<CulturePanel
 					culture={element as Culture}
+					options={props.options}
 					mode={PanelMode.Full}
 				/>
 			);
@@ -128,6 +136,7 @@ export const LibraryViewPage = (props: Props) => {
 			panel = (
 				<DomainPanel
 					domain={element as Domain}
+					options={props.options}
 					mode={PanelMode.Full}
 				/>
 			);
@@ -138,6 +147,7 @@ export const LibraryViewPage = (props: Props) => {
 			panel = (
 				<ItemPanel
 					item={element as Item}
+					options={props.options}
 					showCustomizations={true}
 					mode={PanelMode.Full}
 				/>
@@ -149,6 +159,7 @@ export const LibraryViewPage = (props: Props) => {
 			panel = (
 				<KitPanel
 					kit={element as Kit}
+					options={props.options}
 					mode={PanelMode.Full}
 				/>
 			);
@@ -162,6 +173,7 @@ export const LibraryViewPage = (props: Props) => {
 					<MonsterPanel
 						monster={element as Monster}
 						monsterGroup={element as MonsterGroup}
+						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -169,6 +181,7 @@ export const LibraryViewPage = (props: Props) => {
 				panel = (
 					<MonsterGroupPanel
 						monsterGroup={element as MonsterGroup}
+						options={props.options}
 						mode={PanelMode.Full}
 						onSelectMonster={m => navigation.goToLibraryView(kind, element!.id, m.id)}
 					/>
@@ -181,6 +194,7 @@ export const LibraryViewPage = (props: Props) => {
 			panel = (
 				<PerkPanel
 					perk={element as Perk}
+					options={props.options}
 					mode={PanelMode.Full}
 				/>
 			);
@@ -202,6 +216,7 @@ export const LibraryViewPage = (props: Props) => {
 			panel = (
 				<TitlePanel
 					title={element as Title}
+					options={props.options}
 					mode={PanelMode.Full}
 				/>
 			);

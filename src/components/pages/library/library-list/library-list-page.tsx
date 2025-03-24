@@ -227,7 +227,7 @@ export const LibraryListPage = (props: Props) => {
 					list.map(a => {
 						const item = (
 							<SelectablePanel key={a.id} onSelect={() => navigation.goToLibraryView('ancestry', a.id)}>
-								<AncestryPanel ancestry={a} />
+								<AncestryPanel ancestry={a} options={props.options} />
 							</SelectablePanel>
 						);
 
@@ -260,7 +260,7 @@ export const LibraryListPage = (props: Props) => {
 					list.map(c => {
 						const item = (
 							<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('culture', c.id)}>
-								<CulturePanel culture={c} />
+								<CulturePanel culture={c} options={props.options} />
 							</SelectablePanel>
 						);
 
@@ -293,7 +293,7 @@ export const LibraryListPage = (props: Props) => {
 					list.map(c => {
 						const item = (
 							<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('career', c.id)}>
-								<CareerPanel career={c} />
+								<CareerPanel career={c} options={props.options} />
 							</SelectablePanel>
 						);
 
@@ -327,7 +327,7 @@ export const LibraryListPage = (props: Props) => {
 
 						const item = (
 							<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('class', c.id)}>
-								<ClassPanel heroClass={c} />
+								<ClassPanel heroClass={c} options={props.options} />
 							</SelectablePanel>
 						);
 
@@ -360,7 +360,7 @@ export const LibraryListPage = (props: Props) => {
 					list.map(c => {
 						const item = (
 							<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('complication', c.id)}>
-								<ComplicationPanel complication={c} />
+								<ComplicationPanel complication={c} options={props.options} />
 							</SelectablePanel>
 						);
 
@@ -393,7 +393,7 @@ export const LibraryListPage = (props: Props) => {
 					list.map(d => {
 						const item = (
 							<SelectablePanel key={d.id} onSelect={() => navigation.goToLibraryView('domain', d.id)}>
-								<DomainPanel domain={d} />
+								<DomainPanel domain={d} options={props.options} />
 							</SelectablePanel>
 						);
 
@@ -426,7 +426,7 @@ export const LibraryListPage = (props: Props) => {
 					list.map(k => {
 						const item = (
 							<SelectablePanel key={k.id} onSelect={() => navigation.goToLibraryView('kit', k.id)}>
-								<KitPanel kit={k} />
+								<KitPanel kit={k} options={props.options} />
 							</SelectablePanel>
 						);
 
@@ -459,7 +459,7 @@ export const LibraryListPage = (props: Props) => {
 					list.map(p => {
 						const item = (
 							<SelectablePanel key={p.id} onSelect={() => navigation.goToLibraryView('perk', p.id)}>
-								<PerkPanel perk={p} />
+								<PerkPanel perk={p} options={props.options} />
 							</SelectablePanel>
 						);
 
@@ -492,7 +492,7 @@ export const LibraryListPage = (props: Props) => {
 					list.map(t => {
 						const item = (
 							<SelectablePanel key={t.id} onSelect={() => navigation.goToLibraryView('title', t.id)}>
-								<TitlePanel title={t} />
+								<TitlePanel title={t} options={props.options} />
 							</SelectablePanel>
 						);
 
@@ -525,7 +525,7 @@ export const LibraryListPage = (props: Props) => {
 					list.map(i => {
 						const item = (
 							<SelectablePanel key={i.id} onSelect={() => navigation.goToLibraryView('item', i.id)}>
-								<ItemPanel item={i} />
+								<ItemPanel item={i} options={props.options} />
 							</SelectablePanel>
 						);
 
@@ -559,7 +559,7 @@ export const LibraryListPage = (props: Props) => {
 						list.map(mg => {
 							const item = (
 								<SelectablePanel key={mg.id} onSelect={() => navigation.goToLibraryView('monster-group', mg.id)}>
-									<MonsterGroupPanel monsterGroup={mg} />
+									<MonsterGroupPanel monsterGroup={mg} options={props.options} />
 								</SelectablePanel>
 							);
 
@@ -623,7 +623,7 @@ export const LibraryListPage = (props: Props) => {
 
 							const item = (
 								<SelectablePanel key={m.id} onSelect={() => navigation.goToLibraryView('monster-group', mg.id, m.id)}>
-									<MonsterPanel monster={m} monsterGroup={mg} />
+									<MonsterPanel monster={m} monsterGroup={mg} options={props.options} />
 								</SelectablePanel>
 							);
 

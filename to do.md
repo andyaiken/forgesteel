@@ -36,11 +36,11 @@
 ### Session
 
 * Encounter tracker
-  * Choose heroes
   * Set 'used reaction' flag on monsters / minions
   * Show number of squares on terrain encounter row
   * Show 'should be N squares' for terrain
-  * Ability to add new monsters / terrain / heroes
+  * Ability to add heroes / new terrain objects
+  * Ability to duplicate / delete monsters in a slot
   * On end turn, handle EoT conditions
   * Handle 'save ends' conditions
 * Player view

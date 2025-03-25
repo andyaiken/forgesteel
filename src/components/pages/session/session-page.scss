@@ -10,18 +10,15 @@
 		flex-direction: row;
 		overflow: hidden;
 
-		.left-column,
-		.right-column {
+		.left-column {
+			flex: 1 1 0;
 			padding: 0 20px 20px 20px;
 			overflow-y: auto;
 		}
 
-		.left-column {
-			flex: 1 1 0;
-		}
-
 		.right-column {
 			flex: 2 2 0;
+			overflow-y: auto;
 		}
 	}
 }

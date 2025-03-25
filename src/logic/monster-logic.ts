@@ -1,5 +1,5 @@
 import { Feature, FeatureDamageModifierData } from '../models/feature';
-import { Monster, MonsterGroup } from '../models/monster';
+import { Monster, MonsterGroup, MonsterState } from '../models/monster';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
@@ -957,6 +957,15 @@ export class MonsterLogic {
 		}
 
 		return str;
+	};
+
+	static resetState = (state: MonsterState) => {
+		state.staminaDamage = 0;
+		state.staminaTemp = 0;
+		state.conditions = [];
+		state.reactionUsed = false;
+		state.defeated = false;
+		state.captainID = undefined;
 	};
 
 	///////////////////////////////////////////////////////////////////////////

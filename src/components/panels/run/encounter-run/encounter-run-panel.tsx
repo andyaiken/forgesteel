@@ -1,14 +1,16 @@
-import { Alert, Button, Divider, Drawer, Progress, Segmented, Space, Tabs, Tag } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, Popover, Progress, Segmented, Space, Tabs, Tag } from 'antd';
+import { EllipsisOutlined, HeartFilled, InfoCircleOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterSlot } from '../../../../models/encounter';
-import { HeartFilled, InfoCircleOutlined } from '@ant-design/icons';
 import { Monster, MonsterState } from '../../../../models/monster';
 import { AbilityPanel } from '../../elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { Collections } from '../../../../utils/collections';
 import { ConditionLogic } from '../../../../logic/condition-logic';
+import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterObjectivePanel } from '../../elements/encounter-objective/encounter-objective-panel';
+import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
@@ -17,12 +19,14 @@ import { Markdown } from '../../../controls/markdown/markdown';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterModal } from '../../../modals/monster/monster-modal';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
+import { MonsterSelectModal } from '../../../modals/monster-select/monster-select-modal';
 import { MonsterStateModal } from '../../../modals/monster-state/monster-state-modal';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Terrain } from '../../../../models/terrain';
 import { TerrainModal } from '../../../modals/terrain/terrain-modal';
 import { Token } from '../../../controls/token/token';
@@ -40,6 +44,7 @@ interface Props {
 
 export const EncounterRunPanel = (props: Props) => {
 	const [ encounter, setEncounter ] = useState<Encounter>(Utils.copy(props.encounter));
+	const [ addingMonsters, setAddingMonsters ] = useState<boolean>(false);
 	const [ selectedMonster, setSelectedMonster ] = useState<Monster | null>(null);
 	const [ selectedTerrain, setSelectedTerrain ] = useState<Terrain | null>(null);
 	const [ selectedSlot, setSelectedSlot ] = useState<EncounterSlot | null>(null);
@@ -61,6 +66,29 @@ export const EncounterRunPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const addSlot = (monster: Monster) => {
+		const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, monster.id);
+		if (monsterGroup) {
+			const slot = FactoryLogic.createEncounterSlot(monster.id, monsterGroup.id);
+			slot.count = 1;
+
+			while (slot.monsters.length < slot.count) {
+				const monsterCopy = Utils.copy(monster);
+				monsterCopy.id = Utils.guid();
+				slot.monsters.push(monsterCopy);
+			}
+
+			const group = FactoryLogic.createEncounterGroup();
+			group.slots.push(slot);
+
+			const copy = Utils.copy(encounter);
+			copy.groups.push(group);
+
+			setEncounter(copy);
+			props.onChange(copy);
+		}
+	};
+
 	const updateSlotState = (slot: EncounterSlot, state: MonsterState) => {
 		const copy = Utils.copy(encounter);
 		if (selectedSlot) {
@@ -75,7 +103,7 @@ export const EncounterRunPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const getEncounterGroups = () => {
+	const getMonsterGroups = () => {
 		const groups = encounter.groups.filter(g => g.slots.length > 0);
 		if (groups.length === 0) {
 			return (
@@ -198,32 +226,79 @@ export const EncounterRunPanel = (props: Props) => {
 		};
 
 		const getGroup = (group: EncounterGroup, index: number) => {
+			const duplicateGroup = () => {
+				const copy = Utils.copy(encounter);
+				const index = copy.groups.findIndex(g => g.id === group.id);
+				if (index !== -1) {
+					const groupCopy = Utils.copy(group);
+					groupCopy.id = Utils.guid();
+					groupCopy.slots.forEach(s => {
+						s.id = Utils.guid();
+						MonsterLogic.resetState(s.state);
+						s.monsters.forEach(m => {
+							m.id = Utils.guid();
+							MonsterLogic.resetState(m.state);
+						});
+					});
+					copy.groups.splice(index + 1, 0, groupCopy);
+				}
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			const deleteGroup = () => {
+				const copy = Utils.copy(encounter);
+				copy.groups = copy.groups.filter(g => g.id !== group.id);
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
 			const setActed = (value: boolean) => {
 				const copy = Utils.copy(encounter);
 				copy.groups.filter(g => g.id === group.id).forEach(g => g.acted = value);
 				setEncounter(copy);
-				if (props.onChange) {
-					props.onChange(copy);
-				}
+				props.onChange(copy);
 			};
 
+			const defeated = group.slots.every(s => s.state.defeated || s.monsters.every(m => m.state.defeated));
+
 			return (
-				<div key={group.id} className='encounter-group'>
-					<div className='group-name'>
-						Group {(index + 1).toString()}
+				<div key={group.id} className={defeated ? 'encounter-group defeated' : 'encounter-group'}>
+					<div className='group-column'>
+						<Flex align='center' justify='space-between'>
+							<div className='group-name'>
+								Group {(index + 1).toString()}
+							</div>
+							<Popover
+								trigger='click'
+								placement='bottom'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										<Button block={true} onClick={duplicateGroup}>Duplicate</Button>
+										<DangerButton onConfirm={deleteGroup} />
+									</div>
+								)}
+							>
+								<Button type='text' icon={<EllipsisOutlined />} />
+							</Popover>
+						</Flex>
+						{
+							defeated ?
+								null
+								:
+								<Segmented
+									block={true}
+									options={[
+										{ value: false, label: 'Ready' },
+										{ value: true, label: 'Acted' }
+									]}
+									value={group.acted}
+									onChange={setActed}
+								/>
+						}
 					</div>
-					<div className={group.slots.every(s => s.state.defeated || s.monsters.every(m => m.state.defeated)) ? 'encounter-slots defeated' : 'encounter-slots'}>
+					<div className='encounter-slots'>
 						{group.slots.map(getSlot)}
-					</div>
-					<div className='group-acted'>
-						<Segmented
-							options={[
-								{ value: false, label: 'Ready' },
-								{ value: true, label: 'Acted' }
-							]}
-							value={group.acted}
-							onChange={setActed}
-						/>
 					</div>
 				</div>
 			);
@@ -400,13 +475,16 @@ export const EncounterRunPanel = (props: Props) => {
 						<Field label='Round' value={encounter.round} />
 						<Button onClick={nextRound}>Next Round</Button>
 					</div>
+					<div>
+						<Button onClick={() => setAddingMonsters(true)}>Add a Monster</Button>
+					</div>
 				</div>
 				<Tabs
 					items={[
 						{
 							key: '1',
-							label: 'Groups',
-							children: getEncounterGroups()
+							label: 'Monsters',
+							children: getMonsterGroups()
 						},
 						{
 							key: '2',
@@ -430,6 +508,19 @@ export const EncounterRunPanel = (props: Props) => {
 						}
 					]}
 				/>
+				<Drawer open={addingMonsters} onClose={() => setAddingMonsters(false)} closeIcon={null} width='500px'>
+					<MonsterSelectModal
+						type='companion'
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						selectOriginal={true}
+						onClose={() => setAddingMonsters(false)}
+						onSelect={m => {
+							setAddingMonsters(false);
+							addSlot(m);
+						}}
+					/>
+				</Drawer>
 				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
 					{
 						selectedMonster ?

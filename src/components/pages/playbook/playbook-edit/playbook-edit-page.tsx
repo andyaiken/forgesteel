@@ -1684,11 +1684,7 @@ export const PlaybookEditPage = (props: Props) => {
 							<Popover
 								trigger='click'
 								placement='bottom'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										<OptionsPanel mode='encounter' options={props.options} setOptions={props.setOptions} />
-									</div>
-								)}
+								content={<OptionsPanel mode='encounter' options={props.options} setOptions={props.setOptions} />}
 							>
 								<Button icon={<SettingOutlined />}>
 									Options

@@ -19,7 +19,7 @@ export const DirectoryModal = (props: Props) => {
 	const navigation = useNavigation();
 
 	try {
-		const folders = Collections.distinct(props.heroes.map(h => h.folder).sort(), f => f);
+		const folders = Collections.distinct(props.heroes.map(h => h.folder), f => f).sort();
 		if (folders.length === 0) {
 			folders.push('');
 		}

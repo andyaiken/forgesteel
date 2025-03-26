@@ -729,6 +729,14 @@ export class HeroLogic {
 			hero.state.notes = '';
 		}
 
+		if (hero.state.acted === undefined) {
+			hero.state.acted = false;
+		}
+
+		if (hero.state.defeated === undefined) {
+			hero.state.defeated = false;
+		}
+
 		hero.state.inventory = hero.state.inventory.filter(i => (i as unknown as FeatureItemChoice).data === undefined);
 		hero.state.inventory.forEach(item => {
 			if (item.customizationsByLevel === undefined) {

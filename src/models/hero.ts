@@ -24,6 +24,8 @@ export interface HeroState {
 	inventory: Item[];
 	projects: Project[];
 	notes: string;
+	acted: boolean;
+	defeated: boolean;
 }
 
 export interface AbilityCustomization {

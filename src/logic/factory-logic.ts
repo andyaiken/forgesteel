@@ -92,7 +92,9 @@ export class FactoryLogic {
 				conditions: [],
 				inventory: [],
 				projects: [],
-				notes: ''
+				notes: '',
+				acted: false,
+				defeated: false
 			},
 			abilityCustomizations: []
 		};
@@ -496,7 +498,8 @@ export class FactoryLogic {
 			terrain: [],
 			objective: EncounterObjectiveData.diminishNumbers,
 			round: 1,
-			malice: 0
+			malice: 0,
+			heroes: []
 		};
 	};
 

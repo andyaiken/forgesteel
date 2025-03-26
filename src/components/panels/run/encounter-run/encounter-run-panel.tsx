@@ -1,5 +1,5 @@
 import { Alert, Button, Divider, Drawer, Flex, Popover, Progress, Segmented, Space, Tabs, Tag } from 'antd';
-import { EllipsisOutlined, HeartFilled, InfoCircleOutlined } from '@ant-design/icons';
+import { EllipsisOutlined, HeartFilled, IdcardOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterSlot } from '../../../../models/encounter';
 import { Monster, MonsterState } from '../../../../models/monster';
 import { AbilityPanel } from '../../elements/ability-panel/ability-panel';
@@ -15,6 +15,12 @@ import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
+import { Hero } from '../../../../models/hero';
+import { HeroLogic } from '../../../../logic/hero-logic';
+import { HeroSelectModal } from '../../../modals/hero-select/hero-select-modal';
+import { HeroStateModal } from '../../../modals/hero-state/hero-state-modal';
+import { HeroStatePage } from '../../../../enums/hero-state-page';
+import { HeroicResourceBadge } from '../../../controls/badge/badge';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterModal } from '../../../modals/monster/monster-modal';
@@ -38,14 +44,17 @@ import './encounter-run-panel.scss';
 interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
+	heroes: Hero[];
 	options: Options;
 	onChange: (encounter: Encounter) => void;
 }
 
 export const EncounterRunPanel = (props: Props) => {
 	const [ encounter, setEncounter ] = useState<Encounter>(Utils.copy(props.encounter));
+	const [ addingHeroes, setAddingHeroes ] = useState<boolean>(false);
 	const [ addingMonsters, setAddingMonsters ] = useState<boolean>(false);
 	const [ selectedMonster, setSelectedMonster ] = useState<Monster | null>(null);
+	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
 	const [ selectedTerrain, setSelectedTerrain ] = useState<Terrain | null>(null);
 	const [ selectedSlot, setSelectedSlot ] = useState<EncounterSlot | null>(null);
 
@@ -62,6 +71,13 @@ export const EncounterRunPanel = (props: Props) => {
 		copy.groups.forEach(g => {
 			g.acted = false;
 		});
+		setEncounter(copy);
+		props.onChange(copy);
+	};
+
+	const addHeroes = (heroes: Hero[]) => {
+		const copy = Utils.copy(encounter);
+		heroes.forEach(h => copy.heroes.push(Utils.copy(h)));
 		setEncounter(copy);
 		props.onChange(copy);
 	};
@@ -103,9 +119,9 @@ export const EncounterRunPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const getMonsterGroups = () => {
+	const getCombatantGroups = () => {
 		const groups = encounter.groups.filter(g => g.slots.length > 0);
-		if (groups.length === 0) {
+		if ((groups.length === 0) && (encounter.heroes.length === 0)) {
 			return (
 				<Empty />
 			);
@@ -188,7 +204,7 @@ export const EncounterRunPanel = (props: Props) => {
 									{getMinionCaptainTag()}
 									{slot.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
 								</div>
-								<Button type='text' icon={<InfoCircleOutlined />} onClick={() => setSelectedSlot(slot)} />
+								<Button type='text' icon={<IdcardOutlined />} onClick={() => setSelectedSlot(slot)} />
 							</div>
 							: null
 					}
@@ -217,7 +233,7 @@ export const EncounterRunPanel = (props: Props) => {
 								<div className='conditions-column'>
 									{monster.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
 								</div>
-								<Button type='text' icon={<InfoCircleOutlined />} onClick={() => setSelectedMonster(monster)} />
+								<Button type='text' icon={<IdcardOutlined />} onClick={() => setSelectedMonster(monster)} />
 							</div>
 						))
 					}
@@ -225,7 +241,7 @@ export const EncounterRunPanel = (props: Props) => {
 			);
 		};
 
-		const getGroup = (group: EncounterGroup, index: number) => {
+		const getMonsterGroup = (group: EncounterGroup, index: number) => {
 			const duplicateGroup = () => {
 				const copy = Utils.copy(encounter);
 				const index = copy.groups.findIndex(g => g.id === group.id);
@@ -261,9 +277,15 @@ export const EncounterRunPanel = (props: Props) => {
 			};
 
 			const defeated = group.slots.every(s => s.state.defeated || s.monsters.every(m => m.state.defeated));
+			let className = 'encounter-group';
+			if (defeated) {
+				className += ' defeated';
+			} else if (group.acted) {
+				className += ' acted';
+			}
 
 			return (
-				<div key={group.id} className={defeated ? 'encounter-group defeated' : 'encounter-group'}>
+				<div key={group.id} className={className}>
 					<div className='group-column'>
 						<Flex align='center' justify='space-between'>
 							<div className='group-name'>
@@ -304,9 +326,91 @@ export const EncounterRunPanel = (props: Props) => {
 			);
 		};
 
+		const getHeroGroup = (hero: Hero) => {
+			const deleteGroup = () => {
+				const copy = Utils.copy(encounter);
+				copy.heroes = copy.heroes.filter(h => h.id !== hero.id);
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			const setActed = (value: boolean) => {
+				const copy = Utils.copy(encounter);
+				copy.heroes.filter(h => h.id === hero.id).forEach(h => h.state.acted = value);
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			let className = 'encounter-group';
+			if (hero.state.defeated) {
+				className += ' defeated';
+			} else if (hero.state.acted) {
+				className += ' acted';
+			}
+
+			return (
+				<div key={hero.id} className={className}>
+					<div className='group-column'>
+						<Flex align='center' justify='space-between'>
+							<div className='group-name'>
+								Hero
+							</div>
+							<Popover
+								trigger='click'
+								placement='bottom'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										<DangerButton onConfirm={deleteGroup} />
+									</div>
+								)}
+							>
+								<Button type='text' icon={<EllipsisOutlined />} />
+							</Popover>
+						</Flex>
+						{
+							hero.state.defeated ?
+								null
+								:
+								<Segmented
+									block={true}
+									options={[
+										{ value: false, label: 'Ready' },
+										{ value: true, label: 'Acted' }
+									]}
+									value={hero.state.acted}
+									onChange={setActed}
+								/>
+						}
+					</div>
+					<div className='encounter-slots'>
+						<div className='encounter-slot'>
+							<div className={hero.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'}>
+								<div className='name-column'>
+									{hero.name || 'Unnamed Hero'}
+								</div>
+								<div className='stamina-column'>
+									{HeroLogic.getStamina(hero)}
+									<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+								</div>
+								<div className='conditions-column'>
+									{hero.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+								</div>
+								<Button type='text' icon={<IdcardOutlined />} onClick={() => setSelectedHero(hero)} />
+							</div>
+						</div>
+					</div>
+				</div>
+			);
+		};
+
 		return (
 			<div className='encounter-groups'>
-				{groups.map(getGroup)}
+				{groups.map(getMonsterGroup)}
+				{encounter.heroes.map(getHeroGroup)}
+				<Flex gap={5}>
+					<Button block={true} onClick={() => setAddingHeroes(true)}>Add hero(es)</Button>
+					<Button block={true} onClick={() => setAddingMonsters(true)}>Add monster</Button>
+				</Flex>
 			</div>
 		);
 	};
@@ -321,8 +425,13 @@ export const EncounterRunPanel = (props: Props) => {
 		return (
 			<div className='encounter-groups'>
 				{
-					encounter.terrain.map(slot => (
+					encounter.terrain.map((slot, index) => (
 						<div key={slot.id} className='encounter-group'>
+							<div className='group-column'>
+								<div className='group-name'>
+									Terrain {(index + 1).toString()}
+								</div>
+							</div>
 							<div className='encounter-slots'>
 								<div className='encounter-slot'>
 									{
@@ -331,7 +440,7 @@ export const EncounterRunPanel = (props: Props) => {
 												<div className='name-column'>
 													{terrain.name}
 												</div>
-												<Button type='text' icon={<InfoCircleOutlined />} onClick={() => setSelectedTerrain(terrain)} />
+												<Button type='text' icon={<IdcardOutlined />} onClick={() => setSelectedTerrain(terrain)} />
 											</div>
 										))
 									}
@@ -377,6 +486,7 @@ export const EncounterRunPanel = (props: Props) => {
 															onClick={() => setMalice(Math.max(encounter.malice - cost, 0))}
 														>
 															Use
+															<HeroicResourceBadge value={cost} />
 														</Button>
 														:
 														<div className='malice-progress'>
@@ -463,6 +573,12 @@ export const EncounterRunPanel = (props: Props) => {
 	};
 
 	try {
+		const monstersDone = encounter.groups
+			.filter(g => g.slots.length > 0)
+			.every(g => g.acted || g.slots.every(s => s.state.defeated || s.monsters.every(m => m.state.defeated)));
+		const heroesDone = encounter.heroes.every(h => h.state.acted || h.state.defeated);
+		const allDone = monstersDone && heroesDone;
+
 		return (
 			<div className='encounter-run-panel' id={encounter.id}>
 				<HeaderText level={1}>{encounter.name || 'Unnamed Encounter'}</HeaderText>
@@ -471,20 +587,17 @@ export const EncounterRunPanel = (props: Props) => {
 					<NumberSpin min={0} value={encounter.malice} onChange={setMalice}>
 						<Field orientation='vertical' label='Malice' value={encounter.malice} />
 					</NumberSpin>
-					<div style={{ textAlign: 'center', marginTop: '-5px', marginBottom: '5px' }}>
-						<Field label='Round' value={encounter.round} />
-						<Button onClick={nextRound}>Next Round</Button>
-					</div>
-					<div>
-						<Button onClick={() => setAddingMonsters(true)}>Add a Monster</Button>
-					</div>
+					<Space split={<Divider type='vertical' />}>
+						<Field orientation='vertical' label='Round' value={encounter.round} />
+						<Button type='primary' disabled={!allDone} onClick={nextRound}>Next Round</Button>
+					</Space>
 				</div>
 				<Tabs
 					items={[
 						{
 							key: '1',
-							label: 'Monsters',
-							children: getMonsterGroups()
+							label: 'Combatants',
+							children: getCombatantGroups()
 						},
 						{
 							key: '2',
@@ -508,6 +621,18 @@ export const EncounterRunPanel = (props: Props) => {
 						}
 					]}
 				/>
+				<Drawer open={addingHeroes} onClose={() => setAddingHeroes(false)} closeIcon={null} width='500px'>
+					<HeroSelectModal
+						heroes={props.heroes}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onClose={() => setAddingHeroes(false)}
+						onSelect={heroes => {
+							setAddingHeroes(false);
+							addHeroes(heroes);
+						}}
+					/>
+				</Drawer>
 				<Drawer open={addingMonsters} onClose={() => setAddingMonsters(false)} closeIcon={null} width='500px'>
 					<MonsterSelectModal
 						type='companion'
@@ -556,6 +681,28 @@ export const EncounterRunPanel = (props: Props) => {
 
 									setEncounter(copy);
 								}}
+							/>
+							: null
+					}
+				</Drawer>
+				<Drawer open={!!selectedHero} onClose={() => setSelectedHero(null)} closeIcon={null} width='500px'>
+					{
+						selectedHero ?
+							<HeroStateModal
+								hero={selectedHero}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+								onClose={() => setSelectedHero(null)}
+								startPage={HeroStatePage.Hero}
+								onChange={hero => {
+									const copy = Utils.copy(encounter);
+									const index = copy.heroes.findIndex(h => h.id === hero.id);
+									if (index !== -1) {
+										copy.heroes[index] = hero;
+									}
+									setEncounter(copy);
+								}}
+								onLevelUp={() => null}
 							/>
 							: null
 					}

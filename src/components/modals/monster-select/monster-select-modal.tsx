@@ -20,7 +20,7 @@ import './monster-select-modal.scss';
 interface Props {
 	type: 'companion' | 'mount' | 'retainer';
 	sourcebooks: Sourcebook[];
-	options: Options
+	options: Options;
 	selectOriginal?: boolean;
 	onClose: () => void;
 	onSelect: (monster: Monster) => void;

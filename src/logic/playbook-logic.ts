@@ -161,6 +161,10 @@ export class PlaybookLogic {
 						};
 					}
 				});
+
+				if (e.heroes === undefined) {
+					e.heroes = [];
+				}
 			});
 
 			if (e.terrain === undefined) {

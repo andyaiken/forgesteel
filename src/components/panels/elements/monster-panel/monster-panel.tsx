@@ -27,7 +27,7 @@ import './monster-panel.scss';
 interface Props {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
-	options: Options
+	options: Options;
 	mode?: PanelMode;
 	canRoll?: boolean;
 	updateMonster?: (monster: Monster) => void;

@@ -17,7 +17,7 @@ import './mini-checklist-modal.scss';
 interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
-	options: Options
+	options: Options;
 	onClose: () => void;
 }
 

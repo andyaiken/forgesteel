@@ -10,6 +10,7 @@ import { EncounterPanel } from '../../panels/elements/encounter-panel/encounter-
 import { EncounterRunPanel } from '../../panels/run/encounter-run/encounter-run-panel';
 import { Format } from '../../../utils/format';
 import { HeaderText } from '../../controls/header-text/header-text';
+import { Hero } from '../../../models/hero';
 import { Montage } from '../../../models/montage';
 import { MontageData } from '../../../data/montage-data';
 import { MontagePanel } from '../../panels/elements/montage-panel/montage-panel';
@@ -35,6 +36,7 @@ interface Props {
 	session: Playbook;
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
+	heroes: Hero[];
 	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
@@ -110,6 +112,7 @@ export const SessionPage = (props: Props) => {
 					<EncounterRunPanel
 						encounter={encounter}
 						sourcebooks={props.sourcebooks}
+						heroes={props.heroes}
 						options={props.options}
 						onChange={encounter => {
 							const copy = Utils.copy(session);

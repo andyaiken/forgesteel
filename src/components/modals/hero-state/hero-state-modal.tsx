@@ -225,6 +225,20 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const setActed = (value: boolean) => {
+			const copy = Utils.copy(hero);
+			copy.state.acted = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setDefeated = (value: boolean) => {
+			const copy = Utils.copy(hero);
+			copy.state.defeated = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HealthPanel hero={hero} />
@@ -259,6 +273,25 @@ export const HeroStateModal = (props: Props) => {
 					value={hero.state.staminaTemp}
 					min={0}
 					onChange={setStaminaTemp}
+				/>
+				<Divider />
+				<Segmented
+					block={true}
+					options={[
+						{ value: false, label: 'Ready' },
+						{ value: true, label: 'Acted' }
+					]}
+					value={hero.state.acted}
+					onChange={setActed}
+				/>
+				<Segmented
+					block={true}
+					options={[
+						{ value: false, label: 'Active' },
+						{ value: true, label: 'Defeated' }
+					]}
+					value={hero.state.defeated}
+					onChange={setDefeated}
 				/>
 				<Divider />
 				<Flex align='center' justify='space-between' gap='5px'>

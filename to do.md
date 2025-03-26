@@ -25,6 +25,8 @@
 
 * Add maps
   * Tactical
+    * Create or import
+    * Auto-create delve map
   * Regional
 * Adventure Builder:
   * Allow subplots
@@ -39,7 +41,7 @@
   * Set 'used reaction' flag on monsters / minions
   * Show number of squares on terrain encounter row
   * Show 'should be N squares' for terrain
-  * Ability to add heroes / new terrain objects
+  * Ability to add new terrain objects
   * Ability to duplicate / delete monsters in a slot
   * On end turn, handle EoT conditions
   * Handle 'save ends' conditions

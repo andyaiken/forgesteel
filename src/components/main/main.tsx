@@ -1218,6 +1218,7 @@ export const Main = (props: Props) => {
 							session={session}
 							playbook={playbook}
 							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+							heroes={heroes}
 							options={options}
 							showDirectory={showDirectoryPane}
 							showAbout={showAbout}

@@ -1,5 +1,6 @@
 import { Monster, MonsterState } from './monster';
 import { Element } from './element';
+import { Hero } from './hero';
 import { Terrain } from './terrain';
 
 export interface EncounterSlot {
@@ -38,6 +39,7 @@ export interface EncounterObjective extends Element {
 export interface Encounter extends Element {
 	groups: EncounterGroup[];
 	terrain: TerrainSlot[];
+	heroes: Hero[];
 	objective: EncounterObjective;
 	round: number;
 	malice: number;

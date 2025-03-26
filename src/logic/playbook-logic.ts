@@ -2,6 +2,7 @@ import { Counter } from '../models/counter';
 import { Encounter } from '../models/encounter';
 import { EncounterLogic } from './encounter-logic';
 import { EncounterObjectiveData } from '../data/encounter-objective-data';
+import { Hero } from '../models/hero';
 import { MonsterLogic } from './monster-logic';
 import { Montage } from '../models/montage';
 import { Negotiation } from '../models/negotiation';
@@ -73,7 +74,7 @@ export class PlaybookLogic {
 		});
 	};
 
-	static startEncounter = (encounter: Encounter, sourcebooks: Sourcebook[], options: Options) => {
+	static startEncounter = (encounter: Encounter, sourcebooks: Sourcebook[], heroes: Hero[], options: Options) => {
 		const copy = Utils.copy(encounter);
 		copy.id = Utils.guid();
 
@@ -94,6 +95,12 @@ export class PlaybookLogic {
 			});
 		});
 
+		if (options.party !== '') {
+			heroes
+				.filter(h => h.folder === options.party)
+				.forEach(h => copy.heroes.push(Utils.copy(h)));
+		}
+
 		copy.terrain.forEach(slot => {
 			const terrain = SourcebookLogic.getTerrains(sourcebooks).find(t => t.id === slot.terrainID);
 			if (terrain) {
@@ -102,7 +109,7 @@ export class PlaybookLogic {
 				for (let n = 1; n <= count; ++n) {
 					const terrainCopy = Utils.copy(terrain);
 					terrainCopy.id = Utils.guid();
-					terrainCopy.name = count === 1 ? name : `${name} ${n}`;
+					terrainCopy.name = name;
 					slot.terrain.push(terrainCopy);
 				}
 			}

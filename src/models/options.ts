@@ -18,6 +18,7 @@ export interface Options {
 	similarSize: boolean;
 	// Encounter
 	minionCount: number;
+	party: string;
 	// Encounter Difficulty
 	heroCount: number;
 	heroLevel: number;

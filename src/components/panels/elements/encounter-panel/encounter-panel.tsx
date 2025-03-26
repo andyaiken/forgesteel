@@ -10,6 +10,7 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../monster-panel/monster-panel';
+import { MonsterToken } from '../../../controls/token/token';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
@@ -17,7 +18,6 @@ import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Space } from 'antd';
 import { TerrainPanel } from '../terrain-panel/terrain-panel';
-import { Token } from '../../../controls/token/token';
 
 import './encounter-panel.scss';
 
@@ -66,7 +66,7 @@ export const EncounterPanel = (props: Props) => {
 									return (
 										<div key={slot.id} className='encounter-slot'>
 											<div className='encounter-slot-name'>
-												<Token monster={monster} monsterGroup={monsterGroup} />
+												<MonsterToken monster={monster} monsterGroup={monsterGroup} />
 												<div className='ds-text'>{name}</div>
 											</div>
 											{count > 1 ? <Badge>x{count}</Badge> : null}

@@ -23,6 +23,10 @@ import { SourcebookData } from '../data/sourcebook-data';
 import { SourcebookLogic } from './sourcebook-logic';
 
 export class HeroLogic {
+	static getHeroDescription = (hero: Hero) => {
+		return `Level ${hero.class?.level || 1} ${hero.ancestry?.name || 'Ancestry'} ${hero.class?.name || 'Class'}`;
+	};
+
 	static getKitTypes = (hero: Hero) => {
 		const types = [ KitType.Standard ];
 

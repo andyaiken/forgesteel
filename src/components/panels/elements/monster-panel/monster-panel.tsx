@@ -15,10 +15,10 @@ import { MonsterLabel } from '../../monster-label/monster-label';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterStatePanel } from '../../monster-state/monster-state-panel';
+import { MonsterToken } from '../../../controls/token/token';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Token } from '../../../controls/token/token';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -50,7 +50,7 @@ export const MonsterPanel = (props: Props) => {
 		if (props.mode !== PanelMode.Full) {
 			return (
 				<div className='monster-panel compact'>
-					<HeaderText level={1} ribbon={<Token monster={monster} monsterGroup={props.monsterGroup} size={28} />}>
+					<HeaderText level={1} ribbon={<MonsterToken monster={monster} monsterGroup={props.monsterGroup} size={28} />}>
 						{MonsterLogic.getMonsterName(monster, props.monsterGroup)}
 					</HeaderText>
 					<MonsterLabel monster={monster} />
@@ -73,7 +73,7 @@ export const MonsterPanel = (props: Props) => {
 
 		return (
 			<div className='monster-panel' id={monster.id}>
-				<HeaderText level={1} ribbon={<Token monster={monster} monsterGroup={props.monsterGroup} size={28} />}>
+				<HeaderText level={1} ribbon={<MonsterToken monster={monster} monsterGroup={props.monsterGroup} size={28} />}>
 					{MonsterLogic.getMonsterName(monster, props.monsterGroup)}
 				</HeaderText>
 				<MonsterLabel monster={monster} />

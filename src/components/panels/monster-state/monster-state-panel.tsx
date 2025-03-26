@@ -8,8 +8,8 @@ import { Encounter } from '../../../models/encounter';
 import { Field } from '../../controls/field/field';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterState } from '../../../models/monster';
+import { MonsterToken } from '../../controls/token/token';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
-import { Token } from '../../controls/token/token';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
@@ -119,7 +119,7 @@ export const MonsterStatePanel = (props: Props) => {
 													background: (m.id === state.captainID ? 'rgb(64, 150, 255)' : undefined),
 													color: (m.id === state.captainID ? 'rgb(255, 255, 255)' : undefined)
 												}}>
-												<Token monster={m} />
+												<MonsterToken monster={m} />
 												{m.name}
 											</div>
 										)

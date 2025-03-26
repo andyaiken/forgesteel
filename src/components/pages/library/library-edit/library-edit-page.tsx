@@ -36,6 +36,7 @@ import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
+import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
@@ -81,6 +82,7 @@ import './library-edit-page.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
+	heroes: Hero[];
 	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
@@ -2870,7 +2872,7 @@ export const LibraryEditPage = (props: Props) => {
 							<Popover
 								trigger='click'
 								placement='bottom'
-								content={<OptionsPanel mode='monster' options={props.options} setOptions={props.setOptions} />}
+								content={<OptionsPanel mode='monster' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
 							>
 								<Button icon={<SettingOutlined />}>
 									Options

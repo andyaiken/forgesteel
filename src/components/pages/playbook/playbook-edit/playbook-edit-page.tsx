@@ -25,6 +25,7 @@ import { FeaturePanel } from '../../../panels/elements/feature-panel/feature-pan
 import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
+import { Hero } from '../../../../models/hero';
 import { MonsterFilterPanel } from '../../../panels/monster-filter/monster-filter-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
@@ -59,6 +60,7 @@ import './playbook-edit-page.scss';
 interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
+	heroes: Hero[];
 	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
@@ -1684,7 +1686,7 @@ export const PlaybookEditPage = (props: Props) => {
 							<Popover
 								trigger='click'
 								placement='bottom'
-								content={<OptionsPanel mode='encounter' options={props.options} setOptions={props.setOptions} />}
+								content={<OptionsPanel mode='encounter' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
 							>
 								<Button icon={<SettingOutlined />}>
 									Options

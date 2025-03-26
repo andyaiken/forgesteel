@@ -47,13 +47,16 @@ export class TerrainLogic {
 
 	static getStaminaValue = (terrain: Terrain) => {
 		let value = terrain.stamina.base;
+
 		if (terrain.stamina.perSquare) {
 			value += (terrain.stamina.perSquare * terrain.state.squares);
 		}
+
 		if (terrain.state.staminaDamage > 0) {
 			value -= terrain.state.staminaDamage;
 		}
-		return value;
+
+		return Math.max(value, 0);
 	};
 
 	static matches = (terrain: Terrain, filter: TerrainFilter) => {

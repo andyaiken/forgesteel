@@ -30,7 +30,7 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	allowSelection?: boolean;
-	start?: (kind: PlaybookElementKind, element: Element) => void;
+	start?: (kind: PlaybookElementKind, element: Element, party: string) => void;
 }
 
 export const AdventurePanel = (props: Props) => {
@@ -130,7 +130,7 @@ export const AdventurePanel = (props: Props) => {
 				if (encounter) {
 					return (
 						<>
-							{props.start ? <Button icon={<PlayCircleOutlined />} onClick={() => props.start!('encounter', encounter)} /> : null}
+							{props.start ? <Button icon={<PlayCircleOutlined />} onClick={() => props.start!('encounter', encounter, '')} /> : null}
 						</>
 					);
 				}
@@ -141,7 +141,7 @@ export const AdventurePanel = (props: Props) => {
 				if (montage) {
 					return (
 						<>
-							{props.start ? <Button icon={<PlayCircleOutlined />} onClick={() => props.start!('montage', montage)} /> : null}
+							{props.start ? <Button icon={<PlayCircleOutlined />} onClick={() => props.start!('montage', montage, '')} /> : null}
 						</>
 					);
 				}
@@ -152,7 +152,7 @@ export const AdventurePanel = (props: Props) => {
 				if (negotiation) {
 					return (
 						<>
-							{props.start ? <Button icon={<PlayCircleOutlined />} onClick={() => props.start!('negotiation', negotiation)} /> : null}
+							{props.start ? <Button icon={<PlayCircleOutlined />} onClick={() => props.start!('negotiation', negotiation, '')} /> : null}
 						</>
 					);
 				}

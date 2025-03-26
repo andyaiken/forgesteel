@@ -838,7 +838,7 @@ export const Main = (props: Props) => {
 
 		switch (kind) {
 			case 'encounter': {
-				e = PlaybookLogic.startEncounter(element as Encounter, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], options);
+				e = PlaybookLogic.startEncounter(element as Encounter, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], heroes, options);
 				sessionCopy.encounters.push(e as Encounter);
 				break;
 			}
@@ -1110,6 +1110,7 @@ export const Main = (props: Props) => {
 						element={
 							<LibraryListPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								heroes={heroes}
 								options={options}
 								hiddenSourcebookIDs={hiddenSourcebookIDs}
 								showDirectory={showDirectoryPane}
@@ -1143,6 +1144,7 @@ export const Main = (props: Props) => {
 						element={
 							<LibraryEditPage
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								heroes={heroes}
 								options={options}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
@@ -1165,6 +1167,7 @@ export const Main = (props: Props) => {
 							<PlaybookListPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								heroes={heroes}
 								options={options}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
@@ -1181,6 +1184,7 @@ export const Main = (props: Props) => {
 							<PlaybookViewPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								heroes={heroes}
 								options={options}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
@@ -1199,6 +1203,7 @@ export const Main = (props: Props) => {
 							<PlaybookEditPage
 								playbook={playbook}
 								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								heroes={heroes}
 								options={options}
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
@@ -1224,6 +1229,7 @@ export const Main = (props: Props) => {
 							showAbout={showAbout}
 							showRoll={showRoll}
 							updateSession={persistSession}
+							setOptions={persistOptions}
 						/>
 					}
 				/>

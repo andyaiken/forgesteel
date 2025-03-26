@@ -7,7 +7,9 @@ import { AppHeader } from '../../../panels/app-header/app-header';
 import { Element } from '../../../../models/element';
 import { Empty } from '../../../controls/empty/empty';
 import { Encounter } from '../../../../models/encounter';
+import { EncounterData } from '../../../../data/encounter-data';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
+import { Hero } from '../../../../models/hero';
 import { Montage } from '../../../../models/montage';
 import { MontageData } from '../../../../data/montage-data';
 import { MontagePanel } from '../../../panels/elements/montage-panel/montage-panel';
@@ -28,6 +30,7 @@ import './playbook-list-page.scss';
 interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
+	heroes: Hero[];
 	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
@@ -173,8 +176,21 @@ export const PlaybookListPage = (props: Props) => {
 	try {
 		const adventures = getAdventures();
 		const encounters = getEncounters();
-		const negotiations = getNegotiations();
 		const montages = getMontages();
+		const negotiations = getNegotiations();
+
+		const exampleEncounters = [
+			EncounterData.goblinAmbush,
+			EncounterData.dragonAttack
+		];
+
+		const exampleMontages = [
+			MontageData.fightFire,
+			MontageData.infiltrateThePalace,
+			MontageData.prepareForBattle,
+			MontageData.trackTheFugitive,
+			MontageData.wildernessRace
+		];
 
 		const exampleNegotiations = [
 			NegotiationData.banditChief,
@@ -189,14 +205,6 @@ export const PlaybookListPage = (props: Props) => {
 			NegotiationData.monarch,
 			NegotiationData.lich,
 			NegotiationData.deity
-		];
-
-		const exampleMontages = [
-			MontageData.fightFire,
-			MontageData.infiltrateThePalace,
-			MontageData.prepareForBattle,
-			MontageData.trackTheFugitive,
-			MontageData.wildernessRace
 		];
 
 		return (
@@ -235,6 +243,20 @@ export const PlaybookListPage = (props: Props) => {
 										<Button block={true} icon={<DownloadOutlined />}>Import</Button>
 									</Upload>
 								</Space>
+								{
+									currentTab === 'encounter' ?
+										<div>
+											<div className='ds-text centered-text'>or start with a premade example:</div>
+											<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
+												{
+													exampleEncounters.map(n => (
+														<Button key={n.id} block={true} onClick={() => createElement(n)}>{n.name}</Button>
+													))
+												}
+											</div>
+										</div>
+										: null
+								}
 								{
 									currentTab === 'negotiation' ?
 										<div>
@@ -280,7 +302,7 @@ export const PlaybookListPage = (props: Props) => {
 							<Popover
 								trigger='click'
 								placement='bottom'
-								content={<OptionsPanel mode='encounter' options={props.options} setOptions={props.setOptions} />}
+								content={<OptionsPanel mode='encounter' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
 							>
 								<Button icon={<SettingOutlined />}>
 									Options

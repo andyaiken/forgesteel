@@ -4,6 +4,7 @@ import { Empty } from '../../controls/empty/empty';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
+import { HeroLogic } from '../../../logic/hero-logic';
 import { HeroPanel } from '../../panels/hero/hero-panel';
 import { Modal } from '../modal/modal';
 import { Options } from '../../../models/options';
@@ -28,15 +29,18 @@ export const HeroSelectModal = (props: Props) => {
 		const getContent = () => {
 			switch (mode) {
 				case 'party': {
-					const folders = Collections.distinct(props.heroes.map(h => h.folder), f => f).sort().filter(f => !!f);
+					const parties = Collections
+						.distinct(props.heroes.map(h => h.folder), f => f)
+						.sort()
+						.filter(f => !!f);
 
-					if (folders.length === 0) {
+					if (parties.length === 0) {
 						return (
 							<Empty />
 						);
 					}
 
-					return folders.map(f => (
+					return parties.map(f => (
 						<SelectablePanel
 							key={f}
 							onSelect={() => props.onSelect(props.heroes.filter(h => h.folder === f))}
@@ -46,7 +50,7 @@ export const HeroSelectModal = (props: Props) => {
 								props.heroes
 									.filter(h => h.folder === f)
 									.sort()
-									.map(h => <Field label={h.name} value={`Level ${h.class?.level} ${h.ancestry?.name} ${h.class?.name}`} />)
+									.map(h => <Field key={h.id} label={h.name} value={HeroLogic.getHeroDescription(h)} />)
 							}
 						</SelectablePanel>
 					));

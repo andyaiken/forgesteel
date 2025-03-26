@@ -110,7 +110,7 @@ export const HeroViewPage = (props: Props) => {
 					<Popover
 						trigger='click'
 						placement='bottom'
-						content={<OptionsPanel mode='hero' options={props.options} setOptions={props.setOptions} />}
+						content={<OptionsPanel mode='hero' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
 					>
 						<Button icon={<SettingOutlined />}>
 							Options

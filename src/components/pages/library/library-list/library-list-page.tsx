@@ -21,6 +21,7 @@ import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
+import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
@@ -50,6 +51,7 @@ import './library-list-page.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
+	heroes: Hero[];
 	options: Options;
 	hiddenSourcebookIDs: string[];
 	showDirectory: () => void;
@@ -760,7 +762,7 @@ export const LibraryListPage = (props: Props) => {
 					<Popover
 						trigger='click'
 						placement='bottom'
-						content={<OptionsPanel mode='library' options={props.options} setOptions={props.setOptions} />}
+						content={<OptionsPanel mode='library' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
 					>
 						<Button icon={<SettingOutlined />}>
 							Options

@@ -1,6 +1,7 @@
 import { Alert, Button, Divider, Drawer, Flex, Popover, Progress, Segmented, Space, Tabs, Tag } from 'antd';
 import { EllipsisOutlined, HeartFilled, IdcardOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterSlot } from '../../../../models/encounter';
+import { HeroToken, MonsterToken } from '../../../controls/token/token';
 import { Monster, MonsterState } from '../../../../models/monster';
 import { AbilityPanel } from '../../elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../../enums/ability-usage';
@@ -34,8 +35,8 @@ import { SelectablePanel } from '../../../controls/selectable-panel/selectable-p
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Terrain } from '../../../../models/terrain';
+import { TerrainLogic } from '../../../../logic/terrain-logic';
 import { TerrainModal } from '../../../modals/terrain/terrain-modal';
-import { Token } from '../../../controls/token/token';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -119,7 +120,7 @@ export const EncounterRunPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const getCombatantGroups = () => {
+	const getCombatants = () => {
 		const groups = encounter.groups.filter(g => g.slots.length > 0);
 		if ((groups.length === 0) && (encounter.heroes.length === 0)) {
 			return (
@@ -218,7 +219,7 @@ export const EncounterRunPanel = (props: Props) => {
 						slot.monsters.map(monster => (
 							<div key={monster.id} className={slot.state.defeated || monster.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'}>
 								<div className='name-column'>
-									<Token monster={monster} />
+									<MonsterToken monster={monster} />
 									{monster.name}
 								</div>
 								{
@@ -327,7 +328,7 @@ export const EncounterRunPanel = (props: Props) => {
 		};
 
 		const getHeroGroup = (hero: Hero) => {
-			const deleteGroup = () => {
+			const deleteHero = () => {
 				const copy = Utils.copy(encounter);
 				copy.heroes = copy.heroes.filter(h => h.id !== hero.id);
 				setEncounter(copy);
@@ -360,7 +361,7 @@ export const EncounterRunPanel = (props: Props) => {
 								placement='bottom'
 								content={(
 									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										<DangerButton onConfirm={deleteGroup} />
+										<DangerButton onConfirm={deleteHero} />
 									</div>
 								)}
 							>
@@ -386,7 +387,11 @@ export const EncounterRunPanel = (props: Props) => {
 						<div className='encounter-slot'>
 							<div className={hero.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'}>
 								<div className='name-column'>
-									{hero.name || 'Unnamed Hero'}
+									<HeroToken hero={hero} />
+									<div>
+										<div>{hero.name || 'Unnamed Hero'}</div>
+										<div style={{ opacity: 0.7 }}>{HeroLogic.getHeroDescription(hero)}</div>
+									</div>
 								</div>
 								<div className='stamina-column'>
 									{HeroLogic.getStamina(hero)}
@@ -409,46 +414,87 @@ export const EncounterRunPanel = (props: Props) => {
 				{encounter.heroes.map(getHeroGroup)}
 				<Flex gap={5}>
 					<Button block={true} onClick={() => setAddingHeroes(true)}>Add hero(es)</Button>
-					<Button block={true} onClick={() => setAddingMonsters(true)}>Add monster</Button>
+					<Button block={true} onClick={() => setAddingMonsters(true)}>Add a monster</Button>
 				</Flex>
 			</div>
 		);
 	};
 
-	const getTerrainGroups = () => {
+	const getTerrain = () => {
 		if (encounter.terrain.length === 0) {
 			return (
 				<Empty />
 			);
 		}
 
-		return (
-			<div className='encounter-groups'>
-				{
-					encounter.terrain.map((slot, index) => (
-						<div key={slot.id} className='encounter-group'>
-							<div className='group-column'>
-								<div className='group-name'>
-									Terrain {(index + 1).toString()}
-								</div>
+		const getTerrainSlot = (terrain: Terrain) => {
+			const duplicateTerrain = () => {
+				const copy = Utils.copy(encounter);
+				copy.terrain.forEach(ts => {
+					if (ts.terrain.map(t => t.id).includes(terrain.id)) {
+						const terrainCopy = Utils.copy(terrain);
+						terrainCopy.id = Utils.guid();
+						terrainCopy.state.staminaDamage = 0;
+						ts.terrain.push(terrainCopy);
+					}
+				});
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			const deleteTerrain = () => {
+				const copy = Utils.copy(encounter);
+				copy.terrain.forEach(ts => {
+					ts.terrain = ts.terrain.filter(t => t.id !== terrain.id);
+				});
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			return (
+				<div key={terrain.id} className='encounter-group'>
+					<div className='group-column'>
+						<Flex align='center' justify='space-between'>
+							<div className='group-name'>
+								Terrain
 							</div>
-							<div className='encounter-slots'>
-								<div className='encounter-slot'>
-									{
-										slot.terrain.map(terrain => (
-											<div key={terrain.id} className='encounter-slot-row'>
-												<div className='name-column'>
-													{terrain.name}
-												</div>
-												<Button type='text' icon={<IdcardOutlined />} onClick={() => setSelectedTerrain(terrain)} />
-											</div>
-										))
-									}
+							<Popover
+								trigger='click'
+								placement='bottom'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										<Button block={true} onClick={duplicateTerrain}>Duplicate</Button>
+										<DangerButton onConfirm={deleteTerrain} />
+									</div>
+								)}
+							>
+								<Button type='text' icon={<EllipsisOutlined />} />
+							</Popover>
+						</Flex>
+					</div>
+					<div className='encounter-slots'>
+						<div className='encounter-slot'>
+							<div className='encounter-slot-row'>
+								<div className='name-column'>
+									{terrain.name}
 								</div>
+								<div className='stamina-column'>
+									{TerrainLogic.getStaminaValue(terrain)}
+									<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+								</div>
+								<div className='conditions-column'>
+								</div>
+								<Button type='text' icon={<IdcardOutlined />} onClick={() => setSelectedTerrain(terrain)} />
 							</div>
 						</div>
-					))
-				}
+					</div>
+				</div>
+			);
+		};
+
+		return (
+			<div className='encounter-groups'>
+				{encounter.terrain.flatMap(ts => ts.terrain).map(getTerrainSlot)}
 			</div>
 		);
 	};
@@ -597,12 +643,12 @@ export const EncounterRunPanel = (props: Props) => {
 						{
 							key: '1',
 							label: 'Combatants',
-							children: getCombatantGroups()
+							children: getCombatants()
 						},
 						{
 							key: '2',
 							label: 'Terrain',
-							children: getTerrainGroups()
+							children: getTerrain()
 						},
 						{
 							key: '3',
@@ -693,7 +739,7 @@ export const EncounterRunPanel = (props: Props) => {
 								sourcebooks={props.sourcebooks}
 								options={props.options}
 								onClose={() => setSelectedHero(null)}
-								startPage={HeroStatePage.Hero}
+								startPage={HeroStatePage.Vitals}
 								onChange={hero => {
 									const copy = Utils.copy(encounter);
 									const index = copy.heroes.findIndex(h => h.id === hero.id);

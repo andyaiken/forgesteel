@@ -165,7 +165,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 		}),
 		FactoryLogic.createMonster({
 			id: 'goblin-3',
-			name: 'Goblin Spineclever',
+			name: 'Goblin Spinecleaver',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 			keywords: [ 'Goblin', 'Humanoid' ],

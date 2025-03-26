@@ -295,7 +295,7 @@ export const HeroEditPage = (props: Props) => {
 		const setSubclasses = (subclassIDs: string[]) => {
 			const heroCopy = Utils.copy(hero);
 			if (heroCopy.class) {
-				heroCopy.class.subclasses.forEach(sc => sc.selected = subclassIDs.includes(sc.id));
+				heroCopy.class.subclasses.forEach(sc => sc.selected = (subclassIDs || []).includes(sc.id));
 			}
 			setHero(heroCopy);
 			setDirty(true);

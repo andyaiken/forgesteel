@@ -9,6 +9,7 @@ import { Element } from '../../../../models/element';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { Format } from '../../../../utils/format';
+import { Hero } from '../../../../models/hero';
 import { Montage } from '../../../../models/montage';
 import { MontagePanel } from '../../../panels/elements/montage-panel/montage-panel';
 import { Negotiation } from '../../../../models/negotiation';
@@ -27,6 +28,7 @@ import './playbook-view-page.scss';
 interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
+	heroes: Hero[];
 	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
@@ -130,8 +132,8 @@ export const PlaybookViewPage = (props: Props) => {
 							: null
 					}
 					{
-						(kind !== 'adventure') ?
-							<Button icon={<PlayCircleOutlined />} onClick={() => props.start(kind!, element)}>
+						(kind === 'encounter') || (kind === 'montage') || (kind === 'negotiation') ?
+							<Button icon={<PlayCircleOutlined />} onClick={() => props.start(kind, element)}>
 								Run
 							</Button>
 							: null
@@ -148,7 +150,7 @@ export const PlaybookViewPage = (props: Props) => {
 							<Popover
 								trigger='click'
 								placement='bottom'
-								content={<OptionsPanel mode='encounter' options={props.options} setOptions={props.setOptions} />}
+								content={<OptionsPanel mode='encounter' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
 							>
 								<Button icon={<SettingOutlined />}>
 									Options

@@ -1,15 +1,18 @@
+import { Alert, Divider, Segmented, Select } from 'antd';
+import { Collections } from '../../../utils/collections';
+import { Hero } from '../../../models/hero';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Options } from '../../../models/options';
 import { PanelWidth } from '../../../enums/panel-width';
-import { Segmented } from 'antd';
 import { Toggle } from '../../controls/toggle/toggle';
 import { Utils } from '../../../utils/utils';
 
 import './options-panel.scss';
 
 interface Props {
-	mode: 'hero' | 'library' | 'monster' | 'encounter';
+	mode: 'hero' | 'library' | 'monster' | 'encounter' | 'session';
 	options: Options;
+	heroes: Hero[];
 	setOptions: (options: Options) => void;
 }
 
@@ -92,6 +95,12 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
+	const setParty = (value: string) => {
+		const copy = Utils.copy(props.options);
+		copy.party = value;
+		props.setOptions(copy);
+	};
+
 	const setHeroCount = (value: number) => {
 		const copy = Utils.copy(props.options);
 		copy.heroCount = value;
@@ -110,18 +119,44 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
-	const getPartyDescription = () => {
-		const heroes = `${props.options.heroCount === 1 ? 'hero' : 'heroes'}`;
-		const victories = `${props.options.heroVictories === 1 ? 'victory' : 'victories'}`;
-
-		if (props.options.heroVictories > 0) {
-			return `${props.options.heroCount} ${heroes} at level ${props.options.heroLevel} with ${props.options.heroVictories} ${victories}`;
-		}
-
-		return `${props.options.heroCount} ${heroes} at level ${props.options.heroLevel}`;
-	};
-
 	const getContent = () => {
+		const getPartySection = (initialDivider: boolean) => {
+			const parties = Collections
+				.distinct(props.heroes.map(h => h.folder), f => f)
+				.sort()
+				.filter(f => !!f);
+
+			if (parties.length === 0) {
+				return null;
+			}
+
+			return (
+				<>
+					{initialDivider ? <Divider /> : null}
+					<div>Start encounters with these heroes:</div>
+					<Select
+						style={{ width: '100%' }}
+						placeholder='Select a party'
+						options={[ '', ...parties ].map(s => ({ value: s, label: s || 'No heroes' }))}
+						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+						value={props.options.party}
+						onChange={p => setParty(p || '')}
+					/>
+				</>
+			);
+		};
+
+		const getPartyDescription = () => {
+			const heroes = `${props.options.heroCount === 1 ? 'hero' : 'heroes'}`;
+			const victories = `${props.options.heroVictories === 1 ? 'victory' : 'victories'}`;
+
+			if (props.options.heroVictories > 0) {
+				return `${props.options.heroCount} ${heroes} at level ${props.options.heroLevel} with ${props.options.heroVictories} ${victories}`;
+			}
+
+			return `${props.options.heroCount} ${heroes} at level ${props.options.heroLevel}`;
+		};
+
 		switch (props.mode) {
 			case 'hero':
 				return (
@@ -173,10 +208,18 @@ export const OptionsPanel = (props: Props) => {
 				return (
 					<>
 						<NumberSpin label='Minions per group' min={1} value={props.options.minionCount} onChange={setMinionCount} />
-						<div className='ds-text'>Calculating encounter difficulty based on a party of {getPartyDescription()}.</div>
+						{getPartySection(true)}
+						<Divider />
+						<Alert type='info' showIcon={true} message={`Calculate encounter difficulty based on a party of ${getPartyDescription()}.`} />
 						<NumberSpin label='Number of heroes' min={1} value={props.options.heroCount} onChange={setHeroCount} />
 						<NumberSpin label='Hero level' min={1} max={10} value={props.options.heroLevel} onChange={setHeroLevel} />
 						<NumberSpin label='Number of victories' min={0} value={props.options.heroVictories} onChange={setHeroVictories} />
+					</>
+				);
+			case 'session':
+				return (
+					<>
+						{getPartySection(false)}
 					</>
 				);
 		}

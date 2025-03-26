@@ -1,11 +1,12 @@
 import { Alert, Button, Input, Popover, Segmented, Space } from 'antd';
-import { PlusOutlined, ReadOutlined } from '@ant-design/icons';
+import { PlusOutlined, ReadOutlined, SettingOutlined } from '@ant-design/icons';
 import { AppHeader } from '../../panels/app-header/app-header';
 import { CounterPanel } from '../../panels/elements/counter-panel/counter-panel';
 import { CounterRunPanel } from '../../panels/run/counter-run/counter-run-panel';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Empty } from '../../controls/empty/empty';
 import { Encounter } from '../../../models/encounter';
+import { EncounterData } from '../../../data/encounter-data';
 import { EncounterPanel } from '../../panels/elements/encounter-panel/encounter-panel';
 import { EncounterRunPanel } from '../../panels/run/encounter-run/encounter-run-panel';
 import { Format } from '../../../utils/format';
@@ -21,6 +22,7 @@ import { NegotiationPanel } from '../../panels/elements/negotiation-panel/negoti
 import { NegotiationRunPanel } from '../../panels/run/negotiation-run/negotiation-run-panel';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Options } from '../../../models/options';
+import { OptionsPanel } from '../../panels/options/options-panel';
 import { Playbook } from '../../../models/playbook';
 import { PlaybookLogic } from '../../../logic/playbook-logic';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
@@ -42,6 +44,7 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	updateSession: (session: Playbook) => void;
+	setOptions: (options: Options) => void;
 }
 
 export const SessionPage = (props: Props) => {
@@ -197,7 +200,7 @@ export const SessionPage = (props: Props) => {
 
 	const getStartContent = () => {
 		const startEncounter = (encounter: Encounter) => {
-			const copy = PlaybookLogic.startEncounter(encounter, props.sourcebooks, props.options);
+			const copy = PlaybookLogic.startEncounter(encounter, props.sourcebooks, props.heroes, props.options);
 
 			const sessionCopy = Utils.copy(session);
 			sessionCopy.encounters.push(copy);
@@ -249,6 +252,11 @@ export const SessionPage = (props: Props) => {
 			navigation.goToSession(copy.id);
 		};
 
+		const exampleEncounters = [
+			EncounterData.goblinAmbush,
+			EncounterData.dragonAttack
+		];
+
 		const exampleMontages = [
 			MontageData.fightFire,
 			MontageData.infiltrateThePalace,
@@ -292,6 +300,14 @@ export const SessionPage = (props: Props) => {
 								/>
 								: null
 						}
+						<div className='ds-text bold-text'>Example encounters:</div>
+						<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '10px' }}>
+							{
+								exampleEncounters.map(e => (
+									<Button key={e.id} block={true} onClick={() => startEncounter(e)}>{e.name}</Button>
+								))
+							}
+						</div>
 					</Space>
 				);
 			case 'montage':
@@ -416,6 +432,16 @@ export const SessionPage = (props: Props) => {
 							/>
 							: null
 					}
+					<div className='divider' />
+					<Popover
+						trigger='click'
+						placement='bottom'
+						content={<OptionsPanel mode='session' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+					>
+						<Button icon={<SettingOutlined />}>
+							Options
+						</Button>
+					</Popover>
 				</AppHeader>
 				<div className='session-page-content'>
 					<Space className='left-column' direction='vertical'>

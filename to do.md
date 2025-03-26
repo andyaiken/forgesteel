@@ -27,6 +27,8 @@
   * Tactical
     * Create or import
     * Auto-create delve map
+    * Add heroes to map
+    * In encounter, add monster tokens / terrain tokens / terrain overlays
   * Regional
 * Adventure Builder:
   * Allow subplots
@@ -38,13 +40,17 @@
 ### Session
 
 * Encounter tracker
-  * Set 'used reaction' flag on monsters / minions
-  * Show number of squares on terrain encounter row
-  * Show 'should be N squares' for terrain
-  * Ability to add new terrain objects
-  * Ability to duplicate / delete monsters in a slot
-  * On end turn, handle EoT conditions
-  * Handle 'save ends' conditions
+  * Monsters:
+    * Set 'used reaction' flag on monsters / minions
+    * Ability to duplicate / delete monsters in a slot
+    * Button to roll for initiative (heroes / monsters)
+    * Button to end current turn
+      * Handle EoT (remove) / save ends (roll to remove) conditions on combatants in current group
+      * Select (ready, active) group from other faction; if no more, next turn (mark all as ready)
+  * Terrain:
+    * Show number of squares on terrain encounter row
+    * Show 'should be N squares' for terrain
+    * Ability to add new terrain objects
 * Player view
   * Ability to show certain information to players using a second window
 

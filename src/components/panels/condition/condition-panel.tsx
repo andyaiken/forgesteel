@@ -65,7 +65,7 @@ export const ConditionPanel = (props: Props) => {
 					/>
 				</Space>
 				<div className='action-buttons'>
-					<DangerButton mode='icon' onConfirm={() => props.onDelete(condition)} />
+					<DangerButton mode='clear' onConfirm={() => props.onDelete(condition)} />
 				</div>
 			</div>
 		);

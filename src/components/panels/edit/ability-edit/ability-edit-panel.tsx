@@ -453,7 +453,7 @@ export const AbilityEditPanel = (props: Props) => {
 													extra={[
 														<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveDistance(n, 'up'); }} />,
 														<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveDistance(n, 'down'); }} />,
-														<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteDistance(n); }} />
+														<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteDistance(n); }} />
 													]}
 												>
 													<Space direction='vertical' style={{ width: '100%' }}>
@@ -641,7 +641,7 @@ export const AbilityEditPanel = (props: Props) => {
 													extra={[
 														<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveAlternateEffect(n, 'up'); }} />,
 														<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveAlternateEffect(n, 'down'); }} />,
-														<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteAlternateEffect(n); }} />
+														<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteAlternateEffect(n); }} />
 													]}
 												>
 													<Input
@@ -671,7 +671,7 @@ export const AbilityEditPanel = (props: Props) => {
 													extra={[
 														<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSpend(n, 'up'); }} />,
 														<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSpend(n, 'down'); }} />,
-														<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSpend(n); }} />
+														<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSpend(n); }} />
 													]}
 												>
 													<Space direction='vertical' style={{ width: '100%' }}>
@@ -704,7 +704,7 @@ export const AbilityEditPanel = (props: Props) => {
 													extra={[
 														<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); movePersistence(n, 'up'); }} />,
 														<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); movePersistence(n, 'down'); }} />,
-														<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deletePersistence(n); }} />
+														<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deletePersistence(n); }} />
 													]}
 												>
 													<Space direction='vertical' style={{ width: '100%' }}>

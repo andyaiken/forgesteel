@@ -100,7 +100,7 @@ export const HeroViewPage = (props: Props) => {
 							Export
 						</Button>
 					</Popover>
-					<DangerButton block={true} onConfirm={() => props.deleteHero(hero)} />
+					<DangerButton mode='block' onConfirm={() => props.deleteHero(hero)} />
 					<div className='divider' />
 					<Button onClick={() => props.showHeroState(hero, HeroStatePage.Hero)}>
 						Manage

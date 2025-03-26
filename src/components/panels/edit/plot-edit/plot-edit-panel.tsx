@@ -134,7 +134,7 @@ export const PlotEditPanel = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveContent(c, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveContent(c, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteContent(c); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteContent(c); }} />
 							]}
 						>
 							<HeaderText>Type</HeaderText>
@@ -236,7 +236,7 @@ export const PlotEditPanel = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveLink(l, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveLink(l, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteLink(l); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteLink(l); }} />
 							]}
 						>
 							<HeaderText>Link To</HeaderText>

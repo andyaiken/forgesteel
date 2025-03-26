@@ -746,7 +746,7 @@ export const FeatureEditPanel = (props: Props) => {
 									extra={[
 										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveChoice(data, n, 'up'); }} />,
 										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveChoice(data, n, 'down');}} />,
-										<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteChoice(data, n); }} />
+										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteChoice(data, n); }} />
 									]}
 								>
 									<Space direction='vertical' style={{ width: '100%' }}>
@@ -853,7 +853,7 @@ export const FeatureEditPanel = (props: Props) => {
 										/>
 										<NumberSpin label='Per Level After 1st' min={0} value={mod.valuePerLevel} onChange={value => setDamageModifierValuePerLevel(data, n, value)} />
 										<NumberSpin label='Per Echelon' min={0} value={mod.valuePerEchelon} onChange={value => setDamageModifierValuePerEchelon(data, n, value)} />
-										<DangerButton block={true} onConfirm={() => deleteDamageModifier(data, n)} />
+										<DangerButton mode='block' onConfirm={() => deleteDamageModifier(data, n)} />
 									</Space>
 								</Expander>
 							))
@@ -987,7 +987,7 @@ export const FeatureEditPanel = (props: Props) => {
 										extra={[
 											<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMaliceSection(data, n, 'up'); }} />,
 											<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMaliceSection(data, n, 'down'); }} />,
-											<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteMaliceSection(data, n); }} />
+											<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteMaliceSection(data, n); }} />
 										]}
 									>
 										<Space direction='vertical' style={{ width: '100%' }}>
@@ -1067,7 +1067,7 @@ export const FeatureEditPanel = (props: Props) => {
 									extra={[
 										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMultipleFeature(data, n, 'up'); }} />,
 										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMultipleFeature(data, n, 'down'); }} />,
-										<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteMultipleFeature(data, n); }} />
+										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteMultipleFeature(data, n); }} />
 									]}
 								>
 									<FeatureEditPanel

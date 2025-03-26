@@ -429,7 +429,7 @@ export const HeroStateModal = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveItem(item, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveItem(item, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteItem(item); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteItem(item); }} />
 							]}
 						>
 							<ItemPanel
@@ -564,7 +564,7 @@ export const HeroStateModal = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveProject(project, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveProject(project, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteProject(project); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteProject(project); }} />
 							]}
 						>
 							<ProjectPanel

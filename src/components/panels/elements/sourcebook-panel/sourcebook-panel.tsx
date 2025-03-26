@@ -163,7 +163,7 @@ export const SourcebookPanel = (props: Props) => {
 										extra={[
 											<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'up'); }} />,
 											<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'down'); }} />,
-											<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteLanguage(n); }} />
+											<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteLanguage(n); }} />
 										]}
 									>
 										<Space direction='vertical' style={{ width: '100%' }}>
@@ -199,7 +199,7 @@ export const SourcebookPanel = (props: Props) => {
 										extra={[
 											<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'up'); }} />,
 											<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'down'); }} />,
-											<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSkill(n); }} />
+											<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSkill(n); }} />
 										]}
 									>
 										<Space direction='vertical' style={{ width: '100%' }}>
@@ -253,7 +253,7 @@ export const SourcebookPanel = (props: Props) => {
 					<Button type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(sourcebook, !props.visible)} />
 					{sourcebook.isHomebrew ? <Button type='text' title='Edit' icon={<EditOutlined />} onClick={toggleEditing} /> : null}
 					<Button type='text' title='Export' icon={<UploadOutlined />} onClick={onExport} />
-					{sourcebook.isHomebrew ? <DangerButton disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='icon' onConfirm={onDelete} /> : null}
+					{sourcebook.isHomebrew ? <DangerButton disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='clear' onConfirm={onDelete} /> : null}
 				</>
 			);
 		}

@@ -253,7 +253,7 @@ export const HeroCustomizePanel = (props: Props) => {
 							key={f.id}
 							title={f.name}
 							extra={[
-								<DangerButton key='delete' mode='icon' onConfirm={() => props.deleteFeature(f)} />
+								<DangerButton key='delete' mode='clear' onConfirm={() => props.deleteFeature(f)} />
 							]}
 						>
 							{getEditSection(f)}

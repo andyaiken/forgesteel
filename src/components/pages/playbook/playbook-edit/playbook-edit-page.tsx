@@ -208,7 +208,7 @@ export const PlaybookEditPage = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSection(n, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSection(n, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSection(section.id); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSection(section.id); }} />
 							]}
 						>
 							<HeaderText>Section</HeaderText>
@@ -282,7 +282,7 @@ export const PlaybookEditPage = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); movePlotPoint(n, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); movePlotPoint(n, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deletePlotPoint(p.id); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deletePlotPoint(p.id); }} />
 							]}
 						>
 							<PlotEditPanel
@@ -480,7 +480,7 @@ export const PlaybookEditPage = (props: Props) => {
 									/>
 									: null
 							}
-							{encounter.groups.length > 1 ? <DangerButton block={true} label='Delete Group' onConfirm={() => deleteGroup(group)} /> : null}
+							{encounter.groups.length > 1 ? <DangerButton mode='block' label='Delete Group' onConfirm={() => deleteGroup(group)} /> : null}
 						</div>
 					))
 				}
@@ -771,7 +771,7 @@ export const PlaybookEditPage = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMotivation(n, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMotivation(n, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteMotivation(m.trait); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteMotivation(m.trait); }} />
 							]}
 						>
 							<HeaderText>Motivation</HeaderText>
@@ -852,7 +852,7 @@ export const PlaybookEditPage = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); movePitfall(n, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); movePitfall(n, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deletePitfall(p.trait); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deletePitfall(p.trait); }} />
 							]}
 						>
 							<HeaderText>Pitfall</HeaderText>
@@ -1120,7 +1120,7 @@ export const PlaybookEditPage = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSection(sectionIndex, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSection(sectionIndex, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSection(s.id); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSection(s.id); }} />
 							]}
 						>
 							<Tabs
@@ -1150,7 +1150,7 @@ export const PlaybookEditPage = (props: Props) => {
 															extra={[
 																<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveChallenge(sectionIndex, challengeIndex, 'up'); }} />,
 																<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveChallenge(sectionIndex, challengeIndex, 'down'); }} />,
-																<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteChallenge(sectionIndex, c.id); }} />
+																<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteChallenge(sectionIndex, c.id); }} />
 															]}
 														>
 															<HeaderText>Name</HeaderText>
@@ -1219,7 +1219,7 @@ export const PlaybookEditPage = (props: Props) => {
 															extra={[
 																<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveTwist(sectionIndex, twistIndex, 'up'); }} />,
 																<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveTwist(sectionIndex, twistIndex, 'down'); }} />,
-																<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteTwist(sectionIndex, t.id); }} />
+																<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteTwist(sectionIndex, t.id); }} />
 															]}
 														>
 															<HeaderText>Name</HeaderText>

@@ -229,7 +229,7 @@ export const LibraryEditPage = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteFeature(f); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteFeature(f); }} />
 							]}
 						>
 							<FeatureEditPanel
@@ -299,7 +299,7 @@ export const LibraryEditPage = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveIncident(o, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveIncident(o, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteIncident(o); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteIncident(o); }} />
 							]}
 						>
 							<ElementEditPanel
@@ -542,7 +542,7 @@ export const LibraryEditPage = (props: Props) => {
 											extra={[
 												<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'up'); }} />,
 												<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'down'); }} />,
-												<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteFeature(lvl.level, f); }} />
+												<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteFeature(lvl.level, f); }} />
 											]}
 										>
 											<FeatureEditPanel
@@ -621,7 +621,7 @@ export const LibraryEditPage = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteAbility(a); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteAbility(a); }} />
 							]}
 						>
 							<AbilityEditPanel
@@ -677,7 +677,7 @@ export const LibraryEditPage = (props: Props) => {
 								<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!, sc.id); }} />,
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSubclass(sc); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSubclass(sc); }} />
 							]}
 						>
 							<SubclassPanel subclass={sc} options={props.options} />
@@ -801,7 +801,7 @@ export const LibraryEditPage = (props: Props) => {
 								extra={[
 									<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(subclass, lvl.level, f, 'up'); }} />,
 									<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(subclass, lvl.level, f, 'down'); }} />,
-									<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteFeature(subclass, lvl.level, f); }} />
+									<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteFeature(subclass, lvl.level, f); }} />
 								]}
 							>
 								<FeatureEditPanel
@@ -1266,7 +1266,7 @@ export const LibraryEditPage = (props: Props) => {
 											extra={[
 												<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f.feature, 'up'); }} />,
 												<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f.feature, 'down'); }} />,
-												<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteFeature(lvl.level, f.feature); }} />
+												<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteFeature(lvl.level, f.feature); }} />
 											]}
 										>
 											<FeatureEditPanel
@@ -1566,7 +1566,7 @@ export const LibraryEditPage = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveDamageMod(n, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveDamageMod(n, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteDamageMod(n); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteDamageMod(n); }} />
 							]}
 						>
 							<HeaderText>Modifier Type</HeaderText>
@@ -1676,7 +1676,7 @@ export const LibraryEditPage = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSection(sectionIndex, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSection(sectionIndex, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSection(sectionIndex); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSection(sectionIndex); }} />
 							]}
 						>
 							<Space direction='vertical' style={{ width: '100%' }}>
@@ -1688,7 +1688,7 @@ export const LibraryEditPage = (props: Props) => {
 											extra={[
 												<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSectionContent(sectionIndex, contentIndex, 'up'); }} />,
 												<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSectionContent(sectionIndex, contentIndex, 'down'); }} />,
-												<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteSectionContent(sectionIndex, contentIndex); }} />
+												<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSectionContent(sectionIndex, contentIndex); }} />
 											]}
 										>
 											<FeatureEditPanel
@@ -1845,7 +1845,7 @@ export const LibraryEditPage = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveUpgrade(upgradeIndex, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveUpgrade(upgradeIndex, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteUpgrade(upgradeIndex); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteUpgrade(upgradeIndex); }} />
 							]}
 						>
 							<Space direction='vertical' style={{ width: '100%' }}>
@@ -1870,7 +1870,7 @@ export const LibraryEditPage = (props: Props) => {
 											extra={[
 												<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveUpgradeSection(upgradeIndex, sectionIndex, 'up'); }} />,
 												<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveUpgradeSection(upgradeIndex, sectionIndex, 'down'); }} />,
-												<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteUpgradeSection(upgradeIndex, sectionIndex); }} />
+												<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteUpgradeSection(upgradeIndex, sectionIndex); }} />
 											]}
 										>
 											<Space direction='vertical' style={{ width: '100%' }}>
@@ -1882,7 +1882,7 @@ export const LibraryEditPage = (props: Props) => {
 															extra={[
 																<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveUpgradeSectionContent(upgradeIndex, sectionIndex, contentIndex, 'up'); }} />,
 																<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveUpgradeSectionContent(upgradeIndex, sectionIndex, contentIndex, 'down'); }} />,
-																<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteUpgradeSectionContent(upgradeIndex, sectionIndex, contentIndex); }} />
+																<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteUpgradeSectionContent(upgradeIndex, sectionIndex, contentIndex); }} />
 															]}
 														>
 															<FeatureEditPanel
@@ -1973,7 +1973,7 @@ export const LibraryEditPage = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveInformation(i, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveInformation(i, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteInformation(i); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteInformation(i); }} />
 							]}
 						>
 							<ElementEditPanel
@@ -2045,7 +2045,7 @@ export const LibraryEditPage = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMaliceFeature(f, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMaliceFeature(f, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteMaliceFeature(f); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteMaliceFeature(f); }} />
 							]}
 						>
 							<FeatureEditPanel
@@ -2120,7 +2120,7 @@ export const LibraryEditPage = (props: Props) => {
 								<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!, m.id); }} />,
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMonster(m, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMonster(m, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteMonster(m); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteMonster(m); }} />
 							]}
 						>
 							<MonsterPanel
@@ -2191,7 +2191,7 @@ export const LibraryEditPage = (props: Props) => {
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveAddOn(i, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveAddOn(i, 'down'); }} />,
-								<DangerButton key='delete' mode='icon' onConfirm={e => { e.stopPropagation(); deleteAddOn(i); }} />
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteAddOn(i); }} />
 							]}
 						>
 							<FeatureEditPanel

@@ -5,8 +5,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import './danger-button.scss';
 
 interface Props {
-	mode?: 'default' | 'icon';
-	block?: boolean;
+	mode?: 'default' | 'block' | 'clear' | 'icon';
 	disabled?: boolean;
 	label?: ReactNode;
 	message?: ReactNode;
@@ -18,6 +17,31 @@ export const DangerButton = (props: Props) => {
 
 	try {
 		const disabled = props.disabled || false;
+
+		const getContent = () => {
+			switch (props.mode) {
+				case 'block':
+					return (
+						<Button icon={<DeleteOutlined />} block={true} disabled={disabled} danger={true}>
+							{props.label || 'Delete'}
+						</Button>
+					);
+				case 'clear':
+					return (
+						<Button type='text' icon={<DeleteOutlined />} disabled={disabled} danger={true} />
+					);
+				case 'icon':
+					return (
+						<Button icon={<DeleteOutlined />} disabled={disabled} danger={true} />
+					);
+				default:
+					return (
+						<Button icon={<DeleteOutlined />} disabled={disabled} danger={true}>
+							{props.label || 'Delete'}
+						</Button>
+					);
+			}
+		};
 
 		return (
 			<Popover
@@ -36,14 +60,7 @@ export const DangerButton = (props: Props) => {
 				)}
 			>
 				<div onClick={e => e.stopPropagation()}>
-					{
-						props.mode === 'icon' ?
-							<DeleteOutlined disabled={disabled} style={{ color: '#ff4d4f', pointerEvents: disabled ? 'none' : 'auto', opacity: disabled ? 0.6 : 1 }} />
-							:
-							<Button icon={<DeleteOutlined />} block={props.block || false} disabled={disabled} danger={true}>
-								{props.label || 'Delete'}
-							</Button>
-					}
+					{getContent()}
 				</div>
 			</Popover>
 		);

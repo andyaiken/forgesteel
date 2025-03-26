@@ -18,6 +18,7 @@ import { Kit } from '../../../../models/kit';
 import { Options } from '../../../../models/options';
 import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { RulesPage } from '../../../../enums/rules-page';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { useMemo } from 'react';
 import { useNavigation } from '../../../../hooks/use-navigation';
@@ -47,7 +48,7 @@ interface Props {
 	showCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
 	showHeroState: (hero: Hero, page: HeroStatePage) => void;
-	showRules: (hero: Hero) => void;
+	showRules: (hero: Hero, page: RulesPage) => void;
 }
 
 export const HeroViewPage = (props: Props) => {
@@ -75,7 +76,7 @@ export const HeroViewPage = (props: Props) => {
 
 		return (
 			<div className='hero-view-page'>
-				<AppHeader subheader='Hero' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader subheader='Hero' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={() => props.showRules(hero, RulesPage.Conditions)}>
 					<Button icon={<CloseOutlined />} onClick={() => navigation.goToHeroList(hero.folder)}>
 						Close
 					</Button>
@@ -102,10 +103,7 @@ export const HeroViewPage = (props: Props) => {
 					<DangerButton block={true} onConfirm={() => props.deleteHero(hero)} />
 					<div className='divider' />
 					<Button onClick={() => props.showHeroState(hero, HeroStatePage.Hero)}>
-						State
-					</Button>
-					<Button onClick={() => props.showRules(hero)}>
-						Rules
+						Manage
 					</Button>
 					<Popover
 						trigger='click'
@@ -134,6 +132,7 @@ export const HeroViewPage = (props: Props) => {
  						onSelectCharacteristic={characteristic => props.showCharacteristic(characteristic, hero)}
  						onSelectAbility={ability => props.showAbility(ability, hero)}
  						onShowState={page => props.showHeroState(hero, page)}
+ 						onShowRules={page => props.showRules(hero, page)}
 					/>
 				</div>
 			</div>

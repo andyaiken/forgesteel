@@ -57,6 +57,7 @@ interface Props {
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
+	showRules: () => void;
 	setOptions: (options: Options) => void;
  	showSourcebooks: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null) => void;
@@ -698,7 +699,7 @@ export const LibraryListPage = (props: Props) => {
 
 		return (
 			<div className='library-list-page'>
-				<AppHeader subheader='Library' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader subheader='Library' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
 					<Input
 						placeholder='Search'
 						allowClear={true}

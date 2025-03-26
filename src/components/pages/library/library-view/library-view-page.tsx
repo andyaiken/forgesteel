@@ -50,6 +50,7 @@ interface Props {
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
+	showRules: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 	export: (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	delete: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
@@ -248,7 +249,7 @@ export const LibraryViewPage = (props: Props) => {
 	try {
 		return (
 			<div className='library-view-page'>
-				<AppHeader subheader={getSubheader()} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader subheader={getSubheader()} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
 					{
 						subElementID ?
 							<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryView(kind!, elementID!)}>

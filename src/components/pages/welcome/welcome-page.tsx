@@ -10,6 +10,7 @@ interface Props {
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
+	showRules: () => void;
 }
 
 export const WelcomePage = (props: Props) => {
@@ -18,7 +19,7 @@ export const WelcomePage = (props: Props) => {
 	try {
 		return (
 			<div className='welcome-page'>
-				<AppHeader showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} />
+				<AppHeader showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
 				<div className='welcome-page-content'>
 					<div className='welcome-column'>
 						<HeaderText level={1}>Welcome to FORGE STEEL</HeaderText>

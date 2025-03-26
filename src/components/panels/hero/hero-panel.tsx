@@ -29,6 +29,7 @@ import { Kit } from '../../../models/kit';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
+import { RulesPage } from '../../../enums/rules-page';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Skill } from '../../../models/skill';
 import { SkillList } from '../../../enums/skill-list';
@@ -53,6 +54,7 @@ interface Props {
  	onSelectCharacteristic?: (characteristic: Characteristic) => void;
  	onSelectAbility?: (ability: Ability) => void;
  	onShowState?: (page: HeroStatePage) => void;
+ 	onShowRules?: (page: RulesPage) => void;
 }
 
 export const HeroPanel = (props: Props) => {
@@ -219,6 +221,18 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getRightColumn = (showBorder: boolean) => {
+		const onShowSkills = () => {
+			if (props.onShowRules) {
+				props.onShowRules(RulesPage.Skills);
+			}
+		};
+
+		const onShowLanguages = () => {
+			if (props.onShowRules) {
+				props.onShowRules(RulesPage.Languages);
+			}
+		};
+
 		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
 		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
@@ -226,7 +240,7 @@ export const HeroPanel = (props: Props) => {
 
 		const getSkills = (label: string, skills: Skill[]) => {
 			return skills.length > 0 ?
-				<div key={label} className='overview-tile'>
+				<div key={label} className='overview-tile clickable' onClick={onShowSkills}>
 					<HeaderText>{label}</HeaderText>
 					{skills.map(s => <div key={s.name} className='ds-text'>{s.name}</div>)}
 				</div>
@@ -255,7 +269,7 @@ export const HeroPanel = (props: Props) => {
 						</div>
 						: null
 				}
-				<div className='overview-tile'>
+				<div className='overview-tile clickable' onClick={onShowLanguages}>
 					<HeaderText>Languages</HeaderText>
 					{
 						HeroLogic.getLanguages(props.hero, sourcebooks).length > 0 ?

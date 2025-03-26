@@ -33,7 +33,8 @@ interface Props {
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
-	showMiniChecklist: (encounter: Encounter) => void;
+	showRules: () => void;
+	showEncounterTools: (encounter: Encounter) => void;
 	export: (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	start: (kind: PlaybookElementKind, element: Element) => void;
 	delete: (kind: PlaybookElementKind, element: Element) => void;
@@ -99,7 +100,7 @@ export const PlaybookViewPage = (props: Props) => {
 	try {
 		return (
 			<div className='playbook-view-page'>
-				<AppHeader subheader={Format.capitalize(kind!)} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader subheader={Format.capitalize(kind!)} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
 					<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybookList(kind!)}>
 						Close
 					</Button>
@@ -140,8 +141,8 @@ export const PlaybookViewPage = (props: Props) => {
 					}
 					{
 						(kind === 'encounter') ?
-							<Button onClick={() => props.showMiniChecklist(element as Encounter)}>
-								Minis
+							<Button onClick={() => props.showEncounterTools(element as Encounter)}>
+								Tools
 							</Button>
 							: null
 					}

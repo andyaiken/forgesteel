@@ -56,7 +56,8 @@
 
 ### Ideas
 
-* Add a way to load / save data from a remote folder / OneDrive / Google Docs / iCloud etc
+* Add a way to load / save data from a remote folder / OneDrive / Google Docs / iCloud
 * Add guides for specific features
+  * Heroes / hero state / PDF export
   * Monster building / genesplice
-  * Encounter building
+  * Encounter building / running

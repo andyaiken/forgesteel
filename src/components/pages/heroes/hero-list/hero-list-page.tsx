@@ -22,6 +22,7 @@ interface Props {
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
+	showRules: () => void;
 	addHero: () => void;
 	importHero: (hero: Hero) => void;
 }
@@ -79,7 +80,7 @@ export const HeroListPage = (props: Props) => {
 	try {
 		return (
 			<div className='hero-list-page'>
-				<AppHeader subheader='Heroes' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader subheader='Heroes' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
 					<Input
 						placeholder='Search'
 						allowClear={true}

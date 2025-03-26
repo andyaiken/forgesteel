@@ -83,7 +83,7 @@ export const ProjectPanel = (props: Props) => {
 									: null
 							}
 							{
-								project.progress && project.progress.prerequisites && project.progress.source && (project.goal > 0) ?
+								project.progress && itemOK && sourceOK && (project.goal > 0) ?
 									<Progress
 										className='project-progress'
 										type='dashboard'

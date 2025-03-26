@@ -18,6 +18,7 @@ import { Domain } from '../../models/domain';
 import { Element } from '../../models/element';
 import { ElementModal } from '../modals/element/element-modal';
 import { Encounter } from '../../models/encounter';
+import { EncounterToolsModal } from '../modals/encounter-tools/encounter-tools-modal';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { Format } from '../../utils/format';
 import { Hero } from '../../models/hero';
@@ -36,7 +37,6 @@ import { LibraryEditPage } from '../pages/library/library-edit/library-edit-page
 import { LibraryListPage } from '../pages/library/library-list/library-list-page';
 import { LibraryViewPage } from '../pages/library/library-view/library-view-page';
 import { MainLayout } from './main-layout';
-import { MiniChecklistModal } from '../modals/mini-checklist/mini-checklist-modal';
 import { MonsterModal } from '../modals/monster/monster-modal';
 import { Montage } from '../../models/montage';
 import { Negotiation } from '../../models/negotiation';
@@ -49,6 +49,7 @@ import { PlaybookLogic } from '../../logic/playbook-logic';
 import { PlaybookViewPage } from '../pages/playbook/playbook-view/playbook-view-page';
 import { RollModal } from '../modals/roll/roll-modal';
 import { RulesModal } from '../modals/rules/rules-modal';
+import { RulesPage } from '../../enums/rules-page';
 import { SessionPage } from '../pages/session/session-page';
 import { SourcebookData } from '../../data/sourcebook-data';
 import { SourcebookLogic } from '../../logic/sourcebook-logic';
@@ -894,6 +895,10 @@ export const Main = (props: Props) => {
 		);
 	};
 
+	const showRules = () => {
+		onShowRules(null, RulesPage.Conditions);
+	};
+
 	const onSelectLibraryElement = (element: Element, kind: SourcebookElementKind) => {
 		setDrawer(
 			<ElementModal
@@ -970,11 +975,12 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onShowRules = (hero: Hero) => {
+	const onShowRules = (hero: Hero | null, page: RulesPage) => {
 		setDrawer(
 			<RulesModal
 				hero={hero}
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				startPage={page}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -994,9 +1000,9 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const showMiniChecklist = (encounter: Encounter) => {
+	const showEncounterTools = (encounter: Encounter) => {
 		setDrawer(
-			<MiniChecklistModal
+			<EncounterToolsModal
 				encounter={encounter}
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
 				options={options}
@@ -1028,6 +1034,7 @@ export const Main = (props: Props) => {
 							showDirectory={showDirectoryPane}
 							showAbout={showAbout}
 							showRoll={showRoll}
+							showRules={showRules}
 						/>
 					}
 				/>
@@ -1043,6 +1050,7 @@ export const Main = (props: Props) => {
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
+								showRules={showRules}
 								addHero={createHero}
 								importHero={importHero}
 							/>
@@ -1091,6 +1099,7 @@ export const Main = (props: Props) => {
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
+								showRules={showRules}
 								saveChanges={saveHero}
 							/>
 						}
@@ -1116,6 +1125,7 @@ export const Main = (props: Props) => {
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
+								showRules={showRules}
 								setOptions={persistOptions}
 								showSourcebooks={showSourcebooks}
 								createElement={(kind, sourcebookID) => createLibraryElement(kind, sourcebookID, null)}
@@ -1133,6 +1143,7 @@ export const Main = (props: Props) => {
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
+								showRules={showRules}
 								createElement={createLibraryElement}
 								export={exportLibraryElement}
 								delete={deleteLibraryElement}
@@ -1149,6 +1160,7 @@ export const Main = (props: Props) => {
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
+								showRules={showRules}
 								showMonster={onSelectMonster}
 								saveChanges={saveLibraryElement}
 								setOptions={persistOptions}
@@ -1172,6 +1184,7 @@ export const Main = (props: Props) => {
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
+								showRules={showRules}
 								createElement={createPlaybookElement}
 								importElement={importPlaybookElement}
 								setOptions={persistOptions}
@@ -1189,7 +1202,8 @@ export const Main = (props: Props) => {
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
-								showMiniChecklist={showMiniChecklist}
+								showRules={showRules}
+								showEncounterTools={showEncounterTools}
 								export={exportPlaybookElement}
 								start={startPlaybookElement}
 								delete={deletePlaybookElement}
@@ -1208,6 +1222,7 @@ export const Main = (props: Props) => {
 								showDirectory={showDirectoryPane}
 								showAbout={showAbout}
 								showRoll={showRoll}
+								showRules={showRules}
 								showMonster={onSelectMonster}
 								showTerrain={onSelectTerrain}
 								saveChanges={savePlaybookElement}
@@ -1228,6 +1243,7 @@ export const Main = (props: Props) => {
 							showDirectory={showDirectoryPane}
 							showAbout={showAbout}
 							showRoll={showRoll}
+							showRules={showRules}
 							updateSession={persistSession}
 							setOptions={persistOptions}
 						/>

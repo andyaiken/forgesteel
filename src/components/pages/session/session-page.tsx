@@ -43,6 +43,7 @@ interface Props {
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
+	showRules: () => void;
 	updateSession: (session: Playbook) => void;
 	setOptions: (options: Options) => void;
 }
@@ -403,7 +404,7 @@ export const SessionPage = (props: Props) => {
 	try {
 		return (
 			<div className='session-page'>
-				<AppHeader subheader='Session' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll}>
+				<AppHeader subheader='Session' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
 					<Popover
 						trigger='click'
 						placement='bottom'

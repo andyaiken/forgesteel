@@ -1,4 +1,5 @@
 import { AbilityKeyword } from '../../../enums/ability-keyword';
+import { Alert } from 'antd';
 import { Collections } from '../../../utils/collections';
 import { Encounter } from '../../../models/encounter';
 import { FeatureType } from '../../../enums/feature-type';
@@ -12,7 +13,7 @@ import { Options } from '../../../models/options';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
 
-import './mini-checklist-modal.scss';
+import './encounter-tools-modal.scss';
 
 interface Props {
 	encounter: Encounter;
@@ -21,7 +22,7 @@ interface Props {
 	onClose: () => void;
 }
 
-export const MiniChecklistModal = (props: Props) => {
+export const EncounterToolsModal = (props: Props) => {
 	try {
 		const monsters: { monster: Monster, count: number }[] = [];
 		props.encounter.groups
@@ -44,8 +45,13 @@ export const MiniChecklistModal = (props: Props) => {
 		return (
 			<Modal
 				content={
-					<div className='mini-checklist-modal'>
+					<div className='encounter-tools-modal'>
 						<HeaderText level={1}>Mini Checklist</HeaderText>
+						<Alert
+							type='info'
+							showIcon={true}
+							message='This list provides a breakdown of the minis you will need to run this encounter.'
+						/>
 						{
 							Collections.sort(monsters, data => data.monster.name).map(data => {
 								return (

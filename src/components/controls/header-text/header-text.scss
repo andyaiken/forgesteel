@@ -11,9 +11,11 @@
 		padding-bottom: 10px;
 		border-bottom-width: 5px;
 
-		.header-text {
-			font-size: 22px;
-			letter-spacing: 2px;
+		.header-text-content {
+			.header-text {
+				font-size: 22px;
+				letter-spacing: 2px;
+			}
 		}
 	}
 
@@ -21,9 +23,11 @@
 		margin: 10px 0;
 		border-bottom-width: 1px;
 
-		.header-text {
-			font-size: 16px;
-			letter-spacing: 1px;
+		.header-text-content {
+			.header-text {
+				font-size: 16px;
+				letter-spacing: 1px;
+			}
 		}
 	}
 
@@ -48,8 +52,10 @@
 	.header-text-panel {
 		border-bottom-color: rgba(250, 250, 250, 0.6);
 
-		.header-text {
-			color: rgba(255, 255, 255, 0.88);
+		.header-text-content {
+			.header-text {
+				color: rgba(255, 255, 255, 0.88);
+			}
 		}
 	}	
 }

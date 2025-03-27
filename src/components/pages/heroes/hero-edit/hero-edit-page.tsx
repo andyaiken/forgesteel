@@ -1,5 +1,5 @@
-import { Alert, AutoComplete, Button, Divider, Input, Radio, Segmented, Select, Space } from 'antd';
-import { CloseOutlined, SaveOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Alert, AutoComplete, Button, Divider, Input, Radio, Segmented, Select, Space, Upload } from 'antd';
+import { CloseOutlined, DownloadOutlined, SaveOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureBonusData, FeatureData } from '../../../../models/feature';
 import { Hero, HeroEditTab } from '../../../../models/hero';
@@ -42,6 +42,7 @@ import { useParams } from 'react-router';
 import './hero-edit-page.scss';
 
 enum PageState {
+	Blank = '',
 	Optional = 'Optional',
 	NotStarted = 'Not Started',
 	InProgress = 'In Progress',
@@ -66,6 +67,7 @@ interface Props {
 	showRoll: () => void;
 	showRules: () => void;
 	saveChanges: (hero: Hero) => void;
+	importSourcebook: (sourcebook: Sourcebook) => void;
 }
 
 export const HeroEditPage = (props: Props) => {
@@ -80,6 +82,8 @@ export const HeroEditPage = (props: Props) => {
 	try {
 		const getPageState = (page: HeroEditTab) => {
 			switch (page) {
+				case 'start':
+					return PageState.Blank;
 				case 'ancestry':
 					if (hero.ancestry) {
 						return (hero.ancestry.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
@@ -392,6 +396,15 @@ export const HeroEditPage = (props: Props) => {
 
 		const getContent = () => {
 			switch (page) {
+				case 'start':
+					return (
+						<StartSection
+							hero={hero}
+							sourcebooks={props.sourcebooks}
+							setSettingIDs={setSettingIDs}
+							importSourcebook={props.importSourcebook}
+						/>
+					);
 				case 'ancestry':
 					return (
 						<AncestrySection
@@ -462,10 +475,8 @@ export const HeroEditPage = (props: Props) => {
 							allHeroes={props.heroes}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
 							options={props.options}
-							allSourcebooks={props.sourcebooks}
 							setName={setName}
 							setFolder={setFolder}
-							setSettingIDs={setSettingIDs}
 							addFeature={addFeature}
 							deleteFeature={deleteFeature}
 							setFeature={setFeature}
@@ -511,6 +522,7 @@ export const HeroEditPage = (props: Props) => {
 						<Segmented<HeroEditTab>
 							name='sections'
 							options={([
+								'start',
 								'ancestry',
 								'culture',
 								'career',
@@ -546,6 +558,84 @@ export const HeroEditPage = (props: Props) => {
 							: null
 					}
 					{getContent()}
+				</div>
+			</div>
+		);
+	} catch (ex) {
+		console.error(ex);
+		return null;
+	}
+};
+
+interface StartSectionProps {
+	hero: Hero;
+	sourcebooks: Sourcebook[];
+	setSettingIDs: (settingIDs: string[]) => void;
+	importSourcebook: (sourcebook: Sourcebook) => void;
+}
+
+const StartSection = (props: StartSectionProps) => {
+	try {
+		return (
+			<div className='hero-edit-content centered'>
+				<div className='hero-edit-content-column start choices'>
+					<HeaderText>Creating a Hero</HeaderText>
+					<div className='ds-text'>
+						Creating a hero in <b>Forge Steel</b> is simple.
+					</div>
+					<ul>
+						<li>
+							Use the tabs above to select your hero's <b>ancestry</b>, <b>culture</b>, <b>career</b>, and <b>class</b>.
+							If there are any choices to be made, you'll be prompted to make your selections.
+						</li>
+						<li>
+							Optionally, you can choose a <b>complication</b> - but you can skip this if you'd prefer.
+						</li>
+						<li>
+							Finally, go to the <code>Details</code> tab and give your hero a name.
+						</li>
+					</ul>
+					<div className='ds-text'>
+						When you're done, click <code>Save Changes</code> in the toolbar at the top, and you'll see your hero sheet.
+					</div>
+					<HeaderText>Sourcebooks</HeaderText>
+					<div className='ds-text'>
+						Sourcebooks contain ancestries, classes, kits, and so on.
+						If you have a homebrew sourcebook you'd like to use for this hero, you can include it here.
+					</div>
+					<Select
+						style={{ width: '100%' }}
+						placeholder='Select'
+						mode='multiple'
+						options={props.sourcebooks.map(cs => ({ value: cs.id, label: cs.name || 'Unnamed Sourcebook' }))}
+						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+						dropdownRender={menu => (
+							<>
+								{menu}
+								<Divider style={{ margin: '8px 0' }} />
+								<Upload
+									style={{ width: '100%' }}
+									accept='.drawsteel-sourcebook'
+									showUploadList={false}
+									beforeUpload={file => {
+										file
+											.text()
+											.then(json => {
+												const sourcebook = (JSON.parse(json) as Sourcebook);
+												sourcebook.id = Utils.guid();
+												SourcebookLogic.updateSourcebook(sourcebook);
+												props.importSourcebook(sourcebook);
+											});
+										return false;
+									}}
+								>
+									<Button block={true} icon={<DownloadOutlined />}>Import a sourcebook</Button>
+								</Upload>
+							</>
+						  )}
+						value={props.hero.settingIDs}
+						onChange={props.setSettingIDs}
+					/>
 				</div>
 			</div>
 		);
@@ -1103,11 +1193,9 @@ interface DetailsSectionProps {
 	hero: Hero;
 	allHeroes: Hero[];
 	sourcebooks: Sourcebook[];
-	allSourcebooks: Sourcebook[];
 	options: Options;
 	setName: (value: string) => void;
 	setFolder: (value: string) => void;
-	setSettingIDs: (settingIDs: string[]) => void;
 	addFeature: (feature: Feature) => void;
 	deleteFeature: (feature: Feature) => void;
 	setFeature: (featureID: string, feature: Feature) => void;
@@ -1141,16 +1229,6 @@ const DetailsSection = (props: DetailsSectionProps) => {
 						onSelect={value => props.setFolder(value)}
 						onChange={value => props.setFolder(value)}
 						filterOption={(value, option) => value.toLowerCase().split(' ').every(token => option!.value.toLowerCase().indexOf(token.toLowerCase()) !== -1)}
-					/>
-					<HeaderText>Sourcebooks</HeaderText>
-					<Select
-						style={{ width: '100%' }}
-						placeholder='Select'
-						mode='multiple'
-						options={props.allSourcebooks.map(cs => ({ value: cs.id, label: cs.name || 'Unnamed Collection' }))}
-						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-						value={props.hero.settingIDs}
-						onChange={props.setSettingIDs}
 					/>
 					{
 						props.hero.features.filter(f => f.id === 'default-language').map(f => (
@@ -1200,9 +1278,9 @@ const EmptyMessage = (props: EmptyMessageProps) => {
 				showIcon={true}
 				message={
 					<div>
-						Looking for something specific? If it's homebrew, make sure you&apos;ve included the sourcebook it&apos;s in.
+						Looking for something specific? If it's homebrew, make sure you've included the sourcebook it's in.
 						<Divider type='vertical' />
-						<Button type='primary' onClick={() => navigation.goToHeroEdit(props.hero.id, 'details')}>
+						<Button type='primary' onClick={() => navigation.goToHeroEdit(props.hero.id, 'start')}>
 							Click Here
 						</Button>
 					</div>

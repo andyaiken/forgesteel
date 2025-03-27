@@ -99,6 +99,7 @@ export const SourcebooksModal = (props: Props) => {
 										.text()
 										.then(json => {
 											const sourcebook = (JSON.parse(json) as Sourcebook);
+											sourcebook.id = Utils.guid();
 											SourcebookLogic.updateSourcebook(sourcebook);
 											importSourcebook(sourcebook);
 										});

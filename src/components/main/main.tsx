@@ -149,7 +149,7 @@ export const Main = (props: Props) => {
 		]);
 
 		setDrawer(null);
-		persistHero(hero).then(() => navigation.goToHeroEdit(hero.id, 'ancestry'));
+		persistHero(hero).then(() => navigation.goToHeroEdit(hero.id, 'start'));
 	};
 
 	const deleteHero = (hero: Hero) => {
@@ -1087,7 +1087,7 @@ export const Main = (props: Props) => {
 					/>
 					<Route
 						path='edit/:heroID'
-						element={<Navigate to='ancestry' replace={true} />}
+						element={<Navigate to='start' replace={true} />}
 					/>
 					<Route
 						path='edit/:heroID/:page'
@@ -1101,6 +1101,11 @@ export const Main = (props: Props) => {
 								showRoll={showRoll}
 								showRules={showRules}
 								saveChanges={saveHero}
+								importSourcebook={sourcebook => {
+									const copy = Utils.copy(homebrewSourcebooks);
+									copy.push(sourcebook);
+									persistHomebrewSourcebooks(copy);
+								}}
 							/>
 						}
 					/>

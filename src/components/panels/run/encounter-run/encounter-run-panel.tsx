@@ -52,6 +52,7 @@ interface Props {
 
 export const EncounterRunPanel = (props: Props) => {
 	const [ encounter, setEncounter ] = useState<Encounter>(Utils.copy(props.encounter));
+	const [ tab, setTab ] = useState<string>('1');
 	const [ addingHeroes, setAddingHeroes ] = useState<boolean>(false);
 	const [ addingMonsters, setAddingMonsters ] = useState<boolean>(false);
 	const [ selectedMonster, setSelectedMonster ] = useState<Monster | null>(null);
@@ -412,10 +413,6 @@ export const EncounterRunPanel = (props: Props) => {
 			<div className='encounter-groups'>
 				{groups.map(getMonsterGroup)}
 				{encounter.heroes.map(getHeroGroup)}
-				<Flex gap={5}>
-					<Button block={true} onClick={() => setAddingHeroes(true)}>Add hero(es)</Button>
-					<Button block={true} onClick={() => setAddingMonsters(true)}>Add a monster</Button>
-				</Flex>
 			</div>
 		);
 	};
@@ -666,6 +663,16 @@ export const EncounterRunPanel = (props: Props) => {
 							children: getReminders()
 						}
 					]}
+					activeKey={tab}
+					onChange={setTab}
+					tabBarExtraContent={
+						tab === '1' ?
+							<Flex gap={5}>
+								<Button block={true} onClick={() => setAddingHeroes(true)}>Add hero(es)</Button>
+								<Button block={true} onClick={() => setAddingMonsters(true)}>Add a monster</Button>
+							</Flex>
+							: null
+					}
 				/>
 				<Drawer open={addingHeroes} onClose={() => setAddingHeroes(false)} closeIcon={null} width='500px'>
 					<HeroSelectModal

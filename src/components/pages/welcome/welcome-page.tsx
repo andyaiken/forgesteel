@@ -26,45 +26,50 @@ export const WelcomePage = (props: Props) => {
 						<div className='ds-text'>
 							<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players, directors, and content creators.
 						</div>
-						<HeaderText>For Players</HeaderText>
-						<div className='welcome-row'>
-							<div>
-								In the <b>HEROES</b> section you can create characters for <b>DRAW STEEL</b>.
-								<ul>
-									<li>
-										All the official content is included (for levels 1 to 3), and you can also use any homebrew content your director has created.
-									</li>
-									<li>
-										You can use the app to track your hero's stamina, conditions, surges, etc.
-									</li>
-									<li>
-										If you're playing offline, you can export your heroes in PNG or PDF formats.
-									</li>
-								</ul>
-							</div>
-							<Button type='primary' block={true} icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>Heroes</Button>
+						<HeaderText
+							extra={<Button type='primary' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>Heroes</Button>}
+						>
+							For Players
+						</HeaderText>
+						<div className='ds-text'>
+							In the <b>HEROES</b> section you can create characters for <b>DRAW STEEL</b>.
 						</div>
-						<HeaderText>For Directors</HeaderText>
-						<div className='welcome-row'>
-							<div>
-								In your <b>PLAYBOOK</b>, you can build encounters, ensuring that they're perfectly balanced for your heroes, and craft negotiations and montage tests.
-								You can then combine all these into an adventure.
-							</div>
-							<Button block={true} icon={<ReadOutlined />} onClick={() => navigation.goToPlaybookList('adventure')}>Playbook</Button>
+						<ul>
+							<li>
+								All the official content is included (for levels 1 to 3), and you can also use any homebrew content your director has created.
+							</li>
+							<li>
+								You can use the app to track your hero's stamina, conditions, surges, etc.
+							</li>
+							<li>
+								If you're playing offline, you can export your heroes in PNG or PDF formats.
+							</li>
+						</ul>
+						<HeaderText
+							extra={
+								<div style={{ display: 'flex', gap: '5px' }}>
+									<Button icon={<ReadOutlined />} onClick={() => navigation.goToPlaybookList('adventure')}>Playbook</Button>
+									<Button icon={<PlayCircleOutlined />} onClick={() => navigation.goToSession()}>Session</Button>
+								</div>
+							}
+						>
+							For Directors
+						</HeaderText>
+						<div className='ds-text'>
+							In your <b>PLAYBOOK</b>, you can build encounters, ensuring that they're perfectly balanced for your heroes, and craft negotiations and montage tests.
+							You can then combine all these into an adventure.
 						</div>
-						<div className='welcome-row'>
-							<div>
-								In the <b>SESSION</b> screen, you can run your encounters, montages, and negotiations.
-							</div>
-							<Button block={true} icon={<PlayCircleOutlined />} onClick={() => navigation.goToSession()}>Session</Button>
+						<div className='ds-text'>
+							In the <b>SESSION</b> screen, you can run your encounters, montages, and negotiations.
 						</div>
-						<HeaderText>For Content Creators</HeaderText>
-						<div className='welcome-row'>
-							<div>
-								In the <b>LIBRARY</b>, you can browse the collections of ancestries, classes, kits - all of the elements you need to build a hero - and other useful elements like monsters and terrain objects.
-								You can use these as a base from which to design your own homebrew elements, or create them from whole cloth.
-							</div>
-							<Button block={true} icon={<BookOutlined />} onClick={() => navigation.goToLibraryList('ancestry')}>Library</Button>
+						<HeaderText
+							extra={<Button icon={<BookOutlined />} onClick={() => navigation.goToLibraryList('ancestry')}>Library</Button>}
+						>
+							For Content Creators
+						</HeaderText>
+						<div className='ds-text'>
+							In the <b>LIBRARY</b>, you can browse the collections of ancestries, classes, kits - all of the elements you need to build a hero - and other useful elements like monsters and terrain objects.
+							You can use these as a base from which to design your own homebrew elements, or create them from whole cloth.
 						</div>
 					</div>
 				</div>

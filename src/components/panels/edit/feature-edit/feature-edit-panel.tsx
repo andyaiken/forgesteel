@@ -1,6 +1,6 @@
 import { Button, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -226,6 +226,23 @@ export const FeatureEditPanel = (props: Props) => {
 					speed: 5
 				} as FeatureSpeedData;
 				break;
+			case FeatureType.TaggedFeature:
+				data = {
+					tag: '',
+					feature: FactoryLogic.feature.create({
+						id: Utils.guid(),
+						name: '',
+						description: ''
+					})
+				};
+				break;
+			case FeatureType.TaggedFeatureChoice:
+				data = {
+					tag: '',
+					count: 1,
+					selected: []
+				};
+				break;
 			case FeatureType.TitleChoice:
 				data = {
 					echelon: 1,
@@ -258,7 +275,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 	const getDataSection = () => {
 		const setCount = (value: number) => {
-			const copy = Utils.copy(feature.data) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureItemChoiceData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureTitleChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureItemChoiceData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureTaggedFeatureChoiceData | FeatureTitleChoiceData;
 			copy.count = value;
 			setData(copy);
 		};
@@ -434,6 +451,18 @@ export const FeatureEditPanel = (props: Props) => {
 		const setSpeed = (value: number) => {
 			const copy = Utils.copy(feature.data) as FeatureSpeedData;
 			copy.speed = value;
+			setData(copy);
+		};
+
+		const setTag = (value: string) => {
+			const copy = Utils.copy(feature.data) as FeatureTaggedFeatureData | FeatureTaggedFeatureChoiceData;
+			copy.tag = value;
+			setData(copy);
+		};
+
+		const setTaggedFeature = (value: Feature) => {
+			const copy = Utils.copy(feature.data) as FeatureTaggedFeatureData;
+			copy.feature = value;
 			setData(copy);
 		};
 
@@ -1188,6 +1217,45 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
+			case FeatureType.TaggedFeature: {
+				const data = feature.data as FeatureTaggedFeatureData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Tag</HeaderText>
+						<Input
+							className={data.tag === '' ? 'input-empty' : ''}
+							placeholder='Tag'
+							allowClear={true}
+							value={data.tag}
+							onChange={e => setTag(e.target.value)}
+						/>
+						<Expander title='Feature'>
+							<FeatureEditPanel
+								feature={data.feature}
+								sourcebooks={props.sourcebooks}
+								onChange={setTaggedFeature}
+							/>
+						</Expander>
+					</Space>
+				);
+			}
+			case FeatureType.TaggedFeatureChoice: {
+				const data = feature.data as FeatureTaggedFeatureChoiceData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Tag</HeaderText>
+						<Input
+							className={data.tag === '' ? 'input-empty' : ''}
+							placeholder='Tag'
+							allowClear={true}
+							value={data.tag}
+							onChange={e => setTag(e.target.value)}
+						/>
+						<HeaderText>Count</HeaderText>
+						<NumberSpin min={1} value={data.count} onChange={setCount} />
+					</Space>
+				);
+			}
 			case FeatureType.Text: {
 				return null;
 			}
@@ -1238,7 +1306,7 @@ export const FeatureEditPanel = (props: Props) => {
 												<Select
 													style={{ width: '100%' }}
 													placeholder='Select type'
-													options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.AbilityCost, FeatureType.AncestryChoice, FeatureType.AncestryFeatureChoice, FeatureType.Bonus, FeatureType.CharacteristicBonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.Companion, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.TitleChoice ]).map(o => ({ value: o }))}
+													options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.AbilityCost, FeatureType.AncestryChoice, FeatureType.AncestryFeatureChoice, FeatureType.Bonus, FeatureType.CharacteristicBonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.Companion, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.TaggedFeature, FeatureType.TaggedFeatureChoice, FeatureType.TitleChoice ]).map(o => ({ value: o }))}
 													optionRender={option => <Field label={option.data.value} value={FeatureLogic.getFeatureTypeDescription(option.data.value)} />}
 													value={feature.type}
 													onChange={setType}

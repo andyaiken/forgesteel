@@ -171,6 +171,9 @@ export class FeatureLogic {
 				case FeatureType.Perk:
 					feature.data.selected.forEach(addFeature);
 					break;
+				case FeatureType.TaggedFeatureChoice:
+					feature.data.selected.forEach(addFeature);
+					break;
 				case FeatureType.TitleChoice:
 					feature.data.selected.forEach(title => title.features.filter(f => f.id === title.selectedFeatureID).forEach(addFeature));
 					break;
@@ -198,6 +201,7 @@ export class FeatureLogic {
 			case FeatureType.LanguageChoice:
 			case FeatureType.Perk:
 			case FeatureType.SkillChoice:
+			case FeatureType.TaggedFeatureChoice:
 			case FeatureType.TitleChoice:
 				return true;
 		};
@@ -234,6 +238,8 @@ export class FeatureLogic {
 			case FeatureType.Perk:
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.SkillChoice:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.TaggedFeatureChoice:
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.TitleChoice:
 				return feature.data.selected.length >= feature.data.count;
@@ -330,6 +336,10 @@ export class FeatureLogic {
 				return 'This feature allows you to choose a skill.';
 			case FeatureType.Speed:
 				return 'This feature sets your base speed.';
+			case FeatureType.TaggedFeature:
+				return 'This feature describes a tagged feature.';
+			case FeatureType.TaggedFeatureChoice:
+				return 'This feature allows you to select a tagged feature.';
 			case FeatureType.Text:
 				return 'This feature has no special properties, just a text description.';
 			case FeatureType.TitleChoice:

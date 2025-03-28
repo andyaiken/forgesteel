@@ -13,6 +13,20 @@
 		border: 1px solid rgba(5, 5, 5, 0.06);
 		border-radius: 10px;
 		background-color: rgb(250, 250, 250);
+
+		.round-button {
+			width: 270px;
+			height: 60px;
+
+			.maintext {
+				font-weight: 600;
+			}
+
+			.subtext {
+				font-size: 10px;
+				opacity: 0.75;
+			}
+		}
 	}
 
 	.encounter-groups {

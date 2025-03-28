@@ -77,6 +77,7 @@ export class PlaybookLogic {
 	static startEncounter = (encounter: Encounter, sourcebooks: Sourcebook[], heroes: Hero[], options: Options) => {
 		const copy = Utils.copy(encounter);
 		copy.id = Utils.guid();
+		copy.round = 0;
 
 		copy.groups.forEach(group => {
 			group.slots.forEach(slot => {

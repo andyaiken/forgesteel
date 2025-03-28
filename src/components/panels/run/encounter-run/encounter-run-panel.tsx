@@ -69,9 +69,13 @@ export const EncounterRunPanel = (props: Props) => {
 
 	const nextRound = () => {
 		const copy = Utils.copy(encounter);
+		copy.malice += EncounterLogic.getMaliceGained(copy);
 		copy.round += 1;
 		copy.groups.forEach(g => {
 			g.acted = false;
+		});
+		copy.heroes.forEach(h => {
+			h.state.acted = false;
 		});
 		setEncounter(copy);
 		props.onChange(copy);
@@ -621,19 +625,51 @@ export const EncounterRunPanel = (props: Props) => {
 			.every(g => g.acted || g.slots.every(s => s.state.defeated || s.monsters.every(m => m.state.defeated)));
 		const heroesDone = encounter.heroes.every(h => h.state.acted || h.state.defeated);
 		const allDone = monstersDone && heroesDone;
+		const roundIsNotFinished = (encounter.round > 0) && !allDone;
+
+		const getRoundButtonText = () => {
+			if (roundIsNotFinished) {
+				return `Round ${encounter.round}`;
+			}
+
+			return `Start Round ${encounter.round + 1}`;
+		};
+
+		const getRoundButtonInfo = () => {
+			if (roundIsNotFinished) {
+				return 'Some combatants have not acted';
+			}
+
+			const malice = EncounterLogic.getMaliceGained(encounter);
+			if (malice > 0) {
+				return `Gain ${EncounterLogic.getMaliceGained(encounter)} malice`;
+			}
+
+			if (encounter.round === 0) {
+				return `Gain ${encounter.round + 1} + (number of heroes) + (average victories) malice`;
+			}
+
+			return `Gain ${encounter.round + 1} + (number of heroes) malice`;
+		};
 
 		return (
 			<div className='encounter-run-panel' id={encounter.id}>
 				<HeaderText level={1}>{encounter.name || 'Unnamed Encounter'}</HeaderText>
 				<Markdown text={encounter.description} />
 				<div className='stats'>
+					<Button className='round-button' type='primary' disabled={roundIsNotFinished} onClick={nextRound}>
+						<Space direction='vertical'>
+							<div className='maintext'>
+								{getRoundButtonText()}
+							</div>
+							<div className='subtext'>
+								{getRoundButtonInfo()}
+							</div>
+						</Space>
+					</Button>
 					<NumberSpin min={0} value={encounter.malice} onChange={setMalice}>
 						<Field orientation='vertical' label='Malice' value={encounter.malice} />
 					</NumberSpin>
-					<Space split={<Divider type='vertical' />}>
-						<Field orientation='vertical' label='Round' value={encounter.round} />
-						<Button type='primary' disabled={!allDone} onClick={nextRound}>Next Round</Button>
-					</Space>
 				</div>
 				<Tabs
 					items={[

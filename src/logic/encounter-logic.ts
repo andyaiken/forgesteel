@@ -184,4 +184,23 @@ export class EncounterLogic {
 
 		return null;
 	};
+
+	static getMaliceGained = (encounter: Encounter) => {
+		if (encounter.heroes.length === 0) {
+			return 0;
+		}
+
+		let malice = 0;
+
+		if (encounter.round === 0) {
+			// Gain malice equal to average number of victories per hero
+			malice += Math.round(Collections.mean(encounter.heroes, h => h.state.victories));
+		}
+
+		// Gain malice equal to number of active heroes plus number of the round that's starting
+		malice += encounter.heroes.filter(h => !h.state.defeated).length;
+		malice += encounter.round + 1;
+
+		return malice;
+	};
 }

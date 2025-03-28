@@ -185,6 +185,19 @@ export interface FeatureSpeedData extends _FeatureData {
 };
 export type FeatureSpeed = FeatureOf<FeatureType.Speed, FeatureSpeedData>;
 
+export interface FeatureTaggedFeatureData extends _FeatureData {
+	tag: string;
+	feature: Feature;
+};
+export type FeatureTaggedFeature = FeatureOf<FeatureType.TaggedFeature, FeatureTaggedFeatureData>;
+
+export interface FeatureTaggedFeatureChoiceData extends _FeatureData {
+	tag: string;
+	count: number;
+	selected: Feature[];
+};
+export type FeatureTaggedFeatureChoice = FeatureOf<FeatureType.TaggedFeatureChoice, FeatureTaggedFeatureChoiceData>;
+
 export type FeatureText = FeatureOf<FeatureType.Text>;
 
 export interface FeatureTitleChoiceData extends _FeatureData {
@@ -221,6 +234,8 @@ export type Feature =
 	| FeatureSkillChoice
 	| FeatureSpeed
 	| FeatureText
+	| FeatureTaggedFeature
+	| FeatureTaggedFeatureChoice
 	| FeatureTitleChoice;
 
 export type FeatureData = Feature['data'];

@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { MonsterFilter, TerrainFilter } from '../models/filter';
@@ -497,7 +497,7 @@ export class FactoryLogic {
 			groups: [],
 			terrain: [],
 			objective: EncounterObjectiveData.diminishNumbers,
-			round: 1,
+			round: 0,
 			malice: 0,
 			heroes: []
 		};
@@ -1234,6 +1234,31 @@ export class FactoryLogic {
 				type: FeatureType.Speed,
 				data: {
 					speed: data.speed
+				}
+			};
+		},
+		createTaggedFeature: (data: { tag: string, feature: Feature }): FeatureTaggedFeature => {
+			return {
+				id: data.feature.id,
+				name: data.feature.name,
+				description: data.feature.description,
+				type: FeatureType.TaggedFeature,
+				data: {
+					tag: data.tag,
+					feature: data.feature
+				}
+			};
+		},
+		createTaggedFeatureChoice: (data: { id: string, name?: string, description?: string, tag: string, count?: number }): FeatureTaggedFeatureChoice => {
+			return {
+				id: data.id,
+				name: data.name || 'Tagged Feature',
+				description: data.description || '',
+				type: FeatureType.TaggedFeatureChoice,
+				data: {
+					tag: data.tag,
+					count: data.count || 1,
+					selected: []
 				}
 			};
 		},

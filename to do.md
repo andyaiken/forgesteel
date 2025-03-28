@@ -40,6 +40,9 @@
 ### Session
 
 * Encounter tracker
+  * Malice:
+    * Start: gain malice equal to average number of victories per hero
+    * Start of each round: gain malice equal to number of active heroes plus number of current round
   * Monsters:
     * Set 'used reaction' flag on monsters / minions
     * Ability to duplicate / delete monsters in a slot

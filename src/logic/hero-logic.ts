@@ -1,5 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureItemChoice, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
+import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureItemChoice, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
 import { AbilityData } from '../data/ability-data';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
@@ -14,7 +14,6 @@ import { Hero } from '../models/hero';
 import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
 import { Kit } from '../models/kit';
-import { KitType } from '../enums/kit-type';
 import { Language } from '../models/language';
 import { Size } from '../models/size';
 import { Skill } from '../models/skill';
@@ -25,20 +24,6 @@ import { SourcebookLogic } from './sourcebook-logic';
 export class HeroLogic {
 	static getHeroDescription = (hero: Hero) => {
 		return `Level ${hero.class?.level || 1} ${hero.ancestry?.name || 'Ancestry'} ${hero.class?.name || 'Class'}`;
-	};
-
-	static getKitTypes = (hero: Hero) => {
-		const types = [ KitType.Standard ];
-
-		// Collate from features
-		this.getFeatures(hero)
-			.filter(f => f.type === FeatureType.KitType)
-			.forEach(f => {
-				const data = f.data as FeatureKitTypeData;
-				types.push(...data.types);
-			});
-
-		return types;
 	};
 
 	static getKits = (hero: Hero) => {
@@ -695,6 +680,12 @@ export class HeroLogic {
 			}
 		}
 
+		if (hero.class) {
+			if (hero.class.primaryCharacteristicsOptions === undefined) {
+				hero.class.primaryCharacteristicsOptions = [];
+			}
+		}
+
 		if (hero.features === undefined) {
 			hero.features = [];
 		}
@@ -766,18 +757,16 @@ export class HeroLogic {
 		}
 
 		this.getFeatures(hero).filter(f => f.type === FeatureType.Bonus).forEach(f => {
-			const data = f.data as FeatureBonusData;
-			if (data.valueCharacteristics === undefined) {
-				data.valueCharacteristics = [];
+			if (f.data.valueCharacteristics === undefined) {
+				f.data.valueCharacteristics = [];
 			}
-			if (data.valuePerEchelon === undefined) {
-				data.valuePerEchelon = 0;
+			if (f.data.valuePerEchelon === undefined) {
+				f.data.valuePerEchelon = 0;
 			}
 		});
 
 		this.getFeatures(hero).filter(f => f.type === FeatureType.DamageModifier).forEach(f => {
-			const data = f.data as FeatureDamageModifierData;
-			data.modifiers.forEach(dm => {
+			f.data.modifiers.forEach(dm => {
 				if (dm.valueCharacteristics === undefined) {
 					dm.valueCharacteristics = [];
 				}
@@ -790,9 +779,15 @@ export class HeroLogic {
 			});
 		});
 
+		this.getFeatures(hero).filter(f => f.type === FeatureType.Kit).forEach(f => {
+			if (f.data.types.includes('Standard')) {
+				f.data.types = f.data.types.filter(t => t !== 'Standard');
+				f.data.types.push('');
+			}
+		});
+
 		this.getFeatures(hero).filter(f => f.type === FeatureType.ItemChoice).forEach(f => {
-			const data = f.data as FeatureItemChoiceData;
-			data.selected.forEach(item => {
+			f.data.selected.forEach(item => {
 				if (item.customizationsByLevel === undefined) {
 					item.customizationsByLevel = [
 						{
@@ -810,6 +805,12 @@ export class HeroLogic {
 					];
 				}
 			});
+		});
+
+		this.getKits(hero).forEach(k => {
+			if (k.type === 'Standard') {
+				k.type = '';
+			}
 		});
 	};
 }

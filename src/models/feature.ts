@@ -10,7 +10,6 @@ import { FeatureType } from '../enums/feature-type';
 import { Item } from './item';
 import { ItemType } from '../enums/item-type';
 import { Kit } from './kit';
-import { KitType } from '../enums/kit-type';
 import { Monster } from './monster';
 import { Perk } from './perk';
 import { PerkList } from '../enums/perk-list';
@@ -122,16 +121,11 @@ export interface FeatureItemChoiceData extends _FeatureData {
 export type FeatureItemChoice = FeatureOf<FeatureType.ItemChoice, FeatureItemChoiceData>;
 
 export interface FeatureKitData extends _FeatureData {
-	types: KitType[];
+	types: string[];
 	count: number;
 	selected: Kit[];
 };
 export type FeatureKit = FeatureOf<FeatureType.Kit, FeatureKitData>;
-
-export interface FeatureKitTypeData extends _FeatureData {
-	types: KitType[];
-};
-export type FeatureKitType = FeatureOf<FeatureType.KitType, FeatureKitTypeData>;
 
 export interface FeatureLanguageData extends _FeatureData {
 	language: string;
@@ -216,7 +210,6 @@ export type Feature =
 	| FeatureDomainFeature
 	| FeatureItemChoice
 	| FeatureKit
-	| FeatureKitType
 	| FeatureLanguage
 	| FeatureLanguageChoice
 	| FeatureMalice

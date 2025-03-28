@@ -16,7 +16,10 @@ And beyond the mundane, there are insurmountable dangers that cause many a hero 
 	heroicResource: 'Drama',
 	subclassName: 'Class Act',
 	subclassCount: 1,
-	primaryCharacteristics: [ Characteristic.Agility, Characteristic.Presence ],
+	primaryCharacteristicsOptions: [
+		[ Characteristic.Agility, Characteristic.Presence ]
+	],
+	primaryCharacteristics: [],
 	featuresByLevel: [
 		{
 			level: 1,

@@ -1,4 +1,4 @@
-import { Button, Drawer, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Drawer, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, EditOutlined, LeftOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureAbility, FeatureAddOn, FeatureAddOnType, FeatureMalice, FeatureText } from '../../../../models/feature';
@@ -44,7 +44,6 @@ import { ItemType } from '../../../../enums/item-type';
 import { Kit } from '../../../../models/kit';
 import { KitArmor } from '../../../../enums/kit-armor';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
-import { KitType } from '../../../../enums/kit-type';
 import { KitWeapon } from '../../../../enums/kit-weapon';
 import { MonsterEditPanel } from '../../../panels/edit/monster-edit/monster-edit-panel';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
@@ -424,10 +423,35 @@ export const LibraryEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const setPrimaryCharacteristics = (value: Characteristic[]) => {
-			const elementCopy = Utils.copy(element) as HeroClass;
-			elementCopy.primaryCharacteristics = value;
-			setElement(elementCopy);
+		const addCharacteristicSet = () => {
+			const classCopy = Utils.copy(element) as HeroClass;
+			classCopy.primaryCharacteristicsOptions.push([]);
+			setElement(classCopy);
+			setDirty(true);
+		};
+
+		const toggleCharacteristic = (index: number, characteristic: Characteristic) => {
+			const classCopy = Utils.copy(element) as HeroClass;
+			if (classCopy.primaryCharacteristicsOptions[index].includes(characteristic)) {
+				classCopy.primaryCharacteristicsOptions[index] = classCopy.primaryCharacteristicsOptions[index].filter(ch => ch !== characteristic);
+			} else {
+				classCopy.primaryCharacteristicsOptions[index].push(characteristic);
+			}
+			setElement(classCopy);
+			setDirty(true);
+		};
+
+		const moveCharacteristicSet = (index: number, direction: 'up' | 'down') => {
+			const classCopy = Utils.copy(element) as HeroClass;
+			classCopy.primaryCharacteristicsOptions = Collections.move(classCopy.primaryCharacteristicsOptions, index, direction);
+			setElement(classCopy);
+			setDirty(true);
+		};
+
+		const deleteCharacteristicSet = (index: number) => {
+			const classCopy = Utils.copy(element) as HeroClass;
+			classCopy.primaryCharacteristicsOptions.splice(index, 1);
+			setElement(classCopy);
 			setDirty(true);
 		};
 
@@ -456,17 +480,46 @@ export const LibraryEditPage = (props: Props) => {
 					onChange={setSubclassCount}
 				/>
 				<HeaderText>Primary Characteristics</HeaderText>
-				<Select
-					style={{ width: '100%' }}
-					className={heroClass.primaryCharacteristics.length < 2 ? 'selection-empty' : ''}
-					mode='multiple'
-					maxCount={2}
-					placeholder='Select primary characteristics'
-					options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(ch => ({ value: ch }))}
-					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					value={heroClass.primaryCharacteristics}
-					onChange={setPrimaryCharacteristics}
-				/>
+				{
+					heroClass.primaryCharacteristicsOptions.map((o, n) => (
+						<Expander
+							key={n}
+							title={o.join(', ') || 'No Characteristics'}
+							extra={[
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveCharacteristicSet(n, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveCharacteristicSet(n, 'down'); }} />,
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteCharacteristicSet(n); }} />
+							]}
+						>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								<Toggle label={Characteristic.Might} value={o.includes(Characteristic.Might)} onChange={() => toggleCharacteristic(n, Characteristic.Might)} />
+								<Toggle label={Characteristic.Agility} value={o.includes(Characteristic.Agility)} onChange={() => toggleCharacteristic(n, Characteristic.Agility)} />
+								<Toggle label={Characteristic.Reason} value={o.includes(Characteristic.Reason)} onChange={() => toggleCharacteristic(n, Characteristic.Reason)} />
+								<Toggle label={Characteristic.Intuition} value={o.includes(Characteristic.Intuition)} onChange={() => toggleCharacteristic(n, Characteristic.Intuition)} />
+								<Toggle label={Characteristic.Presence} value={o.includes(Characteristic.Presence)} onChange={() => toggleCharacteristic(n, Characteristic.Presence)} />
+								{
+									(o.length === 0) || (o.length >= 3) ?
+										<Alert
+											type='warning'
+											showIcon={true}
+											message='One or two characteristics must be selected.'
+										/>
+										: null
+								}
+							</Space>
+						</Expander>
+					))
+				}
+				{
+					heroClass.primaryCharacteristicsOptions.length === 0 ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='A class must have one or two primary characteristics.'
+						/>
+						: null
+				}
+				<Button block={true} onClick={addCharacteristicSet}>Add a new primary characteristic option</Button>
 			</Space>
 		);
 	};
@@ -874,7 +927,7 @@ export const LibraryEditPage = (props: Props) => {
 	const getKitDetailsSection = () => {
 		const kit = element as Kit;
 
-		const setType = (value: KitType) => {
+		const setType = (value: string) => {
 			const elementCopy = Utils.copy(element) as Kit;
 			elementCopy.type = value;
 			setElement(elementCopy);
@@ -898,13 +951,11 @@ export const LibraryEditPage = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Type</HeaderText>
-				<Select
-					style={{ width: '100%' }}
-					placeholder='Select type'
-					options={[ KitType.Standard, KitType.Stormwight ].map(l => ({ value: l }))}
-					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					value={kit.type}
-					onChange={setType}
+				<Input
+					placeholder='Type'
+					allowClear={true}
+					value={element.name}
+					onChange={e => setType(e.target.value)}
 				/>
 				<HeaderText>Armor</HeaderText>
 				<Select

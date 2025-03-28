@@ -17,7 +17,10 @@ As a tactician, you have abilities that heal your allies and grant them increase
 	heroicResource: 'Focus',
 	subclassName: 'Tactical Doctrine',
 	subclassCount: 1,
-	primaryCharacteristics: [ Characteristic.Might, Characteristic.Reason ],
+	primaryCharacteristicsOptions: [
+		[ Characteristic.Might, Characteristic.Reason ]
+	],
+	primaryCharacteristics: [],
 	featuresByLevel: [
 		{
 			level: 1,

@@ -20,7 +20,10 @@ The null is an unarmed psionic warrior who dampens and absorbs the effects of ma
 	heroicResource: 'Discipline',
 	subclassName: 'Tradition',
 	subclassCount: 1,
-	primaryCharacteristics: [ Characteristic.Agility, Characteristic.Intuition ],
+	primaryCharacteristicsOptions: [
+		[ Characteristic.Agility, Characteristic.Intuition ]
+	],
+	primaryCharacteristics: [],
 	featuresByLevel: [
 		{
 			level: 1,

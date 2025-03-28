@@ -3,7 +3,6 @@ import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Kit } from '../../../../models/kit';
-import { KitType } from '../../../../enums/kit-type';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
@@ -23,7 +22,7 @@ export const KitPanel = (props: Props) => {
 	try {
 		return (
 			<div className={props.mode === PanelMode.Full ? 'kit-panel' : 'kit-panel compact'} id={props.mode === PanelMode.Full ? props.kit.id : undefined}>
-				<HeaderText level={1} tags={props.kit.type === KitType.Standard ? [] : [ props.kit.type ]}>{props.kit.name || 'Unnamed Kit'}</HeaderText>
+				<HeaderText level={1} tags={props.kit.type ? [ props.kit.type ] : []}>{props.kit.name || 'Unnamed Kit'}</HeaderText>
 				<Markdown text={props.kit.description} />
 				{
 					props.mode === PanelMode.Full ?

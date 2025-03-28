@@ -15,7 +15,6 @@ export enum FeatureType {
 	DomainFeature = 'Domain Feature',
 	ItemChoice = 'Item Choice',
 	Kit = 'Kit',
-	KitType = 'Kit Type',
 	Language = 'Language',
 	LanguageChoice = 'Language Choice',
 	Malice = 'Malice',

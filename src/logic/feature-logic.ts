@@ -310,8 +310,6 @@ export class FeatureLogic {
 				return 'This feature allows you to choose an item.';
 			case FeatureType.Kit:
 				return 'This feature allows you to choose a kit.';
-			case FeatureType.KitType:
-				return 'This feature changes the types of kit you can select.';
 			case FeatureType.Language:
 				return 'This feature grants you a language.';
 			case FeatureType.LanguageChoice:

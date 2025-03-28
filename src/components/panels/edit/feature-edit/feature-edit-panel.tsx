@@ -1,6 +1,6 @@
 import { Button, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -20,7 +20,6 @@ import { Format } from '../../../../utils/format';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { ItemType } from '../../../../enums/item-type';
-import { KitType } from '../../../../enums/kit-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Perk } from '../../../../models/perk';
@@ -166,11 +165,6 @@ export const FeatureEditPanel = (props: Props) => {
 					count: 1,
 					selected: []
 				} as FeatureKitData;
-				break;
-			case FeatureType.KitType:
-				data = {
-					types: []
-				} as FeatureKitTypeData;
 				break;
 			case FeatureType.Language:
 				data = {
@@ -365,7 +359,7 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
-		const setKitTypes = (value: KitType[]) => {
+		const setKitTypes = (value: string[]) => {
 			const copy = Utils.copy(feature.data) as FeatureKitData;
 			copy.types = value;
 			setData(copy);
@@ -919,8 +913,11 @@ export const FeatureEditPanel = (props: Props) => {
 							placeholder='Kit types'
 							mode='multiple'
 							allowClear={true}
-							options={[ KitType.Standard, KitType.Stormwight ].map(option => ({ value: option }))}
-							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							options={[
+								{ value: '', label: 'Standard' },
+								{ value: 'Stormwight', label: 'Stormwight' }
+							]}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 							value={data.types}
 							onChange={setKitTypes}
 						/>
@@ -928,9 +925,6 @@ export const FeatureEditPanel = (props: Props) => {
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
 					</Space>
 				);
-			}
-			case FeatureType.KitType: {
-				return null;
 			}
 			case FeatureType.Language: {
 				const data = feature.data as FeatureLanguageData;

@@ -1,6 +1,6 @@
 import { Alert, Button, Drawer, Input, Select, Space } from 'antd';
 import { Badge, HeroicResourceBadge } from '../../../controls/badge/badge';
-import { Feature, FeatureAbilityCostData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureKitTypeData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Ancestry } from '../../../../models/ancestry';
@@ -170,22 +170,21 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
+		const selectedIDs = data.selected.map(f => f.id);
+		const pointsUsed = Collections.sum(selectedIDs, id => {
+			const original = availableOptions.find(o => o.feature.id === id);
+			return original ? original.value : 0;
+		});
+		const pointsLeft = data.count - pointsUsed;
+
 		let unavailableIDs: string[] = [];
-		let showCosts = false;
-		let pointsLeft = 0;
 		if (data.options.some(opt => opt.value > 1)) {
-			const selectedIDs = data.selected.map(f => f.id);
-			const pointsUsed = Collections.sum(selectedIDs, id => {
-				const original = availableOptions.find(o => o.feature.id === id);
-				return original ? original.value : 0;
-			});
-			pointsLeft = data.count - pointsUsed;
 			unavailableIDs = availableOptions
 				.filter(opt => !selectedIDs.includes(opt.feature.id) && (opt.value > pointsLeft))
 				.map(opt => opt.feature.id);
-
-			showCosts = true;
 		}
+
+		const showCosts = data.options.some(opt => opt.value > 1);
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -579,7 +578,7 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
-		const kitTypes = data.types.length > 0 ? data.types : HeroLogic.getKitTypes(props.hero);
+		const kitTypes = data.types.length > 0 ? data.types : [ '' ];
 		const kits = SourcebookLogic.getKits(props.sourcebooks as Sourcebook[])
 			.filter(k => kitTypes.includes(k.type));
 
@@ -1174,16 +1173,6 @@ export const FeaturePanel = (props: Props) => {
 		return null;
 	};
 
-	const getInformationKitType = (data: FeatureKitTypeData) => {
-		if (!props.feature.description) {
-			return (
-				<div className='ds-text'>Allow {data.types.join(', ')} kits.</div>
-			);
-		}
-
-		return null;
-	};
-
 	const getInformationLanguage = (data: FeatureLanguageData) => {
 		if (!props.feature.description) {
 			return (
@@ -1375,8 +1364,6 @@ export const FeaturePanel = (props: Props) => {
 				return getInformationItemChoice(props.feature.data);
 			case FeatureType.Kit:
 				return getInformationKit(props.feature.data);
-			case FeatureType.KitType:
-				return getInformationKitType(props.feature.data);
 			case FeatureType.Language:
 				return getInformationLanguage(props.feature.data);
 			case FeatureType.LanguageChoice:

@@ -8,6 +8,8 @@ export interface HeroClass extends Element {
 	heroicResource: string;
 	subclassName: string;
 	subclassCount: number;
+
+	primaryCharacteristicsOptions: Characteristic[][];
 	primaryCharacteristics: Characteristic[];
 
 	featuresByLevel: {

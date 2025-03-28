@@ -17,7 +17,10 @@ A talent is limited only by the strength of their mind. Powerful psionic heroes 
 	heroicResource: 'Clarity',
 	subclassName: 'Tradition',
 	subclassCount: 1,
-	primaryCharacteristics: [ Characteristic.Reason, Characteristic.Presence ],
+	primaryCharacteristicsOptions: [
+		[ Characteristic.Reason, Characteristic.Presence ]
+	],
+	primaryCharacteristics: [],
 	featuresByLevel: [
 		{
 			level: 1,

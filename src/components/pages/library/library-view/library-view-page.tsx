@@ -280,7 +280,7 @@ export const LibraryViewPage = (props: Props) => {
 												.filter(sb => sb.isHomebrew)
 												.map(cs => <Button key={cs.id} onClick={() => props.createElement(kind!, cs.id, element)}>In {cs.name || 'Unnamed Sourcebook'}</Button>)
 										}
-										<Button onClick={() => props.createElement(kind!, null, element)}>In a new collection</Button>
+										<Button onClick={() => props.createElement(kind!, null, element)}>In a new sourcebook</Button>
 									</div>
 								)}
 							>

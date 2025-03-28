@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureKitType, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { MonsterFilter, TerrainFilter } from '../models/filter';
@@ -30,7 +30,6 @@ import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
 import { KitArmor } from '../enums/kit-armor';
-import { KitType } from '../enums/kit-type';
 import { KitWeapon } from '../enums/kit-weapon';
 import { MonsterLogic } from './monster-logic';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
@@ -176,6 +175,7 @@ export class FactoryLogic {
 			heroicResource: '',
 			subclassName: '',
 			subclassCount: 1,
+			primaryCharacteristicsOptions: [],
 			primaryCharacteristics: [],
 			featuresByLevel: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(n => ({ level: n, features: [] })),
 			abilities: [],
@@ -219,7 +219,7 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
-			type: KitType.Standard,
+			type: '',
 			armor: [],
 			weapon: [],
 			stamina: 0,
@@ -1074,7 +1074,7 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createKitChoice: (data: { id: string, name?: string, description?: string, types?: KitType[], count?: number }): FeatureKit => {
+		createKitChoice: (data: { id: string, name?: string, description?: string, types?: string[], count?: number }): FeatureKit => {
 			const count = data.count || 1;
 			return {
 				id: data.id,
@@ -1082,20 +1082,9 @@ export class FactoryLogic {
 				description: data.description || '',
 				type: FeatureType.Kit,
 				data: {
-					types: data.types || [],
+					types: data.types || [ '' ],
 					count: count,
 					selected: []
-				}
-			};
-		},
-		createKitType: (data: { id: string, name?: string, description?: string, types: KitType[] }): FeatureKitType => {
-			return {
-				id: data.id,
-				name: data.name || 'Kit Type',
-				description: data.description || '',
-				type: FeatureType.KitType,
-				data: {
-					types: data.types || []
 				}
 			};
 		},

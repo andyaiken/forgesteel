@@ -17,7 +17,10 @@ As a shadow, you have abilities that deal a lot of damage, let you move swiftly 
 	heroicResource: 'Insight',
 	subclassName: 'Shadow College',
 	subclassCount: 1,
-	primaryCharacteristics: [ Characteristic.Agility ],
+	primaryCharacteristicsOptions: [
+		[ Characteristic.Agility ]
+	],
+	primaryCharacteristics: [],
 	featuresByLevel: [
 		{
 			level: 1,

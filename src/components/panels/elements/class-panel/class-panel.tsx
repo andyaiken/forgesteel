@@ -32,7 +32,7 @@ export const ClassPanel = (props: Props) => {
 				<Markdown text={props.heroClass.description} />
 				<Field label='Heroic Resource' value={props.heroClass.heroicResource} />
 				{props.heroClass.subclasses.length > 0 ? <Field label={`${props.heroClass.subclassName}s`} value={props.heroClass.subclasses.map(c => c.name).join(', ')} /> : null}
-				<Field label='Primary Characteristics' value={props.heroClass.primaryCharacteristics.join(', ')} />
+				<Field label='Primary Characteristics' value={props.heroClass.primaryCharacteristics.join(', ') || props.heroClass.primaryCharacteristicsOptions.map(array => array.join(', ') || 'None').join(' or ') || 'None'} />
 				{
 					props.mode === PanelMode.Full ?
 						props.heroClass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (

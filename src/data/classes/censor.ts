@@ -17,7 +17,10 @@ You’re at your best against the strongest foes. Your judgments terrify heretic
 	heroicResource: 'Wrath',
 	subclassName: 'Order',
 	subclassCount: 1,
-	primaryCharacteristics: [ Characteristic.Might, Characteristic.Presence ],
+	primaryCharacteristicsOptions: [
+		[ Characteristic.Might, Characteristic.Presence ]
+	],
+	primaryCharacteristics: [],
 	featuresByLevel: [
 		{
 			level: 1,

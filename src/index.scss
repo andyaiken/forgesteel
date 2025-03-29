@@ -61,6 +61,24 @@ body {
 	flex-direction: column;
 }
 
+h1 {
+	font-size: 22px;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	margin: 15px 0;
+	border-bottom: 5px solid rgba(5, 5, 5, 0.06);
+	padding-bottom: 10px;
+}
+
+h2 {
+	font-size: 16px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	margin: 15px 0;
+	border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+	padding-bottom: 10px;
+}
+
 p,
 .ds-text {
 	margin: 10px 0;

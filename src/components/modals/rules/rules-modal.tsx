@@ -25,14 +25,44 @@ import './rules-modal.scss';
 interface Props {
 	hero: Hero | null;
 	sourcebooks: Sourcebook[];
-	startPage: RulesPage;
+	startPage?: RulesPage;
 	onClose: () => void;
 }
 
 export const RulesModal = (props: Props) => {
-	const [ page, setPage ] = useState<string>(props.startPage);
+	const [ page, setPage ] = useState<string>(props.startPage || RulesPage.Rules);
 
 	try {
+		const getRulesSection = () => {
+			const md = `
+# SURPRISE
+
+When battle begins, the Director determines which creatures, if any, are caught off guard. Any creature who isn’t ready for combat at the start of an encounter is surprised until the end of the first round of combat. A surprised creature can’t take triggered or free triggered actions and ability power rolls against them gain an edge.
+
+# FLANKING
+
+When you and at least one ally are adjacent to the same enemy and on completely opposite sides of the enemy, you are flanking that enemy. While flanking an enemy, you gain an edge on melee strikes against them.
+
+If you’re unsure whether your hero and an ally are flanking a foe, imagine a line extending from the center of your space to your ally’s space. If that line passes through opposite sides or corners of the enemy’s space, then you and your ally are flanking the enemy.
+
+You must have line of effect to the enemy and be able to take triggered actions in order to gain or grant the flanking benefit.
+
+# COVER
+
+When you have line of effect to a creature or object but that target has at least half their form blocked by a solid obstruction such as a tree, wall, or overturned table, the target has cover. You take a bane on abilities that deal damage against creatures or objects that have cover from you.
+
+# CONCEALMENT
+
+Darkness, fog, invisibility magic, and any other effect that fully obscures a creature but doesn’t protect their body grants that creature concealment. You can target a creature who has concealment with strikes, provided they aren’t hidden. However, strikes against such creatures take a bane. Even if you have line of effect to a creature, they have concealment from you if you can’t see them.
+
+## INVISIBLE CREATURES
+
+Invisible creatures always have concealment from other creatures. If an invisible creature isn’t hidden, they can still be targeted with abilities, though strikes against them take a bane. The test made to find a hidden creature who is invisible takes a bane.`;
+			return (
+				<Markdown text={md} />
+			);
+		};
+
 		const getConditionsSection = () => {
 			return (
 				<div>
@@ -181,13 +211,15 @@ export const RulesModal = (props: Props) => {
 
 		const getContent = () => {
 			switch (page) {
-				case 'Conditions':
+				case RulesPage.Rules:
+					return getRulesSection();
+				case RulesPage.Conditions:
 					return getConditionsSection();
-				case 'Skills':
+				case RulesPage.Skills:
 					return getSkillsSection();
-				case 'Languages':
+				case RulesPage.Languages:
 					return getLanguagesSection();
-				case 'Abilities':
+				case RulesPage.Abilities:
 					return getAbilitiesSection();
 			}
 		};
@@ -198,7 +230,7 @@ export const RulesModal = (props: Props) => {
 					<div style={{ width: '100%', textAlign: 'center' }}>
 						<Segmented
 							name='tabs'
-							options={[ 'Conditions', 'Skills', 'Languages', 'Abilities' ]}
+							options={[ RulesPage.Rules, RulesPage.Conditions, RulesPage.Skills, RulesPage.Languages, RulesPage.Abilities ]}
 							value={page}
 							onChange={setPage}
 						/>

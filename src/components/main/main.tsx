@@ -896,7 +896,7 @@ export const Main = (props: Props) => {
 	};
 
 	const showRules = () => {
-		onShowRules(null, RulesPage.Conditions);
+		onShowRules(null);
 	};
 
 	const onSelectLibraryElement = (element: Element, kind: SourcebookElementKind) => {
@@ -975,7 +975,7 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onShowRules = (hero: Hero | null, page: RulesPage) => {
+	const onShowRules = (hero: Hero | null, page?: RulesPage) => {
 		setDrawer(
 			<RulesModal
 				hero={hero}

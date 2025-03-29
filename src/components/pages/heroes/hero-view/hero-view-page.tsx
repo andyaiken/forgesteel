@@ -48,7 +48,7 @@ interface Props {
 	showCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
 	showHeroState: (hero: Hero, page: HeroStatePage) => void;
-	showRules: (hero: Hero, page: RulesPage) => void;
+	showRules: (hero: Hero, page?: RulesPage) => void;
 }
 
 export const HeroViewPage = (props: Props) => {
@@ -76,7 +76,7 @@ export const HeroViewPage = (props: Props) => {
 
 		return (
 			<div className='hero-view-page'>
-				<AppHeader subheader='Hero' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={() => props.showRules(hero, RulesPage.Conditions)}>
+				<AppHeader subheader='Hero' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={() => props.showRules(hero)}>
 					<Button icon={<CloseOutlined />} onClick={() => navigation.goToHeroList(hero.folder)}>
 						Close
 					</Button>

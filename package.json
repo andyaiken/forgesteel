@@ -1,19 +1,16 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "8.25.0",
+	"version": "8.26.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
 	"scripts": {
-		"update": "npx npm-check-updates --interactive --format group",
 		"start": "vite --host",
-		"lint": "npm run type:check && eslint .",
-		"preview": "vite preview",
-		"build": "vite build",
-		"predeploy": "npm run type:check && vite build",
-		"deploy": "gh-pages -d dist",
-		"type:check": "tsc -p tsconfig.node.json && tsc -p tsconfig.app.json"
+		"update": "npx npm-check-updates --interactive --format group",
+		"lint": "tsc -p tsconfig.node.json && tsc -p tsconfig.app.json && eslint .",
+		"predeploy": "npm run lint && vite build",
+		"deploy": "gh-pages -d dist"
 	},
 	"dependencies": {
 		"@ant-design/icons": "^6.0.0",

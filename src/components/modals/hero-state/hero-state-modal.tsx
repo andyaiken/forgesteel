@@ -39,7 +39,7 @@ interface Props {
 	startPage: HeroStatePage;
 	onClose: () => void;
 	onChange: (hero: Hero) => void;
-	onLevelUp: () => void;
+	onLevelUp?: () => void;
 }
 
 export const HeroStateModal = (props: Props) => {
@@ -109,9 +109,8 @@ export const HeroStateModal = (props: Props) => {
 				/>
 				{
 					hero.state.surges > 0 ?
-						<div>
+						<Space direction='vertical' style={{ width: '100%' }}>
 							<Alert
-								style={{ margin: '10px 0' }}
 								type='info'
 								showIcon={true}
 								message={`Spend 1 - 3 surges to add ${hero.class ? Math.max(...hero.class.characteristics.map(ch => ch.value)) : 0} damage per surge to one target.`}
@@ -119,14 +118,13 @@ export const HeroStateModal = (props: Props) => {
 							{
 								(hero.state.surges >= 2) ?
 									<Alert
-										style={{ margin: '10px 0' }}
 										type='info'
 										showIcon={true}
 										message='Spend 2 surges to increase an ability’s potency by 1 for a single target.'
 									/>
 									: null
 							}
-						</div>
+						</Space>
 						: null
 				}
 				<NumberSpin
@@ -144,11 +142,10 @@ export const HeroStateModal = (props: Props) => {
 				{
 					HeroLogic.canLevelUp(hero) ?
 						<Alert
-							style={{ margin: '10px 0' }}
 							type='info'
 							showIcon={true}
 							message='You have enough XP to level up.'
-							action={<Button type='text' title='Level Up' icon={<ArrowUpOutlined />} onClick={props.onLevelUp} />}
+							action={props.onLevelUp ? <Button type='text' title='Level Up' icon={<ArrowUpOutlined />} onClick={props.onLevelUp} /> : null}
 						/>
 						: null
 				}
@@ -259,9 +256,8 @@ export const HeroStateModal = (props: Props) => {
 					onChange={setRecoveriesUsed}
 				/>
 				{
-					hero.state.staminaDamage >= (HeroLogic.getStamina(hero) / 2) ?
+					HeroLogic.isWinded(hero) ?
 						<Alert
-							style={{ margin: '10px 0' }}
 							type='warning'
 							showIcon={true}
 							message='You are winded.'

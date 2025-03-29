@@ -244,6 +244,7 @@ export const EncounterRunPanel = (props: Props) => {
 										</div>
 								}
 								<div className='conditions-column'>
+									{MonsterLogic.isWinded(monster) ? <Tag>Winded</Tag> : null}
 									{monster.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
 								</div>
 								<Button type='text' icon={<IdcardOutlined />} onClick={() => setSelectedMonster(monster)} />
@@ -410,6 +411,7 @@ export const EncounterRunPanel = (props: Props) => {
 									<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
 								</div>
 								<div className='conditions-column'>
+									{HeroLogic.isWinded(hero) ? <Tag>Winded</Tag> : null}
 									{hero.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
 								</div>
 								<Button type='text' icon={<IdcardOutlined />} onClick={() => setSelectedHero(hero)} />
@@ -801,7 +803,6 @@ export const EncounterRunPanel = (props: Props) => {
 									}
 									setEncounter(copy);
 								}}
-								onLevelUp={() => null}
 							/>
 							: null
 					}

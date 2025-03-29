@@ -1,4 +1,4 @@
-import { Drawer, Flex, Tag } from 'antd';
+import { Alert, Drawer, Flex, Tag } from 'antd';
 import { Monster, MonsterGroup, MonsterState } from '../../../../models/monster';
 import { Ability } from '../../../../models/ability';
 import { AbilityModal } from '../../../modals/ability/ability-modal';
@@ -98,6 +98,15 @@ export const MonsterPanel = (props: Props) => {
 					<Field orientation='vertical' label='Stability' value={monster.stability} />
 					<Field orientation='vertical' label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(monster)} />
 				</div>
+				{
+					MonsterLogic.isWinded(monster) ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message={`${MonsterLogic.getMonsterName(monster, props.monsterGroup)} is winded.`}
+						/>
+						: null
+				}
 				<div className='stats'>
 					{
 						[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]

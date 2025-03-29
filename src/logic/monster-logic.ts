@@ -902,6 +902,10 @@ export class MonsterLogic {
 		return 1;
 	};
 
+	static isWinded = (monster: Monster) => {
+		return monster.state.staminaDamage >= (MonsterLogic.getStamina(monster) / 2);
+	};
+
 	static getRoleTypeDescription = (type: MonsterRoleType) => {
 		switch (type) {
 			case MonsterRoleType.Ambusher:

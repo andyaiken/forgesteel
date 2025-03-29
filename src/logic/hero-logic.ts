@@ -625,6 +625,10 @@ export class HeroLogic {
 		}
 	};
 
+	static isWinded = (hero: Hero) => {
+		return hero.state.staminaDamage >= (HeroLogic.getStamina(hero) / 2);
+	};
+
 	static getMinXP = (level: number) => {
 		switch (level) {
 			case 1:

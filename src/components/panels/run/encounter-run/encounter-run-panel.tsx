@@ -60,6 +60,13 @@ export const EncounterRunPanel = (props: Props) => {
 	const [ selectedTerrain, setSelectedTerrain ] = useState<Terrain | null>(null);
 	const [ selectedSlot, setSelectedSlot ] = useState<EncounterSlot | null>(null);
 
+	const setRound = (value: number) => {
+		const copy = Utils.copy(encounter);
+		copy.round = value;
+		setEncounter(copy);
+		props.onChange(copy);
+	};
+
 	const setMalice = (value: number) => {
 		const copy = Utils.copy(encounter);
 		copy.malice = value;
@@ -657,6 +664,9 @@ export const EncounterRunPanel = (props: Props) => {
 				<HeaderText level={1}>{encounter.name || 'Unnamed Encounter'}</HeaderText>
 				<Markdown text={encounter.description} />
 				<div className='stats'>
+					<NumberSpin min={0} value={encounter.round} onChange={setRound}>
+						<Field orientation='vertical' label='Round' value={encounter.round || '-'} />
+					</NumberSpin>
 					<Button className='round-button' type='primary' disabled={roundIsNotFinished} onClick={nextRound}>
 						<Space direction='vertical'>
 							<div className='maintext'>

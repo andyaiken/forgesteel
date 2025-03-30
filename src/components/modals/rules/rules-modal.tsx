@@ -1,4 +1,4 @@
-import { Alert, Segmented, Space } from 'antd';
+import { Segmented, Space } from 'antd';
 import { AbilityData } from '../../../data/ability-data';
 import { AbilityPanel } from '../../panels/elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
@@ -66,11 +66,6 @@ Invisible creatures always have concealment from other creatures. If an invisibl
 		const getConditionsSection = () => {
 			return (
 				<div>
-					<Alert
-						type='info'
-						showIcon={true}
-						message='This page lists all the standard conditions in the game, and their effects.'
-					/>
 					{
 						[
 							ConditionType.Bleeding,
@@ -100,11 +95,6 @@ Invisible creatures always have concealment from other creatures. If an invisibl
 
 			return (
 				<div>
-					<Alert
-						type='info'
-						showIcon={true}
-						message='This page lists all the skills in the game, grouped by category.'
-					/>
 					{
 						[
 							SkillList.Crafting,
@@ -139,11 +129,6 @@ Invisible creatures always have concealment from other creatures. If an invisibl
 
 			return (
 				<div>
-					<Alert
-						type='info'
-						showIcon={true}
-						message='This page lists all the languages in the game.'
-					/>
 					{
 						Collections
 							.sort(allLanguages, l => l.name)
@@ -182,11 +167,6 @@ Invisible creatures always have concealment from other creatures. If an invisibl
 
 			return (
 				<Space direction='vertical'>
-					<Alert
-						type='info'
-						showIcon={true}
-						message='This page lists all the standard actions, maneuvers, and move actions a hero (or monster) can take.'
-					/>
 					<HeaderText>Actions</HeaderText>
 					{
 						abilities

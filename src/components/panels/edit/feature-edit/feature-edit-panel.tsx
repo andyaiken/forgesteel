@@ -1272,6 +1272,34 @@ export const FeatureEditPanel = (props: Props) => {
 	};
 
 	try {
+		const featureTypes = [
+			FeatureType.Text,
+			FeatureType.Ability,
+			FeatureType.AbilityCost,
+			FeatureType.AncestryChoice,
+			FeatureType.AncestryFeatureChoice,
+			FeatureType.Bonus,
+			FeatureType.CharacteristicBonus,
+			FeatureType.Choice,
+			FeatureType.ClassAbility,
+			FeatureType.Companion,
+			FeatureType.DamageModifier,
+			FeatureType.Domain,
+			FeatureType.DomainFeature,
+			FeatureType.Kit,
+			FeatureType.Language,
+			FeatureType.LanguageChoice,
+			FeatureType.Multiple,
+			FeatureType.Perk,
+			FeatureType.Size,
+			FeatureType.Skill,
+			FeatureType.SkillChoice,
+			FeatureType.Speed,
+			FeatureType.TaggedFeature,
+			FeatureType.TaggedFeatureChoice,
+			FeatureType.TitleChoice
+		];
+
 		return (
 			<div className='feature-edit-panel'>
 				<Tabs
@@ -1306,7 +1334,7 @@ export const FeatureEditPanel = (props: Props) => {
 												<Select
 													style={{ width: '100%' }}
 													placeholder='Select type'
-													options={(props.allowedTypes || [ FeatureType.Text, FeatureType.Ability, FeatureType.AbilityCost, FeatureType.AncestryChoice, FeatureType.AncestryFeatureChoice, FeatureType.Bonus, FeatureType.CharacteristicBonus, FeatureType.Choice, FeatureType.ClassAbility, FeatureType.Companion, FeatureType.DamageModifier, FeatureType.Domain, FeatureType.DomainFeature, FeatureType.Kit, FeatureType.Language, FeatureType.Multiple, FeatureType.Perk, FeatureType.Size, FeatureType.Skill, FeatureType.SkillChoice, FeatureType.Speed, FeatureType.TaggedFeature, FeatureType.TaggedFeatureChoice, FeatureType.TitleChoice ]).map(o => ({ value: o }))}
+													options={(props.allowedTypes || featureTypes).map(o => ({ value: o }))}
 													optionRender={option => <Field label={option.data.value} value={FeatureLogic.getFeatureTypeDescription(option.data.value)} />}
 													value={feature.type}
 													onChange={setType}

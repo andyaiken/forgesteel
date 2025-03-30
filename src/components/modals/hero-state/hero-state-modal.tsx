@@ -208,7 +208,7 @@ export const HeroStateModal = (props: Props) => {
 			const copy = Utils.copy(hero);
 			copy.state.staminaDamage = 0;
 			copy.state.recoveriesUsed = 0;
-			copy.state.xp = copy.state.victories;
+			copy.state.xp += copy.state.victories;
 			copy.state.victories = 0;
 			setHero(copy);
 			props.onChange(copy);

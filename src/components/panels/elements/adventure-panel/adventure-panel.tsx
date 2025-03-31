@@ -18,6 +18,8 @@ import { PlotPanel } from '../plot-panel/plot-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
+import { TacticalMapPanel } from '../tactical-map-panel/tactical-map-panel';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useState } from 'react';
 
@@ -78,6 +80,21 @@ export const AdventurePanel = (props: Props) => {
 						<SelectablePanel onSelect={() => navigation.goToPlaybookView('negotiation', negotiation.id)}>
 							<NegotiationPanel
 								negotiation={negotiation}
+							/>
+						</SelectablePanel>
+					);
+				}
+				break;
+			}
+			case 'map': {
+				const map = props.playbook.tacticalMaps.find(tm => tm.id === content.contentID);
+				if (map) {
+					return (
+						<SelectablePanel onSelect={() => navigation.goToPlaybookView('tactical-map', map.id)}>
+							<TacticalMapPanel
+								map={map}
+								display={TacticalMapDisplayType.Thumbnail}
+								options={props.options}
 							/>
 						</SelectablePanel>
 					);

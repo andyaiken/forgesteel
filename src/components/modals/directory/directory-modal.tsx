@@ -57,6 +57,7 @@ export const DirectoryModal = (props: Props) => {
 						<div className='directory-btn' onClick={() => { navigation.goToPlaybookList('encounter'); props.onClose(); }}>Encounters</div>
 						<div className='directory-btn' onClick={() => { navigation.goToPlaybookList('montage'); props.onClose(); }}>Montages</div>
 						<div className='directory-btn' onClick={() => { navigation.goToPlaybookList('negotiation'); props.onClose(); }}>Negotiations</div>
+						<div className='directory-btn' onClick={() => { navigation.goToPlaybookList('tactical-map'); props.onClose(); }}>Tactical Maps</div>
 						<div className='directory-header'>Session</div>
 						<div className='directory-btn' onClick={() => { navigation.goToSession(); props.onClose(); }}>Session</div>
 					</div>

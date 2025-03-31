@@ -1,0 +1,11 @@
+.grid-square-panel {
+	position: absolute;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+
+	&:hover,
+	&.selected {
+		border-color: rgb(64, 150, 255);
+		background-color: rgb(180, 220, 255);
+	}
+}

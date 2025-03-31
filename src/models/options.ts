@@ -23,4 +23,6 @@ export interface Options {
 	heroCount: number;
 	heroLevel: number;
 	heroVictories: number;
+	// Tactical Map
+	gridSize: number;
 }

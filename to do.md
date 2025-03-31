@@ -23,23 +23,21 @@
 
 ### Playbook
 
-* Add maps
-  * Tactical
-    * Create or import
-    * Auto-create delve map
-    * Add heroes to map
-    * In encounter, add monster tokens / terrain tokens / terrain overlays
-  * Regional
 * Adventure Builder:
   * Allow subplots
 * Encounter Builder:
   * Set number of squares for per-square terrain
   * Use encounter templates
   * Auto-create encounters
+* Tactical Maps:
+  * Switch map Z level
+  * Ability to add / fill / clear fog of war
+  * Ability to destroy tile squares / wall sections
+* Regional Maps
 
 ### Session
 
-* Encounter tracker
+* Encounter
   * Monsters:
     * Set 'used reaction' flag on monsters / minions
     * Ability to duplicate / delete monsters in a slot
@@ -51,6 +49,11 @@
     * Show number of squares on terrain encounter row
     * Show 'should be N squares' for terrain
     * Ability to add new terrain objects
+* Tactical map
+  * Add hero tokens to map (automatically based on encounter setting)
+  * Add monster tokens to map (automatically if there's an encounter active)
+  * Add terrain tokens / overlays
+  * In encounter, add monster tokens / terrain tokens / terrain overlays
 * Player view
   * Ability to show certain information to players using a second window
 

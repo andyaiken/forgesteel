@@ -54,6 +54,7 @@ import { SessionPage } from '../pages/session/session-page';
 import { SourcebookData } from '../../data/sourcebook-data';
 import { SourcebookLogic } from '../../logic/sourcebook-logic';
 import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
+import { TacticalMap } from '../../models/tactical-map';
 import { Terrain } from '../../models/terrain';
 import { TerrainModal } from '../modals/terrain/terrain-modal';
 import { Title } from '../../models/title';
@@ -752,6 +753,15 @@ export const Main = (props: Props) => {
 				}
 				copy.negotiations.push(element as Negotiation);
 				break;
+			case 'tactical-map':
+				if (original) {
+					element = Utils.copy(original);
+					element.id = Utils.guid();
+				} else {
+					element = FactoryLogic.createTacticalMap();
+				}
+				copy.tacticalMaps.push(element as TacticalMap);
+				break;
 		}
 
 		persistPlaybook(copy).then(() => navigation.goToPlaybookView(kind, element.id));
@@ -774,6 +784,9 @@ export const Main = (props: Props) => {
 			case 'negotiation':
 				copy.negotiations = copy.negotiations.filter(x => x.id !== element.id);
 				break;
+			case 'tactical-map':
+				copy.tacticalMaps = copy.tacticalMaps.filter(x => x.id !== element.id);
+				break;
 		}
 
 		setDrawer(null);
@@ -794,6 +807,9 @@ export const Main = (props: Props) => {
 				break;
 			case 'negotiation':
 				copy.negotiations = copy.negotiations.map(x => x.id === element.id ? element : x) as Negotiation[];
+				break;
+			case 'tactical-map':
+				copy.tacticalMaps = copy.tacticalMaps.map(x => x.id === element.id ? element : x) as TacticalMap[];
 				break;
 		}
 
@@ -820,6 +836,10 @@ export const Main = (props: Props) => {
 			case 'negotiation':
 				copy.negotiations.push(element as Negotiation);
 				copy.negotiations = Collections.sort<Element>(copy.negotiations, item => item.name) as Negotiation[];
+				break;
+			case 'tactical-map':
+				copy.tacticalMaps.push(element as TacticalMap);
+				copy.tacticalMaps = Collections.sort<Element>(copy.tacticalMaps, item => item.name) as TacticalMap[];
 				break;
 		}
 

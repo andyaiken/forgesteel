@@ -47,6 +47,9 @@ import { PlotEditPanel } from '../../../panels/edit/plot-edit/plot-edit-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { TacticalMap } from '../../../../models/tactical-map';
+import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
+import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/tactical-map-panel';
 import { Terrain } from '../../../../models/terrain';
 import { TerrainFilterPanel } from '../../../panels/terrain-filter/terrain-filter-panel';
 import { TerrainLogic } from '../../../../logic/terrain-logic';
@@ -89,6 +92,9 @@ export const PlaybookEditPage = (props: Props) => {
 				break;
 			case 'negotiation':
 				original = props.playbook.negotiations.find(e => e.id === elementID)!;
+				break;
+			case 'tactical-map':
+				original = props.playbook.tacticalMaps.find(e => e.id === elementID)!;
 				break;
 		}
 		return Utils.copy(original);
@@ -685,201 +691,6 @@ export const PlaybookEditPage = (props: Props) => {
 		);
 	};
 
-	const getNegotiationDetailsSection = () => {
-		const negotiation = element as Negotiation;
-
-		const setImpression = (value: number) => {
-			const copy = Utils.copy(element) as Negotiation;
-			copy.impression = value;
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const setInterest = (value: number) => {
-			const copy = Utils.copy(element) as Negotiation;
-			copy.interest = value;
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const setPatience = (value: number) => {
-			const copy = Utils.copy(element) as Negotiation;
-			copy.patience = value;
-			setElement(copy);
-			setDirty(true);
-		};
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				<NumberSpin label='Impression' min={0} max={15} value={negotiation.impression} onChange={setImpression} />
-				<NumberSpin label='Interest' min={0} max={5} value={negotiation.interest} onChange={setInterest} />
-				<NumberSpin label='Patience' min={0} max={5} value={negotiation.patience} onChange={setPatience} />
-			</Space>
-		);
-	};
-
-	const getNegotiationMotivationsSection = () => {
-		const negotiation = element as Negotiation;
-
-		const addMotivation = () => {
-			const copy = Utils.copy(element) as Negotiation;
-			copy.motivations.push({
-				trait: NegotiationTrait.Benevolence,
-				description: ''
-			});
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const setMotivationTrait = (index: number, value: NegotiationTrait) => {
-			const copy = Utils.copy(element) as Negotiation;
-			const m = copy.motivations[index];
-			m.trait = value;
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const setMotivationDescription = (index: number, value: string) => {
-			const copy = Utils.copy(element) as Negotiation;
-			const m = copy.motivations[index];
-			m.description = value;
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const moveMotivation = (index: number, direction: 'up' | 'down') => {
-			const copy = Utils.copy(element) as Negotiation;
-			copy.motivations = Collections.move(copy.motivations, index, direction);
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const deleteMotivation = (trait: NegotiationTrait) => {
-			const copy = Utils.copy(element) as Negotiation;
-			copy.motivations = copy.motivations.filter(m => m.trait !== trait);
-			setElement(copy);
-			setDirty(true);
-		};
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					negotiation.motivations.map((m, n) => (
-						<Expander
-							key={`m${n}`}
-							title={m.trait}
-							extra={[
-								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMotivation(n, 'up'); }} />,
-								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMotivation(n, 'down'); }} />,
-								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteMotivation(m.trait); }} />
-							]}
-						>
-							<HeaderText>Motivation</HeaderText>
-							<Space direction='vertical' style={{ width: '100%' }}>
-								<Select
-									style={{ width: '100%' }}
-									placeholder='Trait'
-									options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getMotivationDescription(nt) }))}
-									optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-									value={m.trait}
-									onChange={t => setMotivationTrait(n, t)}
-								/>
-								<MultiLine label='Description' value={m.description} onChange={value => setMotivationDescription(n, value)} />
-							</Space>
-						</Expander>
-					))
-				}
-				{
-					negotiation.motivations.length === 0 ?
-						<Empty />
-						: null
-				}
-				<Button block={true} onClick={addMotivation}>Add a motivation</Button>
-			</Space>
-		);
-	};
-
-	const getNegotiationPitfallsSection = () => {
-		const negotiation = element as Negotiation;
-
-		const addPitfall = () => {
-			const copy = Utils.copy(element) as Negotiation;
-			copy.pitfalls.push({
-				trait: NegotiationTrait.Benevolence,
-				description: ''
-			});
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const setPitfallTrait = (index: number, value: NegotiationTrait) => {
-			const copy = Utils.copy(element) as Negotiation;
-			const m = copy.pitfalls[index];
-			m.trait = value;
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const setPitfallDescription = (index: number, value: string) => {
-			const copy = Utils.copy(element) as Negotiation;
-			const m = copy.pitfalls[index];
-			m.description = value;
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const movePitfall = (index: number, direction: 'up' | 'down') => {
-			const copy = Utils.copy(element) as Negotiation;
-			copy.pitfalls = Collections.move(copy.pitfalls, index, direction);
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const deletePitfall = (trait: NegotiationTrait) => {
-			const copy = Utils.copy(element) as Negotiation;
-			copy.pitfalls = copy.pitfalls.filter(m => m.trait !== trait);
-			setElement(copy);
-			setDirty(true);
-		};
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					negotiation.pitfalls.map((p, n) => (
-						<Expander
-							key={`p${n}`}
-							title={p.trait}
-							extra={[
-								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); movePitfall(n, 'up'); }} />,
-								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); movePitfall(n, 'down'); }} />,
-								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deletePitfall(p.trait); }} />
-							]}
-						>
-							<HeaderText>Pitfall</HeaderText>
-							<Space direction='vertical' style={{ width: '100%' }}>
-								<Select
-									style={{ width: '100%' }}
-									placeholder='Trait'
-									options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getMotivationDescription(nt) }))}
-									optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-									value={p.trait}
-									onChange={t => setPitfallTrait(n, t)}
-								/>
-								<MultiLine label='Description' value={p.description} onChange={value => setPitfallDescription(n, value)} />
-							</Space>
-						</Expander>
-					))
-				}
-				{
-					negotiation.pitfalls.length === 0 ?
-						<Empty />
-						: null
-				}
-				<Button block={true} onClick={addPitfall}>Add a pitfall</Button>
-			</Space>
-		);
-	};
-
 	const getMontageSceneSection = () => {
 		const montage = element as Montage;
 
@@ -1324,6 +1135,220 @@ export const PlaybookEditPage = (props: Props) => {
 		);
 	};
 
+	const getNegotiationDetailsSection = () => {
+		const negotiation = element as Negotiation;
+
+		const setImpression = (value: number) => {
+			const copy = Utils.copy(element) as Negotiation;
+			copy.impression = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setInterest = (value: number) => {
+			const copy = Utils.copy(element) as Negotiation;
+			copy.interest = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setPatience = (value: number) => {
+			const copy = Utils.copy(element) as Negotiation;
+			copy.patience = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<NumberSpin label='Impression' min={0} max={15} value={negotiation.impression} onChange={setImpression} />
+				<NumberSpin label='Interest' min={0} max={5} value={negotiation.interest} onChange={setInterest} />
+				<NumberSpin label='Patience' min={0} max={5} value={negotiation.patience} onChange={setPatience} />
+			</Space>
+		);
+	};
+
+	const getNegotiationMotivationsSection = () => {
+		const negotiation = element as Negotiation;
+
+		const addMotivation = () => {
+			const copy = Utils.copy(element) as Negotiation;
+			copy.motivations.push({
+				trait: NegotiationTrait.Benevolence,
+				description: ''
+			});
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setMotivationTrait = (index: number, value: NegotiationTrait) => {
+			const copy = Utils.copy(element) as Negotiation;
+			const m = copy.motivations[index];
+			m.trait = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setMotivationDescription = (index: number, value: string) => {
+			const copy = Utils.copy(element) as Negotiation;
+			const m = copy.motivations[index];
+			m.description = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const moveMotivation = (index: number, direction: 'up' | 'down') => {
+			const copy = Utils.copy(element) as Negotiation;
+			copy.motivations = Collections.move(copy.motivations, index, direction);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const deleteMotivation = (trait: NegotiationTrait) => {
+			const copy = Utils.copy(element) as Negotiation;
+			copy.motivations = copy.motivations.filter(m => m.trait !== trait);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					negotiation.motivations.map((m, n) => (
+						<Expander
+							key={`m${n}`}
+							title={m.trait}
+							extra={[
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveMotivation(n, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveMotivation(n, 'down'); }} />,
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteMotivation(m.trait); }} />
+							]}
+						>
+							<HeaderText>Motivation</HeaderText>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								<Select
+									style={{ width: '100%' }}
+									placeholder='Trait'
+									options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getMotivationDescription(nt) }))}
+									optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+									value={m.trait}
+									onChange={t => setMotivationTrait(n, t)}
+								/>
+								<MultiLine label='Description' value={m.description} onChange={value => setMotivationDescription(n, value)} />
+							</Space>
+						</Expander>
+					))
+				}
+				{
+					negotiation.motivations.length === 0 ?
+						<Empty />
+						: null
+				}
+				<Button block={true} onClick={addMotivation}>Add a motivation</Button>
+			</Space>
+		);
+	};
+
+	const getNegotiationPitfallsSection = () => {
+		const negotiation = element as Negotiation;
+
+		const addPitfall = () => {
+			const copy = Utils.copy(element) as Negotiation;
+			copy.pitfalls.push({
+				trait: NegotiationTrait.Benevolence,
+				description: ''
+			});
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setPitfallTrait = (index: number, value: NegotiationTrait) => {
+			const copy = Utils.copy(element) as Negotiation;
+			const m = copy.pitfalls[index];
+			m.trait = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const setPitfallDescription = (index: number, value: string) => {
+			const copy = Utils.copy(element) as Negotiation;
+			const m = copy.pitfalls[index];
+			m.description = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const movePitfall = (index: number, direction: 'up' | 'down') => {
+			const copy = Utils.copy(element) as Negotiation;
+			copy.pitfalls = Collections.move(copy.pitfalls, index, direction);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const deletePitfall = (trait: NegotiationTrait) => {
+			const copy = Utils.copy(element) as Negotiation;
+			copy.pitfalls = copy.pitfalls.filter(m => m.trait !== trait);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					negotiation.pitfalls.map((p, n) => (
+						<Expander
+							key={`p${n}`}
+							title={p.trait}
+							extra={[
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); movePitfall(n, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); movePitfall(n, 'down'); }} />,
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deletePitfall(p.trait); }} />
+							]}
+						>
+							<HeaderText>Pitfall</HeaderText>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								<Select
+									style={{ width: '100%' }}
+									placeholder='Trait'
+									options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getMotivationDescription(nt) }))}
+									optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+									value={p.trait}
+									onChange={t => setPitfallTrait(n, t)}
+								/>
+								<MultiLine label='Description' value={p.description} onChange={value => setPitfallDescription(n, value)} />
+							</Space>
+						</Expander>
+					))
+				}
+				{
+					negotiation.pitfalls.length === 0 ?
+						<Empty />
+						: null
+				}
+				<Button block={true} onClick={addPitfall}>Add a pitfall</Button>
+			</Space>
+		);
+	};
+
+	const getTacticalMapBuilder = () => {
+		const map = element as TacticalMap;
+
+		return (
+			<div className='tactical-map-container'>
+				<TacticalMapPanel
+					map={map}
+					display={TacticalMapDisplayType.DirectorEdit}
+					options={props.options}
+					mode={PanelMode.Full}
+					updateMap={map => {
+						setElement(map);
+						setDirty(true);
+					}}
+				/>
+			</div>
+		);
+	};
+
 	const getEditSection = () => {
 		switch (kind!) {
 			case 'adventure':
@@ -1434,6 +1459,8 @@ export const PlaybookEditPage = (props: Props) => {
 						]}
 					/>
 				);
+			case 'tactical-map':
+				return getTacticalMapBuilder();
 		}
 	};
 
@@ -1667,10 +1694,18 @@ export const PlaybookEditPage = (props: Props) => {
 
 	//#endregion
 
+	const getSubheader = () => {
+		if (kind === 'tactical-map') {
+			return 'Tactical Map';
+		}
+
+		return Format.capitalize(kind!);
+	};
+
 	try {
 		return (
 			<div className='playbook-edit-page'>
-				<AppHeader subheader={`${Format.capitalize(kind!)} Builder`} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+				<AppHeader subheader={`${getSubheader()} Builder`} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
 					<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
 						Save Changes
 					</Button>
@@ -1683,11 +1718,11 @@ export const PlaybookEditPage = (props: Props) => {
 							: null
 					}
 					{
-						(kind === 'encounter') ?
+						(kind === 'encounter') || (kind === 'tactical-map') ?
 							<Popover
 								trigger='click'
 								placement='bottom'
-								content={<OptionsPanel mode='encounter' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
+								content={<OptionsPanel mode={kind} options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
 							>
 								<Button icon={<SettingOutlined />}>
 									Options
@@ -1700,9 +1735,13 @@ export const PlaybookEditPage = (props: Props) => {
 					<div className='edit-column'>
 						{getEditSection()}
 					</div>
-					<div className='preview-column'>
-						{getPreview()}
-					</div>
+					{
+						kind !== 'tactical-map' ?
+							<div className='preview-column'>
+								{getPreview()}
+							</div>
+							: null
+					}
 				</div>
 			</div>
 		);

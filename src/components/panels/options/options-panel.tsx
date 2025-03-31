@@ -10,7 +10,7 @@ import { Utils } from '../../../utils/utils';
 import './options-panel.scss';
 
 interface Props {
-	mode: 'hero' | 'library' | 'monster' | 'encounter' | 'session';
+	mode: 'hero' | 'library' | 'monster' | 'encounter' | 'tactical-map' | 'session';
 	options: Options;
 	heroes: Hero[];
 	setOptions: (options: Options) => void;
@@ -119,6 +119,12 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
+	const setGridSize = (value: number) => {
+		const copy = Utils.copy(props.options);
+		copy.gridSize = value;
+		props.setOptions(copy);
+	};
+
 	const getContent = () => {
 		const getPartySection = (initialDivider: boolean) => {
 			const parties = Collections
@@ -214,6 +220,12 @@ export const OptionsPanel = (props: Props) => {
 						<NumberSpin label='Number of heroes' min={1} value={props.options.heroCount} onChange={setHeroCount} />
 						<NumberSpin label='Hero level' min={1} max={10} value={props.options.heroLevel} onChange={setHeroLevel} />
 						<NumberSpin label='Number of victories' min={0} value={props.options.heroVictories} onChange={setHeroVictories} />
+					</>
+				);
+			case 'tactical-map':
+				return (
+					<>
+						<NumberSpin label='Grid Size' min={5} steps={[ 5 ]} value={props.options.gridSize} onChange={setGridSize} />
 					</>
 				);
 			case 'session':

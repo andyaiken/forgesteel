@@ -1,0 +1,59 @@
+import { MapItemStyle } from '../tactical-map-panel';
+import { MapPosition } from '../../../../../models/tactical-map';
+import { MouseEvent } from 'react';
+import { TacticalMapDisplayType } from '../../../../../enums/tactical-map-display-type';
+
+import './grid-square.scss';
+
+interface Props {
+	position: MapPosition;
+	display: TacticalMapDisplayType;
+	style: MapItemStyle;
+	selected: boolean;
+	onMouseDown: (position: MapPosition) => void;
+	onMouseUp: (position: MapPosition) => void;
+	onMouseEnter: (position: MapPosition) => void;
+}
+
+export const GridSquarePanel = (props: Props) => {
+	const mouseDown = (e: MouseEvent) => {
+		e.stopPropagation();
+		if (props.onMouseDown) {
+			props.onMouseDown(props.position);
+		}
+	};
+
+	const mouseUp = (e: MouseEvent) => {
+		e.stopPropagation();
+		if (props.onMouseUp) {
+			props.onMouseUp(props.position);
+		}
+	};
+
+	const mouseEnter = (e: MouseEvent) => {
+		e.stopPropagation();
+		if (props.onMouseEnter) {
+			props.onMouseEnter(props.position);
+		}
+	};
+
+	try {
+		let className = 'grid-square-panel ' + props.display;
+		if (props.selected) {
+			className += ' selected';
+		}
+
+		return (
+			<div
+				className={className}
+				style={props.style}
+				onMouseDown={mouseDown}
+				onMouseUp={mouseUp}
+				onMouseEnter={mouseEnter}
+			/>
+		);
+	} catch (e) {
+		console.error(e);
+		return null;
+	}
+};

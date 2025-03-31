@@ -57,6 +57,7 @@ export const WelcomePage = (props: Props) => {
 						</HeaderText>
 						<div className='ds-text'>
 							In your <b>PLAYBOOK</b>, you can build encounters, ensuring that they're perfectly balanced for your heroes, and craft negotiations and montage tests.
+							You can also create detailed tactical maps for your heroes to explore.
 							You can then combine all these into an adventure.
 						</div>
 						<div className='ds-text'>

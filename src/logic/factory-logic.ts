@@ -2,6 +2,7 @@ import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot } from '../models/encounter';
 import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityData, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
+import { MapTile, MapWall, MapZone, TacticalMap } from '../models/tactical-map';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
 import { MonsterFilter, TerrainFilter } from '../models/filter';
 import { Montage, MontageChallenge, MontageSection } from '../models/montage';
@@ -129,6 +130,7 @@ export class FactoryLogic {
 			encounters: [],
 			montages: [],
 			negotiations: [],
+			tacticalMaps: [],
 			counters: []
 		};
 	};
@@ -1277,4 +1279,67 @@ export class FactoryLogic {
 			};
 		}
 	};
+
+	public static createTacticalMap(): TacticalMap {
+		return {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			items: []
+		};
+	}
+
+	public static createMapTile(): MapTile {
+		return {
+			id: Utils.guid(),
+			type: 'tile',
+			notes: '',
+			position: {
+				x: 0,
+				y: 0,
+				z: 0
+			},
+			dimensions: {
+				width: 4,
+				height: 4,
+				depth: 1
+			},
+			corners: 'square'
+		};
+	}
+
+	public static createMapWall(): MapWall {
+		return {
+			id: Utils.guid(),
+			type: 'wall',
+			notes: '',
+			pointA: { x: 0, y: 0, z: 0 },
+			pointB: { x: 0, y: 0, z: 0 },
+			blocksLineOfSight: true,
+			blocksMovement: true,
+			isOpenable: false,
+			isConcealed: false
+		};
+	};
+
+	public static createMapZone(): MapZone {
+		return {
+			id: Utils.guid(),
+			type: 'zone',
+			notes: '',
+			position: {
+				x: 0,
+				y: 0,
+				z: 0
+			},
+			dimensions: {
+				width: 4,
+				height: 4,
+				depth: 1
+			},
+			corners: 'rounded',
+			color: '5599ff80',
+			opacity: 0.5
+		};
+	}
 }

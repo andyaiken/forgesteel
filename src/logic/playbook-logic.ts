@@ -221,6 +221,16 @@ export class PlaybookLogic {
 			}
 		});
 
+		if (playbook.tacticalMaps === undefined) {
+			playbook.tacticalMaps = [];
+		}
+
+		playbook.tacticalMaps.forEach(tm => {
+			if (tm.items === undefined) {
+				tm.items = [];
+			}
+		});
+
 		if (playbook.counters === undefined) {
 			playbook.counters = [];
 		}

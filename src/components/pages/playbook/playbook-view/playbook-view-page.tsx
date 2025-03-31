@@ -20,6 +20,9 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { PlaybookLogic } from '../../../../logic/playbook-logic';
 import { ReactNode } from 'react';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { TacticalMap } from '../../../../models/tactical-map';
+import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
+import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/tactical-map-panel';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
@@ -91,16 +94,37 @@ export const PlaybookViewPage = (props: Props) => {
 				/>
 			);
 			break;
+		case 'tactical-map':
+			element = props.playbook.tacticalMaps.find(x => x.id === elementID) as TacticalMap;
+			panel = (
+				<div className='tactical-map-container'>
+					<TacticalMapPanel
+						map={element as TacticalMap}
+						display={TacticalMapDisplayType.DirectorView}
+						options={props.options}
+						mode={PanelMode.Full}
+					/>
+				</div>
+			);
+			break;
 	}
 
 	if (!element || !panel) {
 		return null;
 	}
 
+	const getSubheader = () => {
+		if (kind === 'tactical-map') {
+			return 'Tactical Map';
+		}
+
+		return Format.capitalize(kind!);
+	};
+
 	try {
 		return (
 			<div className='playbook-view-page'>
-				<AppHeader subheader={Format.capitalize(kind!)} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+				<AppHeader subheader={getSubheader()} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
 					<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybookList(kind!)}>
 						Close
 					</Button>
@@ -147,11 +171,11 @@ export const PlaybookViewPage = (props: Props) => {
 							: null
 					}
 					{
-						(kind === 'encounter') ?
+						(kind === 'encounter') || (kind === 'tactical-map') ?
 							<Popover
 								trigger='click'
 								placement='bottom'
-								content={<OptionsPanel mode='encounter' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+								content={<OptionsPanel mode={kind} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
 							>
 								<Button icon={<SettingOutlined />}>
 									Options

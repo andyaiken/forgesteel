@@ -115,7 +115,8 @@ Promise.all(promises).then(results => {
 			party: '',
 			heroCount: 4,
 			heroLevel: 1,
-			heroVictories: 0
+			heroVictories: 0,
+			gridSize: 50
 		};
 	}
 
@@ -169,6 +170,10 @@ Promise.all(promises).then(results => {
 
 	if (options.heroVictories === undefined) {
 		options.heroVictories = 0;
+	}
+
+	if (options.gridSize === undefined) {
+		options.gridSize = 50;
 	}
 
 	//#endregion

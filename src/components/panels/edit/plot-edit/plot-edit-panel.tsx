@@ -73,7 +73,7 @@ export const PlotEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setContentType = (content: PlotContent, value: 'encounter' | 'montage' | 'negotiation' | 'item' | 'monster') => {
+		const setContentType = (content: PlotContent, value: 'encounter' | 'montage' | 'negotiation' | 'map' | 'item' | 'monster') => {
 			const copy = Utils.copy(plot);
 			const index = copy.content.findIndex(c => c.id === content.id);
 			if (index !== -1) {
@@ -109,7 +109,7 @@ export const PlotEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const getContentOptions = (type: 'encounter' | 'montage' | 'negotiation' | 'item' | 'monster') => {
+		const getContentOptions = (type: 'encounter' | 'montage' | 'negotiation' | 'map' | 'item' | 'monster') => {
 			switch (type) {
 				case 'encounter':
 					return props.playbook.encounters;
@@ -117,6 +117,8 @@ export const PlotEditPanel = (props: Props) => {
 					return props.playbook.montages;
 				case 'negotiation':
 					return props.playbook.negotiations;
+				case 'map':
+					return props.playbook.tacticalMaps;
 				case 'item':
 					return Collections.sort(props.sourcebooks.flatMap(sb => sb.items), i => i.name);
 				case 'monster':
@@ -141,16 +143,16 @@ export const PlotEditPanel = (props: Props) => {
 							<Segmented
 								name='contenttypes'
 								block={true}
-								options={[ 'encounter', 'montage', 'negotiation', 'item', 'monster' ].map(t => ({ value: t, label: Format.capitalize(t) }))}
+								options={[ 'encounter', 'montage', 'negotiation', 'map', 'item', 'monster' ].map(t => ({ value: t, label: Format.capitalize(t) }))}
 								value={c.type}
-								onChange={type => setContentType(c, type as 'encounter' | 'montage' | 'negotiation' | 'item' | 'monster')}
+								onChange={type => setContentType(c, type as 'encounter' | 'montage' | 'negotiation' | 'map' | 'item' | 'monster')}
 							/>
 							<HeaderText>Content</HeaderText>
 							<Select
 								style={{ width: '100%' }}
 								allowClear={true}
 								placeholder='Select'
-								options={getContentOptions(c.type).map(o => ({ value: o.id, label: o.name, desc: o.description }))}
+								options={getContentOptions(c.type).map(o => ({ value: o.id, label: o.name || 'Element', desc: o.description }))}
 								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 								value={c.contentID}
 								onChange={id => setContentID(c, id)}

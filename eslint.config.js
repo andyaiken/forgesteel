@@ -58,12 +58,6 @@ export default tseslint.config(
 				'error',
 				'prefer-single'
 			],
-			'no-tabs': [
-				'error',
-				{
-					'allowIndentationTabs': true
-				}
-			],
 			'no-trailing-spaces': [
 				'error'
 			],

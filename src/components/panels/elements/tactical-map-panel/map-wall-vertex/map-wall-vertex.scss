@@ -1,0 +1,18 @@
+.map-wall-vertex-panel {
+	position: absolute;
+	border: 1px solid rgb(150, 150, 150);
+	background-color: rgb(200, 200, 200);
+
+	&.director-edit {
+		cursor: pointer;
+
+		&:hover {
+			border-color: rgb(64, 150, 255);
+		}
+	}
+
+	&.selected {
+		border-color: rgb(64, 150, 255);
+		background-color: rgb(180, 220, 255);
+	}
+}

@@ -1,0 +1,33 @@
+.tactical-map-toolbar {
+	z-index: 10;
+	position: sticky;
+	left: 0;
+	top: 0;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 5px;
+	padding: 10px 0;
+}
+
+.tactical-map-panel {
+	&.thumbnail {
+		.grid {
+			height: 100%;
+		}
+	}
+
+	&.director-view,
+	&.director-edit,
+	&.player {
+		overflow: auto;
+	}
+
+	.grid {
+		position: relative;
+		margin: 0 auto;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+}

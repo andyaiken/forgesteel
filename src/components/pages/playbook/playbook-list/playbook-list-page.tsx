@@ -20,6 +20,9 @@ import { Options } from '../../../../models/options';
 import { OptionsPanel } from '../../../panels/options/options-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { TacticalMap } from '../../../../models/tactical-map';
+import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
+import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/tactical-map-panel';
 import { Utils } from '../../../../utils/utils';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
@@ -83,6 +86,14 @@ export const PlaybookListPage = (props: Props) => {
 
 	const getNegotiations = () => {
 		return props.playbook.negotiations
+			.filter(item => Utils.textMatches([
+				item.name,
+				item.description
+			], searchTerm));
+	};
+
+	const getTacticalMaps = () => {
+		return props.playbook.tacticalMaps
 			.filter(item => Utils.textMatches([
 				item.name,
 				item.description
@@ -174,11 +185,38 @@ export const PlaybookListPage = (props: Props) => {
 		);
 	};
 
+	const getTacticalMapsSection = (list: TacticalMap[]) => {
+		if (list.length === 0) {
+			return (
+				<Empty />
+			);
+		}
+
+		return (
+			<div className='playbook-section-row'>
+				{
+					list.map(tm => (
+						<SelectablePanel key={tm.id} onSelect={() => navigation.goToPlaybookView('tactical-map', tm.id)}>
+							<div className='tactical-map-container'>
+								<TacticalMapPanel
+									map={tm}
+									display={TacticalMapDisplayType.Thumbnail}
+									options={props.options}
+								/>
+							</div>
+						</SelectablePanel>
+					))
+				}
+			</div>
+		);
+	};
+
 	try {
 		const adventures = getAdventures();
 		const encounters = getEncounters();
 		const montages = getMontages();
 		const negotiations = getNegotiations();
+		const tacticalMaps = getTacticalMaps();
 
 		const exampleEncounters = [
 			EncounterData.goblinAmbush,
@@ -355,6 +393,16 @@ export const PlaybookListPage = (props: Props) => {
 									</div>
 								),
 								children: getNegotiationsSection(negotiations)
+							},
+							{
+								key: 'tactical-map',
+								label: (
+									<div className='section-header'>
+										<div className='section-title'>Tactical Maps</div>
+										<div className='section-count'>{tacticalMaps.length}</div>
+									</div>
+								),
+								children: getTacticalMapsSection(tacticalMaps)
 							}
 						]}
 						onChange={k => navigation.goToPlaybookList(k as PlaybookElementKind)}

@@ -1,6 +1,6 @@
 import { Alert, Button, Drawer, Input, Select, Space } from 'antd';
 import { Badge, HeroicResourceBadge } from '../../../controls/badge/badge';
-import { Feature, FeatureAbilityCostData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Ancestry } from '../../../../models/ancestry';
@@ -1038,6 +1038,12 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
+	const getInformationAbilityDamage = (data: FeatureAbilityDamageData) => {
+		return (
+			<Field label={data.keywords.join(', ')} value={FormatLogic.getModifier(data)} />
+		);
+	};
+
 	const getInformationAncestryChoice = (data: FeatureAncestryChoiceData) => {
 		if (!data.selected) {
 			return null;
@@ -1434,6 +1440,8 @@ export const FeaturePanel = (props: Props) => {
 		switch (props.feature.type) {
 			case FeatureType.AbilityCost:
 				return getInformationAbilityCost(props.feature.data);
+			case FeatureType.AbilityDamage:
+				return getInformationAbilityDamage(props.feature.data);
 			case FeatureType.AncestryChoice:
 				return getInformationAncestryChoice(props.feature.data);
 			case FeatureType.AncestryFeatureChoice:

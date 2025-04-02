@@ -1,3 +1,4 @@
+import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
@@ -147,23 +148,71 @@ export class FeatureLogic {
 			// Imbued armor grants +6 / +12 / +21 stamina based on highest enhancement tier
 			if (hasLvl1) {
 				features.push(FactoryLogic.feature.createBonus({
-					id: '',
+					id: item.name + '-bonus-1',
 					field: FeatureField.Stamina,
 					value: 6
 				}));
 			}
 			if (hasLvl5) {
 				features.push(FactoryLogic.feature.createBonus({
-					id: '',
+					id: item.name + '-bonus-5',
 					field: FeatureField.Stamina,
 					value: 6
 				}));
 			}
 			if (hasLvl9) {
 				features.push(FactoryLogic.feature.createBonus({
-					id: '',
+					id: item.name + '-bonus-9',
 					field: FeatureField.Stamina,
 					value: 9
+				}));
+			}
+		}
+		if (item.type === ItemType.ImbuedImplement) {
+			// Imbued implement grants +1 / +2 / +3 damage to magic / psionic abilities based on highest enhancement tier
+			if (hasLvl1) {
+				features.push(FactoryLogic.feature.createAbilityDamage({
+					id: item.name + '-bonus-1',
+					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Psionic ],
+					modifier: 1
+				}));
+			}
+			if (hasLvl5) {
+				features.push(FactoryLogic.feature.createAbilityDamage({
+					id: item.name + '-bonus-5',
+					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Psionic ],
+					modifier: 1
+				}));
+			}
+			if (hasLvl9) {
+				features.push(FactoryLogic.feature.createAbilityDamage({
+					id: item.name + '-bonus-9',
+					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Psionic ],
+					modifier: 1
+				}));
+			}
+		}
+		if (item.type === ItemType.ImbuedWeapon) {
+			// Imbued weapon grants +1 / +2 / +3 damage to weapon abilities based on highest enhancement tier
+			if (hasLvl1) {
+				features.push(FactoryLogic.feature.createAbilityDamage({
+					id: item.name + '-bonus-1',
+					keywords: [ AbilityKeyword.Weapon ],
+					modifier: 1
+				}));
+			}
+			if (hasLvl5) {
+				features.push(FactoryLogic.feature.createAbilityDamage({
+					id: item.name + '-bonus-5',
+					keywords: [ AbilityKeyword.Weapon ],
+					modifier: 1
+				}));
+			}
+			if (hasLvl9) {
+				features.push(FactoryLogic.feature.createAbilityDamage({
+					id: item.name + '-bonus-9',
+					keywords: [ AbilityKeyword.Weapon ],
+					modifier: 1
 				}));
 			}
 		}
@@ -320,6 +369,8 @@ export class FeatureLogic {
 				return 'This feature grants you an ability.';
 			case FeatureType.AbilityCost:
 				return 'This feature modifies the cost to use an ability.';
+			case FeatureType.AbilityDamage:
+				return 'This feature modifies the damage of an ability.';
 			case FeatureType.AddOn:
 				return 'This feature grants you a monster customization.';
 			case FeatureType.AncestryChoice:

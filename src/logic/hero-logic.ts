@@ -15,6 +15,7 @@ import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
 import { Kit } from '../models/kit';
 import { Language } from '../models/language';
+import { Modifier } from '../models/damage-modifier';
 import { Size } from '../models/size';
 import { Skill } from '../models/skill';
 import { Sourcebook } from '../models/sourcebook';
@@ -257,12 +258,7 @@ export class HeroLogic {
 				data.modifiers
 					.filter(dm => dm.type === type)
 					.forEach(dm => {
-						let value = dm.value;
-						value += (Collections.max(dm.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0) * dm.valueCharacteristicMultiplier;
-						if (hero.class) {
-							value += dm.valuePerLevel * (hero.class.level - 1);
-							value += dm.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
-						}
+						const value = HeroLogic.calculateModifierValue(hero, dm);
 
 						const existing = modifiers.find(x => x.damageType === dm.damageType);
 						if (existing) {
@@ -277,6 +273,19 @@ export class HeroLogic {
 			});
 
 		return Collections.sort(modifiers, dm => dm.damageType);
+	};
+
+	static calculateModifierValue = (hero: Hero, mod: Modifier) => {
+		let value = mod.value;
+
+		value += (Collections.max(mod.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0) * mod.valueCharacteristicMultiplier;
+
+		if (hero.class) {
+			value += mod.valuePerLevel * (hero.class.level - 1);
+			value += mod.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
+		}
+
+		return value;
 	};
 
 	///////////////////////////////////////////////////////////////////////////
@@ -485,6 +494,16 @@ export class HeroLogic {
 			value3 += Collections.max(kits.map(kit => kit.meleeDamage?.tier3 || 0), value => value) || 0;
 		}
 
+		HeroLogic.getFeatures(hero)
+			.filter(f => f.type === FeatureType.AbilityDamage)
+			.filter(f => f.data.keywords.some(kw => ability.keywords.includes(kw)))
+			.forEach(f => {
+				const mod = HeroLogic.calculateModifierValue(hero, f.data);
+				value1 += mod;
+				value2 += mod;
+				value3 += mod;
+			});
+
 		if ((value1 === 0) && (value2 === 0) && (value3 === 0)) {
 			return null;
 		}
@@ -508,6 +527,16 @@ export class HeroLogic {
 			value2 += Collections.max(kits.map(kit => kit.rangedDamage?.tier2 || 0), value => value) || 0;
 			value3 += Collections.max(kits.map(kit => kit.rangedDamage?.tier3 || 0), value => value) || 0;
 		}
+
+		HeroLogic.getFeatures(hero)
+			.filter(f => f.type === FeatureType.AbilityDamage)
+			.filter(f => f.data.keywords.some(kw => ability.keywords.includes(kw)))
+			.forEach(f => {
+				const mod = HeroLogic.calculateModifierValue(hero, f.data);
+				value1 += mod;
+				value2 += mod;
+				value3 += mod;
+			});
 
 		if ((value1 === 0) && (value2 === 0) && (value3 === 0)) {
 			return null;

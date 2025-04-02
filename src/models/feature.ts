@@ -41,6 +41,12 @@ export interface FeatureAbilityCostData extends _FeatureData {
 };
 export type FeatureAbilityCost = FeatureOf<FeatureType.AbilityCost, FeatureAbilityCostData>
 
+export interface FeatureAbilityDamageData extends _FeatureData, Modifier {
+	keywords: AbilityKeyword[];
+	damageType: string;
+};
+export type FeatureAbilityDamage = FeatureOf<FeatureType.AbilityDamage, FeatureAbilityDamageData>
+
 export interface FeatureAddOnData extends _FeatureData {
 	category: FeatureAddOnType;
 	cost: number;
@@ -210,6 +216,7 @@ export type FeatureTitleChoice = FeatureOf<FeatureType.TitleChoice, FeatureTitle
 export type Feature =
 	| FeatureAbility
 	| FeatureAbilityCost
+	| FeatureAbilityDamage
 	| FeatureAddOn
 	| FeatureAncestryChoice
 	| FeatureAncestryFeatureChoice

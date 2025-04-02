@@ -1,6 +1,6 @@
 import { Button, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -80,6 +80,17 @@ export const FeatureEditPanel = (props: Props) => {
 					keywords: [],
 					modifier: -1
 				} as FeatureAbilityCostData;
+				break;
+			case FeatureType.AbilityDamage:
+				data = {
+					keywords: [],
+					value: 0,
+					valueCharacteristics: [],
+					valueCharacteristicMultiplier: 1,
+					valuePerLevel: 0,
+					valuePerEchelon: 0,
+					damageType: 'Damage'
+				};
 				break;
 			case FeatureType.AddOn:
 				data = {
@@ -287,25 +298,25 @@ export const FeatureEditPanel = (props: Props) => {
 		};
 
 		const setValue = (value: number) => {
-			const copy = Utils.copy(feature.data) as FeatureBonusData | FeatureCharacteristicBonusData | FeatureAncestryFeatureChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureAbilityDamageData | FeatureBonusData | FeatureCharacteristicBonusData | FeatureAncestryFeatureChoiceData;
 			copy.value = value;
 			setData(copy);
 		};
 
 		const setValuePerLevel = (value: number) => {
-			const copy = Utils.copy(feature.data) as FeatureBonusData;
+			const copy = Utils.copy(feature.data) as FeatureAbilityDamageData | FeatureBonusData;
 			copy.valuePerLevel = value;
 			setData(copy);
 		};
 
 		const setValuePerEchelon = (value: number) => {
-			const copy = Utils.copy(feature.data) as FeatureBonusData;
+			const copy = Utils.copy(feature.data) as FeatureAbilityDamageData | FeatureBonusData;
 			copy.valuePerEchelon = value;
 			setData(copy);
 		};
 
 		const setValueCharacteristics = (value: Characteristic[]) => {
-			const copy = Utils.copy(feature.data) as FeatureBonusData;
+			const copy = Utils.copy(feature.data) as FeatureAbilityDamageData | FeatureBonusData;
 			copy.valueCharacteristics = value;
 			setData(copy);
 		};
@@ -425,7 +436,7 @@ export const FeatureEditPanel = (props: Props) => {
 		};
 
 		const setKeywords = (value: AbilityKeyword[]) => {
-			const copy = Utils.copy(feature.data) as FeatureAbilityCostData;
+			const copy = Utils.copy(feature.data) as FeatureAbilityCostData | FeatureAbilityDamageData;
 			copy.keywords = value;
 			setData(copy);
 		};
@@ -673,6 +684,37 @@ export const FeatureEditPanel = (props: Props) => {
 						/>
 						<HeaderText>Modifier</HeaderText>
 						<NumberSpin value={data.modifier} onChange={setModifier} />
+					</Space>
+				);
+			}
+			case FeatureType.AbilityDamage: {
+				const data = feature.data as FeatureAbilityDamageData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Keywords</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select keywords'
+							mode='multiple'
+							allowClear={true}
+							options={AbilityLogic.getKeywords().map(o => ({ value: o }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={data.keywords}
+							onChange={setKeywords}
+						/>
+						<HeaderText>Value</HeaderText>
+						<NumberSpin label='Value' min={0} value={data.value} onChange={setValue} />
+						<NumberSpin label='Per Level After 1st' min={0} value={data.valuePerLevel} onChange={setValuePerLevel} />
+						<NumberSpin label='Per Echelon' min={0} value={data.valuePerEchelon} onChange={setValuePerEchelon} />
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Characteristics'
+							mode='multiple'
+							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={data.valueCharacteristics}
+							onChange={setValueCharacteristics}
+						/>
 					</Space>
 				);
 			}
@@ -1276,6 +1318,7 @@ export const FeatureEditPanel = (props: Props) => {
 			FeatureType.Text,
 			FeatureType.Ability,
 			FeatureType.AbilityCost,
+			FeatureType.AbilityDamage,
 			FeatureType.AncestryChoice,
 			FeatureType.AncestryFeatureChoice,
 			FeatureType.Bonus,

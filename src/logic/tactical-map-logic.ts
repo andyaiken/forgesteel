@@ -23,10 +23,12 @@ export class TacticalMapLogic {
 						i.pointA,
 						i.pointB
 					];
+				case 'fog':
+					return [ i.position ];
 			}
 		});
 
-		const dimensions = points.length > 0 ? {
+		const boundaries = points.length > 0 ? {
 			minX: Math.min(...points.map(pt => pt.x)),
 			minY: Math.min(...points.map(pt => pt.y)),
 			minZ: Math.min(...points.map(pt => pt.z)),
@@ -35,18 +37,7 @@ export class TacticalMapLogic {
 			maxZ: Math.max(...points.map(pt => pt.z))
 		} : null;
 
-		if (dimensions) {
-			// Apply the border
-			const paddingSquares = 1;
-			dimensions.minX -= paddingSquares;
-			dimensions.minY -= paddingSquares;
-			dimensions.minZ -= paddingSquares;
-			dimensions.maxX += paddingSquares;
-			dimensions.maxY += paddingSquares;
-			dimensions.maxZ += paddingSquares;
-		}
-
-		return dimensions;
+		return boundaries;
 	};
 
 	static canAddTileHere(map: TacticalMap, x: number, y: number, width: number, height: number, minGapX: number, minGapY: number) {
@@ -310,6 +301,16 @@ export class TacticalMapLogic {
 				item.position.y = newY;
 				item.dimensions.width = newWidth;
 				item.dimensions.height = newHeight;
+			});
+
+		map.items
+			.filter(item => item.type === 'fog')
+			.forEach(item => {
+				const newX = (item.position.y) * -1;
+				const newY = item.position.x;
+
+				item.position.x = newX;
+				item.position.y = newY;
 			});
 
 		map.items.forEach(item => item.id = Utils.guid());

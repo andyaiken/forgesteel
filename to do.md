@@ -30,8 +30,8 @@
   * Use encounter templates
   * Auto-create encounters
 * Tactical Maps:
+  * Generate cavern map type
   * Switch map Z level
-  * Ability to add / fill / clear fog of war
   * Ability to destroy tile squares / wall sections
 * Regional Maps
 

@@ -9,6 +9,7 @@ interface Props {
 	position: MapPosition;
 	display: TacticalMapDisplayType;
 	style: MapItemStyle;
+	render: 'cell' | 'fog';
 	selected: boolean;
 	onMouseDown: (position: MapPosition) => void;
 	onMouseUp: (position: MapPosition) => void;
@@ -38,7 +39,10 @@ export const GridSquarePanel = (props: Props) => {
 	};
 
 	try {
-		let className = 'grid-square-panel ' + props.display;
+		let className = 'grid-square-panel ' + props.display + ' ' + props.render;
+		if (props.display === TacticalMapDisplayType.DirectorEdit) {
+			className += ' selectable';
+		}
 		if (props.selected) {
 			className += ' selected';
 		}

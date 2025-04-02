@@ -22,7 +22,8 @@ enum TacticalMapEditMode {
 	Map,
 	Tiles,
 	Walls,
-	Zones
+	Zones,
+	Fog
 }
 
 export interface MapItemStyle {
@@ -161,9 +162,76 @@ export const TacticalMapPanel = (props: Props) => {
 		}
 	};
 
+	const clearFog = () => {
+		const copy = Utils.copy(map) as TacticalMap;
+		copy.items = copy.items.filter(i => i.type !== 'fog');
+		setMap(copy);
+		if (props.updateMap) {
+			props.updateMap(copy);
+		}
+	};
+
 	const addSurroundingWalls = () => {
 		const copy = Utils.copy(map) as TacticalMap;
 		TacticalMapLogic.addWalls(copy, true, false);
+		setMap(copy);
+		if (props.updateMap) {
+			props.updateMap(copy);
+		}
+	};
+
+	const toggleFog = (points: MapPosition[]) => {
+		const copy = Utils.copy(map) as TacticalMap;
+
+		const minX = Math.min(...points.map(pt => pt.x));
+		const minY = Math.min(...points.map(pt => pt.y));
+		const maxX = Math.max(...points.map(pt => pt.x));
+		const maxY = Math.max(...points.map(pt => pt.y));
+
+		for (let x = minX; x <= maxX; ++x) {
+			for (let y = minY; y <= maxY; ++y) {
+				const z = 1;
+
+				const current = copy.items
+					.filter(i => i.type === 'fog')
+					.find(i => (i.position.x === x) && (i.position.y === y) && (i.position.z === z));
+				if (current) {
+					// Remove this fog
+					copy.items = copy.items.filter(i => i.id !== current.id);
+				} else {
+					// Add fog here
+					const fog = FactoryLogic.createMapFog();
+					fog.position.x = x;
+					fog.position.y = y;
+					fog.position.z = z;
+					copy.items.push(fog);
+				}
+			}
+		}
+
+		setMap(copy);
+		if (props.updateMap) {
+			props.updateMap(copy);
+		}
+	};
+
+	const fillFog = () => {
+		const copy = Utils.copy(map) as TacticalMap;
+
+		const boundaries = TacticalMapLogic.getMapBoundaries(copy);
+		if (boundaries) {
+			for (let x = boundaries.minX; x <= boundaries.maxX; ++x) {
+				for (let y = boundaries.minY; y <= boundaries.maxY; ++y) {
+					const z = 1;
+					const fog = FactoryLogic.createMapFog();
+					fog.position.x = x;
+					fog.position.y = y;
+					fog.position.z = z;
+					copy.items.push(fog);
+				}
+			}
+		}
+
 		setMap(copy);
 		if (props.updateMap) {
 			props.updateMap(copy);
@@ -209,6 +277,9 @@ export const TacticalMapPanel = (props: Props) => {
 			}
 			if ((editMode === TacticalMapEditMode.Zones) && editAdding) {
 				addZone([ selectionStartSquare, pos ]);
+			}
+			if (editMode === TacticalMapEditMode.Fog) {
+				toggleFog([ selectionStartSquare, pos ]);
 			}
 
 			setSelectionStartSquare(null);
@@ -374,7 +445,8 @@ export const TacticalMapPanel = (props: Props) => {
 						{ value: TacticalMapEditMode.Map, label: 'Map' },
 						{ value: TacticalMapEditMode.Tiles, label: 'Tiles' },
 						{ value: TacticalMapEditMode.Walls, label: 'Walls' },
-						{ value: TacticalMapEditMode.Zones, label: 'Zones' }
+						{ value: TacticalMapEditMode.Zones, label: 'Zones' },
+						{ value: TacticalMapEditMode.Fog, label: 'Fog' }
 					]}
 					value={editMode}
 					onChange={setEditMode}
@@ -402,7 +474,7 @@ export const TacticalMapPanel = (props: Props) => {
 						: null
 				}
 				{
-					editMode !== TacticalMapEditMode.Map ?
+					(editMode === TacticalMapEditMode.Tiles) || (editMode === TacticalMapEditMode.Walls) || (editMode === TacticalMapEditMode.Zones) ?
 						<Segmented
 							options={[
 								{ value: false, label: 'Select' },
@@ -414,13 +486,18 @@ export const TacticalMapPanel = (props: Props) => {
 						: null
 				}
 				{
-					editMode !== TacticalMapEditMode.Map ?
+					(editMode === TacticalMapEditMode.Tiles) || (editMode === TacticalMapEditMode.Walls) || (editMode === TacticalMapEditMode.Zones) ?
 						<Divider type='vertical' />
 						: null
 				}
 				{
 					editMode === TacticalMapEditMode.Walls ?
 						<Button onClick={addSurroundingWalls}>Add Surrounding Walls</Button>
+						: null
+				}
+				{
+					editMode === TacticalMapEditMode.Fog ?
+						<Button onClick={fillFog}>Fill Fog</Button>
 						: null
 				}
 				{
@@ -441,6 +518,11 @@ export const TacticalMapPanel = (props: Props) => {
 				{
 					editMode === TacticalMapEditMode.Zones ?
 						<DangerButton disabled={map.items.filter(i => i.type === 'zone').length === 0} label='Clear Zones' onConfirm={clearZones} />
+						: null
+				}
+				{
+					editMode === TacticalMapEditMode.Fog ?
+						<DangerButton disabled={map.items.filter(i => i.type === 'fog').length === 0} label='Clear Fog' onConfirm={clearFog} />
 						: null
 				}
 			</div>
@@ -502,27 +584,55 @@ export const TacticalMapPanel = (props: Props) => {
 			));
 	};
 
+	const getFog = (boundaries: MapBoundaries) => {
+		return map.items
+			.filter(i => i.type === 'fog')
+			.map(fog => (
+				<GridSquarePanel
+					key={fog.id}
+					position={fog.position}
+					display={props.display}
+					style={getMapItemStyle(fog.position.x, fog.position.y, 1, 1, 'square', boundaries)}
+					render='fog'
+					selected={isGridSquareSelected(fog.position)}
+					onMouseDown={gridSquareMouseDown}
+					onMouseUp={gridSquareMouseUp}
+					onMouseEnter={gridSquareEntered}
+				/>
+			));
+	};
+
 	const getGrid = (boundaries: MapBoundaries) => {
 		const grid: ReactNode[] = [];
 
-		const squareModes = [ TacticalMapEditMode.Tiles, TacticalMapEditMode.Zones ];
-		if (squareModes.includes(editMode) && editAdding) {
-			for (let x = boundaries.minX; x !== boundaries.maxX + 1; ++x) {
-				for (let y = boundaries.minY; y !== boundaries.maxY + 1; ++y) {
-					for (let z = boundaries.minZ; z !== boundaries.maxZ + 1; ++z) {
-						grid.push(
-							<GridSquarePanel
-								key={'grid ' + x + ',' + y + ',' + z}
-								position={{ x: x, y: y, z: z }}
-								display={props.display}
-								style={getMapItemStyle(x, y, 1, 1, 'square', boundaries)}
-								selected={isGridSquareSelected({ x: x, y: y, z: z })}
-								onMouseDown={gridSquareMouseDown}
-								onMouseUp={gridSquareMouseUp}
-								onMouseEnter={gridSquareEntered}
-							/>
-						);
-					}
+		let showGrid = false;
+		switch (editMode) {
+			case TacticalMapEditMode.Tiles:
+			case TacticalMapEditMode.Zones:
+				showGrid = editAdding;
+				break;
+			case TacticalMapEditMode.Fog:
+				showGrid = true;
+				break;
+		}
+
+		if (showGrid) {
+			for (let x = boundaries.minX; x <= boundaries.maxX; ++x) {
+				for (let y = boundaries.minY; y <= boundaries.maxY; ++y) {
+					const z = 1;
+					grid.push(
+						<GridSquarePanel
+							key={'grid ' + x + ',' + y + ',' + z}
+							position={{ x: x, y: y, z: z }}
+							display={props.display}
+							style={getMapItemStyle(x, y, 1, 1, 'square', boundaries)}
+							render='cell'
+							selected={isGridSquareSelected({ x: x, y: y, z: z })}
+							onMouseDown={gridSquareMouseDown}
+							onMouseUp={gridSquareMouseUp}
+							onMouseEnter={gridSquareEntered}
+						/>
+					);
 				}
 			}
 		}
@@ -533,24 +643,22 @@ export const TacticalMapPanel = (props: Props) => {
 	const getWallVertices = (boundaries: MapBoundaries) => {
 		const grid: ReactNode[] = [];
 
-		const vertexModes = [ TacticalMapEditMode.Walls ];
-		if (vertexModes.includes(editMode) && editAdding) {
+		if ((editMode === TacticalMapEditMode.Walls) && editAdding) {
 			for (let x = boundaries.minX + 1; x !== boundaries.maxX + 1; ++x) {
 				for (let y = boundaries.minY + 1; y !== boundaries.maxY + 1; ++y) {
-					for (let z = boundaries.minZ + 1; z !== boundaries.maxZ + 1; ++z) {
-						grid.push(
-							<MapWallVertexPanel
-								key={'vertex ' + x + ',' + y + ',' + z}
-								position={{ x: x, y: y, z: z }}
-								display={props.display}
-								style={getMapItemStyle(x, y, 1, 1, 'vertex', boundaries)}
-								selected={isVertexSelected({ x: x, y: y, z: z })}
-								onMouseDown={vertexMouseDown}
-								onMouseUp={vertexMouseUp}
-								onMouseEnter={vertexEntered}
-							/>
-						);
-					}
+					const z = 1;
+					grid.push(
+						<MapWallVertexPanel
+							key={'vertex ' + x + ',' + y + ',' + z}
+							position={{ x: x, y: y, z: z }}
+							display={props.display}
+							style={getMapItemStyle(x, y, 1, 1, 'vertex', boundaries)}
+							selected={isVertexSelected({ x: x, y: y, z: z })}
+							onMouseDown={vertexMouseDown}
+							onMouseUp={vertexMouseUp}
+							onMouseEnter={vertexEntered}
+						/>
+					);
 				}
 			}
 		}
@@ -567,16 +675,25 @@ export const TacticalMapPanel = (props: Props) => {
 				boundaries = {
 					minX: 0,
 					minY: 0,
-					minZ: 0,
+					minZ: 1,
 					maxX: 15,
 					maxY: 15,
-					maxZ: 0
+					maxZ: 1
 				};
 			} else {
 				return (
 					<Empty text='Empty map' />
 				);
 			}
+		}
+
+		if (boundaries) {
+			// Apply a border
+			const paddingSquares = 1;
+			boundaries.minX -= paddingSquares;
+			boundaries.minY -= paddingSquares;
+			boundaries.maxX += paddingSquares;
+			boundaries.maxY += paddingSquares;
 		}
 
 		const widthInSquares = 1 + boundaries.maxX - boundaries.minX;
@@ -596,6 +713,7 @@ export const TacticalMapPanel = (props: Props) => {
 						{getTiles(boundaries)}
 						{getWalls(boundaries)}
 						{getZones(boundaries)}
+						{getFog(boundaries)}
 						{getGrid(boundaries)}
 						{getWallVertices(boundaries)}
 					</div>

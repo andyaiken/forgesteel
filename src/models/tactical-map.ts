@@ -25,7 +25,7 @@ export interface MapDimensions {
 	depth: number;
 }
 
-export type MapItem = MapTile | MapWall | MapZone;
+export type MapItem = MapTile | MapWall | MapZone | MapFog;
 
 export interface MapTile {
 	id: string;
@@ -59,23 +59,8 @@ export interface MapZone {
 	opacity: number;
 }
 
-/*
-export interface MapZone extends MapItem {
-	type: 'zone';
-	position: MapPosition;
-	dimensions: MapDimensions;
-	style: 'square' | 'rounded' | 'circle' | null;
-}
-
-export interface MapItem {
+export interface MapFog {
 	id: string;
-	type: 'tile' | 'token' | 'overlay';
-	point: MapPoint;
-	size: MapSize;															// Used by tiles
-	content: { type: string, orientation: string, style: string } | null;	// Used by tiles
-	//size: string;															// Used by overlays
-	color: string;															// Used by overlays
-	opacity: number;														// Used by overlays
-	style: 'square' | 'rounded' | 'circle' | null;							// Used by tiles and overlays
+	type: 'fog';
+	position: MapPosition;
 }
-*/

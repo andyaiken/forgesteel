@@ -68,7 +68,7 @@ export const ProjectPanel = (props: Props) => {
 							{project.itemPrerequisites && project.progress ? <Toggle label='Obtained Items' value={project.progress.prerequisites} onChange={setPrerequisites} /> : null}
 							{project.source ? <Field label='Source' value={props.project.source} /> : null}
 							{project.source && project.progress ? <Toggle label='Obtained Source' value={project.progress.source} onChange={setSource} /> : null}
-							<Field label='Characteristic' value={props.project.characteristic.join(' or ')} />
+							<Field label='Characteristic' value={props.project.characteristic.length === 5 ? 'highest characteristic' : props.project.characteristic.join(' or ')} />
 							<Field label='Goal' value={props.project.goal || '(varies)'} />
 							{
 								project.progress && itemOK && sourceOK ?

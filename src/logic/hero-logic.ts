@@ -266,7 +266,7 @@ export class HeroLogic {
 
 						const existing = modifiers.find(x => x.damageType === dm.damageType);
 						if (existing) {
-							existing.value += dm.value;
+							existing.value = Math.max(existing.value, value);
 						} else {
 							modifiers.push({
 								damageType: dm.damageType,

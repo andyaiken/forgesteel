@@ -47,7 +47,7 @@ export class FormatLogic {
 		}
 
 		if (mod.valueCharacteristics.length > 0) {
-			const ch = mod.valueCharacteristics.join(' or ');
+			const ch = (mod.valueCharacteristics.length === 5) ? 'highest characteristic' : mod.valueCharacteristics.join(' or ');
 			if (mod.valueCharacteristicMultiplier === 1) {
 				sections.push(`+ ${ch}`);
 			} else {

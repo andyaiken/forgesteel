@@ -6,10 +6,12 @@ import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { FactoryLogic } from './factory-logic';
 import { Feature } from '../models/feature';
+import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
+import { ItemType } from '../enums/item-type';
 import { MonsterFeatureCategory } from '../enums/monster-feature-category';
 
 export class FeatureLogic {
@@ -136,6 +138,34 @@ export class FeatureLogic {
 							}
 						});
 				});
+		}
+
+		const hasLvl1 = item.customizationsByLevel.filter(lvl => lvl.level === 1).flatMap(lvl => lvl.features).filter(f => f.selected).length > 0;
+		const hasLvl5 = item.customizationsByLevel.filter(lvl => lvl.level === 5).flatMap(lvl => lvl.features).filter(f => f.selected).length > 0;
+		const hasLvl9 = item.customizationsByLevel.filter(lvl => lvl.level === 9).flatMap(lvl => lvl.features).filter(f => f.selected).length > 0;
+		if (item.type === ItemType.ImbuedArmor) {
+			// Imbued armor grants +6 / +12 / +21 stamina based on highest enhancement tier
+			if (hasLvl1) {
+				features.push(FactoryLogic.feature.createBonus({
+					id: '',
+					field: FeatureField.Stamina,
+					value: 6
+				}));
+			}
+			if (hasLvl5) {
+				features.push(FactoryLogic.feature.createBonus({
+					id: '',
+					field: FeatureField.Stamina,
+					value: 6
+				}));
+			}
+			if (hasLvl9) {
+				features.push(FactoryLogic.feature.createBonus({
+					id: '',
+					field: FeatureField.Stamina,
+					value: 9
+				}));
+			}
 		}
 
 		return FeatureLogic.simplifyFeatures(features, hero);

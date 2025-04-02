@@ -89,7 +89,7 @@ export const SessionPlayerPage = (props: Props) => {
 	try {
 		return (
 			<div className='session-player-page'>
-				<AppHeader subheader='Session' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
+				<AppHeader subheader='Forge Steel' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
 				<div className='session-page-content'>
 					{getContent()}
 				</div>

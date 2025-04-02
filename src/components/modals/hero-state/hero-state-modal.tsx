@@ -444,7 +444,7 @@ export const HeroStateModal = (props: Props) => {
 						: null
 				}
 				<Button block={true} onClick={() => setShopVisible(true)}>Add a new item</Button>
-				<Drawer open={shopVisible} closeIcon={null} width='500px'>
+				<Drawer open={shopVisible} onClose={() => setShopVisible(false)} closeIcon={null} width='500px'>
 					<ItemSelectModal
 						types={[ ItemType.Artifact, ItemType.Consumable, ItemType.ImbuedArmor, ItemType.ImbuedImplement, ItemType.ImbuedWeapon, ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Trinket ]}
 						sourcebooks={props.sourcebooks}
@@ -507,7 +507,7 @@ export const HeroStateModal = (props: Props) => {
 						: null
 				}
 				<Button block={true} onClick={() => setConditionsVisible(true)}>Add a new condition</Button>
-				<Drawer open={conditionsVisible} closeIcon={null} width='500px'>
+				<Drawer open={conditionsVisible} onClose={() => setConditionsVisible(false)} closeIcon={null} width='500px'>
 					<ConditionSelectModal onSelect={addCondition} onClose={() => setConditionsVisible(false)} />
 				</Drawer>
 			</Space>
@@ -577,7 +577,7 @@ export const HeroStateModal = (props: Props) => {
 						: null
 				}
 				<Button block={true} onClick={() => setProjectsVisible(true)}>Add a new project</Button>
-				<Drawer open={projectsVisible} closeIcon={null} width='500px'>
+				<Drawer open={projectsVisible} onClose={() => setProjectsVisible(false)} closeIcon={null} width='500px'>
 					<ProjectSelectModal sourcebooks={props.sourcebooks} onSelect={addProject} onClose={() => setProjectsVisible(false)} />
 				</Drawer>
 			</Space>

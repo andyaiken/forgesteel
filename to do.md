@@ -47,10 +47,11 @@
     * Show 'should be N squares' for terrain
     * Ability to add new terrain objects
 * Tactical map
-  * Add hero tokens to map (automatically based on encounter setting)
-  * Add monster tokens to map (automatically if there's an encounter active)
-  * Add terrain tokens / overlays
-  * In encounter, add monster tokens / terrain tokens / terrain overlays
+  * Add hero minis to map (automatically if there's an encounter active, or if not, then based on encounter setting)
+  * Add monster minis to map (automatically if there's an encounter active)
+  * Add terrain minis / overlays
+  * In encounter, add monster minis / terrain minis / terrain minis
+  * Minis should be able to be hidden (not shown on player view)
 
 ### Player View
 

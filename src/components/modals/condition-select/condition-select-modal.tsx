@@ -1,10 +1,9 @@
-import { Button, Space } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { ConditionType } from '../../../enums/condition-type';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Modal } from '../modal/modal';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
+import { Space } from 'antd';
 
 import './condition-select-modal.scss';
 
@@ -30,11 +29,6 @@ export const ConditionSelectModal = (props: Props) => {
 
 		return (
 			<Modal
-				toolbar={
-					<>
-						<Button icon={<CloseOutlined />} onClick={props.onClose}>Cancel</Button>
-					</>
-				}
 				content={
 					<div className='condition-select-modal'>
 						<Space direction='vertical' style={{ width: '100%' }}>

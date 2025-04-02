@@ -1,15 +1,17 @@
-import { Button, Input, Space } from 'antd';
-import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
+import { Input, Space } from 'antd';
 import { Empty } from '../../controls/empty/empty';
 import { Hero } from '../../../models/hero';
+import { HeroLogic } from '../../../logic/hero-logic';
 import { Item } from '../../../models/item';
 import { ItemPanel } from '../../panels/elements/item-panel/item-panel';
 import { ItemType } from '../../../enums/item-type';
 import { Modal } from '../modal/modal';
 import { Options } from '../../../models/options';
+import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
+import { Toggle } from '../../controls/toggle/toggle';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
@@ -27,11 +29,13 @@ interface Props {
 
 export const ItemSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
+	const [ showUsableOnly, setShowUsableOnly ] = useState<boolean>(true);
 
 	try {
 		const items = SourcebookLogic
 			.getItems(props.sourcebooks)
 			.filter(item => props.types.includes(item.type))
+			.filter(item => !showUsableOnly || HeroLogic.canUseItem(props.hero, item))
 			.filter(item => Utils.textMatches([
 				item.name,
 				item.description,
@@ -50,12 +54,12 @@ export const ItemSelectModal = (props: Props) => {
 							suffix={<SearchOutlined />}
 							onChange={e => setSearchTerm(e.target.value)}
 						/>
-						<Button icon={<CloseOutlined />} onClick={props.onClose}>Cancel</Button>
 					</>
 				}
 				content={
 					<div className='item-select-modal'>
 						<Space direction='vertical' style={{ width: '100%' }}>
+							<Toggle label='Only show items you can use' value={showUsableOnly} onChange={setShowUsableOnly} />
 							{
 								items.map(item => (
 									<SelectablePanel

@@ -1,4 +1,4 @@
-import { Segmented, Space } from 'antd';
+import { Segmented, Space, Tabs } from 'antd';
 import { AbilityData } from '../../../data/ability-data';
 import { AbilityPanel } from '../../panels/elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
@@ -166,26 +166,46 @@ Invisible creatures always have concealment from other creatures. If an invisibl
 			];
 
 			return (
-				<Space direction='vertical'>
-					<HeaderText>Actions</HeaderText>
-					{
-						abilities
-							.filter(a => a.type.usage === AbilityUsage.Action)
-							.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
-					}
-					<HeaderText>Maneuvers</HeaderText>
-					{
-						abilities
-							.filter(a => a.type.usage === AbilityUsage.Maneuver)
-							.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
-					}
-					<HeaderText>Move Actions</HeaderText>
-					{
-						abilities
-							.filter(a => a.type.usage === AbilityUsage.Move)
-							.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
-					}
-				</Space>
+				<Tabs
+					items={[
+						{
+							key: 'actions',
+							label: 'Actions',
+							children:
+								<Space direction='vertical'>
+									{
+										abilities
+											.filter(a => a.type.usage === AbilityUsage.Action)
+											.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
+									}
+								</Space>
+						},
+						{
+							key: 'maneuvers',
+							label: 'Maneuvers',
+							children:
+								<Space direction='vertical'>
+									{
+										abilities
+											.filter(a => a.type.usage === AbilityUsage.Maneuver)
+											.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
+									}
+								</Space>
+						},
+						{
+							key: 'moves',
+							label: 'Move Actions',
+							children:
+								<Space direction='vertical'>
+									{
+										abilities
+											.filter(a => a.type.usage === AbilityUsage.Move)
+											.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
+									}
+								</Space>
+						}
+					]}
+				/>
 			);
 		};
 

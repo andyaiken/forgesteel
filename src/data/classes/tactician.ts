@@ -385,7 +385,7 @@ Each target is marked by you. You immediately force each targeted creature to ma
 										ability: FactoryLogic.createAbility({
 											id: 'tactician-sub-1-2-2b',
 											name: 'Try Me Instead',
-											description: '“Try picking on someone MY size.',
+											description: '“Try picking on someone MY size.”',
 											type: FactoryLogic.type.createAction(),
 											keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 											distance: [ FactoryLogic.distance.createMelee() ],

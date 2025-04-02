@@ -134,10 +134,11 @@ This ability stays active even after encounters end. It ends if you are dying or
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createAbilityDamage({
 								id: 'null-1-7b',
 								name: 'Force Augmentation',
-								description: 'You gain a +1 rolled damage bonus with damage-dealing psionic abilities.'
+								keywords: [ AbilityKeyword.Psionic ],
+								modifier: 1
 							}),
 							value: 1
 						},

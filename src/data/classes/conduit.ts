@@ -157,10 +157,12 @@ For each piety spent, you can choose one of the following enhancements:
 					name: 'Prayer',
 					options: [
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createAbilityDamage({
 								id: 'conduit-1-8a',
 								name: 'Prayer of Destruction',
-								description: 'Your god infuses wrath within your being. You gain a +1 rolled damage bonus with magic abilities.'
+								description: 'Your god infuses wrath within your being.',
+								keywords: [ AbilityKeyword.Magic ],
+								modifier: 1
 							}),
 							value: 1
 						},

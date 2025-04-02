@@ -1270,7 +1270,7 @@ export class LeveledImplementData {
 					FactoryLogic.feature.create({
 						id: 'item-brittlebreaker-9',
 						name: '',
-						description: 'The implement\'s extra psychic damage increases to 4. Additionally, whenever you use a damagedealing supernatural ability, you can take half as much damage as is dealt to the target to immediately use the same ability again. The damage you take can\'t be reduced in any way. You can repeat this process until you become winded.'
+						description: 'The implement\'s extra psychic damage increases to 4. Additionally, whenever you use a damage-dealing supernatural ability, you can take half as much damage as is dealt to the target to immediately use the same ability again. The damage you take can\'t be reduced in any way. You can repeat this process until you become winded.'
 					})
 				]
 			}
@@ -1296,7 +1296,7 @@ export class LeveledImplementData {
 					FactoryLogic.feature.create({
 						id: 'item-chaldorb-1',
 						name: '',
-						description: 'While you wield this implement, your damagedealing supernatural abilities gain a +1 rolled damage bonus. Additionally, if you make a magic strike, the strike must deal cold damage instead of its usual damage.'
+						description: 'While you wield this implement, your damage-dealing supernatural abilities gain a +1 rolled damage bonus. Additionally, if you make a magic strike, the strike must deal cold damage instead of its usual damage.'
 					})
 				]
 			},
@@ -1342,7 +1342,7 @@ export class LeveledImplementData {
 					FactoryLogic.feature.create({
 						id: 'item-ether-fueled-vessel-1',
 						name: '',
-						description: 'While you wield this implement, your damagedealing supernatural abilities gain a +1 rolled damage bonus. Additionally, whenever you deal damage to a creature with a supernatural ability, they become insubstantial to you until the end of their next turn, allowing you to pass through them freely. While insubstantial, a creature can\'t make opportunity attacks against you.'
+						description: 'While you wield this implement, your damage-dealing supernatural abilities gain a +1 rolled damage bonus. Additionally, whenever you deal damage to a creature with a supernatural ability, they become insubstantial to you until the end of their next turn, allowing you to pass through them freely. While insubstantial, a creature can\'t make opportunity attacks against you.'
 					})
 				]
 			},
@@ -1388,7 +1388,7 @@ export class LeveledImplementData {
 					FactoryLogic.feature.create({
 						id: 'item-foesense-lenses-1',
 						name: '',
-						description: 'While you wield this implement, your damagedealing supernatural abilities gain a +1 rolled damage bonus. Additionally, whenever you deal damage to a creature with a supernatural ability, you can use that creature\'s senses until the end of your next turn, allowing you to experience all they observe and use your abilities as if you were in their space. You also benefit from your own senses at the same time'
+						description: 'While you wield this implement, your damage-dealing supernatural abilities gain a +1 rolled damage bonus. Additionally, whenever you deal damage to a creature with a supernatural ability, you can use that creature\'s senses until the end of your next turn, allowing you to experience all they observe and use your abilities as if you were in their space. You also benefit from your own senses at the same time'
 					})
 				]
 			},
@@ -1434,7 +1434,7 @@ export class LeveledImplementData {
 					FactoryLogic.feature.create({
 						id: 'item-geometric-manipulator-1',
 						name: '',
-						description: 'While you wield this implement, your damagedealing supernatural abilities gain a +1 rolled damage bonus. Additionally, when you use any supernatural ability that creates a cube or a burst, you can use a maneuver to rearrange the squares of the area into any shape you wish, provided there are no empty squares inside it.'
+						description: 'While you wield this implement, your damage-dealing supernatural abilities gain a +1 rolled damage bonus. Additionally, when you use any supernatural ability that creates a cube or a burst, you can use a maneuver to rearrange the squares of the area into any shape you wish, provided there are no empty squares inside it.'
 					})
 				]
 			},
@@ -1528,7 +1528,13 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-authoritys-end-1',
 						name: '',
-						description: 'Any damage-dealing weapon ability using this weapon gains a +1 rolled damage bonus. Whenever you damage a creature with the weapon, you can immediately use a maneuver to end one condition or effect imposed by that creature on you or another creature within 5 squares of you.'
+						description: 'Whenever you damage a creature with the weapon, you can immediately use a maneuver to end one condition or effect imposed by that creature on you or another creature within 5 squares of you.'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-authoritys-end-1a',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						modifier: 1
 					})
 				]
 			},
@@ -1538,7 +1544,13 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-authoritys-end-5',
 						name: '',
-						description: 'The weapon\'s damage bonus increases to +2. Additionally, you and each ally within 2 squares of you gains a +1 bonus on saving throws.'
+						description: 'You and each ally within 2 squares of you gains a +1 bonus on saving throws.'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-authoritys-end-5a',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						modifier: 1
 					})
 				]
 			},
@@ -1548,7 +1560,13 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-authoritys-end-9',
 						name: '',
-						description: 'The weapon\'s damage bonus increases to +3. Additionally, you no longer need to use a maneuver to end one condition or effect when you damage a creature with the weapon. The weapon also refuses to vie for control of your psyche, and no longer counts against the limit of leveled treasures you can carry safely.'
+						description: 'You no longer need to use a maneuver to end one condition or effect when you damage a creature with the weapon. The weapon also refuses to vie for control of your psyche, and no longer counts against the limit of leveled treasures you can carry safely.'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-authoritys-end-9a',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						modifier: 1
 					})
 				]
 			}
@@ -1574,7 +1592,13 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-blade-of-quintessence-1',
 						name: '',
-						description: 'Any damage-dealing weapon ability using this weapon gains a +1 rolled damage bonus. Additionally, you can change the damage type of such abilities to cold, fire, lightning, or sonic.'
+						description: 'You can change the damage type of weapon abilities to cold, fire, lightning, or sonic.'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-blade-of-quintessence-1a',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						modifier: 1
 					})
 				]
 			},
@@ -1584,17 +1608,30 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-blade-of-quintessence-5',
 						name: '',
-						description: 'The weapon’s damage bonus increases to +2. Additionally, the weapon can be used with ranged weapon abilities, and returns to you when a ranged ability is resolved. Ranged abilities used with the weapon increase their distance by 3, and must deal cold, fire, lightning, or sonic damage (chosen when you use the ability).'
+						description: 'The weapon can be used with ranged weapon abilities, and returns to you when a ranged ability is resolved. Ranged abilities used with the weapon increase their distance by 3, and must deal cold, fire, lightning, or sonic damage (chosen when you use the ability).'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-blade-of-quintessence-5a',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Ranged ],
+						modifier: 1
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-blade-of-quintessence-5b',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon ],
+						modifier: 1
 					})
 				]
 			},
 			{
 				level: 9,
 				features: [
-					FactoryLogic.feature.create({
-						id: 'item-blade-of-quintessence-9',
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-blade-of-quintessence-9a',
 						name: '',
-						description: 'The weapon’s damage bonus increases to +3.'
+						keywords: [ AbilityKeyword.Weapon ],
+						modifier: 1
 					}),
 					FactoryLogic.feature.createDamageModifier({
 						id: 'item-blade-of-quintessence-9b',
@@ -1645,7 +1682,13 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-blade-of-the-luxurious-fop-1',
 						name: '',
-						description: 'Any damage-dealing weapon ability using this weapon gains a +1 rolled damage bonus. Additionally, whenever you deal damage with this weapon, you can immediately shift 1 square. As well, while you wield or carry the weapon and are present in a negotiation, if an NPC in a negotiation has the Greed, Legacy, Power, or Revelry motivation, their starting interest increases by 1 (to a maximum of 5).'
+						description: 'Whenever you deal damage with this weapon, you can immediately shift 1 square. As well, while you wield or carry the weapon and are present in a negotiation, if an NPC in a negotiation has the Greed, Legacy, Power, or Revelry motivation, their starting interest increases by 1 (to a maximum of 5).'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-blade-of-the-luxurious-fop-1a',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						modifier: 1
 					})
 				]
 			},
@@ -1655,7 +1698,13 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-blade-of-the-luxurious-fop-5',
 						name: '',
-						description: 'The weapon’s damage bonus increases to +2. Additionally, when you make an opportunity attack against an enemy of your size or smaller, you can use fancy footwork to knock them prone. You also gain a +1 bonus to Renown.'
+						description: 'When you make an opportunity attack against an enemy of your size or smaller, you can use fancy footwork to knock them prone. You also gain a +1 bonus to Renown.'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-blade-of-the-luxurious-fop-5a',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						modifier: 1
 					})
 				]
 			},
@@ -1665,7 +1714,13 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-blade-of-the-luxurious-fop-9',
 						name: '',
-						description: 'The weapon’s damage bonus increases to +3. Additionally, you have a double edge on any test you make using a skill you have from the interpersonal skill group.'
+						description: 'You have a double edge on any test you make using a skill you have from the interpersonal skill group.'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-blade-of-the-luxurious-fop-9a',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						modifier: 1
 					})
 				]
 			}
@@ -2023,7 +2078,7 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.create({
 						id: 'item-steeltongue-5',
 						name: '',
-						description: 'The weapon\'s bonus to melee distance increases to +2. Additionally, when you use a damagedealing weapon ability using the weapon, that ability gains a +3 rolled damage bonus against any target who is bleeding.'
+						description: 'The weapon\'s bonus to melee distance increases to +2. Additionally, when you use a damage-dealing weapon ability using the weapon, that ability gains a +3 rolled damage bonus against any target who is bleeding.'
 					})
 				]
 			},
@@ -2265,7 +2320,13 @@ export class LeveledOtherData {
 					FactoryLogic.feature.create({
 						id: 'item-bloody-hand-wraps-1',
 						name: '',
-						description: 'While you wear these hand wraps, your weapon abilities that use your unarmed strike gain a +1 rolled damage bonus. Additionally, once per turn, you can take 5 damage that can\'t be reduced in any way to use the Grab maneuver (no action required).'
+						description: 'Once per turn, you can take 5 damage that can\'t be reduced in any way to use the Grab maneuver (no action required).'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-bloody-hand-wraps-1a',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						modifier: 1
 					})
 				]
 			},
@@ -2275,7 +2336,13 @@ export class LeveledOtherData {
 					FactoryLogic.feature.create({
 						id: 'item-bloody-hand-wraps-5',
 						name: '',
-						description: 'The damage bonus granted by the hand wraps increases to +2. Additionally, once per turn, you can take 10 damage that can\'t be reduced in any way to make a melee free strike (no action required).'
+						description: 'Once per turn, you can take 10 damage that can\'t be reduced in any way to make a melee free strike (no action required).'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-bloody-hand-wraps-5a',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						modifier: 1
 					})
 				]
 			},
@@ -2285,7 +2352,13 @@ export class LeveledOtherData {
 					FactoryLogic.feature.create({
 						id: 'item-bloody-hand-wraps-9',
 						name: '',
-						description: 'The damage bonus granted by the hand wraps increases to +3. Additionally, once per turn, you can take 15 damage that can\'t be reduced in any way to use a signature ability (no action required).'
+						description: 'Once per turn, you can take 15 damage that can\'t be reduced in any way to use a signature ability (no action required).'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-bloody-hand-wraps-9a',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						modifier: 1
 					})
 				]
 			}
@@ -2308,10 +2381,18 @@ export class LeveledOtherData {
 			{
 				level: 1,
 				features: [
-					FactoryLogic.feature.create({
-						id: 'item-lightning-treads-1',
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-lightning-treads-1a',
 						name: '',
-						description: 'While you wear the boots, any damage-dealing weapon ability using your unarmed strike deals an extra 1 rolled lightning damage. Additionally, you gain a +2 bonus to speed.'
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						modifier: 1,
+						damageType: 'Lightning'
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'item-lightning-treads-1b',
+						name: '',
+						field: FeatureField.Speed,
+						value: 2
 					})
 				]
 			},
@@ -2321,7 +2402,14 @@ export class LeveledOtherData {
 					FactoryLogic.feature.create({
 						id: 'item-lightning-treads-5',
 						name: '',
-						description: 'The extra lightning damage granted by the treads increases to 2. This bonus increases by 1 for each square you move this turn before you use the ability to a maximum total bonus of 4.'
+						description: 'Any damage-dealing weapon ability using your unarmed strike deals 1 extra lightning damage for each square you move this turn before you use the ability to a maximum bonus of +2.'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-lightning-treads-5a',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						modifier: 1,
+						damageType: 'Lightning'
 					})
 				]
 			},
@@ -2331,7 +2419,14 @@ export class LeveledOtherData {
 					FactoryLogic.feature.create({
 						id: 'item-lightning-treads-9',
 						name: '',
-						description: 'The extra lightning damage granted by the treads increases to 3, and the maximum total damage bonus you can earn including movement increase to 6. Additionally, you can use a maneuver to perform a flying lightning kick on one adjacent creature. That target is pushed up to 5 squares, and you can move to any square adjacent to the target after the push.'
+						description: 'The maximum total damage bonus you can earn including movement increase to +3. Additionally, you can use a maneuver to perform a flying lightning kick on one adjacent creature. That target is pushed up to 5 squares, and you can move to any square adjacent to the target after the push.'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-lightning-treads-9a',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						modifier: 1,
+						damageType: 'Lightning'
 					})
 				]
 			}
@@ -2470,7 +2565,13 @@ Though its size and make are often debated, the sword is consistently described 
 					FactoryLogic.feature.create({
 						id: 'item-blade-of-a-thousand-years-1',
 						name: 'Suited for Victory',
-						description: 'This sword takes on the size, shape, and make that the wielder wills into it. It can be a light, medium, or heavy weapon, and you can change its weapon type and appearance as a free maneuver. Any damagedealing weapon ability using the Blade of a Thousand Years gains a +5 rolled damage bonus, and that ability always deals holy damage. Any creature vulnerable to holy damage who takes damage from this weapon is also weakened and frightened until the end of their turn.'
+						description: 'This sword takes on the size, shape, and make that the wielder wills into it. It can be a light, medium, or heavy weapon, and you can change its weapon type and appearance as a free maneuver. Any damagedealing weapon ability using the Blade of a Thousand Years always deals holy damage. Any creature vulnerable to holy damage who takes damage from this weapon is also weakened and frightened until the end of their turn.'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-blade-of-a-thousand-years-1a',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						modifier: 5
 					}),
 					FactoryLogic.feature.create({
 						id: 'item-blade-of-a-thousand-years-2',

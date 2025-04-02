@@ -143,10 +143,12 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createAbilityDamage({
 								id: 'elementalist-1-7c',
 								name: 'Enchantment of Destruction',
-								description: 'You harness the destructive power of flame inside your mind, allowing you to focus your magic on destroying your enemies. You gain a +1 rolled damage bonus with magic abilities.'
+								description: 'You harness the destructive power of flame inside your mind, allowing you to focus your magic on destroying your enemies.',
+								keywords: [ AbilityKeyword.Magic ],
+								modifier: 1
 							}),
 							value: 1
 						},

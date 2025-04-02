@@ -139,10 +139,11 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createAbilityDamage({
 								id: 'talent-1-5d',
 								name: 'Force Augmentation',
-								description: 'Your damage-dealing psionic abilities gain a +1 rolled damage bonus.'
+								keywords: [ AbilityKeyword.Psionic ],
+								modifier: 1
 							}),
 							value: 1
 						},

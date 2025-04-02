@@ -91,11 +91,14 @@ export const AdventurePanel = (props: Props) => {
 				if (map) {
 					return (
 						<SelectablePanel onSelect={() => navigation.goToPlaybookView('tactical-map', map.id)}>
-							<TacticalMapPanel
-								map={map}
-								display={TacticalMapDisplayType.Thumbnail}
-								options={props.options}
-							/>
+							<HeaderText level={1}>{map.name || 'Unnamed Map'}</HeaderText>
+							<div className='tactical-map-container'>
+								<TacticalMapPanel
+									map={map}
+									display={TacticalMapDisplayType.Thumbnail}
+									options={props.options}
+								/>
+							</div>
 						</SelectablePanel>
 					);
 				}
@@ -170,6 +173,17 @@ export const AdventurePanel = (props: Props) => {
 					return (
 						<>
 							{props.start ? <Button icon={<PlayCircleOutlined />} onClick={() => props.start!('negotiation', negotiation, '')} /> : null}
+						</>
+					);
+				}
+				break;
+			}
+			case 'map': {
+				const map = props.playbook.tacticalMaps.find(tm => tm.id === content.contentID);
+				if (map) {
+					return (
+						<>
+							{props.start ? <Button icon={<PlayCircleOutlined />} onClick={() => props.start!('tactical-map', map, '')} /> : null}
 						</>
 					);
 				}

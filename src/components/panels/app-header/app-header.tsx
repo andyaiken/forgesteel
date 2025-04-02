@@ -9,10 +9,10 @@ import './app-header.scss';
 interface Props {
 	subheader?: string;
 	children?: ReactNode;
-	showDirectory: () => void;
-	showAbout: () => void;
+	showDirectory?: () => void;
 	showRoll: () => void;
 	showRules: () => void;
+	showAbout: () => void;
 }
 
 export const AppHeader = (props: Props) => {
@@ -31,7 +31,7 @@ export const AppHeader = (props: Props) => {
 	return (
 		<div className='app-header'>
 			<div className='left-section'>
-				<Button type='text' icon={<MenuOutlined />} onClick={props.showDirectory} />
+				{props.showDirectory ? <Button type='text' icon={<MenuOutlined />} onClick={props.showDirectory} /> : null}
 				{!isSmall ? <LogoPanel text={props.subheader} /> : null}
 			</div>
 			{

@@ -131,7 +131,8 @@ export class FactoryLogic {
 			montages: [],
 			negotiations: [],
 			tacticalMaps: [],
-			counters: []
+			counters: [],
+			playerViewID: null
 		};
 	};
 

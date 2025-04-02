@@ -1,7 +1,6 @@
-import { Button, Divider, Segmented } from 'antd';
+import { Button, Divider, Input, Segmented } from 'antd';
 import { MapBoundaries, MapItem, MapPosition, TacticalMap } from '../../../../models/tactical-map';
 import { ReactNode, useState } from 'react';
-import { RotateRightOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
 import { FactoryLogic } from '../../../../logic/factory-logic';
@@ -12,6 +11,7 @@ import { MapWallVertexPanel } from './map-wall-vertex/map-wall-vertex';
 import { MapZonePanel } from './map-zone/map-zone';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { RotateRightOutlined } from '@ant-design/icons';
 import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
 import { TacticalMapLogic } from '../../../../logic/tactical-map-logic';
 import { Utils } from '../../../../utils/utils';
@@ -53,9 +53,9 @@ export const TacticalMapPanel = (props: Props) => {
 
 	const size = props.display === 'thumbnail' ? 5 : props.options.gridSize;
 
-	const generateMap = () => {
+	const setName = (value: string) => {
 		const copy = Utils.copy(map) as TacticalMap;
-		TacticalMapLogic.generate(5, copy);
+		copy.name = value;
 		setMap(copy);
 		if (props.updateMap) {
 			props.updateMap(copy);
@@ -382,12 +382,23 @@ export const TacticalMapPanel = (props: Props) => {
 				<Divider type='vertical' />
 				{
 					editMode === TacticalMapEditMode.Map ?
-						<Button disabled={map.items.length === 0} icon={<RotateRightOutlined />} onClick={rotateMap}>Rotate</Button>
+						<Input
+							style={{ width: '250px' }}
+							placeholder='Name'
+							allowClear={true}
+							value={map.name}
+							onChange={e => setName(e.target.value)}
+						/>
 						: null
 				}
 				{
 					editMode === TacticalMapEditMode.Map ?
-						<Button disabled={map.items.length > 0} icon={<ThunderboltOutlined />} onClick={generateMap}>Generate</Button>
+						<Divider type='vertical' />
+						: null
+				}
+				{
+					editMode === TacticalMapEditMode.Map ?
+						<Button disabled={map.items.length === 0} icon={<RotateRightOutlined />} onClick={rotateMap}>Rotate</Button>
 						: null
 				}
 				{

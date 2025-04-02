@@ -54,8 +54,10 @@
   * Add monster tokens to map (automatically if there's an encounter active)
   * Add terrain tokens / overlays
   * In encounter, add monster tokens / terrain tokens / terrain overlays
-* Player view
-  * Ability to show certain information to players using a second window
+
+### Player View
+
+* Add a way to check if data has changed; if it has, update the screen
 
 ### Ideas
 

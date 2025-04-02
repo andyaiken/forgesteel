@@ -48,9 +48,12 @@ export const useNavigation = () => {
 		},
 		goToSession: (elementID?: string) => {
 			if (elementID) {
-				return navigate(`/session/${elementID}`);
+				return navigate(`/session/director/${elementID}`);
 			}
-			return navigate('/session');
+			return navigate('/session/director');
+		},
+		goToPlayerView: () => {
+			return navigate('/session/player');
 		}
 	};
 };

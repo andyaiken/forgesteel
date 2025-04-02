@@ -1,5 +1,5 @@
 import { Button, Input, Popover, Space, Tabs, Upload } from 'antd';
-import { DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
+import { DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { Adventure } from '../../../../models/adventure';
 import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
@@ -9,6 +9,8 @@ import { Empty } from '../../../controls/empty/empty';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterData } from '../../../../data/encounter-data';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
+import { FactoryLogic } from '../../../../logic/factory-logic';
+import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Montage } from '../../../../models/montage';
 import { MontageData } from '../../../../data/montage-data';
@@ -16,12 +18,14 @@ import { MontagePanel } from '../../../panels/elements/montage-panel/montage-pan
 import { Negotiation } from '../../../../models/negotiation';
 import { NegotiationData } from '../../../../data/negotiation-data';
 import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/negotiation-panel';
+import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
 import { OptionsPanel } from '../../../panels/options/options-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { TacticalMap } from '../../../../models/tactical-map';
 import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
+import { TacticalMapLogic } from '../../../../logic/tactical-map-logic';
 import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/tactical-map-panel';
 import { Utils } from '../../../../utils/utils';
 import { useNavigation } from '../../../../hooks/use-navigation';
@@ -50,6 +54,7 @@ export const PlaybookListPage = (props: Props) => {
 	const [ previousTab, setPreviousTab ] = useState<PlaybookElementKind | undefined>(kind);
 	const [ currentTab, setCurrentTab ] = useState<PlaybookElementKind>(kind ?? 'encounter');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
+	const [ roomCount, setRoomCount ] = useState<number>(5);
 
 	if (kind !== previousTab) {
 		setCurrentTab(kind ?? 'encounter');
@@ -58,6 +63,12 @@ export const PlaybookListPage = (props: Props) => {
 
 	const createElement = (original: Element | null) => {
 		props.createElement(currentTab, original);
+	};
+
+	const generateMap = () => {
+		const map = FactoryLogic.createTacticalMap();
+		TacticalMapLogic.generate(roomCount, map);
+		createElement(map);
 	};
 
 	const getAdventures = () => {
@@ -197,12 +208,9 @@ export const PlaybookListPage = (props: Props) => {
 				{
 					list.map(tm => (
 						<SelectablePanel key={tm.id} onSelect={() => navigation.goToPlaybookView('tactical-map', tm.id)}>
+							<HeaderText level={1}>{tm.name || 'Unnamed Map'}</HeaderText>
 							<div className='tactical-map-container'>
-								<TacticalMapPanel
-									map={tm}
-									display={TacticalMapDisplayType.Thumbnail}
-									options={props.options}
-								/>
+								<TacticalMapPanel map={tm} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
 							</div>
 						</SelectablePanel>
 					))
@@ -322,6 +330,15 @@ export const PlaybookListPage = (props: Props) => {
 												}
 											</div>
 										</div>
+										: null
+								}
+								{
+									currentTab === 'tactical-map' ?
+										<Space direction='vertical' style={{ width: '100%' }}>
+											<div className='ds-text centered-text'>or generate a random dungeon:</div>
+											<NumberSpin label='Rooms' min={1} value={roomCount} onChange={setRoomCount} />
+											<Button block={true} icon={<ThunderboltOutlined />} onClick={generateMap}>Generate</Button>
+										</Space>
 										: null
 								}
 							</div>

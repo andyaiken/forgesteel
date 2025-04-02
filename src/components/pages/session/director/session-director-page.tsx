@@ -1,38 +1,42 @@
 import { Alert, Button, Input, Popover, Segmented, Space } from 'antd';
 import { PlusOutlined, ReadOutlined, SettingOutlined } from '@ant-design/icons';
-import { AppHeader } from '../../panels/app-header/app-header';
-import { CounterPanel } from '../../panels/elements/counter-panel/counter-panel';
-import { CounterRunPanel } from '../../panels/run/counter-run/counter-run-panel';
-import { DangerButton } from '../../controls/danger-button/danger-button';
-import { Empty } from '../../controls/empty/empty';
-import { Encounter } from '../../../models/encounter';
-import { EncounterData } from '../../../data/encounter-data';
-import { EncounterPanel } from '../../panels/elements/encounter-panel/encounter-panel';
-import { EncounterRunPanel } from '../../panels/run/encounter-run/encounter-run-panel';
-import { Format } from '../../../utils/format';
-import { HeaderText } from '../../controls/header-text/header-text';
-import { Hero } from '../../../models/hero';
-import { Montage } from '../../../models/montage';
-import { MontageData } from '../../../data/montage-data';
-import { MontagePanel } from '../../panels/elements/montage-panel/montage-panel';
-import { MontageRunPanel } from '../../panels/run/montage-run/montage-run-panel';
-import { Negotiation } from '../../../models/negotiation';
-import { NegotiationData } from '../../../data/negotiation-data';
-import { NegotiationPanel } from '../../panels/elements/negotiation-panel/negotiation-panel';
-import { NegotiationRunPanel } from '../../panels/run/negotiation-run/negotiation-run-panel';
-import { NumberSpin } from '../../controls/number-spin/number-spin';
-import { Options } from '../../../models/options';
-import { OptionsPanel } from '../../panels/options/options-panel';
-import { Playbook } from '../../../models/playbook';
-import { PlaybookLogic } from '../../../logic/playbook-logic';
-import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../models/sourcebook';
-import { Utils } from '../../../utils/utils';
-import { useNavigation } from '../../../hooks/use-navigation';
+import { AppHeader } from '../../../panels/app-header/app-header';
+import { CounterPanel } from '../../../panels/elements/counter-panel/counter-panel';
+import { CounterRunPanel } from '../../../panels/run/counter-run/counter-run-panel';
+import { DangerButton } from '../../../controls/danger-button/danger-button';
+import { Empty } from '../../../controls/empty/empty';
+import { Encounter } from '../../../../models/encounter';
+import { EncounterData } from '../../../../data/encounter-data';
+import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
+import { EncounterRunPanel } from '../../../panels/run/encounter-run/encounter-run-panel';
+import { Format } from '../../../../utils/format';
+import { HeaderText } from '../../../controls/header-text/header-text';
+import { Hero } from '../../../../models/hero';
+import { Montage } from '../../../../models/montage';
+import { MontageData } from '../../../../data/montage-data';
+import { MontagePanel } from '../../../panels/elements/montage-panel/montage-panel';
+import { MontageRunPanel } from '../../../panels/run/montage-run/montage-run-panel';
+import { Negotiation } from '../../../../models/negotiation';
+import { NegotiationData } from '../../../../data/negotiation-data';
+import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/negotiation-panel';
+import { NegotiationRunPanel } from '../../../panels/run/negotiation-run/negotiation-run-panel';
+import { NumberSpin } from '../../../controls/number-spin/number-spin';
+import { Options } from '../../../../models/options';
+import { OptionsPanel } from '../../../panels/options/options-panel';
+import { PanelMode } from '../../../../enums/panel-mode';
+import { Playbook } from '../../../../models/playbook';
+import { PlaybookLogic } from '../../../../logic/playbook-logic';
+import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '../../../../models/sourcebook';
+import { TacticalMap } from '../../../../models/tactical-map';
+import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
+import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/tactical-map-panel';
+import { Utils } from '../../../../utils/utils';
+import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
 
-import './session-page.scss';
+import './session-director-page.scss';
 
 interface Props {
 	session: Playbook;
@@ -44,11 +48,12 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showRules: () => void;
+	showPlayerView: () => void;
 	updateSession: (session: Playbook) => void;
 	setOptions: (options: Options) => void;
 }
 
-export const SessionPage = (props: Props) => {
+export const SessionDirectorPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { elementID } = useParams<{ elementID: string }>();
 	const [ previousElement, setPreviousElement ] = useState<string | undefined>(elementID);
@@ -64,7 +69,7 @@ export const SessionPage = (props: Props) => {
 	}
 
 	const getSelectableContent = () => {
-		if ((session.encounters.length === 0) && (session.montages.length === 0) && (session.negotiations.length === 0) && (session.counters.length === 0)) {
+		if ((session.encounters.length === 0) && (session.montages.length === 0) && (session.negotiations.length === 0) && (session.tacticalMaps.length === 0) && (session.counters.length === 0)) {
 			return (
 				<Empty text='Nothing is currently in progress.' />
 			);
@@ -94,6 +99,16 @@ export const SessionPage = (props: Props) => {
 					))
 				}
 				{
+					session.tacticalMaps.map(tm => (
+						<SelectablePanel key={tm.id} selected={selectedElementID === tm.id} onSelect={() => navigation.goToSession(tm.id)}>
+							<HeaderText level={1}>{tm.name || 'Unnamed Map'}</HeaderText>
+							<div className='tactical-map-container'>
+								<TacticalMapPanel key={JSON.stringify(tm)} map={tm} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
+							</div>
+						</SelectablePanel>
+					))
+				}
+				{
 					session.counters.map(c => (
 						<SelectablePanel key={c.id} selected={selectedElementID === c.id} onSelect={() => navigation.goToSession(c.id)}>
 							<CounterPanel counter={c} />
@@ -105,7 +120,7 @@ export const SessionPage = (props: Props) => {
 	};
 
 	const getSelectedContent = () => {
-		if ((session.encounters.length === 0) && (session.montages.length === 0) && (session.negotiations.length === 0) && (session.counters.length === 0)) {
+		if ((session.encounters.length === 0) && (session.montages.length === 0) && (session.negotiations.length === 0) && (session.tacticalMaps.length === 0) && (session.counters.length === 0)) {
 			return null;
 		}
 
@@ -173,6 +188,29 @@ export const SessionPage = (props: Props) => {
 				);
 			}
 
+			const map = session.tacticalMaps.find(tm => tm.id === selectedElementID);
+			if (map) {
+				return (
+					<TacticalMapPanel
+						map={map}
+						display={TacticalMapDisplayType.DirectorEdit}
+						options={props.options}
+						mode={PanelMode.Full}
+						updateMap={map => {
+							const copy = Utils.copy(session);
+
+							const index = copy.tacticalMaps.findIndex(tm => tm.id === map.id);
+							if (index !== -1) {
+								copy.tacticalMaps[index] = map;
+							}
+
+							setSession(copy);
+							props.updateSession(copy);
+						}}
+					/>
+				);
+			}
+
 			const counter = session.counters.find(c => c.id === selectedElementID);
 			if (counter) {
 				return (
@@ -227,6 +265,17 @@ export const SessionPage = (props: Props) => {
 
 			const sessionCopy = Utils.copy(session);
 			sessionCopy.negotiations.push(copy);
+
+			setSession(sessionCopy);
+			props.updateSession(sessionCopy);
+			navigation.goToSession(copy.id);
+		};
+
+		const startMap = (map: TacticalMap) => {
+			const copy = PlaybookLogic.startMap(map);
+
+			const sessionCopy = Utils.copy(session);
+			sessionCopy.tacticalMaps.push(copy);
 
 			setSession(sessionCopy);
 			props.updateSession(sessionCopy);
@@ -369,6 +418,27 @@ export const SessionPage = (props: Props) => {
 						</div>
 					</Space>
 				);
+			case 'map':
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<div className='ds-text bold-text'>Your maps:</div>
+						{
+							props.playbook.tacticalMaps.map(tm => (
+								<Button key={tm.id} block={true} onClick={() => startMap(tm)}>{tm.name || 'Unnamed Map'}</Button>
+							))
+						}
+						{
+							props.playbook.tacticalMaps.length === 0 ?
+								<Alert
+									type='warning'
+									showIcon={true}
+									message='You have not created any maps.'
+									action={<Button type='text' title='Maps' icon={<ReadOutlined />} onClick={() => navigation.goToPlaybookList('tactical-map')} />}
+								/>
+								: null
+						}
+					</Space>
+				);
 			case 'counter':
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
@@ -392,9 +462,15 @@ export const SessionPage = (props: Props) => {
 		copy.encounters = copy.encounters.filter(e => e.id !== selectedElementID);
 		copy.montages = copy.montages.filter(m => m.id !== selectedElementID);
 		copy.negotiations = copy.negotiations.filter(n => n.id !== selectedElementID);
+		copy.tacticalMaps = copy.tacticalMaps.filter(tm => tm.id !== selectedElementID);
 		copy.counters = copy.counters.filter(c => c.id !== selectedElementID);
 
+		if (copy.playerViewID === selectedElementID) {
+			copy.playerViewID = null;
+		}
 		setSession(copy);
+		setSelectedElementID(null);
+
 		props.updateSession(copy);
 		if (selectedElementID === selectedElementID) {
 			navigation.goToSession();
@@ -403,7 +479,7 @@ export const SessionPage = (props: Props) => {
 
 	try {
 		return (
-			<div className='session-page'>
+			<div className='session-director-page'>
 				<AppHeader subheader='Session' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
 					<Popover
 						trigger='click'
@@ -413,7 +489,7 @@ export const SessionPage = (props: Props) => {
 								<Segmented
 									name='startelements'
 									block={true}
-									options={[ 'encounter', 'montage', 'negotiation', 'counter' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
+									options={[ 'encounter', 'montage', 'negotiation', 'map', 'counter' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
 									value={startElement}
 									onChange={setStartElement}
 								/>
@@ -434,6 +510,7 @@ export const SessionPage = (props: Props) => {
 							: null
 					}
 					<div className='divider' />
+					<Button onClick={props.showPlayerView}>Player View</Button>
 					<Popover
 						trigger='click'
 						placement='bottom'

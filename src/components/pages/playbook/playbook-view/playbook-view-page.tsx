@@ -9,6 +9,7 @@ import { Element } from '../../../../models/element';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { Format } from '../../../../utils/format';
+import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Montage } from '../../../../models/montage';
 import { MontagePanel } from '../../../panels/elements/montage-panel/montage-panel';
@@ -97,14 +98,17 @@ export const PlaybookViewPage = (props: Props) => {
 		case 'tactical-map':
 			element = props.playbook.tacticalMaps.find(x => x.id === elementID) as TacticalMap;
 			panel = (
-				<div className='tactical-map-container'>
-					<TacticalMapPanel
-						map={element as TacticalMap}
-						display={TacticalMapDisplayType.DirectorView}
-						options={props.options}
-						mode={PanelMode.Full}
-					/>
-				</div>
+				<>
+					<HeaderText level={1}>{element.name || 'Unnamed Map'}</HeaderText>
+					<div className='tactical-map-container'>
+						<TacticalMapPanel
+							map={element as TacticalMap}
+							display={TacticalMapDisplayType.DirectorView}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					</div>
+				</>
 			);
 			break;
 	}
@@ -157,7 +161,7 @@ export const PlaybookViewPage = (props: Props) => {
 							: null
 					}
 					{
-						(kind === 'encounter') || (kind === 'montage') || (kind === 'negotiation') ?
+						(kind === 'encounter') || (kind === 'montage') || (kind === 'negotiation') || (kind === 'tactical-map') ?
 							<Button icon={<PlayCircleOutlined />} onClick={() => props.start(kind, element)}>
 								Run
 							</Button>

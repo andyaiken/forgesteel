@@ -2,6 +2,7 @@ import { MapBoundaries, MapTile, MapWall, TacticalMap } from '../models/tactical
 import { Collections } from '../utils/collections';
 import { FactoryLogic } from './factory-logic';
 import { Random } from '../utils/random';
+import { Utils } from '../utils/utils';
 
 export class TacticalMapLogic {
 	static getMapBoundaries = (map: TacticalMap): MapBoundaries | null => {
@@ -297,19 +298,21 @@ export class TacticalMapLogic {
 				wall.pointB.y = newY + newHeight - 1;
 			});
 
-		/*
-		map.areas.forEach(area => {
-			const newX = (area.y + area.height - 1) * -1;
-			const newY = area.x;
-			const newWidth = area.height;
-			const newHeight = area.width;
+		map.items
+			.filter(item => item.type === 'zone')
+			.forEach(item => {
+				const newX = (item.position.y + item.dimensions.height - 1) * -1;
+				const newY = item.position.x;
+				const newWidth = item.dimensions.height;
+				const newHeight = item.dimensions.width;
 
-			area.x = newX;
-			area.y = newY;
-			area.width = newWidth;
-			area.height = newHeight;
-		});
-		*/
+				item.position.x = newX;
+				item.position.y = newY;
+				item.dimensions.width = newWidth;
+				item.dimensions.height = newHeight;
+			});
+
+		map.items.forEach(item => item.id = Utils.guid());
 	}
 
 	static generate(areas: number, map: TacticalMap) {

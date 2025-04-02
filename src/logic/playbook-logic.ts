@@ -11,6 +11,7 @@ import { Playbook } from '../models/playbook';
 import { Plot } from '../models/plot';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookLogic } from './sourcebook-logic';
+import { TacticalMap } from '../models/tactical-map';
 import { Utils } from '../utils/utils';
 
 export class PlaybookLogic {
@@ -133,6 +134,13 @@ export class PlaybookLogic {
 		return copy;
 	};
 
+	static startMap = (map: TacticalMap) => {
+		const copy = Utils.copy(map);
+		copy.id = Utils.guid();
+
+		return copy;
+	};
+
 	static startCounter = (counter: Counter) => {
 		const copy = Utils.copy(counter);
 		copy.id = Utils.guid();
@@ -233,6 +241,10 @@ export class PlaybookLogic {
 
 		if (playbook.counters === undefined) {
 			playbook.counters = [];
+		}
+
+		if (playbook.playerViewID === undefined) {
+			playbook.playerViewID = null;
 		}
 	};
 }

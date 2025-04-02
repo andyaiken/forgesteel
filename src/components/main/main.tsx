@@ -47,10 +47,12 @@ import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit-
 import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list-page';
 import { PlaybookLogic } from '../../logic/playbook-logic';
 import { PlaybookViewPage } from '../pages/playbook/playbook-view/playbook-view-page';
+import { PlayerViewModal } from '../modals/player-view/player-view-modal';
 import { RollModal } from '../modals/roll/roll-modal';
 import { RulesModal } from '../modals/rules/rules-modal';
 import { RulesPage } from '../../enums/rules-page';
-import { SessionPage } from '../pages/session/session-page';
+import { SessionDirectorPage } from '../pages/session/director/session-director-page';
+import { SessionPlayerPage } from '../pages/session/player/session-player-page';
 import { SourcebookData } from '../../data/sourcebook-data';
 import { SourcebookLogic } from '../../logic/sourcebook-logic';
 import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
@@ -873,6 +875,11 @@ export const Main = (props: Props) => {
 				sessionCopy.negotiations.push(e as Negotiation);
 				break;
 			}
+			case 'tactical-map': {
+				e = PlaybookLogic.startMap(element as TacticalMap);
+				sessionCopy.tacticalMaps.push(e as TacticalMap);
+				break;
+			}
 		}
 
 		persistSession(sessionCopy).then(() => navigation.goToSession(e.id));
@@ -1026,6 +1033,16 @@ export const Main = (props: Props) => {
 				encounter={encounter}
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
 				options={options}
+				onClose={() => setDrawer(null)}
+			/>
+		);
+	};
+
+	const showPlayerView = () => {
+		setDrawer(
+			<PlayerViewModal
+				session={session}
+				updateSession={persistSession}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1256,24 +1273,46 @@ export const Main = (props: Props) => {
 						}
 					/>
 				</Route>
-				<Route
-					path='session/:elementID?'
-					element={
-						<SessionPage
-							session={session}
-							playbook={playbook}
-							sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-							heroes={heroes}
-							options={options}
-							showDirectory={showDirectoryPane}
-							showAbout={showAbout}
-							showRoll={showRoll}
-							showRules={showRules}
-							updateSession={persistSession}
-							setOptions={persistOptions}
-						/>
-					}
-				/>
+				<Route path='session'>
+					<Route
+						index={true}
+						element={<Navigate to='director' replace={true} />}
+					/>
+					<Route
+						path='director/:elementID?'
+						element={
+							<SessionDirectorPage
+								session={session}
+								playbook={playbook}
+								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								heroes={heroes}
+								options={options}
+								showDirectory={showDirectoryPane}
+								showAbout={showAbout}
+								showRoll={showRoll}
+								showRules={showRules}
+								showPlayerView={showPlayerView}
+								updateSession={persistSession}
+								setOptions={persistOptions}
+							/>
+						}
+					/>
+					<Route
+						path='player'
+						element={
+							<SessionPlayerPage
+								session={session}
+								playbook={playbook}
+								sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+								heroes={heroes}
+								options={options}
+								showAbout={showAbout}
+								showRoll={showRoll}
+								showRules={showRules}
+							/>
+						}
+					/>
+				</Route>
 			</Route>
 		</Routes>
 	);

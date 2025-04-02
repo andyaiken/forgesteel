@@ -232,6 +232,8 @@ export const OptionsPanel = (props: Props) => {
 				return (
 					<>
 						{getPartySection(false)}
+						<Divider />
+						<NumberSpin label='Grid Size' min={5} steps={[ 5 ]} value={props.options.gridSize} onChange={setGridSize} />
 					</>
 				);
 		}

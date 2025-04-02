@@ -152,7 +152,7 @@ export const PlotEditPanel = (props: Props) => {
 								style={{ width: '100%' }}
 								allowClear={true}
 								placeholder='Select'
-								options={getContentOptions(c.type).map(o => ({ value: o.id, label: o.name || 'Element', desc: o.description }))}
+								options={getContentOptions(c.type).map(o => ({ value: o.id, label: o.name || 'Unnamed Content', desc: o.description }))}
 								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 								value={c.contentID}
 								onChange={id => setContentID(c, id)}

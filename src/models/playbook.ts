@@ -12,6 +12,7 @@ export interface Playbook {
 	montages: Montage[];
 	tacticalMaps: TacticalMap[];
 	counters: Counter[];
+	playerViewID: string | null;
 }
 
 export type PlaybookElementKind = 'adventure' | 'encounter' | 'negotiation' | 'montage' | 'tactical-map';

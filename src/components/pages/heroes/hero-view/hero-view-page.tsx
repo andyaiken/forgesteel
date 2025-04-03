@@ -10,6 +10,7 @@ import { Complication } from '../../../../models/complication';
 import { Culture } from '../../../../models/culture';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroPanel } from '../../../panels/hero/hero-panel';
@@ -75,67 +76,69 @@ export const HeroViewPage = (props: Props) => {
 		};
 
 		return (
-			<div className='hero-view-page'>
-				<AppHeader subheader='Hero' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={() => props.showRules(hero)}>
-					<Button icon={<CloseOutlined />} onClick={() => navigation.goToHeroList(hero.folder)}>
-						Close
-					</Button>
-					<div className='divider' />
-					<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>
-						Edit
-					</Button>
-					<Popover
-						trigger='click'
-						placement='bottom'
-						content={(
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Button onClick={() => exportHero('image')}>Export As Image</Button>
-								<Button onClick={() => exportHero('pdf-portrait')}>Export As PDF (portrait)</Button>
-								<Button onClick={() => exportHero('pdf-landscape')}>Export As PDF (landscape)</Button>
-								<Button onClick={() => exportHero('json')}>Export As Data</Button>
-							</div>
-						)}
-					>
-						<Button icon={<UploadOutlined />}>
-							Export
+			<ErrorBoundary>
+				<div className='hero-view-page'>
+					<AppHeader subheader='Hero' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={() => props.showRules(hero)}>
+						<Button icon={<CloseOutlined />} onClick={() => navigation.goToHeroList(hero.folder)}>
+							Close
 						</Button>
-					</Popover>
-					<DangerButton mode='block' onConfirm={() => props.deleteHero(hero)} />
-					<div className='divider' />
-					<Button onClick={() => props.showHeroState(hero, HeroStatePage.Hero)}>
-						Manage
-					</Button>
-					<Popover
-						trigger='click'
-						placement='bottom'
-						content={<OptionsPanel mode='hero' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-					>
-						<Button icon={<SettingOutlined />}>
-							Options
+						<div className='divider' />
+						<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>
+							Edit
 						</Button>
-					</Popover>
-				</AppHeader>
-				<div className='hero-view-page-content'>
-					<HeroPanel
-						hero={hero}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						mode={PanelMode.Full}
-						onSelectAncestry={props.showAncestry}
- 						onSelectCulture={props.showCulture}
- 						onSelectCareer={props.showCareer}
- 						onSelectClass={props.showClass}
- 						onSelectComplication={props.showComplication}
- 						onSelectDomain={props.showDomain}
- 						onSelectKit={props.showKit}
-						onSelectCompanion={props.showCompanion}
- 						onSelectCharacteristic={characteristic => props.showCharacteristic(characteristic, hero)}
- 						onSelectAbility={ability => props.showAbility(ability, hero)}
- 						onShowState={page => props.showHeroState(hero, page)}
- 						onShowRules={page => props.showRules(hero, page)}
-					/>
+						<Popover
+							trigger='click'
+							placement='bottom'
+							content={(
+								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+									<Button onClick={() => exportHero('image')}>Export As Image</Button>
+									<Button onClick={() => exportHero('pdf-portrait')}>Export As PDF (portrait)</Button>
+									<Button onClick={() => exportHero('pdf-landscape')}>Export As PDF (landscape)</Button>
+									<Button onClick={() => exportHero('json')}>Export As Data</Button>
+								</div>
+							)}
+						>
+							<Button icon={<UploadOutlined />}>
+								Export
+							</Button>
+						</Popover>
+						<DangerButton mode='block' onConfirm={() => props.deleteHero(hero)} />
+						<div className='divider' />
+						<Button onClick={() => props.showHeroState(hero, HeroStatePage.Hero)}>
+							Manage
+						</Button>
+						<Popover
+							trigger='click'
+							placement='bottom'
+							content={<OptionsPanel mode='hero' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+						>
+							<Button icon={<SettingOutlined />}>
+								Options
+							</Button>
+						</Popover>
+					</AppHeader>
+					<div className='hero-view-page-content'>
+						<HeroPanel
+							hero={hero}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							mode={PanelMode.Full}
+							onSelectAncestry={props.showAncestry}
+							onSelectCulture={props.showCulture}
+							onSelectCareer={props.showCareer}
+							onSelectClass={props.showClass}
+							onSelectComplication={props.showComplication}
+							onSelectDomain={props.showDomain}
+							onSelectKit={props.showKit}
+							onSelectCompanion={props.showCompanion}
+							onSelectCharacteristic={characteristic => props.showCharacteristic(characteristic, hero)}
+							onSelectAbility={ability => props.showAbility(ability, hero)}
+							onShowState={page => props.showHeroState(hero, page)}
+							onShowRules={page => props.showRules(hero, page)}
+						/>
+					</div>
 				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

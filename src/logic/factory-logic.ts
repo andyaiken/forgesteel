@@ -95,6 +95,7 @@ export class FactoryLogic {
 				projects: [],
 				notes: '',
 				acted: false,
+				hidden: false,
 				defeated: false
 			},
 			abilityCustomizations: []
@@ -444,6 +445,7 @@ export class FactoryLogic {
 				staminaTemp: 0,
 				conditions: [],
 				reactionUsed: false,
+				hidden: false,
 				defeated: false,
 				captainID: undefined
 			}
@@ -530,6 +532,7 @@ export class FactoryLogic {
 				staminaTemp: 0,
 				conditions: [],
 				reactionUsed: false,
+				hidden: false,
 				defeated: false,
 				captainID: undefined
 			}

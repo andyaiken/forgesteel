@@ -1,6 +1,7 @@
 import { BookOutlined, PlayCircleOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
 import { AppHeader } from '../../panels/app-header/app-header';
 import { Button } from 'antd';
+import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { useNavigation } from '../../../hooks/use-navigation';
 
@@ -18,63 +19,65 @@ export const WelcomePage = (props: Props) => {
 
 	try {
 		return (
-			<div className='welcome-page'>
-				<AppHeader showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
-				<div className='welcome-page-content'>
-					<div className='welcome-column'>
-						<HeaderText level={1}>Welcome to FORGE STEEL</HeaderText>
-						<div className='ds-text'>
-							<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players, directors, and content creators.
-						</div>
-						<HeaderText
-							extra={<Button type='primary' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>Heroes</Button>}
-						>
-							For Players
-						</HeaderText>
-						<div className='ds-text'>
-							In the <b>HEROES</b> section you can create characters for <b>DRAW STEEL</b>.
-						</div>
-						<ul>
-							<li>
-								All the official content is included (for levels 1 to 3), and you can also use any homebrew content your director has created.
-							</li>
-							<li>
-								You can use the app to track your hero's stamina, conditions, surges, etc.
-							</li>
-							<li>
-								If you're playing offline, you can export your heroes in PNG or PDF formats.
-							</li>
-						</ul>
-						<HeaderText
-							extra={
-								<div style={{ display: 'flex', gap: '5px' }}>
-									<Button icon={<ReadOutlined />} onClick={() => navigation.goToPlaybookList('adventure')}>Playbook</Button>
-									<Button icon={<PlayCircleOutlined />} onClick={() => navigation.goToSession()}>Session</Button>
-								</div>
-							}
-						>
-							For Directors
-						</HeaderText>
-						<div className='ds-text'>
-							In your <b>PLAYBOOK</b>, you can build encounters, ensuring that they're perfectly balanced for your heroes, and craft negotiations and montage tests.
-							You can also create detailed tactical maps for your heroes to explore.
-							You can then combine all these into an adventure.
-						</div>
-						<div className='ds-text'>
-							In the <b>SESSION</b> screen, you can run your encounters, montages, and negotiations.
-						</div>
-						<HeaderText
-							extra={<Button icon={<BookOutlined />} onClick={() => navigation.goToLibraryList('ancestry')}>Library</Button>}
-						>
-							For Content Creators
-						</HeaderText>
-						<div className='ds-text'>
-							In the <b>LIBRARY</b>, you can browse the collections of ancestries, classes, kits - all of the elements you need to build a hero - and other useful elements like monsters and terrain objects.
-							You can use these as a base from which to design your own homebrew elements, or create them from whole cloth.
+			<ErrorBoundary>
+				<div className='welcome-page'>
+					<AppHeader showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
+					<div className='welcome-page-content'>
+						<div className='welcome-column'>
+							<HeaderText level={1}>Welcome to FORGE STEEL</HeaderText>
+							<div className='ds-text'>
+								<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players, directors, and content creators.
+							</div>
+							<HeaderText
+								extra={<Button type='primary' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>Heroes</Button>}
+							>
+								For Players
+							</HeaderText>
+							<div className='ds-text'>
+								In the <b>HEROES</b> section you can create characters for <b>DRAW STEEL</b>.
+							</div>
+							<ul>
+								<li>
+									All the official content is included (for levels 1 to 3), and you can also use any homebrew content your director has created.
+								</li>
+								<li>
+									You can use the app to track your hero's stamina, conditions, surges, etc.
+								</li>
+								<li>
+									If you're playing offline, you can export your heroes in PNG or PDF formats.
+								</li>
+							</ul>
+							<HeaderText
+								extra={
+									<div style={{ display: 'flex', gap: '5px' }}>
+										<Button icon={<ReadOutlined />} onClick={() => navigation.goToPlaybookList('adventure')}>Playbook</Button>
+										<Button icon={<PlayCircleOutlined />} onClick={() => navigation.goToSession()}>Session</Button>
+									</div>
+								}
+							>
+								For Directors
+							</HeaderText>
+							<div className='ds-text'>
+								In your <b>PLAYBOOK</b>, you can build encounters, ensuring that they're perfectly balanced for your heroes, and craft negotiations and montage tests.
+								You can also create detailed tactical maps for your heroes to explore.
+								You can then combine all these into an adventure.
+							</div>
+							<div className='ds-text'>
+								In the <b>SESSION</b> screen, you can run your encounters, montages, and negotiations.
+							</div>
+							<HeaderText
+								extra={<Button icon={<BookOutlined />} onClick={() => navigation.goToLibraryList('ancestry')}>Library</Button>}
+							>
+								For Content Creators
+							</HeaderText>
+							<div className='ds-text'>
+								In the <b>LIBRARY</b>, you can browse the collections of ancestries, classes, kits - all of the elements you need to build a hero - and other useful elements like monsters and terrain objects.
+								You can use these as a base from which to design your own homebrew elements, or create them from whole cloth.
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

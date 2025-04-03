@@ -18,6 +18,7 @@ import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
 import { Empty } from '../../../controls/empty/empty';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -218,358 +219,27 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getAncestriesSection = (list: Ancestry[]) => {
-		if (list.length === 0) {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
 			return (
-				<Empty />
-			);
-		}
-
-		return (
-			<div className='library-section-row'>
-				{
-					list.map(a => {
-						const item = (
-							<SelectablePanel key={a.id} onSelect={() => navigation.goToLibraryView('ancestry', a.id)}>
-								<AncestryPanel ancestry={a} options={props.options} />
-							</SelectablePanel>
-						);
-
-						const sourcebook = SourcebookLogic.getAncestrySourcebook(props.sourcebooks, a);
-						if (sourcebook && sourcebook.id) {
-							return (
-								<Badge.Ribbon key={a.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-									{item}
-								</Badge.Ribbon>
-							);
-						}
-
-						return item;
-					})
-				}
-			</div>
-		);
-	};
-
-	const getCulturesSection = (list: Culture[]) => {
-		if (list.length === 0) {
-			return (
-				<Empty />
-			);
-		}
-
-		return (
-			<div className='library-section-row'>
-				{
-					list.map(c => {
-						const item = (
-							<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('culture', c.id)}>
-								<CulturePanel culture={c} options={props.options} />
-							</SelectablePanel>
-						);
-
-						const sourcebook = SourcebookLogic.getCultureSourcebook(props.sourcebooks, c);
-						if (sourcebook && sourcebook.id) {
-							return (
-								<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-									{item}
-								</Badge.Ribbon>
-							);
-						}
-
-						return item;
-					})
-				}
-			</div>
-		);
-	};
-
-	const getCareersSection = (list: Career[]) => {
-		if (list.length === 0) {
-			return (
-				<Empty />
-			);
-		}
-
-		return (
-			<div className='library-section-row'>
-				{
-					list.map(c => {
-						const item = (
-							<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('career', c.id)}>
-								<CareerPanel career={c} options={props.options} />
-							</SelectablePanel>
-						);
-
-						const sourcebook = SourcebookLogic.getCareerSourcebook(props.sourcebooks, c);
-						if (sourcebook && sourcebook.id) {
-							return (
-								<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-									{item}
-								</Badge.Ribbon>
-							);
-						}
-
-						return item;
-					})
-				}
-			</div>
-		);
-	};
-
-	const getClassesSection = (list: HeroClass[]) => {
-		if (list.length === 0) {
-			return (
-				<Empty />
-			);
-		}
-
-		return (
-			<div className='library-section-row'>
-				{
-					list.map(c => {
-
-						const item = (
-							<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('class', c.id)}>
-								<ClassPanel heroClass={c} options={props.options} />
-							</SelectablePanel>
-						);
-
-						const sourcebook = SourcebookLogic.getClassSourcebook(props.sourcebooks, c);
-						if (sourcebook && sourcebook.id) {
-							return (
-								<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-									{item}
-								</Badge.Ribbon>
-							);
-						}
-
-						return item;
-					})
-				}
-			</div>
-		);
-	};
-
-	const getComplicationsSection = (list: Complication[]) => {
-		if (list.length === 0) {
-			return (
-				<Empty />
-			);
-		}
-
-		return (
-			<div className='library-section-row'>
-				{
-					list.map(c => {
-						const item = (
-							<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('complication', c.id)}>
-								<ComplicationPanel complication={c} options={props.options} />
-							</SelectablePanel>
-						);
-
-						const sourcebook = SourcebookLogic.getComplicationSourcebook(props.sourcebooks, c);
-						if (sourcebook && sourcebook.id) {
-							return (
-								<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-									{item}
-								</Badge.Ribbon>
-							);
-						}
-
-						return item;
-					})
-				}
-			</div>
-		);
-	};
-
-	const getDomainsSection = (list: Domain[]) => {
-		if (list.length === 0) {
-			return (
-				<Empty />
-			);
-		}
-
-		return (
-			<div className='library-section-row'>
-				{
-					list.map(d => {
-						const item = (
-							<SelectablePanel key={d.id} onSelect={() => navigation.goToLibraryView('domain', d.id)}>
-								<DomainPanel domain={d} options={props.options} />
-							</SelectablePanel>
-						);
-
-						const sourcebook = SourcebookLogic.getDomainSourcebook(props.sourcebooks, d);
-						if (sourcebook && sourcebook.id) {
-							return (
-								<Badge.Ribbon key={d.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-									{item}
-								</Badge.Ribbon>
-							);
-						}
-
-						return item;
-					})
-				}
-			</div>
-		);
-	};
-
-	const getKitsSection = (list: Kit[]) => {
-		if (list.length === 0) {
-			return (
-				<Empty />
-			);
-		}
-
-		return (
-			<div className='library-section-row'>
-				{
-					list.map(k => {
-						const item = (
-							<SelectablePanel key={k.id} onSelect={() => navigation.goToLibraryView('kit', k.id)}>
-								<KitPanel kit={k} options={props.options} />
-							</SelectablePanel>
-						);
-
-						const sourcebook = SourcebookLogic.getKitSourcebook(props.sourcebooks, k);
-						if (sourcebook && sourcebook.id) {
-							return (
-								<Badge.Ribbon key={k.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-									{item}
-								</Badge.Ribbon>
-							);
-						}
-
-						return item;
-					})
-				}
-			</div>
-		);
-	};
-
-	const getPerksSection = (list: Perk[]) => {
-		if (list.length === 0) {
-			return (
-				<Empty />
-			);
-		}
-
-		return (
-			<div className='library-section-row'>
-				{
-					list.map(p => {
-						const item = (
-							<SelectablePanel key={p.id} onSelect={() => navigation.goToLibraryView('perk', p.id)}>
-								<PerkPanel perk={p} options={props.options} />
-							</SelectablePanel>
-						);
-
-						const sourcebook = SourcebookLogic.getPerkSourcebook(props.sourcebooks, p);
-						if (sourcebook && sourcebook.id) {
-							return (
-								<Badge.Ribbon key={p.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-									{item}
-								</Badge.Ribbon>
-							);
-						}
-
-						return item;
-					})
-				}
-			</div>
-		);
-	};
-
-	const getTitlesSection = (list: Title[]) => {
-		if (list.length === 0) {
-			return (
-				<Empty />
-			);
-		}
-
-		return (
-			<div className='library-section-row'>
-				{
-					list.map(t => {
-						const item = (
-							<SelectablePanel key={t.id} onSelect={() => navigation.goToLibraryView('title', t.id)}>
-								<TitlePanel title={t} options={props.options} />
-							</SelectablePanel>
-						);
-
-						const sourcebook = SourcebookLogic.getTitleSourcebook(props.sourcebooks, t);
-						if (sourcebook && sourcebook.id) {
-							return (
-								<Badge.Ribbon key={t.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-									{item}
-								</Badge.Ribbon>
-							);
-						}
-
-						return item;
-					})
-				}
-			</div>
-		);
-	};
-
-	const getItemsSection = (list: Item[]) => {
-		if (list.length === 0) {
-			return (
-				<Empty />
-			);
-		}
-
-		return (
-			<div className='library-section-row'>
-				{
-					list.map(i => {
-						const item = (
-							<SelectablePanel key={i.id} onSelect={() => navigation.goToLibraryView('item', i.id)}>
-								<ItemPanel item={i} options={props.options} />
-							</SelectablePanel>
-						);
-
-						const sourcebook = SourcebookLogic.getItemSourcebook(props.sourcebooks, i);
-						if (sourcebook && sourcebook.id) {
-							return (
-								<Badge.Ribbon key={i.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-									{item}
-								</Badge.Ribbon>
-							);
-						}
-
-						return item;
-					})
-				}
-			</div>
-		);
-	};
-
-	const getMonsterGroupsSection = (list: MonsterGroup[]) => {
-		if (list.length === 0) {
-			return (
-				<Empty />
-			);
-		}
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
 				<div className='library-section-row'>
 					{
-						list.map(mg => {
+						list.map(a => {
 							const item = (
-								<SelectablePanel key={mg.id} onSelect={() => navigation.goToLibraryView('monster-group', mg.id)}>
-									<MonsterGroupPanel monsterGroup={mg} options={props.options} />
+								<SelectablePanel key={a.id} onSelect={() => navigation.goToLibraryView('ancestry', a.id)}>
+									<AncestryPanel ancestry={a} options={props.options} />
 								</SelectablePanel>
 							);
 
-							const sourcebook = SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, mg);
+							const sourcebook = SourcebookLogic.getAncestrySourcebook(props.sourcebooks, a);
 							if (sourcebook && sourcebook.id) {
 								return (
-									<Badge.Ribbon key={mg.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+									<Badge.Ribbon key={a.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
 										{item}
 									</Badge.Ribbon>
 								);
@@ -579,61 +249,487 @@ export const LibraryListPage = (props: Props) => {
 						})
 					}
 				</div>
-			</Space>
-		);
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
+	const getCulturesSection = (list: Culture[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			return (
+				<div className='library-section-row'>
+					{
+						list.map(c => {
+							const item = (
+								<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('culture', c.id)}>
+									<CulturePanel culture={c} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getCultureSourcebook(props.sourcebooks, c);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
+	const getCareersSection = (list: Career[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			return (
+				<div className='library-section-row'>
+					{
+						list.map(c => {
+							const item = (
+								<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('career', c.id)}>
+									<CareerPanel career={c} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getCareerSourcebook(props.sourcebooks, c);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
+	const getClassesSection = (list: HeroClass[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			return (
+				<div className='library-section-row'>
+					{
+						list.map(c => {
+
+							const item = (
+								<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('class', c.id)}>
+									<ClassPanel heroClass={c} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getClassSourcebook(props.sourcebooks, c);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
+	const getComplicationsSection = (list: Complication[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			return (
+				<div className='library-section-row'>
+					{
+						list.map(c => {
+							const item = (
+								<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('complication', c.id)}>
+									<ComplicationPanel complication={c} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getComplicationSourcebook(props.sourcebooks, c);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
+	const getDomainsSection = (list: Domain[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			return (
+				<div className='library-section-row'>
+					{
+						list.map(d => {
+							const item = (
+								<SelectablePanel key={d.id} onSelect={() => navigation.goToLibraryView('domain', d.id)}>
+									<DomainPanel domain={d} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getDomainSourcebook(props.sourcebooks, d);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={d.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
+	const getKitsSection = (list: Kit[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			return (
+				<div className='library-section-row'>
+					{
+						list.map(k => {
+							const item = (
+								<SelectablePanel key={k.id} onSelect={() => navigation.goToLibraryView('kit', k.id)}>
+									<KitPanel kit={k} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getKitSourcebook(props.sourcebooks, k);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={k.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
+	const getPerksSection = (list: Perk[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			return (
+				<div className='library-section-row'>
+					{
+						list.map(p => {
+							const item = (
+								<SelectablePanel key={p.id} onSelect={() => navigation.goToLibraryView('perk', p.id)}>
+									<PerkPanel perk={p} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getPerkSourcebook(props.sourcebooks, p);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={p.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
+	const getTitlesSection = (list: Title[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			return (
+				<div className='library-section-row'>
+					{
+						list.map(t => {
+							const item = (
+								<SelectablePanel key={t.id} onSelect={() => navigation.goToLibraryView('title', t.id)}>
+									<TitlePanel title={t} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getTitleSourcebook(props.sourcebooks, t);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={t.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
+	const getItemsSection = (list: Item[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			return (
+				<div className='library-section-row'>
+					{
+						list.map(i => {
+							const item = (
+								<SelectablePanel key={i.id} onSelect={() => navigation.goToLibraryView('item', i.id)}>
+									<ItemPanel item={i} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getItemSourcebook(props.sourcebooks, i);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={i.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
+	const getMonsterGroupsSection = (list: MonsterGroup[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					<div className='library-section-row'>
+						{
+							list.map(mg => {
+								const item = (
+									<SelectablePanel key={mg.id} onSelect={() => navigation.goToLibraryView('monster-group', mg.id)}>
+										<MonsterGroupPanel monsterGroup={mg} options={props.options} />
+									</SelectablePanel>
+								);
+
+								const sourcebook = SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, mg);
+								if (sourcebook && sourcebook.id) {
+									return (
+										<Badge.Ribbon key={mg.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+											{item}
+										</Badge.Ribbon>
+									);
+								}
+
+								return item;
+							})
+						}
+					</div>
+				</Space>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
 	};
 
 	const getMonstersSection = (list: Monster[]) => {
-		const tools = (
-			<>
-				<Expander title='Filter'>
-					<HeaderText>Monster Filter</HeaderText>
-					<MonsterFilterPanel
-						monsterFilter={monsterFilter}
-						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
-						onChange={setMonsterFilter}
-					/>
-				</Expander>
-				<Expander title='Demographics'>
-					<HeaderText>By Level</HeaderText>
-					<HistogramPanel values={list.map(m => m.level)} />
-					<HeaderText>By Organization</HeaderText>
-					<HistogramTextPanel values={list.map(m => m.role.organization)} />
-					<HeaderText>By Role</HeaderText>
-					<HistogramTextPanel values={list.map(m => m.role.type)} />
-				</Expander>
-			</>
-		);
+		try {
+			const tools = (
+				<>
+					<Expander title='Filter'>
+						<HeaderText>Monster Filter</HeaderText>
+						<MonsterFilterPanel
+							monsterFilter={monsterFilter}
+							monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
+							onChange={setMonsterFilter}
+						/>
+					</Expander>
+					<Expander title='Demographics'>
+						<HeaderText>By Level</HeaderText>
+						<HistogramPanel values={list.map(m => m.level)} />
+						<HeaderText>By Organization</HeaderText>
+						<HistogramTextPanel values={list.map(m => m.role.organization)} />
+						<HeaderText>By Role</HeaderText>
+						<HistogramTextPanel values={list.map(m => m.role.type)} />
+					</Expander>
+				</>
+			);
 
-		if (list.length === 0) {
+			if (list.length === 0) {
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{tools}
+						<Divider />
+						<Empty />
+					</Space>
+				);
+			}
+
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{tools}
 					<Divider />
-					<Empty />
+					<div className='library-section-row'>
+						{
+							list.map(m => {
+								const mg = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup;
+
+								const item = (
+									<SelectablePanel key={m.id} onSelect={() => navigation.goToLibraryView('monster-group', mg.id, m.id)}>
+										<MonsterPanel monster={m} monsterGroup={mg} options={props.options} />
+									</SelectablePanel>
+								);
+
+								const sourcebook = SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, mg);
+								if (sourcebook && sourcebook.id) {
+									return (
+										<Badge.Ribbon key={mg.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+											{item}
+										</Badge.Ribbon>
+									);
+								}
+
+								return item;
+							})
+						}
+					</div>
 				</Space>
 			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
 		}
+	};
 
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				{tools}
-				<Divider />
+	const getTerrainsSection = (list: Terrain[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			return (
 				<div className='library-section-row'>
 					{
-						list.map(m => {
-							const mg = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup;
-
+						list.map(t => {
 							const item = (
-								<SelectablePanel key={m.id} onSelect={() => navigation.goToLibraryView('monster-group', mg.id, m.id)}>
-									<MonsterPanel monster={m} monsterGroup={mg} options={props.options} />
+								<SelectablePanel key={t.id} onSelect={() => navigation.goToLibraryView('terrain', t.id)}>
+									<TerrainPanel terrain={t} />
 								</SelectablePanel>
 							);
 
-							const sourcebook = SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, mg);
+							const sourcebook = SourcebookLogic.getTerrainSourcebook(props.sourcebooks, t);
 							if (sourcebook && sourcebook.id) {
 								return (
-									<Badge.Ribbon key={mg.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+									<Badge.Ribbon key={t.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
 										{item}
 									</Badge.Ribbon>
 								);
@@ -643,41 +739,11 @@ export const LibraryListPage = (props: Props) => {
 						})
 					}
 				</div>
-			</Space>
-		);
-	};
-
-	const getTerrainsSection = (list: Terrain[]) => {
-		if (list.length === 0) {
-			return (
-				<Empty />
 			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
 		}
-
-		return (
-			<div className='library-section-row'>
-				{
-					list.map(t => {
-						const item = (
-							<SelectablePanel key={t.id} onSelect={() => navigation.goToLibraryView('terrain', t.id)}>
-								<TerrainPanel terrain={t} />
-							</SelectablePanel>
-						);
-
-						const sourcebook = SourcebookLogic.getTerrainSourcebook(props.sourcebooks, t);
-						if (sourcebook && sourcebook.id) {
-							return (
-								<Badge.Ribbon key={t.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-									{item}
-								</Badge.Ribbon>
-							);
-						}
-
-						return item;
-					})
-				}
-			</div>
-		);
 	};
 
 	try {
@@ -698,207 +764,209 @@ export const LibraryListPage = (props: Props) => {
 		const terrains = getTerrains();
 
 		return (
-			<div className='library-list-page'>
-				<AppHeader subheader='Library' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
-					<Input
-						placeholder='Search'
-						allowClear={true}
-						value={searchTerm}
-						suffix={<SearchOutlined />}
-						onChange={e => setSearchTerm(e.target.value)}
-					/>
-					<div className='divider' />
-					<Popover
-						trigger='click'
-						placement='bottom'
-						content={(
-							<div style={{ display: 'flex', flexDirection: 'column' }}>
+			<ErrorBoundary>
+				<div className='library-list-page'>
+					<AppHeader subheader='Library' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+						<Input
+							placeholder='Search'
+							allowClear={true}
+							value={searchTerm}
+							suffix={<SearchOutlined />}
+							onChange={e => setSearchTerm(e.target.value)}
+						/>
+						<div className='divider' />
+						<Popover
+							trigger='click'
+							placement='bottom'
+							content={(
+								<div style={{ display: 'flex', flexDirection: 'column' }}>
+									{
+										sourcebookOptions.length > 1 ?
+											<div>
+												<div className='ds-text'>Where do you want it to live?</div>
+												<Select
+													style={{ width: '100%' }}
+													placeholder='Select'
+													options={sourcebookOptions}
+													optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+													value={sourcebookID}
+													onChange={setSourcebookID}
+												/>
+											</div>
+											: null
+									}
+									{sourcebookOptions.length > 1 ? <Divider /> : null}
+									<Space>
+										<Button type='primary' block={true} icon={<PlusOutlined />} onClick={createElement}>Create</Button>
+										<div className='ds-text'>or</div>
+										<Upload
+											style={{ width: '100%' }}
+											accept={`.drawsteel-${currentTab.toLowerCase()}`}
+											showUploadList={false}
+											beforeUpload={file => {
+												file
+													.text()
+													.then(json => {
+														const e = (JSON.parse(json) as Element);
+														props.importElement(currentTab, sourcebookID, e);
+													});
+												return false;
+											}}
+										>
+											<Button block={true} icon={<DownloadOutlined />}>Import</Button>
+										</Upload>
+									</Space>
+								</div>
+							)}
+						>
+							<Button type='primary' icon={<PlusOutlined />}>
+								Add
+							</Button>
+						</Popover>
+						<div className='divider' />
+						<Button onClick={props.showSourcebooks}>
+							Sourcebooks
+						</Button>
+						<Popover
+							trigger='click'
+							placement='bottom'
+							content={<OptionsPanel mode='library' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
+						>
+							<Button icon={<SettingOutlined />}>
+								Options
+							</Button>
+						</Popover>
+					</AppHeader>
+					<div className='library-list-page-content'>
+						<Tabs
+							activeKey={currentTab}
+							items={[
 								{
-									sourcebookOptions.length > 1 ?
-										<div>
-											<div className='ds-text'>Where do you want it to live?</div>
-											<Select
-												style={{ width: '100%' }}
-												placeholder='Select'
-												options={sourcebookOptions}
-												optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-												value={sourcebookID}
-												onChange={setSourcebookID}
-											/>
+									key: 'ancestry',
+									label: (
+										<div className='section-header'>
+											<div className='section-title'>Ancestries</div>
+											<div className='section-count'>{ancestries.length}</div>
 										</div>
-										: null
+									),
+									children: getAncestriesSection(ancestries)
+								},
+								{
+									key: 'career',
+									label: (
+										<div className='section-header'>
+											<div className='section-title'>Careers</div>
+											<div className='section-count'>{careers.length}</div>
+										</div>
+									),
+									children: getCareersSection(careers)
+								},
+								{
+									key: 'class',
+									label: (
+										<div className='section-header'>
+											<div className='section-title'>Classes</div>
+											<div className='section-count'>{classes.length}</div>
+										</div>
+									),
+									children: getClassesSection(classes)
+								},
+								{
+									key: 'complication',
+									label: (
+										<div className='section-header'>
+											<div className='section-title'>Complications</div>
+											<div className='section-count'>{complications.length}</div>
+										</div>
+									),
+									children: getComplicationsSection(complications)
+								},
+								{
+									key: 'culture',
+									label: (
+										<div className='section-header'>
+											<div className='section-title'>Cultures</div>
+											<div className='section-count'>{cultures.length}</div>
+										</div>
+									),
+									children: getCulturesSection(cultures)
+								},
+								{
+									key: 'domain',
+									label: (
+										<div className='section-header'>
+											<div className='section-title'>Domains</div>
+											<div className='section-count'>{domains.length}</div>
+										</div>
+									),
+									children: getDomainsSection(domains)
+								},
+								{
+									key: 'item',
+									label: (
+										<div className='section-header'>
+											<div className='section-title'>Items</div>
+											<div className='section-count'>{items.length}</div>
+										</div>
+									),
+									children: getItemsSection(items)
+								},
+								{
+									key: 'kit',
+									label: (
+										<div className='section-header'>
+											<div className='section-title'>Kits</div>
+											<div className='section-count'>{kits.length}</div>
+										</div>
+									),
+									children: getKitsSection(kits)
+								},
+								{
+									key: 'monster-group',
+									label: (
+										<div className='section-header'>
+											<div className='section-title'>Monsters</div>
+											<div className='section-count'>{props.options.showMonstersInGroups ? monsterGroups.length : monsters.length}</div>
+										</div>
+									),
+									children: props.options.showMonstersInGroups ? getMonsterGroupsSection(monsterGroups) : getMonstersSection(monsters)
+								},
+								{
+									key: 'perk',
+									label: (
+										<div className='section-header'>
+											<div className='section-title'>Perks</div>
+											<div className='section-count'>{perks.length}</div>
+										</div>
+									),
+									children: getPerksSection(perks)
+								},
+								{
+									key: 'terrain',
+									label: (
+										<div className='section-header'>
+											<div className='section-title'>Terrain</div>
+											<div className='section-count'>{terrains.length}</div>
+										</div>
+									),
+									children: getTerrainsSection(terrains)
+								},
+								{
+									key: 'title',
+									label: (
+										<div className='section-header'>
+											<div className='section-title'>Titles</div>
+											<div className='section-count'>{titles.length}</div>
+										</div>
+									),
+									children: getTitlesSection(titles)
 								}
-								{sourcebookOptions.length > 1 ? <Divider /> : null}
-								<Space>
-									<Button type='primary' block={true} icon={<PlusOutlined />} onClick={createElement}>Create</Button>
-									<div className='ds-text'>or</div>
-									<Upload
-										style={{ width: '100%' }}
-										accept={`.drawsteel-${currentTab.toLowerCase()}`}
-										showUploadList={false}
-										beforeUpload={file => {
-											file
-												.text()
-												.then(json => {
-													const e = (JSON.parse(json) as Element);
-													props.importElement(currentTab, sourcebookID, e);
-												});
-											return false;
-										}}
-									>
-										<Button block={true} icon={<DownloadOutlined />}>Import</Button>
-									</Upload>
-								</Space>
-							</div>
-						)}
-					>
-						<Button type='primary' icon={<PlusOutlined />}>
-							Add
-						</Button>
-					</Popover>
-					<div className='divider' />
-					<Button onClick={props.showSourcebooks}>
-						Sourcebooks
-					</Button>
-					<Popover
-						trigger='click'
-						placement='bottom'
-						content={<OptionsPanel mode='library' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
-					>
-						<Button icon={<SettingOutlined />}>
-							Options
-						</Button>
-					</Popover>
-				</AppHeader>
-				<div className='library-list-page-content'>
-					<Tabs
-						activeKey={currentTab}
-						items={[
-							{
-								key: 'ancestry',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Ancestries</div>
-										<div className='section-count'>{ancestries.length}</div>
-									</div>
-								),
-								children: getAncestriesSection(ancestries)
-							},
-							{
-								key: 'career',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Careers</div>
-										<div className='section-count'>{careers.length}</div>
-									</div>
-								),
-								children: getCareersSection(careers)
-							},
-							{
-								key: 'class',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Classes</div>
-										<div className='section-count'>{classes.length}</div>
-									</div>
-								),
-								children: getClassesSection(classes)
-							},
-							{
-								key: 'complication',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Complications</div>
-										<div className='section-count'>{complications.length}</div>
-									</div>
-								),
-								children: getComplicationsSection(complications)
-							},
-							{
-								key: 'culture',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Cultures</div>
-										<div className='section-count'>{cultures.length}</div>
-									</div>
-								),
-								children: getCulturesSection(cultures)
-							},
-							{
-								key: 'domain',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Domains</div>
-										<div className='section-count'>{domains.length}</div>
-									</div>
-								),
-								children: getDomainsSection(domains)
-							},
-							{
-								key: 'item',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Items</div>
-										<div className='section-count'>{items.length}</div>
-									</div>
-								),
-								children: getItemsSection(items)
-							},
-							{
-								key: 'kit',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Kits</div>
-										<div className='section-count'>{kits.length}</div>
-									</div>
-								),
-								children: getKitsSection(kits)
-							},
-							{
-								key: 'monster-group',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Monsters</div>
-										<div className='section-count'>{props.options.showMonstersInGroups ? monsterGroups.length : monsters.length}</div>
-									</div>
-								),
-								children: props.options.showMonstersInGroups ? getMonsterGroupsSection(monsterGroups) : getMonstersSection(monsters)
-							},
-							{
-								key: 'perk',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Perks</div>
-										<div className='section-count'>{perks.length}</div>
-									</div>
-								),
-								children: getPerksSection(perks)
-							},
-							{
-								key: 'terrain',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Terrain</div>
-										<div className='section-count'>{terrains.length}</div>
-									</div>
-								),
-								children: getTerrainsSection(terrains)
-							},
-							{
-								key: 'title',
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>Titles</div>
-										<div className='section-count'>{titles.length}</div>
-									</div>
-								),
-								children: getTitlesSection(titles)
-							}
-						]}
-						onChange={k => navigation.goToLibraryList(k as SourcebookElementKind)}
-					/>
+							]}
+							onChange={k => navigation.goToLibraryList(k as SourcebookElementKind)}
+						/>
+					</div>
 				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

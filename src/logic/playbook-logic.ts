@@ -172,6 +172,7 @@ export class PlaybookLogic {
 							staminaTemp: 0,
 							conditions: [],
 							reactionUsed: false,
+							hidden: false,
 							defeated: false,
 							captainID: undefined
 						};

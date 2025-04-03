@@ -93,6 +93,27 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const setHidden = (value: boolean) => {
+			const copy = Utils.copy(hero);
+			copy.state.hidden = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setActed = (value: boolean) => {
+			const copy = Utils.copy(hero);
+			copy.state.acted = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setDefeated = (value: boolean) => {
+			const copy = Utils.copy(hero);
+			copy.state.defeated = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<NumberSpin
@@ -150,30 +171,75 @@ export const HeroStateModal = (props: Props) => {
 						: null
 				}
 				<Divider />
-				<Flex align='center' justify='space-between' gap='5px'>
+				<Flex align='center' justify='space-evenly'>
 					<Button
+						key='start-encounter'
 						className='tall-button'
 						type='primary'
-						block={true}
 						onClick={startEncounter}
 					>
 						<div>
-							<div>Start of Encounter</div>
+							<div>Start Encounter</div>
 							<div className='subtext'>
 								Victories to {hero.class ? hero.class.heroicResource : 'Heroic Resource'}
 							</div>
 						</div>
 					</Button>
 					<Button
+						key='end-encounter'
 						className='tall-button'
 						type='primary'
-						block={true}
 						onClick={endEncounter}
 					>
 						<div>
-							<div>End of Encounter</div>
+							<div>End Encounter</div>
 							<div className='subtext'>
-								Gain a Victory
+								+1 Victory
+							</div>
+						</div>
+					</Button>
+				</Flex>
+				<Divider />
+				<Flex align='center' justify='space-evenly'>
+					<Button
+						key='hidden'
+						className='tall-button'
+						onClick={() => setHidden(!hero.state.hidden)}
+					>
+						<div>
+							<div>
+								{hero.state.hidden ? 'Hidden' : 'Not Hidden'}
+							</div>
+							<div className='subtext'>
+								You are {hero.state.hidden ? 'hidden' : 'not hidden'}
+							</div>
+						</div>
+					</Button>
+					<Button
+						key='acted'
+						className='tall-button'
+						onClick={() => setActed(!hero.state.acted)}
+					>
+						<div>
+							<div>
+								{hero.state.acted ? 'Acted' : 'Ready'}
+							</div>
+							<div className='subtext'>
+								You have {hero.state.acted ? 'taken your turn' : 'not taken your turn'}
+							</div>
+						</div>
+					</Button>
+					<Button
+						key='defeated'
+						className='tall-button'
+						onClick={() => setDefeated(!hero.state.defeated)}
+					>
+						<div>
+							<div>
+								{hero.state.defeated ? 'Defeated' : 'Active'}
+							</div>
+							<div className='subtext'>
+								You are {hero.state.defeated ? 'defeated' : 'not defeated'}
 							</div>
 						</div>
 					</Button>
@@ -222,20 +288,6 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setActed = (value: boolean) => {
-			const copy = Utils.copy(hero);
-			copy.state.acted = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setDefeated = (value: boolean) => {
-			const copy = Utils.copy(hero);
-			copy.state.defeated = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HealthPanel hero={hero} />
@@ -271,30 +323,11 @@ export const HeroStateModal = (props: Props) => {
 					onChange={setStaminaTemp}
 				/>
 				<Divider />
-				<Segmented
-					block={true}
-					options={[
-						{ value: false, label: 'Ready' },
-						{ value: true, label: 'Acted' }
-					]}
-					value={hero.state.acted}
-					onChange={setActed}
-				/>
-				<Segmented
-					block={true}
-					options={[
-						{ value: false, label: 'Active' },
-						{ value: true, label: 'Defeated' }
-					]}
-					value={hero.state.defeated}
-					onChange={setDefeated}
-				/>
-				<Divider />
-				<Flex align='center' justify='space-between' gap='5px'>
+				<Flex align='center' justify='space-evenly'>
 					<Button
+						key='spend-recovery'
 						className='tall-button'
 						type='primary'
-						block={true}
 						disabled={(hero.state.staminaDamage === 0) || (hero.state.recoveriesUsed >= HeroLogic.getRecoveries(hero))}
 						onClick={spendRecovery}
 					>
@@ -306,9 +339,9 @@ export const HeroStateModal = (props: Props) => {
 						</div>
 					</Button>
 					<Button
+						key='take-respite'
 						className='tall-button'
 						type='primary'
-						block={true}
 						onClick={endRespite}
 					>
 						<div>

@@ -17,6 +17,7 @@ import { ComplicationPanel } from '../../../panels/elements/complication-panel/c
 import { Culture } from '../../../../models/culture';
 import { CulturePanel } from '../../../panels/elements/culture-panel/culture-panel';
 import { Element } from '../../../../models/element';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeatureField } from '../../../../enums/feature-field';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeaturePanel } from '../../../panels/elements/feature-panel/feature-panel';
@@ -523,58 +524,60 @@ export const HeroEditPage = (props: Props) => {
 		}
 
 		return (
-			<div className='hero-edit-page'>
-				<AppHeader subheader='Hero Builder' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
-					<Button icon={<SaveOutlined />} type='primary' disabled={!dirty} onClick={saveChanges}>
-						Save Changes
-					</Button>
-					<Button icon={<CloseOutlined />} onClick={() => navigation.goToHeroView(heroID!)}>
-						Cancel
-					</Button>
-				</AppHeader>
-				<div className={isSmall ? 'hero-edit-page-content small' : 'hero-edit-page-content'}>
-					<div className='page-selector'>
-						<Segmented<HeroEditTab>
-							name='sections'
-							options={([
-								'start',
-								'ancestry',
-								'culture',
-								'career',
-								'class',
-								'complication',
-								'details'
-							] as const).map(tab => ({
-								value: tab,
-								label: (
-									<div className={`page-button ${getPageState(tab).toLowerCase().replace(' ', '-')}`}>
-										<div className='page-button-title'>{Format.capitalize(tab, '-')}</div>
-										<div className='page-button-subtitle'>{getPageState(tab)}</div>
-									</div>
-								)
-							}))}
-							block={true}
-							value={page}
-							onChange={value => navigation.goToHeroEdit(heroID!, value)}
-						/>
+			<ErrorBoundary>
+				<div className='hero-edit-page'>
+					<AppHeader subheader='Hero Builder' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+						<Button icon={<SaveOutlined />} type='primary' disabled={!dirty} onClick={saveChanges}>
+							Save Changes
+						</Button>
+						<Button icon={<CloseOutlined />} onClick={() => navigation.goToHeroView(heroID!)}>
+							Cancel
+						</Button>
+					</AppHeader>
+					<div className={isSmall ? 'hero-edit-page-content small' : 'hero-edit-page-content'}>
+						<div className='page-selector'>
+							<Segmented<HeroEditTab>
+								name='sections'
+								options={([
+									'start',
+									'ancestry',
+									'culture',
+									'career',
+									'class',
+									'complication',
+									'details'
+								] as const).map(tab => ({
+									value: tab,
+									label: (
+										<div className={`page-button ${getPageState(tab).toLowerCase().replace(' ', '-')}`}>
+											<div className='page-button-title'>{Format.capitalize(tab, '-')}</div>
+											<div className='page-button-subtitle'>{getPageState(tab)}</div>
+										</div>
+									)
+								}))}
+								block={true}
+								value={page}
+								onChange={value => navigation.goToHeroEdit(heroID!, value)}
+							/>
+						</div>
+						{
+							showSearchBar ?
+								<div className='search-bar'>
+									<Input
+										placeholder='Search'
+										allowClear={true}
+										value={searchTerm}
+										suffix={!searchTerm ? <SearchOutlined /> : null}
+										onChange={e => setSearchTerm(e.target.value)}
+									/>
+									<Button disabled={!!searchTerm} icon={<ThunderboltOutlined />} onClick={selectRandom}>Random</Button>
+								</div>
+								: null
+						}
+						{getContent()}
 					</div>
-					{
-						showSearchBar ?
-							<div className='search-bar'>
-								<Input
-									placeholder='Search'
-									allowClear={true}
-									value={searchTerm}
-									suffix={!searchTerm ? <SearchOutlined /> : null}
-									onChange={e => setSearchTerm(e.target.value)}
-								/>
-								<Button disabled={!!searchTerm} icon={<ThunderboltOutlined />} onClick={selectRandom}>Random</Button>
-							</div>
-							: null
-					}
-					{getContent()}
 				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

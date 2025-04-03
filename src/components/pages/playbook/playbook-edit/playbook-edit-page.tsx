@@ -19,6 +19,7 @@ import { EncounterDifficultyPanel } from '../../../panels/encounter-difficulty/e
 import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterObjectiveData } from '../../../../data/encounter-objective-data';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeaturePanel } from '../../../panels/elements/feature-panel/feature-panel';
@@ -1704,46 +1705,48 @@ export const PlaybookEditPage = (props: Props) => {
 
 	try {
 		return (
-			<div className='playbook-edit-page'>
-				<AppHeader subheader={`${getSubheader()} Builder`} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
-					<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
-						Save Changes
-					</Button>
-					<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybookView(kind!, element.id)}>
-						Cancel
-					</Button>
-					{
-						(kind === 'encounter') ?
-							<div className='divider' />
-							: null
-					}
-					{
-						(kind === 'encounter') || (kind === 'tactical-map') ?
-							<Popover
-								trigger='click'
-								placement='bottom'
-								content={<OptionsPanel mode={kind} options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
-							>
-								<Button icon={<SettingOutlined />}>
-									Options
-								</Button>
-							</Popover>
-							: null
-					}
-				</AppHeader>
-				<div className='playbook-edit-page-content'>
-					<div className='edit-column'>
-						{getEditSection()}
+			<ErrorBoundary>
+				<div className='playbook-edit-page'>
+					<AppHeader subheader={`${getSubheader()} Builder`} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+						<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
+							Save Changes
+						</Button>
+						<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybookView(kind!, element.id)}>
+							Cancel
+						</Button>
+						{
+							(kind === 'encounter') ?
+								<div className='divider' />
+								: null
+						}
+						{
+							(kind === 'encounter') || (kind === 'tactical-map') ?
+								<Popover
+									trigger='click'
+									placement='bottom'
+									content={<OptionsPanel mode={kind} options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
+								>
+									<Button icon={<SettingOutlined />}>
+										Options
+									</Button>
+								</Popover>
+								: null
+						}
+					</AppHeader>
+					<div className='playbook-edit-page-content'>
+						<div className='edit-column'>
+							{getEditSection()}
+						</div>
+						{
+							kind !== 'tactical-map' ?
+								<div className='preview-column'>
+									{getPreview()}
+								</div>
+								: null
+						}
 					</div>
-					{
-						kind !== 'tactical-map' ?
-							<div className='preview-column'>
-								{getPreview()}
-							</div>
-							: null
-					}
 				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

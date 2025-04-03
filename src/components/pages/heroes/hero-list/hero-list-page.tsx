@@ -3,6 +3,7 @@ import { DownloadOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icon
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Collections } from '../../../../utils/collections';
 import { Empty } from '../../../controls/empty/empty';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Hero } from '../../../../models/hero';
 import { HeroPanel } from '../../../panels/hero/hero-panel';
 import { Options } from '../../../../models/options';
@@ -79,66 +80,68 @@ export const HeroListPage = (props: Props) => {
 
 	try {
 		return (
-			<div className='hero-list-page'>
-				<AppHeader subheader='Heroes' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
-					<Input
-						placeholder='Search'
-						allowClear={true}
-						value={searchTerm}
-						suffix={<SearchOutlined />}
-						onChange={e => setSearchTerm(e.target.value)}
-					/>
-					<div className='divider' />
-					<Popover
-						trigger='click'
-						placement='bottom'
-						content={(
-							<div style={{ display: 'flex', flexDirection: 'column' }}>
-								<Space>
-									<Button type='primary' block={true} icon={<PlusOutlined />} onClick={props.addHero}>Create</Button>
-									<div className='ds-text'>or</div>
-									<Upload
-										style={{ width: '100%' }}
-										accept='.drawsteel-hero'
-										showUploadList={false}
-										beforeUpload={file => {
-											file
-												.text()
-												.then(json => {
-													const hero = (JSON.parse(json) as Hero);
-													props.importHero(hero);
-												});
-											return false;
-										}}
-									>
-										<Button block={true} icon={<DownloadOutlined />}>Import</Button>
-									</Upload>
-								</Space>
-							</div>
-						)}
-					>
-						<Button type='primary' icon={<PlusOutlined />}>
-							Add
-						</Button>
-					</Popover>
-				</AppHeader>
-				<div className='hero-list-page-content'>
-					<Tabs
-						activeKey={currentTab}
-						items={folders.map(f => ({
-							key: f,
-							label: (
-								<div className='section-header'>
-									<div className='section-title'>{f || 'Heroes'}</div>
-									<div className='section-count'>{getHeroes(f).length}</div>
+			<ErrorBoundary>
+				<div className='hero-list-page'>
+					<AppHeader subheader='Heroes' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+						<Input
+							placeholder='Search'
+							allowClear={true}
+							value={searchTerm}
+							suffix={<SearchOutlined />}
+							onChange={e => setSearchTerm(e.target.value)}
+						/>
+						<div className='divider' />
+						<Popover
+							trigger='click'
+							placement='bottom'
+							content={(
+								<div style={{ display: 'flex', flexDirection: 'column' }}>
+									<Space>
+										<Button type='primary' block={true} icon={<PlusOutlined />} onClick={props.addHero}>Create</Button>
+										<div className='ds-text'>or</div>
+										<Upload
+											style={{ width: '100%' }}
+											accept='.drawsteel-hero'
+											showUploadList={false}
+											beforeUpload={file => {
+												file
+													.text()
+													.then(json => {
+														const hero = (JSON.parse(json) as Hero);
+														props.importHero(hero);
+													});
+												return false;
+											}}
+										>
+											<Button block={true} icon={<DownloadOutlined />}>Import</Button>
+										</Upload>
+									</Space>
 								</div>
-							),
-							children: getHeroesSection(getHeroes(f))
-						}))}
-						onChange={folder => navigation.goToHeroList(folder)}
-					/>
+							)}
+						>
+							<Button type='primary' icon={<PlusOutlined />}>
+								Add
+							</Button>
+						</Popover>
+					</AppHeader>
+					<div className='hero-list-page-content'>
+						<Tabs
+							activeKey={currentTab}
+							items={folders.map(f => ({
+								key: f,
+								label: (
+									<div className='section-header'>
+										<div className='section-title'>{f || 'Heroes'}</div>
+										<div className='section-count'>{getHeroes(f).length}</div>
+									</div>
+								),
+								children: getHeroesSection(getHeroes(f))
+							}))}
+							onChange={folder => navigation.goToHeroList(folder)}
+						/>
+					</div>
 				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

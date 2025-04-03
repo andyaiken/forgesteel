@@ -9,6 +9,7 @@ import { Encounter } from '../../../../models/encounter';
 import { EncounterData } from '../../../../data/encounter-data';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { EncounterRunPanel } from '../../../panels/run/encounter-run/encounter-run-panel';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
@@ -479,58 +480,60 @@ export const SessionDirectorPage = (props: Props) => {
 
 	try {
 		return (
-			<div className='session-director-page'>
-				<AppHeader subheader='Session' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
-					<Popover
-						trigger='click'
-						placement='bottom'
-						content={(
-							<div style={{ width: '375px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Segmented
-									name='startelements'
-									block={true}
-									options={[ 'encounter', 'montage', 'negotiation', 'map', 'counter' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
-									value={startElement}
-									onChange={setStartElement}
+			<ErrorBoundary>
+				<div className='session-director-page'>
+					<AppHeader subheader='Session' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+						<Popover
+							trigger='click'
+							placement='bottom'
+							content={(
+								<div style={{ width: '375px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+									<Segmented
+										name='startelements'
+										block={true}
+										options={[ 'encounter', 'montage', 'negotiation', 'map', 'counter' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
+										value={startElement}
+										onChange={setStartElement}
+									/>
+									{getStartContent()}
+								</div>
+							)}
+						>
+							<Button type='primary' icon={<PlusOutlined />}>
+								Add
+							</Button>
+						</Popover>
+						{
+							selectedElementID ?
+								<DangerButton
+									label='Finish'
+									onConfirm={finish}
 								/>
-								{getStartContent()}
-							</div>
-						)}
-					>
-						<Button type='primary' icon={<PlusOutlined />}>
-							Add
-						</Button>
-					</Popover>
-					{
-						selectedElementID ?
-							<DangerButton
-								label='Finish'
-								onConfirm={finish}
-							/>
-							: null
-					}
-					<div className='divider' />
-					<Button onClick={props.showPlayerView}>Player View</Button>
-					<Popover
-						trigger='click'
-						placement='bottom'
-						content={<OptionsPanel mode='session' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-					>
-						<Button icon={<SettingOutlined />}>
-							Options
-						</Button>
-					</Popover>
-				</AppHeader>
-				<div className='session-page-content'>
-					<Space className='left-column' direction='vertical'>
-						<HeaderText level={1}>In Progress</HeaderText>
-						{getSelectableContent()}
-					</Space>
-					<div className='right-column'>
-						{getSelectedContent()}
+								: null
+						}
+						<div className='divider' />
+						<Button onClick={props.showPlayerView}>Player View</Button>
+						<Popover
+							trigger='click'
+							placement='bottom'
+							content={<OptionsPanel mode='session' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+						>
+							<Button icon={<SettingOutlined />}>
+								Options
+							</Button>
+						</Popover>
+					</AppHeader>
+					<div className='session-page-content'>
+						<Space className='left-column' direction='vertical'>
+							<HeaderText level={1}>In Progress</HeaderText>
+							{getSelectableContent()}
+						</Space>
+						<div className='right-column'>
+							{getSelectedContent()}
+						</div>
 					</div>
 				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

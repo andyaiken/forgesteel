@@ -28,6 +28,7 @@ import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel'
 import { Element } from '../../../../models/element';
 import { ElementEditPanel } from '../../../panels/edit/element-edit/element-edit-panel';
 import { Empty } from '../../../controls/empty/empty';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeatureEditPanel } from '../../../panels/edit/feature-edit/feature-edit-panel';
@@ -2909,44 +2910,46 @@ export const LibraryEditPage = (props: Props) => {
 		}
 
 		return (
-			<div className='library-edit-page'>
-				<AppHeader subheader={getSubheader()} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
-					<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
-						Save Changes
-					</Button>
-					<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
-						Cancel
-					</Button>
-					{
-						monster ?
-							<div className='divider' />
-							: null
-					}
-					{
-						monster ?
-							<Popover
-								trigger='click'
-								placement='bottom'
-								content={<OptionsPanel mode='monster' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
-							>
-								<Button icon={<SettingOutlined />}>
-									Options
-								</Button>
-							</Popover>
-							: null
-					}
-				</AppHeader>
-				<div className='library-edit-page-content'>
-					<div className='edit-column'>
-						{getEditHeaderSection()}
-						{getEditSection()}
-					</div>
-					<div className='preview-column'>
-						{getPreviewHeaderSection()}
-						{getPreview()}
+			<ErrorBoundary>
+				<div className='library-edit-page'>
+					<AppHeader subheader={getSubheader()} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+						<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
+							Save Changes
+						</Button>
+						<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
+							Cancel
+						</Button>
+						{
+							monster ?
+								<div className='divider' />
+								: null
+						}
+						{
+							monster ?
+								<Popover
+									trigger='click'
+									placement='bottom'
+									content={<OptionsPanel mode='monster' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
+								>
+									<Button icon={<SettingOutlined />}>
+										Options
+									</Button>
+								</Popover>
+								: null
+						}
+					</AppHeader>
+					<div className='library-edit-page-content'>
+						<div className='edit-column'>
+							{getEditHeaderSection()}
+							{getEditSection()}
+						</div>
+						<div className='preview-column'>
+							{getPreviewHeaderSection()}
+							{getPreview()}
+						</div>
 					</div>
 				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

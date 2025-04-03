@@ -24,6 +24,7 @@ export interface HeroState {
 	inventory: Item[];
 	projects: Project[];
 	notes: string;
+	hidden: boolean;
 	acted: boolean;
 	defeated: boolean;
 }

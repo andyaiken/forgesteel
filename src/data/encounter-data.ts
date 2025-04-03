@@ -26,6 +26,7 @@ export class EncounterData {
 							staminaTemp: 0,
 							conditions: [],
 							reactionUsed: false,
+							hidden: false,
 							defeated: false,
 							captainID: undefined
 						}
@@ -50,6 +51,7 @@ export class EncounterData {
 							staminaTemp: 0,
 							conditions: [],
 							reactionUsed: false,
+							hidden: false,
 							defeated: false,
 							captainID: undefined
 						}
@@ -74,6 +76,7 @@ export class EncounterData {
 							staminaTemp: 0,
 							conditions: [],
 							reactionUsed: false,
+							hidden: false,
 							defeated: false,
 							captainID: undefined
 						}
@@ -98,6 +101,7 @@ export class EncounterData {
 							staminaTemp: 0,
 							conditions: [],
 							reactionUsed: false,
+							hidden: false,
 							defeated: false,
 							captainID: undefined
 						}
@@ -150,6 +154,7 @@ export class EncounterData {
 							staminaTemp: 0,
 							conditions: [],
 							reactionUsed: false,
+							hidden: false,
 							defeated: false,
 							captainID: undefined
 						}

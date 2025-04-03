@@ -8,6 +8,7 @@ import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Element } from '../../../../models/element';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
@@ -127,71 +128,73 @@ export const PlaybookViewPage = (props: Props) => {
 
 	try {
 		return (
-			<div className='playbook-view-page'>
-				<AppHeader subheader={getSubheader()} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
-					<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybookList(kind!)}>
-						Close
-					</Button>
-					<div className='divider' />
-					<Button icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit(kind!, elementID!)}>
-						Edit
-					</Button>
-					<Popover
-						trigger='click'
-						placement='bottom'
-						content={(
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Button onClick={() => props.export(kind!, element, 'image')}>Export As Image</Button>
-								<Button onClick={() => props.export(kind!, element, 'pdf')}>Export As PDF</Button>
-								<Button onClick={() => props.export(kind!, element, 'json')}>Export as Data</Button>
-							</div>
-						)}
-					>
-						<Button icon={<UploadOutlined />}>
-							Export
+			<ErrorBoundary>
+				<div className='playbook-view-page'>
+					<AppHeader subheader={getSubheader()} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+						<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybookList(kind!)}>
+							Close
 						</Button>
-					</Popover>
-					<DangerButton
-						disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
-						onConfirm={() => props.delete(kind!, element)}
-					/>
-					{
-						(kind !== 'adventure') ?
-							<div className='divider' />
-							: null
-					}
-					{
-						(kind === 'encounter') || (kind === 'montage') || (kind === 'negotiation') || (kind === 'tactical-map') ?
-							<Button icon={<PlayCircleOutlined />} onClick={() => props.start(kind, element)}>
-								Run
+						<div className='divider' />
+						<Button icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit(kind!, elementID!)}>
+							Edit
+						</Button>
+						<Popover
+							trigger='click'
+							placement='bottom'
+							content={(
+								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+									<Button onClick={() => props.export(kind!, element, 'image')}>Export As Image</Button>
+									<Button onClick={() => props.export(kind!, element, 'pdf')}>Export As PDF</Button>
+									<Button onClick={() => props.export(kind!, element, 'json')}>Export as Data</Button>
+								</div>
+							)}
+						>
+							<Button icon={<UploadOutlined />}>
+								Export
 							</Button>
-							: null
-					}
-					{
-						(kind === 'encounter') ?
-							<Button onClick={() => props.showEncounterTools(element as Encounter)}>
-								Tools
-							</Button>
-							: null
-					}
-					{
-						(kind === 'encounter') || (kind === 'tactical-map') ?
-							<Popover
-								trigger='click'
-								placement='bottom'
-								content={<OptionsPanel mode={kind} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-							>
-								<Button icon={<SettingOutlined />}>
-									Options
+						</Popover>
+						<DangerButton
+							disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
+							onConfirm={() => props.delete(kind!, element)}
+						/>
+						{
+							(kind !== 'adventure') ?
+								<div className='divider' />
+								: null
+						}
+						{
+							(kind === 'encounter') || (kind === 'montage') || (kind === 'negotiation') || (kind === 'tactical-map') ?
+								<Button icon={<PlayCircleOutlined />} onClick={() => props.start(kind, element)}>
+									Run
 								</Button>
-							</Popover>
-							: null
-					}
-				</AppHeader>
-				<div className='playbook-view-page-content'>
-					{panel}
+								: null
+						}
+						{
+							(kind === 'encounter') ?
+								<Button onClick={() => props.showEncounterTools(element as Encounter)}>
+									Tools
+								</Button>
+								: null
+						}
+						{
+							(kind === 'encounter') || (kind === 'tactical-map') ?
+								<Popover
+									trigger='click'
+									placement='bottom'
+									content={<OptionsPanel mode={kind} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+								>
+									<Button icon={<SettingOutlined />}>
+										Options
+									</Button>
+								</Popover>
+								: null
+						}
+					</AppHeader>
+					<div className='playbook-view-page-content'>
+						{panel}
+					</div>
 				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

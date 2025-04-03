@@ -16,6 +16,7 @@ import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Format } from '../../../../utils/format';
 import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
@@ -248,76 +249,78 @@ export const LibraryViewPage = (props: Props) => {
 
 	try {
 		return (
-			<div className='library-view-page'>
-				<AppHeader subheader={getSubheader()} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
-					{
-						subElementID ?
-							<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
-								Back
-							</Button>
-							:
-							<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibraryList(kind!)}>
-								Close
-							</Button>
-					}
-					<div className='divider' />
-					{
-						sourcebook.isHomebrew ?
-							<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(kind!, sourcebook.id, elementID!, subElementID)}>
-								Edit
-							</Button>
-							: null
-					}
-					{
-						!sourcebook.isHomebrew && !subElementID ?
-							<Popover
-								trigger='click'
-								placement='bottom'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										{
-											props.sourcebooks
-												.filter(sb => sb.isHomebrew)
-												.map(cs => <Button key={cs.id} onClick={() => props.createElement(kind!, cs.id, element)}>In {cs.name || 'Unnamed Sourcebook'}</Button>)
-										}
-										<Button onClick={() => props.createElement(kind!, null, element)}>In a new sourcebook</Button>
-									</div>
-								)}
-							>
-								<Button icon={<CopyOutlined />}>
-									Create Homebrew Version
+			<ErrorBoundary>
+				<div className='library-view-page'>
+					<AppHeader subheader={getSubheader()} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+						{
+							subElementID ?
+								<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
+									Back
 								</Button>
-							</Popover>
-							: null
-					}
-					<Popover
-						trigger='click'
-						placement='bottom'
-						content={(
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Button onClick={() => props.export(kind!, element, 'image')}>Export As Image</Button>
-								<Button onClick={() => props.export(kind!, element, 'pdf')}>Export As PDF</Button>
-								<Button onClick={() => props.export(kind!, element, 'json')}>Export as Data</Button>
-							</div>
-						)}
-					>
-						<Button icon={<UploadOutlined />}>
-							Export
-						</Button>
-					</Popover>
-					{
-						sourcebook.isHomebrew && !subElementID ?
-							<DangerButton
-								disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
-								onConfirm={() => props.delete(kind!, sourcebook.id, element)}
-							/>
-							: null
-					}
-				</AppHeader>
-				<div className='library-view-page-content'>
-					{panel}
+								:
+								<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibraryList(kind!)}>
+									Close
+								</Button>
+						}
+						<div className='divider' />
+						{
+							sourcebook.isHomebrew ?
+								<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(kind!, sourcebook.id, elementID!, subElementID)}>
+									Edit
+								</Button>
+								: null
+						}
+						{
+							!sourcebook.isHomebrew && !subElementID ?
+								<Popover
+									trigger='click'
+									placement='bottom'
+									content={(
+										<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+											{
+												props.sourcebooks
+													.filter(sb => sb.isHomebrew)
+													.map(cs => <Button key={cs.id} onClick={() => props.createElement(kind!, cs.id, element)}>In {cs.name || 'Unnamed Sourcebook'}</Button>)
+											}
+											<Button onClick={() => props.createElement(kind!, null, element)}>In a new sourcebook</Button>
+										</div>
+									)}
+								>
+									<Button icon={<CopyOutlined />}>
+										Create Homebrew Version
+									</Button>
+								</Popover>
+								: null
+						}
+						<Popover
+							trigger='click'
+							placement='bottom'
+							content={(
+								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+									<Button onClick={() => props.export(kind!, element, 'image')}>Export As Image</Button>
+									<Button onClick={() => props.export(kind!, element, 'pdf')}>Export As PDF</Button>
+									<Button onClick={() => props.export(kind!, element, 'json')}>Export as Data</Button>
+								</div>
+							)}
+						>
+							<Button icon={<UploadOutlined />}>
+								Export
+							</Button>
+						</Popover>
+						{
+							sourcebook.isHomebrew && !subElementID ?
+								<DangerButton
+									disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
+									onConfirm={() => props.delete(kind!, sourcebook.id, element)}
+								/>
+								: null
+						}
+					</AppHeader>
+					<div className='library-view-page-content'>
+						{panel}
+					</div>
 				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

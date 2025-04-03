@@ -2,6 +2,7 @@ import { AppHeader } from '../../../panels/app-header/app-header';
 import { CounterRunPanel } from '../../../panels/run/counter-run/counter-run-panel';
 import { Empty } from '../../../controls/empty/empty';
 import { EncounterRunPanel } from '../../../panels/run/encounter-run/encounter-run-panel';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Hero } from '../../../../models/hero';
 import { MontageRunPanel } from '../../../panels/run/montage-run/montage-run-panel';
 import { NegotiationRunPanel } from '../../../panels/run/negotiation-run/negotiation-run-panel';
@@ -26,74 +27,76 @@ interface Props {
 }
 
 export const SessionPlayerPage = (props: Props) => {
-	const getContent = () => {
-		const encounter = props.session.encounters.find(e => e.id === props.session.playerViewID);
-		if (encounter) {
-			return (
-				<EncounterRunPanel
-					encounter={encounter}
-					sourcebooks={props.sourcebooks}
-					heroes={props.heroes}
-					options={props.options}
-					onChange={() => null}
-				/>
-			);
-		}
-
-		const montage = props.session.montages.find(m => m.id === props.session.playerViewID);
-		if (montage) {
-			return (
-				<MontageRunPanel
-					montage={montage}
-					onChange={() => null}
-				/>
-			);
-		}
-
-		const negotiation = props.session.negotiations.find(n => n.id === props.session.playerViewID);
-		if (negotiation) {
-			return (
-				<NegotiationRunPanel
-					negotiation={negotiation}
-					onChange={() => null}
-				/>
-			);
-		}
-
-		const map = props.session.tacticalMaps.find(tm => tm.id === props.session.playerViewID);
-		if (map) {
-			return (
-				<TacticalMapPanel
-					key={JSON.stringify(map)}
-					map={map}
-					display={TacticalMapDisplayType.Player}
-					options={props.options}
-					mode={PanelMode.Full}
-				/>
-			);
-		}
-
-		const counter = props.session.counters.find(c => c.id === props.session.playerViewID);
-		if (counter) {
-			return (
-				<CounterRunPanel
-					counter={counter}
-					onChange={() => null}
-				/>
-			);
-		}
-
-		return <Empty text='Your director is not currently sharing anything with you.' />;
-	};
-
 	try {
+		const getContent = () => {
+			const encounter = props.session.encounters.find(e => e.id === props.session.playerViewID);
+			if (encounter) {
+				return (
+					<EncounterRunPanel
+						encounter={encounter}
+						sourcebooks={props.sourcebooks}
+						heroes={props.heroes}
+						options={props.options}
+						onChange={() => null}
+					/>
+				);
+			}
+
+			const montage = props.session.montages.find(m => m.id === props.session.playerViewID);
+			if (montage) {
+				return (
+					<MontageRunPanel
+						montage={montage}
+						onChange={() => null}
+					/>
+				);
+			}
+
+			const negotiation = props.session.negotiations.find(n => n.id === props.session.playerViewID);
+			if (negotiation) {
+				return (
+					<NegotiationRunPanel
+						negotiation={negotiation}
+						onChange={() => null}
+					/>
+				);
+			}
+
+			const map = props.session.tacticalMaps.find(tm => tm.id === props.session.playerViewID);
+			if (map) {
+				return (
+					<TacticalMapPanel
+						key={JSON.stringify(map)}
+						map={map}
+						display={TacticalMapDisplayType.Player}
+						options={props.options}
+						mode={PanelMode.Full}
+					/>
+				);
+			}
+
+			const counter = props.session.counters.find(c => c.id === props.session.playerViewID);
+			if (counter) {
+				return (
+					<CounterRunPanel
+						counter={counter}
+						onChange={() => null}
+					/>
+				);
+			}
+
+			return <Empty text='Your director is not currently sharing anything with you.' />;
+		};
+
 		return (
-			<div className='session-player-page'>
-				<AppHeader subheader='Forge Steel' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
-				<div className='session-page-content'>
-					{getContent()}
+			<ErrorBoundary>
+				<div className='session-player-page'>
+					<AppHeader subheader='Forge Steel' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
+					<div className='session-page-content'>
+						{getContent()}
+					</div>
 				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

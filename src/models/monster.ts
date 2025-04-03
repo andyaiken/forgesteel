@@ -16,6 +16,7 @@ export interface MonsterState {
 	staminaTemp: number;
 	conditions: Condition[];
 	reactionUsed: boolean;
+	hidden: boolean;
 	defeated: boolean;
 	captainID: string | undefined;
 };

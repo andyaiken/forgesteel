@@ -139,81 +139,81 @@ export class FeatureLogic {
 							}
 						});
 				});
-		}
 
-		const hasLvl1 = item.customizationsByLevel.filter(lvl => lvl.level === 1).flatMap(lvl => lvl.features).filter(f => f.selected).length > 0;
-		const hasLvl5 = item.customizationsByLevel.filter(lvl => lvl.level === 5).flatMap(lvl => lvl.features).filter(f => f.selected).length > 0;
-		const hasLvl9 = item.customizationsByLevel.filter(lvl => lvl.level === 9).flatMap(lvl => lvl.features).filter(f => f.selected).length > 0;
-		if (item.type === ItemType.ImbuedArmor) {
-			// Imbued armor grants +6 / +12 / +21 stamina based on highest enhancement tier
-			if (hasLvl1) {
-				features.push(FactoryLogic.feature.createBonus({
-					id: item.name + '-bonus-1',
-					field: FeatureField.Stamina,
-					value: 6
-				}));
+			const hasLvl1 = item.customizationsByLevel.filter(lvl => lvl.level === 1).flatMap(lvl => lvl.features).filter(f => f.selected).length > 0;
+			const hasLvl5 = item.customizationsByLevel.filter(lvl => lvl.level === 5).flatMap(lvl => lvl.features).filter(f => f.selected).length > 0;
+			const hasLvl9 = item.customizationsByLevel.filter(lvl => lvl.level === 9).flatMap(lvl => lvl.features).filter(f => f.selected).length > 0;
+			if (item.type === ItemType.ImbuedArmor) {
+				// Imbued armor grants +6 / +12 / +21 stamina based on highest enhancement tier
+				if (hasLvl1) {
+					features.push(FactoryLogic.feature.createBonus({
+						id: item.name + '-bonus-1',
+						field: FeatureField.Stamina,
+						value: 6
+					}));
+				}
+				if (hasLvl5) {
+					features.push(FactoryLogic.feature.createBonus({
+						id: item.name + '-bonus-5',
+						field: FeatureField.Stamina,
+						value: 6
+					}));
+				}
+				if (hasLvl9) {
+					features.push(FactoryLogic.feature.createBonus({
+						id: item.name + '-bonus-9',
+						field: FeatureField.Stamina,
+						value: 9
+					}));
+				}
 			}
-			if (hasLvl5) {
-				features.push(FactoryLogic.feature.createBonus({
-					id: item.name + '-bonus-5',
-					field: FeatureField.Stamina,
-					value: 6
-				}));
+			if (item.type === ItemType.ImbuedImplement) {
+				// Imbued implement grants +1 / +2 / +3 damage to magic / psionic abilities based on highest enhancement tier
+				if (hasLvl1) {
+					features.push(FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-1',
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Psionic ],
+						modifier: 1
+					}));
+				}
+				if (hasLvl5) {
+					features.push(FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-5',
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Psionic ],
+						modifier: 1
+					}));
+				}
+				if (hasLvl9) {
+					features.push(FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-9',
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Psionic ],
+						modifier: 1
+					}));
+				}
 			}
-			if (hasLvl9) {
-				features.push(FactoryLogic.feature.createBonus({
-					id: item.name + '-bonus-9',
-					field: FeatureField.Stamina,
-					value: 9
-				}));
-			}
-		}
-		if (item.type === ItemType.ImbuedImplement) {
-			// Imbued implement grants +1 / +2 / +3 damage to magic / psionic abilities based on highest enhancement tier
-			if (hasLvl1) {
-				features.push(FactoryLogic.feature.createAbilityDamage({
-					id: item.name + '-bonus-1',
-					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Psionic ],
-					modifier: 1
-				}));
-			}
-			if (hasLvl5) {
-				features.push(FactoryLogic.feature.createAbilityDamage({
-					id: item.name + '-bonus-5',
-					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Psionic ],
-					modifier: 1
-				}));
-			}
-			if (hasLvl9) {
-				features.push(FactoryLogic.feature.createAbilityDamage({
-					id: item.name + '-bonus-9',
-					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Psionic ],
-					modifier: 1
-				}));
-			}
-		}
-		if (item.type === ItemType.ImbuedWeapon) {
-			// Imbued weapon grants +1 / +2 / +3 damage to weapon abilities based on highest enhancement tier
-			if (hasLvl1) {
-				features.push(FactoryLogic.feature.createAbilityDamage({
-					id: item.name + '-bonus-1',
-					keywords: [ AbilityKeyword.Weapon ],
-					modifier: 1
-				}));
-			}
-			if (hasLvl5) {
-				features.push(FactoryLogic.feature.createAbilityDamage({
-					id: item.name + '-bonus-5',
-					keywords: [ AbilityKeyword.Weapon ],
-					modifier: 1
-				}));
-			}
-			if (hasLvl9) {
-				features.push(FactoryLogic.feature.createAbilityDamage({
-					id: item.name + '-bonus-9',
-					keywords: [ AbilityKeyword.Weapon ],
-					modifier: 1
-				}));
+			if (item.type === ItemType.ImbuedWeapon) {
+				// Imbued weapon grants +1 / +2 / +3 damage to weapon abilities based on highest enhancement tier
+				if (hasLvl1) {
+					features.push(FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-1',
+						keywords: [ AbilityKeyword.Weapon ],
+						modifier: 1
+					}));
+				}
+				if (hasLvl5) {
+					features.push(FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-5',
+						keywords: [ AbilityKeyword.Weapon ],
+						modifier: 1
+					}));
+				}
+				if (hasLvl9) {
+					features.push(FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-9',
+						keywords: [ AbilityKeyword.Weapon ],
+						modifier: 1
+					}));
+				}
 			}
 		}
 

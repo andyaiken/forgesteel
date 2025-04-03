@@ -617,7 +617,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 		}),
 		FactoryLogic.createMonster({
 			id: 'human-10',
-			name: 'Human Soundrel',
+			name: 'Human Scoundrel',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Ambusher),
 			keywords: [ 'Human', 'Humanoid' ],

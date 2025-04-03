@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 import { HeroClass } from '../../models/class';
@@ -654,7 +655,7 @@ As your discipline grows, your psionic mastery of your body intensifies.
 						FactoryLogic.feature.createDamageModifier({
 							id: 'null-sub-2-2-1b',
 							modifiers: [
-								FactoryLogic.damageModifier.createCharacteristic({ damageType: 'Cold', modifierType: DamageModifierType.Immunity, characteristics: [ Characteristic.Intuition ], multiplier: 2 })
+								FactoryLogic.damageModifier.createCharacteristic({ damageType: DamageType.Cold, modifierType: DamageModifierType.Immunity, characteristics: [ Characteristic.Intuition ], multiplier: 2 })
 							]
 						}),
 						FactoryLogic.feature.createChoice({

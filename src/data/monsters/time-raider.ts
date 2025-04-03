@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -131,7 +132,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-1-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
 				})
 			]
 		}),
@@ -174,7 +175,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-2-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
 				})
 			]
 		}),
@@ -240,7 +241,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-3-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
 				})
 			]
 		}),
@@ -298,7 +299,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-4-feature-4',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
 				})
 			]
 		}),
@@ -354,7 +355,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-5-feature-4',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
 				})
 			]
 		}),
@@ -408,7 +409,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-6-feature-4',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
 				})
 			]
 		}),
@@ -468,7 +469,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-7-feature-4',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
 				})
 			]
 		}),
@@ -529,7 +530,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-1-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
 				})
 			]
 		}),
@@ -595,7 +596,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-9-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
 				})
 			]
 		}),
@@ -672,7 +673,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-10-feature-6',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -754,7 +755,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-11-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			],
 			retainer: {

@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -156,7 +157,7 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'wyvern-1-feature-7',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Acid', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Acid, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		}),
@@ -252,7 +253,7 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'wyvern-2-feature-7',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Acid', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Acid, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		})

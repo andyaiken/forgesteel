@@ -1,6 +1,7 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -135,7 +136,7 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-1-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 9 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 9 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -229,7 +230,7 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-3-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Cold', modifierType: DamageModifierType.Immunity, value: 8 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Cold, modifierType: DamageModifierType.Immunity, value: 8 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -276,7 +277,7 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-4-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Damage', modifierType: DamageModifierType.Immunity, value: 3 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Damage, modifierType: DamageModifierType.Immunity, value: 3 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -414,7 +415,7 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-6-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 9 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Damage, modifierType: DamageModifierType.Immunity, value: 9 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -512,7 +513,7 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-7-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 9 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 9 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -623,7 +624,7 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-8-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Cold', modifierType: DamageModifierType.Immunity, value: 8 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Cold, modifierType: DamageModifierType.Immunity, value: 8 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -714,7 +715,7 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-9-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Cold', modifierType: DamageModifierType.Immunity, value: 8 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Cold, modifierType: DamageModifierType.Immunity, value: 8 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -896,7 +897,7 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-11-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Damage', modifierType: DamageModifierType.Immunity, value: 3 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Damage, modifierType: DamageModifierType.Immunity, value: 3 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1098,7 +1099,7 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-13-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 10 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 10 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({

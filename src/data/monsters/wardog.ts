@@ -1,6 +1,7 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -394,7 +395,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 				FactoryLogic.feature.createDamageModifier({
 					id: 'wardog-7-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -456,7 +457,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 				FactoryLogic.feature.createDamageModifier({
 					id: 'wardog-8-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -525,7 +526,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 				FactoryLogic.feature.createDamageModifier({
 					id: 'wardog-9-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 3 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 3 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -652,7 +653,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 				FactoryLogic.feature.createDamageModifier({
 					id: 'wardog-11-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Acid', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Acid, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({

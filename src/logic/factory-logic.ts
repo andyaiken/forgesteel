@@ -19,6 +19,7 @@ import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { DamageModifier } from '../models/damage-modifier';
 import { DamageModifierType } from '../enums/damage-modifier-type';
+import { DamageType } from '../enums/damage-type';
 import { Domain } from '../models/domain';
 import { Element } from '../models/element';
 import { EncounterObjectiveData } from '../data/encounter-objective-data';
@@ -695,7 +696,7 @@ export class FactoryLogic {
 	};
 
 	static damageModifier = {
-		create: (data: { damageType: string, modifierType: DamageModifierType, value: number }): DamageModifier => {
+		create: (data: { damageType: DamageType, modifierType: DamageModifierType, value: number }): DamageModifier => {
 			return {
 				damageType: data.damageType,
 				type: data.modifierType,
@@ -706,7 +707,7 @@ export class FactoryLogic {
 				valuePerEchelon: 0
 			};
 		},
-		createPerLevel: (data: { damageType: string, modifierType: DamageModifierType, value: number }): DamageModifier => {
+		createPerLevel: (data: { damageType: DamageType, modifierType: DamageModifierType, value: number }): DamageModifier => {
 			return {
 				damageType: data.damageType,
 				type: data.modifierType,
@@ -717,7 +718,7 @@ export class FactoryLogic {
 				valuePerEchelon: 0
 			};
 		},
-		createValuePlusPerLevel: (data: { damageType: string, modifierType: DamageModifierType, value: number, perLevel: number }): DamageModifier => {
+		createValuePlusPerLevel: (data: { damageType: DamageType, modifierType: DamageModifierType, value: number, perLevel: number }): DamageModifier => {
 			return {
 				damageType: data.damageType,
 				type: data.modifierType,
@@ -728,7 +729,7 @@ export class FactoryLogic {
 				valuePerEchelon: 0
 			};
 		},
-		createFirstLevelHigherLevel: (data: { damageType: string, modifierType: DamageModifierType, first: number, higher: number }): DamageModifier => {
+		createFirstLevelHigherLevel: (data: { damageType: DamageType, modifierType: DamageModifierType, first: number, higher: number }): DamageModifier => {
 			return {
 				damageType: data.damageType,
 				type: data.modifierType,
@@ -739,7 +740,7 @@ export class FactoryLogic {
 				valuePerEchelon: 0
 			};
 		},
-		createPerEchelon: (data: { damageType: string, modifierType: DamageModifierType, value: number }): DamageModifier => {
+		createPerEchelon: (data: { damageType: DamageType, modifierType: DamageModifierType, value: number }): DamageModifier => {
 			return {
 				damageType: data.damageType,
 				type: data.modifierType,
@@ -750,7 +751,7 @@ export class FactoryLogic {
 				valuePerEchelon: data.value
 			};
 		},
-		createCharacteristic: (data: { damageType: string, modifierType: DamageModifierType, characteristics: Characteristic[], multiplier?: number }): DamageModifier => {
+		createCharacteristic: (data: { damageType: DamageType, modifierType: DamageModifierType, characteristics: Characteristic[], multiplier?: number }): DamageModifier => {
 			return {
 				damageType: data.damageType,
 				type: data.modifierType,
@@ -915,7 +916,7 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createAbilityDamage: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number, damageType?: string }): FeatureAbilityDamage => {
+		createAbilityDamage: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number, damageType?: DamageType }): FeatureAbilityDamage => {
 			return {
 				id: data.id,
 				name: data.name || `${data.keywords.join(', ')} damage modifier`,
@@ -928,7 +929,7 @@ export class FactoryLogic {
 					valueCharacteristicMultiplier: 0,
 					valuePerLevel: 0,
 					valuePerEchelon: 0,
-					damageType: data.damageType || 'Damage'
+					damageType: data.damageType || DamageType.Damage
 				}
 			};
 		},

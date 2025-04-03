@@ -1,6 +1,7 @@
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
 import { DamageModifierType } from '../enums/damage-modifier-type';
+import { DamageType } from '../enums/damage-type';
 import { FactoryLogic } from '../logic/factory-logic';
 import { FeatureField } from '../enums/feature-field';
 import { Item } from '../models/item';
@@ -278,7 +279,7 @@ export class TrinketData {
 						id: 'item-color-cloak-blue-1',
 						modifiers: [
 							FactoryLogic.damageModifier.createPerLevel({
-								damageType: 'Cold',
+								damageType: DamageType.Cold,
 								modifierType: DamageModifierType.Immunity,
 								value: 1
 							})
@@ -310,7 +311,7 @@ export class TrinketData {
 						id: 'item-color-cloak-red-1',
 						modifiers: [
 							FactoryLogic.damageModifier.createPerLevel({
-								damageType: 'Fire',
+								damageType: DamageType.Fire,
 								modifierType: DamageModifierType.Immunity,
 								value: 1
 							})
@@ -342,7 +343,7 @@ export class TrinketData {
 						id: 'item-color-cloak-yellow-1',
 						modifiers: [
 							FactoryLogic.damageModifier.createPerLevel({
-								damageType: 'Lightning',
+								damageType: DamageType.Lightning,
 								modifierType: DamageModifierType.Immunity,
 								value: 1
 							})
@@ -533,7 +534,7 @@ export class LeveledArmorData {
 						id: 'item-adaptive-second-skin-1b',
 						modifiers: [
 							FactoryLogic.damageModifier.createCharacteristic({
-								damageType: 'Acid',
+								damageType: DamageType.Acid,
 								modifierType: DamageModifierType.Immunity,
 								characteristics: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
 							})
@@ -543,7 +544,7 @@ export class LeveledArmorData {
 						id: 'item-adaptive-second-skin-1c',
 						modifiers: [
 							FactoryLogic.damageModifier.createCharacteristic({
-								damageType: 'Poison',
+								damageType: DamageType.Poison,
 								modifierType: DamageModifierType.Immunity,
 								characteristics: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
 							})
@@ -629,7 +630,7 @@ export class LeveledArmorData {
 						id: 'item-chain-of-the-sea-and-sky-5b',
 						modifiers: [
 							FactoryLogic.damageModifier.create({
-								damageType: 'Cold',
+								damageType: DamageType.Cold,
 								modifierType: DamageModifierType.Immunity,
 								value: 5
 							})
@@ -654,7 +655,7 @@ export class LeveledArmorData {
 						id: 'item-chain-of-the-sea-and-sky-9b',
 						modifiers: [
 							FactoryLogic.damageModifier.create({
-								damageType: 'Cold',
+								damageType: DamageType.Cold,
 								modifierType: DamageModifierType.Immunity,
 								value: 10
 							})
@@ -1076,7 +1077,7 @@ export class LeveledArmorData {
 						id: 'item-star-hunter-5b',
 						modifiers: [
 							FactoryLogic.damageModifier.create({
-								damageType: 'Psychic',
+								damageType: DamageType.Psychic,
 								modifierType: DamageModifierType.Immunity,
 								value: 5
 							})
@@ -1101,7 +1102,7 @@ export class LeveledArmorData {
 						id: 'item-star-hunter-9b',
 						modifiers: [
 							FactoryLogic.damageModifier.create({
-								damageType: 'Psychic',
+								damageType: DamageType.Psychic,
 								modifierType: DamageModifierType.Immunity,
 								value: 10
 							})
@@ -1246,7 +1247,7 @@ export class LeveledImplementData {
 						id: 'item-brittlebreaker-1a',
 						modifiers: [
 							FactoryLogic.damageModifier.create({
-								damageType: 'Damage',
+								damageType: DamageType.Damage,
 								modifierType: DamageModifierType.Weakness,
 								value: 3
 							})
@@ -1637,22 +1638,22 @@ export class LeveledWeaponData {
 						id: 'item-blade-of-quintessence-9b',
 						modifiers: [
 							FactoryLogic.damageModifier.create({
-								damageType: 'Cold',
+								damageType: DamageType.Cold,
 								modifierType: DamageModifierType.Immunity,
 								value: 10
 							}),
 							FactoryLogic.damageModifier.create({
-								damageType: 'Fire',
+								damageType: DamageType.Fire,
 								modifierType: DamageModifierType.Immunity,
 								value: 10
 							}),
 							FactoryLogic.damageModifier.create({
-								damageType: 'Lightning',
+								damageType: DamageType.Lightning,
 								modifierType: DamageModifierType.Immunity,
 								value: 10
 							}),
 							FactoryLogic.damageModifier.create({
-								damageType: 'Sonic',
+								damageType: DamageType.Sonic,
 								modifierType: DamageModifierType.Immunity,
 								value: 10
 							})
@@ -2275,7 +2276,7 @@ export class LeveledOtherData {
 						id: 'item-bloodbound-band-5b',
 						modifiers: [
 							FactoryLogic.damageModifier.create({
-								damageType: 'Damage',
+								damageType: DamageType.Damage,
 								modifierType: DamageModifierType.Immunity,
 								value: 2
 							})
@@ -2386,7 +2387,7 @@ export class LeveledOtherData {
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						modifier: 1,
-						damageType: 'Lightning'
+						damageType: DamageType.Lightning
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-lightning-treads-1b',
@@ -2409,7 +2410,7 @@ export class LeveledOtherData {
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						modifier: 1,
-						damageType: 'Lightning'
+						damageType: DamageType.Lightning
 					})
 				]
 			},
@@ -2426,7 +2427,7 @@ export class LeveledOtherData {
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						modifier: 1,
-						damageType: 'Lightning'
+						damageType: DamageType.Lightning
 					})
 				]
 			}

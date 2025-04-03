@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -515,7 +516,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'elf-high-9-feature-4',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		}),

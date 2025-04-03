@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -226,7 +227,7 @@ However, any hero who has at least one psionic ability can use their maneuver to
 				FactoryLogic.feature.createDamageModifier({
 					id: 'lord-syull-feature-11',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 10 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 10 })
 					]
 				})
 			]
@@ -248,7 +249,7 @@ However, any hero who has at least one psionic ability can use their maneuver to
 				FactoryLogic.feature.createDamageModifier({
 					id: 'lord-syull-2-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 3 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({

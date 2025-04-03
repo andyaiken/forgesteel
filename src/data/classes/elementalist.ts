@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 import { HeroClass } from '../../models/class';
@@ -201,27 +202,27 @@ Choose one of the following effects:
 								description: 'The protective shield you weave around yourself is made of all the elements to channel their full protective power.',
 								modifiers: [
 									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: 'Acid',
+										damageType: DamageType.Acid,
 										modifierType: DamageModifierType.Immunity,
 										characteristics: [ Characteristic.Reason ]
 									}),
 									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: 'Cold',
+										damageType: DamageType.Cold,
 										modifierType: DamageModifierType.Immunity,
 										characteristics: [ Characteristic.Reason ]
 									}),
 									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: 'Corruption',
+										damageType: DamageType.Corruption,
 										modifierType: DamageModifierType.Immunity,
 										characteristics: [ Characteristic.Reason ]
 									}),
 									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: 'Fire',
+										damageType: DamageType.Fire,
 										modifierType: DamageModifierType.Immunity,
 										characteristics: [ Characteristic.Reason ]
 									}),
 									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: 'Lightning',
+										damageType: DamageType.Lightning,
 										modifierType: DamageModifierType.Immunity,
 										characteristics: [ Characteristic.Reason ]
 									})

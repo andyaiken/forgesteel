@@ -8,6 +8,7 @@ import { AbilityLogic } from '../../../../logic/ability-logic';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
+import { DamageType } from '../../../../enums/damage-type';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
@@ -89,7 +90,7 @@ export const FeatureEditPanel = (props: Props) => {
 					valueCharacteristicMultiplier: 1,
 					valuePerLevel: 0,
 					valuePerEchelon: 0,
-					damageType: 'Damage'
+					damageType: DamageType.Damage
 				};
 				break;
 			case FeatureType.AddOn:
@@ -516,7 +517,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 		const addDamageModifier = (data: FeatureDamageModifierData) => {
 			const copy = Utils.copy(data);
-			copy.modifiers.push(FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 0 }));
+			copy.modifiers.push(FactoryLogic.damageModifier.create({ damageType: DamageType.Damage, modifierType: DamageModifierType.Immunity, value: 0 }));
 			setData(copy);
 		};
 
@@ -526,7 +527,7 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
-		const setDamageModifierDamageType = (data: FeatureDamageModifierData, index: number, value: string) => {
+		const setDamageModifierDamageType = (data: FeatureDamageModifierData, index: number, value: DamageType) => {
 			const copy = Utils.copy(data);
 			copy.modifiers[index].damageType = value;
 			setData(copy);
@@ -891,12 +892,13 @@ export const FeatureEditPanel = (props: Props) => {
 								<Expander key={n} title='Damage Modifier'>
 									<Space direction='vertical' style={{ width: '100%' }}>
 										<HeaderText>{FormatLogic.getDamageModifier(mod)}</HeaderText>
-										<Input
-											className={mod.damageType === '' ? 'input-empty' : ''}
+										<Select
+											style={{ width: '100%' }}
 											placeholder='Damage type'
-											allowClear={true}
+											options={[ DamageType.Damage, DamageType.Acid, DamageType.Cold, DamageType.Corruption, DamageType.Fire, DamageType.Holy, DamageType.Lightning, DamageType.Poison, DamageType.Psychic, DamageType.Sonic ].map(option => ({ value: option }))}
+											optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 											value={mod.damageType}
-											onChange={e => setDamageModifierDamageType(data, n, e.target.value)}
+											onChange={value => setDamageModifierDamageType(data, n, value)}
 										/>
 										<Select
 											style={{ width: '100%' }}

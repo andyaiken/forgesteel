@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -119,7 +120,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'devil-1-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		}),
@@ -163,7 +164,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'devil-2-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		}),
@@ -207,7 +208,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'devil-3-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		}),
@@ -304,7 +305,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'devil-4-feature-7',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		}),
@@ -398,7 +399,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'devil-5-feature-7',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		}),
@@ -492,7 +493,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'devil-6-feature-7',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		}),
@@ -586,7 +587,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'devil-7-feature-7',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		}),
@@ -671,7 +672,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'devil-8-feature-6',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 8 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 8 }) ]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

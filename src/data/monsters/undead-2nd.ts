@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -77,8 +78,8 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-1-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 4 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 4 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 4 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -124,8 +125,8 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-2-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 4 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 4 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 4 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -176,8 +177,8 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-3-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 4 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 4 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 4 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -221,8 +222,8 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-4-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 4 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 4 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 4 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -292,8 +293,8 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-5-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 4 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 4 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 4 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -353,9 +354,9 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-6-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 4 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 4 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Weakness, value: 5 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 4 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 4 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Weakness, value: 5 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -425,8 +426,8 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-7-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 4 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 4 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 4 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -485,8 +486,8 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-8-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 4 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 4 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 4 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -554,9 +555,9 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-9-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 6 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 6 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Weakness, value: 5 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 6 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 6 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Weakness, value: 5 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({

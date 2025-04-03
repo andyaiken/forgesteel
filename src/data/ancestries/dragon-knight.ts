@@ -3,6 +3,7 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Ancestry } from '../../models/ancestry';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 
 export const dragonKnight: Ancestry = {
@@ -19,7 +20,7 @@ export const dragonKnight: Ancestry = {
 					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-1-1',
 						modifiers: [
-							FactoryLogic.damageModifier.createPerLevel({ damageType: 'Acid', modifierType: DamageModifierType.Immunity, value: 1 })
+							FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Acid, modifierType: DamageModifierType.Immunity, value: 1 })
 						]
 					}),
 					value: 1
@@ -28,7 +29,7 @@ export const dragonKnight: Ancestry = {
 					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-1-2',
 						modifiers: [
-							FactoryLogic.damageModifier.createPerLevel({ damageType: 'Cold', modifierType: DamageModifierType.Immunity, value: 1 })
+							FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Cold, modifierType: DamageModifierType.Immunity, value: 1 })
 						]
 					}),
 					value: 1
@@ -37,7 +38,7 @@ export const dragonKnight: Ancestry = {
 					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-1-3',
 						modifiers: [
-							FactoryLogic.damageModifier.createPerLevel({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
+							FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 })
 						]
 					}),
 					value: 1
@@ -46,7 +47,7 @@ export const dragonKnight: Ancestry = {
 					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-1-4',
 						modifiers: [
-							FactoryLogic.damageModifier.createPerLevel({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 1 })
+							FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 1 })
 						]
 					}),
 					value: 1
@@ -55,7 +56,7 @@ export const dragonKnight: Ancestry = {
 					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-1-5',
 						modifiers: [
-							FactoryLogic.damageModifier.createPerLevel({ damageType: 'Lightning', modifierType: DamageModifierType.Immunity, value: 1 })
+							FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Lightning, modifierType: DamageModifierType.Immunity, value: 1 })
 						]
 					}),
 					value: 1
@@ -64,7 +65,7 @@ export const dragonKnight: Ancestry = {
 					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'dragon-knight-feature-1-6',
 						modifiers: [
-							FactoryLogic.damageModifier.createPerLevel({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 1 })
+							FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
 						]
 					}),
 					value: 1
@@ -95,7 +96,7 @@ export const dragonKnight: Ancestry = {
 						id: 'dragon-knight-feature-2-2',
 						name: 'Prismatic Scales (acid)',
 						modifiers: [
-							FactoryLogic.damageModifier.createPerLevel({ damageType: 'Acid', modifierType: DamageModifierType.Immunity, value: 1 })
+							FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Acid, modifierType: DamageModifierType.Immunity, value: 1 })
 						]
 					}),
 					value: 1
@@ -105,7 +106,7 @@ export const dragonKnight: Ancestry = {
 						id: 'dragon-knight-feature-2-3',
 						name: 'Prismatic Scales (cold)',
 						modifiers: [
-							FactoryLogic.damageModifier.createPerLevel({ damageType: 'Cold', modifierType: DamageModifierType.Immunity, value: 1 })
+							FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Cold, modifierType: DamageModifierType.Immunity, value: 1 })
 						]
 					}),
 					value: 1
@@ -115,7 +116,7 @@ export const dragonKnight: Ancestry = {
 						id: 'dragon-knight-feature-2-4',
 						name: 'Prismatic Scales (corruption)',
 						modifiers: [
-							FactoryLogic.damageModifier.createPerLevel({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
+							FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 })
 						]
 					}),
 					value: 1
@@ -125,7 +126,7 @@ export const dragonKnight: Ancestry = {
 						id: 'dragon-knight-feature-2-5',
 						name: 'Prismatic Scales (fire)',
 						modifiers: [
-							FactoryLogic.damageModifier.createPerLevel({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 1 })
+							FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 1 })
 						]
 					}),
 					value: 1
@@ -135,7 +136,7 @@ export const dragonKnight: Ancestry = {
 						id: 'dragon-knight-feature-2-6',
 						name: 'Prismatic Scales (lightning)',
 						modifiers: [
-							FactoryLogic.damageModifier.createPerLevel({ damageType: 'Lightning', modifierType: DamageModifierType.Immunity, value: 1 })
+							FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Lightning, modifierType: DamageModifierType.Immunity, value: 1 })
 						]
 					}),
 					value: 1
@@ -145,7 +146,7 @@ export const dragonKnight: Ancestry = {
 						id: 'dragon-knight-feature-2-7',
 						name: 'Prismatic Scales (poison)',
 						modifiers: [
-							FactoryLogic.damageModifier.createPerLevel({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 1 })
+							FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
 						]
 					}),
 					value: 1

@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -109,8 +110,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-1-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -156,8 +157,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -203,8 +204,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-3-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -249,8 +250,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-4-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -294,8 +295,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-5-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -355,8 +356,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-6-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -420,8 +421,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-7-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -479,8 +480,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-8-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -555,8 +556,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-9-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -613,8 +614,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-10-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -676,8 +677,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-11-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 3 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 3 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 3 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 3 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({

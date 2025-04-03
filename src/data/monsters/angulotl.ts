@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -122,8 +123,8 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 				FactoryLogic.feature.createDamageModifier({
 					id: 'angulotl-1-feature-3',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 2 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Lightning', modifierType: DamageModifierType.Immunity, value: 3 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Lightning, modifierType: DamageModifierType.Immunity, value: 3 })
 					]
 				})
 			]
@@ -168,7 +169,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'angulotl-2-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 2 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }) ]
 				})
 			]
 		}),
@@ -212,7 +213,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'angulotl-3-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 2 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }) ]
 				})
 			]
 		}),
@@ -255,7 +256,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'angulotl-4-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 2 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }) ]
 				})
 			]
 		}),
@@ -312,7 +313,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'angulotl-2-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 2 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }) ]
 				})
 			]
 		}),
@@ -374,7 +375,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'angulotl-6-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 2 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }) ]
 				})
 			]
 		}),
@@ -435,7 +436,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'angulotl-7-feature-4',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 2 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }) ]
 				})
 			]
 		}),
@@ -545,7 +546,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'angulotl-8-feature-9',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 3 }) ]
 				})
 			]
 		}),
@@ -588,7 +589,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'angulotl-9-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 2 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }) ]
 				})
 			],
 			retainer: {

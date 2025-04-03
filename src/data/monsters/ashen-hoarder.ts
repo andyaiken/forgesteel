@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -80,7 +81,7 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'ashen-hoarder-feature-1',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				}),
 				FactoryLogic.feature.createSoloMonster({
 					id: 'ashen-hoarder-feature-2',

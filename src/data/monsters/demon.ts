@@ -1,6 +1,7 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -126,7 +127,7 @@ The following demons have been identified across categories 1-3:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-1-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
@@ -169,7 +170,7 @@ The following demons have been identified across categories 1-3:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
@@ -217,7 +218,7 @@ The following demons have been identified across categories 1-3:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-3-feature-4',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
@@ -277,7 +278,7 @@ The following demons have been identified across categories 1-3:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-4-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
@@ -337,7 +338,7 @@ The following demons have been identified across categories 1-3:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-5-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
@@ -399,7 +400,7 @@ The following demons have been identified across categories 1-3:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-6-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
@@ -463,7 +464,7 @@ The following demons have been identified across categories 1-3:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-7-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
@@ -522,7 +523,7 @@ The following demons have been identified across categories 1-3:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-8-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 3 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
@@ -598,7 +599,7 @@ The following demons have been identified across categories 1-3:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-9-feature-7',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

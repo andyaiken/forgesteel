@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -109,7 +110,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-1-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -160,7 +161,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-2-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -210,7 +211,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-3-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -259,7 +260,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-4-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -308,7 +309,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-5-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 4 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -367,7 +368,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-6-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 4 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -435,7 +436,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-7-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 6 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 6 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -508,7 +509,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-8-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 5 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -569,7 +570,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-9-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 5 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -636,7 +637,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-10-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 6 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 6 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -698,7 +699,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-11-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 5 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -766,7 +767,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-12-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 4 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -823,7 +824,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-13-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 5 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -909,7 +910,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-14-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 5 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1001,7 +1002,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-15-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 6 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 6 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1125,7 +1126,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-16-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 4 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({

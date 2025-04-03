@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -118,8 +119,8 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 				FactoryLogic.feature.createDamageModifier({
 					id: 'medusa-feature-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 5 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Acid', modifierType: DamageModifierType.Immunity, value: 5 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 5 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Acid, modifierType: DamageModifierType.Immunity, value: 5 })
 					]
 				}),
 				FactoryLogic.feature.createSoloMonster({

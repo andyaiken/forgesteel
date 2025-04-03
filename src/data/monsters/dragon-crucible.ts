@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -99,7 +100,7 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'dragon-crucible-feature-1',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 6 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 6 }) ]
 				}),
 				FactoryLogic.feature.createSoloMonster({
 					id: 'dragon-crucible-feature-2',

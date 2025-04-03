@@ -21,6 +21,7 @@ import { ComplicationPanel } from '../../../panels/elements/complication-panel/c
 import { Culture } from '../../../../models/culture';
 import { CulturePanel } from '../../../panels/elements/culture-panel/culture-panel';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
+import { DamageType } from '../../../../enums/damage-type';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel';
@@ -1564,7 +1565,7 @@ export const LibraryEditPage = (props: Props) => {
 		const addDamageMod = () => {
 			const copy = Utils.copy(element) as Terrain;
 			copy.damageMods.push(FactoryLogic.damageModifier.create({
-				damageType: '',
+				damageType: DamageType.Damage,
 				modifierType: DamageModifierType.Immunity,
 				value: 0
 			}));
@@ -1579,7 +1580,7 @@ export const LibraryEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const setDamageType = (index: number, value: string) => {
+		const setDamageType = (index: number, value: DamageType) => {
 			const copy = Utils.copy(element) as Terrain;
 			copy.damageMods[index].damageType = value;
 			setElement(copy);
@@ -1629,11 +1630,13 @@ export const LibraryEditPage = (props: Props) => {
 								onChange={value => setModifierType(n, value)}
 							/>
 							<HeaderText>Damage Type</HeaderText>
-							<Input
+							<Select
+								style={{ width: '100%' }}
 								placeholder='Damage type'
-								allowClear={true}
+								options={[ DamageType.Damage, DamageType.Acid, DamageType.Cold, DamageType.Corruption, DamageType.Fire, DamageType.Holy, DamageType.Lightning, DamageType.Poison, DamageType.Psychic, DamageType.Sonic ].map(option => ({ value: option }))}
+								optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 								value={dm.damageType}
-								onChange={e => setDamageType(n, e.target.value)}
+								onChange={value => setDamageType(n, value)}
 							/>
 							<HeaderText>Value</HeaderText>
 							<NumberSpin min={0} value={dm.value} onChange={value => setValue(n, value)} />

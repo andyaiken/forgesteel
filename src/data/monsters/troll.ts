@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -238,8 +239,8 @@ export const troll: MonsterGroup = {
 				FactoryLogic.feature.createDamageModifier({
 					id: 'troll-3-feature-7',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Acid', modifierType: DamageModifierType.Weakness, value: 5 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Weakness, value: 5 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Acid, modifierType: DamageModifierType.Weakness, value: 5 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Weakness, value: 5 })
 					]
 				})
 			]
@@ -325,8 +326,8 @@ export const troll: MonsterGroup = {
 				FactoryLogic.feature.createDamageModifier({
 					id: 'troll-4-feature-7',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Acid', modifierType: DamageModifierType.Weakness, value: 5 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Weakness, value: 5 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Acid, modifierType: DamageModifierType.Weakness, value: 5 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Weakness, value: 5 })
 					]
 				})
 			]
@@ -387,8 +388,8 @@ export const troll: MonsterGroup = {
 				FactoryLogic.feature.createDamageModifier({
 					id: 'troll-5-feature-4',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Acid', modifierType: DamageModifierType.Weakness, value: 5 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Weakness, value: 5 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Acid, modifierType: DamageModifierType.Weakness, value: 5 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Weakness, value: 5 })
 					]
 				})
 			],

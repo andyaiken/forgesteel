@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -88,7 +89,7 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'dragon-thorn-feature-1',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				}),
 				FactoryLogic.feature.createSoloMonster({
 					id: 'dragon-thorn-feature-2',

@@ -3,6 +3,7 @@ import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
 import { Complication } from '../models/complication';
 import { DamageModifierType } from '../enums/damage-modifier-type';
+import { DamageType } from '../enums/damage-type';
 import { FactoryLogic } from '../logic/factory-logic';
 import { FeatureField } from '../enums/feature-field';
 import { ItemType } from '../enums/item-type';
@@ -112,7 +113,7 @@ export class ComplicationData {
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-bereaved-d',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -300,7 +301,7 @@ Your knowledge of your chosen field increases. When you finish this project, the
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-cult-victim-d',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: 'Corruption' , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption , modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -362,7 +363,7 @@ Your knowledge of your chosen field increases. When you finish this project, the
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-cursedWeapon-d',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: 'Damage' , modifierType: DamageModifierType.Weakness, value: 2 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Damage , modifierType: DamageModifierType.Weakness, value: 2 })
 				]
 			})
 		]
@@ -543,8 +544,8 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-fire-and-chaos-b',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: 'Fire' , modifierType: DamageModifierType.Immunity, value: 5 }),
-					FactoryLogic.damageModifier.create({ damageType: 'Cold' , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Fire , modifierType: DamageModifierType.Immunity, value: 5 }),
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Cold , modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -599,8 +600,8 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-frostheart-mods',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: 'Cold' , modifierType: DamageModifierType.Immunity, value: 5 }),
-					FactoryLogic.damageModifier.create({ damageType: 'Fire' , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Cold , modifierType: DamageModifierType.Immunity, value: 5 }),
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Fire , modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -653,8 +654,8 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-greening-mods',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: 'Corruption' , modifierType: DamageModifierType.Immunity, value: 5 }),
-					FactoryLogic.damageModifier.create({ damageType: 'Fire' , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption , modifierType: DamageModifierType.Immunity, value: 5 }),
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Fire , modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -767,7 +768,7 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-hostBody-mods',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: 'Fire' , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Fire , modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -1151,9 +1152,9 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-mundane-b',
 				modifiers: [
-					FactoryLogic.damageModifier.createPerLevel({ damageType: 'Corruption' , modifierType: DamageModifierType.Immunity, value: 1 }),
-					FactoryLogic.damageModifier.createPerLevel({ damageType: 'Holy' , modifierType: DamageModifierType.Immunity, value: 1 }),
-					FactoryLogic.damageModifier.createPerLevel({ damageType: 'Psychic' , modifierType: DamageModifierType.Immunity, value: 1 })
+					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Corruption , modifierType: DamageModifierType.Immunity, value: 1 }),
+					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Holy , modifierType: DamageModifierType.Immunity, value: 1 }),
+					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Psychic , modifierType: DamageModifierType.Immunity, value: 1 })
 				]
 			}),
 			FactoryLogic.feature.create({
@@ -1226,8 +1227,8 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-primordial-sickness-b',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: 'Poison' , modifierType: DamageModifierType.Immunity, value: 5 }),
-					FactoryLogic.damageModifier.create({ damageType: 'Corruption' , modifierType: DamageModifierType.Immunity, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Poison , modifierType: DamageModifierType.Immunity, value: 5 }),
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption , modifierType: DamageModifierType.Immunity, value: 5 })
 				]
 			}),
 			FactoryLogic.feature.createBonus({
@@ -1414,7 +1415,7 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-rogueTalent-d',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: 'Psychic' , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic , modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -1522,7 +1523,7 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-sewerFolk-d',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: 'Poison' , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Poison , modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -1541,7 +1542,7 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-shadowBorn-d',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: 'Holy' , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Holy , modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -1649,7 +1650,7 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-silentSentinel-mod',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: 'Sonic' , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Sonic , modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -1717,7 +1718,7 @@ Note: Stormwight furies can’t take this complication.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-stoneCursed-mod2',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: 'Sonic' , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Sonic , modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -1963,7 +1964,7 @@ Whenever you take a respite, make a Reason power roll.
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-waterborn-mod',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: 'Lightning' , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Lightning , modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -1982,7 +1983,7 @@ Whenever you take a respite, make a Reason power roll.
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-wodewalker-d',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: 'Fire' , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Fire , modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]

@@ -1,6 +1,7 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -98,7 +99,7 @@ categories 4-6:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-1-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				})
 			]
 		}),
@@ -146,7 +147,7 @@ categories 4-6:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-2-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				})
 			]
 		}),
@@ -190,7 +191,7 @@ categories 4-6:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-3-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				})
 			]
 		}),
@@ -259,7 +260,7 @@ categories 4-6:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-4-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				})
 			]
 		}),
@@ -329,7 +330,7 @@ categories 4-6:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-5-feature-6',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				})
 			]
 		}),
@@ -392,7 +393,7 @@ categories 4-6:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-6-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				})
 			]
 		}),
@@ -452,7 +453,7 @@ categories 4-6:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-7-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				})
 			]
 		}),
@@ -518,7 +519,7 @@ categories 4-6:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-8-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				})
 			]
 		}),
@@ -595,7 +596,7 @@ categories 4-6:
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-9-feature-7',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Holy', modifierType: DamageModifierType.Weakness, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

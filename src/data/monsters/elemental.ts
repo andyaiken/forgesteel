@@ -1,6 +1,7 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -168,7 +169,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'elemental-1-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		}),
@@ -240,7 +241,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'elemental-2-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Lightning', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Lightning, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		}),
@@ -314,7 +315,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'elemental-3-feature-6',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Cold', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Cold, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		}),
@@ -388,7 +389,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'elemental-4-feature-6',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		}),

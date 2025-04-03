@@ -3,6 +3,7 @@ import { Ability } from './ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from './ancestry';
 import { Characteristic } from '../enums/characteristic';
+import { DamageType } from '../enums/damage-type';
 import { Domain } from './domain';
 import { Element } from './element';
 import { FeatureField } from '../enums/feature-field';
@@ -43,7 +44,7 @@ export type FeatureAbilityCost = FeatureOf<FeatureType.AbilityCost, FeatureAbili
 
 export interface FeatureAbilityDamageData extends _FeatureData, Modifier {
 	keywords: AbilityKeyword[];
-	damageType: string;
+	damageType: DamageType;
 };
 export type FeatureAbilityDamage = FeatureOf<FeatureType.AbilityDamage, FeatureAbilityDamageData>
 

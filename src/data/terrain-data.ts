@@ -1,6 +1,5 @@
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
-import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FactoryLogic } from '../logic/factory-logic';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Terrain } from '../models/terrain';
@@ -151,14 +150,18 @@ export class TerrainData {
 			perSquare: 0
 		},
 		size: '1 or more squares of difficult terrain',
-		damageMods: [
-			FactoryLogic.damageModifier.create({
-				damageType: 'All non-fire or non-cold damage',
-				modifierType: DamageModifierType.Immunity,
-				value: 5
-			})
-		],
+		damageMods: [],
 		sections: [
+			{
+				id: 'damage-immunity',
+				content: [
+					FactoryLogic.feature.create({
+						id: 'damage-immunity',
+						name: 'Damage Immunity',
+						description: 'Immunity 5 to all non-fire or non-cold damage.'
+					})
+				]
+			},
 			{
 				id: 'disable',
 				content: [
@@ -245,14 +248,18 @@ export class TerrainData {
 			perSquare: 3
 		},
 		size: '1 or more squares of difficult terrain',
-		damageMods: [
-			FactoryLogic.damageModifier.create({
-				damageType: 'All non-fire damage',
-				modifierType: DamageModifierType.Immunity,
-				value: 5
-			})
-		],
+		damageMods: [],
 		sections: [
+			{
+				id: 'damage-immunity',
+				content: [
+					FactoryLogic.feature.create({
+						id: 'damage-immunity',
+						name: 'Damage Immunity',
+						description: 'Immunity 5 to all non-fire damage.'
+					})
+				]
+			},
 			{
 				id: 'disable',
 				content: [
@@ -364,14 +371,18 @@ export class TerrainData {
 			perSquare: 12
 		},
 		size: '1 or more squares of difficult terrain',
-		damageMods: [
-			FactoryLogic.damageModifier.create({
-				damageType: 'All non-cold damage',
-				modifierType: DamageModifierType.Immunity,
-				value: 5
-			})
-		],
+		damageMods: [],
 		sections: [
+			{
+				id: 'damage-immunity',
+				content: [
+					FactoryLogic.feature.create({
+						id: 'damage-immunity',
+						name: 'Damage Immunity',
+						description: 'Immunity 5 to all non-cold damage.'
+					})
+				]
+			},
 			{
 				id: 'disable',
 				content: [
@@ -3017,14 +3028,18 @@ A creature seated in the throne becomes the Hierophant of A’An and gains the f
 			perSquare: 0
 		},
 		size: '3',
-		damageMods: [
-			FactoryLogic.damageModifier.create({
-				damageType: 'All non-fire or corruption damage',
-				modifierType: DamageModifierType.Immunity,
-				value: 5
-			})
-		],
+		damageMods: [],
 		sections: [
+			{
+				id: 'damage-immunity',
+				content: [
+					FactoryLogic.feature.create({
+						id: 'damage-immunity',
+						name: 'Damage Immunity',
+						description: 'Immunity 5 to all non-fire or non-corruption damage.'
+					})
+				]
+			},
 			{
 				id: 'disable',
 				content: [

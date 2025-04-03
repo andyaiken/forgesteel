@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -102,13 +103,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-1-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-1-2',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -156,13 +157,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-2-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-2-2',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -210,13 +211,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-3-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-3-2',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -263,13 +264,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-4-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-4-2',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -318,13 +319,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-5-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-5-2',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -372,13 +373,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-6-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-6-2',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -426,13 +427,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-7-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-7-2',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -496,13 +497,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-8-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-8-2',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -560,13 +561,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-9-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-9-2',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -631,13 +632,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-10-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-10-2',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -696,13 +697,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-11-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 3 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 3 })
 					]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-11-2',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 3 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -777,13 +778,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-12-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-12-2',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 1 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -837,13 +838,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-13-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-13-2',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -956,13 +957,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-14-1',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 4 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-14-2',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 4 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({

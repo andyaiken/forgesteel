@@ -2,6 +2,7 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Ancestry } from '../../models/ancestry';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 
 export const revenant: Ancestry = {
@@ -17,11 +18,11 @@ export const revenant: Ancestry = {
 		FactoryLogic.feature.createDamageModifier({
 			id: 'revenant-feature-2',
 			modifiers: [
-				FactoryLogic.damageModifier.createPerLevel({ damageType: 'Cold', modifierType: DamageModifierType.Immunity, value: 1 }),
-				FactoryLogic.damageModifier.createPerLevel({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 1 }),
-				FactoryLogic.damageModifier.createPerLevel({ damageType: 'Lightning', modifierType: DamageModifierType.Immunity, value: 1 }),
-				FactoryLogic.damageModifier.createPerLevel({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 1 }),
-				FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Weakness, value: 5 })
+				FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Cold, modifierType: DamageModifierType.Immunity, value: 1 }),
+				FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
+				FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Lightning, modifierType: DamageModifierType.Immunity, value: 1 }),
+				FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 }),
+				FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Weakness, value: 5 })
 			]
 		}),
 		FactoryLogic.feature.create({

@@ -1,6 +1,7 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -165,7 +166,7 @@ A target that ends two consecutive turns restrained by this ability is petrified
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'basilisk-1-feature-6',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 4 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 4 }) ]
 				})
 			]
 		}),
@@ -267,8 +268,8 @@ A target that ends two consecutive turns restrained by this ability is petrified
 				FactoryLogic.feature.createDamageModifier({
 					id: 'basilisk-2-feature-6',
 					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 2 }),
-						FactoryLogic.damageModifier.create({ damageType: 'Acid', modifierType: DamageModifierType.Immunity, value: 2 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Acid, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				})
 			]

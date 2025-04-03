@@ -1,6 +1,7 @@
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Ancestry } from '../../models/ancestry';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 
@@ -36,7 +37,7 @@ export const polder: Ancestry = {
 						id: 'polder-feature-3-1',
 						name: 'Corruption Immunity',
 						modifiers: [
-							FactoryLogic.damageModifier.createValuePlusPerLevel({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 2, perLevel: 1 })
+							FactoryLogic.damageModifier.createValuePlusPerLevel({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 2, perLevel: 1 })
 						]
 					}),
 					value: 1

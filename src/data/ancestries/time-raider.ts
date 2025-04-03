@@ -2,6 +2,7 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Ancestry } from '../../models/ancestry';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 
 export const timeRaider: Ancestry = {
@@ -65,7 +66,7 @@ export const timeRaider: Ancestry = {
 						id: 'time-raider-feature-2-3',
 						name: 'Psychic Scar',
 						modifiers: [
-							FactoryLogic.damageModifier.createPerLevel({ damageType: 'Psychic', modifierType: DamageModifierType.Immunity, value: 1 })
+							FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 1 })
 						]
 					}),
 					value: 1

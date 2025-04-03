@@ -2,6 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -188,7 +189,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'draconian-1-feature-6',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Poison', modifierType: DamageModifierType.Immunity, value: 6 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 6 }) ]
 				})
 			]
 		}),
@@ -281,7 +282,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'draconian-2-feature-7',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Acid', modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Acid, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		}),
@@ -361,7 +362,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'draconian-3-feature-6',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Cold', modifierType: DamageModifierType.Immunity, value: 6 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Cold, modifierType: DamageModifierType.Immunity, value: 6 }) ]
 				})
 			]
 		}),
@@ -446,7 +447,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'draconian-4-feature-6',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 6 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 6 }) ]
 				})
 			]
 		}),
@@ -539,7 +540,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'draconian-5-feature-7',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Fire', modifierType: DamageModifierType.Immunity, value: 6 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 6 }) ]
 				})
 			]
 		}),
@@ -622,7 +623,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'draconian-6-feature-7',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Lightning', modifierType: DamageModifierType.Immunity, value: 6 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Lightning, modifierType: DamageModifierType.Immunity, value: 6 }) ]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -718,7 +719,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'draconian-7-feature-4',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: 'Corruption', modifierType: DamageModifierType.Immunity, value: 6 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 6 }) ]
 				})
 			],
 			retainer: {

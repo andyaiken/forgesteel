@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { CloseOutlined, EditOutlined, PlayCircleOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, CopyOutlined, EditOutlined, FileOutlined, PlayCircleOutlined, SettingOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { Adventure } from '../../../../models/adventure';
 import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
@@ -42,6 +42,7 @@ interface Props {
 	showEncounterTools: (encounter: Encounter) => void;
 	export: (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	start: (kind: PlaybookElementKind, element: Element) => void;
+	copy: (kind: PlaybookElementKind, element: Element) => void;
 	delete: (kind: PlaybookElementKind, element: Element) => void;
 	setOptions: (options: Options) => void;
 }
@@ -135,33 +136,44 @@ export const PlaybookViewPage = (props: Props) => {
 							Close
 						</Button>
 						<div className='divider' />
-						<Button icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit(kind!, elementID!)}>
-							Edit
-						</Button>
 						<Popover
 							trigger='click'
 							placement='bottom'
 							content={(
-								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<Button onClick={() => props.export(kind!, element, 'image')}>Export As Image</Button>
-									<Button onClick={() => props.export(kind!, element, 'pdf')}>Export As PDF</Button>
-									<Button onClick={() => props.export(kind!, element, 'json')}>Export as Data</Button>
+								<div style={{ minWidth: '120px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+									<Button icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit(kind!, elementID!)}>
+										Edit
+									</Button>
+									<Button icon={<CopyOutlined />} onClick={() => props.copy(kind!, element)}>
+										Copy
+									</Button>
+									<Popover
+										trigger='click'
+										placement='bottom'
+										content={(
+											<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+												<Button onClick={() => props.export(kind!, element, 'image')}>Export As Image</Button>
+												<Button onClick={() => props.export(kind!, element, 'pdf')}>Export As PDF</Button>
+												<Button onClick={() => props.export(kind!, element, 'json')}>Export as Data</Button>
+											</div>
+										)}
+									>
+										<Button icon={<UploadOutlined />}>
+											Export
+										</Button>
+									</Popover>
+									<DangerButton
+										mode='block'
+										disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
+										onConfirm={() => props.delete(kind!, element)}
+									/>
 								</div>
 							)}
 						>
-							<Button icon={<UploadOutlined />}>
-								Export
+							<Button icon={<FileOutlined />}>
+								File
 							</Button>
 						</Popover>
-						<DangerButton
-							disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
-							onConfirm={() => props.delete(kind!, element)}
-						/>
-						{
-							(kind !== 'adventure') ?
-								<div className='divider' />
-								: null
-						}
 						{
 							(kind === 'encounter') || (kind === 'montage') || (kind === 'negotiation') || (kind === 'tactical-map') ?
 								<Button icon={<PlayCircleOutlined />} onClick={() => props.start(kind, element)}>
@@ -171,7 +183,7 @@ export const PlaybookViewPage = (props: Props) => {
 						}
 						{
 							(kind === 'encounter') ?
-								<Button onClick={() => props.showEncounterTools(element as Encounter)}>
+								<Button icon={<ToolOutlined />} onClick={() => props.showEncounterTools(element as Encounter)}>
 									Tools
 								</Button>
 								: null

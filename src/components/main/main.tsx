@@ -167,12 +167,20 @@ export const Main = (props: Props) => {
 		persistHero(hero).then(() => navigation.goToHeroView(hero.id));
 	};
 
-	const importHero = (hero: Hero) => {
+	const importHero = (hero: Hero, createCopy: boolean = false) => {
+		if (createCopy) {
+			hero = Utils.copy(hero);
+			hero.name = `Copy of ${hero.name}`;
+		}
 		hero.id = Utils.guid();
 		HeroLogic.updateHero(hero);
 
 		setDrawer(null);
 		persistHero(hero).then(() => navigation.goToHeroView(hero.id));
+	};
+
+	const copyHero = (hero: Hero) => {
+		importHero(hero, true);
 	};
 
 	const exportHero = (hero: Hero, format: 'image' | 'pdf' | 'json') => {
@@ -325,11 +333,15 @@ export const Main = (props: Props) => {
 		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibraryView(kind, element.id));
 	};
 
-	const importLibraryElement = (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => {
+	const importLibraryElement = (kind: SourcebookElementKind, sourcebookID: string | null, element: Element, createCopy: boolean = false) => {
+		if (createCopy) {
+			element = Utils.copy(element);
+			element.name = `Copy of ${element.name}`;
+		}
 		element.id = Utils.guid();
 		if (kind === 'monster-group') {
 			const group = element as MonsterGroup;
-			group.monsters.forEach(m => m.id === Utils.guid());
+			group.monsters.forEach(m => m.id = Utils.guid());
 		}
 
 		const copy = Utils.copy(homebrewSourcebooks);
@@ -394,6 +406,10 @@ export const Main = (props: Props) => {
 
 		setDrawer(null);
 		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibraryList(kind));
+	};
+
+	const copyLibraryElement = (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => {
+		importLibraryElement(kind, sourcebookID, element, true);
 	};
 
 	const exportLibraryElement = (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => {
@@ -819,7 +835,11 @@ export const Main = (props: Props) => {
 		persistPlaybook(copy).then(() => navigation.goToPlaybookView(kind, element.id));
 	};
 
-	const importPlaybookElement = (kind: PlaybookElementKind, element: Element) => {
+	const importPlaybookElement = (kind: PlaybookElementKind, element: Element, createCopy: boolean = false) => {
+		if (createCopy) {
+			element = Utils.copy(element);
+			element.name = `Copy of ${element.name}`;
+		}
 		element.id = Utils.guid();
 
 		const copy = Utils.copy(playbook);
@@ -850,6 +870,10 @@ export const Main = (props: Props) => {
 
 		setDrawer(null);
 		persistPlaybook(copy).then(() => navigation.goToPlaybookList(kind));
+	};
+
+	const copyPlaybookElement = (kind: PlaybookElementKind, element: Element) => {
+		importPlaybookElement(kind, element, true);
 	};
 
 	const exportPlaybookElement = (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => {
@@ -1109,6 +1133,7 @@ export const Main = (props: Props) => {
 										showRoll={showRoll}
 										exportHero={exportHero}
 										exportHeroPDF={exportHeroPDF}
+										copyHero={copyHero}
 										deleteHero={deleteHero}
 										showAncestry={ancestry => onSelectLibraryElement(ancestry, 'ancestry')}
 										showCulture={culture => onSelectLibraryElement(culture, 'culture')}
@@ -1191,6 +1216,7 @@ export const Main = (props: Props) => {
 										showRules={showRules}
 										createElement={createLibraryElement}
 										export={exportLibraryElement}
+										copy={copyLibraryElement}
 										delete={deleteLibraryElement}
 									/>
 								}
@@ -1251,6 +1277,7 @@ export const Main = (props: Props) => {
 										showEncounterTools={showEncounterTools}
 										export={exportPlaybookElement}
 										start={startPlaybookElement}
+										copy={copyPlaybookElement}
 										delete={deletePlaybookElement}
 										setOptions={persistOptions}
 									/>

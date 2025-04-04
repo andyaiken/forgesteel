@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { CloseOutlined, CopyOutlined, EditOutlined, LeftOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, CopyOutlined, EditOutlined, FileOutlined, LeftOutlined, UploadOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
@@ -54,6 +54,7 @@ interface Props {
 	showRules: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 	export: (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
+	copy: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 	delete: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 }
 
@@ -263,58 +264,97 @@ export const LibraryViewPage = (props: Props) => {
 								</Button>
 						}
 						<div className='divider' />
-						{
-							sourcebook.isHomebrew ?
-								<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(kind!, sourcebook.id, elementID!, subElementID)}>
-									Edit
-								</Button>
-								: null
-						}
-						{
-							!sourcebook.isHomebrew && !subElementID ?
-								<Popover
-									trigger='click'
-									placement='bottom'
-									content={(
-										<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-											{
-												props.sourcebooks
-													.filter(sb => sb.isHomebrew)
-													.map(cs => <Button key={cs.id} onClick={() => props.createElement(kind!, cs.id, element)}>In {cs.name || 'Unnamed Sourcebook'}</Button>)
-											}
-											<Button onClick={() => props.createElement(kind!, null, element)}>In a new sourcebook</Button>
-										</div>
-									)}
-								>
-									<Button icon={<CopyOutlined />}>
-										Create Homebrew Version
-									</Button>
-								</Popover>
-								: null
-						}
 						<Popover
 							trigger='click'
 							placement='bottom'
 							content={(
-								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<Button onClick={() => props.export(kind!, element, 'image')}>Export As Image</Button>
-									<Button onClick={() => props.export(kind!, element, 'pdf')}>Export As PDF</Button>
-									<Button onClick={() => props.export(kind!, element, 'json')}>Export as Data</Button>
+								<div style={{ minWidth: '120px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+									{
+										sourcebook.isHomebrew ?
+											<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(kind!, sourcebook.id, elementID!, subElementID)}>
+												Edit
+											</Button>
+											: null
+									}
+									{
+										sourcebook.isHomebrew ?
+											<Popover
+												trigger='click'
+												placement='bottom'
+												content={(
+													<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+														<ErrorBoundary>
+															{
+																props.sourcebooks
+																	.filter(sb => sb.isHomebrew)
+																	.map(sb => <Button key={sb.id} onClick={() => props.createElement(kind!, sb.id, element)}>In {sb.name || 'Unnamed Sourcebook'}</Button>)
+															}
+														</ErrorBoundary>
+														<Button onClick={() => props.createElement(kind!, null, element)}>In a new sourcebook</Button>
+													</div>
+												)}
+											>
+												<Button icon={<CopyOutlined />}>
+													Copy
+												</Button>
+											</Popover>
+											: null
+									}
+									{
+										!sourcebook.isHomebrew && !subElementID ?
+											<Popover
+												trigger='click'
+												placement='bottom'
+												content={(
+													<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+														<ErrorBoundary>
+															{
+																props.sourcebooks
+																	.filter(sb => sb.isHomebrew)
+																	.map(sb => <Button key={sb.id} onClick={() => props.createElement(kind!, sb.id, element)}>In {sb.name || 'Unnamed Sourcebook'}</Button>)
+															}
+														</ErrorBoundary>
+														<Button onClick={() => props.createElement(kind!, null, element)}>In a new sourcebook</Button>
+													</div>
+												)}
+											>
+												<Button icon={<CopyOutlined />}>
+													Create Homebrew Version
+												</Button>
+											</Popover>
+											: null
+									}
+									<Popover
+										trigger='click'
+										placement='bottom'
+										content={(
+											<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+												<Button onClick={() => props.export(kind!, element, 'image')}>Export As Image</Button>
+												<Button onClick={() => props.export(kind!, element, 'pdf')}>Export As PDF</Button>
+												<Button onClick={() => props.export(kind!, element, 'json')}>Export as Data</Button>
+											</div>
+										)}
+									>
+										<Button icon={<UploadOutlined />}>
+											Export
+										</Button>
+									</Popover>
+									{
+										sourcebook.isHomebrew && !subElementID ?
+											<DangerButton
+												mode='block'
+												disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
+												onConfirm={() => props.delete(kind!, sourcebook.id, element)}
+											/>
+											: null
+									}
 								</div>
 							)}
 						>
-							<Button icon={<UploadOutlined />}>
-								Export
+							<Button icon={<FileOutlined />}>
+								File
 							</Button>
 						</Popover>
-						{
-							sourcebook.isHomebrew && !subElementID ?
-								<DangerButton
-									disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
-									onConfirm={() => props.delete(kind!, sourcebook.id, element)}
-								/>
-								: null
-						}
 					</AppHeader>
 					<div className='library-view-page-content'>
 						{panel}

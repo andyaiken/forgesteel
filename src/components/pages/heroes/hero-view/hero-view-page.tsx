@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { CloseOutlined, EditOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, CopyOutlined, EditOutlined, FileOutlined, SettingOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Ability } from '../../../../models/ability';
 import { Ancestry } from '../../../../models/ancestry';
@@ -37,6 +37,7 @@ interface Props {
 	setOptions: (options: Options) => void;
 	exportHero: (hero: Hero, format: 'image' | 'pdf' | 'json') => void;
 	exportHeroPDF: (hero: Hero, format: 'portrait' | 'landscape') => void;
+	copyHero: (hero: Hero) => void;
 	deleteHero: (hero: Hero) => void;
 	showAncestry: (ancestry: Ancestry) => void;
 	showCulture: (culture: Culture) => void;
@@ -83,28 +84,45 @@ export const HeroViewPage = (props: Props) => {
 							Close
 						</Button>
 						<div className='divider' />
-						<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>
-							Edit
-						</Button>
 						<Popover
 							trigger='click'
 							placement='bottom'
 							content={(
-								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<Button onClick={() => exportHero('image')}>Export As Image</Button>
-									<Button onClick={() => exportHero('pdf-portrait')}>Export As PDF (portrait)</Button>
-									<Button onClick={() => exportHero('pdf-landscape')}>Export As PDF (landscape)</Button>
-									<Button onClick={() => exportHero('json')}>Export As Data</Button>
+								<div style={{ minWidth: '120px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+									<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>
+										Edit
+									</Button>
+									<Button icon={<CopyOutlined />} onClick={() => props.copyHero(hero)}>
+										Copy
+									</Button>
+									<Popover
+										trigger='click'
+										placement='bottom'
+										content={(
+											<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+												<Button onClick={() => exportHero('image')}>Export As Image</Button>
+												<Button onClick={() => exportHero('pdf-portrait')}>Export As PDF (portrait)</Button>
+												<Button onClick={() => exportHero('pdf-landscape')}>Export As PDF (landscape)</Button>
+												<Button onClick={() => exportHero('json')}>Export As Data</Button>
+											</div>
+										)}
+									>
+										<Button icon={<UploadOutlined />}>
+											Export
+										</Button>
+									</Popover>
+									<DangerButton
+										mode='block'
+										onConfirm={() => props.deleteHero(hero)}
+									/>
 								</div>
 							)}
 						>
-							<Button icon={<UploadOutlined />}>
-								Export
+							<Button icon={<FileOutlined />}>
+								File
 							</Button>
 						</Popover>
-						<DangerButton mode='block' onConfirm={() => props.deleteHero(hero)} />
-						<div className='divider' />
-						<Button onClick={() => props.showHeroState(hero, HeroStatePage.Hero)}>
+						<Button icon={<ToolOutlined />} onClick={() => props.showHeroState(hero, HeroStatePage.Hero)}>
 							Manage
 						</Button>
 						<Popover

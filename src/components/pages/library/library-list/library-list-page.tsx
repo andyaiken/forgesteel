@@ -1,5 +1,5 @@
 import { Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
-import { DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
+import { BookOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
 import { HistogramPanel, HistogramTextPanel } from '../../../panels/histogram/histogram-panel';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
@@ -88,134 +88,199 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getAncestries = () => {
-		return SourcebookLogic
-			.getAncestries(getSourcebooks())
-			.filter(item => Utils.textMatches([
-				item.name,
-				item.description,
-				...item.features.map(f => f.name)
-			], searchTerm));
+		try {
+			return SourcebookLogic
+				.getAncestries(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description,
+					...item.features.map(f => f.name)
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
 	};
 
 	const getCultures = () => {
-		return SourcebookLogic
-			.getCultures(getSourcebooks())
-			.filter(item => Utils.textMatches([
-				item.name,
-				item.description
-			], searchTerm));
+		try {
+			return SourcebookLogic
+				.getCultures(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
 	};
 
 	const getCareers = () => {
-		return SourcebookLogic
-			.getCareers(getSourcebooks())
-			.filter(item => Utils.textMatches([
-				item.name,
-				item.description,
-				...item.features.map(f => f.name)
-			], searchTerm));
+		try {
+			return SourcebookLogic
+				.getCareers(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description,
+					...item.features.map(f => f.name)
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
 	};
 
 	const getClasses = () => {
-		return SourcebookLogic
-			.getClasses(getSourcebooks())
-			.filter(item => Utils.textMatches([
-				item.name,
-				item.description,
-				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name)),
-				...item.abilities.flatMap(a => a.name),
-				...item.subclasses.map(sc => sc.name),
-				...item.subclasses.flatMap(sc => sc.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name)))
-			], searchTerm));
+		try {
+			return SourcebookLogic
+				.getClasses(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description,
+					...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name)),
+					...item.abilities.flatMap(a => a.name),
+					...item.subclasses.map(sc => sc.name),
+					...item.subclasses.flatMap(sc => sc.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name)))
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
 	};
 
 	const getComplications = () => {
-		return SourcebookLogic
-			.getComplications(getSourcebooks())
-			.filter(item => Utils.textMatches([
-				item.name,
-				item.description
-			], searchTerm));
+		try {
+			return SourcebookLogic
+				.getComplications(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
 	};
 
 	const getDomains = () => {
-		return SourcebookLogic
-			.getDomains(getSourcebooks())
-			.filter(item => Utils.textMatches([
-				item.name,
-				item.description,
-				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
-			], searchTerm));
+		try {
+			return SourcebookLogic
+				.getDomains(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description,
+					...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
 	};
 
 	const getKits = () => {
-		return SourcebookLogic
-			.getKits(getSourcebooks())
-			.filter(item => Utils.textMatches([
-				item.name,
-				item.description,
-				...item.features.map(f => f.name)
-			], searchTerm));
+		try {
+			return SourcebookLogic
+				.getKits(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description,
+					...item.features.map(f => f.name)
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
 	};
 
 	const getPerks = () => {
-		return SourcebookLogic
-			.getPerks(getSourcebooks())
-			.filter(item => Utils.textMatches([
-				item.name,
-				item.description
-			], searchTerm));
+		try {
+			return SourcebookLogic
+				.getPerks(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
 	};
 
 	const getTitles = () => {
-		return SourcebookLogic
-			.getTitles(getSourcebooks())
-			.filter(item => Utils.textMatches([
-				item.name,
-				item.description,
-				...item.features.map(f => f.name)
-			], searchTerm));
+		try {
+			return SourcebookLogic
+				.getTitles(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description,
+					...item.features.map(f => f.name)
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
 	};
 
 	const getItems = () => {
-		return SourcebookLogic
-			.getItems(getSourcebooks())
-			.filter(item => Utils.textMatches([
-				item.name,
-				item.description,
-				...item.keywords,
-				...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
-			], searchTerm));
+		try {
+			return SourcebookLogic
+				.getItems(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description,
+					...item.keywords,
+					...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
 	};
 
 	const getMonsterGroups = () => {
-		return SourcebookLogic
-			.getMonsterGroups(getSourcebooks())
-			.filter(item => Utils.textMatches([
-				item.name,
-				item.description,
-				...item.monsters.map(m => m.name)
-			], searchTerm));
+		try {
+			return SourcebookLogic
+				.getMonsterGroups(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description,
+					...item.monsters.map(m => m.name)
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
 	};
 
 	const getMonsters = () => {
-		return SourcebookLogic
-			.getMonsterGroups(getSourcebooks())
-			.flatMap(mg => mg.monsters)
-			.filter(m => MonsterLogic.matches(m, monsterFilter))
-			.filter(item => Utils.textMatches([
-				item.name,
-				item.description
-			], searchTerm));
+		try {
+			return SourcebookLogic
+				.getMonsterGroups(getSourcebooks())
+				.flatMap(mg => mg.monsters)
+				.filter(m => MonsterLogic.matches(m, monsterFilter))
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
 	};
 
 	const getTerrains = () => {
-		return SourcebookLogic
-			.getTerrains(getSourcebooks())
-			.filter(item => Utils.textMatches([
-				item.name,
-				item.description
-			], searchTerm));
+		try {
+			return SourcebookLogic
+				.getTerrains(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
 	};
 
 	const getAncestriesSection = (list: Ancestry[]) => {
@@ -747,7 +812,9 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	try {
-		const sourcebookOptions = props.sourcebooks.filter(cs => cs.isHomebrew).map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
+		const sourcebookOptions = props.sourcebooks
+			.filter(cs => cs.isHomebrew)
+			.map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
 
 		const ancestries = getAncestries();
 		const cultures = getCultures();
@@ -824,7 +891,7 @@ export const LibraryListPage = (props: Props) => {
 							</Button>
 						</Popover>
 						<div className='divider' />
-						<Button onClick={props.showSourcebooks}>
+						<Button icon={<BookOutlined />} onClick={props.showSourcebooks}>
 							Sourcebooks
 						</Button>
 						<Popover

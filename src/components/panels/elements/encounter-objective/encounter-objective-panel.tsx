@@ -15,7 +15,7 @@ export const EncounterObjectivePanel = (props: Props) => {
 	try {
 		return (
 			<div className={props.mode === PanelMode.Full ? 'encounter-objective-panel' : 'encounter-objective-panel compact'} id={props.mode === PanelMode.Full ? props.objective.id : undefined}>
-				<HeaderText>{props.objective.name || 'Unnamed Objective'}</HeaderText>
+				<HeaderText level={1}>{props.objective.name || 'Unnamed Objective'}</HeaderText>
 				<Markdown text={props.objective.description} />
 				{
 					props.mode === PanelMode.Full ?

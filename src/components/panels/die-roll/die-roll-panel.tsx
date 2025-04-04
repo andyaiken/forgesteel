@@ -1,6 +1,7 @@
 import { Alert, Button, Slider, Space, Statistic } from 'antd';
 import { ReactNode, useState } from 'react';
 import { Collections } from '../../../utils/collections';
+import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Expander } from '../../controls/expander/expander';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Random } from '../../../utils/random';
@@ -86,76 +87,78 @@ export const DieRollPanel = (props: Props) => {
 		}
 
 		return (
-			<div className='die-roll-panel'>
-				{
-					props.type === 'Power Roll' ?
-						<Expander title='Edges and Banes'>
-							<Space direction='vertical' style={{ paddingTop: '15px', width: '100%' }}>
-								<NumberSpin
-									label='Edges'
-									value={edges}
-									min={0}
-									max={2}
-									onChange={setEdges}
-								/>
-								<NumberSpin
-									label='Banes'
-									value={banes}
-									min={0}
-									max={2}
-									onChange={setBanes}
-								/>
-							</Space>
-						</Expander>
-						: null
-				}
-				<Button type='primary' block={true} onClick={roll}>Roll</Button>
-				{
-					results.length > 0 ?
-						<div className='result-row'>
-							{(props.type === 'Power Roll') ? results.map((r, n) => <Statistic key={n} title='d10' value={r} />) : null}
-							{(props.type === 'Power Roll') ? props.modifiers.filter(m => m !== 0).map((m, n) => <Statistic key={n} title='Modifier' value={`${m >= 0 ? '+' : ''}${m}`} />) : null}
-							{(props.type === 'Power Roll') && bonus ? <Statistic title={bonus > 0 ? 'Edge' : 'Bane'} value={`${bonus >= 0 ? '+' : ''}${bonus}`} /> : null}
-							<Statistic className='total' title='Total' value={total} />
-						</div>
-						: null
-				}
-				{
-					results.length > 0 ?
-						<Slider
-							range={true}
-							marks={marks}
-							min={Math.min(1, total)}
-							max={Math.max(max, total)}
-							value={[ total ]}
-							styles={{
-								track: {
-									background: 'transparent'
-								}
-							}}
-							tooltip={{ open: false }}
-						/>
-						: null
-				}
-				{
-					tierMessage ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message={tierMessage}
-						/>
-						: null
-				}
-				{
-					(props.type === 'Power Roll') && (Collections.sum(results, r => r) >= 19) ?
-						<Alert
-							type='success'
-							showIcon={true}
-							message='Critical hit!'
-						/>
-						: null
-				}
-			</div>
+			<ErrorBoundary>
+				<div className='die-roll-panel'>
+					{
+						props.type === 'Power Roll' ?
+							<Expander title='Edges and Banes'>
+								<Space direction='vertical' style={{ paddingTop: '15px', width: '100%' }}>
+									<NumberSpin
+										label='Edges'
+										value={edges}
+										min={0}
+										max={2}
+										onChange={setEdges}
+									/>
+									<NumberSpin
+										label='Banes'
+										value={banes}
+										min={0}
+										max={2}
+										onChange={setBanes}
+									/>
+								</Space>
+							</Expander>
+							: null
+					}
+					<Button type='primary' block={true} onClick={roll}>Roll</Button>
+					{
+						results.length > 0 ?
+							<div className='result-row'>
+								{(props.type === 'Power Roll') ? results.map((r, n) => <Statistic key={n} title='d10' value={r} />) : null}
+								{(props.type === 'Power Roll') ? props.modifiers.filter(m => m !== 0).map((m, n) => <Statistic key={n} title='Modifier' value={`${m >= 0 ? '+' : ''}${m}`} />) : null}
+								{(props.type === 'Power Roll') && bonus ? <Statistic title={bonus > 0 ? 'Edge' : 'Bane'} value={`${bonus >= 0 ? '+' : ''}${bonus}`} /> : null}
+								<Statistic className='total' title='Total' value={total} />
+							</div>
+							: null
+					}
+					{
+						results.length > 0 ?
+							<Slider
+								range={true}
+								marks={marks}
+								min={Math.min(1, total)}
+								max={Math.max(max, total)}
+								value={[ total ]}
+								styles={{
+									track: {
+										background: 'transparent'
+									}
+								}}
+								tooltip={{ open: false }}
+							/>
+							: null
+					}
+					{
+						tierMessage ?
+							<Alert
+								type='warning'
+								showIcon={true}
+								message={tierMessage}
+							/>
+							: null
+					}
+					{
+						(props.type === 'Power Roll') && (Collections.sum(results, r => r) >= 19) ?
+							<Alert
+								type='success'
+								showIcon={true}
+								message='Critical hit!'
+							/>
+							: null
+					}
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

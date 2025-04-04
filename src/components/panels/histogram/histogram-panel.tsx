@@ -1,4 +1,5 @@
 import { Collections } from '../../../utils/collections';
+import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 
 import './histogram-panel.scss';
 
@@ -30,17 +31,19 @@ export const HistogramPanel = (props: HistogramPanelProps) => {
 		const height = 100 / mode;
 
 		return (
-			<div className={props.onSelect ? 'histogram-panel clickable' : 'histogram-panel'}>
-				{
-					data.map(v => (
-						<div key={v.x} className={v.x === props.selected ? 'bar-section selected' : 'bar-section'} onClick={() => onSelect(v.x)}>
-							<div style={{ height: `${height * (mode - v.value)}px` }} />
-							{v.value > 0 ? <div className='bar' style={{ height: `${height * v.value}px` }} /> : null}
-							<div className='label'>{v.x}</div>
-						</div>
-					))
-				}
-			</div>
+			<ErrorBoundary>
+				<div className={props.onSelect ? 'histogram-panel clickable' : 'histogram-panel'}>
+					{
+						data.map(v => (
+							<div key={v.x} className={v.x === props.selected ? 'bar-section selected' : 'bar-section'} onClick={() => onSelect(v.x)}>
+								<div style={{ height: `${height * (mode - v.value)}px` }} />
+								{v.value > 0 ? <div className='bar' style={{ height: `${height * v.value}px` }} /> : null}
+								<div className='label'>{v.x}</div>
+							</div>
+						))
+					}
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);
@@ -78,17 +81,19 @@ export const HistogramTextPanel = (props: HistogramTextPanelProps) => {
 		const height = 100 / mode;
 
 		return (
-			<div className={props.onSelect ? 'histogram-panel clickable' : 'histogram-panel'}>
-				{
-					sortedData.map(v => (
-						<div key={v.key} className={v.key === props.selected ? 'bar-section selected' : 'bar-section'} onClick={() => onSelect(v.key)}>
-							<div style={{ height: `${height * (mode - v.value)}px` }} />
-							{v.value > 0 ? <div className='bar' style={{ height: `${height * v.value}px` }} /> : null}
-							<div className='label'>{v.key}</div>
-						</div>
-					))
-				}
-			</div>
+			<ErrorBoundary>
+				<div className={props.onSelect ? 'histogram-panel clickable' : 'histogram-panel'}>
+					{
+						sortedData.map(v => (
+							<div key={v.key} className={v.key === props.selected ? 'bar-section selected' : 'bar-section'} onClick={() => onSelect(v.key)}>
+								<div style={{ height: `${height * (mode - v.value)}px` }} />
+								{v.value > 0 ? <div className='bar' style={{ height: `${height * v.value}px` }} /> : null}
+								<div className='label'>{v.key}</div>
+							</div>
+						))
+					}
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

@@ -6,6 +6,7 @@ import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Feature } from '../../../../models/feature';
@@ -767,16 +768,18 @@ export const MonsterEditPanel = (props: Props) => {
 		}
 
 		return (
-			<div className='monster-edit-panel'>
-				<Tabs
-					items={tabs}
-					tabBarExtraContent={
-						props.similarMonsters.length > 1 ?
-							<Button type='text' title='Genesplice' icon={<ThunderboltOutlined />} onClick={genesplice} />
-							: null
-					}
-				/>
-			</div>
+			<ErrorBoundary>
+				<div className='monster-edit-panel'>
+					<Tabs
+						items={tabs}
+						tabBarExtraContent={
+							props.similarMonsters.length > 1 ?
+								<Button type='text' title='Genesplice' icon={<ThunderboltOutlined />} onClick={genesplice} />
+								: null
+						}
+					/>
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

@@ -4,6 +4,7 @@ import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
 import { AbilityLogic } from '../../../logic/ability-logic';
 import { Button } from 'antd';
 import { Collections } from '../../../utils/collections';
+import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Field } from '../../controls/field/field';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
@@ -124,27 +125,29 @@ export const PowerRollPanel = (props: Props) => {
 		const footer = getFooter();
 
 		return (
-			<div className='power-roll-panel'>
-				{header ? <div className='power-roll-row power-roll-header'>{header}</div> : null}
-				<div className='power-roll-row'>
-					<div className='tier'>11 -</div>
-					<div className='effect'>{getTier(1, props.powerRoll.tier1)}</div>
+			<ErrorBoundary>
+				<div className='power-roll-panel'>
+					{header ? <div className='power-roll-row power-roll-header'>{header}</div> : null}
+					<div className='power-roll-row'>
+						<div className='tier'>11 -</div>
+						<div className='effect'>{getTier(1, props.powerRoll.tier1)}</div>
+					</div>
+					<div className='power-roll-row'>
+						<div className='tier'>12 - 16</div>
+						<div className='effect'>{getTier(2, props.powerRoll.tier2)}</div>
+					</div>
+					<div className='power-roll-row'>
+						<div className='tier'>17 +</div>
+						<div className='effect'>{getTier(3, props.powerRoll.tier3)}</div>
+					</div>
+					{footer ? <div className='power-roll-row power-roll-footer'>{footer}</div> : null}
+					{
+						props.ability && props.hero ?
+							<Button className='autocalc-btn' type='text' title='Calculate' icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />} onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }} />
+							: null
+					}
 				</div>
-				<div className='power-roll-row'>
-					<div className='tier'>12 - 16</div>
-					<div className='effect'>{getTier(2, props.powerRoll.tier2)}</div>
-				</div>
-				<div className='power-roll-row'>
-					<div className='tier'>17 +</div>
-					<div className='effect'>{getTier(3, props.powerRoll.tier3)}</div>
-				</div>
-				{footer ? <div className='power-roll-row power-roll-footer'>{footer}</div> : null}
-				{
-					props.ability && props.hero ?
-						<Button className='autocalc-btn' type='text' title='Calculate' icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />} onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }} />
-						: null
-				}
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

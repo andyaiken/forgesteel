@@ -1,5 +1,6 @@
 import { ColorPicker, Flex, Popover, Segmented, Space, Tabs } from 'antd';
 import { DangerButton } from '../../../../controls/danger-button/danger-button';
+import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
 import { MapItemStyle } from '../tactical-map-panel';
 import { MapZone } from '../../../../../models/tactical-map';
 import { Markdown } from '../../../../controls/markdown/markdown';
@@ -165,19 +166,21 @@ export const MapZonePanel = (props: Props) => {
 		}
 
 		return (
-			<Popover
-				content={props.selectable ? getEditor() : getInfo()}
-				trigger={props.selectable ? 'click' : 'hover'}
-				open={selected}
-				onOpenChange={onOpenChange}
-			>
-				<div
-					className={className}
-					style={props.style}
+			<ErrorBoundary>
+				<Popover
+					content={props.selectable ? getEditor() : getInfo()}
+					trigger={props.selectable ? 'click' : 'hover'}
+					open={selected}
+					onOpenChange={onOpenChange}
 				>
-					<div className='zone-content' style={{ borderRadius: props.style.borderRadius, backgroundColor: `#${zone.color}` }} />
-				</div>
-			</Popover>
+					<div
+						className={className}
+						style={props.style}
+					>
+						<div className='zone-content' style={{ borderRadius: props.style.borderRadius, backgroundColor: `#${zone.color}` }} />
+					</div>
+				</Popover>
+			</ErrorBoundary>
 		);
 	} catch (e) {
 		console.error(e);

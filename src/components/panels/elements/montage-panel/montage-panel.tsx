@@ -1,5 +1,6 @@
 import { Montage, MontageChallenge, MontageSection } from '../../../../models/montage';
 import { Badge } from '../../../controls/badge/badge';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Field } from '../../../controls/field/field';
 import { Flex } from 'antd';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -57,25 +58,27 @@ export const MontagePanel = (props: Props) => {
 
 	try {
 		return (
-			<div className={props.mode === PanelMode.Full ? 'montage-panel' : 'montage-panel compact'} id={props.mode === PanelMode.Full ? props.montage.id : undefined}>
-				<HeaderText level={1}>{props.montage.name || 'Unnamed Montage'}</HeaderText>
-				<Markdown text={props.montage.description} />
-				{
-					props.mode === PanelMode.Full ?
-						<>
-							<HeaderText>Setting the Scene</HeaderText>
-							<Markdown text={props.montage.scene} />
-							{props.montage.sections.map(getSection)}
-							<div>
-								<HeaderText>Montage Test Outcomes</HeaderText>
-								<Field label='Total Success' value={<Markdown text={props.montage.outcomes.totalSuccess} useSpan={true} />} />
-								<Field label='Partial Success' value={<Markdown text={props.montage.outcomes.partialSuccess} useSpan={true} />} />
-								<Field label='Total Failure' value={<Markdown text={props.montage.outcomes.totalFailure} useSpan={true} />} />
-							</div>
-						</>
-						: null
-				}
-			</div>
+			<ErrorBoundary>
+				<div className={props.mode === PanelMode.Full ? 'montage-panel' : 'montage-panel compact'} id={props.mode === PanelMode.Full ? props.montage.id : undefined}>
+					<HeaderText level={1}>{props.montage.name || 'Unnamed Montage'}</HeaderText>
+					<Markdown text={props.montage.description} />
+					{
+						props.mode === PanelMode.Full ?
+							<>
+								<HeaderText>Setting the Scene</HeaderText>
+								<Markdown text={props.montage.scene} />
+								{props.montage.sections.map(getSection)}
+								<div>
+									<HeaderText>Montage Test Outcomes</HeaderText>
+									<Field label='Total Success' value={<Markdown text={props.montage.outcomes.totalSuccess} useSpan={true} />} />
+									<Field label='Partial Success' value={<Markdown text={props.montage.outcomes.partialSuccess} useSpan={true} />} />
+									<Field label='Total Failure' value={<Markdown text={props.montage.outcomes.totalFailure} useSpan={true} />} />
+								</div>
+							</>
+							: null
+					}
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

@@ -1,3 +1,4 @@
+import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
 import { MapItemStyle } from '../tactical-map-panel';
 import { MapPosition } from '../../../../../models/tactical-map';
 import { MouseEvent } from 'react';
@@ -48,13 +49,15 @@ export const GridSquarePanel = (props: Props) => {
 		}
 
 		return (
-			<div
-				className={className}
-				style={props.style}
-				onMouseDown={mouseDown}
-				onMouseUp={mouseUp}
-				onMouseEnter={mouseEnter}
-			/>
+			<ErrorBoundary>
+				<div
+					className={className}
+					style={props.style}
+					onMouseDown={mouseDown}
+					onMouseUp={mouseUp}
+					onMouseEnter={mouseEnter}
+				/>
+			</ErrorBoundary>
 		);
 	} catch (e) {
 		console.error(e);

@@ -11,6 +11,7 @@ import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterObjectivePanel } from '../../elements/encounter-objective/encounter-objective-panel';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
@@ -662,186 +663,188 @@ export const EncounterRunPanel = (props: Props) => {
 		};
 
 		return (
-			<div className='encounter-run-panel' id={encounter.id}>
-				<HeaderText level={1}>{encounter.name || 'Unnamed Encounter'}</HeaderText>
-				<Markdown text={encounter.description} />
-				<div className='stats'>
-					<NumberSpin min={0} value={encounter.round} onChange={setRound}>
-						<Field orientation='vertical' label='Round' value={encounter.round || '-'} />
-					</NumberSpin>
-					<Button className='round-button' type='primary' disabled={roundIsNotFinished} onClick={nextRound}>
-						<Space direction='vertical'>
-							<div className='maintext'>
-								{getRoundButtonText()}
-							</div>
-							<div className='subtext'>
-								{getRoundButtonInfo()}
-							</div>
-						</Space>
-					</Button>
-					<NumberSpin min={0} value={encounter.malice} onChange={setMalice}>
-						<Field orientation='vertical' label='Malice' value={encounter.malice} />
-					</NumberSpin>
-				</div>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Combatants',
-							children: getCombatants()
-						},
-						{
-							key: '2',
-							label: 'Terrain',
-							children: getTerrain()
-						},
-						{
-							key: '3',
-							label: 'Malice',
-							children: getMalice()
-						},
-						{
-							key: '4',
-							label: 'Objective',
-							children: <EncounterObjectivePanel objective={encounter.objective} mode={PanelMode.Full} />
-						},
-						{
-							key: '5',
-							label: 'Reminders',
-							children: getReminders()
+			<ErrorBoundary>
+				<div className='encounter-run-panel' id={encounter.id}>
+					<HeaderText level={1}>{encounter.name || 'Unnamed Encounter'}</HeaderText>
+					<Markdown text={encounter.description} />
+					<div className='stats'>
+						<NumberSpin min={0} value={encounter.round} onChange={setRound}>
+							<Field orientation='vertical' label='Round' value={encounter.round || '-'} />
+						</NumberSpin>
+						<Button className='round-button' type='primary' disabled={roundIsNotFinished} onClick={nextRound}>
+							<Space direction='vertical'>
+								<div className='maintext'>
+									{getRoundButtonText()}
+								</div>
+								<div className='subtext'>
+									{getRoundButtonInfo()}
+								</div>
+							</Space>
+						</Button>
+						<NumberSpin min={0} value={encounter.malice} onChange={setMalice}>
+							<Field orientation='vertical' label='Malice' value={encounter.malice} />
+						</NumberSpin>
+					</div>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Combatants',
+								children: getCombatants()
+							},
+							{
+								key: '2',
+								label: 'Terrain',
+								children: getTerrain()
+							},
+							{
+								key: '3',
+								label: 'Malice',
+								children: getMalice()
+							},
+							{
+								key: '4',
+								label: 'Objective',
+								children: <EncounterObjectivePanel objective={encounter.objective} mode={PanelMode.Full} />
+							},
+							{
+								key: '5',
+								label: 'Reminders',
+								children: getReminders()
+							}
+						]}
+						activeKey={tab}
+						onChange={setTab}
+						tabBarExtraContent={
+							tab === '1' ?
+								<Flex gap={5}>
+									<Button block={true} onClick={() => setAddingHeroes(true)}>Add hero(es)</Button>
+									<Button block={true} onClick={() => setAddingMonsters(true)}>Add a monster</Button>
+								</Flex>
+								: null
 						}
-					]}
-					activeKey={tab}
-					onChange={setTab}
-					tabBarExtraContent={
-						tab === '1' ?
-							<Flex gap={5}>
-								<Button block={true} onClick={() => setAddingHeroes(true)}>Add hero(es)</Button>
-								<Button block={true} onClick={() => setAddingMonsters(true)}>Add a monster</Button>
-							</Flex>
-							: null
-					}
-				/>
-				<Drawer open={addingHeroes} onClose={() => setAddingHeroes(false)} closeIcon={null} width='500px'>
-					<HeroSelectModal
-						heroes={props.heroes}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						onClose={() => setAddingHeroes(false)}
-						onSelect={heroes => {
-							setAddingHeroes(false);
-							addHeroes(heroes);
-						}}
 					/>
-				</Drawer>
-				<Drawer open={addingMonsters} onClose={() => setAddingMonsters(false)} closeIcon={null} width='500px'>
-					<MonsterSelectModal
-						type='companion'
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						selectOriginal={true}
-						onClose={() => setAddingMonsters(false)}
-						onSelect={m => {
-							setAddingMonsters(false);
-							addSlot(m);
-						}}
-					/>
-				</Drawer>
-				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
-					{
-						selectedMonster ?
-							<MonsterModal
-								monster={selectedMonster}
-								options={props.options}
-								onClose={() => setSelectedMonster(null)}
-								updateMonster={monster => {
-									const copy = Utils.copy(encounter);
-									copy.groups.forEach(g => {
-										g.slots.forEach(s => {
-											const index = s.monsters.findIndex(m => m.id === monster.id);
-											if (index !== -1) {
-												s.monsters[index] = monster;
-											}
+					<Drawer open={addingHeroes} onClose={() => setAddingHeroes(false)} closeIcon={null} width='500px'>
+						<HeroSelectModal
+							heroes={props.heroes}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							onClose={() => setAddingHeroes(false)}
+							onSelect={heroes => {
+								setAddingHeroes(false);
+								addHeroes(heroes);
+							}}
+						/>
+					</Drawer>
+					<Drawer open={addingMonsters} onClose={() => setAddingMonsters(false)} closeIcon={null} width='500px'>
+						<MonsterSelectModal
+							type='companion'
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							selectOriginal={true}
+							onClose={() => setAddingMonsters(false)}
+							onSelect={m => {
+								setAddingMonsters(false);
+								addSlot(m);
+							}}
+						/>
+					</Drawer>
+					<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
+						{
+							selectedMonster ?
+								<MonsterModal
+									monster={selectedMonster}
+									options={props.options}
+									onClose={() => setSelectedMonster(null)}
+									updateMonster={monster => {
+										const copy = Utils.copy(encounter);
+										copy.groups.forEach(g => {
+											g.slots.forEach(s => {
+												const index = s.monsters.findIndex(m => m.id === monster.id);
+												if (index !== -1) {
+													s.monsters[index] = monster;
+												}
+											});
 										});
-									});
 
-									// Make sure no minion groups have a dead captain
-									const captainIDs = copy.groups
-										.flatMap(g => g.slots)
-										.flatMap(s => s.monsters)
-										.filter(m => m.role.organization !== MonsterOrganizationType.Minion)
-										.filter(m => !m.state.defeated)
-										.map(m => m.id);
-									copy.groups.forEach(g => {
-										g.slots.forEach(s => {
-											if (s.state.captainID && !captainIDs.includes(s.state.captainID)) {
-												s.state.captainID = undefined;
-											}
+										// Make sure no minion groups have a dead captain
+										const captainIDs = copy.groups
+											.flatMap(g => g.slots)
+											.flatMap(s => s.monsters)
+											.filter(m => m.role.organization !== MonsterOrganizationType.Minion)
+											.filter(m => !m.state.defeated)
+											.map(m => m.id);
+										copy.groups.forEach(g => {
+											g.slots.forEach(s => {
+												if (s.state.captainID && !captainIDs.includes(s.state.captainID)) {
+													s.state.captainID = undefined;
+												}
+											});
 										});
-									});
 
-									setEncounter(copy);
-								}}
-							/>
-							: null
-					}
-				</Drawer>
-				<Drawer open={!!selectedHero} onClose={() => setSelectedHero(null)} closeIcon={null} width='500px'>
-					{
-						selectedHero ?
-							<HeroStateModal
-								hero={selectedHero}
-								sourcebooks={props.sourcebooks}
-								options={props.options}
-								onClose={() => setSelectedHero(null)}
-								startPage={HeroStatePage.Vitals}
-								onChange={hero => {
-									const copy = Utils.copy(encounter);
-									const index = copy.heroes.findIndex(h => h.id === hero.id);
-									if (index !== -1) {
-										copy.heroes[index] = hero;
-									}
-									setEncounter(copy);
-								}}
-							/>
-							: null
-					}
-				</Drawer>
-				<Drawer open={!!selectedTerrain} onClose={() => setSelectedTerrain(null)} closeIcon={null} width='500px'>
-					{
-						selectedTerrain ?
-							<TerrainModal
-								terrain={selectedTerrain}
-								upgradeIDs={[]}
-								onClose={() => setSelectedTerrain(null)}
-								updateTerrain={terrain => {
-									const copy = Utils.copy(encounter);
-									copy.terrain.forEach(slot => {
-										const index = slot.terrain.findIndex(t => t.id === terrain.id);
+										setEncounter(copy);
+									}}
+								/>
+								: null
+						}
+					</Drawer>
+					<Drawer open={!!selectedHero} onClose={() => setSelectedHero(null)} closeIcon={null} width='500px'>
+						{
+							selectedHero ?
+								<HeroStateModal
+									hero={selectedHero}
+									sourcebooks={props.sourcebooks}
+									options={props.options}
+									onClose={() => setSelectedHero(null)}
+									startPage={HeroStatePage.Vitals}
+									onChange={hero => {
+										const copy = Utils.copy(encounter);
+										const index = copy.heroes.findIndex(h => h.id === hero.id);
 										if (index !== -1) {
-											slot.terrain[index] = terrain;
+											copy.heroes[index] = hero;
 										}
-									});
-									setEncounter(copy);
-								}}
-							/>
-							: null
-					}
-				</Drawer>
-				<Drawer open={!!selectedSlot} onClose={() => setSelectedSlot(null)} closeIcon={null} width='500px'>
-					{
-						selectedSlot ?
-							<MonsterStateModal
-								state={selectedSlot.state}
-								source='minion-group'
-								encounter={encounter}
-								updateState={state => updateSlotState(selectedSlot, state)}
-								onClose={() => setSelectedSlot(null)}
-							/>
-							: null
-					}
-				</Drawer>
-			</div>
+										setEncounter(copy);
+									}}
+								/>
+								: null
+						}
+					</Drawer>
+					<Drawer open={!!selectedTerrain} onClose={() => setSelectedTerrain(null)} closeIcon={null} width='500px'>
+						{
+							selectedTerrain ?
+								<TerrainModal
+									terrain={selectedTerrain}
+									upgradeIDs={[]}
+									onClose={() => setSelectedTerrain(null)}
+									updateTerrain={terrain => {
+										const copy = Utils.copy(encounter);
+										copy.terrain.forEach(slot => {
+											const index = slot.terrain.findIndex(t => t.id === terrain.id);
+											if (index !== -1) {
+												slot.terrain[index] = terrain;
+											}
+										});
+										setEncounter(copy);
+									}}
+								/>
+								: null
+						}
+					</Drawer>
+					<Drawer open={!!selectedSlot} onClose={() => setSelectedSlot(null)} closeIcon={null} width='500px'>
+						{
+							selectedSlot ?
+								<MonsterStateModal
+									state={selectedSlot.state}
+									source='minion-group'
+									encounter={encounter}
+									updateState={state => updateSlotState(selectedSlot, state)}
+									onClose={() => setSelectedSlot(null)}
+								/>
+								: null
+						}
+					</Drawer>
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

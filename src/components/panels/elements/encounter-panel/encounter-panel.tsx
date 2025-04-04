@@ -4,6 +4,7 @@ import { Encounter } from '../../../../models/encounter';
 import { EncounterDifficultyPanel } from '../../encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterObjectivePanel } from '../encounter-objective/encounter-objective-panel';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -216,14 +217,16 @@ export const EncounterPanel = (props: Props) => {
 		const difficulty = EncounterLogic.getDifficulty(strength, props.options);
 
 		return (
-			<div className={props.mode === PanelMode.Full ? 'encounter-panel' : 'encounter-panel compact'} id={props.mode === PanelMode.Full ? props.encounter.id : undefined}>
-				<HeaderText level={1} tags={[ difficulty ]}>{props.encounter.name || 'Unnamed Encounter'}</HeaderText>
-				<Markdown text={props.encounter.description} />
-				{getEncounterGroups()}
-				{getMeta()}
-				{getStatBlocks()}
-				{getMaliceDetails()}
-			</div>
+			<ErrorBoundary>
+				<div className={props.mode === PanelMode.Full ? 'encounter-panel' : 'encounter-panel compact'} id={props.mode === PanelMode.Full ? props.encounter.id : undefined}>
+					<HeaderText level={1} tags={[ difficulty ]}>{props.encounter.name || 'Unnamed Encounter'}</HeaderText>
+					<Markdown text={props.encounter.description} />
+					{getEncounterGroups()}
+					{getMeta()}
+					{getStatBlocks()}
+					{getMaliceDetails()}
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

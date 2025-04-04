@@ -8,6 +8,7 @@ import { AncestryPanel } from '../ancestry-panel/ancestry-panel';
 import { Collections } from '../../../../utils/collections';
 import { DomainPanel } from '../domain-panel/domain-panel';
 import { Empty } from '../../../controls/empty/empty';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
@@ -1527,17 +1528,19 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		return (
-			<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
-				<HeaderText ribbon={props.cost === 'signature' ? <Badge>Signature</Badge> : props.cost ? <HeroicResourceBadge value={props.cost} repeatable={props.repeatable} /> : null} tags={tags}>
-					{props.feature.name}
-				</HeaderText>
-				<Markdown text={props.feature.description} />
-				{
-					props.mode === PanelMode.Full
-						? (props.setData ? getSelection() : getInformation())
-						: null
-				}
-			</div>
+			<ErrorBoundary>
+				<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
+					<HeaderText ribbon={props.cost === 'signature' ? <Badge>Signature</Badge> : props.cost ? <HeroicResourceBadge value={props.cost} repeatable={props.repeatable} /> : null} tags={tags}>
+						{props.feature.name}
+					</HeaderText>
+					<Markdown text={props.feature.description} />
+					{
+						props.mode === PanelMode.Full
+							? (props.setData ? getSelection() : getInformation())
+							: null
+					}
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

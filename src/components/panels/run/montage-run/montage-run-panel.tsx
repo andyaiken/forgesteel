@@ -3,6 +3,7 @@ import { CheckCircleFilled, CheckOutlined, CloseCircleFilled, CloseOutlined, Ell
 import { Montage, MontageChallenge, MontageSection } from '../../../../models/montage';
 import { Badge } from '../../../controls/badge/badge';
 import { Collections } from '../../../../utils/collections';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
@@ -147,19 +148,21 @@ export const MontageRunPanel = (props: Props) => {
 
 	try {
 		return (
-			<div className='montage-run-panel' id={montage.id}>
-				<HeaderText level={1}>{montage.name || 'Unnamed Montage'}</HeaderText>
-				<Markdown text={montage.description} />
-				<HeaderText>Setting the Scene</HeaderText>
-				<Markdown text={montage.scene} />
-				{montage.sections.map(getSection)}
-				<div>
-					<HeaderText>Montage Test Outcomes</HeaderText>
-					<Field label='Total Success' value={<Markdown text={montage.outcomes.totalSuccess} useSpan={true} />} />
-					<Field label='Partial Success' value={<Markdown text={montage.outcomes.partialSuccess} useSpan={true} />} />
-					<Field label='Total Failure' value={<Markdown text={montage.outcomes.totalFailure} useSpan={true} />} />
+			<ErrorBoundary>
+				<div className='montage-run-panel' id={montage.id}>
+					<HeaderText level={1}>{montage.name || 'Unnamed Montage'}</HeaderText>
+					<Markdown text={montage.description} />
+					<HeaderText>Setting the Scene</HeaderText>
+					<Markdown text={montage.scene} />
+					{montage.sections.map(getSection)}
+					<div>
+						<HeaderText>Montage Test Outcomes</HeaderText>
+						<Field label='Total Success' value={<Markdown text={montage.outcomes.totalSuccess} useSpan={true} />} />
+						<Field label='Partial Success' value={<Markdown text={montage.outcomes.partialSuccess} useSpan={true} />} />
+						<Field label='Total Failure' value={<Markdown text={montage.outcomes.totalFailure} useSpan={true} />} />
+					</div>
 				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

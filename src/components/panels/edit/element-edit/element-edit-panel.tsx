@@ -1,4 +1,5 @@
 import { Element } from '../../../../models/element';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Input } from 'antd';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
@@ -31,18 +32,20 @@ export const ElementEditPanel = (props: Props) => {
 
 	try {
 		return (
-			<div className='monster-edit-panel'>
-				<HeaderText>Name</HeaderText>
-				<Input
-					className={element.name === '' ? 'input-empty' : ''}
-					placeholder='Name'
-					allowClear={true}
-					value={element.name}
-					onChange={e => setName(e.target.value)}
-				/>
-				<HeaderText>Description</HeaderText>
-				<MultiLine label='Description' value={element.description} onChange={setDescription} />
-			</div>
+			<ErrorBoundary>
+				<div className='monster-edit-panel'>
+					<HeaderText>Name</HeaderText>
+					<Input
+						className={element.name === '' ? 'input-empty' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={element.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<HeaderText>Description</HeaderText>
+					<MultiLine label='Description' value={element.description} onChange={setDescription} />
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

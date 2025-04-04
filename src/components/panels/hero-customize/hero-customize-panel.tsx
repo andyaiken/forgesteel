@@ -3,6 +3,7 @@ import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteris
 import { Characteristic } from '../../../enums/characteristic';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
+import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Expander } from '../../controls/expander/expander';
 import { FactoryLogic } from '../../../logic/factory-logic';
 import { FeatureField } from '../../../enums/feature-field';
@@ -246,135 +247,137 @@ export const HeroCustomizePanel = (props: Props) => {
 
 	try {
 		return (
-			<div className='hero-customize-panel'>
-				{
-					props.hero.features.filter(f => f.id !== 'default-language').map(f => (
-						<Expander
-							key={f.id}
-							title={f.name}
-							extra={[
-								<DangerButton key='delete' mode='clear' onConfirm={() => props.deleteFeature(f)} />
-							]}
-						>
-							{getEditSection(f)}
-							{
-								f.type !== FeatureType.Bonus ?
-									<FeaturePanel
-										feature={f}
-										options={props.options}
-										hero={props.hero}
-										sourcebooks={props.sourcebooks}
-										mode={PanelMode.Full}
-										setData={props.setFeatureData}
-									/>
-									: null
+			<ErrorBoundary>
+				<div className='hero-customize-panel'>
+					{
+						props.hero.features.filter(f => f.id !== 'default-language').map(f => (
+							<Expander
+								key={f.id}
+								title={f.name}
+								extra={[
+									<DangerButton key='delete' mode='clear' onConfirm={() => props.deleteFeature(f)} />
+								]}
+							>
+								{getEditSection(f)}
+								{
+									f.type !== FeatureType.Bonus ?
+										<FeaturePanel
+											feature={f}
+											options={props.options}
+											hero={props.hero}
+											sourcebooks={props.sourcebooks}
+											mode={PanelMode.Full}
+											setData={props.setFeatureData}
+										/>
+										: null
+								}
+							</Expander>
+						))
+					}
+					{props.hero.features.filter(f => f.id !== 'default-language').length > 0 ? <Divider /> : null}
+					<DropdownButton
+						label='Add a new feature'
+						items={[
+							{ key: 'ancestry', label: <div className='ds-text centered-text'>Ancestry Feature</div> },
+							{ key: 'characteristic-bonus', label: <div className='ds-text centered-text'>Characteristic Bonus</div> },
+							{ key: 'class-ability', label: <div className='ds-text centered-text'>Class Ability</div> },
+							{ key: 'companion', label: <div className='ds-text centered-text'>Companion</div> },
+							{ key: 'kit', label: <div className='ds-text centered-text'>Kit</div> },
+							{ key: 'language', label: <div className='ds-text centered-text'>Language</div> },
+							{ key: 'mount', label: <div className='ds-text centered-text'>Mount</div> },
+							{ key: 'perk', label: <div className='ds-text centered-text'>Perk</div> },
+							{ key: 'retainer', label: <div className='ds-text centered-text'>Retainer</div> },
+							{ key: 'skill', label: <div className='ds-text centered-text'>Skill</div> },
+							{ key: 'stat-bonus', label: <div className='ds-text centered-text'>Stat Bonus</div> },
+							{ key: 'title', label: <div className='ds-text centered-text'>Title</div> }
+						]}
+						onClick={key => {
+							let feature = null;
+							switch (key) {
+								case 'ancestry':
+									feature = FactoryLogic.feature.createAncestryFeature({
+										id: Utils.guid(),
+										value: 1,
+										current: true,
+										former: true
+									});
+									break;
+								case 'characteristic-bonus':
+									feature = FactoryLogic.feature.createCharacteristicBonus({
+										id: Utils.guid(),
+										name: `${Characteristic.Might} + 1`,
+										characteristic: Characteristic.Might,
+										value: 1
+									});
+									break;
+								case 'class-ability':
+									feature = FactoryLogic.feature.createClassAbilityChoice({
+										id: Utils.guid(),
+										cost: 'signature'
+									});
+									break;
+								case 'companion':
+									feature = FactoryLogic.feature.createCompanion({
+										id: Utils.guid(),
+										type: 'companion'
+									});
+									break;
+								case 'kit':
+									feature = FactoryLogic.feature.createKitChoice({
+										id: Utils.guid()
+									});
+									break;
+								case 'language':
+									feature = FactoryLogic.feature.createLanguageChoice({
+										id: Utils.guid()
+									});
+									break;
+								case 'mount':
+									feature = FactoryLogic.feature.createCompanion({
+										id: Utils.guid(),
+										type: 'mount'
+									});
+									break;
+								case 'perk':
+									feature = FactoryLogic.feature.createPerk({
+										id: Utils.guid(),
+										lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ]
+									});
+									break;
+								case 'retainer':
+									feature = FactoryLogic.feature.createCompanion({
+										id: Utils.guid(),
+										type: 'retainer'
+									});
+									break;
+								case 'skill':
+									feature = FactoryLogic.feature.createSkillChoice({
+										id: Utils.guid(),
+										listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+									});
+									break;
+								case 'stat-bonus':
+									feature = FactoryLogic.feature.createBonus({
+										id: Utils.guid(),
+										name: `${FeatureField.Stamina} + 6`,
+										field: FeatureField.Stamina,
+										value: 6
+									});
+									break;
+								case 'title':
+									feature = FactoryLogic.feature.createTitleChoice({
+										id: Utils.guid(),
+										echelon: 1
+									});
+									break;
 							}
-						</Expander>
-					))
-				}
-				{props.hero.features.filter(f => f.id !== 'default-language').length > 0 ? <Divider /> : null}
-				<DropdownButton
-					label='Add a new feature'
-					items={[
-						{ key: 'ancestry', label: <div className='ds-text centered-text'>Ancestry Feature</div> },
-						{ key: 'characteristic-bonus', label: <div className='ds-text centered-text'>Characteristic Bonus</div> },
-						{ key: 'class-ability', label: <div className='ds-text centered-text'>Class Ability</div> },
-						{ key: 'companion', label: <div className='ds-text centered-text'>Companion</div> },
-						{ key: 'kit', label: <div className='ds-text centered-text'>Kit</div> },
-						{ key: 'language', label: <div className='ds-text centered-text'>Language</div> },
-						{ key: 'mount', label: <div className='ds-text centered-text'>Mount</div> },
-						{ key: 'perk', label: <div className='ds-text centered-text'>Perk</div> },
-						{ key: 'retainer', label: <div className='ds-text centered-text'>Retainer</div> },
-						{ key: 'skill', label: <div className='ds-text centered-text'>Skill</div> },
-						{ key: 'stat-bonus', label: <div className='ds-text centered-text'>Stat Bonus</div> },
-						{ key: 'title', label: <div className='ds-text centered-text'>Title</div> }
-					]}
-					onClick={key => {
-						let feature = null;
-						switch (key) {
-							case 'ancestry':
-								feature = FactoryLogic.feature.createAncestryFeature({
-									id: Utils.guid(),
-									value: 1,
-									current: true,
-									former: true
-								});
-								break;
-							case 'characteristic-bonus':
-								feature = FactoryLogic.feature.createCharacteristicBonus({
-									id: Utils.guid(),
-									name: `${Characteristic.Might} + 1`,
-									characteristic: Characteristic.Might,
-									value: 1
-								});
-								break;
-							case 'class-ability':
-								feature = FactoryLogic.feature.createClassAbilityChoice({
-									id: Utils.guid(),
-									cost: 'signature'
-								});
-								break;
-							case 'companion':
-								feature = FactoryLogic.feature.createCompanion({
-									id: Utils.guid(),
-									type: 'companion'
-								});
-								break;
-							case 'kit':
-								feature = FactoryLogic.feature.createKitChoice({
-									id: Utils.guid()
-								});
-								break;
-							case 'language':
-								feature = FactoryLogic.feature.createLanguageChoice({
-									id: Utils.guid()
-								});
-								break;
-							case 'mount':
-								feature = FactoryLogic.feature.createCompanion({
-									id: Utils.guid(),
-									type: 'mount'
-								});
-								break;
-							case 'perk':
-								feature = FactoryLogic.feature.createPerk({
-									id: Utils.guid(),
-									lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ]
-								});
-								break;
-							case 'retainer':
-								feature = FactoryLogic.feature.createCompanion({
-									id: Utils.guid(),
-									type: 'retainer'
-								});
-								break;
-							case 'skill':
-								feature = FactoryLogic.feature.createSkillChoice({
-									id: Utils.guid(),
-									listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
-								});
-								break;
-							case 'stat-bonus':
-								feature = FactoryLogic.feature.createBonus({
-									id: Utils.guid(),
-									name: `${FeatureField.Stamina} + 6`,
-									field: FeatureField.Stamina,
-									value: 6
-								});
-								break;
-							case 'title':
-								feature = FactoryLogic.feature.createTitleChoice({
-									id: Utils.guid(),
-									echelon: 1
-								});
-								break;
-						}
-						if (feature) {
-							props.addFeature(feature);
-						}
-					}}
-				/>
-			</div>
+							if (feature) {
+								props.addFeature(feature);
+							}
+						}}
+					/>
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

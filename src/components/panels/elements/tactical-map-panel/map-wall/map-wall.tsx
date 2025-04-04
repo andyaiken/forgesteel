@@ -1,5 +1,6 @@
 import { Popover, Space, Tabs } from 'antd';
 import { DangerButton } from '../../../../controls/danger-button/danger-button';
+import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
 import { MapItemStyle } from '../tactical-map-panel';
 import { MapWall } from '../../../../../models/tactical-map';
 import { Markdown } from '../../../../controls/markdown/markdown';
@@ -230,19 +231,21 @@ export const MapWallPanel = (props: Props) => {
 		}
 
 		return (
-			<Popover
-				content={props.selectable ? getEditor() : getInfo()}
-				trigger={props.selectable ? 'click' : 'hover'}
-				open={selected}
-				onOpenChange={onOpenChange}
-			>
-				<div
-					className={className}
-					style={props.style}
+			<ErrorBoundary>
+				<Popover
+					content={props.selectable ? getEditor() : getInfo()}
+					trigger={props.selectable ? 'click' : 'hover'}
+					open={selected}
+					onOpenChange={onOpenChange}
 				>
-					{content}
-				</div>
-			</Popover>
+					<div
+						className={className}
+						style={props.style}
+					>
+						{content}
+					</div>
+				</Popover>
+			</ErrorBoundary>
 		);
 	} catch (e) {
 		console.error(e);

@@ -17,6 +17,10 @@
 			max-width: 600px;
 			display: flex;
 			flex-direction: column;
+
+			.carousel-page {
+				padding-bottom: 30px;
+			}
 		}
 	}
 }

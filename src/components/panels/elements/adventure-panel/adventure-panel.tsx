@@ -4,6 +4,7 @@ import { Plot, PlotContent } from '../../../../models/plot';
 import { Adventure } from '../../../../models/adventure';
 import { Element } from '../../../../models/element';
 import { EncounterPanel } from '../encounter-panel/encounter-panel';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { ItemPanel } from '../item-panel/item-panel';
@@ -242,42 +243,44 @@ export const AdventurePanel = (props: Props) => {
 
 	try {
 		return (
-			<div className={props.mode === PanelMode.Full ? 'adventure-panel' : 'adventure-panel compact'} id={props.mode === PanelMode.Full ? props.adventure.id : undefined}>
-				<HeaderText level={1}>{props.adventure.name || 'Unnamed Adventure'}</HeaderText>
-				<Markdown text={props.adventure.description} />
-				<div className='ds-text'>A <b>DRAW STEEL</b> adventure for {props.adventure.party.count} heroes of level {props.adventure.party.level}.</div>
-				{
-					props.mode === PanelMode.Full ?
-						<Tabs
-							items={[
-								{
-									key: 'introduction',
-									label: 'Introduction',
-									children: props.adventure.introduction.map(section => (
-										<div key={section.id}>
-											<HeaderText>{section.name}</HeaderText>
-											{section.description ? <Markdown text={section.description} /> : <div className='ds-text dimmed-text'>None</div>}
-										</div>
-									))
-								},
-								{
-									key: 'plot',
-									label: 'Plot',
-									children:
-										<div className='plot-display-container'>
-											<PlotPanel
-												plot={props.adventure.plot}
-												selectedPlot={selectedPlot || undefined}
-												onSelect={props.allowSelection ? setSelectedPlot : undefined}
-											/>
-											{props.allowSelection ? getPlotInfo() : null}
-										</div>
-								}
-							]}
-						/>
-						: null
-				}
-			</div>
+			<ErrorBoundary>
+				<div className={props.mode === PanelMode.Full ? 'adventure-panel' : 'adventure-panel compact'} id={props.mode === PanelMode.Full ? props.adventure.id : undefined}>
+					<HeaderText level={1}>{props.adventure.name || 'Unnamed Adventure'}</HeaderText>
+					<Markdown text={props.adventure.description} />
+					<div className='ds-text'>A <b>DRAW STEEL</b> adventure for {props.adventure.party.count} heroes of level {props.adventure.party.level}.</div>
+					{
+						props.mode === PanelMode.Full ?
+							<Tabs
+								items={[
+									{
+										key: 'introduction',
+										label: 'Introduction',
+										children: props.adventure.introduction.map(section => (
+											<div key={section.id}>
+												<HeaderText>{section.name}</HeaderText>
+												{section.description ? <Markdown text={section.description} /> : <div className='ds-text dimmed-text'>None</div>}
+											</div>
+										))
+									},
+									{
+										key: 'plot',
+										label: 'Plot',
+										children:
+											<div className='plot-display-container'>
+												<PlotPanel
+													plot={props.adventure.plot}
+													selectedPlot={selectedPlot || undefined}
+													onSelect={props.allowSelection ? setSelectedPlot : undefined}
+												/>
+												{props.allowSelection ? getPlotInfo() : null}
+											</div>
+									}
+								]}
+							/>
+							: null
+					}
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

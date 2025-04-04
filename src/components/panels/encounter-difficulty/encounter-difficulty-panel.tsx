@@ -1,6 +1,7 @@
 import { Alert, Slider } from 'antd';
 import { Encounter } from '../../../models/encounter';
 import { EncounterLogic } from '../../../logic/encounter-logic';
+import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Options } from '../../../models/options';
@@ -60,32 +61,34 @@ export const EncounterDifficultyPanel = (props: Props) => {
 		}
 
 		return (
-			<div className='encounter-difficulty-panel'>
-				<HeaderText level={1}>Encounter Difficulty</HeaderText>
-				<div className='ds-text'>Difficulty for {getPartyDescription()}</div>
-				<div className='encounter-slider'>
-					<Slider
-						range={true}
-						marks={marks}
-						min={0}
-						max={Math.max(budgets.maxHard * 1.1, strength)}
-						value={[ strength ]}
-						styles={{
-							track: {
-								background: 'transparent'
-							}
-						}}
-						tooltip={{ open: false }}
-					/>
+			<ErrorBoundary>
+				<div className='encounter-difficulty-panel'>
+					<HeaderText level={1}>Encounter Difficulty</HeaderText>
+					<div className='ds-text'>Difficulty for {getPartyDescription()}</div>
+					<div className='encounter-slider'>
+						<Slider
+							range={true}
+							marks={marks}
+							min={0}
+							max={Math.max(budgets.maxHard * 1.1, strength)}
+							value={[ strength ]}
+							styles={{
+								track: {
+									background: 'transparent'
+								}
+							}}
+							tooltip={{ open: false }}
+						/>
+					</div>
+					<div className='encounter-stats'>
+						<Field orientation='vertical' label='Monsters' value={count} />
+						<Field orientation='vertical' label='Strength' value={strength} />
+						<Field orientation='vertical' label='Difficulty' value={difficulty} />
+						<Field orientation='vertical' label='Victories' value={victories} />
+					</div>
+					{warnings}
 				</div>
-				<div className='encounter-stats'>
-					<Field orientation='vertical' label='Monsters' value={count} />
-					<Field orientation='vertical' label='Strength' value={strength} />
-					<Field orientation='vertical' label='Difficulty' value={difficulty} />
-					<Field orientation='vertical' label='Victories' value={victories} />
-				</div>
-				{warnings}
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

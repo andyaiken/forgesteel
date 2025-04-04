@@ -1,5 +1,6 @@
 import { Alert, Divider, Segmented, Select } from 'antd';
 import { Collections } from '../../../utils/collections';
+import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Hero } from '../../../models/hero';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Options } from '../../../models/options';
@@ -241,9 +242,11 @@ export const OptionsPanel = (props: Props) => {
 
 	try {
 		return (
-			<div className='options-panel'>
-				{getContent()}
-			</div>
+			<ErrorBoundary>
+				<div className='options-panel'>
+					{getContent()}
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

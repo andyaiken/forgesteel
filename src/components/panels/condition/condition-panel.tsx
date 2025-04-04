@@ -3,6 +3,7 @@ import { Segmented, Space } from 'antd';
 import { Condition } from '../../../models/condition';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { DangerButton } from '../../controls/danger-button/danger-button';
+import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Field } from '../../controls/field/field';
 import { Markdown } from '../../controls/markdown/markdown';
 import { MultiLine } from '../../controls/multi-line/multi-line';
@@ -40,34 +41,36 @@ export const ConditionPanel = (props: Props) => {
 
 	try {
 		return (
-			<div className='condition-panel'>
-				<Space direction='vertical' style={{ width: '100%', margin: '5px 0' }}>
-					{
-						condition.type === ConditionType.Custom ?
-							<MultiLine label='Custom Condition Text' value={condition.text} onChange={setConditionText} />
-							:
-							<Field
-								label={condition.type}
-								value={
-									<Markdown
-										text={ConditionLogic.getDescription(condition.type)}
-										useSpan={true}
-									/>
-								}
-							/>
-					}
-					<Segmented
-						name='endtypes'
-						block={true}
-						options={[ ConditionEndType.EndOfTurn, ConditionEndType.SaveEnds ]}
-						value={condition.ends}
-						onChange={setConditionEndType}
-					/>
-				</Space>
-				<div className='action-buttons'>
-					<DangerButton mode='clear' onConfirm={() => props.onDelete(condition)} />
+			<ErrorBoundary>
+				<div className='condition-panel'>
+					<Space direction='vertical' style={{ width: '100%', margin: '5px 0' }}>
+						{
+							condition.type === ConditionType.Custom ?
+								<MultiLine label='Custom Condition Text' value={condition.text} onChange={setConditionText} />
+								:
+								<Field
+									label={condition.type}
+									value={
+										<Markdown
+											text={ConditionLogic.getDescription(condition.type)}
+											useSpan={true}
+										/>
+									}
+								/>
+						}
+						<Segmented
+							name='endtypes'
+							block={true}
+							options={[ ConditionEndType.EndOfTurn, ConditionEndType.SaveEnds ]}
+							value={condition.ends}
+							onChange={setConditionEndType}
+						/>
+					</Space>
+					<div className='action-buttons'>
+						<DangerButton mode='clear' onConfirm={() => props.onDelete(condition)} />
+					</div>
 				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

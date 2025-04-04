@@ -3,6 +3,7 @@ import { MapBoundaries, MapItem, MapPosition, TacticalMap } from '../../../../mo
 import { ReactNode, useState } from 'react';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { GridSquarePanel } from './grid-square/grid-square';
 import { MapTilePanel } from './map-tile/map-tile';
@@ -702,7 +703,7 @@ export const TacticalMapPanel = (props: Props) => {
 		const heightInPixels = (size * heightInSquares);
 
 		return (
-			<>
+			<ErrorBoundary>
 				{getToolbar()}
 				<div
 					id={map.id}
@@ -718,7 +719,7 @@ export const TacticalMapPanel = (props: Props) => {
 						{getWallVertices(boundaries)}
 					</div>
 				</div>
-			</>
+			</ErrorBoundary>
 		);
 	} catch (e) {
 		console.error(e);

@@ -1,5 +1,6 @@
 import { Button, Popover } from 'antd';
 import { DownOutlined, MenuOutlined } from '@ant-design/icons';
+import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { LogoPanel } from '../logo/logo-panel';
 import { ReactNode } from 'react';
 import { useMediaQuery } from '../../../hooks/use-media-query';
@@ -29,34 +30,36 @@ export const AppHeader = (props: Props) => {
 	);
 
 	return (
-		<div className='app-header'>
-			<div className='left-section'>
-				{props.showDirectory ? <Button type='text' icon={<MenuOutlined />} onClick={props.showDirectory} /> : null}
-				{!isSmall ? <LogoPanel text={props.subheader} /> : null}
+		<ErrorBoundary>
+			<div className='app-header'>
+				<div className='left-section'>
+					{props.showDirectory ? <Button type='text' icon={<MenuOutlined />} onClick={props.showDirectory} /> : null}
+					{!isSmall ? <LogoPanel text={props.subheader} /> : null}
+				</div>
+				{
+					isSmall ?
+						<div className='action-buttons-dropdown'>
+							<Popover
+								trigger='click'
+								placement='bottom'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										{actions}
+									</div>
+								)}
+							>
+								<Button>
+									Actions
+									<DownOutlined />
+								</Button>
+							</Popover>
+						</div>
+						:
+						<div className='action-buttons-panel'>
+							{actions}
+						</div>
+				}
 			</div>
-			{
-				isSmall ?
-					<div className='action-buttons-dropdown'>
-						<Popover
-							trigger='click'
-							placement='bottom'
-							content={(
-								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									{actions}
-								</div>
-							)}
-						>
-							<Button>
-								Actions
-								<DownOutlined />
-							</Button>
-						</Popover>
-					</div>
-					:
-					<div className='action-buttons-panel'>
-						{actions}
-					</div>
-			}
-		</div>
+		</ErrorBoundary>
 	);
 };

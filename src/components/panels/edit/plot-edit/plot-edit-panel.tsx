@@ -5,6 +5,7 @@ import { Adventure } from '../../../../models/adventure';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
@@ -273,27 +274,29 @@ export const PlotEditPanel = (props: Props) => {
 
 	try {
 		return (
-			<div className='plot-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Plot',
-							children: getNameAndDescriptionSection()
-						},
-						{
-							key: '2',
-							label: 'Content',
-							children: getContentSection()
-						},
-						{
-							key: '3',
-							label: 'Links',
-							children: getLinksSection()
-						}
-					]}
-				/>
-			</div>
+			<ErrorBoundary>
+				<div className='plot-edit-panel'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Plot',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Content',
+								children: getContentSection()
+							},
+							{
+								key: '3',
+								label: 'Links',
+								children: getLinksSection()
+							}
+						]}
+					/>
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

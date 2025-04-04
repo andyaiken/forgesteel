@@ -1,4 +1,5 @@
 import { Career } from '../../../../models/career';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -40,18 +41,20 @@ export const CareerPanel = (props: Props) => {
 
 	try {
 		return (
-			<div className={props.mode === PanelMode.Full ? 'career-panel' : 'career-panel compact'} id={props.mode === PanelMode.Full ? props.career.id : undefined}>
-				<HeaderText level={1}>{props.career.name || 'Unnamed Career'}</HeaderText>
-				<Markdown text={props.career.description} />
-				{
-					props.mode === PanelMode.Full ?
-						<div>
-							{props.career.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
-							{getIncitingIncidents()}
-						</div>
-						: null
-				}
-			</div>
+			<ErrorBoundary>
+				<div className={props.mode === PanelMode.Full ? 'career-panel' : 'career-panel compact'} id={props.mode === PanelMode.Full ? props.career.id : undefined}>
+					<HeaderText level={1}>{props.career.name || 'Unnamed Career'}</HeaderText>
+					<Markdown text={props.career.description} />
+					{
+						props.mode === PanelMode.Full ?
+							<div>
+								{props.career.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
+								{getIncitingIncidents()}
+							</div>
+							: null
+					}
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

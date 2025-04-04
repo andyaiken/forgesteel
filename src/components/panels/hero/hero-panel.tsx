@@ -16,6 +16,7 @@ import { CultureData } from '../../../data/culture-data';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { Domain } from '../../../models/domain';
 import { Element } from '../../../models/element';
+import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { FeaturePanel } from '../elements/feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
@@ -619,72 +620,74 @@ export const HeroPanel = (props: Props) => {
 		}
 
 		return (
-			<div className='hero-panel' id={props.hero.id}>
-				<div className='hero-main-section' id='stats'>
-					{getLeftColumn(true)}
-					<div className='hero-main-column'>
-						<HeaderText level={1} tags={props.hero.folder ? [ props.hero.folder ] : []}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
-						{getStatsSection()}
-						{getConditionsSection()}
-						{getFeaturesSection('Features')}
+			<ErrorBoundary>
+				<div className='hero-panel' id={props.hero.id}>
+					<div className='hero-main-section' id='stats'>
+						{getLeftColumn(true)}
+						<div className='hero-main-column'>
+							<HeaderText level={1} tags={props.hero.folder ? [ props.hero.folder ] : []}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
+							{getStatsSection()}
+							{getConditionsSection()}
+							{getFeaturesSection('Features')}
+						</div>
+						{getRightColumn(true)}
 					</div>
-					{getRightColumn(true)}
+					{
+						actions.length > 0 ?
+							<div className='hero-main-section' id='actions'>
+								<div className='hero-main-column'>
+									{getAbilitiesSection(actions, 'Actions')}
+								</div>
+							</div>
+							: null
+					}
+					{
+						maneuvers.length > 0 ?
+							<div className='hero-main-section' id='maneuvers'>
+								<div className='hero-main-column'>
+									{getAbilitiesSection(maneuvers, 'Maneuvers')}
+								</div>
+							</div>
+							: null
+					}
+					{
+						moves.length > 0 ?
+							<div className='hero-main-section' id='moves'>
+								<div className='hero-main-column'>
+									{getAbilitiesSection(moves, 'Move Actions')}
+								</div>
+							</div>
+							: null
+					}
+					{
+						triggers.length > 0 ?
+							<div className='hero-main-section' id='triggers'>
+								<div className='hero-main-column'>
+									{getAbilitiesSection(triggers, 'Triggered Actions')}
+								</div>
+							</div>
+							: null
+					}
+					{
+						others.length > 0 ?
+							<div className='hero-main-section' id='others'>
+								<div className='hero-main-column'>
+									{getAbilitiesSection(others, 'Other Actions')}
+								</div>
+							</div>
+							: null
+					}
+					{
+						noactions.length > 0 ?
+							<div className='hero-main-section' id='none'>
+								<div className='hero-main-column'>
+									{getAbilitiesSection(noactions, 'No Action')}
+								</div>
+							</div>
+							: null
+					}
 				</div>
-				{
-					actions.length > 0 ?
-						<div className='hero-main-section' id='actions'>
-							<div className='hero-main-column'>
-								{getAbilitiesSection(actions, 'Actions')}
-							</div>
-						</div>
-						: null
-				}
-				{
-					maneuvers.length > 0 ?
-						<div className='hero-main-section' id='maneuvers'>
-							<div className='hero-main-column'>
-								{getAbilitiesSection(maneuvers, 'Maneuvers')}
-							</div>
-						</div>
-						: null
-				}
-				{
-					moves.length > 0 ?
-						<div className='hero-main-section' id='moves'>
-							<div className='hero-main-column'>
-								{getAbilitiesSection(moves, 'Move Actions')}
-							</div>
-						</div>
-						: null
-				}
-				{
-					triggers.length > 0 ?
-						<div className='hero-main-section' id='triggers'>
-							<div className='hero-main-column'>
-								{getAbilitiesSection(triggers, 'Triggered Actions')}
-							</div>
-						</div>
-						: null
-				}
-				{
-					others.length > 0 ?
-						<div className='hero-main-section' id='others'>
-							<div className='hero-main-column'>
-								{getAbilitiesSection(others, 'Other Actions')}
-							</div>
-						</div>
-						: null
-				}
-				{
-					noactions.length > 0 ?
-						<div className='hero-main-section' id='none'>
-							<div className='hero-main-column'>
-								{getAbilitiesSection(noactions, 'No Action')}
-							</div>
-						</div>
-						: null
-				}
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

@@ -3,6 +3,7 @@ import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, EditOutlined, 
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
@@ -259,15 +260,17 @@ export const SourcebookPanel = (props: Props) => {
 		}
 
 		return (
-			<div className='sourcebook-panel' id={sourcebook.id}>
-				<div className='content'>
-					<HeaderText tags={sourcebook.isHomebrew ? [ 'Homebrew' ] : []}>{sourcebook.name || 'Unnamed Sourcebook'}</HeaderText>
-					{content}
+			<ErrorBoundary>
+				<div className='sourcebook-panel' id={sourcebook.id}>
+					<div className='content'>
+						<HeaderText tags={sourcebook.isHomebrew ? [ 'Homebrew' ] : []}>{sourcebook.name || 'Unnamed Sourcebook'}</HeaderText>
+						{content}
+					</div>
+					<div className='action-buttons'>
+						{buttons}
+					</div>
 				</div>
-				<div className='action-buttons'>
-					{buttons}
-				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

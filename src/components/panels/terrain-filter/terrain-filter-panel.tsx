@@ -1,4 +1,5 @@
 import { Input, Select, Slider, Space } from 'antd';
+import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Field } from '../../controls/field/field';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
 import { TerrainFilter } from '../../../models/filter';
@@ -44,55 +45,57 @@ export const TerrainFilterPanel = (props: Props) => {
 	};
 
 	return (
-		<div className='terrain-filter-panel'>
-			<Space direction='vertical' style={{ width: '100%' }}>
-				<Input
-					placeholder='Name, keywords'
-					allowClear={true}
-					value={props.terrainFilter.name}
-					onChange={e => setFilterName(e.target.value)}
-				/>
-				<Select
-					style={{ width: '100%' }}
-					mode='multiple'
-					allowClear={true}
-					placeholder='Role'
-					options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(r => ({ label: r, value: r }))}
-					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-					value={props.terrainFilter.roles}
-					onChange={setFilterRoles}
-				/>
-				<Select
-					style={{ width: '100%' }}
-					mode='multiple'
-					allowClear={true}
-					placeholder='Terrain roles'
-					options={[ TerrainRoleType.Fortification, TerrainRoleType.Hazard, TerrainRoleType.Relic, TerrainRoleType.SiegeEngine, TerrainRoleType.Trap, TerrainRoleType.Trigger ].map(r => ({ label: r, value: r }))}
-					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-					value={props.terrainFilter.terrainRoles}
-					onChange={setFilterTerrainRoles}
-				/>
-				<div>
-					<Slider
-						range={{ draggableTrack: true }}
-						min={1}
-						max={10}
-						value={props.terrainFilter.level}
-						onChange={setFilterLevel}
+		<ErrorBoundary>
+			<div className='terrain-filter-panel'>
+				<Space direction='vertical' style={{ width: '100%' }}>
+					<Input
+						placeholder='Name, keywords'
+						allowClear={true}
+						value={props.terrainFilter.name}
+						onChange={e => setFilterName(e.target.value)}
 					/>
-					<Field label='Level' value={`${Math.min(...props.terrainFilter.level)} to ${Math.max(...props.terrainFilter.level)}`} />
-				</div>
-				<div>
-					<Slider
-						range={{ draggableTrack: true }}
-						min={0}
-						max={120}
-						value={props.terrainFilter.ev}
-						onChange={setFilterEV}
+					<Select
+						style={{ width: '100%' }}
+						mode='multiple'
+						allowClear={true}
+						placeholder='Role'
+						options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(r => ({ label: r, value: r }))}
+						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+						value={props.terrainFilter.roles}
+						onChange={setFilterRoles}
 					/>
-					<Field label='EV' value={`${Math.min(...props.terrainFilter.ev)} to ${Math.max(...props.terrainFilter.ev)}`} />
-				</div>
-			</Space>
-		</div>
+					<Select
+						style={{ width: '100%' }}
+						mode='multiple'
+						allowClear={true}
+						placeholder='Terrain roles'
+						options={[ TerrainRoleType.Fortification, TerrainRoleType.Hazard, TerrainRoleType.Relic, TerrainRoleType.SiegeEngine, TerrainRoleType.Trap, TerrainRoleType.Trigger ].map(r => ({ label: r, value: r }))}
+						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+						value={props.terrainFilter.terrainRoles}
+						onChange={setFilterTerrainRoles}
+					/>
+					<div>
+						<Slider
+							range={{ draggableTrack: true }}
+							min={1}
+							max={10}
+							value={props.terrainFilter.level}
+							onChange={setFilterLevel}
+						/>
+						<Field label='Level' value={`${Math.min(...props.terrainFilter.level)} to ${Math.max(...props.terrainFilter.level)}`} />
+					</div>
+					<div>
+						<Slider
+							range={{ draggableTrack: true }}
+							min={0}
+							max={120}
+							value={props.terrainFilter.ev}
+							onChange={setFilterEV}
+						/>
+						<Field label='EV' value={`${Math.min(...props.terrainFilter.ev)} to ${Math.max(...props.terrainFilter.ev)}`} />
+					</div>
+				</Space>
+			</div>
+		</ErrorBoundary>
 	);
 };

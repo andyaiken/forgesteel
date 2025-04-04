@@ -11,6 +11,7 @@ import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { DamageType } from '../../../../enums/damage-type';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeatureField } from '../../../../enums/feature-field';
@@ -1346,69 +1347,71 @@ export const FeatureEditPanel = (props: Props) => {
 		];
 
 		return (
-			<div className='feature-edit-panel'>
-				<Tabs
-					items={[
-						{
-							key: '1',
-							label: 'Feature',
-							children: (
-								<div>
-									<HeaderText>Name</HeaderText>
-									<Input
-										className={feature.name === '' ? 'input-empty' : ''}
-										placeholder='Name'
-										allowClear={true}
-										value={feature.name}
-										onChange={e => setName(e.target.value)}
-									/>
-									<HeaderText>Description</HeaderText>
-									<MultiLine label='Description' value={feature.description} onChange={setDescription} />
-								</div>
-							)
-						},
-						{
-							key: '2',
-							label: 'Details',
-							children: (
-								<div>
-									{
-										(props.allowedTypes || []).length !== 1 ?
-											<>
-												<HeaderText>Feature Type</HeaderText>
-												<Select
-													style={{ width: '100%' }}
-													placeholder='Select type'
-													options={(props.allowedTypes || featureTypes).map(o => ({ value: o }))}
-													optionRender={option => <Field label={option.data.value} value={FeatureLogic.getFeatureTypeDescription(option.data.value)} />}
-													value={feature.type}
-													onChange={setType}
-												/>
-											</>
-											: null
-									}
-									{
-										(feature as Perk).list !== undefined ?
-											<div>
-												<HeaderText>Perk List</HeaderText>
-												<Select
-													style={{ width: '100%' }}
-													placeholder='Select list'
-													options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(o => ({ value: o }))}
-													optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-													value={(feature as Perk).list}
-													onChange={setList}
-												/>
-											</div>
-											: null
-									}
-									{getDataSection()}
-								</div>
-							)
-						}
-					]}
-				/>
-			</div>
+			<ErrorBoundary>
+				<div className='feature-edit-panel'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Feature',
+								children: (
+									<div>
+										<HeaderText>Name</HeaderText>
+										<Input
+											className={feature.name === '' ? 'input-empty' : ''}
+											placeholder='Name'
+											allowClear={true}
+											value={feature.name}
+											onChange={e => setName(e.target.value)}
+										/>
+										<HeaderText>Description</HeaderText>
+										<MultiLine label='Description' value={feature.description} onChange={setDescription} />
+									</div>
+								)
+							},
+							{
+								key: '2',
+								label: 'Details',
+								children: (
+									<div>
+										{
+											(props.allowedTypes || []).length !== 1 ?
+												<>
+													<HeaderText>Feature Type</HeaderText>
+													<Select
+														style={{ width: '100%' }}
+														placeholder='Select type'
+														options={(props.allowedTypes || featureTypes).map(o => ({ value: o }))}
+														optionRender={option => <Field label={option.data.value} value={FeatureLogic.getFeatureTypeDescription(option.data.value)} />}
+														value={feature.type}
+														onChange={setType}
+													/>
+												</>
+												: null
+										}
+										{
+											(feature as Perk).list !== undefined ?
+												<div>
+													<HeaderText>Perk List</HeaderText>
+													<Select
+														style={{ width: '100%' }}
+														placeholder='Select list'
+														options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(o => ({ value: o }))}
+														optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+														value={(feature as Perk).list}
+														onChange={setList}
+													/>
+												</div>
+												: null
+										}
+										{getDataSection()}
+									</div>
+								)
+							}
+						]}
+					/>
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

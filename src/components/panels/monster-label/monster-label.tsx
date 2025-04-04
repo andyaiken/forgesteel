@@ -1,3 +1,4 @@
+import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Monster } from '../../../models/monster';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { Terrain } from '../../../models/terrain';
@@ -25,8 +26,10 @@ interface TerrainLabelProps {
 export const TerrainLabel = (props: TerrainLabelProps) => {
 	const type = props.terrain.role.type.toLowerCase().replace(' ', '');
 	return (
-		<div className={`terrain-label ${type}`}>
-			{TerrainLogic.getTerrainDescription(props.terrain)}
-		</div>
+		<ErrorBoundary>
+			<div className={`terrain-label ${type}`}>
+				{TerrainLogic.getTerrainDescription(props.terrain)}
+			</div>
+		</ErrorBoundary>
 	);
 };

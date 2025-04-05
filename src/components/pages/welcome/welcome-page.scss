@@ -14,13 +14,38 @@
 		padding: 20px;
 
 		.welcome-column {
+			width: 100%;
 			max-width: 600px;
 			display: flex;
 			flex-direction: column;
+			overflow-y: auto;
 
-			.carousel-page {
-				padding-top: 10px;
-				padding-bottom: 40px;
+			.welcome-tab-button {
+				width: 60px;
+				height: 50px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				min-height: unset;
+				line-height: unset;
+
+				.title {
+					font-size: 14px;
+					font-weight: 600;
+				}
+
+				.subtitle {
+					font-size: 11px;
+				}
+			}
+
+			.welcome-section {
+				height: 400px;
+
+				.ant-btn {
+					width: 150px;
+				}
 			}
 		}
 	}

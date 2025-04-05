@@ -27,16 +27,18 @@
 				flex-direction: column;
 				align-items: center;
 				justify-content: center;
-				min-height: unset;
-				line-height: unset;
 
 				.title {
 					font-size: 14px;
 					font-weight: 600;
+					height: 20px;
+					line-height: 20px;
 				}
 
 				.subtitle {
 					font-size: 11px;
+					height: 18px;
+					line-height: 18px;
 				}
 			}
 

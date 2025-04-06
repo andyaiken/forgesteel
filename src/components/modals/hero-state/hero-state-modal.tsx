@@ -37,6 +37,7 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	startPage: HeroStatePage;
+	showEncounterControls: boolean;
 	onClose: () => void;
 	onChange: (hero: Hero) => void;
 	onLevelUp?: () => void;
@@ -89,27 +90,6 @@ export const HeroStateModal = (props: Props) => {
 			const copy = Utils.copy(hero);
 			copy.state.heroicResource = 0;
 			copy.state.victories += 1;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setHidden = (value: boolean) => {
-			const copy = Utils.copy(hero);
-			copy.state.hidden = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setActed = (value: boolean) => {
-			const copy = Utils.copy(hero);
-			copy.state.acted = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setDefeated = (value: boolean) => {
-			const copy = Utils.copy(hero);
-			copy.state.defeated = value;
 			setHero(copy);
 			props.onChange(copy);
 		};
@@ -200,50 +180,6 @@ export const HeroStateModal = (props: Props) => {
 					</Button>
 				</Flex>
 				<Divider />
-				<Flex align='center' justify='space-evenly'>
-					<Button
-						key='hidden'
-						className='tall-button'
-						onClick={() => setHidden(!hero.state.hidden)}
-					>
-						<div>
-							<div>
-								{hero.state.hidden ? 'Hidden' : 'Not Hidden'}
-							</div>
-							<div className='subtext'>
-								You are {hero.state.hidden ? 'hidden' : 'not hidden'}
-							</div>
-						</div>
-					</Button>
-					<Button
-						key='acted'
-						className='tall-button'
-						onClick={() => setActed(!hero.state.acted)}
-					>
-						<div>
-							<div>
-								{hero.state.acted ? 'Acted' : 'Ready'}
-							</div>
-							<div className='subtext'>
-								You have {hero.state.acted ? 'taken your turn' : 'not taken your turn'}
-							</div>
-						</div>
-					</Button>
-					<Button
-						key='defeated'
-						className='tall-button'
-						onClick={() => setDefeated(!hero.state.defeated)}
-					>
-						<div>
-							<div>
-								{hero.state.defeated ? 'Defeated' : 'Active'}
-							</div>
-							<div className='subtext'>
-								You are {hero.state.defeated ? 'defeated' : 'not defeated'}
-							</div>
-						</div>
-					</Button>
-				</Flex>
 			</Space>
 		);
 	};
@@ -284,6 +220,27 @@ export const HeroStateModal = (props: Props) => {
 			const copy = Utils.copy(hero);
 			copy.state.recoveriesUsed += 1;
 			copy.state.staminaDamage = Math.max(copy.state.staminaDamage - HeroLogic.getRecoveryValue(hero), 0);
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setHidden = (value: boolean) => {
+			const copy = Utils.copy(hero);
+			copy.state.hidden = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setActed = (value: boolean) => {
+			const copy = Utils.copy(hero);
+			copy.state.acted = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setDefeated = (value: boolean) => {
+			const copy = Utils.copy(hero);
+			copy.state.defeated = value;
 			setHero(copy);
 			props.onChange(copy);
 		};
@@ -352,6 +309,54 @@ export const HeroStateModal = (props: Props) => {
 						</div>
 					</Button>
 				</Flex>
+				{
+					props.showEncounterControls ?
+						<Flex align='center' justify='space-evenly'>
+							<Button
+								key='hidden'
+								className='tall-button'
+								onClick={() => setHidden(!hero.state.hidden)}
+							>
+								<div>
+									<div>
+										{hero.state.hidden ? 'Hidden' : 'Not Hidden'}
+									</div>
+									<div className='subtext'>
+										You are {hero.state.hidden ? 'hidden' : 'not hidden'}
+									</div>
+								</div>
+							</Button>
+							<Button
+								key='acted'
+								className='tall-button'
+								onClick={() => setActed(!hero.state.acted)}
+							>
+								<div>
+									<div>
+										{hero.state.acted ? 'Acted' : 'Ready'}
+									</div>
+									<div className='subtext'>
+										You have {hero.state.acted ? 'taken your turn' : 'not taken your turn'}
+									</div>
+								</div>
+							</Button>
+							<Button
+								key='defeated'
+								className='tall-button'
+								onClick={() => setDefeated(!hero.state.defeated)}
+							>
+								<div>
+									<div>
+										{hero.state.defeated ? 'Defeated' : 'Active'}
+									</div>
+									<div className='subtext'>
+										You are {hero.state.defeated ? 'defeated' : 'not defeated'}
+									</div>
+								</div>
+							</Button>
+						</Flex>
+						: null
+				}
 			</Space>
 		);
 	};

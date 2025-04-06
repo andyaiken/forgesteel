@@ -1014,6 +1014,7 @@ export const Main = (props: Props) => {
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
 				options={options}
 				startPage={page}
+				showEncounterControls={false}
 				onClose={() => setDrawer(null)}
 				onChange={persistHero}
 				onLevelUp={() => {

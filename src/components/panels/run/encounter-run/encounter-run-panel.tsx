@@ -795,8 +795,9 @@ export const EncounterRunPanel = (props: Props) => {
 									hero={selectedHero}
 									sourcebooks={props.sourcebooks}
 									options={props.options}
-									onClose={() => setSelectedHero(null)}
 									startPage={HeroStatePage.Vitals}
+									showEncounterControls={true}
+									onClose={() => setSelectedHero(null)}
 									onChange={hero => {
 										const copy = Utils.copy(encounter);
 										const index = copy.heroes.findIndex(h => h.id === hero.id);

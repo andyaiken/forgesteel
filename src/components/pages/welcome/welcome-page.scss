@@ -22,7 +22,7 @@
 
 			.welcome-tab-button {
 				width: 60px;
-				height: 50px;
+				height: 45px;
 				display: flex;
 				flex-direction: column;
 				align-items: center;
@@ -46,7 +46,8 @@
 				height: 400px;
 
 				.ant-btn {
-					width: 150px;
+					width: 160px;
+					flex: 0 0 160px;
 				}
 			}
 		}

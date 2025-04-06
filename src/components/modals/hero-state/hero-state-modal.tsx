@@ -50,6 +50,7 @@ export const HeroStateModal = (props: Props) => {
 	const [ conditionsVisible, setConditionsVisible ] = useState<boolean>(false);
 	const [ projectsVisible, setProjectsVisible ] = useState<boolean>(false);
 	const [ damageOrRestoreValue, setDamageOrRestoreValue ] = useState<number>(0);
+	const [ temporaryStaminaDiff, setTemporaryStaminaDiff ] = useState<number>(0);
 
 	const getHeroSection = () => {
 		const setHeroicResource = (value: number) => {
@@ -208,9 +209,10 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setStaminaTemp = (value: number) => {
+		const applyTemporaryStaminaDiff = () => {
 			const copy = Utils.copy(hero);
-			copy.state.staminaTemp = value;
+			copy.state.staminaTemp += temporaryStaminaDiff;
+			setTemporaryStaminaDiff(0);
 			setHero(copy);
 			props.onChange(copy);
 		};
@@ -225,6 +227,7 @@ export const HeroStateModal = (props: Props) => {
 		const endRespite = () => {
 			const copy = Utils.copy(hero);
 			copy.state.staminaDamage = 0;
+			copy.state.staminaTemp = 0;
 			copy.state.recoveriesUsed = 0;
 			copy.state.xp += copy.state.victories;
 			copy.state.victories = 0;
@@ -293,31 +296,15 @@ export const HeroStateModal = (props: Props) => {
 						</div>
 					</Button>
 				</Flex>
-				<NumberSpin
-					label='Recoveries Used'
-					value={hero.state.recoveriesUsed}
-					suffix={hero.state.recoveriesUsed > 0 ? `/ ${HeroLogic.getRecoveries(hero)}` : undefined}
-					min={0}
-					max={HeroLogic.getRecoveries(hero)}
-					onChange={setRecoveriesUsed}
-				/>
-				{
-					HeroLogic.isWinded(hero) ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='You are winded.'
-						/>
-						: null
-				}
-				<NumberSpin
-					label='Temporary Stamina'
-					value={hero.state.staminaTemp}
-					min={0}
-					onChange={setStaminaTemp}
-				/>
-				<Divider />
 				<Flex align='center' justify='space-evenly'>
+					<NumberSpin
+						label='Recoveries Used'
+						value={hero.state.recoveriesUsed}
+						suffix={hero.state.recoveriesUsed > 0 ? `/ ${HeroLogic.getRecoveries(hero)}` : undefined}
+						min={0}
+						max={HeroLogic.getRecoveries(hero)}
+						onChange={setRecoveriesUsed}
+					/>
 					<Button
 						key='spend-recovery'
 						className='tall-button'
@@ -332,6 +319,45 @@ export const HeroStateModal = (props: Props) => {
 							</div>
 						</div>
 					</Button>
+				</Flex>
+				{
+					HeroLogic.isWinded(hero) ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='You are winded.'
+						/>
+						: null
+				}
+				<Flex align='center' justify='space-evenly'>
+					<NumberSpin
+						label='Temporary Stamina'
+						value={temporaryStaminaDiff}
+						min={-hero.state.staminaTemp}
+						onChange={setTemporaryStaminaDiff}
+					/>
+					<Button
+						key='apply-temporary-stamina'
+						className='tall-button'
+						type='primary'
+						disabled={temporaryStaminaDiff === 0}
+						onClick={applyTemporaryStaminaDiff}
+					>
+						<div>
+							<div>Apply</div>
+							{
+								temporaryStaminaDiff !== 0 ?
+									<div className='subtext'>
+										Set temporary stamina to {hero.state.staminaTemp + temporaryStaminaDiff}
+									</div>
+									: null
+							}
+						</div>
+					</Button>
+
+				</Flex>
+				<Divider />
+				<Flex align='center' justify='space-evenly'>
 					<Button
 						key='take-respite'
 						className='tall-button'

@@ -49,7 +49,7 @@ export const HeroStateModal = (props: Props) => {
 	const [ shopVisible, setShopVisible ] = useState<boolean>(false);
 	const [ conditionsVisible, setConditionsVisible ] = useState<boolean>(false);
 	const [ projectsVisible, setProjectsVisible ] = useState<boolean>(false);
-	const [ damageOrRestoreValue, setDamageOrRestoreValue ] = useState<number>(0);
+	const [ damageOrRegainValue, setDamageOrRegainValue ] = useState<number>(0);
 	const [ temporaryStaminaToGain, setTemporaryStaminaToGain ] = useState<number>(0);
 
 	const getHeroSection = () => {
@@ -187,10 +187,10 @@ export const HeroStateModal = (props: Props) => {
 	};
 
 	const getVitalsSection = () => {
-		const applyDamageOrRestore = () => {
+		const applyDamageOrRegain = () => {
 			const copy = Utils.copy(hero);
 
-			let value = damageOrRestoreValue;
+			let value = damageOrRegainValue;
 			// Negative value means damage
 			if (value < 0) {
 				value = -value;
@@ -204,7 +204,7 @@ export const HeroStateModal = (props: Props) => {
 				copy.state.staminaDamage = Math.max(copy.state.staminaDamage - value, 0);
 			}
 
-			setDamageOrRestoreValue(0);
+			setDamageOrRegainValue(0);
 			setHero(copy);
 			props.onChange(copy);
 		};
@@ -280,28 +280,28 @@ export const HeroStateModal = (props: Props) => {
 				<Row gutter={[ 16, 16 ]}>
 					<Col span={16}>
 						<NumberSpin
-							label='Damage/Restore Stamina'
-							value={damageOrRestoreValue}
+							label='Damage/Regain Stamina'
+							value={damageOrRegainValue}
 							max={hero.state.staminaDamage}
-							onChange={setDamageOrRestoreValue}
+							onChange={setDamageOrRegainValue}
 						/>
 					</Col>
 					<Col span={8}>
 						<Button
-							key='apply-damage-restore'
+							key='apply-damage-regain'
 							className='tall-button'
 							type='primary'
-							disabled={damageOrRestoreValue === 0}
-							onClick={applyDamageOrRestore}
+							disabled={damageOrRegainValue === 0}
+							onClick={applyDamageOrRegain}
 						>
 							<div>
 								<div>Apply</div>
 								{
-									damageOrRestoreValue !== 0 ?
+									damageOrRegainValue !== 0 ?
 										<div className='subtext'>
-											{damageOrRestoreValue < 0 ?
-												`Deal ${-damageOrRestoreValue} damage` :
-												`Restore ${damageOrRestoreValue} stamina`}
+											{damageOrRegainValue < 0 ?
+												`Deal ${-damageOrRegainValue} damage` :
+												`Regain ${damageOrRegainValue} stamina`}
 										</div>
 										: null
 								}

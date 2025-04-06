@@ -49,6 +49,7 @@ export const HeroStateModal = (props: Props) => {
 	const [ shopVisible, setShopVisible ] = useState<boolean>(false);
 	const [ conditionsVisible, setConditionsVisible ] = useState<boolean>(false);
 	const [ projectsVisible, setProjectsVisible ] = useState<boolean>(false);
+	const [ damageOrRestoreValue, setDamageOrRestoreValue ] = useState<number>(0);
 
 	const getHeroSection = () => {
 		const setHeroicResource = (value: number) => {
@@ -185,9 +186,24 @@ export const HeroStateModal = (props: Props) => {
 	};
 
 	const getVitalsSection = () => {
-		const setStaminaDamage = (value: number) => {
+		const applyDamageOrRestore = () => {
 			const copy = Utils.copy(hero);
-			copy.state.staminaDamage = value;
+
+			let value = damageOrRestoreValue;
+			// Negative value means damage
+			if (value < 0) {
+				value = -value;
+				if (value <= copy.state.staminaTemp) {
+					copy.state.staminaTemp -= value;
+				} else {
+					copy.state.staminaDamage += value - copy.state.staminaTemp;
+					copy.state.staminaTemp = 0;
+				}
+			} else {
+				copy.state.staminaDamage = Math.max(copy.state.staminaDamage - value, 0);
+			}
+
+			setDamageOrRestoreValue(0);
 			setHero(copy);
 			props.onChange(copy);
 		};
@@ -249,13 +265,33 @@ export const HeroStateModal = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HealthPanel hero={hero} />
 				<Divider />
-				<NumberSpin
-					label='Damage Taken'
-					value={hero.state.staminaDamage}
-					suffix={hero.state.staminaDamage > 0 ? `/ ${HeroLogic.getStamina(hero)}` : undefined}
-					min={0}
-					onChange={setStaminaDamage}
-				/>
+				<Flex align='center' justify='space-evenly'>
+					<NumberSpin
+						label='Damage/Restore Stamina'
+						value={damageOrRestoreValue}
+						onChange={setDamageOrRestoreValue}
+					/>
+					<Button
+						key='apply-damage-restore'
+						className='tall-button'
+						type='primary'
+						disabled={damageOrRestoreValue === 0}
+						onClick={applyDamageOrRestore}
+					>
+						<div>
+							<div>Apply</div>
+							{
+								damageOrRestoreValue !== 0 ?
+									<div className='subtext'>
+										{damageOrRestoreValue < 0 ?
+											`Deal ${-damageOrRestoreValue} damage` :
+											`Restore ${damageOrRestoreValue} stamina`}
+									</div>
+									: null
+							}
+						</div>
+					</Button>
+				</Flex>
 				<NumberSpin
 					label='Recoveries Used'
 					value={hero.state.recoveriesUsed}

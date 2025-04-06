@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Drawer, Flex, Segmented, Space } from 'antd';
+import { Alert, Button, Col, Divider, Drawer, Flex, Row, Segmented, Space } from 'antd';
 import { ArrowUpOutlined, CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { Collections } from '../../../utils/collections';
@@ -268,58 +268,6 @@ export const HeroStateModal = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HealthPanel hero={hero} />
 				<Divider />
-				<Flex align='center' justify='space-evenly'>
-					<NumberSpin
-						label='Damage/Restore Stamina'
-						value={damageOrRestoreValue}
-						max={hero.state.staminaDamage}
-						onChange={setDamageOrRestoreValue}
-					/>
-					<Button
-						key='apply-damage-restore'
-						className='tall-button'
-						type='primary'
-						disabled={damageOrRestoreValue === 0}
-						onClick={applyDamageOrRestore}
-					>
-						<div>
-							<div>Apply</div>
-							{
-								damageOrRestoreValue !== 0 ?
-									<div className='subtext'>
-										{damageOrRestoreValue < 0 ?
-											`Deal ${-damageOrRestoreValue} damage` :
-											`Restore ${damageOrRestoreValue} stamina`}
-									</div>
-									: null
-							}
-						</div>
-					</Button>
-				</Flex>
-				<Flex align='center' justify='space-evenly'>
-					<NumberSpin
-						label='Recoveries Used'
-						value={hero.state.recoveriesUsed}
-						suffix={hero.state.recoveriesUsed > 0 ? `/ ${HeroLogic.getRecoveries(hero)}` : undefined}
-						min={0}
-						max={HeroLogic.getRecoveries(hero)}
-						onChange={setRecoveriesUsed}
-					/>
-					<Button
-						key='spend-recovery'
-						className='tall-button'
-						type='primary'
-						disabled={(hero.state.staminaDamage === 0) || (hero.state.recoveriesUsed >= HeroLogic.getRecoveries(hero))}
-						onClick={spendRecovery}
-					>
-						<div>
-							<div>Spend a Recovery</div>
-							<div className='subtext'>
-								Regain {HeroLogic.getRecoveryValue(hero)} Stamina
-							</div>
-						</div>
-					</Button>
-				</Flex>
 				{
 					HeroLogic.isWinded(hero) ?
 						<Alert
@@ -329,33 +277,96 @@ export const HeroStateModal = (props: Props) => {
 						/>
 						: null
 				}
-				<Flex align='center' justify='space-evenly'>
-					<NumberSpin
-						label='Temporary Stamina'
-						value={temporaryStaminaDiff}
-						min={-hero.state.staminaTemp}
-						onChange={setTemporaryStaminaDiff}
-					/>
-					<Button
-						key='apply-temporary-stamina'
-						className='tall-button'
-						type='primary'
-						disabled={temporaryStaminaDiff === 0}
-						onClick={applyTemporaryStaminaDiff}
-					>
-						<div>
-							<div>Apply</div>
-							{
-								temporaryStaminaDiff !== 0 ?
-									<div className='subtext'>
-										Set temporary stamina to {hero.state.staminaTemp + temporaryStaminaDiff}
-									</div>
-									: null
-							}
-						</div>
-					</Button>
-
-				</Flex>
+				<Row gutter={[ 16, 16 ]}>
+					<Col span={16}>
+						<NumberSpin
+							label='Damage/Restore Stamina'
+							value={damageOrRestoreValue}
+							max={hero.state.staminaDamage}
+							onChange={setDamageOrRestoreValue}
+						/>
+					</Col>
+					<Col span={8}>
+						<Button
+							key='apply-damage-restore'
+							className='tall-button'
+							type='primary'
+							disabled={damageOrRestoreValue === 0}
+							onClick={applyDamageOrRestore}
+						>
+							<div>
+								<div>Apply</div>
+								{
+									damageOrRestoreValue !== 0 ?
+										<div className='subtext'>
+											{damageOrRestoreValue < 0 ?
+												`Deal ${-damageOrRestoreValue} damage` :
+												`Restore ${damageOrRestoreValue} stamina`}
+										</div>
+										: null
+								}
+							</div>
+						</Button>
+					</Col>
+				</Row>
+				<Row gutter={[ 16, 16 ]}>
+					<Col span={16}>
+						<NumberSpin
+							label='Recoveries Used'
+							value={hero.state.recoveriesUsed}
+							suffix={hero.state.recoveriesUsed > 0 ? `/ ${HeroLogic.getRecoveries(hero)}` : undefined}
+							min={0}
+							max={HeroLogic.getRecoveries(hero)}
+							onChange={setRecoveriesUsed}
+						/>
+					</Col>
+					<Col span={8}>
+						<Button
+							key='spend-recovery'
+							className='tall-button'
+							type='primary'
+							disabled={(hero.state.staminaDamage === 0) || (hero.state.recoveriesUsed >= HeroLogic.getRecoveries(hero))}
+							onClick={spendRecovery}
+						>
+							<div>
+								<div>Spend a Recovery</div>
+								<div className='subtext'>
+									Regain {HeroLogic.getRecoveryValue(hero)} Stamina
+								</div>
+							</div>
+						</Button>
+					</Col>
+				</Row>
+				<Row gutter={[ 16, 16 ]}>
+					<Col span={16}>
+						<NumberSpin
+							label='Temporary Stamina'
+							value={temporaryStaminaDiff}
+							min={-hero.state.staminaTemp}
+							onChange={setTemporaryStaminaDiff}
+						/>
+					</Col>
+					<Col span={8}>
+						<Button
+							key='apply-temporary-stamina'
+							className='tall-button'
+							type='primary'
+							disabled={temporaryStaminaDiff === 0}
+							onClick={applyTemporaryStaminaDiff}
+						>
+							<div>
+								<div>Apply</div>
+								{
+									temporaryStaminaDiff !== 0 ?
+										<div className='subtext'>
+											Set temporary stamina to {hero.state.staminaTemp + temporaryStaminaDiff}
+										</div>
+										: null
+								}
+							</div>
+						</Button>
+					</Col>
+				</Row>
 				<Divider />
 				<Flex align='center' justify='space-evenly'>
 					<Button

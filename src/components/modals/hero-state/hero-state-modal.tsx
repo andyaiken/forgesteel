@@ -269,6 +269,7 @@ export const HeroStateModal = (props: Props) => {
 					<NumberSpin
 						label='Damage/Restore Stamina'
 						value={damageOrRestoreValue}
+						max={hero.state.staminaDamage}
 						onChange={setDamageOrRestoreValue}
 					/>
 					<Button

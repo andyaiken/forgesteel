@@ -219,7 +219,7 @@ export const HeroStateModal = (props: Props) => {
 
 		const setRecoveriesUsed = (value: number) => {
 			const copy = Utils.copy(hero);
-			copy.state.recoveriesUsed = value;
+			copy.state.recoveriesUsed = HeroLogic.getRecoveries(hero) - value;
 			setHero(copy);
 			props.onChange(copy);
 		};
@@ -343,9 +343,9 @@ export const HeroStateModal = (props: Props) => {
 				<Row gutter={[ 16, 16 ]}>
 					<Col span={16}>
 						<NumberSpin
-							label='Recoveries Used'
-							value={hero.state.recoveriesUsed}
-							suffix={hero.state.recoveriesUsed > 0 ? `/ ${HeroLogic.getRecoveries(hero)}` : undefined}
+							label='Recoveries'
+							value={HeroLogic.getRecoveries(hero) - hero.state.recoveriesUsed}
+							suffix={`/ ${HeroLogic.getRecoveries(hero)}`}
 							min={0}
 							max={HeroLogic.getRecoveries(hero)}
 							onChange={setRecoveriesUsed}

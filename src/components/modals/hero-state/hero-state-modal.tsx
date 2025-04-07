@@ -401,20 +401,20 @@ export const HeroStateModal = (props: Props) => {
 				<NumberSpin
 					label='Renown'
 					value={hero.state.renown}
-					min={0}
+					format={() => HeroLogic.getRenown(hero).toString()}
 					onChange={setRenown}
 				/>
 				<NumberSpin
 					label='Wealth'
 					value={hero.state.wealth}
-					min={1}
+					format={() => HeroLogic.getWealth(hero).toString()}
 					onChange={setWealth}
 				/>
 				<NumberSpin
 					label='Project Points'
 					value={hero.state.projectPoints}
-					min={0}
 					steps={[ 1, 10 ]}
+					format={() => HeroLogic.getProjectPoints(hero).toString()}
 					onChange={setProjectPoints}
 				/>
 			</Space>

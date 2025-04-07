@@ -1,5 +1,4 @@
 import { Ability, AbilityDistance } from '../models/ability';
-import { Feature, FeatureAbilityData, FeatureBonusData, FeatureClassAbilityData, FeatureDamageModifierData, FeatureDomainData, FeatureItemChoice, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureSkillChoiceData, FeatureSkillData } from '../models/feature';
 import { AbilityData } from '../data/ability-data';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
@@ -7,6 +6,7 @@ import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Domain } from '../models/domain';
+import { Feature } from '../models/feature';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from './feature-logic';
 import { FeatureType } from '../enums/feature-type';
@@ -34,8 +34,7 @@ export class HeroLogic {
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Kit)
 			.forEach(f => {
-				const data = f.data as FeatureKitData;
-				kits.push(...data.selected);
+				kits.push(...f.data.selected);
 			});
 
 		return kits;
@@ -48,8 +47,7 @@ export class HeroLogic {
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Domain)
 			.forEach(f => {
-				const data = f.data as FeatureDomainData;
-				domains.push(...data.selected);
+				domains.push(...f.data.selected);
 			});
 
 		return domains;
@@ -105,15 +103,13 @@ export class HeroLogic {
 			this.getFeatures(hero)
 				.filter(f => f.type === FeatureType.Ability)
 				.forEach(f => {
-					const data = f.data as FeatureAbilityData;
-					choices.push(data.ability);
+					choices.push(f.data.ability);
 				});
 
 			this.getFeatures(hero)
 				.filter(f => f.type === FeatureType.ClassAbility)
 				.forEach(f => {
-					const data = f.data as FeatureClassAbilityData;
-					data.selectedIDs.forEach(abilityID => {
+					f.data.selectedIDs.forEach(abilityID => {
 						const ability = hero.class?.abilities.find(a => a.id === abilityID);
 						if (ability) {
 							choices.push(ability);
@@ -196,14 +192,12 @@ export class HeroLogic {
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Language)
 			.forEach(f => {
-				const data = f.data as FeatureLanguageData;
-				languageNames.push(data.language);
+				languageNames.push(f.data.language);
 			});
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.LanguageChoice)
 			.forEach(f => {
-				const data = f.data as FeatureLanguageChoiceData;
-				languageNames.push(...data.selected);
+				languageNames.push(...f.data.selected);
 			});
 
 		const allLanguages = sourcebooks.flatMap(cs => cs.languages);
@@ -226,14 +220,12 @@ export class HeroLogic {
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Skill)
 			.forEach(f => {
-				const data = f.data as FeatureSkillData;
-				skillNames.push(data.skill);
+				skillNames.push(f.data.skill);
 			});
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.SkillChoice)
 			.forEach(f => {
-				const data = f.data as FeatureSkillChoiceData;
-				skillNames.push(...data.selected);
+				skillNames.push(...f.data.selected);
 			});
 
 		const skills: Skill[] = [];
@@ -254,8 +246,7 @@ export class HeroLogic {
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.DamageModifier)
 			.forEach(f => {
-				const data = f.data as FeatureDamageModifierData;
-				data.modifiers
+				f.data.modifiers
 					.filter(dm => dm.type === type)
 					.forEach(dm => {
 						const value = HeroLogic.calculateModifierValue(hero, dm);
@@ -302,7 +293,7 @@ export class HeroLogic {
 
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Bonus)
-			.map(f => f.data as FeatureBonusData)
+			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Stamina)
 			.forEach(data => {
 				value += data.value;
@@ -321,7 +312,7 @@ export class HeroLogic {
 
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Bonus)
-			.map(f => f.data as FeatureBonusData)
+			.map(f => f.data)
 			.filter(data => data.field === FeatureField.RecoveryValue)
 			.forEach(data => {
 				value += data.value;
@@ -340,7 +331,7 @@ export class HeroLogic {
 
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Bonus)
-			.map(f => f.data as FeatureBonusData)
+			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Recoveries)
 			.forEach(data => {
 				value += data.value;
@@ -400,7 +391,7 @@ export class HeroLogic {
 
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Bonus)
-			.map(f => f.data as FeatureBonusData)
+			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Speed)
 			.forEach(data => {
 				value += data.value;
@@ -423,7 +414,7 @@ export class HeroLogic {
 
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Bonus)
-			.map(f => f.data as FeatureBonusData)
+			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Stability)
 			.forEach(data => {
 				value += data.value;
@@ -446,7 +437,7 @@ export class HeroLogic {
 
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Bonus)
-			.map(f => f.data as FeatureBonusData)
+			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Disengage)
 			.forEach(data => {
 				value += data.value;
@@ -465,8 +456,46 @@ export class HeroLogic {
 
 		this.getFeatures(hero)
 			.filter(f => f.type === FeatureType.Bonus)
-			.map(f => f.data as FeatureBonusData)
+			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Renown)
+			.forEach(data => {
+				value += data.value;
+				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
+				if (hero.class) {
+					value += data.valuePerLevel * (hero.class.level - 1);
+					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
+				}
+			});
+
+		return value;
+	};
+
+	static getProjectPoints = (hero: Hero) => {
+		let value = hero.state.projectPoints;
+
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.Bonus)
+			.map(f => f.data)
+			.filter(data => data.field === FeatureField.ProjectPoints)
+			.forEach(data => {
+				value += data.value;
+				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
+				if (hero.class) {
+					value += data.valuePerLevel * (hero.class.level - 1);
+					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
+				}
+			});
+
+		return value;
+	};
+
+	static getWealth = (hero: Hero) => {
+		let value = hero.state.wealth;
+
+		this.getFeatures(hero)
+			.filter(f => f.type === FeatureType.Bonus)
+			.map(f => f.data)
+			.filter(data => data.field === FeatureField.Wealth)
 			.forEach(data => {
 				value += data.value;
 				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
@@ -765,7 +794,6 @@ export class HeroLogic {
 			hero.state.defeated = false;
 		}
 
-		hero.state.inventory = hero.state.inventory.filter(i => (i as unknown as FeatureItemChoice).data === undefined);
 		hero.state.inventory.forEach(item => {
 			if (item.customizationsByLevel === undefined) {
 				item.customizationsByLevel = [

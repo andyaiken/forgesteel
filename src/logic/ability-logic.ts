@@ -218,7 +218,7 @@ export class AbilityLogic {
 			.replace(/<\s*[[({]?avg[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'average')}`)
 			.replace(/<\s*[[({]?strong[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'strong')}`);
 
-		// Equal to [twice / three times / Nx] your [Characteristic(s)] score
+		// Equal to [N times] your [Characteristic(s)] score
 		const charRegex = /equal to.*your.*score/gi;
 		[ ...text.matchAll(charRegex) ].map(r => r[0]).forEach(str => {
 			const options: number[] = [];
@@ -229,25 +229,47 @@ export class AbilityLogic {
 				Characteristic.Intuition,
 				Characteristic.Presence
 			].forEach(ch => {
-				if (str.toLowerCase().includes(ch.toLowerCase())) {
+				if (str.toLowerCase().includes('highest characteristic') || str.toLowerCase().includes(ch.toLowerCase())) {
 					options.push(HeroLogic.getCharacteristic(hero, ch));
 				}
 			});
 			const value = Math.max(...options);
 
+			const constant = AbilityLogic.getConstant(str);
 			const multiplier = AbilityLogic.getMultiplier(str);
-			text = text.replace(str, `equal to ${value * multiplier}`);
+			text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
 		});
 
-		// Equal to [twice / three times / Nx] your level
+		// Equal to [N times] your level
 		const lvlRegex = /equal to.*your level/gi;
 		[ ...text.matchAll(lvlRegex) ].map(r => r[0]).forEach(str => {
+			const constant = AbilityLogic.getConstant(str);
 			const value = hero.class ? hero.class.level : 1;
 			const multiplier = AbilityLogic.getMultiplier(str);
-			text = text.replace(str, `equal to ${value * multiplier}`);
+			text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
+		});
+
+		// Equal to [N times] your recovery value
+		const recRegex = /equal to.*your recovery value/gi;
+		[ ...text.matchAll(recRegex) ].map(r => r[0]).forEach(str => {
+			const constant = AbilityLogic.getConstant(str);
+			const value = HeroLogic.getRecoveryValue(hero);
+			const multiplier = AbilityLogic.getMultiplier(str);
+			text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
 		});
 
 		return text;
+	};
+
+	static getConstant = (text: string) => {
+		let constant = 0;
+
+		const constantMatch = text.match(/(?<c>\d+)\s*(\+|plus)/);
+		if (constantMatch && constantMatch.groups) {
+			constant = parseInt(constantMatch.groups['c']);
+		}
+
+		return constant;
 	};
 
 	static getMultiplier = (text: string) => {

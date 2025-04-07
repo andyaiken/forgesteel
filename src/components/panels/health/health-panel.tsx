@@ -15,6 +15,17 @@ export const HealthPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='health-panel'>
+				{
+					props.hero.state.staminaTemp > 0 ?
+						<Progress
+							className='stamina-temp-progress'
+							type='dashboard'
+							percent={100 * props.hero.state.staminaTemp / HeroLogic.getStamina(props.hero)}
+							showInfo={false}
+							status='active'
+						/>
+						: null
+				}
 				<Progress
 					className='stamina-progress'
 					type='dashboard'
@@ -30,6 +41,14 @@ export const HealthPanel = (props: Props) => {
 					status='active'
 				/>
 				<div className='gauge-info'>
+					{
+						props.hero.state.staminaTemp > 0 ?
+							<div>
+								Tmp <b>{props.hero.state.staminaTemp}</b>
+								<Divider style={{ margin: '5px 0' }} />
+							</div>
+							: null
+					}
 					<div>
 						Sta <b>{props.hero.state.staminaDamage ? `${HeroLogic.getStamina(props.hero) - props.hero.state.staminaDamage} / ${HeroLogic.getStamina(props.hero)}` : `${HeroLogic.getStamina(props.hero)}`}</b>
 					</div>

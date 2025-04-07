@@ -1,7 +1,7 @@
 import { Alert, AutoComplete, Button, Divider, Input, Radio, Segmented, Select, Space, Upload } from 'antd';
 import { CloseOutlined, DownloadOutlined, SaveOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
-import { Feature, FeatureBonusData, FeatureData } from '../../../../models/feature';
+import { Feature, FeatureData } from '../../../../models/feature';
 import { Hero, HeroEditTab } from '../../../../models/hero';
 import { ReactNode, useMemo, useState } from 'react';
 import { Ancestry } from '../../../../models/ancestry';
@@ -18,10 +18,8 @@ import { Culture } from '../../../../models/culture';
 import { CulturePanel } from '../../../panels/elements/culture-panel/culture-panel';
 import { Element } from '../../../../models/element';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { FeatureField } from '../../../../enums/feature-field';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeaturePanel } from '../../../panels/elements/feature-panel/feature-panel';
-import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -232,25 +230,6 @@ export const HeroEditPage = (props: Props) => {
 			const careerCopy = Utils.copy(career) as Career | null;
 			const heroCopy = Utils.copy(hero);
 			heroCopy.career = careerCopy;
-			if (careerCopy) {
-				heroCopy.state.projectPoints = 0;
-				heroCopy.state.renown = 0;
-				heroCopy.state.wealth = 1;
-				careerCopy.features.filter(f => f.type === FeatureType.Bonus).map(f => {
-					const data = f.data as FeatureBonusData;
-					switch (data.field) {
-						case FeatureField.ProjectPoints:
-							heroCopy.state.projectPoints += data.value;
-							break;
-						case FeatureField.Renown:
-							heroCopy.state.renown += data.value;
-							break;
-						case FeatureField.Wealth:
-							heroCopy.state.wealth += data.value;
-							break;
-					}
-				});
-			}
 			setHero(heroCopy);
 			setDirty(true);
 		};

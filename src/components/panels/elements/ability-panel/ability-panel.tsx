@@ -1,5 +1,8 @@
 import { AbilityCustomization, Hero } from '../../../../models/hero';
 import { Badge, HeroicResourceBadge } from '../../../controls/badge/badge';
+import { Button, Tag } from 'antd';
+import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
+import { useMemo, useState } from 'react';
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
@@ -12,8 +15,6 @@ import { Markdown } from '../../../controls/markdown/markdown';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { PowerRollPanel } from '../../power-roll/power-roll-panel';
-import { Tag } from 'antd';
-import { useMemo } from 'react';
 
 import './ability-panel.scss';
 
@@ -28,6 +29,8 @@ interface Props {
 }
 
 export const AbilityPanel = (props: Props) => {
+	const [ autoCalc, setAutoCalc ] = useState<boolean>(true);
+
 	const cost = useMemo(
 		() => {
 			const cost = props.cost ?? props.ability.cost;
@@ -67,6 +70,14 @@ export const AbilityPanel = (props: Props) => {
 		[ props.hero, props.options, cost ]
 	);
 
+	const parseText = (text: string) => {
+		if (autoCalc && props.hero) {
+			text = AbilityLogic.getTextEffect(text, props.hero);
+		}
+
+		return text;
+	};
+
 	try {
 		let className = 'ability-panel';
 		if (props.mode !== PanelMode.Full) {
@@ -84,7 +95,18 @@ export const AbilityPanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className={className} id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
-					<HeaderText ribbon={headerRibbon} tags={props.tags}>
+					<HeaderText
+						ribbon={headerRibbon}
+						tags={props.tags}
+						extra={
+							<Button
+								type='text'
+								title='Auto-calculate damage, potancy, etc'
+								icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
+								onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
+							/>
+						}
+					>
 						{customization?.name || props.ability.name || 'Unnamed Ability'}
 					</HeaderText>
 					<Markdown text={customization?.description || props.ability.description} />
@@ -106,7 +128,7 @@ export const AbilityPanel = (props: Props) => {
 									props.ability.preEffect ?
 										<Field
 											label='Effect'
-											value={<Markdown text={props.ability.preEffect} useSpan={true} />}
+											value={<Markdown text={parseText(props.ability.preEffect)} useSpan={true} />}
 										/>
 										: null
 								}
@@ -116,6 +138,7 @@ export const AbilityPanel = (props: Props) => {
 											powerRoll={props.ability.powerRoll}
 											ability={props.ability}
 											hero={props.hero}
+											autoCalc={autoCalc}
 										/>
 										: null
 								}
@@ -131,7 +154,7 @@ export const AbilityPanel = (props: Props) => {
 									props.ability.effect ?
 										<Field
 											label='Effect'
-											value={<Markdown text={props.ability.effect} useSpan={true} />}
+											value={<Markdown text={parseText(props.ability.effect)} useSpan={true} />}
 										/>
 										: null
 								}
@@ -139,7 +162,7 @@ export const AbilityPanel = (props: Props) => {
 									props.ability.strained ?
 										<Field
 											label='Strained'
-											value={<Markdown text={props.ability.strained} useSpan={true} />}
+											value={<Markdown text={parseText(props.ability.strained)} useSpan={true} />}
 										/>
 										: null
 								}
@@ -148,7 +171,7 @@ export const AbilityPanel = (props: Props) => {
 										<Field
 											key={n}
 											label='Alternate Effect'
-											value={<Markdown text={effect} useSpan={true} />}
+											value={<Markdown text={parseText(effect)} useSpan={true} />}
 										/>
 									))
 								}
@@ -163,7 +186,7 @@ export const AbilityPanel = (props: Props) => {
 													{spend.value ? <HeroicResourceBadge value={spend.value} repeatable={spend.repeatable} /> : null}
 												</div>
 											)}
-											value={<Markdown text={spend.effect} useSpan={true} />}
+											value={<Markdown text={parseText(spend.effect)} useSpan={true} />}
 										/>
 									))
 								}
@@ -177,7 +200,7 @@ export const AbilityPanel = (props: Props) => {
 													{persist.value ? <HeroicResourceBadge value={persist.value} /> : null}
 												</div>
 											)}
-											value={<Markdown text={persist.effect} useSpan={true} />}
+											value={<Markdown text={parseText(persist.effect)} useSpan={true} />}
 										/>
 									))
 								}
@@ -185,7 +208,7 @@ export const AbilityPanel = (props: Props) => {
 									customization && customization.notes ?
 										<Field
 											label='Notes'
-											value={<Markdown text={customization.notes} useSpan={true} />}
+											value={<Markdown text={parseText(customization.notes)} useSpan={true} />}
 										/>
 										: null
 								}

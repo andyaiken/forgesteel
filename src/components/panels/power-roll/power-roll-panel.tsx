@@ -1,15 +1,12 @@
-import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '../../../models/ability';
 import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
 import { AbilityLogic } from '../../../logic/ability-logic';
-import { Button } from 'antd';
 import { Collections } from '../../../utils/collections';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Field } from '../../controls/field/field';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import type { PowerRoll } from '../../../models/power-roll';
-import { useState } from 'react';
 
 import './power-roll-panel.scss';
 
@@ -18,11 +15,10 @@ interface Props {
 	ability?: Ability;
 	hero?: Hero;
 	test?: boolean;
+	autoCalc?: boolean;
 }
 
 export const PowerRollPanel = (props: Props) => {
-	const [ autoCalc, setAutoCalc ] = useState<boolean>(true);
-
 	const dmgMelee = props.ability && props.hero ? HeroLogic.getMeleeDamageBonus(props.hero, props.ability) : null;
 	const dmgRanged = props.ability && props.hero ? HeroLogic.getRangedDamageBonus(props.hero, props.ability) : null;
 	const usesPotency = AbilityLogic.usesPotency(props.powerRoll);
@@ -38,7 +34,7 @@ export const PowerRollPanel = (props: Props) => {
 			return `${props.powerRoll.characteristic.join(' or ')} Test`;
 		}
 
-		if (props.hero && autoCalc) {
+		if (props.hero && props.autoCalc) {
 			const values = props.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero!, ch));
 			const bonus = Collections.max(values, v => v) || 0;
 			const sign = bonus >= 0 ? '+' : '';
@@ -66,7 +62,7 @@ export const PowerRollPanel = (props: Props) => {
 
 		if (props.hero) {
 			const sections = [];
-			if (autoCalc) {
+			if (props.autoCalc) {
 				// Show melee and ranged damage only if:
 				// * we have both, and they're different
 				// * we have only one, but the ability has melee and ranged distances
@@ -113,7 +109,7 @@ export const PowerRollPanel = (props: Props) => {
 	};
 
 	const getTier = (tier: number, value: string) => {
-		if (autoCalc && props.ability && props.hero) {
+		if (props.autoCalc && props.ability && props.hero) {
 			return AbilityLogic.getTierEffect(value, tier, props.ability, props.hero);
 		}
 
@@ -141,11 +137,6 @@ export const PowerRollPanel = (props: Props) => {
 						<div className='effect'>{getTier(3, props.powerRoll.tier3)}</div>
 					</div>
 					{footer ? <div className='power-roll-row power-roll-footer'>{footer}</div> : null}
-					{
-						props.ability && props.hero ?
-							<Button className='autocalc-btn' type='text' title='Calculate' icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />} onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }} />
-							: null
-					}
 				</div>
 			</ErrorBoundary>
 		);

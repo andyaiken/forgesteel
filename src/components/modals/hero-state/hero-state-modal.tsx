@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Drawer, Flex, Segmented, Space } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, InputNumber, Segmented, Space } from 'antd';
 import { ArrowUpOutlined, CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { Collections } from '../../../utils/collections';
@@ -46,6 +46,7 @@ interface Props {
 export const HeroStateModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ page, setPage ] = useState<HeroStatePage>(props.startPage);
+	const [ damageValue, setDamageValue ] = useState<number>(0);
 	const [ shopVisible, setShopVisible ] = useState<boolean>(false);
 	const [ conditionsVisible, setConditionsVisible ] = useState<boolean>(false);
 	const [ projectsVisible, setProjectsVisible ] = useState<boolean>(false);
@@ -90,6 +91,16 @@ export const HeroStateModal = (props: Props) => {
 			const copy = Utils.copy(hero);
 			copy.state.heroicResource = 0;
 			copy.state.victories += 1;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const takeRespite = () => {
+			const copy = Utils.copy(hero);
+			copy.state.staminaDamage = 0;
+			copy.state.recoveriesUsed = 0;
+			copy.state.xp += copy.state.victories;
+			copy.state.victories = 0;
 			setHero(copy);
 			props.onChange(copy);
 		};
@@ -151,7 +162,7 @@ export const HeroStateModal = (props: Props) => {
 						: null
 				}
 				<Divider />
-				<Flex align='center' justify='space-evenly'>
+				<Flex align='center' justify='space-evenly' gap={10}>
 					<Button
 						key='start-encounter'
 						className='tall-button'
@@ -178,13 +189,47 @@ export const HeroStateModal = (props: Props) => {
 							</div>
 						</div>
 					</Button>
+					<Button
+						key='take-respite'
+						className='tall-button'
+						type='primary'
+						onClick={takeRespite}
+					>
+						<div>
+							<div>Take a Respite</div>
+							<div className='subtext'>
+								24 hours of rest
+							</div>
+						</div>
+					</Button>
 				</Flex>
-				<Divider />
 			</Space>
 		);
 	};
 
 	const getVitalsSection = () => {
+		const takeDamage = () => {
+			const damageToTemp = Math.min(damageValue, hero.state.staminaTemp);
+			const damageToStamina = damageValue - damageToTemp;
+
+			const copy = Utils.copy(hero);
+			copy.state.staminaDamage += damageToStamina;
+			copy.state.staminaTemp -= damageToTemp;
+			setDamageValue(0);
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const heal = () => {
+			setStaminaDamage(Math.max(hero.state.staminaDamage - damageValue, 0));
+			setDamageValue(0);
+		};
+
+		const addTemp = () => {
+			setStaminaTemp(hero.state.staminaTemp + damageValue);
+			setDamageValue(0);
+		};
+
 		const setStaminaDamage = (value: number) => {
 			const copy = Utils.copy(hero);
 			copy.state.staminaDamage = value;
@@ -202,16 +247,6 @@ export const HeroStateModal = (props: Props) => {
 		const setRecoveriesUsed = (value: number) => {
 			const copy = Utils.copy(hero);
 			copy.state.recoveriesUsed = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const endRespite = () => {
-			const copy = Utils.copy(hero);
-			copy.state.staminaDamage = 0;
-			copy.state.recoveriesUsed = 0;
-			copy.state.xp += copy.state.victories;
-			copy.state.victories = 0;
 			setHero(copy);
 			props.onChange(copy);
 		};
@@ -247,7 +282,35 @@ export const HeroStateModal = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<HealthPanel hero={hero} />
+				<Flex align='center' justify='space-evenly'>
+					<HealthPanel hero={hero} />
+					<Flex vertical={true} align='center' justify='center' gap={5}>
+						<NumberSpin
+							min={0}
+							steps={[ 1, 10 ]}
+							value={damageValue}
+							onChange={setDamageValue}
+						>
+							<InputNumber style={{ width: '65px' }} min={0} value={damageValue} onChange={value => setDamageValue(value || 0)} />
+						</NumberSpin>
+						<Button block={true} disabled={damageValue === 0} onClick={takeDamage}>Take Damage</Button>
+						<Button block={true} disabled={damageValue === 0} onClick={heal}>Heal</Button>
+						<Button block={true} disabled={damageValue === 0} onClick={addTemp}>Add Temp Stamina</Button>
+						<Button
+							block={true}
+							className='tall-button'
+							disabled={(hero.state.staminaDamage === 0) || (hero.state.recoveriesUsed >= HeroLogic.getRecoveries(hero))}
+							onClick={spendRecovery}
+						>
+							<div>
+								<div>Spend a Recovery</div>
+								<div className='subtext'>
+									Regain {HeroLogic.getRecoveryValue(hero)} Stamina
+								</div>
+							</div>
+						</Button>
+					</Flex>
+				</Flex>
 				<Divider />
 				<NumberSpin
 					label='Damage Taken'
@@ -279,82 +342,55 @@ export const HeroStateModal = (props: Props) => {
 					min={0}
 					onChange={setStaminaTemp}
 				/>
-				<Divider />
-				<Flex align='center' justify='space-evenly'>
-					<Button
-						key='spend-recovery'
-						className='tall-button'
-						type='primary'
-						disabled={(hero.state.staminaDamage === 0) || (hero.state.recoveriesUsed >= HeroLogic.getRecoveries(hero))}
-						onClick={spendRecovery}
-					>
-						<div>
-							<div>Spend a Recovery</div>
-							<div className='subtext'>
-								Regain {HeroLogic.getRecoveryValue(hero)} Stamina
-							</div>
-						</div>
-					</Button>
-					<Button
-						key='take-respite'
-						className='tall-button'
-						type='primary'
-						onClick={endRespite}
-					>
-						<div>
-							<div>Take a Respite</div>
-							<div className='subtext'>
-								24 hours of rest
-							</div>
-						</div>
-					</Button>
-				</Flex>
 				{
 					props.showEncounterControls ?
-						<Flex align='center' justify='space-evenly'>
-							<Button
-								key='hidden'
-								className='tall-button'
-								onClick={() => setHidden(!hero.state.hidden)}
-							>
-								<div>
+						<>
+							<Divider />
+							<Flex align='center' justify='space-evenly'>
+								<Button
+									key='hidden'
+									className='tall-button'
+									onClick={() => setHidden(!hero.state.hidden)}
+								>
 									<div>
-										{hero.state.hidden ? 'Hidden' : 'Not Hidden'}
+										<div>
+											{hero.state.hidden ? 'Hidden' : 'Not Hidden'}
+										</div>
+										<div className='subtext'>
+											You are {hero.state.hidden ? 'hidden' : 'not hidden'}
+										</div>
 									</div>
-									<div className='subtext'>
-										You are {hero.state.hidden ? 'hidden' : 'not hidden'}
-									</div>
-								</div>
-							</Button>
-							<Button
-								key='acted'
-								className='tall-button'
-								onClick={() => setActed(!hero.state.acted)}
-							>
-								<div>
+								</Button>
+								<Button
+									key='acted'
+									className='tall-button'
+									onClick={() => setActed(!hero.state.acted)}
+								>
 									<div>
-										{hero.state.acted ? 'Acted' : 'Ready'}
+										<div>
+											{hero.state.acted ? 'Acted' : 'Ready'}
+										</div>
+										<div className='subtext'>
+											You have {hero.state.acted ? 'taken your turn' : 'not taken your turn'}
+										</div>
 									</div>
-									<div className='subtext'>
-										You have {hero.state.acted ? 'taken your turn' : 'not taken your turn'}
-									</div>
-								</div>
-							</Button>
-							<Button
-								key='defeated'
-								className='tall-button'
-								onClick={() => setDefeated(!hero.state.defeated)}
-							>
-								<div>
+								</Button>
+								<Button
+									key='defeated'
+									className='tall-button'
+									onClick={() => setDefeated(!hero.state.defeated)}
+								>
 									<div>
-										{hero.state.defeated ? 'Defeated' : 'Active'}
+										<div>
+											{hero.state.defeated ? 'Defeated' : 'Active'}
+										</div>
+										<div className='subtext'>
+											You are {hero.state.defeated ? 'defeated' : 'not defeated'}
+										</div>
 									</div>
-									<div className='subtext'>
-										You are {hero.state.defeated ? 'defeated' : 'not defeated'}
-									</div>
-								</div>
-							</Button>
-						</Flex>
+								</Button>
+							</Flex>
+						</>
 						: null
 				}
 			</Space>

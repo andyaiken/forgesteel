@@ -319,7 +319,7 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'undead-5-feature-3',
-						name: 'Shadow Chains',
+						name: 'Leap',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],

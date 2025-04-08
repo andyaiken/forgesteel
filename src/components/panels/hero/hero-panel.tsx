@@ -335,12 +335,6 @@ export const HeroPanel = (props: Props) => {
 			}
 		};
 
-		const onShowStats = () => {
-			if (props.onShowState) {
-				props.onShowState(HeroStatePage.Stats);
-			}
-		};
-
 		return (
 			<Row gutter={[ 16, 16 ]}>
 				<Col span={24}>
@@ -379,7 +373,7 @@ export const HeroPanel = (props: Props) => {
 					</div>
 				</Col>
 				<Col xs={sizeSmall.xs} sm={sizeSmall.sm} md={sizeSmall.md} lg={sizeSmall.lg} xl={sizeSmall.xl} xxl={sizeSmall.xxl}>
-					<div className='characteristics-box clickable' onClick={onShowStats}>
+					<div className='characteristics-box clickable' onClick={onShowHero}>
 						<div className='characteristic'>
 							<Statistic title='Hero Tokens' value={props.hero.state.heroTokens} />
 						</div>
@@ -431,7 +425,7 @@ export const HeroPanel = (props: Props) => {
 
 		const showConditions = () => {
 			if (props.onShowState) {
-				props.onShowState(HeroStatePage.Conditions);
+				props.onShowState(HeroStatePage.Vitals);
 			}
 		};
 
@@ -541,8 +535,7 @@ export const HeroPanel = (props: Props) => {
 		const maneuvers = abilities.filter(a => a.type.usage === AbilityUsage.Maneuver);
 		const moves = abilities.filter(a => a.type.usage === AbilityUsage.Move);
 		const triggers = abilities.filter(a => a.type.usage === AbilityUsage.Trigger);
-		const others = abilities.filter(a => a.type.usage === AbilityUsage.Other);
-		const noactions = abilities.filter(a => a.type.usage === AbilityUsage.NoAction);
+		const others = abilities.filter(a => (a.type.usage === AbilityUsage.Other) || (a.type.usage === AbilityUsage.NoAction));
 
 		if (isSmall) {
 			const tabs = [ 'Hero', 'Statistics', 'Features' ];
@@ -555,7 +548,7 @@ export const HeroPanel = (props: Props) => {
 			if (triggers.length > 0) {
 				tabs.push('Triggers');
 			}
-			if ((moves.length + others.length + noactions.length) > 0) {
+			if ((moves.length + others.length) > 0) {
 				tabs.push('Others');
 			}
 
@@ -591,7 +584,7 @@ export const HeroPanel = (props: Props) => {
 					content = getAbilitiesSection(triggers);
 					break;
 				case 'Others':
-					content = getAbilitiesSection([ ...moves, ...others, ...noactions ]);
+					content = getAbilitiesSection([ ...moves, ...others ]);
 					break;
 			}
 
@@ -672,16 +665,7 @@ export const HeroPanel = (props: Props) => {
 						others.length > 0 ?
 							<div className='hero-main-section' id='others'>
 								<div className='hero-main-column'>
-									{getAbilitiesSection(others, 'Other Actions')}
-								</div>
-							</div>
-							: null
-					}
-					{
-						noactions.length > 0 ?
-							<div className='hero-main-section' id='none'>
-								<div className='hero-main-column'>
-									{getAbilitiesSection(noactions, 'No Action')}
+									{getAbilitiesSection(others, 'Other Abilities')}
 								</div>
 							</div>
 							: null

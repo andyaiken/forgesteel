@@ -1,5 +1,5 @@
-import { Alert, Button, Divider, Drawer, Flex, InputNumber, Segmented, Space } from 'antd';
-import { ArrowUpOutlined, CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
+import { Alert, Button, Divider, Drawer, Flex, Segmented, Space } from 'antd';
+import { ArrowUpOutlined, CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { Collections } from '../../../utils/collections';
 import { Condition } from '../../../models/condition';
@@ -9,8 +9,9 @@ import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Empty } from '../../controls/empty/empty';
 import { Expander } from '../../controls/expander/expander';
 import { FactoryLogic } from '../../../logic/factory-logic';
-import { HealthPanel } from '../../panels/health/health-panel';
+import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
+import { HeroHealthPanel } from '../../panels/health/health-panel';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { HeroStatePage } from '../../../enums/hero-state-page';
 import { Item } from '../../../models/item';
@@ -46,7 +47,6 @@ interface Props {
 export const HeroStateModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ page, setPage ] = useState<HeroStatePage>(props.startPage);
-	const [ damageValue, setDamageValue ] = useState<number>(0);
 	const [ shopVisible, setShopVisible ] = useState<boolean>(false);
 	const [ conditionsVisible, setConditionsVisible ] = useState<boolean>(false);
 	const [ projectsVisible, setProjectsVisible ] = useState<boolean>(false);
@@ -76,6 +76,27 @@ export const HeroStateModal = (props: Props) => {
 		const setXP = (value: number) => {
 			const copy = Utils.copy(hero);
 			copy.state.xp = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setHeroTokens = (value: number) => {
+			const copy = Utils.copy(hero);
+			copy.state.heroTokens = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setRenown = (value: number) => {
+			const copy = Utils.copy(hero);
+			copy.state.renown = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const setWealth = (value: number) => {
+			const copy = Utils.copy(hero);
+			copy.state.wealth = value;
 			setHero(copy);
 			props.onChange(copy);
 		};
@@ -161,6 +182,24 @@ export const HeroStateModal = (props: Props) => {
 						/>
 						: null
 				}
+				<NumberSpin
+					label='Hero Tokens'
+					value={hero.state.heroTokens}
+					min={0}
+					onChange={setHeroTokens}
+				/>
+				<NumberSpin
+					label='Renown'
+					value={hero.state.renown}
+					format={() => HeroLogic.getRenown(hero).toString()}
+					onChange={setRenown}
+				/>
+				<NumberSpin
+					label='Wealth'
+					value={hero.state.wealth}
+					format={() => HeroLogic.getWealth(hero).toString()}
+					onChange={setWealth}
+				/>
 				<Divider />
 				<Flex align='center' justify='space-evenly' gap={10}>
 					<Button
@@ -208,55 +247,9 @@ export const HeroStateModal = (props: Props) => {
 	};
 
 	const getVitalsSection = () => {
-		const takeDamage = () => {
-			const damageToTemp = Math.min(damageValue, hero.state.staminaTemp);
-			const damageToStamina = damageValue - damageToTemp;
-
-			const copy = Utils.copy(hero);
-			copy.state.staminaDamage += damageToStamina;
-			copy.state.staminaTemp -= damageToTemp;
-			setDamageValue(0);
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const heal = () => {
-			setStaminaDamage(Math.max(hero.state.staminaDamage - damageValue, 0));
-			setDamageValue(0);
-		};
-
-		const addTemp = () => {
-			setStaminaTemp(hero.state.staminaTemp + damageValue);
-			setDamageValue(0);
-		};
-
-		const setStaminaDamage = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.staminaDamage = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setStaminaTemp = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.staminaTemp = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setRecoveriesUsed = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.recoveriesUsed = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const spendRecovery = () => {
-			const copy = Utils.copy(hero);
-			copy.state.recoveriesUsed += 1;
-			copy.state.staminaDamage = Math.max(copy.state.staminaDamage - HeroLogic.getRecoveryValue(hero), 0);
-			setHero(copy);
-			props.onChange(copy);
+		const onHeroChange = (h: Hero) => {
+			setHero(h);
+			props.onChange(h);
 		};
 
 		const setHidden = (value: boolean) => {
@@ -280,68 +273,42 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const addCondition = (type: ConditionType) => {
+			const copy = Utils.copy(hero);
+			copy.state.conditions.push({
+				id: Utils.guid(),
+				type: type,
+				text: '',
+				ends: ConditionEndType.EndOfTurn
+			});
+			setHero(copy);
+			setConditionsVisible(false);
+			props.onChange(copy);
+		};
+
+		const editCondition = (condition: Condition) => {
+			const copy = Utils.copy(hero);
+			const index = copy.state.conditions.findIndex(c => c.id === condition.id);
+			if (index !== -1) {
+				copy.state.conditions[index] = condition;
+				setHero(copy);
+				props.onChange(copy);
+			}
+		};
+
+		const deleteCondition = (condition: Condition) => {
+			const copy = Utils.copy(hero);
+			copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
+			setHero(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<Flex align='center' justify='space-evenly'>
-					<HealthPanel hero={hero} />
-					<Flex vertical={true} align='center' justify='center' gap={5}>
-						<NumberSpin
-							min={0}
-							steps={[ 1, 10 ]}
-							value={damageValue}
-							onChange={setDamageValue}
-						>
-							<InputNumber style={{ width: '65px' }} min={0} value={damageValue} onChange={value => setDamageValue(value || 0)} />
-						</NumberSpin>
-						<Button block={true} disabled={damageValue === 0} onClick={takeDamage}>Take Damage</Button>
-						<Button block={true} disabled={damageValue === 0} onClick={heal}>Heal</Button>
-						<Button block={true} disabled={damageValue === 0} onClick={addTemp}>Add Temp Stamina</Button>
-						<Button
-							block={true}
-							className='tall-button'
-							disabled={(hero.state.staminaDamage === 0) || (hero.state.recoveriesUsed >= HeroLogic.getRecoveries(hero))}
-							onClick={spendRecovery}
-						>
-							<div>
-								<div>Spend a Recovery</div>
-								<div className='subtext'>
-									Regain {HeroLogic.getRecoveryValue(hero)} Stamina
-								</div>
-							</div>
-						</Button>
-					</Flex>
-				</Flex>
-				<Divider />
-				<NumberSpin
-					label='Damage Taken'
-					value={hero.state.staminaDamage}
-					suffix={hero.state.staminaDamage > 0 ? `/ ${HeroLogic.getStamina(hero)}` : undefined}
-					min={0}
-					onChange={setStaminaDamage}
-				/>
-				<NumberSpin
-					label='Recoveries Used'
-					value={hero.state.recoveriesUsed}
-					suffix={hero.state.recoveriesUsed > 0 ? `/ ${HeroLogic.getRecoveries(hero)}` : undefined}
-					min={0}
-					max={HeroLogic.getRecoveries(hero)}
-					onChange={setRecoveriesUsed}
-				/>
-				{
-					HeroLogic.isWinded(hero) ?
-						<Alert
-							type='warning'
-							showIcon={true}
-							message='You are winded.'
-						/>
-						: null
-				}
-				<NumberSpin
-					label='Temporary Stamina'
-					value={hero.state.staminaTemp}
-					min={0}
-					onChange={setStaminaTemp}
-				/>
+				<HeaderText>
+					Stamina and Recoveries
+				</HeaderText>
+				<HeroHealthPanel hero={hero} onChange={onHeroChange} />
 				{
 					props.showEncounterControls ?
 						<>
@@ -393,66 +360,31 @@ export const HeroStateModal = (props: Props) => {
 						</>
 						: null
 				}
-			</Space>
-		);
-	};
-
-	const getStatisticsSection = () => {
-		const setHeroTokens = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.heroTokens = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setRenown = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.renown = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setWealth = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.wealth = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setProjectPoints = (value: number) => {
-			const copy = Utils.copy(hero);
-			copy.state.projectPoints = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				<NumberSpin
-					label='Hero Tokens'
-					value={hero.state.heroTokens}
-					min={0}
-					onChange={setHeroTokens}
-				/>
-				<NumberSpin
-					label='Renown'
-					value={hero.state.renown}
-					format={() => HeroLogic.getRenown(hero).toString()}
-					onChange={setRenown}
-				/>
-				<NumberSpin
-					label='Wealth'
-					value={hero.state.wealth}
-					format={() => HeroLogic.getWealth(hero).toString()}
-					onChange={setWealth}
-				/>
-				<NumberSpin
-					label='Project Points'
-					value={hero.state.projectPoints}
-					steps={[ 1, 10 ]}
-					format={() => HeroLogic.getProjectPoints(hero).toString()}
-					onChange={setProjectPoints}
-				/>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={() => setConditionsVisible(true)} />
+					}
+				>
+					Conditions
+				</HeaderText>
+				{
+					hero.state.conditions.map(c => (
+						<ConditionPanel
+							key={c.id}
+							condition={c}
+							onChange={editCondition}
+							onDelete={deleteCondition}
+						/>
+					))
+				}
+				{
+					hero.state.conditions.length === 0 ?
+						<Empty text='You are not affected by any conditions.' />
+						: null
+				}
+				<Drawer open={conditionsVisible} onClose={() => setConditionsVisible(false)} closeIcon={null} width='500px'>
+					<ConditionSelectModal onSelect={addCondition} onClose={() => setConditionsVisible(false)} />
+				</Drawer>
 			</Space>
 		);
 	};
@@ -532,63 +464,14 @@ export const HeroStateModal = (props: Props) => {
 		);
 	};
 
-	const getConditionsSection = () => {
-		const addCondition = (type: ConditionType) => {
-			const copy = Utils.copy(hero);
-			copy.state.conditions.push({
-				id: Utils.guid(),
-				type: type,
-				text: '',
-				ends: ConditionEndType.EndOfTurn
-			});
-			setHero(copy);
-			setConditionsVisible(false);
-			props.onChange(copy);
-		};
-
-		const editCondition = (condition: Condition) => {
-			const copy = Utils.copy(hero);
-			const index = copy.state.conditions.findIndex(c => c.id === condition.id);
-			if (index !== -1) {
-				copy.state.conditions[index] = condition;
-				setHero(copy);
-				props.onChange(copy);
-			}
-		};
-
-		const deleteCondition = (condition: Condition) => {
-			const copy = Utils.copy(hero);
-			copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					hero.state.conditions.map(c => (
-						<ConditionPanel
-							key={c.id}
-							condition={c}
-							onChange={editCondition}
-							onDelete={deleteCondition}
-						/>
-					))
-				}
-				{
-					hero.state.conditions.length === 0 ?
-						<Empty text='You are not affected by any conditions.' />
-						: null
-				}
-				<Button block={true} onClick={() => setConditionsVisible(true)}>Add a new condition</Button>
-				<Drawer open={conditionsVisible} onClose={() => setConditionsVisible(false)} closeIcon={null} width='500px'>
-					<ConditionSelectModal onSelect={addCondition} onClose={() => setConditionsVisible(false)} />
-				</Drawer>
-			</Space>
-		);
-	};
-
 	const getProjectsSection = () => {
+		const setProjectPoints = (value: number) => {
+			const copy = Utils.copy(hero);
+			copy.state.projectPoints = value;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
 		const addProject = (project: Project) => {
 			const projectCopy = Utils.copy(project);
 			projectCopy.id = Utils.guid();
@@ -626,6 +509,14 @@ export const HeroStateModal = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<NumberSpin
+					label='Project Points'
+					value={hero.state.projectPoints}
+					steps={[ 1, 10 ]}
+					format={() => HeroLogic.getProjectPoints(hero).toString()}
+					onChange={setProjectPoints}
+				/>
+				<Divider />
 				{
 					hero.state.projects.map(project => (
 						<Expander
@@ -685,12 +576,8 @@ export const HeroStateModal = (props: Props) => {
 				return getHeroSection();
 			case HeroStatePage.Vitals:
 				return getVitalsSection();
-			case HeroStatePage.Stats:
-				return getStatisticsSection();
 			case HeroStatePage.Inventory:
 				return getInventorySection();
-			case HeroStatePage.Conditions:
-				return getConditionsSection();
 			case HeroStatePage.Projects:
 				return getProjectsSection();
 			case HeroStatePage.Notes:
@@ -708,9 +595,7 @@ export const HeroStateModal = (props: Props) => {
 							options={[
 								HeroStatePage.Hero,
 								HeroStatePage.Vitals,
-								HeroStatePage.Stats,
 								HeroStatePage.Inventory,
-								HeroStatePage.Conditions,
 								HeroStatePage.Projects,
 								HeroStatePage.Notes
 							]}

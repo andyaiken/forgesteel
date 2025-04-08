@@ -1,30 +1,37 @@
 .health-panel {
-	width: 230px;
-	height: 215px;
-	padding: 15px 15px 0 15px;
-	position: relative;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-evenly;
 
-	.stamina-temp-progress {
-		position: absolute;
-		transform: scale(1.6);
-	}
+	.health-gauges {
+		width: 230px;
+		height: 220px;
+		padding: 20px 15px 0 15px;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 
-	.stamina-progress {
-		position: absolute;
-		transform: scale(1.3);
-	}
+		.stamina-temp-progress {
+			position: absolute;
+			transform: scale(1.6);
+		}
 
-	.recovery-progress {
-		position: absolute;
-	}
+		.stamina-progress {
+			position: absolute;
+			transform: scale(1.3);
+		}
 
-	.gauge-info {
-		position: absolute;
-		text-align: center;
-		font-size: 13px;
+		.recovery-progress {
+			position: absolute;
+		}
+
+		.gauge-info {
+			position: absolute;
+			text-align: center;
+			font-size: 13px;
+		}
 	}
 }

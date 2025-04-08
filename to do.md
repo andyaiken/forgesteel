@@ -1,5 +1,9 @@
 # Development Plans
 
+Add HealthPanel to monsters and minion groups
+Add visible / hidden toggle to monsters and minions
+Maybe add two tabs to monster modal - stat block and state
+
 ### Heroes
 
 * Make sure multiple melee / ranged damage bonuses are handled correctly

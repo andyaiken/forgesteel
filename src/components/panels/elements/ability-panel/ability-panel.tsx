@@ -1,9 +1,11 @@
 import { AbilityCustomization, Hero } from '../../../../models/hero';
+import { Alert, Button, Tag } from 'antd';
 import { Badge, HeroicResourceBadge } from '../../../controls/badge/badge';
-import { Button, Tag } from 'antd';
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
 import { Ability } from '../../../../models/ability';
+import { AbilityData } from '../../../../data/ability-data';
+import { AbilityKeyword } from '../../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeatureType } from '../../../../enums/feature-type';
@@ -209,6 +211,24 @@ export const AbilityPanel = (props: Props) => {
 										<Field
 											label='Notes'
 											value={<Markdown text={parseText(customization.notes)} useSpan={true} />}
+										/>
+										: null
+								}
+								{
+									props.ability.keywords.includes(AbilityKeyword.Charge) && (props.ability.id !== AbilityData.freeStrikeMelee.id) ?
+										<Alert
+											type='info'
+											showIcon={true}
+											message='This ability can be used in place of a melee free strike when you take the Charge action.'
+										/>
+										: null
+								}
+								{
+									props.ability.keywords.includes(AbilityKeyword.Routine) ?
+										<Alert
+											type='info'
+											showIcon={true}
+											message='This ability is a Routine.'
 										/>
 										: null
 								}

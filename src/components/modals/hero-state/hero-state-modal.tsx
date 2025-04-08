@@ -217,9 +217,9 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setRecoveriesUsed = (value: number) => {
+		const setRecoveries = (value: number) => {
 			const copy = Utils.copy(hero);
-			copy.state.recoveriesUsed = HeroLogic.getRecoveries(hero) - value;
+			copy.state.recoveriesUsed = Math.max(0, HeroLogic.getRecoveries(hero) - Math.max(0, value));
 			setHero(copy);
 			props.onChange(copy);
 		};
@@ -348,7 +348,7 @@ export const HeroStateModal = (props: Props) => {
 							suffix={`/ ${HeroLogic.getRecoveries(hero)}`}
 							min={0}
 							max={HeroLogic.getRecoveries(hero)}
-							onChange={setRecoveriesUsed}
+							onChange={setRecoveries}
 						/>
 					</Col>
 					<Col span={8}>

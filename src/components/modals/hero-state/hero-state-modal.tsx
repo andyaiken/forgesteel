@@ -280,7 +280,7 @@ export const HeroStateModal = (props: Props) => {
 				<Row gutter={[ 16, 16 ]}>
 					<Col span={16}>
 						<NumberSpin
-							label='Damage/Regain Stamina'
+							label='Stamina'
 							value={damageOrRegainValue}
 							max={hero.state.staminaDamage}
 							onChange={setDamageOrRegainValue}

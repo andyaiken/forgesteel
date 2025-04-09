@@ -232,7 +232,7 @@ const HealthPanel = (props: Props) => {
 							<InputNumber style={{ width: '75px' }} min={0} value={damageValue} onChange={value => setDamageValue(value || 0)} />
 						</NumberSpin>
 						<Button block={true} disabled={damageValue === 0} onClick={takeDamage}>Take Damage</Button>
-						<Button block={true} disabled={damageValue === 0} onClick={heal}>Heal</Button>
+						<Button block={true} disabled={damageValue === 0} onClick={heal}>Regain Stamina</Button>
 						<Button block={true} disabled={damageValue === 0} onClick={addTemp}>Add Temporary Stamina</Button>
 						{
 							props.recoveriesMax > 0 ?

@@ -3,7 +3,9 @@ import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
 import { AbilityLogic } from '../../../logic/ability-logic';
 import { Collections } from '../../../utils/collections';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
+import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
+import { FormatLogic } from '../../../logic/format-logic';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import type { PowerRoll } from '../../../models/power-roll';
@@ -94,6 +96,14 @@ export const PowerRollPanel = (props: Props) => {
 					const potency = `weak ${HeroLogic.calculatePotency(props.hero, 'weak')}, average ${HeroLogic.calculatePotency(props.hero, 'average')}, strong ${HeroLogic.calculatePotency(props.hero, 'strong')}`;
 					sections.push(<Field key='potency' label='Potency' value={potency} />);
 				}
+
+				HeroLogic.getFeatures(props.hero)
+					.filter(f => f.type === FeatureType.AbilityDamage)
+					.filter(f => f.data.keywords.every(kw => props.ability?.keywords.includes(kw)))
+					.forEach(f => {
+						const value = `${FormatLogic.getModifier(f.data)} ${f.data.damageType}`;
+						sections.push(<Field key={f.id} label={f.name || 'Damage'} value={value} />);
+					});
 			}
 
 			if (sections.length > 0) {

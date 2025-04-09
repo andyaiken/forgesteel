@@ -115,6 +115,7 @@ export class AbilityLogic {
 	static getTierEffect = (value: string, tier: number, ability: Ability, hero: Hero) => {
 		const dmgMelee = HeroLogic.getMeleeDamageBonus(hero, ability);
 		const dmgRanged = HeroLogic.getRangedDamageBonus(hero, ability);
+		const dmgBonus = HeroLogic.getFeatureDamageBonus(hero, ability);
 
 		return value
 			.split(';')
@@ -168,6 +169,8 @@ export class AbilityLogic {
 								break;
 						}
 					}
+
+					value += dmgBonus;
 
 					section.toLowerCase().split(' ').forEach(token => {
 						if ((token === 'damage') || (token === 'dmg')) {

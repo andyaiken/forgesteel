@@ -1,14 +1,11 @@
 import { Alert, Button, Divider, Drawer, Flex, Segmented, Space } from 'antd';
-import { ArrowUpOutlined, CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
-import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
+import { ArrowUpOutlined, CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Collections } from '../../../utils/collections';
-import { Condition } from '../../../models/condition';
-import { ConditionPanel } from '../../panels/condition/condition-panel';
-import { ConditionSelectModal } from '../condition-select/condition-select-modal';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Empty } from '../../controls/empty/empty';
 import { Expander } from '../../controls/expander/expander';
 import { FactoryLogic } from '../../../logic/factory-logic';
+import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroHealthPanel } from '../../panels/health/health-panel';
@@ -48,7 +45,6 @@ export const HeroStateModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ page, setPage ] = useState<HeroStatePage>(props.startPage);
 	const [ shopVisible, setShopVisible ] = useState<boolean>(false);
-	const [ conditionsVisible, setConditionsVisible ] = useState<boolean>(false);
 	const [ projectsVisible, setProjectsVisible ] = useState<boolean>(false);
 
 	const getHeroSection = () => {
@@ -101,6 +97,22 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const gainSurges = () => {
+			const copy = Utils.copy(hero);
+			copy.state.heroTokens -= 1;
+			copy.state.surges += 2;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const gainStamina = () => {
+			const copy = Utils.copy(hero);
+			copy.state.heroTokens -= 2;
+			copy.state.staminaDamage = Math.max(copy.state.staminaDamage - HeroLogic.getRecoveryValue(copy), 0);
+			setHero(copy);
+			props.onChange(copy);
+		};
+
 		const startEncounter = () => {
 			const copy = Utils.copy(hero);
 			copy.state.heroicResource = copy.state.victories;
@@ -112,13 +124,7 @@ export const HeroStateModal = (props: Props) => {
 			const copy = Utils.copy(hero);
 			copy.state.heroicResource = 0;
 			copy.state.victories += 1;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const takeRespite = () => {
-			const copy = Utils.copy(hero);
-			HeroLogic.takeRespite(copy);
+			copy.state.surges = 0;
 			setHero(copy);
 			props.onChange(copy);
 		};
@@ -139,22 +145,20 @@ export const HeroStateModal = (props: Props) => {
 				/>
 				{
 					hero.state.surges > 0 ?
-						<Space direction='vertical' style={{ width: '100%' }}>
-							<Alert
-								type='info'
-								showIcon={true}
-								message={`Spend 1 - 3 surges to add ${hero.class ? Math.max(...hero.class.characteristics.map(ch => ch.value)) : 0} damage per surge to one target.`}
-							/>
-							{
-								(hero.state.surges >= 2) ?
-									<Alert
-										type='info'
-										showIcon={true}
-										message='Spend 2 surges to increase an ability’s potency by 1 for a single target.'
-									/>
-									: null
-							}
-						</Space>
+						<Alert
+							type='info'
+							showIcon={true}
+							message={`Spend 1 - 3 surges to add ${hero.class ? Math.max(...hero.class.characteristics.map(ch => ch.value)) : 0} damage per surge to one target.`}
+						/>
+						: null
+				}
+				{
+					hero.state.surges >= 2 ?
+						<Alert
+							type='info'
+							showIcon={true}
+							message='Spend 2 surges to increase an ability’s potency by 1 for a single target.'
+						/>
 						: null
 				}
 				<NumberSpin
@@ -185,6 +189,44 @@ export const HeroStateModal = (props: Props) => {
 					min={0}
 					onChange={setHeroTokens}
 				/>
+				{
+					hero.state.heroTokens > 0 ?
+						<Alert
+							type='info'
+							showIcon={true}
+							message={'Spend a hero token to gain two surges.'}
+							action={<Button onClick={gainSurges}>+2 Surges</Button>}
+						/>
+						: null
+				}
+				{
+					hero.state.heroTokens > 0 ?
+						<Alert
+							type='info'
+							showIcon={true}
+							message={'Spend a hero token when you: (a) fail a saving throw to succeed on it instead; (b) fail a test or succeed on a test with a consequence to turn the failure into a success and to lose any consequence suffered.'}
+						/>
+						: null
+				}
+				{
+					hero.state.heroTokens >= 2 ?
+						<Alert
+							type='info'
+							showIcon={true}
+							message={'Spend 2 hero tokens on your turn or whenever you take damage (no action required) to regain Stamina equal to your Recovery value without spending a Recovery.'}
+							action={
+								<div style={{ margin: '10px 0' }}>
+									<Field
+										orientation='vertical'
+										label='Stamina'
+										value={`${HeroLogic.getStamina(hero) - hero.state.staminaDamage} / ${HeroLogic.getStamina(hero)}`}
+									/>
+									<Button disabled={hero.state.staminaDamage === 0} onClick={gainStamina}>+{HeroLogic.getRecoveryValue(hero)} Stamina</Button>
+								</div>
+							}
+						/>
+						: null
+				}
 				<NumberSpin
 					label='Renown'
 					value={hero.state.renown}
@@ -203,7 +245,6 @@ export const HeroStateModal = (props: Props) => {
 						key='start-encounter'
 						style={{ flex: '1 1 0' }}
 						className='tall-button'
-						type='primary'
 						onClick={startEncounter}
 					>
 						<div>
@@ -217,27 +258,12 @@ export const HeroStateModal = (props: Props) => {
 						key='end-encounter'
 						style={{ flex: '1 1 0' }}
 						className='tall-button'
-						type='primary'
 						onClick={endEncounter}
 					>
 						<div>
 							<div>End Encounter</div>
 							<div className='subtext'>
 								+1 Victory
-							</div>
-						</div>
-					</Button>
-					<Button
-						key='take-respite'
-						style={{ flex: '1 1 0' }}
-						className='tall-button'
-						type='primary'
-						onClick={takeRespite}
-					>
-						<div>
-							<div>Take a Respite</div>
-							<div className='subtext'>
-								24 hours of rest
 							</div>
 						</div>
 					</Button>
@@ -252,142 +278,54 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(h);
 		};
 
-		const setHidden = (value: boolean) => {
-			const copy = Utils.copy(hero);
-			copy.state.hidden = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
+		return (
+			<HeroHealthPanel
+				hero={hero}
+				showEncounterControls={props.showEncounterControls}
+				onChange={onHeroChange}
+			/>
+		);
+	};
 
-		const setActed = (value: boolean) => {
+	const getRespiteSection = () => {
+		const takeRespite = () => {
 			const copy = Utils.copy(hero);
-			copy.state.acted = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const setDefeated = (value: boolean) => {
-			const copy = Utils.copy(hero);
-			copy.state.defeated = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const addCondition = (type: ConditionType) => {
-			const copy = Utils.copy(hero);
-			copy.state.conditions.push({
-				id: Utils.guid(),
-				type: type,
-				text: '',
-				ends: ConditionEndType.EndOfTurn
-			});
-			setHero(copy);
-			setConditionsVisible(false);
-			props.onChange(copy);
-		};
-
-		const editCondition = (condition: Condition) => {
-			const copy = Utils.copy(hero);
-			const index = copy.state.conditions.findIndex(c => c.id === condition.id);
-			if (index !== -1) {
-				copy.state.conditions[index] = condition;
-				setHero(copy);
-				props.onChange(copy);
-			}
-		};
-
-		const deleteCondition = (condition: Condition) => {
-			const copy = Utils.copy(hero);
-			copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
+			HeroLogic.takeRespite(copy);
 			setHero(copy);
 			props.onChange(copy);
 		};
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<HeaderText>
-					Stamina and Recoveries
-				</HeaderText>
-				<HeroHealthPanel hero={hero} onChange={onHeroChange} />
-				{
-					props.showEncounterControls ?
-						<>
-							<Divider />
-							<Flex align='center' justify='space-evenly' gap={10}>
-								<Button
-									key='hidden'
-									style={{ flex: '1 1 0' }}
-									className='tall-button'
-									onClick={() => setHidden(!hero.state.hidden)}
-								>
-									<div>
-										<div>
-											{hero.state.hidden ? 'Hidden' : 'Not Hidden'}
-										</div>
-										<div className='subtext'>
-											You are {hero.state.hidden ? 'hidden' : 'not hidden'}
-										</div>
-									</div>
-								</Button>
-								<Button
-									key='acted'
-									style={{ flex: '1 1 0' }}
-									className='tall-button'
-									onClick={() => setActed(!hero.state.acted)}
-								>
-									<div>
-										<div>
-											{hero.state.acted ? 'Acted' : 'Ready'}
-										</div>
-										<div className='subtext'>
-											You have {hero.state.acted ? 'taken your turn' : 'not taken your turn'}
-										</div>
-									</div>
-								</Button>
-								<Button
-									key='defeated'
-									style={{ flex: '1 1 0' }}
-									className='tall-button'
-									onClick={() => setDefeated(!hero.state.defeated)}
-								>
-									<div>
-										<div>
-											{hero.state.defeated ? 'Defeated' : 'Active'}
-										</div>
-										<div className='subtext'>
-											You are {hero.state.defeated ? 'defeated' : 'not defeated'}
-										</div>
-									</div>
-								</Button>
-							</Flex>
-						</>
-						: null
-				}
-				<HeaderText
-					extra={
-						<Button icon={<PlusOutlined />} onClick={() => setConditionsVisible(true)} />
-					}
+				<HeaderText>Respite</HeaderText>
+				<div className='ds-text'>
+					Taking a respite has the following effects:
+				</div>
+				<ul>
+					<li>
+						Your Stamina and Recoveries reset (and any temporary Stamina goes away)
+					</li>
+					<li>
+						Your Victories are turned into XP
+					</li>
+					<li>
+						Any conditions affecting you are removed
+					</li>
+				</ul>
+				<Divider />
+				<Button
+					key='take-respite'
+					block={true}
+					className='tall-button'
+					onClick={takeRespite}
 				>
-					Conditions
-				</HeaderText>
-				{
-					hero.state.conditions.map(c => (
-						<ConditionPanel
-							key={c.id}
-							condition={c}
-							onChange={editCondition}
-							onDelete={deleteCondition}
-						/>
-					))
-				}
-				{
-					hero.state.conditions.length === 0 ?
-						<Empty text='You are not affected by any conditions.' />
-						: null
-				}
-				<Drawer open={conditionsVisible} onClose={() => setConditionsVisible(false)} closeIcon={null} width='500px'>
-					<ConditionSelectModal onSelect={addCondition} onClose={() => setConditionsVisible(false)} />
-				</Drawer>
+					<div>
+						<div>Take a Respite</div>
+						<div className='subtext'>
+							24 hours of rest
+						</div>
+					</div>
+				</Button>
 			</Space>
 		);
 	};
@@ -579,6 +517,8 @@ export const HeroStateModal = (props: Props) => {
 				return getHeroSection();
 			case HeroStatePage.Vitals:
 				return getVitalsSection();
+			case HeroStatePage.Respite:
+				return getRespiteSection();
 			case HeroStatePage.Inventory:
 				return getInventorySection();
 			case HeroStatePage.Projects:
@@ -598,6 +538,7 @@ export const HeroStateModal = (props: Props) => {
 							options={[
 								HeroStatePage.Hero,
 								HeroStatePage.Vitals,
+								HeroStatePage.Respite,
 								HeroStatePage.Inventory,
 								HeroStatePage.Projects,
 								HeroStatePage.Notes

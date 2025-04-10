@@ -1,5 +1,5 @@
 import { Alert, Drawer, Flex, Tag } from 'antd';
-import { Monster, MonsterGroup, MonsterState } from '../../../../models/monster';
+import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Ability } from '../../../../models/ability';
 import { AbilityModal } from '../../../modals/ability/ability-modal';
 import { AbilityPanel } from '../ability-panel/ability-panel';
@@ -12,10 +12,10 @@ import { Field } from '../../../controls/field/field';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
+import { MonsterHealthPanel } from '../../health/health-panel';
 import { MonsterLabel } from '../../monster-label/monster-label';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
-import { MonsterStatePanel } from '../../monster-state/monster-state-panel';
 import { MonsterToken } from '../../../controls/token/token';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
@@ -30,7 +30,6 @@ interface Props {
 	monsterGroup?: MonsterGroup;
 	options: Options;
 	mode?: PanelMode;
-	canRoll?: boolean;
 	updateMonster?: (monster: Monster) => void;
 }
 
@@ -38,9 +37,8 @@ export const MonsterPanel = (props: Props) => {
 	const [ monster, setMonster ] = useState<Monster>(Utils.copy(props.monster));
 	const [ selectedAbility, setSelectedAbility ] = useState<Ability | null>(null);
 
-	const updateState = (state: MonsterState) => {
+	const updateMonster = (monster: Monster) => {
 		const copy = Utils.copy(monster);
-		copy.state = state;
 		setMonster(copy);
 		if (props.updateMonster) {
 			props.updateMonster(copy);
@@ -86,11 +84,7 @@ export const MonsterPanel = (props: Props) => {
 					</Flex>
 					{
 						props.updateMonster ?
-							<MonsterStatePanel
-								state={monster.state}
-								source={monster.role.organization === MonsterOrganizationType.Minion ? 'minion' : 'monster'}
-								updateState={updateState}
-							/>
+							<MonsterHealthPanel monster={monster} onChange={updateMonster} />
 							: null
 					}
 					<div className='stats'>

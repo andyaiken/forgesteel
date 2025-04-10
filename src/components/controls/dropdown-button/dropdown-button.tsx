@@ -1,10 +1,12 @@
 import { Button, Dropdown } from 'antd';
+import { CSSProperties, ReactNode } from 'react';
 import { DownOutlined } from '@ant-design/icons';
-import { ReactNode } from 'react';
 
 import './dropdown-button.scss';
 
 interface Props {
+	className?: string;
+	style?: CSSProperties;
 	label: string;
 	items: { key: string, label: ReactNode }[];
 	onClick: (key: string) => void;
@@ -13,7 +15,7 @@ interface Props {
 export const DropdownButton = (props: Props) => {
 	try {
 		return (
-			<div className='dropdown-button'>
+			<div className='dropdown-button' style={props.style}>
 				<Dropdown
 					menu={{
 						items: props.items,
@@ -21,7 +23,7 @@ export const DropdownButton = (props: Props) => {
 					}}
 					trigger={[ 'click' ]}
 				>
-					<Button block={true}>
+					<Button className={props.className} block={true}>
 						{props.label}
 						<DownOutlined />
 					</Button>

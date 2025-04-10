@@ -163,6 +163,17 @@ td {
 	&:disabled {
 		color: rgb(120, 120, 120);
 	}
+
+	&.tall-button {
+		min-width: 145px;
+		height: 60px;
+
+		.subtext {
+			margin-top: 5px;
+			font-size: 10px;
+			opacity: 0.75;
+		}
+	}
 }
 
 .ant-collapse {

@@ -1,12 +1,24 @@
-import { Alert, Button, Divider, Flex, InputNumber, Progress, Space } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, InputNumber, Progress, Space } from 'antd';
+import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
+import { Encounter, EncounterSlot } from '../../../models/encounter';
+import { Collections } from '../../../utils/collections';
+import { Condition } from '../../../models/condition';
+import { ConditionPanel } from '../condition/condition-panel';
+import { ConditionSelectModal } from '../../modals/condition-select/condition-select-modal';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
+import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
+import { Empty } from '../../controls/empty/empty';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Field } from '../../controls/field/field';
+import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { Monster } from '../../../models/monster';
 import { MonsterLogic } from '../../../logic/monster-logic';
+import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
+import { MonsterToken } from '../../controls/token/token';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
+import { PlusOutlined } from '@ant-design/icons';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
@@ -14,6 +26,7 @@ import './health-panel.scss';
 
 interface HeroProps {
 	hero: Hero;
+	showEncounterControls: boolean;
 	onChange: (hero: Hero) => void;
 }
 
@@ -53,22 +66,101 @@ export const HeroHealthPanel = (props: HeroProps) => {
 		props.onChange(copy);
 	};
 
+	const setHidden = (value: boolean) => {
+		const copy = Utils.copy(hero);
+		copy.state.hidden = value;
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const setActed = (value: boolean) => {
+		const copy = Utils.copy(hero);
+		copy.state.acted = value;
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const setDefeated = (value: boolean) => {
+		const copy = Utils.copy(hero);
+		copy.state.defeated = value;
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const addCondition = (condition: Condition) => {
+		const copy = Utils.copy(hero);
+		copy.state.conditions.push(condition);
+		setHero(copy);
+		props.onChange(copy);
+	};
+
+	const editCondition = (condition: Condition) => {
+		const copy = Utils.copy(hero);
+		const index = copy.state.conditions.findIndex(c => c.id === condition.id);
+		if (index !== -1) {
+			copy.state.conditions[index] = condition;
+			setHero(copy);
+			props.onChange(copy);
+		}
+	};
+
+	const deleteCondition = (condition: Condition) => {
+		const copy = Utils.copy(hero);
+		copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
+		setHero(copy);
+		props.onChange(copy);
+	};
+
 	return (
 		<ErrorBoundary>
 			<HealthPanel
-				staminaMax={HeroLogic.getStamina(hero)}
-				staminaDamage={hero.state.staminaDamage}
-				staminaTemp={hero.state.staminaTemp}
-				recoveriesMax={HeroLogic.getRecoveries(hero)}
-				recoveriesUsed={hero.state.recoveriesUsed}
-				recoveryValue={HeroLogic.getRecoveryValue(hero)}
-				isWinded={HeroLogic.isWinded(hero)}
-				immunities={HeroLogic.getDamageModifiers(hero, DamageModifierType.Immunity)}
-				weaknesses={HeroLogic.getDamageModifiers(hero, DamageModifierType.Weakness)}
-				takeDamage={takeDamage}
-				heal={heal}
-				addTemp={addTemp}
-				spendRecovery={spendRecovery}
+				stamina={{
+					staminaMax: HeroLogic.getStamina(hero),
+					staminaDamage: hero.state.staminaDamage,
+					isWinded: HeroLogic.isWinded(hero),
+					immunities: HeroLogic.getDamageModifiers(hero, DamageModifierType.Immunity),
+					weaknesses: HeroLogic.getDamageModifiers(hero, DamageModifierType.Weakness),
+					takeDamage: takeDamage,
+					heal: heal
+				}}
+				staminaTemp={{
+					staminaTemp: hero.state.staminaTemp,
+					addTemp: addTemp
+				}}
+				recoveries={{
+					recoveriesMax: HeroLogic.getRecoveries(hero),
+					recoveriesUsed: hero.state.recoveriesUsed,
+					recoveryValue: HeroLogic.getRecoveryValue(hero),
+					spendRecovery: spendRecovery
+				}}
+				hidden={
+					props.showEncounterControls ?
+						{
+							value: hero.state.hidden,
+							setValue: setHidden
+						}
+						: undefined
+				}
+				acted={
+					props.showEncounterControls ?
+						{
+							value: hero.state.hidden,
+							setValue: setActed
+						}
+						: undefined
+				}
+				defeated={
+					props.showEncounterControls ?
+						{
+							value: hero.state.hidden,
+							setValue: setDefeated
+						}
+						: undefined
+				}
+				conditions={hero.state.conditions}
+				addCondition={addCondition}
+				editCondition={editCondition}
+				deleteCondition={deleteCondition}
 			/>
 		</ErrorBoundary>
 	);
@@ -107,154 +199,364 @@ export const MonsterHealthPanel = (props: MonsterProps) => {
 		props.onChange(copy);
 	};
 
+	const setHidden = (value: boolean) => {
+		const copy = Utils.copy(monster);
+		copy.state.hidden = value;
+		setMonster(copy);
+		props.onChange(copy);
+	};
+
+	const setDefeated = (value: boolean) => {
+		const copy = Utils.copy(monster);
+		copy.state.defeated = value;
+		setMonster(copy);
+		props.onChange(copy);
+	};
+
+	const addCondition = (condition: Condition) => {
+		const copy = Utils.copy(monster);
+		copy.state.conditions.push(condition);
+		setMonster(copy);
+		props.onChange(copy);
+	};
+
+	const editCondition = (condition: Condition) => {
+		const copy = Utils.copy(monster);
+		const index = copy.state.conditions.findIndex(c => c.id === condition.id);
+		if (index !== -1) {
+			copy.state.conditions[index] = condition;
+			setMonster(copy);
+			props.onChange(copy);
+		}
+	};
+
+	const deleteCondition = (condition: Condition) => {
+		const copy = Utils.copy(monster);
+		copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
+		setMonster(copy);
+		props.onChange(copy);
+	};
+
 	return (
 		<ErrorBoundary>
 			<HealthPanel
-				staminaMax={MonsterLogic.getStamina(monster)}
-				staminaDamage={monster.state.staminaDamage}
-				staminaTemp={monster.state.staminaTemp}
-				recoveriesMax={0}
-				recoveriesUsed={0}
-				recoveryValue={0}
-				isWinded={MonsterLogic.isWinded(monster)}
-				immunities={MonsterLogic.getDamageModifiers(monster, DamageModifierType.Immunity)}
-				weaknesses={MonsterLogic.getDamageModifiers(monster, DamageModifierType.Weakness)}
-				takeDamage={takeDamage}
-				heal={heal}
-				addTemp={addTemp}
-				spendRecovery={() => null}
+				stamina={
+					monster.role.organization !== MonsterOrganizationType.Minion ?
+						{
+							staminaMax: MonsterLogic.getStamina(monster),
+							staminaDamage: monster.state.staminaDamage,
+							isWinded: MonsterLogic.isWinded(monster),
+							immunities: MonsterLogic.getDamageModifiers(monster, DamageModifierType.Immunity),
+							weaknesses: MonsterLogic.getDamageModifiers(monster, DamageModifierType.Weakness),
+							takeDamage: takeDamage,
+							heal: heal
+						}
+						: undefined
+				}
+				staminaTemp={
+					monster.role.organization !== MonsterOrganizationType.Minion ?
+						{
+							staminaTemp: monster.state.staminaTemp,
+							addTemp: addTemp
+						}
+						: undefined
+				}
+				hidden={{
+					value: monster.state.hidden,
+					setValue: setHidden
+				}}
+				defeated={{
+					value: monster.state.defeated,
+					setValue: setDefeated
+				}}
+				conditions={monster.state.conditions}
+				addCondition={addCondition}
+				editCondition={editCondition}
+				deleteCondition={deleteCondition}
+			/>
+		</ErrorBoundary>
+	);
+};
+
+interface MinionGroupProps {
+	slot: EncounterSlot;
+	encounter: Encounter;
+	onChange: (slot: EncounterSlot) => void;
+}
+
+export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
+	const [ slot, setSlot ] = useState<EncounterSlot>(Utils.copy(props.slot));
+
+	const takeDamage = (value: number) => {
+		const damageToTemp = Math.min(value, slot.state.staminaTemp);
+		const damageToStamina = value - damageToTemp;
+
+		const copy = Utils.copy(slot);
+		copy.state.staminaDamage += damageToStamina;
+		copy.state.staminaTemp -= damageToTemp;
+		setSlot(copy);
+		props.onChange(copy);
+	};
+
+	const heal = (value: number) => {
+		const copy = Utils.copy(slot);
+		copy.state.staminaDamage = Math.max(copy.state.staminaDamage - value, 0);
+		setSlot(copy);
+		props.onChange(copy);
+	};
+
+	const setDefeated = (value: boolean) => {
+		const copy = Utils.copy(slot);
+		copy.state.defeated = value;
+		setSlot(copy);
+		props.onChange(copy);
+	};
+
+	const setCaptainID = (value: string | undefined) => {
+		const copy = Utils.copy(slot);
+		copy.state.captainID = value;
+		setSlot(copy);
+		props.onChange(copy);
+	};
+
+	const addCondition = (condition: Condition) => {
+		const copy = Utils.copy(slot);
+		copy.state.conditions.push(condition);
+		setSlot(copy);
+		props.onChange(copy);
+	};
+
+	const editCondition = (condition: Condition) => {
+		const copy = Utils.copy(slot);
+		const index = copy.state.conditions.findIndex(c => c.id === condition.id);
+		if (index !== -1) {
+			copy.state.conditions[index] = condition;
+			setSlot(copy);
+			props.onChange(copy);
+		}
+	};
+
+	const deleteCondition = (condition: Condition) => {
+		const copy = Utils.copy(slot);
+		copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
+		setSlot(copy);
+		props.onChange(copy);
+	};
+
+	return (
+		<ErrorBoundary>
+			<HealthPanel
+				stamina={{
+					staminaMax: Collections.sum(props.slot.monsters, m => MonsterLogic.getStamina(m)),
+					staminaDamage: slot.state.staminaDamage,
+					isWinded: false,
+					immunities: [],
+					weaknesses: [],
+					takeDamage: takeDamage,
+					heal: heal
+				}}
+				defeated={{
+					value: slot.state.defeated,
+					setValue: setDefeated
+				}}
+				captain={{
+					captainID: slot.state.captainID,
+					candidates: props.encounter.groups
+						.flatMap(g => g.slots)
+						.flatMap(s => s.monsters)
+						.filter(m => m.role.organization !== MonsterOrganizationType.Minion)
+						.filter(m => !m.state.defeated),
+					setCaptainID: setCaptainID
+				}}
+				conditions={slot.state.conditions}
+				addCondition={addCondition}
+				editCondition={editCondition}
+				deleteCondition={deleteCondition}
 			/>
 		</ErrorBoundary>
 	);
 };
 
 interface Props {
-	staminaMax: number;
-	staminaDamage: number;
-	staminaTemp: number;
-	recoveriesMax: number;
-	recoveriesUsed: number;
-	recoveryValue: number;
-	isWinded: boolean;
-	immunities: { damageType: string, value: number }[];
-	weaknesses: { damageType: string, value: number }[];
-	takeDamage: (value: number) => void;
-	heal: (value: number) => void;
-	addTemp: (value: number) => void;
-	spendRecovery: () => void;
+	stamina?: {
+		staminaMax: number;
+		staminaDamage: number;
+		isWinded: boolean;
+		immunities: { damageType: string, value: number }[];
+		weaknesses: { damageType: string, value: number }[];
+		takeDamage: (value: number) => void;
+		heal: (value: number) => void;
+	};
+	staminaTemp?: {
+		staminaTemp: number;
+		addTemp: (value: number) => void;
+	}
+	recoveries?: {
+		recoveriesMax: number;
+		recoveriesUsed: number;
+		recoveryValue: number;
+		spendRecovery: () => void;
+	}
+	hidden?: {
+		value: boolean;
+		setValue: (value: boolean) => void;
+	};
+	acted?: {
+		value: boolean;
+		setValue: (value: boolean) => void;
+	};
+	defeated?: {
+		value: boolean;
+		setValue: (value: boolean) => void;
+	};
+	captain?: {
+		captainID: string | undefined;
+		candidates: Monster[];
+		setCaptainID: (value: string | undefined) => void;
+	}
+	conditions: Condition[];
+	addCondition: (condition: Condition) => void;
+	editCondition: (condition: Condition) => void;
+	deleteCondition: (condition: Condition) => void;
 }
 
 const HealthPanel = (props: Props) => {
 	const [ damageValue, setDamageValue ] = useState<number>(0);
+	const [ conditionsVisible, setConditionsVisible ] = useState<boolean>(false);
 
 	const takeDamage = () => {
-		props.takeDamage(damageValue);
+		if (props.stamina) {
+			props.stamina.takeDamage(damageValue);
+		}
 		setDamageValue(0);
 	};
 
 	const heal = () => {
-		props.heal(damageValue);
+		if (props.stamina) {
+			props.stamina.heal(damageValue);
+		}
 		setDamageValue(0);
 	};
 
 	const addTemp = () => {
-		props.addTemp(damageValue);
+		if (props.staminaTemp) {
+			props.staminaTemp.addTemp(damageValue);
+		}
 		setDamageValue(0);
+	};
+
+	const addCondition = (type: ConditionType) => {
+		setConditionsVisible(false);
+		props.addCondition({
+			id: Utils.guid(),
+			type: type,
+			text: '',
+			ends: ConditionEndType.EndOfTurn
+		});
 	};
 
 	return (
 		<ErrorBoundary>
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<div className='health-panel'>
-					<div className='health-gauges'>
-						{
-							props.staminaTemp > 0 ?
-								<Progress
-									className='stamina-temp-progress'
-									type='dashboard'
-									percent={100 * props.staminaTemp / props.staminaMax}
-									showInfo={false}
-									status='active'
-								/>
-								: null
-						}
-						<Progress
-							className='stamina-progress'
-							type='dashboard'
-							percent={100 * (props.staminaMax - props.staminaDamage) / props.staminaMax}
-							showInfo={false}
-							status={props.isWinded ? 'exception' : 'active'}
-						/>
-						{
-							props.recoveriesMax > 0 ?
-								<Progress
-									className='recovery-progress'
-									type='dashboard'
-									percent={100 * (props.recoveriesMax - props.recoveriesUsed) / props.recoveriesMax}
-									showInfo={false}
-									status='active'
-								/>
-								: null
-						}
-						<div className='gauge-info'>
-							{
-								props.staminaTemp > 0 ?
-									<>
-										<div>
-											Temp <b>{props.staminaTemp}</b>
-										</div>
-										<Divider style={{ margin: '5px 0' }} />
-									</>
-									: null
-							}
-							<div>
-								Sta <b>{props.staminaDamage ? `${props.staminaMax - props.staminaDamage} / ${props.staminaMax}` : `${props.staminaMax}`}</b>
-							</div>
-							{
-								props.recoveriesMax > 0 ?
-									<>
-										<Divider style={{ margin: '5px 0' }} />
-										<div>
-											Rec <b>{props.recoveriesUsed ? `${props.recoveriesMax - props.recoveriesUsed} / ${props.recoveriesMax}` : `${props.recoveriesMax}`}</b>
-										</div>
-									</>
-									: null
-							}
-						</div>
-					</div>
-					<Flex style={{ flex: '1 1 0' }} vertical={true} align='center' justify='center' gap={5}>
-						<NumberSpin
-							min={0}
-							steps={[ 1, 10 ]}
-							value={damageValue}
-							onChange={setDamageValue}
-						>
-							<InputNumber style={{ width: '75px' }} min={0} value={damageValue} onChange={value => setDamageValue(value || 0)} />
-						</NumberSpin>
-						<Button block={true} disabled={damageValue === 0} onClick={takeDamage}>Take Damage</Button>
-						<Button block={true} disabled={damageValue === 0} onClick={heal}>Regain Stamina</Button>
-						<Button block={true} disabled={damageValue === 0} onClick={addTemp}>Add Temporary Stamina</Button>
-						{
-							props.recoveriesMax > 0 ?
-								<Button
-									block={true}
-									className='tall-button'
-									disabled={(props.staminaDamage === 0) || (props.recoveriesUsed >= props.recoveriesMax)}
-									onClick={props.spendRecovery}
-								>
-									<div>
-										<div>Spend a Recovery</div>
-										<div className='subtext'>
-											Regain {props.recoveryValue} Stamina
-										</div>
-									</div>
-								</Button>
-								: null
-						}
-					</Flex>
-				</div>
 				{
-					props.isWinded ?
+					props.stamina ?
+						<>
+							<HeaderText>
+								Stamina
+							</HeaderText>
+							<div className='health-panel'>
+								<div className='health-gauges'>
+									{
+										props.staminaTemp && (props.staminaTemp.staminaTemp > 0) ?
+											<Progress
+												className='stamina-temp-progress'
+												type='dashboard'
+												percent={100 * props.staminaTemp.staminaTemp / props.stamina!.staminaMax}
+												showInfo={false}
+												status='active'
+											/>
+											: null
+									}
+									<Progress
+										className='stamina-progress'
+										type='dashboard'
+										percent={100 * (props.stamina!.staminaMax - props.stamina!.staminaDamage) / props.stamina!.staminaMax}
+										showInfo={false}
+										status={props.stamina!.isWinded ? 'exception' : 'active'}
+									/>
+									{
+										props.recoveries ?
+											<Progress
+												className='recovery-progress'
+												type='dashboard'
+												percent={100 * (props.recoveries!.recoveriesMax - props.recoveries!.recoveriesUsed) / props.recoveries!.recoveriesMax}
+												showInfo={false}
+												status='active'
+											/>
+											: null
+									}
+									<div className='gauge-info'>
+										{
+											props.staminaTemp && (props.staminaTemp.staminaTemp > 0) ?
+												<>
+													<div>
+														Temp <b>{props.staminaTemp.staminaTemp}</b>
+													</div>
+													<Divider style={{ margin: '5px 0' }} />
+												</>
+												: null
+										}
+										<div>
+											Sta <b>{props.stamina!.staminaDamage ? `${props.stamina!.staminaMax - props.stamina!.staminaDamage} / ${props.stamina!.staminaMax}` : `${props.stamina!.staminaMax}`}</b>
+										</div>
+										{
+											props.recoveries ?
+												<>
+													<Divider style={{ margin: '5px 0' }} />
+													<div>
+														Rec <b>{props.recoveries!.recoveriesUsed ? `${props.recoveries!.recoveriesMax - props.recoveries!.recoveriesUsed} / ${props.recoveries!.recoveriesMax}` : `${props.recoveries!.recoveriesMax}`}</b>
+													</div>
+												</>
+												: null
+										}
+									</div>
+								</div>
+								<Flex style={{ flex: '1 1 0' }} vertical={true} align='center' justify='center' gap={5}>
+									<NumberSpin
+										min={0}
+										steps={[ 1, 10 ]}
+										value={damageValue}
+										onChange={setDamageValue}
+									>
+										<InputNumber style={{ width: '75px' }} min={0} value={damageValue} onChange={value => setDamageValue(value || 0)} />
+									</NumberSpin>
+									<Button block={true} disabled={damageValue === 0} onClick={takeDamage}>Take Damage</Button>
+									<Button block={true} disabled={damageValue === 0} onClick={heal}>Regain Stamina</Button>
+									{props.staminaTemp ? <Button block={true} disabled={damageValue === 0} onClick={addTemp}>Add Temporary Stamina</Button> : null}
+									{
+										props.recoveries ?
+											<Button
+												block={true}
+												className='tall-button'
+												disabled={(props.stamina!.staminaDamage === 0) || (props.recoveries!.recoveriesUsed >= props.recoveries!.recoveriesMax)}
+												onClick={props.recoveries!.spendRecovery}
+											>
+												<div>
+													<div>Spend a Recovery</div>
+													<div className='subtext'>
+														Regain {props.recoveries!.recoveryValue} Stamina
+													</div>
+												</div>
+											</Button>
+											: null
+									}
+								</Flex>
+							</div>
+						</>
+						: null
+				}
+				{
+					props.stamina && props.stamina.isWinded ?
 						<Alert
 							type='warning'
 							showIcon={true}
@@ -263,15 +565,136 @@ const HealthPanel = (props: Props) => {
 						: null
 				}
 				{
-					props.immunities.length > 0 ?
-						<Field label='Immunities' value={props.immunities.map(dm => `${dm.damageType} ${dm.value}`).join(', ')} />
+					props.stamina && props.stamina.immunities.length > 0 ?
+						<Field label='Immunities' value={props.stamina.immunities.map(dm => `${dm.damageType} ${dm.value}`).join(', ')} />
 						: null
 				}
 				{
-					props.weaknesses.length > 0 ?
-						<Field label='Weakness' value={props.weaknesses.map(dm => `${dm.damageType} ${dm.value}`).join(', ')} />
+					props.stamina && props.stamina.weaknesses.length > 0 ?
+						<Field label='Weakness' value={props.stamina.weaknesses.map(dm => `${dm.damageType} ${dm.value}`).join(', ')} />
 						: null
 				}
+				{
+					props.hidden || props.acted || props.defeated || props.captain ?
+						<>
+							<Divider />
+							<Flex align='center' justify='space-evenly' gap={10}>
+								{
+									props.hidden ?
+										<Button
+											key='hidden'
+											style={{ flex: '1 1 0' }}
+											className='tall-button'
+											onClick={() => props.hidden!.setValue(!props.hidden!.value)}
+										>
+											<div>
+												<div>
+													{props.hidden.value ? 'Hidden' : 'Not Hidden'}
+												</div>
+												<div className='subtext'>
+													You are {props.hidden.value ? 'hidden' : 'not hidden'}
+												</div>
+											</div>
+										</Button>
+										: null
+								}
+								{
+									props.acted ?
+										<Button
+											key='acted'
+											style={{ flex: '1 1 0' }}
+											className='tall-button'
+											onClick={() => props.acted!.setValue(!props.acted!.value)}
+										>
+											<div>
+												<div>
+													{props.acted.value ? 'Acted' : 'Ready'}
+												</div>
+												<div className='subtext'>
+													You have {props.acted.value ? 'taken your turn' : 'not taken your turn'}
+												</div>
+											</div>
+										</Button>
+										: null
+								}
+								{
+									props.defeated ?
+										<Button
+											key='defeated'
+											style={{ flex: '1 1 0' }}
+											className='tall-button'
+											onClick={() => props.defeated!.setValue(!props.defeated!.value)}
+										>
+											<div>
+												<div>
+													{props.defeated.value ? 'Defeated' : 'Active'}
+												</div>
+												<div className='subtext'>
+													You are {props.defeated.value ? 'defeated' : 'not defeated'}
+												</div>
+											</div>
+										</Button>
+										: null
+								}
+								{
+									props.captain ?
+										<DropdownButton
+											style={{ flex: '1 1 0' }}
+											className='tall-button'
+											label='Captain'
+											items={
+												props.captain.candidates.map(m => ({
+													key: m.id,
+													label: (
+														<div
+															style={{
+																display: 'flex',
+																alignItems: 'center',
+																gap: '10px',
+																padding: '5px',
+																borderRadius: '5px',
+																background: (m.id === props.captain!.captainID ? 'rgb(64, 150, 255)' : undefined),
+																color: (m.id === props.captain!.captainID ? 'rgb(255, 255, 255)' : undefined)
+															}}>
+															<MonsterToken monster={m} />
+															{m.name}
+														</div>
+													)
+												}))
+											}
+											onClick={props.captain.setCaptainID}
+										/>
+										: null
+								}
+							</Flex>
+						</>
+						: null
+				}
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={() => setConditionsVisible(true)} />
+					}
+				>
+					Conditions
+				</HeaderText>
+				{
+					props.conditions.map(c => (
+						<ConditionPanel
+							key={c.id}
+							condition={c}
+							onChange={props.editCondition}
+							onDelete={props.deleteCondition}
+						/>
+					))
+				}
+				{
+					props.conditions.length === 0 ?
+						<Empty text='You are not affected by any conditions.' />
+						: null
+				}
+				<Drawer open={conditionsVisible} onClose={() => setConditionsVisible(false)} closeIcon={null} width='500px'>
+					<ConditionSelectModal onSelect={addCondition} onClose={() => setConditionsVisible(false)} />
+				</Drawer>
 			</Space>
 		</ErrorBoundary>
 	);

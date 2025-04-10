@@ -2,7 +2,6 @@ import { Alert, Button, Divider, Drawer, Flex, Popover, Progress, Segmented, Spa
 import { EllipsisOutlined, HeartFilled, IdcardOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterSlot } from '../../../../models/encounter';
 import { HeroToken, MonsterToken } from '../../../controls/token/token';
-import { Monster, MonsterState } from '../../../../models/monster';
 import { AbilityPanel } from '../../elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { Collections } from '../../../../utils/collections';
@@ -24,11 +23,13 @@ import { HeroStateModal } from '../../../modals/hero-state/hero-state-modal';
 import { HeroStatePage } from '../../../../enums/hero-state-page';
 import { HeroicResourceBadge } from '../../../controls/badge/badge';
 import { Markdown } from '../../../controls/markdown/markdown';
+import { MinionGroupHealthPanel } from '../../health/health-panel';
+import { Modal } from '../../../modals/modal/modal';
+import { Monster } from '../../../../models/monster';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterModal } from '../../../modals/monster/monster-modal';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterSelectModal } from '../../../modals/monster-select/monster-select-modal';
-import { MonsterStateModal } from '../../../modals/monster-state/monster-state-modal';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
@@ -59,7 +60,7 @@ export const EncounterRunPanel = (props: Props) => {
 	const [ selectedMonster, setSelectedMonster ] = useState<Monster | null>(null);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
 	const [ selectedTerrain, setSelectedTerrain ] = useState<Terrain | null>(null);
-	const [ selectedSlot, setSelectedSlot ] = useState<EncounterSlot | null>(null);
+	const [ selectedMinionSlot, setSelectedMinionSlot ] = useState<EncounterSlot | null>(null);
 
 	const setRound = (value: number) => {
 		const copy = Utils.copy(encounter);
@@ -117,20 +118,6 @@ export const EncounterRunPanel = (props: Props) => {
 			setEncounter(copy);
 			props.onChange(copy);
 		}
-	};
-
-	const updateSlotState = (slot: EncounterSlot, state: MonsterState) => {
-		const copy = Utils.copy(encounter);
-		if (selectedSlot) {
-			copy.groups
-				.flatMap(g => g.slots)
-				.filter(s => s.id === slot.id)
-				.forEach(s => {
-					s.state = state;
-				});
-		}
-		setEncounter(copy);
-		props.onChange(copy);
 	};
 
 	const getCombatants = () => {
@@ -218,7 +205,7 @@ export const EncounterRunPanel = (props: Props) => {
 									{getMinionCaptainTag()}
 									{slot.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
 								</div>
-								<Button type='text' icon={<IdcardOutlined />} onClick={() => setSelectedSlot(slot)} />
+								<Button type='text' icon={<IdcardOutlined />} onClick={() => setSelectedMinionSlot(slot)} />
 							</div>
 							: null
 					}
@@ -364,6 +351,20 @@ export const EncounterRunPanel = (props: Props) => {
 				className += ' acted';
 			}
 
+			const getStaminaDescription = () => {
+				const max = HeroLogic.getStamina(hero);
+
+				let str = `${max}`;
+				if (hero.state.staminaDamage > 0) {
+					str = `${Math.max(max - hero.state.staminaDamage, 0)} / ${max}`;
+				}
+				if (hero.state.staminaTemp > 0) {
+					str += ` +${hero.state.staminaTemp}`;
+				}
+
+				return str;
+			};
+
 			return (
 				<div key={hero.id} className={className}>
 					<div className='group-column'>
@@ -409,7 +410,7 @@ export const EncounterRunPanel = (props: Props) => {
 									</div>
 								</div>
 								<div className='stamina-column'>
-									{HeroLogic.getStamina(hero)}
+									{getStaminaDescription()}
 									<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
 								</div>
 								<div className='conditions-column'>
@@ -833,15 +834,30 @@ export const EncounterRunPanel = (props: Props) => {
 								: null
 						}
 					</Drawer>
-					<Drawer open={!!selectedSlot} onClose={() => setSelectedSlot(null)} closeIcon={null} width='500px'>
+					<Drawer open={!!selectedMinionSlot} onClose={() => setSelectedMinionSlot(null)} closeIcon={null} width='500px'>
 						{
-							selectedSlot ?
-								<MonsterStateModal
-									state={selectedSlot.state}
-									source='minion-group'
-									encounter={encounter}
-									updateState={state => updateSlotState(selectedSlot, state)}
-									onClose={() => setSelectedSlot(null)}
+							selectedMinionSlot ?
+								<Modal
+									content={
+										<div style={{ padding: '20px' }}>
+											<MinionGroupHealthPanel
+												slot={selectedMinionSlot}
+												encounter={encounter}
+												onChange={slot => {
+													const copy = Utils.copy(encounter);
+													copy.groups.forEach(g => {
+														const index = g.slots.findIndex(s => s.id === slot.id);
+														if (index !== -1) {
+															g.slots[index] = slot;
+														}
+													});
+													setEncounter(copy);
+													props.onChange(copy);
+												}}
+											/>
+										</div>
+									}
+									onClose={() => setSelectedMinionSlot(null)}
 								/>
 								: null
 						}

@@ -48,7 +48,7 @@ export const AppHeader = (props: Props) => {
 									</div>
 								)}
 							>
-								<Button>
+								<Button type='primary'>
 									Actions
 									<DownOutlined />
 								</Button>

@@ -1,31 +1,5 @@
 # Development Plans
 
-### Respite
-
-* Create a new hero state page called Respite
-* Move 'Take Respite' button here
-* Add info on all the things that are going to be reset
-* Add info about respite actions
-
-### HealthPanel
-
-HealthPanel is going to become the 'Encounter State' control
-* This way there's a unified way to deal with stamina, conditions, etc
-* Move conditions into HealthPanel
-* Add HealthPanel to monsters, minion groups, and minions
-* Use HealthPanel for heroes, heroes in an encounter, monsters, minion groups, and minions
-
-| Feature           | Hero  | Hero (in encounter) | Monster | Minion Group | Minion  |
-|:------------------|:-----:|:-------------------:|:-------:|:------------:|:-------:|
-| Circles           |   X   |         X           |    X    |      X       |         |
-| Stamina           |   X   |         X           |    X    |      X       |         |
-| Recoveries        |   X   |         X           |         |              |         |
-| Set Captain       |       |                     |         |      X       |         |
-| Conditions        |   X   |         X           |    X    |      X       |    X    |
-| Active / Defeated |       |         X           |    X    |      X       |    X    |
-| Visible / Hidden  |       |         X           |    X    |              |    X    |
-| Ready / Acted     |       |         X           |    X    |      X       |         |
-
 ### Heroes
 
 * Make sure multiple melee / ranged damage bonuses are handled correctly
@@ -62,7 +36,7 @@ HealthPanel is going to become the 'Encounter State' control
 
 * Encounter
   * Monsters:
-    * Set 'used reaction' flag on monsters / minions
+    * Ability to set 'used reaction' flag on heroes / monsters / minions
     * Ability to duplicate / delete monsters in a slot
     * Button to roll for initiative (heroes / monsters)
     * Button to end current turn

@@ -1,5 +1,6 @@
-import { Alert, Button, Divider, Drawer, Flex, InputNumber, Progress, Space } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, InputNumber, Progress } from 'antd';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
+import { DownOutlined, PlusOutlined, UpOutlined } from '@ant-design/icons';
 import { Encounter, EncounterSlot } from '../../../models/encounter';
 import { Collections } from '../../../utils/collections';
 import { Condition } from '../../../models/condition';
@@ -18,7 +19,6 @@ import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterToken } from '../../controls/token/token';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
-import { PlusOutlined } from '@ant-design/icons';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
@@ -114,6 +114,7 @@ export const HeroHealthPanel = (props: HeroProps) => {
 	return (
 		<ErrorBoundary>
 			<HealthPanel
+				expandable={false}
 				stamina={{
 					staminaMax: HeroLogic.getStamina(hero),
 					staminaDamage: hero.state.staminaDamage,
@@ -240,6 +241,7 @@ export const MonsterHealthPanel = (props: MonsterProps) => {
 	return (
 		<ErrorBoundary>
 			<HealthPanel
+				expandable={true}
 				stamina={
 					monster.role.organization !== MonsterOrganizationType.Minion ?
 						{
@@ -346,6 +348,7 @@ export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
 	return (
 		<ErrorBoundary>
 			<HealthPanel
+				expandable={false}
 				stamina={{
 					staminaMax: Collections.sum(props.slot.monsters, m => MonsterLogic.getStamina(m)),
 					staminaDamage: slot.state.staminaDamage,
@@ -378,6 +381,7 @@ export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
 };
 
 interface Props {
+	expandable: boolean;
 	stamina?: {
 		staminaMax: number;
 		staminaDamage: number;
@@ -421,6 +425,7 @@ interface Props {
 }
 
 const HealthPanel = (props: Props) => {
+	const [ expanded, setExpanded ] = useState<boolean>(!props.expandable);
 	const [ damageValue, setDamageValue ] = useState<number>(0);
 	const [ conditionsVisible, setConditionsVisible ] = useState<boolean>(false);
 
@@ -455,73 +460,132 @@ const HealthPanel = (props: Props) => {
 		});
 	};
 
+	const getGauges = () => {
+		if (!props.stamina) {
+			return null;
+		}
+
+		return (
+			<div className='health-gauges'>
+				{
+					props.staminaTemp && (props.staminaTemp.staminaTemp > 0) ?
+						<Progress
+							className='stamina-temp-progress'
+							type='dashboard'
+							percent={100 * props.staminaTemp.staminaTemp / props.stamina!.staminaMax}
+							showInfo={false}
+							status='active'
+						/>
+						: null
+				}
+				<Progress
+					className='stamina-progress'
+					type='dashboard'
+					percent={100 * (props.stamina!.staminaMax - props.stamina!.staminaDamage) / props.stamina!.staminaMax}
+					showInfo={false}
+					status={props.stamina!.isWinded ? 'exception' : 'active'}
+				/>
+				{
+					props.recoveries && (props.recoveries.recoveriesMax > 0) ?
+						<Progress
+							className='recovery-progress'
+							type='dashboard'
+							percent={100 * (props.recoveries!.recoveriesMax - props.recoveries!.recoveriesUsed) / props.recoveries!.recoveriesMax}
+							showInfo={false}
+							status='active'
+						/>
+						: null
+				}
+				<div className='gauge-info'>
+					{
+						props.staminaTemp && (props.staminaTemp.staminaTemp > 0) ?
+							<>
+								<div>
+									Temp <b>{props.staminaTemp.staminaTemp}</b>
+								</div>
+								<Divider style={{ margin: '5px 0' }} />
+							</>
+							: null
+					}
+					<div>
+						Sta <b>{props.stamina!.staminaDamage ? `${props.stamina!.staminaMax - props.stamina!.staminaDamage} / ${props.stamina!.staminaMax}` : `${props.stamina!.staminaMax}`}</b>
+					</div>
+					{
+						props.recoveries && (props.recoveries.recoveriesMax > 0) ?
+							<>
+								<Divider style={{ margin: '5px 0' }} />
+								<div>
+									Rec <b>{props.recoveries!.recoveriesUsed ? `${props.recoveries!.recoveriesMax - props.recoveries!.recoveriesUsed} / ${props.recoveries!.recoveriesMax}` : `${props.recoveries!.recoveriesMax}`}</b>
+								</div>
+							</>
+							: null
+					}
+				</div>
+			</div>
+		);
+	};
+
+	if (!expanded) {
+		return (
+			<div className='health-panel bordered compact'>
+				{
+					props.stamina ?
+						<Field
+							orientation='vertical'
+							label='Stamina'
+							value={props.stamina.staminaDamage ? `${props.stamina!.staminaMax - props.stamina!.staminaDamage} / ${props.stamina!.staminaMax}` : props.stamina!.staminaMax}
+						/>
+						: null
+				}
+				<div>
+					{
+						props.stamina && props.stamina.isWinded ?
+							<div className='ds-text'>Winded</div>
+							: null
+					}
+					{
+						props.hidden && props.hidden.value ?
+							<div className='ds-text'>Hidden</div>
+							: null
+					}
+					{
+						<div className='ds-text'>
+							{props.acted && props.acted.value ? 'Has acted' : 'Has not yet acted'}
+						</div>
+					}
+					{
+						props.defeated && props.defeated.value ?
+							<div className='ds-text'>Defeated</div>
+							: null
+					}
+					{
+						props.captain && props.captain.captainID ?
+							<div className='ds-text'>{props.captain.candidates.find(m => m.id === props.captain!.captainID)?.name}</div>
+							: null
+					}
+					{
+						<div className='ds-text'>
+							{props.conditions.map(c => c.type).join(', ') || 'Not affected by any conditions'}
+						</div>
+					}
+				</div>
+				<Button type='primary' onClick={() => setExpanded(true)}>
+					Expand
+					<DownOutlined />
+				</Button>
+			</div>
+		);
+	}
+
 	return (
 		<ErrorBoundary>
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<div className={props.expandable ? 'health-panel bordered' : 'health-panel'}>
 				{
 					props.stamina ?
 						<>
-							<HeaderText>
-								Stamina
-							</HeaderText>
-							<div className='health-panel'>
-								<div className='health-gauges'>
-									{
-										props.staminaTemp && (props.staminaTemp.staminaTemp > 0) ?
-											<Progress
-												className='stamina-temp-progress'
-												type='dashboard'
-												percent={100 * props.staminaTemp.staminaTemp / props.stamina!.staminaMax}
-												showInfo={false}
-												status='active'
-											/>
-											: null
-									}
-									<Progress
-										className='stamina-progress'
-										type='dashboard'
-										percent={100 * (props.stamina!.staminaMax - props.stamina!.staminaDamage) / props.stamina!.staminaMax}
-										showInfo={false}
-										status={props.stamina!.isWinded ? 'exception' : 'active'}
-									/>
-									{
-										props.recoveries ?
-											<Progress
-												className='recovery-progress'
-												type='dashboard'
-												percent={100 * (props.recoveries!.recoveriesMax - props.recoveries!.recoveriesUsed) / props.recoveries!.recoveriesMax}
-												showInfo={false}
-												status='active'
-											/>
-											: null
-									}
-									<div className='gauge-info'>
-										{
-											props.staminaTemp && (props.staminaTemp.staminaTemp > 0) ?
-												<>
-													<div>
-														Temp <b>{props.staminaTemp.staminaTemp}</b>
-													</div>
-													<Divider style={{ margin: '5px 0' }} />
-												</>
-												: null
-										}
-										<div>
-											Sta <b>{props.stamina!.staminaDamage ? `${props.stamina!.staminaMax - props.stamina!.staminaDamage} / ${props.stamina!.staminaMax}` : `${props.stamina!.staminaMax}`}</b>
-										</div>
-										{
-											props.recoveries ?
-												<>
-													<Divider style={{ margin: '5px 0' }} />
-													<div>
-														Rec <b>{props.recoveries!.recoveriesUsed ? `${props.recoveries!.recoveriesMax - props.recoveries!.recoveriesUsed} / ${props.recoveries!.recoveriesMax}` : `${props.recoveries!.recoveriesMax}`}</b>
-													</div>
-												</>
-												: null
-										}
-									</div>
-								</div>
-								<Flex style={{ flex: '1 1 0' }} vertical={true} align='center' justify='center' gap={5}>
+							<div className='health-panel-stamina'>
+								{getGauges()}
+								<Flex style={{ flex: '0 0 225px' }} vertical={true} align='center' justify='center' gap={5}>
 									<NumberSpin
 										min={0}
 										steps={[ 1, 10 ]}
@@ -577,8 +641,7 @@ const HealthPanel = (props: Props) => {
 				{
 					props.hidden || props.acted || props.defeated || props.captain ?
 						<>
-							<Divider />
-							<Flex align='center' justify='space-evenly' gap={10}>
+							<Flex align='center' justify='space-evenly' gap={10} style={{ margin: '10px 0' }}>
 								{
 									props.hidden ?
 										<Button
@@ -692,10 +755,18 @@ const HealthPanel = (props: Props) => {
 						<Empty text='You are not affected by any conditions.' />
 						: null
 				}
+				{
+					props.expandable ?
+						<Button block={true} style={{ marginBottom: '15px' }} onClick={() => setExpanded(false)}>
+							Smaller
+							<UpOutlined />
+						</Button>
+						: null
+				}
 				<Drawer open={conditionsVisible} onClose={() => setConditionsVisible(false)} closeIcon={null} width='500px'>
 					<ConditionSelectModal onSelect={addCondition} onClose={() => setConditionsVisible(false)} />
 				</Drawer>
-			</Space>
+			</div>
 		</ErrorBoundary>
 	);
 };

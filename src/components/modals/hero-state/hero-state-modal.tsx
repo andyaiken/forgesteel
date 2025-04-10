@@ -118,10 +118,7 @@ export const HeroStateModal = (props: Props) => {
 
 		const takeRespite = () => {
 			const copy = Utils.copy(hero);
-			copy.state.staminaDamage = 0;
-			copy.state.recoveriesUsed = 0;
-			copy.state.xp += copy.state.victories;
-			copy.state.victories = 0;
+			HeroLogic.takeRespite(copy);
 			setHero(copy);
 			props.onChange(copy);
 		};
@@ -204,6 +201,7 @@ export const HeroStateModal = (props: Props) => {
 				<Flex align='center' justify='space-evenly' gap={10}>
 					<Button
 						key='start-encounter'
+						style={{ flex: '1 1 0' }}
 						className='tall-button'
 						type='primary'
 						onClick={startEncounter}
@@ -217,6 +215,7 @@ export const HeroStateModal = (props: Props) => {
 					</Button>
 					<Button
 						key='end-encounter'
+						style={{ flex: '1 1 0' }}
 						className='tall-button'
 						type='primary'
 						onClick={endEncounter}
@@ -230,6 +229,7 @@ export const HeroStateModal = (props: Props) => {
 					</Button>
 					<Button
 						key='take-respite'
+						style={{ flex: '1 1 0' }}
 						className='tall-button'
 						type='primary'
 						onClick={takeRespite}
@@ -313,9 +313,10 @@ export const HeroStateModal = (props: Props) => {
 					props.showEncounterControls ?
 						<>
 							<Divider />
-							<Flex align='center' justify='space-evenly'>
+							<Flex align='center' justify='space-evenly' gap={10}>
 								<Button
 									key='hidden'
+									style={{ flex: '1 1 0' }}
 									className='tall-button'
 									onClick={() => setHidden(!hero.state.hidden)}
 								>
@@ -330,6 +331,7 @@ export const HeroStateModal = (props: Props) => {
 								</Button>
 								<Button
 									key='acted'
+									style={{ flex: '1 1 0' }}
 									className='tall-button'
 									onClick={() => setActed(!hero.state.acted)}
 								>
@@ -344,6 +346,7 @@ export const HeroStateModal = (props: Props) => {
 								</Button>
 								<Button
 									key='defeated'
+									style={{ flex: '1 1 0' }}
 									className='tall-button'
 									onClick={() => setDefeated(!hero.state.defeated)}
 								>

@@ -1,8 +1,30 @@
 # Development Plans
 
-Add HealthPanel to monsters and minion groups
-Add visible / hidden toggle to monsters and minions
-Maybe add two tabs to monster modal - stat block and state
+### Respite
+
+* Create a new hero state page called Respite
+* Move 'Take Respite' button here
+* Add info on all the things that are going to be reset
+* Add info about respite actions
+
+### HealthPanel
+
+HealthPanel is going to become the 'Encounter State' control
+* This way there's a unified way to deal with stamina, conditions, etc
+* Move conditions into HealthPanel
+* Add HealthPanel to monsters, minion groups, and minions
+* Use HealthPanel for heroes, heroes in an encounter, monsters, minion groups, and minions
+
+| Feature           | Hero  | Hero (in encounter) | Monster | Minion Group | Minion  |
+|:------------------|:-----:|:-------------------:|:-------:|:------------:|:-------:|
+| Circles           |   X   |         X           |    X    |      X       |         |
+| Stamina           |   X   |         X           |    X    |      X       |         |
+| Recoveries        |   X   |         X           |         |              |         |
+| Set Captain       |       |                     |         |      X       |         |
+| Conditions        |   X   |         X           |    X    |      X       |    X    |
+| Active / Defeated |       |         X           |    X    |      X       |    X    |
+| Visible / Hidden  |       |         X           |    X    |              |    X    |
+| Ready / Acted     |       |         X           |    X    |      X       |         |
 
 ### Heroes
 

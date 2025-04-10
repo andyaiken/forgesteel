@@ -523,16 +523,6 @@ export class HeroLogic {
 			value3 += Collections.max(kits.map(kit => kit.meleeDamage?.tier3 || 0), value => value) || 0;
 		}
 
-		HeroLogic.getFeatures(hero)
-			.filter(f => f.type === FeatureType.AbilityDamage)
-			.filter(f => f.data.keywords.some(kw => ability.keywords.includes(kw)))
-			.forEach(f => {
-				const mod = HeroLogic.calculateModifierValue(hero, f.data);
-				value1 += mod;
-				value2 += mod;
-				value3 += mod;
-			});
-
 		if ((value1 === 0) && (value2 === 0) && (value3 === 0)) {
 			return null;
 		}
@@ -557,16 +547,6 @@ export class HeroLogic {
 			value3 += Collections.max(kits.map(kit => kit.rangedDamage?.tier3 || 0), value => value) || 0;
 		}
 
-		HeroLogic.getFeatures(hero)
-			.filter(f => f.type === FeatureType.AbilityDamage)
-			.filter(f => f.data.keywords.some(kw => ability.keywords.includes(kw)))
-			.forEach(f => {
-				const mod = HeroLogic.calculateModifierValue(hero, f.data);
-				value1 += mod;
-				value2 += mod;
-				value3 += mod;
-			});
-
 		if ((value1 === 0) && (value2 === 0) && (value3 === 0)) {
 			return null;
 		}
@@ -576,6 +556,20 @@ export class HeroLogic {
 			tier2: value2,
 			tier3: value3
 		};
+	};
+
+	static getFeatureDamageBonus = (hero: Hero, ability: Ability) => {
+		let value = 0;
+
+		HeroLogic.getFeatures(hero)
+			.filter(f => f.type === FeatureType.AbilityDamage)
+			.filter(f => f.data.keywords.some(kw => ability.keywords.includes(kw)))
+			.forEach(f => {
+				const mod = HeroLogic.calculateModifierValue(hero, f.data);
+				value += mod;
+			});
+
+		return value;
 	};
 
 	static getDistanceBonus = (hero: Hero, ability: Ability, distance: AbilityDistance) => {
@@ -720,6 +714,20 @@ export class HeroLogic {
 		}
 
 		return hero.state.xp >= this.getMinXP(hero.class.level + 1);
+	};
+
+	static takeRespite = (hero: Hero) => {
+		hero.state.staminaDamage = 0;
+		hero.state.staminaTemp = 0;
+		hero.state.recoveriesUsed = 0;
+		hero.state.surges = 0;
+		hero.state.heroicResource = 0;
+		hero.state.xp += hero.state.victories;
+		hero.state.victories = 0;
+		hero.state.conditions = [];
+		hero.state.hidden = false;
+		hero.state.acted = false;
+		hero.state.defeated = false;
 	};
 
 	///////////////////////////////////////////////////////////////////////////

@@ -1041,7 +1041,7 @@ export const FeaturePanel = (props: Props) => {
 
 	const getInformationAbilityDamage = (data: FeatureAbilityDamageData) => {
 		return (
-			<Field label={data.keywords.join(', ')} value={FormatLogic.getModifier(data)} />
+			<Field label={data.keywords.join(', ')} value={`${FormatLogic.getModifier(data)} ${data.damageType}`} />
 		);
 	};
 

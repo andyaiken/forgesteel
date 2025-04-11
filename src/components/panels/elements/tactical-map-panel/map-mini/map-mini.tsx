@@ -1,26 +1,26 @@
 import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
 import { MapItemStyle } from '../tactical-map-panel';
-import { MapZone } from '../../../../../models/tactical-map';
+import { MapMini } from '../../../../../models/tactical-map';
 import { Markdown } from '../../../../controls/markdown/markdown';
 import { Popover } from 'antd';
 import { TacticalMapDisplayType } from '../../../../../enums/tactical-map-display-type';
 
-import './map-zone.scss';
+import './map-mini.scss';
 
 interface Props {
-	zone: MapZone;
+	mini: MapMini;
 	display: TacticalMapDisplayType;
 	selectable: boolean;
 	selected: boolean;
 	style: MapItemStyle;
-	selectZone: (zone: MapZone) => void;
-	updateZone: (zone: MapZone) => void;
-	deleteZone: (zone: MapZone) => void;
+	selectMini: (mini: MapMini) => void;
+	updateMini: (mini: MapMini) => void;
+	deleteMini: (mini: MapMini) => void;
 }
 
-export const MapZonePanel = (props: Props) => {
+export const MapMiniPanel = (props: Props) => {
 	try {
-		let className = 'map-zone-panel ' + props.display;
+		let className = 'map-mini-panel ' + props.display;
 		if (props.selectable) {
 			className += ' selectable';
 		}
@@ -30,18 +30,18 @@ export const MapZonePanel = (props: Props) => {
 
 		return (
 			<ErrorBoundary>
-				<Popover content={<Markdown text={props.zone.notes} />}>
+				<Popover content={<Markdown text={props.mini.notes} />}>
 					<div
 						className={className}
 						style={props.style}
 						onClick={e => {
 							e.stopPropagation();
 							if (props.selectable) {
-								props.selectZone(props.zone);
+								props.selectMini(props.mini);
 							}
 						}}
 					>
-						<div className='zone-content' style={{ borderRadius: props.style.borderRadius, backgroundColor: `#${props.zone.color}` }} />
+						<div className='mini-content' />
 					</div>
 				</Popover>
 			</ErrorBoundary>

@@ -25,7 +25,7 @@ export interface MapDimensions {
 	depth: number;
 }
 
-export type MapItem = MapTile | MapWall | MapZone | MapFog;
+export type MapItem = MapTile | MapWall | MapZone | MapMini | MapFog;
 
 export interface MapTile {
 	id: string;
@@ -56,7 +56,14 @@ export interface MapZone {
 	dimensions: MapDimensions;
 	corners: 'square' | 'rounded' | 'circle';
 	color: string;
-	opacity: number;
+}
+
+export interface MapMini {
+	id: string;
+	type: 'mini';
+	notes: string;
+	position: MapPosition;
+	dimensions: MapDimensions;
 }
 
 export interface MapFog {

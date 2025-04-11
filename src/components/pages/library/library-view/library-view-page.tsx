@@ -55,6 +55,7 @@ interface Props {
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 	export: (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	copy: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
+	copySubElement: (kind: SourcebookElementKind, sourcebookID: string, parentElementID: string, subElement: Element) => void;
 	delete: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 }
 
@@ -277,7 +278,7 @@ export const LibraryViewPage = (props: Props) => {
 											: null
 									}
 									{
-										sourcebook.isHomebrew ?
+										sourcebook.isHomebrew && !subElementID ?
 											<Popover
 												trigger='click'
 												placement='bottom'
@@ -298,6 +299,13 @@ export const LibraryViewPage = (props: Props) => {
 													Copy
 												</Button>
 											</Popover>
+											: null
+									}
+									{
+										sourcebook.isHomebrew && subElementID ?
+											<Button icon={<CopyOutlined />} onClick={() => props.copySubElement(kind!, sourcebook.id, elementID!, element)}>
+												Copy
+											</Button>
 											: null
 									}
 									{

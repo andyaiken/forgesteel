@@ -1,13 +1,24 @@
 .tactical-map-toolbar {
 	z-index: 10;
-	position: sticky;
-	left: 0;
-	top: 0;
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	gap: 5px;
-	padding: 10px 0;
+    position: sticky;
+    left: 10px;
+    width: calc(100% - 20px);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    padding: 5px;
+    background: rgba(200, 200, 200, 0.5);
+    border-radius: 10px;
+    backdrop-filter: blur(2px);
+
+	&.top-toolbar {
+		top: 10px;
+	}
+
+	&.bottom-toolbar {
+		bottom: 10px;
+	}
 }
 
 .tactical-map-panel {

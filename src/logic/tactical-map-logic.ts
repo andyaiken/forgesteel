@@ -10,6 +10,7 @@ export class TacticalMapLogic {
 			switch (i.type) {
 				case 'tile':
 				case 'zone':
+				case 'mini':
 					return [
 						i.position,
 						{

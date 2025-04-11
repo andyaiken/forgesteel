@@ -166,6 +166,12 @@ export class PlaybookLogic {
 						s.monsters = [];
 					}
 
+					s.monsters.forEach(m => {
+						if (m.state.positions === undefined) {
+							m.state.positions = [];
+						}
+					});
+
 					if (s.state === undefined) {
 						s.state = {
 							staminaDamage: 0,
@@ -174,8 +180,13 @@ export class PlaybookLogic {
 							reactionUsed: false,
 							hidden: false,
 							defeated: false,
-							captainID: undefined
+							captainID: undefined,
+							positions: []
 						};
+					}
+
+					if (s.state.positions === undefined) {
+						s.state.positions = [];
 					}
 				});
 

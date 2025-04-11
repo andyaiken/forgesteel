@@ -6,6 +6,7 @@ import { Culture } from './culture';
 import { Feature } from './feature';
 import { HeroClass } from './class';
 import { Item } from './item';
+import { MapPosition } from './tactical-map';
 import { Project } from './project';
 
 export interface HeroState {
@@ -27,6 +28,10 @@ export interface HeroState {
 	hidden: boolean;
 	acted: boolean;
 	defeated: boolean;
+	positions: {
+		mapID: string;
+		position: MapPosition;
+	}[];
 }
 
 export interface AbilityCustomization {

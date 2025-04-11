@@ -802,6 +802,10 @@ export class HeroLogic {
 			hero.state.defeated = false;
 		}
 
+		if (hero.state.positions === undefined) {
+			hero.state.positions = [];
+		}
+
 		hero.state.inventory.forEach(item => {
 			if (item.customizationsByLevel === undefined) {
 				item.customizationsByLevel = [

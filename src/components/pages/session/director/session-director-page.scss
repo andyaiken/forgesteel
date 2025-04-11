@@ -11,7 +11,7 @@
 		overflow: hidden;
 
 		.left-column {
-			flex: 1 1 0;
+			flex: 0 0 350px;
 			padding: 0 20px 20px 20px;
 			overflow-y: auto;
 
@@ -21,7 +21,7 @@
 		}
 
 		.right-column {
-			flex: 2 2 0;
+			flex: 1 1 0;
 			overflow-y: auto;
 		}
 	}

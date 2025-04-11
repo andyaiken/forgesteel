@@ -1,31 +1,30 @@
-import { Button, Divider, Input, Segmented } from 'antd';
-import { MapBoundaries, MapItem, MapPosition, TacticalMap } from '../../../../models/tactical-map';
+import { BookOutlined, RotateRightOutlined, SettingOutlined } from '@ant-design/icons';
+import { Button, ColorPicker, Divider, Input, Popover, Segmented, Select } from 'antd';
+import { MapBoundaries, MapItem, MapMini, MapPosition, MapTile, MapWall, MapZone, TacticalMap } from '../../../../models/tactical-map';
 import { ReactNode, useState } from 'react';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
+import { Encounter } from '../../../../models/encounter';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FactoryLogic } from '../../../../logic/factory-logic';
+import { Field } from '../../../controls/field/field';
 import { GridSquarePanel } from './grid-square/grid-square';
+import { MapMiniPanel } from './map-mini/map-mini';
 import { MapTilePanel } from './map-tile/map-tile';
 import { MapWallPanel } from './map-wall/map-wall';
 import { MapWallVertexPanel } from './map-wall-vertex/map-wall-vertex';
 import { MapZonePanel } from './map-zone/map-zone';
+import { MultiLine } from '../../../controls/multi-line/multi-line';
+import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { RotateRightOutlined } from '@ant-design/icons';
 import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
+import { TacticalMapEditMode } from '../../../../enums/tactical-map-edit-mode';
 import { TacticalMapLogic } from '../../../../logic/tactical-map-logic';
+import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 
 import './tactical-map-panel.scss';
-
-enum TacticalMapEditMode {
-	Map,
-	Tiles,
-	Walls,
-	Zones,
-	Fog
-}
 
 export interface MapItemStyle {
 	left: string;
@@ -40,6 +39,7 @@ interface Props {
 	map: TacticalMap;
 	display: TacticalMapDisplayType;
 	options: Options;
+	encounters?: Encounter[];
 	mode?: PanelMode;
 	updateMap?: (map: TacticalMap) => void;
 }
@@ -52,192 +52,9 @@ export const TacticalMapPanel = (props: Props) => {
 	const [ selectionEndSquare, setSelectionEndSquare ] = useState<MapPosition | null>(null);
 	const [ wallStartVertex, setWallStartVertex ] = useState<MapPosition | null>(null);
 	const [ wallEndVertex, setWallEndVertex ] = useState<MapPosition | null>(null);
+	const [ selectedMapItemID, setSelectedMapItemID ] = useState<string | null>(null);
 
 	const size = props.display === 'thumbnail' ? 5 : props.options.gridSize;
-
-	const setName = (value: string) => {
-		const copy = Utils.copy(map) as TacticalMap;
-		copy.name = value;
-		setMap(copy);
-		if (props.updateMap) {
-			props.updateMap(copy);
-		}
-	};
-
-	const rotateMap = () => {
-		const copy = Utils.copy(map) as TacticalMap;
-		TacticalMapLogic.rotateMap(copy);
-		setMap(copy);
-		if (props.updateMap) {
-			props.updateMap(copy);
-		}
-	};
-
-	const addTile = (points: MapPosition[]) => {
-		const minX = Math.min(...points.map(pt => pt.x));
-		const minY = Math.min(...points.map(pt => pt.y));
-		const maxX = Math.max(...points.map(pt => pt.x));
-		const maxY = Math.max(...points.map(pt => pt.y));
-
-		const tile = FactoryLogic.createMapTile();
-		tile.position = { x: minX, y: minY, z: 0 };
-		tile.dimensions = { width: maxX - minX + 1, height: maxY - minY + 1, depth: 0 };
-
-		const copy = Utils.copy(map) as TacticalMap;
-		copy.items.push(tile);
-		setMap(copy);
-		if (props.updateMap) {
-			props.updateMap(copy);
-		}
-	};
-
-	const addWall = (points: MapPosition[]) => {
-		const minX = Math.min(...points.map(pt => pt.x));
-		const minY = Math.min(...points.map(pt => pt.y));
-		const maxX = Math.max(...points.map(pt => pt.x));
-		const maxY = Math.max(...points.map(pt => pt.y));
-
-		const wall = FactoryLogic.createMapWall();
-		wall.pointA = { x: minX, y: minY, z: 0 };
-		wall.pointB = { x: maxX, y: maxY, z: 0 };
-
-		const copy = Utils.copy(map) as TacticalMap;
-		copy.items.push(wall);
-		setMap(copy);
-		if (props.updateMap) {
-			props.updateMap(copy);
-		}
-	};
-
-	const addZone = (points: MapPosition[]) => {
-		const minX = Math.min(...points.map(pt => pt.x));
-		const minY = Math.min(...points.map(pt => pt.y));
-		const maxX = Math.max(...points.map(pt => pt.x));
-		const maxY = Math.max(...points.map(pt => pt.y));
-
-		const zone = FactoryLogic.createMapZone();
-		zone.position = { x: minX, y: minY, z: 0 };
-		zone.dimensions = { width: maxX - minX + 1, height: maxY - minY + 1, depth: 0 };
-
-		const copy = Utils.copy(map) as TacticalMap;
-		copy.items.push(zone);
-		setMap(copy);
-		if (props.updateMap) {
-			props.updateMap(copy);
-		}
-	};
-
-	const clearMap = () => {
-		const copy = Utils.copy(map) as TacticalMap;
-		copy.items = [];
-		setMap(copy);
-		if (props.updateMap) {
-			props.updateMap(copy);
-		}
-	};
-
-	const clearTiles = () => {
-		const copy = Utils.copy(map) as TacticalMap;
-		copy.items = copy.items.filter(i => i.type !== 'tile');
-		setMap(copy);
-		if (props.updateMap) {
-			props.updateMap(copy);
-		}
-	};
-
-	const clearWalls = () => {
-		const copy = Utils.copy(map) as TacticalMap;
-		copy.items = copy.items.filter(i => i.type !== 'wall');
-		setMap(copy);
-		if (props.updateMap) {
-			props.updateMap(copy);
-		}
-	};
-
-	const clearZones = () => {
-		const copy = Utils.copy(map) as TacticalMap;
-		copy.items = copy.items.filter(i => i.type !== 'zone');
-		setMap(copy);
-		if (props.updateMap) {
-			props.updateMap(copy);
-		}
-	};
-
-	const clearFog = () => {
-		const copy = Utils.copy(map) as TacticalMap;
-		copy.items = copy.items.filter(i => i.type !== 'fog');
-		setMap(copy);
-		if (props.updateMap) {
-			props.updateMap(copy);
-		}
-	};
-
-	const addSurroundingWalls = () => {
-		const copy = Utils.copy(map) as TacticalMap;
-		TacticalMapLogic.addWalls(copy, true, false);
-		setMap(copy);
-		if (props.updateMap) {
-			props.updateMap(copy);
-		}
-	};
-
-	const toggleFog = (points: MapPosition[]) => {
-		const copy = Utils.copy(map) as TacticalMap;
-
-		const minX = Math.min(...points.map(pt => pt.x));
-		const minY = Math.min(...points.map(pt => pt.y));
-		const maxX = Math.max(...points.map(pt => pt.x));
-		const maxY = Math.max(...points.map(pt => pt.y));
-
-		for (let x = minX; x <= maxX; ++x) {
-			for (let y = minY; y <= maxY; ++y) {
-				const z = 1;
-
-				const current = copy.items
-					.filter(i => i.type === 'fog')
-					.find(i => (i.position.x === x) && (i.position.y === y) && (i.position.z === z));
-				if (current) {
-					// Remove this fog
-					copy.items = copy.items.filter(i => i.id !== current.id);
-				} else {
-					// Add fog here
-					const fog = FactoryLogic.createMapFog();
-					fog.position.x = x;
-					fog.position.y = y;
-					fog.position.z = z;
-					copy.items.push(fog);
-				}
-			}
-		}
-
-		setMap(copy);
-		if (props.updateMap) {
-			props.updateMap(copy);
-		}
-	};
-
-	const fillFog = () => {
-		const copy = Utils.copy(map) as TacticalMap;
-
-		const boundaries = TacticalMapLogic.getMapBoundaries(copy);
-		if (boundaries) {
-			for (let x = boundaries.minX; x <= boundaries.maxX; ++x) {
-				for (let y = boundaries.minY; y <= boundaries.maxY; ++y) {
-					const z = 1;
-					const fog = FactoryLogic.createMapFog();
-					fog.position.x = x;
-					fog.position.y = y;
-					fog.position.z = z;
-					copy.items.push(fog);
-				}
-			}
-		}
-
-		setMap(copy);
-		if (props.updateMap) {
-			props.updateMap(copy);
-		}
-	};
 
 	const updateMapItem = (item: MapItem) => {
 		const copy = Utils.copy(map);
@@ -272,12 +89,107 @@ export const TacticalMapPanel = (props: Props) => {
 	};
 
 	const gridSquareMouseUp = (pos: MapPosition) => {
+		const addTile = (points: MapPosition[]) => {
+			const minX = Math.min(...points.map(pt => pt.x));
+			const minY = Math.min(...points.map(pt => pt.y));
+			const maxX = Math.max(...points.map(pt => pt.x));
+			const maxY = Math.max(...points.map(pt => pt.y));
+
+			const tile = FactoryLogic.createMapTile();
+			tile.position = { x: minX, y: minY, z: 0 };
+			tile.dimensions = { width: maxX - minX + 1, height: maxY - minY + 1, depth: 1 };
+
+			const copy = Utils.copy(map) as TacticalMap;
+			copy.items.push(tile);
+			setMap(copy);
+			if (props.updateMap) {
+				props.updateMap(copy);
+			}
+		};
+
+		const addZone = (points: MapPosition[]) => {
+			const minX = Math.min(...points.map(pt => pt.x));
+			const minY = Math.min(...points.map(pt => pt.y));
+			const maxX = Math.max(...points.map(pt => pt.x));
+			const maxY = Math.max(...points.map(pt => pt.y));
+
+			const zone = FactoryLogic.createMapZone();
+			zone.position = { x: minX, y: minY, z: 0 };
+			zone.dimensions = { width: maxX - minX + 1, height: maxY - minY + 1, depth: 1 };
+
+			const copy = Utils.copy(map) as TacticalMap;
+			copy.items.push(zone);
+			setMap(copy);
+			if (props.updateMap) {
+				props.updateMap(copy);
+			}
+		};
+
+		const addMini = (points: MapPosition[]) => {
+			const minX = Math.min(...points.map(pt => pt.x));
+			const minY = Math.min(...points.map(pt => pt.y));
+			const maxX = Math.max(...points.map(pt => pt.x));
+			const maxY = Math.max(...points.map(pt => pt.y));
+
+			const width = maxX - minX + 1;
+			const height = maxY - minY + 1;
+
+			const mini = FactoryLogic.createMapMini();
+			mini.position = { x: minX, y: minY, z: 0 };
+			mini.dimensions = { width: Math.min(width, height), height: Math.min(width, height), depth: 1 };
+
+			const copy = Utils.copy(map) as TacticalMap;
+			copy.items.push(mini);
+			setMap(copy);
+			if (props.updateMap) {
+				props.updateMap(copy);
+			}
+		};
+
+		const toggleFog = (points: MapPosition[]) => {
+			const copy = Utils.copy(map) as TacticalMap;
+
+			const minX = Math.min(...points.map(pt => pt.x));
+			const minY = Math.min(...points.map(pt => pt.y));
+			const maxX = Math.max(...points.map(pt => pt.x));
+			const maxY = Math.max(...points.map(pt => pt.y));
+
+			for (let x = minX; x <= maxX; ++x) {
+				for (let y = minY; y <= maxY; ++y) {
+					const z = 1;
+
+					const current = copy.items
+						.filter(i => i.type === 'fog')
+						.find(i => (i.position.x === x) && (i.position.y === y) && (i.position.z === z));
+					if (current) {
+						// Remove this fog
+						copy.items = copy.items.filter(i => i.id !== current.id);
+					} else {
+						// Add fog here
+						const fog = FactoryLogic.createMapFog();
+						fog.position.x = x;
+						fog.position.y = y;
+						fog.position.z = z;
+						copy.items.push(fog);
+					}
+				}
+			}
+
+			setMap(copy);
+			if (props.updateMap) {
+				props.updateMap(copy);
+			}
+		};
+
 		if (selectionStartSquare) {
 			if ((editMode === TacticalMapEditMode.Tiles) && editAdding) {
 				addTile([ selectionStartSquare, pos ]);
 			}
 			if ((editMode === TacticalMapEditMode.Zones) && editAdding) {
 				addZone([ selectionStartSquare, pos ]);
+			}
+			if ((editMode === TacticalMapEditMode.Minis) && editAdding) {
+				addMini([ selectionStartSquare, pos ]);
 			}
 			if (editMode === TacticalMapEditMode.Fog) {
 				toggleFog([ selectionStartSquare, pos ]);
@@ -312,6 +224,24 @@ export const TacticalMapPanel = (props: Props) => {
 	};
 
 	const vertexMouseUp = (pos: MapPosition) => {
+		const addWall = (points: MapPosition[]) => {
+			const minX = Math.min(...points.map(pt => pt.x));
+			const minY = Math.min(...points.map(pt => pt.y));
+			const maxX = Math.max(...points.map(pt => pt.x));
+			const maxY = Math.max(...points.map(pt => pt.y));
+
+			const wall = FactoryLogic.createMapWall();
+			wall.pointA = { x: minX, y: minY, z: 0 };
+			wall.pointB = { x: maxX, y: maxY, z: 0 };
+
+			const copy = Utils.copy(map) as TacticalMap;
+			copy.items.push(wall);
+			setMap(copy);
+			if (props.updateMap) {
+				props.updateMap(copy);
+			}
+		};
+
 		if (wallStartVertex) {
 			if ((editMode === TacticalMapEditMode.Walls) && editAdding) {
 				if ((wallStartVertex.x === pos.x) && (wallStartVertex.y === pos.y)) {
@@ -433,13 +363,117 @@ export const TacticalMapPanel = (props: Props) => {
 
 	//#region Rendering
 
-	const getToolbar = () => {
+	const getTopToolbar = () => {
 		if (props.display !== TacticalMapDisplayType.DirectorEdit) {
 			return null;
 		}
 
+		const setName = (value: string) => {
+			const copy = Utils.copy(map) as TacticalMap;
+			copy.name = value;
+			setMap(copy);
+			if (props.updateMap) {
+				props.updateMap(copy);
+			}
+		};
+
+		const rotateMap = () => {
+			const copy = Utils.copy(map) as TacticalMap;
+			TacticalMapLogic.rotateMap(copy);
+			setMap(copy);
+			if (props.updateMap) {
+				props.updateMap(copy);
+			}
+		};
+
+		const clearMap = () => {
+			const copy = Utils.copy(map) as TacticalMap;
+			copy.items = [];
+			setMap(copy);
+			if (props.updateMap) {
+				props.updateMap(copy);
+			}
+		};
+
+		const clearTiles = () => {
+			const copy = Utils.copy(map) as TacticalMap;
+			copy.items = copy.items.filter(i => i.type !== 'tile');
+			setMap(copy);
+			if (props.updateMap) {
+				props.updateMap(copy);
+			}
+		};
+
+		const clearWalls = () => {
+			const copy = Utils.copy(map) as TacticalMap;
+			copy.items = copy.items.filter(i => i.type !== 'wall');
+			setMap(copy);
+			if (props.updateMap) {
+				props.updateMap(copy);
+			}
+		};
+
+		const clearZones = () => {
+			const copy = Utils.copy(map) as TacticalMap;
+			copy.items = copy.items.filter(i => i.type !== 'zone');
+			setMap(copy);
+			if (props.updateMap) {
+				props.updateMap(copy);
+			}
+		};
+
+		const clearMinis = () => {
+			const copy = Utils.copy(map) as TacticalMap;
+			copy.items = copy.items.filter(i => i.type !== 'mini');
+			setMap(copy);
+			if (props.updateMap) {
+				props.updateMap(copy);
+			}
+		};
+
+		const clearFog = () => {
+			const copy = Utils.copy(map) as TacticalMap;
+			copy.items = copy.items.filter(i => i.type !== 'fog');
+			setMap(copy);
+			if (props.updateMap) {
+				props.updateMap(copy);
+			}
+		};
+
+		const addSurroundingWalls = () => {
+			const copy = Utils.copy(map) as TacticalMap;
+			TacticalMapLogic.addWalls(copy, true, false);
+			setMap(copy);
+			if (props.updateMap) {
+				props.updateMap(copy);
+			}
+		};
+
+		const fillFog = () => {
+			const copy = Utils.copy(map) as TacticalMap;
+
+			const boundaries = TacticalMapLogic.getMapBoundaries(copy);
+			if (boundaries) {
+				for (let x = boundaries.minX; x <= boundaries.maxX; ++x) {
+					for (let y = boundaries.minY; y <= boundaries.maxY; ++y) {
+						const z = 1;
+						const fog = FactoryLogic.createMapFog();
+						fog.position.x = x;
+						fog.position.y = y;
+						fog.position.z = z;
+						copy.items.push(fog);
+					}
+				}
+			}
+
+			setMap(copy);
+			if (props.updateMap) {
+				props.updateMap(copy);
+			}
+		};
+
 		return (
-			<div className='tactical-map-toolbar'>
+			<div className='tactical-map-toolbar top-toolbar'>
 				<Segmented
 					name='edit'
 					options={[
@@ -447,6 +481,7 @@ export const TacticalMapPanel = (props: Props) => {
 						{ value: TacticalMapEditMode.Tiles, label: 'Tiles' },
 						{ value: TacticalMapEditMode.Walls, label: 'Walls' },
 						{ value: TacticalMapEditMode.Zones, label: 'Zones' },
+						{ value: TacticalMapEditMode.Minis, label: 'Minis' },
 						{ value: TacticalMapEditMode.Fog, label: 'Fog' }
 					]}
 					value={editMode}
@@ -456,7 +491,7 @@ export const TacticalMapPanel = (props: Props) => {
 				{
 					editMode === TacticalMapEditMode.Map ?
 						<Input
-							style={{ width: '250px' }}
+							style={{ width: '200px' }}
 							placeholder='Name'
 							allowClear={true}
 							value={map.name}
@@ -475,7 +510,7 @@ export const TacticalMapPanel = (props: Props) => {
 						: null
 				}
 				{
-					(editMode === TacticalMapEditMode.Tiles) || (editMode === TacticalMapEditMode.Walls) || (editMode === TacticalMapEditMode.Zones) ?
+					(editMode === TacticalMapEditMode.Tiles) || (editMode === TacticalMapEditMode.Walls) || (editMode === TacticalMapEditMode.Zones) || (editMode === TacticalMapEditMode.Minis) ?
 						<Segmented
 							options={[
 								{ value: false, label: 'Select' },
@@ -487,7 +522,7 @@ export const TacticalMapPanel = (props: Props) => {
 						: null
 				}
 				{
-					(editMode === TacticalMapEditMode.Tiles) || (editMode === TacticalMapEditMode.Walls) || (editMode === TacticalMapEditMode.Zones) ?
+					(editMode === TacticalMapEditMode.Tiles) || (editMode === TacticalMapEditMode.Walls) || (editMode === TacticalMapEditMode.Zones) || (editMode === TacticalMapEditMode.Minis) ?
 						<Divider type='vertical' />
 						: null
 				}
@@ -522,10 +557,295 @@ export const TacticalMapPanel = (props: Props) => {
 						: null
 				}
 				{
+					editMode === TacticalMapEditMode.Minis ?
+						<DangerButton disabled={map.items.filter(i => i.type === 'mini').length === 0} label='Clear Minis' onConfirm={clearMinis} />
+						: null
+				}
+				{
 					editMode === TacticalMapEditMode.Fog ?
 						<DangerButton disabled={map.items.filter(i => i.type === 'fog').length === 0} label='Clear Fog' onConfirm={clearFog} />
 						: null
 				}
+			</div>
+		);
+	};
+
+	const getBottomToolbar = () => {
+		if (props.display !== TacticalMapDisplayType.DirectorEdit) {
+			return null;
+		}
+
+		const item = map.items.find(i => i.id === selectedMapItemID);
+		if (!item) {
+			return null;
+		}
+
+		const setX = (value: number) => {
+			const copy = Utils.copy(item) as MapTile | MapZone | MapMini;
+			copy.position.x = value;
+			updateMapItem(copy);
+		};
+
+		const setY = (value: number) => {
+			const copy = Utils.copy(item) as MapTile | MapZone | MapMini;
+			copy.position.y = value;
+			updateMapItem(copy);
+		};
+
+		const setWidth = (value: number) => {
+			const copy = Utils.copy(item) as MapTile | MapZone | MapMini;
+			copy.dimensions.width = value;
+			updateMapItem(copy);
+		};
+
+		const setHeight = (value: number) => {
+			const copy = Utils.copy(item) as MapTile | MapZone | MapMini;
+			copy.dimensions.height = value;
+			updateMapItem(copy);
+		};
+
+		const setCorners = (value: 'square' | 'rounded' | 'circle') => {
+			const copy = Utils.copy(item) as MapTile | MapZone;
+			copy.corners = value;
+			updateMapItem(copy);
+		};
+
+		const setWallX = (value: number) => {
+			const copy = Utils.copy(item) as MapWall;
+			copy.pointA.x = value;
+			copy.pointB.x = value;
+			updateMapItem(copy);
+		};
+
+		const setWallY = (value: number) => {
+			const copy = Utils.copy(item) as MapWall;
+			copy.pointA.y = value;
+			copy.pointB.y = value;
+			updateMapItem(copy);
+		};
+
+		const setStartX = (value: number) => {
+			const copy = Utils.copy(item) as MapWall;
+			copy.pointA.x = value;
+			updateMapItem(copy);
+		};
+
+		const setStartY = (value: number) => {
+			const copy = Utils.copy(item) as MapWall;
+			copy.pointA.y = value;
+			updateMapItem(copy);
+		};
+
+		const setEndX = (value: number) => {
+			const copy = Utils.copy(item) as MapWall;
+			copy.pointB.x = value;
+			updateMapItem(copy);
+		};
+
+		const setEndY = (value: number) => {
+			const copy = Utils.copy(item) as MapWall;
+			copy.pointB.y = value;
+			updateMapItem(copy);
+		};
+
+		const setBlocksMovement = (value: boolean) => {
+			const copy = Utils.copy(item) as MapWall;
+			copy.blocksMovement = value;
+			updateMapItem(copy);
+		};
+
+		const setBlocksLOS = (value: boolean) => {
+			const copy = Utils.copy(item) as MapWall;
+			copy.blocksLineOfSight = value;
+			updateMapItem(copy);
+		};
+
+		const setIsOpenable = (value: boolean) => {
+			const copy = Utils.copy(item) as MapWall;
+			copy.isOpenable = value;
+			updateMapItem(copy);
+		};
+
+		const setIsConcealed = (value: boolean) => {
+			const copy = Utils.copy(item) as MapWall;
+			copy.isConcealed = value;
+			updateMapItem(copy);
+		};
+
+		const setColor = (value: string) => {
+			const copy = Utils.copy(item) as MapZone;
+			copy.color = value;
+			updateMapItem(copy);
+		};
+
+		const setSize = (value: number) => {
+			const copy = Utils.copy(item) as MapMini;
+			copy.dimensions.width = value;
+			copy.dimensions.height = value;
+			updateMapItem(copy);
+		};
+
+		const setNotes = (value: string) => {
+			const copy = Utils.copy(item) as MapTile | MapWall | MapZone | MapMini;
+			copy.notes = value;
+			updateMapItem(copy);
+		};
+
+		return (
+			<div className='tactical-map-toolbar bottom-toolbar'>
+				{
+					item.type === 'tile' ?
+						<>
+							<NumberSpin value={item.position.x} onChange={setX}>
+								<Field label='X' value={item.position.x} />
+							</NumberSpin>
+							<NumberSpin value={item.position.y} onChange={setY}>
+								<Field label='Y' value={item.position.y} />
+							</NumberSpin>
+							<NumberSpin min={1} value={item.dimensions.width} onChange={setWidth}>
+								<Field label='Width' value={item.dimensions.width} />
+							</NumberSpin>
+							<NumberSpin min={1} value={item.dimensions.height} onChange={setHeight}>
+								<Field label='Height' value={item.dimensions.height} />
+							</NumberSpin>
+							<Select
+								options={[
+									{ id: 'square', label: 'Square' },
+									{ id: 'rounded', label: 'Rounded' },
+									{ id: 'circle', label: 'Circle' }
+								]}
+								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+								value={item.corners}
+								onChange={setCorners}
+							/>
+						</>
+						: null
+				}
+				{
+					item.type === 'wall' ?
+						<>
+							{
+								TacticalMapLogic.getWallOrientation(item) === 'vertical' ?
+									<>
+										<NumberSpin label='X' value={item.pointA.x} onChange={setWallX}>
+											<Field label='X' value={item.pointA.x} />
+										</NumberSpin>
+										<NumberSpin label='Start Y' value={item.pointA.y} onChange={setStartY}>
+											<Field label='Start Y' value={item.pointA.y} />
+										</NumberSpin>
+										<NumberSpin label='End Y' min={item.pointA.y + 1} value={item.pointB.y} onChange={setEndY}>
+											<Field label='End Y' value={item.pointB.y} />
+										</NumberSpin>
+									</>
+									:
+									<>
+										<NumberSpin label='Y' value={item.pointA.y} onChange={setWallY}>
+											<Field label='Y' value={item.pointA.y} />
+										</NumberSpin>
+										<NumberSpin label='Start X' value={item.pointA.x} onChange={setStartX}>
+											<Field label='Start X' value={item.pointA.x} />
+										</NumberSpin>
+										<NumberSpin label='End X' min={item.pointA.x + 1} value={item.pointB.x} onChange={setEndX}>
+											<Field label='End X' value={item.pointB.x} />
+										</NumberSpin>
+									</>
+							}
+							<Popover
+								content={
+									<>
+										<Toggle
+											label='Blocks movement'
+											value={item.blocksMovement}
+											onChange={setBlocksMovement}
+										/>
+										<Toggle
+											label='Blocks line-of-sight'
+											value={item.blocksLineOfSight}
+											onChange={setBlocksLOS}
+										/>
+										<Toggle
+											label='Openable'
+											value={item.isOpenable}
+											onChange={setIsOpenable}
+										/>
+										<Toggle
+											label='Concealed'
+											value={item.isConcealed}
+											onChange={setIsConcealed}
+										/>
+									</>
+								}
+							>
+								<Button type='text'>
+									<SettingOutlined />
+								</Button>
+							</Popover>
+						</>
+						: null
+				}
+				{
+					item.type === 'zone' ?
+						<>
+							<NumberSpin value={item.position.x} onChange={setX}>
+								<Field label='X' value={item.position.x} />
+							</NumberSpin>
+							<NumberSpin value={item.position.y} onChange={setY}>
+								<Field label='Y' value={item.position.y} />
+							</NumberSpin>
+							<NumberSpin min={1} value={item.dimensions.width} onChange={setWidth}>
+								<Field label='Width' value={item.dimensions.width} />
+							</NumberSpin>
+							<NumberSpin min={1} value={item.dimensions.height} onChange={setHeight}>
+								<Field label='Height' value={item.dimensions.height} />
+							</NumberSpin>
+							<Select
+								options={[
+									{ id: 'square', label: 'Square' },
+									{ id: 'rounded', label: 'Rounded' },
+									{ id: 'circle', label: 'Circle' }
+								]}
+								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+								value={item.corners}
+								onChange={setCorners}
+							/>
+							<ColorPicker
+								style={{ flex: '0 0 auto' }}
+								format='hex'
+								value={item.color}
+								onChange={c => setColor(c.toHex())}
+							/>
+						</>
+						: null
+				}
+				{
+					item.type === 'mini' ?
+						<>
+							<NumberSpin value={item.position.x} onChange={setX}>
+								<Field label='X' value={item.position.x} />
+							</NumberSpin>
+							<NumberSpin value={item.position.y} onChange={setY}>
+								<Field label='Y' value={item.position.y} />
+							</NumberSpin>
+							<NumberSpin value={item.dimensions.width} onChange={setSize}>
+								<Field label='Size' value={item.dimensions.width} />
+							</NumberSpin>
+						</>
+						: null
+				}
+				<Popover
+					content={
+						<MultiLine
+							label='Notes'
+							value={(item  as MapTile | MapWall | MapZone | MapMini).notes}
+							onChange={setNotes}
+						/>
+					}
+				>
+					<Button type='text'>
+						<BookOutlined />
+					</Button>
+				</Popover>
+				<DangerButton mode='clear' onConfirm={() => deleteMapItem(item)} />
 			</div>
 		);
 	};
@@ -539,7 +859,9 @@ export const TacticalMapPanel = (props: Props) => {
 					tile={tile}
 					display={props.display}
 					selectable={(editMode === TacticalMapEditMode.Tiles) && !editAdding}
+					selected={selectedMapItemID === tile.id}
 					style={getMapItemStyle(tile.position.x, tile.position.y, tile.dimensions.width, tile.dimensions.height, tile.corners, boundaries)}
+					selectTile={tile => setSelectedMapItemID(tile.id)}
 					updateTile={updateMapItem}
 					deleteTile={deleteMapItem}
 				/>
@@ -561,7 +883,9 @@ export const TacticalMapPanel = (props: Props) => {
 						wall={wall}
 						display={props.display}
 						selectable={(editMode === TacticalMapEditMode.Walls) && !editAdding}
+						selected={selectedMapItemID === wall.id}
 						style={getMapItemStyle(x, y, width, height, 'wall', boundaries)}
+						selectWall={wall => setSelectedMapItemID(wall.id)}
 						updateWall={updateMapItem}
 						deleteWall={deleteMapItem}
 					/>
@@ -578,9 +902,29 @@ export const TacticalMapPanel = (props: Props) => {
 					zone={zone}
 					display={props.display}
 					selectable={(editMode === TacticalMapEditMode.Zones) && !editAdding}
+					selected={selectedMapItemID === zone.id}
 					style={getMapItemStyle(zone.position.x, zone.position.y, zone.dimensions.width, zone.dimensions.height, zone.corners, boundaries)}
+					selectZone={zone => setSelectedMapItemID(zone.id)}
 					updateZone={updateMapItem}
 					deleteZone={deleteMapItem}
+				/>
+			));
+	};
+
+	const getMinis = (boundaries: MapBoundaries) => {
+		return map.items
+			.filter(i => i.type === 'mini')
+			.map(mini => (
+				<MapMiniPanel
+					key={mini.id}
+					mini={mini}
+					display={props.display}
+					selectable={(editMode === TacticalMapEditMode.Minis) && !editAdding}
+					selected={selectedMapItemID === mini.id}
+					style={getMapItemStyle(mini.position.x, mini.position.y, mini.dimensions.width, mini.dimensions.height, 'circle', boundaries)}
+					selectMini={mini => setSelectedMapItemID(mini.id)}
+					updateMini={updateMapItem}
+					deleteMini={deleteMapItem}
 				/>
 			));
 	};
@@ -610,6 +954,7 @@ export const TacticalMapPanel = (props: Props) => {
 		switch (editMode) {
 			case TacticalMapEditMode.Tiles:
 			case TacticalMapEditMode.Zones:
+			case TacticalMapEditMode.Minis:
 				showGrid = editAdding;
 				break;
 			case TacticalMapEditMode.Fog:
@@ -704,21 +1049,23 @@ export const TacticalMapPanel = (props: Props) => {
 
 		return (
 			<ErrorBoundary>
-				{getToolbar()}
+				{getTopToolbar()}
 				<div
 					id={map.id}
 					className={'tactical-map-panel ' + props.display}
 					style={{ width: widthInPixels + 'px', height: heightInPixels + 'px' }}
 				>
-					<div className='grid'>
+					<div className='grid' onClick={() => setSelectedMapItemID(null)}>
 						{getTiles(boundaries)}
 						{getWalls(boundaries)}
 						{getZones(boundaries)}
+						{getMinis(boundaries)}
 						{getFog(boundaries)}
 						{getGrid(boundaries)}
 						{getWallVertices(boundaries)}
 					</div>
 				</div>
+				{getBottomToolbar()}
 			</ErrorBoundary>
 		);
 	} catch (e) {

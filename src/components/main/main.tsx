@@ -57,6 +57,7 @@ import { SessionPlayerPage } from '../pages/session/player/session-player-page';
 import { SourcebookData } from '../../data/sourcebook-data';
 import { SourcebookLogic } from '../../logic/sourcebook-logic';
 import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
+import { SubClass } from '../../models/subclass';
 import { TacticalMap } from '../../models/tactical-map';
 import { Terrain } from '../../models/terrain';
 import { TerrainModal } from '../modals/terrain/terrain-modal';
@@ -410,6 +411,30 @@ export const Main = (props: Props) => {
 
 	const copyLibraryElement = (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => {
 		importLibraryElement(kind, sourcebookID, element, true);
+	};
+
+	const copyLibrarySubElement = (kind: SourcebookElementKind, sourcebookID: string, parentElementID: string, subElement: Element) => {
+		if (kind === 'class') {
+			const parent = homebrewSourcebooks.flatMap(sb => sb.classes).find(x => x.id === parentElementID);
+			if (parent) {
+				const copy = Utils.copy(subElement as SubClass);
+				copy.id = Utils.guid();
+				parent.subclasses.push(copy);
+				parent.subclasses = Collections.sort(parent.subclasses, sc => sc.name);
+				saveLibraryElement(kind, sourcebookID, parent);
+			}
+		}
+
+		if (kind === 'monster-group') {
+			const parent = homebrewSourcebooks.flatMap(sb => sb.monsterGroups).find(x => x.id === parentElementID);
+			if (parent) {
+				const copy = Utils.copy(subElement as Monster);
+				copy.id = Utils.guid();
+				parent.monsters.push(copy);
+				parent.monsters = Collections.sort(parent.monsters, m => m.name);
+				saveLibraryElement(kind, sourcebookID, parent);
+			}
+		}
 	};
 
 	const exportLibraryElement = (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => {
@@ -1218,6 +1243,7 @@ export const Main = (props: Props) => {
 										createElement={createLibraryElement}
 										export={exportLibraryElement}
 										copy={copyLibraryElement}
+										copySubElement={copyLibrarySubElement}
 										delete={deleteLibraryElement}
 									/>
 								}

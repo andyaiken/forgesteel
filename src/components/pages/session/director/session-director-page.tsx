@@ -196,6 +196,7 @@ export const SessionDirectorPage = (props: Props) => {
 						map={map}
 						display={TacticalMapDisplayType.DirectorEdit}
 						options={props.options}
+						encounters={props.playbook.encounters}
 						mode={PanelMode.Full}
 						updateMap={map => {
 							const copy = Utils.copy(session);

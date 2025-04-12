@@ -64,6 +64,11 @@ export interface MapMini {
 	notes: string;
 	position: MapPosition;
 	dimensions: MapDimensions;
+	content: {
+		type: 'hero' | 'monster';
+		encounterID: string;
+		id: string;
+	} | null;
 }
 
 export interface MapFog {

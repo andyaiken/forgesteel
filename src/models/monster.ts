@@ -2,7 +2,6 @@ import { Feature, FeatureAbility, FeatureAddOn, FeatureMalice } from './feature'
 import { Characteristic } from '../enums/characteristic';
 import { Condition } from './condition';
 import { Element } from './element';
-import { MapPosition } from './tactical-map';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Size } from './size';
@@ -20,10 +19,6 @@ export interface MonsterState {
 	hidden: boolean;
 	defeated: boolean;
 	captainID: string | undefined;
-	positions: {
-		mapID: string;
-		position: MapPosition;
-	}[];
 };
 
 export interface Monster extends Element {

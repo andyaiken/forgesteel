@@ -28,8 +28,7 @@ export class EncounterData {
 							reactionUsed: false,
 							hidden: false,
 							defeated: false,
-							captainID: undefined,
-							positions: []
+							captainID: undefined
 						}
 					}
 				],
@@ -54,8 +53,7 @@ export class EncounterData {
 							reactionUsed: false,
 							hidden: false,
 							defeated: false,
-							captainID: undefined,
-							positions: []
+							captainID: undefined
 						}
 					}
 				],
@@ -80,8 +78,7 @@ export class EncounterData {
 							reactionUsed: false,
 							hidden: false,
 							defeated: false,
-							captainID: undefined,
-							positions: []
+							captainID: undefined
 						}
 					}
 				],
@@ -106,8 +103,7 @@ export class EncounterData {
 							reactionUsed: false,
 							hidden: false,
 							defeated: false,
-							captainID: undefined,
-							positions: []
+							captainID: undefined
 						}
 					}
 				],
@@ -160,8 +156,7 @@ export class EncounterData {
 							reactionUsed: false,
 							hidden: false,
 							defeated: false,
-							captainID: undefined,
-							positions: []
+							captainID: undefined
 						}
 					}
 				],

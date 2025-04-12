@@ -1,19 +1,26 @@
-import { BookOutlined, RotateRightOutlined, SettingOutlined } from '@ant-design/icons';
+import { BarsOutlined, CloseOutlined, FileTextOutlined, RotateRightOutlined } from '@ant-design/icons';
 import { Button, ColorPicker, Divider, Input, Popover, Segmented, Select } from 'antd';
+import { HeroToken, MonsterToken } from '../../../controls/token/token';
 import { MapBoundaries, MapItem, MapMini, MapPosition, MapTile, MapWall, MapZone, TacticalMap } from '../../../../models/tactical-map';
 import { ReactNode, useState } from 'react';
+import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
 import { Encounter } from '../../../../models/encounter';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Field } from '../../../controls/field/field';
+import { Format } from '../../../../utils/format';
 import { GridSquarePanel } from './grid-square/grid-square';
+import { HeaderText } from '../../../controls/header-text/header-text';
+import { Hero } from '../../../../models/hero';
+import { HeroLogic } from '../../../../logic/hero-logic';
 import { MapMiniPanel } from './map-mini/map-mini';
 import { MapTilePanel } from './map-tile/map-tile';
 import { MapWallPanel } from './map-wall/map-wall';
 import { MapWallVertexPanel } from './map-wall-vertex/map-wall-vertex';
 import { MapZonePanel } from './map-zone/map-zone';
+import { Monster } from '../../../../models/monster';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
@@ -39,6 +46,7 @@ interface Props {
 	map: TacticalMap;
 	display: TacticalMapDisplayType;
 	options: Options;
+	heroes?: Hero[];
 	encounters?: Encounter[];
 	mode?: PanelMode;
 	updateMap?: (map: TacticalMap) => void;
@@ -53,6 +61,18 @@ export const TacticalMapPanel = (props: Props) => {
 	const [ wallStartVertex, setWallStartVertex ] = useState<MapPosition | null>(null);
 	const [ wallEndVertex, setWallEndVertex ] = useState<MapPosition | null>(null);
 	const [ selectedMapItemID, setSelectedMapItemID ] = useState<string | null>(null);
+	const [ miniSource, setMiniSource ] = useState<string | null>(() => {
+		if (props.encounters && props.encounters.length > 0) {
+			return props.encounters[0].id;
+		}
+
+		if (props.heroes && props.heroes.length > 0) {
+			return props.heroes[0].folder;
+		}
+
+		return null;
+	});
+	const [ selectedMini, setSelectedMini ] = useState<{ type: 'hero' | 'monster', encounterID: string, id: string } | null>(null);
 
 	const size = props.display === 'thumbnail' ? 5 : props.options.gridSize;
 
@@ -76,6 +96,8 @@ export const TacticalMapPanel = (props: Props) => {
 			props.updateMap(copy);
 		}
 	};
+
+	//#region Grid squares
 
 	const gridSquareMouseDown = (pos: MapPosition) => {
 		setSelectionStartSquare(pos);
@@ -131,12 +153,29 @@ export const TacticalMapPanel = (props: Props) => {
 			const maxX = Math.max(...points.map(pt => pt.x));
 			const maxY = Math.max(...points.map(pt => pt.y));
 
-			const width = maxX - minX + 1;
-			const height = maxY - minY + 1;
-
 			const mini = FactoryLogic.createMapMini();
 			mini.position = { x: minX, y: minY, z: 0 };
-			mini.dimensions = { width: Math.min(width, height), height: Math.min(width, height), depth: 1 };
+
+			if (selectedMini) {
+				mini.content = selectedMini;
+				setSelectedMini(null);
+
+				let size = FactoryLogic.createSize(1, 'M');
+				const source = getMiniSource(mini);
+				if (source) {
+					if (mini.content!.type === 'hero') {
+						size = HeroLogic.getSize(source as Hero);
+					} else {
+						size = (source as Monster).size;
+					}
+				}
+				mini.dimensions = { width: size.value, height: size.value, depth: 1 };
+			} else {
+				const width = maxX - minX + 1;
+				const height = maxY - minY + 1;
+				const size = Math.min(width, height);
+				mini.dimensions = { width: size, height: size, depth: 1 };
+			}
 
 			const copy = Utils.copy(map) as TacticalMap;
 			copy.items.push(mini);
@@ -212,6 +251,37 @@ export const TacticalMapPanel = (props: Props) => {
 		return false;
 	};
 
+	const getMiniSource = (mini: MapMini): Hero | Monster | null => {
+		if (mini.content) {
+			if (props.encounters) {
+				const enc = props.encounters.find(e => e.id === mini.content!.encounterID);
+				if (enc) {
+					const hero = enc.heroes.find(h => h.id === mini.content!.id);
+					if (hero) {
+						return hero;
+					}
+					const monster = enc.groups.flatMap(g => g.slots).flatMap(s => s.monsters).find(m => m.id === mini.content!.id);
+					if (monster) {
+						return monster;
+					}
+				}
+			}
+
+			if (props.heroes) {
+				const hero = props.heroes.find(h => h.id === mini.content!.id);
+				if (hero) {
+					return hero;
+				}
+			}
+		}
+
+		return null;
+	};
+
+	//#endregion
+
+	//#region Vertices
+
 	const vertexMouseDown = (pos: MapPosition) => {
 		setWallStartVertex(pos);
 		setWallEndVertex(null);
@@ -282,6 +352,8 @@ export const TacticalMapPanel = (props: Props) => {
 
 		return false;
 	};
+
+	//#endregion
 
 	const getMapItemStyle = (x: number, y: number, width: number, height: number, style: 'square' | 'rounded' | 'circle' | 'vertex' | 'wall' | null, dim: MapBoundaries): MapItemStyle => {
 		let offsetX = 0;
@@ -576,278 +648,374 @@ export const TacticalMapPanel = (props: Props) => {
 		}
 
 		const item = map.items.find(i => i.id === selectedMapItemID);
-		if (!item) {
-			return null;
+		if (item) {
+			const setX = (value: number) => {
+				const copy = Utils.copy(item) as MapTile | MapZone | MapMini;
+				copy.position.x = value;
+				updateMapItem(copy);
+			};
+
+			const setY = (value: number) => {
+				const copy = Utils.copy(item) as MapTile | MapZone | MapMini;
+				copy.position.y = value;
+				updateMapItem(copy);
+			};
+
+			const setWidth = (value: number) => {
+				const copy = Utils.copy(item) as MapTile | MapZone | MapMini;
+				copy.dimensions.width = value;
+				updateMapItem(copy);
+			};
+
+			const setHeight = (value: number) => {
+				const copy = Utils.copy(item) as MapTile | MapZone | MapMini;
+				copy.dimensions.height = value;
+				updateMapItem(copy);
+			};
+
+			const setCorners = (value: 'square' | 'rounded' | 'circle') => {
+				const copy = Utils.copy(item) as MapTile | MapZone;
+				copy.corners = value;
+				updateMapItem(copy);
+			};
+
+			const setWallX = (value: number) => {
+				const copy = Utils.copy(item) as MapWall;
+				copy.pointA.x = value;
+				copy.pointB.x = value;
+				updateMapItem(copy);
+			};
+
+			const setWallY = (value: number) => {
+				const copy = Utils.copy(item) as MapWall;
+				copy.pointA.y = value;
+				copy.pointB.y = value;
+				updateMapItem(copy);
+			};
+
+			const setStartX = (value: number) => {
+				const copy = Utils.copy(item) as MapWall;
+				copy.pointA.x = value;
+				updateMapItem(copy);
+			};
+
+			const setStartY = (value: number) => {
+				const copy = Utils.copy(item) as MapWall;
+				copy.pointA.y = value;
+				updateMapItem(copy);
+			};
+
+			const setEndX = (value: number) => {
+				const copy = Utils.copy(item) as MapWall;
+				copy.pointB.x = value;
+				updateMapItem(copy);
+			};
+
+			const setEndY = (value: number) => {
+				const copy = Utils.copy(item) as MapWall;
+				copy.pointB.y = value;
+				updateMapItem(copy);
+			};
+
+			const setBlocksMovement = (value: boolean) => {
+				const copy = Utils.copy(item) as MapWall;
+				copy.blocksMovement = value;
+				updateMapItem(copy);
+			};
+
+			const setBlocksLOS = (value: boolean) => {
+				const copy = Utils.copy(item) as MapWall;
+				copy.blocksLineOfSight = value;
+				updateMapItem(copy);
+			};
+
+			const setIsOpenable = (value: boolean) => {
+				const copy = Utils.copy(item) as MapWall;
+				copy.isOpenable = value;
+				updateMapItem(copy);
+			};
+
+			const setIsConcealed = (value: boolean) => {
+				const copy = Utils.copy(item) as MapWall;
+				copy.isConcealed = value;
+				updateMapItem(copy);
+			};
+
+			const setColor = (value: string) => {
+				const copy = Utils.copy(item) as MapZone;
+				copy.color = value;
+				updateMapItem(copy);
+			};
+
+			const setSize = (value: number) => {
+				const copy = Utils.copy(item) as MapMini;
+				copy.dimensions.width = value;
+				copy.dimensions.height = value;
+				updateMapItem(copy);
+			};
+
+			const setNotes = (value: string) => {
+				const copy = Utils.copy(item) as MapTile | MapWall | MapZone | MapMini;
+				copy.notes = value;
+				updateMapItem(copy);
+			};
+
+			return (
+				<div className='tactical-map-toolbar bottom-toolbar'>
+					{
+						item.type === 'tile' ?
+							<>
+								<NumberSpin value={item.position.x} onChange={setX}>
+									<Field label='X' value={item.position.x} />
+								</NumberSpin>
+								<NumberSpin value={item.position.y} onChange={setY}>
+									<Field label='Y' value={item.position.y} />
+								</NumberSpin>
+								<NumberSpin min={1} value={item.dimensions.width} onChange={setWidth}>
+									<Field label='Width' value={item.dimensions.width} />
+								</NumberSpin>
+								<NumberSpin min={1} value={item.dimensions.height} onChange={setHeight}>
+									<Field label='Height' value={item.dimensions.height} />
+								</NumberSpin>
+								<Select
+									options={[
+										{ id: 'square', label: 'Square' },
+										{ id: 'rounded', label: 'Rounded' },
+										{ id: 'circle', label: 'Circle' }
+									]}
+									labelRender={data => <div className='ds-text'>{Format.capitalize(data.value.toString())}</div>}
+									optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+									value={item.corners}
+									onChange={setCorners}
+								/>
+							</>
+							: null
+					}
+					{
+						item.type === 'wall' ?
+							<>
+								{
+									TacticalMapLogic.getWallOrientation(item) === 'vertical' ?
+										<>
+											<NumberSpin label='X' value={item.pointA.x} onChange={setWallX}>
+												<Field label='X' value={item.pointA.x} />
+											</NumberSpin>
+											<NumberSpin label='Start Y' value={item.pointA.y} onChange={setStartY}>
+												<Field label='Start Y' value={item.pointA.y} />
+											</NumberSpin>
+											<NumberSpin label='End Y' min={item.pointA.y + 1} value={item.pointB.y} onChange={setEndY}>
+												<Field label='End Y' value={item.pointB.y} />
+											</NumberSpin>
+										</>
+										:
+										<>
+											<NumberSpin label='Y' value={item.pointA.y} onChange={setWallY}>
+												<Field label='Y' value={item.pointA.y} />
+											</NumberSpin>
+											<NumberSpin label='Start X' value={item.pointA.x} onChange={setStartX}>
+												<Field label='Start X' value={item.pointA.x} />
+											</NumberSpin>
+											<NumberSpin label='End X' min={item.pointA.x + 1} value={item.pointB.x} onChange={setEndX}>
+												<Field label='End X' value={item.pointB.x} />
+											</NumberSpin>
+										</>
+								}
+								<Popover
+									content={
+										<>
+											<Toggle
+												label='Blocks movement'
+												value={item.blocksMovement}
+												onChange={setBlocksMovement}
+											/>
+											<Toggle
+												label='Blocks line-of-sight'
+												value={item.blocksLineOfSight}
+												onChange={setBlocksLOS}
+											/>
+											<Toggle
+												label='Openable'
+												value={item.isOpenable}
+												onChange={setIsOpenable}
+											/>
+											<Toggle
+												label='Concealed'
+												value={item.isConcealed}
+												onChange={setIsConcealed}
+											/>
+										</>
+									}
+								>
+									<Button type='text'>
+										<BarsOutlined />
+									</Button>
+								</Popover>
+							</>
+							: null
+					}
+					{
+						item.type === 'zone' ?
+							<>
+								<NumberSpin value={item.position.x} onChange={setX}>
+									<Field label='X' value={item.position.x} />
+								</NumberSpin>
+								<NumberSpin value={item.position.y} onChange={setY}>
+									<Field label='Y' value={item.position.y} />
+								</NumberSpin>
+								<NumberSpin min={1} value={item.dimensions.width} onChange={setWidth}>
+									<Field label='Width' value={item.dimensions.width} />
+								</NumberSpin>
+								<NumberSpin min={1} value={item.dimensions.height} onChange={setHeight}>
+									<Field label='Height' value={item.dimensions.height} />
+								</NumberSpin>
+								<Select
+									options={[
+										{ id: 'square', label: 'Square' },
+										{ id: 'rounded', label: 'Rounded' },
+										{ id: 'circle', label: 'Circle' }
+									]}
+									optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+									value={item.corners}
+									onChange={setCorners}
+								/>
+								<ColorPicker
+									style={{ flex: '0 0 auto' }}
+									format='hex'
+									value={item.color}
+									onChange={c => setColor(c.toHex())}
+								/>
+							</>
+							: null
+					}
+					{
+						item.type === 'mini' ?
+							<>
+								<NumberSpin value={item.position.x} onChange={setX}>
+									<Field label='X' value={item.position.x} />
+								</NumberSpin>
+								<NumberSpin value={item.position.y} onChange={setY}>
+									<Field label='Y' value={item.position.y} />
+								</NumberSpin>
+								<NumberSpin min={1} value={item.dimensions.width} onChange={setSize}>
+									<Field label='Size' value={item.dimensions.width} />
+								</NumberSpin>
+							</>
+							: null
+					}
+					<Popover
+						content={
+							<MultiLine
+								label='Notes'
+								value={(item  as MapTile | MapWall | MapZone | MapMini).notes}
+								onChange={setNotes}
+							/>
+						}
+					>
+						<Button type='text'>
+							<FileTextOutlined />
+						</Button>
+					</Popover>
+					<DangerButton mode='clear' onConfirm={() => deleteMapItem(item)} />
+				</div>
+			);
 		}
 
-		const setX = (value: number) => {
-			const copy = Utils.copy(item) as MapTile | MapZone | MapMini;
-			copy.position.x = value;
-			updateMapItem(copy);
-		};
+		if ((editMode === TacticalMapEditMode.Minis) && editAdding) {
+			const sources: { value: string, label: string }[] = [];
+			if (props.heroes) {
+				props.heroes.forEach(h => sources.push({ value: h.folder, label: h.folder || 'Heroes' }));
+			}
+			if (props.encounters) {
+				props.encounters.forEach(enc => sources.push({ value: enc.id, label: enc.name || 'Unnamed Encounter' }));
+			}
+			const distinctSources = Collections.distinct(sources, s => s.value);
 
-		const setY = (value: number) => {
-			const copy = Utils.copy(item) as MapTile | MapZone | MapMini;
-			copy.position.y = value;
-			updateMapItem(copy);
-		};
+			const onMap = map.items
+				.filter(i => i.type === 'mini')
+				.map(mini => mini.content)
+				.filter(c => !!c)
+				.map(c => c.id);
 
-		const setWidth = (value: number) => {
-			const copy = Utils.copy(item) as MapTile | MapZone | MapMini;
-			copy.dimensions.width = value;
-			updateMapItem(copy);
-		};
-
-		const setHeight = (value: number) => {
-			const copy = Utils.copy(item) as MapTile | MapZone | MapMini;
-			copy.dimensions.height = value;
-			updateMapItem(copy);
-		};
-
-		const setCorners = (value: 'square' | 'rounded' | 'circle') => {
-			const copy = Utils.copy(item) as MapTile | MapZone;
-			copy.corners = value;
-			updateMapItem(copy);
-		};
-
-		const setWallX = (value: number) => {
-			const copy = Utils.copy(item) as MapWall;
-			copy.pointA.x = value;
-			copy.pointB.x = value;
-			updateMapItem(copy);
-		};
-
-		const setWallY = (value: number) => {
-			const copy = Utils.copy(item) as MapWall;
-			copy.pointA.y = value;
-			copy.pointB.y = value;
-			updateMapItem(copy);
-		};
-
-		const setStartX = (value: number) => {
-			const copy = Utils.copy(item) as MapWall;
-			copy.pointA.x = value;
-			updateMapItem(copy);
-		};
-
-		const setStartY = (value: number) => {
-			const copy = Utils.copy(item) as MapWall;
-			copy.pointA.y = value;
-			updateMapItem(copy);
-		};
-
-		const setEndX = (value: number) => {
-			const copy = Utils.copy(item) as MapWall;
-			copy.pointB.x = value;
-			updateMapItem(copy);
-		};
-
-		const setEndY = (value: number) => {
-			const copy = Utils.copy(item) as MapWall;
-			copy.pointB.y = value;
-			updateMapItem(copy);
-		};
-
-		const setBlocksMovement = (value: boolean) => {
-			const copy = Utils.copy(item) as MapWall;
-			copy.blocksMovement = value;
-			updateMapItem(copy);
-		};
-
-		const setBlocksLOS = (value: boolean) => {
-			const copy = Utils.copy(item) as MapWall;
-			copy.blocksLineOfSight = value;
-			updateMapItem(copy);
-		};
-
-		const setIsOpenable = (value: boolean) => {
-			const copy = Utils.copy(item) as MapWall;
-			copy.isOpenable = value;
-			updateMapItem(copy);
-		};
-
-		const setIsConcealed = (value: boolean) => {
-			const copy = Utils.copy(item) as MapWall;
-			copy.isConcealed = value;
-			updateMapItem(copy);
-		};
-
-		const setColor = (value: string) => {
-			const copy = Utils.copy(item) as MapZone;
-			copy.color = value;
-			updateMapItem(copy);
-		};
-
-		const setSize = (value: number) => {
-			const copy = Utils.copy(item) as MapMini;
-			copy.dimensions.width = value;
-			copy.dimensions.height = value;
-			updateMapItem(copy);
-		};
-
-		const setNotes = (value: string) => {
-			const copy = Utils.copy(item) as MapTile | MapWall | MapZone | MapMini;
-			copy.notes = value;
-			updateMapItem(copy);
-		};
-
-		return (
-			<div className='tactical-map-toolbar bottom-toolbar'>
-				{
-					item.type === 'tile' ?
-						<>
-							<NumberSpin value={item.position.x} onChange={setX}>
-								<Field label='X' value={item.position.x} />
-							</NumberSpin>
-							<NumberSpin value={item.position.y} onChange={setY}>
-								<Field label='Y' value={item.position.y} />
-							</NumberSpin>
-							<NumberSpin min={1} value={item.dimensions.width} onChange={setWidth}>
-								<Field label='Width' value={item.dimensions.width} />
-							</NumberSpin>
-							<NumberSpin min={1} value={item.dimensions.height} onChange={setHeight}>
-								<Field label='Height' value={item.dimensions.height} />
-							</NumberSpin>
-							<Select
-								options={[
-									{ id: 'square', label: 'Square' },
-									{ id: 'rounded', label: 'Rounded' },
-									{ id: 'circle', label: 'Circle' }
-								]}
-								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-								value={item.corners}
-								onChange={setCorners}
-							/>
-						</>
-						: null
-				}
-				{
-					item.type === 'wall' ?
-						<>
-							{
-								TacticalMapLogic.getWallOrientation(item) === 'vertical' ?
-									<>
-										<NumberSpin label='X' value={item.pointA.x} onChange={setWallX}>
-											<Field label='X' value={item.pointA.x} />
-										</NumberSpin>
-										<NumberSpin label='Start Y' value={item.pointA.y} onChange={setStartY}>
-											<Field label='Start Y' value={item.pointA.y} />
-										</NumberSpin>
-										<NumberSpin label='End Y' min={item.pointA.y + 1} value={item.pointB.y} onChange={setEndY}>
-											<Field label='End Y' value={item.pointB.y} />
-										</NumberSpin>
-									</>
-									:
-									<>
-										<NumberSpin label='Y' value={item.pointA.y} onChange={setWallY}>
-											<Field label='Y' value={item.pointA.y} />
-										</NumberSpin>
-										<NumberSpin label='Start X' value={item.pointA.x} onChange={setStartX}>
-											<Field label='Start X' value={item.pointA.x} />
-										</NumberSpin>
-										<NumberSpin label='End X' min={item.pointA.x + 1} value={item.pointB.x} onChange={setEndX}>
-											<Field label='End X' value={item.pointB.x} />
-										</NumberSpin>
-									</>
-							}
-							<Popover
-								content={
-									<>
-										<Toggle
-											label='Blocks movement'
-											value={item.blocksMovement}
-											onChange={setBlocksMovement}
-										/>
-										<Toggle
-											label='Blocks line-of-sight'
-											value={item.blocksLineOfSight}
-											onChange={setBlocksLOS}
-										/>
-										<Toggle
-											label='Openable'
-											value={item.isOpenable}
-											onChange={setIsOpenable}
-										/>
-										<Toggle
-											label='Concealed'
-											value={item.isConcealed}
-											onChange={setIsConcealed}
-										/>
-									</>
-								}
-							>
-								<Button type='text'>
-									<SettingOutlined />
-								</Button>
-							</Popover>
-						</>
-						: null
-				}
-				{
-					item.type === 'zone' ?
-						<>
-							<NumberSpin value={item.position.x} onChange={setX}>
-								<Field label='X' value={item.position.x} />
-							</NumberSpin>
-							<NumberSpin value={item.position.y} onChange={setY}>
-								<Field label='Y' value={item.position.y} />
-							</NumberSpin>
-							<NumberSpin min={1} value={item.dimensions.width} onChange={setWidth}>
-								<Field label='Width' value={item.dimensions.width} />
-							</NumberSpin>
-							<NumberSpin min={1} value={item.dimensions.height} onChange={setHeight}>
-								<Field label='Height' value={item.dimensions.height} />
-							</NumberSpin>
-							<Select
-								options={[
-									{ id: 'square', label: 'Square' },
-									{ id: 'rounded', label: 'Rounded' },
-									{ id: 'circle', label: 'Circle' }
-								]}
-								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-								value={item.corners}
-								onChange={setCorners}
-							/>
-							<ColorPicker
-								style={{ flex: '0 0 auto' }}
-								format='hex'
-								value={item.color}
-								onChange={c => setColor(c.toHex())}
-							/>
-						</>
-						: null
-				}
-				{
-					item.type === 'mini' ?
-						<>
-							<NumberSpin value={item.position.x} onChange={setX}>
-								<Field label='X' value={item.position.x} />
-							</NumberSpin>
-							<NumberSpin value={item.position.y} onChange={setY}>
-								<Field label='Y' value={item.position.y} />
-							</NumberSpin>
-							<NumberSpin value={item.dimensions.width} onChange={setSize}>
-								<Field label='Size' value={item.dimensions.width} />
-							</NumberSpin>
-						</>
-						: null
-				}
-				<Popover
-					content={
-						<MultiLine
-							label='Notes'
-							value={(item  as MapTile | MapWall | MapZone | MapMini).notes}
-							onChange={setNotes}
+			const tokens: ReactNode[] = [];
+			if (props.heroes) {
+				props.heroes
+					.filter(h => h.folder === miniSource)
+					.filter(h => !onMap.includes(h.id))
+					.forEach(h => tokens.push(
+						<HeroToken
+							key={h.id}
+							hero={h}
+							size={30}
+							onClick={() => setSelectedMini({ type: 'hero', encounterID: '', id: h.id })}
 						/>
-					}
-				>
-					<Button type='text'>
-						<BookOutlined />
-					</Button>
-				</Popover>
-				<DangerButton mode='clear' onConfirm={() => deleteMapItem(item)} />
-			</div>
-		);
+					));
+			}
+			if (props.encounters) {
+				props.encounters
+					.filter(enc => enc.id === miniSource)
+					.forEach(enc => {
+						enc.heroes
+							.filter(h => !onMap.includes(h.id))
+							.forEach(h => tokens.push(
+								<HeroToken
+									key={h.id}
+									hero={h}
+									size={30}
+									onClick={() => setSelectedMini({ type: 'hero', encounterID: enc.id, id: h.id })}
+								/>
+							));
+						enc.groups.forEach(g => {
+							g.slots.forEach(s => {
+								s.monsters
+									.filter(m => !onMap.includes(m.id))
+									.forEach(m => tokens.push(
+										<MonsterToken
+											key={m.id}
+											monster={m}
+											size={30}
+											onClick={() => setSelectedMini({ type: 'monster', encounterID: enc.id, id: m.id })}
+										/>
+									));
+							});
+						});
+					});
+			}
+
+			if (selectedMini) {
+				return (
+					<div className='tactical-map-toolbar bottom-toolbar'>
+						<Button onClick={() => setSelectedMini(null)}>
+							<CloseOutlined />
+						</Button>
+						<div>
+							Select a square to add this mini
+						</div>
+					</div>
+				);
+			}
+
+			return (
+				<div className='tactical-map-toolbar bottom-toolbar'>
+					<Select
+						style={{ width: '200px' }}
+						options={distinctSources}
+						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+						dropdownRender={menu => (
+							<>
+								<HeaderText>Pick minis from:</HeaderText>
+								{menu}
+							</>
+						)}
+						value={miniSource}
+						onChange={setMiniSource}
+					/>
+					<Divider type='vertical' />
+					{tokens}
+				</div>
+			);
+		}
+
+		return null;
 	};
 
 	const getTiles = (boundaries: MapBoundaries) => {
@@ -918,6 +1086,7 @@ export const TacticalMapPanel = (props: Props) => {
 				<MapMiniPanel
 					key={mini.id}
 					mini={mini}
+					content={getMiniSource(mini)}
 					display={props.display}
 					selectable={(editMode === TacticalMapEditMode.Minis) && !editAdding}
 					selected={selectedMapItemID === mini.id}

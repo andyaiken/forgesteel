@@ -62,6 +62,10 @@ $monster-support: rgb(245, 213, 184);
 		border-color: color.scale($monster-support, $lightness: -20%);
 	}
 
+	&.clickable {
+		cursor: pointer;
+	}
+
 	.inner-token {
 		height: 100%;
 		width: 100%;

@@ -1,7 +1,10 @@
+import { HeroToken, MonsterToken } from '../../../../controls/token/token';
 import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
+import { Hero } from '../../../../../models/hero';
 import { MapItemStyle } from '../tactical-map-panel';
 import { MapMini } from '../../../../../models/tactical-map';
 import { Markdown } from '../../../../controls/markdown/markdown';
+import { Monster } from '../../../../../models/monster';
 import { Popover } from 'antd';
 import { TacticalMapDisplayType } from '../../../../../enums/tactical-map-display-type';
 
@@ -9,6 +12,7 @@ import './map-mini.scss';
 
 interface Props {
 	mini: MapMini;
+	content: Hero | Monster | null;
 	display: TacticalMapDisplayType;
 	selectable: boolean;
 	selected: boolean;
@@ -19,6 +23,26 @@ interface Props {
 }
 
 export const MapMiniPanel = (props: Props) => {
+	const getContent = () => {
+		if (props.mini.content && props.content) {
+			const size = parseInt(props.style.width);
+
+			if (props.mini.content.type === 'hero') {
+				return (
+					<HeroToken hero={props.content as Hero} size={size} />
+				);
+			}
+
+			if (props.mini.content.type === 'monster') {
+				return (
+					<MonsterToken monster={props.content as Monster} size={size} />
+				);
+			}
+		}
+
+		return null;
+	};
+
 	try {
 		let className = 'map-mini-panel ' + props.display;
 		if (props.selectable) {
@@ -41,7 +65,9 @@ export const MapMiniPanel = (props: Props) => {
 							}
 						}}
 					>
-						<div className='mini-content' />
+						<div className='mini-content'>
+							{getContent()}
+						</div>
 					</div>
 				</Popover>
 			</ErrorBoundary>

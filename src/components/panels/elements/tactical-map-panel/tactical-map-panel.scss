@@ -9,8 +9,10 @@
     gap: 5px;
     padding: 5px;
     background: rgba(200, 200, 200, 0.5);
+	border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 10px;
     backdrop-filter: blur(2px);
+	overflow-x: auto;
 
 	&.top-toolbar {
 		top: 10px;

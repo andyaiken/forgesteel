@@ -629,7 +629,7 @@ const StartSection = (props: StartSectionProps) => {
 									<Button block={true} icon={<DownloadOutlined />}>Import a sourcebook</Button>
 								</Upload>
 							</>
-						  )}
+						)}
 						value={props.hero.settingIDs}
 						onChange={props.setSettingIDs}
 					/>

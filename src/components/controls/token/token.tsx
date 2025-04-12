@@ -9,6 +9,7 @@ interface Props {
 	name: string;
 	role: MonsterRoleType;
 	size?: number;
+	onClick?: () => void;
 }
 
 export const Token = (props: Props) => {
@@ -21,11 +22,17 @@ export const Token = (props: Props) => {
 			.join('')
 			.toUpperCase();
 
+		let className = `token ${props.role.toLowerCase()}`;
+		if (props.onClick) {
+			className += ' clickable';
+		}
+
 		return (
 			<div
-				className={`token ${props.role.toLowerCase()}`}
+				className={className}
 				style={{ width: `${size}px`, padding: `${size * 0.08}px` }}
 				title={props.name}
+				onClick={props.onClick}
 			>
 				<div
 					className='inner-token'
@@ -45,25 +52,27 @@ interface MonsterTokenProps {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
 	size?: number;
+	onClick?: () => void;
 }
 
 export const MonsterToken = (props: MonsterTokenProps) => {
 	const name = MonsterLogic.getMonsterName(props.monster, props.monsterGroup);
 	const role = props.monster.role.type;
 	return (
-		<Token name={name} role={role} size={props.size}  />
+		<Token name={name} role={role} size={props.size} onClick={props.onClick} />
 	);
 };
 
 interface HeroTokenProps {
 	hero: Hero;
 	size?: number;
+	onClick?: () => void;
 }
 
 export const HeroToken = (props: HeroTokenProps) => {
 	const name = props.hero.name || 'Hero';
 	const role = MonsterRoleType.NoRole;
 	return (
-		<Token name={name} role={role} size={props.size}  />
+		<Token name={name} role={role} size={props.size} onClick={props.onClick} />
 	);
 };

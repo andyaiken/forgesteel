@@ -366,8 +366,7 @@ export class SourcebookLogic {
 						reactionUsed: false,
 						hidden: false,
 						defeated: false,
-						captainID: undefined,
-						positions: []
+						captainID: undefined
 					};
 				}
 

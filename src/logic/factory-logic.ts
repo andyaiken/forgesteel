@@ -96,8 +96,7 @@ export class FactoryLogic {
 				notes: '',
 				acted: false,
 				hidden: false,
-				defeated: false,
-				positions: []
+				defeated: false
 			},
 			abilityCustomizations: []
 		};
@@ -448,8 +447,7 @@ export class FactoryLogic {
 				reactionUsed: false,
 				hidden: false,
 				defeated: false,
-				captainID: undefined,
-				positions: []
+				captainID: undefined
 			}
 		};
 	};
@@ -536,8 +534,7 @@ export class FactoryLogic {
 				reactionUsed: false,
 				hidden: false,
 				defeated: false,
-				captainID: undefined,
-				positions: []
+				captainID: undefined
 			}
 		};
 	};
@@ -1381,7 +1378,8 @@ export class FactoryLogic {
 				width: 1,
 				height: 1,
 				depth: 1
-			}
+			},
+			content: null
 		};
 	}
 

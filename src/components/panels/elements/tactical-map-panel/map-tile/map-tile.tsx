@@ -30,7 +30,7 @@ export const MapTilePanel = (props: Props) => {
 
 		return (
 			<ErrorBoundary>
-				<Popover content={<Markdown text={props.tile.notes} />}>
+				<Popover content={props.tile.notes ? <Markdown text={props.tile.notes} /> : null}>
 					<div
 						className={className}
 						style={props.style}

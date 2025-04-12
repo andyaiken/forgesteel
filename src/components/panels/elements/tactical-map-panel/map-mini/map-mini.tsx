@@ -30,7 +30,7 @@ export const MapMiniPanel = (props: Props) => {
 
 		return (
 			<ErrorBoundary>
-				<Popover content={<Markdown text={props.mini.notes} />}>
+				<Popover content={props.mini.notes ? <Markdown text={props.mini.notes} /> : null}>
 					<div
 						className={className}
 						style={props.style}

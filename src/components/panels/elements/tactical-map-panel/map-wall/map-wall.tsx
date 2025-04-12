@@ -54,7 +54,7 @@ export const MapWallPanel = (props: Props) => {
 
 		return (
 			<ErrorBoundary>
-				<Popover content={<Markdown text={props.wall.notes} />}>
+				<Popover content={props.wall.notes ? <Markdown text={props.wall.notes} /> : null}>
 					<div
 						className={className}
 						style={props.style}

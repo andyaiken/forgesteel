@@ -162,7 +162,7 @@ export class PDFExport {
 				}
 				ignoredFeatures[heroicResourceFeature.id] = true;
 				let resourceGainText = 'Your resource is ' + resource + '.\n\n' + heroicResourceFeature.description.replace(startup, '');
-				if(domains) {
+				if(hero.class && hero.class.name == 'Conduit' && domains) {
 					resourceGainText = resourceGainText + '\n' + domains.map(d => d.piety).join('');
 				}
 				texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);

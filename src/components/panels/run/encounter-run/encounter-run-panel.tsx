@@ -404,7 +404,7 @@ export const EncounterRunPanel = (props: Props) => {
 									<HeroToken hero={hero} />
 									<div>
 										<div>{hero.name || 'Unnamed Hero'}</div>
-										<div style={{ opacity: 0.7 }}>{HeroLogic.getHeroDescription(hero)}</div>
+										<div style={{ fontSize: '10px', opacity: 0.7 }}>{HeroLogic.getHeroDescription(hero)}</div>
 									</div>
 								</div>
 								<div className='stamina-column'>

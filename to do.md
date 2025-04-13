@@ -23,6 +23,7 @@
 * Adventure Builder:
   * Allow subplots
 * Encounter Builder:
+  * Show encounter difficulty always (but collapsed)
   * Set number of squares for per-square terrain
   * Use encounter templates
   * Auto-create encounters
@@ -34,6 +35,7 @@
 
 ### Session
 
+* Rework session page UI for mobile
 * Encounter
   * Monsters:
     * Ability to set 'used reaction' flag on heroes / monsters / minions
@@ -47,10 +49,8 @@
     * Show 'should be N squares' for terrain
     * Ability to add new terrain objects
 * Tactical map
-  * Add hero minis to map (automatically if there's an encounter active, or if not, then based on encounter setting)
-  * Add monster minis to map (automatically if there's an encounter active)
+  * Allow uploaded images to be used as maps
   * Add terrain minis / overlays
-  * In encounter, add monster minis / terrain minis / terrain minis
   * Minis should be able to be hidden (not shown on player view)
 
 ### Player View

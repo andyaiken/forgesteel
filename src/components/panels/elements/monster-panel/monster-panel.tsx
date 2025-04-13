@@ -12,7 +12,6 @@ import { Field } from '../../../controls/field/field';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
-import { MonsterHealthPanel } from '../../health/health-panel';
 import { MonsterLabel } from '../../monster-label/monster-label';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
@@ -20,7 +19,6 @@ import { MonsterToken } from '../../../controls/token/token';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
 import './monster-panel.scss';
@@ -30,87 +28,72 @@ interface Props {
 	monsterGroup?: MonsterGroup;
 	options: Options;
 	mode?: PanelMode;
-	updateMonster?: (monster: Monster) => void;
 }
 
 export const MonsterPanel = (props: Props) => {
-	const [ monster, setMonster ] = useState<Monster>(Utils.copy(props.monster));
 	const [ selectedAbility, setSelectedAbility ] = useState<Ability | null>(null);
-
-	const updateMonster = (monster: Monster) => {
-		const copy = Utils.copy(monster);
-		setMonster(copy);
-		if (props.updateMonster) {
-			props.updateMonster(copy);
-		}
-	};
 
 	try {
 		if (props.mode !== PanelMode.Full) {
 			return (
 				<div className='monster-panel compact'>
-					<HeaderText level={1} ribbon={<MonsterToken monster={monster} monsterGroup={props.monsterGroup} size={28} />}>
-						{MonsterLogic.getMonsterName(monster, props.monsterGroup)}
+					<HeaderText level={1} ribbon={<MonsterToken monster={props.monster} monsterGroup={props.monsterGroup} size={28} />}>
+						{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
 					</HeaderText>
-					<MonsterLabel monster={monster} />
+					<MonsterLabel monster={props.monster} />
 					<Flex align='center' justify='space-between'>
-						<div>{monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
-						<Field label='EV' value={(monster.role.organization === MonsterOrganizationType.Minion) ? `${monster.encounterValue} for ${props.options.minionCount} minions` : ((monster.encounterValue === 0) ? '-': monster.encounterValue)} />
+						<div>{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
+						<Field label='EV' value={(props.monster.role.organization === MonsterOrganizationType.Minion) ? `${props.monster.encounterValue} for ${props.options.minionCount} minions` : ((props.monster.encounterValue === 0) ? '-': props.monster.encounterValue)} />
 					</Flex>
 				</div>
 			);
 		}
 
-		const signatureBonus = MonsterLogic.getSignatureDamageBonus(monster);
+		const signatureBonus = MonsterLogic.getSignatureDamageBonus(props.monster);
 
-		const immunities = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Immunity);
-		const weaknesses = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Weakness);
-		const speed = monster.speed.modes !== '' ? `${monster.speed.value} (${monster.speed.modes})` : monster.speed.value;
+		const immunities = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Immunity);
+		const weaknesses = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Weakness);
+		const speed = props.monster.speed.modes !== '' ? `${props.monster.speed.value} (${props.monster.speed.modes})` : props.monster.speed.value;
 
-		const features = MonsterLogic.getFeatures(monster).filter(f => (f.type === FeatureType.Text) || (f.type === FeatureType.AddOn));
-		const abilities = MonsterLogic.getFeatures(monster).filter(f => f.type === FeatureType.Ability).map(f => f.data.ability);
+		const features = MonsterLogic.getFeatures(props.monster).filter(f => (f.type === FeatureType.Text) || (f.type === FeatureType.AddOn));
+		const abilities = MonsterLogic.getFeatures(props.monster).filter(f => f.type === FeatureType.Ability).map(f => f.data.ability);
 
 		return (
 			<ErrorBoundary>
-				<div className='monster-panel' id={monster.id}>
-					<HeaderText level={1} ribbon={<MonsterToken monster={monster} monsterGroup={props.monsterGroup} size={28} />}>
-						{MonsterLogic.getMonsterName(monster, props.monsterGroup)}
+				<div className='monster-panel' id={props.monster.id}>
+					<HeaderText level={1} ribbon={<MonsterToken monster={props.monster} monsterGroup={props.monsterGroup} size={28} />}>
+						{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
 					</HeaderText>
-					<MonsterLabel monster={monster} />
-					<Markdown text={monster.description} />
+					<MonsterLabel monster={props.monster} />
+					<Markdown text={props.monster.description} />
 					<Flex align='center' justify='space-between'>
-						<div>{monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
-						<Field label='EV' value={(monster.role.organization === MonsterOrganizationType.Minion) ? `${monster.encounterValue} ${props.options.minionCount} minions` : ((monster.encounterValue === 0) ? '-': monster.encounterValue)} />
+						<div>{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
+						<Field label='EV' value={(props.monster.role.organization === MonsterOrganizationType.Minion) ? `${props.monster.encounterValue} ${props.options.minionCount} minions` : ((props.monster.encounterValue === 0) ? '-': props.monster.encounterValue)} />
 					</Flex>
-					{
-						props.updateMonster ?
-							<MonsterHealthPanel monster={monster} onChange={updateMonster} />
-							: null
-					}
 					<div className='stats'>
 						<Field orientation='vertical' label='Speed' value={speed} />
-						<Field orientation='vertical' label='Size' value={FormatLogic.getSize(monster.size)} />
-						<Field orientation='vertical' label='Stamina' value={MonsterLogic.getStaminaDescription(monster)} />
-						<Field orientation='vertical' label='Stability' value={monster.stability} />
-						<Field orientation='vertical' label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(monster)} />
+						<Field orientation='vertical' label='Size' value={FormatLogic.getSize(props.monster.size)} />
+						<Field orientation='vertical' label='Stamina' value={MonsterLogic.getStaminaDescription(props.monster)} />
+						<Field orientation='vertical' label='Stability' value={props.monster.stability} />
+						<Field orientation='vertical' label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(props.monster)} />
 					</div>
 					{
-						MonsterLogic.isWinded(monster) ?
+						MonsterLogic.isWinded(props.monster) ?
 							<Alert
 								type='warning'
 								showIcon={true}
-								message={`${MonsterLogic.getMonsterName(monster, props.monsterGroup)} is winded.`}
+								message={`${MonsterLogic.getMonsterName(props.monster, props.monsterGroup)} is winded.`}
 							/>
 							: null
 					}
 					<div className='stats'>
 						{
 							[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
-								.map(ch => <Field key={ch} orientation='vertical' label={ch} value={MonsterLogic.getCharacteristic(monster, ch)} />)
+								.map(ch => <Field key={ch} orientation='vertical' label={ch} value={MonsterLogic.getCharacteristic(props.monster, ch)} />)
 						}
 					</div>
 					{
-						signatureBonus || monster.withCaptain || (immunities.length > 0) || (weaknesses.length > 0) || (features.length > 0) ?
+						signatureBonus || props.monster.withCaptain || (immunities.length > 0) || (weaknesses.length > 0) || (features.length > 0) ?
 							<div className='features'>
 								{
 									signatureBonus ?
@@ -118,8 +101,8 @@ export const MonsterPanel = (props: Props) => {
 										: null
 								}
 								{
-									monster.withCaptain ?
-										<Field label='With Captain' value={monster.withCaptain} />
+									props.monster.withCaptain ?
+										<Field label='With Captain' value={props.monster.withCaptain} />
 										: null
 								}
 								{
@@ -144,29 +127,29 @@ export const MonsterPanel = (props: Props) => {
 							: null
 					}
 					{
-						monster.retainer ?
+						props.monster.retainer ?
 							<>
 								{
-									monster.retainer.level4 && (monster.retainer.level < 4) ?
+									props.monster.retainer.level4 && (props.monster.retainer.level < 4) ?
 										<>
 											<HeaderText level={1}>Level 4</HeaderText>
-											<FeaturePanel key={monster.retainer.level4.id} feature={monster.retainer.level4}options={props.options} mode={PanelMode.Full} />
+											<FeaturePanel key={props.monster.retainer.level4.id} feature={props.monster.retainer.level4}options={props.options} mode={PanelMode.Full} />
 										</>
 										: null
 								}
 								{
-									monster.retainer.level7 && (monster.retainer.level < 7) ?
+									props.monster.retainer.level7 && (props.monster.retainer.level < 7) ?
 										<>
 											<HeaderText level={1}>Level 7</HeaderText>
-											<FeaturePanel key={monster.retainer.level7.id} feature={monster.retainer.level7}options={props.options} mode={PanelMode.Full} />
+											<FeaturePanel key={props.monster.retainer.level7.id} feature={props.monster.retainer.level7}options={props.options} mode={PanelMode.Full} />
 										</>
 										: null
 								}
 								{
-									monster.retainer.level10 && (monster.retainer.level < 10) ?
+									props.monster.retainer.level10 && (props.monster.retainer.level < 10) ?
 										<>
 											<HeaderText level={1}>Level 10</HeaderText>
-											<FeaturePanel key={monster.retainer.level10.id} feature={monster.retainer.level10}options={props.options} mode={PanelMode.Full} />
+											<FeaturePanel key={props.monster.retainer.level10.id} feature={props.monster.retainer.level10}options={props.options} mode={PanelMode.Full} />
 										</>
 										: null
 								}
@@ -178,7 +161,7 @@ export const MonsterPanel = (props: Props) => {
 							selectedAbility ?
 								<AbilityModal
 									ability={selectedAbility}
-									monster={monster}
+									monster={props.monster}
 									onClose={() => setSelectedAbility(null)}
 								/>
 								: null

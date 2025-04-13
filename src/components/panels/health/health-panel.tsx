@@ -1,6 +1,5 @@
 import { Alert, Button, Divider, Drawer, Flex, InputNumber, Progress } from 'antd';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
-import { DownOutlined, PlusOutlined, UpOutlined } from '@ant-design/icons';
 import { Encounter, EncounterSlot } from '../../../models/encounter';
 import { Collections } from '../../../utils/collections';
 import { Condition } from '../../../models/condition';
@@ -19,6 +18,8 @@ import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterToken } from '../../controls/token/token';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
+import { PanelMode } from '../../../enums/panel-mode';
+import { PlusOutlined } from '@ant-design/icons';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
@@ -27,7 +28,7 @@ import './health-panel.scss';
 interface HeroProps {
 	hero: Hero;
 	showEncounterControls: boolean;
-	onChange: (hero: Hero) => void;
+	onChange?: (hero: Hero) => void;
 }
 
 export const HeroHealthPanel = (props: HeroProps) => {
@@ -41,21 +42,27 @@ export const HeroHealthPanel = (props: HeroProps) => {
 		copy.state.staminaDamage += damageToStamina;
 		copy.state.staminaTemp -= damageToTemp;
 		setHero(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const heal = (value: number) => {
 		const copy = Utils.copy(hero);
 		copy.state.staminaDamage = Math.max(hero.state.staminaDamage - value, 0);
 		setHero(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const addTemp = (value: number) => {
 		const copy = Utils.copy(hero);
 		copy.state.staminaTemp = hero.state.staminaTemp + value;
 		setHero(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const spendRecovery = () => {
@@ -63,35 +70,45 @@ export const HeroHealthPanel = (props: HeroProps) => {
 		copy.state.recoveriesUsed += 1;
 		copy.state.staminaDamage = Math.max(copy.state.staminaDamage - HeroLogic.getRecoveryValue(hero), 0);
 		setHero(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const setHidden = (value: boolean) => {
 		const copy = Utils.copy(hero);
 		copy.state.hidden = value;
 		setHero(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const setActed = (value: boolean) => {
 		const copy = Utils.copy(hero);
 		copy.state.acted = value;
 		setHero(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const setDefeated = (value: boolean) => {
 		const copy = Utils.copy(hero);
 		copy.state.defeated = value;
 		setHero(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const addCondition = (condition: Condition) => {
 		const copy = Utils.copy(hero);
 		copy.state.conditions.push(condition);
 		setHero(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const editCondition = (condition: Condition) => {
@@ -100,7 +117,9 @@ export const HeroHealthPanel = (props: HeroProps) => {
 		if (index !== -1) {
 			copy.state.conditions[index] = condition;
 			setHero(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				props.onChange(copy);
+			}
 		}
 	};
 
@@ -108,13 +127,15 @@ export const HeroHealthPanel = (props: HeroProps) => {
 		const copy = Utils.copy(hero);
 		copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
 		setHero(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	return (
 		<ErrorBoundary>
 			<HealthPanel
-				expandable={false}
+				mode={props.onChange ? PanelMode.Full : PanelMode.Compact}
 				stamina={{
 					staminaMax: HeroLogic.getStamina(hero),
 					staminaDamage: hero.state.staminaDamage,
@@ -169,7 +190,7 @@ export const HeroHealthPanel = (props: HeroProps) => {
 
 interface MonsterProps {
 	monster: Monster;
-	onChange: (monster: Monster) => void;
+	onChange?: (monster: Monster) => void;
 }
 
 export const MonsterHealthPanel = (props: MonsterProps) => {
@@ -183,42 +204,54 @@ export const MonsterHealthPanel = (props: MonsterProps) => {
 		copy.state.staminaDamage += damageToStamina;
 		copy.state.staminaTemp -= damageToTemp;
 		setMonster(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const heal = (value: number) => {
 		const copy = Utils.copy(monster);
 		copy.state.staminaDamage = Math.max(monster.state.staminaDamage - value, 0);
 		setMonster(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const addTemp = (value: number) => {
 		const copy = Utils.copy(monster);
 		copy.state.staminaTemp = monster.state.staminaTemp + value;
 		setMonster(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const setHidden = (value: boolean) => {
 		const copy = Utils.copy(monster);
 		copy.state.hidden = value;
 		setMonster(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const setDefeated = (value: boolean) => {
 		const copy = Utils.copy(monster);
 		copy.state.defeated = value;
 		setMonster(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const addCondition = (condition: Condition) => {
 		const copy = Utils.copy(monster);
 		copy.state.conditions.push(condition);
 		setMonster(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const editCondition = (condition: Condition) => {
@@ -227,7 +260,9 @@ export const MonsterHealthPanel = (props: MonsterProps) => {
 		if (index !== -1) {
 			copy.state.conditions[index] = condition;
 			setMonster(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				props.onChange(copy);
+			}
 		}
 	};
 
@@ -235,13 +270,15 @@ export const MonsterHealthPanel = (props: MonsterProps) => {
 		const copy = Utils.copy(monster);
 		copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
 		setMonster(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	return (
 		<ErrorBoundary>
 			<HealthPanel
-				expandable={true}
+				mode={props.onChange ? PanelMode.Full : PanelMode.Compact}
 				stamina={
 					monster.role.organization !== MonsterOrganizationType.Minion ?
 						{
@@ -283,7 +320,7 @@ export const MonsterHealthPanel = (props: MonsterProps) => {
 interface MinionGroupProps {
 	slot: EncounterSlot;
 	encounter: Encounter;
-	onChange: (slot: EncounterSlot) => void;
+	onChange?: (slot: EncounterSlot) => void;
 }
 
 export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
@@ -297,35 +334,45 @@ export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
 		copy.state.staminaDamage += damageToStamina;
 		copy.state.staminaTemp -= damageToTemp;
 		setSlot(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const heal = (value: number) => {
 		const copy = Utils.copy(slot);
 		copy.state.staminaDamage = Math.max(copy.state.staminaDamage - value, 0);
 		setSlot(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const setDefeated = (value: boolean) => {
 		const copy = Utils.copy(slot);
 		copy.state.defeated = value;
 		setSlot(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const setCaptainID = (value: string | undefined) => {
 		const copy = Utils.copy(slot);
 		copy.state.captainID = value;
 		setSlot(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const addCondition = (condition: Condition) => {
 		const copy = Utils.copy(slot);
 		copy.state.conditions.push(condition);
 		setSlot(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	const editCondition = (condition: Condition) => {
@@ -334,7 +381,9 @@ export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
 		if (index !== -1) {
 			copy.state.conditions[index] = condition;
 			setSlot(copy);
-			props.onChange(copy);
+			if (props.onChange) {
+				props.onChange(copy);
+			}
 		}
 	};
 
@@ -342,13 +391,15 @@ export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
 		const copy = Utils.copy(slot);
 		copy.state.conditions = copy.state.conditions.filter(c => c.id !== condition.id);
 		setSlot(copy);
-		props.onChange(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
 	};
 
 	return (
 		<ErrorBoundary>
 			<HealthPanel
-				expandable={false}
+				mode={props.onChange ? PanelMode.Full : PanelMode.Compact}
 				stamina={{
 					staminaMax: Collections.sum(props.slot.monsters, m => MonsterLogic.getStamina(m)),
 					staminaDamage: slot.state.staminaDamage,
@@ -381,7 +432,7 @@ export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
 };
 
 interface Props {
-	expandable: boolean;
+	mode: PanelMode;
 	stamina?: {
 		staminaMax: number;
 		staminaDamage: number;
@@ -425,7 +476,6 @@ interface Props {
 }
 
 const HealthPanel = (props: Props) => {
-	const [ expanded, setExpanded ] = useState<boolean>(!props.expandable);
 	const [ damageValue, setDamageValue ] = useState<number>(0);
 	const [ conditionsVisible, setConditionsVisible ] = useState<boolean>(false);
 
@@ -525,9 +575,9 @@ const HealthPanel = (props: Props) => {
 		);
 	};
 
-	if (!expanded) {
+	if (props.mode === PanelMode.Compact) {
 		return (
-			<div className='health-panel bordered compact'>
+			<div className='health-panel compact'>
 				{
 					props.stamina ?
 						<Field
@@ -569,17 +619,13 @@ const HealthPanel = (props: Props) => {
 						</div>
 					}
 				</div>
-				<Button type='primary' onClick={() => setExpanded(true)}>
-					Expand
-					<DownOutlined />
-				</Button>
 			</div>
 		);
 	}
 
 	return (
 		<ErrorBoundary>
-			<div className={props.expandable ? 'health-panel bordered' : 'health-panel'}>
+			<div className='health-panel'>
 				{
 					props.stamina ?
 						<>
@@ -753,14 +799,6 @@ const HealthPanel = (props: Props) => {
 				{
 					props.conditions.length === 0 ?
 						<Empty text='You are not affected by any conditions.' />
-						: null
-				}
-				{
-					props.expandable ?
-						<Button block={true} style={{ marginBottom: '15px' }} onClick={() => setExpanded(false)}>
-							Smaller
-							<UpOutlined />
-						</Button>
 						: null
 				}
 				<Drawer open={conditionsVisible} onClose={() => setConditionsVisible(false)} closeIcon={null} width='500px'>

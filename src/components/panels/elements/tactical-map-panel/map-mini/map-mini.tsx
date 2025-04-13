@@ -1,5 +1,7 @@
+import { HeroHealthPanel, MonsterHealthPanel } from '../../../health/health-panel';
 import { HeroToken, MonsterToken } from '../../../../controls/token/token';
 import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
+import { HeaderText } from '../../../../controls/header-text/header-text';
 import { Hero } from '../../../../../models/hero';
 import { MapItemStyle } from '../tactical-map-panel';
 import { MapMini } from '../../../../../models/tactical-map';
@@ -43,6 +45,56 @@ export const MapMiniPanel = (props: Props) => {
 		return null;
 	};
 
+	const getInfo = () => {
+		const content = [];
+
+		if (props.mini.content && props.content) {
+			content.push(
+				<HeaderText key='name'>
+					{props.content.name}
+				</HeaderText>
+			);
+
+			if (props.mini.content.type === 'hero') {
+				content.push(
+					<HeroHealthPanel
+						key='hero'
+						hero={props.content as Hero}
+						showEncounterControls={false}
+					/>
+				);
+			}
+
+			if (props.mini.content.type === 'monster') {
+				content.push(
+					<MonsterHealthPanel
+						key='monster'
+						monster={props.content as Monster}
+					/>
+				);
+			}
+		}
+
+		if (props.mini.notes) {
+			content.push(
+				<Markdown
+					key='notes'
+					text={props.mini.notes}
+				/>
+			);
+		}
+
+		if (content.length > 0) {
+			return (
+				<>
+					{content}
+				</>
+			);
+		}
+
+		return null;
+	};
+
 	try {
 		let className = 'map-mini-panel ' + props.display;
 		if (props.selectable) {
@@ -54,7 +106,7 @@ export const MapMiniPanel = (props: Props) => {
 
 		return (
 			<ErrorBoundary>
-				<Popover content={props.mini.notes ? <Markdown text={props.mini.notes} /> : null}>
+				<Popover content={getInfo()}>
 					<div
 						className={className}
 						style={props.style}

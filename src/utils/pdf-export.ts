@@ -162,7 +162,7 @@ export class PDFExport {
 				}
 				ignoredFeatures[heroicResourceFeature.id] = true;
 				let resourceGainText = 'Your resource is ' + resource + '.\n\n' + heroicResourceFeature.description.replace(startup, '');
-				if(domains) {
+				if(hero.class && hero.class.name == 'Conduit' && domains) {
 					resourceGainText = resourceGainText + '\n' + domains.map(d => d.piety).join('');
 				}
 				texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
@@ -288,6 +288,7 @@ export class PDFExport {
 		}
 
 		{
+			const AddSign = (n: number) => n >= 0 ? '+' + n : n.toString();
 			const ApplyGroup = (
 				abilities: Ability[],
 				prefix: string,
@@ -340,6 +341,14 @@ export class PDFExport {
 							a,
 							hero
 						);
+
+						const dmgMelee = HeroLogic.getMeleeDamageBonus(hero, a);
+						const dmgRanged = HeroLogic.getRangedDamageBonus(hero, a);
+						if(dmgMelee && dmgRanged && ((dmgMelee.tier1 !== dmgRanged.tier1) || (dmgMelee.tier2 !== dmgRanged.tier2) || (dmgMelee.tier3 !== dmgRanged.tier3))) {
+							powerRollText = powerRollText + '\n   Bonus Melee Damage: ' + AddSign(dmgMelee.tier1) + ' / ' + AddSign(dmgMelee.tier2) + ' / ' + AddSign(dmgMelee.tier3);
+							powerRollText = powerRollText + '\n   Bonus Ranged Damage: ' + AddSign(dmgRanged.tier1) + ' / ' + AddSign(dmgRanged.tier2) + ' / ' + AddSign(dmgRanged.tier3);
+						}
+
 						details.push(powerRollText);
 					}
 					if (a.type.trigger !== '') {

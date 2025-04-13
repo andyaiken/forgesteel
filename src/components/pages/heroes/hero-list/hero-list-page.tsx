@@ -93,7 +93,6 @@ export const HeroListPage = (props: Props) => {
 						<div className='divider' />
 						<Popover
 							trigger='click'
-							placement='bottom'
 							content={(
 								<div style={{ display: 'flex', flexDirection: 'column' }}>
 									<Space>

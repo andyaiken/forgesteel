@@ -2928,7 +2928,6 @@ export const LibraryEditPage = (props: Props) => {
 							monster ?
 								<Popover
 									trigger='click'
-									placement='bottom'
 									content={<OptionsPanel mode='monster' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
 								>
 									<Button icon={<SettingOutlined />}>

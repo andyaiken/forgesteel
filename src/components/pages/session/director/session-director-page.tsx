@@ -487,7 +487,6 @@ export const SessionDirectorPage = (props: Props) => {
 					<AppHeader subheader='Session' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
 						<Popover
 							trigger='click'
-							placement='bottom'
 							content={(
 								<div style={{ width: '375px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 									<Segmented
@@ -517,7 +516,6 @@ export const SessionDirectorPage = (props: Props) => {
 						<Button onClick={props.showPlayerView}>Player View</Button>
 						<Popover
 							trigger='click'
-							placement='bottom'
 							content={<OptionsPanel mode='session' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
 						>
 							<Button icon={<SettingOutlined />}>

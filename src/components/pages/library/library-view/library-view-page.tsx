@@ -267,7 +267,6 @@ export const LibraryViewPage = (props: Props) => {
 						<div className='divider' />
 						<Popover
 							trigger='click'
-							placement='bottom'
 							content={(
 								<div style={{ minWidth: '120px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 									{
@@ -281,7 +280,6 @@ export const LibraryViewPage = (props: Props) => {
 										sourcebook.isHomebrew && !subElementID ?
 											<Popover
 												trigger='click'
-												placement='bottom'
 												content={(
 													<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 														<ErrorBoundary>
@@ -312,7 +310,6 @@ export const LibraryViewPage = (props: Props) => {
 										!sourcebook.isHomebrew && !subElementID ?
 											<Popover
 												trigger='click'
-												placement='bottom'
 												content={(
 													<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 														<ErrorBoundary>
@@ -334,7 +331,6 @@ export const LibraryViewPage = (props: Props) => {
 									}
 									<Popover
 										trigger='click'
-										placement='bottom'
 										content={(
 											<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 												<Button onClick={() => props.export(kind!, element, 'image')}>Export As Image</Button>

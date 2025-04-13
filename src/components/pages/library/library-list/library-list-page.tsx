@@ -844,7 +844,6 @@ export const LibraryListPage = (props: Props) => {
 						<div className='divider' />
 						<Popover
 							trigger='click'
-							placement='bottom'
 							content={(
 								<div style={{ display: 'flex', flexDirection: 'column' }}>
 									{
@@ -896,7 +895,6 @@ export const LibraryListPage = (props: Props) => {
 						</Button>
 						<Popover
 							trigger='click'
-							placement='bottom'
 							content={<OptionsPanel mode='library' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
 						>
 							<Button icon={<SettingOutlined />}>

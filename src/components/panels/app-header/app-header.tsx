@@ -41,7 +41,6 @@ export const AppHeader = (props: Props) => {
 						<div className='action-buttons-dropdown'>
 							<Popover
 								trigger='click'
-								placement='bottom'
 								content={(
 									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 										{actions}

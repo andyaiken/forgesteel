@@ -269,7 +269,6 @@ export const PlaybookListPage = (props: Props) => {
 						<div className='divider' />
 						<Popover
 							trigger='click'
-							placement='bottom'
 							content={(
 								<div style={{ display: 'flex', flexDirection: 'column' }}>
 									<Space>
@@ -359,7 +358,6 @@ export const PlaybookListPage = (props: Props) => {
 							(currentTab === 'encounter') ?
 								<Popover
 									trigger='click'
-									placement='bottom'
 									content={<OptionsPanel mode='encounter' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
 								>
 									<Button icon={<SettingOutlined />}>

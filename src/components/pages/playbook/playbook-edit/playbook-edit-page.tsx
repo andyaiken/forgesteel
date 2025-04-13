@@ -644,7 +644,6 @@ export const PlaybookEditPage = (props: Props) => {
 				<Flex justify='end'>
 					<Popover
 						trigger='click'
-						placement='bottom'
 						content={(
 							<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '10px' }}>
 								{
@@ -1723,7 +1722,6 @@ export const PlaybookEditPage = (props: Props) => {
 							(kind === 'encounter') || (kind === 'tactical-map') ?
 								<Popover
 									trigger='click'
-									placement='bottom'
 									content={<OptionsPanel mode={kind} options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
 								>
 									<Button icon={<SettingOutlined />}>

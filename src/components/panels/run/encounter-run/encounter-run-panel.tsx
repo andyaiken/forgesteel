@@ -296,7 +296,6 @@ export const EncounterRunPanel = (props: Props) => {
 							</div>
 							<Popover
 								trigger='click'
-								placement='bottom'
 								content={(
 									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 										<Button block={true} onClick={duplicateGroup}>Duplicate</Button>
@@ -374,7 +373,6 @@ export const EncounterRunPanel = (props: Props) => {
 							</div>
 							<Popover
 								trigger='click'
-								placement='bottom'
 								content={(
 									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 										<DangerButton onConfirm={deleteHero} />
@@ -474,7 +472,6 @@ export const EncounterRunPanel = (props: Props) => {
 							</div>
 							<Popover
 								trigger='click'
-								placement='bottom'
 								content={(
 									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 										<Button block={true} onClick={duplicateTerrain}>Duplicate</Button>

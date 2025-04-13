@@ -1,5 +1,15 @@
 .map-wall-panel {
 	position: absolute;
+	transition:
+		background-color ease-in-out 0.2s,
+		background-image ease-in-out 0.2s,
+		border-color ease-in-out 0.2s,
+		outline ease-in-out 0.2s,
+		left ease-in-out 0.2s,
+		right ease-in-out 0.2s,
+		top ease-in-out 0.2s,
+		bottom ease-in-out 0.2s,
+		opacity ease-in-out 0.2s;
 
 	&.selectable {
 		cursor: pointer;

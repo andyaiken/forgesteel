@@ -25,7 +25,6 @@ export const TerrainModal = (props: Props) => {
 							props.export ?
 								<Popover
 									trigger='click'
-									placement='bottom'
 									content={(
 										<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 											<Button onClick={() => props.export!('image')}>Export As Image</Button>

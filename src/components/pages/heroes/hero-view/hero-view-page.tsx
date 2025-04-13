@@ -86,7 +86,6 @@ export const HeroViewPage = (props: Props) => {
 						<div className='divider' />
 						<Popover
 							trigger='click'
-							placement='bottom'
 							content={(
 								<div style={{ minWidth: '120px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 									<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>
@@ -97,7 +96,6 @@ export const HeroViewPage = (props: Props) => {
 									</Button>
 									<Popover
 										trigger='click'
-										placement='bottom'
 										content={(
 											<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 												<Button onClick={() => exportHero('image')}>Export As Image</Button>
@@ -127,7 +125,6 @@ export const HeroViewPage = (props: Props) => {
 						</Button>
 						<Popover
 							trigger='click'
-							placement='bottom'
 							content={<OptionsPanel mode='hero' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
 						>
 							<Button icon={<SettingOutlined />}>

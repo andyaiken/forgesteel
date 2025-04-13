@@ -49,7 +49,6 @@ export const DangerButton = (props: Props) => {
 				open={disabled ? false : open}
 				onOpenChange={setOpen}
 				trigger='click'
-				placement='bottom'
 				content={(
 					<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 						{props.message || <div className='ds-text'>This can't be undone; are you sure?</div>}

@@ -1349,6 +1349,10 @@ export const PlaybookEditPage = (props: Props) => {
 		);
 	};
 
+	const getEditHeaderSection = () => {
+		return null;
+	};
+
 	const getEditSection = () => {
 		switch (kind!) {
 			case 'adventure':
@@ -1618,15 +1622,18 @@ export const PlaybookEditPage = (props: Props) => {
 		);
 	};
 
-	const getEncounterPreviewDifficultySection = () => {
+	const getPreviewHeaderSection = () => {
+		const strength = EncounterLogic.getStrength(element as Encounter, props.sourcebooks);
+		const difficulty = EncounterLogic.getDifficulty(strength, props.options);
+
 		return (
-			<SelectablePanel>
+			<Expander title='Difficulty' tags={[ difficulty ]}>
 				<EncounterDifficultyPanel
 					encounter={element as Encounter}
 					sourcebooks={props.sourcebooks}
 					options={props.options}
 				/>
-			</SelectablePanel>
+			</Expander>
 		);
 	};
 
@@ -1662,11 +1669,6 @@ export const PlaybookEditPage = (props: Props) => {
 								key: '3',
 								label: 'Terrain',
 								children: getEncounterPreviewTerrainSection()
-							},
-							{
-								key: '4',
-								label: 'Difficulty',
-								children: getEncounterPreviewDifficultySection()
 							}
 						]}
 					/>
@@ -1733,11 +1735,13 @@ export const PlaybookEditPage = (props: Props) => {
 					</AppHeader>
 					<div className='playbook-edit-page-content'>
 						<div className='edit-column'>
+							{getEditHeaderSection()}
 							{getEditSection()}
 						</div>
 						{
 							kind !== 'tactical-map' ?
 								<div className='preview-column'>
+									{getPreviewHeaderSection()}
 									{getPreview()}
 								</div>
 								: null

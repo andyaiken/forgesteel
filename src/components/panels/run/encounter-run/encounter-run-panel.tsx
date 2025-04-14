@@ -783,6 +783,7 @@ export const EncounterRunPanel = (props: Props) => {
 										});
 
 										setEncounter(copy);
+										props.onChange(copy);
 									}}
 								/>
 								: null
@@ -805,6 +806,7 @@ export const EncounterRunPanel = (props: Props) => {
 											copy.heroes[index] = hero;
 										}
 										setEncounter(copy);
+										props.onChange(copy);
 									}}
 								/>
 								: null
@@ -826,6 +828,7 @@ export const EncounterRunPanel = (props: Props) => {
 											}
 										});
 										setEncounter(copy);
+										props.onChange(copy);
 									}}
 								/>
 								: null

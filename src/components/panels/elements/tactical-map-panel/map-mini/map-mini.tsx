@@ -95,6 +95,12 @@ export const MapMiniPanel = (props: Props) => {
 		return null;
 	};
 
+	// Don't show hidden minis
+	const hideMinis = [ TacticalMapDisplayType.Player, TacticalMapDisplayType.Thumbnail ];
+	if (hideMinis.includes(props.display) && props.content && props.content.state.hidden) {
+		return null;
+	}
+
 	try {
 		let className = 'map-mini-panel ' + props.display;
 		if (props.selectable) {
@@ -102,6 +108,9 @@ export const MapMiniPanel = (props: Props) => {
 		}
 		if (props.selected) {
 			className += ' selected';
+		}
+		if (props.content && props.content.state.hidden) {
+			className += ' hidden';
 		}
 
 		return (
@@ -111,8 +120,8 @@ export const MapMiniPanel = (props: Props) => {
 						className={className}
 						style={props.style}
 						onClick={e => {
-							e.stopPropagation();
 							if (props.selectable) {
+								e.stopPropagation();
 								props.selectMini(props.mini);
 							}
 						}}

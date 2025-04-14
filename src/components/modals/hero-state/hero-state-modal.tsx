@@ -362,13 +362,27 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		let warning = null;
+		const leveled = hero.state.inventory.filter(i => [ ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon ].includes(i.type));
+		if (leveled.length > 3) {
+			warning = (
+				<Alert
+					type='warning'
+					showIcon={true}
+					message='You can only use 3 leveled items at a time.'
+				/>
+			);
+		}
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				{warning}
 				{
 					hero.state.inventory.map(item => (
 						<Expander
 							key={item.id}
 							title={item.count === 1 ? item.name : `${item.name} (x${item.count})`}
+							tags={[ item.type ]}
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveItem(item, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveItem(item, 'down'); }} />,

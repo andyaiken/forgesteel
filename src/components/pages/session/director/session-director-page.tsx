@@ -104,7 +104,7 @@ export const SessionDirectorPage = (props: Props) => {
 						<SelectablePanel key={tm.id} selected={selectedElementID === tm.id} onSelect={() => navigation.goToSession(tm.id)}>
 							<HeaderText level={1}>{tm.name || 'Unnamed Map'}</HeaderText>
 							<div className='tactical-map-container'>
-								<TacticalMapPanel key={JSON.stringify(tm)} map={tm} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
+								<TacticalMapPanel key={JSON.stringify(tm)} map={tm} display={TacticalMapDisplayType.Thumbnail} options={props.options} heroes={props.heroes}encounters={session.encounters} />
 							</div>
 						</SelectablePanel>
 					))

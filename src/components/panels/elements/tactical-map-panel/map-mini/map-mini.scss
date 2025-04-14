@@ -23,6 +23,10 @@
 		outline: 6px solid rgb(64, 150, 255);
 	}
 
+	&.hidden {
+		opacity: 0.3;
+	}
+
 	.mini-content {
 		position: absolute;
 		width: 100%;

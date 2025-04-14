@@ -13,8 +13,6 @@
 * It should be possible to create a homebrew subclass / class ability / monster individually
 * Add data:
   * Rivals
-* Imbued items:
-  * Add a toggle so the user can add enhancements by the rules or add anything
 * Monster Builder:
   * Auto-create monsters
 
@@ -23,11 +21,11 @@
 * Adventure Builder:
   * Allow subplots
 * Encounter Builder:
-  * Show encounter difficulty always (but collapsed)
   * Set number of squares for per-square terrain
   * Use encounter templates
   * Auto-create encounters
 * Tactical Maps:
+  * Allow uploaded images to be used as maps
   * Generate cavern map type
   * Switch map Z level
   * Ability to destroy tile squares / wall sections
@@ -49,9 +47,10 @@
     * Show 'should be N squares' for terrain
     * Ability to add new terrain objects
 * Tactical map
-  * Allow uploaded images to be used as maps
   * Add terrain minis / overlays
-  * Minis should be able to be hidden (not shown on player view)
+  * Move minis (and tiles, walls, zones) using a radial control
+  * Minis should not be allowed to walk through walls
+  * Allow hero / monster stats to be edited
 
 ### Player View
 
@@ -64,3 +63,4 @@
   * Heroes / hero state / PDF export
   * Monster building / genesplice
   * Encounter building / running
+  * Map making / adding minis

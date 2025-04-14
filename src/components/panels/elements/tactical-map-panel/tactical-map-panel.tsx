@@ -797,26 +797,26 @@ export const TacticalMapPanel = (props: Props) => {
 								{
 									TacticalMapLogic.getWallOrientation(item) === 'vertical' ?
 										<>
-											<NumberSpin label='X' value={item.pointA.x} onChange={setWallX}>
+											<NumberSpin value={item.pointA.x} onChange={setWallX}>
 												<Field label='X' value={item.pointA.x} />
 											</NumberSpin>
-											<NumberSpin label='Start Y' value={item.pointA.y} onChange={setStartY}>
-												<Field label='Start Y' value={item.pointA.y} />
+											<NumberSpin value={item.pointA.y} onChange={setStartY}>
+												<Field label='Y' value={item.pointA.y} />
 											</NumberSpin>
-											<NumberSpin label='End Y' min={item.pointA.y + 1} value={item.pointB.y} onChange={setEndY}>
-												<Field label='End Y' value={item.pointB.y} />
+											<NumberSpin min={item.pointA.y + 1} value={item.pointB.y} onChange={setEndY}>
+												<Field label='Length' value={item.pointB.y - item.pointA.y} />
 											</NumberSpin>
 										</>
 										:
 										<>
-											<NumberSpin label='Y' value={item.pointA.y} onChange={setWallY}>
+											<NumberSpin value={item.pointA.x} onChange={setStartX}>
+												<Field label='X' value={item.pointA.x} />
+											</NumberSpin>
+											<NumberSpin value={item.pointA.y} onChange={setWallY}>
 												<Field label='Y' value={item.pointA.y} />
 											</NumberSpin>
-											<NumberSpin label='Start X' value={item.pointA.x} onChange={setStartX}>
-												<Field label='Start X' value={item.pointA.x} />
-											</NumberSpin>
-											<NumberSpin label='End X' min={item.pointA.x + 1} value={item.pointB.x} onChange={setEndX}>
-												<Field label='End X' value={item.pointB.x} />
+											<NumberSpin min={item.pointA.x + 1} value={item.pointB.x} onChange={setEndX}>
+												<Field label='Length' value={item.pointB.x - item.pointA.x} />
 											</NumberSpin>
 										</>
 								}
@@ -1082,6 +1082,17 @@ export const TacticalMapPanel = (props: Props) => {
 	const getMinis = (boundaries: MapBoundaries) => {
 		return map.items
 			.filter(i => i.type === 'mini')
+			.filter(mini => {
+				if (props.display === TacticalMapDisplayType.Player) {
+					// Don't show hidden minis
+					const src = getMiniSource(mini);
+					if (src) {
+						return !src.state.hidden;
+					}
+				}
+
+				return true;
+			})
 			.map(mini => (
 				<MapMiniPanel
 					key={mini.id}

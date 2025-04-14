@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Segmented, Space, Tag } from 'antd';
+import { Alert, Button, Divider, Space, Tag } from 'antd';
 import { Empty } from '../../../controls/empty/empty';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
@@ -29,7 +29,6 @@ interface Props {
 
 export const ItemPanel = (props: Props) => {
 	const [ item, setItem ] = useState<Item>(Utils.copy(props.item));
-	const [ customizationLevel, setCustomizationLevel ] = useState<number>(1);
 
 	const toggleCustomization = (featureID: string) => {
 		const copy = Utils.copy(item);
@@ -53,6 +52,74 @@ export const ItemPanel = (props: Props) => {
 			props.onChange(copy);
 		}
 		setItem(copy);
+	};
+
+	const getAvailableCustomizations = () => {
+		const selectedNames = item.customizationsByLevel.flatMap(lvl => lvl.features).filter(f => f.selected).map(f => f.feature.name.toLowerCase());
+		const selectedLvl1 = item.customizationsByLevel.filter(lvl => lvl.level === 1).flatMap(lvl => lvl.features).filter(f => f.selected);
+		const selectedLvl5 = item.customizationsByLevel.filter(lvl => lvl.level === 5).flatMap(lvl => lvl.features).filter(f => f.selected);
+		const selectedLvl9 = item.customizationsByLevel.filter(lvl => lvl.level === 9).flatMap(lvl => lvl.features).filter(f => f.selected);
+
+		let level = 0;
+		if ((selectedLvl1.length === 0) && (selectedLvl5.length === 0) && (selectedLvl9.length === 0)) {
+			level = 1;
+		}
+
+		if ((selectedLvl1.length > 0) && (selectedLvl5.length === 0) && (selectedLvl9.length === 0)) {
+			level = 5;
+		}
+
+		if ((selectedLvl1.length > 0) && (selectedLvl5.length > 0) && (selectedLvl9.length === 0)) {
+			level = 9;
+		}
+
+		const options = item.customizationsByLevel
+			.filter(lvl => lvl.level === level)
+			.flatMap(lvl => lvl.features)
+			.filter(f => {
+				const featureName = f.feature.name.toLowerCase();
+
+				if (featureName.endsWith(' iii')) {
+					const index = featureName.lastIndexOf(' ');
+					const start = featureName.substring(0, index);
+					return selectedNames.some(name => name === `${start} ii`);
+				}
+
+				if (featureName.endsWith(' ii')) {
+					const index = featureName.lastIndexOf(' ');
+					const start = featureName.substring(0, index);
+					return selectedNames.some(name => name === `${start} i`);
+				}
+
+				return true;
+			});
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					options.map(f => (
+						<div key={f.feature.id}>
+							<FeaturePanel feature={f.feature} options={props.options} mode={PanelMode.Full} />
+							{
+								f.selected ?
+									<Alert
+										type='info'
+										showIcon={true}
+										message='This customization has been selected.'
+									/>
+									:
+									<Button block={true} onClick={() => toggleCustomization(f.feature.id)}>Select</Button>
+							}
+						</div>
+					))
+				}
+				{
+					options.length === 0 ?
+						<Empty text='No customizations are available.' />
+						: null
+				}
+			</Space>
+		);
 	};
 
 	const customizable = item.customizationsByLevel.flatMap(lvl => lvl.features).length > 0;
@@ -117,41 +184,7 @@ export const ItemPanel = (props: Props) => {
 					{
 						props.onChange && customizable ?
 							<Expander title='Customization'>
-								<Space direction='vertical' style={{ width: '100%' }}>
-									<HeaderText>Customization</HeaderText>
-									<Segmented
-										name='levels'
-										block={true}
-										options={item.customizationsByLevel.map(lvl => ({ value: lvl.level, label: `Level ${lvl.level}` }))}
-										value={customizationLevel}
-										onChange={setCustomizationLevel}
-									/>
-									{
-										item.customizationsByLevel
-											.filter(lvl => lvl.level === customizationLevel)
-											.flatMap(lvl => lvl.features)
-											.map(f => (
-												<div key={f.feature.id}>
-													<FeaturePanel feature={f.feature} options={props.options} mode={PanelMode.Full} />
-													{
-														f.selected ?
-															<Alert
-																type='info'
-																showIcon={true}
-																message='This customization has been selected.'
-															/>
-															:
-															<Button block={true} onClick={() => toggleCustomization(f.feature.id)}>Select</Button>
-													}
-												</div>
-											))
-									}
-									{
-										item.customizationsByLevel.filter(lvl => lvl.level === customizationLevel).flatMap(lvl => lvl.features).length === 0 ?
-											<Empty />
-											: null
-									}
-								</Space>
+								{getAvailableCustomizations()}
 							</Expander>
 							: null
 					}

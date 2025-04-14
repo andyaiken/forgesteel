@@ -59,8 +59,8 @@ export const MapWallPanel = (props: Props) => {
 						className={className}
 						style={props.style}
 						onClick={e => {
-							e.stopPropagation();
 							if (props.selectable) {
+								e.stopPropagation();
 								props.selectWall(props.wall);
 							}
 						}}

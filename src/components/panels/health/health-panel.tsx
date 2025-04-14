@@ -136,6 +136,7 @@ export const HeroHealthPanel = (props: HeroProps) => {
 		<ErrorBoundary>
 			<HealthPanel
 				mode={props.onChange ? PanelMode.Full : PanelMode.Compact}
+				showToggles={props.showEncounterControls}
 				stamina={{
 					staminaMax: HeroLogic.getStamina(hero),
 					staminaDamage: hero.state.staminaDamage,
@@ -155,30 +156,18 @@ export const HeroHealthPanel = (props: HeroProps) => {
 					recoveryValue: HeroLogic.getRecoveryValue(hero),
 					spendRecovery: spendRecovery
 				}}
-				hidden={
-					props.showEncounterControls ?
-						{
-							value: hero.state.hidden,
-							setValue: setHidden
-						}
-						: undefined
-				}
-				acted={
-					props.showEncounterControls ?
-						{
-							value: hero.state.hidden,
-							setValue: setActed
-						}
-						: undefined
-				}
-				defeated={
-					props.showEncounterControls ?
-						{
-							value: hero.state.hidden,
-							setValue: setDefeated
-						}
-						: undefined
-				}
+				hidden={{
+					value: hero.state.hidden,
+					setValue: setHidden
+				}}
+				acted={{
+					value: hero.state.acted,
+					setValue: setActed
+				}}
+				defeated={{
+					value: hero.state.defeated,
+					setValue: setDefeated
+				}}
 				conditions={hero.state.conditions}
 				addCondition={addCondition}
 				editCondition={editCondition}
@@ -279,6 +268,7 @@ export const MonsterHealthPanel = (props: MonsterProps) => {
 		<ErrorBoundary>
 			<HealthPanel
 				mode={props.onChange ? PanelMode.Full : PanelMode.Compact}
+				showToggles={true}
 				stamina={
 					monster.role.organization !== MonsterOrganizationType.Minion ?
 						{
@@ -400,6 +390,7 @@ export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
 		<ErrorBoundary>
 			<HealthPanel
 				mode={props.onChange ? PanelMode.Full : PanelMode.Compact}
+				showToggles={true}
 				stamina={{
 					staminaMax: Collections.sum(props.slot.monsters, m => MonsterLogic.getStamina(m)),
 					staminaDamage: slot.state.staminaDamage,
@@ -433,6 +424,7 @@ export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
 
 interface Props {
 	mode: PanelMode;
+	showToggles: boolean;
 	stamina?: {
 		staminaMax: number;
 		staminaDamage: number;
@@ -599,9 +591,10 @@ const HealthPanel = (props: Props) => {
 							: null
 					}
 					{
-						<div className='ds-text'>
-							{props.acted && props.acted.value ? 'Has acted' : 'Has not yet acted'}
-						</div>
+						props.acted && props.acted.value ?
+							<div className='ds-text'>Has acted</div>
+							:
+							<div className='ds-text'>Has not yet acted</div>
 					}
 					{
 						props.defeated && props.defeated.value ?
@@ -685,7 +678,7 @@ const HealthPanel = (props: Props) => {
 						: null
 				}
 				{
-					props.hidden || props.acted || props.defeated || props.captain ?
+					props.showToggles && (props.hidden || props.acted || props.defeated || props.captain) ?
 						<>
 							<Flex align='center' justify='space-evenly' gap={10} style={{ margin: '10px 0' }}>
 								{

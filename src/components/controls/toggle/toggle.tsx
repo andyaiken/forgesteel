@@ -1,8 +1,10 @@
+import { CSSProperties } from 'react';
 import { Switch } from 'antd';
 
 import './toggle.scss';
 
 interface Props {
+	style?: CSSProperties;
 	disabled?: boolean;
 	label: string;
 	value: boolean;
@@ -16,7 +18,7 @@ export const Toggle = (props: Props) => {
 
 	try {
 		return (
-			<div className={props.disabled ? 'toggle disabled' : 'toggle'} onClick={onClick}>
+			<div className={props.disabled ? 'toggle disabled' : 'toggle'} style={props.style} onClick={onClick}>
 				<div>{props.label}</div>
 				<Switch checked={props.value} />
 			</div>

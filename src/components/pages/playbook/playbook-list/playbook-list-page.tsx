@@ -1,4 +1,4 @@
-import { Button, Input, Popover, Space, Tabs, Upload } from 'antd';
+import { Button, Input, Popover, Segmented, Space, Tabs, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { Adventure } from '../../../../models/adventure';
@@ -11,6 +11,7 @@ import { EncounterData } from '../../../../data/encounter-data';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FactoryLogic } from '../../../../logic/factory-logic';
+import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Montage } from '../../../../models/montage';
@@ -55,7 +56,8 @@ export const PlaybookListPage = (props: Props) => {
 	const [ previousTab, setPreviousTab ] = useState<PlaybookElementKind | undefined>(kind);
 	const [ currentTab, setCurrentTab ] = useState<PlaybookElementKind>(kind ?? 'encounter');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
-	const [ roomCount, setRoomCount ] = useState<number>(5);
+	const [ mapType, setMapType ] = useState<'dungeon' | 'cavern'>('dungeon');
+	const [ mapSize, setMapSize ] = useState<number>(5);
 
 	if (kind !== previousTab) {
 		setCurrentTab(kind ?? 'encounter');
@@ -68,7 +70,14 @@ export const PlaybookListPage = (props: Props) => {
 
 	const generateMap = () => {
 		const map = FactoryLogic.createTacticalMap();
-		TacticalMapLogic.generate(roomCount, map);
+		switch (mapType) {
+			case 'dungeon':
+				TacticalMapLogic.generateDungeon(mapSize, map);
+				break;
+			case 'cavern':
+				TacticalMapLogic.generateCavern(mapSize * 50, map);
+				break;
+		}
 		createElement(map);
 	};
 
@@ -336,8 +345,19 @@ export const PlaybookListPage = (props: Props) => {
 									{
 										currentTab === 'tactical-map' ?
 											<Space direction='vertical' style={{ width: '100%' }}>
-												<div className='ds-text centered-text'>or generate a random dungeon:</div>
-												<NumberSpin label='Rooms' min={1} value={roomCount} onChange={setRoomCount} />
+												<div className='ds-text centered-text'>or generate a random map:</div>
+												<Segmented
+													block={true}
+													options={[
+														{ value: 'dungeon', label: 'Dungeon' },
+														{ value: 'cavern', label: 'Cavern' }
+													]}
+													value={mapType}
+													onChange={setMapType}
+												/>
+												<NumberSpin min={1} value={mapSize} onChange={setMapSize}>
+													<Field orientation='vertical' label={mapType === 'dungeon' ? 'Rooms' : 'Size'} value={mapSize} />
+												</NumberSpin>
 												<Button block={true} icon={<ThunderboltOutlined />} onClick={generateMap}>Generate</Button>
 											</Space>
 											: null

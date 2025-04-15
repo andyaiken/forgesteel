@@ -25,9 +25,10 @@
   * Use encounter templates
   * Auto-create encounters
 * Tactical Maps:
-  * Allow uploaded images to be used as maps
-  * Generate cavern map type
+  * Allow tile color / background to be changed
+    * Allow uploaded images to be used as maps
   * Switch map Z level
+    * Show (blurred, translucent, no pointer events) levels below / above
   * Ability to destroy tile squares / wall sections
 * Regional Maps
 
@@ -48,7 +49,6 @@
     * Ability to add new terrain objects
 * Tactical map
   * Add terrain minis / overlays
-  * Move minis (and tiles, walls, zones) using a radial control
   * Minis should not be allowed to walk through walls
   * Allow hero / monster stats to be edited
 

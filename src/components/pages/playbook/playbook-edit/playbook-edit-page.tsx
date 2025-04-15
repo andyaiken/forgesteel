@@ -1623,18 +1623,22 @@ export const PlaybookEditPage = (props: Props) => {
 	};
 
 	const getPreviewHeaderSection = () => {
-		const strength = EncounterLogic.getStrength(element as Encounter, props.sourcebooks);
-		const difficulty = EncounterLogic.getDifficulty(strength, props.options);
+		if (kind === 'encounter') {
+			const strength = EncounterLogic.getStrength(element as Encounter, props.sourcebooks);
+			const difficulty = EncounterLogic.getDifficulty(strength, props.options);
 
-		return (
-			<Expander title='Difficulty' tags={[ difficulty ]}>
-				<EncounterDifficultyPanel
-					encounter={element as Encounter}
-					sourcebooks={props.sourcebooks}
-					options={props.options}
-				/>
-			</Expander>
-		);
+			return (
+				<Expander title='Difficulty' tags={[ difficulty ]}>
+					<EncounterDifficultyPanel
+						encounter={element as Encounter}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+					/>
+				</Expander>
+			);
+		}
+
+		return null;
 	};
 
 	const getPreview = () => {

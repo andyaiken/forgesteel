@@ -1,4 +1,4 @@
-import { BarsOutlined, CloseOutlined, FileTextOutlined, RotateRightOutlined } from '@ant-design/icons';
+import { BarsOutlined, CloseOutlined, DragOutlined, FileTextOutlined, RotateRightOutlined } from '@ant-design/icons';
 import { Button, ColorPicker, Divider, Input, Popover, Segmented, Select } from 'antd';
 import { HeroToken, MonsterToken } from '../../../controls/token/token';
 import { MapBoundaries, MapItem, MapMini, MapPosition, MapTile, MapWall, MapZone, TacticalMap } from '../../../../models/tactical-map';
@@ -25,6 +25,7 @@ import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { Radial } from '../../../controls/radial/radial';
 import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
 import { TacticalMapEditMode } from '../../../../enums/tactical-map-edit-mode';
 import { TacticalMapLogic } from '../../../../logic/tactical-map-logic';
@@ -74,6 +75,7 @@ export const TacticalMapPanel = (props: Props) => {
 	});
 	const [ selectedMini, setSelectedMini ] = useState<{ type: 'hero' | 'monster', encounterID: string, id: string } | null>(null);
 
+	const zLevel = 0;
 	const size = props.display === 'thumbnail' ? 5 : props.options.gridSize;
 
 	const updateMapItem = (item: MapItem) => {
@@ -118,7 +120,7 @@ export const TacticalMapPanel = (props: Props) => {
 			const maxY = Math.max(...points.map(pt => pt.y));
 
 			const tile = FactoryLogic.createMapTile();
-			tile.position = { x: minX, y: minY, z: 0 };
+			tile.position = { x: minX, y: minY, z: zLevel };
 			tile.dimensions = { width: maxX - minX + 1, height: maxY - minY + 1, depth: 1 };
 
 			const copy = Utils.copy(map) as TacticalMap;
@@ -136,7 +138,7 @@ export const TacticalMapPanel = (props: Props) => {
 			const maxY = Math.max(...points.map(pt => pt.y));
 
 			const zone = FactoryLogic.createMapZone();
-			zone.position = { x: minX, y: minY, z: 0 };
+			zone.position = { x: minX, y: minY, z: zLevel };
 			zone.dimensions = { width: maxX - minX + 1, height: maxY - minY + 1, depth: 1 };
 
 			const copy = Utils.copy(map) as TacticalMap;
@@ -154,7 +156,7 @@ export const TacticalMapPanel = (props: Props) => {
 			const maxY = Math.max(...points.map(pt => pt.y));
 
 			const mini = FactoryLogic.createMapMini();
-			mini.position = { x: minX, y: minY, z: 0 };
+			mini.position = { x: minX, y: minY, z: zLevel };
 
 			if (selectedMini) {
 				mini.content = selectedMini;
@@ -195,11 +197,9 @@ export const TacticalMapPanel = (props: Props) => {
 
 			for (let x = minX; x <= maxX; ++x) {
 				for (let y = minY; y <= maxY; ++y) {
-					const z = 1;
-
 					const current = copy.items
 						.filter(i => i.type === 'fog')
-						.find(i => (i.position.x === x) && (i.position.y === y) && (i.position.z === z));
+						.find(i => (i.position.x === x) && (i.position.y === y) && (i.position.z === zLevel));
 					if (current) {
 						// Remove this fog
 						copy.items = copy.items.filter(i => i.id !== current.id);
@@ -208,7 +208,7 @@ export const TacticalMapPanel = (props: Props) => {
 						const fog = FactoryLogic.createMapFog();
 						fog.position.x = x;
 						fog.position.y = y;
-						fog.position.z = z;
+						fog.position.z = zLevel;
 						copy.items.push(fog);
 					}
 				}
@@ -251,33 +251,6 @@ export const TacticalMapPanel = (props: Props) => {
 		return false;
 	};
 
-	const getMiniSource = (mini: MapMini): Hero | Monster | null => {
-		if (mini.content) {
-			if (props.encounters) {
-				const enc = props.encounters.find(e => e.id === mini.content!.encounterID);
-				if (enc) {
-					const hero = enc.heroes.find(h => h.id === mini.content!.id);
-					if (hero) {
-						return hero;
-					}
-					const monster = enc.groups.flatMap(g => g.slots).flatMap(s => s.monsters).find(m => m.id === mini.content!.id);
-					if (monster) {
-						return monster;
-					}
-				}
-			}
-
-			if (props.heroes) {
-				const hero = props.heroes.find(h => h.id === mini.content!.id);
-				if (hero) {
-					return hero;
-				}
-			}
-		}
-
-		return null;
-	};
-
 	//#endregion
 
 	//#region Vertices
@@ -301,8 +274,8 @@ export const TacticalMapPanel = (props: Props) => {
 			const maxY = Math.max(...points.map(pt => pt.y));
 
 			const wall = FactoryLogic.createMapWall();
-			wall.pointA = { x: minX, y: minY, z: 0 };
-			wall.pointB = { x: maxX, y: maxY, z: 0 };
+			wall.pointA = { x: minX, y: minY, z: zLevel };
+			wall.pointB = { x: maxX, y: maxY, z: zLevel };
 
 			const copy = Utils.copy(map) as TacticalMap;
 			copy.items.push(wall);
@@ -354,6 +327,33 @@ export const TacticalMapPanel = (props: Props) => {
 	};
 
 	//#endregion
+
+	const getMiniSource = (mini: MapMini): Hero | Monster | null => {
+		if (mini.content) {
+			if (props.encounters) {
+				const enc = props.encounters.find(e => e.id === mini.content!.encounterID);
+				if (enc) {
+					const hero = enc.heroes.find(h => h.id === mini.content!.id);
+					if (hero) {
+						return hero;
+					}
+					const monster = enc.groups.flatMap(g => g.slots).flatMap(s => s.monsters).find(m => m.id === mini.content!.id);
+					if (monster) {
+						return monster;
+					}
+				}
+			}
+
+			if (props.heroes) {
+				const hero = props.heroes.find(h => h.id === mini.content!.id);
+				if (hero) {
+					return hero;
+				}
+			}
+		}
+
+		return null;
+	};
 
 	const getMapItemStyle = (x: number, y: number, width: number, height: number, style: 'square' | 'rounded' | 'circle' | 'vertex' | 'wall' | null, dim: MapBoundaries): MapItemStyle => {
 		let offsetX = 0;
@@ -528,11 +528,10 @@ export const TacticalMapPanel = (props: Props) => {
 			if (boundaries) {
 				for (let x = boundaries.minX; x <= boundaries.maxX; ++x) {
 					for (let y = boundaries.minY; y <= boundaries.maxY; ++y) {
-						const z = 1;
 						const fog = FactoryLogic.createMapFog();
 						fog.position.x = x;
 						fog.position.y = y;
-						fog.position.z = z;
+						fog.position.z = zLevel;
 						copy.items.push(fog);
 					}
 				}
@@ -649,15 +648,19 @@ export const TacticalMapPanel = (props: Props) => {
 
 		const item = map.items.find(i => i.id === selectedMapItemID);
 		if (item) {
-			const setX = (value: number) => {
+			const move = (dx: number, dy: number) => {
 				const copy = Utils.copy(item) as MapTile | MapZone | MapMini;
-				copy.position.x = value;
+				copy.position.x += dx;
+				copy.position.y += dy;
 				updateMapItem(copy);
 			};
 
-			const setY = (value: number) => {
-				const copy = Utils.copy(item) as MapTile | MapZone | MapMini;
-				copy.position.y = value;
+			const moveWall = (dx: number, dy: number) => {
+				const copy = Utils.copy(item) as MapWall;
+				copy.pointA.x += dx;
+				copy.pointB.x += dx;
+				copy.pointA.y += dy;
+				copy.pointB.y += dy;
 				updateMapItem(copy);
 			};
 
@@ -676,32 +679,6 @@ export const TacticalMapPanel = (props: Props) => {
 			const setCorners = (value: 'square' | 'rounded' | 'circle') => {
 				const copy = Utils.copy(item) as MapTile | MapZone;
 				copy.corners = value;
-				updateMapItem(copy);
-			};
-
-			const setWallX = (value: number) => {
-				const copy = Utils.copy(item) as MapWall;
-				copy.pointA.x = value;
-				copy.pointB.x = value;
-				updateMapItem(copy);
-			};
-
-			const setWallY = (value: number) => {
-				const copy = Utils.copy(item) as MapWall;
-				copy.pointA.y = value;
-				copy.pointB.y = value;
-				updateMapItem(copy);
-			};
-
-			const setStartX = (value: number) => {
-				const copy = Utils.copy(item) as MapWall;
-				copy.pointA.x = value;
-				updateMapItem(copy);
-			};
-
-			const setStartY = (value: number) => {
-				const copy = Utils.copy(item) as MapWall;
-				copy.pointA.y = value;
 				updateMapItem(copy);
 			};
 
@@ -765,12 +742,11 @@ export const TacticalMapPanel = (props: Props) => {
 					{
 						item.type === 'tile' ?
 							<>
-								<NumberSpin value={item.position.x} onChange={setX}>
-									<Field label='X' value={item.position.x} />
-								</NumberSpin>
-								<NumberSpin value={item.position.y} onChange={setY}>
-									<Field label='Y' value={item.position.y} />
-								</NumberSpin>
+								<Popover content={<Radial onChange={move} />}>
+									<Button>
+										<DragOutlined />
+									</Button>
+								</Popover>
 								<NumberSpin min={1} value={item.dimensions.width} onChange={setWidth}>
 									<Field label='Width' value={item.dimensions.width} />
 								</NumberSpin>
@@ -794,41 +770,32 @@ export const TacticalMapPanel = (props: Props) => {
 					{
 						item.type === 'wall' ?
 							<>
+								<Popover content={<Radial onChange={moveWall} />}>
+									<Button>
+										<DragOutlined />
+									</Button>
+								</Popover>
 								{
 									TacticalMapLogic.getWallOrientation(item) === 'vertical' ?
-										<>
-											<NumberSpin value={item.pointA.x} onChange={setWallX}>
-												<Field label='X' value={item.pointA.x} />
-											</NumberSpin>
-											<NumberSpin value={item.pointA.y} onChange={setStartY}>
-												<Field label='Y' value={item.pointA.y} />
-											</NumberSpin>
-											<NumberSpin min={item.pointA.y + 1} value={item.pointB.y} onChange={setEndY}>
-												<Field label='Length' value={item.pointB.y - item.pointA.y} />
-											</NumberSpin>
-										</>
+										<NumberSpin min={item.pointA.y + 1} value={item.pointB.y} onChange={setEndY}>
+											<Field label='Length' value={item.pointB.y - item.pointA.y} />
+										</NumberSpin>
 										:
-										<>
-											<NumberSpin value={item.pointA.x} onChange={setStartX}>
-												<Field label='X' value={item.pointA.x} />
-											</NumberSpin>
-											<NumberSpin value={item.pointA.y} onChange={setWallY}>
-												<Field label='Y' value={item.pointA.y} />
-											</NumberSpin>
-											<NumberSpin min={item.pointA.x + 1} value={item.pointB.x} onChange={setEndX}>
-												<Field label='Length' value={item.pointB.x - item.pointA.x} />
-											</NumberSpin>
-										</>
+										<NumberSpin min={item.pointA.x + 1} value={item.pointB.x} onChange={setEndX}>
+											<Field label='Length' value={item.pointB.x - item.pointA.x} />
+										</NumberSpin>
 								}
 								<Popover
 									content={
 										<>
 											<Toggle
+												style={{ display: 'none' }}
 												label='Blocks movement'
 												value={item.blocksMovement}
 												onChange={setBlocksMovement}
 											/>
 											<Toggle
+												style={{ display: 'none' }}
 												label='Blocks line-of-sight'
 												value={item.blocksLineOfSight}
 												onChange={setBlocksLOS}
@@ -839,6 +806,7 @@ export const TacticalMapPanel = (props: Props) => {
 												onChange={setIsOpenable}
 											/>
 											<Toggle
+												disabled={!item.isOpenable}
 												label='Concealed'
 												value={item.isConcealed}
 												onChange={setIsConcealed}
@@ -846,7 +814,7 @@ export const TacticalMapPanel = (props: Props) => {
 										</>
 									}
 								>
-									<Button type='text'>
+									<Button>
 										<BarsOutlined />
 									</Button>
 								</Popover>
@@ -856,12 +824,11 @@ export const TacticalMapPanel = (props: Props) => {
 					{
 						item.type === 'zone' ?
 							<>
-								<NumberSpin value={item.position.x} onChange={setX}>
-									<Field label='X' value={item.position.x} />
-								</NumberSpin>
-								<NumberSpin value={item.position.y} onChange={setY}>
-									<Field label='Y' value={item.position.y} />
-								</NumberSpin>
+								<Popover content={<Radial onChange={move} />}>
+									<Button>
+										<DragOutlined />
+									</Button>
+								</Popover>
 								<NumberSpin min={1} value={item.dimensions.width} onChange={setWidth}>
 									<Field label='Width' value={item.dimensions.width} />
 								</NumberSpin>
@@ -890,12 +857,11 @@ export const TacticalMapPanel = (props: Props) => {
 					{
 						item.type === 'mini' ?
 							<>
-								<NumberSpin value={item.position.x} onChange={setX}>
-									<Field label='X' value={item.position.x} />
-								</NumberSpin>
-								<NumberSpin value={item.position.y} onChange={setY}>
-									<Field label='Y' value={item.position.y} />
-								</NumberSpin>
+								<Popover content={<Radial onChange={move} />}>
+									<Button>
+										<DragOutlined />
+									</Button>
+								</Popover>
 								<NumberSpin min={1} value={item.dimensions.width} onChange={setSize}>
 									<Field label='Size' value={item.dimensions.width} />
 								</NumberSpin>
@@ -911,16 +877,29 @@ export const TacticalMapPanel = (props: Props) => {
 							/>
 						}
 					>
-						<Button type='text'>
+						<Button>
 							<FileTextOutlined />
 						</Button>
 					</Popover>
-					<DangerButton mode='clear' onConfirm={() => deleteMapItem(item)} />
+					<DangerButton mode='icon' onConfirm={() => deleteMapItem(item)} />
 				</div>
 			);
 		}
 
 		if ((editMode === TacticalMapEditMode.Minis) && editAdding) {
+			if (selectedMini) {
+				return (
+					<div className='tactical-map-toolbar bottom-toolbar'>
+						<Button onClick={() => setSelectedMini(null)}>
+							<CloseOutlined />
+						</Button>
+						<div>
+							Select a square to place this mini
+						</div>
+					</div>
+				);
+			}
+
 			const sources: { value: string, label: string }[] = [];
 			if (props.heroes) {
 				props.heroes.forEach(h => sources.push({ value: h.folder, label: h.folder || 'Heroes' }));
@@ -936,19 +915,15 @@ export const TacticalMapPanel = (props: Props) => {
 				.filter(c => !!c)
 				.map(c => c.id);
 
-			const tokens: ReactNode[] = [];
+			const heroes: Hero[] = [];
+			const encounterHeroes: { hero: Hero, encounter: Encounter }[] = [];
+			const encounterMonsters: { monster: Monster, encounter: Encounter }[] = [];
+
 			if (props.heroes) {
 				props.heroes
 					.filter(h => h.folder === miniSource)
 					.filter(h => !onMap.includes(h.id))
-					.forEach(h => tokens.push(
-						<HeroToken
-							key={h.id}
-							hero={h}
-							size={30}
-							onClick={() => setSelectedMini({ type: 'hero', encounterID: '', id: h.id })}
-						/>
-					));
+					.forEach(h => heroes.push(h));
 			}
 			if (props.encounters) {
 				props.encounters
@@ -956,43 +931,58 @@ export const TacticalMapPanel = (props: Props) => {
 					.forEach(enc => {
 						enc.heroes
 							.filter(h => !onMap.includes(h.id))
-							.forEach(h => tokens.push(
-								<HeroToken
-									key={h.id}
-									hero={h}
-									size={30}
-									onClick={() => setSelectedMini({ type: 'hero', encounterID: enc.id, id: h.id })}
-								/>
-							));
+							.forEach(h => encounterHeroes.push({ hero: h, encounter: enc }));
 						enc.groups.forEach(g => {
 							g.slots.forEach(s => {
 								s.monsters
 									.filter(m => !onMap.includes(m.id))
-									.forEach(m => tokens.push(
-										<MonsterToken
-											key={m.id}
-											monster={m}
-											size={30}
-											onClick={() => setSelectedMini({ type: 'monster', encounterID: enc.id, id: m.id })}
-										/>
-									));
+									.forEach(m => encounterMonsters.push({ monster: m, encounter: enc }));
 							});
 						});
 					});
 			}
 
-			if (selectedMini) {
-				return (
-					<div className='tactical-map-toolbar bottom-toolbar'>
-						<Button onClick={() => setSelectedMini(null)}>
-							<CloseOutlined />
-						</Button>
-						<div>
-							Select a square to add this mini
-						</div>
-					</div>
-				);
-			}
+			const scatterMinis = () => {
+				const copy = Utils.copy(map);
+
+				const tokens: { type: 'hero' | 'monster', encounterID: string, id: string, size: number }[] = [];
+				heroes.forEach(h => tokens.push({ type: 'hero', encounterID: '', id: h.id, size: HeroLogic.getSize(h).value }));
+				encounterHeroes.forEach(h => tokens.push({ type: 'hero', encounterID: h.encounter.id, id: h.hero.id, size: HeroLogic.getSize(h.hero).value }));
+				encounterMonsters.forEach(m => tokens.push({ type: 'monster', encounterID: m.encounter.id, id: m.monster.id, size: m.monster.size.value }));
+				TacticalMapLogic.scatterCombatants(copy, tokens);
+
+				setMap(copy);
+				if (props.updateMap) {
+					props.updateMap(copy);
+				}
+			};
+
+			const tokens = [
+				...heroes.map(h => (
+					<HeroToken
+						key={h.id}
+						hero={h}
+						size={30}
+						onClick={() => setSelectedMini({ type: 'hero', encounterID: '', id: h.id })}
+					/>
+				)),
+				...encounterHeroes.map(h => (
+					<HeroToken
+						key={h.hero.id}
+						hero={h.hero}
+						size={30}
+						onClick={() => setSelectedMini({ type: 'hero', encounterID: h.encounter.id, id: h.hero.id })}
+					/>
+				)),
+				...encounterMonsters.map(m => (
+					<MonsterToken
+						key={m.monster.id}
+						monster={m.monster}
+						size={30}
+						onClick={() => setSelectedMini({ type: 'monster', encounterID: m.encounter.id, id: m.monster.id })}
+					/>
+				))
+			];
 
 			return (
 				<div className='tactical-map-toolbar bottom-toolbar'>
@@ -1010,7 +1000,16 @@ export const TacticalMapPanel = (props: Props) => {
 						onChange={setMiniSource}
 					/>
 					<Divider type='vertical' />
-					{tokens}
+					{
+						tokens.length > 0 ?
+							<>
+								{tokens}
+								<Divider type='vertical' />
+								<Button onClick={scatterMinis}>Scatter</Button>
+							</>
+							:
+							'No minis to add'
+					}
 				</div>
 			);
 		}
@@ -1145,15 +1144,14 @@ export const TacticalMapPanel = (props: Props) => {
 		if (showGrid) {
 			for (let x = boundaries.minX; x <= boundaries.maxX; ++x) {
 				for (let y = boundaries.minY; y <= boundaries.maxY; ++y) {
-					const z = 1;
 					grid.push(
 						<GridSquarePanel
-							key={'grid ' + x + ',' + y + ',' + z}
-							position={{ x: x, y: y, z: z }}
+							key={'grid ' + x + ',' + y + ',' + zLevel}
+							position={{ x: x, y: y, z: zLevel }}
 							display={props.display}
 							style={getMapItemStyle(x, y, 1, 1, 'square', boundaries)}
 							render='cell'
-							selected={isGridSquareSelected({ x: x, y: y, z: z })}
+							selected={isGridSquareSelected({ x: x, y: y, z: zLevel })}
 							onMouseDown={gridSquareMouseDown}
 							onMouseUp={gridSquareMouseUp}
 							onMouseEnter={gridSquareEntered}
@@ -1172,14 +1170,13 @@ export const TacticalMapPanel = (props: Props) => {
 		if ((editMode === TacticalMapEditMode.Walls) && editAdding) {
 			for (let x = boundaries.minX + 1; x !== boundaries.maxX + 1; ++x) {
 				for (let y = boundaries.minY + 1; y !== boundaries.maxY + 1; ++y) {
-					const z = 1;
 					grid.push(
 						<MapWallVertexPanel
-							key={'vertex ' + x + ',' + y + ',' + z}
-							position={{ x: x, y: y, z: z }}
+							key={'vertex ' + x + ',' + y + ',' + zLevel}
+							position={{ x: x, y: y, z: zLevel }}
 							display={props.display}
 							style={getMapItemStyle(x, y, 1, 1, 'vertex', boundaries)}
-							selected={isVertexSelected({ x: x, y: y, z: z })}
+							selected={isVertexSelected({ x: x, y: y, z: zLevel })}
 							onMouseDown={vertexMouseDown}
 							onMouseUp={vertexMouseUp}
 							onMouseEnter={vertexEntered}

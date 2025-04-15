@@ -1,10 +1,14 @@
-import { MapBoundaries, MapTile, MapWall, TacticalMap } from '../models/tactical-map';
+import { MapBoundaries, MapItem, MapPosition, MapTile, MapWall, TacticalMap } from '../models/tactical-map';
 import { Collections } from '../utils/collections';
 import { FactoryLogic } from './factory-logic';
 import { Random } from '../utils/random';
-import { Utils } from '../utils/utils';
 
 export class TacticalMapLogic {
+	static getMapSize = (map: TacticalMap) => {
+		const tiles = map.items.filter(item => item.type === 'tile');
+		return Collections.sum(tiles, tile => tile.dimensions.width * tile.dimensions.height);
+	};
+
 	static getMapBoundaries = (map: TacticalMap): MapBoundaries | null => {
 		const points = map.items.flatMap(i => {
 			switch (i.type) {
@@ -60,17 +64,15 @@ export class TacticalMapLogic {
 		return coveredSquares.every(square => square);
 	}
 
-	/*
-	static canAddMonsterHere(map: TacticalMap, combatant: Combatant, combatants: Combatant[], x: number, y: number) {
+	static canAddMonsterHere(map: TacticalMap, x: number, y: number, size: number) {
 		const coveredSquares: boolean[] = [];
 
-		const size = this.getTokenSize(combatant, combatants);
 		const right = x + Math.max(1, size) - 1;
 		const bottom = y + Math.max(1, size) - 1;
 		for (let x1 = x; x1 <= right; ++x1) {
 			for (let y1 = y; y1 <= bottom; ++y1) {
 				// Is this square on an empty tile?
-				const occupants = this.itemsAt(map as Map, x1, y1);
+				const occupants = this.itemsAt(map, x1, y1);
 				const canOccupy = (occupants.length > 0) && occupants.every(item => item.type === 'tile');
 				coveredSquares.push(canOccupy);
 			}
@@ -79,67 +81,36 @@ export class TacticalMapLogic {
 		return coveredSquares.every(square => square);
 	}
 
-	static scatterCombatants(map: TacticalMap, combatants: Combatant[], areaID: string | null) {
-		// Remove these combatants from the map
-		map.items = map.items.filter(item => !combatants.map(c => c.id).includes(item.id));
-
-		// Find map dimensions
-		const tiles = map.items.filter(item => item.type === 'tile');
-		if (tiles.length > 0) {
-			let areaDimensions: {
-				minX: number;
-				minY: number;
-				maxX: number;
-				maxY: number;
-			} | null = null;
-			if (areaID) {
-				const area = map.areas.find(a => a.id === areaID);
-				if (area) {
-					areaDimensions = {
-						minX: area.x,
-						minY: area.y,
-						maxX: area.x + area.width - 1,
-						maxY: area.y + area.height - 1
-					};
-				}
-			}
-			const dimensions = areaDimensions || this.mapDimensions(map.items);
-			if (dimensions) {
-				combatants.forEach(combatant => {
-					const candidateSquares: {x: number, y: number}[] = [];
-
-					// Find all squares that we could add this monster to
-					for (let x = dimensions.minX; x <= dimensions.maxX; ++x) {
-						for (let y = dimensions.minY; y <= dimensions.maxY; ++y) {
-							// Could we add this monster to this square?
-							const canAddHere = this.canAddMonsterHere(map, combatant, combatants, x, y);
-							if (canAddHere) {
-								candidateSquares.push({x: x, y: y});
-							}
+	static scatterCombatants(map: TacticalMap, tokens: { type: 'hero' | 'monster', encounterID: string, id: string, size: number }[]) {
+		const dimensions = this.getMapBoundaries(map);
+		if (dimensions) {
+			tokens.forEach(token => {
+				// Find all squares that we could add this token to
+				const candidateSquares: {x: number, y: number}[] = [];
+				for (let x = dimensions.minX; x <= dimensions.maxX; ++x) {
+					for (let y = dimensions.minY; y <= dimensions.maxY; ++y) {
+						const canAddHere = this.canAddMonsterHere(map, x, y, token.size);
+						if (canAddHere) {
+							candidateSquares.push({ x: x, y: y });
 						}
 					}
+				}
 
-					if (candidateSquares.length > 0) {
-						const index = Utils.randomNumber(candidateSquares.length);
-						const square = candidateSquares[index];
-						const size = this.getTokenSize(combatant, combatants);
+				if (candidateSquares.length > 0) {
+					const square = Collections.draw(candidateSquares);
 
-						const item = Factory.createMapItem();
-						item.id = combatant.id;
-						item.type = combatant.type as ('pc' | 'monster' | 'companion');
-						item.x = square.x;
-						item.y = square.y;
-						item.z = 0;
-						item.height = size;
-						item.width = size;
-						item.depth = size;
-						map.items.push(item);
-					}
-				});
-			}
+					const mini = FactoryLogic.createMapMini();
+					mini.position = { x: square.x, y: square.y, z: 0 };
+					mini.dimensions = { width: token.size, height: token.size, depth: 1 };
+					mini.content = { type: token.type, encounterID: token.encounterID, id: token.id };
+
+					map.items.push(mini);
+				}
+			});
 		}
 	}
 
+	/*
 	static canSee(
 		walls: { horizontal: { start: number, end: number, y: number }[], vertical: { start: number, end: number, x: number }[] },
 		a: { x: number, y: number },
@@ -245,7 +216,9 @@ export class TacticalMapLogic {
 	*/
 
 	static itemsAt(map: TacticalMap, x: number, y: number) {
-		return map.items
+		const items: MapItem[] = [];
+
+		map.items
 			.filter(item => item.type === 'tile')
 			.filter(item => {
 				const left = item.position.x;
@@ -253,7 +226,32 @@ export class TacticalMapLogic {
 				const top = item.position.y;
 				const bottom = item.position.y + item.dimensions.height - 1;
 				return (x >= left) && (x <= right) && (y >= top) && (y <= bottom);
-			});
+			})
+			.forEach(item => items.push(item));
+
+		map.items
+			.filter(item => item.type === 'zone')
+			.filter(item => {
+				const left = item.position.x;
+				const right = item.position.x + item.dimensions.width - 1;
+				const top = item.position.y;
+				const bottom = item.position.y + item.dimensions.height - 1;
+				return (x >= left) && (x <= right) && (y >= top) && (y <= bottom);
+			})
+			.forEach(item => items.push(item));
+
+		map.items
+			.filter(item => item.type === 'mini')
+			.filter(item => {
+				const left = item.position.x;
+				const right = item.position.x + item.dimensions.width - 1;
+				const top = item.position.y;
+				const bottom = item.position.y + item.dimensions.height - 1;
+				return (x >= left) && (x <= right) && (y >= top) && (y <= bottom);
+			})
+			.forEach(item => items.push(item));
+
+		return items;
 	}
 
 	static rotateMap(map: TacticalMap) {
@@ -305,7 +303,7 @@ export class TacticalMapLogic {
 			});
 
 		map.items
-			.filter(item => item.type === 'fog')
+			.filter(item => item.type === 'mini')
 			.forEach(item => {
 				const newX = (item.position.y) * -1;
 				const newY = item.position.x;
@@ -314,14 +312,22 @@ export class TacticalMapLogic {
 				item.position.y = newY;
 			});
 
-		map.items.forEach(item => item.id = Utils.guid());
+		map.items
+			.filter(item => item.type === 'fog')
+			.forEach(item => {
+				const newX = (item.position.y) * -1;
+				const newY = item.position.x;
+
+				item.position.x = newX;
+				item.position.y = newY;
+			});
 	}
 
-	static generate(areas: number, map: TacticalMap) {
+	static generateDungeon(size: number, map: TacticalMap) {
 		map.items = [];
 
 		let n = 0;
-		while (n < areas) {
+		while (n < size) {
 			if (this.addRoom(map)) {
 				n += 1;
 			}
@@ -329,6 +335,62 @@ export class TacticalMapLogic {
 
 		this.addWalls(map, true, true);
 	}
+
+	static generateCavern = (size: number, map: TacticalMap) => {
+		map.items = [];
+
+		while (TacticalMapLogic.getMapSize(map) < size) {
+			this.addBlob(map);
+		}
+
+		this.addWalls(map, true, false);
+	};
+
+	static addBlob = (map: TacticalMap) => {
+		const blob: MapTile[] = [];
+
+		const getEmptyAdjacentSquares = (tiles: MapTile[]) => {
+			const adjacents: MapPosition[] = [];
+			tiles.forEach(tile => {
+				for (let x = tile.position.x; x <= tile.position.x + tile.dimensions.width - 1; ++x) {
+					adjacents.push({ x: x, y: tile.position.y - 1, z: tile.position.z });
+					adjacents.push({ x: x, y: tile.position.y + 1, z: tile.position.z });
+				}
+				for (let y = tile.position.y; y <= tile.position.y + tile.dimensions.height - 1; ++y) {
+					adjacents.push({ x: tile.position.x - 1, y: y, z: tile.position.z });
+					adjacents.push({ x: tile.position.x + 1, y: y, z: tile.position.z });
+				}
+			});
+			return adjacents.filter(adj => TacticalMapLogic.itemsAt(map, adj.x, adj.y).length === 0);
+		};
+
+		while ((blob.length < 5) || (Random.randomNumber(10) !== 0)) {
+			const candidates: MapPosition[] = [];
+			if (TacticalMapLogic.getMapSize(map) === 0) {
+				// Start at origin
+				candidates.push({ x: 0, y: 0, z: 0 });
+			} else if (blob.length === 0) {
+				// Find an empty square adjacent to the map
+				const tiles = map.items.filter(item => item.type === 'tile');
+				candidates.push(...getEmptyAdjacentSquares(tiles));
+			} else {
+				candidates.push(...getEmptyAdjacentSquares(blob));
+			}
+
+			if (candidates.length === 0) {
+				break;
+			}
+
+			const square = Collections.draw(candidates);
+
+			const tile = FactoryLogic.createMapTile();
+			tile.position = square;
+			tile.dimensions = { width: 1, height: 1, depth: 1 };
+
+			map.items.push(tile);
+			blob.push(tile);
+		}
+	};
 
 	static addRoom(map: TacticalMap) {
 		const room = FactoryLogic.createMapTile();

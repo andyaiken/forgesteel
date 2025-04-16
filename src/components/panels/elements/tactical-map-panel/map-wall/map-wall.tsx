@@ -15,7 +15,6 @@ interface Props {
 	style: MapItemStyle;
 	selectWall: (wall: MapWall) => void;
 	updateWall: (wall: MapWall) => void;
-	deleteWall: (wall: MapWall) => void;
 }
 
 export const MapWallPanel = (props: Props) => {

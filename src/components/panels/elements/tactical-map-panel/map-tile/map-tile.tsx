@@ -15,7 +15,6 @@ interface Props {
 	style: MapItemStyle;
 	selectTile: (tile: MapTile) => void;
 	updateTile: (tile: MapTile) => void;
-	deleteTile: (tile: MapTile) => void;
 }
 
 export const MapTilePanel = (props: Props) => {

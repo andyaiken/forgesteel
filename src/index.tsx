@@ -116,7 +116,8 @@ Promise.all(promises).then(results => {
 			heroCount: 4,
 			heroLevel: 1,
 			heroVictories: 0,
-			gridSize: 50
+			gridSize: 50,
+			playerGridSize: 50
 		};
 	}
 
@@ -174,6 +175,10 @@ Promise.all(promises).then(results => {
 
 	if (options.gridSize === undefined) {
 		options.gridSize = 50;
+	}
+
+	if (options.playerGridSize === undefined) {
+		options.playerGridSize = 50;
 	}
 
 	//#endregion

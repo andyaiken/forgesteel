@@ -1258,6 +1258,11 @@ const DetailsSection = (props: DetailsSectionProps) => {
 						onChange={value => props.setFolder(value)}
 						filterOption={(value, option) => value.toLowerCase().split(' ').every(token => option!.value.toLowerCase().indexOf(token.toLowerCase()) !== -1)}
 					/>
+					<Alert
+						type='info'
+						showIcon={true}
+						message='You can add your hero to a folder to group it with other heroes.'
+					/>
 					{
 						props.hero.features.filter(f => f.id === 'default-language').map(f => (
 							<FeaturePanel

@@ -261,6 +261,16 @@ export class AbilityLogic {
 			text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
 		});
 
+		// Up to [N times] your speed
+		text = text.replace('a number of squares up to your speed', 'up to your speed');
+		const speedRegex = /up to.*your speed/gi;
+		[ ...text.matchAll(speedRegex) ].map(r => r[0]).forEach(str => {
+			const constant = AbilityLogic.getConstant(str);
+			const value = HeroLogic.getRecoveryValue(hero);
+			const multiplier = AbilityLogic.getMultiplier(str);
+			text = text.replace(str, `up to ${constant + (value * multiplier)} squares`);
+		});
+
 		return text;
 	};
 

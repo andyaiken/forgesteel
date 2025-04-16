@@ -50,6 +50,7 @@ interface Props {
 	showRoll: () => void;
 	showRules: () => void;
 	showPlayerView: () => void;
+	updateHero: (hero: Hero) => void;
 	updateSession: (session: Playbook) => void;
 	setOptions: (options: Options) => void;
 }
@@ -198,6 +199,7 @@ export const SessionDirectorPage = (props: Props) => {
 						options={props.options}
 						heroes={props.heroes}
 						encounters={session.encounters}
+						sourcebooks={props.sourcebooks}
 						mode={PanelMode.Full}
 						updateMap={map => {
 							const copy = Utils.copy(session);
@@ -205,6 +207,18 @@ export const SessionDirectorPage = (props: Props) => {
 							const index = copy.tacticalMaps.findIndex(tm => tm.id === map.id);
 							if (index !== -1) {
 								copy.tacticalMaps[index] = map;
+							}
+
+							setSession(copy);
+							props.updateSession(copy);
+						}}
+						updateHero={props.updateHero}
+						updateEncounter={encounter => {
+							const copy = Utils.copy(session);
+
+							const index = copy.encounters.findIndex(enc => enc.id === encounter.id);
+							if (index !== -1) {
+								copy.encounters[index] = encounter;
 							}
 
 							setSession(copy);

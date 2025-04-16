@@ -15,7 +15,6 @@ interface Props {
 	style: MapItemStyle;
 	selectZone: (zone: MapZone) => void;
 	updateZone: (zone: MapZone) => void;
-	deleteZone: (zone: MapZone) => void;
 }
 
 export const MapZonePanel = (props: Props) => {

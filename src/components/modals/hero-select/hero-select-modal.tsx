@@ -23,24 +23,24 @@ interface Props {
 }
 
 export const HeroSelectModal = (props: Props) => {
-	const [ mode, setMode ] = useState<string>('party');
+	const [ mode, setMode ] = useState<string>('folder');
 
 	try {
 		const getContent = () => {
 			switch (mode) {
-				case 'party': {
-					const parties = Collections
+				case 'folder': {
+					const folders = Collections
 						.distinct(props.heroes.map(h => h.folder), f => f)
 						.sort()
 						.filter(f => !!f);
 
-					if (parties.length === 0) {
+					if (folders.length === 0) {
 						return (
-							<Empty />
+							<Empty text='No folders' />
 						);
 					}
 
-					return parties.map(f => (
+					return folders.map(f => (
 						<SelectablePanel
 							key={f}
 							onSelect={() => props.onSelect(props.heroes.filter(h => h.folder === f))}
@@ -60,7 +60,7 @@ export const HeroSelectModal = (props: Props) => {
 
 					if (heroes.length === 0) {
 						return (
-							<Empty />
+							<Empty text='No heroes' />
 						);
 					}
 
@@ -86,7 +86,7 @@ export const HeroSelectModal = (props: Props) => {
 					<div style={{ width: '100%', textAlign: 'center' }}>
 						<Segmented
 							options={[
-								{ value: 'party', label: 'Parties' },
+								{ value: 'folder', label: 'Folders' },
 								{ value: 'hero', label: 'Heroes' }
 							]}
 							value={mode}

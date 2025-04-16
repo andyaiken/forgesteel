@@ -25,4 +25,5 @@ export interface Options {
 	heroVictories: number;
 	// Tactical Map
 	gridSize: number;
+	playerGridSize: number;
 }

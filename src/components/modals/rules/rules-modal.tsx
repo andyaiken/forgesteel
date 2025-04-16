@@ -145,8 +145,6 @@ Invisible creatures always have concealment from other creatures. If an invisibl
 
 		const getAbilitiesSection = () => {
 			const abilities = [
-				AbilityData.freeStrikeMelee,
-				AbilityData.freeStrikeRanged,
 				AbilityData.advance,
 				AbilityData.disengage,
 				AbilityData.ride,
@@ -169,10 +167,24 @@ Invisible creatures always have concealment from other creatures. If an invisibl
 				<Tabs
 					items={[
 						{
+							key: 'free',
+							label: 'Free Strikes',
+							children:
+								<Space direction='vertical' style={{ width: '100%' }}>
+									{
+										[
+											AbilityData.freeStrikeMelee,
+											AbilityData.freeStrikeRanged
+										]
+											.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
+									}
+								</Space>
+						},
+						{
 							key: 'actions',
 							label: 'Actions',
 							children:
-								<Space direction='vertical'>
+								<Space direction='vertical' style={{ width: '100%' }}>
 									{
 										abilities
 											.filter(a => a.type.usage === AbilityUsage.Action)
@@ -184,7 +196,7 @@ Invisible creatures always have concealment from other creatures. If an invisibl
 							key: 'maneuvers',
 							label: 'Maneuvers',
 							children:
-								<Space direction='vertical'>
+								<Space direction='vertical' style={{ width: '100%' }}>
 									{
 										abilities
 											.filter(a => a.type.usage === AbilityUsage.Maneuver)
@@ -196,7 +208,7 @@ Invisible creatures always have concealment from other creatures. If an invisibl
 							key: 'moves',
 							label: 'Move Actions',
 							children:
-								<Space direction='vertical'>
+								<Space direction='vertical' style={{ width: '100%' }}>
 									{
 										abilities
 											.filter(a => a.type.usage === AbilityUsage.Move)

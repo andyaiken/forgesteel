@@ -8,6 +8,8 @@ import './token.scss';
 interface Props {
 	name: string;
 	role: MonsterRoleType;
+	type?: string;
+	isDefeated?: boolean;
 	size?: number;
 	onClick?: () => void;
 }
@@ -27,6 +29,14 @@ export const Token = (props: Props) => {
 			className += ' clickable';
 		}
 
+		let innerClassName = 'inner-token';
+		if (props.type) {
+			innerClassName += ` ${props.type}`;
+		}
+		if (props.isDefeated) {
+			innerClassName += ' defeated';
+		}
+
 		return (
 			<div
 				className={className}
@@ -35,7 +45,7 @@ export const Token = (props: Props) => {
 				onClick={props.onClick}
 			>
 				<div
-					className='inner-token'
+					className={innerClassName}
 					style={{ fontSize: `${size * 0.3}px`, letterSpacing: `-${size * 0.01}px` }}
 				>
 					{initials}
@@ -56,10 +66,15 @@ interface MonsterTokenProps {
 }
 
 export const MonsterToken = (props: MonsterTokenProps) => {
-	const name = MonsterLogic.getMonsterName(props.monster, props.monsterGroup);
-	const role = props.monster.role.type;
 	return (
-		<Token name={name} role={role} size={props.size} onClick={props.onClick} />
+		<Token
+			name={MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
+			role={props.monster.role.type}
+			type='monster'
+			isDefeated={props.monster.state.defeated}
+			size={props.size}
+			onClick={props.onClick}
+		/>
 	);
 };
 
@@ -70,9 +85,14 @@ interface HeroTokenProps {
 }
 
 export const HeroToken = (props: HeroTokenProps) => {
-	const name = props.hero.name || 'Hero';
-	const role = MonsterRoleType.NoRole;
 	return (
-		<Token name={name} role={role} size={props.size} onClick={props.onClick} />
+		<Token
+			name={props.hero.name || 'Hero'}
+			role={MonsterRoleType.NoRole}
+			type='hero'
+			isDefeated={props.hero.state.defeated}
+			size={props.size}
+			onClick={props.onClick}
+		/>
 	);
 };

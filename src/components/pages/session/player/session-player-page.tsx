@@ -1,3 +1,4 @@
+import { Button, Popover } from 'antd';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { CounterRunPanel } from '../../../panels/run/counter-run/counter-run-panel';
 import { Empty } from '../../../controls/empty/empty';
@@ -7,8 +8,10 @@ import { Hero } from '../../../../models/hero';
 import { MontageRunPanel } from '../../../panels/run/montage-run/montage-run-panel';
 import { NegotiationRunPanel } from '../../../panels/run/negotiation-run/negotiation-run-panel';
 import { Options } from '../../../../models/options';
+import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Playbook } from '../../../../models/playbook';
+import { SettingOutlined } from '@ant-design/icons';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
 import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/tactical-map-panel';
@@ -24,6 +27,7 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showRules: () => void;
+	setOptions: (options: Options) => void;
 }
 
 export const SessionPlayerPage = (props: Props) => {
@@ -72,6 +76,7 @@ export const SessionPlayerPage = (props: Props) => {
 						options={props.options}
 						heroes={props.heroes}
 						encounters={props.session.encounters}
+						sourcebooks={props.sourcebooks}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -93,7 +98,16 @@ export const SessionPlayerPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='session-player-page'>
-					<AppHeader subheader='Forge Steel' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
+					<AppHeader subheader='Forge Steel' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+						<Popover
+							trigger='click'
+							content={<OptionsPanel mode='player' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+						>
+							<Button icon={<SettingOutlined />}>
+								Options
+							</Button>
+						</Popover>
+					</AppHeader>
 					<div className='session-page-content'>
 						{getContent()}
 					</div>

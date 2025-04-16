@@ -9,6 +9,7 @@ import { MapItemStyle } from '../tactical-map-panel';
 import { MapMini } from '../../../../../models/tactical-map';
 import { Markdown } from '../../../../controls/markdown/markdown';
 import { Monster } from '../../../../../models/monster';
+import { MonsterLabel } from '../../../monster-label/monster-label';
 import { Popover } from 'antd';
 import { TacticalMapDisplayType } from '../../../../../enums/tactical-map-display-type';
 
@@ -22,8 +23,9 @@ interface Props {
 	selected: boolean;
 	style: MapItemStyle;
 	selectMini: (mini: MapMini) => void;
+	selectHero: (hero: Hero) => void;
+	selectMonster: (monster: Monster) => void;
 	updateMini: (mini: MapMini) => void;
-	deleteMini: (mini: MapMini) => void;
 }
 
 export const MapMiniPanel = (props: Props) => {
@@ -76,7 +78,7 @@ export const MapMiniPanel = (props: Props) => {
 			if (props.mini.content.type === 'hero') {
 				content.push(
 					<HeroHealthPanel
-						key='hero'
+						key='hero-health'
 						hero={props.content as Hero}
 						showEncounterControls={false}
 					/>
@@ -85,8 +87,14 @@ export const MapMiniPanel = (props: Props) => {
 
 			if (props.mini.content.type === 'monster') {
 				content.push(
+					<MonsterLabel
+						key='monster-label'
+						monster={props.content as Monster}
+					/>
+				);
+				content.push(
 					<MonsterHealthPanel
-						key='monster'
+						key='monster-health'
 						monster={props.content as Monster}
 					/>
 				);
@@ -141,6 +149,21 @@ export const MapMiniPanel = (props: Props) => {
 							if (props.selectable) {
 								e.stopPropagation();
 								props.selectMini(props.mini);
+							}
+						}}
+						onDoubleClick={e => {
+							if (props.selectable) {
+								e.stopPropagation();
+								if (props.display === TacticalMapDisplayType.DirectorEdit) {
+									if (props.content && props.mini.content) {
+										if (props.mini.content.type === 'hero') {
+											props.selectHero(props.content as Hero);
+										}
+										if (props.mini.content.type === 'monster') {
+											props.selectMonster(props.content as Monster);
+										}
+									}
+								}
 							}
 						}}
 					>

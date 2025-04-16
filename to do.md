@@ -46,9 +46,8 @@
     * Show 'should be N squares' for terrain
     * Ability to add new terrain objects
 * Tactical map
-  * Add terrain minis / overlays
   * Minis should not be allowed to walk through walls
-  * Allow hero / monster stats to be edited
+  * Add terrain minis / overlays
 
 ### Player View
 

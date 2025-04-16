@@ -1349,6 +1349,7 @@ export const Main = (props: Props) => {
 										showRoll={showRoll}
 										showRules={showRules}
 										showPlayerView={showPlayerView}
+										updateHero={persistHero}
 										updateSession={persistSession}
 										setOptions={persistOptions}
 									/>
@@ -1366,6 +1367,7 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showRules={showRules}
+										setOptions={persistOptions}
 									/>
 								}
 							/>

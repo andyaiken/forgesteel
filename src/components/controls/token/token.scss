@@ -72,10 +72,22 @@ $monster-support: rgb(245, 213, 184);
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: black;
+		background: rgb(0, 0, 0);
 		border-radius: 50%;
 		color: white;
 		font-weight: 600;
 		user-select: none;
+
+		&.hero {
+			background: rgb(0, 80, 0);
+		}
+
+		&.monster {
+			background: rgb(80, 0, 0);
+		}
+
+		&.defeated {
+			text-decoration: line-through;
+		}
 	}
 }

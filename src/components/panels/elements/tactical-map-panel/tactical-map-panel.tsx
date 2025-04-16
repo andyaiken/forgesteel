@@ -1,5 +1,5 @@
-import { BarsOutlined, CloseOutlined, DownloadOutlined, DragOutlined, FileTextOutlined, LinkOutlined, RotateRightOutlined } from '@ant-design/icons';
-import { Button, ColorPicker, Divider, Input, Popover, Segmented, Select, Upload } from 'antd';
+import { BarsOutlined, CloseOutlined, DownloadOutlined, DragOutlined, FileTextOutlined, InfoCircleOutlined, LinkOutlined, RotateRightOutlined } from '@ant-design/icons';
+import { Button, ColorPicker, Divider, Drawer, Input, Popover, Segmented, Select, Upload } from 'antd';
 import { HeroToken, MonsterToken } from '../../../controls/token/token';
 import { MapBoundaries, MapItem, MapMini, MapPosition, MapTile, MapWall, MapZone, TacticalMap } from '../../../../models/tactical-map';
 import { ReactNode, useState } from 'react';
@@ -14,17 +14,22 @@ import { GridSquarePanel } from './grid-square/grid-square';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
+import { HeroStateModal } from '../../../modals/hero-state/hero-state-modal';
+import { HeroStatePage } from '../../../../enums/hero-state-page';
 import { MapMiniPanel } from './map-mini/map-mini';
 import { MapTilePanel } from './map-tile/map-tile';
 import { MapWallPanel } from './map-wall/map-wall';
 import { MapWallVertexPanel } from './map-wall-vertex/map-wall-vertex';
 import { MapZonePanel } from './map-zone/map-zone';
 import { Monster } from '../../../../models/monster';
+import { MonsterModal } from '../../../modals/monster/monster-modal';
+import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Radial } from '../../../controls/radial/radial';
+import { Sourcebook } from '../../../../models/sourcebook';
 import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
 import { TacticalMapEditMode } from '../../../../enums/tactical-map-edit-mode';
 import { TacticalMapLogic } from '../../../../logic/tactical-map-logic';
@@ -48,8 +53,11 @@ interface Props {
 	options: Options;
 	heroes?: Hero[];
 	encounters?: Encounter[];
+	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 	updateMap?: (map: TacticalMap) => void;
+	updateHero?: (hero: Hero) => void;
+	updateEncounter?: (encounter: Encounter) => void;
 }
 
 export const TacticalMapPanel = (props: Props) => {
@@ -73,6 +81,8 @@ export const TacticalMapPanel = (props: Props) => {
 		return null;
 	});
 	const [ selectedMini, setSelectedMini ] = useState<{ type: 'hero' | 'monster', encounterID: string, id: string } | null>(null);
+	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
+	const [ selectedMonster, setSelectedMonster ] = useState<Monster | null>(null);
 
 	const zLevel = 0;
 	const size = props.display === 'thumbnail' ? 5 : props.options.gridSize;
@@ -162,12 +172,12 @@ export const TacticalMapPanel = (props: Props) => {
 				setSelectedMini(null);
 
 				let size = FactoryLogic.createSize(1, 'M');
-				const source = getMiniSource(mini);
-				if (source) {
+				const content = getMiniContent(mini);
+				if (content) {
 					if (mini.content!.type === 'hero') {
-						size = HeroLogic.getSize(source as Hero);
+						size = HeroLogic.getSize(content as Hero);
 					} else {
-						size = (source as Monster).size;
+						size = (content as Monster).size;
 					}
 				}
 				mini.dimensions = { width: size.value, height: size.value, depth: 1 };
@@ -327,7 +337,7 @@ export const TacticalMapPanel = (props: Props) => {
 
 	//#endregion
 
-	const getMiniSource = (mini: MapMini): Hero | Monster | null => {
+	const getMiniContent = (mini: MapMini): Hero | Monster | null => {
 		if (mini.content) {
 			if (props.encounters) {
 				const enc = props.encounters.find(e => e.id === mini.content!.encounterID);
@@ -790,6 +800,17 @@ export const TacticalMapPanel = (props: Props) => {
 				updateMapItem(copy);
 			};
 
+			const showMiniInfo = () => {
+				const mini = item as MapMini;
+				const content = getMiniContent(mini);
+				if (mini.content && mini.content.type === 'hero') {
+					setSelectedHero(content as Hero);
+				}
+				if (mini.content && mini.content.type === 'monster') {
+					setSelectedMonster(content as Monster);
+				}
+			};
+
 			const setNotes = (value: string) => {
 				const copy = Utils.copy(item) as MapTile | MapWall | MapZone | MapMini;
 				copy.notes = value;
@@ -1009,6 +1030,9 @@ export const TacticalMapPanel = (props: Props) => {
 								<NumberSpin min={1} value={item.dimensions.width} onChange={setSize}>
 									<Field label='Size' value={item.dimensions.width} />
 								</NumberSpin>
+								<Button onClick={showMiniInfo}>
+									<InfoCircleOutlined />
+ 								</Button>
 							</>
 							: null
 					}
@@ -1174,7 +1198,6 @@ export const TacticalMapPanel = (props: Props) => {
 					style={getMapItemStyle(tile.position.x, tile.position.y, tile.dimensions.width, tile.dimensions.height, tile.corners, boundaries)}
 					selectTile={tile => setSelectedMapItemID(tile.id)}
 					updateTile={updateMapItem}
-					deleteTile={deleteMapItem}
 				/>
 			));
 	};
@@ -1198,7 +1221,6 @@ export const TacticalMapPanel = (props: Props) => {
 						style={getMapItemStyle(x, y, width, height, 'wall', boundaries)}
 						selectWall={wall => setSelectedMapItemID(wall.id)}
 						updateWall={updateMapItem}
-						deleteWall={deleteMapItem}
 					/>
 				);
 			});
@@ -1217,7 +1239,6 @@ export const TacticalMapPanel = (props: Props) => {
 					style={getMapItemStyle(zone.position.x, zone.position.y, zone.dimensions.width, zone.dimensions.height, zone.corners, boundaries)}
 					selectZone={zone => setSelectedMapItemID(zone.id)}
 					updateZone={updateMapItem}
-					deleteZone={deleteMapItem}
 				/>
 			));
 	};
@@ -1228,28 +1249,32 @@ export const TacticalMapPanel = (props: Props) => {
 			.filter(mini => {
 				if (props.display === TacticalMapDisplayType.Player) {
 					// Don't show hidden minis
-					const src = getMiniSource(mini);
-					if (src) {
-						return !src.state.hidden;
+					const content = getMiniContent(mini);
+					if (content) {
+						return !content.state.hidden;
 					}
 				}
 
 				return true;
 			})
-			.map(mini => (
-				<MapMiniPanel
-					key={mini.id}
-					mini={mini}
-					content={getMiniSource(mini)}
-					display={props.display}
-					selectable={(editMode === TacticalMapEditMode.Minis) && !editAdding}
-					selected={selectedMapItemID === mini.id}
-					style={getMapItemStyle(mini.position.x, mini.position.y, mini.dimensions.width, mini.dimensions.height, 'circle', boundaries)}
-					selectMini={mini => setSelectedMapItemID(mini.id)}
-					updateMini={updateMapItem}
-					deleteMini={deleteMapItem}
-				/>
-			));
+			.map(mini => {
+				const content = getMiniContent(mini);
+				return (
+					<MapMiniPanel
+						key={content ? JSON.stringify(content) : JSON.stringify(mini)}
+						mini={mini}
+						content={content}
+						display={props.display}
+						selectable={(editMode === TacticalMapEditMode.Minis) && !editAdding}
+						selected={selectedMapItemID === mini.id}
+						style={getMapItemStyle(mini.position.x, mini.position.y, mini.dimensions.width, mini.dimensions.height, 'circle', boundaries)}
+						selectMini={mini => setSelectedMapItemID(mini.id)}
+						selectHero={setSelectedHero}
+						selectMonster={setSelectedMonster}
+						updateMini={updateMapItem}
+					/>
+				);
+			});
 	};
 
 	const getFog = (boundaries: MapBoundaries) => {
@@ -1354,7 +1379,7 @@ export const TacticalMapPanel = (props: Props) => {
 			}
 		}
 
-		if (boundaries && (props.display === TacticalMapDisplayType.DirectorEdit) && (editMode === TacticalMapEditMode.Tiles)) {
+		if (boundaries && (props.display === TacticalMapDisplayType.DirectorEdit) && (editMode === TacticalMapEditMode.Tiles) && editAdding) {
 			// Apply a border
 			const paddingSquares = 5;
 			boundaries.minX -= paddingSquares;
@@ -1387,6 +1412,88 @@ export const TacticalMapPanel = (props: Props) => {
 					</div>
 				</div>
 				{getBottomToolbar()}
+				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
+					{
+						selectedMonster ?
+							<MonsterModal
+								monster={selectedMonster}
+								options={props.options}
+								onClose={() => setSelectedMonster(null)}
+								updateMonster={monster => {
+									const mini = map.items.filter(item => item.type === 'mini').find(mini => mini.id === selectedMapItemID);
+									if (mini && mini.content) {
+										const encounter = props.encounters ? props.encounters.find(e => e.id === mini.content!.encounterID) : undefined;
+										if (encounter) {
+											const copy = Utils.copy(encounter as Encounter);
+											copy.groups.forEach(g => {
+												g.slots.forEach(s => {
+													const index = s.monsters.findIndex(m => m.id === monster.id);
+													if (index !== -1) {
+														s.monsters[index] = monster;
+													}
+												});
+											});
+
+											// Make sure no minion groups have a dead captain
+											const captainIDs = copy.groups
+												.flatMap(g => g.slots)
+												.flatMap(s => s.monsters)
+												.filter(m => m.role.organization !== MonsterOrganizationType.Minion)
+												.filter(m => !m.state.defeated)
+												.map(m => m.id);
+											copy.groups.forEach(g => {
+												g.slots.forEach(s => {
+													if (s.state.captainID && !captainIDs.includes(s.state.captainID)) {
+														s.state.captainID = undefined;
+													}
+												});
+											});
+
+											if (props.updateEncounter) {
+												props.updateEncounter(copy);
+											}
+										}
+									}
+								}}
+							/>
+							: null
+					}
+				</Drawer>
+				<Drawer open={!!selectedHero} onClose={() => setSelectedHero(null)} closeIcon={null} width='500px'>
+					{
+						selectedHero ?
+							<HeroStateModal
+								hero={selectedHero}
+								sourcebooks={props.sourcebooks || []}
+								options={props.options}
+								startPage={HeroStatePage.Vitals}
+								showEncounterControls={true}
+								onClose={() => setSelectedHero(null)}
+								onChange={hero => {
+									const mini = map.items.filter(item => item.type === 'mini').find(mini => mini.id === selectedMapItemID);
+									if (mini && mini.content) {
+										const encounter = props.encounters ? props.encounters.find(e => e.id === mini.content!.encounterID) : undefined;
+										if (encounter) {
+											const copy = Utils.copy(encounter);
+											const index = copy.heroes.findIndex(h => h.id === hero.id);
+											if (index !== -1) {
+												copy.heroes[index] = hero;
+											}
+
+											if (props.updateEncounter) {
+												props.updateEncounter(copy);
+											}
+										} else {
+											if (props.updateHero) {
+												props.updateHero(hero);
+											}
+										}
+									}
+								}}
+							/>
+							: null
+					}
+				</Drawer>
 			</ErrorBoundary>
 		);
 	} catch (e) {

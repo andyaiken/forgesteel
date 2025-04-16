@@ -138,17 +138,17 @@ export const AbilityModal = (props: Props) => {
 						<Expander title='Name and Description'>
 							<HeaderText>Name</HeaderText>
 							<Input
-								placeholder='Name'
+								placeholder={props.ability.name}
 								allowClear={true}
 								value={customization?.name || ''}
 								onChange={e => setName(e.target.value)}
 							/>
 							<HeaderText>Description</HeaderText>
-							<MultiLine label='Description' value={customization?.description || ''} onChange={setDescription} />
+							<MultiLine label={props.ability.description} value={customization?.description || ''} onChange={setDescription} />
 						</Expander>
 						<Expander title='Notes'>
 							<HeaderText>Notes</HeaderText>
-							<MultiLine label='Description' value={customization?.notes || ''} onChange={setNotes} />
+							<MultiLine label='Notes' value={customization?.notes || ''} onChange={setNotes} />
 						</Expander>
 					</div>
 				);

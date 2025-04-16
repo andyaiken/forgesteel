@@ -52,12 +52,12 @@ export const TerrainPanel = (props: Props) => {
 				<div key={index} className='terrain-section'>
 					<Divider />
 					{
-						section.content.map((content, n) => {
+						section.content.map(content => {
 							switch (content.type) {
 								case FeatureType.Text:
-									return <Field key={n} label={content.name} value={<Markdown text={content.description} useSpan={true} />} />;
+									return <Field key={content.id} label={content.name} value={<Markdown text={content.description} useSpan={true} />} />;
 								case FeatureType.Ability:
-									return <AbilityPanel key={n} ability={content.data.ability} mode={PanelMode.Full} />;
+									return <AbilityPanel key={content.id} ability={content.data.ability} mode={PanelMode.Full} />;
 							}
 						})
 					}
@@ -124,8 +124,8 @@ export const TerrainPanel = (props: Props) => {
 									props.upgradeIDs ?
 										terrain.upgrades
 											.filter(u => (props.upgradeIDs|| []).includes(u.id))
-											.map((upgrade, n) => (
-												<div key={n}>
+											.map(upgrade => (
+												<div key={upgrade.id}>
 													<Divider />
 													<Field label={upgrade.label} value={upgrade.text} />
 													{upgrade.sections.map((section, n) => getSection(section, n))}
@@ -136,8 +136,8 @@ export const TerrainPanel = (props: Props) => {
 								{props.showCustomizations && (terrain.upgrades.length > 0) ? <HeaderText level={1}>Customization</HeaderText> : null}
 								{
 									props.showCustomizations ?
-										terrain.upgrades.map((upgrade, n) => (
-											<div key={n}>
+										terrain.upgrades.map(upgrade => (
+											<div key={upgrade.id}>
 												{
 													upgrade.cost >= 0 ?
 														<HeaderText ribbon={<Badge>+{upgrade.cost} EV</Badge>}>{upgrade.label}</HeaderText>

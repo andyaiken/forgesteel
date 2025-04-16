@@ -284,7 +284,7 @@ export const PlaybookEditPage = (props: Props) => {
 				{
 					adventure.plot.plots.map((p, n) => (
 						<Expander
-							key={n}
+							key={p.id}
 							title={p.name || 'Unnamed Plot Point'}
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); movePlotPoint(n, 'up'); }} />,

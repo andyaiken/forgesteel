@@ -808,7 +808,7 @@ export const FeatureEditPanel = (props: Props) => {
 						{
 							data.options.map((option, n) => (
 								<Expander
-									key={n}
+									key={option.feature.id}
 									title={option.feature.name || 'Unnamed Feature'}
 									extra={[
 										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveChoice(data, n, 'up'); }} />,

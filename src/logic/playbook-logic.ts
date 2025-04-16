@@ -228,6 +228,10 @@ export class PlaybookLogic {
 			if (n.impression === undefined) {
 				n.impression = 1;
 			}
+
+			if (n.outcomes === undefined) {
+				n.outcomes = [ '', '', '', '', '', '' ];
+			}
 		});
 
 		if (playbook.tacticalMaps === undefined) {

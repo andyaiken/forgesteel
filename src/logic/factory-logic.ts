@@ -560,7 +560,8 @@ export class FactoryLogic {
 			interest: 1,
 			patience: 1,
 			motivations: [],
-			pitfalls: []
+			pitfalls: [],
+			outcomes: [ '', '', '', '', '', '' ]
 		};
 	};
 

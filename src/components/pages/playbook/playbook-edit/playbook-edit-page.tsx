@@ -1310,7 +1310,7 @@ export const PlaybookEditPage = (props: Props) => {
 								<Select
 									style={{ width: '100%' }}
 									placeholder='Trait'
-									options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getMotivationDescription(nt) }))}
+									options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getPitfallDescription(nt) }))}
 									optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 									value={p.trait}
 									onChange={t => setPitfallTrait(n, t)}
@@ -1326,6 +1326,33 @@ export const PlaybookEditPage = (props: Props) => {
 						: null
 				}
 				<Button block={true} onClick={addPitfall}>Add a pitfall</Button>
+			</Space>
+		);
+	};
+
+	const getNegotiationOutcomesSection = () => {
+		const negotiation = element as Negotiation;
+
+		const setOutcome = (index: number, value: string) => {
+			const copy = Utils.copy(element) as Negotiation;
+			copy.outcomes[index] = value;
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					negotiation.outcomes.map((o, n) => (
+						<Expander
+							key={`o${n}`}
+							title={n}
+						>
+							<HeaderText>Outcome {n}</HeaderText>
+							<MultiLine label='Outcome' value={o} onChange={value => setOutcome(n, value)} />
+						</Expander>
+					))
+				}
 			</Space>
 		);
 	};
@@ -1432,6 +1459,11 @@ export const PlaybookEditPage = (props: Props) => {
 								key: '4',
 								label: 'Pitfalls',
 								children: getNegotiationPitfallsSection()
+							},
+							{
+								key: '5',
+								label: 'Outcomes',
+								children: getNegotiationOutcomesSection()
 							}
 						]}
 					/>

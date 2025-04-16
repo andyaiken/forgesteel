@@ -25,8 +25,6 @@
   * Use encounter templates
   * Auto-create encounters
 * Tactical Maps:
-  * Allow tile color / background to be changed
-    * Allow uploaded images to be used as maps
   * Switch map Z level
     * Show (blurred, translucent, no pointer events) levels below / above
   * Ability to destroy tile squares / wall sections

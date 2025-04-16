@@ -19,6 +19,57 @@ interface Props {
 }
 
 export const MapTilePanel = (props: Props) => {
+	const getContent = () => {
+		switch (props.tile.content.type) {
+			case 'color':
+				return (
+					<div
+						className='tile-content'
+						style={{
+							backgroundColor: `#${props.tile.content.color}`,
+							borderRadius: props.style.borderRadius
+						}}
+					/>
+				);
+			case 'image':
+				return (
+					<img
+						className='tile-content'
+						style={{
+							borderRadius: props.style.borderRadius
+						}}
+						src={props.tile.content.imageData || undefined}
+					/>
+				);
+			case 'video':
+				return (
+					<video
+						className='tile-content'
+						style={{
+							borderRadius: props.style.borderRadius
+						}}
+						src={props.tile.content.videoData || undefined}
+						autoPlay={true}
+						controls={false}
+						loop={true}
+						muted={true}
+					/>
+				);
+			case 'link':
+				return (
+					<img
+						className='tile-content'
+						style={{
+							borderRadius: props.style.borderRadius
+						}}
+						src={props.tile.content.url}
+					/>
+				);
+		}
+
+		return null;
+	};
+
 	try {
 		let className = 'map-tile-panel ' + props.display;
 		if (props.selectable) {
@@ -41,7 +92,7 @@ export const MapTilePanel = (props: Props) => {
 							}
 						}}
 					>
-						<div className='tile-content' style={{ borderRadius: props.style.borderRadius }} />
+						{getContent()}
 					</div>
 				</Popover>
 			</ErrorBoundary>

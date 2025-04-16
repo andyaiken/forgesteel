@@ -1326,7 +1326,11 @@ export class FactoryLogic {
 				height: 4,
 				depth: 1
 			},
-			corners: 'square'
+			corners: 'square',
+			content: {
+				type: 'color',
+				color: 'C8C8C8FF'
+			}
 		};
 	}
 

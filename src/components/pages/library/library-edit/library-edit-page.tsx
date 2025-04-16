@@ -956,7 +956,7 @@ export const LibraryEditPage = (props: Props) => {
 				<Input
 					placeholder='Type'
 					allowClear={true}
-					value={element.name}
+					value={kit.type}
 					onChange={e => setType(e.target.value)}
 				/>
 				<HeaderText>Armor</HeaderText>

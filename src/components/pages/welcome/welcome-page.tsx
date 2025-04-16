@@ -79,6 +79,7 @@ export const WelcomePage = (props: Props) => {
 							</li>
 							<li>
 								You can also create detailed <b>tactical maps</b> for your heroes to explore, adding tiles and walls and overlays - or you can generate a random map of whatever size you need.
+								You can use battlemap images for your maps - even animated maps!
 							</li>
 						</ul>
 						<div className='ds-text'>

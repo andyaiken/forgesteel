@@ -1,4 +1,4 @@
-import { Button, Input, Popover, Segmented, Space, Tabs, Upload } from 'antd';
+import { Button, Divider, Flex, Input, Popover, Segmented, Space, Tabs, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { Adventure } from '../../../../models/adventure';
@@ -10,6 +10,7 @@ import { Encounter } from '../../../../models/encounter';
 import { EncounterData } from '../../../../data/encounter-data';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
+import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -56,8 +57,12 @@ export const PlaybookListPage = (props: Props) => {
 	const [ previousTab, setPreviousTab ] = useState<PlaybookElementKind | undefined>(kind);
 	const [ currentTab, setCurrentTab ] = useState<PlaybookElementKind>(kind ?? 'encounter');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
-	const [ mapType, setMapType ] = useState<'dungeon' | 'cavern'>('dungeon');
-	const [ mapSize, setMapSize ] = useState<number>(5);
+	const [ mapImportType, setMapImportType ] = useState<'image' | 'video'>('image');
+	const [ mapImportData, setMapImportData ] = useState<string>('');
+	const [ mapImportWidth, setMapImportWidth ] = useState<number>(10);
+	const [ mapImportHeight, setMapImportHeight ] = useState<number>(5);
+	const [ mapGenerateType, setMapGenerateType ] = useState<'dungeon' | 'cavern'>('dungeon');
+	const [ mapGenerateSize, setMapGenerateSize ] = useState<number>(5);
 
 	if (kind !== previousTab) {
 		setCurrentTab(kind ?? 'encounter');
@@ -68,14 +73,30 @@ export const PlaybookListPage = (props: Props) => {
 		props.createElement(currentTab, original);
 	};
 
+	const createImageMap = () => {
+		const map = FactoryLogic.createTacticalMap();
+		const tile = FactoryLogic.createMapTile();
+		tile.dimensions.width = mapImportWidth;
+		tile.dimensions.height = mapImportHeight;
+		switch (mapImportType) {
+			case 'image':
+				tile.content = { type: 'image', imageData: mapImportData };
+				break;
+			case 'video':
+				tile.content = { type: 'video', videoData: mapImportData };
+		}
+		map.items.push(tile);
+		createElement(map);
+	};
+
 	const generateMap = () => {
 		const map = FactoryLogic.createTacticalMap();
-		switch (mapType) {
+		switch (mapGenerateType) {
 			case 'dungeon':
-				TacticalMapLogic.generateDungeon(mapSize, map);
+				TacticalMapLogic.generateDungeon(mapGenerateSize, map);
 				break;
 			case 'cavern':
-				TacticalMapLogic.generateCavern(mapSize * 50, map);
+				TacticalMapLogic.generateCavern(mapGenerateSize * 50, map);
 				break;
 		}
 		createElement(map);
@@ -280,8 +301,8 @@ export const PlaybookListPage = (props: Props) => {
 							trigger='click'
 							content={(
 								<div style={{ display: 'flex', flexDirection: 'column' }}>
-									<Space>
-										<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => createElement(null)}>Create</Button>
+									<Flex align='center' justify='center' gap={10}>
+										<Button type='primary' icon={<PlusOutlined />} onClick={() => createElement(null)}>Create</Button>
 										<div className='ds-text'>or</div>
 										<Upload
 											style={{ width: '100%' }}
@@ -297,9 +318,9 @@ export const PlaybookListPage = (props: Props) => {
 												return false;
 											}}
 										>
-											<Button block={true} icon={<DownloadOutlined />}>Import</Button>
+											<Button icon={<DownloadOutlined />}>Import</Button>
 										</Upload>
-									</Space>
+									</Flex>
 									{
 										currentTab === 'encounter' ?
 											<div>
@@ -344,21 +365,88 @@ export const PlaybookListPage = (props: Props) => {
 									}
 									{
 										currentTab === 'tactical-map' ?
-											<Space direction='vertical' style={{ width: '100%' }}>
-												<div className='ds-text centered-text'>or generate a random map:</div>
-												<Segmented
-													block={true}
-													options={[
-														{ value: 'dungeon', label: 'Dungeon' },
-														{ value: 'cavern', label: 'Cavern' }
-													]}
-													value={mapType}
-													onChange={setMapType}
-												/>
-												<NumberSpin min={1} value={mapSize} onChange={setMapSize}>
-													<Field orientation='vertical' label={mapType === 'dungeon' ? 'Rooms' : 'Size'} value={mapSize} />
-												</NumberSpin>
-												<Button block={true} icon={<ThunderboltOutlined />} onClick={generateMap}>Generate</Button>
+											<Space direction='vertical' style={{ width: '300px' }}>
+												<Divider />
+												<Expander title='Use an image or video'>
+													<Space direction='vertical' style={{ width: '100%' }}>
+														<Segmented
+															block={true}
+															options={[
+																{ value: 'image', label: 'Image' },
+																{ value: 'video', label: 'Video' }
+															]}
+															value={mapImportType}
+															onChange={setMapImportType}
+														/>
+														<Upload
+															style={{ width: '100%' }}
+															accept={mapImportType === 'image' ? '.png,.webp,.gif.jpg,.jpeg,.svg' : '.mp4,.webm'}
+															showUploadList={false}
+															beforeUpload={file => {
+																const reader = new FileReader();
+																reader.onload = progress => {
+																	if (progress.target) {
+																		const content = progress.target.result as string;
+																		setMapImportData(content);
+																	}
+																};
+																reader.readAsDataURL(file);
+																return false;
+															}}
+														>
+															<Button block={true}>
+																<DownloadOutlined />
+																Choose file
+															</Button>
+														</Upload>
+														{
+															mapImportData ?
+																<>
+																	{
+																		mapImportType === 'image' ?
+																			<img
+																				style={{ width: '100%' }}
+																				src={mapImportData}
+																			/>
+																			:
+																			<video
+																				style={{ width: '100%' }}
+																				src={mapImportData}
+																				autoPlay={true}
+																				controls={false}
+																				loop={true}
+																				muted={true}
+																			/>
+																	}
+																	<Flex align='center' justify='space-between' gap={10}>
+																		<NumberSpin min={1} value={mapImportWidth} onChange={setMapImportWidth}>
+																			<Field orientation='vertical' label='Width' value={mapImportWidth} />
+																		</NumberSpin>
+																		<NumberSpin min={1} value={mapImportHeight} onChange={setMapImportHeight}>
+																			<Field orientation='vertical' label='Height' value={mapImportHeight} />
+																		</NumberSpin>
+																	</Flex>
+																	<Button block={true} type='primary' onClick={createImageMap}>Create</Button>
+																</>
+																: null
+														}
+													</Space>
+												</Expander>
+												<Expander title='Generate a random map'>
+													<Segmented
+														block={true}
+														options={[
+															{ value: 'dungeon', label: 'Dungeon' },
+															{ value: 'cavern', label: 'Cavern' }
+														]}
+														value={mapGenerateType}
+														onChange={setMapGenerateType}
+													/>
+													<NumberSpin min={1} value={mapGenerateSize} onChange={setMapGenerateSize}>
+														<Field orientation='vertical' label={mapGenerateType === 'dungeon' ? 'Rooms' : 'Size'} value={mapGenerateSize} />
+													</NumberSpin>
+													<Button block={true} type='primary' icon={<ThunderboltOutlined />} onClick={generateMap}>Generate</Button>
+												</Expander>
 											</Space>
 											: null
 									}

@@ -1,5 +1,5 @@
-import { BarsOutlined, CloseOutlined, DragOutlined, FileTextOutlined, RotateRightOutlined } from '@ant-design/icons';
-import { Button, ColorPicker, Divider, Input, Popover, Segmented, Select } from 'antd';
+import { BarsOutlined, CloseOutlined, DownloadOutlined, DragOutlined, FileTextOutlined, LinkOutlined, RotateRightOutlined } from '@ant-design/icons';
+import { Button, ColorPicker, Divider, Input, Popover, Segmented, Select, Upload } from 'antd';
 import { HeroToken, MonsterToken } from '../../../controls/token/token';
 import { MapBoundaries, MapItem, MapMini, MapPosition, MapTile, MapWall, MapZone, TacticalMap } from '../../../../models/tactical-map';
 import { ReactNode, useState } from 'react';
@@ -10,7 +10,6 @@ import { Encounter } from '../../../../models/encounter';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Field } from '../../../controls/field/field';
-import { Format } from '../../../../utils/format';
 import { GridSquarePanel } from './grid-square/grid-square';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
@@ -440,6 +439,11 @@ export const TacticalMapPanel = (props: Props) => {
 			return null;
 		}
 
+		const changeEditMode = (mode: TacticalMapEditMode) => {
+			setEditMode(mode);
+			setSelectedMapItemID(null);
+		};
+
 		const setName = (value: string) => {
 			const copy = Utils.copy(map) as TacticalMap;
 			copy.name = value;
@@ -543,20 +547,24 @@ export const TacticalMapPanel = (props: Props) => {
 			}
 		};
 
+		const editModes = [
+			{ value: TacticalMapEditMode.Map, label: 'Map' },
+			{ value: TacticalMapEditMode.Tiles, label: 'Tiles' },
+			{ value: TacticalMapEditMode.Walls, label: 'Walls' },
+			{ value: TacticalMapEditMode.Zones, label: 'Overlays' }
+		];
+		if (props.heroes || props.encounters) {
+			editModes.push({ value: TacticalMapEditMode.Minis, label: 'Minis' });
+			editModes.push({ value: TacticalMapEditMode.Fog, label: 'Fog' });
+		}
+
 		return (
 			<div className='tactical-map-toolbar top-toolbar'>
 				<Segmented
 					name='edit'
-					options={[
-						{ value: TacticalMapEditMode.Map, label: 'Map' },
-						{ value: TacticalMapEditMode.Tiles, label: 'Tiles' },
-						{ value: TacticalMapEditMode.Walls, label: 'Walls' },
-						{ value: TacticalMapEditMode.Zones, label: 'Zones' },
-						{ value: TacticalMapEditMode.Minis, label: 'Minis' },
-						{ value: TacticalMapEditMode.Fog, label: 'Fog' }
-					]}
+					options={editModes}
 					value={editMode}
-					onChange={setEditMode}
+					onChange={changeEditMode}
 				/>
 				<Divider type='vertical' />
 				{
@@ -624,7 +632,7 @@ export const TacticalMapPanel = (props: Props) => {
 				}
 				{
 					editMode === TacticalMapEditMode.Zones ?
-						<DangerButton disabled={map.items.filter(i => i.type === 'zone').length === 0} label='Clear Zones' onConfirm={clearZones} />
+						<DangerButton disabled={map.items.filter(i => i.type === 'zone').length === 0} label='Clear Overlays' onConfirm={clearZones} />
 						: null
 				}
 				{
@@ -679,6 +687,57 @@ export const TacticalMapPanel = (props: Props) => {
 			const setCorners = (value: 'square' | 'rounded' | 'circle') => {
 				const copy = Utils.copy(item) as MapTile | MapZone;
 				copy.corners = value;
+				updateMapItem(copy);
+			};
+
+			const setContentType = (value: 'color' | 'image' | 'video' | 'link') => {
+				const copy = Utils.copy(item) as MapTile;
+				switch (value) {
+					case 'color':
+						copy.content = { type: 'color', color: 'C8C8C8FF' };
+						break;
+					case 'image':
+						copy.content = { type: 'image', imageData: '' };
+						break;
+					case 'video':
+						copy.content = { type: 'video', videoData: '' };
+						break;
+					case 'link':
+						copy.content = { type: 'link', url: '' };
+						break;
+				}
+				updateMapItem(copy);
+			};
+
+			const setContentColor = (value: string) => {
+				const copy = Utils.copy(item) as MapTile;
+				if (copy.content.type === 'color') {
+					copy.content.color = value;
+				}
+				updateMapItem(copy);
+			};
+
+			const setContentImageData = (value: string) => {
+				const copy = Utils.copy(item) as MapTile;
+				if (copy.content.type === 'image') {
+					copy.content.imageData = value;
+				}
+				updateMapItem(copy);
+			};
+
+			const setContentVideoData = (value: string) => {
+				const copy = Utils.copy(item) as MapTile;
+				if (copy.content.type === 'video') {
+					copy.content.videoData = value;
+				}
+				updateMapItem(copy);
+			};
+
+			const setContentUrl = (value: string) => {
+				const copy = Utils.copy(item) as MapTile;
+				if (copy.content.type === 'link') {
+					copy.content.url = value;
+				}
 				updateMapItem(copy);
 			};
 
@@ -755,15 +814,100 @@ export const TacticalMapPanel = (props: Props) => {
 								</NumberSpin>
 								<Select
 									options={[
-										{ id: 'square', label: 'Square' },
-										{ id: 'rounded', label: 'Rounded' },
-										{ id: 'circle', label: 'Circle' }
+										{ value: 'square', label: 'Square' },
+										{ value: 'rounded', label: 'Rounded' },
+										{ value: 'circle', label: 'Circle' }
 									]}
-									labelRender={data => <div className='ds-text'>{Format.capitalize(data.value.toString())}</div>}
 									optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 									value={item.corners}
 									onChange={setCorners}
 								/>
+								<Select
+									options={[
+										{ value: 'color', label: 'Color' },
+										{ value: 'image', label: 'Image' },
+										{ value: 'video', label: 'Video' },
+										{ value: 'link', label: 'Link' }
+									]}
+									optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+									value={item.content.type}
+									onChange={setContentType}
+								/>
+								{
+									item.content.type === 'color' ?
+										<ColorPicker
+											format='hex'
+											value={item.content.color}
+											onChange={c => setContentColor(c.toHex())}
+										/>
+										: null
+								}
+								{
+									item.content.type === 'image' ?
+										<Upload
+											style={{ width: '100%' }}
+											accept='.png,.webp,.gif.jpg,.jpeg,.svg'
+											showUploadList={false}
+											beforeUpload={file => {
+												const reader = new FileReader();
+												reader.onload = progress => {
+													if (progress.target) {
+														const content = progress.target.result as string;
+														setContentImageData(content);
+													}
+												};
+												reader.readAsDataURL(file);
+												return false;
+											}}
+										>
+											<Button>
+												<DownloadOutlined />
+											</Button>
+										</Upload>
+										: null
+								}
+								{
+									item.content.type === 'video' ?
+										<Upload
+											style={{ width: '100%' }}
+											accept='.mp4,webm'
+											showUploadList={false}
+											beforeUpload={file => {
+												const reader = new FileReader();
+												reader.onload = progress => {
+													if (progress.target) {
+														const content = progress.target.result as string;
+														setContentVideoData(content);
+													}
+												};
+												reader.readAsDataURL(file);
+												return false;
+											}}
+										>
+											<Button>
+												<DownloadOutlined />
+											</Button>
+										</Upload>
+										: null
+								}
+								{
+									item.content.type === 'link' ?
+										<Popover
+											content={
+												<Input
+													placeholder='Link'
+													allowClear={true}
+													value={item.content.url}
+													onChange={e => setContentUrl(e.target.value)}
+												/>
+											}
+										>
+											<Button>
+												<LinkOutlined />
+											</Button>
+										</Popover>
+										: null
+								}
 							</>
 							: null
 					}

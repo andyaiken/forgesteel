@@ -34,6 +34,11 @@ export interface MapTile {
 	position: MapPosition;
 	dimensions: MapDimensions;
 	corners: 'square' | 'rounded' | 'circle';
+	content:
+		{ type: 'color', color: string } |
+		{ type: 'image', imageData: string } |
+		{ type: 'video', videoData: string } |
+		{ type: 'link', url: string };
 }
 
 export interface MapWall {

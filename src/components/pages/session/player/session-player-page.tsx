@@ -70,6 +70,8 @@ export const SessionPlayerPage = (props: Props) => {
 						map={map}
 						display={TacticalMapDisplayType.Player}
 						options={props.options}
+						heroes={props.heroes}
+						encounters={props.session.encounters}
 						mode={PanelMode.Full}
 					/>
 				);

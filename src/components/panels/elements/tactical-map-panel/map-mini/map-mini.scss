@@ -11,6 +11,18 @@
 		bottom ease-in-out 0.2s,
 		opacity ease-in-out 0.2s;
 
+	&.size-t {
+		transform: scale(0.3);
+	}
+
+	&.size-s {
+		transform: scale(0.7);
+	}
+
+	&.size-l {
+		transform: scale(1.2);
+	}
+
 	&.selectable {
 		cursor: pointer;
 

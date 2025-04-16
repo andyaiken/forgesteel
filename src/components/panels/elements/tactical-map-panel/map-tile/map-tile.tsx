@@ -62,7 +62,7 @@ export const MapTilePanel = (props: Props) => {
 						style={{
 							borderRadius: props.style.borderRadius
 						}}
-						src={props.tile.content.url}
+						src={props.tile.content.url || undefined}
 					/>
 				);
 		}

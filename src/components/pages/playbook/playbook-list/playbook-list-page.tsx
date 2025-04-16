@@ -367,13 +367,13 @@ export const PlaybookListPage = (props: Props) => {
 										currentTab === 'tactical-map' ?
 											<Space direction='vertical' style={{ width: '300px' }}>
 												<Divider />
-												<Expander title='Use an image or video'>
+												<Expander title='Use a battlemap'>
 													<Space direction='vertical' style={{ width: '100%' }}>
 														<Segmented
 															block={true}
 															options={[
 																{ value: 'image', label: 'Image' },
-																{ value: 'video', label: 'Video' }
+																{ value: 'video', label: 'Animated' }
 															]}
 															value={mapImportType}
 															onChange={setMapImportType}

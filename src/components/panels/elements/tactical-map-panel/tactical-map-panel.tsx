@@ -826,7 +826,7 @@ export const TacticalMapPanel = (props: Props) => {
 									options={[
 										{ value: 'color', label: 'Color' },
 										{ value: 'image', label: 'Image' },
-										{ value: 'video', label: 'Video' },
+										{ value: 'video', label: 'Animated' },
 										{ value: 'link', label: 'Link' }
 									]}
 									optionRender={option => <div className='ds-text'>{option.data.label}</div>}
@@ -1342,10 +1342,10 @@ export const TacticalMapPanel = (props: Props) => {
 				boundaries = {
 					minX: 0,
 					minY: 0,
-					minZ: 1,
+					minZ: 0,
 					maxX: 15,
 					maxY: 15,
-					maxZ: 1
+					maxZ: 0
 				};
 			} else {
 				return (
@@ -1354,9 +1354,9 @@ export const TacticalMapPanel = (props: Props) => {
 			}
 		}
 
-		if (boundaries) {
+		if (boundaries && (props.display === TacticalMapDisplayType.DirectorEdit) && (editMode === TacticalMapEditMode.Tiles)) {
 			// Apply a border
-			const paddingSquares = 1;
+			const paddingSquares = 5;
 			boundaries.minX -= paddingSquares;
 			boundaries.minY -= paddingSquares;
 			boundaries.maxX += paddingSquares;

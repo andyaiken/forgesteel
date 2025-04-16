@@ -1,8 +1,10 @@
 import { HeroHealthPanel, MonsterHealthPanel } from '../../../health/health-panel';
 import { HeroToken, MonsterToken } from '../../../../controls/token/token';
 import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
+import { FactoryLogic } from '../../../../../logic/factory-logic';
 import { HeaderText } from '../../../../controls/header-text/header-text';
 import { Hero } from '../../../../../models/hero';
+import { HeroLogic } from '../../../../../logic/hero-logic';
 import { MapItemStyle } from '../tactical-map-panel';
 import { MapMini } from '../../../../../models/tactical-map';
 import { Markdown } from '../../../../controls/markdown/markdown';
@@ -25,6 +27,22 @@ interface Props {
 }
 
 export const MapMiniPanel = (props: Props) => {
+	const getSizeModifier = () => {
+		let size = FactoryLogic.createSize(1);
+
+		if (props.mini.content) {
+			if (props.mini.content.type === 'hero') {
+				size = HeroLogic.getSize(props.content as Hero);
+			}
+
+			if (props.mini.content.type === 'monster') {
+				size = (props.content as Monster).size;
+			}
+		}
+
+		return size.mod;
+	};
+
 	const getContent = () => {
 		if (props.mini.content && props.content) {
 			const size = parseInt(props.style.width);
@@ -102,7 +120,7 @@ export const MapMiniPanel = (props: Props) => {
 	}
 
 	try {
-		let className = 'map-mini-panel ' + props.display;
+		let className = 'map-mini-panel ' + props.display + ' size-' + getSizeModifier().toLowerCase();
 		if (props.selectable) {
 			className += ' selectable';
 		}

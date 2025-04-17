@@ -1,4 +1,4 @@
-import { BarsOutlined, CloseOutlined, DownloadOutlined, DragOutlined, FileTextOutlined, InfoCircleOutlined, LinkOutlined, RotateRightOutlined } from '@ant-design/icons';
+import { BarsOutlined, CloseOutlined, DownloadOutlined, DragOutlined, FileTextOutlined, IdcardOutlined, LinkOutlined, RotateRightOutlined } from '@ant-design/icons';
 import { Button, ColorPicker, Divider, Drawer, Input, Popover, Segmented, Select, Upload } from 'antd';
 import { HeroToken, MonsterToken } from '../../../controls/token/token';
 import { MapBoundaries, MapItem, MapMini, MapPosition, MapTile, MapWall, MapZone, TacticalMap } from '../../../../models/tactical-map';
@@ -454,15 +454,6 @@ export const TacticalMapPanel = (props: Props) => {
 			setSelectedMapItemID(null);
 		};
 
-		const setName = (value: string) => {
-			const copy = Utils.copy(map) as TacticalMap;
-			copy.name = value;
-			setMap(copy);
-			if (props.updateMap) {
-				props.updateMap(copy);
-			}
-		};
-
 		const rotateMap = () => {
 			const copy = Utils.copy(map) as TacticalMap;
 			TacticalMapLogic.rotateMap(copy);
@@ -579,22 +570,6 @@ export const TacticalMapPanel = (props: Props) => {
 				<Divider type='vertical' />
 				{
 					editMode === TacticalMapEditMode.Map ?
-						<Input
-							style={{ width: '200px' }}
-							placeholder='Name'
-							allowClear={true}
-							value={map.name}
-							onChange={e => setName(e.target.value)}
-						/>
-						: null
-				}
-				{
-					editMode === TacticalMapEditMode.Map ?
-						<Divider type='vertical' />
-						: null
-				}
-				{
-					editMode === TacticalMapEditMode.Map ?
 						<Button disabled={map.items.length === 0} icon={<RotateRightOutlined />} onClick={rotateMap}>Rotate</Button>
 						: null
 				}
@@ -662,6 +637,29 @@ export const TacticalMapPanel = (props: Props) => {
 	const getBottomToolbar = () => {
 		if (props.display !== TacticalMapDisplayType.DirectorEdit) {
 			return null;
+		}
+
+		if (editMode === TacticalMapEditMode.Map) {
+			const setName = (value: string) => {
+				const copy = Utils.copy(map) as TacticalMap;
+				copy.name = value;
+				setMap(copy);
+				if (props.updateMap) {
+					props.updateMap(copy);
+				}
+			};
+
+			return (
+				<div className='tactical-map-toolbar bottom-toolbar'>
+					<Input
+						style={{ width: '200px' }}
+						placeholder='Name'
+						allowClear={true}
+						value={map.name}
+						onChange={e => setName(e.target.value)}
+					/>
+				</div>
+			);
 		}
 
 		const item = map.items.find(i => i.id === selectedMapItemID);
@@ -1031,7 +1029,7 @@ export const TacticalMapPanel = (props: Props) => {
 									<Field label='Size' value={item.dimensions.width} />
 								</NumberSpin>
 								<Button onClick={showMiniInfo}>
-									<InfoCircleOutlined />
+									<IdcardOutlined />
  								</Button>
 							</>
 							: null

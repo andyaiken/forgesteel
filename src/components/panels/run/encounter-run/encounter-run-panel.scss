@@ -4,6 +4,23 @@
 	padding: 0 20px 20px 20px;
 	overflow: hidden;
 
+	&.is-small {
+		.encounter-groups {
+			.encounter-group {
+				flex-direction: column;
+
+				.group-column {
+					flex: 0 0 auto;
+					border-radius: 5px 5px 0 0;
+				}
+
+				.encounter-slots {
+					border-radius: 0 0 5px 5px;
+				}
+			}
+		}
+	}
+
 	.stats {
 		margin: 10px 0;
 		padding: 10px 0;

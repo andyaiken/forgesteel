@@ -33,6 +33,7 @@ import { TacticalMap } from '../../../../models/tactical-map';
 import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
 import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/tactical-map-panel';
 import { Utils } from '../../../../utils/utils';
+import { useMediaQuery } from '../../../../hooks/use-media-query';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
@@ -56,6 +57,7 @@ interface Props {
 }
 
 export const SessionDirectorPage = (props: Props) => {
+	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const navigation = useNavigation();
 	const { elementID } = useParams<{ elementID: string }>();
 	const [ previousElement, setPreviousElement ] = useState<string | undefined>(elementID);
@@ -495,6 +497,11 @@ export const SessionDirectorPage = (props: Props) => {
 	};
 
 	try {
+		let className = 'session-page-content';
+		if (isSmall) {
+			className += ' small';
+		}
+
 		return (
 			<ErrorBoundary>
 				<div className='session-director-page'>
@@ -537,9 +544,9 @@ export const SessionDirectorPage = (props: Props) => {
 							</Button>
 						</Popover>
 					</AppHeader>
-					<div className='session-page-content'>
+					<div className={className}>
 						<Space className='left-column' direction='vertical'>
-							<HeaderText level={1}>In Progress</HeaderText>
+							{isSmall ? null : <HeaderText level={1}>In Progress</HeaderText>}
 							{getSelectableContent()}
 						</Space>
 						<div className='right-column'>

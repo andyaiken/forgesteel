@@ -25,6 +25,8 @@
 
 .tactical-map-panel {
 	&.thumbnail {
+		pointer-events: none;
+
 		.grid {
 			height: 100%;
 		}

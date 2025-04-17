@@ -40,6 +40,7 @@ import { Terrain } from '../../../../models/terrain';
 import { TerrainLogic } from '../../../../logic/terrain-logic';
 import { TerrainModal } from '../../../modals/terrain/terrain-modal';
 import { Utils } from '../../../../utils/utils';
+import { useMediaQuery } from '../../../../hooks/use-media-query';
 import { useState } from 'react';
 
 import './encounter-run-panel.scss';
@@ -53,6 +54,7 @@ interface Props {
 }
 
 export const EncounterRunPanel = (props: Props) => {
+	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const [ encounter, setEncounter ] = useState<Encounter>(Utils.copy(props.encounter));
 	const [ tab, setTab ] = useState<string>('1');
 	const [ addingHeroes, setAddingHeroes ] = useState<boolean>(false);
@@ -630,6 +632,11 @@ export const EncounterRunPanel = (props: Props) => {
 	};
 
 	try {
+		let className = 'encounter-run-panel';
+		if (isSmall) {
+			className += ' is-small';
+		}
+
 		const monstersDone = encounter.groups
 			.filter(g => g.slots.length > 0)
 			.every(g => g.acted || g.slots.every(s => s.state.defeated || s.monsters.every(m => m.state.defeated)));
@@ -664,7 +671,7 @@ export const EncounterRunPanel = (props: Props) => {
 
 		return (
 			<ErrorBoundary>
-				<div className='encounter-run-panel' id={encounter.id}>
+				<div className={className} id={encounter.id}>
 					<HeaderText level={1}>{encounter.name || 'Unnamed Encounter'}</HeaderText>
 					<Markdown text={encounter.description} />
 					<div className='stats'>

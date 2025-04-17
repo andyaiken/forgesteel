@@ -10,8 +10,21 @@
 		flex-direction: row;
 		overflow: hidden;
 
+		&.small {
+			display: flex;
+			flex-direction: column;
+
+			.left-column {
+				flex: 0 0 auto;
+				display: flex;
+				flex-direction: row;
+				padding: 20px 20px 10px 20px;
+				overflow-x: auto;
+			}
+		}
+
 		.left-column {
-			flex: 0 0 350px;
+			flex: 0 0 250px;
 			padding: 0 20px 20px 20px;
 			overflow-y: auto;
 

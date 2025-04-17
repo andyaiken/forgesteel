@@ -32,7 +32,6 @@
 
 ### Session
 
-* Rework session page UI for mobile
 * Encounter
   * Monsters:
     * Ability to set 'used reaction' flag on heroes / monsters / minions

@@ -98,7 +98,7 @@ export class AbilityData {
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		effect: `
-By using the Catch Breath maneuver, you spend a Recovery and heal an amount equal to your recovery value. In addition, you also gain the benefit of the Defend action.
+By using the Catch Breath maneuver, you spend a Recovery and heal an amount equal to your recovery value.
 If you are dying, you can’t take the Catch Breath maneuver, but other creatures can help you spend recoveries.`
 	});
 

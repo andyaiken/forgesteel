@@ -123,9 +123,21 @@ export const AbilityPanel = (props: Props) => {
 										: null
 								}
 								<Field label='Type' value={FormatLogic.getAbilityType(props.ability.type)} />
-								{props.ability.type.trigger ? <Field label='Trigger' value={props.ability.type.trigger} /> : null}
-								{props.ability.distance.length > 0 ? <Field label='Distance' value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.hero, props.ability)).join(' or ')} /> : null}
-								{props.ability.target ? <Field label='Target' value={props.ability.target} /> : null}
+								{
+									props.ability.type.trigger ?
+										<Field label='Trigger' value={props.ability.type.trigger} />
+										: null
+								}
+								{
+									props.ability.distance.length > 0 ?
+										<Field label='Distance' value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.hero, props.ability)).join(' or ')} />
+										: null
+								}
+								{
+									props.ability.target ?
+										<Field label='Target' value={props.ability.target} />
+										: null
+								}
 								{
 									props.ability.preEffect ?
 										<Field

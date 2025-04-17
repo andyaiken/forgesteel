@@ -371,10 +371,12 @@ export class FeatureLogic {
 				return 'This feature modifies the cost to use an ability.';
 			case FeatureType.AbilityDamage:
 				return 'This feature modifies the damage of an ability.';
+			case FeatureType.AbilityDistance:
+				return 'This feature modifies the distance of an ability.';
 			case FeatureType.AddOn:
 				return 'This feature grants you a monster customization.';
 			case FeatureType.AncestryChoice:
-				return 'This feature sets the hero\' ancestry.';
+				return 'This feature sets the hero\'s ancestry.';
 			case FeatureType.AncestryFeatureChoice:
 				return 'This feature allows you to select a feature from an ancestry.';
 			case FeatureType.Bonus:

@@ -154,10 +154,12 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createAbilityDistance({
 								id: 'elementalist-1-7d',
 								name: 'Enchantment of Distance',
-								description: 'You reach into the mysteries of the void and mix that element with all of your abilities. You gain a +2 bonus to the distance of your ranged magic abilities.'
+								description: 'You reach into the mysteries of the void and mix that element with all of your abilities.',
+								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+								modifier: 2
 							}),
 							value: 1
 						},
@@ -988,10 +990,11 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.create({
+						FactoryLogic.feature.createAbilityDistance({
 							id: 'elementalist-sub-4-1-1',
 							name: 'Acolyte of the Void',
-							description: 'The distance of all your ranged void magic abilities increases by 2.'
+							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
+							modifier: 2
 						}),
 						FactoryLogic.feature.create({
 							id: 'elementalist-sub-4-1-2',

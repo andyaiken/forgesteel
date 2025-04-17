@@ -1,6 +1,6 @@
 import { Button, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -92,6 +92,16 @@ export const FeatureEditPanel = (props: Props) => {
 					valuePerLevel: 0,
 					valuePerEchelon: 0,
 					damageType: DamageType.Damage
+				};
+				break;
+			case FeatureType.AbilityDistance:
+				data = {
+					keywords: [],
+					value: 0,
+					valueCharacteristics: [],
+					valueCharacteristicMultiplier: 1,
+					valuePerLevel: 0,
+					valuePerEchelon: 0
 				};
 				break;
 			case FeatureType.AddOn:
@@ -300,25 +310,25 @@ export const FeatureEditPanel = (props: Props) => {
 		};
 
 		const setValue = (value: number) => {
-			const copy = Utils.copy(feature.data) as FeatureAbilityDamageData | FeatureBonusData | FeatureCharacteristicBonusData | FeatureAncestryFeatureChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureAbilityDamageData | FeatureAbilityDistanceData | FeatureBonusData | FeatureCharacteristicBonusData | FeatureAncestryFeatureChoiceData;
 			copy.value = value;
 			setData(copy);
 		};
 
 		const setValuePerLevel = (value: number) => {
-			const copy = Utils.copy(feature.data) as FeatureAbilityDamageData | FeatureBonusData;
+			const copy = Utils.copy(feature.data) as FeatureAbilityDamageData | FeatureAbilityDistanceData | FeatureBonusData;
 			copy.valuePerLevel = value;
 			setData(copy);
 		};
 
 		const setValuePerEchelon = (value: number) => {
-			const copy = Utils.copy(feature.data) as FeatureAbilityDamageData | FeatureBonusData;
+			const copy = Utils.copy(feature.data) as FeatureAbilityDamageData | FeatureAbilityDistanceData | FeatureBonusData;
 			copy.valuePerEchelon = value;
 			setData(copy);
 		};
 
 		const setValueCharacteristics = (value: Characteristic[]) => {
-			const copy = Utils.copy(feature.data) as FeatureAbilityDamageData | FeatureBonusData;
+			const copy = Utils.copy(feature.data) as FeatureAbilityDamageData | FeatureAbilityDistanceData | FeatureBonusData;
 			copy.valueCharacteristics = value;
 			setData(copy);
 		};
@@ -438,7 +448,7 @@ export const FeatureEditPanel = (props: Props) => {
 		};
 
 		const setKeywords = (value: AbilityKeyword[]) => {
-			const copy = Utils.copy(feature.data) as FeatureAbilityCostData | FeatureAbilityDamageData;
+			const copy = Utils.copy(feature.data) as FeatureAbilityCostData | FeatureAbilityDamageData | FeatureAbilityDistanceData;
 			copy.keywords = value;
 			setData(copy);
 		};
@@ -691,6 +701,37 @@ export const FeatureEditPanel = (props: Props) => {
 			}
 			case FeatureType.AbilityDamage: {
 				const data = feature.data as FeatureAbilityDamageData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Keywords</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select keywords'
+							mode='multiple'
+							allowClear={true}
+							options={AbilityLogic.getKeywords().map(o => ({ value: o }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={data.keywords}
+							onChange={setKeywords}
+						/>
+						<HeaderText>Value</HeaderText>
+						<NumberSpin label='Value' min={0} value={data.value} onChange={setValue} />
+						<NumberSpin label='Per Level After 1st' min={0} value={data.valuePerLevel} onChange={setValuePerLevel} />
+						<NumberSpin label='Per Echelon' min={0} value={data.valuePerEchelon} onChange={setValuePerEchelon} />
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Characteristics'
+							mode='multiple'
+							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={data.valueCharacteristics}
+							onChange={setValueCharacteristics}
+						/>
+					</Space>
+				);
+			}
+			case FeatureType.AbilityDistance: {
+				const data = feature.data as FeatureAbilityDistanceData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Keywords</HeaderText>
@@ -1322,6 +1363,7 @@ export const FeatureEditPanel = (props: Props) => {
 			FeatureType.Ability,
 			FeatureType.AbilityCost,
 			FeatureType.AbilityDamage,
+			FeatureType.AbilityDistance,
 			FeatureType.AncestryChoice,
 			FeatureType.AncestryFeatureChoice,
 			FeatureType.Bonus,

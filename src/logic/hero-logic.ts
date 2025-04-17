@@ -573,19 +573,32 @@ export class HeroLogic {
 	};
 
 	static getDistanceBonus = (hero: Hero, ability: Ability, distance: AbilityDistance) => {
-		const kits = this.getKits(hero);
+		let value = 0;
 
-		if (ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon) && (distance.type === AbilityDistanceType.Melee)) {
-			// Add maximum melee distance bonus from kits
-			return Collections.max(kits.map(kit => kit.meleeDistance), value => value) || 0;
+		switch (distance.type) {
+			case AbilityDistanceType.Melee:
+				if (ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon)) {
+					// Add maximum melee distance bonus from kits
+					value += Collections.max(this.getKits(hero).map(kit => kit.meleeDistance), value => value) || 0;
+				}
+				break;
+			case AbilityDistanceType.Ranged:
+				if (ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon)) {
+					// Add maximum ranged distance bonus from kits
+					value += Collections.max(this.getKits(hero).map(kit => kit.rangedDistance), value => value) || 0;
+				}
+				break;
 		}
 
-		if (ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon) && (distance.type === AbilityDistanceType.Ranged)) {
-			// Add maximum ranged distance bonus from kits
-			return Collections.max(kits.map(kit => kit.rangedDistance), value => value) || 0;
-		}
+		HeroLogic.getFeatures(hero)
+			.filter(f => f.type === FeatureType.AbilityDistance)
+			.filter(f => f.data.keywords.every(kw => ability.keywords.includes(kw)))
+			.forEach(f => {
+				const mod = HeroLogic.calculateModifierValue(hero, f.data);
+				value += mod;
+			});
 
-		return 0;
+		return value;
 	};
 
 	///////////////////////////////////////////////////////////////////////////

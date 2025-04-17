@@ -29,8 +29,8 @@ interface Props {
 }
 
 export const MapMiniPanel = (props: Props) => {
-	const getSizeModifier = () => {
-		let size = FactoryLogic.createSize(1);
+	const getSize = () => {
+		let size = FactoryLogic.createSize(1, 'M');
 
 		if (props.mini.content) {
 			if (props.mini.content.type === 'hero') {
@@ -42,7 +42,7 @@ export const MapMiniPanel = (props: Props) => {
 			}
 		}
 
-		return size.mod;
+		return size;
 	};
 
 	const getContent = () => {
@@ -128,7 +128,9 @@ export const MapMiniPanel = (props: Props) => {
 	}
 
 	try {
-		let className = 'map-mini-panel ' + props.display + ' size-' + getSizeModifier().toLowerCase();
+		const size = getSize();
+
+		let className = `map-mini-panel ${props.display} size-${size.mod.toLowerCase()}`;
 		if (props.selectable) {
 			className += ' selectable';
 		}

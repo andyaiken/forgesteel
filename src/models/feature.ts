@@ -40,24 +40,29 @@ export interface FeatureAbilityCostData extends _FeatureData {
 	keywords: AbilityKeyword[];
 	modifier: number;
 };
-export type FeatureAbilityCost = FeatureOf<FeatureType.AbilityCost, FeatureAbilityCostData>
+export type FeatureAbilityCost = FeatureOf<FeatureType.AbilityCost, FeatureAbilityCostData>;
 
 export interface FeatureAbilityDamageData extends _FeatureData, Modifier {
 	keywords: AbilityKeyword[];
 	damageType: DamageType;
 };
-export type FeatureAbilityDamage = FeatureOf<FeatureType.AbilityDamage, FeatureAbilityDamageData>
+export type FeatureAbilityDamage = FeatureOf<FeatureType.AbilityDamage, FeatureAbilityDamageData>;
+
+export interface FeatureAbilityDistanceData extends _FeatureData, Modifier {
+	keywords: AbilityKeyword[];
+};
+export type FeatureAbilityDistance = FeatureOf<FeatureType.AbilityDistance, FeatureAbilityDistanceData>;
 
 export interface FeatureAddOnData extends _FeatureData {
 	category: FeatureAddOnType;
 	cost: number;
 };
-export type FeatureAddOn = FeatureOf<FeatureType.AddOn, FeatureAddOnData>
+export type FeatureAddOn = FeatureOf<FeatureType.AddOn, FeatureAddOnData>;
 
 export interface FeatureAncestryChoiceData extends _FeatureData {
 	selected: Ancestry | null;
 };
-export type FeatureAncestryChoice = FeatureOf<FeatureType.AncestryChoice, FeatureAncestryChoiceData>
+export type FeatureAncestryChoice = FeatureOf<FeatureType.AncestryChoice, FeatureAncestryChoiceData>;
 
 export interface FeatureAncestryFeatureChoiceData extends _FeatureData {
 	source: {
@@ -67,7 +72,7 @@ export interface FeatureAncestryFeatureChoiceData extends _FeatureData {
 	value: number;
 	selected: Feature | null;
 };
-export type FeatureAncestryFeatureChoice = FeatureOf<FeatureType.AncestryFeatureChoice, FeatureAncestryFeatureChoiceData>
+export type FeatureAncestryFeatureChoice = FeatureOf<FeatureType.AncestryFeatureChoice, FeatureAncestryFeatureChoiceData>;
 
 export interface FeatureBonusData extends _FeatureData, Modifier {
 	field: FeatureField;
@@ -218,6 +223,7 @@ export type Feature =
 	| FeatureAbility
 	| FeatureAbilityCost
 	| FeatureAbilityDamage
+	| FeatureAbilityDistance
 	| FeatureAddOn
 	| FeatureAncestryChoice
 	| FeatureAncestryFeatureChoice

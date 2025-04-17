@@ -1176,8 +1176,35 @@ export const TacticalMapPanel = (props: Props) => {
 								<Button onClick={scatterMinis}>Scatter</Button>
 							</>
 							:
-							'No minis to add'
+							<div className='ds-text'>No minis to add</div>
 					}
+				</div>
+			);
+		}
+
+		let message: string | null = null;
+		switch (editMode) {
+			case TacticalMapEditMode.Tiles:
+				message = editAdding ? 'Click on a square and drag to create a tile.' : 'Click on a tile to select it.';
+				break;
+			case TacticalMapEditMode.Walls:
+				message = editAdding ? 'Click on a corner and drag to create a wall.' : 'Click on a wall to select it.';
+				break;
+			case TacticalMapEditMode.Zones:
+				message = editAdding ? 'Click on a square and drag to create an overlay.' : 'Click on an overlay to select it.';
+				break;
+			case TacticalMapEditMode.Minis:
+				message = editAdding ? 'Click on a square to create a mini token.' : 'Double-click on a hero or monster mini to edit it.';
+				break;
+			case TacticalMapEditMode.Fog:
+				message = 'Click on a square and drag to create a zone of fog.';
+				break;
+		}
+
+		if (message) {
+			return (
+				<div className='tactical-map-toolbar bottom-toolbar'>
+					<div className='ds-text' style={{ padding: '0 10px' }}>{message}</div>
 				</div>
 			);
 		}

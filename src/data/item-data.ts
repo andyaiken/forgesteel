@@ -1481,7 +1481,19 @@ export class LeveledImplementData {
 					FactoryLogic.feature.create({
 						id: 'item-words-become-wonders-1',
 						name: '',
-						description: 'You open or close the tome as a maneuver while saying its full name. While the tome is open, it floats in a space adjacent to you and flips to specific pages at your command. Additionally, you gain an edge on Intuition tests to recall lore, and you gain a +3 bonus to the distance of your ranged supernatural abilities.'
+						description: 'You open or close the tome as a maneuver while saying its full name. While the tome is open, it floats in a space adjacent to you and flips to specific pages at your command. Additionally, you gain an edge on Intuition tests to recall lore.'
+					}),
+					FactoryLogic.feature.createAbilityDistance({
+						id: 'item-words-become-wonders-1a',
+						name: '',
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+						modifier: 3
+					}),
+					FactoryLogic.feature.createAbilityDistance({
+						id: 'item-words-become-wonders-1b',
+						name: '',
+						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
+						modifier: 3
 					})
 				]
 			},

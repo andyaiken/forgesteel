@@ -167,10 +167,12 @@ For each piety spent, you can choose one of the following enhancements:
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createAbilityDistance({
 								id: 'conduit-1-8b',
 								name: 'Prayer of Distance',
-								description: 'Your god blesses you with the ability to stretch your divine magic further. You gain a +2 bonus to the distance of your ranged magic abilities.'
+								description: 'Your god blesses you with the ability to stretch your divine magic further.',
+								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+								modifier: 2
 							}),
 							value: 1
 						},

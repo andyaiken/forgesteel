@@ -835,10 +835,11 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.create({
+						FactoryLogic.feature.createAbilityDamage({
 							id: 'elementalist-sub-2-1-1',
 							name: 'Acolyte of Fire',
-							description: 'Your abilities that have the Fire and Magic keywords gain a +1 rolled damage bonus.'
+							keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic ],
+							modifier: 1
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({

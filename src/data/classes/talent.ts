@@ -112,10 +112,11 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.create({
+							feature: FactoryLogic.feature.createAbilityDistance({
 								id: 'talent-1-5b',
 								name: 'Distance Augmentation',
-								description: 'You gain a +2 bonus to the distance of your ranged psionic abilities.'
+								keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
+								modifier: 2
 							}),
 							value: 1
 						},

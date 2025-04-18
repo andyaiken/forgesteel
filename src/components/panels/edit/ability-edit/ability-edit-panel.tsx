@@ -1,5 +1,5 @@
 import { Button, Input, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -540,7 +540,10 @@ export const AbilityEditPanel = (props: Props) => {
 													<Empty />
 													: null
 											}
-											<Button block={true} onClick={addDistance}>Add a new distance</Button>
+											<Button block={true} onClick={addDistance}>
+												<PlusOutlined />
+												Add a new distance
+											</Button>
 										</Space>
 										<HeaderText>Target</HeaderText>
 										<Input
@@ -661,7 +664,10 @@ export const AbilityEditPanel = (props: Props) => {
 													<Empty />
 													: null
 											}
-											<Button block={true} onClick={addAlternateEffect}>Add an alternate effect</Button>
+											<Button block={true} onClick={addAlternateEffect}>
+												<PlusOutlined />
+												Add an alternate effect
+											</Button>
 										</Space>
 										<HeaderText>Spend</HeaderText>
 										<Space direction='vertical' style={{ width: '100%' }}>
@@ -694,7 +700,10 @@ export const AbilityEditPanel = (props: Props) => {
 													<Empty />
 													: null
 											}
-											<Button block={true} onClick={addSpend}>Add a spend effect</Button>
+											<Button block={true} onClick={addSpend}>
+												<PlusOutlined />
+												Add a spend effect
+											</Button>
 										</Space>
 										<HeaderText>Persistence</HeaderText>
 										<Space direction='vertical' style={{ width: '100%' }}>
@@ -727,7 +736,10 @@ export const AbilityEditPanel = (props: Props) => {
 													<Empty />
 													: null
 											}
-											<Button block={true} onClick={addPersistence}>Add a persistence effect</Button>
+											<Button block={true} onClick={addPersistence}>
+												<PlusOutlined />
+												Add a persistence effect
+											</Button>
 											<HeaderText>Strained</HeaderText>
 											<MultiLine label='Strained' value={ability.strained} onChange={setStrained} />
 										</Space>

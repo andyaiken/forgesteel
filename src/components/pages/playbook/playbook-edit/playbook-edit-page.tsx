@@ -237,7 +237,10 @@ export const PlaybookEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addSection}>Add a section</Button>
+				<Button block={true} onClick={addSection}>
+					<PlusOutlined />
+					Add a section
+				</Button>
 			</Space>
 		);
 	};
@@ -307,7 +310,10 @@ export const PlaybookEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addPlotPoint}>Add a plot point</Button>
+				<Button block={true} onClick={addPlotPoint}>
+					<PlusOutlined />
+					Add a plot point
+				</Button>
 			</Space>
 		);
 	};
@@ -1011,7 +1017,10 @@ export const PlaybookEditPage = (props: Props) => {
 														<Empty />
 														: null
 												}
-												<Button block={true} onClick={() => addChallenge(sectionIndex)}>Add a challenge</Button>
+												<Button block={true} onClick={() => addChallenge(sectionIndex)}>
+													<PlusOutlined />
+													Add a challenge
+												</Button>
 											</Space>
 										)
 									},
@@ -1080,7 +1089,10 @@ export const PlaybookEditPage = (props: Props) => {
 														<Empty />
 														: null
 												}
-												<Button block={true} onClick={() => addTwist(sectionIndex)}>Add a twist</Button>
+												<Button block={true} onClick={() => addTwist(sectionIndex)}>
+													<PlusOutlined />
+													Add a twist
+												</Button>
 											</Space>
 										)
 									}
@@ -1094,7 +1106,10 @@ export const PlaybookEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addSection}>Add a section</Button>
+				<Button block={true} onClick={addSection}>
+					<PlusOutlined />
+					Add a section
+				</Button>
 			</Space>
 		);
 	};
@@ -1244,7 +1259,10 @@ export const PlaybookEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addMotivation}>Add a motivation</Button>
+				<Button block={true} onClick={addMotivation}>
+					<PlusOutlined />
+					Add a motivation
+				</Button>
 			</Space>
 		);
 	};
@@ -1325,7 +1343,10 @@ export const PlaybookEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addPitfall}>Add a pitfall</Button>
+				<Button block={true} onClick={addPitfall}>
+					<PlusOutlined />
+					Add a pitfall
+				</Button>
 			</Space>
 		);
 	};

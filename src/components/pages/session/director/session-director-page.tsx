@@ -53,14 +53,20 @@ export const SessionDirectorPage = (props: Props) => {
 	const [ session, setSession ] = useState<Playbook>(Utils.copy(props.session));
 	const [ selectedElementID, setSelectedElementID ] = useState<string | null>(() => {
 		const options = PlaybookLogic.getContentOptions(session);
-		return options.length > 0 ? options[0].value : null;
+		return options.length > 0 ? options[0].id : null;
 	});
 	const [ startElement, setStartElement ] = useState<string>('encounter');
 	const [ newCounterName, setNewCounterName ] = useState<string>('');
 	const [ newCounterValue, setNewCounterValue ] = useState<number>(0);
 
 	const getSelector = () => {
-		const options = PlaybookLogic.getContentOptions(session);
+		const options = PlaybookLogic.getContentOptions(session).map(o => {
+			return {
+				value: o.id,
+				label: o.name
+			};
+		});
+
 		if (options.length <= 1) {
 			return null;
 		}
@@ -456,7 +462,7 @@ export const SessionDirectorPage = (props: Props) => {
 		props.updateSession(copy);
 
 		const options = PlaybookLogic.getContentOptions(copy);
-		setSelectedElementID(options.length > 0 ? options[0].value : null);
+		setSelectedElementID(options.length > 0 ? options[0].id : null);
 	};
 
 	try {
@@ -467,7 +473,7 @@ export const SessionDirectorPage = (props: Props) => {
 						<Popover
 							trigger='click'
 							content={(
-								<div style={{ width: '375px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								<div style={{ width: '500px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 									<Segmented
 										name='startelements'
 										block={true}

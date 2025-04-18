@@ -1,5 +1,5 @@
 import { Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, ImportOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, ImportOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Badge } from '../../../controls/badge/badge';
 import { Characteristic } from '../../../../enums/characteristic';
@@ -560,7 +560,10 @@ export const MonsterEditPanel = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addFeature}>Add a new feature</Button>
+				<Button block={true} onClick={addFeature}>
+					<PlusOutlined />
+					Add a new feature
+				</Button>
 				{props.similarMonsters.length > 0 ? <Divider /> : null}
 				{
 					props.similarMonsters.length > 0 ?

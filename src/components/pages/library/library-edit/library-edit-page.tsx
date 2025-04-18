@@ -1,5 +1,5 @@
-import { Alert, Button, Drawer, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, EditOutlined, LeftOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Alert, Button, Drawer, Flex, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, DownloadOutlined, EditOutlined, LeftOutlined, PlusOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureAbility, FeatureAddOn, FeatureAddOnType, FeatureMalice, FeatureText } from '../../../../models/feature';
 import { Monster, MonsterGroup } from '../../../../models/monster';
@@ -246,7 +246,10 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addFeature}>Add a new feature</Button>
+				<Button block={true} onClick={addFeature}>
+					<PlusOutlined />
+					Add a new feature
+				</Button>
 			</Space>
 		);
 	};
@@ -315,7 +318,10 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addIncident}>Add a new inciting incident</Button>
+				<Button block={true} onClick={addIncident}>
+					<PlusOutlined />
+					Add a new inciting incident
+				</Button>
 			</Space>
 		);
 	};
@@ -521,7 +527,10 @@ export const LibraryEditPage = (props: Props) => {
 						/>
 						: null
 				}
-				<Button block={true} onClick={addCharacteristicSet}>Add a new primary characteristic option</Button>
+				<Button block={true} onClick={addCharacteristicSet}>
+					<PlusOutlined />
+					Add a new primary characteristic option
+				</Button>
 			</Space>
 		);
 	};
@@ -613,7 +622,10 @@ export const LibraryEditPage = (props: Props) => {
 										<Empty />
 										: null
 								}
-								<Button block={true} onClick={() => addFeature(lvl.level)}>Add a new level {lvl.level} feature</Button>
+								<Button block={true} onClick={() => addFeature(lvl.level)}>
+									<PlusOutlined />
+									Add a new level {lvl.level} feature
+								</Button>
 							</Space>
 						</div>
 					))
@@ -691,7 +703,10 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addAbility}>Add a new ability</Button>
+				<Button block={true} onClick={addAbility}>
+					<PlusOutlined />
+					Add a new ability
+				</Button>
 			</Space>
 		);
 	};
@@ -744,7 +759,10 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addSubclass}>Add a new subclass</Button>
+				<Button block={true} onClick={addSubclass}>
+					<PlusOutlined />
+					Add a new subclass
+				</Button>
 			</Space>
 		);
 	};
@@ -872,7 +890,10 @@ export const LibraryEditPage = (props: Props) => {
 							<Empty />
 							: null
 					}
-					<Button block={true} onClick={() => addFeature(subclass, lvl.level)}>Add a new level {lvl.level} feature</Button>
+					<Button block={true} onClick={() => addFeature(subclass, lvl.level)}>
+						<PlusOutlined />
+						Add a new level {lvl.level} feature
+					</Button>
 				</Space>
 			));
 		};
@@ -1335,7 +1356,10 @@ export const LibraryEditPage = (props: Props) => {
 										<Empty />
 										: null
 								}
-								<Button block={true} onClick={() => addFeature(lvl.level)}>Add a new level {lvl.level} feature</Button>
+								<Button block={true} onClick={() => addFeature(lvl.level)}>
+									<PlusOutlined />
+									Add a new level {lvl.level} feature
+								</Button>
 							</Space>
 						</div>
 					))
@@ -1649,7 +1673,10 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addDamageMod}>Add a new damage modifier</Button>
+				<Button block={true} onClick={addDamageMod}>
+					<PlusOutlined />
+					Add a new damage modifier
+				</Button>
 			</Space>
 		);
 	};
@@ -1760,7 +1787,10 @@ export const LibraryEditPage = (props: Props) => {
 										<Empty />
 										: null
 								}
-								<Button block={true} onClick={() => addSectionContent(sectionIndex)}>Add a new content item</Button>
+								<Button block={true} onClick={() => addSectionContent(sectionIndex)}>
+									<PlusOutlined />
+									Add a new content item
+								</Button>
 							</Space>
 						</Expander>
 					))
@@ -1770,7 +1800,10 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addSection}>Add a new section</Button>
+				<Button block={true} onClick={addSection}>
+					<PlusOutlined />
+					Add a new section
+				</Button>
 			</Space>
 		);
 	};
@@ -1954,7 +1987,10 @@ export const LibraryEditPage = (props: Props) => {
 														<Empty />
 														: null
 												}
-												<Button block={true} onClick={() => addUpgradeSectionContent(upgradeIndex, sectionIndex)}>Add a new content item</Button>
+												<Button block={true} onClick={() => addUpgradeSectionContent(upgradeIndex, sectionIndex)}>
+													<PlusOutlined />
+													Add a new content item
+												</Button>
 											</Space>
 										</Expander>
 									))
@@ -1964,7 +2000,10 @@ export const LibraryEditPage = (props: Props) => {
 										<Empty />
 										: null
 								}
-								<Button block={true} onClick={() => addUpgradeSection(upgradeIndex)}>Add a new section</Button>
+								<Button block={true} onClick={() => addUpgradeSection(upgradeIndex)}>
+									<PlusOutlined />
+									Add a new section
+								</Button>
 							</Space>
 						</Expander>
 					))
@@ -1974,7 +2013,10 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addUpgrade}>Add a new customization</Button>
+				<Button block={true} onClick={addUpgrade}>
+					<PlusOutlined />
+					Add a new customization
+				</Button>
 			</Space>
 		);
 	};
@@ -2043,7 +2085,10 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addInformation}>Add a new information piece</Button>
+				<Button block={true} onClick={addInformation}>
+					<PlusOutlined />
+					Add a new information piece
+				</Button>
 			</Space>
 		);
 	};
@@ -2117,7 +2162,10 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addMaliceFeature}>Add a new malice feature</Button>
+				<Button block={true} onClick={addMaliceFeature}>
+					<PlusOutlined />
+					Add a new malice feature
+				</Button>
 			</Space>
 		);
 	};
@@ -2142,6 +2190,16 @@ export const LibraryEditPage = (props: Props) => {
 				characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 0, 0),
 				features: []
 			}));
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const copyMonster = (monster: Monster) => {
+			const monsterCopy = Utils.copy(monster);
+			monsterCopy.id = Utils.guid();
+
+			const copy = Utils.copy(monsterGroup) as MonsterGroup;
+			copy.monsters.push(monsterCopy);
 			setElement(copy);
 			setDirty(true);
 		};
@@ -2191,7 +2249,29 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addMonster}>Add a new monster</Button>
+				<Flex gap={10}>
+					<Button block={true} onClick={addMonster}>
+						<PlusOutlined />
+						Add a new monster
+					</Button>
+					<Button block={true} onClick={() => setDrawerOpen(true)}>
+						<DownloadOutlined />
+						Copy an existing monster
+					</Button>
+				</Flex>
+				<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} width='500px'>
+					<MonsterSelectModal
+						type='companion'
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						selectOriginal={false}
+						onSelect={monster => {
+							copyMonster(monster);
+							setDrawerOpen(false);
+						}}
+						onClose={() => setDrawerOpen(false)}
+					/>
+				</Drawer>
 			</Space>
 		);
 	};
@@ -2263,7 +2343,10 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addAddOn}>Add a new customization</Button>
+				<Button block={true} onClick={addAddOn}>
+					<PlusOutlined />
+					Add a new customization
+				</Button>
 			</Space>
 		);
 	};
@@ -2363,7 +2446,7 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty text='No similar monsters.' />
 						: null
 				}
-				<Drawer open={drawerOpen} closeIcon={null} width='500px'>
+				<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} width='500px'>
 					<MonsterSelectModal
 						type='companion'
 						sourcebooks={props.sourcebooks}

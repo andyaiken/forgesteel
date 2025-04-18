@@ -1,5 +1,5 @@
 import { Button, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
@@ -873,7 +873,10 @@ export const FeatureEditPanel = (props: Props) => {
 								<Empty />
 								: null
 						}
-						<Button block={true} onClick={() => addChoice(data)}>Add an option</Button>
+						<Button block={true} onClick={() => addChoice(data)}>
+							<PlusOutlined />
+							Add an option
+						</Button>
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
 					</Space>
@@ -972,7 +975,10 @@ export const FeatureEditPanel = (props: Props) => {
 								<Empty />
 								: null
 						}
-						<Button block={true} onClick={() => addDamageModifier(data)}>Add a modifier</Button>
+						<Button block={true} onClick={() => addDamageModifier(data)}>
+							<PlusOutlined />
+							Add a modifier
+						</Button>
 					</Space>
 				);
 			}

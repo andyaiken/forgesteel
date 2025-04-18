@@ -1,5 +1,5 @@
 import { Alert, Button, Divider, Drawer, Flex, Segmented, Space } from 'antd';
-import { ArrowUpOutlined, CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
+import { ArrowUpOutlined, CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Collections } from '../../../utils/collections';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Empty } from '../../controls/empty/empty';
@@ -404,7 +404,10 @@ export const HeroStateModal = (props: Props) => {
 						<Empty text='Your inventory is empty.' />
 						: null
 				}
-				<Button block={true} onClick={() => setShopVisible(true)}>Add a new item</Button>
+				<Button block={true} onClick={() => setShopVisible(true)}>
+					<PlusOutlined />
+					Add a new item
+				</Button>
 				<Drawer open={shopVisible} onClose={() => setShopVisible(false)} closeIcon={null} width='500px'>
 					<ItemSelectModal
 						types={[ ItemType.Artifact, ItemType.Consumable, ItemType.ImbuedArmor, ItemType.ImbuedImplement, ItemType.ImbuedWeapon, ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Trinket ]}
@@ -496,7 +499,10 @@ export const HeroStateModal = (props: Props) => {
 						<Empty text='You have no projects underway.' />
 						: null
 				}
-				<Button block={true} onClick={() => setProjectsVisible(true)}>Add a new project</Button>
+				<Button block={true} onClick={() => setProjectsVisible(true)}>
+					<PlusOutlined />
+					Add a new project
+				</Button>
 				<Drawer open={projectsVisible} onClose={() => setProjectsVisible(false)} closeIcon={null} width='500px'>
 					<ProjectSelectModal sourcebooks={props.sourcebooks} onSelect={addProject} onClose={() => setProjectsVisible(false)} />
 				</Drawer>

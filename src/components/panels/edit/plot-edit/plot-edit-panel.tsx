@@ -1,5 +1,5 @@
 import { Button, Input, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Plot, PlotContent, PlotLink } from '../../../../models/plot';
 import { Adventure } from '../../../../models/adventure';
 import { Collections } from '../../../../utils/collections';
@@ -166,7 +166,10 @@ export const PlotEditPanel = (props: Props) => {
 						<Empty text='No content' />
 						: null
 				}
-				<Button block={true} onClick={addContent}>Add a new piece of content</Button>
+				<Button block={true} onClick={addContent}>
+					<PlusOutlined />
+					Add a new piece of content
+				</Button>
 			</Space>
 		);
 	};
@@ -267,7 +270,10 @@ export const PlotEditPanel = (props: Props) => {
 						<Empty text='No links' />
 						: null
 				}
-				<Button block={true} onClick={addLink}>Add a new link</Button>
+				<Button block={true} onClick={addLink}>
+					<PlusOutlined />
+					Add a new link
+				</Button>
 			</Space>
 		);
 	};

@@ -1,5 +1,4 @@
-import { Button, Input, Space } from 'antd';
-import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
+import { Input, Space } from 'antd';
 import { Collections } from '../../../utils/collections';
 import { Empty } from '../../controls/empty/empty';
 import { Modal } from '../modal/modal';
@@ -9,6 +8,7 @@ import { MonsterOrganizationType } from '../../../enums/monster-organization-typ
 import { MonsterPanel } from '../../panels/elements/monster-panel/monster-panel';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
 import { Options } from '../../../models/options';
+import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
@@ -54,16 +54,13 @@ export const MonsterSelectModal = (props: Props) => {
 		return (
 			<Modal
 				toolbar={
-					<>
-						<Input
-							placeholder='Search'
-							allowClear={true}
-							value={searchTerm}
-							suffix={<SearchOutlined />}
-							onChange={e => setSearchTerm(e.target.value)}
-						/>
-						<Button icon={<CloseOutlined />} onClick={props.onClose}>Cancel</Button>
-					</>
+					<Input
+						placeholder='Search'
+						allowClear={true}
+						value={searchTerm}
+						suffix={<SearchOutlined />}
+						onChange={e => setSearchTerm(e.target.value)}
+					/>
 				}
 				content={
 					<div className='monster-select-modal'>

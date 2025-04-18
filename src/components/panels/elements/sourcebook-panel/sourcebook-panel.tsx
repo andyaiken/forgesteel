@@ -1,5 +1,5 @@
 import { Button, Input, Select, Space } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
@@ -186,7 +186,10 @@ export const SourcebookPanel = (props: Props) => {
 									<Empty />
 									: null
 							}
-							<Button block={true} onClick={addLanguage}>Add a new language</Button>
+							<Button block={true} onClick={addLanguage}>
+								<PlusOutlined />
+								Add a new language
+							</Button>
 						</Space>
 					</Expander>
 					<Expander title='Skills'>
@@ -230,7 +233,10 @@ export const SourcebookPanel = (props: Props) => {
 									<Empty />
 									: null
 							}
-							<Button block={true} onClick={addSkill}>Add a new skill</Button>
+							<Button block={true} onClick={addSkill}>
+								<PlusOutlined />
+								Add a new skill
+							</Button>
 						</Space>
 					</Expander>
 				</Space>

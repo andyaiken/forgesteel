@@ -58,7 +58,7 @@ Floating clawed brains with a trailing spinal column and nerves, mindkillers ser
 Mindkiller whelps are a lesser form of mindkiller that can be created in a fraction of the time. While they can’t inhabit bodies, their mere presence weakens their foes’ mental defenses against psionics`
 		},
 		{
-			id: 'voiceless-talker-info-8',
+			id: 'voiceless-talker-info-9',
 			name: 'Voiceless Talker Languages',
 			description: 'Most voiceless talkers communicate telepathically using Mindspeech and Variac.'
 		}

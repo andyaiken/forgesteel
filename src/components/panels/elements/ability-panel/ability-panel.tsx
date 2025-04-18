@@ -101,12 +101,14 @@ export const AbilityPanel = (props: Props) => {
 						ribbon={headerRibbon}
 						tags={props.tags}
 						extra={
-							<Button
-								type='text'
-								title='Auto-calculate damage, potancy, etc'
-								icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
-								onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
-							/>
+							props.hero ?
+								<Button
+									type='text'
+									title='Auto-calculate damage, potancy, etc'
+									icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
+									onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
+								/>
+								: null
 						}
 					>
 						{customization?.name || props.ability.name || 'Unnamed Ability'}

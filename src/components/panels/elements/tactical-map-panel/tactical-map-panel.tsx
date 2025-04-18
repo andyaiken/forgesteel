@@ -1,5 +1,5 @@
 import { BarsOutlined, CloseOutlined, DownloadOutlined, DragOutlined, FileTextOutlined, IdcardOutlined, LinkOutlined, RotateRightOutlined } from '@ant-design/icons';
-import { Button, ColorPicker, Divider, Drawer, Input, Popover, Segmented, Select, Upload } from 'antd';
+import { Button, ColorPicker, Divider, Drawer, Input, Popover, Segmented, Select, Space, Upload } from 'antd';
 import { HeroToken, MonsterToken } from '../../../controls/token/token';
 import { MapBoundaries, MapItem, MapMini, MapPosition, MapTile, MapWall, MapZone, TacticalMap } from '../../../../models/tactical-map';
 import { ReactNode, useState } from 'react';
@@ -711,7 +711,7 @@ export const TacticalMapPanel = (props: Props) => {
 						copy.content = { type: 'video', videoData: '' };
 						break;
 					case 'link':
-						copy.content = { type: 'link', url: '' };
+						copy.content = { type: 'link', url: '', isVideo: false };
 						break;
 				}
 				updateMapItem(copy);
@@ -745,6 +745,14 @@ export const TacticalMapPanel = (props: Props) => {
 				const copy = Utils.copy(item) as MapTile;
 				if (copy.content.type === 'link') {
 					copy.content.url = value;
+				}
+				updateMapItem(copy);
+			};
+
+			const setContentIsVideo = (value: boolean) => {
+				const copy = Utils.copy(item) as MapTile;
+				if (copy.content.type === 'link') {
+					copy.content.isVideo = value;
 				}
 				updateMapItem(copy);
 			};
@@ -913,12 +921,23 @@ export const TacticalMapPanel = (props: Props) => {
 									item.content.type === 'link' ?
 										<Popover
 											content={
-												<Input
-													placeholder='Link'
-													allowClear={true}
-													value={item.content.url}
-													onChange={e => setContentUrl(e.target.value)}
-												/>
+												<Space direction='vertical' style={{ width: '100%' }}>
+													<Input
+														placeholder={item.content.isVideo ? 'URL of video' : 'URL of image'}
+														allowClear={true}
+														value={item.content.url}
+														onChange={e => setContentUrl(e.target.value)}
+													/>
+													<Segmented
+														block={true}
+														options={[
+															{ value: false, label: 'Image' },
+															{ value: true, label: 'Video' }
+														]}
+														value={item.content.isVideo}
+														onChange={setContentIsVideo}
+													/>
+												</Space>
 											}
 										>
 											<Button>

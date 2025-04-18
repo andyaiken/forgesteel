@@ -56,13 +56,26 @@ export const MapTilePanel = (props: Props) => {
 				);
 			case 'link':
 				return (
-					<img
-						className='tile-content'
-						style={{
-							borderRadius: props.style.borderRadius
-						}}
-						src={props.tile.content.url || undefined}
-					/>
+					props.tile.content.isVideo ?
+						<video
+							className='tile-content'
+							style={{
+								borderRadius: props.style.borderRadius
+							}}
+							src={props.tile.content.url || undefined}
+							autoPlay={true}
+							controls={false}
+							loop={true}
+							muted={true}
+						/>
+						:
+						<img
+							className='tile-content'
+							style={{
+								borderRadius: props.style.borderRadius
+							}}
+							src={props.tile.content.url || undefined}
+						/>
 				);
 		}
 

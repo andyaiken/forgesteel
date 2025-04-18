@@ -76,13 +76,13 @@ export class PlaybookLogic {
 	};
 
 	static getContentOptions = (session: Playbook) => {
-		const options: { value: string, label: string }[] = [];
+		const options: { type: string, id: string, name: string }[] = [];
 
-		session.encounters.forEach(e => options.push({ value: e.id, label: e.name }));
-		session.montages.forEach(m => options.push({ value: m.id, label: m.name }));
-		session.negotiations.forEach(n => options.push({ value: n.id, label: n.name }));
-		session.tacticalMaps.forEach(tm => options.push({ value: tm.id, label: tm.name }));
-		session.counters.forEach(c => options.push({ value: c.id, label: c.name }));
+		session.encounters.forEach(e => options.push({ type: 'encounter', id: e.id, name: e.name }));
+		session.montages.forEach(m => options.push({ type: 'montage', id: m.id, name: m.name }));
+		session.negotiations.forEach(n => options.push({ type: 'negotiation', id: n.id, name: n.name }));
+		session.tacticalMaps.forEach(tm => options.push({ type: 'map', id: tm.id, name: tm.name }));
+		session.counters.forEach(c => options.push({ type: 'counter', id: c.id, name: c.name }));
 
 		return options;
 	};

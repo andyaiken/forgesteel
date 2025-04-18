@@ -38,7 +38,7 @@ export interface MapTile {
 		{ type: 'color', color: string } |
 		{ type: 'image', imageData: string } |
 		{ type: 'video', videoData: string } |
-		{ type: 'link', url: string };
+		{ type: 'link', url: string, isVideo: boolean };
 }
 
 export interface MapWall {

@@ -585,6 +585,7 @@ export const EncounterRunPanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<Markdown text={encounter.description} />
 				{
 					monsters.map(m => (
 						<div key={m.id}>
@@ -673,7 +674,6 @@ export const EncounterRunPanel = (props: Props) => {
 			<ErrorBoundary>
 				<div className={className} id={encounter.id}>
 					<HeaderText level={1}>{encounter.name || 'Unnamed Encounter'}</HeaderText>
-					<Markdown text={encounter.description} />
 					<div className='stats'>
 						<NumberSpin min={0} value={encounter.round} onChange={setRound}>
 							<Field orientation='vertical' label='Round' value={encounter.round || '-'} />

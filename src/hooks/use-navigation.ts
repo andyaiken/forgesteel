@@ -46,10 +46,7 @@ export const useNavigation = () => {
 		goToPlaybookEdit: (kind: PlaybookElementKind, elementID: string) => {
 			return navigate(`/playbook/edit/${kind}/${elementID}`);
 		},
-		goToSession: (elementID?: string) => {
-			if (elementID) {
-				return navigate(`/session/director/${elementID}`);
-			}
+		goToSession: () => {
 			return navigate('/session/director');
 		},
 		goToPlayerView: () => {

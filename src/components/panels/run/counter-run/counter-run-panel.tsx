@@ -1,6 +1,5 @@
 import { Counter } from '../../../../models/counter';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Utils } from '../../../../utils/utils';
@@ -29,9 +28,7 @@ export const CounterRunPanel = (props: Props) => {
 				<div className='counter-run-panel' id={counter.id}>
 					<HeaderText level={1}>{counter.name || 'Unnamed Counter'}</HeaderText>
 					<div className='stats'>
-						<NumberSpin min={0} max={20} value={counter.value} onChange={setValue}>
-							<Field orientation='vertical' label='Value' value={counter.value} />
-						</NumberSpin>
+						<NumberSpin label='Value' min={0} max={100} value={counter.value} onChange={setValue} />
 					</div>
 				</div>
 			</ErrorBoundary>

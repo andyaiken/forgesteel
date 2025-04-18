@@ -932,7 +932,7 @@ export const Main = (props: Props) => {
 			}
 		}
 
-		persistSession(sessionCopy).then(() => navigation.goToSession(e.id));
+		persistSession(sessionCopy).then(() => navigation.goToSession());
 	};
 
 	//#endregion
@@ -1336,7 +1336,7 @@ export const Main = (props: Props) => {
 								element={<Navigate to='director' replace={true} />}
 							/>
 							<Route
-								path='director/:elementID?'
+								path='director'
 								element={
 									<SessionDirectorPage
 										session={session}

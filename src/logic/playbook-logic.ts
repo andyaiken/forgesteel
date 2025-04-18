@@ -75,6 +75,18 @@ export class PlaybookLogic {
 		});
 	};
 
+	static getContentOptions = (session: Playbook) => {
+		const options: { value: string, label: string }[] = [];
+
+		session.encounters.forEach(e => options.push({ value: e.id, label: e.name }));
+		session.montages.forEach(m => options.push({ value: m.id, label: m.name }));
+		session.negotiations.forEach(n => options.push({ value: n.id, label: n.name }));
+		session.tacticalMaps.forEach(tm => options.push({ value: tm.id, label: tm.name }));
+		session.counters.forEach(c => options.push({ value: c.id, label: c.name }));
+
+		return options;
+	};
+
 	static startEncounter = (encounter: Encounter, sourcebooks: Sourcebook[], heroes: Hero[], options: Options) => {
 		const copy = Utils.copy(encounter);
 		copy.id = Utils.guid();

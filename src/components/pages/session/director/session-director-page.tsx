@@ -1,25 +1,20 @@
 import { Alert, Button, Input, Popover, Segmented, Space } from 'antd';
 import { PlusOutlined, ReadOutlined, SettingOutlined } from '@ant-design/icons';
 import { AppHeader } from '../../../panels/app-header/app-header';
-import { CounterPanel } from '../../../panels/elements/counter-panel/counter-panel';
 import { CounterRunPanel } from '../../../panels/run/counter-run/counter-run-panel';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterData } from '../../../../data/encounter-data';
-import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { EncounterRunPanel } from '../../../panels/run/encounter-run/encounter-run-panel';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Format } from '../../../../utils/format';
-import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Montage } from '../../../../models/montage';
 import { MontageData } from '../../../../data/montage-data';
-import { MontagePanel } from '../../../panels/elements/montage-panel/montage-panel';
 import { MontageRunPanel } from '../../../panels/run/montage-run/montage-run-panel';
 import { Negotiation } from '../../../../models/negotiation';
 import { NegotiationData } from '../../../../data/negotiation-data';
-import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/negotiation-panel';
 import { NegotiationRunPanel } from '../../../panels/run/negotiation-run/negotiation-run-panel';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
@@ -27,15 +22,12 @@ import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Playbook } from '../../../../models/playbook';
 import { PlaybookLogic } from '../../../../logic/playbook-logic';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { TacticalMap } from '../../../../models/tactical-map';
 import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
 import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/tactical-map-panel';
 import { Utils } from '../../../../utils/utils';
-import { useMediaQuery } from '../../../../hooks/use-media-query';
 import { useNavigation } from '../../../../hooks/use-navigation';
-import { useParams } from 'react-router';
 import { useState } from 'react';
 
 import './session-director-page.scss';
@@ -57,203 +49,175 @@ interface Props {
 }
 
 export const SessionDirectorPage = (props: Props) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const navigation = useNavigation();
-	const { elementID } = useParams<{ elementID: string }>();
-	const [ previousElement, setPreviousElement ] = useState<string | undefined>(elementID);
 	const [ session, setSession ] = useState<Playbook>(Utils.copy(props.session));
-	const [ selectedElementID, setSelectedElementID ] = useState<string | null>(elementID ?? null);
+	const [ selectedElementID, setSelectedElementID ] = useState<string | null>(() => {
+		const options = PlaybookLogic.getContentOptions(session);
+		return options.length > 0 ? options[0].value : null;
+	});
 	const [ startElement, setStartElement ] = useState<string>('encounter');
 	const [ newCounterName, setNewCounterName ] = useState<string>('');
 	const [ newCounterValue, setNewCounterValue ] = useState<number>(0);
 
-	if (elementID !== previousElement) {
-		setSelectedElementID(elementID ?? null);
-		setPreviousElement(elementID);
-	}
-
-	const getSelectableContent = () => {
-		if ((session.encounters.length === 0) && (session.montages.length === 0) && (session.negotiations.length === 0) && (session.tacticalMaps.length === 0) && (session.counters.length === 0)) {
-			return (
-				<Empty text='Nothing is currently in progress.' />
-			);
+	const getSelector = () => {
+		const options = PlaybookLogic.getContentOptions(session);
+		if (options.length <= 1) {
+			return null;
 		}
 
 		return (
-			<>
-				{
-					session.encounters.map(e => (
-						<SelectablePanel key={e.id} selected={selectedElementID === e.id} onSelect={() => navigation.goToSession(e.id)}>
-							<EncounterPanel encounter={e} sourcebooks={props.sourcebooks} options={props.options} />
-						</SelectablePanel>
-					))
-				}
-				{
-					session.montages.map(m => (
-						<SelectablePanel key={m.id} selected={selectedElementID === m.id} onSelect={() => navigation.goToSession(m.id)}>
-							<MontagePanel montage={m} />
-						</SelectablePanel>
-					))
-				}
-				{
-					session.negotiations.map(n => (
-						<SelectablePanel key={n.id} selected={selectedElementID === n.id} onSelect={() => navigation.goToSession(n.id)}>
-							<NegotiationPanel negotiation={n} />
-						</SelectablePanel>
-					))
-				}
-				{
-					session.tacticalMaps.map(tm => (
-						<SelectablePanel key={tm.id} selected={selectedElementID === tm.id} onSelect={() => navigation.goToSession(tm.id)}>
-							<HeaderText level={1}>{tm.name || 'Unnamed Map'}</HeaderText>
-							<div className='tactical-map-container'>
-								<TacticalMapPanel key={JSON.stringify(tm)} map={tm} display={TacticalMapDisplayType.Thumbnail} options={props.options} heroes={props.heroes}encounters={session.encounters} />
-							</div>
-						</SelectablePanel>
-					))
-				}
-				{
-					session.counters.map(c => (
-						<SelectablePanel key={c.id} selected={selectedElementID === c.id} onSelect={() => navigation.goToSession(c.id)}>
-							<CounterPanel counter={c} />
-						</SelectablePanel>
-					))
-				}
-			</>
+			<div className='session-page-content-selector'>
+				<Segmented
+					options={options}
+					value={selectedElementID}
+					onChange={setSelectedElementID}
+				/>
+			</div>
 		);
 	};
 
 	const getSelectedContent = () => {
-		if ((session.encounters.length === 0) && (session.montages.length === 0) && (session.negotiations.length === 0) && (session.tacticalMaps.length === 0) && (session.counters.length === 0)) {
-			return null;
-		}
-
 		if (selectedElementID) {
 			const encounter = session.encounters.find(e => e.id === selectedElementID);
 			if (encounter) {
 				return (
-					<EncounterRunPanel
-						encounter={encounter}
-						sourcebooks={props.sourcebooks}
-						heroes={props.heroes}
-						options={props.options}
-						onChange={encounter => {
-							const copy = Utils.copy(session);
+					<div className='session-page-content-container'>
+						<EncounterRunPanel
+							encounter={encounter}
+							sourcebooks={props.sourcebooks}
+							heroes={props.heroes}
+							options={props.options}
+							onChange={encounter => {
+								const copy = Utils.copy(session);
 
-							const index = copy.encounters.findIndex(n => n.id === encounter.id);
-							if (index !== -1) {
-								copy.encounters[index] = encounter;
-							}
+								const index = copy.encounters.findIndex(n => n.id === encounter.id);
+								if (index !== -1) {
+									copy.encounters[index] = encounter;
+								}
 
-							setSession(copy);
-							props.updateSession(copy);
-						}}
-					/>
+								setSession(copy);
+								props.updateSession(copy);
+							}}
+						/>
+					</div>
 				);
 			}
 
 			const montage = session.montages.find(m => m.id === selectedElementID);
 			if (montage) {
 				return (
-					<MontageRunPanel
-						montage={montage}
-						onChange={montage => {
-							const copy = Utils.copy(session);
+					<div className='session-page-content-container'>
+						<MontageRunPanel
+							montage={montage}
+							onChange={montage => {
+								const copy = Utils.copy(session);
 
-							const index = copy.montages.findIndex(n => n.id === montage.id);
-							if (index !== -1) {
-								copy.montages[index] = montage;
-							}
+								const index = copy.montages.findIndex(n => n.id === montage.id);
+								if (index !== -1) {
+									copy.montages[index] = montage;
+								}
 
-							setSession(copy);
-							props.updateSession(copy);
-						}}
-					/>
+								setSession(copy);
+								props.updateSession(copy);
+							}}
+						/>
+					</div>
 				);
 			}
 
 			const negotiation = session.negotiations.find(n => n.id === selectedElementID);
 			if (negotiation) {
 				return (
-					<NegotiationRunPanel
-						negotiation={negotiation}
-						onChange={negotiation => {
-							const copy = Utils.copy(session);
+					<div className='session-page-content-container'>
+						<NegotiationRunPanel
+							negotiation={negotiation}
+							onChange={negotiation => {
+								const copy = Utils.copy(session);
 
-							const index = copy.negotiations.findIndex(n => n.id === negotiation.id);
-							if (index !== -1) {
-								copy.negotiations[index] = negotiation;
-							}
+								const index = copy.negotiations.findIndex(n => n.id === negotiation.id);
+								if (index !== -1) {
+									copy.negotiations[index] = negotiation;
+								}
 
-							setSession(copy);
-							props.updateSession(copy);
-						}}
-					/>
+								setSession(copy);
+								props.updateSession(copy);
+							}}
+						/>
+					</div>
 				);
 			}
 
 			const map = session.tacticalMaps.find(tm => tm.id === selectedElementID);
 			if (map) {
 				return (
-					<TacticalMapPanel
-						map={map}
-						display={TacticalMapDisplayType.DirectorEdit}
-						options={props.options}
-						heroes={props.heroes}
-						encounters={session.encounters}
-						sourcebooks={props.sourcebooks}
-						mode={PanelMode.Full}
-						updateMap={map => {
-							const copy = Utils.copy(session);
+					<div className='session-page-content-container'>
+						<TacticalMapPanel
+							map={map}
+							display={TacticalMapDisplayType.DirectorEdit}
+							options={props.options}
+							heroes={props.heroes}
+							encounters={session.encounters}
+							sourcebooks={props.sourcebooks}
+							mode={PanelMode.Full}
+							updateMap={map => {
+								const copy = Utils.copy(session);
 
-							const index = copy.tacticalMaps.findIndex(tm => tm.id === map.id);
-							if (index !== -1) {
-								copy.tacticalMaps[index] = map;
-							}
+								const index = copy.tacticalMaps.findIndex(tm => tm.id === map.id);
+								if (index !== -1) {
+									copy.tacticalMaps[index] = map;
+								}
 
-							setSession(copy);
-							props.updateSession(copy);
-						}}
-						updateHero={props.updateHero}
-						updateEncounter={encounter => {
-							const copy = Utils.copy(session);
+								setSession(copy);
+								props.updateSession(copy);
+							}}
+							updateHero={props.updateHero}
+							updateEncounter={encounter => {
+								const copy = Utils.copy(session);
 
-							const index = copy.encounters.findIndex(enc => enc.id === encounter.id);
-							if (index !== -1) {
-								copy.encounters[index] = encounter;
-							}
+								const index = copy.encounters.findIndex(enc => enc.id === encounter.id);
+								if (index !== -1) {
+									copy.encounters[index] = encounter;
+								}
 
-							setSession(copy);
-							props.updateSession(copy);
-						}}
-					/>
+								setSession(copy);
+								props.updateSession(copy);
+							}}
+						/>
+					</div>
 				);
 			}
 
 			const counter = session.counters.find(c => c.id === selectedElementID);
 			if (counter) {
 				return (
-					<CounterRunPanel
-						counter={counter}
-						onChange={counter => {
-							const copy = Utils.copy(session);
+					<div className='session-page-content-container'>
+						<CounterRunPanel
+							counter={counter}
+							onChange={counter => {
+								const copy = Utils.copy(session);
 
-							const index = copy.counters.findIndex(c => c.id === counter.id);
-							if (index !== -1) {
-								copy.counters[index] = counter;
-							}
+								const index = copy.counters.findIndex(c => c.id === counter.id);
+								if (index !== -1) {
+									copy.counters[index] = counter;
+								}
 
-							setSession(copy);
-							props.updateSession(copy);
-						}}
-					/>
+								setSession(copy);
+								props.updateSession(copy);
+							}}
+						/>
+					</div>
 				);
 			}
 		}
 
-		return (
-			<Empty text='Select an element from the list on the left.' />
-		);
+		const options = PlaybookLogic.getContentOptions(session);
+		if (options.length === 0) {
+			return (
+				<Empty text='Nothing is currently in progress.' />
+			);
+		}
+
+		return null;
 	};
 
 	const getStartContent = () => {
@@ -265,7 +229,7 @@ export const SessionDirectorPage = (props: Props) => {
 
 			setSession(sessionCopy);
 			props.updateSession(sessionCopy);
-			navigation.goToSession(copy.id);
+			setSelectedElementID(copy.id);
 		};
 
 		const startMontage = (montage: Montage) => {
@@ -275,8 +239,8 @@ export const SessionDirectorPage = (props: Props) => {
 			sessionCopy.montages.push(copy);
 
 			setSession(sessionCopy);
-			navigation.goToSession(copy.id);
 			props.updateSession(sessionCopy);
+			setSelectedElementID(copy.id);
 		};
 
 		const startNegotiation = (negotiation: Negotiation) => {
@@ -287,7 +251,7 @@ export const SessionDirectorPage = (props: Props) => {
 
 			setSession(sessionCopy);
 			props.updateSession(sessionCopy);
-			navigation.goToSession(copy.id);
+			setSelectedElementID(copy.id);
 		};
 
 		const startMap = (map: TacticalMap) => {
@@ -298,7 +262,7 @@ export const SessionDirectorPage = (props: Props) => {
 
 			setSession(sessionCopy);
 			props.updateSession(sessionCopy);
-			navigation.goToSession(copy.id);
+			setSelectedElementID(copy.id);
 		};
 
 		const startCounter = () => {
@@ -318,7 +282,7 @@ export const SessionDirectorPage = (props: Props) => {
 
 			setSession(sessionCopy);
 			props.updateSession(sessionCopy);
-			navigation.goToSession(copy.id);
+			setSelectedElementID(copy.id);
 		};
 
 		const exampleEncounters = [
@@ -487,21 +451,15 @@ export const SessionDirectorPage = (props: Props) => {
 		if (copy.playerViewID === selectedElementID) {
 			copy.playerViewID = null;
 		}
-		setSession(copy);
-		setSelectedElementID(null);
 
+		setSession(copy);
 		props.updateSession(copy);
-		if (selectedElementID === selectedElementID) {
-			navigation.goToSession();
-		}
+
+		const options = PlaybookLogic.getContentOptions(copy);
+		setSelectedElementID(options.length > 0 ? options[0].value : null);
 	};
 
 	try {
-		let className = 'session-page-content';
-		if (isSmall) {
-			className += ' small';
-		}
-
 		return (
 			<ErrorBoundary>
 				<div className='session-director-page'>
@@ -544,14 +502,9 @@ export const SessionDirectorPage = (props: Props) => {
 							</Button>
 						</Popover>
 					</AppHeader>
-					<div className={className}>
-						<Space className='left-column' direction='vertical'>
-							{isSmall ? null : <HeaderText level={1}>In Progress</HeaderText>}
-							{getSelectableContent()}
-						</Space>
-						<div className='right-column'>
-							{getSelectedContent()}
-						</div>
+					<div className='session-page-content'>
+						{getSelector()}
+						{getSelectedContent()}
 					</div>
 				</div>
 			</ErrorBoundary>

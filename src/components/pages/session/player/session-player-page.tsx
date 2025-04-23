@@ -15,6 +15,7 @@ import { Playbook } from '../../../../models/playbook';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
 import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/tactical-map-panel';
+import localforage from 'localforage';
 
 import './session-player-page.scss';
 
@@ -31,6 +32,16 @@ interface Props {
 }
 
 export const SessionPlayerPage = (props: Props) => {
+	setInterval(() => {
+		localforage
+			.getItem<Playbook>('forgesteel-session')
+			.then(session => {
+				if (session && (JSON.stringify(session) !== JSON.stringify(props.session))) {
+					window.location.reload();
+				}
+			});
+	}, 5 * 1000);
+
 	try {
 		const getContent = () => {
 			const encounter = props.session.encounters.find(e => e.id === props.session.playerViewID);

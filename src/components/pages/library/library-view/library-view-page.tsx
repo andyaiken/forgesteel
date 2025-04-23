@@ -265,6 +265,37 @@ export const LibraryViewPage = (props: Props) => {
 								</Button>
 						}
 						<div className='divider' />
+						{
+							!sourcebook.isHomebrew && !subElementID && (props.sourcebooks.filter(sb => sb.isHomebrew).length === 0) ?
+								<Button icon={<CopyOutlined />} onClick={() => props.createElement(kind!, null, element)}>
+									Create Homebrew Version
+								</Button>
+								: null
+						}
+						{
+							!sourcebook.isHomebrew && !subElementID && (props.sourcebooks.filter(sb => sb.isHomebrew).length > 0) ?
+								<Popover
+									trigger='click'
+									content={(
+										<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+											<ErrorBoundary>
+												{
+													props.sourcebooks
+														.filter(sb => sb.isHomebrew)
+														.map(sb => <Button key={sb.id} onClick={() => props.createElement(kind!, sb.id, element)}>In {sb.name || 'Unnamed Sourcebook'}</Button>)
+												}
+											</ErrorBoundary>
+											<Button onClick={() => props.createElement(kind!, null, element)}>In a new sourcebook</Button>
+										</div>
+									)}
+								>
+									<Button icon={<CopyOutlined />}>
+										Create Homebrew Version
+										<DownOutlined />
+									</Button>
+								</Popover>
+								: null
+						}
 						<Popover
 							trigger='click'
 							content={(
@@ -304,29 +335,6 @@ export const LibraryViewPage = (props: Props) => {
 											<Button icon={<CopyOutlined />} onClick={() => props.copySubElement(kind!, sourcebook.id, elementID!, element)}>
 												Copy
 											</Button>
-											: null
-									}
-									{
-										!sourcebook.isHomebrew && !subElementID ?
-											<Popover
-												trigger='click'
-												content={(
-													<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-														<ErrorBoundary>
-															{
-																props.sourcebooks
-																	.filter(sb => sb.isHomebrew)
-																	.map(sb => <Button key={sb.id} onClick={() => props.createElement(kind!, sb.id, element)}>In {sb.name || 'Unnamed Sourcebook'}</Button>)
-															}
-														</ErrorBoundary>
-														<Button onClick={() => props.createElement(kind!, null, element)}>In a new sourcebook</Button>
-													</div>
-												)}
-											>
-												<Button icon={<CopyOutlined />}>
-													Create Homebrew Version
-												</Button>
-											</Popover>
 											: null
 									}
 									<Popover

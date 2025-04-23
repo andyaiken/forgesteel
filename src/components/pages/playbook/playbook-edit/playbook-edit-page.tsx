@@ -1,5 +1,5 @@
 import { Alert, Button, Divider, Flex, Input, Popover, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, PlusOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, DownOutlined, PlusOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot, TerrainSlot } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { MonsterFilter, TerrainFilter } from '../../../../models/filter';
@@ -125,7 +125,7 @@ export const PlaybookEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Input
-					className={element.name === '' ? 'input-empty' : ''}
+					status={element.name === '' ? 'warning' : ''}
 					placeholder='Name'
 					allowClear={true}
 					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
@@ -221,7 +221,7 @@ export const PlaybookEditPage = (props: Props) => {
 							<HeaderText>Section</HeaderText>
 							<Space direction='vertical' style={{ width: '100%' }}>
 								<Input
-									className={section.name === '' ? 'input-empty' : ''}
+									status={section.name === '' ? 'warning' : ''}
 									placeholder='Name'
 									allowClear={true}
 									value={section.name}
@@ -972,7 +972,7 @@ export const PlaybookEditPage = (props: Props) => {
 														>
 															<HeaderText>Name</HeaderText>
 															<Input
-																className={element.name === '' ? 'input-empty' : ''}
+																status={element.name === '' ? 'warning' : ''}
 																placeholder='Name'
 																allowClear={true}
 																value={c.name}
@@ -983,7 +983,7 @@ export const PlaybookEditPage = (props: Props) => {
 															<HeaderText>Characteristics</HeaderText>
 															<Select
 																style={{ width: '100%' }}
-																className={c.characteristics.length < 2 ? 'selection-empty' : ''}
+																status={c.characteristics.length < 2 ? 'warning' : ''}
 																mode='multiple'
 																placeholder='Select characteristics'
 																options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(ch => ({ value: ch }))}
@@ -993,7 +993,7 @@ export const PlaybookEditPage = (props: Props) => {
 															/>
 															<HeaderText>Skills</HeaderText>
 															<Input
-																className={element.name === '' ? 'input-empty' : ''}
+																status={element.name === '' ? 'warning' : ''}
 																placeholder='Skills'
 																allowClear={true}
 																value={c.skills}
@@ -1001,7 +1001,7 @@ export const PlaybookEditPage = (props: Props) => {
 															/>
 															<HeaderText>Abilities</HeaderText>
 															<Input
-																className={element.name === '' ? 'input-empty' : ''}
+																status={element.name === '' ? 'warning' : ''}
 																placeholder='Skills'
 																allowClear={true}
 																value={c.abilities}
@@ -1044,7 +1044,7 @@ export const PlaybookEditPage = (props: Props) => {
 														>
 															<HeaderText>Name</HeaderText>
 															<Input
-																className={element.name === '' ? 'input-empty' : ''}
+																status={element.name === '' ? 'warning' : ''}
 																placeholder='Name'
 																allowClear={true}
 																value={t.name}
@@ -1055,7 +1055,7 @@ export const PlaybookEditPage = (props: Props) => {
 															<HeaderText>Characteristics</HeaderText>
 															<Select
 																style={{ width: '100%' }}
-																className={t.characteristics.length < 2 ? 'selection-empty' : ''}
+																status={t.characteristics.length < 2 ? 'warning' : ''}
 																mode='multiple'
 																placeholder='Select characteristics'
 																options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(ch => ({ value: ch }))}
@@ -1065,7 +1065,7 @@ export const PlaybookEditPage = (props: Props) => {
 															/>
 															<HeaderText>Skills</HeaderText>
 															<Input
-																className={element.name === '' ? 'input-empty' : ''}
+																status={element.name === '' ? 'warning' : ''}
 																placeholder='Skills'
 																allowClear={true}
 																value={t.skills}
@@ -1073,7 +1073,7 @@ export const PlaybookEditPage = (props: Props) => {
 															/>
 															<HeaderText>Abilities</HeaderText>
 															<Input
-																className={element.name === '' ? 'input-empty' : ''}
+																status={element.name === '' ? 'warning' : ''}
 																placeholder='Skills'
 																allowClear={true}
 																value={t.abilities}
@@ -1785,6 +1785,7 @@ export const PlaybookEditPage = (props: Props) => {
 								>
 									<Button icon={<SettingOutlined />}>
 										Options
+										<DownOutlined />
 									</Button>
 								</Popover>
 								: null

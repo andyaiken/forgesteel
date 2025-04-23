@@ -1,5 +1,5 @@
 import { Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
-import { BookOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
+import { BookOutlined, DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
 import { HistogramPanel, HistogramTextPanel } from '../../../panels/histogram/histogram-panel';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
@@ -835,6 +835,7 @@ export const LibraryListPage = (props: Props) => {
 				<div className='library-list-page'>
 					<AppHeader subheader='Library' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
 						<Input
+							name='search'
 							placeholder='Search'
 							allowClear={true}
 							value={searchTerm}
@@ -885,8 +886,9 @@ export const LibraryListPage = (props: Props) => {
 								</div>
 							)}
 						>
-							<Button type='primary' icon={<PlusOutlined />}>
+							<Button type='primary'>
 								Add
+								<DownOutlined />
 							</Button>
 						</Popover>
 						<div className='divider' />
@@ -899,6 +901,7 @@ export const LibraryListPage = (props: Props) => {
 						>
 							<Button icon={<SettingOutlined />}>
 								Options
+								<DownOutlined />
 							</Button>
 						</Popover>
 					</AppHeader>

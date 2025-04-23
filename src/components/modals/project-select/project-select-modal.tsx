@@ -35,6 +35,7 @@ export const ProjectSelectModal = (props: Props) => {
 				toolbar={
 					<>
 						<Input
+							name='search'
 							placeholder='Search'
 							allowClear={true}
 							value={searchTerm}

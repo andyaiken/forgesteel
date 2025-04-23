@@ -543,6 +543,7 @@ export const HeroEditPage = (props: Props) => {
 							showSearchBar ?
 								<div className='search-bar'>
 									<Input
+										name='search'
 										placeholder='Search'
 										allowClear={true}
 										value={searchTerm}
@@ -752,7 +753,7 @@ const CultureSection = (props: CultureSectionProps) => {
 						<Space direction='vertical' style={{ width: '100%' }}>
 							<Select
 								style={{ width: '100%' }}
-								className={props.hero.culture.environment === null ? 'selection-empty' : ''}
+								status={props.hero.culture.environment === null ? 'warning' : ''}
 								allowClear={true}
 								placeholder='Select'
 								options={EnvironmentData.getEnvironments().map(s => ({ value: s.id, label: s.name, desc: s.description }))}
@@ -762,7 +763,7 @@ const CultureSection = (props: CultureSectionProps) => {
 							/>
 							<Select
 								style={{ width: '100%' }}
-								className={props.hero.culture.organization === null ? 'selection-empty' : ''}
+								status={props.hero.culture.organization === null ? 'warning' : ''}
 								allowClear={true}
 								placeholder='Select'
 								options={OrganizationData.getOrganizations().map(s => ({ value: s.id, label: s.name, desc: s.description }))}
@@ -772,7 +773,7 @@ const CultureSection = (props: CultureSectionProps) => {
 							/>
 							<Select
 								style={{ width: '100%' }}
-								className={props.hero.culture.upbringing === null ? 'selection-empty' : ''}
+								status={props.hero.culture.upbringing === null ? 'warning' : ''}
 								allowClear={true}
 								placeholder='Select'
 								options={UpbringingData.getUpbringings().map(s => ({ value: s.id, label: s.name, desc: s.description }))}
@@ -791,7 +792,7 @@ const CultureSection = (props: CultureSectionProps) => {
 					<div className='ds-text'>Choose your language.</div>
 					<Select
 						style={{ width: '100%' }}
-						className={props.hero.culture.languages.length === 0 ? 'selection-empty' : ''}
+						status={props.hero.culture.languages.length === 0 ? 'warning' : ''}
 						allowClear={true}
 						placeholder='Select'
 						options={SourcebookLogic.getLanguages(props.sourcebooks).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
@@ -879,7 +880,7 @@ const CareerSection = (props: CareerSectionProps) => {
 					<div className='ds-text'>Choose an inciting incident.</div>
 					<Select
 						style={{ width: '100%' }}
-						className={props.hero.career.incitingIncidents.selectedID === null ? 'selection-empty' : ''}
+						status={props.hero.career.incitingIncidents.selectedID === null ? 'warning' : ''}
 						allowClear={true}
 						placeholder='Select'
 						options={props.hero.career.incitingIncidents.options.map(s => ({ value: s.id, label: s.name, desc: s.description }))}
@@ -990,7 +991,7 @@ const ClassSection = (props: ClassSectionProps) => {
 						<div className='ds-text'>Choose {props.hero.class.subclassCount === 1 ? `a ${props.hero.class.subclassName || 'subclass'}` : `${props.hero.class.subclassCount} ${props.hero.class.subclassName || 'subclasse'}s`}.</div>
 						<Select
 							style={{ width: '100%' }}
-							className={props.hero.class.subclasses.filter(sc => sc.selected).length === 0 ? 'selection-empty' : ''}
+							status={props.hero.class.subclasses.filter(sc => sc.selected).length === 0 ? 'warning' : ''}
 							mode={props.hero.class.subclassCount === 1 ? undefined : 'multiple'}
 							maxCount={props.hero.class.subclassCount === 1 ? undefined : props.hero.class.subclassCount}
 							allowClear={true}
@@ -1015,7 +1016,7 @@ const ClassSection = (props: ClassSectionProps) => {
 						<HeaderText>Characteristics</HeaderText>
 						<Select
 							style={{ width: '100%' }}
-							className={array === null ? 'selection-empty' : ''}
+							status={array === null ? 'warning' : ''}
 							placeholder='Select characteristic array'
 							options={arrays.map(a => ({ value: a.join(', '), array: a }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
@@ -1072,7 +1073,7 @@ const ClassSection = (props: ClassSectionProps) => {
 						<HeaderText>Primary Characteristics</HeaderText>
 						<Select
 							style={{ width: '100%' }}
-							className={array === null ? 'selection-empty' : ''}
+							status={array === null ? 'warning' : ''}
 							placeholder='Select your primary characteristics'
 							options={props.hero.class.primaryCharacteristicsOptions.map(a => ({ value: a.join(', '), array: a }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
@@ -1242,7 +1243,7 @@ const DetailsSection = (props: DetailsSectionProps) => {
 				<div className='hero-edit-content-column choices' id='details-main'>
 					<HeaderText>Name</HeaderText>
 					<Input
-						className={props.hero.name === '' ? 'input-empty' : ''}
+						status={props.hero.name === '' ? 'warning' : ''}
 						placeholder='Name'
 						allowClear={true}
 						addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => props.setName(NameGenerator.generateName())} />}

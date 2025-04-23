@@ -1,5 +1,5 @@
 import { Alert, Button, Input, Popover, Segmented, Space } from 'antd';
-import { PlusOutlined, ReadOutlined, SettingOutlined } from '@ant-design/icons';
+import { DownOutlined, ReadOutlined, SettingOutlined } from '@ant-design/icons';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { CounterRunPanel } from '../../../panels/run/counter-run/counter-run-panel';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
@@ -485,8 +485,9 @@ export const SessionDirectorPage = (props: Props) => {
 								</div>
 							)}
 						>
-							<Button type='primary' icon={<PlusOutlined />}>
-								Add
+							<Button type='primary'>
+								Start
+								<DownOutlined />
 							</Button>
 						</Popover>
 						{
@@ -505,6 +506,7 @@ export const SessionDirectorPage = (props: Props) => {
 						>
 							<Button icon={<SettingOutlined />}>
 								Options
+								<DownOutlined />
 							</Button>
 						</Popover>
 					</AppHeader>

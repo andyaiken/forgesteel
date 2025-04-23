@@ -72,7 +72,7 @@ export const MonsterEditPanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Input
-					className={monster.name === '' ? 'input-empty' : ''}
+					status={monster.name === '' ? 'warning' : ''}
 					placeholder='Name'
 					allowClear={true}
 					addonAfter={<ThunderboltOutlined className='random-btn' onClick={setRandomName} />}

@@ -55,6 +55,7 @@ export const MonsterSelectModal = (props: Props) => {
 			<Modal
 				toolbar={
 					<Input
+						name='search'
 						placeholder='Search'
 						allowClear={true}
 						value={searchTerm}

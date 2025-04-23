@@ -1,5 +1,5 @@
 import { Button, Input, Popover, Space, Tabs, Upload } from 'antd';
-import { DownloadOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Collections } from '../../../../utils/collections';
 import { Empty } from '../../../controls/empty/empty';
@@ -84,6 +84,7 @@ export const HeroListPage = (props: Props) => {
 				<div className='hero-list-page'>
 					<AppHeader subheader='Heroes' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
 						<Input
+							name='search'
 							placeholder='Search'
 							allowClear={true}
 							value={searchTerm}
@@ -118,8 +119,9 @@ export const HeroListPage = (props: Props) => {
 								</div>
 							)}
 						>
-							<Button type='primary' icon={<PlusOutlined />}>
+							<Button type='primary'>
 								Add
+								<DownOutlined />
 							</Button>
 						</Popover>
 					</AppHeader>

@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { CloseOutlined, CopyOutlined, EditOutlined, FileOutlined, SettingOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, FileOutlined, SettingOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Ability } from '../../../../models/ability';
 import { Ancestry } from '../../../../models/ancestry';
@@ -118,6 +118,7 @@ export const HeroViewPage = (props: Props) => {
 						>
 							<Button icon={<FileOutlined />}>
 								File
+								<DownOutlined />
 							</Button>
 						</Popover>
 						<Button icon={<ToolOutlined />} onClick={() => props.showHeroState(hero, HeroStatePage.Hero)}>
@@ -129,6 +130,7 @@ export const HeroViewPage = (props: Props) => {
 						>
 							<Button icon={<SettingOutlined />}>
 								Options
+								<DownOutlined />
 							</Button>
 						</Popover>
 					</AppHeader>

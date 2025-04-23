@@ -35,11 +35,11 @@ export const RulesModal = (props: Props) => {
 	try {
 		const getRulesSection = () => {
 			const md = `
-# SURPRISE
+## SURPRISE
 
 When battle begins, the Director determines which creatures, if any, are caught off guard. Any creature who isn’t ready for combat at the start of an encounter is surprised until the end of the first round of combat. A surprised creature can’t take triggered or free triggered actions and ability power rolls against them gain an edge.
 
-# FLANKING
+## FLANKING
 
 When you and at least one ally are adjacent to the same enemy and on completely opposite sides of the enemy, you are flanking that enemy. While flanking an enemy, you gain an edge on melee strikes against them.
 
@@ -47,17 +47,15 @@ If you’re unsure whether your hero and an ally are flanking a foe, imagine a l
 
 You must have line of effect to the enemy and be able to take triggered actions in order to gain or grant the flanking benefit.
 
-# COVER
+## COVER
 
 When you have line of effect to a creature or object but that target has at least half their form blocked by a solid obstruction such as a tree, wall, or overturned table, the target has cover. You take a bane on abilities that deal damage against creatures or objects that have cover from you.
 
-# CONCEALMENT
+## CONCEALMENT
 
 Darkness, fog, invisibility magic, and any other effect that fully obscures a creature but doesn’t protect their body grants that creature concealment. You can target a creature who has concealment with strikes, provided they aren’t hidden. However, strikes against such creatures take a bane. Even if you have line of effect to a creature, they have concealment from you if you can’t see them.
 
-## INVISIBLE CREATURES
-
-Invisible creatures always have concealment from other creatures. If an invisible creature isn’t hidden, they can still be targeted with abilities, though strikes against them take a bane. The test made to find a hidden creature who is invisible takes a bane.`;
+**Invisible Creatures** Invisible creatures always have concealment from other creatures. If an invisible creature isn’t hidden, they can still be targeted with abilities, though strikes against them take a bane. The test made to find a hidden creature who is invisible takes a bane.`;
 			return (
 				<Markdown text={md} />
 			);

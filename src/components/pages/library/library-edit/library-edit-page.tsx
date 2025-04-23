@@ -1,5 +1,5 @@
 import { Alert, Button, Drawer, Flex, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, DownloadOutlined, EditOutlined, LeftOutlined, PlusOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, DownOutlined, DownloadOutlined, EditOutlined, LeftOutlined, PlusOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureAbility, FeatureAddOn, FeatureAddOnType, FeatureMalice, FeatureText } from '../../../../models/feature';
 import { Monster, MonsterGroup } from '../../../../models/monster';
@@ -167,7 +167,7 @@ export const LibraryEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Input
-					className={element.name === '' ? 'input-empty' : ''}
+					status={element.name === '' ? 'warning' : ''}
 					placeholder='Name'
 					allowClear={true}
 					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
@@ -333,7 +333,7 @@ export const LibraryEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Select
 					style={{ width: '100%' }}
-					className={culture.languages.length === 0 ? 'selection-empty' : ''}
+					status={culture.languages.length === 0 ? 'warning' : ''}
 					allowClear={true}
 					placeholder='Select language'
 					options={SourcebookLogic.getLanguages(props.sourcebooks).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
@@ -348,7 +348,7 @@ export const LibraryEditPage = (props: Props) => {
 				/>
 				<Select
 					style={{ width: '100%' }}
-					className={culture.environment === null ? 'selection-empty' : ''}
+					status={culture.environment === null ? 'warning' : ''}
 					allowClear={true}
 					placeholder='Select environment'
 					options={EnvironmentData.getEnvironments().map(s => ({ value: s.id, label: s.name }))}
@@ -367,7 +367,7 @@ export const LibraryEditPage = (props: Props) => {
 				/>
 				<Select
 					style={{ width: '100%' }}
-					className={culture.organization === null ? 'selection-empty' : ''}
+					status={culture.organization === null ? 'warning' : ''}
 					allowClear={true}
 					placeholder='Select organization'
 					options={OrganizationData.getOrganizations().map(s => ({ value: s.id, label: s.name }))}
@@ -386,7 +386,7 @@ export const LibraryEditPage = (props: Props) => {
 				/>
 				<Select
 					style={{ width: '100%' }}
-					className={culture.upbringing === null ? 'selection-empty' : ''}
+					status={culture.upbringing === null ? 'warning' : ''}
 					allowClear={true}
 					placeholder='Select upbringing'
 					options={UpbringingData.getUpbringings().map(s => ({ value: s.id, label: s.name }))}
@@ -467,7 +467,7 @@ export const LibraryEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Heroic Resource</HeaderText>
 				<Input
-					className={heroClass.heroicResource === '' ? 'input-empty' : ''}
+					status={heroClass.heroicResource === '' ? 'warning' : ''}
 					placeholder='Heroic resource'
 					allowClear={true}
 					value={heroClass.heroicResource}
@@ -475,7 +475,7 @@ export const LibraryEditPage = (props: Props) => {
 				/>
 				<HeaderText>Subclass Name</HeaderText>
 				<Input
-					className={heroClass.subclassName === '' ? 'input-empty' : ''}
+					status={heroClass.subclassName === '' ? 'warning' : ''}
 					placeholder='Subclass name'
 					allowClear={true}
 					value={heroClass.subclassName}
@@ -908,7 +908,7 @@ export const LibraryEditPage = (props: Props) => {
 							<div>
 								<HeaderText>Name</HeaderText>
 								<Input
-									className={subclass.name === '' ? 'input-empty' : ''}
+									status={subclass.name === '' ? 'warning' : ''}
 									placeholder='Name'
 									allowClear={true}
 									value={subclass.name}
@@ -983,7 +983,7 @@ export const LibraryEditPage = (props: Props) => {
 				<HeaderText>Armor</HeaderText>
 				<Select
 					style={{ width: '100%' }}
-					className={kit.armor.length === 0 ? 'selection-empty' : ''}
+					status={kit.armor.length === 0 ? 'warning' : ''}
 					mode='multiple'
 					allowClear={true}
 					placeholder='Select armor'
@@ -995,7 +995,7 @@ export const LibraryEditPage = (props: Props) => {
 				<HeaderText>Weapons</HeaderText>
 				<Select
 					style={{ width: '100%' }}
-					className={kit.weapon.length === 0 ? 'selection-empty' : ''}
+					status={kit.weapon.length === 0 ? 'warning' : ''}
 					mode='multiple'
 					allowClear={true}
 					placeholder='Select weapon'
@@ -1939,7 +1939,7 @@ export const LibraryEditPage = (props: Props) => {
 							<Space direction='vertical' style={{ width: '100%' }}>
 								<HeaderText>Label</HeaderText>
 								<Input
-									className={upgrade.label === '' ? 'input-empty' : ''}
+									status={upgrade.label === '' ? 'warning' : ''}
 									placeholder='Label'
 									allowClear={true}
 									value={upgrade.label}
@@ -3015,6 +3015,7 @@ export const LibraryEditPage = (props: Props) => {
 								>
 									<Button icon={<SettingOutlined />}>
 										Options
+										<DownOutlined />
 									</Button>
 								</Popover>
 								: null

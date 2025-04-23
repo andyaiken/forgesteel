@@ -1,4 +1,5 @@
 import { Button, Popover } from 'antd';
+import { DownOutlined, SettingOutlined } from '@ant-design/icons';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { CounterRunPanel } from '../../../panels/run/counter-run/counter-run-panel';
 import { Empty } from '../../../controls/empty/empty';
@@ -11,7 +12,6 @@ import { Options } from '../../../../models/options';
 import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Playbook } from '../../../../models/playbook';
-import { SettingOutlined } from '@ant-design/icons';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
 import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/tactical-map-panel';
@@ -105,6 +105,7 @@ export const SessionPlayerPage = (props: Props) => {
 						>
 							<Button icon={<SettingOutlined />}>
 								Options
+								<DownOutlined />
 							</Button>
 						</Popover>
 					</AppHeader>

@@ -1,5 +1,5 @@
 import { Button, Divider, Flex, Input, Popover, Segmented, Space, Tabs, Upload } from 'antd';
-import { DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { Adventure } from '../../../../models/adventure';
 import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
@@ -290,6 +290,7 @@ export const PlaybookListPage = (props: Props) => {
 				<div className='playbook-list-page'>
 					<AppHeader subheader='Playbook' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
 						<Input
+							name='search'
 							placeholder='Search'
 							allowClear={true}
 							value={searchTerm}
@@ -453,8 +454,9 @@ export const PlaybookListPage = (props: Props) => {
 								</div>
 							)}
 						>
-							<Button type='primary' icon={<PlusOutlined />}>
+							<Button type='primary'>
 								Add
+								<DownOutlined />
 							</Button>
 						</Popover>
 						{
@@ -470,6 +472,7 @@ export const PlaybookListPage = (props: Props) => {
 								>
 									<Button icon={<SettingOutlined />}>
 										Options
+										<DownOutlined />
 									</Button>
 								</Popover>
 								: null

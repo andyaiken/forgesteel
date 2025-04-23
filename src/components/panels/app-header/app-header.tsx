@@ -23,8 +23,8 @@ export const AppHeader = (props: Props) => {
 		<>
 			{props.children}
 			{props.children ? <div className='divider' /> : null}
-			<Button onClick={props.showRoll}>Roll</Button>
 			<Button onClick={props.showRules}>Rules</Button>
+			<Button onClick={props.showRoll}>Roll</Button>
 			<Button onClick={props.showAbout}>About</Button>
 		</>
 	);

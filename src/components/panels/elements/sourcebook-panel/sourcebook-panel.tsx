@@ -142,7 +142,7 @@ export const SourcebookPanel = (props: Props) => {
 			content = (
 				<Space direction='vertical' style={{ width: '100%', paddingBottom: '5px' }}>
 					<Input
-						className={sourcebook.name === '' ? 'input-empty' : ''}
+						status={sourcebook.name === '' ? 'warning' : ''}
 						placeholder='Name'
 						allowClear={true}
 						addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
@@ -169,7 +169,7 @@ export const SourcebookPanel = (props: Props) => {
 									>
 										<Space direction='vertical' style={{ width: '100%' }}>
 											<Input
-												className={lang.name === '' ? 'input-empty' : ''}
+												status={lang.name === '' ? 'warning' : ''}
 												placeholder='Name'
 												allowClear={true}
 												addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setLanguageName(n, NameGenerator.generateName())} />}
@@ -208,7 +208,7 @@ export const SourcebookPanel = (props: Props) => {
 									>
 										<Space direction='vertical' style={{ width: '100%' }}>
 											<Input
-												className={skill.name === '' ? 'input-empty' : ''}
+												status={skill.name === '' ? 'warning' : ''}
 												placeholder='Name'
 												allowClear={true}
 												addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setSkillName(n, NameGenerator.generateName())} />}

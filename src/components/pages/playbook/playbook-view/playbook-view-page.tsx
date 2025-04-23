@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { CloseOutlined, CopyOutlined, EditOutlined, FileOutlined, PlayCircleOutlined, SettingOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, FileOutlined, PlayCircleOutlined, SettingOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { Adventure } from '../../../../models/adventure';
 import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
@@ -170,6 +170,7 @@ export const PlaybookViewPage = (props: Props) => {
 						>
 							<Button icon={<FileOutlined />}>
 								File
+								<DownOutlined />
 							</Button>
 						</Popover>
 						{
@@ -194,6 +195,7 @@ export const PlaybookViewPage = (props: Props) => {
 								>
 									<Button icon={<SettingOutlined />}>
 										Options
+										<DownOutlined />
 									</Button>
 								</Popover>
 								: null

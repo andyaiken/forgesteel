@@ -36,7 +36,7 @@ export const ElementEditPanel = (props: Props) => {
 				<div className='monster-edit-panel'>
 					<HeaderText>Name</HeaderText>
 					<Input
-						className={element.name === '' ? 'input-empty' : ''}
+						status={element.name === '' ? 'warning' : ''}
 						placeholder='Name'
 						allowClear={true}
 						value={element.name}

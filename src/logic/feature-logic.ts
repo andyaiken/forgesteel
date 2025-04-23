@@ -171,22 +171,37 @@ export class FeatureLogic {
 				// Imbued implement grants +1 / +2 / +3 damage to magic / psionic abilities based on highest enhancement tier
 				if (hasLvl1) {
 					features.push(FactoryLogic.feature.createAbilityDamage({
-						id: item.name + '-bonus-1',
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Psionic ],
+						id: item.name + '-bonus-1a',
+						keywords: [ AbilityKeyword.Magic ],
+						modifier: 1
+					}));
+					features.push(FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-1b',
+						keywords: [ AbilityKeyword.Psionic ],
 						modifier: 1
 					}));
 				}
 				if (hasLvl5) {
 					features.push(FactoryLogic.feature.createAbilityDamage({
-						id: item.name + '-bonus-5',
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Psionic ],
+						id: item.name + '-bonus-5a',
+						keywords: [ AbilityKeyword.Magic ],
+						modifier: 1
+					}));
+					features.push(FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-5b',
+						keywords: [ AbilityKeyword.Psionic ],
 						modifier: 1
 					}));
 				}
 				if (hasLvl9) {
 					features.push(FactoryLogic.feature.createAbilityDamage({
-						id: item.name + '-bonus-9',
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Psionic ],
+						id: item.name + '-bonus-9a',
+						keywords: [ AbilityKeyword.Magic ],
+						modifier: 1
+					}));
+					features.push(FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-9b',
+						keywords: [ AbilityKeyword.Psionic ],
 						modifier: 1
 					}));
 				}

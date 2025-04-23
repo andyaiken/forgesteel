@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { CloseOutlined, CopyOutlined, EditOutlined, FileOutlined, LeftOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, FileOutlined, LeftOutlined, UploadOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
@@ -357,6 +357,7 @@ export const LibraryViewPage = (props: Props) => {
 						>
 							<Button icon={<FileOutlined />}>
 								File
+								<DownOutlined />
 							</Button>
 						</Popover>
 					</AppHeader>

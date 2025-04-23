@@ -1009,7 +1009,7 @@ export const FeatureEditPanel = (props: Props) => {
 						<HeaderText>Types</HeaderText>
 						<Select
 							style={{ width: '100%' }}
-							className={data.types.length === 0 ? 'selection-empty' : ''}
+							status={data.types.length === 0 ? 'warning' : ''}
 							placeholder='Item types'
 							mode='multiple'
 							allowClear={true}
@@ -1030,7 +1030,7 @@ export const FeatureEditPanel = (props: Props) => {
 						<HeaderText>Types</HeaderText>
 						<Select
 							style={{ width: '100%' }}
-							className={data.types.length === 0 ? 'selection-empty' : ''}
+							status={data.types.length === 0 ? 'warning' : ''}
 							placeholder='Kit types'
 							mode='multiple'
 							allowClear={true}
@@ -1054,7 +1054,7 @@ export const FeatureEditPanel = (props: Props) => {
 						<HeaderText>Language</HeaderText>
 						<Select
 							style={{ width: '100%' }}
-							className={data.language === '' ? 'selection-empty' : ''}
+							status={data.language === '' ? 'warning' : ''}
 							placeholder='Language'
 							allowClear={true}
 							options={SourcebookLogic.getLanguages(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
@@ -1072,7 +1072,7 @@ export const FeatureEditPanel = (props: Props) => {
 						<HeaderText>Options</HeaderText>
 						<Select
 							style={{ width: '100%' }}
-							className={data.options.length === 0 ? 'selection-empty' : ''}
+							status={data.options.length === 0 ? 'warning' : ''}
 							placeholder='Options'
 							mode='multiple'
 							allowClear={true}
@@ -1121,7 +1121,7 @@ export const FeatureEditPanel = (props: Props) => {
 														<HeaderText>Power Roll</HeaderText>
 														<Select
 															style={{ width: '100%' }}
-															className={section.characteristic.length === 0 ? 'selection-empty' : ''}
+															status={section.characteristic.length === 0 ? 'warning' : ''}
 															placeholder='Characteristics'
 															mode='multiple'
 															options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
@@ -1130,21 +1130,21 @@ export const FeatureEditPanel = (props: Props) => {
 															onChange={value => setMaliceSectionPowerRollCharacteristics(data, n, value)}
 														/>
 														<Input
-															className={section.tier1 === '' ? 'input-empty' : ''}
+															status={section.tier1 === '' ? 'warning' : ''}
 															placeholder='Tier 1'
 															allowClear={true}
 															value={section.tier1}
 															onChange={e => setMaliceSectionPowerRoll1(data, n, e.target.value)}
 														/>
 														<Input
-															className={section.tier1 === '' ? 'input-empty' : ''}
+															status={section.tier1 === '' ? 'warning' : ''}
 															placeholder='Tier 2'
 															allowClear={true}
 															value={section.tier2}
 															onChange={e => setMaliceSectionPowerRoll2(data, n, e.target.value)}
 														/>
 														<Input
-															className={section.tier1 === '' ? 'input-empty' : ''}
+															status={section.tier1 === '' ? 'warning' : ''}
 															placeholder='Tier 3'
 															allowClear={true}
 															value={section.tier3}
@@ -1212,7 +1212,7 @@ export const FeatureEditPanel = (props: Props) => {
 						<HeaderText>Lists</HeaderText>
 						<Select
 							style={{ width: '100%' }}
-							className={data.lists.length === 0 ? 'selection-empty' : ''}
+							status={data.lists.length === 0 ? 'warning' : ''}
 							placeholder='Perk lists'
 							mode='multiple'
 							allowClear={true}
@@ -1258,7 +1258,7 @@ export const FeatureEditPanel = (props: Props) => {
 						<HeaderText>Skill</HeaderText>
 						<Select
 							style={{ width: '100%' }}
-							className={data.skill === '' ? 'selection-empty' : ''}
+							status={data.skill === '' ? 'warning' : ''}
 							placeholder='Skill'
 							allowClear={true}
 							options={SourcebookLogic.getSkills(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
@@ -1315,7 +1315,7 @@ export const FeatureEditPanel = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Tag</HeaderText>
 						<Input
-							className={data.tag === '' ? 'input-empty' : ''}
+							status={data.tag === '' ? 'warning' : ''}
 							placeholder='Tag'
 							allowClear={true}
 							value={data.tag}
@@ -1337,7 +1337,7 @@ export const FeatureEditPanel = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Tag</HeaderText>
 						<Input
-							className={data.tag === '' ? 'input-empty' : ''}
+							status={data.tag === '' ? 'warning' : ''}
 							placeholder='Tag'
 							allowClear={true}
 							value={data.tag}
@@ -1406,7 +1406,7 @@ export const FeatureEditPanel = (props: Props) => {
 									<div>
 										<HeaderText>Name</HeaderText>
 										<Input
-											className={feature.name === '' ? 'input-empty' : ''}
+											status={feature.name === '' ? 'warning' : ''}
 											placeholder='Name'
 											allowClear={true}
 											value={feature.name}

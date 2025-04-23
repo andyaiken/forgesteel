@@ -238,22 +238,6 @@ td {
 	}
 }
 
-.ant-input-affix-wrapper {
-	&.input-empty {
-		border-color: rgb(255, 160, 0);
-		background-color: rgba(255, 160, 0, 0.2);
-	}
-}
-
-.ant-input-group-wrapper {
-	&.input-empty {
-		.ant-input-outlined {
-			border-color: rgb(255, 160, 0);
-			background-color: rgba(255, 160, 0, 0.2);
-		}
-	}
-}
-
 .ant-popover {
 	.ant-divider {
 		margin: 10px 0;
@@ -296,15 +280,6 @@ td {
 		.ant-select-item-option-content {
 			white-space: unset !important;
 			text-overflow: unset !important;
-		}
-	}
-}
-
-.ant-select-outlined {
-	&.selection-empty {
-		.ant-select-selector {
-			border-color: rgb(255, 160, 0);
-			background-color: rgba(255, 160, 0, 0.2);
 		}
 	}
 }

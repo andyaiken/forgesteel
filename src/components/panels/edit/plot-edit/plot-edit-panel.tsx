@@ -50,7 +50,7 @@ export const PlotEditPanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Input
-					className={plot.name === '' ? 'input-empty' : ''}
+					status={plot.name === '' ? 'warning' : ''}
 					placeholder='Name'
 					allowClear={true}
 					value={plot.name}

@@ -70,7 +70,7 @@ export const FeaturePanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Select
 					style={{ width: '100%' }}
-					className={!data.selected ? 'selection-empty' : ''}
+					status={!data.selected ? 'warning' : ''}
 					allowClear={true}
 					placeholder='Select an ancestry'
 					options={sortedAncestries.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
@@ -129,7 +129,7 @@ export const FeaturePanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Select
 					style={{ width: '100%' }}
-					className={!data.selected ? 'selection-empty' : ''}
+					status={!data.selected ? 'warning' : ''}
 					allowClear={true}
 					placeholder='Select an ability from an ancestry'
 					options={sortedFeatures.map(a => ({ label: a.name, value: a.id, desc: a.description, disabled: currentFeatureIDs.includes(a.id) }))}
@@ -199,7 +199,7 @@ export const FeaturePanel = (props: Props) => {
 				</div>
 				<Select
 					style={{ width: '100%' }}
-					className={pointsLeft > 0 ? 'selection-empty' : ''}
+					status={pointsLeft > 0 ? 'warning' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -283,7 +283,7 @@ export const FeaturePanel = (props: Props) => {
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selectedIDs.length < data.count ? 'selection-empty' : ''}
+					status={data.selectedIDs.length < data.count ? 'warning' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -362,7 +362,7 @@ export const FeaturePanel = (props: Props) => {
 						<Expander title='Customize'>
 							<HeaderText>Customize</HeaderText>
 							<Input
-								className={data.selected.name === '' ? 'input-empty' : ''}
+								status={data.selected.name === '' ? 'warning' : ''}
 								placeholder='Name'
 								allowClear={true}
 								addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
@@ -422,7 +422,7 @@ export const FeaturePanel = (props: Props) => {
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length < data.count ? 'selection-empty' : ''}
+					status={data.selected.length < data.count ? 'warning' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -481,7 +481,7 @@ export const FeaturePanel = (props: Props) => {
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length < data.count ? 'selection-empty' : ''}
+					status={data.selected.length < data.count ? 'warning' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -541,7 +541,7 @@ export const FeaturePanel = (props: Props) => {
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length < data.count ? 'selection-empty' : ''}
+					status={data.selected.length < data.count ? 'warning' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -596,7 +596,7 @@ export const FeaturePanel = (props: Props) => {
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length < data.count ? 'selection-empty' : ''}
+					status={data.selected.length < data.count ? 'warning' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -675,7 +675,7 @@ export const FeaturePanel = (props: Props) => {
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length < data.count ? 'selection-empty' : ''}
+					status={data.selected.length < data.count ? 'warning' : ''}
 					mode={data.count == 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -733,7 +733,7 @@ export const FeaturePanel = (props: Props) => {
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length < data.count ? 'selection-empty' : ''}
+					status={data.selected.length < data.count ? 'warning' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -806,7 +806,7 @@ export const FeaturePanel = (props: Props) => {
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				<Select
 					style={{ width: '100%' }}
-					className={data.selected.length < data.count ? 'selection-empty' : ''}
+					status={data.selected.length < data.count ? 'warning' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
@@ -863,7 +863,7 @@ export const FeaturePanel = (props: Props) => {
 					sortedFeatures.length > 0 ?
 						<Select
 							style={{ width: '100%' }}
-							className={data.selected.length < data.count ? 'selection-empty' : ''}
+							status={data.selected.length < data.count ? 'warning' : ''}
 							mode={data.count === 1 ? undefined : 'multiple'}
 							maxCount={data.count === 1 ? undefined : data.count}
 							allowClear={true}
@@ -926,7 +926,7 @@ export const FeaturePanel = (props: Props) => {
 					sortedTitles.length > 0 ?
 						<Select
 							style={{ width: '100%' }}
-							className={data.selected.length < data.count ? 'selection-empty' : ''}
+							status={data.selected.length < data.count ? 'warning' : ''}
 							mode={data.count === 1 ? undefined : 'multiple'}
 							maxCount={data.count === 1 ? undefined : data.count}
 							allowClear={true}
@@ -962,7 +962,7 @@ export const FeaturePanel = (props: Props) => {
 						<Select
 							key={title.id}
 							style={{ width: '100%' }}
-							className={title.selectedFeatureID === '' ? 'selection-empty' : ''}
+							status={title.selectedFeatureID === '' ? 'warning' : ''}
 							allowClear={true}
 							placeholder='Select a title feature'
 							options={title.features.map(f => ({ label: f.name, value: f.id, desc: f.description }))}

@@ -459,8 +459,9 @@ export const HeroPanel = (props: Props) => {
 		const features = HeroLogic.getFeatures(props.hero)
 			.filter(f => featureTypes.includes(f.feature.type));
 
-		const mainFeatures = features.filter(f => !props.options.separateInventoryFeatures || (f.source !== 'Inventory'));
-		const inventoryFeatures = features.filter(f => props.options.separateInventoryFeatures && (f.source === 'Inventory'));
+		const itemNames = props.hero.state.inventory.map(i => i.name);
+		const mainFeatures = features.filter(f => !props.options.separateInventoryFeatures || !itemNames.includes(f.source));
+		const inventoryFeatures = features.filter(f => props.options.separateInventoryFeatures && itemNames.includes(f.source));
 
 		return (
 			<div className='features-section'>

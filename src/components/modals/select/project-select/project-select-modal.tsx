@@ -1,13 +1,13 @@
 import { Input, Space } from 'antd';
-import { Empty } from '../../controls/empty/empty';
-import { Modal } from '../modal/modal';
-import { Project } from '../../../models/project';
-import { ProjectPanel } from '../../panels/elements/project-panel/project-panel';
+import { Empty } from '../../../controls/empty/empty';
+import { Modal } from '../../modal/modal';
+import { Project } from '../../../../models/project';
+import { ProjectPanel } from '../../../panels/elements/project-panel/project-panel';
 import { SearchOutlined } from '@ant-design/icons';
-import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../models/sourcebook';
-import { SourcebookLogic } from '../../../logic/sourcebook-logic';
-import { Utils } from '../../../utils/utils';
+import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '../../../../models/sourcebook';
+import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
 import './project-select-modal.scss';

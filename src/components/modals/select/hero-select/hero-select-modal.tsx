@@ -1,15 +1,15 @@
 import { Segmented, Space } from 'antd';
-import { Collections } from '../../../utils/collections';
-import { Empty } from '../../controls/empty/empty';
-import { Field } from '../../controls/field/field';
-import { HeaderText } from '../../controls/header-text/header-text';
-import { Hero } from '../../../models/hero';
-import { HeroLogic } from '../../../logic/hero-logic';
-import { HeroPanel } from '../../panels/hero/hero-panel';
-import { Modal } from '../modal/modal';
-import { Options } from '../../../models/options';
-import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../models/sourcebook';
+import { Collections } from '../../../../utils/collections';
+import { Empty } from '../../../controls/empty/empty';
+import { Field } from '../../../controls/field/field';
+import { HeaderText } from '../../../controls/header-text/header-text';
+import { Hero } from '../../../../models/hero';
+import { HeroLogic } from '../../../../logic/hero-logic';
+import { HeroPanel } from '../../../panels/hero/hero-panel';
+import { Modal } from '../../modal/modal';
+import { Options } from '../../../../models/options';
+import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '../../../../models/sourcebook';
 import { useState } from 'react';
 
 import './hero-select-modal.scss';

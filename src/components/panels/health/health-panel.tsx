@@ -4,7 +4,7 @@ import { Encounter, EncounterSlot } from '../../../models/encounter';
 import { Collections } from '../../../utils/collections';
 import { Condition } from '../../../models/condition';
 import { ConditionPanel } from '../condition/condition-panel';
-import { ConditionSelectModal } from '../../modals/condition-select/condition-select-modal';
+import { ConditionSelectModal } from '../../modals/select/condition-select/condition-select-modal';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
 import { Empty } from '../../controls/empty/empty';

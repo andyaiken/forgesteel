@@ -27,34 +27,34 @@ export class HeroLogic {
 		return `Level ${hero.class?.level || 1} ${hero.ancestry?.name || 'Ancestry'} ${hero.class?.name || 'Class'}`;
 	};
 
-	static getFeatures = (hero: Hero): { feature: Feature, source: string }[] => {
+	static getFeatures = (hero: Hero) => {
 		const features: { feature: Feature, source: string }[] = [];
 
 		if (hero.ancestry) {
-			features.push(...FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero).map(f => ({ feature: f, source: hero.ancestry!.name })));
+			features.push(...FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero));
 		}
 
 		if (hero.culture) {
-			features.push(...FeatureLogic.getFeaturesFromCulture(hero.culture, hero).map(f => ({ feature: f, source: hero.culture!.name })));
+			features.push(...FeatureLogic.getFeaturesFromCulture(hero.culture, hero));
 		}
 
 		if (hero.career) {
-			features.push(...FeatureLogic.getFeaturesFromCareer(hero.career, hero).map(f => ({ feature: f, source: hero.career!.name })));
+			features.push(...FeatureLogic.getFeaturesFromCareer(hero.career, hero));
 		}
 
 		if (hero.class) {
-			features.push(...FeatureLogic.getFeaturesFromClass(hero.class, hero).map(f => ({ feature: f, source: hero.class!.name })));
+			features.push(...FeatureLogic.getFeaturesFromClass(hero.class, hero));
 		}
 
 		if (hero.complication) {
-			features.push(...FeatureLogic.getFeaturesFromComplication(hero.complication, hero).map(f => ({ feature: f, source: hero.complication!.name })));
+			features.push(...FeatureLogic.getFeaturesFromComplication(hero.complication, hero));
 		}
 
-		features.push(...FeatureLogic.getFeaturesFromCustomization(hero).map(f => ({ feature: f, source: 'Customization' })));
+		features.push(...FeatureLogic.getFeaturesFromCustomization(hero));
 
 		hero.state.inventory.forEach(item => {
 			try {
-				features.push(...FeatureLogic.getFeaturesFromItem(item, hero).map(f => ({ feature: f, source: 'Inventory' })));
+				features.push(...FeatureLogic.getFeaturesFromItem(item, hero));
 			} catch (ex) {
 				console.error(ex);
 			}

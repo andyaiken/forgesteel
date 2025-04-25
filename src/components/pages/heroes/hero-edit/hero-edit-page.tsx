@@ -666,6 +666,7 @@ const AncestrySection = (props: AncestrySectionProps) => {
 		let choices: ReactNode[] = [];
 		if (props.hero.ancestry) {
 			choices = FeatureLogic.getFeaturesFromAncestry(props.hero.ancestry, props.hero)
+				.map(f => f.feature)
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
@@ -740,6 +741,7 @@ const CultureSection = (props: CultureSectionProps) => {
 		let choices: ReactNode[] = [];
 		if (props.hero.culture) {
 			choices = FeatureLogic.getFeaturesFromCulture(props.hero.culture, props.hero)
+				.map(f => f.feature)
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
@@ -869,6 +871,7 @@ const CareerSection = (props: CareerSectionProps) => {
 		let choices: ReactNode[] = [];
 		if (props.hero.career) {
 			choices = FeatureLogic.getFeaturesFromCareer(props.hero.career, props.hero)
+				.map(f => f.feature)
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
@@ -977,6 +980,7 @@ const ClassSection = (props: ClassSectionProps) => {
 		let choices: ReactNode[] = [];
 		if (props.hero.class) {
 			choices = FeatureLogic.getFeaturesFromClass(props.hero.class, props.hero)
+				.map(f => f.feature)
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
@@ -1171,6 +1175,7 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 		let choices: ReactNode[] = [];
 		if (props.hero.complication) {
 			choices = FeatureLogic.getFeaturesFromComplication(props.hero.complication, props.hero)
+				.map(f => f.feature)
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>

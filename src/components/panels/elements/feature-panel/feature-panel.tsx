@@ -24,7 +24,7 @@ import { KitPanel } from '../kit-panel/kit-panel';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { Monster } from '../../../../models/monster';
 import { MonsterPanel } from '../monster-panel/monster-panel';
-import { MonsterSelectModal } from '../../../modals/monster-select/monster-select-modal';
+import { MonsterSelectModal } from '../../../modals/select/monster-select/monster-select-modal';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';

@@ -320,7 +320,9 @@ export const HeroEditPage = (props: Props) => {
 
 		const setFeatureData = (featureID: string, data: FeatureData) => {
 			const heroCopy = Utils.copy(hero);
-			const feature = HeroLogic.getFeatures(heroCopy).find(f => f.id === featureID);
+			const feature = HeroLogic.getFeatures(heroCopy)
+				.map(f => f.feature)
+				.find(f => f.id === featureID);
 			if (feature) {
 				feature.data = data;
 			}

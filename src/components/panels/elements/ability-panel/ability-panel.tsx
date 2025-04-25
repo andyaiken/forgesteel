@@ -40,6 +40,7 @@ export const AbilityPanel = (props: Props) => {
 				return cost;
 			}
 			const modifierSum = HeroLogic.getFeatures(props.hero)
+				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.AbilityCost)
 				.filter(f => f.data.keywords.every(k => props.ability.keywords.includes(k)))
 				.map(f => f.data.modifier)

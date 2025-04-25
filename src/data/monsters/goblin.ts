@@ -608,7 +608,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All allies in the burst',
-						effect: 'Each target can.'
+						effect: 'Each target can make a free strike, dealing an additional 3 damage.'
 					})
 				})
 			]

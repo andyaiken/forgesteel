@@ -522,7 +522,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							bonus: 2,
 							tier1: '6 damage',
 							tier2: '9 damage',
-							tier3: '12 damage; M<2 the target has a double bane on escaping their next power roll'
+							tier3: '12 damage; M<2 the target has a double bane on their next power roll'
 						}),
 						effect: 'Taunted (EoT).'
 					})

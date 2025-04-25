@@ -457,33 +457,60 @@ export const HeroPanel = (props: Props) => {
 		const featureTypes = [ FeatureType.Text, FeatureType.Package ];
 
 		const features = HeroLogic.getFeatures(props.hero)
-			.filter(feature => featureTypes.includes(feature.type));
-		if (features.length === 0) {
-			return null;
-		}
+			.filter(f => featureTypes.includes(f.feature.type));
+
+		const mainFeatures = features.filter(f => !props.options.separateInventoryFeatures || (f.source !== 'Inventory'));
+		const inventoryFeatures = features.filter(f => props.options.separateInventoryFeatures && (f.source === 'Inventory'));
 
 		return (
 			<div className='features-section'>
-				{header ? <HeaderText level={1}>{header}</HeaderText> : null}
-				<div className={`features-grid ${props.options.featureWidth.toLowerCase().replace(' ', '-')}`}>
-					{
-						features.map(feature => (
-							<FeaturePanel
-								key={feature.id}
-								feature={feature}
-								options={props.options}
-								hero={props.hero}
-								sourcebooks={props.sourcebooks}
-								mode={PanelMode.Full}
-							/>
-						))
-					}
-				</div>
+				{
+					mainFeatures.length > 0 ?
+						<>
+							{header ? <HeaderText level={1}>{header}</HeaderText> : null}
+							<div className={`features-grid ${props.options.featureWidth.toLowerCase().replace(' ', '-')}`}>
+								{
+									mainFeatures.map(f => (
+										<FeaturePanel
+											key={f.feature.id}
+											feature={f.feature}
+											options={props.options}
+											hero={props.hero}
+											sourcebooks={props.sourcebooks}
+											mode={PanelMode.Full}
+										/>
+									))
+								}
+							</div>
+						</>
+						: null
+				}
+				{
+					inventoryFeatures.length > 0 ?
+						<>
+							<HeaderText level={1}>Inventory</HeaderText>
+							<div className={`features-grid ${props.options.featureWidth.toLowerCase().replace(' ', '-')}`}>
+								{
+									inventoryFeatures.map(f => (
+										<FeaturePanel
+											key={f.feature.id}
+											feature={f.feature}
+											options={props.options}
+											hero={props.hero}
+											sourcebooks={props.sourcebooks}
+											mode={PanelMode.Full}
+										/>
+									))
+								}
+							</div>
+						</>
+						: null
+				}
 			</div>
 		);
 	};
 
-	const getAbilitiesSection = (abilities: Ability[], header?: string) => {
+	const getAbilitiesSection = (abilities: { ability: Ability, source: string }[], header?: string) => {
 		if (abilities.length === 0) {
 			return null;
 		}
@@ -499,9 +526,9 @@ export const HeroPanel = (props: Props) => {
 				{header ? <HeaderText level={1}>{header}</HeaderText> : null}
 				<div className={`abilities-grid ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
 					{
-						abilities.map(ability => (
-							<SelectablePanel key={ability.id} style={ header ? { gridColumn: `span ${AbilityLogic.panelWidth(ability)}` } : undefined} onSelect={() => showAbility(ability)}>
-								<AbilityPanel ability={ability} hero={props.hero} options={props.options} mode={PanelMode.Full} />
+						abilities.map(a => (
+							<SelectablePanel key={a.ability.id} style={ header ? { gridColumn: `span ${AbilityLogic.panelWidth(a.ability)}` } : undefined} onSelect={() => showAbility(a.ability)}>
+								<AbilityPanel ability={a.ability} hero={props.hero} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						))
 					}
@@ -531,11 +558,11 @@ export const HeroPanel = (props: Props) => {
 		}
 
 		const abilities = HeroLogic.getAbilities(props.hero, true, props.options.showFreeStrikes, props.options.showStandardAbilities);
-		const actions = abilities.filter(a => a.type.usage === AbilityUsage.Action);
-		const maneuvers = abilities.filter(a => a.type.usage === AbilityUsage.Maneuver);
-		const moves = abilities.filter(a => a.type.usage === AbilityUsage.Move);
-		const triggers = abilities.filter(a => a.type.usage === AbilityUsage.Trigger);
-		const others = abilities.filter(a => (a.type.usage === AbilityUsage.Other) || (a.type.usage === AbilityUsage.NoAction));
+		const actions = abilities.filter(a => a.ability.type.usage === AbilityUsage.Action);
+		const maneuvers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Maneuver);
+		const moves = abilities.filter(a => a.ability.type.usage === AbilityUsage.Move);
+		const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
+		const others = abilities.filter(a => (a.ability.type.usage === AbilityUsage.Other) || (a.ability.type.usage === AbilityUsage.NoAction));
 
 		if (isSmall) {
 			const tabs = [ 'Hero', 'Statistics', 'Features' ];

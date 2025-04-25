@@ -80,7 +80,7 @@ export class PDFExport {
 		const toggles: { [key: string]: boolean } = {};
 		const ignoredFeatures: { [key: string]: boolean } = {};
 
-		const features = HeroLogic.getFeatures(hero) as Feature[];
+		const features = HeroLogic.getFeatures(hero).map(f => f.feature);
 
 		{
 			if (hero.class) {
@@ -393,7 +393,8 @@ export class PDFExport {
 					}
 				});
 			};
-			const abilities = HeroLogic.getAbilities(hero, true, true, false);
+			const abilities = HeroLogic.getAbilities(hero, true, true, false)
+				.map(a => a.ability);
 			texts['RegularActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Action && a.id !== 'free-melee' && a.id !== 'free-ranged').map(a => ' • ' + a.name + (typeof (a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
 			texts['Maneuvers'] = abilities.filter(a => a.type.usage == AbilityUsage.Maneuver).map(a => ' • ' + a.name + (typeof (a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
 			texts['TriggeredActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Trigger).map(a => ' • ' + a.name + (typeof (a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');

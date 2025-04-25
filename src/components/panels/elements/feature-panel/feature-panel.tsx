@@ -99,6 +99,7 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		const currentFeatureIDs = HeroLogic.getFeatures(props.hero)
+			.map(f => f.feature)
 			.filter(f => f.id !== props.feature.id)
 			.map(f => f.id);
 
@@ -255,6 +256,7 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		const currentAbilityIDs = HeroLogic.getFeatures(props.hero)
+			.map(f => f.feature)
 			.filter(f => f.id !== props.feature.id)
 			.filter(f => f.type === FeatureType.ClassAbility)
 			.flatMap(f => f.data.selectedIDs);
@@ -639,6 +641,7 @@ export const FeaturePanel = (props: Props) => {
 		const currentLanguages: string[] = [];
 		if (props.hero) {
 			HeroLogic.getFeatures(props.hero)
+				.map(f => f.feature)
 				.filter(f => f.id !== props.feature.id)
 				.forEach(f => {
 					const addCurrent = (language: string) => {
@@ -714,6 +717,7 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		const currentPerkIDs = HeroLogic.getFeatures(props.hero)
+			.map(f => f.feature)
 			.filter(f => f.id !== props.feature.id)
 			.filter(f => f.type === FeatureType.Perk)
 			.flatMap(f => f.data.selected)
@@ -772,6 +776,7 @@ export const FeaturePanel = (props: Props) => {
 		const currentSkills: string[] = [];
 		if (props.hero) {
 			HeroLogic.getFeatures(props.hero)
+				.map(f => f.feature)
 				.filter(f => f.id !== props.feature.id)
 				.forEach(f => {
 					const addCurrent = (skill: string) => {
@@ -845,6 +850,7 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		const currentTaggedFeatureIDs = HeroLogic.getFeatures(props.hero)
+			.map(f => f.feature)
 			.filter(f => f.id !== props.feature.id)
 			.filter(f => f.type === FeatureType.TaggedFeatureChoice)
 			.filter(f => f.data.tag === data.tag)
@@ -852,6 +858,7 @@ export const FeaturePanel = (props: Props) => {
 			.map(p => p.id);
 
 		const features = HeroLogic.getFeatures(props.hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.TaggedFeature)
 			.filter(f => f.data.tag === data.tag);
 		const sortedFeatures = Collections.sort(features, f => f.name);
@@ -911,6 +918,7 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		const currentTitleIDs = HeroLogic.getFeatures(props.hero)
+			.map(f => f.feature)
 			.filter(f => f.id !== props.feature.id)
 			.filter(f => f.type === FeatureType.TitleChoice)
 			.flatMap(f => f.data.selected)

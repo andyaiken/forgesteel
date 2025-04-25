@@ -18,6 +18,12 @@ interface Props {
 }
 
 export const OptionsPanel = (props: Props) => {
+	const setSeparateInventoryFeatures = (value: boolean) => {
+		const copy = Utils.copy(props.options);
+		copy.separateInventoryFeatures = value;
+		props.setOptions(copy);
+	};
+
 	const setShowSkillsInGroups = (value: boolean) => {
 		const copy = Utils.copy(props.options);
 		copy.showSkillsInGroups = value;
@@ -174,6 +180,7 @@ export const OptionsPanel = (props: Props) => {
 			case 'hero':
 				return (
 					<>
+						<Toggle label='Separate inventory features' value={props.options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
 						<Toggle label='Show skills in groups' value={props.options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
 						<Toggle label='Show free strikes' value={props.options.showFreeStrikes} onChange={setShowFreeStrikes} />
 						<Toggle label='Show standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />

@@ -1,4 +1,5 @@
 import { Ability, AbilityDistance } from '../models/ability';
+import { Feature, FeatureAbility, FeatureClassAbility } from '../models/feature';
 import { AbilityData } from '../data/ability-data';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
@@ -6,7 +7,6 @@ import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Domain } from '../models/domain';
-import { Feature } from '../models/feature';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from './feature-logic';
 import { FeatureType } from '../enums/feature-type';
@@ -27,11 +27,48 @@ export class HeroLogic {
 		return `Level ${hero.class?.level || 1} ${hero.ancestry?.name || 'Ancestry'} ${hero.class?.name || 'Class'}`;
 	};
 
+	static getFeatures = (hero: Hero): { feature: Feature, source: string }[] => {
+		const features: { feature: Feature, source: string }[] = [];
+
+		if (hero.ancestry) {
+			features.push(...FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero).map(f => ({ feature: f, source: hero.ancestry!.name })));
+		}
+
+		if (hero.culture) {
+			features.push(...FeatureLogic.getFeaturesFromCulture(hero.culture, hero).map(f => ({ feature: f, source: hero.culture!.name })));
+		}
+
+		if (hero.career) {
+			features.push(...FeatureLogic.getFeaturesFromCareer(hero.career, hero).map(f => ({ feature: f, source: hero.career!.name })));
+		}
+
+		if (hero.class) {
+			features.push(...FeatureLogic.getFeaturesFromClass(hero.class, hero).map(f => ({ feature: f, source: hero.class!.name })));
+		}
+
+		if (hero.complication) {
+			features.push(...FeatureLogic.getFeaturesFromComplication(hero.complication, hero).map(f => ({ feature: f, source: hero.complication!.name })));
+		}
+
+		features.push(...FeatureLogic.getFeaturesFromCustomization(hero).map(f => ({ feature: f, source: 'Customization' })));
+
+		hero.state.inventory.forEach(item => {
+			try {
+				features.push(...FeatureLogic.getFeaturesFromItem(item, hero).map(f => ({ feature: f, source: 'Inventory' })));
+			} catch (ex) {
+				console.error(ex);
+			}
+		});
+
+		return Collections.sort(features, f => f.feature.name);
+	};
+
 	static getKits = (hero: Hero) => {
 		const kits: Kit[] = [];
 
 		// Collate from features
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Kit)
 			.forEach(f => {
 				kits.push(...f.data.selected);
@@ -45,6 +82,7 @@ export class HeroLogic {
 
 		// Collate from features
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Domain)
 			.forEach(f => {
 				domains.push(...f.data.selected);
@@ -53,71 +91,35 @@ export class HeroLogic {
 		return domains;
 	};
 
-	static getFeatures = (hero: Hero) => {
-		const features: Feature[] = [];
-
-		if (hero.ancestry) {
-			features.push(...FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero));
-		}
-
-		if (hero.culture) {
-			features.push(...FeatureLogic.getFeaturesFromCulture(hero.culture, hero));
-		}
-
-		if (hero.career) {
-			features.push(...FeatureLogic.getFeaturesFromCareer(hero.career, hero));
-		}
-
-		if (hero.class) {
-			features.push(...FeatureLogic.getFeaturesFromClass(hero.class, hero));
-		}
-
-		if (hero.complication) {
-			features.push(...FeatureLogic.getFeaturesFromComplication(hero.complication, hero));
-		}
-
-		features.push(...FeatureLogic.getFeaturesFromCustomization(hero));
-
-		hero.state.inventory.forEach(item => {
-			try {
-				features.push(...FeatureLogic.getFeaturesFromItem(item, hero));
-			} catch (ex) {
-				console.error(ex);
-			}
-		});
-
-		return Collections.sort(features, f => f.name);
-	};
-
 	static getAbilities = (hero: Hero, includeChoices: boolean, includeFreeStrikes: boolean, includeStandard: boolean) => {
-		const abilities: Ability[] = [];
+		const abilities: { ability: Ability, source: string }[] = [];
 
 		if (includeFreeStrikes) {
-			abilities.push(AbilityData.freeStrikeMelee);
-			abilities.push(AbilityData.freeStrikeRanged);
+			abilities.push({ ability: AbilityData.freeStrikeMelee, source: 'Standard' });
+			abilities.push({ ability: AbilityData.freeStrikeRanged, source: 'Standard' });
 		}
 
 		if (includeChoices) {
-			const choices: Ability[] = [];
+			const choices: { ability: Ability, source: string }[] = [];
 
 			this.getFeatures(hero)
-				.filter(f => f.type === FeatureType.Ability)
+				.filter(f => f.feature.type === FeatureType.Ability)
 				.forEach(f => {
-					choices.push(f.data.ability);
+					choices.push({ ability: (f.feature as FeatureAbility).data.ability, source: f.source });
 				});
 
 			this.getFeatures(hero)
-				.filter(f => f.type === FeatureType.ClassAbility)
+				.filter(f => f.feature.type === FeatureType.ClassAbility)
 				.forEach(f => {
-					f.data.selectedIDs.forEach(abilityID => {
+					(f.feature as FeatureClassAbility).data.selectedIDs.forEach(abilityID => {
 						const ability = hero.class?.abilities.find(a => a.id === abilityID);
 						if (ability) {
-							choices.push(ability);
+							choices.push({ ability: ability, source: f.source });
 						}
 					});
 				});
 
-			Collections.distinct(choices.map(a => a.cost), a => a)
+			Collections.distinct(choices.map(a => a.ability.cost), a => a)
 				.sort((a, b) => {
 					if (a === 'signature' && b === 'signature') {
 						return 0;
@@ -130,37 +132,45 @@ export class HeroLogic {
 					}
 					return a - b;
 				})
-				.forEach(cost => abilities.push(...Collections.sort(choices.filter(a => a.cost === cost), a => a.name)));
+				.forEach(cost => abilities.push(...Collections.sort(choices.filter(a => a.ability.cost === cost), a => a.ability.name)));
 		}
 
 		if (includeStandard) {
-			abilities.push(AbilityData.advance);
-			abilities.push(AbilityData.disengage);
-			abilities.push(AbilityData.ride);
-			abilities.push(AbilityData.aidAttack);
-			abilities.push(AbilityData.catchBreath);
-			abilities.push(AbilityData.drinkPotion);
-			abilities.push(AbilityData.escapeGrab);
-			abilities.push(AbilityData.grab);
-			abilities.push(AbilityData.hide);
-			abilities.push(AbilityData.knockback);
-			abilities.push(AbilityData.makeAssistTest);
-			abilities.push(AbilityData.search);
-			abilities.push(AbilityData.standUp);
-			abilities.push(AbilityData.charge);
-			abilities.push(AbilityData.defend);
-			abilities.push(AbilityData.heal);
+			abilities.push({ ability: AbilityData.advance, source: 'Standard' });
+			abilities.push({ ability: AbilityData.disengage, source: 'Standard' });
+			abilities.push({ ability: AbilityData.ride, source: 'Standard' });
+			abilities.push({ ability: AbilityData.aidAttack, source: 'Standard' });
+			abilities.push({ ability: AbilityData.catchBreath, source: 'Standard' });
+			abilities.push({ ability: AbilityData.drinkPotion, source: 'Standard' });
+			abilities.push({ ability: AbilityData.escapeGrab, source: 'Standard' });
+			abilities.push({ ability: AbilityData.grab, source: 'Standard' });
+			abilities.push({ ability: AbilityData.hide, source: 'Standard' });
+			abilities.push({ ability: AbilityData.knockback, source: 'Standard' });
+			abilities.push({ ability: AbilityData.makeAssistTest, source: 'Standard' });
+			abilities.push({ ability: AbilityData.search, source: 'Standard' });
+			abilities.push({ ability: AbilityData.standUp, source: 'Standard' });
+			abilities.push({ ability: AbilityData.charge, source: 'Standard' });
+			abilities.push({ ability: AbilityData.defend, source: 'Standard' });
+			abilities.push({ ability: AbilityData.heal, source: 'Standard' });
 		}
 
 		return abilities;
 	};
 
 	static getFormerAncestries = (hero: Hero) => {
-		return this.getFeatures(hero).filter(f => f.type === FeatureType.AncestryChoice).map(f => f.data.selected).filter(a => !!a);
+		return this.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.AncestryChoice)
+			.map(f => f.data.selected)
+			.filter(a => !!a);
 	};
 
 	static getCompanions = (hero: Hero) => {
-		return this.getFeatures(hero).filter(f => f.type === FeatureType.Companion).map(f => f.data.selected).filter(a => !!a);
+		return this.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Companion)
+			.map(f => f.data.selected)
+			.filter(a => !!a);
 	};
 
 	static getCharacteristic = (hero: Hero, characteristic: Characteristic) => {
@@ -190,11 +200,13 @@ export class HeroLogic {
 
 		// Collate from features
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Language)
 			.forEach(f => {
 				languageNames.push(f.data.language);
 			});
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.LanguageChoice)
 			.forEach(f => {
 				languageNames.push(...f.data.selected);
@@ -218,11 +230,13 @@ export class HeroLogic {
 
 		// Collate from features
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Skill)
 			.forEach(f => {
 				skillNames.push(f.data.skill);
 			});
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.SkillChoice)
 			.forEach(f => {
 				skillNames.push(...f.data.selected);
@@ -244,6 +258,7 @@ export class HeroLogic {
 
 		// Collate from features
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.DamageModifier)
 			.forEach(f => {
 				f.data.modifiers
@@ -292,6 +307,7 @@ export class HeroLogic {
 		}
 
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Stamina)
@@ -311,6 +327,7 @@ export class HeroLogic {
 		let value = Math.floor(this.getStamina(hero) / 3);
 
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.RecoveryValue)
@@ -330,6 +347,7 @@ export class HeroLogic {
 		let value = 0;
 
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Recoveries)
@@ -347,6 +365,7 @@ export class HeroLogic {
 
 	static getSize = (hero: Hero) => {
 		const featureSizes = this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Size)
 			.map(f => f.data.size);
 		if (featureSizes.length > 0) {
@@ -379,7 +398,9 @@ export class HeroLogic {
 	static getSpeed = (hero: Hero) => {
 		let value = 5;
 
-		const features = this.getFeatures(hero).filter(f => f.type === FeatureType.Speed);
+		const features = this.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Speed);
 		if (features.length > 0) {
 			const datas = features.map(f => f.data);
 			value = Collections.max(datas.map(d => d.speed), v => v) || 0;
@@ -390,6 +411,7 @@ export class HeroLogic {
 		value += Collections.max(kits.map(kit => kit.speed), value => value) || 0;
 
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Speed)
@@ -413,6 +435,7 @@ export class HeroLogic {
 		value += Collections.max(kits.map(kit => kit.stability), value => value) || 0;
 
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Stability)
@@ -436,6 +459,7 @@ export class HeroLogic {
 		value += Collections.max(kits.map(kit => kit.disengage), value => value) || 0;
 
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Disengage)
@@ -455,6 +479,7 @@ export class HeroLogic {
 		let value = hero.state.renown;
 
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Renown)
@@ -474,6 +499,7 @@ export class HeroLogic {
 		let value = hero.state.projectPoints;
 
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.ProjectPoints)
@@ -493,6 +519,7 @@ export class HeroLogic {
 		let value = hero.state.wealth;
 
 		this.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Wealth)
@@ -562,6 +589,7 @@ export class HeroLogic {
 		let value = 0;
 
 		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.AbilityDamage)
 			.filter(f => f.data.keywords.some(kw => ability.keywords.includes(kw)))
 			.forEach(f => {
@@ -591,6 +619,7 @@ export class HeroLogic {
 		}
 
 		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.AbilityDistance)
 			.filter(f => f.data.keywords.every(kw => ability.keywords.includes(kw)))
 			.forEach(f => {
@@ -838,7 +867,7 @@ export class HeroLogic {
 			hero.abilityCustomizations = [];
 		}
 
-		this.getFeatures(hero).filter(f => f.type === FeatureType.Bonus).forEach(f => {
+		this.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.Bonus).forEach(f => {
 			if (f.data.valueCharacteristics === undefined) {
 				f.data.valueCharacteristics = [];
 			}
@@ -847,7 +876,7 @@ export class HeroLogic {
 			}
 		});
 
-		this.getFeatures(hero).filter(f => f.type === FeatureType.DamageModifier).forEach(f => {
+		this.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.DamageModifier).forEach(f => {
 			f.data.modifiers.forEach(dm => {
 				if (dm.valueCharacteristics === undefined) {
 					dm.valueCharacteristics = [];
@@ -861,14 +890,14 @@ export class HeroLogic {
 			});
 		});
 
-		this.getFeatures(hero).filter(f => f.type === FeatureType.Kit).forEach(f => {
+		this.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.Kit).forEach(f => {
 			if (f.data.types.includes('Standard')) {
 				f.data.types = f.data.types.filter(t => t !== 'Standard');
 				f.data.types.push('');
 			}
 		});
 
-		this.getFeatures(hero).filter(f => f.type === FeatureType.ItemChoice).forEach(f => {
+		this.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.ItemChoice).forEach(f => {
 			f.data.selected.forEach(item => {
 				if (item.customizationsByLevel === undefined) {
 					item.customizationsByLevel = [

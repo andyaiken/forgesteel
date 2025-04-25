@@ -2,6 +2,7 @@ import { PanelWidth } from '../enums/panel-width';
 
 export interface Options {
 	// Hero
+	separateInventoryFeatures: boolean;
 	showSkillsInGroups: boolean;
 	showFreeStrikes: boolean;
 	showStandardAbilities: boolean;

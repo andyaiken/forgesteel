@@ -98,6 +98,7 @@ export const PowerRollPanel = (props: Props) => {
 				}
 
 				HeroLogic.getFeatures(props.hero)
+					.map(f => f.feature)
 					.filter(f => f.type === FeatureType.AbilityDamage)
 					.filter(f => f.data.keywords.every(kw => props.ability?.keywords.includes(kw)))
 					.forEach(f => {

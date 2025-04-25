@@ -42,6 +42,7 @@ import './feature-panel.scss';
 
 interface Props {
 	feature: Feature | Perk;
+	source?: string;
 	options: Options;
 	cost?: number | 'signature';
 	repeatable?: boolean;
@@ -1518,6 +1519,9 @@ export const FeaturePanel = (props: Props) => {
 
 	try {
 		const tags = [];
+		if (props.source) {
+			tags.push(props.source);
+		}
 		const list = (props.feature as Perk).list;
 		if (list !== undefined) {
 			tags.push(list);

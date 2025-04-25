@@ -474,6 +474,7 @@ export const HeroPanel = (props: Props) => {
 										<FeaturePanel
 											key={f.feature.id}
 											feature={f.feature}
+											source={props.options.showSources ? f.source : undefined}
 											options={props.options}
 											hero={props.hero}
 											sourcebooks={props.sourcebooks}
@@ -495,6 +496,7 @@ export const HeroPanel = (props: Props) => {
 										<FeaturePanel
 											key={f.feature.id}
 											feature={f.feature}
+											source={props.options.showSources ? f.source : undefined}
 											options={props.options}
 											hero={props.hero}
 											sourcebooks={props.sourcebooks}
@@ -528,7 +530,13 @@ export const HeroPanel = (props: Props) => {
 					{
 						abilities.map(a => (
 							<SelectablePanel key={a.ability.id} style={ header ? { gridColumn: `span ${AbilityLogic.panelWidth(a.ability)}` } : undefined} onSelect={() => showAbility(a.ability)}>
-								<AbilityPanel ability={a.ability} hero={props.hero} options={props.options} mode={PanelMode.Full} />
+								<AbilityPanel
+									ability={a.ability}
+									hero={props.hero}
+									options={props.options}
+									mode={PanelMode.Full}
+									tags={props.options.showSources ? [ a.source ] : undefined}
+								/>
 							</SelectablePanel>
 						))
 					}

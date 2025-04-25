@@ -7,6 +7,7 @@ export interface Options {
 	showFreeStrikes: boolean;
 	showStandardAbilities: boolean;
 	dimUnavailableAbilities: boolean;
+	showSources: boolean;
 	featureWidth: PanelWidth;
 	abilityWidth: PanelWidth;
 	// Library

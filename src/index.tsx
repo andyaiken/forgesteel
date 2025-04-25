@@ -104,6 +104,7 @@ Promise.all(promises).then(results => {
 			showFreeStrikes: false,
 			showStandardAbilities: false,
 			dimUnavailableAbilities: false,
+			showSources: false,
 			featureWidth: PanelWidth.Medium,
 			abilityWidth: PanelWidth.Medium,
 			showMonstersInGroups: true,
@@ -132,6 +133,10 @@ Promise.all(promises).then(results => {
 
 	if (options.abilityWidth === undefined) {
 		options.abilityWidth = PanelWidth.Medium;
+	}
+
+	if (options.showSources === undefined) {
+		options.showSources = false;
 	}
 
 	if (options.showMonstersInGroups === undefined) {

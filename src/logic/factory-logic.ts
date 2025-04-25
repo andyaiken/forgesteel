@@ -911,7 +911,7 @@ export class FactoryLogic {
 		createAbilityCost: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number }): FeatureAbilityCost => {
 			return {
 				id: data.id,
-				name: data.name || `${data.keywords.join(', ')} cost modifier`,
+				name: data.name || 'Ability cost modifier',
 				description: data.description || '',
 				type: FeatureType.AbilityCost,
 				data: {
@@ -923,7 +923,7 @@ export class FactoryLogic {
 		createAbilityDamage: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number, damageType?: DamageType }): FeatureAbilityDamage => {
 			return {
 				id: data.id,
-				name: data.name || `${data.keywords.join(', ')} damage modifier`,
+				name: data.name || 'Ability damage modifier',
 				description: data.description || '',
 				type: FeatureType.AbilityDamage,
 				data: {
@@ -940,7 +940,7 @@ export class FactoryLogic {
 		createAbilityDistance: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number }): FeatureAbilityDistance => {
 			return {
 				id: data.id,
-				name: data.name || `${data.keywords.join(', ')} distance modifier`,
+				name: data.name || 'Ability distance modifier',
 				description: data.description || '',
 				type: FeatureType.AbilityDistance,
 				data: {

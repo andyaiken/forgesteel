@@ -48,6 +48,12 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
+	const setShowSources = (value: boolean) => {
+		const copy = Utils.copy(props.options);
+		copy.showSources = value;
+		props.setOptions(copy);
+	};
+
 	const setFeatureWidth = (value: PanelWidth) => {
 		const copy = Utils.copy(props.options);
 		copy.featureWidth = value;
@@ -182,9 +188,10 @@ export const OptionsPanel = (props: Props) => {
 					<>
 						<Toggle label='Separate inventory features' value={props.options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
 						<Toggle label='Show skills in groups' value={props.options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
-						<Toggle label='Show free strikes' value={props.options.showFreeStrikes} onChange={setShowFreeStrikes} />
-						<Toggle label='Show standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
+						<Toggle label='Include free strikes' value={props.options.showFreeStrikes} onChange={setShowFreeStrikes} />
+						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
 						<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
+						<Toggle label='Show feature / ability sources' value={props.options.showSources} onChange={setShowSources} />
 						<div className='option-heading'>Features</div>
 						<Segmented
 							name='featurewidth'

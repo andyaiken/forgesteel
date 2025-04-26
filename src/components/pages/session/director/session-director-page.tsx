@@ -1,5 +1,6 @@
 import { Alert, Button, Input, Popover, Segmented, Space } from 'antd';
 import { DownOutlined, ReadOutlined, SettingOutlined } from '@ant-design/icons';
+import { AppFooter } from '../../../panels/app-footer/app-footer';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { CounterRunPanel } from '../../../panels/run/counter-run/counter-run-panel';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
@@ -469,7 +470,7 @@ export const SessionDirectorPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='session-director-page'>
-					<AppHeader subheader='Session' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+					<AppHeader subheader='Session' showDirectory={props.showDirectory}>
 						<Popover
 							trigger='click'
 							content={(
@@ -514,6 +515,7 @@ export const SessionDirectorPage = (props: Props) => {
 						{getSelector()}
 						{getSelectedContent()}
 					</div>
+					<AppFooter page='session' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
 				</div>
 			</ErrorBoundary>
 		);

@@ -1,11 +1,11 @@
 import { Button, Popover, Segmented } from 'antd';
+import { DownOutlined, UploadOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../models/monster';
 import { Modal } from '../modal/modal';
 import { MonsterHealthPanel } from '../../panels/health/health-panel';
 import { MonsterPanel } from '../../panels/elements/monster-panel/monster-panel';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
-import { UploadOutlined } from '@ant-design/icons';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
@@ -91,6 +91,7 @@ export const MonsterModal = (props: Props) => {
 								>
 									<Button icon={<UploadOutlined />}>
 										Export
+										<DownOutlined />
 									</Button>
 								</Popover>
 								: null

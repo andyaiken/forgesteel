@@ -3,6 +3,7 @@ import { DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, SettingOu
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { Adventure } from '../../../../models/adventure';
 import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
+import { AppFooter } from '../../../panels/app-footer/app-footer';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Element } from '../../../../models/element';
 import { Empty } from '../../../controls/empty/empty';
@@ -288,7 +289,7 @@ export const PlaybookListPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='playbook-list-page'>
-					<AppHeader subheader='Playbook' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+					<AppHeader subheader='Playbook' showDirectory={props.showDirectory}>
 						<Input
 							name='search'
 							placeholder='Search'
@@ -536,6 +537,7 @@ export const PlaybookListPage = (props: Props) => {
 							onChange={k => navigation.goToPlaybookList(k as PlaybookElementKind)}
 						/>
 					</div>
+					<AppFooter page='playbook' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
 				</div>
 			</ErrorBoundary>
 		);

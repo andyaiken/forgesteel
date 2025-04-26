@@ -1,5 +1,6 @@
 import { BookOutlined, PlayCircleOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
 import { Button, Flex, Segmented } from 'antd';
+import { AppFooter } from '../../panels/app-footer/app-footer';
 import { AppHeader } from '../../panels/app-header/app-header';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { HeaderText } from '../../controls/header-text/header-text';
@@ -167,7 +168,7 @@ export const WelcomePage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='welcome-page'>
-					<AppHeader showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
+					<AppHeader showDirectory={props.showDirectory} />
 					<div className='welcome-page-content'>
 						<div className='welcome-column'>
 							<HeaderText level={1}>Welcome to FORGE STEEL</HeaderText>
@@ -219,6 +220,7 @@ export const WelcomePage = (props: Props) => {
 							{getContent(page)}
 						</div>
 					</div>
+					<AppFooter page='welcome' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
 				</div>
 			</ErrorBoundary>
 		);

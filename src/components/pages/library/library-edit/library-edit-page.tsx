@@ -10,6 +10,7 @@ import { AbilityKeyword } from '../../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
+import { AppFooter } from '../../../panels/app-footer/app-footer';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Career } from '../../../../models/career';
 import { CareerPanel } from '../../../panels/elements/career-panel/career-panel';
@@ -2995,7 +2996,7 @@ export const LibraryEditPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='library-edit-page'>
-					<AppHeader subheader={getSubheader()} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+					<AppHeader subheader={getSubheader()} showDirectory={props.showDirectory}>
 						<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
 							Save Changes
 						</Button>
@@ -3031,6 +3032,7 @@ export const LibraryEditPage = (props: Props) => {
 							{getPreview()}
 						</div>
 					</div>
+					<AppFooter page='library' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
 				</div>
 			</ErrorBoundary>
 		);

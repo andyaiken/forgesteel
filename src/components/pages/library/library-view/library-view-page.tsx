@@ -1,9 +1,10 @@
 import { Button, Popover } from 'antd';
-import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, FileOutlined, LeftOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, LeftOutlined, UploadOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
+import { AppFooter } from '../../../panels/app-footer/app-footer';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Career } from '../../../../models/career';
 import { CareerPanel } from '../../../panels/elements/career-panel/career-panel';
@@ -253,7 +254,7 @@ export const LibraryViewPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='library-view-page'>
-					<AppHeader subheader={getSubheader()} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+					<AppHeader subheader={getSubheader()} showDirectory={props.showDirectory}>
 						{
 							subElementID ?
 								<Button icon={<LeftOutlined />} onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
@@ -296,82 +297,72 @@ export const LibraryViewPage = (props: Props) => {
 								</Popover>
 								: null
 						}
+						{
+							sourcebook.isHomebrew ?
+								<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(kind!, sourcebook.id, elementID!, subElementID)}>
+									Edit
+								</Button>
+								: null
+						}
+						{
+							sourcebook.isHomebrew && !subElementID ?
+								<Popover
+									trigger='click'
+									content={(
+										<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+											<ErrorBoundary>
+												{
+													props.sourcebooks
+														.filter(sb => sb.isHomebrew)
+														.map(sb => <Button key={sb.id} onClick={() => props.createElement(kind!, sb.id, element)}>In {sb.name || 'Unnamed Sourcebook'}</Button>)
+												}
+											</ErrorBoundary>
+											<Button onClick={() => props.createElement(kind!, null, element)}>In a new sourcebook</Button>
+										</div>
+									)}
+								>
+									<Button icon={<CopyOutlined />}>
+										Copy
+									</Button>
+								</Popover>
+								: null
+						}
+						{
+							sourcebook.isHomebrew && subElementID ?
+								<Button icon={<CopyOutlined />} onClick={() => props.copySubElement(kind!, sourcebook.id, elementID!, element)}>
+									Copy
+								</Button>
+								: null
+						}
 						<Popover
 							trigger='click'
 							content={(
-								<div style={{ minWidth: '120px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									{
-										sourcebook.isHomebrew ?
-											<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(kind!, sourcebook.id, elementID!, subElementID)}>
-												Edit
-											</Button>
-											: null
-									}
-									{
-										sourcebook.isHomebrew && !subElementID ?
-											<Popover
-												trigger='click'
-												content={(
-													<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-														<ErrorBoundary>
-															{
-																props.sourcebooks
-																	.filter(sb => sb.isHomebrew)
-																	.map(sb => <Button key={sb.id} onClick={() => props.createElement(kind!, sb.id, element)}>In {sb.name || 'Unnamed Sourcebook'}</Button>)
-															}
-														</ErrorBoundary>
-														<Button onClick={() => props.createElement(kind!, null, element)}>In a new sourcebook</Button>
-													</div>
-												)}
-											>
-												<Button icon={<CopyOutlined />}>
-													Copy
-												</Button>
-											</Popover>
-											: null
-									}
-									{
-										sourcebook.isHomebrew && subElementID ?
-											<Button icon={<CopyOutlined />} onClick={() => props.copySubElement(kind!, sourcebook.id, elementID!, element)}>
-												Copy
-											</Button>
-											: null
-									}
-									<Popover
-										trigger='click'
-										content={(
-											<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-												<Button onClick={() => props.export(kind!, element, 'image')}>Export As Image</Button>
-												<Button onClick={() => props.export(kind!, element, 'pdf')}>Export As PDF</Button>
-												<Button onClick={() => props.export(kind!, element, 'json')}>Export as Data</Button>
-											</div>
-										)}
-									>
-										<Button icon={<UploadOutlined />}>
-											Export
-										</Button>
-									</Popover>
-									{
-										sourcebook.isHomebrew && !subElementID ?
-											<DangerButton
-												mode='block'
-												disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
-												onConfirm={() => props.delete(kind!, sourcebook.id, element)}
-											/>
-											: null
-									}
+								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+									<Button onClick={() => props.export(kind!, element, 'image')}>Export As Image</Button>
+									<Button onClick={() => props.export(kind!, element, 'pdf')}>Export As PDF</Button>
+									<Button onClick={() => props.export(kind!, element, 'json')}>Export as Data</Button>
 								</div>
 							)}
 						>
-							<Button icon={<FileOutlined />}>
-								File
+							<Button icon={<UploadOutlined />}>
+								Export
 								<DownOutlined />
 							</Button>
 						</Popover>
+						{
+							sourcebook.isHomebrew && !subElementID ?
+								<DangerButton
+									mode='block'
+									disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
+									onConfirm={() => props.delete(kind!, sourcebook.id, element)}
+								/>
+								: null
+						}
 					</AppHeader>
 					<div className='library-view-page-content'>
 						{panel}
 					</div>
+					<AppFooter page='library' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
 				</div>
 			</ErrorBoundary>
 		);

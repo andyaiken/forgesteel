@@ -6,6 +6,7 @@ import { Hero, HeroEditTab } from '../../../../models/hero';
 import { ReactNode, useMemo, useState } from 'react';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
+import { AppFooter } from '../../../panels/app-footer/app-footer';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Career } from '../../../../models/career';
 import { CareerPanel } from '../../../panels/elements/career-panel/career-panel';
@@ -507,7 +508,7 @@ export const HeroEditPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='hero-edit-page'>
-					<AppHeader subheader='Hero Builder' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+					<AppHeader subheader='Hero Builder' showDirectory={props.showDirectory}>
 						<Button icon={<SaveOutlined />} type='primary' disabled={!dirty} onClick={saveChanges}>
 							Save Changes
 						</Button>
@@ -558,6 +559,7 @@ export const HeroEditPage = (props: Props) => {
 						}
 						{getContent()}
 					</div>
+					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
 				</div>
 			</ErrorBoundary>
 		);

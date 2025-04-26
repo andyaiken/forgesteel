@@ -1,5 +1,6 @@
 import { Button, Input, Popover, Space, Tabs, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { AppFooter } from '../../../panels/app-footer/app-footer';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Collections } from '../../../../utils/collections';
 import { Empty } from '../../../controls/empty/empty';
@@ -82,7 +83,7 @@ export const HeroListPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='hero-list-page'>
-					<AppHeader subheader='Heroes' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+					<AppHeader subheader='Heroes' showDirectory={props.showDirectory}>
 						<Input
 							name='search'
 							placeholder='Search'
@@ -141,6 +142,7 @@ export const HeroListPage = (props: Props) => {
 							onChange={folder => navigation.goToHeroList(folder)}
 						/>
 					</div>
+					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
 				</div>
 			</ErrorBoundary>
 		);

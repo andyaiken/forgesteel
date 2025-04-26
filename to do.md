@@ -39,6 +39,7 @@
     * Button to roll for initiative (heroes / monsters)
     * Button to end current turn
       * Handle EoT (remove) / save ends (roll to remove) conditions on combatants in current group
+        * Automate for monsters; prompt for heroes
       * Select (ready, active) group from other faction; if no more, next turn (mark all as ready)
   * Terrain:
     * Show number of squares on terrain encounter row
@@ -47,10 +48,12 @@
 * Tactical map
   * Minis should not be allowed to walk through walls
   * Add terrain minis / overlays
+  * Show distance between selected mini and hovered square
 
 ### Player View
 
 * Add a way to check if data has changed; if it has, update the screen
+  * Currently it updates every 5 seconds
 
 ### Ideas
 

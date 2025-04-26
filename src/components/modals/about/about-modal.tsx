@@ -2,7 +2,9 @@ import { Divider } from 'antd';
 import { Field } from '../../controls/field/field';
 import { Modal } from '../modal/modal';
 
+import pbds from '../../../assets/powered-by-draw-steel.png';
 import pkg from '../../../../package.json';
+import shield from '../../../assets/shield.png';
 
 import './about-modal.scss';
 
@@ -16,13 +18,9 @@ export const AboutModal = (props: Props) => {
 			<Modal
 				content={
 					<div className='about-modal'>
-						<p>
-							<b>FORGE STEEL</b> is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC.
+						<p className='logo-container'>
+							<img src={shield} />
 						</p>
-						<p>
-							<b>DRAW STEEL</b> © 2024 <a href='https://mcdmproductions.com/' target='_blank'>MCDM Productions, LLC.</a>
-						</p>
-						<Divider />
 						<p>
 							Designed by <a href='mailto:andy.aiken@live.co.uk'>Andy Aiken</a>.
 						</p>
@@ -38,6 +36,16 @@ export const AboutModal = (props: Props) => {
 						</p>
 						<p>
 							If you really feel the need to show your appreciation, I'd be grateful if you would take whatever you feel the app is worth and donate it to a local mental health charity.
+						</p>
+						<Divider />
+						<p className='logo-container'>
+							<img src={pbds} />
+						</p>
+						<p>
+							<b>FORGE STEEL</b> is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC.
+						</p>
+						<p>
+							<b>DRAW STEEL</b> © 2024 <a href='https://mcdmproductions.com/' target='_blank'>MCDM Productions, LLC.</a>
 						</p>
 						<Divider />
 						<Field label='Version' value={pkg.version} />

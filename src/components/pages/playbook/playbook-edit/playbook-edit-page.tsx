@@ -7,6 +7,7 @@ import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { ReactNode, useState } from 'react';
 import { Adventure } from '../../../../models/adventure';
 import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
+import { AppFooter } from '../../../panels/app-footer/app-footer';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Badge } from '../../../controls/badge/badge';
 import { Characteristic } from '../../../../enums/characteristic';
@@ -1765,7 +1766,7 @@ export const PlaybookEditPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='playbook-edit-page'>
-					<AppHeader subheader={`${getSubheader()} Builder`} showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+					<AppHeader subheader={`${getSubheader()} Builder`} showDirectory={props.showDirectory}>
 						<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
 							Save Changes
 						</Button>
@@ -1805,6 +1806,7 @@ export const PlaybookEditPage = (props: Props) => {
 								: null
 						}
 					</div>
+					<AppFooter page='playbook' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
 				</div>
 			</ErrorBoundary>
 		);

@@ -5,6 +5,7 @@ import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
+import { AppFooter } from '../../../panels/app-footer/app-footer';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Career } from '../../../../models/career';
 import { CareerPanel } from '../../../panels/elements/career-panel/career-panel';
@@ -833,7 +834,7 @@ export const LibraryListPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='library-list-page'>
-					<AppHeader subheader='Library' showDirectory={props.showDirectory} showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+					<AppHeader subheader='Library' showDirectory={props.showDirectory}>
 						<Input
 							name='search'
 							placeholder='Search'
@@ -1033,6 +1034,7 @@ export const LibraryListPage = (props: Props) => {
 							onChange={k => navigation.goToLibraryList(k as SourcebookElementKind)}
 						/>
 					</div>
+					<AppFooter page='library' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
 				</div>
 			</ErrorBoundary>
 		);

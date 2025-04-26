@@ -1,5 +1,6 @@
 import { Button, Popover } from 'antd';
 import { DownOutlined, SettingOutlined } from '@ant-design/icons';
+import { AppFooter } from '../../../panels/app-footer/app-footer';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { CounterRunPanel } from '../../../panels/run/counter-run/counter-run-panel';
 import { Empty } from '../../../controls/empty/empty';
@@ -109,7 +110,7 @@ export const SessionPlayerPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='session-player-page'>
-					<AppHeader subheader='Forge Steel' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules}>
+					<AppHeader subheader='Forge Steel'>
 						<Popover
 							trigger='click'
 							content={<OptionsPanel mode='player' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
@@ -123,6 +124,7 @@ export const SessionPlayerPage = (props: Props) => {
 					<div className='session-page-content'>
 						{getContent()}
 					</div>
+					<AppFooter showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
 				</div>
 			</ErrorBoundary>
 		);

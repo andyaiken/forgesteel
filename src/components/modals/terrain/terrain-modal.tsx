@@ -1,9 +1,9 @@
 import { Button, Popover } from 'antd';
+import { DownOutlined, UploadOutlined } from '@ant-design/icons';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Terrain } from '../../../models/terrain';
 import { TerrainPanel } from '../../panels/elements/terrain-panel/terrain-panel';
-import { UploadOutlined } from '@ant-design/icons';
 
 import './terrain-modal.scss';
 
@@ -35,6 +35,7 @@ export const TerrainModal = (props: Props) => {
 								>
 									<Button icon={<UploadOutlined />}>
 										Export
+										<DownOutlined />
 									</Button>
 								</Popover>
 								: null

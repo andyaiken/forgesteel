@@ -1,4 +1,5 @@
 import { Button, Popover } from 'antd';
+import { DownOutlined, UploadOutlined } from '@ant-design/icons';
 import { Ancestry } from '../../../models/ancestry';
 import { AncestryPanel } from '../../panels/elements/ancestry-panel/ancestry-panel';
 import { Career } from '../../../models/career';
@@ -29,7 +30,6 @@ import { Terrain } from '../../../models/terrain';
 import { TerrainPanel } from '../../panels/elements/terrain-panel/terrain-panel';
 import { Title } from '../../../models/title';
 import { TitlePanel } from '../../panels/elements/title-panel/title-panel';
-import { UploadOutlined } from '@ant-design/icons';
 
 import './element-modal.scss';
 
@@ -172,6 +172,7 @@ export const ElementModal = (props: Props) => {
 						>
 							<Button icon={<UploadOutlined />}>
 								Export
+								<DownOutlined />
 							</Button>
 						</Popover>
 					</>

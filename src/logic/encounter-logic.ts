@@ -1,4 +1,4 @@
-import { Encounter, EncounterGroup, TerrainSlot } from '../models/encounter';
+import { Encounter, EncounterGroup, EncounterSlot, TerrainSlot } from '../models/encounter';
 import { Collections } from '../utils/collections';
 import { EncounterDifficulty } from '../enums/encounter-difficulty';
 import { MonsterLogic } from './monster-logic';
@@ -128,6 +128,29 @@ export class EncounterLogic {
 		}
 
 		return 2;
+	};
+
+	static getGroupName = (group: EncounterGroup, encounter: Encounter) => {
+		const names = group.slots.flatMap(s => s.monsters).map(m => m.name);
+		if (names.length === 0) {
+			const index = encounter.groups.findIndex(g => g.id === group.id);
+			return `Group ${index + 1}`;
+		}
+		if (names.length === 1) {
+			return names[0];
+		}
+		return `${names[0]} (and ${names.length > 2 ? `${names.length - 1} others` : '1 other'})`;
+	};
+
+	static getSlotName = (slot: EncounterSlot) => {
+		const names = slot.monsters.map(m => m.name);
+		if (names.length === 0) {
+			return 'Slot';
+		}
+		if (names.length === 1) {
+			return names[0];
+		}
+		return `${names[0]} (and ${names.length > 2 ? `${names.length - 1} others` : '1 other'})`;
 	};
 
 	static getMonsterData = (encounter: Encounter) => {

@@ -132,6 +132,12 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
+	const setShowDefeatedCombatants = (value: boolean) => {
+		const copy = Utils.copy(props.options);
+		copy.showDefeatedCombatants = value;
+		props.setOptions(copy);
+	};
+
 	const setGridSize = (value: number) => {
 		const copy = Utils.copy(props.options);
 		copy.gridSize = value;
@@ -254,6 +260,7 @@ export const OptionsPanel = (props: Props) => {
 					<>
 						{getPartySection(false)}
 						<Divider />
+						<Toggle label='Show defeated combatants' value={props.options.showDefeatedCombatants} onChange={setShowDefeatedCombatants} />
 						<NumberSpin label='Map Grid Size' min={5} steps={[ 5 ]} value={props.options.gridSize} onChange={setGridSize} />
 					</>
 				);

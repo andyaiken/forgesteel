@@ -167,6 +167,10 @@ export class PlaybookLogic {
 
 		playbook.encounters.forEach(e => {
 			e.groups.forEach(g => {
+				if (g.encounterState === undefined) {
+					g.encounterState = 'ready';
+				}
+
 				g.slots.forEach(s => {
 					if (s.customization === undefined) {
 						s.customization = {

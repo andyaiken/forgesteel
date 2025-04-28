@@ -768,7 +768,7 @@ export class HeroLogic {
 		hero.state.victories = 0;
 		hero.state.conditions = [];
 		hero.state.hidden = false;
-		hero.state.acted = false;
+		hero.state.encounterState = 'ready';
 		hero.state.defeated = false;
 	};
 
@@ -836,8 +836,8 @@ export class HeroLogic {
 			hero.state.notes = '';
 		}
 
-		if (hero.state.acted === undefined) {
-			hero.state.acted = false;
+		if (hero.state.encounterState === undefined) {
+			hero.state.encounterState = 'ready';
 		}
 
 		if (hero.state.defeated === undefined) {

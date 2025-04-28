@@ -84,15 +84,6 @@ export const HeroHealthPanel = (props: HeroProps) => {
 		}
 	};
 
-	const setActed = (value: boolean) => {
-		const copy = Utils.copy(hero);
-		copy.state.acted = value;
-		setHero(copy);
-		if (props.onChange) {
-			props.onChange(copy);
-		}
-	};
-
 	const setDefeated = (value: boolean) => {
 		const copy = Utils.copy(hero);
 		copy.state.defeated = value;
@@ -159,10 +150,6 @@ export const HeroHealthPanel = (props: HeroProps) => {
 				hidden={{
 					value: hero.state.hidden,
 					setValue: setHidden
-				}}
-				acted={{
-					value: hero.state.acted,
-					setValue: setActed
 				}}
 				defeated={{
 					value: hero.state.defeated,
@@ -448,10 +435,6 @@ interface Props {
 		value: boolean;
 		setValue: (value: boolean) => void;
 	};
-	acted?: {
-		value: boolean;
-		setValue: (value: boolean) => void;
-	};
 	defeated?: {
 		value: boolean;
 		setValue: (value: boolean) => void;
@@ -591,12 +574,6 @@ const HealthPanel = (props: Props) => {
 							: null
 					}
 					{
-						props.acted && props.acted.value ?
-							<div className='ds-text'>Has acted</div>
-							:
-							<div className='ds-text'>Has not yet acted</div>
-					}
-					{
 						props.defeated && props.defeated.value ?
 							<div className='ds-text'>Defeated</div>
 							: null
@@ -678,7 +655,7 @@ const HealthPanel = (props: Props) => {
 						: null
 				}
 				{
-					props.showToggles && (props.hidden || props.acted || props.defeated || props.captain) ?
+					props.showToggles && (props.hidden || props.defeated || props.captain) ?
 						<>
 							<Flex align='center' justify='space-evenly' gap={10} style={{ margin: '10px 0' }}>
 								{
@@ -695,25 +672,6 @@ const HealthPanel = (props: Props) => {
 												</div>
 												<div className='subtext'>
 													You are {props.hidden.value ? 'hidden' : 'not hidden'}
-												</div>
-											</div>
-										</Button>
-										: null
-								}
-								{
-									props.acted ?
-										<Button
-											key='acted'
-											style={{ flex: '1 1 0' }}
-											className='tall-button'
-											onClick={() => props.acted!.setValue(!props.acted!.value)}
-										>
-											<div>
-												<div>
-													{props.acted.value ? 'Acted' : 'Ready'}
-												</div>
-												<div className='subtext'>
-													You have {props.acted.value ? 'taken your turn' : 'not taken your turn'}
 												</div>
 											</div>
 										</Button>

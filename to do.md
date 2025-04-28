@@ -36,11 +36,6 @@
   * Monsters:
     * Ability to set 'used reaction' flag on heroes / monsters / minions
     * Ability to duplicate / delete monsters in a slot
-    * Button to roll for initiative (heroes / monsters)
-    * Button to end current turn
-      * Handle EoT (remove) / save ends (roll to remove) conditions on combatants in current group
-        * Automate for monsters; prompt for heroes
-      * Select (ready, active) group from other faction; if no more, next turn (mark all as ready)
   * Terrain:
     * Show number of squares on terrain encounter row
     * Show 'should be N squares' for terrain

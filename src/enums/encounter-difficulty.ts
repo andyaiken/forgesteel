@@ -7,7 +7,7 @@ export enum EncounterDifficulty {
 	Extreme = 'Extreme',
 	SuperExtreme = 'Super Extreme',
 	Silly = 'Now You\'re Just Being Silly',
-	Annihilation = 'Annihilating The Heroes Does Not Count As Therapy, You Know',
+	Annihilation = 'Please Be Aware That Annihilating The Heroes Does Not Count As Therapy',
 	BlackGods = 'Black Gods!',
 	Death = '💀'
 }

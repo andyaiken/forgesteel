@@ -25,7 +25,7 @@ export interface HeroState {
 	projects: Project[];
 	notes: string;
 	hidden: boolean;
-	acted: boolean;
+	encounterState: 'ready' | 'current' | 'finished';
 	defeated: boolean;
 }
 

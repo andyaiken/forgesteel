@@ -94,7 +94,7 @@ export class FactoryLogic {
 				inventory: [],
 				projects: [],
 				notes: '',
-				acted: false,
+				encounterState: 'ready',
 				hidden: false,
 				defeated: false
 			},
@@ -503,6 +503,7 @@ export class FactoryLogic {
 			groups: [],
 			terrain: [],
 			objective: EncounterObjectiveData.diminishNumbers,
+			initiative: undefined,
 			round: 0,
 			malice: 0,
 			heroes: []
@@ -513,7 +514,7 @@ export class FactoryLogic {
 		return {
 			id: Utils.guid(),
 			slots: [],
-			acted: false
+			encounterState: 'ready'
 		};
 	};
 

@@ -118,6 +118,7 @@ Promise.all(promises).then(results => {
 			heroCount: 4,
 			heroLevel: 1,
 			heroVictories: 0,
+			showDefeatedCombatants: false,
 			gridSize: 50,
 			playerGridSize: 50
 		};
@@ -181,6 +182,10 @@ Promise.all(promises).then(results => {
 
 	if (options.heroVictories === undefined) {
 		options.heroVictories = 0;
+	}
+
+	if (options.showDefeatedCombatants === undefined) {
+		options.showDefeatedCombatants = false;
 	}
 
 	if (options.gridSize === undefined) {

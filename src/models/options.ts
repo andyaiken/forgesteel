@@ -25,6 +25,7 @@ export interface Options {
 	heroCount: number;
 	heroLevel: number;
 	heroVictories: number;
+	showDefeatedCombatants: boolean;
 	// Tactical Map
 	gridSize: number;
 	playerGridSize: number;

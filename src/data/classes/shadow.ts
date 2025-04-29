@@ -36,13 +36,11 @@ As a shadow, you have abilities that deal a lot of damage, let you move swiftly 
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
-				FactoryLogic.feature.createSkill({
+				FactoryLogic.feature.createSkillChoice({
 					id: 'shadow-1-1',
-					skill: 'Hide'
-				}),
-				FactoryLogic.feature.createSkill({
-					id: 'shadow-1-2',
-					skill: 'Sneak'
+					listOptions: [ SkillList.Intrigue ],
+					count: 2,
+					selected: [ 'Hide', 'Sneak' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'shadow-1-3',
@@ -404,9 +402,10 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkill({
+						FactoryLogic.feature.createSkillChoice({
 							id: 'shadow-sub-1-1-1',
-							skill: 'Magic'
+							listOptions: [ SkillList.Lore ],
+							selected: [ 'Magic' ]
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
@@ -518,9 +517,10 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkill({
+						FactoryLogic.feature.createSkillChoice({
 							id: 'shadow-sub-2-1-1',
-							skill: 'Alchemy'
+							listOptions: [ SkillList.Crafting ],
+							selected: [ 'Alchemy' ]
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
@@ -639,9 +639,10 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 				{
 					level: 1,
 					features: [
-						FactoryLogic.feature.createSkill({
+						FactoryLogic.feature.createSkillChoice({
 							id: 'shadow-sub-3-1-1',
-							skill: 'Lie'
+							listOptions: [ SkillList.Interpersonal ],
+							selected: [ 'Lie' ]
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({

@@ -36,13 +36,15 @@ A talent is limited only by the strength of their mind. Powerful psionic heroes 
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
-				FactoryLogic.feature.createSkill({
+				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-skill-a',
-					skill: 'Psionics'
+					listOptions: [ SkillList.Lore ],
+					selected: [ 'Psionics' ]
 				}),
-				FactoryLogic.feature.createSkill({
+				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-skill-b',
-					skill: 'Read Person'
+					listOptions: [ SkillList.Interpersonal ],
+					selected: [ 'Read Person' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-skill-c',

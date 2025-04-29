@@ -36,9 +36,10 @@ As a tactician, you have abilities that heal your allies and grant them increase
 					field: FeatureField.Recoveries,
 					value: 10
 				}),
-				FactoryLogic.feature.createSkill({
+				FactoryLogic.feature.createSkillChoice({
 					id: 'tactician-1-1',
-					skill: 'Lead'
+					listOptions: [ SkillList.Interpersonal ],
+					selected: [ 'Lead' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'tactician-1-2',

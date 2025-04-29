@@ -1,11 +1,12 @@
 import { Button, Input, Popover, Space, Tabs, Upload } from 'antd';
-import { DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { AppFooter } from '../../../panels/app-footer/app-footer';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Collections } from '../../../../utils/collections';
 import { Empty } from '../../../controls/empty/empty';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Hero } from '../../../../models/hero';
+import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroPanel } from '../../../panels/hero/hero-panel';
 import { Options } from '../../../../models/options';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
@@ -117,6 +118,13 @@ export const HeroListPage = (props: Props) => {
 											<Button block={true} icon={<DownloadOutlined />}>Import</Button>
 										</Upload>
 									</Space>
+									<div className='ds-text centered-text'>or</div>
+									<Button
+										icon={<ThunderboltOutlined />}
+										onClick={() => props.importHero(HeroLogic.createRandomHero())}
+									>
+										Create a Random Hero
+									</Button>
 								</div>
 							)}
 						>

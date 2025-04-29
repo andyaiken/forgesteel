@@ -3,10 +3,12 @@ import { Feature, FeatureAbility, FeatureClassAbility } from '../models/feature'
 import { AbilityData } from '../data/ability-data';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
+import { Ancestry } from '../models/ancestry';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Domain } from '../models/domain';
+import { FactoryLogic } from './factory-logic';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from './feature-logic';
 import { FeatureType } from '../enums/feature-type';
@@ -16,11 +18,17 @@ import { ItemType } from '../enums/item-type';
 import { Kit } from '../models/kit';
 import { Language } from '../models/language';
 import { Modifier } from '../models/damage-modifier';
+import { MonsterOrganizationType } from '../enums/monster-organization-type';
+import { MonsterRoleType } from '../enums/monster-role-type';
+import { NameGenerator } from '../utils/name-generator';
+import { Perk } from '../models/perk';
 import { Size } from '../models/size';
 import { Skill } from '../models/skill';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
 import { SourcebookLogic } from './sourcebook-logic';
+import { Title } from '../models/title';
+import { Utils } from '../utils/utils';
 
 export class HeroLogic {
 	static getHeroDescription = (hero: Hero) => {
@@ -67,6 +75,20 @@ export class HeroLogic {
 		return Collections.sort(features, f => f.feature.name);
 	};
 
+	static getPerks = (hero: Hero) => {
+		const perks: Perk[] = [];
+
+		// Collate from features
+		this.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Perk)
+			.forEach(f => {
+				perks.push(...f.data.selected);
+			});
+
+		return perks;
+	};
+
 	static getKits = (hero: Hero) => {
 		const kits: Kit[] = [];
 
@@ -79,6 +101,20 @@ export class HeroLogic {
 			});
 
 		return kits;
+	};
+
+	static getTitles = (hero: Hero) => {
+		const titles: Title[] = [];
+
+		// Collate from features
+		this.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.TitleChoice)
+			.forEach(f => {
+				titles.push(...f.data.selected);
+			});
+
+		return titles;
 	};
 
 	static getDomains = (hero: Hero) => {
@@ -778,6 +814,216 @@ export class HeroLogic {
 		hero.state.hidden = false;
 		hero.state.encounterState = 'ready';
 		hero.state.defeated = false;
+	};
+
+	///////////////////////////////////////////////////////////////////////////
+
+	static createRandomHero = () => {
+		const sourcebooks = [ SourcebookData.core, SourcebookData.orden ];
+		const hero = FactoryLogic.createHero(sourcebooks.map(sb => sb.id));
+		hero.name = NameGenerator.generateName();
+		hero.ancestry = Collections.draw(SourcebookLogic.getAncestries(sourcebooks));
+		hero.culture = Collections.draw(SourcebookLogic.getCultures(sourcebooks));
+		hero.career = Collections.draw(SourcebookLogic.getCareers(sourcebooks));
+		hero.class = Collections.draw(SourcebookLogic.getClasses(sourcebooks));
+
+		hero.class.primaryCharacteristics = Collections.draw(hero.class.primaryCharacteristicsOptions);
+		const array = Collections.draw(HeroLogic.getCharacteristicArrays(hero.class.primaryCharacteristics.length));
+		hero.class.characteristics = Collections.draw(HeroLogic.calculateCharacteristicArrays(array, hero.class.primaryCharacteristics));
+
+		while (hero.class.subclasses.filter(sc => sc.selected).length < hero.class.subclassCount) {
+			const options = hero.class.subclasses.filter(sc => !sc.selected);
+			Collections.draw(options).selected = true;
+		}
+
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(feature => FeatureLogic.isChoice(feature))
+			.forEach(feature => {
+				switch (feature.type) {
+					case FeatureType.AncestryChoice: {
+						const options = SourcebookLogic.getAncestries(sourcebooks);
+						feature.data.selected = Collections.draw(options);
+						break;
+					}
+					case FeatureType.AncestryFeatureChoice: {
+						const ancestries: Ancestry[] = [];
+						if (feature.data.source.current) {
+							if (hero.ancestry) {
+								ancestries.push(hero.ancestry);
+							}
+						}
+						if (feature.data.source.former) {
+							ancestries.push(...HeroLogic.getFormerAncestries(hero));
+						}
+						const options = ancestries
+							.flatMap(a => a.features)
+							.filter(f => f.type === FeatureType.Choice)
+							.flatMap(f => f.data.options)
+							.filter(opt => feature.data.value === opt.value)
+							.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice)
+							.map(opt => opt.feature);
+						feature.data.selected = Collections.draw(options);
+						break;
+					}
+					case FeatureType.Choice: {
+						let remaining = feature.data.count;
+						while (feature.data.options.some(o => o.value <= remaining)) {
+							const currentIDs = feature.data.selected.map(f => f.id);
+							const options = feature.data.options
+								.filter(o => !currentIDs.includes(o.feature.id))
+								.filter(o => o.value <= remaining);
+							const selected = Collections.draw(options);
+							feature.data.selected.push(selected.feature);
+							remaining -= selected.value;
+						}
+						break;
+					}
+					case FeatureType.ClassAbility: {
+						if (hero.class) {
+							while (feature.data.selectedIDs.length < feature.data.count) {
+								const currentIDs = feature.data.selectedIDs;
+								const options = hero.class.abilities
+									.filter(a => !currentIDs.includes(a.id))
+									.filter(a => a.cost === feature.data.cost);
+								const selected = Collections.draw(options);
+								feature.data.selectedIDs.push(selected.id);
+							}
+						}
+						break;
+					}
+					case FeatureType.Companion: {
+						const options = SourcebookLogic.getMonsterGroups(sourcebooks)
+							.flatMap(mg => mg.monsters)
+							.filter(m => {
+								switch (feature.data.type) {
+									case 'companion':
+										return true;
+									case 'mount':
+										return m.role.type === MonsterRoleType.Mount;
+									case 'retainer':
+										return m.role.organization === MonsterOrganizationType.Retainer;
+								}
+							});
+						feature.data.selected = Collections.draw(Utils.copy(options));
+						break;
+					}
+					case FeatureType.Domain: {
+						while (feature.data.selected.length < feature.data.count) {
+							const currentIDs = HeroLogic.getDomains(hero).map(d => d.id);
+							const options = SourcebookLogic.getDomains(sourcebooks)
+								.filter(a => !currentIDs.includes(a.id));
+							feature.data.selected.push(Collections.draw(options));
+						}
+						break;
+					}
+					case FeatureType.DomainFeature: {
+						while (feature.data.selected.length < feature.data.count) {
+							const currentIDs = HeroLogic.getFeatures(hero).map(f => f.feature.id);
+							const options = HeroLogic.getDomains(hero)
+								.flatMap(d => d.featuresByLevel)
+								.filter(lvl => lvl.level === feature.data.level)
+								.flatMap(lvl => lvl.features)
+								.filter(f => !currentIDs.includes(f.id));
+							feature.data.selected.push(Collections.draw(options));
+						}
+						break;
+					}
+					case FeatureType.ItemChoice: {
+						while (feature.data.selected.length < feature.data.count) {
+							const currentIDs = feature.data.selected.map(d => d.id);
+							const options = SourcebookLogic.getItems(sourcebooks)
+								.filter(i => !currentIDs.includes(i.id))
+								.filter(i => (feature.data.types.length === 0) || feature.data.types.includes(i.type));
+							feature.data.selected.push(Collections.draw(options));
+						}
+						break;
+					}
+					case FeatureType.Kit: {
+						while (feature.data.selected.length < feature.data.count) {
+							const currentIDs = HeroLogic.getKits(hero).map(k => k.id);
+							const options = SourcebookLogic.getKits(sourcebooks)
+								.filter(k => !currentIDs.includes(k.id))
+								.filter(k => (feature.data.types.length === 0) || feature.data.types.includes(k.type));
+							feature.data.selected.push(Collections.draw(options));
+						}
+						break;
+					}
+					case FeatureType.LanguageChoice: {
+						while (feature.data.selected.length < feature.data.count) {
+							const current = HeroLogic.getLanguages(hero, sourcebooks).map(l => l.name);
+							const options = SourcebookLogic.getLanguages(sourcebooks)
+								.filter(l => !current.includes(l.name));
+							feature.data.selected.push(Collections.draw(options).name);
+						}
+						break;
+					}
+					case FeatureType.Perk: {
+						while (feature.data.selected.length < feature.data.count) {
+							const currentIDs = HeroLogic.getPerks(hero).map(p => p.id);
+							const options = SourcebookLogic.getPerks(sourcebooks)
+								.filter(p => !currentIDs.includes(p.id))
+								.filter(p => (feature.data.lists.length === 0) || feature.data.lists.includes(p.list));
+							feature.data.selected.push(Collections.draw(options));
+						}
+						break;
+					}
+					case FeatureType.SkillChoice: {
+						while (feature.data.selected.length < feature.data.count) {
+							const current = HeroLogic.getSkills(hero, sourcebooks).map(s => s.name);
+							const allOptions = [ ...feature.data.options ];
+							feature.data.listOptions.forEach(list => {
+								SourcebookLogic.getSkills(sourcebooks)
+									.filter(s => s.list === list)
+									.map(s => s.name)
+									.forEach(s => allOptions.push(s));
+							});
+							const options = allOptions
+								.filter(s => !current.includes(s));
+							feature.data.selected.push(Collections.draw(options));
+						}
+						break;
+					}
+					case FeatureType.TaggedFeatureChoice: {
+						while (feature.data.selected.length < feature.data.count) {
+							const taggedFeatures = HeroLogic.getFeatures(hero)
+								.map(f => f.feature)
+								.filter(f => f.type === FeatureType.TaggedFeature)
+								.filter(f => f.data.tag === feature.data.tag);
+							const currentIDs = HeroLogic.getFeatures(hero)
+								.map(f => f.feature)
+								.filter(f => f.type === FeatureType.TaggedFeatureChoice)
+								.flatMap(f => f.data.selected)
+								.map(f => f.id);
+							const options = taggedFeatures
+								.filter(t => !currentIDs.includes(t.id));
+							feature.data.selected.push(Collections.draw(options));
+						}
+						break;
+					}
+					case FeatureType.TitleChoice: {
+						while (feature.data.selected.length < feature.data.count) {
+							const currentIDs = HeroLogic.getTitles(hero).map(t => t.id);
+							const options = SourcebookLogic.getTitles(sourcebooks)
+								.filter(t => !currentIDs.includes(t.id))
+								.filter(t => feature.data.echelon === t.echelon);
+							feature.data.selected.push(Collections.draw(options));
+						}
+						break;
+					}
+				};
+			});
+
+		// Choose culture language
+		const currentLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(l => l.name);
+		const options = SourcebookLogic.getLanguages(sourcebooks)
+			.filter(l => !currentLanguages.includes(l.name));
+		hero.culture.languages.push(Collections.draw(options).name);
+
+		// Choose career inciting incident
+		hero.career.incitingIncidents.selectedID = Collections.draw(hero.career.incitingIncidents.options.map(ii => ii.id));
+
+		return hero;
 	};
 
 	///////////////////////////////////////////////////////////////////////////

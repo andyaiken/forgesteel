@@ -2,10 +2,10 @@
 
 ### Heroes
 
+* Add pregens from the Delian Tomb
 * Make sure multiple melee / ranged damage bonuses are handled correctly
 * Hero Builder:
   * Revenants should have 3 ancestry points if small
-  * Auto-create heroes
 
 ### Library
 

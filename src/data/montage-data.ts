@@ -397,7 +397,7 @@ The first time the heroes fail a test while the alarm level is 2, they encounter
 						name: 'Push On',
 						description: 'Pick up the pace and push past the fatigue.',
 						characteristics: [ Characteristic.Might ],
-						skills: 'Endurance, Lead; Animal Handling, Drive, or Ride if the party has mounts or vehicles'
+						skills: 'Endurance, Lead; Handle Animals, Drive, or Ride if the party has mounts or vehicles'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'scout-ahead',

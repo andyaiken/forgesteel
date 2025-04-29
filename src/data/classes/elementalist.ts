@@ -38,9 +38,10 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
-				FactoryLogic.feature.createSkill({
+				FactoryLogic.feature.createSkillChoice({
 					id: 'elementalist-1-1',
-					skill: 'Magic'
+					listOptions: [ SkillList.Lore ],
+					selected: [ 'Magic' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'elementalist-1-2',

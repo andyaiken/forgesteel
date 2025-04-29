@@ -40,9 +40,10 @@ The null is an unarmed psionic warrior who dampens and absorbs the effects of ma
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
-				FactoryLogic.feature.createSkill({
+				FactoryLogic.feature.createSkillChoice({
 					id: 'null-1-1',
-					skill: 'Psionics'
+					listOptions: [ SkillList.Lore ],
+					selected: [ 'Psionics' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'null-1-2',

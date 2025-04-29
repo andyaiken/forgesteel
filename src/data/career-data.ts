@@ -10,9 +10,10 @@ export class CareerData {
 		name: 'Agent',
 		description: 'You worked as a spy for a government or organization.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'career-agent-feature-1',
-				skill: 'Sneak'
+				listOptions: [ SkillList.Intrigue ],
+				selected: [ 'Sneak' ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
 				id: 'career-agent-feature-2',
@@ -201,9 +202,10 @@ export class CareerData {
 		name: 'Beggar',
 		description: 'You lived by going to a tavern, crossroads, city street, or other busy area and begging passersby for money or food.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'career-beggar-feature-1',
-				skill: 'Rumors'
+				listOptions: [ SkillList.Lore ],
+				selected: [ 'Rumors' ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
 				id: 'career-beggar-feature-2',
@@ -264,9 +266,10 @@ export class CareerData {
 		name: 'Criminal',
 		description: 'You once worked as a bandit, insurgent, smuggler, outlaw, or even as an assassin.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'career-criminal-feature-1',
-				skill: 'Criminal Underworld'
+				listOptions: [ SkillList.Lore ],
+				selected: [ 'Criminal Underworld' ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
 				id: 'career-criminal-feature-2',
@@ -328,9 +331,10 @@ export class CareerData {
 		name: 'Disciple',
 		description: 'You worked in a church, temple, or other religious institution as part of the clergy.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'career-disciple-feature-1',
-				skill: 'Religion'
+				listOptions: [ SkillList.Lore ],
+				selected: [ 'Religion' ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
 				id: 'career-disciple-feature-2',
@@ -389,9 +393,10 @@ export class CareerData {
 		name: 'Explorer',
 		description: 'You ventured into uncharted areas and made your living as a cartographer, researcher, resource seeker, or treasure hunter.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'career-explorer-feature-1',
-				skill: 'Navigate'
+				listOptions: [ SkillList.Exploration ],
+				selected: [ 'Navigate' ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
 				id: 'career-explorer-feature-2',
@@ -449,9 +454,10 @@ export class CareerData {
 		name: 'Farmer',
 		description: 'You grew crops or cared for livestock.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'career-farmer-feature-1',
-				skill: 'Handle Animals'
+				listOptions: [ SkillList.Interpersonal ],
+				selected: [ 'Handle Animals' ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
 				id: 'career-farmer-feature-2',
@@ -573,9 +579,10 @@ export class CareerData {
 		name: 'Laborer',
 		description: 'You worked as a farmer, builder, clothes washer, forester, miner, or some other profession engaged in hard manual labor.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'laborer-feature-1',
-				skill: 'Endurance'
+				listOptions: [ SkillList.Exploration ],
+				selected: [ 'Endurance' ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
 				id: 'laborer-feature-2',
@@ -637,9 +644,10 @@ export class CareerData {
 		name: 'Mage’s Apprentice',
 		description: 'For long years, you studied magic under the mentorship of a more experienced mage.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'mages-apprentice-feature-1',
-				skill: 'Magic'
+				listOptions: [ SkillList.Lore ],
+				selected: [ 'Magic' ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
 				id: 'mages-apprentice-feature-2',
@@ -887,9 +895,10 @@ export class CareerData {
 		name: 'Sailor',
 		description: 'You worked on a ship that might have been a merchant cog, a mercenary or military craft, or a pirate vessel. You might have been a deckhand, a mate, or even the captain.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'career-sailor-feature-1',
-				skill: 'Swim'
+				listOptions: [ SkillList.Exploration ],
+				selected: [ 'Swim' ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
 				id: 'career-sailor-feature-2',
@@ -1011,9 +1020,10 @@ export class CareerData {
 		name: 'Warden',
 		description: 'You protected a wild region from those who sought to harm it, such as poachers and cultists bent on the destruction of the natural world. Knowing your land well, you could also serve as a guide or the leader of a rescue party for those wandering the wilds.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'career-warden-feature-1',
-				skill: 'Nature'
+				listOptions: [ SkillList.Lore ],
+				selected: [ 'Nature' ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
 				id: 'career-warden-feature-2',
@@ -1078,9 +1088,10 @@ export class CareerData {
 		name: 'Watch Officer',
 		description: 'You served as an officer of the law for a local government. You might have been a single person in a much larger city watch or the only constable patrolling a small village.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'career-watch-officer-feature-1',
-				skill: 'Alertness'
+				listOptions: [ SkillList.Intrigue ],
+				selected: [ 'Alertness' ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
 				id: 'career-watch-officer-feature-2',

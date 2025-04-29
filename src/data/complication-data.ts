@@ -271,9 +271,10 @@ Your knowledge of your chosen field increases. When you finish this project, the
 		name: 'Crash Landed',
 		description: 'You used to flit around the stars in your own ship, but after an ugly run-in with a pirate (or a pirate hunter), you’re marooned on this backwater world. You’re prepared to carve out a life here - at least until you can hitch a ride.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-crashLanded-skill',
-				skill: 'Timescape'
+				listOptions: [ SkillList.Lore ],
+				selected: [ 'Timescape' ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-crashLanded-b',
@@ -467,9 +468,10 @@ Your knowledge of your chosen field increases. When you finish this project, the
 		name: 'Fallen Immortal',
 		description: 'You used to be an immortal creature, dispensing justice and doing the bidding of the gods. Now, as a punishment or perhaps as a reward, you have put aside your wings and become a mortal. Your remaining years will be short, but living aside your fellow mortals gives your life new meaning.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-fallenImmortal-skill',
-				skill: 'Religion'
+				listOptions: [ SkillList.Lore ],
+				selected: [ 'Religion' ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-fallenImmortal-b',
@@ -1037,9 +1039,10 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Master Chef',
 		description: 'Before you were a hero, you were a chef - and when you retire, you have big plans for your next restaurant or inn. In the meantime, you’re on the lookout for rare ingredients that only a traveler can find. After all, it’s food that makes the world go round.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-masterChef-skill',
-				skill: 'Cooking'
+				listOptions: [ SkillList.Crafting ],
+				selected: [ 'Cooking' ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-masterChef-b',
@@ -1336,14 +1339,15 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Raised by Beasts',
 		description: 'You were orphaned or lost in the wild, and a friendly animal pack (perhaps apes, bears, or wolves) took you in. Returning to so-called civilization was a shock, but you’re determined to learn all you can about your own kind.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-raisedByBeasts-skill',
-				skill: 'Animal Handling'
+				listOptions: [ SkillList.Interpersonal ],
+				selected: [ 'Handle Animals' ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-raisedByBeasts-b',
 				name: 'Raised by Beasts Benefit',
-				description: 'Choose an animal type, such as wolf. You can communicate with this animal as if you shared a language, and animals of this type are not initially hostile to you unless they’re supernaturally compelled to be. You gain an edge when you use Animal Handling to interact with this animal.'
+				description: 'Choose an animal type, such as wolf. You can communicate with this animal as if you shared a language, and animals of this type are not initially hostile to you unless they’re supernaturally compelled to be. You gain an edge when you use Handle Animals to interact with this animal.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-raisedByBeasts-d',
@@ -1625,13 +1629,11 @@ You can’t take this complication if you can’t be dazed.`,
 		name: 'Silent Sentinel',
 		description: 'You were trained by a group of spies who psionically infused silence into your every step and enhanced your ability to hear distant whispers. It wasn’t until you got caught by an elementalist who blasted you with thunder that you learned the enhanced hearing had some nasty side effects.',
 		features: [
-			FactoryLogic.feature.createSkill({
+			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-silentSentinel-skill1',
-				skill: 'Eavesdrop'
-			}),
-			FactoryLogic.feature.createSkill({
-				id: 'comp-silentSentinel-skill2',
-				skill: 'Sneak'
+				listOptions: [ SkillList.Intrigue ],
+				count: 2,
+				selected: [ 'Eavesdrop', 'Sneak' ]
 			}),
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-silentSentinel-skill3',

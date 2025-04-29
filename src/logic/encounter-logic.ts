@@ -216,14 +216,48 @@ export class EncounterLogic {
 		let malice = 0;
 
 		if (encounter.round === 0) {
-			// Gain malice equal to average number of victories per hero
+			// Gain malice equal to the average number of victories per hero
 			malice += Math.round(Collections.mean(encounter.heroes, h => h.state.victories));
 		}
 
-		// Gain malice equal to number of active heroes plus number of the round that's starting
+		// Gain malice equal to the number of active heroes plus the number of the round that's starting
 		malice += encounter.heroes.filter(h => !h.state.defeated).length;
 		malice += encounter.round + 1;
 
 		return malice;
+	};
+
+	static getCombatants = (encounter: Encounter) => {
+		const combatants: { type: 'group' | 'hero', id: string, section: 'ready' | 'current' | 'finished' | 'defeated' }[] = [];
+
+		encounter.groups
+			.filter(g => g.slots.length > 0)
+			.forEach(g => {
+				const section = g.slots.every(s => s.state.defeated) || g.slots.flatMap(s => s.monsters).every(m => m.state.defeated) ? 'defeated' : g.encounterState;
+				combatants.push({ type: 'group', id: g.id, section: section });
+			});
+
+		encounter.heroes.forEach(h => {
+			const section = h.state.defeated ? 'defeated' : h.state.encounterState;
+			combatants.push({ type: 'hero', id: h.id, section: section });
+		});
+
+		return combatants;
+	};
+
+	static getEncounterVictory = (encounter: Encounter) => {
+		const combatants = EncounterLogic.getCombatants(encounter);
+		const activeCombatants = combatants.filter(c => c.section !== 'defeated');
+		const inactiveCombatants = combatants.filter(c => c.section === 'defeated');
+
+		if (activeCombatants.every(c => c.type === 'group') && inactiveCombatants.some(c => c.type === 'hero')) {
+			return 'monsters';
+		}
+
+		if (activeCombatants.every(c => c.type === 'hero') && inactiveCombatants.some(c => c.type === 'group')) {
+			return 'heroes';
+		}
+
+		return null;
 	};
 }

@@ -1,12 +1,8 @@
-import { Alert, Button, Divider, Drawer, Flex, Popover, Progress, Segmented, Space, Tabs, Tag } from 'antd';
-import { EllipsisOutlined, HeartFilled, IdcardOutlined } from '@ant-design/icons';
+import { Alert, Button, Drawer, Flex, Progress, Space, Tabs } from 'antd';
 import { Encounter, EncounterGroup, EncounterSlot } from '../../../../models/encounter';
-import { HeroToken, MonsterToken } from '../../../controls/token/token';
+import { EncounterGroupHero, EncounterGroupMonster, EncounterGroupTerrain } from '../../encounter-group/encounter-group-panel';
 import { AbilityPanel } from '../../elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../../enums/ability-usage';
-import { Collections } from '../../../../utils/collections';
-import { ConditionLogic } from '../../../../logic/condition-logic';
-import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterObjectivePanel } from '../../elements/encounter-objective/encounter-objective-panel';
@@ -18,7 +14,6 @@ import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
-import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroSelectModal } from '../../../modals/select/hero-select/hero-select-modal';
 import { HeroStateModal } from '../../../modals/hero-state/hero-state-modal';
 import { HeroStatePage } from '../../../../enums/hero-state-page';
@@ -38,7 +33,6 @@ import { SelectablePanel } from '../../../controls/selectable-panel/selectable-p
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Terrain } from '../../../../models/terrain';
-import { TerrainLogic } from '../../../../logic/terrain-logic';
 import { TerrainModal } from '../../../modals/terrain/terrain-modal';
 import { Utils } from '../../../../utils/utils';
 import { useMediaQuery } from '../../../../hooks/use-media-query';
@@ -116,36 +110,67 @@ export const EncounterRunPanel = (props: Props) => {
 
 	const getControlSection = () => {
 		const getMainText = () => {
+			if (encounter.heroes.length === 0) {
+				return 'No Heroes';
+			}
+
 			if (!encounter.initiative) {
 				return 'Initiative';
+			}
+
+			if (encounter.groups.every(g => g.encounterState !== 'current') && encounter.heroes.every(h => h.state.encounterState !== 'current')) {
+				return 'Start Turn';
 			}
 
 			return 'End Turn';
 		};
 
 		const getSubText = () => {
+			if (encounter.heroes.length === 0) {
+				return 'To start, add your heroes';
+			}
+
 			if (!encounter.initiative) {
 				return 'Click here to set initiative';
 			}
 
+			if (encounter.groups.every(g => g.encounterState !== 'current') && encounter.heroes.every(h => h.state.encounterState !== 'current')) {
+				return 'Click here to start a turn';
+			}
+
 			return 'Click here to finish this turn';
 		};
+
+		const victory = EncounterLogic.getEncounterVictory(encounter);
 
 		return (
 			<div className='stats'>
 				<NumberSpin min={0} value={encounter.round} onChange={setRound}>
 					<Field orientation='vertical' label='Round' value={encounter.round || '-'} />
 				</NumberSpin>
-				<Button className='round-button' type='primary' onClick={nextTurn}>
-					<Space direction='vertical'>
-						<div className='maintext'>
-							{getMainText()}
-						</div>
-						<div className='subtext'>
-							{getSubText()}
-						</div>
-					</Space>
-				</Button>
+				{
+					victory ?
+						<Alert
+							type='info'
+							showIcon={true}
+							message={(
+								<div>
+									The <b>{victory}</b> have won this encounter.
+								</div>
+							)}
+						/>
+						:
+						<Button className='initiative-button' type='primary' disabled={encounter.heroes.length === 0} onClick={nextTurn}>
+							<Space direction='vertical'>
+								<div className='maintext'>
+									{getMainText()}
+								</div>
+								<div className='subtext'>
+									{getSubText()}
+								</div>
+							</Space>
+						</Button>
+				}
 				<NumberSpin min={0} value={encounter.malice} onChange={setMalice}>
 					<Field orientation='vertical' label='Malice' value={encounter.malice} />
 				</NumberSpin>
@@ -154,134 +179,6 @@ export const EncounterRunPanel = (props: Props) => {
 	};
 
 	const getCombatants = () => {
-		const combatants: { type: 'group' | 'hero', id: string, section: 'ready' | 'current' | 'finished' | 'defeated' }[] = [];
-		encounter.groups
-			.filter(g => g.slots.length > 0)
-			.forEach(g => {
-				const section = g.slots.every(s => s.state.defeated) || g.slots.flatMap(s => s.monsters).every(m => m.state.defeated) ? 'defeated' : g.encounterState;
-				combatants.push({ type: 'group', id: g.id, section: section });
-			});
-		encounter.heroes.forEach(h => {
-			const section = h.state.defeated ? 'defeated' : h.state.encounterState;
-			combatants.push({ type: 'hero', id: h.id, section: section });
-		});
-
-		const getSlot = (slot: EncounterSlot) => {
-			const isMinionSlot = slot.monsters.every(m => m.role.organization === MonsterOrganizationType.Minion);
-
-			const getStaminaDescription = () => {
-				const max = Collections.sum(slot.monsters, m => MonsterLogic.getStamina(m));
-
-				let str = `${max}`;
-				if (slot.state.staminaDamage > 0) {
-					str = `${Math.max(max - slot.state.staminaDamage, 0)} / ${max}`;
-				}
-				if (slot.state.staminaTemp > 0) {
-					str += ` +${slot.state.staminaTemp}`;
-				}
-
-				return str;
-			};
-
-			const getMinionCountMessage = () => {
-				if (!isMinionSlot) {
-					return null;
-				}
-
-				const staminaRemaining = Collections.sum(slot.monsters, m => MonsterLogic.getStamina(m)) - slot.state.staminaDamage;
-				const staminaPerMinion = Collections.mean(slot.monsters, m => MonsterLogic.getStamina(m));
-				const minionsExpected = Math.ceil(staminaRemaining / staminaPerMinion);
-				const minionsAlive = slot.monsters.filter(m => !m.state.defeated).length;
-
-				if (minionsAlive !== minionsExpected) {
-					return (
-						<Alert
-							type='warning'
-							showIcon={true}
-							message={`There should be ${Math.max(minionsExpected, 0)} active minions, not ${minionsAlive}.`}
-						/>
-					);
-				}
-
-				return null;
-			};
-
-			const getMinionCaptainTag = () => {
-				if (!isMinionSlot) {
-					return null;
-				}
-
-				if (slot.state.captainID) {
-					const captain = encounter.groups.flatMap(g => g.slots).flatMap(s => s.monsters).find(m => m.id === slot.state.captainID);
-					if (captain) {
-						return (
-							<Tag>
-								Captain: {captain.name}
-							</Tag>
-						);
-					}
-				}
-
-				return (
-					<Tag>No captain</Tag>
-				);
-			};
-
-			return (
-				<div key={slot.id} className='encounter-slot'>
-					{
-						isMinionSlot ?
-							<div key='minions' className={slot.state.defeated ? 'encounter-slot-row minion defeated' : 'encounter-slot-row minion'}>
-								<div className='name-column'>
-									<b>Minions</b>
-								</div>
-								<div className='stamina-column'>
-									{getStaminaDescription()}
-									<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
-								</div>
-								<div className='conditions-column'>
-									{getMinionCaptainTag()}
-									{slot.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
-								</div>
-								<Button type='text' icon={<IdcardOutlined />} onClick={() => setSelectedMinionSlot(slot)} />
-							</div>
-							: null
-					}
-					{
-						isMinionSlot ? getMinionCountMessage() : null
-					}
-					{
-						isMinionSlot ? <Divider /> : null
-					}
-					{
-						slot.monsters.map(monster => (
-							<div key={monster.id} className={slot.state.defeated || monster.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'}>
-								<div className='name-column'>
-									<MonsterToken monster={monster} />
-									{monster.name}
-								</div>
-								{
-									isMinionSlot ?
-										<div className='stamina-column' />
-										:
-										<div className='stamina-column'>
-											{MonsterLogic.getStaminaDescription(monster)}
-											<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
-										</div>
-								}
-								<div className='conditions-column'>
-									{MonsterLogic.isWinded(monster) ? <Tag>Winded</Tag> : null}
-									{monster.state.hidden ? <Tag>Hidden</Tag> : null}
-									{monster.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
-								</div>
-								<Button type='text' icon={<IdcardOutlined />} onClick={() => setSelectedMonster(monster)} />
-							</div>
-						))
-					}
-				</div>
-			);
-		};
-
 		const getMonsterGroup = (group: EncounterGroup, index: number) => {
 			const duplicateGroup = () => {
 				const copy = Utils.copy(encounter);
@@ -319,49 +216,18 @@ export const EncounterRunPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
-			const defeated = group.slots.every(s => s.state.defeated || s.monsters.every(m => m.state.defeated));
-			let className = 'encounter-group';
-			if (defeated) {
-				className += ' defeated';
-			} else if (group.encounterState === 'finished') {
-				className += ' acted';
-			}
-
 			return (
-				<div key={group.id} className={className}>
-					<div className='group-column'>
-						<Flex align='center' justify='space-between'>
-							<div className='group-name'>
-								Group {(index + 1).toString()}
-							</div>
-							<Popover
-								trigger='click'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										<Segmented
-											vertical={true}
-											disabled={defeated}
-											options={[
-												{ value: 'ready', label: 'Ready To Act' },
-												{ value: 'current', label: 'Acting Now' },
-												{ value: 'finished', label: 'Finished' }
-											]}
-											value={group.encounterState}
-											onChange={setEncounterState}
-										/>
-										<Button block={true} onClick={duplicateGroup}>Duplicate</Button>
-										<DangerButton mode='block' onConfirm={deleteGroup} />
-									</div>
-								)}
-							>
-								<Button type='text' icon={<EllipsisOutlined />} />
-							</Popover>
-						</Flex>
-					</div>
-					<div className='encounter-slots'>
-						{group.slots.map(getSlot)}
-					</div>
-				</div>
+				<EncounterGroupMonster
+					key={group.id}
+					group={group}
+					index={index}
+					encounter={encounter}
+					onSelectMonster={monster => setSelectedMonster(monster)}
+					onSelectMinionSlot={slot => setSelectedMinionSlot(slot)}
+					onSetState={(_group, state) => setEncounterState(state)}
+					onDuplicate={() => duplicateGroup()}
+					onDelete={() => deleteGroup()}
+				/>
 			);
 		};
 
@@ -382,81 +248,14 @@ export const EncounterRunPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
-			let className = 'encounter-group';
-			if (hero.state.defeated) {
-				className += ' defeated';
-			} else if (hero.state.encounterState === 'finished') {
-				className += ' acted';
-			}
-
-			const getStaminaDescription = () => {
-				const max = HeroLogic.getStamina(hero);
-
-				let str = `${max}`;
-				if (hero.state.staminaDamage > 0) {
-					str = `${Math.max(max - hero.state.staminaDamage, 0)} / ${max}`;
-				}
-				if (hero.state.staminaTemp > 0) {
-					str += ` +${hero.state.staminaTemp}`;
-				}
-
-				return str;
-			};
-
 			return (
-				<div key={hero.id} className={className}>
-					<div className='group-column'>
-						<Flex align='center' justify='space-between'>
-							<div className='group-name'>
-								Hero
-							</div>
-							<Popover
-								trigger='click'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										<Segmented
-											vertical={true}
-											disabled={hero.state.defeated}
-											options={[
-												{ value: 'ready', label: 'Ready To Act' },
-												{ value: 'current', label: 'Acting Now' },
-												{ value: 'finished', label: 'Finished' }
-											]}
-											value={hero.state.encounterState}
-											onChange={setEncounterState}
-										/>
-										<DangerButton mode='block' onConfirm={deleteHero} />
-									</div>
-								)}
-							>
-								<Button type='text' icon={<EllipsisOutlined />} />
-							</Popover>
-						</Flex>
-					</div>
-					<div className='encounter-slots'>
-						<div className='encounter-slot'>
-							<div className={hero.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'}>
-								<div className='name-column'>
-									<HeroToken hero={hero} />
-									<div>
-										<div>{hero.name || 'Unnamed Hero'}</div>
-										<div style={{ fontSize: '10px', opacity: 0.7 }}>{HeroLogic.getHeroDescription(hero)}</div>
-									</div>
-								</div>
-								<div className='stamina-column'>
-									{getStaminaDescription()}
-									<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
-								</div>
-								<div className='conditions-column'>
-									{HeroLogic.isWinded(hero) ? <Tag>Winded</Tag> : null}
-									{hero.state.hidden ? <Tag>Hidden</Tag> : null}
-									{hero.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
-								</div>
-								<Button type='text' icon={<IdcardOutlined />} onClick={() => setSelectedHero(hero)} />
-							</div>
-						</div>
-					</div>
-				</div>
+				<EncounterGroupHero
+					key={hero.id}
+					hero={hero}
+					onSelect={hero => setSelectedHero(hero)}
+					onSetState={(_hero, state) => setEncounterState(state)}
+					onDelete={() => deleteHero()}
+				/>
 			);
 		};
 
@@ -464,6 +263,8 @@ export const EncounterRunPanel = (props: Props) => {
 		if (props.options.showDefeatedCombatants) {
 			sections.push('defeated');
 		}
+
+		const combatants = EncounterLogic.getCombatants(encounter);
 
 		return (
 			<div className='encounter-groups'>
@@ -549,42 +350,13 @@ export const EncounterRunPanel = (props: Props) => {
 			};
 
 			return (
-				<div key={terrain.id} className='encounter-group'>
-					<div className='group-column'>
-						<Flex align='center' justify='space-between'>
-							<div className='group-name'>
-								Terrain
-							</div>
-							<Popover
-								trigger='click'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										<Button block={true} onClick={duplicateTerrain}>Duplicate</Button>
-										<DangerButton onConfirm={deleteTerrain} />
-									</div>
-								)}
-							>
-								<Button type='text' icon={<EllipsisOutlined />} />
-							</Popover>
-						</Flex>
-					</div>
-					<div className='encounter-slots'>
-						<div className='encounter-slot'>
-							<div className='encounter-slot-row'>
-								<div className='name-column'>
-									{terrain.name}
-								</div>
-								<div className='stamina-column'>
-									{TerrainLogic.getStaminaValue(terrain)}
-									<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
-								</div>
-								<div className='conditions-column'>
-								</div>
-								<Button type='text' icon={<IdcardOutlined />} onClick={() => setSelectedTerrain(terrain)} />
-							</div>
-						</div>
-					</div>
-				</div>
+				<EncounterGroupTerrain
+					key={terrain.id}
+					terrain={terrain}
+					onSelect={terrain => setSelectedTerrain(terrain)}
+					onDuplicate={() => duplicateTerrain()}
+					onDelete={() => deleteTerrain()}
+				/>
 			);
 		};
 
@@ -772,7 +544,7 @@ export const EncounterRunPanel = (props: Props) => {
 						tabBarExtraContent={
 							tab === 'combatants' ?
 								<Flex gap={5}>
-									<Button block={true} onClick={() => setAddingHeroes(true)}>Add hero(es)</Button>
+									<Button block={true} type={encounter.heroes.length === 0 ? 'primary' : 'default'} onClick={() => setAddingHeroes(true)}>Add hero(es)</Button>
 									<Button block={true} onClick={() => setAddingMonsters(true)}>Add a monster</Button>
 								</Flex>
 								: null

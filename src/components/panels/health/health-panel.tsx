@@ -128,15 +128,19 @@ export const HeroHealthPanel = (props: HeroProps) => {
 			<HealthPanel
 				mode={props.onChange ? PanelMode.Full : PanelMode.Compact}
 				showToggles={props.showEncounterControls}
-				stamina={{
-					staminaMax: HeroLogic.getStamina(hero),
-					staminaDamage: hero.state.staminaDamage,
-					isWinded: HeroLogic.isWinded(hero),
-					immunities: HeroLogic.getDamageModifiers(hero, DamageModifierType.Immunity),
-					weaknesses: HeroLogic.getDamageModifiers(hero, DamageModifierType.Weakness),
-					takeDamage: takeDamage,
-					heal: heal
-				}}
+				stamina={
+					HeroLogic.getStamina(hero) !== 0 ?
+						{
+							staminaMax: HeroLogic.getStamina(hero),
+							staminaDamage: hero.state.staminaDamage,
+							isWinded: HeroLogic.isWinded(hero),
+							immunities: HeroLogic.getDamageModifiers(hero, DamageModifierType.Immunity),
+							weaknesses: HeroLogic.getDamageModifiers(hero, DamageModifierType.Weakness),
+							takeDamage: takeDamage,
+							heal: heal
+						}
+						: undefined
+				}
 				staminaTemp={{
 					staminaTemp: hero.state.staminaTemp,
 					addTemp: addTemp

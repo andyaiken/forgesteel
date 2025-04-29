@@ -1,6 +1,7 @@
-import { Segmented, Space } from 'antd';
+import { Alert, Button, Flex, Input, Segmented, Space } from 'antd';
 import { Collections } from '../../../../utils/collections';
 import { Empty } from '../../../controls/empty/empty';
+import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
@@ -8,6 +9,7 @@ import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroPanel } from '../../../panels/hero/hero-panel';
 import { Modal } from '../../modal/modal';
 import { Options } from '../../../../models/options';
+import { PlusOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { useState } from 'react';
@@ -24,6 +26,7 @@ interface Props {
 
 export const HeroSelectModal = (props: Props) => {
 	const [ mode, setMode ] = useState<string>('folder');
+	const [ heroName, setHeroName ] = useState<string>('');
 
 	try {
 		const getContent = () => {
@@ -75,6 +78,45 @@ export const HeroSelectModal = (props: Props) => {
 						</SelectablePanel>
 					));
 				}
+				case 'simple': {
+					return (
+						<Space direction='vertical' style={{ width: '100%' }}>
+							<Alert
+								type='info'
+								showIcon={true}
+								message={(
+									<>
+										<div>
+											If you don't have your party in Forge Steel, you can just add their names.
+										</div>
+										<div>
+											You won't be able to track their stamina, but they'll be in the turn order and you'll still be able to track conditions.
+										</div>
+									</>
+								)}
+							/>
+							<Flex align='center' justify='space-between' gap={10}>
+								<Input
+									placeholder='Name'
+									allowClear={true}
+									value={heroName}
+									onChange={e => setHeroName(e.target.value)}
+								/>
+								<Button
+									disabled={!heroName}
+									type='primary'
+									icon={<PlusOutlined />}
+									onClick={() => {
+										const hero = FactoryLogic.createHero([]);
+										hero.name = heroName;
+										setHeroName('');
+										props.onSelect([ hero ]);
+									}}
+								/>
+							</Flex>
+						</Space>
+					);
+				}
 			}
 
 			return null;
@@ -87,7 +129,8 @@ export const HeroSelectModal = (props: Props) => {
 						<Segmented
 							options={[
 								{ value: 'folder', label: 'Folders' },
-								{ value: 'hero', label: 'Heroes' }
+								{ value: 'hero', label: 'Heroes' },
+								{ value: 'simple', label: 'Simple' }
 							]}
 							value={mode}
 							onChange={setMode}

@@ -31,7 +31,7 @@
 		border-radius: 10px;
 		background-color: rgb(250, 250, 250);
 
-		.round-button {
+		.initiative-button {
 			width: 270px;
 			height: 60px;
 
@@ -50,120 +50,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 5px;
-
-		.encounter-group {
-			border: 1px solid rgba(5, 5, 5, 0.06);
-			border-radius: 5px;
-			display: flex;
-			flex-direction: row;
-			gap: 2px;
-
-			&.acted {
-				.group-column,
-				.encounter-slots {
-					background-color: rgba(255, 255, 255, 0.4);
-				}
-			}
-
-			&.defeated {
-				.group-column,
-				.encounter-slots {
-					background-color: transparent;
-				}
-
-				.group-column {
-					.group-name {
-						opacity: 0.3;
-						text-decoration: line-through;
-					}
-				}
-			}
-
-			.group-column,
-			.encounter-slots {
-				background-color: white;
-			}
-
-			.group-column {
-				flex: 0 0 130px;
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				gap: 5px;
-				border-radius: 5px 0 0 5px;
-				padding: 5px;
-
-				.group-name {
-					margin: 0 5px;
-					font-weight: 600;
-				}
-			}
-
-			.encounter-slots {
-				flex: 1 1 0;
-				border-radius: 0 5px 5px 0;
-				padding: 5px 5px 5px 10px;
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-
-				.encounter-slot {
-					width: 100%;
-
-					.encounter-slot-row {
-						display: flex;
-						flex-direction: row;
-						align-items: center;
-						gap: 10px;
-
-						&.defeated {
-							.name-column {
-								text-decoration: line-through;
-							}
-
-							.name-column,
-							.stamina-column,
-							.conditions-column {
-								opacity: 0.3;
-							}
-						}
-
-						.name-column {
-							flex: 0 0 250px;
-							display: flex;
-							flex-direction: row;
-							align-items: center;
-							gap: 5px;
-						}
-
-						.stamina-column {
-							flex: 0 0 90px;
-							display: flex;
-							flex-direction: row;
-							align-items: center;
-							justify-content: flex-end;
-							gap: 5px;
-						}
-
-						.conditions-column {
-							flex: 1 1 0;
-							display: flex;
-							flex-direction: row;
-							align-items: center;
-							gap: 5px;
-						}
-					}
-
-					.ant-divider-horizontal {
-						margin: 5px 0;
-					}
-				}
-			}
-
-			.group-acted {
-				flex: 0 0 auto;
-			}
-		}
 	}
 
 	.malice {
@@ -185,27 +71,6 @@
 		.stats {
 			border-color: rgba(250, 250, 250, 0.6);
 			background-color: rgb(30, 30, 30);
-		}
-
-		.encounter-groups {
-			.encounter-group {
-				border-color: rgba(250, 250, 250, 0.6);
-
-				&.acted {
-					.group-column,
-					.encounter-slots {
-						background-color: rgba(255, 255, 255, 0.2);
-					}
-				}
-
-				&.defeated {
-					color: rgba(255, 255, 255, 0.88);
-
-					.ant-btn {
-						color: rgba(255, 255, 255, 0.88) !important;
-					}
-				}
-			}
 		}
 	}	
 }

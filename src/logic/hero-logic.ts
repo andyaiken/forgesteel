@@ -24,7 +24,11 @@ import { SourcebookLogic } from './sourcebook-logic';
 
 export class HeroLogic {
 	static getHeroDescription = (hero: Hero) => {
-		return `Level ${hero.class?.level || 1} ${hero.ancestry?.name || 'Ancestry'} ${hero.class?.name || 'Class'}`;
+		if (!hero.class || !hero.ancestry) {
+			return 'Hero';
+		}
+
+		return `Level ${hero.class.level} ${hero.ancestry.name} ${hero.class.name}`;
 	};
 
 	static getFeatures = (hero: Hero) => {
@@ -720,7 +724,11 @@ export class HeroLogic {
 	};
 
 	static isWinded = (hero: Hero) => {
-		return hero.state.staminaDamage >= (HeroLogic.getStamina(hero) / 2);
+		const stamina = HeroLogic.getStamina(hero);
+		if (stamina === 0) {
+			return false;
+		}
+		return hero.state.staminaDamage >= (stamina / 2);
 	};
 
 	static getMinXP = (level: number) => {

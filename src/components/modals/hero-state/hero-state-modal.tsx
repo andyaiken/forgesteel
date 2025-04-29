@@ -549,20 +549,30 @@ export const HeroStateModal = (props: Props) => {
 	};
 
 	try {
+		let pages: HeroStatePage[] = [];
+		if (HeroLogic.getStamina(hero) !== 0) {
+			pages = [
+				HeroStatePage.Hero,
+				HeroStatePage.Vitals,
+				HeroStatePage.Respite,
+				HeroStatePage.Inventory,
+				HeroStatePage.Projects,
+				HeroStatePage.Notes
+			];
+		} else {
+			pages = [
+				HeroStatePage.Vitals,
+				HeroStatePage.Notes
+			];
+		}
+
 		return (
 			<Modal
 				toolbar={
 					<div style={{ width: '100%', textAlign: 'center' }}>
 						<Segmented
 							name='tabs'
-							options={[
-								HeroStatePage.Hero,
-								HeroStatePage.Vitals,
-								HeroStatePage.Respite,
-								HeroStatePage.Inventory,
-								HeroStatePage.Projects,
-								HeroStatePage.Notes
-							]}
+							options={pages}
 							value={page}
 							onChange={setPage}
 						/>

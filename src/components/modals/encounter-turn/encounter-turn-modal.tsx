@@ -1,14 +1,18 @@
 import { Button, Flex, Space } from 'antd';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
+import { Encounter, EncounterGroup } from '../../../models/encounter';
+import { HeroToken, MonsterToken } from '../../controls/token/token';
 import { Condition } from '../../../models/condition';
 import { ConditionLogic } from '../../../logic/condition-logic';
-import { Encounter } from '../../../models/encounter';
 import { EncounterLogic } from '../../../logic/encounter-logic';
 import { Field } from '../../controls/field/field';
 import { Format } from '../../../utils/format';
 import { HeaderText } from '../../controls/header-text/header-text';
+import { Hero } from '../../../models/hero';
+import { HeroLogic } from '../../../logic/hero-logic';
 import { Markdown } from '../../controls/markdown/markdown';
 import { Modal } from '../modal/modal';
+import { MonsterLogic } from '../../../logic/monster-logic';
 import { Random } from '../../../utils/random';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
@@ -125,6 +129,38 @@ export const EncounterTurnModal = (props: Props) => {
 				}
 			};
 
+			const getGroupButton = (group: EncounterGroup, onClick: () => void) => {
+				return (
+					<div key={group.id} className='combatant-button' onClick={onClick}>
+						{
+							group.slots.flatMap(s => s.monsters).map(m => (
+								<div key={m.id} className='combatant-button-content'>
+									<MonsterToken monster={m} />
+									<div className='combatant-button-details'>
+										<div className='combatant-name'>{m.name}</div>
+										<div className='combatant-info'>{MonsterLogic.getMonsterDescription(m)}</div>
+									</div>
+								</div>
+							))
+						}
+					</div>
+				);
+			};
+
+			const getHeroButton = (hero: Hero, onClick: () => void) => {
+				return (
+					<div key={hero.id} className='combatant-button' onClick={onClick}>
+						<div className='combatant-button-content'>
+							<HeroToken hero={hero} />
+							<div className='combatant-button-details'>
+								<div className='combatant-name'>{hero.name}</div>
+								<div className='combatant-info'>{HeroLogic.getHeroDescription(hero)}</div>
+							</div>
+						</div>
+					</div>
+				);
+			};
+
 			const activeGroups = encounter.groups.filter(g => g.slots.some(s => !s.state.defeated && s.monsters.some(m => !m.state.defeated)));
 			const activeHeroes = encounter.heroes.filter(h => !h.state.defeated);
 
@@ -160,7 +196,7 @@ export const EncounterTurnModal = (props: Props) => {
 					<div key='initiative'>
 						<HeaderText>Initiative</HeaderText>
 						<div className='ds-text'>
-							{`${Format.capitalize(encounter.initiative || 'None')} will act first each turn.`}
+							{`${Format.capitalize(encounter.initiative || 'None')} will act first each round.`}
 						</div>
 					</div>
 				);
@@ -170,39 +206,22 @@ export const EncounterTurnModal = (props: Props) => {
 				const allMonstersFinished = activeGroups.every(g => g.encounterState === 'finished');
 				const allHeroesFinished = activeHeroes.every(h => h.state.encounterState === 'finished');
 				if ((allMonstersReady && allHeroesReady) || (allMonstersFinished && allHeroesFinished)) {
-					const malice = EncounterLogic.getMaliceGained(encounter);
-
 					content.push(
 						<div key='start-round'>
 							<HeaderText>Round {encounter.round + 1}</HeaderText>
-							{
-								malice > 0 ?
-									<div className='ds-text'>
-										Select a {encounter.initiative === 'monsters' ? 'monster group' : 'hero'} to start the round and gain <b>{malice} malice</b>.
-									</div>
-									:
-									<div className='ds-text'>
-										Select a {encounter.initiative === 'monsters' ? 'monster group' : 'hero'} to start the round and gain malice equal to <b>{encounter.round + 1} + (number of heroes) + (average victories)</b>.
-									</div>
-							}
+							<div className='ds-text'>
+								Select a {encounter.initiative === 'monsters' ? 'monster group' : 'hero'} to start the round and gain <b>{EncounterLogic.getMaliceGained(encounter)} malice</b>.
+							</div>
 							<Space direction='vertical' style={{ width: '100%' }}>
 								{
 									encounter.initiative === 'monsters' ?
 										activeGroups
 											.filter(g => g.encounterState === 'ready')
-											.map(g => (
-												<Button key={g.id} block={true} onClick={() => startRound(g.id)}>
-													{EncounterLogic.getGroupName(g, encounter)}
-												</Button>
-											))
+											.map(g => getGroupButton(g, () => startRound(g.id)))
 										:
 										activeHeroes
 											.filter(h => h.state.encounterState === 'ready')
-											.map(h => (
-												<Button key={h.id} block={true} onClick={() => startRound(h.id)}>
-													{h.name}
-												</Button>
-											))
+											.map(h => getHeroButton(h, () => startRound(h.id)))
 								}
 							</Space>
 						</div>
@@ -239,11 +258,7 @@ export const EncounterTurnModal = (props: Props) => {
 								{
 									activeGroups
 										.filter(g => g.encounterState === 'ready')
-										.map(g => (
-											<Button key={g.id} block={true} onClick={() => selectGroup(g.id)}>
-												{EncounterLogic.getGroupName(g, encounter)}
-											</Button>
-										))
+										.map(g => getGroupButton(g, () => selectGroup(g.id)))
 								}
 							</Space>
 						);
@@ -254,11 +269,7 @@ export const EncounterTurnModal = (props: Props) => {
 								{
 									activeHeroes
 										.filter(h => h.state.encounterState === 'ready')
-										.map(h => (
-											<Button key={h.id} block={true} onClick={() => selectHero(h.id)}>
-												{h.name}
-											</Button>
-										))
+										.map(h => getHeroButton(h, () => selectHero(h.id)))
 								}
 							</Space>
 						);
@@ -279,21 +290,20 @@ export const EncounterTurnModal = (props: Props) => {
 										.flatMap(s => s.monsters)
 										.map(m => getConditions(m.id, m.name, m.state.conditions))
 								}
-								<HeaderText>{EncounterLogic.getGroupName(group, encounter)}</HeaderText>
-								<div className='ds-text'>Ready to finish this turn? Choose who's next.</div>
+								<HeaderText>{EncounterLogic.getGroupName(group, encounter)}: End Turn</HeaderText>
+								<div className='ds-text'>
+									{
+										(groups.length > 0) || (heroes.length > 0) ?
+											'Ready to finish this turn? Choose who\'s next.'
+											:
+											'Ready to finish this turn? That\'ll be the end of this round.'
+									}
+								</div>
 								{
 									heroes.length > 0 ?
-										heroes.map(h => (
-											<Button key={h.id} block={true} onClick={() => endTurnAndStartNext(group.id, h.id)}>
-												{h.name}
-											</Button>
-										))
+										heroes.map(h => getHeroButton(h, () => endTurnAndStartNext(group.id, h.id)))
 										:
-										groups.map(g => (
-											<Button key={g.id} block={true} onClick={() => endTurnAndStartNext(group.id, g.id)}>
-												{EncounterLogic.getGroupName(g, encounter)}
-											</Button>
-										))
+										groups.map(g => getGroupButton(g, () => endTurnAndStartNext(group.id, g.id)))
 								}
 								{
 									(groups.length === 0) && (heroes.length === 0) ?
@@ -312,21 +322,20 @@ export const EncounterTurnModal = (props: Props) => {
 						content.push(
 							<Space key={hero.id} direction='vertical' style={{ width: '100%' }}>
 								{getConditions(hero.id, hero.name, hero.state.conditions)}
-								<HeaderText>{hero.name}</HeaderText>
-								<div className='ds-text'>Ready to finish this turn? Choose who's next.</div>
+								<HeaderText>{hero.name}: End Turn</HeaderText>
+								<div className='ds-text'>
+									{
+										(groups.length > 0) || (heroes.length > 0) ?
+											'Ready to finish this turn? Choose who\'s next.'
+											:
+											'Ready to finish this turn? That\'ll be the end of this round.'
+									}
+								</div>
 								{
 									groups.length > 0 ?
-										groups.map(g => (
-											<Button key={g.id} block={true} onClick={() => endTurnAndStartNext(hero.id, g.id)}>
-												{EncounterLogic.getGroupName(g, encounter)}
-											</Button>
-										))
+										groups.map(g => getGroupButton(g, () => endTurnAndStartNext(hero.id, g.id)))
 										:
-										heroes.map(h => (
-											<Button key={h.id} block={true} onClick={() => endTurnAndStartNext(hero.id, h.id)}>
-												{h.name}
-											</Button>
-										))
+										heroes.map(h => getHeroButton(h, () => endTurnAndStartNext(hero.id, h.id)))
 								}
 								{
 									(groups.length === 0) && (heroes.length === 0) ?

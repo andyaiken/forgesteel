@@ -1,5 +1,5 @@
-import { Alert, AutoComplete, Button, Divider, Input, Radio, Segmented, Select, Space, Upload } from 'antd';
-import { CloseOutlined, DownloadOutlined, SaveOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Alert, AutoComplete, Button, Divider, Drawer, Flex, Input, Radio, Segmented, Select, Space, Upload } from 'antd';
+import { CloseOutlined, DownloadOutlined, InfoCircleOutlined, SaveOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureData } from '../../../../models/feature';
 import { Hero, HeroEditTab } from '../../../../models/hero';
@@ -27,6 +27,7 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
 import { HeroCustomizePanel } from '../../../panels/hero-customize/hero-customize-panel';
 import { HeroLogic } from '../../../../logic/hero-logic';
+import { Modal } from '../../../modals/modal/modal';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
@@ -34,6 +35,8 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { SubClass } from '../../../../models/subclass';
+import { SubclassPanel } from '../../../panels/elements/subclass-panel/subclass-panel';
 import { Utils } from '../../../../utils/utils';
 import { useMediaQuery } from '../../../../hooks/use-media-query';
 import { useNavigation } from '../../../../hooks/use-navigation';
@@ -970,6 +973,7 @@ const ClassSection = (props: ClassSectionProps) => {
 
 		return currentArray;
 	});
+	const [ selectedSubClass, setSelectedSubClass ] = useState<SubClass | null>(null);
 
 	try {
 		const classes = SourcebookLogic.getClasses(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
@@ -1009,6 +1013,25 @@ const ClassSection = (props: ClassSectionProps) => {
 							value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.id)}
 							onChange={props.selectSubclasses}
 						/>
+						{
+							props.hero.class.subclasses
+								.filter(sc => sc.selected)
+								.map(sc => (
+									<Flex key={sc.id} align='center'>
+										<Field
+											style={{ flex: '1 1 0' }}
+											label={sc.name}
+											value={sc.description}
+										/>
+										<Button
+											style={{ flex: '0 0 auto' }}
+											type='text'
+											icon={<InfoCircleOutlined />}
+											onClick={() => setSelectedSubClass(sc)}
+										/>
+									</Flex>
+								))
+						}
 					</SelectablePanel>
 				);
 			}
@@ -1148,6 +1171,12 @@ const ClassSection = (props: ClassSectionProps) => {
 						</div>
 						: null
 				}
+				<Drawer open={!!selectedSubClass} onClose={() => setSelectedSubClass(null)} closeIcon={null} width='500px'>
+					<Modal
+						content={selectedSubClass ? <SubclassPanel subclass={selectedSubClass} options={props.options} mode={PanelMode.Full} /> : null}
+						onClose={() => setSelectedSubClass(null)}
+					/>
+				</Drawer>
 			</div>
 		);
 	} catch (ex) {

@@ -1,4 +1,5 @@
 import { Monster, MonsterGroup } from '../../../models/monster';
+import { CSSProperties } from 'react';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { MonsterLogic } from '../../../logic/monster-logic';
@@ -83,11 +84,12 @@ export const HeroToken = (props: HeroTokenProps) => {
 
 interface HeroInfoProps {
 	hero: Hero;
+	style?: CSSProperties;
 }
 
 export const HeroInfo = (props: HeroInfoProps) => {
 	return (
-		<div className='combatant-button-content'>
+		<div className='combatant-button-content' style={props.style}>
 			<HeroToken hero={props.hero} />
 			<div className='combatant-button-details'>
 				<div className='combatant-name'>{props.hero.name}</div>
@@ -119,11 +121,12 @@ export const MonsterToken = (props: MonsterTokenProps) => {
 
 interface MonsterInfoProps {
 	monster: Monster;
+	style?: CSSProperties;
 }
 
 export const MonsterInfo = (props: MonsterInfoProps) => {
 	return (
-		<div key={props.monster.id} className='combatant-button-content'>
+		<div className='combatant-button-content' style={props.style}>
 			<MonsterToken monster={props.monster} />
 			<div className='combatant-button-details'>
 				<div className='combatant-name'>{props.monster.name}</div>
@@ -135,11 +138,12 @@ export const MonsterInfo = (props: MonsterInfoProps) => {
 
 interface TerrainInfoProps {
 	terrain: Terrain;
+	style?: CSSProperties;
 }
 
 export const TerrainInfo = (props: TerrainInfoProps) => {
 	return (
-		<div key={props.terrain.id} className='combatant-button-content'>
+		<div className='combatant-button-content' style={props.style}>
 			<div className='combatant-button-details'>
 				<div className='combatant-name'>{props.terrain.name}</div>
 				<div className='combatant-info'>{TerrainLogic.getTerrainDescription(props.terrain)}</div>

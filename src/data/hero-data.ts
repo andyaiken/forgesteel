@@ -11734,7 +11734,7 @@ export class HeroData {
 						count: 2,
 						selected: [
 							'Vaslorian',
-							'Yllric'
+							'Yllyric'
 						]
 					}
 				},
@@ -19659,7 +19659,7 @@ export class HeroData {
 			name: 'Bespoke Culture',
 			description: 'Choose any Environment, Organization, and Upbringing.',
 			languages: [
-				'Yllric'
+				'Yllyric'
 			],
 			environment: {
 				id: 'env-wilderness',

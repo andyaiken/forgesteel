@@ -1,11 +1,16 @@
-import { Alert, Button, Drawer, Input, Select, Space } from 'antd';
+import { Alert, Button, Drawer, Flex, Input, Select, Space } from 'antd';
 import { Badge, HeroicResourceBadge } from '../../../controls/badge/badge';
+import { CSSProperties, useState } from 'react';
 import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '../../../../models/ability';
+import { AbilityLogic } from '../../../../logic/ability-logic';
+import { AbilityModal } from '../../../modals/ability/ability-modal';
 import { AbilityPanel } from '../ability-panel/ability-panel';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../ancestry-panel/ancestry-panel';
 import { Collections } from '../../../../utils/collections';
+import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../domain-panel/domain-panel';
 import { Empty } from '../../../controls/empty/empty';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
@@ -19,10 +24,15 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
+import { Item } from '../../../../models/item';
 import { ItemPanel } from '../item-panel/item-panel';
+import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../kit-panel/kit-panel';
 import { Markdown } from '../../../controls/markdown/markdown';
+import { Modal } from '../../../modals/modal/modal';
 import { Monster } from '../../../../models/monster';
+import { MonsterInfo } from '../../../controls/token/token';
+import { MonsterModal } from '../../../modals/monster/monster-modal';
 import { MonsterPanel } from '../monster-panel/monster-panel';
 import { MonsterSelectModal } from '../../../modals/select/monster-select/monster-select-modal';
 import { NameGenerator } from '../../../../utils/name-generator';
@@ -33,10 +43,8 @@ import { PerkPanel } from '../perk-panel/perk-panel';
 import { PowerRollPanel } from '../../power-roll/power-roll-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
-import { ThunderboltOutlined } from '@ant-design/icons';
 import { TitlePanel } from '../title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
-import { useState } from 'react';
 
 import './feature-panel.scss';
 
@@ -49,11 +57,21 @@ interface Props {
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
+	style?: CSSProperties;
 	setData?: (featureID: string, data: FeatureData) => void;
 }
 
 export const FeaturePanel = (props: Props) => {
-	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
+	const [ autoCalc, setAutoCalc ] = useState<boolean>(true);
+	const [ monsterSelectorOpen, setMonsterSelectorOpen ] = useState<boolean>(false);
+	const [ selectedAbility, setSelectedAbility ] = useState<Ability | null>(null);
+	const [ selectedAncestry, setSelectedAncestry ] = useState<Ancestry | null>(null);
+	const [ selectedDomain, setSelectedDomain ] = useState<Domain | null>(null);
+	const [ selectedItem, setSelectedItem ] = useState<Item | null>(null);
+	const [ selectedKit, setSelectedKit ] = useState<Kit | null>(null);
+	const [ selectedMonster, setSelectedMonster ] = useState<Monster | null>(null);
+	const [ selectedPerk, setSelectedPerk ] = useState<Perk | null>(null);
+	const [ selectedTitleFeature, setSelectedTitleFeature ] = useState<Feature | null>(null);
 
 	// #region Selection
 
@@ -87,9 +105,27 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected ?
-						<AncestryPanel ancestry={data.selected} options={props.options} />
+						<Flex align='center'>
+							<Field
+								style={{ flex: '1 1 0' }}
+								label={data.selected.name}
+								value={data.selected.description}
+							/>
+							<Button
+								style={{ flex: '0 0 auto' }}
+								type='text'
+								icon={<InfoCircleOutlined />}
+								onClick={() => setSelectedAncestry(data.selected)}
+							/>
+						</Flex>
 						: null
 				}
+				<Drawer open={!!selectedAncestry} onClose={() => setSelectedAncestry(null)} closeIcon={null} width='500px'>
+					<Modal
+						content={selectedAncestry ? <AncestryPanel ancestry={selectedAncestry} options={props.options} mode={PanelMode.Full} /> : null}
+						onClose={() => setSelectedAncestry(null)}
+					/>
+				</Drawer>
 			</Space>
 		);
 	};
@@ -312,10 +348,25 @@ export const FeaturePanel = (props: Props) => {
 					data.selectedIDs.map(id => {
 						const ability = abilities.find(a => a.id === id) as Ability;
 						return (
-							<AbilityPanel key={ability.id} ability={ability} mode={PanelMode.Full} />
+							<Flex key={ability.id} align='center'>
+								<Field
+									style={{ flex: '1 1 0' }}
+									label={ability.name}
+									value={ability.description}
+								/>
+								<Button
+									style={{ flex: '0 0 auto' }}
+									type='text'
+									icon={<InfoCircleOutlined />}
+									onClick={() => setSelectedAbility(ability)}
+								/>
+							</Flex>
 						);
 					})
 				}
+				<Drawer open={!!selectedAbility} onClose={() => setSelectedAbility(null)} closeIcon={null} width='500px'>
+					{selectedAbility ? <AbilityModal ability={selectedAbility} onClose={() => setSelectedAncestry(null)} /> : null}
+				</Drawer>
 			</Space>
 		);
 	};
@@ -359,7 +410,7 @@ export const FeaturePanel = (props: Props) => {
 							))
 						: null
 				}
-				<Button block={true} onClick={() => setDrawerOpen(true)}>{data.selected ? 'Change' : 'Select'}</Button>
+				<Button block={true} onClick={() => setMonsterSelectorOpen(true)}>{data.selected ? 'Change' : 'Select'}</Button>
 				{
 					data.selected ?
 						<Expander title='Customize'>
@@ -377,16 +428,27 @@ export const FeaturePanel = (props: Props) => {
 				}
 				{
 					data.selected ?
-						<MonsterPanel monster={data.selected} options={props.options} />
+						<Flex align='center'>
+							<MonsterInfo
+								style={{ flex: '1 1 0' }}
+								monster={data.selected}
+							/>
+							<Button
+								style={{ flex: '0 0 auto' }}
+								type='text'
+								icon={<InfoCircleOutlined />}
+								onClick={() => setSelectedMonster(data.selected)}
+							/>
+						</Flex>
 						: null
 				}
-				<Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} closeIcon={null} width='500px'>
+				<Drawer open={monsterSelectorOpen} onClose={() => setMonsterSelectorOpen(false)} closeIcon={null} width='500px'>
 					<MonsterSelectModal
 						type={data.type}
 						sourcebooks={props.sourcebooks || []}
 						options={props.options}
 						onSelect={monster => {
-							setDrawerOpen(false);
+							setMonsterSelectorOpen(false);
 
 							const monsterCopy = Utils.copy(monster) as Monster;
 							if (monsterCopy.retainer) {
@@ -399,8 +461,11 @@ export const FeaturePanel = (props: Props) => {
 								props.setData(props.feature.id, dataCopy);
 							}
 						}}
-						onClose={() => setDrawerOpen(false)}
+						onClose={() => setMonsterSelectorOpen(false)}
 					/>
+				</Drawer>
+				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
+					{selectedMonster ? <MonsterModal monster={selectedMonster} options={props.options} onClose={() => setSelectedMonster(null)} /> : null}
 				</Drawer>
 			</Space>
 		);
@@ -453,6 +518,29 @@ export const FeaturePanel = (props: Props) => {
 						}
 					}}
 				/>
+				{
+					data.selected.map(domain => (
+						<Flex key={domain.id} align='center'>
+							<Field
+								style={{ flex: '1 1 0' }}
+								label={domain.name}
+								value={domain.description}
+							/>
+							<Button
+								style={{ flex: '0 0 auto' }}
+								type='text'
+								icon={<InfoCircleOutlined />}
+								onClick={() => setSelectedDomain(domain)}
+							/>
+						</Flex>
+					))
+				}
+				<Drawer open={!!selectedDomain} onClose={() => setSelectedDomain(null)} closeIcon={null} width='500px'>
+					<Modal
+						content={selectedDomain ? <DomainPanel domain={selectedDomain} options={props.options} mode={PanelMode.Full} /> : null}
+						onClose={() => setSelectedDomain(null)}
+					/>
+				</Drawer>
 			</Space>
 		);
 	};
@@ -572,7 +660,29 @@ export const FeaturePanel = (props: Props) => {
 						}
 					}}
 				/>
-				{data.selected.map(i => (<ItemPanel key={i.id} item={i} options={props.options} />))}
+				{
+					data.selected.map(item => (
+						<Flex key={item.id} align='center'>
+							<Field
+								style={{ flex: '1 1 0' }}
+								label={item.name}
+								value={item.description}
+							/>
+							<Button
+								style={{ flex: '0 0 auto' }}
+								type='text'
+								icon={<InfoCircleOutlined />}
+								onClick={() => setSelectedItem(item)}
+							/>
+						</Flex>
+					))
+				}
+				<Drawer open={!!selectedItem} onClose={() => setSelectedItem(null)} closeIcon={null} width='500px'>
+					<Modal
+						content={selectedItem ? <ItemPanel item={selectedItem} options={props.options} /> : null}
+						onClose={() => setSelectedItem(null)}
+					/>
+				</Drawer>
 			</Space>
 		);
 	};
@@ -628,12 +738,28 @@ export const FeaturePanel = (props: Props) => {
 					}}
 				/>
 				{
-					data.selected.map(k => {
-						return (
-							<KitPanel key={k.id} kit={k} options={props.options} mode={PanelMode.Full} />
-						);
-					})
+					data.selected.map(kit => (
+						<Flex key={kit.id} align='center'>
+							<Field
+								style={{ flex: '1 1 0' }}
+								label={kit.name}
+								value={kit.description}
+							/>
+							<Button
+								style={{ flex: '0 0 auto' }}
+								type='text'
+								icon={<InfoCircleOutlined />}
+								onClick={() => setSelectedKit(kit)}
+							/>
+						</Flex>
+					))
 				}
+				<Drawer open={!!selectedKit} onClose={() => setSelectedKit(null)} closeIcon={null} width='500px'>
+					<Modal
+						content={selectedKit ? <KitPanel kit={selectedKit} options={props.options} mode={PanelMode.Full} /> : null}
+						onClose={() => setSelectedKit(null)}
+					/>
+				</Drawer>
 			</Space>
 		);
 	};
@@ -767,8 +893,28 @@ export const FeaturePanel = (props: Props) => {
 					}}
 				/>
 				{
-					data.selected.map(p => <PerkPanel key={p.id} perk={p} options={props.options} mode={PanelMode.Full} />)
+					data.selected.map(perk => (
+						<Flex key={perk.id} align='center'>
+							<Field
+								style={{ flex: '1 1 0' }}
+								label={perk.name}
+								value={perk.description}
+							/>
+							<Button
+								style={{ flex: '0 0 auto' }}
+								type='text'
+								icon={<InfoCircleOutlined />}
+								onClick={() => setSelectedPerk(perk)}
+							/>
+						</Flex>
+					))
 				}
+				<Drawer open={!!selectedPerk} onClose={() => setSelectedPerk(null)} closeIcon={null} width='500px'>
+					<Modal
+						content={selectedPerk ? <PerkPanel perk={selectedPerk} options={props.options} mode={PanelMode.Full} /> : null}
+						onClose={() => setSelectedPerk(null)}
+					/>
+				</Drawer>
 			</Space>
 		);
 	};
@@ -989,16 +1135,33 @@ export const FeaturePanel = (props: Props) => {
 				}
 				{
 					data.selected.map(title => {
-						const f = title.features.find(ft => ft.id === title.selectedFeatureID);
-						if (f) {
-							return (
-								<FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
-							);
+						const feature = title.features.find(ft => ft.id === title.selectedFeatureID);
+						if (!feature) {
+							return null;
 						}
-
-						return null;
+						return (
+							<Flex key={feature.id} align='center'>
+								<Field
+									style={{ flex: '1 1 0' }}
+									label={feature.name}
+									value={feature.description}
+								/>
+								<Button
+									style={{ flex: '0 0 auto' }}
+									type='text'
+									icon={<InfoCircleOutlined />}
+									onClick={() => setSelectedTitleFeature(feature)}
+								/>
+							</Flex>
+						);
 					})
 				}
+				<Drawer open={!!selectedTitleFeature} onClose={() => setSelectedTitleFeature(null)} closeIcon={null} width='500px'>
+					<Modal
+						content={selectedTitleFeature ? <FeaturePanel style={{ padding: '0 20px 20px 20px' }} feature={selectedTitleFeature} options={props.options} mode={PanelMode.Full} /> : null}
+						onClose={() => setSelectedTitleFeature(null)}
+					/>
+				</Drawer>
 			</Space>
 		);
 	};
@@ -1517,6 +1680,12 @@ export const FeaturePanel = (props: Props) => {
 
 	// #endregion
 
+	const autoCalcAvailable = () => {
+		return props.hero
+			&& (props.feature.type === FeatureType.Text)
+			&& (AbilityLogic.getTextEffect(props.feature.description, props.hero) !== props.feature.description);
+	};
+
 	try {
 		const tags = [];
 		if (props.source) {
@@ -1542,18 +1711,45 @@ export const FeaturePanel = (props: Props) => {
 		if (props.feature.type === FeatureType.AncestryFeatureChoice) {
 			if (props.feature.data.selected) {
 				return (
-					<FeaturePanel feature={props.feature.data.selected} options={props.options} />
+					<FeaturePanel feature={props.feature.data.selected} options={props.options} style={props.style} />
 				);
 			}
 		}
 
 		return (
 			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? props.feature.id : undefined}>
-					<HeaderText ribbon={props.cost === 'signature' ? <Badge>Signature</Badge> : props.cost ? <HeroicResourceBadge value={props.cost} repeatable={props.repeatable} /> : null} tags={tags}>
+				<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? props.feature.id : undefined} style={props.style}>
+					<HeaderText
+						ribbon={
+							props.cost === 'signature' ?
+								<Badge>Signature</Badge>
+								:
+								props.cost ?
+									<HeroicResourceBadge value={props.cost} repeatable={props.repeatable} />
+									: null
+						}
+						tags={tags}
+						extra={
+							autoCalcAvailable() ?
+								<Button
+									type='text'
+									title='Auto-calculate damage, potancy, etc'
+									icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
+									onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
+								/>
+								: null
+						}
+					>
 						{props.feature.name}
 					</HeaderText>
-					<Markdown text={props.feature.description} />
+					<Markdown
+						text={
+							(props.feature.type === FeatureType.Text) && autoCalc && props.hero ?
+								AbilityLogic.getTextEffect(props.feature.description, props.hero)
+								:
+								props.feature.description
+						}
+					/>
 					{
 						props.mode === PanelMode.Full
 							? (props.setData ? getSelection() : getInformation())

@@ -2,6 +2,13 @@
 
 ### Heroes
 
+* Handle condition immunities
+  * Add a new feature type
+  * Modify feature text
+  * Allow this for monsters
+  * Include on hero sheet
+  * Include on monster statblock
+  * Honour this setting when adding conditions
 * Make sure multiple melee / ranged damage bonuses are handled correctly
 * Hero Builder:
   * Revenants should have 3 ancestry points if small

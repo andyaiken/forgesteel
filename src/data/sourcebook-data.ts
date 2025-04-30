@@ -554,7 +554,7 @@ export class SourcebookData {
 			FactoryLogic.createCulture('Devil', 'Urban, bureaucratic, academic.', [ 'Anjali' ], EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.academic),
 			FactoryLogic.createCulture('Dragon Knight', 'Secluded, bureaucratic, martial.', [ 'Vastariax' ], EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.martial),
 			FactoryLogic.createCulture('Dwarf', 'Secluded, bureaucratic, creative.', [ 'Zaliac' ], EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.creative),
-			FactoryLogic.createCulture('Wode Elf', 'Wilderness, bureaucratic, martial.', [ 'Yllric' ], EnvironmentData.wilderness, OrganizationData.bureaucratic, UpbringingData.martial),
+			FactoryLogic.createCulture('Wode Elf', 'Wilderness, bureaucratic, martial.', [ 'Yllyric' ], EnvironmentData.wilderness, OrganizationData.bureaucratic, UpbringingData.martial),
 			FactoryLogic.createCulture('High Elf', 'Secluded, bureaucratic, martial.', [ 'Hyrallic' ], EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.martial),
 			FactoryLogic.createCulture('Hakaan', 'Rural, communal, labor.', [ 'Vhoric' ], EnvironmentData.rural, OrganizationData.communal, UpbringingData.labor),
 			FactoryLogic.createCulture('Human', 'Urban, communal, labor.', [ 'Vaslorian' ], EnvironmentData.urban, OrganizationData.communal, UpbringingData.labor),
@@ -733,7 +733,7 @@ export class SourcebookData {
 				description: 'Spoken by time raiders.'
 			},
 			{
-				name: 'Yllric',
+				name: 'Yllyric',
 				description: 'Spoken by wode elves; the language of druids.'
 			},
 			{

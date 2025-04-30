@@ -27,7 +27,7 @@ import { HeroClass } from '../../../models/class';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { HeroStatePage } from '../../../enums/hero-state-page';
 import { Kit } from '../../../models/kit';
-import { MonsterLogic } from '../../../logic/monster-logic';
+import { MonsterInfo } from '../../controls/token/token';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { RulesPage } from '../../../enums/rules-page';
@@ -211,7 +211,7 @@ export const HeroPanel = (props: Props) => {
 						HeroLogic.getCompanions(props.hero).map(monster => (
 							<div key={monster.id} className='overview-tile clickable' onClick={() => onSelectCompanion(monster)}>
 								<HeaderText>Companion</HeaderText>
-								<Field label='Name' value={MonsterLogic.getMonsterName(monster)} />
+								<MonsterInfo monster={monster} style={{ marginBottom: '10px' }} />
 							</div>
 						))
 						:

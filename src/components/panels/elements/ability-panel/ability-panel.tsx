@@ -81,6 +81,22 @@ export const AbilityPanel = (props: Props) => {
 		return text;
 	};
 
+	const autoCalcAvailable = () => {
+		const texts = [
+			props.ability.preEffect,
+			props.ability.effect,
+			props.ability.strained,
+			...props.ability.alternateEffects,
+			...props.ability.spend.map(s => s.effect),
+			...props.ability.persistence.map(p => p.effect)
+		];
+
+		return props.hero
+			&& (
+				props.ability.powerRoll || props.ability.test || texts.some(text => AbilityLogic.getTextEffect(text, props.hero!) !== text)
+			);
+	};
+
 	try {
 		let className = 'ability-panel';
 		if (props.mode !== PanelMode.Full) {
@@ -102,7 +118,7 @@ export const AbilityPanel = (props: Props) => {
 						ribbon={headerRibbon}
 						tags={props.tags}
 						extra={
-							props.hero ?
+							autoCalcAvailable() ?
 								<Button
 									type='text'
 									title='Auto-calculate damage, potancy, etc'

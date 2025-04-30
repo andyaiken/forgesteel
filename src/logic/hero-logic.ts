@@ -255,12 +255,13 @@ export class HeroLogic {
 		const allLanguages = sourcebooks.flatMap(cs => cs.languages);
 
 		const languages: Language[] = [];
-		languageNames.forEach(name => {
-			const language = allLanguages.find(l => l.name === name);
-			if (language) {
-				languages.push(language);
-			}
-		});
+		Collections.distinct(languageNames, l => l)
+			.forEach(name => {
+				const language = allLanguages.find(l => l.name === name);
+				if (language) {
+					languages.push(language);
+				}
+			});
 
 		return Collections.sort(languages, l => l.name);
 	};
@@ -283,12 +284,13 @@ export class HeroLogic {
 			});
 
 		const skills: Skill[] = [];
-		skillNames.forEach(name => {
-			const skill = SourcebookLogic.getSkill(name, sourcebooks);
-			if (skill) {
-				skills.push(skill);
-			}
-		});
+		Collections.distinct(skillNames, s => s)
+			.forEach(name => {
+				const skill = SourcebookLogic.getSkill(name, sourcebooks);
+				if (skill) {
+					skills.push(skill);
+				}
+			});
 
 		return Collections.sort(skills, s => s.name);
 	};

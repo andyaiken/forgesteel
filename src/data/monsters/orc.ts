@@ -458,7 +458,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'orc-8-feature-3',
+					id: 'orc-8-feature-4',
 					name: 'Relentless',
 					description: 'If the eye\'s Stamina drops to 0, they can make a free strike before dying. If the target is reduced to 0 Stamina or killed by the strike, the eye lives and their Stamina is reduced to 1 instead.'
 				})

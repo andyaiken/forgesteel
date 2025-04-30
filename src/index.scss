@@ -169,6 +169,13 @@ td {
 			opacity: 0.75;
 		}
 	}
+
+	&.container-button {
+		height: unset;
+		display: block;
+		text-align: unset;
+		padding: 5px 10px;
+	}
 }
 
 .ant-collapse {

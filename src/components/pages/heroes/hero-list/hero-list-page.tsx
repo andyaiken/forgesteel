@@ -1,4 +1,4 @@
-import { Button, Input, Popover, Space, Tabs, Upload } from 'antd';
+import { Button, Input, Popover, Tabs, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { AppFooter } from '../../../panels/app-footer/app-footer';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -6,6 +6,8 @@ import { Collections } from '../../../../utils/collections';
 import { Empty } from '../../../controls/empty/empty';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Hero } from '../../../../models/hero';
+import { HeroData } from '../../../../data/hero-data';
+import { HeroInfo } from '../../../controls/token/token';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroPanel } from '../../../panels/hero/hero-panel';
 import { Options } from '../../../../models/options';
@@ -81,6 +83,19 @@ export const HeroListPage = (props: Props) => {
 	};
 
 	try {
+
+		const exampleHeroes = [
+			HeroData.dwarfFury,
+			HeroData.highElfTactician,
+			HeroData.humanCensor,
+			HeroData.humanNull,
+			HeroData.humanTalent,
+			HeroData.orcConduit,
+			HeroData.polderElementalist,
+			HeroData.polderShadow,
+			HeroData.wodeElfTroubadour
+		];
+
 		return (
 			<ErrorBoundary>
 				<div className='hero-list-page'>
@@ -97,10 +112,15 @@ export const HeroListPage = (props: Props) => {
 						<Popover
 							trigger='click'
 							content={(
-								<div style={{ display: 'flex', flexDirection: 'column' }}>
-									<Space>
-										<Button type='primary' block={true} icon={<PlusOutlined />} onClick={props.addHero}>Create</Button>
-										<div className='ds-text'>or</div>
+								<div style={{ width: '500px' }}>
+									<Button type='primary' block={true} icon={<PlusOutlined />} onClick={props.addHero}>
+										Create a New Hero
+									</Button>
+									<div className='ds-text centered-text'>or</div>
+									<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
+										<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero())}>
+											Generate a Random Hero
+										</Button>
 										<Upload
 											style={{ width: '100%' }}
 											accept='.drawsteel-hero'
@@ -115,16 +135,21 @@ export const HeroListPage = (props: Props) => {
 												return false;
 											}}
 										>
-											<Button block={true} icon={<DownloadOutlined />}>Import</Button>
+											<Button block={true} icon={<DownloadOutlined />}>
+												Import a Hero File
+											</Button>
 										</Upload>
-									</Space>
-									<div className='ds-text centered-text'>or</div>
-									<Button
-										icon={<ThunderboltOutlined />}
-										onClick={() => props.importHero(HeroLogic.createRandomHero())}
-									>
-										Create a Random Hero
-									</Button>
+									</div>
+									<div className='ds-text centered-text'>or start with a premade example:</div>
+									<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
+										{
+											exampleHeroes.map(h => (
+												<Button key={h.id} className='container-button' block={true} onClick={() => props.importHero(h)}>
+													<HeroInfo hero={h} />
+												</Button>
+											))
+										}
+									</div>
 								</div>
 							)}
 						>

@@ -1,7 +1,7 @@
 import { Button, Flex, Space } from 'antd';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { Encounter, EncounterGroup } from '../../../models/encounter';
-import { HeroToken, MonsterToken } from '../../controls/token/token';
+import { HeroInfo, MonsterInfo } from '../../controls/token/token';
 import { Condition } from '../../../models/condition';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { EncounterLogic } from '../../../logic/encounter-logic';
@@ -9,10 +9,8 @@ import { Field } from '../../controls/field/field';
 import { Format } from '../../../utils/format';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
-import { HeroLogic } from '../../../logic/hero-logic';
 import { Markdown } from '../../controls/markdown/markdown';
 import { Modal } from '../modal/modal';
-import { MonsterLogic } from '../../../logic/monster-logic';
 import { Random } from '../../../utils/random';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
@@ -131,33 +129,21 @@ export const EncounterTurnModal = (props: Props) => {
 
 			const getGroupButton = (group: EncounterGroup, onClick: () => void) => {
 				return (
-					<div key={group.id} className='combatant-button' onClick={onClick}>
+					<Button key={group.id} className='container-button' block={true} onClick={onClick}>
 						{
 							group.slots.flatMap(s => s.monsters).map(m => (
-								<div key={m.id} className='combatant-button-content'>
-									<MonsterToken monster={m} />
-									<div className='combatant-button-details'>
-										<div className='combatant-name'>{m.name}</div>
-										<div className='combatant-info'>{MonsterLogic.getMonsterDescription(m)}</div>
-									</div>
-								</div>
+								<MonsterInfo key={m.id} monster={m} />
 							))
 						}
-					</div>
+					</Button>
 				);
 			};
 
 			const getHeroButton = (hero: Hero, onClick: () => void) => {
 				return (
-					<div key={hero.id} className='combatant-button' onClick={onClick}>
-						<div className='combatant-button-content'>
-							<HeroToken hero={hero} />
-							<div className='combatant-button-details'>
-								<div className='combatant-name'>{hero.name}</div>
-								<div className='combatant-info'>{HeroLogic.getHeroDescription(hero)}</div>
-							</div>
-						</div>
-					</div>
+					<Button key={hero.id} className='container-button' block={true} onClick={onClick}>
+						<HeroInfo hero={hero} />
+					</Button>
 				);
 			};
 

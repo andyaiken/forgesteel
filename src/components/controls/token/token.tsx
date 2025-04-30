@@ -1,7 +1,10 @@
 import { Monster, MonsterGroup } from '../../../models/monster';
 import { Hero } from '../../../models/hero';
+import { HeroLogic } from '../../../logic/hero-logic';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
+import { Terrain } from '../../../models/terrain';
+import { TerrainLogic } from '../../../logic/terrain-logic';
 
 import './token.scss';
 
@@ -22,6 +25,7 @@ export const Token = (props: Props) => {
 			.split(' ')
 			.map(token => token[0])
 			.join('')
+			.substring(0, 3)
 			.toUpperCase();
 
 		let className = `token ${props.role.toLowerCase()}`;
@@ -58,6 +62,41 @@ export const Token = (props: Props) => {
 	}
 };
 
+interface HeroTokenProps {
+	hero: Hero;
+	size?: number;
+	onClick?: () => void;
+}
+
+export const HeroToken = (props: HeroTokenProps) => {
+	return (
+		<Token
+			name={props.hero.name || 'Hero'}
+			role={MonsterRoleType.NoRole}
+			type='hero'
+			isDefeated={props.hero.state.defeated}
+			size={props.size}
+			onClick={props.onClick}
+		/>
+	);
+};
+
+interface HeroInfoProps {
+	hero: Hero;
+}
+
+export const HeroInfo = (props: HeroInfoProps) => {
+	return (
+		<div className='combatant-button-content'>
+			<HeroToken hero={props.hero} />
+			<div className='combatant-button-details'>
+				<div className='combatant-name'>{props.hero.name}</div>
+				<div className='combatant-info'>{HeroLogic.getHeroDescription(props.hero)}</div>
+			</div>
+		</div>
+	);
+};
+
 interface MonsterTokenProps {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
@@ -78,21 +117,33 @@ export const MonsterToken = (props: MonsterTokenProps) => {
 	);
 };
 
-interface HeroTokenProps {
-	hero: Hero;
-	size?: number;
-	onClick?: () => void;
+interface MonsterInfoProps {
+	monster: Monster;
 }
 
-export const HeroToken = (props: HeroTokenProps) => {
+export const MonsterInfo = (props: MonsterInfoProps) => {
 	return (
-		<Token
-			name={props.hero.name || 'Hero'}
-			role={MonsterRoleType.NoRole}
-			type='hero'
-			isDefeated={props.hero.state.defeated}
-			size={props.size}
-			onClick={props.onClick}
-		/>
+		<div key={props.monster.id} className='combatant-button-content'>
+			<MonsterToken monster={props.monster} />
+			<div className='combatant-button-details'>
+				<div className='combatant-name'>{props.monster.name}</div>
+				<div className='combatant-info'>{MonsterLogic.getMonsterDescription(props.monster)}</div>
+			</div>
+		</div>
+	);
+};
+
+interface TerrainInfoProps {
+	terrain: Terrain;
+}
+
+export const TerrainInfo = (props: TerrainInfoProps) => {
+	return (
+		<div key={props.terrain.id} className='combatant-button-content'>
+			<div className='combatant-button-details'>
+				<div className='combatant-name'>{props.terrain.name}</div>
+				<div className='combatant-info'>{TerrainLogic.getTerrainDescription(props.terrain)}</div>
+			</div>
+		</div>
 	);
 };

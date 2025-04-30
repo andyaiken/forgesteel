@@ -302,7 +302,7 @@ export const PlaybookListPage = (props: Props) => {
 						<Popover
 							trigger='click'
 							content={(
-								<div style={{ display: 'flex', flexDirection: 'column' }}>
+								<div style={{ width: '300px' }}>
 									<Flex align='center' justify='center' gap={10}>
 										<Button type='primary' icon={<PlusOutlined />} onClick={() => createElement(null)}>Create</Button>
 										<div className='ds-text'>or</div>

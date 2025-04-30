@@ -1,7 +1,7 @@
 import { Alert, Button, Divider, Flex, Popover, Segmented, Tag } from 'antd';
 import { EllipsisOutlined, HeartFilled, IdcardOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterSlot } from '../../../models/encounter';
-import { HeroToken, MonsterToken } from '../../controls/token/token';
+import { HeroInfo, MonsterInfo, TerrainInfo } from '../../controls/token/token';
 import { Collections } from '../../../utils/collections';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { DangerButton } from '../../controls/danger-button/danger-button';
@@ -83,11 +83,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 					<div className='encounter-slot'>
 						<div className={props.hero.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'}>
 							<div className='name-column'>
-								<HeroToken hero={props.hero} />
-								<div>
-									<div>{props.hero.name || 'Unnamed Hero'}</div>
-									<div className='name-column-info'>{HeroLogic.getHeroDescription(props.hero)}</div>
-								</div>
+								<HeroInfo hero={props.hero} />
 							</div>
 							{
 								HeroLogic.getStamina(props.hero) === 0 ?
@@ -222,11 +218,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 						slot.monsters.map(monster => (
 							<div key={monster.id} className={slot.state.defeated || monster.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'}>
 								<div className='name-column'>
-									<MonsterToken monster={monster} />
-									<div>
-										<div>{monster.name}</div>
-										<div className='name-column-info'>{MonsterLogic.getMonsterDescription(monster)}</div>
-									</div>
+									<MonsterInfo monster={monster} />
 								</div>
 								{
 									isMinionSlot ?
@@ -341,10 +333,7 @@ export const EncounterGroupTerrain = (props: EncounterGroupTerrainProps) => {
 					<div className='encounter-slot'>
 						<div className='encounter-slot-row'>
 							<div className='name-column'>
-								<div>
-									<div>{props.terrain.name}</div>
-									<div className='name-column-info'>{TerrainLogic.getTerrainDescription(props.terrain)}</div>
-								</div>
+								<TerrainInfo terrain={props.terrain} />
 							</div>
 							<div className='stamina-column'>
 								{TerrainLogic.getStaminaValue(props.terrain)}

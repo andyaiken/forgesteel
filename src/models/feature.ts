@@ -3,6 +3,7 @@ import { Ability } from './ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from './ancestry';
 import { Characteristic } from '../enums/characteristic';
+import { ConditionType } from '../enums/condition-type';
 import { DamageType } from '../enums/damage-type';
 import { Domain } from './domain';
 import { Element } from './element';
@@ -100,6 +101,11 @@ export interface FeatureClassAbilityData extends _FeatureData {
 	selectedIDs: string[];
 }
 export type FeatureClassAbility = FeatureOf<FeatureType.ClassAbility, FeatureClassAbilityData>;
+
+export interface FeatureConditionImmunityData extends _FeatureData {
+	conditions: ConditionType[];
+}
+export type FeatureConditionImmunity = FeatureOf<FeatureType.ConditionImmunity, FeatureConditionImmunityData>;
 
 export interface FeatureCompanionData extends _FeatureData {
 	type: 'companion' | 'mount' | 'retainer';
@@ -232,6 +238,7 @@ export type Feature =
 	| FeatureChoice
 	| FeatureClassAbility
 	| FeatureCompanion
+	| FeatureConditionImmunity
 	| FeatureDamageModifier
 	| FeatureDomain
 	| FeatureDomainFeature

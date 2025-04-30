@@ -549,7 +549,7 @@ export const MonsterEditPanel = (props: Props) => {
 							<FeatureEditPanel
 								feature={f}
 								sourcebooks={props.sourcebooks}
-								allowedTypes={[ FeatureType.Text, FeatureType.Ability, FeatureType.DamageModifier ]}
+								allowedTypes={[ FeatureType.Text, FeatureType.Ability, FeatureType.ConditionImmunity, FeatureType.DamageModifier ]}
 								onChange={changeFeature}
 							/>
 						</Expander>

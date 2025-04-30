@@ -1,6 +1,7 @@
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Ancestry } from '../../models/ancestry';
 import { Characteristic } from '../../enums/characteristic';
+import { ConditionType } from '../../enums/condition-type';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
@@ -130,10 +131,11 @@ export const timeRaider: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createConditionImmunity({
 						id: 'time-raider-feature-2-7',
 						name: 'Unstoppable Mind',
-						description: 'Your mind allows you to maintain your focus in any situation. You can’t be dazed.'
+						description: 'Your mind allows you to maintain your focus in any situation.',
+						conditions: [ ConditionType.Dazed ]
 					}),
 					value: 2
 				}

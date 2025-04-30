@@ -1,10 +1,10 @@
 import { Divider } from 'antd';
 import { Field } from '../../controls/field/field';
+import { LogoPanel } from '../../panels/logo/logo-panel';
 import { Modal } from '../modal/modal';
 
 import pbds from '../../../assets/powered-by-draw-steel.png';
 import pkg from '../../../../package.json';
-import shield from '../../../assets/shield.png';
 
 import './about-modal.scss';
 
@@ -19,7 +19,7 @@ export const AboutModal = (props: Props) => {
 				content={
 					<div className='about-modal'>
 						<p className='logo-container'>
-							<img src={shield} />
+							<LogoPanel />
 						</p>
 						<p>
 							Designed by <a href='mailto:andy.aiken@live.co.uk'>Andy Aiken</a>.
@@ -31,13 +31,6 @@ export const AboutModal = (props: Props) => {
 							If you would like to contribute to this project, you can find the code <a href='https://github.com/andyaiken/forgesteel' target='_blank'>here</a>.
 						</p>
 						<Divider />
-						<p>
-							<b>FORGE STEEL</b> is free.
-						</p>
-						<p>
-							If you really feel the need to show your appreciation, I'd be grateful if you would take whatever you feel the app is worth and donate it to a local mental health charity.
-						</p>
-						<Divider />
 						<p className='logo-container'>
 							<img src={pbds} />
 						</p>
@@ -46,6 +39,13 @@ export const AboutModal = (props: Props) => {
 						</p>
 						<p>
 							<b>DRAW STEEL</b> © 2024 <a href='https://mcdmproductions.com/' target='_blank'>MCDM Productions, LLC.</a>
+						</p>
+						<Divider />
+						<p>
+							<b>FORGE STEEL</b> is free.
+						</p>
+						<p>
+							If you really feel the need to show your appreciation, I'd be grateful if you would take whatever you feel the app is worth and donate it to a local mental health charity.
 						</p>
 						<Divider />
 						<Field label='Version' value={pkg.version} />

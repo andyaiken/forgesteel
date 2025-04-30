@@ -1,11 +1,12 @@
-import { Feature, FeatureDamageModifierData } from '../models/feature';
 import { Monster, MonsterGroup, MonsterState } from '../models/monster';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
+import { ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FactoryLogic } from './factory-logic';
+import { Feature } from '../models/feature';
 import { FeatureLogic } from './feature-logic';
 import { FeatureType } from '../enums/feature-type';
 import { MonsterFeatureCategory } from '../enums/monster-feature-category';
@@ -848,6 +849,23 @@ export class MonsterLogic {
 		return value;
 	};
 
+	static getConditionImmunities = (monster: Monster) => {
+		const conditions: ConditionType[] = [];
+
+		// Collate from features
+		MonsterLogic.getFeatures(monster)
+			.filter(f => f.type === FeatureType.ConditionImmunity)
+			.forEach(f => {
+				f.data.conditions.forEach(c => {
+					if (!conditions.includes(c)) {
+						conditions.push(c);
+					}
+				});
+			});
+
+		return Collections.sort(conditions, c => c);
+	};
+
 	static getDamageModifiers = (monster: Monster, type: DamageModifierType) => {
 		const modifiers: { damageType: string, value: number }[] = [];
 
@@ -855,8 +873,7 @@ export class MonsterLogic {
 		MonsterLogic.getFeatures(monster)
 			.filter(f => f.type === FeatureType.DamageModifier)
 			.forEach(f => {
-				const data = f.data as FeatureDamageModifierData;
-				data.modifiers
+				f.data.modifiers
 					.filter(dm => dm.type === type)
 					.forEach(dm => {
 						let value = dm.value;

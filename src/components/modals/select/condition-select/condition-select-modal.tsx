@@ -8,6 +8,7 @@ import { Space } from 'antd';
 import './condition-select-modal.scss';
 
 interface Props {
+	immunities: ConditionType[];
 	onClose: () => void;
 	onSelect: (condition: ConditionType) => void;
 }
@@ -36,6 +37,7 @@ export const ConditionSelectModal = (props: Props) => {
 								conditions.map(c => (
 									<SelectablePanel
 										key={c}
+										disabled={props.immunities.includes(c)}
 										onSelect={() => props.onSelect(c)}
 									>
 										<HeaderText>{c}</HeaderText>

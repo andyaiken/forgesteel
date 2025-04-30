@@ -1,4 +1,5 @@
 import { Ancestry } from '../../models/ancestry';
+import { ConditionType } from '../../enums/condition-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 
 export const hakaan: Ancestry = {
@@ -41,10 +42,11 @@ export const hakaan: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createConditionImmunity({
 						id: 'hakaan-feature-2-4',
 						name: 'Great Fortitude',
-						description: 'Your hearty constitution prevents you from losing strength. You can’t be weakened.'
+						description: 'Your hearty constitution prevents you from losing strength.',
+						conditions: [ ConditionType.Weakened ]
 					}),
 					value: 2
 				},

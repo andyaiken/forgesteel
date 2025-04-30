@@ -159,7 +159,10 @@ export const HeroHealthPanel = (props: HeroProps) => {
 					value: hero.state.defeated,
 					setValue: setDefeated
 				}}
-				conditions={hero.state.conditions}
+				conditions={{
+					current: hero.state.conditions,
+					immunities: HeroLogic.getConditionImmunities(hero)
+				}}
 				addCondition={addCondition}
 				editCondition={editCondition}
 				deleteCondition={deleteCondition}
@@ -289,7 +292,10 @@ export const MonsterHealthPanel = (props: MonsterProps) => {
 					value: monster.state.defeated,
 					setValue: setDefeated
 				}}
-				conditions={monster.state.conditions}
+				conditions={{
+					current: monster.state.conditions,
+					immunities: MonsterLogic.getConditionImmunities(monster)
+				}}
 				addCondition={addCondition}
 				editCondition={editCondition}
 				deleteCondition={deleteCondition}
@@ -404,7 +410,10 @@ export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
 						.filter(m => !m.state.defeated),
 					setCaptainID: setCaptainID
 				}}
-				conditions={slot.state.conditions}
+				conditions={{
+					current: slot.state.conditions,
+					immunities: []
+				}}
 				addCondition={addCondition}
 				editCondition={editCondition}
 				deleteCondition={deleteCondition}
@@ -447,8 +456,11 @@ interface Props {
 		captainID: string | undefined;
 		candidates: Monster[];
 		setCaptainID: (value: string | undefined) => void;
-	}
-	conditions: Condition[];
+	};
+	conditions: {
+		current: Condition[];
+		immunities: ConditionType[];
+	};
 	addCondition: (condition: Condition) => void;
 	editCondition: (condition: Condition) => void;
 	deleteCondition: (condition: Condition) => void;
@@ -589,7 +601,7 @@ const HealthPanel = (props: Props) => {
 					}
 					{
 						<div className='ds-text'>
-							{props.conditions.map(c => c.type).join(', ') || 'Not affected by any conditions'}
+							{props.conditions.current.map(c => c.type).join(', ') || 'Not affected by any conditions'}
 						</div>
 					}
 				</div>
@@ -742,7 +754,7 @@ const HealthPanel = (props: Props) => {
 					Conditions
 				</HeaderText>
 				{
-					props.conditions.map(c => (
+					props.conditions.current.map(c => (
 						<ConditionPanel
 							key={c.id}
 							condition={c}
@@ -752,12 +764,12 @@ const HealthPanel = (props: Props) => {
 					))
 				}
 				{
-					props.conditions.length === 0 ?
+					props.conditions.current.length === 0 ?
 						<Empty text='You are not affected by any conditions.' />
 						: null
 				}
 				<Drawer open={conditionsVisible} onClose={() => setConditionsVisible(false)} closeIcon={null} width='500px'>
-					<ConditionSelectModal onSelect={addCondition} onClose={() => setConditionsVisible(false)} />
+					<ConditionSelectModal immunities={props.conditions.immunities} onSelect={addCondition} onClose={() => setConditionsVisible(false)} />
 				</Drawer>
 			</div>
 		</ErrorBoundary>

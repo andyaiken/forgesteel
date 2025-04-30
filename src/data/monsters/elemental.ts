@@ -1,5 +1,6 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
+import { ConditionType } from '../../enums/condition-type';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
@@ -165,7 +166,11 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 				FactoryLogic.feature.create({
 					id: 'elemental-1-feature-4',
 					name: 'Fickle and Free',
-					description: 'The crux can’t be restrained, slowed, or knocked prone, and they ignore diﬃcult terrain.'
+					description: 'The crux ignores diﬃcult terrain.'
+				}),
+				FactoryLogic.feature.createConditionImmunity({
+					id: 'elemental-1-feature-4b',
+					conditions: [ ConditionType.Restrained, ConditionType.Slowed, ConditionType.Prone ]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'elemental-1-feature-5',
@@ -237,7 +242,11 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 				FactoryLogic.feature.create({
 					id: 'elemental-2-feature-4',
 					name: 'Fickle and Free',
-					description: 'The essence can’t be restrained, slowed, or knocked prone, and they ignore diﬃcult terrain.'
+					description: 'The essence ignores diﬃcult terrain.'
+				}),
+				FactoryLogic.feature.createConditionImmunity({
+					id: 'elemental-2-feature-4b',
+					conditions: [ ConditionType.Restrained, ConditionType.Slowed, ConditionType.Prone ]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'elemental-2-feature-5',
@@ -311,7 +320,11 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 				FactoryLogic.feature.create({
 					id: 'elemental-3-feature-5',
 					name: 'Fickle and Free',
-					description: 'The essence can’t be restrained, slowed, or knocked prone, and they ignore diﬃcult terrain.'
+					description: 'The essence ignores diﬃcult terrain.'
+				}),
+				FactoryLogic.feature.createConditionImmunity({
+					id: 'elemental-3-feature-5b',
+					conditions: [ ConditionType.Restrained, ConditionType.Slowed, ConditionType.Prone ]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'elemental-3-feature-6',
@@ -380,12 +393,16 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 				FactoryLogic.feature.create({
 					id: 'elemental-4-feature-4',
 					name: 'Roots Run Deep',
-					description: 'The ﬁeld can target creatures touching the ground with abilities, even if they don’t have line of eﬀect.'
+					description: 'The field can target creatures touching the ground with abilities, even if they don’t have line of eﬀect.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'elemental-4-feature-5',
 					name: 'Fickle and Free',
-					description: 'The ﬁeld can’t be restrained, slowed, or knocked prone, and they ignore diﬃcult terrain.'
+					description: 'The field ignores diﬃcult terrain.'
+				}),
+				FactoryLogic.feature.createConditionImmunity({
+					id: 'elemental-4-feature-5b',
+					conditions: [ ConditionType.Restrained, ConditionType.Slowed, ConditionType.Prone ]
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'elemental-4-feature-6',
@@ -459,7 +476,11 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 				FactoryLogic.feature.create({
 					id: 'elemental-5-feature-5',
 					name: 'Fickle and Free',
-					description: 'The force can’t be restrained, slowed, or knocked prone, and they ignore diﬃcult terrain.'
+					description: 'The force ignores diﬃcult terrain.'
+				}),
+				FactoryLogic.feature.createConditionImmunity({
+					id: 'elemental-5-feature-5b',
+					conditions: [ ConditionType.Restrained, ConditionType.Slowed, ConditionType.Prone ]
 				})
 			]
 		})

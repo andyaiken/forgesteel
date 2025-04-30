@@ -6,6 +6,7 @@ import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from '../models/ancestry';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
+import { ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Domain } from '../models/domain';
 import { FactoryLogic } from './factory-logic';
@@ -293,6 +294,24 @@ export class HeroLogic {
 			});
 
 		return Collections.sort(skills, s => s.name);
+	};
+
+	static getConditionImmunities = (hero: Hero) => {
+		const conditions: ConditionType[] = [];
+
+		// Collate from features
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.ConditionImmunity)
+			.forEach(f => {
+				f.data.conditions.forEach(c => {
+					if (!conditions.includes(c)) {
+						conditions.push(c);
+					}
+				});
+			});
+
+		return Collections.sort(conditions, c => c);
 	};
 
 	static getDamageModifiers = (hero: Hero, type: DamageModifierType) => {

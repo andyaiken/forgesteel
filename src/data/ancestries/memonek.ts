@@ -1,4 +1,5 @@
 import { Ancestry } from '../../models/ancestry';
+import { ConditionType } from '../../enums/condition-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 
 export const memonek: Ancestry = {
@@ -77,10 +78,11 @@ export const memonek: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createConditionImmunity({
 						id: 'memonek-feature-3-7',
 						name: 'Nonstop',
-						description: 'Your connection to Axiom allows you to regulate your movements, even when other creatures would be forced to pause. You can’t be slowed.'
+						description: 'Your connection to Axiom allows you to regulate your movements, even when other creatures would be forced to pause.',
+						conditions: [ ConditionType.Slowed ]
 					}),
 					value: 2
 				}

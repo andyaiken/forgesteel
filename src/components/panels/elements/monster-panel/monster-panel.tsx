@@ -51,6 +51,7 @@ export const MonsterPanel = (props: Props) => {
 
 		const signatureBonus = MonsterLogic.getSignatureDamageBonus(props.monster);
 
+		const conditions = MonsterLogic.getConditionImmunities(props.monster);
 		const immunities = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Immunity);
 		const weaknesses = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Weakness);
 		const speed = props.monster.speed.modes !== '' ? `${props.monster.speed.value} (${props.monster.speed.modes})` : props.monster.speed.value;
@@ -93,7 +94,7 @@ export const MonsterPanel = (props: Props) => {
 						}
 					</div>
 					{
-						signatureBonus || props.monster.withCaptain || (immunities.length > 0) || (weaknesses.length > 0) || (features.length > 0) ?
+						signatureBonus || props.monster.withCaptain || (conditions.length > 0) || (immunities.length > 0) || (weaknesses.length > 0) || (features.length > 0) ?
 							<div className='features'>
 								{
 									signatureBonus ?
@@ -103,6 +104,11 @@ export const MonsterPanel = (props: Props) => {
 								{
 									props.monster.withCaptain ?
 										<Field label='With Captain' value={props.monster.withCaptain} />
+										: null
+								}
+								{
+									conditions.length > 0 ?
+										<Field label='Cannot Be' value={conditions.join(', ')} />
 										: null
 								}
 								{

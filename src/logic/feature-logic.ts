@@ -406,6 +406,7 @@ export class FeatureLogic {
 						return MonsterFeatureCategory.Trigger;
 				}
 				return MonsterFeatureCategory.Other;
+			case FeatureType.ConditionImmunity:
 			case FeatureType.DamageModifier:
 				return MonsterFeatureCategory.DamageMod;
 		}
@@ -439,6 +440,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose an ability from your class.';
 			case FeatureType.Companion:
 				return 'This feature grants you a companion, mount, or retainer.';
+			case FeatureType.ConditionImmunity:
+				return 'This feature grants you immunity to one or more condition types.';
 			case FeatureType.DamageModifier:
 				return 'This feature grants you an immunity or a weakness.';
 			case FeatureType.Domain:

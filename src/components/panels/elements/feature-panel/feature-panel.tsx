@@ -1,7 +1,7 @@
 import { Alert, Button, Drawer, Flex, Input, Select, Space } from 'antd';
 import { Badge, HeroicResourceBadge } from '../../../controls/badge/badge';
 import { CSSProperties, useState } from 'react';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
@@ -1326,6 +1326,12 @@ export const FeaturePanel = (props: Props) => {
 		return <MonsterPanel monster={data.selected} options={props.options} />;
 	};
 
+	const getInformationConditionImmunity = (data: FeatureConditionImmunityData) => {
+		return (
+			<Field label='Cannot Be' value={data.conditions.join(', ')} />
+		);
+	};
+
 	const getInformationDamageModifier = (data: FeatureDamageModifierData) => {
 		if (!props.feature.description) {
 			return (
@@ -1637,6 +1643,8 @@ export const FeaturePanel = (props: Props) => {
 				return getInformationClassAbility(props.feature.data);
 			case FeatureType.Companion:
 				return getInformationCompanion(props.feature.data);
+			case FeatureType.ConditionImmunity:
+				return getInformationConditionImmunity(props.feature.data);
 			case FeatureType.DamageModifier:
 				return getInformationDamageModifier(props.feature.data);
 			case FeatureType.Domain:

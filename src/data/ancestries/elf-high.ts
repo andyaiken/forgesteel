@@ -1,4 +1,5 @@
 import { Ancestry } from '../../models/ancestry';
+import { ConditionType } from '../../enums/condition-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 
@@ -51,10 +52,11 @@ export const highElf: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createConditionImmunity({
 						id: 'high-elf-feature-2-5',
 						name: 'Unstoppable Mind',
-						description: 'Your mind allows you to maintain your focus in any situation. You can’t be dazed.'
+						description: 'Your mind allows you to maintain your focus in any situation.',
+						conditions: [ ConditionType.Dazed ]
 					}),
 					value: 2
 				}

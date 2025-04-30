@@ -1,4 +1,5 @@
 import { Ancestry } from '../../models/ancestry';
+import { ConditionType } from '../../enums/condition-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 
@@ -48,10 +49,11 @@ You can carve a rune onto your skin and the magic within your body activates it.
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createConditionImmunity({
 						id: 'dwarf-feature-2-4',
 						name: 'Great Fortitude',
-						description: 'Your hearty constitution prevents you from losing strength. You can’t be weakened.'
+						description: 'Your hearty constitution prevents you from losing strength.',
+						conditions: [ ConditionType.Weakened ]
 					}),
 					value: 2
 				},

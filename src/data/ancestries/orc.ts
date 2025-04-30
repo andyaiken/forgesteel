@@ -1,4 +1,5 @@
 import { Ancestry } from '../../models/ancestry';
+import { ConditionType } from '../../enums/condition-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 
@@ -51,10 +52,11 @@ export const orc: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createConditionImmunity({
 						id: 'orc-feature-2-5',
 						name: 'Nonstop',
-						description: 'Your bloodfire supplies you with a constant rush of adrenaline. You can’t be slowed.'
+						description: 'Your bloodfire supplies you with a constant rush of adrenaline.',
+						conditions: [ ConditionType.Slowed ]
 					}),
 					value: 2
 				}

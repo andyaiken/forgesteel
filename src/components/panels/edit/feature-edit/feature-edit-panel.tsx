@@ -1,12 +1,13 @@
 import { Button, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
+import { ConditionType } from '../../../../enums/condition-type';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { DamageType } from '../../../../enums/damage-type';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
@@ -156,6 +157,11 @@ export const FeatureEditPanel = (props: Props) => {
 					minLevel: 1,
 					selectedIDs: []
 				} as FeatureClassAbilityData;
+				break;
+			case FeatureType.ConditionImmunity:
+				data = {
+					conditions: []
+				} as FeatureConditionImmunityData;
 				break;
 			case FeatureType.DamageModifier:
 				data = {
@@ -366,6 +372,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setCompanionType = (value: 'companion' | 'mount' | 'retainer') => {
 			const copy = Utils.copy(feature.data) as FeatureCompanionData;
 			copy.type = value;
+			setData(copy);
+		};
+
+		const setConditions = (value: ConditionType[]) => {
+			const copy = Utils.copy(feature.data) as FeatureConditionImmunityData;
+			copy.conditions = value;
 			setData(copy);
 		};
 
@@ -923,6 +935,24 @@ export const FeatureEditPanel = (props: Props) => {
 							options={[ 'companion', 'mount', 'retainer' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
 							value={data.type}
 							onChange={s => setCompanionType(s as 'companion' | 'mount' | 'retainer')}
+						/>
+					</Space>
+				);
+			}
+			case FeatureType.ConditionImmunity: {
+				const data = feature.data as FeatureConditionImmunityData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Conditions</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select conditions'
+							mode='multiple'
+							allowClear={true}
+							options={[ ConditionType.Bleeding, ConditionType.Dazed, ConditionType.Frightened, ConditionType.Grabbed, ConditionType.Prone, ConditionType.Restrained, ConditionType.Slowed, ConditionType.Taunted, ConditionType.Weakened ].map(o => ({ value: o }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							value={data.conditions}
+							onChange={conditions => setConditions(conditions)}
 						/>
 					</Space>
 				);

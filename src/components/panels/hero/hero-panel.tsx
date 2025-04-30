@@ -222,6 +222,12 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getRightColumn = (showBorder: boolean) => {
+		const onShowConditions = () => {
+			if (props.onShowRules) {
+				props.onShowRules(RulesPage.Conditions);
+			}
+		};
+
 		const onShowSkills = () => {
 			if (props.onShowRules) {
 				props.onShowRules(RulesPage.Skills);
@@ -234,6 +240,7 @@ export const HeroPanel = (props: Props) => {
 			}
 		};
 
+		const conditions = HeroLogic.getConditionImmunities(props.hero);
 		const immunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
 		const weaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
@@ -254,6 +261,14 @@ export const HeroPanel = (props: Props) => {
 
 		return (
 			<div className={showBorder ? 'hero-right-column border' : 'hero-right-column'}>
+				{
+					conditions.length > 0 ?
+						<div className='overview-tile clickable' onClick={onShowConditions}>
+							<HeaderText>Cannot Be</HeaderText>
+							{conditions.map((c, n) => <div key={n} className='ds-text'>{c}</div>)}
+						</div>
+						: null
+				}
 				{
 					immunities.length > 0 ?
 						<div className='overview-tile'>

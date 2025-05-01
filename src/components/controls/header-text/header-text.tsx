@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { Tag } from 'antd';
 
 import './header-text.scss';
@@ -9,6 +9,7 @@ interface Props {
 	ribbon?: ReactNode;
 	tags?: string[];
 	extra?: ReactNode;
+	style?: CSSProperties;
 }
 
 export const HeaderText = (props: Props) => {
@@ -18,7 +19,7 @@ export const HeaderText = (props: Props) => {
 		}
 
 		return (
-			<div className={`header-text-panel level-${props.level || 2}`}>
+			<div className={`header-text-panel level-${props.level || 2}`} style={props.style}>
 				<div className='header-text-content'>
 					{props.ribbon}
 					<div className='header-text'>{props.children}</div>

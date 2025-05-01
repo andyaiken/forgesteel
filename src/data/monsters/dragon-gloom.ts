@@ -100,7 +100,7 @@ When such an understanding is not reached, gloom dragons are feared for their co
 				}),
 				FactoryLogic.feature.create({
 					id: 'dragon-gloom-feature-3',
-					name: 'Gloaming Wyrmsacle Aura',
+					name: 'Gloaming Wyrmscale Aura',
 					description: 'The dragon’s scales emit a 4 aura of dark fog. An enemy who starts their turn in an aﬀected area takes 2 psychic damage, and the dragon deals an additional 2 psychic damage on abilities per number of enemies in the aura (to a maximum of 6).'
 				}),
 				FactoryLogic.feature.createAbility({

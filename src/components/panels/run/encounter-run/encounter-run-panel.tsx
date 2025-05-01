@@ -362,7 +362,9 @@ export const EncounterRunPanel = (props: Props) => {
 
 		return (
 			<div className='encounter-groups'>
-				{encounter.terrain.flatMap(ts => ts.terrain).map(getTerrainSlot)}
+				<div>
+					{encounter.terrain.flatMap(ts => ts.terrain).map(getTerrainSlot)}
+				</div>
 			</div>
 		);
 	};

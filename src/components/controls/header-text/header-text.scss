@@ -57,5 +57,9 @@
 				color: rgba(255, 255, 255, 0.88);
 			}
 		}
+
+		.ant-btn-icon {
+			filter: invert(1);
+		}
 	}	
 }

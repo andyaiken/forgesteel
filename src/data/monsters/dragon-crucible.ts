@@ -108,7 +108,7 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 				}),
 				FactoryLogic.feature.create({
 					id: 'dragon-crucible-feature-3',
-					name: 'Magnetized Wyrmsacle Aura',
+					name: 'Magnetized Wyrmscale Aura',
 					description: 'The dragon’s scales emit a 3 aura of magnetism that aﬀects metal equipment and objects. A creature that enters an aﬀected square or starts their turn there while slagged or wearing metal is pulled 2 towards the dragon and is M<3 unable to move away.'
 				}),
 				FactoryLogic.feature.createAbility({

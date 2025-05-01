@@ -97,7 +97,7 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 				}),
 				FactoryLogic.feature.create({
 					id: 'dragon-thorn-feature-3',
-					name: 'Withering Wyrmsacle Aura',
+					name: 'Withering Wyrmscale Aura',
 					description: 'The dragon’s scales emit a 2 aura barrier of withering green magic. When a creature in the aﬀected area regains Stamina, they only regain half the Stamina. A winded creature who enters an aﬀected square or starts their turn there takes 1d6 poison damage.'
 				}),
 				FactoryLogic.feature.createAbility({

@@ -27,6 +27,7 @@ import { HeroClass } from '../../../models/class';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { HeroStatePage } from '../../../enums/hero-state-page';
 import { Kit } from '../../../models/kit';
+import { Markdown } from '../../controls/markdown/markdown';
 import { MonsterInfo } from '../../controls/token/token';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -440,47 +441,32 @@ export const HeroPanel = (props: Props) => {
 			return null;
 		}
 
-		const showConditions = () => {
-			if (props.onShowState) {
-				props.onShowState(HeroStatePage.Vitals);
-			}
-		};
-
 		return (
 			<div className='conditions-section'>
 				<HeaderText level={1}>Conditions</HeaderText>
-				<div className='conditions-grid'>
-					{
-						state === 'dying' ?
-							<div className='condition-tile' onClick={showConditions}>
-								<HeaderText>Dying</HeaderText>
-								<div className='ds-text'>
-									<div>
-										You can’t take the Catch Breath maneuver in combat, and you are bleeding, and this condition can’t be removed in any way until you are no longer dying.
-									</div>
-									<div>
-										Your allies can help you spend Recoveries in combat, and you can spend Recoveries out of combat as usual.
-									</div>
+				{
+					state === 'dying' ?
+						<div>
+							<HeaderText>Dying</HeaderText>
+							<div className='ds-text'>
+								<div>
+									You can’t take the Catch Breath maneuver in combat, and you are bleeding, and this condition can’t be removed in any way until you are no longer dying.
+								</div>
+								<div>
+									Your allies can help you spend Recoveries in combat, and you can spend Recoveries out of combat as usual.
 								</div>
 							</div>
-							: null
-					}
-					{
-						props.hero.state.conditions.map(c => (
-							<div key={c.id} className='condition-tile' onClick={showConditions}>
-								<HeaderText>{c.type}: {c.ends}</HeaderText>
-								<div className='ds-text'>
-									{
-										c.type === ConditionType.Custom ?
-											c.text || 'A custom condition.'
-											:
-											ConditionLogic.getDescription(c.type)
-									}
-								</div>
-							</div>
-						))
-					}
-				</div>
+						</div>
+						: null
+				}
+				{
+					props.hero.state.conditions.map(c => (
+						<div key={c.id}>
+							<HeaderText tags={[ c.ends ]}>{c.type}</HeaderText>
+							<Markdown text={c.type === ConditionType.Custom ? c.text || 'A custom condition.' : ConditionLogic.getDescription(c.type)} />
+						</div>
+					))
+				}
 			</div>
 		);
 	};
@@ -625,7 +611,7 @@ export const HeroPanel = (props: Props) => {
 				case 'Hero':
 					content = (
 						<>
-							<HeaderText tags={props.hero.folder ? [ props.hero.folder ] : []}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
+							<HeaderText level={1} tags={props.hero.folder ? [ props.hero.folder ] : []}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
 							{getLeftColumn(false)}
 							{getRightColumn(false)}
 						</>

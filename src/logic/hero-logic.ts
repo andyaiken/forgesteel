@@ -667,7 +667,7 @@ export class HeroLogic {
 		HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.AbilityDamage)
-			.filter(f => f.data.keywords.some(kw => ability.keywords.includes(kw)))
+			.filter(f => f.data.keywords.every(kw => ability.keywords.includes(kw)))
 			.forEach(f => {
 				const mod = HeroLogic.calculateModifierValue(hero, f.data);
 				value += mod;

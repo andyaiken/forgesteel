@@ -1,5 +1,6 @@
-import { Segmented, Statistic } from 'antd';
+import { Alert, Segmented, Statistic } from 'antd';
 import { Characteristic } from '../../../enums/characteristic';
+import { ConditionType } from '../../../enums/condition-type';
 import { DieRollPanel } from '../../panels/die-roll/die-roll-panel';
 import { Expander } from '../../controls/expander/expander';
 import { HeaderText } from '../../controls/header-text/header-text';
@@ -22,13 +23,43 @@ export const RollModal = (props: Props) => {
 	const [ type, setType ] = useState<'Power Roll' | 'Saving Throw'>('Power Roll');
 
 	try {
-		const bonus = props.characteristics && props.hero ? Math.max(...props.characteristics.map(ch => HeroLogic.getCharacteristic(props.hero!, ch))) : 0;
+		const warnings: { label: string, text: string }[] = [];
+		let bonus = 0;
+
+		if (props.characteristics && props.hero) {
+			if (props.characteristics.some(ch => [ Characteristic.Might, Characteristic.Agility ].includes(ch))) {
+				if (props.hero.state.conditions.some(c => c.type === ConditionType.Bleeding) || (HeroLogic.getCombatState(props.hero) === 'dying')) {
+					warnings.push({
+						label: ConditionType.Bleeding,
+						text: 'Whenever you make a test using Might or Agility, you lose 1d6 Stamina after it is resolved.'
+					});
+				}
+				if (props.hero.state.conditions.some(c => c.type === ConditionType.Restrained)) {
+					warnings.push({
+						label: ConditionType.Restrained,
+						text: 'You have a bane on Might and Agility tests.'
+					});
+				}
+			}
+
+			bonus = Math.max(...props.characteristics.map(ch => HeroLogic.getCharacteristic(props.hero!, ch)));
+		}
 
 		const getContent = () => {
 			switch (type) {
 				case 'Power Roll':
 					return (
 						<>
+							{
+								warnings.map((warn, n) => (
+									<Alert
+										key={n}
+										type='warning'
+										showIcon={true}
+										message={<div><b>{warn.label}</b>: {warn.text}</div>}
+									/>
+								))
+							}
 							{
 								props.characteristics && props.hero ?
 									<Statistic title={props.characteristics.join(', ')} value={bonus} />

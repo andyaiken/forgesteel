@@ -5,6 +5,7 @@ import { HeroInfo, MonsterInfo, TerrainInfo } from '../../controls/token/token';
 import { Collections } from '../../../utils/collections';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { DangerButton } from '../../controls/danger-button/danger-button';
+import { Format } from '../../../utils/format';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { Monster } from '../../../models/monster';
@@ -95,7 +96,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 									</div>
 							}
 							<div className='conditions-column'>
-								{HeroLogic.isWinded(props.hero) ? <Tag>Winded</Tag> : null}
+								{[ 'healthy', 'injured' ].includes(HeroLogic.getCombatState(props.hero)) ? null : <Tag>{Format.capitalize(HeroLogic.getCombatState(props.hero))}</Tag>}
 								{props.hero.state.hidden ? <Tag>Hidden</Tag> : null}
 								{props.hero.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
 							</div>
@@ -230,7 +231,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 										</div>
 								}
 								<div className='conditions-column'>
-									{MonsterLogic.isWinded(monster) ? <Tag>Winded</Tag> : null}
+									{[ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(monster)) ? null : <Tag>{Format.capitalize(MonsterLogic.getCombatState(monster))}</Tag>}
 									{monster.state.hidden ? <Tag>Hidden</Tag> : null}
 									{monster.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
 								</div>

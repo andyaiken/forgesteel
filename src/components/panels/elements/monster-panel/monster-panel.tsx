@@ -51,10 +51,14 @@ export const MonsterPanel = (props: Props) => {
 
 		const signatureBonus = MonsterLogic.getSignatureDamageBonus(props.monster);
 
+		let speed = `${MonsterLogic.getSpeed(props.monster)}${MonsterLogic.getSpeedModified(props.monster) ? '*' : ''}`;
+		if (props.monster.speed.modes) {
+			speed = `${speed} (${props.monster.speed.modes})`;
+		}
+
 		const conditions = MonsterLogic.getConditionImmunities(props.monster);
 		const immunities = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Immunity);
 		const weaknesses = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Weakness);
-		const speed = props.monster.speed.modes !== '' ? `${props.monster.speed.value} (${props.monster.speed.modes})` : props.monster.speed.value;
 
 		const features = MonsterLogic.getFeatures(props.monster).filter(f => (f.type === FeatureType.Text) || (f.type === FeatureType.AddOn));
 		const abilities = MonsterLogic.getFeatures(props.monster).filter(f => f.type === FeatureType.Ability).map(f => f.data.ability);
@@ -79,11 +83,11 @@ export const MonsterPanel = (props: Props) => {
 						<Field orientation='vertical' label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(props.monster)} />
 					</div>
 					{
-						MonsterLogic.isWinded(props.monster) ?
+						![ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(props.monster)) ?
 							<Alert
 								type='warning'
 								showIcon={true}
-								message={`${MonsterLogic.getMonsterName(props.monster, props.monsterGroup)} is winded.`}
+								message={`${MonsterLogic.getMonsterName(props.monster, props.monsterGroup)} is ${MonsterLogic.getCombatState(props.monster)}.`}
 							/>
 							: null
 					}
@@ -128,7 +132,7 @@ export const MonsterPanel = (props: Props) => {
 					{
 						abilities.length > 0 ?
 							<div className='abilities'>
-								{abilities.map(a => <SelectablePanel key={a.id} onSelect={() => setSelectedAbility(a)}><AbilityPanel ability={a} mode={PanelMode.Full} /></SelectablePanel>)}
+								{abilities.map(a => <SelectablePanel key={a.id} onSelect={() => setSelectedAbility(a)}><AbilityPanel ability={a} monster={props.monster} mode={PanelMode.Full} /></SelectablePanel>)}
 							</div>
 							: null
 					}

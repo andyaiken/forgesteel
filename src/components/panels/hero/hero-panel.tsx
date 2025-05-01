@@ -377,7 +377,7 @@ export const HeroPanel = (props: Props) => {
 							<Statistic title='Size' value={FormatLogic.getSize(HeroLogic.getSize(props.hero))} />
 						</div>
 						<div className='characteristic'>
-							<Statistic title='Speed' value={HeroLogic.getSpeed(props.hero)} />
+							<Statistic title='Speed' value={`${HeroLogic.getSpeed(props.hero)}${HeroLogic.getSpeedModified(props.hero) ? '*' : ''}`} />
 						</div>
 						<div className='characteristic'>
 							<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />
@@ -434,7 +434,9 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getConditionsSection = () => {
-		if (props.hero.state.conditions.length === 0) {
+		const state = HeroLogic.getCombatState(props.hero);
+
+		if ((props.hero.state.conditions.length === 0) && (state !== 'dying')) {
 			return null;
 		}
 
@@ -448,6 +450,21 @@ export const HeroPanel = (props: Props) => {
 			<div className='conditions-section'>
 				<HeaderText level={1}>Conditions</HeaderText>
 				<div className='conditions-grid'>
+					{
+						state === 'dying' ?
+							<div className='condition-tile' onClick={showConditions}>
+								<HeaderText>Dying</HeaderText>
+								<div className='ds-text'>
+									<div>
+										You can’t take the Catch Breath maneuver in combat, and you are bleeding, and this condition can’t be removed in any way until you are no longer dying.
+									</div>
+									<div>
+										Your allies can help you spend Recoveries in combat, and you can spend Recoveries out of combat as usual.
+									</div>
+								</div>
+							</div>
+							: null
+					}
 					{
 						props.hero.state.conditions.map(c => (
 							<div key={c.id} className='condition-tile' onClick={showConditions}>

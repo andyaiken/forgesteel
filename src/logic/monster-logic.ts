@@ -849,6 +849,27 @@ export class MonsterLogic {
 		return value;
 	};
 
+	static getSpeed = (monster: Monster) => {
+		let value = monster.speed.value;
+
+		if (monster.state.conditions.some(c => [ ConditionType.Grabbed, ConditionType.Restrained ].includes(c.type))) {
+			value = 0;
+		}
+		if (monster.state.conditions.some(c => [ ConditionType.Slowed ].includes(c.type))) {
+			value = Math.min(value, 2);
+		}
+
+		return value;
+	};
+
+	static getSpeedModified = (monster: Monster) => {
+		if (monster.state.conditions.some(c => [ ConditionType.Grabbed, ConditionType.Restrained, ConditionType.Slowed ].includes(c.type))) {
+			return true;
+		}
+
+		return false;
+	};
+
 	static getConditionImmunities = (monster: Monster) => {
 		const conditions: ConditionType[] = [];
 
@@ -919,8 +940,26 @@ export class MonsterLogic {
 		return 1;
 	};
 
-	static isWinded = (monster: Monster) => {
-		return monster.state.staminaDamage >= (MonsterLogic.getStamina(monster) / 2);
+	static getCombatState = (monster: Monster) => {
+		const maxStamina = MonsterLogic.getStamina(monster);
+		if ((monster.role.organization !== MonsterOrganizationType.Minion) && (maxStamina > 0)) {
+			const winded = Math.floor(maxStamina / 2);
+			const currentStamina = maxStamina - monster.state.staminaDamage;
+
+			if (currentStamina <= 0) {
+				return 'dead';
+			}
+
+			if (currentStamina <= winded) {
+				return 'winded';
+			}
+
+			if (currentStamina < maxStamina) {
+				return 'injured';
+			}
+		}
+
+		return 'healthy';
 	};
 
 	static getRoleTypeDescription = (type: MonsterRoleType) => {

@@ -116,7 +116,7 @@ export const AbilityModal = (props: Props) => {
 				return (
 					<div className='ability-section'>
 						<SelectablePanel>
-							<AbilityPanel ability={props.ability} hero={hero} mode={PanelMode.Full} />
+							<AbilityPanel ability={props.ability} hero={hero} monster={props.monster} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
 							props.ability.powerRoll ?

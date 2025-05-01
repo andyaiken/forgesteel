@@ -485,7 +485,22 @@ export class HeroLogic {
 				}
 			});
 
+		if (hero.state.conditions.some(c => [ ConditionType.Grabbed, ConditionType.Restrained ].includes(c.type))) {
+			value = 0;
+		}
+		if (hero.state.conditions.some(c => [ ConditionType.Slowed ].includes(c.type))) {
+			value = Math.min(value, 2);
+		}
+
 		return value;
+	};
+
+	static getSpeedModified = (hero: Hero) => {
+		if (hero.state.conditions.some(c => [ ConditionType.Grabbed, ConditionType.Restrained, ConditionType.Slowed ].includes(c.type))) {
+			return true;
+		}
+
+		return false;
 	};
 
 	static getStability = (hero: Hero) => {
@@ -780,12 +795,30 @@ export class HeroLogic {
 		}
 	};
 
-	static isWinded = (hero: Hero) => {
-		const stamina = HeroLogic.getStamina(hero);
-		if (stamina === 0) {
-			return false;
+	static getCombatState = (hero: Hero) => {
+		const maxStamina = HeroLogic.getStamina(hero);
+		if (maxStamina > 0) {
+			const winded = Math.floor(maxStamina / 2);
+			const currentStamina = maxStamina - hero.state.staminaDamage;
+
+			if (currentStamina <= -winded) {
+				return 'dead';
+			}
+
+			if (currentStamina <= 0) {
+				return 'dying';
+			}
+
+			if (currentStamina <= winded) {
+				return 'winded';
+			}
+
+			if (currentStamina < maxStamina) {
+				return 'injured';
+			}
 		}
-		return hero.state.staminaDamage >= (stamina / 2);
+
+		return 'healthy';
 	};
 
 	static getMinXP = (level: number) => {

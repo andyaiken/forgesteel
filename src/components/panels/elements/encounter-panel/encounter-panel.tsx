@@ -45,7 +45,7 @@ export const EncounterPanel = (props: Props) => {
 			<div className='encounter-groups'>
 				{
 					props.encounter.groups.filter(g => g.slots.length > 0).map((group, n) => (
-						<div key={group.id} className='encounter-group'>
+						<div key={group.id} className='encounter-group-info'>
 							{
 								props.encounter.groups.filter(g => g.slots.length > 0).length > 1 ?
 									<HeaderText>Group {(n + 1).toString()}</HeaderText>
@@ -85,7 +85,7 @@ export const EncounterPanel = (props: Props) => {
 				}
 				{
 					props.encounter.terrain.length > 0 ?
-						<div key='terrain' className='terrain-group'>
+						<div key='terrain' className='terrain-group-info'>
 							<HeaderText>Terrain</HeaderText>
 							{
 								props.encounter.terrain.map(slot => {

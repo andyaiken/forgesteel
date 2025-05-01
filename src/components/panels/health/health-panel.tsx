@@ -10,13 +10,15 @@ import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
 import { Empty } from '../../controls/empty/empty';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Field } from '../../controls/field/field';
+import { Format } from '../../../utils/format';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
+import { Markdown } from '../../controls/markdown/markdown';
 import { Monster } from '../../../models/monster';
+import { MonsterInfo } from '../../controls/token/token';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
-import { MonsterToken } from '../../controls/token/token';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../enums/panel-mode';
 import { PlusOutlined } from '@ant-design/icons';
@@ -133,7 +135,7 @@ export const HeroHealthPanel = (props: HeroProps) => {
 						{
 							staminaMax: HeroLogic.getStamina(hero),
 							staminaDamage: hero.state.staminaDamage,
-							isWinded: HeroLogic.isWinded(hero),
+							state: HeroLogic.getCombatState(hero),
 							immunities: HeroLogic.getDamageModifiers(hero, DamageModifierType.Immunity),
 							weaknesses: HeroLogic.getDamageModifiers(hero, DamageModifierType.Weakness),
 							takeDamage: takeDamage,
@@ -268,7 +270,7 @@ export const MonsterHealthPanel = (props: MonsterProps) => {
 						{
 							staminaMax: MonsterLogic.getStamina(monster),
 							staminaDamage: monster.state.staminaDamage,
-							isWinded: MonsterLogic.isWinded(monster),
+							state: MonsterLogic.getCombatState(monster),
 							immunities: MonsterLogic.getDamageModifiers(monster, DamageModifierType.Immunity),
 							weaknesses: MonsterLogic.getDamageModifiers(monster, DamageModifierType.Weakness),
 							takeDamage: takeDamage,
@@ -391,7 +393,7 @@ export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
 				stamina={{
 					staminaMax: Collections.sum(props.slot.monsters, m => MonsterLogic.getStamina(m)),
 					staminaDamage: slot.state.staminaDamage,
-					isWinded: false,
+					state: 'healthy',
 					immunities: [],
 					weaknesses: [],
 					takeDamage: takeDamage,
@@ -428,7 +430,7 @@ interface Props {
 	stamina?: {
 		staminaMax: number;
 		staminaDamage: number;
-		isWinded: boolean;
+		state: string;
 		immunities: { damageType: string, value: number }[];
 		weaknesses: { damageType: string, value: number }[];
 		takeDamage: (value: number) => void;
@@ -524,7 +526,7 @@ const HealthPanel = (props: Props) => {
 					type='dashboard'
 					percent={100 * (props.stamina!.staminaMax - props.stamina!.staminaDamage) / props.stamina!.staminaMax}
 					showInfo={false}
-					status={props.stamina!.isWinded ? 'exception' : 'active'}
+					status={(props.stamina!.state === 'winded') ? 'exception' : 'active'}
 				/>
 				{
 					props.recoveries && (props.recoveries.recoveriesMax > 0) ?
@@ -580,8 +582,8 @@ const HealthPanel = (props: Props) => {
 				}
 				<div>
 					{
-						props.stamina && props.stamina.isWinded ?
-							<div className='ds-text'>Winded</div>
+						props.stamina && ![ 'healthy', 'injured' ].includes(props.stamina.state) ?
+							<div className='ds-text'>{Format.capitalize(props.stamina.state)}</div>
 							: null
 					}
 					{
@@ -652,11 +654,27 @@ const HealthPanel = (props: Props) => {
 						: null
 				}
 				{
-					props.stamina && props.stamina.isWinded ?
+					props.stamina && ![ 'healthy', 'injured', 'dying' ].includes(props.stamina.state) ?
 						<Alert
 							type='warning'
 							showIcon={true}
-							message='You are winded.'
+							message={`You are ${props.stamina.state}.`}
+						/>
+						: null
+				}
+				{
+					props.stamina && (props.stamina.state === 'dying') ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message={
+								<Markdown
+									text={`
+You are dying.
+You can’t take the Catch Breath maneuver in combat, and you are bleeding, and this condition can’t be removed in any way until you are no longer dying.
+Your allies can help you spend Recoveries in combat, and you can spend Recoveries out of combat as usual.`}
+								/>
+							}
 						/>
 						: null
 				}
@@ -724,16 +742,12 @@ const HealthPanel = (props: Props) => {
 													label: (
 														<div
 															style={{
-																display: 'flex',
-																alignItems: 'center',
-																gap: '10px',
-																padding: '5px',
+																padding: '5px 10px',
 																borderRadius: '5px',
 																background: (m.id === props.captain!.captainID ? 'rgb(64, 150, 255)' : undefined),
 																color: (m.id === props.captain!.captainID ? 'rgb(255, 255, 255)' : undefined)
 															}}>
-															<MonsterToken monster={m} />
-															{m.name}
+															<MonsterInfo monster={m} />
 														</div>
 													)
 												}))

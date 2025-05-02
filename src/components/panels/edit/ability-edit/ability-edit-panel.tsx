@@ -403,6 +403,15 @@ export const AbilityEditPanel = (props: Props) => {
 												placeholder='Select usage type'
 												options={[ AbilityUsage.Action, AbilityUsage.Maneuver, AbilityUsage.Move, AbilityUsage.Trigger, AbilityUsage.VillainAction, AbilityUsage.NoAction, AbilityUsage.Other ].map(option => ({ value: option }))}
 												optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+												showSearch={true}
+												filterOption={(input, option) => {
+													const strings = option ?
+														[
+															option.value
+														]
+														: [];
+													return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+												}}
 												value={ability.type.usage}
 												onChange={setTypeUsage}
 											/>
@@ -442,6 +451,15 @@ export const AbilityEditPanel = (props: Props) => {
 											allowClear={true}
 											options={AbilityLogic.getKeywords().map(option => ({ value: option }))}
 											optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+											showSearch={true}
+											filterOption={(input, option) => {
+												const strings = option ?
+													[
+														option.value
+													]
+													: [];
+												return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+											}}
 											value={ability.keywords}
 											onChange={setKeywords}
 										/>
@@ -480,6 +498,15 @@ export const AbilityEditPanel = (props: Props) => {
 																		placeholder='Area type'
 																		options={[ AbilityDistanceType.Aura, AbilityDistanceType.Burst, AbilityDistanceType.Cube, AbilityDistanceType.Wall ].map(option => ({ value: option }))}
 																		optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+																		showSearch={true}
+																		filterOption={(input, option) => {
+																			const strings = option ?
+																				[
+																					option.value
+																				]
+																				: [];
+																			return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+																		}}
 																		value={distance.type}
 																		onChange={value => setDistanceType(n, value)}
 																	/>
@@ -587,6 +614,15 @@ export const AbilityEditPanel = (props: Props) => {
 														mode='multiple'
 														options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
 														optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+														showSearch={true}
+														filterOption={(input, option) => {
+															const strings = option ?
+																[
+																	option.value
+																]
+																: [];
+															return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+														}}
 														value={ability.powerRoll.characteristic}
 														onChange={setPowerRollCharacteristics}
 													/>

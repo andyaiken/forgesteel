@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Drawer, Flex, InputNumber, Progress } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, InputNumber, Progress, Space } from 'antd';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { Encounter, EncounterSlot } from '../../../models/encounter';
 import { Collections } from '../../../utils/collections';
@@ -35,6 +35,33 @@ interface HeroProps {
 
 export const HeroHealthPanel = (props: HeroProps) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
+
+	const setStaminaDamage = (value: number) => {
+		const copy = Utils.copy(hero);
+		copy.state.staminaDamage = value;
+		setHero(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
+	};
+
+	const setStaminaTemp = (value: number) => {
+		const copy = Utils.copy(hero);
+		copy.state.staminaTemp = value;
+		setHero(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
+	};
+
+	const setRecoveriesUsed = (value: number) => {
+		const copy = Utils.copy(hero);
+		copy.state.recoveriesUsed = value;
+		setHero(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
+	};
 
 	const takeDamage = (value: number) => {
 		const damageToTemp = Math.min(value, hero.state.staminaTemp);
@@ -138,6 +165,7 @@ export const HeroHealthPanel = (props: HeroProps) => {
 							state: HeroLogic.getCombatState(hero),
 							immunities: HeroLogic.getDamageModifiers(hero, DamageModifierType.Immunity),
 							weaknesses: HeroLogic.getDamageModifiers(hero, DamageModifierType.Weakness),
+							setValue: setStaminaDamage,
 							takeDamage: takeDamage,
 							heal: heal
 						}
@@ -145,12 +173,14 @@ export const HeroHealthPanel = (props: HeroProps) => {
 				}
 				staminaTemp={{
 					staminaTemp: hero.state.staminaTemp,
+					setValue: setStaminaTemp,
 					addTemp: addTemp
 				}}
 				recoveries={{
 					recoveriesMax: HeroLogic.getRecoveries(hero),
 					recoveriesUsed: hero.state.recoveriesUsed,
 					recoveryValue: HeroLogic.getRecoveryValue(hero),
+					setValue: setRecoveriesUsed,
 					spendRecovery: spendRecovery
 				}}
 				hidden={{
@@ -180,6 +210,24 @@ interface MonsterProps {
 
 export const MonsterHealthPanel = (props: MonsterProps) => {
 	const [ monster, setMonster ] = useState<Monster>(Utils.copy(props.monster));
+
+	const setStaminaDamage = (value: number) => {
+		const copy = Utils.copy(monster);
+		copy.state.staminaDamage = value;
+		setMonster(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
+	};
+
+	const setStaminaTemp = (value: number) => {
+		const copy = Utils.copy(monster);
+		copy.state.staminaTemp = value;
+		setMonster(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
+	};
 
 	const takeDamage = (value: number) => {
 		const damageToTemp = Math.min(value, monster.state.staminaTemp);
@@ -273,6 +321,7 @@ export const MonsterHealthPanel = (props: MonsterProps) => {
 							state: MonsterLogic.getCombatState(monster),
 							immunities: MonsterLogic.getDamageModifiers(monster, DamageModifierType.Immunity),
 							weaknesses: MonsterLogic.getDamageModifiers(monster, DamageModifierType.Weakness),
+							setValue: setStaminaDamage,
 							takeDamage: takeDamage,
 							heal: heal
 						}
@@ -282,6 +331,7 @@ export const MonsterHealthPanel = (props: MonsterProps) => {
 					monster.role.organization !== MonsterOrganizationType.Minion ?
 						{
 							staminaTemp: monster.state.staminaTemp,
+							setValue: setStaminaTemp,
 							addTemp: addTemp
 						}
 						: undefined
@@ -314,6 +364,15 @@ interface MinionGroupProps {
 
 export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
 	const [ slot, setSlot ] = useState<EncounterSlot>(Utils.copy(props.slot));
+
+	const setStaminaDamage = (value: number) => {
+		const copy = Utils.copy(slot);
+		copy.state.staminaDamage = value;
+		setSlot(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
+	};
 
 	const takeDamage = (value: number) => {
 		const damageToTemp = Math.min(value, slot.state.staminaTemp);
@@ -396,6 +455,7 @@ export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
 					state: 'healthy',
 					immunities: [],
 					weaknesses: [],
+					setValue: setStaminaDamage,
 					takeDamage: takeDamage,
 					heal: heal
 				}}
@@ -433,17 +493,20 @@ interface Props {
 		state: string;
 		immunities: { damageType: string, value: number }[];
 		weaknesses: { damageType: string, value: number }[];
+		setValue: (value: number) => void;
 		takeDamage: (value: number) => void;
 		heal: (value: number) => void;
 	};
 	staminaTemp?: {
 		staminaTemp: number;
+		setValue: (value: number) => void;
 		addTemp: (value: number) => void;
 	}
 	recoveries?: {
 		recoveriesMax: number;
 		recoveriesUsed: number;
 		recoveryValue: number;
+		setValue: (value: number) => void;
 		spendRecovery: () => void;
 	}
 	hidden?: {
@@ -503,7 +566,7 @@ const HealthPanel = (props: Props) => {
 		});
 	};
 
-	const getGauges = () => {
+	const getHealthGauges = () => {
 		if (!props.stamina) {
 			return null;
 		}
@@ -544,7 +607,7 @@ const HealthPanel = (props: Props) => {
 						props.staminaTemp && (props.staminaTemp.staminaTemp > 0) ?
 							<>
 								<div>
-									Temp <b>{props.staminaTemp.staminaTemp}</b>
+									Tmp <b>{props.staminaTemp.staminaTemp}</b>
 								</div>
 								<Divider style={{ margin: '5px 0' }} />
 							</>
@@ -565,6 +628,56 @@ const HealthPanel = (props: Props) => {
 					}
 				</div>
 			</div>
+		);
+	};
+
+	const getHealthControls = () => {
+		return (
+			<Space style={{ flex: '1 1 0' }} direction='vertical'>
+				<NumberSpin
+					min={0}
+					steps={[ 1, 10 ]}
+					value={damageValue}
+					onChange={setDamageValue}
+				>
+					<InputNumber min={0} value={damageValue} onChange={value => setDamageValue(Math.round(value || 0))} />
+				</NumberSpin>
+				<Button block={true} disabled={damageValue === 0} onClick={takeDamage}>Take Damage</Button>
+				<Button block={true} disabled={damageValue === 0} onClick={heal}>Regain Stamina</Button>
+				{props.staminaTemp ? <Button block={true} disabled={damageValue === 0} onClick={addTemp}>Add Temporary Stamina</Button> : null}
+				{
+					props.recoveries ?
+						<>
+							<Button
+								block={true}
+								className='tall-button'
+								disabled={(props.stamina!.staminaDamage === 0) || (props.recoveries!.recoveriesUsed >= props.recoveries!.recoveriesMax)}
+								onClick={props.recoveries!.spendRecovery}
+							>
+								<div>
+									<div>Spend a Recovery</div>
+									<div className='subtext'>
+										Regain up to {props.recoveries!.recoveryValue} Stamina
+									</div>
+								</div>
+							</Button>
+							<Button
+								block={true}
+								className='tall-button'
+								disabled={props.recoveries!.recoveriesUsed >= props.recoveries!.recoveriesMax}
+								onClick={props.recoveries!.spendRecovery}
+							>
+								<div>
+									<div>Spend a Recovery</div>
+									<div className='subtext'>
+										Don't regain Stamina
+									</div>
+								</div>
+							</Button>
+						</>
+						: null
+				}
+			</Space>
 		);
 	};
 
@@ -616,41 +729,10 @@ const HealthPanel = (props: Props) => {
 			<div className='health-panel'>
 				{
 					props.stamina ?
-						<>
-							<div className='health-panel-stamina'>
-								{getGauges()}
-								<Flex style={{ flex: '0 0 225px' }} vertical={true} align='center' justify='center' gap={5}>
-									<NumberSpin
-										min={0}
-										steps={[ 1, 10 ]}
-										value={damageValue}
-										onChange={setDamageValue}
-									>
-										<InputNumber style={{ width: '75px' }} min={0} value={damageValue} onChange={value => setDamageValue(Math.round(value || 0))} />
-									</NumberSpin>
-									<Button block={true} disabled={damageValue === 0} onClick={takeDamage}>Take Damage</Button>
-									<Button block={true} disabled={damageValue === 0} onClick={heal}>Regain Stamina</Button>
-									{props.staminaTemp ? <Button block={true} disabled={damageValue === 0} onClick={addTemp}>Add Temporary Stamina</Button> : null}
-									{
-										props.recoveries ?
-											<Button
-												block={true}
-												className='tall-button'
-												disabled={(props.stamina!.staminaDamage === 0) || (props.recoveries!.recoveriesUsed >= props.recoveries!.recoveriesMax)}
-												onClick={props.recoveries!.spendRecovery}
-											>
-												<div>
-													<div>Spend a Recovery</div>
-													<div className='subtext'>
-														Regain {props.recoveries!.recoveryValue} Stamina
-													</div>
-												</div>
-											</Button>
-											: null
-									}
-								</Flex>
-							</div>
-						</>
+						<div className='health-panel-stamina'>
+							{getHealthGauges()}
+							{getHealthControls()}
+						</div>
 						: null
 				}
 				{

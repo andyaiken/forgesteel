@@ -2,6 +2,9 @@
 
 ### Heroes
 
+* Automatic update of library resources when there is a newer version
+  * Indicate an update in the hero sheet (subtly)
+  * Attempt to reselect anything that needs to be selected
 * Make sure multiple melee / ranged damage bonuses are handled correctly
 * Hero Builder:
   * Revenants should have 3 ancestry points if small

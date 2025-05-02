@@ -857,6 +857,15 @@ export const LibraryListPage = (props: Props) => {
 													placeholder='Select'
 													options={sourcebookOptions}
 													optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+													showSearch={true}
+													filterOption={(input, option) => {
+														const strings = option ?
+															[
+																option.label
+															]
+															: [];
+														return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+													}}
 													value={sourcebookID}
 													onChange={setSourcebookID}
 												/>

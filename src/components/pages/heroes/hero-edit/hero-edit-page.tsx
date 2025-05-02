@@ -638,6 +638,8 @@ const StartSection = (props: StartSectionProps) => {
 								</Upload>
 							</>
 						)}
+						showSearch={true}
+						filterOption={(input, option) => { return (option?.label || '').toLowerCase().includes(input.toLowerCase()); }}
 						value={props.hero.settingIDs}
 						onChange={props.setSettingIDs}
 					/>
@@ -767,6 +769,8 @@ const CultureSection = (props: CultureSectionProps) => {
 								placeholder='Select'
 								options={EnvironmentData.getEnvironments().map(s => ({ value: s.id, label: s.name, desc: s.description }))}
 								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+								showSearch={true}
+								filterOption={(input, option) => { return (option?.label || '').toLowerCase().includes(input.toLowerCase()); }}
 								value={props.hero.culture.environment ? props.hero.culture.environment.id : null}
 								onChange={props.selectEnvironment}
 							/>
@@ -777,6 +781,8 @@ const CultureSection = (props: CultureSectionProps) => {
 								placeholder='Select'
 								options={OrganizationData.getOrganizations().map(s => ({ value: s.id, label: s.name, desc: s.description }))}
 								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+								showSearch={true}
+								filterOption={(input, option) => { return (option?.label || '').toLowerCase().includes(input.toLowerCase()); }}
 								value={props.hero.culture.organization ? props.hero.culture.organization.id : null}
 								onChange={props.selectOrganization}
 							/>
@@ -787,6 +793,8 @@ const CultureSection = (props: CultureSectionProps) => {
 								placeholder='Select'
 								options={UpbringingData.getUpbringings().map(s => ({ value: s.id, label: s.name, desc: s.description }))}
 								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+								showSearch={true}
+								filterOption={(input, option) => { return (option?.label || '').toLowerCase().includes(input.toLowerCase()); }}
 								value={props.hero.culture.upbringing ? props.hero.culture.upbringing.id : null}
 								onChange={props.selectUpbringing}
 							/>
@@ -806,6 +814,8 @@ const CultureSection = (props: CultureSectionProps) => {
 						placeholder='Select'
 						options={SourcebookLogic.getLanguages(props.sourcebooks).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
 						optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+						showSearch={true}
+						filterOption={(input, option) => { return (option?.label || '').toLowerCase().includes(input.toLowerCase()); }}
 						value={props.hero.culture.languages.length > 0 ? props.hero.culture.languages[0] : null}
 						onChange={value => props.selectLanguages(value ? [ value ] : [])}
 					/>
@@ -895,6 +905,8 @@ const CareerSection = (props: CareerSectionProps) => {
 						placeholder='Select'
 						options={props.hero.career.incitingIncidents.options.map(s => ({ value: s.id, label: s.name, desc: s.description }))}
 						optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+						showSearch={true}
+						filterOption={(input, option) => { return (option?.label || '').toLowerCase().includes(input.toLowerCase()); }}
 						value={props.hero.career.incitingIncidents.selectedID}
 						onChange={props.selectIncitingIncident}
 					/>
@@ -1010,6 +1022,8 @@ const ClassSection = (props: ClassSectionProps) => {
 							placeholder='Select'
 							options={props.hero.class.subclasses.map(s => ({ value: s.id, label: s.name, desc: s.description }))}
 							optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+							showSearch={true}
+							filterOption={(input, option) => { return (option?.label || '').toLowerCase().includes(input.toLowerCase()); }}
 							value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.id)}
 							onChange={props.selectSubclasses}
 						/>
@@ -1295,6 +1309,7 @@ const DetailsSection = (props: DetailsSectionProps) => {
 						placeholder='Folder'
 						onSelect={value => props.setFolder(value)}
 						onChange={value => props.setFolder(value)}
+						showSearch={true}
 						filterOption={(value, option) => value.toLowerCase().split(' ').every(token => option!.value.toLowerCase().indexOf(token.toLowerCase()) !== -1)}
 					/>
 					<Alert

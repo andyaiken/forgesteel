@@ -94,6 +94,16 @@ export const FeaturePanel = (props: Props) => {
 					placeholder='Select an ancestry'
 					options={sortedAncestries.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.label,
+								option.desc
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
 					value={data.selected ? data.selected.id : null}
 					onChange={value => {
 						const dataCopy = Utils.copy(data);
@@ -172,6 +182,16 @@ export const FeaturePanel = (props: Props) => {
 					placeholder='Select an ability from an ancestry'
 					options={sortedFeatures.map(a => ({ label: a.name, value: a.id, desc: a.description, disabled: currentFeatureIDs.includes(a.id) }))}
 					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.label,
+								option.desc
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
 					value={data.selected ? data.selected.id : null}
 					onChange={value => {
 						const dataCopy = Utils.copy(data);
@@ -255,6 +275,16 @@ export const FeaturePanel = (props: Props) => {
 							value={option.data.desc}
 						/>
 					)}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.label,
+								option.desc
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
 					onChange={value => {
 						let ids: string[] = [];
@@ -329,6 +359,16 @@ export const FeaturePanel = (props: Props) => {
 					placeholder={data.count === 1 ? 'Select an ability' : 'Select abilities'}
 					options={sortedAbilities.map(a => ({ label: a.name, value: a.id, desc: a.description, disabled: currentAbilityIDs.includes(a.id) }))}
 					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.label,
+								option.desc
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
 					value={data.count === 1 ? (data.selectedIDs.length > 0 ? data.selectedIDs[0] : null) : data.selectedIDs}
 					onChange={value => {
 						let ids: string[] = [];
@@ -497,6 +537,16 @@ export const FeaturePanel = (props: Props) => {
 					placeholder={data.count === 1 ? 'Select a domain' : 'Select domains'}
 					options={sortedDomains.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.label,
+								option.desc
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
 					onChange={value => {
 						let ids: string[] = [];
@@ -579,6 +629,16 @@ export const FeaturePanel = (props: Props) => {
 					placeholder={data.count === 1 ? 'Select an option' : 'Select options'}
 					options={options.map(o => ({ label: o.name, value: o.id, desc: o.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.label,
+								option.desc
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
 					onChange={value => {
 						let ids: string[] = [];
@@ -639,6 +699,16 @@ export const FeaturePanel = (props: Props) => {
 					placeholder={data.count === 1 ? 'Select an item' : 'Select items'}
 					options={sortedItems.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.label,
+								option.desc
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(i => i.id)}
 					onChange={value => {
 						let ids: string[] = [];
@@ -716,6 +786,16 @@ export const FeaturePanel = (props: Props) => {
 					placeholder={data.count === 1 ? 'Select a kit' : 'Select kits'}
 					options={sortedKits.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.label,
+								option.desc
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
 					onChange={value => {
 						let ids: string[] = [];
@@ -812,6 +892,16 @@ export const FeaturePanel = (props: Props) => {
 					placeholder={data.count === 1 ? 'Select a language' : 'Select languages'}
 					options={sortedLanguages.map(l => ({ label: l.name, value: l.name, desc: l.description, disabled: currentLanguages.includes(l.name) }))}
 					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.label,
+								option.desc
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
 					onChange={value => {
 						let ids: string[] = [];
@@ -871,6 +961,16 @@ export const FeaturePanel = (props: Props) => {
 					placeholder={data.count === 1 ? 'Select a perk' : 'Select perks'}
 					options={sortedPerks.map(a => ({ label: a.name, value: a.id, desc: a.description, disabled: currentPerkIDs.includes(a.id) }))}
 					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.label,
+								option.desc
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
 					onChange={value => {
 						let ids: string[] = [];
@@ -965,6 +1065,16 @@ export const FeaturePanel = (props: Props) => {
 					placeholder={data.count === 1 ? 'Select a skill' : 'Select skills'}
 					options={sortedSkills.map(s => ({ label: s.name, value: s.name, desc: s.description, disabled: currentSkills.includes(s.name) }))}
 					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.label,
+								option.desc
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
 					onChange={value => {
 						let ids: string[] = [];
@@ -1024,6 +1134,16 @@ export const FeaturePanel = (props: Props) => {
 							placeholder={data.count === 1 ? 'Select a title' : 'Select titles'}
 							options={sortedFeatures.map(a => ({ label: a.name, value: a.id, desc: a.description, disabled: currentTaggedFeatureIDs.includes(a.id) }))}
 							optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.label,
+										option.desc
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
 							value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
 							onChange={value => {
 								let ids: string[] = [];
@@ -1088,6 +1208,16 @@ export const FeaturePanel = (props: Props) => {
 							placeholder={data.count === 1 ? 'Select a title' : 'Select titles'}
 							options={sortedTitles.map(a => ({ label: a.name, value: a.id, desc: a.description, disabled: currentTitleIDs.includes(a.id) }))}
 							optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.label,
+										option.desc
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
 							value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
 							onChange={value => {
 								let ids: string[] = [];
@@ -1122,6 +1252,16 @@ export const FeaturePanel = (props: Props) => {
 							placeholder='Select a title feature'
 							options={title.features.map(f => ({ label: f.name, value: f.id, desc: f.description }))}
 							optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.label,
+										option.desc
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
 							value={title.selectedFeatureID || null}
 							onChange={value => {
 								const dataCopy = Utils.copy(data);

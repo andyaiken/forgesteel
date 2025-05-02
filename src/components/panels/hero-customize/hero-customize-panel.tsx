@@ -145,6 +145,15 @@ export const HeroCustomizePanel = (props: Props) => {
 							placeholder='Select field'
 							options={[ FeatureField.Disengage, FeatureField.ProjectPoints, FeatureField.Recoveries, FeatureField.RecoveryValue, FeatureField.Renown, FeatureField.Speed, FeatureField.Stability, FeatureField.Stamina, FeatureField.Wealth ].map(o => ({ value: o }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.value
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
 							value={feature.data.field}
 							onChange={field => setValueField(feature, field)}
 						/>
@@ -158,6 +167,15 @@ export const HeroCustomizePanel = (props: Props) => {
 							mode='multiple'
 							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.value
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
 							value={feature.data.valueCharacteristics}
 							onChange={value => setValueCharacteristics(feature, value)}
 						/>
@@ -172,6 +190,15 @@ export const HeroCustomizePanel = (props: Props) => {
 							placeholder='Select characteristic'
 							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(o => ({ value: o }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.value
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
 							value={feature.data.characteristic}
 							onChange={ch => setCharacteristic(feature, ch)}
 						/>
@@ -188,6 +215,15 @@ export const HeroCustomizePanel = (props: Props) => {
 							placeholder='Select class'
 							options={[ { id: '', name: 'Your Class', description: 'An ability from your own class.' }, ...SourcebookLogic.getClasses(props.sourcebooks) ].map(o => ({ value: o.id, label: o.name, description: o.description }))}
 							optionRender={option => <Field label={option.data.label} value={option.data.description} />}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.label
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
 							value={feature.data.classID || ''}
 							onChange={id => setClassID(feature, id)}
 						/>
@@ -207,6 +243,15 @@ export const HeroCustomizePanel = (props: Props) => {
 							placeholder='List'
 							options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(pl => ({ label: pl, value: pl }))}
 							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.label
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
 							value={feature.data.lists}
 							onChange={lists => setPerkLists(feature, lists)}
 						/>
@@ -223,6 +268,15 @@ export const HeroCustomizePanel = (props: Props) => {
 							placeholder='List'
 							options={[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map(pl => ({ label: pl, value: pl }))}
 							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.label
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
 							value={feature.data.listOptions}
 							onChange={lists => setSkillLists(feature, lists)}
 						/>

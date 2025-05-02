@@ -402,6 +402,15 @@ export const PlaybookEditPage = (props: Props) => {
 											mode='multiple'
 											options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
 											optionRender={option => <FeaturePanel feature={option.data.feature} options={props.options} cost={option.data.cost} mode={PanelMode.Full} />}
+											showSearch={true}
+											filterOption={(input, option) => {
+												const strings = option ?
+													[
+														option.label
+													]
+													: [];
+												return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+											}}
 											value={slot.customization.addOnIDs}
 											onChange={ids => setSlotAddOnIDs(group.id, slot.id, ids)}
 										/>
@@ -551,6 +560,15 @@ export const PlaybookEditPage = (props: Props) => {
 											mode='multiple'
 											options={Collections.sort(terrain.upgrades, a => a.label).map(a => ({ value: a.id, label: a.label, cost: a.cost }))}
 											optionRender={option => <Flex align='center' gap={8}><div className='ds-text'>{option.data.label}</div><Badge>+{option.data.cost} EV</Badge></Flex>}
+											showSearch={true}
+											filterOption={(input, option) => {
+												const strings = option ?
+													[
+														option.label
+													]
+													: [];
+												return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+											}}
 											value={slot.upgradeIDs}
 											onChange={ids => setTerrainUpgradeIDs(slot.id, ids)}
 										/>
@@ -989,6 +1007,15 @@ export const PlaybookEditPage = (props: Props) => {
 																placeholder='Select characteristics'
 																options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(ch => ({ value: ch }))}
 																optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+																showSearch={true}
+																filterOption={(input, option) => {
+																	const strings = option ?
+																		[
+																			option.value
+																		]
+																		: [];
+																	return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+																}}
 																value={c.characteristics}
 																onChange={value => setChallengeCharacteristics(sectionIndex, challengeIndex, value)}
 															/>
@@ -1061,6 +1088,15 @@ export const PlaybookEditPage = (props: Props) => {
 																placeholder='Select characteristics'
 																options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(ch => ({ value: ch }))}
 																optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+																showSearch={true}
+																filterOption={(input, option) => {
+																	const strings = option ?
+																		[
+																			option.value
+																		]
+																		: [];
+																	return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+																}}
 																value={t.characteristics}
 																onChange={value => setTwistCharacteristics(sectionIndex, twistIndex, value)}
 															/>
@@ -1247,6 +1283,16 @@ export const PlaybookEditPage = (props: Props) => {
 									placeholder='Trait'
 									options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getMotivationDescription(nt) }))}
 									optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+									showSearch={true}
+									filterOption={(input, option) => {
+										const strings = option ?
+											[
+												option.label,
+												option.desc
+											]
+											: [];
+										return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+									}}
 									value={m.trait}
 									onChange={t => setMotivationTrait(n, t)}
 								/>
@@ -1331,6 +1377,16 @@ export const PlaybookEditPage = (props: Props) => {
 									placeholder='Trait'
 									options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getPitfallDescription(nt) }))}
 									optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+									showSearch={true}
+									filterOption={(input, option) => {
+										const strings = option ?
+											[
+												option.label,
+												option.desc
+											]
+											: [];
+										return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+									}}
 									value={p.trait}
 									onChange={t => setPitfallTrait(n, t)}
 								/>

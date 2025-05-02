@@ -57,11 +57,7 @@
 			margin-top: -15px;
 			flex: 1 1 0;
 
-			.characteristics-box {
-				display: flex;
-				align-items: flex-start;
-				justify-content: space-evenly;
-				gap: 5px;
+			.stats-box {
 				border: 1px solid rgb(200, 200, 200);
 				border-radius: 20px;
 				background-color: rgb(255, 255, 255);
@@ -83,25 +79,46 @@
 					}
 				}
 
-				.characteristic {
-					flex: 1 1 0;
-					border-radius: 10px;
-					padding: 5px 0;
+				.stats {
+					display: flex;
+					align-items: flex-start;
+					justify-content: space-evenly;
+					gap: 5px;
 
-					&.clickable {
-						cursor: pointer;
+					.stat {
+						flex: 1 1 0;
+						border-radius: 10px;
+						padding: 5px 0;
 
-						&:hover {
-							background-color: rgb(180, 220, 255);
+						&.clickable {
+							cursor: pointer;
 
-							.ant-statistic {
-								.ant-statistic-title,
-								.ant-statistic-content {
-									color: rgba(0, 0, 0, 0.88);
+							&:hover {
+								background-color: rgb(180, 220, 255);
+
+								.ant-statistic {
+									.ant-statistic-title,
+									.ant-statistic-content {
+										color: rgba(0, 0, 0, 0.88);
+									}
 								}
 							}
 						}
 					}
+				}
+
+				.stats-box-caption {
+					margin-top: 5px;
+					border-top: 1px solid rgba(0, 0, 0, 0.1);
+					padding-top: 10px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 10px;
+					font-weight: 600;
+					text-transform: uppercase;
+					letter-spacing: 2px;
+					opacity: 0.5;
 				}
 			}
 
@@ -172,7 +189,7 @@
 			}
 
 			.hero-main-column {
-				.characteristics-box {
+				.stats-box {
 					border-color: rgb(200, 200, 200);
 					background-color: rgb(0, 0, 0);
 
@@ -187,13 +204,15 @@
 						}
 					}
 	
-					.characteristic {
-						&.clickable {
-							&:hover {
-								.ant-statistic {
-									.ant-statistic-title,
-									.ant-statistic-content {
-										color: rgba(0, 0, 0, 0.88);
+					.stats {
+						.stat {
+							&.clickable {
+								&:hover {
+									.ant-statistic {
+										.ant-statistic-title,
+										.ant-statistic-content {
+											color: rgba(0, 0, 0, 0.88);
+										}
 									}
 								}
 							}

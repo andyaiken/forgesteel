@@ -170,6 +170,15 @@ export const OptionsPanel = (props: Props) => {
 						placeholder='Select a party'
 						options={[ '', ...parties ].map(s => ({ value: s, label: s || 'No heroes' }))}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+						showSearch={true}
+						filterOption={(input, option) => {
+							const strings = option ?
+								[
+									option.label
+								]
+								: [];
+							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+						}}
 						value={props.options.party}
 						onChange={p => setParty(p || '')}
 					/>

@@ -155,6 +155,16 @@ export const PlotEditPanel = (props: Props) => {
 								placeholder='Select'
 								options={getContentOptions(c.type).map(o => ({ value: o.id, label: o.name || 'Unnamed Content', desc: o.description }))}
 								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+								showSearch={true}
+								filterOption={(input, option) => {
+									const strings = option ?
+										[
+											option.label,
+											option.desc
+										]
+										: [];
+									return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+								}}
 								value={c.contentID}
 								onChange={id => setContentID(c, id)}
 							/>
@@ -252,6 +262,16 @@ export const PlotEditPanel = (props: Props) => {
 								placeholder='Select'
 								options={getLinkTargets(l).map(o => ({ value: o.id, label: o.name, desc: o.description }))}
 								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+								showSearch={true}
+								filterOption={(input, option) => {
+									const strings = option ?
+										[
+											option.label,
+											option.desc
+										]
+										: [];
+									return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+								}}
 								value={l.plotID}
 								onChange={id => setLinkPlotID(l, id)}
 							/>

@@ -200,6 +200,15 @@ export const MonsterEditPanel = (props: Props) => {
 					placeholder='Select role'
 					options={[ MonsterRoleType.NoRole, MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(option => ({ value: option, desc: MonsterLogic.getRoleTypeDescription(option) }))}
 					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.value
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
 					value={monster.role.type}
 					onChange={setRoleType}
 				/>
@@ -208,6 +217,15 @@ export const MonsterEditPanel = (props: Props) => {
 					placeholder='Select organization'
 					options={[ MonsterOrganizationType.NoOrganization, MonsterOrganizationType.Minion, MonsterOrganizationType.Band, MonsterOrganizationType.Platoon, MonsterOrganizationType.Troop, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo, MonsterOrganizationType.Retainer ].map(option => ({ value: option, desc: MonsterLogic.getRoleOrganizationDescription(option) }))}
 					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.value
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
 					value={monster.role.organization}
 					onChange={setRoleOrganization}
 				/>

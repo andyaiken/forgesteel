@@ -78,6 +78,15 @@ export const MonsterFilterPanel = (props: Props) => {
 						placeholder='Keywords'
 						options={keywords.map(k => ({ label: k, value: k }))}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+						showSearch={true}
+						filterOption={(input, option) => {
+							const strings = option ?
+								[
+									option.label
+								]
+								: [];
+							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+						}}
 						value={props.monsterFilter.keywords}
 						onChange={setFilterKeywords}
 					/>
@@ -88,6 +97,15 @@ export const MonsterFilterPanel = (props: Props) => {
 						placeholder='Role'
 						options={[ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(r => ({ label: r, value: r }))}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+						showSearch={true}
+						filterOption={(input, option) => {
+							const strings = option ?
+								[
+									option.label
+								]
+								: [];
+							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+						}}
 						value={props.monsterFilter.roles}
 						onChange={setFilterRoles}
 					/>
@@ -98,6 +116,15 @@ export const MonsterFilterPanel = (props: Props) => {
 						placeholder='Organization'
 						options={[ MonsterOrganizationType.Minion, MonsterOrganizationType.Band, MonsterOrganizationType.Platoon, MonsterOrganizationType.Troop, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo, MonsterOrganizationType.Retainer ].map(r => ({ label: r, value: r }))}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+						showSearch={true}
+						filterOption={(input, option) => {
+							const strings = option ?
+								[
+									option.label
+								]
+								: [];
+							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+						}}
 						value={props.monsterFilter.organizations}
 						onChange={setFilterOrganizations}
 					/>

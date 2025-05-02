@@ -6,10 +6,7 @@
 	.hero-view-page-content {
 		background-color: rgba(0, 0, 0, 0.1);
 		flex: 1 1 0;
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-		overflow-x: hidden;
-		overflow-y: auto;
+		overflow: hidden;
+		padding: 10px;
 	}
 }

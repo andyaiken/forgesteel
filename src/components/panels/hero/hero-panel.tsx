@@ -1,12 +1,12 @@
-import { Col, Row, Segmented, Statistic } from 'antd';
+import { ArrowDownOutlined, ToolOutlined } from '@ant-design/icons';
+import { Button, Col, Divider, Flex, Row, Segmented, Statistic } from 'antd';
 import { Monster, MonsterGroup } from '../../../models/monster';
-import { ReactNode, useState } from 'react';
 import { Ability } from '../../../models/ability';
+import { AbilityData } from '../../../data/ability-data';
 import { AbilityLogic } from '../../../logic/ability-logic';
 import { AbilityPanel } from '../elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
 import { Ancestry } from '../../../models/ancestry';
-import { ArrowDownOutlined } from '@ant-design/icons';
 import { Career } from '../../../models/career';
 import { Characteristic } from '../../../enums/characteristic';
 import { Complication } from '../../../models/complication';
@@ -37,6 +37,7 @@ import { Skill } from '../../../models/skill';
 import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
 import { useMediaQuery } from '../../../hooks/use-media-query';
+import { useState } from 'react';
 
 import './hero-panel.scss';
 
@@ -61,9 +62,9 @@ interface Props {
 
 export const HeroPanel = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
-	const [ tab, setTab ] = useState<string>('Hero');
+	const [ tab, setTab ] = useState<string>(isSmall ? 'Overview' : 'Hero');
 
-	const getLeftColumn = (showBorder: boolean) => {
+	const getLeftColumn = () => {
 		const onSelectAncestry = () => {
 			if (props.hero.ancestry && props.onSelectAncestry) {
 				props.onSelectAncestry(props.hero.ancestry);
@@ -118,7 +119,7 @@ export const HeroPanel = (props: Props) => {
 		}
 
 		return (
-			<div className={showBorder ? 'hero-left-column border' : 'hero-left-column'}>
+			<div className='hero-left-column'>
 				{
 					props.hero.ancestry ?
 						<div className='overview-tile clickable' onClick={onSelectAncestry}>
@@ -222,7 +223,7 @@ export const HeroPanel = (props: Props) => {
 		);
 	};
 
-	const getRightColumn = (showBorder: boolean) => {
+	const getRightColumn = () => {
 		const onShowConditions = () => {
 			if (props.onShowRules) {
 				props.onShowRules(RulesPage.Conditions);
@@ -261,7 +262,7 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		return (
-			<div className={showBorder ? 'hero-right-column border' : 'hero-right-column'}>
+			<div className='hero-right-column'>
 				{
 					conditions.length > 0 ?
 						<div className='overview-tile clickable' onClick={onShowConditions}>
@@ -358,7 +359,7 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		return (
-			<Row gutter={[ 16, 16 ]}>
+			<Row gutter={[ 16, 16 ]} className='stats-section'>
 				<Col span={24}>
 					<div className='stats-box'>
 						<div className='stats'>
@@ -456,8 +457,7 @@ export const HeroPanel = (props: Props) => {
 		}
 
 		return (
-			<div className='conditions-section'>
-				<HeaderText level={1}>Conditions</HeaderText>
+			<>
 				{
 					state === 'dying' ?
 						<div>
@@ -481,11 +481,11 @@ export const HeroPanel = (props: Props) => {
 						</div>
 					))
 				}
-			</div>
+			</>
 		);
 	};
 
-	const getFeaturesSection = (header?: string) => {
+	const getFeaturesSection = () => {
 		const featureTypes = [ FeatureType.Text, FeatureType.Package ];
 
 		const features = HeroLogic.getFeatures(props.hero)
@@ -496,26 +496,23 @@ export const HeroPanel = (props: Props) => {
 		const inventoryFeatures = features.filter(f => props.options.separateInventoryFeatures && itemNames.includes(f.source));
 
 		return (
-			<div className='features-section'>
+			<>
 				{
 					mainFeatures.length > 0 ?
 						<>
-							{header ? <HeaderText level={1}>{header}</HeaderText> : null}
-							<div className={`features-grid ${props.options.featureWidth.toLowerCase().replace(' ', '-')}`}>
-								{
-									mainFeatures.map(f => (
-										<FeaturePanel
-											key={f.feature.id}
-											feature={f.feature}
-											source={props.options.showSources ? f.source : undefined}
-											options={props.options}
-											hero={props.hero}
-											sourcebooks={props.sourcebooks}
-											mode={PanelMode.Full}
-										/>
-									))
-								}
-							</div>
+							{
+								mainFeatures.map(f => (
+									<FeaturePanel
+										key={f.feature.id}
+										feature={f.feature}
+										source={props.options.showSources ? f.source : undefined}
+										options={props.options}
+										hero={props.hero}
+										sourcebooks={props.sourcebooks}
+										mode={PanelMode.Full}
+									/>
+								))
+							}
 						</>
 						: null
 				}
@@ -523,29 +520,27 @@ export const HeroPanel = (props: Props) => {
 					inventoryFeatures.length > 0 ?
 						<>
 							<HeaderText level={1}>Inventory</HeaderText>
-							<div className={`features-grid ${props.options.featureWidth.toLowerCase().replace(' ', '-')}`}>
-								{
-									inventoryFeatures.map(f => (
-										<FeaturePanel
-											key={f.feature.id}
-											feature={f.feature}
-											source={props.options.showSources ? f.source : undefined}
-											options={props.options}
-											hero={props.hero}
-											sourcebooks={props.sourcebooks}
-											mode={PanelMode.Full}
-										/>
-									))
-								}
-							</div>
+							{
+								inventoryFeatures.map(f => (
+									<FeaturePanel
+										key={f.feature.id}
+										feature={f.feature}
+										source={props.options.showSources ? f.source : undefined}
+										options={props.options}
+										hero={props.hero}
+										sourcebooks={props.sourcebooks}
+										mode={PanelMode.Full}
+									/>
+								))
+							}
 						</>
 						: null
 				}
-			</div>
+			</>
 		);
 	};
 
-	const getAbilitiesSection = (abilities: { ability: Ability, source: string }[], header?: string) => {
+	const getAbilitiesSection = (abilities: { ability: Ability, source: string }[]) => {
 		if (abilities.length === 0) {
 			return null;
 		}
@@ -556,13 +551,35 @@ export const HeroPanel = (props: Props) => {
 			}
 		};
 
+		const nonStandard = abilities.filter(a => a.source !== 'Standard');
+		const standard = abilities.filter(a => a.source === 'Standard');
+
 		return (
 			<div className='abilities-section'>
-				{header ? <HeaderText level={1}>{header}</HeaderText> : null}
 				<div className={`abilities-grid ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
 					{
-						abilities.map(a => (
-							<SelectablePanel key={a.ability.id} style={ header ? { gridColumn: `span ${AbilityLogic.panelWidth(a.ability)}` } : undefined} onSelect={() => showAbility(a.ability)}>
+						nonStandard.map(a => (
+							<SelectablePanel key={a.ability.id} style={{ gridColumn: `span ${AbilityLogic.panelWidth(a.ability)}` }} onSelect={() => showAbility(a.ability)}>
+								<AbilityPanel
+									ability={a.ability}
+									hero={props.hero}
+									options={props.options}
+									mode={PanelMode.Full}
+									tags={props.options.showSources ? [ a.source ] : undefined}
+								/>
+							</SelectablePanel>
+						))
+					}
+				</div>
+				{
+					(nonStandard.length > 0) && (standard.length > 0) ?
+						<Divider />
+						: null
+				}
+				<div className={`abilities-grid ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+					{
+						standard.map(a => (
+							<SelectablePanel key={a.ability.id} style={{ gridColumn: `span ${AbilityLogic.panelWidth(a.ability)}` }} onSelect={() => showAbility(a.ability)}>
 								<AbilityPanel
 									ability={a.ability}
 									hero={props.hero}
@@ -598,146 +615,116 @@ export const HeroPanel = (props: Props) => {
 			);
 		}
 
-		const abilities = HeroLogic.getAbilities(props.hero, true, props.options.showFreeStrikes, props.options.showStandardAbilities);
+		const abilities = HeroLogic.getAbilities(props.hero, true, false, props.options.showStandardAbilities);
 		const actions = abilities.filter(a => a.ability.type.usage === AbilityUsage.Action);
 		const maneuvers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Maneuver);
 		const moves = abilities.filter(a => a.ability.type.usage === AbilityUsage.Move);
 		const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
 		const others = abilities.filter(a => (a.ability.type.usage === AbilityUsage.Other) || (a.ability.type.usage === AbilityUsage.NoAction));
 
+		const tabs = [];
 		if (isSmall) {
-			const tabs = [ 'Hero', 'Statistics', 'Features' ];
-			if (actions.length > 0) {
-				tabs.push('Actions');
-			}
-			if (maneuvers.length > 0) {
-				tabs.push('Maneuvers');
-			}
-			if (triggers.length > 0) {
-				tabs.push('Triggers');
-			}
-			if ((moves.length + others.length) > 0) {
-				tabs.push('Others');
-			}
+			tabs.push('Overview');
+		}
+		tabs.push('Hero');
+		tabs.push('Features');
+		if (actions.length > 0) {
+			tabs.push('Actions');
+		}
+		if (maneuvers.length > 0) {
+			tabs.push('Maneuvers');
+		}
+		if (triggers.length > 0) {
+			tabs.push('Triggers');
+		}
+		if (moves.length > 0) {
+			tabs.push('Moves');
+		}
+		if (others.length > 0) {
+			tabs.push('Others');
+		}
+		tabs.push('Free Strikes');
 
-			let content: ReactNode;
+		const getContent = () => {
 			switch (tab) {
-				case 'Hero':
-					content = (
+				case 'Overview':
+					return (
 						<>
-							<HeaderText level={1} tags={props.hero.folder ? [ props.hero.folder ] : []}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
-							{getLeftColumn(false)}
-							{getRightColumn(false)}
+							{getLeftColumn()}
+							{getRightColumn()}
 						</>
 					);
-					break;
-				case 'Statistics':
-					content = (
+				case 'Hero':
+					return (
 						<>
 							{getStatsSection()}
 							{getConditionsSection()}
 						</>
 					);
-					break;
 				case 'Features':
-					content = getFeaturesSection();
-					break;
+					return getFeaturesSection();
 				case 'Actions':
-					content = getAbilitiesSection(actions);
-					break;
+					return getAbilitiesSection(actions);
 				case 'Maneuvers':
-					content = getAbilitiesSection(maneuvers);
-					break;
+					return getAbilitiesSection(maneuvers);
 				case 'Triggers':
-					content = getAbilitiesSection(triggers);
-					break;
+					return getAbilitiesSection(triggers);
+				case 'Moves':
+					return getAbilitiesSection(moves);
 				case 'Others':
-					content = getAbilitiesSection([ ...moves, ...others ]);
-					break;
+					return getAbilitiesSection(others);
+				case 'Free Strikes':
+					return getAbilitiesSection([
+						{ ability: AbilityData.freeStrikeMelee, source: 'Standard' },
+						{ ability: AbilityData.freeStrikeRanged, source: 'Standard' }
+					]);
 			}
 
-			return (
-				<div className='hero-panel small' id={props.hero.id}>
-					<Segmented
-						name='sections'
-						style={{ position: 'sticky', top: '0px', borderRadius: '0' }}
-						options={
-							tabs.map(tab => ({
-								value: tab,
-								label: <div className='page-button-title'>{tab}</div>
-							}))
-						}
-						block={true}
-						value={tab}
-						onChange={setTab}
-					/>
-					<div className='hero-main-section'>
-						<div className='hero-main-column'>
-							{content}
-						</div>
-					</div>
-				</div>
-			);
-		}
+			return null;
+		};
 
 		return (
 			<ErrorBoundary>
 				<div className='hero-panel' id={props.hero.id}>
-					<div className='hero-main-section' id='stats'>
-						{getLeftColumn(true)}
-						<div className='hero-main-column'>
-							<HeaderText level={1} tags={props.hero.folder ? [ props.hero.folder ] : []}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
-							{getStatsSection()}
-							{getConditionsSection()}
-							{getFeaturesSection('Features')}
+					<div className='hero-main-section'>
+						{!isSmall ? getLeftColumn() : null}
+						<div className='hero-center-column'>
+							<div className='center-top'>
+								<HeaderText
+									style={{ marginTop: '5px' }}
+									level={1}
+									tags={props.hero.folder ? [ props.hero.folder ] : []}
+								>
+									{props.hero.name || 'Unnamed Hero'}
+								</HeaderText>
+								<Flex align='center' justify='space-between' gap={10}>
+									<Segmented
+										style={{ flex: '1 1 0' }}
+										name='sections'
+										block={true}
+										options={
+											tabs.map(tab => ({
+												value: tab,
+												label: tab
+											}))
+										}
+										value={tab}
+										onChange={setTab}
+									/>
+									<Button
+										icon={<ToolOutlined />}
+										onClick={() => props.onShowState ? props.onShowState(HeroStatePage.Hero) : null}
+									>
+										Manage
+									</Button>
+								</Flex>
+							</div>
+							<div className='center-content'>
+								{getContent()}
+							</div>
 						</div>
-						{getRightColumn(true)}
+						{!isSmall ? getRightColumn() : null}
 					</div>
-					{
-						actions.length > 0 ?
-							<div className='hero-main-section' id='actions'>
-								<div className='hero-main-column'>
-									{getAbilitiesSection(actions, 'Actions')}
-								</div>
-							</div>
-							: null
-					}
-					{
-						maneuvers.length > 0 ?
-							<div className='hero-main-section' id='maneuvers'>
-								<div className='hero-main-column'>
-									{getAbilitiesSection(maneuvers, 'Maneuvers')}
-								</div>
-							</div>
-							: null
-					}
-					{
-						moves.length > 0 ?
-							<div className='hero-main-section' id='moves'>
-								<div className='hero-main-column'>
-									{getAbilitiesSection(moves, 'Move Actions')}
-								</div>
-							</div>
-							: null
-					}
-					{
-						triggers.length > 0 ?
-							<div className='hero-main-section' id='triggers'>
-								<div className='hero-main-column'>
-									{getAbilitiesSection(triggers, 'Triggered Actions')}
-								</div>
-							</div>
-							: null
-					}
-					{
-						others.length > 0 ?
-							<div className='hero-main-section' id='others'>
-								<div className='hero-main-column'>
-									{getAbilitiesSection(others, 'Other Abilities')}
-								</div>
-							</div>
-							: null
-					}
 				</div>
 			</ErrorBoundary>
 		);

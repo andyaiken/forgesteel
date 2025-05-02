@@ -101,11 +101,9 @@ Promise.all(promises).then(results => {
 		options = {
 			separateInventoryFeatures: false,
 			showSkillsInGroups: false,
-			showFreeStrikes: false,
 			showStandardAbilities: false,
 			dimUnavailableAbilities: false,
 			showSources: false,
-			featureWidth: PanelWidth.Medium,
 			abilityWidth: PanelWidth.Medium,
 			showMonstersInGroups: true,
 			showSimilarMonsters: false,
@@ -126,10 +124,6 @@ Promise.all(promises).then(results => {
 
 	if (options.separateInventoryFeatures === undefined) {
 		options.separateInventoryFeatures = false;
-	}
-
-	if (options.featureWidth === undefined) {
-		options.featureWidth = PanelWidth.Medium;
 	}
 
 	if (options.abilityWidth === undefined) {

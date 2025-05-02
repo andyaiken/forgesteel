@@ -4,11 +4,9 @@ export interface Options {
 	// Hero
 	separateInventoryFeatures: boolean;
 	showSkillsInGroups: boolean;
-	showFreeStrikes: boolean;
 	showStandardAbilities: boolean;
 	dimUnavailableAbilities: boolean;
 	showSources: boolean;
-	featureWidth: PanelWidth;
 	abilityWidth: PanelWidth;
 	// Library
 	showMonstersInGroups: boolean;

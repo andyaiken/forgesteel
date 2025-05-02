@@ -256,6 +256,27 @@ td {
     background-color: rgb(180, 220, 255);
 }
 
+.ant-segmented {
+	.ant-segmented-item-selected {
+		font-weight: 600;
+	}
+}
+
+.ant-select-dropdown {
+	.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+		font-weight: unset;
+	}
+
+	.ant-select-item {
+		padding: 0 10px;
+
+		.ant-select-item-option-content {
+			white-space: unset !important;
+			text-overflow: unset !important;
+		}
+	}
+}
+
 .ant-statistic {
 	.ant-statistic-title {
 		min-height: 24px;
@@ -272,21 +293,6 @@ td {
 		.ant-statistic-content-suffix {
 			font-size: 18px;
 			opacity: 0.5;
-		}
-	}
-}
-
-.ant-select-dropdown {
-	.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-		font-weight: unset;
-	}
-
-	.ant-select-item {
-		padding: 0 10px;
-
-		.ant-select-item-option-content {
-			white-space: unset !important;
-			text-overflow: unset !important;
 		}
 	}
 }

@@ -45,7 +45,7 @@ export const Token = (props: Props) => {
 		return (
 			<div
 				className={className}
-				style={{ width: `${size}px`, padding: `${size * 0.08}px` }}
+				style={{ width: `${size}px`, height: `${size}px`, padding: `${size * 0.08}px` }}
 				title={props.name}
 				onClick={props.onClick}
 			>

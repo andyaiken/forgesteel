@@ -27,6 +27,10 @@
 			flex-direction: column;
 			overflow-y: auto;
 
+			&.full-width {
+				flex: 1 1 0;
+			}
+
 			.overview-tile {
 				padding: 0 10px 10px 10px;
 				border-radius: 10px;

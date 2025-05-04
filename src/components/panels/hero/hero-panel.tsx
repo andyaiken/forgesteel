@@ -1,5 +1,5 @@
 import { ArrowDownOutlined, ToolOutlined } from '@ant-design/icons';
-import { Button, Col, Divider, Flex, Row, Segmented, Statistic } from 'antd';
+import { Button, Col, Divider, Flex, Row, Segmented, Select, Statistic } from 'antd';
 import { Monster, MonsterGroup } from '../../../models/monster';
 import { Ability } from '../../../models/ability';
 import { AbilityData } from '../../../data/ability-data';
@@ -64,6 +64,18 @@ export const HeroPanel = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const [ tab, setTab ] = useState<string>(isSmall ? 'Overview' : 'Hero');
 
+	const getName = () => {
+		return (
+			<HeaderText
+				style={{ marginTop: '5px' }}
+				level={1}
+				tags={props.hero.folder ? [ props.hero.folder ] : []}
+			>
+				{props.hero.name || 'Unnamed Hero'}
+			</HeaderText>
+		);
+	};
+
 	const getLeftColumn = () => {
 		const onSelectAncestry = () => {
 			if (props.hero.ancestry && props.onSelectAncestry) {
@@ -119,7 +131,7 @@ export const HeroPanel = (props: Props) => {
 		}
 
 		return (
-			<div className='hero-left-column'>
+			<div className={isSmall ? 'hero-left-column full-width' : 'hero-left-column'}>
 				{
 					props.hero.ancestry ?
 						<div className='overview-tile clickable' onClick={onSelectAncestry}>
@@ -262,7 +274,7 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		return (
-			<div className='hero-right-column'>
+			<div className={isSmall ? 'hero-right-column full-width' : 'hero-right-column'}>
 				{
 					conditions.length > 0 ?
 						<div className='overview-tile clickable' onClick={onShowConditions}>
@@ -559,7 +571,7 @@ export const HeroPanel = (props: Props) => {
 				<div className={`abilities-grid ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
 					{
 						nonStandard.map(a => (
-							<SelectablePanel key={a.ability.id} style={{ gridColumn: `span ${AbilityLogic.panelWidth(a.ability)}` }} onSelect={() => showAbility(a.ability)}>
+							<SelectablePanel key={a.ability.id} style={isSmall ? undefined : { gridColumn: `span ${AbilityLogic.panelWidth(a.ability)}` }} onSelect={() => showAbility(a.ability)}>
 								<AbilityPanel
 									ability={a.ability}
 									hero={props.hero}
@@ -650,6 +662,7 @@ export const HeroPanel = (props: Props) => {
 				case 'Overview':
 					return (
 						<>
+							{getName()}
 							{getLeftColumn()}
 							{getRightColumn()}
 						</>
@@ -690,27 +703,37 @@ export const HeroPanel = (props: Props) => {
 						{!isSmall ? getLeftColumn() : null}
 						<div className='hero-center-column'>
 							<div className='center-top'>
-								<HeaderText
-									style={{ marginTop: '5px' }}
-									level={1}
-									tags={props.hero.folder ? [ props.hero.folder ] : []}
-								>
-									{props.hero.name || 'Unnamed Hero'}
-								</HeaderText>
+								{isSmall ? null : getName()}
 								<Flex align='center' justify='space-between' gap={10}>
-									<Segmented
-										style={{ flex: '1 1 0' }}
-										name='sections'
-										block={true}
-										options={
-											tabs.map(tab => ({
-												value: tab,
-												label: tab
-											}))
-										}
-										value={tab}
-										onChange={setTab}
-									/>
+									{
+										isSmall ?
+											<Select
+												style={{ flex: '1 1 0' }}
+												options={
+													tabs.map(tab => ({
+														value: tab,
+														label: tab
+													}))
+												}
+												optionRender={o => <div className='ds-text'>{o.label}</div>}
+												value={tab}
+												onChange={setTab}
+											/>
+											:
+											<Segmented
+												style={{ flex: '1 1 0' }}
+												name='sections'
+												block={true}
+												options={
+													tabs.map(tab => ({
+														value: tab,
+														label: tab
+													}))
+												}
+												value={tab}
+												onChange={setTab}
+											/>
+									}
 									<Button
 										icon={<ToolOutlined />}
 										onClick={() => props.onShowState ? props.onShowState(HeroStatePage.Hero) : null}

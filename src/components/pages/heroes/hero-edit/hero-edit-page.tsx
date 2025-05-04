@@ -521,29 +521,50 @@ export const HeroEditPage = (props: Props) => {
 					</AppHeader>
 					<div className={isSmall ? 'hero-edit-page-content small' : 'hero-edit-page-content'}>
 						<div className='page-selector'>
-							<Segmented<HeroEditTab>
-								name='sections'
-								options={([
-									'start',
-									'ancestry',
-									'culture',
-									'career',
-									'class',
-									'complication',
-									'details'
-								] as const).map(tab => ({
-									value: tab,
-									label: (
-										<div className={`page-button ${getPageState(tab).toLowerCase().replace(' ', '-')}`}>
-											<div className='page-button-title'>{Format.capitalize(tab, '-')}</div>
-											<div className='page-button-subtitle'>{getPageState(tab)}</div>
-										</div>
-									)
-								}))}
-								block={true}
-								value={page}
-								onChange={value => navigation.goToHeroEdit(heroID!, value)}
-							/>
+							{
+								isSmall ?
+									<Select
+										style={{ width: '100%' }}
+										options={([
+											'start',
+											'ancestry',
+											'culture',
+											'career',
+											'class',
+											'complication',
+											'details'
+										] as const).map(tab => ({
+											value: tab,
+											label: <div className='ds-text'>{Format.capitalize(tab, '-')}</div>
+										}))}
+										value={page}
+										onChange={value => navigation.goToHeroEdit(heroID!, value)}
+									/>
+									:
+									<Segmented
+										name='sections'
+										options={([
+											'start',
+											'ancestry',
+											'culture',
+											'career',
+											'class',
+											'complication',
+											'details'
+										] as const).map(tab => ({
+											value: tab,
+											label: (
+												<div className={`page-button ${getPageState(tab).toLowerCase().replace(' ', '-')}`}>
+													<div className='page-button-title'>{Format.capitalize(tab, '-')}</div>
+													<div className='page-button-subtitle'>{getPageState(tab)}</div>
+												</div>
+											)
+										}))}
+										block={true}
+										value={page}
+										onChange={value => navigation.goToHeroEdit(heroID!, value)}
+									/>
+							}
 						</div>
 						{
 							showSearchBar ?

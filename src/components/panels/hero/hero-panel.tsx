@@ -1,5 +1,4 @@
-import { ArrowDownOutlined, ToolOutlined } from '@ant-design/icons';
-import { Button, Col, Divider, Flex, Row, Segmented, Select, Statistic } from 'antd';
+import { Col, Divider, Flex, Row, Segmented, Select, Statistic } from 'antd';
 import { Monster, MonsterGroup } from '../../../models/monster';
 import { Ability } from '../../../models/ability';
 import { AbilityData } from '../../../data/ability-data';
@@ -7,6 +6,7 @@ import { AbilityLogic } from '../../../logic/ability-logic';
 import { AbilityPanel } from '../elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
 import { Ancestry } from '../../../models/ancestry';
+import { ArrowDownOutlined } from '@ant-design/icons';
 import { Career } from '../../../models/career';
 import { Characteristic } from '../../../enums/characteristic';
 import { Complication } from '../../../models/complication';
@@ -658,6 +658,40 @@ export const HeroPanel = (props: Props) => {
 		tabs.push('Free Strikes');
 
 		const getContent = () => {
+			if (props.options.singlePage) {
+				return (
+					<>
+						{
+							isSmall ?
+								<>
+									{getName()}
+									{getLeftColumn()}
+									{getRightColumn()}
+								</>
+								: null
+						}
+						{getStatsSection()}
+						{getConditionsSection()}
+						{getFeaturesSection()}
+						{actions.length > 0 ? <HeaderText>Actions</HeaderText> : null}
+						{getAbilitiesSection(actions)}
+						{maneuvers.length > 0 ? <HeaderText>Maneuvers</HeaderText> : null}
+						{getAbilitiesSection(maneuvers)}
+						{triggers.length > 0 ? <HeaderText>Triggered Actions</HeaderText> : null}
+						{getAbilitiesSection(triggers)}
+						{moves.length > 0 ? <HeaderText>Moves</HeaderText> : null}
+						{getAbilitiesSection(moves)}
+						{others.length > 0 ? <HeaderText>Other Abilities</HeaderText> : null}
+						{getAbilitiesSection(others)}
+						<HeaderText>Free Strikes</HeaderText>
+						{getAbilitiesSection([
+							{ ability: AbilityData.freeStrikeMelee, source: 'Standard' },
+							{ ability: AbilityData.freeStrikeRanged, source: 'Standard' }
+						])}
+					</>
+				);
+			}
+
 			switch (tab) {
 				case 'Overview':
 					return (
@@ -702,46 +736,45 @@ export const HeroPanel = (props: Props) => {
 					<div className='hero-main-section'>
 						{!isSmall ? getLeftColumn() : null}
 						<div className='hero-center-column'>
-							<div className='center-top'>
-								{isSmall ? null : getName()}
-								<Flex align='center' justify='space-between' gap={10}>
-									{
-										isSmall ?
-											<Select
-												style={{ flex: '1 1 0' }}
-												options={
-													tabs.map(tab => ({
-														value: tab,
-														label: tab
-													}))
-												}
-												optionRender={o => <div className='ds-text'>{o.label}</div>}
-												value={tab}
-												onChange={setTab}
-											/>
-											:
-											<Segmented
-												style={{ flex: '1 1 0' }}
-												name='sections'
-												block={true}
-												options={
-													tabs.map(tab => ({
-														value: tab,
-														label: tab
-													}))
-												}
-												value={tab}
-												onChange={setTab}
-											/>
-									}
-									<Button
-										icon={<ToolOutlined />}
-										onClick={() => props.onShowState ? props.onShowState(HeroStatePage.Hero) : null}
-									>
-										Manage
-									</Button>
-								</Flex>
-							</div>
+							{
+								props.options.singlePage ?
+									null
+									:
+									<div className='center-top'>
+										{isSmall ? null : getName()}
+										<Flex align='center' justify='space-between' gap={10}>
+											{
+												isSmall ?
+													<Select
+														style={{ flex: '1 1 0' }}
+														options={
+															tabs.map(tab => ({
+																value: tab,
+																label: tab
+															}))
+														}
+														optionRender={o => <div className='ds-text'>{o.label}</div>}
+														value={tab}
+														onChange={setTab}
+													/>
+													:
+													<Segmented
+														style={{ flex: '1 1 0' }}
+														name='sections'
+														block={true}
+														options={
+															tabs.map(tab => ({
+																value: tab,
+																label: tab
+															}))
+														}
+														value={tab}
+														onChange={setTab}
+													/>
+											}
+										</Flex>
+									</div>
+							}
 							<div className='center-content'>
 								{getContent()}
 							</div>

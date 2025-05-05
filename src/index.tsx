@@ -99,6 +99,7 @@ Promise.all(promises).then(results => {
 	let options = results[5] as Options | null;
 	if (!options) {
 		options = {
+			singlePage: false,
 			separateInventoryFeatures: false,
 			showSkillsInGroups: false,
 			showStandardAbilities: false,
@@ -120,6 +121,10 @@ Promise.all(promises).then(results => {
 			gridSize: 50,
 			playerGridSize: 50
 		};
+	}
+
+	if (options.singlePage === undefined) {
+		options.singlePage = false;
 	}
 
 	if (options.separateInventoryFeatures === undefined) {

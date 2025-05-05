@@ -1,5 +1,5 @@
 import { Button, Popover } from 'antd';
-import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, SettingOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Ability } from '../../../../models/ability';
 import { Ancestry } from '../../../../models/ancestry';
@@ -112,6 +112,12 @@ export const HeroViewPage = (props: Props) => {
 							onConfirm={() => props.deleteHero(hero)}
 						/>
 						<div className='divider' />
+						<Button
+							icon={<ToolOutlined />}
+							onClick={() => props.showHeroState ? props.showHeroState(hero, HeroStatePage.Hero) : null}
+						>
+							Manage
+						</Button>
 						<Popover
 							trigger='click'
 							content={<OptionsPanel mode='hero' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}

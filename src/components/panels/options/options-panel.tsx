@@ -18,6 +18,12 @@ interface Props {
 }
 
 export const OptionsPanel = (props: Props) => {
+	const setSinglePage = (value: boolean) => {
+		const copy = Utils.copy(props.options);
+		copy.singlePage = value;
+		props.setOptions(copy);
+	};
+
 	const setSeparateInventoryFeatures = (value: boolean) => {
 		const copy = Utils.copy(props.options);
 		copy.separateInventoryFeatures = value;
@@ -189,6 +195,7 @@ export const OptionsPanel = (props: Props) => {
 			case 'hero':
 				return (
 					<>
+						<Toggle label='Single page' value={props.options.singlePage} onChange={setSinglePage} />
 						<Toggle label='Separate inventory features' value={props.options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
 						<Toggle label='Show skills in groups' value={props.options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
 						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />

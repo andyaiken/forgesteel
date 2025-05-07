@@ -1399,7 +1399,7 @@ export const FeaturePanel = (props: Props) => {
 		if (data.selected.length > 0) {
 			return (
 				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
-					{data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={PanelMode.Full} />)}
+					{data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} />)}
 				</Space>
 			);
 		}
@@ -1420,7 +1420,7 @@ export const FeaturePanel = (props: Props) => {
 					}
 				</div>
 				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
-					{data.options.map(o => <FeaturePanel key={o.feature.id} feature={o.feature} options={props.options} cost={showCosts ? o.value : undefined} mode={PanelMode.Full} />)}
+					{data.options.map(o => <FeaturePanel key={o.feature.id} feature={o.feature} options={props.options} cost={showCosts ? o.value : undefined} />)}
 				</Space>
 			</div>
 		);
@@ -1435,7 +1435,7 @@ export const FeaturePanel = (props: Props) => {
 						data.selectedIDs.map(id => {
 							const ability = abilities.find(a => a.id === id) as Ability;
 							return (
-								<AbilityPanel key={ability.id} ability={ability} mode={PanelMode.Full} />
+								<AbilityPanel key={ability.id} ability={ability} />
 							);
 						})
 					}
@@ -1489,7 +1489,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(d => <DomainPanel key={d.id} domain={d} options={props.options} mode={PanelMode.Full} />)
+						data.selected.map(d => <DomainPanel key={d.id} domain={d} options={props.options} />)
 					}
 				</Space>
 			);
@@ -1513,7 +1513,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={PanelMode.Full} />)
+						data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} />)
 					}
 				</Space>
 			);
@@ -1527,7 +1527,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(i => <ItemPanel key={i.id} item={i} options={props.options} mode={PanelMode.Full} />)
+						data.selected.map(i => <ItemPanel key={i.id} item={i} options={props.options} />)
 					}
 				</Space>
 			);
@@ -1557,7 +1557,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(k => <KitPanel key={k.id} kit={k} options={props.options} mode={PanelMode.Full} />)
+						data.selected.map(k => <KitPanel key={k.id} kit={k} options={props.options} />)
 					}
 				</Space>
 			);
@@ -1620,7 +1620,7 @@ export const FeaturePanel = (props: Props) => {
 		return (
 			<div>
 				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
-					{data.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={PanelMode.Full} />)}
+					{data.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} />)}
 				</Space>
 			</div>
 		);
@@ -1650,7 +1650,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(p => <PerkPanel key={p.id} perk={p} options={props.options} mode={PanelMode.Full} />)
+						data.selected.map(p => <PerkPanel key={p.id} perk={p} options={props.options} />)
 					}
 				</Space>
 			);
@@ -1746,7 +1746,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(t => <TitlePanel key={t.id} title={t} options={props.options} mode={PanelMode.Full} />)
+						data.selected.map(t => <TitlePanel key={t.id} title={t} options={props.options} />)
 					}
 				</Space>
 			);

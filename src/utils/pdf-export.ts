@@ -96,7 +96,7 @@ export class PDFExport {
 			}
 		}
 
-		const domains = features.find(f => f.type == FeatureType.Domain)?.data?.selected as Domain[];
+		const domains = features.find(f => f.type === FeatureType.Domain)?.data?.selected as Domain[];
 		if (domains) {
 			texts['SubclassTop'] = domains.map(d => d.name).join(', ');
 		}
@@ -138,7 +138,7 @@ export class PDFExport {
 			features.forEach(f => (ignoredFeatures[f.id] = true));
 			let all = '';
 			for (const feature of features) {
-				if (all != '') {
+				if (all !== '') {
 					all = all + '\n\n';
 				}
 				let text = GetTitle(feature.name) + '\n' + feature.description.replace(/^\s+/, '');
@@ -163,7 +163,7 @@ export class PDFExport {
 				}
 				ignoredFeatures[heroicResourceFeature.id] = true;
 				let resourceGainText = 'Your resource is ' + resource + '.\n\n' + heroicResourceFeature.description.replace(startup, '');
-				if (hero.class && (hero.class.id == ClassData.conduit.id) && domains) {
+				if (hero.class && (hero.class.id === ClassData.conduit.id) && domains) {
 					resourceGainText = resourceGainText + '\n' + domains.map(d => d.piety).join('');
 				}
 				texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
@@ -205,14 +205,14 @@ export class PDFExport {
 			}
 		}
 
-		texts['Features'] = ConvertFeatures(features.filter(f => !ignoredFeatures[f.id] && f.type == 'Text'));
+		texts['Features'] = ConvertFeatures(features.filter(f => !ignoredFeatures[f.id] && f.type === 'Text'));
 
 		{
 			for (const c of hero.state.conditions) {
 				if (c.type !== ConditionType.Custom) {
-					if (c.ends == ConditionEndType.EndOfTurn) {
+					if (c.ends === ConditionEndType.EndOfTurn) {
 						toggles[c.type + 'EoT'] = true;
-					} else if (c.ends == ConditionEndType.SaveEnds) {
+					} else if (c.ends === ConditionEndType.SaveEnds) {
 						toggles[c.type + 'Save'] = true;
 					}
 				}
@@ -230,7 +230,7 @@ export class PDFExport {
 			if (hero.career) {
 				texts['CareerName'] = hero.career.name;
 				const incident = hero.career.incitingIncidents.options.find(
-					o => o.id == (hero.career && hero.career.incitingIncidents.selectedID)
+					o => o.id === (hero.career && hero.career.incitingIncidents.selectedID)
 				);
 				if (incident) {
 					texts['CareerIncident'] =
@@ -254,7 +254,7 @@ export class PDFExport {
 			texts['Languages'] = languages.map(l => '• ' + l.name).join('\n');
 
 			texts['Titles'] = features
-				.filter(f => f.type == FeatureType.TitleChoice)
+				.filter(f => f.type === FeatureType.TitleChoice)
 				.map(f => f.data.selected[0])
 				.map(f => f.name)
 				.join('\n\n');
@@ -302,9 +302,9 @@ export class PDFExport {
 					}
 					texts[prefix + 'Name' + i] = a.name;
 					texts[prefix + 'Target' + i] = a.target;
-					if (a.distance.length > 1 && a.distance[0].type == AbilityDistanceType.Melee && a.distance[1].type == AbilityDistanceType.Ranged) {
+					if (a.distance.length > 1 && a.distance[0].type === AbilityDistanceType.Melee && a.distance[1].type === AbilityDistanceType.Ranged) {
 						texts[prefix + 'Distance' + i] = AbilityLogic.getDistance(a.distance[0], hero, a).replace('Melee', 'M') + ' or ' + AbilityLogic.getDistance(a.distance[1], hero, a).replace('Ranged', 'R');
-					} else {
+					} else if (a.distance.length > 1) {
 						texts[prefix + 'Distance' + i] = AbilityLogic.getDistance(a.distance[0], hero, a);
 					}
 					texts[prefix + 'Keywords' + i] = a.keywords.join(', ');
@@ -320,7 +320,7 @@ export class PDFExport {
 							.map(
 								c =>
 									hero.class &&
-									hero.class.characteristics.find(d => d.characteristic == c)
+									hero.class.characteristics.find(d => d.characteristic === c)
 							)
 							.map(c => (c && c.value) || 0)
 						);
@@ -380,24 +380,24 @@ export class PDFExport {
 					}
 					texts[prefix + 'Text' + i] = details.join('\n\n');
 
-					if (typeof a.cost == 'number' && a.cost > 0) {
+					if (typeof a.cost === 'number' && a.cost > 0) {
 						texts[prefix + 'Tag' + i] = a.cost;
-					} else if (a.cost == 'signature') {
+					} else if (a.cost === 'signature') {
 						texts[prefix + 'Tag' + i] = 'S';
-					} else if (a.type.usage == AbilityUsage.Trigger) {
+					} else if (a.type.usage === AbilityUsage.Trigger) {
 						texts[prefix + 'Tag' + i] = 'T';
-					} else if (a.type.usage == AbilityUsage.Maneuver) {
+					} else if (a.type.usage === AbilityUsage.Maneuver) {
 						texts[prefix + 'Tag' + i] = 'M';
-					} else if (a.type.usage == AbilityUsage.Action) {
+					} else if (a.type.usage === AbilityUsage.Action) {
 						texts[prefix + 'Tag' + i] = 'A';
 					}
 				});
 			};
 			const abilities = HeroLogic.getAbilities(hero, true, true, false)
 				.map(a => a.ability);
-			texts['RegularActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Action && a.id !== 'free-melee' && a.id !== 'free-ranged').map(a => ' • ' + a.name + (typeof (a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
-			texts['Maneuvers'] = abilities.filter(a => a.type.usage == AbilityUsage.Maneuver).map(a => ' • ' + a.name + (typeof (a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
-			texts['TriggeredActions'] = abilities.filter(a => a.type.usage == AbilityUsage.Trigger).map(a => ' • ' + a.name + (typeof (a.cost) == 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
+			texts['RegularActions'] = abilities.filter(a => a.type.usage === AbilityUsage.Action && a.id !== 'free-melee' && a.id !== 'free-ranged').map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
+			texts['Maneuvers'] = abilities.filter(a => a.type.usage === AbilityUsage.Maneuver).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
+			texts['TriggeredActions'] = abilities.filter(a => a.type.usage === AbilityUsage.Trigger).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
 
 			ApplyGroup(
 				abilities.filter(a => !ignoredFeatures[a.id]),

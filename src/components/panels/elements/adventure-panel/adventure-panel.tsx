@@ -1,4 +1,4 @@
-import { Button, Space, Tabs } from 'antd';
+import { Alert, Button, Space } from 'antd';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { Plot, PlotContent } from '../../../../models/plot';
 import { Adventure } from '../../../../models/adventure';
@@ -196,10 +196,6 @@ export const AdventurePanel = (props: Props) => {
 	};
 
 	const getPlotInfo = () => {
-		if (props.adventure.plot.plots.length === 0) {
-			return null;
-		}
-
 		if (selectedPlot) {
 			return (
 				<div className='plot-details'>
@@ -232,13 +228,29 @@ export const AdventurePanel = (props: Props) => {
 					</Space>
 				</div>
 			);
+		} else {
+			return (
+				<div className='plot-details'>
+					{
+						props.adventure.plot.plots.length > 0 ?
+							<Alert
+								type='info'
+								showIcon={true}
+								message='Select a plot point to view its details.'
+							/>
+							: null
+					}
+					{
+						props.adventure.introduction.map(section => (
+							<div key={section.id}>
+								<HeaderText>{section.name}</HeaderText>
+								{section.description ? <Markdown text={section.description} /> : <div className='ds-text dimmed-text'>None</div>}
+							</div>
+						))
+					}
+				</div>
+			);
 		}
-
-		return (
-			<div className='plot-details'>
-				<div className='ds-text dimmed-text'>Select a plot point to view details.</div>
-			</div>
-		);
 	};
 
 	try {
@@ -250,33 +262,14 @@ export const AdventurePanel = (props: Props) => {
 					<div className='ds-text'>A <b>DRAW STEEL</b> adventure for {props.adventure.party.count} heroes of level {props.adventure.party.level}.</div>
 					{
 						props.mode === PanelMode.Full ?
-							<Tabs
-								items={[
-									{
-										key: 'introduction',
-										label: 'Introduction',
-										children: props.adventure.introduction.map(section => (
-											<div key={section.id}>
-												<HeaderText>{section.name}</HeaderText>
-												{section.description ? <Markdown text={section.description} /> : <div className='ds-text dimmed-text'>None</div>}
-											</div>
-										))
-									},
-									{
-										key: 'plot',
-										label: 'Plot',
-										children:
-											<div className='plot-display-container'>
-												<PlotPanel
-													plot={props.adventure.plot}
-													selectedPlot={selectedPlot || undefined}
-													onSelect={props.allowSelection ? setSelectedPlot : undefined}
-												/>
-												{props.allowSelection ? getPlotInfo() : null}
-											</div>
-									}
-								]}
-							/>
+							<div className='plot-display-container'>
+								<PlotPanel
+									plot={props.adventure.plot}
+									selectedPlot={selectedPlot || undefined}
+									onSelect={props.allowSelection ? setSelectedPlot : undefined}
+								/>
+								{props.allowSelection ? getPlotInfo() : null}
+							</div>
 							: null
 					}
 				</div>

@@ -46,7 +46,7 @@ interface Props {
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
-	showRules: () => void;
+	showReference: () => void;
 	createElement: (kind: PlaybookElementKind, original: Element | null) => void;
 	importElement: (kind: PlaybookElementKind, element: Element) => void;
 	setOptions: (options: Options) => void;
@@ -537,7 +537,7 @@ export const PlaybookListPage = (props: Props) => {
 							onChange={k => navigation.goToPlaybookList(k as PlaybookElementKind)}
 						/>
 					</div>
-					<AppFooter page='playbook' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
+					<AppFooter page='playbook' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

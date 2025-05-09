@@ -52,7 +52,7 @@ interface Props {
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
-	showRules: () => void;
+	showReference: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 	export: (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	copy: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
@@ -362,7 +362,7 @@ export const LibraryViewPage = (props: Props) => {
 					<div className='library-view-page-content'>
 						{panel}
 					</div>
-					<AppFooter page='library' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
+					<AppFooter page='library' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

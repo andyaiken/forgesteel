@@ -35,7 +35,7 @@ interface Props {
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
-	showRules: (hero: Hero, page?: RulesPage) => void;
+	showReference: (hero: Hero, page?: RulesPage) => void;
 	setOptions: (options: Options) => void;
 	exportHero: (hero: Hero, format: 'image' | 'pdf' | 'json') => void;
 	exportHeroPDF: (hero: Hero, format: 'portrait' | 'landscape') => void;
@@ -145,10 +145,10 @@ export const HeroViewPage = (props: Props) => {
 							onSelectCharacteristic={characteristic => props.showCharacteristic(characteristic, hero)}
 							onSelectAbility={ability => props.showAbility(ability, hero)}
 							onShowState={page => props.showHeroState(hero, page)}
-							onShowRules={page => props.showRules(hero, page)}
+							onshowReference={page => props.showReference(hero, page)}
 						/>
 					</div>
-					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showRules={() => props.showRules(hero)} />
+					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showReference={() => props.showReference(hero)} />
 				</div>
 			</ErrorBoundary>
 		);

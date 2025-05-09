@@ -28,7 +28,7 @@ interface Props {
 	options: Options;
 	showAbout: () => void;
 	showRoll: () => void;
-	showRules: () => void;
+	showReference: () => void;
 	setOptions: (options: Options) => void;
 }
 
@@ -124,7 +124,7 @@ export const SessionPlayerPage = (props: Props) => {
 					<div className='session-page-content'>
 						{getContent()}
 					</div>
-					<AppFooter showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
+					<AppFooter showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

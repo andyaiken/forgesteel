@@ -1,5 +1,8 @@
-.rules-modal {
+.reference-modal {
 	padding: 20px;
+	height: 100%;
+    display: flex;
+    flex-direction: column;
 
 	.language-row,
 	.skill-row {

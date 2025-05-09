@@ -27,7 +27,7 @@ interface Props {
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
-	showRules: () => void;
+	showReference: () => void;
 	addHero: () => void;
 	importHero: (hero: Hero) => void;
 }
@@ -175,7 +175,7 @@ export const HeroListPage = (props: Props) => {
 							onChange={folder => navigation.goToHeroList(folder)}
 						/>
 					</div>
-					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
+					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

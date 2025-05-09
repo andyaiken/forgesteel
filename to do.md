@@ -35,6 +35,9 @@
 ### Session
 
 * Encounter
+  * Retainers:
+    * For each hero, select a retainer to add to the encounter
+    * Retainers should have 6 recoveries
   * Monsters:
     * Ability to set 'used reaction' flag on heroes / monsters / minions
     * Ability to duplicate / delete monsters in a slot

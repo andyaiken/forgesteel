@@ -1,10 +1,12 @@
-import { Segmented, Space, Tabs } from 'antd';
+import { Button, Flex, Input, Segmented, Space, Tabs } from 'antd';
+import { SearchOutlined, StarFilled } from '@ant-design/icons';
 import { AbilityData } from '../../../data/ability-data';
 import { AbilityPanel } from '../../panels/elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
 import { Collections } from '../../../utils/collections';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { ConditionType } from '../../../enums/condition-type';
+import { Empty } from '../../controls/empty/empty';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
@@ -12,15 +14,16 @@ import { HeroLogic } from '../../../logic/hero-logic';
 import { Markdown } from '../../controls/markdown/markdown';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';
+import { RulesData } from '../../../data/rules-data';
 import { RulesPage } from '../../../enums/rules-page';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
-import { StarFilled } from '@ant-design/icons';
+import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
-import './rules-modal.scss';
+import './reference-modal.scss';
 
 interface Props {
 	hero: Hero | null;
@@ -29,35 +32,86 @@ interface Props {
 	onClose: () => void;
 }
 
-export const RulesModal = (props: Props) => {
+export const ReferenceModal = (props: Props) => {
 	const [ page, setPage ] = useState<string>(props.startPage || RulesPage.Rules);
+	const [ searchTerm, setSearchTerm ] = useState<string>('');
+	const [ selectedRule, setSelectedRule ] = useState<string>('');
 
 	try {
 		const getRulesSection = () => {
-			const md = `
-## SURPRISE
+			const rules = [
+				RulesData.burrowing,
+				RulesData.climbingAndSwimming,
+				RulesData.concealment,
+				RulesData.cover,
+				RulesData.crawling,
+				RulesData.damagingTerrain,
+				RulesData.difficultTerrain,
+				RulesData.falling,
+				RulesData.flanking,
+				RulesData.flying,
+				RulesData.forcedMovement,
+				RulesData.hiding,
+				RulesData.highGround,
+				RulesData.invisibility,
+				RulesData.jumping,
+				RulesData.mountedCombat,
+				RulesData.multipleTargets,
+				RulesData.opportunityAttack,
+				RulesData.shifting,
+				RulesData.slammingCreatures,
+				RulesData.slammingObjects,
+				RulesData.sneaking,
+				RulesData.suffocating,
+				RulesData.surprise,
+				RulesData.teleporting,
+				RulesData.takingATurn,
+				RulesData.underwaterCombat
+			];
 
-When battle begins, the Director determines which creatures, if any, are caught off guard. Any creature who isn’t ready for combat at the start of an encounter is surprised until the end of the first round of combat. A surprised creature can’t take triggered or free triggered actions and ability power rolls against them gain an edge.
+			const filteredRules = rules
+				.filter(r => Utils.textMatches([ r.label, r.content ], searchTerm))
+				.sort((a, b) => a.label.localeCompare(b.label))
+				.map(r => r.label);
 
-## FLANKING
+			const rule = rules.find(r => r.label === selectedRule);
 
-When you and at least one ally are adjacent to the same enemy and on completely opposite sides of the enemy, you are flanking that enemy. While flanking an enemy, you gain an edge on melee strikes against them.
-
-If you’re unsure whether your hero and an ally are flanking a foe, imagine a line extending from the center of your space to your ally’s space. If that line passes through opposite sides or corners of the enemy’s space, then you and your ally are flanking the enemy.
-
-You must have line of effect to the enemy and be able to take triggered actions in order to gain or grant the flanking benefit.
-
-## COVER
-
-When you have line of effect to a creature or object but that target has at least half their form blocked by a solid obstruction such as a tree, wall, or overturned table, the target has cover. You take a bane on abilities that deal damage against creatures or objects that have cover from you.
-
-## CONCEALMENT
-
-Darkness, fog, invisibility magic, and any other effect that fully obscures a creature but doesn’t protect their body grants that creature concealment. You can target a creature who has concealment with strikes, provided they aren’t hidden. However, strikes against such creatures take a bane. Even if you have line of effect to a creature, they have concealment from you if you can’t see them.
-
-**Invisible Creatures** Invisible creatures always have concealment from other creatures. If an invisible creature isn’t hidden, they can still be targeted with abilities, though strikes against them take a bane. The test made to find a hidden creature who is invisible takes a bane.`;
 			return (
-				<Markdown text={md} />
+				<>
+					<Input
+						name='search'
+						placeholder='Search'
+						allowClear={true}
+						value={searchTerm}
+						suffix={<SearchOutlined />}
+						onChange={e => setSearchTerm(e.target.value)}
+					/>
+					<Flex gap={20} style={{ flex: '1 1 0', overflowY: 'hidden' }}>
+						<Space direction='vertical' style={{ flex: '0 0 180px', marginTop: '20px', overflowY: 'auto' }}>
+							{
+								filteredRules.length > 0 ?
+									filteredRules.map((r, n) => (
+										<Button key={n} block={true} onClick={() => setSelectedRule(r)}>
+											{r}
+										</Button>
+									))
+									:
+									<Empty text='No topics' />
+							}
+						</Space>
+						{
+							rule ?
+								<div style={{ flex: '1 1 0', overflowY: 'auto' }}>
+									<HeaderText>{rule.label}</HeaderText>
+									<Markdown text={rule.content} />
+								</div>
+								:
+								<Flex style={{ flex: '1 1 0' }} justify='center'>
+									<Empty text='Select a topic from the list' />
+								</Flex>
+						}
+					</Flex>
+				</>
 			);
 		};
 
@@ -247,7 +301,7 @@ Darkness, fog, invisibility magic, and any other effect that fully obscures a cr
 					</div>
 				}
 				content={
-					<div className='rules-modal'>
+					<div className='reference-modal'>
 						{getContent()}
 					</div>
 				}

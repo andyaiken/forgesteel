@@ -131,18 +131,48 @@ export const HeroStateModal = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<NumberSpin
-					label={hero.class ? hero.class.heroicResource : 'Heroic Resource'}
-					value={hero.state.heroicResource}
-					min={hero.class && (hero.class.id === talent.id) ? undefined : 0}
-					onChange={setHeroicResource}
-				/>
-				<NumberSpin
-					label='Surges'
-					value={hero.state.surges}
-					min={0}
-					onChange={setSurges}
-				/>
+				<Flex gap={20}>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<NumberSpin
+							label={hero.class ? hero.class.heroicResource : 'Heroic Resource'}
+							value={hero.state.heroicResource}
+							min={hero.class && (hero.class.id === talent.id) ? undefined : 0}
+							onChange={setHeroicResource}
+						/>
+						<NumberSpin
+							label='Victories'
+							value={hero.state.victories}
+							min={0}
+							onChange={setVictories}
+						/>
+						<NumberSpin
+							label='Renown'
+							value={hero.state.renown}
+							format={() => HeroLogic.getRenown(hero).toString()}
+							onChange={setRenown}
+						/>
+					</Space>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<NumberSpin
+							label='Surges'
+							value={hero.state.surges}
+							min={0}
+							onChange={setSurges}
+						/>
+						<NumberSpin
+							label='XP'
+							value={hero.state.xp}
+							min={0}
+							onChange={setXP}
+						/>
+						<NumberSpin
+							label='Wealth'
+							value={hero.state.wealth}
+							format={() => HeroLogic.getWealth(hero).toString()}
+							onChange={setWealth}
+						/>
+					</Space>
+				</Flex>
 				{
 					hero.state.surges > 0 ?
 						<Alert
@@ -161,18 +191,6 @@ export const HeroStateModal = (props: Props) => {
 						/>
 						: null
 				}
-				<NumberSpin
-					label='Victories'
-					value={hero.state.victories}
-					min={0}
-					onChange={setVictories}
-				/>
-				<NumberSpin
-					label='XP'
-					value={hero.state.xp}
-					min={0}
-					onChange={setXP}
-				/>
 				{
 					HeroLogic.canLevelUp(hero) ?
 						<Alert
@@ -183,6 +201,7 @@ export const HeroStateModal = (props: Props) => {
 						/>
 						: null
 				}
+				<Divider />
 				<NumberSpin
 					label='Hero Tokens'
 					value={hero.state.heroTokens}
@@ -227,18 +246,6 @@ export const HeroStateModal = (props: Props) => {
 						/>
 						: null
 				}
-				<NumberSpin
-					label='Renown'
-					value={hero.state.renown}
-					format={() => HeroLogic.getRenown(hero).toString()}
-					onChange={setRenown}
-				/>
-				<NumberSpin
-					label='Wealth'
-					value={hero.state.wealth}
-					format={() => HeroLogic.getWealth(hero).toString()}
-					onChange={setWealth}
-				/>
 				<Divider />
 				<Flex align='center' justify='space-evenly' gap={10}>
 					<Button
@@ -303,7 +310,7 @@ export const HeroStateModal = (props: Props) => {
 				</div>
 				<ul>
 					<li>
-						Your Stamina and Recoveries reset (and any temporary Stamina goes away)
+						Your Stamina and Recoveries are reset (and any temporary Stamina goes away)
 					</li>
 					<li>
 						Your Victories are turned into XP
@@ -376,6 +383,7 @@ export const HeroStateModal = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Inventory</HeaderText>
 				{warning}
 				{
 					hero.state.inventory.map(item => (
@@ -467,6 +475,7 @@ export const HeroStateModal = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Projects</HeaderText>
 				<NumberSpin
 					label='Project Points'
 					value={hero.state.projectPoints}

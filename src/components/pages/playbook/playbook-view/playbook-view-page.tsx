@@ -39,7 +39,7 @@ interface Props {
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
-	showRules: () => void;
+	showReference: () => void;
 	showEncounterTools: (encounter: Encounter) => void;
 	export: (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	start: (kind: PlaybookElementKind, element: Element) => void;
@@ -195,7 +195,7 @@ export const PlaybookViewPage = (props: Props) => {
 					<div className='playbook-view-page-content'>
 						{panel}
 					</div>
-					<AppFooter page='playbook' showAbout={props.showAbout} showRoll={props.showRoll} showRules={props.showRules} />
+					<AppFooter page='playbook' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

@@ -57,7 +57,7 @@ interface Props {
  	onSelectCharacteristic?: (characteristic: Characteristic) => void;
  	onSelectAbility?: (ability: Ability) => void;
  	onShowState?: (page: HeroStatePage) => void;
- 	onShowRules?: (page: RulesPage) => void;
+ 	onshowReference?: (page: RulesPage) => void;
 }
 
 export const HeroPanel = (props: Props) => {
@@ -237,20 +237,20 @@ export const HeroPanel = (props: Props) => {
 
 	const getRightColumn = () => {
 		const onShowConditions = () => {
-			if (props.onShowRules) {
-				props.onShowRules(RulesPage.Conditions);
+			if (props.onshowReference) {
+				props.onshowReference(RulesPage.Conditions);
 			}
 		};
 
 		const onShowSkills = () => {
-			if (props.onShowRules) {
-				props.onShowRules(RulesPage.Skills);
+			if (props.onshowReference) {
+				props.onshowReference(RulesPage.Skills);
 			}
 		};
 
 		const onShowLanguages = () => {
-			if (props.onShowRules) {
-				props.onShowRules(RulesPage.Languages);
+			if (props.onshowReference) {
+				props.onshowReference(RulesPage.Languages);
 			}
 		};
 
@@ -408,9 +408,6 @@ export const HeroPanel = (props: Props) => {
 							</div>
 							<div className='stat'>
 								<Statistic title='XP' value={props.hero.state.xp} />
-							</div>
-							<div className='stat'>
-								<Statistic title='Hero Tokens' value={props.hero.state.heroTokens} />
 							</div>
 							<div className='stat'>
 								<Statistic title='Renown' value={HeroLogic.getRenown(props.hero)} />

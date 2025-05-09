@@ -10,8 +10,8 @@ import shield from './../../../assets/shield.png';
 
 interface Props {
 	page?: 'welcome' | 'heroes' | 'library' | 'playbook' | 'session';
+	showReference: () => void;
 	showRoll: () => void;
-	showRules: () => void;
 	showAbout: () => void;
 }
 
@@ -57,7 +57,7 @@ export const AppFooter = (props: Props) => {
 						/>
 				}
 				<div className='action-buttons-panel'>
-					<Button onClick={props.showRules}>Rules</Button>
+					<Button onClick={props.showReference}>Reference</Button>
 					<Button onClick={props.showRoll}>Roll</Button>
 					<Button onClick={props.showAbout}>About</Button>
 				</div>

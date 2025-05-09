@@ -304,7 +304,7 @@ export class PDFExport {
 					texts[prefix + 'Target' + i] = a.target;
 					if (a.distance.length > 1 && a.distance[0].type === AbilityDistanceType.Melee && a.distance[1].type === AbilityDistanceType.Ranged) {
 						texts[prefix + 'Distance' + i] = AbilityLogic.getDistance(a.distance[0], hero, a).replace('Melee', 'M') + ' or ' + AbilityLogic.getDistance(a.distance[1], hero, a).replace('Ranged', 'R');
-					} else if (a.distance.length > 1) {
+					} else if (a.distance.length > 0) {
 						texts[prefix + 'Distance' + i] = AbilityLogic.getDistance(a.distance[0], hero, a);
 					}
 					texts[prefix + 'Keywords' + i] = a.keywords.join(', ');

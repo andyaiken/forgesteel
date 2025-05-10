@@ -26,7 +26,7 @@ You can carve a rune onto your skin and the magic within your body activates it.
 					feature: FactoryLogic.feature.createBonus({
 						id: 'dwarf-feature-2-1',
 						name: 'Grounded',
-						description: 'Your heavy stone body and connection to the earth makes it difficult for others to move you.',
+						description: 'Your heavy stone body and connection to the earth makes it difficult for others to move you. Your stability increases by 1.',
 						field: FeatureField.Stability,
 						value: 1
 					}),
@@ -52,7 +52,7 @@ You can carve a rune onto your skin and the magic within your body activates it.
 					feature: FactoryLogic.feature.createConditionImmunity({
 						id: 'dwarf-feature-2-4',
 						name: 'Great Fortitude',
-						description: 'Your hearty constitution prevents you from losing strength.',
+						description: 'Your hearty constitution prevents you from losing strength. You can’t be weakened.',
 						conditions: [ ConditionType.Weakened ]
 					}),
 					value: 2
@@ -61,7 +61,7 @@ You can carve a rune onto your skin and the magic within your body activates it.
 					feature: FactoryLogic.feature.createBonus({
 						id: 'dwarf-feature-2-5',
 						name: 'Spark Off Your Skin',
-						description: 'Your stone skin affords you potent protection.',
+						description: 'Your stone skin affords you potent protection. Your Stamina increases by 6 at 1st level, then increases by an additional 3 each time you gain a new level.',
 						field: FeatureField.Stamina,
 						value: 6,
 						valuePerLevel: 3

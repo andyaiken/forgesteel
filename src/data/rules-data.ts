@@ -122,7 +122,15 @@ When you use the Hide maneuver to hide during combat while you have cover or con
 
 While you are hidden from another creature, you gain an edge on ability power rolls made against them, and the creature can’t target you with abilities that don’t have the Area keyword. This benefit lasts until the end of the turn in which you become no longer hidden. These rules allow you to be hidden from another creature at the start of your turn, move out of cover or concealment toward them and use an ability against them and still gain the benefit of being hidden as long as you use the ability before the end of the turn in which you moved out of hiding.
 
-You are no longer hidden from a creature if you don’t have cover or concealment from them. If you use an ability, interact with an enemy creature, move without sneaking, or otherwise make noise or reveal yourself while hidden, you are no longer hidden once the thing you’re doing resolves. For instance, if you are hidden and then make an strike, you resolve the strike first, then are no longer hidden.`
+You are no longer hidden from a creature if you don’t have cover or concealment from them. If you use an ability, interact with an enemy creature, move without sneaking, or otherwise make noise or reveal yourself while hidden, you are no longer hidden once the thing you’re doing resolves. For instance, if you are hidden and then make an strike, you resolve the strike first, then are no longer hidden.
+
+**Searching for Hidden Creatures**: You can search for creatures who are hidden from you as long as those creatures are within 10 squares of you and you have line of effect to them. To do so, you make an Intuition test as a maneuver and assess the result:
+
+* **11 or lower**: You find any hidden creatures with an Agility of 0 or lower and who don’t have the Hide skill.
+* **12–16**: You find any hidden creatures who don’t have the Hide skill.
+* **17 or more**: You find all hidden creatures.
+
+As part of this maneuver, you can point out any creatures you find to allies within 10 squares of you, making those creatures no longer hidden from those allies. If a creature is hidden from your allies but not from you, you can use a maneuver without making a test to point them out to your allies.`
 	};
 
 	static highGround: RulesItem = {

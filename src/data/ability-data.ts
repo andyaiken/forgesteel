@@ -199,7 +199,14 @@ Complex or time-consuming tests might require an action if made in combat - or c
 		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
-		effect: 'You can use this maneuver to attempt to search for creatures hidden from you.'
+		preEffect: 'You can use this maneuver to attempt to search for creatures hidden from you, as long as those creatures are within 10 squares of you and you have line of effect to them.',
+		powerRoll: FactoryLogic.createPowerRoll({
+			characteristic: Characteristic.Intuition,
+			tier1: 'You find any hidden creatures with an Agility of 0 or lower and who don’t have the Hide skill',
+			tier2: 'You find any hidden creatures who don’t have the Hide skill',
+			tier3: 'You find all hidden creatures'
+		}),
+		effect: 'As part of this maneuver, you can point out any creatures you find to allies within 10 squares of you, making those creatures no longer hidden from those allies. If a creature is hidden from your allies but not from you, you can use a maneuver without making a test to point them out to your allies.'
 	});
 
 	static standUp = FactoryLogic.createAbility({

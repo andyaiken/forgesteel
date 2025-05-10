@@ -437,18 +437,24 @@ export const Main = (props: Props) => {
 		}
 	};
 
-	const exportLibraryElement = (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => {
-		let name: string;
-		let extension: string;
+	const exportLibraryElement = (kind: SourcebookElementKind, isSubElement: boolean, element: Element, format: 'image' | 'pdf' | 'json') => {
+		let name = Format.capitalize(kind);
+		let extension = kind.toString();
 
 		switch (kind) {
+			case 'class':
+				if (isSubElement) {
+					name = 'Subclass';
+					extension = 'subclass';
+				}
+				break;
 			case 'monster-group':
 				name = 'Monster Group';
 				extension = 'monster-group';
-				break;
-			default:
-				name = Format.capitalize(kind);
-				extension = kind;
+				if (isSubElement) {
+					name = 'Monster';
+					extension = 'monster';
+				}
 				break;
 		};
 
@@ -983,7 +989,7 @@ export const Main = (props: Props) => {
 				element={element}
 				options={options}
 				onClose={() => setDrawer(null)}
-				export={format => exportLibraryElement(kind, element, format)}
+				export={format => exportLibraryElement(kind, false, element, format)}
 			/>
 		);
 	};

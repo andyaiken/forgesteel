@@ -54,7 +54,7 @@ interface Props {
 	showRoll: () => void;
 	showReference: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
-	export: (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
+	export: (kind: SourcebookElementKind, isSubElement: boolean, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	copy: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 	copySubElement: (kind: SourcebookElementKind, sourcebookID: string, parentElementID: string, subElement: Element) => void;
 	delete: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
@@ -338,9 +338,9 @@ export const LibraryViewPage = (props: Props) => {
 							trigger='click'
 							content={(
 								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<Button onClick={() => props.export(kind!, element, 'image')}>Export As Image</Button>
-									<Button onClick={() => props.export(kind!, element, 'pdf')}>Export As PDF</Button>
-									<Button onClick={() => props.export(kind!, element, 'json')}>Export as Data</Button>
+									<Button onClick={() => props.export(kind!, !!subElementID, element, 'image')}>Export As Image</Button>
+									<Button onClick={() => props.export(kind!, !!subElementID, element, 'pdf')}>Export As PDF</Button>
+									<Button onClick={() => props.export(kind!, !!subElementID, element, 'json')}>Export as Data</Button>
 								</div>
 							)}
 						>

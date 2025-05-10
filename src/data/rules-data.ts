@@ -51,6 +51,11 @@ If you are knocked prone while climbing or riding a creature, you fall and land 
 		content: 'If you are prone, you can remain prone and crawl on the ground. Doing so costs you 1 additional square of movement for every square you crawl. If you intentionally want to crawl, you can fall prone as a free maneuver on your turn. While voluntarily prone, you can choose to stand as a free maneuver.'
 	};
 
+	static criticalHit: RulesItem = {
+		label: 'Critical Hit',
+		content: 'When you make an ability power roll as part of an strike or action and the total of the roll is 19 or 20 before adding your characteristic (a natural 19 or natural 20), you score a critical hit. This allows you to immediately take an additional action after resolving the power roll, whether or not it’s your turn and even if you are dazed.'
+	};
+
 	static damagingTerrain: RulesItem = {
 		label: 'Damaging Terrain',
 		content: 'Areas of acid, fire, sharp rocks, lava, or any other terrain that causes damage to creatures who are in it is damaging terrain. The amount of damage caused by hazardous terrain is listed in the terrain’s description or in the description of the effect that creates the terrain.'

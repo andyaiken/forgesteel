@@ -1,5 +1,5 @@
-import { Alert, Button, Drawer, Flex, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, DownOutlined, DownloadOutlined, EditOutlined, LeftOutlined, PlusOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Alert, Button, Drawer, Flex, Input, Popover, Segmented, Select, Space, Tabs, Upload } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, CopyOutlined, DownOutlined, DownloadOutlined, EditOutlined, LeftOutlined, PlusOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { Feature, FeatureAbility, FeatureAddOn, FeatureAddOnType, FeatureMalice, FeatureText } from '../../../../models/feature';
 import { Monster, MonsterGroup } from '../../../../models/monster';
@@ -2365,8 +2365,27 @@ export const LibraryEditPage = (props: Props) => {
 						<PlusOutlined />
 						Add a new monster
 					</Button>
+					<Upload
+						style={{ width: '100%' }}
+						accept='.drawsteel-monster'
+						showUploadList={false}
+						beforeUpload={file => {
+							file
+								.text()
+								.then(json => {
+									const monster = (JSON.parse(json) as Monster);
+									copyMonster(monster);
+								});
+							return false;
+						}}
+					>
+						<Button block={true} onClick={() => null}>
+							<DownloadOutlined />
+							Import a monster
+						</Button>
+					</Upload>
 					<Button block={true} onClick={() => setDrawerOpen(true)}>
-						<DownloadOutlined />
+						<CopyOutlined />
 						Copy an existing monster
 					</Button>
 				</Flex>

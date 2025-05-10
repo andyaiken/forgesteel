@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Drawer, Flex, InputNumber, Progress, Space } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, InputNumber, Progress, Segmented, Space } from 'antd';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { Encounter, EncounterSlot } from '../../../models/encounter';
 import { Collections } from '../../../utils/collections';
@@ -532,6 +532,7 @@ interface Props {
 }
 
 const HealthPanel = (props: Props) => {
+	const [ page, setPage ] = useState<string>(!props.stamina && props.recoveries ? 'recoveries' : 'stamina');
 	const [ damageValue, setDamageValue ] = useState<number>(0);
 	const [ conditionsVisible, setConditionsVisible ] = useState<boolean>(false);
 
@@ -633,21 +634,40 @@ const HealthPanel = (props: Props) => {
 
 	const getHealthControls = () => {
 		return (
-			<Space style={{ flex: '1 1 0' }} direction='vertical'>
-				<NumberSpin
-					min={0}
-					steps={[ 1, 10 ]}
-					value={damageValue}
-					onChange={setDamageValue}
-				>
-					<InputNumber min={0} value={damageValue} onChange={value => setDamageValue(Math.round(value || 0))} />
-				</NumberSpin>
-				<Button block={true} disabled={damageValue === 0} onClick={takeDamage}>Take Damage</Button>
-				<Button block={true} disabled={damageValue === 0} onClick={heal}>Regain Stamina</Button>
-				{props.staminaTemp ? <Button block={true} disabled={damageValue === 0} onClick={addTemp}>Add Temporary Stamina</Button> : null}
+			<Space direction='vertical' style={{ flex: '1 1 0', width: '100%' }}>
 				{
-					props.recoveries ?
-						<>
+					props.stamina && props.recoveries ?
+						<Segmented
+							block={true}
+							options={[
+								{ value: 'stamina', label: 'Stamina' },
+								{ value: 'recoveries', label: 'Recoveries' }
+							]}
+							value={page}
+							onChange={setPage}
+						/>
+						: null
+				}
+				{
+					page === 'stamina' ?
+						<Space direction='vertical' style={{ width: '100%' }}>
+							<NumberSpin
+								min={0}
+								steps={[ 1, 10 ]}
+								value={damageValue}
+								onChange={setDamageValue}
+							>
+								<InputNumber min={0} value={damageValue} onChange={value => setDamageValue(Math.round(value || 0))} />
+							</NumberSpin>
+							<Button block={true} disabled={damageValue === 0} onClick={takeDamage}>Take Damage</Button>
+							<Button block={true} disabled={damageValue === 0} onClick={heal}>Regain Stamina</Button>
+							{props.staminaTemp ? <Button block={true} disabled={damageValue === 0} onClick={addTemp}>Add Temporary Stamina</Button> : null}
+						</Space>
+						: null
+				}
+				{
+					page === 'recoveries' ?
+						<Space direction='vertical' style={{ width: '100%' }}>
 							<Button
 								block={true}
 								className='tall-button'
@@ -665,7 +685,7 @@ const HealthPanel = (props: Props) => {
 								block={true}
 								className='tall-button'
 								disabled={props.recoveries!.recoveriesUsed >= props.recoveries!.recoveriesMax}
-								onClick={props.recoveries!.spendRecovery}
+								onClick={() => props.recoveries!.setValue(props.recoveries!.recoveriesUsed + 1)}
 							>
 								<div>
 									<div>Spend a Recovery</div>
@@ -674,7 +694,14 @@ const HealthPanel = (props: Props) => {
 									</div>
 								</div>
 							</Button>
-						</>
+							<Button
+								block={true}
+								disabled={props.recoveries!.recoveriesUsed === 0}
+								onClick={() => props.recoveries!.setValue(props.recoveries!.recoveriesUsed - 1)}
+							>
+								Regain a Recovery
+							</Button>
+						</Space>
 						: null
 				}
 			</Space>
@@ -753,7 +780,9 @@ const HealthPanel = (props: Props) => {
 								<Markdown
 									text={`
 You are dying.
+
 You can’t take the Catch Breath maneuver in combat, and you are bleeding, and this condition can’t be removed in any way until you are no longer dying.
+
 Your allies can help you spend Recoveries in combat, and you can spend Recoveries out of combat as usual.`}
 								/>
 							}
@@ -844,7 +873,10 @@ Your allies can help you spend Recoveries in combat, and you can spend Recoverie
 				}
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={() => setConditionsVisible(true)} />
+						<Button onClick={() => setConditionsVisible(true)}>
+							<PlusOutlined />
+							Add a condition
+						</Button>
 					}
 				>
 					Conditions

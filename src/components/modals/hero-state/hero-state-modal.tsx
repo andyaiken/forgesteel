@@ -208,6 +208,11 @@ export const HeroStateModal = (props: Props) => {
 					min={0}
 					onChange={setHeroTokens}
 				/>
+				<Alert
+					type='info'
+					showIcon={true}
+					message='Hero tokens are a resource shared by your party.'
+				/>
 				{
 					hero.state.heroTokens > 0 ?
 						<Alert

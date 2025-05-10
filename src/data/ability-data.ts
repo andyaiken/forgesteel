@@ -260,5 +260,16 @@ Complex or time-consuming tests might require an action if made in combat - or c
 		effect: 'You use your action to employ medicine or inspiring words to make an adjacent creature feel better and stay in the fight. The creature can spend a Recovery to regain Stamina, or can make a saving throw against a “(save ends)” effect they are suffering.'
 	});
 
+	static swap = FactoryLogic.createAbility({
+		id: 'swap',
+		name: 'Swap',
+		description: '',
+		type: FactoryLogic.type.createAction(),
+		keywords: [],
+		distance: [ FactoryLogic.distance.createSelf() ],
+		target: 'Self',
+		effect: 'You can turn your action into a move action or a maneuver, so that your turn can alternatively consist of two move actions and a maneuver, or two maneuvers and a move action.'
+	});
+
 	//#endregion
 }

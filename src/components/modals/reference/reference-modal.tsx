@@ -213,7 +213,8 @@ export const ReferenceModal = (props: Props) => {
 				AbilityData.standUp,
 				AbilityData.charge,
 				AbilityData.defend,
-				AbilityData.heal
+				AbilityData.heal,
+				AbilityData.swap
 			];
 
 			return (

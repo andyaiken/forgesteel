@@ -193,6 +193,7 @@ export class HeroLogic {
 			abilities.push({ ability: AbilityData.charge, source: 'Standard' });
 			abilities.push({ ability: AbilityData.defend, source: 'Standard' });
 			abilities.push({ ability: AbilityData.heal, source: 'Standard' });
+			abilities.push({ ability: AbilityData.swap, source: 'Standard' });
 		}
 
 		return abilities;

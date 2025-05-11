@@ -349,7 +349,9 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
+				<div className='ds-text'>
+					Choose {data.count > 1 ? data.count : 'a'} {data.cost === 'signature' ? 'signature' : `${data.cost}pt`} {data.count > 1 ? 'abilities' : 'ability'}.
+				</div>
 				<Select
 					style={{ width: '100%' }}
 					status={data.selectedIDs.length < data.count ? 'warning' : ''}
@@ -405,7 +407,7 @@ export const FeaturePanel = (props: Props) => {
 					})
 				}
 				<Drawer open={!!selectedAbility} onClose={() => setSelectedAbility(null)} closeIcon={null} width='500px'>
-					{selectedAbility ? <AbilityModal ability={selectedAbility} onClose={() => setSelectedAncestry(null)} /> : null}
+					{selectedAbility ? <AbilityModal ability={selectedAbility} hero={props.hero} onClose={() => setSelectedAncestry(null)} /> : null}
 				</Drawer>
 			</Space>
 		);

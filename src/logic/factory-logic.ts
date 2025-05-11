@@ -833,6 +833,15 @@ export class FactoryLogic {
 				time: '',
 				qualifiers: []
 			};
+		},
+		createFreeStrike: (): AbilityType => {
+			return {
+				usage: AbilityUsage.FreeStrike,
+				free: false,
+				trigger: '',
+				time: '',
+				qualifiers: []
+			};
 		}
 	};
 

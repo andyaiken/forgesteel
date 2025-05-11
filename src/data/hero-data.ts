@@ -9516,7 +9516,7 @@ export class HeroData {
 						{
 							id: 'talent-1-4',
 							name: 'Telepathic Speech',
-							description: 'you can telepathically communicate with any creatures within the distance of your Mind Spike ability if they share a language with you and you know of each other. The receiver of your telepathic communications can choose to respond telepathically.',
+							description: 'You can telepathically communicate with any creatures within the distance of your Mind Spike ability if they share a language with you and you know of each other. The receiver of your telepathic communications can choose to respond telepathically.',
 							type: 'Text',
 							data: null
 						},

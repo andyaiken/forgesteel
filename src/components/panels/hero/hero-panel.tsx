@@ -624,7 +624,7 @@ export const HeroPanel = (props: Props) => {
 			);
 		}
 
-		const abilities = HeroLogic.getAbilities(props.hero, true, false, props.options.showStandardAbilities);
+		const abilities = HeroLogic.getAbilities(props.hero, props.options.showStandardAbilities);
 		const actions = abilities.filter(a => a.ability.type.usage === AbilityUsage.Action);
 		const maneuvers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Maneuver);
 		const moves = abilities.filter(a => a.ability.type.usage === AbilityUsage.Move);

@@ -132,49 +132,42 @@ export class HeroLogic {
 		return domains;
 	};
 
-	static getAbilities = (hero: Hero, includeChoices: boolean, includeFreeStrikes: boolean, includeStandard: boolean) => {
+	static getAbilities = (hero: Hero, includeStandard: boolean) => {
+		const choices: { ability: Ability, source: string }[] = [];
+
+		this.getFeatures(hero)
+			.filter(f => f.feature.type === FeatureType.Ability)
+			.forEach(f => {
+				choices.push({ ability: (f.feature as FeatureAbility).data.ability, source: f.source });
+			});
+
+		this.getFeatures(hero)
+			.filter(f => f.feature.type === FeatureType.ClassAbility)
+			.forEach(f => {
+				(f.feature as FeatureClassAbility).data.selectedIDs.forEach(abilityID => {
+					const ability = hero.class?.abilities.find(a => a.id === abilityID);
+					if (ability) {
+						choices.push({ ability: ability, source: f.source });
+					}
+				});
+			});
+
 		const abilities: { ability: Ability, source: string }[] = [];
 
-		if (includeFreeStrikes) {
-			abilities.push({ ability: AbilityData.freeStrikeMelee, source: 'Standard' });
-			abilities.push({ ability: AbilityData.freeStrikeRanged, source: 'Standard' });
-		}
-
-		if (includeChoices) {
-			const choices: { ability: Ability, source: string }[] = [];
-
-			this.getFeatures(hero)
-				.filter(f => f.feature.type === FeatureType.Ability)
-				.forEach(f => {
-					choices.push({ ability: (f.feature as FeatureAbility).data.ability, source: f.source });
-				});
-
-			this.getFeatures(hero)
-				.filter(f => f.feature.type === FeatureType.ClassAbility)
-				.forEach(f => {
-					(f.feature as FeatureClassAbility).data.selectedIDs.forEach(abilityID => {
-						const ability = hero.class?.abilities.find(a => a.id === abilityID);
-						if (ability) {
-							choices.push({ ability: ability, source: f.source });
-						}
-					});
-				});
-
-			Collections.distinct(choices.map(a => a.ability.cost), a => a)
-				.sort((a, b) => {
-					if (a === 'signature' && b === 'signature') {
-						return 0;
-					}
-					if (a === 'signature') {
-						return -1;
-					}
-					if (b === 'signature') {
-						return 1;
-					}
-					return a - b;
-				})
-				.forEach(cost => abilities.push(...Collections.sort(choices.filter(a => a.ability.cost === cost), a => a.ability.name)));
-		}
+		Collections.distinct(choices.map(a => a.ability.cost), a => a)
+			.sort((a, b) => {
+				if (a === 'signature' && b === 'signature') {
+					return 0;
+				}
+				if (a === 'signature') {
+					return -1;
+				}
+				if (b === 'signature') {
+					return 1;
+				}
+				return a - b;
+			})
+			.forEach(cost => abilities.push(...Collections.sort(choices.filter(a => a.ability.cost === cost), a => a.ability.name)));
 
 		if (includeStandard) {
 			abilities.push({ ability: AbilityData.advance, source: 'Standard' });

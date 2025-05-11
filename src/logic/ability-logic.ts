@@ -306,7 +306,9 @@ export class AbilityLogic {
 					'twice',
 					'two times',
 					'2x',
-					'2 x'
+					'2 x',
+					'2×',
+					'2 ×'
 				]
 			},
 			{
@@ -315,7 +317,9 @@ export class AbilityLogic {
 					'thrice',
 					'three times',
 					'3x',
-					'3 x'
+					'3 x',
+					'3×',
+					'3 ×'
 				]
 			},
 			{
@@ -323,7 +327,9 @@ export class AbilityLogic {
 				words: [
 					'four times',
 					'4x',
-					'4 x'
+					'4 x',
+					'4×',
+					'4 ×'
 				]
 			},
 			{
@@ -331,7 +337,9 @@ export class AbilityLogic {
 				words: [
 					'five times',
 					'5x',
-					'5 x'
+					'5 x',
+					'5×',
+					'5 ×'
 				]
 			},
 			{
@@ -339,7 +347,9 @@ export class AbilityLogic {
 				words: [
 					'six times',
 					'6x',
-					'6 x'
+					'6 x',
+					'6×',
+					'6 ×'
 				]
 			},
 			{
@@ -347,7 +357,9 @@ export class AbilityLogic {
 				words: [
 					'seven times',
 					'7x',
-					'7 x'
+					'7 x',
+					'7×',
+					'7 ×'
 				]
 			},
 			{
@@ -355,7 +367,9 @@ export class AbilityLogic {
 				words: [
 					'eight times',
 					'8x',
-					'8 x'
+					'8 x',
+					'8×',
+					'8 ×'
 				]
 			},
 			{
@@ -363,7 +377,9 @@ export class AbilityLogic {
 				words: [
 					'nine times',
 					'9x',
-					'9 x'
+					'9 x',
+					'9×',
+					'9 ×'
 				]
 			},
 			{
@@ -371,7 +387,9 @@ export class AbilityLogic {
 				words: [
 					'ten times',
 					'10x',
-					'10 x'
+					'10 x',
+					'10×',
+					'10 ×'
 				]
 			}
 		];

@@ -197,50 +197,21 @@ export const ReferenceModal = (props: Props) => {
 		};
 
 		const getAbilitiesSection = () => {
-			const abilities = [
-				AbilityData.advance,
-				AbilityData.disengage,
-				AbilityData.ride,
-				AbilityData.aidAttack,
-				AbilityData.catchBreath,
-				AbilityData.drinkPotion,
-				AbilityData.escapeGrab,
-				AbilityData.grab,
-				AbilityData.hide,
-				AbilityData.knockback,
-				AbilityData.makeAssistTest,
-				AbilityData.search,
-				AbilityData.standUp,
-				AbilityData.charge,
-				AbilityData.defend,
-				AbilityData.heal,
-				AbilityData.swap
-			];
-
 			return (
 				<Tabs
 					items={[
-						{
-							key: 'free',
-							label: 'Free Strikes',
-							children:
-								<Space direction='vertical' style={{ width: '100%' }}>
-									{
-										[
-											AbilityData.freeStrikeMelee,
-											AbilityData.freeStrikeRanged
-										]
-											.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
-									}
-								</Space>
-						},
 						{
 							key: 'actions',
 							label: 'Actions',
 							children:
 								<Space direction='vertical' style={{ width: '100%' }}>
 									{
-										abilities
+										[
+											AbilityData.charge,
+											AbilityData.defend,
+											AbilityData.heal,
+											AbilityData.swap
+										]
 											.filter(a => a.type.usage === AbilityUsage.Action)
 											.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
 									}
@@ -252,7 +223,18 @@ export const ReferenceModal = (props: Props) => {
 							children:
 								<Space direction='vertical' style={{ width: '100%' }}>
 									{
-										abilities
+										[
+											AbilityData.aidAttack,
+											AbilityData.catchBreath,
+											AbilityData.drinkPotion,
+											AbilityData.escapeGrab,
+											AbilityData.grab,
+											AbilityData.hide,
+											AbilityData.knockback,
+											AbilityData.makeAssistTest,
+											AbilityData.search,
+											AbilityData.standUp
+										]
 											.filter(a => a.type.usage === AbilityUsage.Maneuver)
 											.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
 									}
@@ -264,8 +246,26 @@ export const ReferenceModal = (props: Props) => {
 							children:
 								<Space direction='vertical' style={{ width: '100%' }}>
 									{
-										abilities
+										[
+											AbilityData.advance,
+											AbilityData.disengage,
+											AbilityData.ride
+										]
 											.filter(a => a.type.usage === AbilityUsage.Move)
+											.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
+									}
+								</Space>
+						},
+						{
+							key: 'free',
+							label: 'Free Strikes',
+							children:
+								<Space direction='vertical' style={{ width: '100%' }}>
+									{
+										[
+											AbilityData.freeStrikeMelee,
+											AbilityData.freeStrikeRanged
+										]
 											.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
 									}
 								</Space>

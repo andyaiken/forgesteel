@@ -324,6 +324,20 @@ export const HeroStateModal = (props: Props) => {
 						Any conditions affecting you are removed
 					</li>
 				</ul>
+				<div className='ds-text'>
+					During a respite you can take one respite action. Standard respite actions are:
+				</div>
+				<ul>
+					<li>
+						Make a project roll
+					</li>
+					<li>
+						Change your kit / prayer / enchantment / augmentation / ward
+					</li>
+					<li>
+						Attract followers (for every 3 renown, you can have 1 follower)
+					</li>
+				</ul>
 				<Divider />
 				<Button
 					key='take-respite'

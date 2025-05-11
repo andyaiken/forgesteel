@@ -32,9 +32,21 @@ export const ClassPanel = (props: Props) => {
 				<div className={props.mode === PanelMode.Full ? 'class-panel' : 'class-panel compact'} id={props.mode === PanelMode.Full ? props.heroClass.id : undefined}>
 					<HeaderText level={1}>{props.heroClass.name || 'Unnamed Class'}</HeaderText>
 					<Markdown text={props.heroClass.description} />
-					<Field label='Heroic Resource' value={props.heroClass.heroicResource} />
-					{props.heroClass.subclasses.length > 0 ? <Field label={`${props.heroClass.subclassName}s`} value={props.heroClass.subclasses.map(c => c.name).join(', ')} /> : null}
-					<Field label='Primary Characteristics' value={props.heroClass.primaryCharacteristics.join(', ') || props.heroClass.primaryCharacteristicsOptions.map(array => array.join(', ') || 'None').join(' or ') || 'None'} />
+					{
+						props.mode === PanelMode.Full ?
+							<Field label='Heroic Resource' value={props.heroClass.heroicResource} />
+							: null
+					}
+					{
+						(props.mode === PanelMode.Full) && (props.heroClass.subclasses.length > 0) ?
+							<Field label={`${props.heroClass.subclassName}s`} value={props.heroClass.subclasses.map(c => c.name).join(', ')} />
+							: null
+					}
+					{
+						props.mode === PanelMode.Full ?
+							<Field label='Primary Characteristics' value={props.heroClass.primaryCharacteristics.join(', ') || props.heroClass.primaryCharacteristicsOptions.map(array => array.join(', ') || 'None').join(' or ') || 'None'} />
+							: null
+					}
 					{
 						props.mode === PanelMode.Full ?
 							props.heroClass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (

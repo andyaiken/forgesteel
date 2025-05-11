@@ -607,15 +607,15 @@ const StartSection = (props: StartSectionProps) => {
 				<div className='hero-edit-content-column start choices'>
 					<HeaderText>Creating a Hero</HeaderText>
 					<div className='ds-text'>
-						Creating a hero in <b>Forge Steel</b> is simple.
+						Creating a hero in <b>FORGE STEEL</b> is simple.
 					</div>
 					<ul>
 						<li>
-							Use the tabs above to select your hero's <b>ancestry</b>, <b>culture</b>, <b>career</b>, and <b>class</b>.
+							Use the tabs above to select your hero's <code>Ancestry</code>, <code>Culture</code>, <code>Career</code>, and <code>Class</code>.
 							If there are any choices to be made, you'll be prompted to make your selections.
 						</li>
 						<li>
-							Optionally, you can choose a <b>complication</b> - but you can skip this if you'd prefer.
+							Optionally, you can choose a <code>Complication</code> - but you can skip this if you'd prefer.
 						</li>
 						<li>
 							Finally, go to the <code>Details</code> tab and give your hero a name.
@@ -635,7 +635,7 @@ const StartSection = (props: StartSectionProps) => {
 						mode='multiple'
 						options={props.sourcebooks.map(cs => ({ value: cs.id, label: cs.name || 'Unnamed Sourcebook' }))}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-						dropdownRender={menu => (
+						popupRender={menu => (
 							<>
 								{menu}
 								<Divider style={{ margin: '8px 0' }} />

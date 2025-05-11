@@ -1175,7 +1175,7 @@ export const TacticalMapPanel = (props: Props) => {
 						style={{ width: '200px' }}
 						options={distinctSources}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-						dropdownRender={menu => (
+						popupRender={menu => (
 							<>
 								<HeaderText>Pick minis from:</HeaderText>
 								{menu}

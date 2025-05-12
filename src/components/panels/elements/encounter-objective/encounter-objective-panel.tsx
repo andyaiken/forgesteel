@@ -22,10 +22,10 @@ export const EncounterObjectivePanel = (props: Props) => {
 					{
 						props.mode === PanelMode.Full ?
 							<>
-								<Field label='Difficulty Modifier' value={<Markdown text={props.objective.difficultyModifier} useSpan={true} />} />
-								<Field label='Success Condition' value={<Markdown text={props.objective.successCondition} useSpan={true} />} />
-								<Field label='Failure Condition' value={<Markdown text={props.objective.failureCondition} useSpan={true} />} />
-								<Field label='Victories' value={<Markdown text={props.objective.victories} useSpan={true} />} />
+								{props.objective.difficultyModifier ? <Field label='Difficulty Modifier' value={<Markdown text={props.objective.difficultyModifier} useSpan={true} />} /> : null}
+								{props.objective.successCondition ? <Field label='Success Condition' value={<Markdown text={props.objective.successCondition} useSpan={true} />} /> : null}
+								{props.objective.failureCondition ? <Field label='Failure Condition' value={<Markdown text={props.objective.failureCondition} useSpan={true} />} /> : null}
+								{props.objective.victories ? <Field label='Victories' value={<Markdown text={props.objective.victories} useSpan={true} />} /> : null}
 							</>
 							: null
 					}

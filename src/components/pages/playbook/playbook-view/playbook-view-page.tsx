@@ -65,7 +65,7 @@ export const PlaybookViewPage = (props: Props) => {
 					sourcebooks={props.sourcebooks}
 					options={props.options}
 					allowSelection={true}
-					start={props.start}
+					onStart={props.start}
 				/>
 			);
 			break;

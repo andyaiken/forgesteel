@@ -306,7 +306,7 @@ export const PlotEditPanel = (props: Props) => {
 						items={[
 							{
 								key: '1',
-								label: 'Plot',
+								label: 'Plot Point',
 								children: getNameAndDescriptionSection()
 							},
 							{

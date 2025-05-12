@@ -1,20 +1,32 @@
 .adventure-panel {
+	height: 100%;
+	overflow: hidden;
 	display: flex;
 	flex-direction: column;
 	padding: 0 20px 20px 20px;
-	overflow: hidden;
 
 	&.compact {
 		margin-top: -10px;
 		padding: unset;
 	}
 
+	&.editor {
+		padding: 0;
+	}
+
 	.plot-display-container {
+		height: 100%;
+		overflow: hidden;
 		display: flex;
 		gap: 20px;
 
-		.plot-details {
-			flex: 0 0 350px;
+		.plot-workspace {
+			flex: 1 1 0;
+		}
+
+		.plot-sidebar {
+			flex: 1 1 0;
+			overflow-y: auto;
 
 			.plot-content-row {
 				display: flex;

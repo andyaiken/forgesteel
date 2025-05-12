@@ -1,5 +1,5 @@
 .multi-line {
-	height: 200px;
+	height: 300px;
 	display: flex;
 	flex-direction: column;
 	gap: 5px;
@@ -10,5 +10,9 @@
 
 	.multi-line-alert {
 		flex: 0 0 auto;
+	}
+
+	textarea {
+		resize: none;
 	}
 }

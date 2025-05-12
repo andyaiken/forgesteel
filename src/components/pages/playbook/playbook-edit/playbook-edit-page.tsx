@@ -43,9 +43,6 @@ import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
 import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { PlaybookLogic } from '../../../../logic/playbook-logic';
-import { Plot } from '../../../../models/plot';
-import { PlotEditPanel } from '../../../panels/edit/plot-edit/plot-edit-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -135,186 +132,6 @@ export const PlaybookEditPage = (props: Props) => {
 				/>
 				<HeaderText>Description</HeaderText>
 				<MultiLine label='Description' value={element.description} onChange={setDescription} />
-			</Space>
-		);
-	};
-
-	const getAdventurePartySection = () => {
-		const adventure = element as Adventure;
-
-		const setCount = (value: number) => {
-			const copy = Utils.copy(element) as Adventure;
-			copy.party.count = value;
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const setLevel = (value: number) => {
-			const copy = Utils.copy(element) as Adventure;
-			copy.party.level = value;
-			setElement(copy);
-			setDirty(true);
-		};
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				<HeaderText>Number of Heroes</HeaderText>
-				<NumberSpin min={1} value={adventure.party.count} onChange={setCount} />
-				<HeaderText>Hero Level</HeaderText>
-				<NumberSpin min={1} max={10} value={adventure.party.level} onChange={setLevel} />
-			</Space>
-		);
-	};
-
-	const getAdventureIntroductionSection = () => {
-		const adventure = element as Adventure;
-
-		const addSection = () => {
-			const copy = Utils.copy(element) as Adventure;
-			copy.introduction.push(FactoryLogic.createElement());
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const setSectionName = (index: number, value: string) => {
-			const copy = Utils.copy(element) as Adventure;
-			const m = copy.introduction[index];
-			m.name = value;
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const setSectionDescription = (index: number, value: string) => {
-			const copy = Utils.copy(element) as Adventure;
-			const m = copy.introduction[index];
-			m.description = value;
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const moveSection = (index: number, direction: 'up' | 'down') => {
-			const copy = Utils.copy(element) as Adventure;
-			copy.introduction = Collections.move(copy.introduction, index, direction);
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const deleteSection = (id: string) => {
-			const copy = Utils.copy(element) as Adventure;
-			copy.introduction = copy.introduction.filter(section => section.id !== id);
-			setElement(copy);
-			setDirty(true);
-		};
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					adventure.introduction.map((section, n) => (
-						<Expander
-							key={section.id}
-							title={section.name || 'Unnamed Section'}
-							extra={[
-								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSection(n, 'up'); }} />,
-								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSection(n, 'down'); }} />,
-								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSection(section.id); }} />
-							]}
-						>
-							<HeaderText>Section</HeaderText>
-							<Space direction='vertical' style={{ width: '100%' }}>
-								<Input
-									status={section.name === '' ? 'warning' : ''}
-									placeholder='Name'
-									allowClear={true}
-									value={section.name}
-									onChange={e => setSectionName(n, e.target.value)}
-								/>
-								<MultiLine label='Description' value={section.description} onChange={value => setSectionDescription(n, value)} />
-							</Space>
-						</Expander>
-					))
-				}
-				{
-					adventure.introduction.length === 0 ?
-						<Empty />
-						: null
-				}
-				<Button block={true} onClick={addSection}>
-					<PlusOutlined />
-					Add a section
-				</Button>
-			</Space>
-		);
-	};
-
-	const getAdventurePlotSection = () => {
-		const adventure = element as Adventure;
-
-		const addPlotPoint = () => {
-			const copy = Utils.copy(element) as Adventure;
-			copy.plot.plots.push(FactoryLogic.createAdventurePlot());
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const changePlotPoint = (plot: Plot) => {
-			const copy = Utils.copy(element) as Adventure;
-			const parent = PlaybookLogic.getPlotPointParent(copy.plot, plot.id);
-			if (parent) {
-				const index = parent.plots.findIndex(p => p.id === plot.id);
-				if (index !== -1) {
-					parent.plots[index] = plot;
-				}
-				setElement(copy);
-				setDirty(true);
-			}
-		};
-
-		const movePlotPoint = (index: number, direction: 'up' | 'down') => {
-			const copy = Utils.copy(element) as Adventure;
-			copy.plot.plots = Collections.move(copy.plot.plots, index, direction);
-			setElement(copy);
-			setDirty(true);
-		};
-
-		const deletePlotPoint = (id: string) => {
-			const copy = Utils.copy(element) as Adventure;
-			copy.plot.plots = copy.plot.plots.filter(p => p.id !== id);
-			setElement(copy);
-			setDirty(true);
-		};
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					adventure.plot.plots.map((p, n) => (
-						<Expander
-							key={p.id}
-							title={p.name || 'Unnamed Plot Point'}
-							extra={[
-								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); movePlotPoint(n, 'up'); }} />,
-								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); movePlotPoint(n, 'down'); }} />,
-								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deletePlotPoint(p.id); }} />
-							]}
-						>
-							<PlotEditPanel
-								plot={p}
-								adventure={adventure}
-								playbook={props.playbook}
-								sourcebooks={props.sourcebooks}
-								onChange={changePlotPoint}
-							/>
-						</Expander>
-					))
-				}
-				{
-					adventure.introduction.length === 0 ?
-						<Empty />
-						: null
-				}
-				<Button block={true} onClick={addPlotPoint}>
-					<PlusOutlined />
-					Add a plot point
-				</Button>
 			</Space>
 		);
 	};
@@ -1436,17 +1253,34 @@ export const PlaybookEditPage = (props: Props) => {
 	};
 
 	const getTacticalMapBuilder = () => {
-		const map = element as TacticalMap;
-
 		return (
 			<div className='tactical-map-container'>
 				<TacticalMapPanel
-					map={map}
+					map={element as TacticalMap}
 					display={TacticalMapDisplayType.DirectorEdit}
 					options={props.options}
 					mode={PanelMode.Full}
 					updateMap={map => {
 						setElement(map);
+						setDirty(true);
+					}}
+				/>
+			</div>
+		);
+	};
+
+	const getAdventureBuilder = () => {
+		return (
+			<div className='adventure-container'>
+				<AdventurePanel
+					adventure={element as Adventure}
+					mode={PanelMode.Full}
+					playbook={props.playbook}
+					sourcebooks={props.sourcebooks}
+					options={props.options}
+					allowSelection={true}
+					onChange={(adventure: Adventure) => {
+						setElement(adventure);
 						setDirty(true);
 					}}
 				/>
@@ -1461,32 +1295,7 @@ export const PlaybookEditPage = (props: Props) => {
 	const getEditSection = () => {
 		switch (kind!) {
 			case 'adventure':
-				return (
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Adventure',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Party',
-								children: getAdventurePartySection()
-							},
-							{
-								key: '3',
-								label: 'Introduction',
-								children: getAdventureIntroductionSection()
-							},
-							{
-								key: '4',
-								label: 'Plot',
-								children: getAdventurePlotSection()
-							}
-						]}
-					/>
-				);
+				return getAdventureBuilder();
 			case 'encounter':
 				return (
 					<Tabs
@@ -1753,18 +1562,6 @@ export const PlaybookEditPage = (props: Props) => {
 
 	const getPreview = () => {
 		switch (kind!) {
-			case 'adventure':
-				return (
-					<SelectablePanel>
-						<AdventurePanel
-							adventure={element as Adventure}
-							mode={PanelMode.Full}
-							playbook={props.playbook}
-							sourcebooks={props.sourcebooks}
-							options={props.options}
-						/>
-					</SelectablePanel>
-				);
 			case 'encounter':
 				return (
 					<Tabs
@@ -1806,6 +1603,8 @@ export const PlaybookEditPage = (props: Props) => {
 					</SelectablePanel>
 				);
 		}
+
+		return null;
 	};
 
 	//#endregion
@@ -1854,7 +1653,7 @@ export const PlaybookEditPage = (props: Props) => {
 							{getEditSection()}
 						</div>
 						{
-							kind !== 'tactical-map' ?
+							(kind !== 'adventure') && (kind !== 'tactical-map') ?
 								<div className='preview-column'>
 									{getPreviewHeaderSection()}
 									{getPreview()}

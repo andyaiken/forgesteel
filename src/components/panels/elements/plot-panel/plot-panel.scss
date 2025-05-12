@@ -1,6 +1,7 @@
 .plot-panel {
-	width: 100%;
 	padding: 20px 0;
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
 
 	&.compact {
 		margin-top: -10px;
@@ -62,7 +63,15 @@
 
 @media (prefers-color-scheme: dark) {
 	.plot-panel {
+		background-color: rgb(0, 0, 0);
+
 		.plot-container {
+			.plot-box-container {
+				.plot-box {
+					color: rgb(0, 0, 0);
+				}
+			}
+
 			.link-label-container {
 				.link-label {
 					color: rgba(255, 255, 255, 0.88);

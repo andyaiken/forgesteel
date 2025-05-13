@@ -3,6 +3,7 @@ import { Encounter } from '../models/encounter';
 import { EncounterLogic } from './encounter-logic';
 import { EncounterObjectiveData } from '../data/encounter-objective-data';
 import { Hero } from '../models/hero';
+import { Monster } from '../models/monster';
 import { MonsterLogic } from './monster-logic';
 import { Montage } from '../models/montage';
 import { Negotiation } from '../models/negotiation';
@@ -92,27 +93,49 @@ export class PlaybookLogic {
 		copy.id = Utils.guid();
 		copy.round = 0;
 
-		copy.groups.forEach(group => {
-			group.slots.forEach(slot => {
+		const monsterInfo: { monster: Monster, name: string, count: number, added: number }[] = [];
+		copy.groups
+			.flatMap(g => g.slots)
+			.forEach(slot => {
 				const monster = SourcebookLogic.getMonster(sourcebooks, slot.monsterID);
 				const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
 				if (monster && monsterGroup) {
-					const name = MonsterLogic.getMonsterName(monster, monsterGroup);
 					const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, options);
-					for (let n = 1; n <= count; ++n) {
-						const monsterCopy = Utils.copy(monster);
-						monsterCopy.id = Utils.guid();
-						monsterCopy.name = count === 1 ? name : `${name} ${n}`;
-						slot.monsters.push(monsterCopy);
+					const current = monsterInfo.find(info => info.monster.id === monster.id);
+					if (current) {
+						current.count += count;
+					} else {
+						monsterInfo.push({
+							monster: monster,
+							name: MonsterLogic.getMonsterName(monster, monsterGroup),
+							count: count,
+							added: 0
+						});
 					}
 				}
 			});
-		});
+
+		copy.groups
+			.flatMap(g => g.slots)
+			.forEach(slot => {
+				const info = monsterInfo.find(info => info.monster.id === slot.monsterID);
+				if (info) {
+					const count = slot.count * MonsterLogic.getRoleMultiplier(info.monster.role.organization, options);
+					for (let n = 1; n <= count; ++n) {
+						const monsterCopy = Utils.copy(info.monster);
+						monsterCopy.id = Utils.guid();
+						monsterCopy.name = info.count === 1 ? info.name : `${info.name} ${info.added + 1}`;
+						slot.monsters.push(monsterCopy);
+						info.added += 1;
+					}
+				}
+			});
 
 		if (options.party !== '') {
 			heroes
 				.filter(h => h.folder === options.party)
-				.forEach(h => copy.heroes.push(Utils.copy(h)));
+				.map(h => Utils.copy(h))
+				.forEach(h => copy.heroes.push(h));
 		}
 
 		copy.terrain.forEach(slot => {

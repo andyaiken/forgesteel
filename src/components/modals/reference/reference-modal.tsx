@@ -40,6 +40,7 @@ export const ReferenceModal = (props: Props) => {
 	try {
 		const getRulesSection = () => {
 			const rules = [
+				RulesData.abilityDistance,
 				RulesData.burrowing,
 				RulesData.climbingAndSwimming,
 				RulesData.concealment,

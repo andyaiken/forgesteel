@@ -2,6 +2,7 @@ import { Utils } from '../../../utils/utils';
 
 interface Props {
 	text: string;
+	className?: string;
 	useSpan?: boolean;
 }
 
@@ -14,11 +15,11 @@ export const Markdown = (props: Props) => {
 
 	if (props.useSpan) {
 		return (
-			<span dangerouslySetInnerHTML={{ __html: md }} />
+			<span className={props.className} dangerouslySetInnerHTML={{ __html: md }} />
 		);
 	}
 
 	return (
-		<div dangerouslySetInnerHTML={{ __html: md }} />
+		<div className={props.className} dangerouslySetInnerHTML={{ __html: md }} />
 	);
 };

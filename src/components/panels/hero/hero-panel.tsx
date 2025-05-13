@@ -670,17 +670,17 @@ export const HeroPanel = (props: Props) => {
 						{getStatsSection()}
 						{getConditionsSection()}
 						{getFeaturesSection()}
-						{actions.length > 0 ? <HeaderText>Actions</HeaderText> : null}
+						{actions.length > 0 ? <HeaderText level={1}>Actions</HeaderText> : null}
 						{getAbilitiesSection(actions)}
-						{maneuvers.length > 0 ? <HeaderText>Maneuvers</HeaderText> : null}
+						{maneuvers.length > 0 ? <HeaderText level={1}>Maneuvers</HeaderText> : null}
 						{getAbilitiesSection(maneuvers)}
-						{triggers.length > 0 ? <HeaderText>Triggered Actions</HeaderText> : null}
+						{triggers.length > 0 ? <HeaderText level={1}>Triggered Actions</HeaderText> : null}
 						{getAbilitiesSection(triggers)}
-						{moves.length > 0 ? <HeaderText>Moves</HeaderText> : null}
+						{moves.length > 0 ? <HeaderText level={1}>Moves</HeaderText> : null}
 						{getAbilitiesSection(moves)}
-						{others.length > 0 ? <HeaderText>Other Abilities</HeaderText> : null}
+						{others.length > 0 ? <HeaderText level={1}>Other Abilities</HeaderText> : null}
 						{getAbilitiesSection(others)}
-						<HeaderText>Free Strikes</HeaderText>
+						<HeaderText level={1}>Free Strikes</HeaderText>
 						{getAbilitiesSection([
 							{ ability: AbilityData.freeStrikeMelee, source: 'Standard' },
 							{ ability: AbilityData.freeStrikeRanged, source: 'Standard' }

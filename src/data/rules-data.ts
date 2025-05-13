@@ -4,6 +4,37 @@ interface RulesItem {
 }
 
 export class RulesData {
+	static abilityDistance: RulesItem = {
+		label: 'Ability Distance',
+		content: `
+An ability’s “Distance” entry indicates how close you need to be to a creature or object to affect that target with the ability.
+
+**Melee**: Melee abilities with a distance of “Melee X” require you to touch a creature with your body, a weapon, or an implement. X is the distance in squares at which you can physically make contact with another creature or object targeted by the ability. For instance, a distance of “Melee 2” can be used to target creatures or objects within 2 squares of you.
+
+**Ranged**: Abilities with a distance noted as “Ranged” can be used to target creatures who are more than a touch away. Ranged distances are presented as “Ranged X,” with X being the number of squares away a creature or object can be while still allowing you to target them with the ability. For instance, a distance of “Ranged 5” can be used to target creatures or objects within 5 squares of you.
+
+If you make a ranged strike while an enemy is adjacent to you, you have a bane on the strike’s power roll.
+
+**Melee or Ranged**: Some abilities have a melee distance and a ranged distance. When you use such an ability, you choose whether to use it as a melee or a ranged ability. The ability never has both the Melee and Ranged keywords at the same time. For example, if you have the Cloak and Dagger kit, which has a weapon damage bonus to melee and ranged abilities, only one bonus at a time applies to an ability with the Melee or Ranged keywords.
+
+**Area Abilities**: Area abilities cover an area, creating an effect within that area that lets you target multiple creatures or objects at once. When an ability allows you to create an area of effect, you are sometimes given a distance, noted as “within X,” that describes how many squares away from you the area can be. If an area ability doesn’t originate from you, then least 1 square of the area of effect must be within that distance and your line of effect. This square is referred to as the origin square of the area of effect. The area of effect can spread from the origin square however you choose, as long as the area of effect conforms to the shape and arrangement rules of that particular area.
+
+Unless otherwise noted, area abilities don’t pass through solid barriers such as walls or ceilings, or spread around corners.
+
+As long as you have line of effect and distance to the origin square, you can place an area ability to include one or more squares where you don’t have line of effect (see Line of Effect below).
+
+An area ability might use any of the following areas of effect:
+
+* **Aura**: When an ability creates an aura, it is expressed as “X aura.” Aura areas always originate from you and move with you for the duration of the ability that created them. A creature must be within X squares of you to be targeted by an aura ability.
+* **Burst**: When an ability creates a burst area, it is expressed as “X burst.” Burst areas always originate from you. A creature must be within X squares of you to be targeted with a burst ability.
+* **Cube**: When an ability affects a cubic area, it is expressed as “X cube.” X is the length of all the area’s sides.
+* **Line**: When an ability affects a linear area, it is expressed as “A × B line.” This means that A equals the line’s length in squares, while B equals the line’s width and height in squares. When you create a line area of effect, the squares it occupies on the grid must be in a straight line, forming either a rectangle or straight diagonal line shape with the squares it effects.
+* **Wall**: When an ability creates a wall, it is expressed as “X wall,” where X equals how many squares are used to make the wall. When you place a wall, you can build it one square at a time, but each square must share at least one side (not just a corner) with another square of the wall. You can stack squares on top of each other to make the wall higher. Unless otherwise stated, a wall can’t be placed in occupied squares, and a wall blocks line of effect.
+* **Special**: Some abilities create a unique area of effect. The distance entry of such abilities specifies how the area is created.
+
+**Self**: If an ability has a distance of “Self,” that ability originates from or affects only you. The ability’s description specifies how it works.`
+	};
+
 	static burrowing: RulesItem = {
 		label: 'Burrowing',
 		content: `

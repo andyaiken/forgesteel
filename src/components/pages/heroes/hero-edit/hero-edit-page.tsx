@@ -21,6 +21,7 @@ import { Element } from '../../../../models/element';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeaturePanel } from '../../../panels/elements/feature-panel/feature-panel';
+import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -83,13 +84,62 @@ export const HeroEditPage = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
 	try {
+		const isChosen = (feature: Feature, hero: Hero) => {
+			switch (feature.type) {
+				case FeatureType.AncestryChoice:
+					return !!feature.data.selected;
+				case FeatureType.AncestryFeatureChoice:
+					return !!feature.data.selected;
+				case FeatureType.Choice: {
+					let availableOptions = [ ...feature.data.options ];
+					if (availableOptions.some(opt => opt.feature.type === FeatureType.AncestryFeatureChoice)) {
+						availableOptions = availableOptions.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
+						const additionalOptions = HeroLogic.getFormerAncestries(hero)
+							.flatMap(a => a.features)
+							.filter(f => f.type === FeatureType.Choice)
+							.flatMap(f => f.data.options)
+							.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
+						availableOptions.push(...additionalOptions);
+					}
+					const selected = feature.data.selected
+						.map(f => availableOptions.find(opt => opt.feature.id === f.id))
+						.filter(opt => !!opt);
+					return Collections.sum(selected, i => i.value) >= feature.data.count;
+				}
+				case FeatureType.ClassAbility:
+					return feature.data.selectedIDs.length >= feature.data.count;
+				case FeatureType.Companion:
+					return feature.data.selected !== null;
+				case FeatureType.Domain:
+					return feature.data.selected.length >= feature.data.count;
+				case FeatureType.DomainFeature:
+					return feature.data.selected.length >= feature.data.count;
+				case FeatureType.ItemChoice:
+					return feature.data.selected.length >= feature.data.count;
+				case FeatureType.Kit:
+					return feature.data.selected.length >= feature.data.count;
+				case FeatureType.LanguageChoice:
+					return feature.data.selected.length >= feature.data.count;
+				case FeatureType.Perk:
+					return feature.data.selected.length >= feature.data.count;
+				case FeatureType.SkillChoice:
+					return feature.data.selected.length >= feature.data.count;
+				case FeatureType.TaggedFeatureChoice:
+					return feature.data.selected.length >= feature.data.count;
+				case FeatureType.TitleChoice:
+					return feature.data.selected.length >= feature.data.count;
+			};
+
+			return true;
+		};
+
 		const getPageState = (page: HeroEditTab) => {
 			switch (page) {
 				case 'start':
 					return PageState.Blank;
 				case 'ancestry':
 					if (hero.ancestry) {
-						return (hero.ancestry.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (hero.ancestry.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f, hero)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
@@ -111,13 +161,13 @@ export const HeroEditPage = (props: Props) => {
 						if (hero.culture.upbringing) {
 							features.push(hero.culture.upbringing);
 						}
-						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f, hero)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
 				case 'career':
 					if (hero.career) {
-						return (hero.career.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (hero.career.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f, hero)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
@@ -141,13 +191,13 @@ export const HeroEditPage = (props: Props) => {
 									.filter(lvl => lvl.level <= level)
 									.forEach(lvl => features.push(...lvl.features));
 							});
-						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f, hero)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
 				case 'complication':
 					if (hero.complication) {
-						return (hero.complication.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (hero.complication.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f, hero)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.Optional;
 					}

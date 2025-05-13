@@ -2,7 +2,6 @@ import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
-import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { FactoryLogic } from './factory-logic';
@@ -336,45 +335,6 @@ export class FeatureLogic {
 		};
 
 		return false;
-	};
-
-	static isChosen = (feature: Feature) => {
-		switch (feature.type) {
-			case FeatureType.AncestryChoice:
-				return !!feature.data.selected;
-			case FeatureType.AncestryFeatureChoice:
-				return !!feature.data.selected;
-			case FeatureType.Choice: {
-				const selected = feature.data.selected
-					.map(f => feature.data.options.find(opt => opt.feature.id === f.id))
-					.filter(opt => !!opt);
-				return Collections.sum(selected, i => i.value) >= feature.data.count;
-			}
-			case FeatureType.ClassAbility:
-				return feature.data.selectedIDs.length >= feature.data.count;
-			case FeatureType.Companion:
-				return feature.data.selected !== null;
-			case FeatureType.Domain:
-				return feature.data.selected.length >= feature.data.count;
-			case FeatureType.DomainFeature:
-				return feature.data.selected.length >= feature.data.count;
-			case FeatureType.ItemChoice:
-				return feature.data.selected.length >= feature.data.count;
-			case FeatureType.Kit:
-				return feature.data.selected.length >= feature.data.count;
-			case FeatureType.LanguageChoice:
-				return feature.data.selected.length >= feature.data.count;
-			case FeatureType.Perk:
-				return feature.data.selected.length >= feature.data.count;
-			case FeatureType.SkillChoice:
-				return feature.data.selected.length >= feature.data.count;
-			case FeatureType.TaggedFeatureChoice:
-				return feature.data.selected.length >= feature.data.count;
-			case FeatureType.TitleChoice:
-				return feature.data.selected.length >= feature.data.count;
-		};
-
-		return true;
 	};
 
 	///////////////////////////////////////////////////////////////////////////

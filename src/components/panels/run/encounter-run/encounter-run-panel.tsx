@@ -1,6 +1,7 @@
 import { Alert, Button, Drawer, Flex, Progress, Space, Tabs } from 'antd';
 import { Encounter, EncounterGroup, EncounterSlot } from '../../../../models/encounter';
 import { EncounterGroupHero, EncounterGroupMonster, EncounterGroupTerrain } from '../../encounter-group/encounter-group-panel';
+import { FeatureAbility, FeatureMalice } from '../../../../models/feature';
 import { AbilityPanel } from '../../elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { Empty } from '../../../controls/empty/empty';
@@ -22,6 +23,7 @@ import { Markdown } from '../../../controls/markdown/markdown';
 import { MinionGroupHealthPanel } from '../../health/health-panel';
 import { Modal } from '../../../modals/modal/modal';
 import { Monster } from '../../../../models/monster';
+import { MonsterData } from '../../../../data/monster-data';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterModal } from '../../../modals/monster/monster-modal';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
@@ -375,44 +377,48 @@ export const EncounterRunPanel = (props: Props) => {
 			return null;
 		}
 
+		const getMaliceItem = (m: FeatureMalice | FeatureAbility) => {
+			const cost = m.type === FeatureType.Ability ? m.data.ability.cost as number : m.data.cost;
+
+			return (
+				<SelectablePanel key={m.id}>
+					<FeaturePanel
+						feature={m}
+						options={props.options}
+						mode={PanelMode.Full}
+						cost={cost}
+						repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
+					/>
+					{
+						encounter.malice >= cost ?
+							<Button
+								block={true}
+								onClick={() => setMalice(Math.max(encounter.malice - cost, 0))}
+							>
+								Use
+								<HeroicResourceBadge value={cost} />
+							</Button>
+							:
+							<div className='malice-progress'>
+								<Progress percent={100 * encounter.malice / cost} steps={cost} showInfo={false} />
+							</div>
+					}
+				</SelectablePanel>
+			);
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Malice</HeaderText>
+				<div className='malice'>
+					{MonsterData.malice.map(getMaliceItem)}
+				</div>
 				{
 					monsterGroups.filter(group => group.malice.length > 0).map(group => (
 						<div key={group.id}>
 							<HeaderText>{group.name} Malice</HeaderText>
 							<div className='malice'>
-								{
-									group.malice.map(m => {
-										const cost = m.type === FeatureType.Ability ? m.data.ability.cost as number : m.data.cost;
-
-										return (
-											<SelectablePanel key={m.id}>
-												<FeaturePanel
-													feature={m}
-													options={props.options}
-													mode={PanelMode.Full}
-													cost={cost}
-													repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
-												/>
-												{
-													encounter.malice >= cost ?
-														<Button
-															block={true}
-															onClick={() => setMalice(Math.max(encounter.malice - cost, 0))}
-														>
-															Use
-															<HeroicResourceBadge value={cost} />
-														</Button>
-														:
-														<div className='malice-progress'>
-															<Progress percent={100 * encounter.malice / cost} steps={cost} showInfo={false} />
-														</div>
-												}
-											</SelectablePanel>
-										);
-									})
-								}
+								{group.malice.map(getMaliceItem)}
 							</div>
 						</div>
 					))

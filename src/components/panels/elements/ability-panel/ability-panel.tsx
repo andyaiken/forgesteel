@@ -237,7 +237,7 @@ export const AbilityPanel = (props: Props) => {
 					>
 						{customization?.name || props.ability.name || 'Unnamed Ability'}
 					</HeaderText>
-					<Markdown text={customization?.description || props.ability.description} />
+					<Markdown text={customization?.description || props.ability.description} className='ability-description-text' />
 					{
 						props.mode === PanelMode.Full ?
 							<div>

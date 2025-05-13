@@ -140,7 +140,7 @@ If you are dying, you can’t take the Catch Breath maneuver, but other creature
 		type: FactoryLogic.type.createManeuver(),
 		keywords: [ AbilityKeyword.Melee ],
 		distance: [ FactoryLogic.distance.createMelee() ],
-		target: '1 creature the same size or smaller than you',
+		target: '1 creature no more than 1 size larger than you',
 		powerRoll: FactoryLogic.createPowerRoll({
 			characteristic: [ Characteristic.Might ],
 			tier1: 'No effect',

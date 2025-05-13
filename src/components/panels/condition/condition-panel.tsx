@@ -14,7 +14,7 @@ import './condition-panel.scss';
 
 interface Props {
 	condition: Condition;
-	onChange: (condition: Condition) => void;
+	onChange?: (condition: Condition) => void;
 	onDelete: (condition: Condition) => void;
 }
 
@@ -47,7 +47,15 @@ export const ConditionPanel = (props: Props) => {
 						{
 							condition.type === ConditionType.Custom ?
 								<MultiLine label='Custom Condition Text' value={condition.text} onChange={setConditionText} />
-								:
+								: null
+						}
+						{
+							condition.type === ConditionType.Quick ?
+								<div className='ds-text bold-text'>{condition.text}</div>
+								: null
+						}
+						{
+							(condition.type !== ConditionType.Custom) && (condition.type !== ConditionType.Quick) ?
 								<Field
 									label={condition.type}
 									value={
@@ -57,11 +65,12 @@ export const ConditionPanel = (props: Props) => {
 										/>
 									}
 								/>
+								: null
 						}
 						<Segmented
 							name='endtypes'
 							block={true}
-							options={[ ConditionEndType.EndOfTurn, ConditionEndType.SaveEnds ]}
+							options={[ ConditionEndType.EndOfTurn, ConditionEndType.SaveEnds, ConditionEndType.UntilRemoved ]}
 							value={condition.ends}
 							onChange={setConditionEndType}
 						/>

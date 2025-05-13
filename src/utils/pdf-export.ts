@@ -13,14 +13,12 @@ import { FormatLogic } from '../logic/format-logic';
 import { Hero } from '../models/hero';
 import { HeroLogic } from '../logic/hero-logic';
 import { Sourcebook } from '../models/sourcebook';
-import { SourcebookData } from '../data/sourcebook-data';
-import localforage from 'localforage';
 
 import pdfLandscape from '../assets/character-sheet-landscape.pdf';
 import pdfPortrait from '../assets/character-sheet-portrait.pdf';
 
 export class PDFExport {
-	static startExport = async (hero: Hero, format: 'portrait' | 'landscape') => {
+	static startExport = async (hero: Hero, sourcebooks: Sourcebook[], format: 'portrait' | 'landscape') => {
 		let file: string;
 		switch (format) {
 			case 'portrait':
@@ -209,7 +207,7 @@ export class PDFExport {
 
 		{
 			for (const c of hero.state.conditions) {
-				if (c.type !== ConditionType.Custom) {
+				if ((c.type !== ConditionType.Custom) && (c.type !== ConditionType.Quick)) {
 					if (c.ends === ConditionEndType.EndOfTurn) {
 						toggles[c.type + 'EoT'] = true;
 					} else if (c.ends === ConditionEndType.SaveEnds) {
@@ -220,12 +218,7 @@ export class PDFExport {
 		}
 
 		{
-			const homebrew = (await localforage.getItem<Sourcebook[]>(
-				'forgesteel-homebrew-settings'
-			)) as Sourcebook[];
-			const books = [ SourcebookData.core, SourcebookData.orden ];
-			if (homebrew) books.push(...homebrew);
-			texts['Skills'] = HeroLogic.getSkills(hero, books).map(s => '• ' + s.name).join('\n');
+			texts['Skills'] = HeroLogic.getSkills(hero, sourcebooks).map(s => '• ' + s.name).join('\n');
 
 			if (hero.career) {
 				texts['CareerName'] = hero.career.name;
@@ -250,7 +243,7 @@ export class PDFExport {
 				}
 				texts['CultureFull'] = cultureUpbringingTexts.join('\n\n');
 			}
-			const languages = HeroLogic.getLanguages(hero, books);
+			const languages = HeroLogic.getLanguages(hero, sourcebooks);
 			texts['Languages'] = languages.map(l => '• ' + l.name).join('\n');
 
 			texts['Titles'] = features

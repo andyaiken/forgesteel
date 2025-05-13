@@ -1,3 +1,4 @@
+import { FactoryLogic } from '../logic/factory-logic';
 import { angulotl } from './monsters/angulotl';
 import { animal } from './monsters/animal';
 import { ankheg } from './monsters/ankheg';
@@ -19,6 +20,7 @@ import { elfHigh } from './monsters/elf-high';
 import { elfShadow } from './monsters/elf-shadow';
 import { elfWode } from './monsters/elf-wode';
 import { fossilCryptic } from './monsters/fossil-cryptic';
+import { giant } from './monsters/giant';
 import { gnoll } from './monsters/gnoll';
 import { goblin } from './monsters/goblin';
 import { griffon } from './monsters/griffon';
@@ -69,7 +71,7 @@ export class MonsterData {
 	static elfShadow = elfShadow;
 	static elfWode = elfWode;
 	static fossilCryptic = fossilCryptic;
-	// static giant = giant;
+	static giant = giant;
 	static gnoll = gnoll;
 	static goblin = goblin;
 	static griffon = griffon;
@@ -97,4 +99,24 @@ export class MonsterData {
 	static werewolf = werewolf;
 	static wyvern = wyvern;
 	static xorannox = xorannox;
+
+	static malice = [
+		FactoryLogic.feature.createMalice({
+			id: 'malice-1',
+			name: 'Brutal Effectiveness',
+			cost: 3,
+			sections: [
+				'The monster digs into the enemy’s weak spot. The next ability the monster uses with a potency has its potency increased by 1.'
+			]
+		}),
+		FactoryLogic.feature.createMalice({
+			id: 'malice-2',
+			name: 'Malicious Strike',
+			cost: 5,
+			repeatable: true,
+			sections: [
+				'The monster pours all their animosity into their attack. Their next strike deals additional damage to one target equal to their highest characteristic. The damage increases by 1 for every additional malice spent on this feature (to a maximum total of three times their highest characteristic). This feature can’t be used two rounds in a row.'
+			]
+		})
+	];
 }

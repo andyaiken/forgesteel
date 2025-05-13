@@ -1,5 +1,6 @@
-import { Alert, Button, Divider, Drawer, Flex, InputNumber, Progress, Segmented, Space } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, InputNumber, Popover, Progress, Segmented, Space } from 'antd';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
+import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import { Encounter, EncounterSlot } from '../../../models/encounter';
 import { Collections } from '../../../utils/collections';
 import { Condition } from '../../../models/condition';
@@ -21,7 +22,6 @@ import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../enums/panel-mode';
-import { PlusOutlined } from '@ant-design/icons';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
@@ -563,7 +563,17 @@ const HealthPanel = (props: Props) => {
 			id: Utils.guid(),
 			type: type,
 			text: '',
-			ends: ConditionEndType.EndOfTurn
+			ends: ConditionEndType.UntilRemoved
+		});
+	};
+
+	const addSpecial = (text: string) => {
+		setConditionsVisible(false);
+		props.addCondition({
+			id: Utils.guid(),
+			type: ConditionType.Quick,
+			text: text,
+			ends: ConditionEndType.UntilRemoved
 		});
 	};
 
@@ -827,6 +837,7 @@ Your allies can help you spend Recoveries in combat, and you can spend Recoverie
 										<Button
 											key='defeated'
 											style={{ flex: '1 1 0' }}
+											type={!props.defeated.value && props.stamina && (props.stamina.staminaDamage >= props.stamina.staminaMax) ? 'primary' : 'default'}
 											className='tall-button'
 											onClick={() => props.defeated!.setValue(!props.defeated!.value)}
 										>
@@ -873,10 +884,27 @@ Your allies can help you spend Recoveries in combat, and you can spend Recoverie
 				}
 				<HeaderText
 					extra={
-						<Button onClick={() => setConditionsVisible(true)}>
-							<PlusOutlined />
-							Add a condition
-						</Button>
+						<Space>
+							<Button onClick={() => setConditionsVisible(true)}>
+								<PlusOutlined />
+								Add a condition
+							</Button>
+							<Popover
+								trigger='click'
+								content={
+									<Space direction='vertical'>
+										<Button type='text' onClick={() => addSpecial('Judged')}>Judged</Button>
+										<Button type='text' onClick={() => addSpecial('Marked')}>Marked</Button>
+									</Space>
+								}
+							>
+								<Button>
+									<PlusOutlined />
+									Add other
+									<DownOutlined />
+								</Button>
+							</Popover>
+						</Space>
 					}
 				>
 					Conditions

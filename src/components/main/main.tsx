@@ -189,7 +189,7 @@ export const Main = (props: Props) => {
 	};
 
 	const exportHeroPDF = (hero: Hero, format: 'portrait' | 'landscape') => {
-		PDFExport.startExport(hero, format);
+		PDFExport.startExport(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], format);
 	};
 
 	//#endregion

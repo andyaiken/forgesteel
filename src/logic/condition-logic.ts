@@ -7,6 +7,8 @@ export class ConditionLogic {
 		switch (condition) {
 			case ConditionType.Custom:
 				return 'A custom condition.';
+			case ConditionType.Quick:
+				return 'A quick condition.';
 			case ConditionType.Bleeding:
 				return ConditionData.bleeding;
 			case ConditionType.Dazed:
@@ -29,12 +31,18 @@ export class ConditionLogic {
 	};
 
 	static getFullDescription = (condition: Condition) => {
-		let end = condition.ends.toLowerCase();
-
-		if (condition.ends === ConditionEndType.EndOfTurn) {
-			end = 'EoT';
+		let type = condition.type.toString();
+		if (condition.type === ConditionType.Quick) {
+			type = condition.text;
 		}
 
-		return `${condition.type} (${end})`;
+		switch (condition.ends) {
+			case ConditionEndType.EndOfTurn:
+				return `${type} (EoT)`;
+			case ConditionEndType.SaveEnds:
+				return `${type} (${condition.ends})`;
+			case ConditionEndType.UntilRemoved:
+				return `${type}`;
+		}
 	};
 }

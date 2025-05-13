@@ -1,5 +1,6 @@
 export enum ConditionType {
 	Custom = 'Custom Condition',
+	Quick = 'Quick Condition',
 	Bleeding = 'Bleeding',
 	Dazed = 'Dazed',
 	Frightened = 'Frightened',
@@ -13,5 +14,6 @@ export enum ConditionType {
 
 export enum ConditionEndType {
 	EndOfTurn = 'End of turn',
-	SaveEnds = 'Save ends'
+	SaveEnds = 'Save ends',
+	UntilRemoved = 'Until removed'
 }

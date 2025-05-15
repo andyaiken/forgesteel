@@ -114,6 +114,7 @@ Promise.all(promises).then(results => {
 			similarSize: true,
 			minionCount: 8,
 			party: '',
+			heroParty: '',
 			heroCount: 4,
 			heroLevel: 1,
 			heroVictories: 0,
@@ -169,6 +170,10 @@ Promise.all(promises).then(results => {
 
 	if (options.party === undefined) {
 		options.party = '';
+	}
+
+	if (options.heroParty === undefined) {
+		options.heroParty = '';
 	}
 
 	if (options.heroCount === undefined) {

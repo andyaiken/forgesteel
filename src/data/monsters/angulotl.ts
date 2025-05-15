@@ -357,10 +357,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The slink jumps 3 squares. If the slink lands in cover or concealment, they can immediately hide.',
-						spend: [
-							{ value: 3, effect: 'The artifex can place a new trap in the encounter and instantly trigger it.' }
-						]
+						effect: 'The slink jumps 3 squares. If the slink lands in cover or concealment, they can immediately hide.'
 					})
 				}),
 				FactoryLogic.feature.create({

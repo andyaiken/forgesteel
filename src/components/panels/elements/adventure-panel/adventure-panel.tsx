@@ -13,6 +13,7 @@ import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
+import { Hero } from '../../../../models/hero';
 import { ItemPanel } from '../item-panel/item-panel';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { MonsterPanel } from '../monster-panel/monster-panel';
@@ -41,6 +42,7 @@ interface Props {
 	mode?: PanelMode;
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
+	heroes: Hero[];
 	options: Options;
 	allowSelection?: boolean;
 	onChange?: (adventure: Adventure) => void;
@@ -66,6 +68,7 @@ export const AdventurePanel = (props: Props) => {
 							<EncounterPanel
 								encounter={encounter}
 								sourcebooks={props.sourcebooks}
+								heroes={props.heroes}
 								options={props.options}
 							/>
 						</SelectablePanel>

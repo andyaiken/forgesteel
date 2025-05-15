@@ -987,7 +987,7 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createAncestryFeature: (data: { id: string, name?: string, description?: string, current: boolean, former: boolean, value: number }): FeatureAncestryFeatureChoice => {
+		createAncestryFeature: (data: { id: string, name?: string, description?: string, current: boolean, former: boolean, customID: string, value: number }): FeatureAncestryFeatureChoice => {
 			return {
 				id: data.id,
 				name: data.name || 'Ancestry Feature',
@@ -996,7 +996,8 @@ export class FactoryLogic {
 				data: {
 					source: {
 						current: data.current,
-						former: data.former
+						former: data.former,
+						customID: data.customID
 					},
 					value: data.value,
 					selected: null

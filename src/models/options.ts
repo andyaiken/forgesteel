@@ -21,6 +21,7 @@ export interface Options {
 	minionCount: number;
 	party: string;
 	// Encounter Difficulty
+	heroParty: string;
 	heroCount: number;
 	heroLevel: number;
 	heroVictories: number;

@@ -69,6 +69,7 @@ export interface FeatureAncestryFeatureChoiceData extends _FeatureData {
 	source: {
 		current: boolean;
 		former: boolean;
+		customID: string;
 	};
 	value: number;
 	selected: Feature | null;

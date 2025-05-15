@@ -1,5 +1,7 @@
 # Development Plans
 
+Add familiar
+
 ### Heroes
 
 * Automatic update of library resources when there is a newer version

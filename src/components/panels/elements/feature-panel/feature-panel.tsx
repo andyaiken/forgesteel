@@ -151,11 +151,18 @@ export const FeaturePanel = (props: Props) => {
 			.map(f => f.id);
 
 		const ancestries: Ancestry[] = [];
-		if (data.source.current && props.hero.ancestry) {
-			ancestries.push(props.hero.ancestry);
-		}
-		if (data.source.former) {
-			ancestries.push(...HeroLogic.getFormerAncestries(props.hero));
+		if (data.source.customID && props.sourcebooks) {
+			const a = SourcebookLogic.getAncestries(props.sourcebooks).find(a => a.id === data.source.customID);
+			if (a) {
+				ancestries.push(a);
+			}
+		} else {
+			if (data.source.current && props.hero.ancestry) {
+				ancestries.push(props.hero.ancestry);
+			}
+			if (data.source.former) {
+				ancestries.push(...HeroLogic.getFormerAncestries(props.hero));
+			}
 		}
 
 		const features = ancestries

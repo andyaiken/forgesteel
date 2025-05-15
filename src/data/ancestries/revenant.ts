@@ -40,6 +40,7 @@ export const revenant: Ancestry = {
 						id: 'revenant-feature-4-1',
 						current: false,
 						former: true,
+						customID: '',
 						value: 1
 					}),
 					value: 1
@@ -66,6 +67,7 @@ export const revenant: Ancestry = {
 						id: 'revenant-feature-4-4',
 						current: false,
 						former: true,
+						customID: '',
 						value: 2
 					}),
 					value: 2

@@ -4,7 +4,9 @@ import { EncounterLogic } from '../../../logic/encounter-logic';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
+import { Hero } from '../../../models/hero';
 import { Options } from '../../../models/options';
+import { OptionsLogic } from '../../../logic/options-logic';
 import { ReactNode } from 'react';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
@@ -14,26 +16,16 @@ import './encounter-difficulty-panel.scss';
 interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
+	heroes: Hero[];
 	options: Options;
 }
 
 export const EncounterDifficultyPanel = (props: Props) => {
-	const getPartyDescription = () => {
-		const heroes = `${props.options.heroCount === 1 ? 'hero' : 'heroes'}`;
-		const victories = `${props.options.heroVictories === 1 ? 'victory' : 'victories'}`;
-
-		if (props.options.heroVictories > 0) {
-			return `${props.options.heroCount} ${heroes} at level ${props.options.heroLevel} with ${props.options.heroVictories} ${victories}`;
-		}
-
-		return `${props.options.heroCount} ${heroes} at level ${props.options.heroLevel}`;
-	};
-
 	try {
 		const count = EncounterLogic.getMonsterCount(props.encounter, props.sourcebooks, props.options);
-		const budgets = EncounterLogic.getBudgets(props.options);
+		const budgets = EncounterLogic.getBudgets(props.options, props.heroes);
 		const strength = EncounterLogic.getStrength(props.encounter, props.sourcebooks);
-		const difficulty = EncounterLogic.getDifficulty(strength, props.options);
+		const difficulty = EncounterLogic.getDifficulty(strength, props.options, props.heroes);
 		const victories = EncounterLogic.getVictories(difficulty);
 
 		const marks: Record<string | number, ReactNode> = {};
@@ -64,7 +56,7 @@ export const EncounterDifficultyPanel = (props: Props) => {
 			<ErrorBoundary>
 				<div className='encounter-difficulty-panel'>
 					<HeaderText level={1}>Encounter Difficulty</HeaderText>
-					<div className='ds-text'>Difficulty for {getPartyDescription()}</div>
+					<div className='ds-text'>Difficulty for {OptionsLogic.getPartyDescription(props.options)}</div>
 					<div className='encounter-slider'>
 						<Slider
 							range={true}

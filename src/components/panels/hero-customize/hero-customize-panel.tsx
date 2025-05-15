@@ -127,11 +127,36 @@ export const HeroCustomizePanel = (props: Props) => {
 		props.setFeature(feature.id, copy);
 	};
 
+	const setCustomAncestryID = (feature: Feature, value: string) => {
+		const copy = Utils.copy(feature) as FeatureAncestryFeatureChoice;
+		copy.data.source.customID = value;
+		copy.data.selected = null;
+		props.setFeature(feature.id, copy);
+	};
+
 	const getEditSection = (feature: Feature) => {
 		switch (feature.type) {
 			case FeatureType.AncestryFeatureChoice:
 				return (
 					<div>
+						<HeaderText>Ancestry</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select ancestry'
+							options={[ null, ...SourcebookLogic.getAncestries(props.sourcebooks) ].map(o => ({ value: o ? o.id : '', label: o ? o.name : 'Your ancestry' }))}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.label
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
+							value={feature.data.source.customID}
+							onChange={id => setCustomAncestryID(feature, id)}
+						/>
 						<HeaderText>Point Cost</HeaderText>
 						<NumberSpin min={1} max={2} value={feature.data.value} onChange={value => setValue(feature, value)} />
 					</div>
@@ -353,7 +378,8 @@ export const HeroCustomizePanel = (props: Props) => {
 										id: Utils.guid(),
 										value: 1,
 										current: true,
-										former: true
+										former: true,
+										customID: ''
 									});
 									break;
 								case 'characteristic-bonus':

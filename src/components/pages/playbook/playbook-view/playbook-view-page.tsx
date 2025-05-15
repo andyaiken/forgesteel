@@ -63,6 +63,7 @@ export const PlaybookViewPage = (props: Props) => {
 					mode={PanelMode.Full}
 					playbook={props.playbook}
 					sourcebooks={props.sourcebooks}
+					heroes={props.heroes}
 					options={props.options}
 					allowSelection={true}
 					onStart={props.start}
@@ -75,6 +76,7 @@ export const PlaybookViewPage = (props: Props) => {
 				<EncounterPanel
 					encounter={element as Encounter}
 					sourcebooks={props.sourcebooks}
+					heroes={props.heroes}
 					options={props.options}
 					mode={PanelMode.Full}
 				/>

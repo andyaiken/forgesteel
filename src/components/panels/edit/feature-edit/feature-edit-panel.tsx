@@ -120,7 +120,8 @@ export const FeatureEditPanel = (props: Props) => {
 				data = {
 					source: {
 						current: true,
-						former: true
+						former: true,
+						customID: ''
 					},
 					value: 1,
 					selected: null

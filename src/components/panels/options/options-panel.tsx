@@ -4,6 +4,7 @@ import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Hero } from '../../../models/hero';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Options } from '../../../models/options';
+import { OptionsLogic } from '../../../logic/options-logic';
 import { PanelWidth } from '../../../enums/panel-width';
 import { Toggle } from '../../controls/toggle/toggle';
 import { Utils } from '../../../utils/utils';
@@ -108,6 +109,12 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
+	const setHeroParty = (value: string) => {
+		const copy = Utils.copy(props.options);
+		copy.heroParty = value;
+		props.setOptions(copy);
+	};
+
 	const setHeroCount = (value: number) => {
 		const copy = Utils.copy(props.options);
 		copy.heroCount = value;
@@ -145,12 +152,15 @@ export const OptionsPanel = (props: Props) => {
 	};
 
 	const getContent = () => {
-		const getPartySection = (initialDivider: boolean) => {
-			const parties = Collections
+		const getParties = () => {
+			return Collections
 				.distinct(props.heroes.map(h => h.folder), f => f)
 				.sort()
 				.filter(f => !!f);
+		};
 
+		const getPartySection = (initialDivider: boolean) => {
+			const parties = getParties();
 			if (parties.length === 0) {
 				return null;
 			}
@@ -162,7 +172,7 @@ export const OptionsPanel = (props: Props) => {
 					<Select
 						style={{ width: '100%' }}
 						placeholder='Select a party'
-						options={[ '', ...parties ].map(s => ({ value: s, label: s || 'No heroes' }))}
+						options={[ '', ...parties ].map(p => ({ value: p, label: p || 'No heroes' }))}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 						showSearch={true}
 						filterOption={(input, option) => {
@@ -178,17 +188,6 @@ export const OptionsPanel = (props: Props) => {
 					/>
 				</>
 			);
-		};
-
-		const getPartyDescription = () => {
-			const heroes = `${props.options.heroCount === 1 ? 'hero' : 'heroes'}`;
-			const victories = `${props.options.heroVictories === 1 ? 'victory' : 'victories'}`;
-
-			if (props.options.heroVictories > 0) {
-				return `${props.options.heroCount} ${heroes} at level ${props.options.heroLevel} with ${props.options.heroVictories} ${victories}`;
-			}
-
-			return `${props.options.heroCount} ${heroes} at level ${props.options.heroLevel}`;
 		};
 
 		switch (props.mode) {
@@ -239,10 +238,33 @@ export const OptionsPanel = (props: Props) => {
 						<NumberSpin label='Minions per group' min={1} value={props.options.minionCount} onChange={setMinionCount} />
 						{getPartySection(true)}
 						<Divider />
-						<Alert type='info' showIcon={true} message={`Calculate encounter difficulty based on a party of ${getPartyDescription()}.`} />
-						<NumberSpin label='Number of heroes' min={1} value={props.options.heroCount} onChange={setHeroCount} />
-						<NumberSpin label='Hero level' min={1} max={10} value={props.options.heroLevel} onChange={setHeroLevel} />
-						<NumberSpin label='Number of victories' min={0} value={props.options.heroVictories} onChange={setHeroVictories} />
+						<Alert type='info' showIcon={true} message={`Calculate encounter difficulty based on ${OptionsLogic.getPartyDescription(props.options)}.`} />
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select a party'
+							options={[ ...getParties(), '' ].map(p => ({ value: p, label: p || 'A custom party' }))}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.label
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
+							value={props.options.heroParty}
+							onChange={p => setHeroParty(p || '')}
+						/>
+						{
+							props.options.heroParty === '' ?
+								<>
+									<NumberSpin label='Number of heroes' min={1} value={props.options.heroCount} onChange={setHeroCount} />
+									<NumberSpin label='Hero level' min={1} max={10} value={props.options.heroLevel} onChange={setHeroLevel} />
+									<NumberSpin label='Number of victories' min={0} value={props.options.heroVictories} onChange={setHeroVictories} />
+								</>
+								: null
+						}
 					</>
 				);
 			case 'tactical-map':

@@ -159,6 +159,7 @@ export const PlaybookListPage = (props: Props) => {
 								adventure={a}
 								playbook={props.playbook}
 								sourcebooks={props.sourcebooks}
+								heroes={props.heroes}
 								options={props.options}
 							/>
 						</SelectablePanel>
@@ -180,7 +181,7 @@ export const PlaybookListPage = (props: Props) => {
 				{
 					list.map(e => (
 						<SelectablePanel key={e.id} onSelect={() => navigation.goToPlaybookView('encounter', e.id)}>
-							<EncounterPanel encounter={e} sourcebooks={props.sourcebooks} options={props.options} />
+							<EncounterPanel encounter={e} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
 						</SelectablePanel>
 					))
 				}

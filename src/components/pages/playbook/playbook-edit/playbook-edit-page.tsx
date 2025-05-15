@@ -1277,6 +1277,7 @@ export const PlaybookEditPage = (props: Props) => {
 					mode={PanelMode.Full}
 					playbook={props.playbook}
 					sourcebooks={props.sourcebooks}
+					heroes={props.heroes}
 					options={props.options}
 					allowSelection={true}
 					onChange={(adventure: Adventure) => {
@@ -1397,6 +1398,7 @@ export const PlaybookEditPage = (props: Props) => {
 				<EncounterPanel
 					encounter={element as Encounter}
 					sourcebooks={props.sourcebooks}
+					heroes={props.heroes}
 					options={props.options}
 					mode={PanelMode.Full}
 				/>
@@ -1544,13 +1546,14 @@ export const PlaybookEditPage = (props: Props) => {
 	const getPreviewHeaderSection = () => {
 		if (kind === 'encounter') {
 			const strength = EncounterLogic.getStrength(element as Encounter, props.sourcebooks);
-			const difficulty = EncounterLogic.getDifficulty(strength, props.options);
+			const difficulty = EncounterLogic.getDifficulty(strength, props.options, props.heroes);
 
 			return (
 				<Expander title='Difficulty' tags={[ difficulty ]}>
 					<EncounterDifficultyPanel
 						encounter={element as Encounter}
 						sourcebooks={props.sourcebooks}
+						heroes={props.heroes}
 						options={props.options}
 					/>
 				</Expander>

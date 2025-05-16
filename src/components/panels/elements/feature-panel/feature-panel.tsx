@@ -1,12 +1,13 @@
 import { Alert, Button, Drawer, Flex, Input, Select, Space } from 'antd';
 import { Badge, HeroicResourceBadge } from '../../../controls/badge/badge';
 import { CSSProperties, useState } from 'react';
+import { DeleteOutlined, InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
-import { InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityModal } from '../../../modals/ability/ability-modal';
 import { AbilityPanel } from '../ability-panel/ability-panel';
+import { AbilitySelectModal } from '../../../modals/select/ability-select/ability-select-modal';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../ancestry-panel/ancestry-panel';
 import { Collections } from '../../../../utils/collections';
@@ -63,6 +64,7 @@ interface Props {
 
 export const FeaturePanel = (props: Props) => {
 	const [ autoCalc, setAutoCalc ] = useState<boolean>(true);
+	const [ abilitySelectorOpen, setAbilitySelectorOpen ] = useState<boolean>(false);
 	const [ monsterSelectorOpen, setMonsterSelectorOpen ] = useState<boolean>(false);
 	const [ selectedAbility, setSelectedAbility ] = useState<Ability | null>(null);
 	const [ selectedAncestry, setSelectedAncestry ] = useState<Ancestry | null>(null);
@@ -359,40 +361,6 @@ export const FeaturePanel = (props: Props) => {
 				<div className='ds-text'>
 					Choose {data.count > 1 ? data.count : 'a'} {data.cost === 'signature' ? 'signature' : `${data.cost}pt`} {data.count > 1 ? 'abilities' : 'ability'}.
 				</div>
-				<Select
-					style={{ width: '100%' }}
-					status={data.selectedIDs.length < data.count ? 'warning' : ''}
-					mode={data.count === 1 ? undefined : 'multiple'}
-					maxCount={data.count === 1 ? undefined : data.count}
-					allowClear={true}
-					placeholder={data.count === 1 ? 'Select an ability' : 'Select abilities'}
-					options={sortedAbilities.map(a => ({ label: a.name, value: a.id, desc: a.description, disabled: currentAbilityIDs.includes(a.id) }))}
-					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
-					value={data.count === 1 ? (data.selectedIDs.length > 0 ? data.selectedIDs[0] : null) : data.selectedIDs}
-					onChange={value => {
-						let ids: string[] = [];
-						if (data.count === 1) {
-							ids = value !== undefined ? [ value as string ] : [];
-						} else {
-							ids = value as string[];
-						}
-						const dataCopy = Utils.copy(data);
-						dataCopy.selectedIDs = ids;
-						if (props.setData) {
-							props.setData(props.feature.id, dataCopy);
-						}
-					}}
-				/>
 				{
 					data.selectedIDs.map(id => {
 						const ability = abilities.find(a => a.id === id) as Ability;
@@ -409,10 +377,45 @@ export const FeaturePanel = (props: Props) => {
 									icon={<InfoCircleOutlined />}
 									onClick={() => setSelectedAbility(ability)}
 								/>
+								<Button
+									style={{ flex: '0 0 auto' }}
+									type='text'
+									icon={<DeleteOutlined />}
+									onClick={() => {
+										const dataCopy = Utils.copy(data);
+										dataCopy.selectedIDs = dataCopy.selectedIDs.filter(id => id !== ability.id);
+										if (props.setData) {
+											props.setData(props.feature.id, dataCopy);
+										}
+									}}
+								/>
 							</Flex>
 						);
 					})
 				}
+				{
+					data.selectedIDs.length < data.count ?
+						<Button block={true} onClick={() => setAbilitySelectorOpen(true)}>
+							Choose an ability
+						</Button>
+						: null
+				}
+				<Drawer open={abilitySelectorOpen} onClose={() => setAbilitySelectorOpen(false)} closeIcon={null} width='500px'>
+					<AbilitySelectModal
+						abilities={sortedAbilities.filter(a => !currentAbilityIDs.includes(a.id))}
+						hero={props.hero}
+						onSelect={ability => {
+							setAbilitySelectorOpen(false);
+
+							const dataCopy = Utils.copy(data);
+							dataCopy.selectedIDs.push(ability.id);
+							if (props.setData) {
+								props.setData(props.feature.id, dataCopy);
+							}
+						}}
+						onClose={() => setAbilitySelectorOpen(false)}
+					/>
+				</Drawer>
 				<Drawer open={!!selectedAbility} onClose={() => setSelectedAbility(null)} closeIcon={null} width='500px'>
 					{selectedAbility ? <AbilityModal ability={selectedAbility} hero={props.hero} onClose={() => setSelectedAncestry(null)} /> : null}
 				</Drawer>

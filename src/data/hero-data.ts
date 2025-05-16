@@ -3356,7 +3356,7 @@ export class HeroData {
 				},
 				{
 					id: 'tactician-ability-12',
-					name: 'Stay [strong], and Focus',
+					name: 'Stay Strong and Focus',
 					description: 'We can do this! Keep faith and hold fast!',
 					type: {
 						usage: 'Maneuver',

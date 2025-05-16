@@ -30,6 +30,7 @@ interface Props {
 	showReference: () => void;
 	addHero: () => void;
 	importHero: (hero: Hero) => void;
+	showParty: (heroes: Hero[]) => void;
 }
 
 export const HeroListPage = (props: Props) => {
@@ -158,6 +159,16 @@ export const HeroListPage = (props: Props) => {
 								<DownOutlined />
 							</Button>
 						</Popover>
+						{
+							getHeroes(currentTab).length > 1 ?
+								<>
+									<div className='divider' />
+									<Button onClick={() => props.showParty(getHeroes(currentTab))}>
+										Party Overview
+									</Button>
+								</>
+								: null
+						}
 					</AppHeader>
 					<div className='hero-list-page-content'>
 						<Tabs

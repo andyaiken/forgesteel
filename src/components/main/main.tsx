@@ -43,6 +43,7 @@ import { Montage } from '../../models/montage';
 import { Negotiation } from '../../models/negotiation';
 import { Options } from '../../models/options';
 import { PDFExport } from '../../utils/pdf-export';
+import { PartyModal } from '../modals/party/party-modal';
 import { Perk } from '../../models/perk';
 import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit-page';
 import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list-page';
@@ -943,12 +944,6 @@ export const Main = (props: Props) => {
 
 	//#endregion
 
-	//#region Session
-
-	//
-
-	//#endregion
-
 	//#region Modals
 
 	const showDirectoryPane = () => {
@@ -1059,6 +1054,16 @@ export const Main = (props: Props) => {
 		);
 	};
 
+	const onShowParty = (heroes: Hero[]) => {
+		setDrawer(
+			<PartyModal
+				heroes={heroes}
+				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				onClose={() => setDrawer(null)}
+			/>
+		);
+	};
+
 	const onshowReference = (hero: Hero | null, page?: RulesPage) => {
 		setDrawer(
 			<ReferenceModal
@@ -1149,6 +1154,7 @@ export const Main = (props: Props) => {
 										showReference={showReference}
 										addHero={createHero}
 										importHero={importHero}
+										showParty={onShowParty}
 									/>
 								}
 							/>

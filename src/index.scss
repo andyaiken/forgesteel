@@ -176,6 +176,10 @@ td {
 		text-align: unset;
 		padding: 5px 10px;
 	}
+
+	&.status-warning {
+		border-color: rgb(250, 173, 20) !important;
+	}
 }
 
 .ant-collapse {

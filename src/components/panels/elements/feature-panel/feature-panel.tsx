@@ -41,6 +41,7 @@ import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../perk-panel/perk-panel';
+import { PerkSelectModal } from '../../../modals/select/perk-select/perk-select-modal';
 import { PowerRollPanel } from '../../power-roll/power-roll-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -66,6 +67,7 @@ export const FeaturePanel = (props: Props) => {
 	const [ autoCalc, setAutoCalc ] = useState<boolean>(true);
 	const [ abilitySelectorOpen, setAbilitySelectorOpen ] = useState<boolean>(false);
 	const [ monsterSelectorOpen, setMonsterSelectorOpen ] = useState<boolean>(false);
+	const [ perkSelectorOpen, setPerkSelectorOpen ] = useState<boolean>(false);
 	const [ selectedAbility, setSelectedAbility ] = useState<Ability | null>(null);
 	const [ selectedAncestry, setSelectedAncestry ] = useState<Ancestry | null>(null);
 	const [ selectedDomain, setSelectedDomain ] = useState<Domain | null>(null);
@@ -395,7 +397,7 @@ export const FeaturePanel = (props: Props) => {
 				}
 				{
 					data.selectedIDs.length < data.count ?
-						<Button block={true} onClick={() => setAbilitySelectorOpen(true)}>
+						<Button className='status-warning' block={true} onClick={() => setAbilitySelectorOpen(true)}>
 							Choose an ability
 						</Button>
 						: null
@@ -964,53 +966,13 @@ export const FeaturePanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
-				<Select
-					style={{ width: '100%' }}
-					status={data.selected.length < data.count ? 'warning' : ''}
-					mode={data.count === 1 ? undefined : 'multiple'}
-					maxCount={data.count === 1 ? undefined : data.count}
-					allowClear={true}
-					placeholder={data.count === 1 ? 'Select a perk' : 'Select perks'}
-					options={sortedPerks.map(a => ({ label: a.name, value: a.id, desc: a.description, disabled: currentPerkIDs.includes(a.id) }))}
-					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
-					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
-					onChange={value => {
-						let ids: string[] = [];
-						if (data.count === 1) {
-							ids = value !== undefined ? [ value as string ] : [];
-						} else {
-							ids = value as string[];
-						}
-						const dataCopy = Utils.copy(data);
-						dataCopy.selected = [];
-						ids.forEach(id => {
-							const perk = perks.find(p => p.id === id);
-							if (perk) {
-								dataCopy.selected.push(perk);
-							}
-						});
-						if (props.setData) {
-							props.setData(props.feature.id, dataCopy);
-						}
-					}}
-				/>
 				{
 					data.selected.map(perk => (
 						<Flex key={perk.id} align='center'>
 							<Field
 								style={{ flex: '1 1 0' }}
 								label={perk.name}
-								value={perk.description}
+								value={<Markdown text={perk.description} useSpan={true} />}
 							/>
 							<Button
 								style={{ flex: '0 0 auto' }}
@@ -1018,9 +980,45 @@ export const FeaturePanel = (props: Props) => {
 								icon={<InfoCircleOutlined />}
 								onClick={() => setSelectedPerk(perk)}
 							/>
+							<Button
+								style={{ flex: '0 0 auto' }}
+								type='text'
+								icon={<DeleteOutlined />}
+								onClick={() => {
+									const dataCopy = Utils.copy(data);
+									dataCopy.selected = dataCopy.selected.filter(p => p.id !== perk.id);
+									if (props.setData) {
+										props.setData(props.feature.id, dataCopy);
+									}
+								}}
+							/>
 						</Flex>
 					))
 				}
+				{
+					data.selected.length < data.count ?
+						<Button className='status-warning' block={true} onClick={() => setPerkSelectorOpen(true)}>
+							Choose a perk
+						</Button>
+						: null
+				}
+				<Drawer open={perkSelectorOpen} onClose={() => setPerkSelectorOpen(false)} closeIcon={null} width='500px'>
+					<PerkSelectModal
+						perks={sortedPerks.filter(p => !currentPerkIDs.includes(p.id))}
+						hero={props.hero}
+						options={props.options}
+						onSelect={perk => {
+							setPerkSelectorOpen(false);
+
+							const dataCopy = Utils.copy(data);
+							dataCopy.selected.push(perk);
+							if (props.setData) {
+								props.setData(props.feature.id, dataCopy);
+							}
+						}}
+						onClose={() => setAbilitySelectorOpen(false)}
+					/>
+				</Drawer>
 				<Drawer open={!!selectedPerk} onClose={() => setSelectedPerk(null)} closeIcon={null} width='500px'>
 					<Modal
 						content={selectedPerk ? <PerkPanel perk={selectedPerk} options={props.options} mode={PanelMode.Full} /> : null}
@@ -1296,7 +1294,7 @@ export const FeaturePanel = (props: Props) => {
 								<Field
 									style={{ flex: '1 1 0' }}
 									label={feature.name}
-									value={feature.description}
+									value={<Markdown text={feature.description} useSpan={true} />}
 								/>
 								<Button
 									style={{ flex: '0 0 auto' }}

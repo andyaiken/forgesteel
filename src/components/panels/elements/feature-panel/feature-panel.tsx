@@ -119,11 +119,11 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected ?
-						<Flex align='center'>
+						<Flex align='center' gap={10}>
 							<Field
 								style={{ flex: '1 1 0' }}
 								label={data.selected.name}
-								value={data.selected.description}
+								value={<Markdown text={data.selected.description} useSpan={true} />}
 							/>
 							<Button
 								style={{ flex: '0 0 auto' }}
@@ -367,30 +367,32 @@ export const FeaturePanel = (props: Props) => {
 					data.selectedIDs.map(id => {
 						const ability = abilities.find(a => a.id === id) as Ability;
 						return (
-							<Flex key={ability.id} align='center'>
+							<Flex key={ability.id} align='center' gap={10}>
 								<Field
 									style={{ flex: '1 1 0' }}
 									label={ability.name}
-									value={ability.description}
+									value={<Markdown text={ability.description} useSpan={true} />}
 								/>
-								<Button
-									style={{ flex: '0 0 auto' }}
-									type='text'
-									icon={<InfoCircleOutlined />}
-									onClick={() => setSelectedAbility(ability)}
-								/>
-								<Button
-									style={{ flex: '0 0 auto' }}
-									type='text'
-									icon={<DeleteOutlined />}
-									onClick={() => {
-										const dataCopy = Utils.copy(data);
-										dataCopy.selectedIDs = dataCopy.selectedIDs.filter(id => id !== ability.id);
-										if (props.setData) {
-											props.setData(props.feature.id, dataCopy);
-										}
-									}}
-								/>
+								<div style={{ display: 'flex', flexDirection: 'column' }}>
+									<Button
+										style={{ flex: '0 0 auto' }}
+										type='text'
+										icon={<InfoCircleOutlined />}
+										onClick={() => setSelectedAbility(ability)}
+									/>
+									<Button
+										style={{ flex: '0 0 auto' }}
+										type='text'
+										icon={<DeleteOutlined />}
+										onClick={() => {
+											const dataCopy = Utils.copy(data);
+											dataCopy.selectedIDs = dataCopy.selectedIDs.filter(id => id !== ability.id);
+											if (props.setData) {
+												props.setData(props.feature.id, dataCopy);
+											}
+										}}
+									/>
+								</div>
 							</Flex>
 						);
 					})
@@ -482,7 +484,7 @@ export const FeaturePanel = (props: Props) => {
 				}
 				{
 					data.selected ?
-						<Flex align='center'>
+						<Flex align='center' gap={10}>
 							<MonsterInfo
 								style={{ flex: '1 1 0' }}
 								monster={data.selected}
@@ -584,11 +586,11 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected.map(domain => (
-						<Flex key={domain.id} align='center'>
+						<Flex key={domain.id} align='center' gap={10}>
 							<Field
 								style={{ flex: '1 1 0' }}
 								label={domain.name}
-								value={domain.description}
+								value={<Markdown text={domain.description} useSpan={true} />}
 							/>
 							<Button
 								style={{ flex: '0 0 auto' }}
@@ -746,11 +748,11 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected.map(item => (
-						<Flex key={item.id} align='center'>
+						<Flex key={item.id} align='center' gap={10}>
 							<Field
 								style={{ flex: '1 1 0' }}
 								label={item.name}
-								value={item.description}
+								value={<Markdown text={item.description} useSpan={true} />}
 							/>
 							<Button
 								style={{ flex: '0 0 auto' }}
@@ -833,11 +835,11 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected.map(kit => (
-						<Flex key={kit.id} align='center'>
+						<Flex key={kit.id} align='center' gap={10}>
 							<Field
 								style={{ flex: '1 1 0' }}
 								label={kit.name}
-								value={kit.description}
+								value={<Markdown text={kit.description} useSpan={true} />}
 							/>
 							<Button
 								style={{ flex: '0 0 auto' }}
@@ -968,30 +970,32 @@ export const FeaturePanel = (props: Props) => {
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
 					data.selected.map(perk => (
-						<Flex key={perk.id} align='center'>
+						<Flex key={perk.id} align='center' gap={10}>
 							<Field
 								style={{ flex: '1 1 0' }}
 								label={perk.name}
 								value={<Markdown text={perk.description} useSpan={true} />}
 							/>
-							<Button
-								style={{ flex: '0 0 auto' }}
-								type='text'
-								icon={<InfoCircleOutlined />}
-								onClick={() => setSelectedPerk(perk)}
-							/>
-							<Button
-								style={{ flex: '0 0 auto' }}
-								type='text'
-								icon={<DeleteOutlined />}
-								onClick={() => {
-									const dataCopy = Utils.copy(data);
-									dataCopy.selected = dataCopy.selected.filter(p => p.id !== perk.id);
-									if (props.setData) {
-										props.setData(props.feature.id, dataCopy);
-									}
-								}}
-							/>
+							<div style={{ display: 'flex', flexDirection: 'column' }}>
+								<Button
+									style={{ flex: '0 0 auto' }}
+									type='text'
+									icon={<InfoCircleOutlined />}
+									onClick={() => setSelectedPerk(perk)}
+								/>
+								<Button
+									style={{ flex: '0 0 auto' }}
+									type='text'
+									icon={<DeleteOutlined />}
+									onClick={() => {
+										const dataCopy = Utils.copy(data);
+										dataCopy.selected = dataCopy.selected.filter(p => p.id !== perk.id);
+										if (props.setData) {
+											props.setData(props.feature.id, dataCopy);
+										}
+									}}
+								/>
+							</div>
 						</Flex>
 					))
 				}
@@ -1290,7 +1294,7 @@ export const FeaturePanel = (props: Props) => {
 							return null;
 						}
 						return (
-							<Flex key={feature.id} align='center'>
+							<Flex key={feature.id} align='center' gap={10}>
 								<Field
 									style={{ flex: '1 1 0' }}
 									label={feature.name}

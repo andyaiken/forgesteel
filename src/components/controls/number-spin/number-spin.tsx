@@ -1,5 +1,5 @@
+import { CSSProperties, ReactNode } from 'react';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { ReactNode } from 'react';
 import { Statistic } from 'antd';
 import { Utils } from '../../../utils/utils';
 
@@ -14,6 +14,7 @@ interface Props {
 	min?: number;
 	max?: number;
 	children?: ReactNode;
+	style?: CSSProperties;
 	format?: (value: number) => string;
 	onChange: (value: number) => void;
 }
@@ -46,7 +47,7 @@ export const NumberSpin = (props: Props) => {
 
 	try {
 		return (
-			<div className={props.disabled ? 'number-spin disabled' : 'number-spin'}>
+			<div className={props.disabled ? 'number-spin disabled' : 'number-spin'} style={props.style}>
 				<div className='spin-buttons'>
 					{
 						descending.map((step, n) => (

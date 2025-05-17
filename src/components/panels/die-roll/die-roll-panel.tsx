@@ -1,8 +1,7 @@
-import { Alert, Button, Slider, Space, Statistic } from 'antd';
+import { Alert, Button, Flex, Slider, Statistic } from 'antd';
 import { ReactNode, useState } from 'react';
 import { Collections } from '../../../utils/collections';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { Expander } from '../../controls/expander/expander';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Random } from '../../../utils/random';
 
@@ -91,24 +90,24 @@ export const DieRollPanel = (props: Props) => {
 				<div className='die-roll-panel'>
 					{
 						props.type === 'Power Roll' ?
-							<Expander title='Edges and Banes'>
-								<Space direction='vertical' style={{ paddingTop: '15px', width: '100%' }}>
-									<NumberSpin
-										label='Edges'
-										value={edges}
-										min={0}
-										max={2}
-										onChange={setEdges}
-									/>
-									<NumberSpin
-										label='Banes'
-										value={banes}
-										min={0}
-										max={2}
-										onChange={setBanes}
-									/>
-								</Space>
-							</Expander>
+							<Flex align='center' justify='space-between' gap={20}>
+								<NumberSpin
+									style={{ flex: '1 1 0' }}
+									label='Edges'
+									value={edges}
+									min={0}
+									max={2}
+									onChange={setEdges}
+								/>
+								<NumberSpin
+									style={{ flex: '1 1 0' }}
+									label='Banes'
+									value={banes}
+									min={0}
+									max={2}
+									onChange={setBanes}
+								/>
+							</Flex>
 							: null
 					}
 					<Button type='primary' block={true} onClick={roll}>Roll</Button>

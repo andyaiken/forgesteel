@@ -28,9 +28,9 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
-	addHero: () => void;
-	importHero: (hero: Hero) => void;
-	showParty: (heroes: Hero[]) => void;
+	addHero: (folder: string) => void;
+	importHero: (hero: Hero, folder: string) => void;
+	showParty: (folder: string) => void;
 }
 
 export const HeroListPage = (props: Props) => {
@@ -114,12 +114,12 @@ export const HeroListPage = (props: Props) => {
 							trigger='click'
 							content={(
 								<div style={{ width: '500px' }}>
-									<Button type='primary' block={true} icon={<PlusOutlined />} onClick={props.addHero}>
+									<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.addHero(currentTab)}>
 										Create a New Hero
 									</Button>
 									<div className='ds-text centered-text'>or</div>
 									<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
-										<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero())}>
+										<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero(), currentTab)}>
 											Generate a Random Hero
 										</Button>
 										<Upload
@@ -131,7 +131,7 @@ export const HeroListPage = (props: Props) => {
 													.text()
 													.then(json => {
 														const hero = (JSON.parse(json) as Hero);
-														props.importHero(hero);
+														props.importHero(hero, currentTab);
 													});
 												return false;
 											}}
@@ -145,7 +145,7 @@ export const HeroListPage = (props: Props) => {
 									<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
 										{
 											exampleHeroes.map(h => (
-												<Button key={h.id} className='container-button' block={true} onClick={() => props.importHero(h)}>
+												<Button key={h.id} className='container-button' block={true} onClick={() => props.importHero(h, currentTab)}>
 													<HeroInfo hero={h} />
 												</Button>
 											))
@@ -163,7 +163,7 @@ export const HeroListPage = (props: Props) => {
 							getHeroes(currentTab).length > 1 ?
 								<>
 									<div className='divider' />
-									<Button onClick={() => props.showParty(getHeroes(currentTab))}>
+									<Button onClick={() => props.showParty(currentTab)}>
 										Party Overview
 									</Button>
 								</>
@@ -183,7 +183,7 @@ export const HeroListPage = (props: Props) => {
 								),
 								children: getHeroesSection(getHeroes(f))
 							}))}
-							onChange={folder => navigation.goToHeroList(folder)}
+							onChange={navigation.goToHeroList}
 						/>
 					</div>
 					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />

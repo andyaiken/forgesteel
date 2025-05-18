@@ -18110,7 +18110,7 @@ export class HeroData {
 				},
 				{
 					id: 'shadow-ability-9',
-					name: 'Coup de Grace',
+					name: 'Coup de Grâce',
 					description: 'Your blade might be the last thing they see.',
 					type: {
 						usage: 'Action',

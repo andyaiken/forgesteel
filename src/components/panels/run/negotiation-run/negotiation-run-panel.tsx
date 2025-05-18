@@ -70,12 +70,12 @@ export const NegotiationRunPanel = (props: Props) => {
 						</div>
 						<div>
 							<HeaderText>Outcomes</HeaderText>
-							<Field disabled={negotiation.interest !== 5} label='5' value={<Markdown text={props.negotiation.outcomes[5] || 'Yes, and...'} useSpan={true} />} />
-							<Field disabled={negotiation.interest !== 4} label='4' value={<Markdown text={props.negotiation.outcomes[4] || 'Yes'} useSpan={true} />} />
-							<Field disabled={negotiation.interest !== 3} label='3' value={<Markdown text={props.negotiation.outcomes[3] || 'Yes, but...'} useSpan={true} />} />
-							<Field disabled={negotiation.interest !== 2} label='2' value={<Markdown text={props.negotiation.outcomes[2] || 'No, but...'} useSpan={true} />} />
-							<Field disabled={negotiation.interest !== 1} label='1' value={<Markdown text={props.negotiation.outcomes[1] || 'No'} useSpan={true} />} />
-							<Field disabled={negotiation.interest !== 0} label='0' value={<Markdown text={props.negotiation.outcomes[0] || 'No, and...'} useSpan={true} />} />
+							<Field className={negotiation.interest === 5 ? 'highlight' : undefined} label='5' value={<Markdown text={props.negotiation.outcomes[5] || 'Yes, and...'} useSpan={true} />} />
+							<Field className={negotiation.interest === 4 ? 'highlight' : undefined} label='4' value={<Markdown text={props.negotiation.outcomes[4] || 'Yes'} useSpan={true} />} />
+							<Field className={negotiation.interest === 3 ? 'highlight' : undefined} label='3' value={<Markdown text={props.negotiation.outcomes[3] || 'Yes, but...'} useSpan={true} />} />
+							<Field className={negotiation.interest === 2 ? 'highlight' : undefined} label='2' value={<Markdown text={props.negotiation.outcomes[2] || 'No, but...'} useSpan={true} />} />
+							<Field className={negotiation.interest === 1 ? 'highlight' : undefined} label='1' value={<Markdown text={props.negotiation.outcomes[1] || 'No'} useSpan={true} />} />
+							<Field className={negotiation.interest === 0 ? 'highlight' : undefined} label='0' value={<Markdown text={props.negotiation.outcomes[0] || 'No, and...'} useSpan={true} />} />
 						</div>
 					</div>
 				</div>

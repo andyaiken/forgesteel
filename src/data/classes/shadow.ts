@@ -265,7 +265,7 @@ When you use a heroic ability that has a power roll, that ability costs 1 less i
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-9',
-			name: 'Coup de Grace',
+			name: 'Coup de Grâce',
 			description: 'Your blade might be the last thing they see.',
 			type: FactoryLogic.type.createAction(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],

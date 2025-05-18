@@ -3,6 +3,7 @@ import { CSSProperties, ReactNode } from 'react';
 import './field.scss';
 
 interface Props {
+	className?: string;
 	style?: CSSProperties;
 	label: ReactNode;
 	value: ReactNode;
@@ -13,6 +14,9 @@ interface Props {
 export const Field = (props: Props) => {
 	try {
 		let className = `field ${props.orientation || 'horizontal'}`;
+		if (props.className) {
+			className += ` ${props.className}`;
+		}
 		if (props.disabled) {
 			className += ' disabled';
 		}

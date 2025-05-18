@@ -1,8 +1,7 @@
-import { Alert, Button, Flex, Slider, Statistic } from 'antd';
+import { Alert, Button, Flex, Segmented, Slider, Statistic } from 'antd';
 import { ReactNode, useState } from 'react';
 import { Collections } from '../../../utils/collections';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Random } from '../../../utils/random';
 
 import './die-roll-panel.scss';
@@ -90,23 +89,35 @@ export const DieRollPanel = (props: Props) => {
 				<div className='die-roll-panel'>
 					{
 						props.type === 'Power Roll' ?
-							<Flex align='center' justify='space-between' gap={20}>
-								<NumberSpin
-									style={{ flex: '1 1 0' }}
-									label='Edges'
-									value={edges}
-									min={0}
-									max={2}
-									onChange={setEdges}
-								/>
-								<NumberSpin
-									style={{ flex: '1 1 0' }}
-									label='Banes'
-									value={banes}
-									min={0}
-									max={2}
-									onChange={setBanes}
-								/>
+							<Flex align='center' gap={20}>
+								<Flex vertical={true} align='center' style={{ flex: '1 1 0' }}>
+									<div className='ds-text bold-text'>
+										Edges
+									</div>
+									<Segmented
+										options={[
+											{ value: 0, label: '0' },
+											{ value: 1, label: '1' },
+											{ value: 2, label: '2+' }
+										]}
+										value={edges}
+										onChange={setEdges}
+									/>
+								</Flex>
+								<Flex vertical={true} align='center' style={{ flex: '1 1 0' }}>
+									<div className='ds-text bold-text'>
+										Banes
+									</div>
+									<Segmented
+										options={[
+											{ value: 0, label: '0' },
+											{ value: 1, label: '1' },
+											{ value: 2, label: '2+' }
+										]}
+										value={banes}
+										onChange={setBanes}
+									/>
+								</Flex>
 							</Flex>
 							: null
 					}

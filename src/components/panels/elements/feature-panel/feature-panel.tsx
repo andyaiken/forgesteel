@@ -29,6 +29,7 @@ import { Item } from '../../../../models/item';
 import { ItemPanel } from '../item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../kit-panel/kit-panel';
+import { KitSelectModal } from '../../../modals/select/kit-select/kit-select-modal';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { Modal } from '../../../modals/modal/modal';
 import { Monster } from '../../../../models/monster';
@@ -66,6 +67,7 @@ interface Props {
 export const FeaturePanel = (props: Props) => {
 	const [ autoCalc, setAutoCalc ] = useState<boolean>(true);
 	const [ abilitySelectorOpen, setAbilitySelectorOpen ] = useState<boolean>(false);
+	const [ kitSelectorOpen, setKitSelectorOpen ] = useState<boolean>(false);
 	const [ monsterSelectorOpen, setMonsterSelectorOpen ] = useState<boolean>(false);
 	const [ perkSelectorOpen, setPerkSelectorOpen ] = useState<boolean>(false);
 	const [ selectedAbility, setSelectedAbility ] = useState<Ability | null>(null);
@@ -119,7 +121,7 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected ?
-						<Flex align='center' gap={10}>
+						<Flex className='selection-box' align='center' gap={10}>
 							<Field
 								style={{ flex: '1 1 0' }}
 								label={data.selected.name}
@@ -367,13 +369,13 @@ export const FeaturePanel = (props: Props) => {
 					data.selectedIDs.map(id => {
 						const ability = abilities.find(a => a.id === id) as Ability;
 						return (
-							<Flex key={ability.id} align='center' gap={10}>
+							<Flex key={ability.id} className='selection-box' align='center' gap={10}>
 								<Field
 									style={{ flex: '1 1 0' }}
 									label={ability.name}
 									value={<Markdown text={ability.description} useSpan={true} />}
 								/>
-								<div style={{ display: 'flex', flexDirection: 'column' }}>
+								<Flex vertical={true}>
 									<Button
 										style={{ flex: '0 0 auto' }}
 										type='text'
@@ -392,7 +394,7 @@ export const FeaturePanel = (props: Props) => {
 											}
 										}}
 									/>
-								</div>
+								</Flex>
 							</Flex>
 						);
 					})
@@ -484,7 +486,7 @@ export const FeaturePanel = (props: Props) => {
 				}
 				{
 					data.selected ?
-						<Flex align='center' gap={10}>
+						<Flex className='selection-box' align='center' gap={10}>
 							<MonsterInfo
 								style={{ flex: '1 1 0' }}
 								monster={data.selected}
@@ -586,7 +588,7 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected.map(domain => (
-						<Flex key={domain.id} align='center' gap={10}>
+						<Flex key={domain.id} className='selection-box' align='center' gap={10}>
 							<Field
 								style={{ flex: '1 1 0' }}
 								label={domain.name}
@@ -748,7 +750,7 @@ export const FeaturePanel = (props: Props) => {
 				/>
 				{
 					data.selected.map(item => (
-						<Flex key={item.id} align='center' gap={10}>
+						<Flex key={item.id} className='selection-box' align='center' gap={10}>
 							<Field
 								style={{ flex: '1 1 0' }}
 								label={item.name}
@@ -778,6 +780,8 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
+		const currentKitIDs = HeroLogic.getKits(props.hero).map(k => k.id);
+
 		const kitTypes = data.types.length > 0 ? data.types : [ '' ];
 		const kits = SourcebookLogic.getKits(props.sourcebooks as Sourcebook[])
 			.filter(k => kitTypes.includes(k.type));
@@ -793,60 +797,60 @@ export const FeaturePanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
-				<Select
-					style={{ width: '100%' }}
-					status={data.selected.length < data.count ? 'warning' : ''}
-					mode={data.count === 1 ? undefined : 'multiple'}
-					maxCount={data.count === 1 ? undefined : data.count}
-					allowClear={true}
-					placeholder={data.count === 1 ? 'Select a kit' : 'Select kits'}
-					options={sortedKits.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
-					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
-					onChange={value => {
-						let ids: string[] = [];
-						if (data.count === 1) {
-							ids = value !== undefined ? [ value as string ] : [];
-						} else {
-							ids = value as string[];
-						}
-						const dataCopy = Utils.copy(data);
-						dataCopy.selected = [];
-						ids.forEach(id => {
-							const kit = kits.find(k => k.id === id);
-							if (kit) {
-								dataCopy.selected.push(kit);
+				{
+					data.selected.length < data.count ?
+						<Button className='status-warning' block={true} onClick={() => setKitSelectorOpen(true)}>
+							Choose a kit
+						</Button>
+						: null
+				}
+				<Drawer open={kitSelectorOpen} onClose={() => setKitSelectorOpen(false)} closeIcon={null} width='500px'>
+					<KitSelectModal
+						kits={sortedKits.filter(k => !currentKitIDs.includes(k.id))}
+						hero={props.hero}
+						options={props.options}
+						onSelect={kit => {
+							setKitSelectorOpen(false);
+
+							const kitCopy = Utils.copy(kit);
+
+							const dataCopy = Utils.copy(data);
+							dataCopy.selected.push(kitCopy);
+							if (props.setData) {
+								props.setData(props.feature.id, dataCopy);
 							}
-						});
-						if (props.setData) {
-							props.setData(props.feature.id, dataCopy);
-						}
-					}}
-				/>
+						}}
+						onClose={() => setKitSelectorOpen(false)}
+					/>
+				</Drawer>
 				{
 					data.selected.map(kit => (
-						<Flex key={kit.id} align='center' gap={10}>
+						<Flex key={kit.id} className='selection-box' align='center' gap={10}>
 							<Field
 								style={{ flex: '1 1 0' }}
 								label={kit.name}
 								value={<Markdown text={kit.description} useSpan={true} />}
 							/>
-							<Button
-								style={{ flex: '0 0 auto' }}
-								type='text'
-								icon={<InfoCircleOutlined />}
-								onClick={() => setSelectedKit(kit)}
-							/>
+							<Flex vertical={true}>
+								<Button
+									style={{ flex: '0 0 auto' }}
+									type='text'
+									icon={<InfoCircleOutlined />}
+									onClick={() => setSelectedKit(kit)}
+								/>
+								<Button
+									style={{ flex: '0 0 auto' }}
+									type='text'
+									icon={<DeleteOutlined />}
+									onClick={() => {
+										const dataCopy = Utils.copy(data);
+										dataCopy.selected = dataCopy.selected.filter(k => k.id !== kit.id);
+										if (props.setData) {
+											props.setData(props.feature.id, dataCopy);
+										}
+									}}
+								/>
+							</Flex>
 						</Flex>
 					))
 				}
@@ -970,13 +974,13 @@ export const FeaturePanel = (props: Props) => {
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
 					data.selected.map(perk => (
-						<Flex key={perk.id} align='center' gap={10}>
+						<Flex key={perk.id} className='selection-box' align='center' gap={10}>
 							<Field
 								style={{ flex: '1 1 0' }}
 								label={perk.name}
 								value={<Markdown text={perk.description} useSpan={true} />}
 							/>
-							<div style={{ display: 'flex', flexDirection: 'column' }}>
+							<Flex vertical={true}>
 								<Button
 									style={{ flex: '0 0 auto' }}
 									type='text'
@@ -995,7 +999,7 @@ export const FeaturePanel = (props: Props) => {
 										}
 									}}
 								/>
-							</div>
+							</Flex>
 						</Flex>
 					))
 				}
@@ -1294,7 +1298,7 @@ export const FeaturePanel = (props: Props) => {
 							return null;
 						}
 						return (
-							<Flex key={feature.id} align='center' gap={10}>
+							<Flex key={feature.id} className='selection-box' align='center' gap={10}>
 								<Field
 									style={{ flex: '1 1 0' }}
 									label={feature.name}

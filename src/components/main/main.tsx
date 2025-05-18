@@ -148,33 +148,36 @@ export const Main = (props: Props) => {
 
 	//#region Heroes
 
-	const createHero = () => {
+	const createHero = (folder: string) => {
 		const hero = FactoryLogic.createHero([
 			SourcebookData.core.id,
 			SourcebookData.orden.id
 		]);
+		hero.folder = folder;
 
 		setDrawer(null);
 		persistHero(hero).then(() => navigation.goToHeroEdit(hero.id, 'start'));
 	};
 
 	const deleteHero = (hero: Hero) => {
-		navigation.goToHeroList();
+		const copy = Utils.copy(heroes.filter(h => h.id !== hero.id));
+		const stayInFolder = copy.some(h => h.folder === hero.folder);
+		navigation.goToHeroList(stayInFolder ? hero.folder : undefined);
 
-		const copy = Utils.copy(heroes);
-		persistHeroes(copy.filter(h => h.id !== hero.id));
+		persistHeroes(copy);
 	};
 
 	const saveHero = (hero: Hero) => {
 		persistHero(hero).then(() => navigation.goToHeroView(hero.id));
 	};
 
-	const importHero = (hero: Hero, createCopy: boolean = false) => {
+	const importHero = (hero: Hero, folder: string, createCopy: boolean = false) => {
 		if (createCopy) {
 			hero = Utils.copy(hero);
 			hero.name = `Copy of ${hero.name}`;
 		}
 		hero.id = Utils.guid();
+		hero.folder = folder;
 		HeroLogic.updateHero(hero);
 
 		setDrawer(null);
@@ -182,7 +185,7 @@ export const Main = (props: Props) => {
 	};
 
 	const copyHero = (hero: Hero) => {
-		importHero(hero, true);
+		importHero(hero, hero.folder, true);
 	};
 
 	const exportHero = (hero: Hero, format: 'image' | 'pdf' | 'json') => {
@@ -1054,10 +1057,10 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onShowParty = (heroes: Hero[]) => {
+	const onShowParty = (folder: string) => {
 		setDrawer(
 			<PartyModal
-				heroes={heroes}
+				heroes={heroes.filter(h => h.folder === folder)}
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
 				onClose={() => setDrawer(null)}
 			/>

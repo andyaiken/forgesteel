@@ -505,7 +505,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 				FactoryLogic.feature.create({
 					id: 'wardog-8-feature-5',
 					name: 'Loyalty Collar',
-					description: 'When the crucibite dies, they explode, dealing 1d6 damage to each adjacent enemy.'
+					description: 'When the neuronite dies, they explode, dealing 1d6 damage to each adjacent enemy.'
 				})
 			]
 		}),

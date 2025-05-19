@@ -1,6 +1,7 @@
 import { Divider, Segmented, Select, Space } from 'antd';
-import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureDamageModifier, FeatureData, FeaturePerk, FeatureSkillChoice, FeatureTitleChoice } from '../../../models/feature';
+import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeaturePerk, FeatureSkillChoice, FeatureTitleChoice } from '../../../models/feature';
 import { Characteristic } from '../../../enums/characteristic';
+import { ConditionType } from '../../../enums/condition-type';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { DamageType } from '../../../enums/damage-type';
 import { DangerButton } from '../../controls/danger-button/danger-button';
@@ -147,6 +148,12 @@ export const HeroCustomizePanel = (props: Props) => {
 		const copy = Utils.copy(feature) as FeatureClassAbility;
 		copy.data.cost = value;
 		copy.data.selectedIDs = [];
+		props.setFeature(feature.id, copy);
+	};
+
+	const setConditionTypes = (feature: Feature, value: ConditionType[]) => {
+		const copy = Utils.copy(feature) as FeatureConditionImmunity;
+		copy.data.conditions = value;
 		props.setFeature(feature.id, copy);
 	};
 
@@ -301,6 +308,27 @@ export const HeroCustomizePanel = (props: Props) => {
 						{feature.data.cost !== 'signature' ? <NumberSpin min={3} max={7} steps={[ 2 ]} value={feature.data.cost} onChange={value => setCost(feature, value)} /> : null}
 					</div>
 				);
+			case FeatureType.ConditionImmunity:
+				return (
+					<Select
+						style={{ width: '100%', marginTop: '15px' }}
+						placeholder='Select condition'
+						mode='multiple'
+						options={[ ConditionType.Bleeding, ConditionType.Dazed, ConditionType.Frightened, ConditionType.Grabbed, ConditionType.Prone, ConditionType.Restrained, ConditionType.Slowed, ConditionType.Taunted, ConditionType.Weakened ].map(o => ({ value: o }))}
+						optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+						showSearch={true}
+						filterOption={(input, option) => {
+							const strings = option ?
+								[
+									option.value
+								]
+								: [];
+							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+						}}
+						value={feature.data.conditions}
+						onChange={value => setConditionTypes(feature, value)}
+					/>
+				);
 			case FeatureType.DamageModifier:
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
@@ -436,7 +464,9 @@ export const HeroCustomizePanel = (props: Props) => {
 								>
 									{getEditSection(f)}
 									{
-										![ FeatureType.Bonus, FeatureType.DamageModifier ].includes(f.type) ?
+										[ FeatureType.Bonus, FeatureType.ConditionImmunity, FeatureType.DamageModifier ].includes(f.type) ?
+											null
+											:
 											<FeaturePanel
 												feature={f}
 												options={props.options}
@@ -445,7 +475,6 @@ export const HeroCustomizePanel = (props: Props) => {
 												mode={PanelMode.Full}
 												setData={props.setFeatureData}
 											/>
-											: null
 									}
 								</Expander>
 							))
@@ -458,6 +487,7 @@ export const HeroCustomizePanel = (props: Props) => {
 							{ key: 'characteristic-bonus', label: <div className='ds-text centered-text'>Characteristic Bonus</div> },
 							{ key: 'class-ability', label: <div className='ds-text centered-text'>Class Ability</div> },
 							{ key: 'companion', label: <div className='ds-text centered-text'>Companion</div> },
+							{ key: 'condition-immunity', label: <div className='ds-text centered-text'>Condition Immunity</div> },
 							{ key: 'damage-mod', label: <div className='ds-text centered-text'>Immunity / Weakness</div> },
 							{ key: 'kit', label: <div className='ds-text centered-text'>Kit</div> },
 							{ key: 'language', label: <div className='ds-text centered-text'>Language</div> },
@@ -498,6 +528,12 @@ export const HeroCustomizePanel = (props: Props) => {
 									feature = FactoryLogic.feature.createCompanion({
 										id: Utils.guid(),
 										type: 'companion'
+									});
+									break;
+								case 'condition-immunity':
+									feature = FactoryLogic.feature.createConditionImmunity({
+										id: Utils.guid(),
+										conditions: []
 									});
 									break;
 								case 'damage-mod':

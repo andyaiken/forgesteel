@@ -481,6 +481,7 @@ export const AdventurePanel = (props: Props) => {
 										:
 										<div className='ds-text dimmed-text'>No details</div>
 								}
+								{selectedPlot.content.length > 0 ? <HeaderText level={1}>Content</HeaderText> : null}
 								<Space direction='vertical' style={{ width: '100%' }}>
 									{
 										selectedPlot.content.map(c => (

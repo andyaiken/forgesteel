@@ -35,6 +35,20 @@
 		pointer-events: none;
 	}
 
+	&.danger {
+		.field-label {
+			color: rgb(140, 0, 0) !important;
+		}
+
+		.field-value {
+			color: rgba(140, 0, 0, 0.88) !important;
+
+			p {
+				color: rgba(140, 0, 0, 0.88) !important;
+			}
+		}
+	}
+
 	.field-label {
 		color: rgb(0, 0, 0);
 	}

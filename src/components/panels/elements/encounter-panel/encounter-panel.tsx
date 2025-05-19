@@ -7,6 +7,7 @@ import { EncounterObjectivePanel } from '../encounter-objective/encounter-object
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
+import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Markdown } from '../../../controls/markdown/markdown';
@@ -116,8 +117,9 @@ export const EncounterPanel = (props: Props) => {
 
 		return (
 			<div className='encounter-meta'>
-				<EncounterObjectivePanel objective={props.encounter.objective} mode={PanelMode.Full} />
+				{props.encounter.objective ? <EncounterObjectivePanel objective={props.encounter.objective} mode={PanelMode.Full} /> : null}
 				<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
+				{props.encounter.notes.map(note => <Field key={note.id} label={note.name} value={<Markdown text={note.description} useSpan={true} />} />)}
 			</div>
 		);
 	};

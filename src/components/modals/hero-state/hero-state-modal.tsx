@@ -211,7 +211,7 @@ export const HeroStateModal = (props: Props) => {
 				<Alert
 					type='info'
 					showIcon={true}
-					message='Hero tokens are a resource shared by your party.'
+					message='Hero tokens are a resource shared by your party; they typically refresh at the beginning of each game session.'
 				/>
 				{
 					hero.state.heroTokens > 0 ?

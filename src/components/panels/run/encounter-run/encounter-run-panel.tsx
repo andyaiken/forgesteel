@@ -427,9 +427,28 @@ export const EncounterRunPanel = (props: Props) => {
 		);
 	};
 
-	const getObjective = () => {
+	const getNotes = () => {
 		return (
-			<EncounterObjectivePanel objective={encounter.objective} mode={PanelMode.Full} />
+			<>
+				{
+					encounter.description ?
+						<>
+							<HeaderText>Encounter Description</HeaderText>
+							<Markdown text={encounter.description} />
+						</>
+						: null
+				}
+				{
+					encounter.notes.map(note => (
+						<div key={note.id}>
+							<HeaderText>{note.name}</HeaderText>
+							<Markdown text={note.description} />
+						</div>
+					))
+				}
+				{encounter.objective ? <EncounterObjectivePanel objective={encounter.objective} mode={PanelMode.Full} /> : null}
+				{(encounter.notes.length === 0) && !encounter.objective ? <Empty text='No notes' /> : null}
+			</>
 		);
 	};
 
@@ -454,14 +473,6 @@ export const EncounterRunPanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					encounter.description ?
-						<>
-							<HeaderText>Encounter Description</HeaderText>
-							<Markdown text={encounter.description} />
-						</>
-						: null
-				}
 				{
 					monsters.map(m => (
 						<div key={m.id}>
@@ -537,9 +548,9 @@ export const EncounterRunPanel = (props: Props) => {
 								children: getMalice()
 							},
 							{
-								key: 'objective',
-								label: 'Objective',
-								children: getObjective()
+								key: 'notes',
+								label: 'Notes',
+								children: getNotes()
 							},
 							{
 								key: 'reminders',

@@ -1,6 +1,8 @@
-import { Divider, Select } from 'antd';
-import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureData, FeaturePerk, FeatureSkillChoice, FeatureTitleChoice } from '../../../models/feature';
+import { Divider, Segmented, Select, Space } from 'antd';
+import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureDamageModifier, FeatureData, FeaturePerk, FeatureSkillChoice, FeatureTitleChoice } from '../../../models/feature';
 import { Characteristic } from '../../../enums/characteristic';
+import { DamageModifierType } from '../../../enums/damage-modifier-type';
+import { DamageType } from '../../../enums/damage-type';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
@@ -92,6 +94,48 @@ export const HeroCustomizePanel = (props: Props) => {
 		props.setFeature(feature.id, copy);
 	};
 
+	const setDamageModifierDamageType = (feature: Feature, value: DamageType) => {
+		const copy = Utils.copy(feature) as FeatureDamageModifier;
+		copy.data.modifiers[0].damageType = value;
+		copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
+		props.setFeature(feature.id, copy);
+	};
+
+	const setDamageModifierType = (feature: Feature, value: DamageModifierType) => {
+		const copy = Utils.copy(feature) as FeatureDamageModifier;
+		copy.data.modifiers[0].type = value;
+		copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
+		props.setFeature(feature.id, copy);
+	};
+
+	const setDamageModifierBonus = (feature: Feature, value: number) => {
+		const copy = Utils.copy(feature) as FeatureDamageModifier;
+		copy.data.modifiers[0].value = value;
+		copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
+		props.setFeature(feature.id, copy);
+	};
+
+	const setDamageModifierValuePerLevel = (feature: Feature, value: number) => {
+		const copy = Utils.copy(feature) as FeatureDamageModifier;
+		copy.data.modifiers[0].valuePerLevel = value;
+		copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
+		props.setFeature(feature.id, copy);
+	};
+
+	const setDamageModifierValuePerEchelon = (feature: Feature, value: number) => {
+		const copy = Utils.copy(feature) as FeatureDamageModifier;
+		copy.data.modifiers[0].valuePerEchelon = value;
+		copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
+		props.setFeature(feature.id, copy);
+	};
+
+	const setDamageModifierCharacteristics = (feature: Feature, value: Characteristic[]) => {
+		const copy = Utils.copy(feature) as FeatureDamageModifier;
+		copy.data.modifiers[0].valueCharacteristics = value;
+		copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
+		props.setFeature(feature.id, copy);
+	};
+
 	const setClassID = (feature: Feature, value: string) => {
 		const copy = Utils.copy(feature) as FeatureClassAbility;
 		copy.data.classID = value === '' ? undefined : value;
@@ -163,7 +207,7 @@ export const HeroCustomizePanel = (props: Props) => {
 				);
 			case FeatureType.Bonus:
 				return (
-					<div>
+					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Field</HeaderText>
 						<Select
 							style={{ width: '100%' }}
@@ -204,7 +248,7 @@ export const HeroCustomizePanel = (props: Props) => {
 							value={feature.data.valueCharacteristics}
 							onChange={value => setValueCharacteristics(feature, value)}
 						/>
-					</div>
+					</Space>
 				);
 			case FeatureType.CharacteristicBonus:
 				return (
@@ -256,6 +300,57 @@ export const HeroCustomizePanel = (props: Props) => {
 						<Toggle label='Signature' value={feature.data.cost === 'signature'} onChange={value => setCost(feature, value ? 'signature' : 3)} />
 						{feature.data.cost !== 'signature' ? <NumberSpin min={3} max={7} steps={[ 2 ]} value={feature.data.cost} onChange={value => setCost(feature, value)} /> : null}
 					</div>
+				);
+			case FeatureType.DamageModifier:
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Modifier</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select field'
+							options={[ DamageType.Damage, DamageType.Acid, DamageType.Cold, DamageType.Corruption, DamageType.Fire, DamageType.Holy, DamageType.Lightning, DamageType.Poison, DamageType.Psychic, DamageType.Sonic ].map(o => ({ value: o }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.value
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
+							value={feature.data.modifiers[0].damageType}
+							onChange={value => setDamageModifierDamageType(feature, value)}
+						/>
+						<Segmented
+							block={true}
+							options={[ DamageModifierType.Immunity, DamageModifierType.Weakness ].map(o => ({ label: o, value: o }))}
+							value={feature.data.modifiers[0].type}
+							onChange={value => setDamageModifierType(feature, value)}
+						/>
+						<HeaderText>Value</HeaderText>
+						<NumberSpin label='Value' min={0} value={feature.data.modifiers[0].value} onChange={value => setDamageModifierBonus(feature, value)} />
+						<NumberSpin label='Per Level After 1st' min={0} value={feature.data.modifiers[0].valuePerLevel} onChange={value => setDamageModifierValuePerLevel(feature, value)} />
+						<NumberSpin label='Per Echelon' min={0} value={feature.data.modifiers[0].valuePerEchelon} onChange={value => setDamageModifierValuePerEchelon(feature, value)} />
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Characteristics'
+							mode='multiple'
+							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.value
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
+							value={feature.data.modifiers[0].valueCharacteristics}
+							onChange={value => setDamageModifierCharacteristics(feature, value)}
+						/>
+					</Space>
 				);
 			case FeatureType.Perk:
 				return (
@@ -329,29 +424,31 @@ export const HeroCustomizePanel = (props: Props) => {
 			<ErrorBoundary>
 				<div className='hero-customize-panel'>
 					{
-						props.hero.features.filter(f => f.id !== 'default-language').map(f => (
-							<Expander
-								key={f.id}
-								title={f.name}
-								extra={[
-									<DangerButton key='delete' mode='clear' onConfirm={() => props.deleteFeature(f)} />
-								]}
-							>
-								{getEditSection(f)}
-								{
-									f.type !== FeatureType.Bonus ?
-										<FeaturePanel
-											feature={f}
-											options={props.options}
-											hero={props.hero}
-											sourcebooks={props.sourcebooks}
-											mode={PanelMode.Full}
-											setData={props.setFeatureData}
-										/>
-										: null
-								}
-							</Expander>
-						))
+						props.hero.features
+							.filter(f => f.id !== 'default-language')
+							.map(f => (
+								<Expander
+									key={f.id}
+									title={f.name}
+									extra={[
+										<DangerButton key='delete' mode='clear' onConfirm={() => props.deleteFeature(f)} />
+									]}
+								>
+									{getEditSection(f)}
+									{
+										![ FeatureType.Bonus, FeatureType.DamageModifier ].includes(f.type) ?
+											<FeaturePanel
+												feature={f}
+												options={props.options}
+												hero={props.hero}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+												setData={props.setFeatureData}
+											/>
+											: null
+									}
+								</Expander>
+							))
 					}
 					{props.hero.features.filter(f => f.id !== 'default-language').length > 0 ? <Divider /> : null}
 					<DropdownButton
@@ -361,6 +458,7 @@ export const HeroCustomizePanel = (props: Props) => {
 							{ key: 'characteristic-bonus', label: <div className='ds-text centered-text'>Characteristic Bonus</div> },
 							{ key: 'class-ability', label: <div className='ds-text centered-text'>Class Ability</div> },
 							{ key: 'companion', label: <div className='ds-text centered-text'>Companion</div> },
+							{ key: 'damage-mod', label: <div className='ds-text centered-text'>Immunity / Weakness</div> },
 							{ key: 'kit', label: <div className='ds-text centered-text'>Kit</div> },
 							{ key: 'language', label: <div className='ds-text centered-text'>Language</div> },
 							{ key: 'mount', label: <div className='ds-text centered-text'>Mount</div> },
@@ -400,6 +498,12 @@ export const HeroCustomizePanel = (props: Props) => {
 									feature = FactoryLogic.feature.createCompanion({
 										id: Utils.guid(),
 										type: 'companion'
+									});
+									break;
+								case 'damage-mod':
+									feature = FactoryLogic.feature.createDamageModifier({
+										id: Utils.guid(),
+										modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 2 }) ]
 									});
 									break;
 								case 'kit':

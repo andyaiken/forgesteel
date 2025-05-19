@@ -18,9 +18,9 @@ export const AboutModal = (props: Props) => {
 			<Modal
 				content={
 					<div className='about-modal'>
-						<p className='logo-container'>
+						<div className='logo-container'>
 							<LogoPanel />
-						</p>
+						</div>
 						<p>
 							Designed by <a href='mailto:andy.aiken@live.co.uk'>Andy Aiken</a>.
 						</p>
@@ -31,9 +31,9 @@ export const AboutModal = (props: Props) => {
 							If you would like to contribute to this project, you can find the code <a href='https://github.com/andyaiken/forgesteel' target='_blank'>here</a>.
 						</p>
 						<Divider />
-						<p className='logo-container'>
+						<div className='logo-container'>
 							<img src={pbds} />
-						</p>
+						</div>
 						<p>
 							<b>FORGE STEEL</b> is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC.
 						</p>

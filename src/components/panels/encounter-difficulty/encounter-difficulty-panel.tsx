@@ -56,7 +56,7 @@ export const EncounterDifficultyPanel = (props: Props) => {
 			<ErrorBoundary>
 				<div className='encounter-difficulty-panel'>
 					<HeaderText level={1}>Encounter Difficulty</HeaderText>
-					<div className='ds-text'>Difficulty for {OptionsLogic.getPartyDescription(props.options)}</div>
+					<div className='ds-text'>Difficulty for {OptionsLogic.getPartyDescription(props.options)}.</div>
 					<div className='encounter-slider'>
 						<Slider
 							range={true}
@@ -72,7 +72,7 @@ export const EncounterDifficultyPanel = (props: Props) => {
 							tooltip={{ open: false }}
 						/>
 					</div>
-					<div className='encounter-stats'>
+					<div className='stats'>
 						<Field orientation='vertical' label='Monsters' value={count} />
 						<Field orientation='vertical' label='Strength' value={strength} />
 						<Field orientation='vertical' label='Difficulty' value={difficulty} />

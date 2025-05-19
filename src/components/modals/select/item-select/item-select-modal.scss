@@ -1,3 +1,11 @@
 .item-select-modal {
 	padding: 20px;
+
+	.item-type-filter-panel {
+		margin-top: 15px;
+
+		.ant-divider {
+			margin: 10px 0;
+		}
+	}
 }

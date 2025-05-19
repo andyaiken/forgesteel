@@ -5,6 +5,7 @@ import { EncounterObjectiveData } from '../data/encounter-objective-data';
 import { Hero } from '../models/hero';
 import { Monster } from '../models/monster';
 import { MonsterLogic } from './monster-logic';
+import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { Montage } from '../models/montage';
 import { Negotiation } from '../models/negotiation';
 import { Options } from '../models/options';
@@ -131,6 +132,20 @@ export class PlaybookLogic {
 				}
 			});
 
+		copy.groups.forEach(g => {
+			const minions = g.slots.filter(s => {
+				const info = monsterInfo.find(info => info.monster.id === s.monsterID);
+				return info && (info.monster.role.organization === MonsterOrganizationType.Minion);
+			});
+			const nonMinions = g.slots.filter(s => {
+				const info = monsterInfo.find(info => info.monster.id === s.monsterID);
+				return info && (info.monster.role.organization !== MonsterOrganizationType.Minion);
+			});
+			if ((minions.length > 0) && (nonMinions.length > 0)) {
+				minions.forEach(s => s.state.captainID = nonMinions[0].monsters[0].id);
+			}
+		});
+
 		if (options.party !== '') {
 			heroes
 				.filter(h => h.folder === options.party)
@@ -244,6 +259,10 @@ export class PlaybookLogic {
 
 			if (e.objective === undefined) {
 				e.objective = EncounterObjectiveData.diminishNumbers;
+			}
+
+			if (e.notes === undefined) {
+				e.notes = [];
 			}
 
 			if (e.round === undefined) {

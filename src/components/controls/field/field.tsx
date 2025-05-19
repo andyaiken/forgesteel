@@ -9,6 +9,7 @@ interface Props {
 	value: ReactNode;
 	orientation?: 'horizontal' | 'vertical';
 	disabled?: boolean;
+	danger?: boolean;
 };
 
 export const Field = (props: Props) => {
@@ -19,6 +20,9 @@ export const Field = (props: Props) => {
 		}
 		if (props.disabled) {
 			className += ' disabled';
+		}
+		if (props.danger) {
+			className += ' danger';
 		}
 
 		return (

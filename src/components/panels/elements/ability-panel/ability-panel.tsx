@@ -74,6 +74,7 @@ export const AbilityPanel = (props: Props) => {
 		() => (props.options?.dimUnavailableAbilities ?? false)
 			&& props.hero
 			&& cost !== 'signature'
+			&& cost > 0
 			&& cost > props.hero.state.heroicResource,
 		[ props.hero, props.options, cost ]
 	);
@@ -301,6 +302,7 @@ export const AbilityPanel = (props: Props) => {
 								{
 									props.ability.strained ?
 										<Field
+											danger={props.hero && (props.hero.state.heroicResource < 0)}
 											label='Strained'
 											value={<Markdown text={parseText(props.ability.strained)} useSpan={true} />}
 										/>

@@ -15,6 +15,7 @@ import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { DropdownButton } from '../../../controls/dropdown-button/dropdown-button';
 import { Element } from '../../../../models/element';
+import { ElementEditPanel } from '../../../panels/edit/element-edit/element-edit-panel';
 import { Empty } from '../../../controls/empty/empty';
 import { EncounterDifficultyPanel } from '../../../panels/encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
@@ -53,6 +54,7 @@ import { Terrain } from '../../../../models/terrain';
 import { TerrainFilterPanel } from '../../../panels/terrain-filter/terrain-filter-panel';
 import { TerrainLogic } from '../../../../logic/terrain-logic';
 import { TerrainPanel } from '../../../panels/elements/terrain-panel/terrain-panel';
+import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
@@ -295,7 +297,13 @@ export const PlaybookEditPage = (props: Props) => {
 				{
 					encounter.groups.map((group, n) => (
 						<div key={group.id} className='group-row'>
-							{encounter.groups.length > 1 ? <HeaderText>Group {(n + 1).toString()}</HeaderText> : null}
+							<HeaderText
+								extra={[
+									<DangerButton mode='clear' label='Delete Group' onConfirm={() => deleteGroup(group)} />
+								]}
+							>
+								Group {(n + 1).toString()}
+							</HeaderText>
 							{group.slots.map(slot => getSlot(slot, group))}
 							{
 								group.slots.length === 0 ?
@@ -320,7 +328,6 @@ export const PlaybookEditPage = (props: Props) => {
 									/>
 									: null
 							}
-							{encounter.groups.length > 1 ? <DangerButton mode='block' label='Delete Group' onConfirm={() => deleteGroup(group)} /> : null}
 						</div>
 					))
 				}
@@ -432,7 +439,7 @@ export const PlaybookEditPage = (props: Props) => {
 	const getEncounterObjectiveSection = () => {
 		const encounter = element as Encounter;
 
-		const setObjective = (value: EncounterObjective) => {
+		const setObjective = (value: EncounterObjective | null) => {
 			const copy = Utils.copy(element) as Encounter;
 			copy.objective = Utils.copy(value);
 			setElement(copy);
@@ -441,49 +448,62 @@ export const PlaybookEditPage = (props: Props) => {
 
 		const setObjectiveName = (value: string) => {
 			const copy = Utils.copy(element) as Encounter;
-			copy.objective.name = value;
-			setElement(copy);
-			setDirty(true);
+			if (copy.objective) {
+				copy.objective.name = value;
+				setElement(copy);
+				setDirty(true);
+			}
 		};
 
 		const setObjectiveDescription = (value: string) => {
 			const copy = Utils.copy(element) as Encounter;
-			copy.objective.description = value;
-			setElement(copy);
-			setDirty(true);
+			if (copy.objective) {
+				copy.objective.description = value;
+				setElement(copy);
+				setDirty(true);
+			}
 		};
 
 		const setObjectiveDifficultyModifier = (value: string) => {
 			const copy = Utils.copy(element) as Encounter;
-			copy.objective.difficultyModifier = value;
-			setElement(copy);
-			setDirty(true);
+			if (copy.objective) {
+				copy.objective.difficultyModifier = value;
+				setElement(copy);
+				setDirty(true);
+			}
 		};
 
 		const setObjectiveSuccessCondition = (value: string) => {
 			const copy = Utils.copy(element) as Encounter;
-			copy.objective.successCondition = value;
-			setElement(copy);
-			setDirty(true);
+			if (copy.objective) {
+				copy.objective.successCondition = value;
+				setElement(copy);
+				setDirty(true);
+			}
 		};
 
 		const setObjectiveFailureCondition = (value: string) => {
 			const copy = Utils.copy(element) as Encounter;
-			copy.objective.failureCondition = value;
-			setElement(copy);
-			setDirty(true);
+			if (copy.objective) {
+				copy.objective.failureCondition = value;
+				setElement(copy);
+				setDirty(true);
+			}
 		};
 
 		const setObjectiveVictories = (value: string) => {
 			const copy = Utils.copy(element) as Encounter;
-			copy.objective.victories = value;
-			setElement(copy);
-			setDirty(true);
+			if (copy.objective) {
+				copy.objective.victories = value;
+				setElement(copy);
+				setDirty(true);
+			}
 		};
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<Flex justify='end'>
+				<Flex align='center' justify='space-between' gap={10}>
+					<Toggle label='Specify an encounter objective' value={!!encounter.objective} onChange={value => setObjective(value ? FactoryLogic.createEncounterObjective() : null)} />
 					<Popover
 						trigger='click'
 						content={(
@@ -509,26 +529,105 @@ export const PlaybookEditPage = (props: Props) => {
 					>
 						<Button>
 							Common Objectives
+							<DownOutlined />
 						</Button>
 					</Popover>
 				</Flex>
-				<HeaderText>Name</HeaderText>
-				<Input
-					placeholder='Name'
-					allowClear={true}
-					value={encounter.objective.name}
-					onChange={e => setObjectiveName(e.target.value)}
-				/>
-				<HeaderText>Description</HeaderText>
-				<MultiLine label='Description' value={encounter.objective.description} onChange={setObjectiveDescription} />
-				<HeaderText>Difficulty Modifier</HeaderText>
-				<MultiLine label='Difficulty Modifier' value={encounter.objective.difficultyModifier} onChange={setObjectiveDifficultyModifier} />
-				<HeaderText>Success Condition</HeaderText>
-				<MultiLine label='Success Condition' value={encounter.objective.successCondition} onChange={setObjectiveSuccessCondition} />
-				<HeaderText>Failure Condition</HeaderText>
-				<MultiLine label='Failure Condition' value={encounter.objective.failureCondition} onChange={setObjectiveFailureCondition} />
-				<HeaderText>Victories</HeaderText>
-				<MultiLine label='Victories' value={encounter.objective.victories} onChange={setObjectiveVictories} />
+				{
+					encounter.objective ?
+						<>
+							<HeaderText>Name</HeaderText>
+							<Input
+								placeholder='Name'
+								allowClear={true}
+								value={encounter.objective.name}
+								onChange={e => setObjectiveName(e.target.value)}
+							/>
+							<HeaderText>Description</HeaderText>
+							<MultiLine label='Description' value={encounter.objective.description} onChange={setObjectiveDescription} />
+							<HeaderText>Difficulty Modifier</HeaderText>
+							<MultiLine label='Difficulty Modifier' value={encounter.objective.difficultyModifier} onChange={setObjectiveDifficultyModifier} />
+							<HeaderText>Success Condition</HeaderText>
+							<MultiLine label='Success Condition' value={encounter.objective.successCondition} onChange={setObjectiveSuccessCondition} />
+							<HeaderText>Failure Condition</HeaderText>
+							<MultiLine label='Failure Condition' value={encounter.objective.failureCondition} onChange={setObjectiveFailureCondition} />
+							<HeaderText>Victories</HeaderText>
+							<MultiLine label='Victories' value={encounter.objective.victories} onChange={setObjectiveVictories} />
+						</>
+						: null
+				}
+			</Space>
+		);
+	};
+
+	const getEncounterNotesSection = () => {
+		const encounter = element as Encounter;
+
+		const addNote = () => {
+			const copy = Utils.copy(encounter) as Encounter;
+			copy.notes.push({
+				id: Utils.guid(),
+				name: '',
+				description: ''
+			});
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const changeNote = (notes: Element) => {
+			const copy = Utils.copy(encounter) as Encounter;
+			const index = copy.notes.findIndex(i => i.id === notes.id);
+			if (index !== -1) {
+				copy.notes[index] = notes;
+			}
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const moveNote = (notes: Element, direction: 'up' | 'down') => {
+			const copy = Utils.copy(encounter) as Encounter;
+			const index = copy.notes.findIndex(i => i.id === notes.id);
+			copy.notes = Collections.move(copy.notes, index, direction);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		const deleteNote = (notes: Element) => {
+			const copy = Utils.copy(encounter) as Encounter;
+			copy.notes = copy.notes.filter(i => i.id !== notes.id);
+			setElement(copy);
+			setDirty(true);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					encounter.notes.map(i => (
+						<Expander
+							key={i.id}
+							title={i.name || 'Unnamed Note'}
+							extra={[
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveNote(i, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveNote(i, 'down'); }} />,
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteNote(i); }} />
+							]}
+						>
+							<ElementEditPanel
+								element={i}
+								onChange={changeNote}
+							/>
+						</Expander>
+					))
+				}
+				{
+					encounter.notes.length === 0 ?
+						<Empty />
+						: null
+				}
+				<Button block={true} onClick={addNote}>
+					<PlusOutlined />
+					Add a new note
+				</Button>
 			</Space>
 		);
 	};
@@ -1320,6 +1419,11 @@ export const PlaybookEditPage = (props: Props) => {
 								key: '4',
 								label: 'Objective',
 								children: getEncounterObjectiveSection()
+							},
+							{
+								key: '5',
+								label: 'Notes',
+								children: getEncounterNotesSection()
 							}
 						]}
 					/>

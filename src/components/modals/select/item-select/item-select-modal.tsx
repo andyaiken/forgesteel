@@ -2,7 +2,6 @@ import { Button, Divider, Input, Space } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
-import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { Item } from '../../../../models/item';
@@ -40,6 +39,14 @@ export const ItemSelectModal = (props: Props) => {
 		return types;
 	});
 
+	const setShowEverything = (value: boolean) => {
+		const types = { ...showTypes };
+		props.types.forEach(type => {
+			types[type] = value;
+		});
+		setShowTypes(types);
+	};
+
 	try {
 		const items = SourcebookLogic
 			.getItems(props.sourcebooks)
@@ -71,23 +78,26 @@ export const ItemSelectModal = (props: Props) => {
 					<div className='item-select-modal'>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							<Expander title='Filter'>
-								<HeaderText>Item Types</HeaderText>
-								{
-									props.types.map(type => (
-										<Toggle
-											key={type}
-											label={type}
-											value={showTypes[type]}
-											onChange={value => {
-												const newTypes = { ...showTypes };
-												newTypes[type] = value;
-												setShowTypes(newTypes);
-											}}
-										/>
-									))
-								}
-								<Divider />
-								<Toggle label='Only show items you can use' value={showUsableOnly} onChange={setShowUsableOnly} />
+								<div className='item-type-filter-panel'>
+									<Toggle label='Show everything' value={props.types.every(t => showTypes[t])} onChange={setShowEverything} />
+									<Divider />
+									{
+										props.types.map(type => (
+											<Toggle
+												key={type}
+												label={type}
+												value={showTypes[type]}
+												onChange={value => {
+													const newTypes = { ...showTypes };
+													newTypes[type] = value;
+													setShowTypes(newTypes);
+												}}
+											/>
+										))
+									}
+									<Divider />
+									<Toggle label='Only show items you can use' value={showUsableOnly} onChange={setShowUsableOnly} />
+								</div>
 							</Expander>
 							<Divider />
 							{

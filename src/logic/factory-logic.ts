@@ -23,7 +23,6 @@ import { DamageModifierType } from '../enums/damage-modifier-type';
 import { DamageType } from '../enums/damage-type';
 import { Domain } from '../models/domain';
 import { Element } from '../models/element';
-import { EncounterObjectiveData } from '../data/encounter-objective-data';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Format } from '../utils/format';
@@ -503,7 +502,8 @@ export class FactoryLogic {
 			description: '',
 			groups: [],
 			terrain: [],
-			objective: EncounterObjectiveData.diminishNumbers,
+			objective: null,
+			notes: [],
 			initiative: undefined,
 			round: 0,
 			malice: 0,

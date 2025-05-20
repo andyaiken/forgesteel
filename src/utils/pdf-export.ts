@@ -1,6 +1,7 @@
 import { ConditionEndType, ConditionType } from '../enums/condition-type';
 import { PDFCheckBox, PDFDocument, PDFTextField, StandardFonts } from 'pdf-lib';
 import { Ability } from '../models/ability';
+import { AbilityData } from '../data/ability-data';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
@@ -385,10 +386,14 @@ export class PDFExport {
 						texts[prefix + 'Tag' + i] = 'M';
 					} else if (a.type.usage === AbilityUsage.Action) {
 						texts[prefix + 'Tag' + i] = 'A';
+					} else if (a.type.usage === AbilityUsage.FreeStrike) {
+						texts[prefix + 'Tag' + i] = 'FS';
 					}
 				});
 			};
 			const abilities = HeroLogic.getAbilities(hero, false).map(a => a.ability);
+			abilities.push(AbilityData.freeStrikeMelee);
+			abilities.push(AbilityData.freeStrikeRanged);
 			texts['RegularActions'] = abilities.filter(a => a.type.usage === AbilityUsage.Action).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
 			texts['Maneuvers'] = abilities.filter(a => a.type.usage === AbilityUsage.Maneuver).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
 			texts['TriggeredActions'] = abilities.filter(a => a.type.usage === AbilityUsage.Trigger).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
@@ -396,7 +401,7 @@ export class PDFExport {
 			ApplyGroup(
 				abilities.filter(a => !ignoredFeatures[a.id]),
 				'Ability',
-				18
+				(format === 'portrait') ? 18 : 16
 			);
 		}
 

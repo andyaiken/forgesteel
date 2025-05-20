@@ -173,12 +173,14 @@ export const ItemPanel = (props: Props) => {
 					}
 					{
 						props.showCustomizations ?
-							props.item.customizationsByLevel.map(lvl => (
-								<div key={lvl.level}>
-									<HeaderText level={1}>Customization: Level {lvl.level}</HeaderText>
-									{lvl.features.map(f => <FeaturePanel key={f.feature.id} feature={f.feature} options={props.options} mode={PanelMode.Full} />)}
-								</div>
-							))
+							props.item.customizationsByLevel
+								.filter(lvl => lvl.features.length > 0)
+								.map(lvl => (
+									<div key={lvl.level}>
+										<HeaderText level={1}>Customization: Level {lvl.level}</HeaderText>
+										{lvl.features.map(f => <FeaturePanel key={f.feature.id} feature={f.feature} options={props.options} mode={PanelMode.Full} />)}
+									</div>
+								))
 							: null
 					}
 					{

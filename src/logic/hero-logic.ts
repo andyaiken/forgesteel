@@ -702,12 +702,27 @@ export class HeroLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
+	static getProficiencies = (hero: Hero) => {
+		return [
+			...HeroLogic.getArmorProficiencies(hero),
+			...HeroLogic.getWeaponProficiencies(hero)
+		];
+	};
+
+	static getArmorProficiencies = (hero: Hero) => {
+		return Collections.distinct(HeroLogic.getKits(hero).flatMap(k => k.armor), x => x);
+	};
+
+	static getWeaponProficiencies = (hero: Hero) => {
+		return Collections.distinct(HeroLogic.getKits(hero).flatMap(k => k.weapon), x => x);
+	};
+
 	static canUseItem = (hero: Hero, item: Item) => {
 		switch (item.type) {
 			case ItemType.LeveledArmor:
-				return HeroLogic.getKits(hero).flatMap(k => k.armor).some(a => item.keywords.includes(a));
+				return HeroLogic.getArmorProficiencies(hero).some(a => item.keywords.includes(a));
 			case ItemType.LeveledWeapon:
-				return HeroLogic.getKits(hero).flatMap(k => k.weapon).some(w => item.keywords.includes(w));
+				return HeroLogic.getWeaponProficiencies(hero).some(w => item.keywords.includes(w));
 		}
 
 		return true;

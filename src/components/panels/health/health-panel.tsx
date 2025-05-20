@@ -399,6 +399,10 @@ export const MinionGroupHealthPanel = (props: MinionGroupProps) => {
 	const setDefeated = (value: boolean) => {
 		const copy = Utils.copy(slot);
 		copy.state.defeated = value;
+		if (value) {
+			// If the group is defeated, all minions are defeated
+			copy.monsters.forEach(m => m.state.defeated = true);
+		}
 		setSlot(copy);
 		if (props.onChange) {
 			props.onChange(copy);
@@ -662,6 +666,7 @@ const HealthPanel = (props: Props) => {
 					page === 'stamina' ?
 						<Space direction='vertical' style={{ width: '100%' }}>
 							<NumberSpin
+								style={{ flex: '1 1 0' }}
 								min={0}
 								steps={[ 1, 10 ]}
 								value={damageValue}

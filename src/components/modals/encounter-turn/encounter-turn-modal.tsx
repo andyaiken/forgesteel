@@ -130,9 +130,12 @@ export const EncounterTurnModal = (props: Props) => {
 				return (
 					<Button key={group.id} className='container-button' block={true} onClick={onClick}>
 						{
-							group.slots.flatMap(s => s.monsters).map(m => (
-								<MonsterInfo key={m.id} monster={m} />
-							))
+							group.slots
+								.flatMap(s => s.monsters)
+								.filter(m => !m.state.defeated)
+								.map(m => (
+									<MonsterInfo key={m.id} monster={m} />
+								))
 						}
 					</Button>
 				);

@@ -1,5 +1,6 @@
 import { Characteristic } from '../../../enums/characteristic';
 import { CheckCircleFilled } from '@ant-design/icons';
+import { Collections } from '../../../utils/collections';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
@@ -23,6 +24,8 @@ export const PartyModal = (props: Props) => {
 		const skills = SourcebookLogic.getSkills(props.sourcebooks)
 			.map(s => s.name)
 			.filter(s => props.heroes.some(h => HeroLogic.getSkills(h, props.sourcebooks).some(x => x.name === s)));
+
+		const itemProficiencies = Collections.distinct(props.heroes.flatMap(h => HeroLogic.getProficiencies(h)), x => x).sort();
 
 		return (
 			<Modal
@@ -64,6 +67,27 @@ export const PartyModal = (props: Props) => {
 											<tr key={n}>
 												<td className='row-label'>{s}</td>
 												{props.heroes.map(h => <td key={h.id} className='row-cell'>{HeroLogic.getSkills(h, props.sourcebooks).some(x => x.name === s) ? <CheckCircleFilled style={{ color: 'rgb(0, 120, 0)' }} /> : null}</td>)}
+											</tr>
+										);
+									})
+								}
+							</tbody>
+						</table>
+						<HeaderText>Equipment</HeaderText>
+						<table>
+							<thead>
+								<tr>
+									<th>Item</th>
+									{props.heroes.map(h => <th key={h.id}>{h.name}</th>)}
+								</tr>
+							</thead>
+							<tbody>
+								{
+									itemProficiencies.map((i, n) => {
+										return (
+											<tr key={n}>
+												<td className='row-label'>{i}</td>
+												{props.heroes.map(h => <td key={h.id} className='row-cell'>{HeroLogic.getProficiencies(h).includes(i) ? <CheckCircleFilled style={{ color: 'rgb(0, 120, 0)' }} /> : null}</td>)}
 											</tr>
 										);
 									})

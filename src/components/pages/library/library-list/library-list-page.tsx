@@ -103,20 +103,6 @@ export const LibraryListPage = (props: Props) => {
 		}
 	};
 
-	const getCultures = () => {
-		try {
-			return SourcebookLogic
-				.getCultures(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
 	const getCareers = () => {
 		try {
 			return SourcebookLogic
@@ -164,40 +150,10 @@ export const LibraryListPage = (props: Props) => {
 		}
 	};
 
-	const getDomains = () => {
+	const getCultures = () => {
 		try {
 			return SourcebookLogic
-				.getDomains(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description,
-					...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getKits = () => {
-		try {
-			return SourcebookLogic
-				.getKits(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description,
-					...item.features.map(f => f.name)
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getPerks = () => {
-		try {
-			return SourcebookLogic
-				.getPerks(getSourcebooks())
+				.getCultures(getSourcebooks())
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -208,14 +164,14 @@ export const LibraryListPage = (props: Props) => {
 		}
 	};
 
-	const getTitles = () => {
+	const getDomains = () => {
 		try {
 			return SourcebookLogic
-				.getTitles(getSourcebooks())
+				.getDomains(getSourcebooks())
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description,
-					...item.features.map(f => f.name)
+					...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
 				], searchTerm));
 		} catch (ex) {
 			console.error(ex);
@@ -232,6 +188,21 @@ export const LibraryListPage = (props: Props) => {
 					item.description,
 					...item.keywords,
 					...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
+	};
+
+	const getKits = () => {
+		try {
+			return SourcebookLogic
+				.getKits(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description,
+					...item.features.map(f => f.name)
 				], searchTerm));
 		} catch (ex) {
 			console.error(ex);
@@ -270,13 +241,42 @@ export const LibraryListPage = (props: Props) => {
 		}
 	};
 
-	const getTerrains = () => {
+	const getPerks = () => {
+		try {
+			return SourcebookLogic
+				.getPerks(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
+	};
+
+	const getTerrainObjects = () => {
 		try {
 			return SourcebookLogic
 				.getTerrains(getSourcebooks())
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
+	};
+
+	const getTitles = () => {
+		try {
+			return SourcebookLogic
+				.getTitles(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description,
+					...item.features.map(f => f.name)
 				], searchTerm));
 		} catch (ex) {
 			console.error(ex);
@@ -306,44 +306,6 @@ export const LibraryListPage = (props: Props) => {
 							if (sourcebook && sourcebook.id) {
 								return (
 									<Badge.Ribbon key={a.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-										{item}
-									</Badge.Ribbon>
-								);
-							}
-
-							return item;
-						})
-					}
-				</div>
-			);
-		} catch (ex) {
-			console.error(ex);
-			return null;
-		}
-	};
-
-	const getCulturesSection = (list: Culture[]) => {
-		try {
-			if (list.length === 0) {
-				return (
-					<Empty />
-				);
-			}
-
-			return (
-				<div className='library-section-row'>
-					{
-						list.map(c => {
-							const item = (
-								<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('culture', c.id)}>
-									<CulturePanel culture={c} options={props.options} />
-								</SelectablePanel>
-							);
-
-							const sourcebook = SourcebookLogic.getCultureSourcebook(props.sourcebooks, c);
-							if (sourcebook && sourcebook.id) {
-								return (
-									<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
 										{item}
 									</Badge.Ribbon>
 								);
@@ -475,6 +437,44 @@ export const LibraryListPage = (props: Props) => {
 		}
 	};
 
+	const getCulturesSection = (list: Culture[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			return (
+				<div className='library-section-row'>
+					{
+						list.map(c => {
+							const item = (
+								<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('culture', c.id)}>
+									<CulturePanel culture={c} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getCultureSourcebook(props.sourcebooks, c);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
 	const getDomainsSection = (list: Domain[]) => {
 		try {
 			if (list.length === 0) {
@@ -513,120 +513,6 @@ export const LibraryListPage = (props: Props) => {
 		}
 	};
 
-	const getKitsSection = (list: Kit[]) => {
-		try {
-			if (list.length === 0) {
-				return (
-					<Empty />
-				);
-			}
-
-			return (
-				<div className='library-section-row'>
-					{
-						list.map(k => {
-							const item = (
-								<SelectablePanel key={k.id} onSelect={() => navigation.goToLibraryView('kit', k.id)}>
-									<KitPanel kit={k} options={props.options} />
-								</SelectablePanel>
-							);
-
-							const sourcebook = SourcebookLogic.getKitSourcebook(props.sourcebooks, k);
-							if (sourcebook && sourcebook.id) {
-								return (
-									<Badge.Ribbon key={k.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-										{item}
-									</Badge.Ribbon>
-								);
-							}
-
-							return item;
-						})
-					}
-				</div>
-			);
-		} catch (ex) {
-			console.error(ex);
-			return null;
-		}
-	};
-
-	const getPerksSection = (list: Perk[]) => {
-		try {
-			if (list.length === 0) {
-				return (
-					<Empty />
-				);
-			}
-
-			return (
-				<div className='library-section-row'>
-					{
-						list.map(p => {
-							const item = (
-								<SelectablePanel key={p.id} onSelect={() => navigation.goToLibraryView('perk', p.id)}>
-									<PerkPanel perk={p} options={props.options} />
-								</SelectablePanel>
-							);
-
-							const sourcebook = SourcebookLogic.getPerkSourcebook(props.sourcebooks, p);
-							if (sourcebook && sourcebook.id) {
-								return (
-									<Badge.Ribbon key={p.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-										{item}
-									</Badge.Ribbon>
-								);
-							}
-
-							return item;
-						})
-					}
-				</div>
-			);
-		} catch (ex) {
-			console.error(ex);
-			return null;
-		}
-	};
-
-	const getTitlesSection = (list: Title[]) => {
-		try {
-			if (list.length === 0) {
-				return (
-					<Empty />
-				);
-			}
-
-			return (
-				<div className='library-section-row'>
-					{
-						list.map(t => {
-							const item = (
-								<SelectablePanel key={t.id} onSelect={() => navigation.goToLibraryView('title', t.id)}>
-									<TitlePanel title={t} options={props.options} />
-								</SelectablePanel>
-							);
-
-							const sourcebook = SourcebookLogic.getTitleSourcebook(props.sourcebooks, t);
-							if (sourcebook && sourcebook.id) {
-								return (
-									<Badge.Ribbon key={t.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
-										{item}
-									</Badge.Ribbon>
-								);
-							}
-
-							return item;
-						})
-					}
-				</div>
-			);
-		} catch (ex) {
-			console.error(ex);
-			return null;
-		}
-	};
-
 	const getItemsSection = (list: Item[]) => {
 		try {
 			if (list.length === 0) {
@@ -649,6 +535,44 @@ export const LibraryListPage = (props: Props) => {
 							if (sourcebook && sourcebook.id) {
 								return (
 									<Badge.Ribbon key={i.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
+	const getKitsSection = (list: Kit[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			return (
+				<div className='library-section-row'>
+					{
+						list.map(k => {
+							const item = (
+								<SelectablePanel key={k.id} onSelect={() => navigation.goToLibraryView('kit', k.id)}>
+									<KitPanel kit={k} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getKitSourcebook(props.sourcebooks, k);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={k.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
 										{item}
 									</Badge.Ribbon>
 								);
@@ -774,7 +698,45 @@ export const LibraryListPage = (props: Props) => {
 		}
 	};
 
-	const getTerrainsSection = (list: Terrain[]) => {
+	const getPerksSection = (list: Perk[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			return (
+				<div className='library-section-row'>
+					{
+						list.map(p => {
+							const item = (
+								<SelectablePanel key={p.id} onSelect={() => navigation.goToLibraryView('perk', p.id)}>
+									<PerkPanel perk={p} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getPerkSourcebook(props.sourcebooks, p);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={p.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
+	const getTerrainObjectsSection = (list: Terrain[]) => {
 		try {
 			if (list.length === 0) {
 				return (
@@ -812,24 +774,62 @@ export const LibraryListPage = (props: Props) => {
 		}
 	};
 
+	const getTitlesSection = (list: Title[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			return (
+				<div className='library-section-row'>
+					{
+						list.map(t => {
+							const item = (
+								<SelectablePanel key={t.id} onSelect={() => navigation.goToLibraryView('title', t.id)}>
+									<TitlePanel title={t} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getTitleSourcebook(props.sourcebooks, t);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={t.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
 	try {
 		const sourcebookOptions = props.sourcebooks
 			.filter(cs => cs.isHomebrew)
 			.map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
 
 		const ancestries = getAncestries();
-		const cultures = getCultures();
 		const careers = getCareers();
 		const classes = getClasses();
 		const complications = getComplications();
+		const cultures = getCultures();
 		const domains = getDomains();
-		const kits = getKits();
-		const perks = getPerks();
-		const titles = getTitles();
 		const items = getItems();
+		const kits = getKits();
 		const monsterGroups = getMonsterGroups();
 		const monsters = Collections.sort(getMonsters(), m => m.name);
-		const terrains = getTerrains();
+		const perks = getPerks();
+		const terrains = getTerrainObjects();
+		const titles = getTitles();
 
 		return (
 			<ErrorBoundary>
@@ -1027,7 +1027,7 @@ export const LibraryListPage = (props: Props) => {
 											<div className='section-count'>{terrains.length}</div>
 										</div>
 									),
-									children: getTerrainsSection(terrains)
+									children: getTerrainObjectsSection(terrains)
 								},
 								{
 									key: 'title',

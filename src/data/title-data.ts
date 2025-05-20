@@ -527,7 +527,7 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 	static zombieSlayer: Title = {
 		id: 'title-zombie-slayer',
 		name: 'Zombie Slayer',
-		description: '“Why won’t you die! You’ve already done it once, youvshould be good at it by now!”',
+		description: '“Why won’t you die! You’ve already done it once, you should be good at it by now!”',
 		echelon: 1,
 		prerequisites: 'You defeat a leader or solo monster with the Undead keyword, such as a ghost.',
 		features: [

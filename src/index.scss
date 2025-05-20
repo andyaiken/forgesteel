@@ -340,6 +340,16 @@ td {
 		color: rgba(255, 255, 255, 0.88);
 	}
 
+	.ant-alert {
+		.ant-alert-content {
+			.ant-alert-message {
+				p, .ds-text {
+					color: rgba(0, 0, 0, 0.88);
+				}
+			}
+		}
+	}
+
 	.ant-collapse {
 		.ant-collapse-item {
 			.ant-collapse-header {

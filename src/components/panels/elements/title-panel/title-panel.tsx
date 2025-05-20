@@ -24,7 +24,7 @@ export const TitlePanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className={props.mode === PanelMode.Full ? 'title-panel' : 'title-panel compact'} id={props.mode === PanelMode.Full ? props.title.id : undefined}>
-					<HeaderText level={1}>{props.title.name || 'Unnamed Title'}</HeaderText>
+					<HeaderText level={1} tags={[ `Echelon ${props.title.echelon}` ]}>{props.title.name || 'Unnamed Title'}</HeaderText>
 					<Markdown text={props.title.description} />
 					{props.mode === PanelMode.Full ? <Field label='Echelon' value={props.title.echelon} /> : null}
 					{props.mode === PanelMode.Full ? <Field label='Prerequisites' value={props.title.prerequisites} /> : null}

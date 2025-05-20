@@ -15,6 +15,7 @@
 	}
 
 	.spin-buttons {
+		flex: 0 0 auto;
 		margin: 5px;
 
 		.spin-button {
@@ -31,6 +32,10 @@
 				background-color: rgba(0, 0, 0, 0.06);
 			}
 		}
+	}
+
+	.spin-middle {
+		flex: 1 1 0;
 	}
 }
 

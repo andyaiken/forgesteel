@@ -1,0 +1,21 @@
+.standard-abilities-panel {
+	height: 100%;
+	overflow-y: auto;
+
+	.standard-abilities-page {
+		padding: 20px;
+
+		.standard-abilities-row {
+			display: flex;
+			flex-direction: row;
+			align-items: flex-start;
+			justify-content: space-between;
+			gap: 10px;
+
+			.ability-panel,
+			.blank-panel {
+				flex: 1 1 0;
+			}
+		}
+	}
+}

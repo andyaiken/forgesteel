@@ -1,6 +1,7 @@
-import { Button, Popover } from 'antd';
+import { Button, Divider, Popover, Segmented } from 'antd';
 import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, SettingOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
+import { useMemo, useState } from 'react';
 import { Ability } from '../../../../models/ability';
 import { Ancestry } from '../../../../models/ancestry';
 import { AppFooter } from '../../../panels/app-footer/app-footer';
@@ -22,7 +23,7 @@ import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { RulesPage } from '../../../../enums/rules-page';
 import { Sourcebook } from '../../../../models/sourcebook';
-import { useMemo } from 'react';
+import { StandardAbilitiesPanel } from '../../../panels/standard-abilities/standard-abilities-panel';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
@@ -39,6 +40,7 @@ interface Props {
 	setOptions: (options: Options) => void;
 	exportHero: (hero: Hero, format: 'image' | 'pdf' | 'json') => void;
 	exportHeroPDF: (hero: Hero, format: 'portrait' | 'landscape') => void;
+	exportStandardAbilities: (format: 'image' | 'pdf') => void;
 	copyHero: (hero: Hero) => void;
 	deleteHero: (hero: Hero) => void;
 	showAncestry: (ancestry: Ancestry) => void;
@@ -57,6 +59,7 @@ interface Props {
 export const HeroViewPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { heroID } = useParams<{ heroID: string }>();
+	const [ content, setContent ] = useState<'hero' | 'standard'>('hero');
 	const hero = useMemo(
 		() => props.heroes.find(h => h.id === heroID)!,
 		[ heroID, props.heroes ]
@@ -74,6 +77,36 @@ export const HeroViewPage = (props: Props) => {
 				default:
 					props.exportHero(hero, key as 'image' | 'json');
 					break;
+			}
+		};
+
+		const getContent = () => {
+			switch (content) {
+				case 'hero':
+					return (
+						<HeroPanel
+							hero={hero}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							mode={PanelMode.Full}
+							onSelectAncestry={props.showAncestry}
+							onSelectCulture={props.showCulture}
+							onSelectCareer={props.showCareer}
+							onSelectClass={props.showClass}
+							onSelectComplication={props.showComplication}
+							onSelectDomain={props.showDomain}
+							onSelectKit={props.showKit}
+							onSelectCompanion={props.showCompanion}
+							onSelectCharacteristic={characteristic => props.showCharacteristic(characteristic, hero)}
+							onSelectAbility={ability => props.showAbility(ability, hero)}
+							onShowState={page => props.showHeroState(hero, page)}
+							onshowReference={page => props.showReference(hero, page)}
+						/>
+					);
+				case 'standard':
+					return (
+						<StandardAbilitiesPanel hero={hero} />
+					);
 			}
 		};
 
@@ -95,10 +128,33 @@ export const HeroViewPage = (props: Props) => {
 							trigger='click'
 							content={(
 								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<Button onClick={() => exportHero('image')}>Export As Image</Button>
-									<Button onClick={() => exportHero('pdf-portrait')}>Export As PDF (portrait)</Button>
-									<Button onClick={() => exportHero('pdf-landscape')}>Export As PDF (landscape)</Button>
-									<Button onClick={() => exportHero('json')}>Export As Data</Button>
+									<Segmented
+										options={[
+											{ value: 'hero', label: 'Hero Sheet' },
+											{ value: 'standard', label: 'Standard Abilities' }
+										]}
+										value={content}
+										onChange={setContent}
+									/>
+									<Divider />
+									{
+										content === 'hero' ?
+											<>
+												<Button onClick={() => exportHero('image')}>Export As Image</Button>
+												<Button onClick={() => exportHero('pdf-portrait')}>Export As PDF (portrait)</Button>
+												<Button onClick={() => exportHero('pdf-landscape')}>Export As PDF (landscape)</Button>
+												<Button onClick={() => exportHero('json')}>Export As Data</Button>
+											</>
+											: null
+									}
+									{
+										content === 'standard' ?
+											<>
+												<Button onClick={() => props.exportStandardAbilities('image')}>Export As Image</Button>
+												<Button onClick={() => props.exportStandardAbilities('pdf')}>Export As PDF</Button>
+											</>
+											: null
+									}
 								</div>
 							)}
 						>
@@ -129,24 +185,7 @@ export const HeroViewPage = (props: Props) => {
 						</Popover>
 					</AppHeader>
 					<div className='hero-view-page-content'>
-						<HeroPanel
-							hero={hero}
-							sourcebooks={props.sourcebooks}
-							options={props.options}
-							mode={PanelMode.Full}
-							onSelectAncestry={props.showAncestry}
-							onSelectCulture={props.showCulture}
-							onSelectCareer={props.showCareer}
-							onSelectClass={props.showClass}
-							onSelectComplication={props.showComplication}
-							onSelectDomain={props.showDomain}
-							onSelectKit={props.showKit}
-							onSelectCompanion={props.showCompanion}
-							onSelectCharacteristic={characteristic => props.showCharacteristic(characteristic, hero)}
-							onSelectAbility={ability => props.showAbility(ability, hero)}
-							onShowState={page => props.showHeroState(hero, page)}
-							onshowReference={page => props.showReference(hero, page)}
-						/>
+						{getContent()}
 					</div>
 					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showReference={() => props.showReference(hero)} />
 				</div>

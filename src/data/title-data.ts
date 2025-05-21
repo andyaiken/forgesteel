@@ -1,6 +1,7 @@
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { FactoryLogic } from '../logic/factory-logic';
+import { FeatureField } from '../enums/feature-field';
 import { Title } from '../models/title';
 
 export class TitleData {
@@ -241,10 +242,11 @@ You can find an agent who can provide you with three pieces of information about
 				name: 'Easy Marks',
 				description: 'You have an edge on tests made with skills from the interpersonal and intrigue skill groups when influencing members of a community that you have saved.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'title-local-hero-3',
 				name: 'Local Fame',
-				description: 'Your Renown score increases by 1.'
+				field: FeatureField.Renown,
+				value: 1
 			})
 		],
 		selectedFeatureID: ''

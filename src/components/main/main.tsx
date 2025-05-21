@@ -89,6 +89,7 @@ export const Main = (props: Props) => {
 	const [ options, setOptions ] = useState<Options>(props.options);
 	const [ directory, setDirectory ] = useState<ReactNode>(null);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
+	const [ playerView, setPlayerView ] = useState<Window | null>(null);
 
 	//#region Persistence
 
@@ -123,7 +124,12 @@ export const Main = (props: Props) => {
 	const persistSession = (session: Playbook) => {
 		return localforage
 			.setItem<Playbook>('forgesteel-session', session)
-			.then(setSession);
+			.then(setSession)
+			.then(() => {
+				if (playerView) {
+					playerView.location.reload();
+				}
+			});
 	};
 
 	const persistHomebrewSourcebooks = (homebrew: Sourcebook[]) => {
@@ -194,6 +200,10 @@ export const Main = (props: Props) => {
 
 	const exportHeroPDF = (hero: Hero, format: 'portrait' | 'landscape') => {
 		PDFExport.startExport(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], format);
+	};
+
+	const exportStandardAbilities = (format: 'image' | 'pdf') => {
+		Utils.export([ 'actions', 'maneuvers' ], 'Standard Abilities', null, 'hero', format);
 	};
 
 	//#endregion
@@ -1108,6 +1118,7 @@ export const Main = (props: Props) => {
 			<PlayerViewModal
 				session={session}
 				updateSession={persistSession}
+				openPlayerView={setPlayerView}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1174,6 +1185,7 @@ export const Main = (props: Props) => {
 										showRoll={showRoll}
 										exportHero={exportHero}
 										exportHeroPDF={exportHeroPDF}
+										exportStandardAbilities={exportStandardAbilities}
 										copyHero={copyHero}
 										deleteHero={deleteHero}
 										showAncestry={ancestry => onSelectLibraryElement(ancestry, 'ancestry')}

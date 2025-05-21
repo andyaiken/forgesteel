@@ -12,6 +12,7 @@ import './player-view-modal.scss';
 interface Props {
 	session: Playbook;
 	updateSession: (session: Playbook) => void;
+	openPlayerView: (playerView: Window | null) => void;
 	onClose: () => void;
 }
 
@@ -25,13 +26,18 @@ export const PlayerViewModal = (props: Props) => {
 		props.updateSession(copy);
 	};
 
+	const openPlayerView = () => {
+		const playerView = window.open(`${window.location.pathname}#/session/player`, '_blank');
+		props.openPlayerView(playerView);
+	};
+
 	try {
 		return (
 			<Modal
 				content={
 					<div className='player-view-modal'>
 						<Space direction='vertical' style={{ width: '100%' }}>
-							<Button block={true} onClick={() => window.open(`${window.location.pathname}#/session/player`, '_blank')}>
+							<Button block={true} onClick={openPlayerView}>
 								Open Player View
 							</Button>
 							<Alert

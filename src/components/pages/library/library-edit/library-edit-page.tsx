@@ -1298,10 +1298,20 @@ export const LibraryEditPage = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Item Type</HeaderText>
-				<Segmented
-					name='itemtypes'
-					block={true}
-					options={[ ItemType.Consumable, ItemType.Trinket, ItemType.Leveled, ItemType.Artifact ]}
+				<Select
+					style={{ width: '100%' }}
+					placeholder='Type'
+					options={[ ItemType.Artifact, ItemType.Consumable, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Leveled, ItemType.Trinket ].map(option => ({ value: option }))}
+					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.value
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
 					value={item.type}
 					onChange={setType}
 				/>

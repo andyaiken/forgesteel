@@ -30,10 +30,12 @@ export enum AbilityKeyword {
 	Ring = 'Ring',
 	Rot = 'Rot',
 	Routine = 'Routine',
+	Scroll = 'Scroll',
 	Strike = 'Strike',
 	Telekinesis = 'Telekinesis',
 	Telepathy = 'Telepathy',
 	Void = 'Void',
+	Waist = 'Waist',
 	Wand = 'Wand',
 	Weapon = 'Weapon'
 }

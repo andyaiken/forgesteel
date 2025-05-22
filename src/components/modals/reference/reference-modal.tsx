@@ -49,6 +49,7 @@ export const ReferenceModal = (props: Props) => {
 				RulesData.criticalHit,
 				RulesData.damagingTerrain,
 				RulesData.difficultTerrain,
+				RulesData.dyingAndDeath,
 				RulesData.falling,
 				RulesData.flanking,
 				RulesData.flying,

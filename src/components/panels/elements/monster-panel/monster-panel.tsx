@@ -73,7 +73,7 @@ export const MonsterPanel = (props: Props) => {
 					<Markdown text={props.monster.description} />
 					<Flex align='center' justify='space-between'>
 						<div>{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
-						<Field label='EV' value={(props.monster.role.organization === MonsterOrganizationType.Minion) ? `${props.monster.encounterValue} ${props.options.minionCount} minions` : ((props.monster.encounterValue === 0) ? '-': props.monster.encounterValue)} />
+						<Field label='EV' value={(props.monster.role.organization === MonsterOrganizationType.Minion) ? `${props.monster.encounterValue} for ${props.options.minionCount} minions` : ((props.monster.encounterValue === 0) ? '-': props.monster.encounterValue)} />
 					</Flex>
 					<div className='stats'>
 						<Field orientation='vertical' label='Speed' value={speed} />

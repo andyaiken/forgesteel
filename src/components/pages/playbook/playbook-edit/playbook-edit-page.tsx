@@ -299,7 +299,7 @@ export const PlaybookEditPage = (props: Props) => {
 						<div key={group.id} className='group-row'>
 							<HeaderText
 								extra={[
-									<DangerButton mode='clear' label='Delete Group' onConfirm={() => deleteGroup(group)} />
+									<DangerButton key='delete' mode='clear' label='Delete Group' onConfirm={() => deleteGroup(group)} />
 								]}
 							>
 								Group {(n + 1).toString()}

@@ -1,9 +1,12 @@
-import { Button, Popover, Segmented } from 'antd';
+import { Button, Flex, Popover, Segmented } from 'antd';
 import { DownOutlined, UploadOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../models/monster';
+import { HeaderText } from '../../controls/header-text/header-text';
 import { Modal } from '../modal/modal';
 import { MonsterHealthPanel } from '../../panels/health/health-panel';
+import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterPanel } from '../../panels/elements/monster-panel/monster-panel';
+import { MonsterToken } from '../../controls/token/token';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Utils } from '../../../utils/utils';
@@ -35,13 +38,10 @@ export const MonsterModal = (props: Props) => {
 		switch (page) {
 			case 'Encounter':
 				return (
-					<div style={{ padding: '10px 20px' }}>
-						<MonsterPanel
-							monster={monster}
-							monsterGroup={props.monsterGroup}
-							options={props.options}
-							mode={PanelMode.Compact}
-						/>
+					<div style={{ padding: '0 20px' }}>
+						<HeaderText level={1} ribbon={<MonsterToken monster={monster} monsterGroup={props.monsterGroup} size={28} />}>
+							{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
+						</HeaderText>
 						<MonsterHealthPanel
 							monster={monster}
 							onChange={updateMonster}
@@ -69,12 +69,14 @@ export const MonsterModal = (props: Props) => {
 					<>
 						{
 							props.updateMonster ?
-								<Segmented
-									name='tabs'
-									options={[ 'Encounter', 'Stat Block' ]}
-									value={page}
-									onChange={setPage}
-								/>
+								<Flex align='center' justify='center' style={{ width: '100%' }}>
+									<Segmented
+										name='tabs'
+										options={[ 'Encounter', 'Stat Block' ]}
+										value={page}
+										onChange={setPage}
+									/>
+								</Flex>
 								: null
 						}
 						{

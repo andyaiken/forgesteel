@@ -97,6 +97,14 @@ If you are knocked prone while climbing or riding a creature, you fall and land 
 		content: 'Areas of thick underbrush, rubble, spiderwebs, or other obstacles to movement create difficult terrain. It costs 1 additional square of movement to enter a square of difficult terrain.'
 	};
 
+	static dyingAndDeath: RulesItem = {
+		label: 'Dying and Death',
+		content: `
+When your Stamina is 0 or lower, you are dying. While dying, you can’t take the Catch Breath maneuver in combat, and you are bleeding, and this condition can’t be removed in any way until you are no longer dying. While you are dying, your allies can help you spend Recoveries in combat, and you can spend Recoveries out of combat as usual.
+
+While your Stamina is lower than 0, if it reaches the negative of your winded value, you die. When you die, you can’t be brought back to life without the use of a special powerful item such as a Scroll of Resurrection.`
+	};
+
 	static falling: RulesItem = {
 		label: 'Falling',
 		content: `

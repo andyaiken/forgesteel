@@ -52,7 +52,7 @@ export class PDFExport {
 			AncestryTop: hero.ancestry && hero.ancestry.name,
 			CareerTop: hero.career && hero.career.name,
 			ClassTop: hero.class && hero.class.name,
-			SubclassTop: hero.class && hero.class.subclassName !== '' && hero.class.subclassName + ': ' + hero.class.subclasses.filter(s => s.selected)[0].name || null,
+			SubclassTop: hero.class && (hero.class.subclassName !== '') && (hero.class.subclasses.filter(s => s.selected).length > 0) && hero.class.subclassName + ': ' + hero.class.subclasses.filter(s => s.selected)[0].name || null,
 			Level: hero.class && hero.class.level,
 			Wealth: hero.state.wealth,
 			Renown: hero.state.renown,
@@ -304,8 +304,8 @@ export class PDFExport {
 						texts[prefix + 'Distance' + i] = AbilityLogic.getDistance(a.distance[0], hero, a);
 					}
 					texts[prefix + 'Keywords' + i] = a.keywords.join(', ');
-					texts[prefix + 'Type' + i] = a.type.usage;
-					const details = [];
+					texts[prefix + 'Type' + i] = a.type.free ? `Free ${a.type.usage}` : a.type.usage;
+					const details = [ ...a.type.qualifiers ];
 
 					if (a.preEffect) {
 						details.push(CleanupOutput(a.preEffect.replace(/^\s+/, '')));
@@ -381,11 +381,11 @@ export class PDFExport {
 					} else if (a.cost === 'signature') {
 						texts[prefix + 'Tag' + i] = 'S';
 					} else if (a.type.usage === AbilityUsage.Trigger) {
-						texts[prefix + 'Tag' + i] = 'T';
+						texts[prefix + 'Tag' + i] = a.type.free ? 'FT' : 'T';
 					} else if (a.type.usage === AbilityUsage.Maneuver) {
-						texts[prefix + 'Tag' + i] = 'M';
+						texts[prefix + 'Tag' + i] = a.type.free ? 'FM' : 'M';
 					} else if (a.type.usage === AbilityUsage.Action) {
-						texts[prefix + 'Tag' + i] = 'A';
+						texts[prefix + 'Tag' + i] = a.type.free ? 'FA' : 'A';
 					} else if (a.type.usage === AbilityUsage.FreeStrike) {
 						texts[prefix + 'Tag' + i] = 'FS';
 					}

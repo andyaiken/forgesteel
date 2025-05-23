@@ -49,6 +49,14 @@
 		}
 	}
 
+	&.highlight {
+		margin: 0 -10px;
+		padding: 10px;
+		border: 1px solid rgba(5, 5, 5, 0.06);
+		border-radius: 5px;
+		background: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
+	}
+
 	.field-label {
 		color: rgb(0, 0, 0);
 	}
@@ -74,6 +82,11 @@
 
 		.field-value {
 			color: rgba(255, 255, 255, 0.88);
+		}
+
+		&.highlight {
+			border-color: rgba(250, 250, 250, 0.6);
+			background: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
 		}
 	}
 }

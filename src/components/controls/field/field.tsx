@@ -10,6 +10,7 @@ interface Props {
 	orientation?: 'horizontal' | 'vertical';
 	disabled?: boolean;
 	danger?: boolean;
+	highlight?: boolean;
 };
 
 export const Field = (props: Props) => {
@@ -23,6 +24,9 @@ export const Field = (props: Props) => {
 		}
 		if (props.danger) {
 			className += ' danger';
+		}
+		if (props.highlight) {
+			className += ' highlight';
 		}
 
 		return (

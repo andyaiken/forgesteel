@@ -873,7 +873,7 @@ export const TacticalMapPanel = (props: Props) => {
 									item.content.type === 'image' ?
 										<Upload
 											style={{ width: '100%' }}
-											accept='.png,.webp,.gif.jpg,.jpeg,.svg'
+											accept='.png,.webp,.gif,.jpg,.jpeg,.svg'
 											showUploadList={false}
 											beforeUpload={file => {
 												const reader = new FileReader();

@@ -1,5 +1,5 @@
 import { Alert, Button, Divider, Flex, Popover, Segmented, Tag } from 'antd';
-import { EllipsisOutlined, HeartFilled, IdcardOutlined } from '@ant-design/icons';
+import { EllipsisOutlined, HeartFilled } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterSlot } from '../../../models/encounter';
 import { HeroInfo, MonsterInfo, TerrainInfo } from '../../controls/token/token';
 import { Collections } from '../../../utils/collections';
@@ -18,7 +18,7 @@ import './encounter-group-panel.scss';
 
 interface EncounterGroupHeroProps {
 	hero: Hero;
-	onSelect?: (hero: Hero) => void;
+	onSelect: (hero: Hero) => void;
 	onSetState?: (hero: Hero, state: 'ready' | 'current' | 'finished') => void;
 	onDelete?: (hero: Hero) => void;
 }
@@ -82,7 +82,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 				</div>
 				<div className='encounter-slots'>
 					<div className='encounter-slot'>
-						<div className={props.hero.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'}>
+						<div className={props.hero.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'} onClick={() => props.onSelect(props.hero)}>
 							<div className='name-column'>
 								<HeroInfo hero={props.hero} />
 							</div>
@@ -100,7 +100,6 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 								{props.hero.state.hidden ? <Tag>Hidden</Tag> : null}
 								{props.hero.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
 							</div>
-							{props.onSelect ? <Button type='text' icon={<IdcardOutlined />} onClick={() => props.onSelect!(props.hero)} /> : null}
 						</div>
 					</div>
 				</div>
@@ -116,7 +115,7 @@ interface EncounterGroupMonsterProps {
 	group: EncounterGroup;
 	index: number;
 	encounter: Encounter;
-	onSelectMonster?: (monster: Monster) => void;
+	onSelectMonster: (monster: Monster) => void;
 	onSelectMinionSlot?: (slot: EncounterSlot) => void;
 	onSetState?: (group: EncounterGroup, state: 'ready' | 'current' | 'finished') => void;
 	onDuplicate?: (group: EncounterGroup) => void;
@@ -193,7 +192,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 				<div key={slot.id} className='encounter-slot'>
 					{
 						isMinionSlot ?
-							<div key='minions' className={slot.state.defeated ? 'encounter-slot-row minion defeated' : 'encounter-slot-row minion'}>
+							<div key='minions' className={slot.state.defeated ? 'encounter-slot-row minion defeated' : 'encounter-slot-row minion'} onClick={() => props.onSelectMinionSlot!(slot)}>
 								<div className='name-column'>
 									<b>Minions</b>
 								</div>
@@ -205,7 +204,6 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 									{getMinionCaptainTag()}
 									{slot.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
 								</div>
-								{props.onSelectMinionSlot ? <Button type='text' icon={<IdcardOutlined />} onClick={() => props.onSelectMinionSlot!(slot)} /> : null}
 							</div>
 							: null
 					}
@@ -217,7 +215,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 					}
 					{
 						slot.monsters.map(monster => (
-							<div key={monster.id} className={slot.state.defeated || monster.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'}>
+							<div key={monster.id} className={slot.state.defeated || monster.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'} onClick={() => props.onSelectMonster!(monster)}>
 								<div className='name-column'>
 									<MonsterInfo monster={monster} />
 								</div>
@@ -235,7 +233,6 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 									{monster.state.hidden ? <Tag>Hidden</Tag> : null}
 									{monster.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
 								</div>
-								{props.onSelectMonster ? <Button type='text' icon={<IdcardOutlined />} onClick={() => props.onSelectMonster!(monster)} /> : null}
 							</div>
 						))
 					}
@@ -299,7 +296,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 
 interface EncounterGroupTerrainProps {
 	terrain: Terrain;
-	onSelect?: (terrain: Terrain) => void;
+	onSelect: (terrain: Terrain) => void;
 	onDuplicate?: (terrain: Terrain) => void;
 	onDelete?: (terrain: Terrain) => void;
 }
@@ -332,7 +329,7 @@ export const EncounterGroupTerrain = (props: EncounterGroupTerrainProps) => {
 				</div>
 				<div className='encounter-slots'>
 					<div className='encounter-slot'>
-						<div className='encounter-slot-row'>
+						<div className='encounter-slot-row' onClick={() => props.onSelect(props.terrain)}>
 							<div className='name-column'>
 								<TerrainInfo terrain={props.terrain} />
 							</div>
@@ -342,7 +339,6 @@ export const EncounterGroupTerrain = (props: EncounterGroupTerrainProps) => {
 							</div>
 							<div className='conditions-column'>
 							</div>
-							{props.onSelect ? <Button type='text' icon={<IdcardOutlined />} onClick={() => props.onSelect!(props.terrain)} /> : null}
 						</div>
 					</div>
 				</div>

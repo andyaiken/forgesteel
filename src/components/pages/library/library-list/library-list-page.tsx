@@ -634,10 +634,10 @@ export const LibraryListPage = (props: Props) => {
 			const tools = (
 				<>
 					<Expander title='Filter'>
-						<HeaderText>Monster Filter</HeaderText>
 						<MonsterFilterPanel
 							monsterFilter={monsterFilter}
 							monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
+							includeNameFilter={true}
 							onChange={setMonsterFilter}
 						/>
 					</Expander>

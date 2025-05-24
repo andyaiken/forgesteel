@@ -80,11 +80,11 @@
 				border: 1px solid rgb(220, 220, 220);
 				border-radius: 10px;
 				background-color: rgba(255, 255, 255);
-				padding: 10px 10px 10px 20px;
+				padding: 5px 10px;
 				display: flex;
 				flex-direction: row;
 				align-items: center;
-				gap: 20px;
+				justify-content: space-between;
 
 				.monster-panel,
 				.terrain-panel {
@@ -92,6 +92,7 @@
 				}
 
 				.actions {
+					margin-top: 10px;
 					flex: 0 0 130px;
 					display: flex;
 					flex-direction: column;

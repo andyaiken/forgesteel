@@ -10,6 +10,7 @@ import './terrain-filter-panel.scss';
 
 interface Props {
 	terrainFilter: TerrainFilter;
+	includeNameFilter: boolean;
 	onChange: (terrainFilter: TerrainFilter) => void;
 }
 
@@ -48,12 +49,16 @@ export const TerrainFilterPanel = (props: Props) => {
 		<ErrorBoundary>
 			<div className='terrain-filter-panel'>
 				<Space direction='vertical' style={{ width: '100%' }}>
-					<Input
-						placeholder='Name, keywords'
-						allowClear={true}
-						value={props.terrainFilter.name}
-						onChange={e => setFilterName(e.target.value)}
-					/>
+					{
+						props.includeNameFilter ?
+							<Input
+								placeholder='Name, keywords'
+								allowClear={true}
+								value={props.terrainFilter.name}
+								onChange={e => setFilterName(e.target.value)}
+							/>
+							: null
+					}
 					<Select
 						style={{ width: '100%' }}
 						mode='multiple'

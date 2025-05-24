@@ -1,4 +1,5 @@
 import { Alert, Button, Drawer, Flex, Progress, Space, Tabs } from 'antd';
+import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterSlot } from '../../../../models/encounter';
 import { EncounterGroupHero, EncounterGroupMonster, EncounterGroupTerrain } from '../../encounter-group/encounter-group-panel';
 import { FeatureAbility, FeatureMalice } from '../../../../models/feature';
@@ -27,6 +28,7 @@ import { MonsterData } from '../../../../data/monster-data';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterModal } from '../../../modals/monster/monster-modal';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
+import { MonsterPanel } from '../../elements/monster-panel/monster-panel';
 import { MonsterSelectModal } from '../../../modals/select/monster-select/monster-select-modal';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
@@ -54,6 +56,7 @@ export const EncounterRunPanel = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const [ encounter, setEncounter ] = useState<Encounter>(Utils.copy(props.encounter));
 	const [ tab, setTab ] = useState<string>('combatants');
+	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
 	const [ addingHeroes, setAddingHeroes ] = useState<boolean>(false);
 	const [ addingMonsters, setAddingMonsters ] = useState<boolean>(false);
 	const [ selectingGroup, setSelectingGroup ] = useState<boolean>(false);
@@ -309,7 +312,7 @@ export const EncounterRunPanel = (props: Props) => {
 								}
 								{
 									combatants.filter(c => c.section === section).length === 0 ?
-										<Empty text='No-one' />
+										<div className='ds-text dimmed-text'>No one</div>
 										: null
 								}
 							</div>
@@ -427,29 +430,49 @@ export const EncounterRunPanel = (props: Props) => {
 		);
 	};
 
-	const getNotes = () => {
+	const getSidebar = () => {
+		const active = getActiveMonsters();
+		if (active.length > 0) {
+			return (
+				<Tabs
+					items={[
+						{
+							key: 'active',
+							label: active.length > 1 ? 'Active Monsters' : 'Active Monster',
+							children: active
+						}
+					]}
+				/>
+			);
+		}
+
 		return (
-			<>
-				{
-					encounter.description ?
-						<>
-							<HeaderText>Encounter Description</HeaderText>
-							<Markdown text={encounter.description} />
-						</>
-						: null
-				}
-				{
-					encounter.notes.map(note => (
-						<div key={note.id}>
-							<HeaderText>{note.name}</HeaderText>
-							<Markdown text={note.description} />
-						</div>
-					))
-				}
-				{encounter.objective ? <EncounterObjectivePanel objective={encounter.objective} mode={PanelMode.Full} /> : null}
-				{(encounter.notes.length === 0) && !encounter.objective ? <Empty text='No notes' /> : null}
-			</>
+			<Tabs
+				items={[
+					{
+						key: 'reminders',
+						label: 'Reminders',
+						children: getReminders()
+					},
+					{
+						key: 'notes',
+						label: 'Notes',
+						children: getNotes()
+					}
+				]}
+			/>
 		);
+	};
+
+	const getActiveMonsters = () => {
+		return encounter.groups
+			.filter(g => g.encounterState === 'current')
+			.flatMap(g => g.slots)
+			.flatMap(s => s.monsters)
+			.filter(m => !m.state.defeated)
+			.map(m => (
+				<MonsterPanel key={m.id} monster={m} options={props.options} mode={PanelMode.Full} style={{ padding: 0 }} />
+			));
 	};
 
 	const getReminders = () => {
@@ -473,6 +496,11 @@ export const EncounterRunPanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<Alert
+					type='info'
+					showIcon={true}
+					message='Here are some things you might need to remember during this encounter.'
+				/>
 				{
 					monsters.map(m => (
 						<div key={m.id}>
@@ -519,6 +547,31 @@ export const EncounterRunPanel = (props: Props) => {
 		);
 	};
 
+	const getNotes = () => {
+		return (
+			<>
+				{
+					encounter.description ?
+						<>
+							<HeaderText>Encounter Description</HeaderText>
+							<Markdown text={encounter.description} />
+						</>
+						: null
+				}
+				{
+					encounter.notes.map(note => (
+						<div key={note.id}>
+							<HeaderText>{note.name}</HeaderText>
+							<Markdown text={note.description} />
+						</div>
+					))
+				}
+				{encounter.objective ? <EncounterObjectivePanel objective={encounter.objective} mode={PanelMode.Full} /> : null}
+				{(encounter.notes.length === 0) && !encounter.objective ? <Empty text='No notes' /> : null}
+			</>
+		);
+	};
+
 	try {
 		let className = 'encounter-run-panel';
 		if (isSmall) {
@@ -528,47 +581,58 @@ export const EncounterRunPanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className={className} id={encounter.id}>
-					<HeaderText level={1}>{encounter.name || 'Unnamed Encounter'}</HeaderText>
-					{getControlSection()}
-					<Tabs
-						items={[
-							{
-								key: 'combatants',
-								label: 'Combatants',
-								children: getCombatants()
-							},
-							{
-								key: 'terrain',
-								label: 'Terrain',
-								children: getTerrain()
-							},
-							{
-								key: 'malice',
-								label: 'Malice',
-								children: getMalice()
-							},
-							{
-								key: 'notes',
-								label: 'Notes',
-								children: getNotes()
-							},
-							{
-								key: 'reminders',
-								label: 'Reminders',
-								children: getReminders()
-							}
-						]}
-						activeKey={tab}
-						onChange={setTab}
-						tabBarExtraContent={
-							tab === 'combatants' ?
-								<Flex gap={5}>
-									<Button block={true} type={encounter.heroes.length === 0 ? 'primary' : 'default'} onClick={() => setAddingHeroes(true)}>Add hero(es)</Button>
-									<Button block={true} onClick={() => setAddingMonsters(true)}>Add a monster</Button>
-								</Flex>
+					<Flex align='flex-start' gap={20}>
+						<div style={{ flex: '1 1 0' }}>
+							<HeaderText
+								level={1}
+								extra={[
+									<Button key='sidebar' onClick={() => setShowSidebar(!showSidebar)}>
+										Sidebar
+										{showSidebar ? <DoubleRightOutlined /> : <DoubleLeftOutlined />}
+									</Button>
+								]}
+							>
+								{encounter.name || 'Unnamed Encounter'}
+							</HeaderText>
+							{getControlSection()}
+							<Tabs
+								items={[
+									{
+										key: 'combatants',
+										label: 'Combatants',
+										children: getCombatants()
+									},
+									{
+										key: 'terrain',
+										label: 'Terrain',
+										children: getTerrain()
+									},
+									{
+										key: 'malice',
+										label: 'Malice',
+										children: getMalice()
+									}
+								]}
+								activeKey={tab}
+								onChange={setTab}
+								tabBarExtraContent={
+									tab === 'combatants' ?
+										<Flex gap={5}>
+											<Button type={encounter.heroes.length === 0 ? 'primary' : 'default'} onClick={() => setAddingHeroes(true)}>Add hero(es)</Button>
+											<Button onClick={() => setAddingMonsters(true)}>Add a monster</Button>
+										</Flex>
+										: null
+								}
+							/>
+						</div>
+						{
+							showSidebar ?
+								<div style={{ flex: '0 0 400px' }}>
+									{getSidebar()}
+								</div>
 								: null
 						}
-					/>
+					</Flex>
 				</div>
 				<Drawer open={addingHeroes} onClose={() => setAddingHeroes(false)} closeIcon={null} width='500px'>
 					<HeroSelectModal

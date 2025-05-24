@@ -13,6 +13,7 @@ import './monster-filter-panel.scss';
 interface Props {
 	monsterFilter: MonsterFilter;
 	monsters: Monster[];
+	includeNameFilter: boolean;
 	onChange: (monsterFilter: MonsterFilter) => void;
 }
 
@@ -65,12 +66,16 @@ export const MonsterFilterPanel = (props: Props) => {
 		<ErrorBoundary>
 			<div className='monster-filter-panel'>
 				<Space direction='vertical' style={{ width: '100%' }}>
-					<Input
-						placeholder='Name'
-						allowClear={true}
-						value={props.monsterFilter.name}
-						onChange={e => setFilterName(e.target.value)}
-					/>
+					{
+						props.includeNameFilter ?
+							<Input
+								placeholder='Name'
+								allowClear={true}
+								value={props.monsterFilter.name}
+								onChange={e => setFilterName(e.target.value)}
+							/>
+							: null
+					}
 					<Select
 						style={{ width: '100%' }}
 						mode='multiple'

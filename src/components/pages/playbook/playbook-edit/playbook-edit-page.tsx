@@ -1,8 +1,9 @@
 import { Alert, Button, Divider, Flex, Input, Popover, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, DownOutlined, PlusOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, CloseOutlined, DownOutlined, InfoCircleOutlined, PlusOutlined, SaveOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot, TerrainSlot } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { MonsterFilter, TerrainFilter } from '../../../../models/filter';
+import { MonsterInfo, TerrainInfo } from '../../../controls/token/token';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { ReactNode, useState } from 'react';
 import { Adventure } from '../../../../models/adventure';
@@ -210,7 +211,7 @@ export const PlaybookEditPage = (props: Props) => {
 				return (
 					<div key={slot.id} className='slot-row'>
 						<div className='content'>
-							<MonsterPanel monster={monster} monsterGroup={monsterGroup} options={props.options} />
+							<MonsterPanel monster={monster} monsterGroup={monsterGroup} options={props.options} extra={<Button type='text' icon={<InfoCircleOutlined />} onClick={() => props.showMonster(monster, monsterGroup)} />} />
 							{
 								monsterGroup.addOns.length > 0 ?
 									<Expander title='Customize'>
@@ -244,7 +245,6 @@ export const PlaybookEditPage = (props: Props) => {
 								onChange={value => setSlotCount(group.id, slot.id, value)}
 							/>
 							<Divider />
-							<Button block={true} onClick={() => props.showMonster(monster, monsterGroup)}>Details</Button>
 							<DropdownButton
 								label='Move To'
 								items={[
@@ -1511,6 +1511,12 @@ export const PlaybookEditPage = (props: Props) => {
 	};
 
 	const getEncounterPreviewMonstersSection = () => {
+		const setMonsterFilterName = (name: string) => {
+			const copy = Utils.copy(monsterFilter);
+			copy.name = name;
+			setMonsterFilter(copy);
+		};
+
 		const addMonster = (monster: Monster, encounterGroupID: string | null) => {
 			const copy = Utils.copy(element) as Encounter;
 
@@ -1541,11 +1547,17 @@ export const PlaybookEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<Input
+					placeholder='Search'
+					allowClear={true}
+					value={monsterFilter.name}
+					onChange={e => setMonsterFilterName(e.target.value)}
+				/>
 				<Expander title='Filter'>
-					<HeaderText>Filter</HeaderText>
 					<MonsterFilterPanel
 						monsterFilter={monsterFilter}
 						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
+						includeNameFilter={false}
 						onChange={setMonsterFilter}
 					/>
 				</Expander>
@@ -1578,11 +1590,11 @@ export const PlaybookEditPage = (props: Props) => {
 
 						return (
 							<div key={m.id} className='monster-row'>
-								<MonsterPanel monster={m} monsterGroup={monsterGroup} options={props.options} />
-								<div className='actions'>
-									<Button block={true} onClick={() => props.showMonster(m, monsterGroup)}>Details</Button>
+								<MonsterInfo monster={m} />
+								<Flex gap={10}>
+									<Button onClick={() => props.showMonster(m, monsterGroup)}>Details</Button>
 									{addBtn}
-								</div>
+								</Flex>
 							</div>
 						);
 					})
@@ -1597,6 +1609,12 @@ export const PlaybookEditPage = (props: Props) => {
 	};
 
 	const getEncounterPreviewTerrainSection = () => {
+		const setTerrainFilterName = (name: string) => {
+			const copy = Utils.copy(terrainFilter);
+			copy.name = name;
+			setTerrainFilter(copy);
+		};
+
 		const addTerrain = (terrain: Terrain) => {
 			const copy = Utils.copy(element) as Encounter;
 
@@ -1621,19 +1639,24 @@ export const PlaybookEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<Input
+					placeholder='Search'
+					allowClear={true}
+					value={terrainFilter.name}
+					onChange={e => setTerrainFilterName(e.target.value)}
+				/>
 				<Expander title='Filter'>
-					<HeaderText>Filter</HeaderText>
-					<TerrainFilterPanel terrainFilter={terrainFilter} onChange={setTerrainFilter} />
+					<TerrainFilterPanel terrainFilter={terrainFilter} includeNameFilter={false} onChange={setTerrainFilter} />
 				</Expander>
 				{
 					terrains.map(t => {
 						return (
 							<div key={t.id} className='terrain-row'>
-								<TerrainPanel terrain={t} />
-								<div className='actions'>
-									<Button block={true} onClick={() => props.showTerrain(t, [])}>Details</Button>
+								<TerrainInfo terrain={t} />
+								<Flex gap={10}>
+									<Button onClick={() => props.showTerrain(t, [])}>Details</Button>
 									<Button icon={<PlusOutlined />} onClick={() => addTerrain(t)}>Add</Button>
-								</div>
+								</Flex>
 							</div>
 						);
 					})

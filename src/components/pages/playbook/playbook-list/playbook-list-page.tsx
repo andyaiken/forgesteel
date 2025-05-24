@@ -383,7 +383,7 @@ export const PlaybookListPage = (props: Props) => {
 														/>
 														<Upload
 															style={{ width: '100%' }}
-															accept={mapImportType === 'image' ? '.png,.webp,.gif.jpg,.jpeg,.svg' : '.mp4,.webm'}
+															accept={mapImportType === 'image' ? '.png,.webp,.gif,.jpg,.jpeg,.svg' : '.mp4,.webm'}
 															showUploadList={false}
 															beforeUpload={file => {
 																const reader = new FileReader();

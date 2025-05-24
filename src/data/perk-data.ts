@@ -528,7 +528,7 @@ If the familiar is destroyed, you can restore them as a respite activity or by s
 
 ### Familiar
 **Stamina**: 2 × your level, **Speed**: 5, **Size**: 1T, **Stability**: 0
-**Might**: −3, **Agility**: +2, **Reason**: +0, **Intuition**: +0, **Presence**: +1
+**Might**: -3, **Agility**: +2, **Reason**: +0, **Intuition**: +0, **Presence**: +1
 **Telepathic**: You and the spirit can communication telepathically with with each other and share senses over while you are within 10 squares of each other.`,
 		type: FeatureType.Text,
 		data: null,

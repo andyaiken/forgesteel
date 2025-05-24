@@ -42,6 +42,7 @@ export class PDFExport {
 			// This replaces characters the PDF doesn't support
 			return str
 				.toString()
+				.replace(/−/g, '-')
 				.replace(/ź/g, 'z')
 				.replace(/ń/g, 'n')
 				.replace(/č/g, 'c');
@@ -305,7 +306,7 @@ export class PDFExport {
 					}
 					texts[prefix + 'Keywords' + i] = a.keywords.join(', ');
 					texts[prefix + 'Type' + i] = a.type.free ? `Free ${a.type.usage}` : a.type.usage;
-					const details = [ ...a.type.qualifiers ];
+					const details = [ ...a.type.qualifiers || [] ];
 
 					if (a.preEffect) {
 						details.push(CleanupOutput(a.preEffect.replace(/^\s+/, '')));

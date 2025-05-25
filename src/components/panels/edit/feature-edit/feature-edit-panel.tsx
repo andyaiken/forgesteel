@@ -523,7 +523,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 		const deleteChoice = (data: FeatureChoiceData, index: number) => {
 			const copy = Utils.copy(data);
-			copy.options.splice(index);
+			copy.options.splice(index, 1);
 			setData(copy);
 		};
 
@@ -547,7 +547,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 		const deleteDamageModifier = (data: FeatureDamageModifierData, index: number) => {
 			const copy = Utils.copy(data);
-			copy.modifiers.splice(index);
+			copy.modifiers.splice(index, 1);
 			setData(copy);
 		};
 
@@ -612,7 +612,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 		const deleteMaliceSection = (data: FeatureMaliceData, index: number) => {
 			const copy = Utils.copy(data);
-			copy.sections.splice(index);
+			copy.sections.splice(index, 1);
 			setData(copy);
 		};
 
@@ -668,7 +668,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 		const deleteMultipleFeature = (data: FeatureMultipleData, index: number) => {
 			const copy = Utils.copy(data);
-			copy.features.splice(index);
+			copy.features.splice(index, 1);
 			setData(copy);
 		};
 

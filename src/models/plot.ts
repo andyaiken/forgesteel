@@ -2,7 +2,7 @@ import { Element } from './element';
 
 export interface PlotContent {
 	id: string;
-	type: 'encounter' | 'montage' | 'negotiation' | 'map' | 'item' | 'monster';
+	type: 'encounter' | 'montage' | 'negotiation' | 'map';
 	contentID: string | null;
 }
 

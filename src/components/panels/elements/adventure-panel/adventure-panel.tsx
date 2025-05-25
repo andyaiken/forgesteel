@@ -1,4 +1,4 @@
-import { Button, Input, Select, Space, Tabs } from 'antd';
+import { Button, Flex, Input, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlayCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { Plot, PlotContent } from '../../../../models/plot';
@@ -14,9 +14,7 @@ import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
-import { ItemPanel } from '../item-panel/item-panel';
 import { Markdown } from '../../../controls/markdown/markdown';
-import { MonsterPanel } from '../monster-panel/monster-panel';
 import { MontagePanel } from '../montage-panel/montage-panel';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NegotiationPanel } from '../negotiation-panel/negotiation-panel';
@@ -28,7 +26,6 @@ import { PlotEditPanel } from '../../edit/plot-edit/plot-edit-panel';
 import { PlotPanel } from '../plot-panel/plot-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
-import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
 import { TacticalMapPanel } from '../tactical-map-panel/tactical-map-panel';
 import { Utils } from '../../../../utils/utils';
@@ -120,36 +117,6 @@ export const AdventurePanel = (props: Props) => {
 				}
 				break;
 			}
-			case 'item': {
-				const item = SourcebookLogic.getItems(props.sourcebooks).find(i => i.id === content.contentID);
-				if (item) {
-					return (
-						<SelectablePanel showShadow={false} onSelect={() => navigation.goToLibraryView('item', item.id)}>
-							<ItemPanel
-								item={item}
-								options={props.options}
-							/>
-						</SelectablePanel>
-					);
-				}
-				break;
-			}
-			case 'monster': {
-				const monster = SourcebookLogic.getMonster(props.sourcebooks, content.contentID);
-				const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, content.contentID);
-				if (monster && monsterGroup) {
-					return (
-						<SelectablePanel showShadow={false} onSelect={() => navigation.goToLibraryView('monster-group', monsterGroup.id, monster.id)}>
-							<MonsterPanel
-								monster={monster}
-								monsterGroup={monsterGroup}
-								options={props.options}
-							/>
-						</SelectablePanel>
-					);
-				}
-				break;
-			}
 		}
 
 		return null;
@@ -165,9 +132,10 @@ export const AdventurePanel = (props: Props) => {
 				const encounter = props.playbook.encounters.find(e => e.id === content.contentID);
 				if (encounter) {
 					return (
-						<>
+						<Flex vertical={true} gap={5}>
 							{props.onStart ? <Button icon={<PlayCircleOutlined />} onClick={() => props.onStart!('encounter', encounter, '')} /> : null}
-						</>
+							<Button icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('encounter', encounter.id)} />
+						</Flex>
 					);
 				}
 				break;
@@ -176,9 +144,10 @@ export const AdventurePanel = (props: Props) => {
 				const montage = props.playbook.montages.find(m => m.id === content.contentID);
 				if (montage) {
 					return (
-						<>
+						<Flex vertical={true} gap={5}>
 							{props.onStart ? <Button icon={<PlayCircleOutlined />} onClick={() => props.onStart!('montage', montage, '')} /> : null}
-						</>
+							<Button icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('montage', montage.id)} />
+						</Flex>
 					);
 				}
 				break;
@@ -187,9 +156,10 @@ export const AdventurePanel = (props: Props) => {
 				const negotiation = props.playbook.negotiations.find(n => n.id === content.contentID);
 				if (negotiation) {
 					return (
-						<>
+						<Flex vertical={true} gap={5}>
 							{props.onStart ? <Button icon={<PlayCircleOutlined />} onClick={() => props.onStart!('negotiation', negotiation, '')} /> : null}
-						</>
+							<Button icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('negotiation', negotiation.id)} />
+						</Flex>
 					);
 				}
 				break;
@@ -198,9 +168,10 @@ export const AdventurePanel = (props: Props) => {
 				const map = props.playbook.tacticalMaps.find(tm => tm.id === content.contentID);
 				if (map) {
 					return (
-						<>
+						<Flex vertical={true} gap={5}>
 							{props.onStart ? <Button icon={<PlayCircleOutlined />} onClick={() => props.onStart!('tactical-map', map, '')} /> : null}
-						</>
+							<Button icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('tactical-map', map.id)} />
+						</Flex>
 					);
 				}
 				break;
@@ -546,6 +517,7 @@ export const AdventurePanel = (props: Props) => {
 			<ErrorBoundary>
 				<div className={className} id={props.mode === PanelMode.Full ? adventure.id : undefined}>
 					{props.onChange ? null : <HeaderText level={1}>{adventure.name || 'Unnamed Adventure'}</HeaderText>}
+					{props.mode !== PanelMode.Full ? <Markdown text={adventure.description} /> : null}
 					{
 						props.mode === PanelMode.Full ?
 							<div className='plot-display-container'>

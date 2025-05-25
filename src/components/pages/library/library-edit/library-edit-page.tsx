@@ -1830,7 +1830,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		const deleteSection = (sectionIndex: number) => {
 			const copy = Utils.copy(terrain) as Terrain;
-			copy.sections.splice(sectionIndex);
+			copy.sections.splice(sectionIndex, 1);
 			setElement(copy);
 			setDirty(true);
 		};
@@ -1857,7 +1857,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		const deleteSectionContent = (sectionIndex: number, contentIndex: number) => {
 			const copy = Utils.copy(terrain) as Terrain;
-			copy.sections[sectionIndex].content.splice(contentIndex);
+			copy.sections[sectionIndex].content.splice(contentIndex, 1);
 			setElement(copy);
 			setDirty(true);
 		};
@@ -1954,7 +1954,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		const deleteUpgrade = (upgradeIndex: number) => {
 			const copy = Utils.copy(element) as Terrain;
-			copy.upgrades.splice(upgradeIndex);
+			copy.upgrades.splice(upgradeIndex, 1);
 			setElement(copy);
 			setDirty(true);
 		};
@@ -2005,7 +2005,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		const deleteUpgradeSection = (upgradeIndex: number, sectionIndex: number) => {
 			const copy = Utils.copy(terrain) as Terrain;
-			copy.upgrades[upgradeIndex].sections.splice(sectionIndex);
+			copy.upgrades[upgradeIndex].sections.splice(sectionIndex, 1);
 			setElement(copy);
 			setDirty(true);
 		};
@@ -2032,7 +2032,7 @@ export const LibraryEditPage = (props: Props) => {
 
 		const deleteUpgradeSectionContent = (upgradeIndex: number, sectionIndex: number, contentIndex: number) => {
 			const copy = Utils.copy(terrain) as Terrain;
-			copy.upgrades[upgradeIndex].sections[sectionIndex].content.splice(contentIndex);
+			copy.upgrades[upgradeIndex].sections[sectionIndex].content.splice(contentIndex, 1);
 			setElement(copy);
 			setDirty(true);
 		};

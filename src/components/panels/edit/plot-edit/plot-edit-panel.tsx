@@ -74,7 +74,7 @@ export const PlotEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setContentType = (content: PlotContent, value: 'encounter' | 'montage' | 'negotiation' | 'map' | 'item' | 'monster') => {
+		const setContentType = (content: PlotContent, value: 'encounter' | 'montage' | 'negotiation' | 'map') => {
 			const copy = Utils.copy(plot);
 			const index = copy.content.findIndex(c => c.id === content.id);
 			if (index !== -1) {
@@ -144,9 +144,9 @@ export const PlotEditPanel = (props: Props) => {
 							<Segmented
 								name='contenttypes'
 								block={true}
-								options={[ 'encounter', 'montage', 'negotiation', 'map', 'item', 'monster' ].map(t => ({ value: t, label: Format.capitalize(t) }))}
+								options={[ 'encounter', 'montage', 'negotiation', 'map' ].map(t => ({ value: t, label: Format.capitalize(t) }))}
 								value={c.type}
-								onChange={type => setContentType(c, type as 'encounter' | 'montage' | 'negotiation' | 'map' | 'item' | 'monster')}
+								onChange={type => setContentType(c, type as 'encounter' | 'montage' | 'negotiation' | 'map')}
 							/>
 							<HeaderText>Content</HeaderText>
 							<Select

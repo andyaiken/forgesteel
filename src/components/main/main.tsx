@@ -1,3 +1,4 @@
+import { Adventure, AdventurePackage } from '../../models/adventure';
 import { Monster, MonsterGroup } from '../../models/monster';
 import { Navigate, Route, Routes } from 'react-router';
 import { Playbook, PlaybookElementKind } from '../../models/playbook';
@@ -6,7 +7,6 @@ import { Sourcebook, SourcebookElementKind } from '../../models/sourcebook';
 import { Ability } from '../../models/ability';
 import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
-import { Adventure } from '../../models/adventure';
 import { Ancestry } from '../../models/ancestry';
 import { Career } from '../../models/career';
 import { Characteristic } from '../../enums/characteristic';
@@ -182,12 +182,16 @@ export const Main = (props: Props) => {
 			hero = Utils.copy(hero);
 			hero.name = `Copy of ${hero.name}`;
 		}
-		hero.id = Utils.guid();
+		if (heroes.some(h => h.id === hero.id)) {
+			hero.id = Utils.guid();
+		}
 		hero.folder = folder;
 		HeroLogic.updateHero(hero);
 
 		setDrawer(null);
 		persistHero(hero).then(() => navigation.goToHeroView(hero.id));
+
+		return hero;
 	};
 
 	const copyHero = (hero: Hero) => {
@@ -353,7 +357,24 @@ export const Main = (props: Props) => {
 			element = Utils.copy(element);
 			element.name = `Copy of ${element.name}`;
 		}
-		element.id = Utils.guid();
+		const sourcebooks = [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ];
+		const elements = [
+			...sourcebooks.flatMap(sb => sb.ancestries),
+			...sourcebooks.flatMap(sb => sb.careers),
+			...sourcebooks.flatMap(sb => sb.classes),
+			...sourcebooks.flatMap(sb => sb.complications),
+			...sourcebooks.flatMap(sb => sb.cultures),
+			...sourcebooks.flatMap(sb => sb.domains),
+			...sourcebooks.flatMap(sb => sb.items),
+			...sourcebooks.flatMap(sb => sb.kits),
+			...sourcebooks.flatMap(sb => sb.monsterGroups),
+			...sourcebooks.flatMap(sb => sb.perks),
+			...sourcebooks.flatMap(sb => sb.terrain),
+			...sourcebooks.flatMap(sb => sb.titles)
+		];
+		if (elements.some(e => e.id === element.id)) {
+			element.id = Utils.guid();
+		}
 		if (kind === 'monster-group') {
 			const group = element as MonsterGroup;
 			group.monsters.forEach(m => m.id = Utils.guid());
@@ -421,6 +442,8 @@ export const Main = (props: Props) => {
 
 		setDrawer(null);
 		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibraryList(kind));
+
+		return element;
 	};
 
 	const copyLibraryElement = (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => {
@@ -880,49 +903,105 @@ export const Main = (props: Props) => {
 		persistPlaybook(copy).then(() => navigation.goToPlaybookView(kind, element.id));
 	};
 
-	const importPlaybookElement = (kind: PlaybookElementKind, element: Element, createCopy: boolean = false) => {
-		if (createCopy) {
-			element = Utils.copy(element);
-			element.name = `Copy of ${element.name}`;
-		}
-		element.id = Utils.guid();
-
+	const importPlaybookElement = (list: { kind: PlaybookElementKind, element: Element }[], createCopy: boolean = false) => {
 		const copy = Utils.copy(playbook);
-		switch (kind) {
-			case 'adventure':
-				copy.adventures.push(element as Adventure);
-				copy.adventures = Collections.sort<Element>(copy.adventures, item => item.name) as Adventure[];
-				break;
-			case 'encounter':
-				copy.encounters.push(element as Encounter);
-				copy.encounters = Collections.sort<Element>(copy.encounters, item => item.name) as Encounter[];
-				break;
-			case 'montage':
-				copy.montages.push(element as Montage);
-				copy.montages = Collections.sort<Element>(copy.montages, item => item.name) as Montage[];
-				break;
-			case 'negotiation':
-				copy.negotiations.push(element as Negotiation);
-				copy.negotiations = Collections.sort<Element>(copy.negotiations, item => item.name) as Negotiation[];
-				break;
-			case 'tactical-map':
-				copy.tacticalMaps.push(element as TacticalMap);
-				copy.tacticalMaps = Collections.sort<Element>(copy.tacticalMaps, item => item.name) as TacticalMap[];
-				break;
-		}
+
+		const changedIDs: { fromID: string, toID: string }[] = [];
+
+		list.forEach(item => {
+			if (createCopy) {
+				item.element = Utils.copy(item.element);
+				item.element.name = `Copy of ${item.element.name}`;
+			}
+			const elements = [
+				...playbook.adventures,
+				...playbook.encounters,
+				...playbook.montages,
+				...playbook.negotiations,
+				...playbook.tacticalMaps
+			];
+			if (elements.some(e => e.id === item.element.id)) {
+				const original = item.element.id;
+				item.element.id = Utils.guid();
+				changedIDs.push({ fromID: original, toID: item.element.id });
+			}
+
+			switch (item.kind) {
+				case 'adventure':
+					PlaybookLogic
+						.getAllPlotPoints((item.element as Adventure).plot)
+						.flatMap(p => p.content)
+						.forEach(c => {
+							const change = changedIDs.find(x => x.fromID === c.id);
+							if (change) {
+								c.id = change.toID;
+							}
+						});
+					copy.adventures.push(item.element as Adventure);
+					copy.adventures = Collections.sort(copy.adventures, item => item.name);
+					break;
+				case 'encounter':
+					copy.encounters.push(item.element as Encounter);
+					copy.encounters = Collections.sort(copy.encounters, item => item.name);
+					break;
+				case 'montage':
+					copy.montages.push(item.element as Montage);
+					copy.montages = Collections.sort(copy.montages, item => item.name);
+					break;
+				case 'negotiation':
+					copy.negotiations.push(item.element as Negotiation);
+					copy.negotiations = Collections.sort(copy.negotiations, item => item.name);
+					break;
+				case 'tactical-map':
+					copy.tacticalMaps.push(item.element as TacticalMap);
+					copy.tacticalMaps = Collections.sort(copy.tacticalMaps, item => item.name);
+					break;
+			}
+		});
 
 		PlaybookLogic.updatePlaybook(copy);
 
 		setDrawer(null);
-		persistPlaybook(copy).then(() => navigation.goToPlaybookList(kind));
+		persistPlaybook(copy).then(() => navigation.goToPlaybookList(list[list.length - 1].kind));
+
+		return list[list.length - 1].element;
+	};
+
+	const importAdventurePackage = async (ap: AdventurePackage) => {
+		importPlaybookElement([
+			...ap.elements.map(e => {
+				let kind: PlaybookElementKind;
+				switch (e.type) {
+					case 'encounter':
+						kind = 'encounter';
+						break;
+					case 'montage':
+						kind = 'montage';
+						break;
+					case 'negotiation':
+						kind = 'negotiation';
+						break;
+					case 'map':
+						kind = 'tactical-map';
+						break;
+				}
+				return { kind: kind, element: e.data };
+			}),
+			{ kind: 'adventure', element: ap.adventure }
+		], false);
 	};
 
 	const copyPlaybookElement = (kind: PlaybookElementKind, element: Element) => {
-		importPlaybookElement(kind, element, true);
+		importPlaybookElement([ { kind: kind, element: element } ], true);
 	};
 
 	const exportPlaybookElement = (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => {
-		Utils.export([ element.id ], element.name || Format.capitalize(kind), element, kind, format);
+		if (kind === 'adventure') {
+			const ap = PlaybookLogic.getAdventurePackage(element as Adventure, playbook);
+			Utils.export([ ap.adventure.id ], ap.adventure.name || 'Adventure', ap, 'adventure', 'json');
+		} else {
+			Utils.export([ element.id ], element.name || Format.capitalize(kind), element, kind, format);
+		}
 	};
 
 	const startPlaybookElement = (kind: PlaybookElementKind, element: Element) => {
@@ -1312,6 +1391,7 @@ export const Main = (props: Props) => {
 										showReference={showReference}
 										createElement={createPlaybookElement}
 										importElement={importPlaybookElement}
+										importAdventurePackage={importAdventurePackage}
 										setOptions={persistOptions}
 									/>
 								}

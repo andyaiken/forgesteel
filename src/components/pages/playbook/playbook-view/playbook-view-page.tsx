@@ -147,13 +147,18 @@ export const PlaybookViewPage = (props: Props) => {
 						</Button>
 						<Popover
 							trigger='click'
-							content={(
-								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<Button onClick={() => props.export(kind!, element, 'image')}>Export As Image</Button>
-									<Button onClick={() => props.export(kind!, element, 'pdf')}>Export As PDF</Button>
-									<Button onClick={() => props.export(kind!, element, 'json')}>Export as Data</Button>
-								</div>
-							)}
+							content={
+								kind === 'adventure' ?
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										<Button onClick={() => props.export(kind!, element, 'json')}>Export as Data</Button>
+									</div>
+									:
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										<Button onClick={() => props.export(kind!, element, 'image')}>Export As Image</Button>
+										<Button onClick={() => props.export(kind!, element, 'pdf')}>Export As PDF</Button>
+										<Button onClick={() => props.export(kind!, element, 'json')}>Export as Data</Button>
+									</div>
+							}
 						>
 							<Button icon={<UploadOutlined />}>
 								Export

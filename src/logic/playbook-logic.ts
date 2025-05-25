@@ -1,3 +1,4 @@
+import { Adventure } from '../models/adventure';
 import { Counter } from '../models/counter';
 import { Encounter } from '../models/encounter';
 import { EncounterLogic } from './encounter-logic';
@@ -87,6 +88,23 @@ export class PlaybookLogic {
 		session.counters.forEach(c => options.push({ type: 'counter', id: c.id, name: c.name }));
 
 		return options;
+	};
+
+	static getAdventurePackage = (adventure: Adventure, playbook: Playbook) => {
+		const contentIDs = PlaybookLogic.getAllPlotPoints(adventure.plot)
+			.flatMap(p => p.content)
+			.map(c => c.contentID)
+			.filter(id => id !== null);
+
+		return {
+			adventure: adventure,
+			elements: [
+				...playbook.encounters.filter(e => contentIDs.includes(e.id)).map(e => ({ type: 'encounter' as const, data: e })),
+				...playbook.montages.filter(m => contentIDs.includes(m.id)).map(m => ({ type: 'montage' as const, data: m })),
+				...playbook.negotiations.filter(n => contentIDs.includes(n.id)).map(n => ({ type: 'negotiation' as const, data: n })),
+				...playbook.tacticalMaps.filter(tm => contentIDs.includes(tm.id)).map(tm => ({ type: 'map' as const, data: tm }))
+			]
+		};
 	};
 
 	static startEncounter = (encounter: Encounter, sourcebooks: Sourcebook[], heroes: Hero[], options: Options) => {

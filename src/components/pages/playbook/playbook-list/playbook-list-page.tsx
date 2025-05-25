@@ -1,7 +1,7 @@
+import { Adventure, AdventurePackage } from '../../../../models/adventure';
 import { Button, Divider, Flex, Input, Popover, Segmented, Space, Tabs, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
-import { Adventure } from '../../../../models/adventure';
 import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
 import { AppFooter } from '../../../panels/app-footer/app-footer';
 import { AppHeader } from '../../../panels/app-header/app-header';
@@ -48,7 +48,8 @@ interface Props {
 	showRoll: () => void;
 	showReference: () => void;
 	createElement: (kind: PlaybookElementKind, original: Element | null) => void;
-	importElement: (kind: PlaybookElementKind, element: Element) => void;
+	importElement: (list: { kind: PlaybookElementKind, element: Element }[]) => void;
+	importAdventurePackage: (ap: AdventurePackage) => void;
 	setOptions: (options: Options) => void;
 }
 
@@ -315,8 +316,13 @@ export const PlaybookListPage = (props: Props) => {
 												file
 													.text()
 													.then(json => {
-														const e = (JSON.parse(json) as Element);
-														props.importElement(currentTab, e);
+														if (currentTab === 'adventure') {
+															const ap = JSON.parse(json) as AdventurePackage;
+															props.importAdventurePackage(ap);
+														} else {
+															const e = JSON.parse(json) as Element;
+															props.importElement([ { kind: currentTab, element: e } ]);
+														}
 													});
 												return false;
 											}}

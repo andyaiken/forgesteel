@@ -3,7 +3,7 @@ import { Element } from './element';
 export interface PlotContent {
 	id: string;
 	type: 'encounter' | 'montage' | 'negotiation' | 'map';
-	contentID: string | null;
+	contentID: string;
 }
 
 export interface PlotLink {

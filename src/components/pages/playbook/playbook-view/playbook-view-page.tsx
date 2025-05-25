@@ -122,6 +122,15 @@ export const PlaybookViewPage = (props: Props) => {
 		return null;
 	}
 
+	const goBack = () => {
+		const adventure = props.playbook.adventures.find(a => PlaybookLogic.getAllPlotPoints(a.plot).flatMap(p => p.content).map(c => c.contentID).includes(element.id));
+		if (adventure) {
+			navigation.goToPlaybookView('adventure', adventure.id);
+		} else {
+			navigation.goToPlaybookList(kind!);
+		}
+	};
+
 	const getSubheader = () => {
 		if (kind === 'tactical-map') {
 			return 'Tactical Map';
@@ -135,7 +144,7 @@ export const PlaybookViewPage = (props: Props) => {
 			<ErrorBoundary>
 				<div className='playbook-view-page'>
 					<AppHeader subheader={getSubheader()} showDirectory={props.showDirectory}>
-						<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybookList(kind!)}>
+						<Button icon={<CloseOutlined />} onClick={goBack}>
 							Close
 						</Button>
 						<div className='divider' />

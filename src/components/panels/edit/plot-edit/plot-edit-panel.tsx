@@ -1,20 +1,33 @@
-import { Button, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { Button, Drawer, Input, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Plot, PlotContent, PlotLink } from '../../../../models/plot';
 import { Adventure } from '../../../../models/adventure';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
+import { Element } from '../../../../models/element';
 import { Empty } from '../../../controls/empty/empty';
+import { Encounter } from '../../../../models/encounter';
+import { EncounterPanel } from '../../elements/encounter-panel/encounter-panel';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { Field } from '../../../controls/field/field';
-import { Format } from '../../../../utils/format';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
+import { Hero } from '../../../../models/hero';
+import { Modal } from '../../../modals/modal/modal';
+import { Montage } from '../../../../models/montage';
+import { MontagePanel } from '../../elements/montage-panel/montage-panel';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
+import { Negotiation } from '../../../../models/negotiation';
+import { NegotiationPanel } from '../../elements/negotiation-panel/negotiation-panel';
+import { Options } from '../../../../models/options';
 import { Playbook } from '../../../../models/playbook';
 import { PlaybookLogic } from '../../../../logic/playbook-logic';
+import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { TacticalMap } from '../../../../models/tactical-map';
+import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
+import { TacticalMapPanel } from '../../elements/tactical-map-panel/tactical-map-panel';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -25,11 +38,26 @@ interface Props {
 	adventure: Adventure;
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
+	heroes: Hero[];
+	options: Options;
 	onChange: (plot: Plot) => void;
 }
 
 export const PlotEditPanel = (props: Props) => {
 	const [ plot, setPlot ] = useState<Plot>(props.plot);
+	const [ addingContent, setAddingContent ] = useState<boolean>(false);
+
+	const addContent = (type: 'encounter' | 'montage' | 'negotiation' | 'map', id: string) => {
+		const copy = Utils.copy(plot);
+		copy.content.push({
+			id: Utils.guid(),
+			type: type,
+			contentID: id
+		});
+		setPlot(copy);
+		setAddingContent(false);
+		props.onChange(copy);
+	};
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
@@ -63,38 +91,6 @@ export const PlotEditPanel = (props: Props) => {
 	};
 
 	const getContentSection = () => {
-		const addContent = () => {
-			const copy = Utils.copy(plot);
-			copy.content.push({
-				id: Utils.guid(),
-				type: 'encounter',
-				contentID: null
-			});
-			setPlot(copy);
-			props.onChange(copy);
-		};
-
-		const setContentType = (content: PlotContent, value: 'encounter' | 'montage' | 'negotiation' | 'map') => {
-			const copy = Utils.copy(plot);
-			const index = copy.content.findIndex(c => c.id === content.id);
-			if (index !== -1) {
-				copy.content[index].type = value;
-				copy.content[index].contentID = null;
-			}
-			setPlot(copy);
-			props.onChange(copy);
-		};
-
-		const setContentID = (content: PlotContent, value: string) => {
-			const copy = Utils.copy(plot);
-			const index = copy.content.findIndex(c => c.id === content.id);
-			if (index !== -1) {
-				copy.content[index].contentID = value;
-			}
-			setPlot(copy);
-			props.onChange(copy);
-		};
-
 		const moveContent = (content: PlotContent, direction: 'up' | 'down') => {
 			const copy = Utils.copy(plot);
 			const index = copy.content.findIndex(c => c.id === content.id);
@@ -110,73 +106,65 @@ export const PlotEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const getContentOptions = (type: 'encounter' | 'montage' | 'negotiation' | 'map' | 'item' | 'monster') => {
-			switch (type) {
-				case 'encounter':
-					return props.playbook.encounters;
-				case 'montage':
-					return props.playbook.montages;
-				case 'negotiation':
-					return props.playbook.negotiations;
-				case 'map':
-					return props.playbook.tacticalMaps;
-				case 'item':
-					return Collections.sort(props.sourcebooks.flatMap(sb => sb.items), i => i.name);
-				case 'monster':
-					return Collections.sort(props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(mg => mg.monsters), m => m.name);
-			}
-		};
-
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
-					plot.content.map(c => (
-						<Expander
-							key={c.id}
-							title={Format.capitalize(c.type)}
-							extra={[
-								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveContent(c, 'up'); }} />,
-								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveContent(c, 'down'); }} />,
-								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteContent(c); }} />
-							]}
-						>
-							<HeaderText>Type</HeaderText>
-							<Segmented
-								name='contenttypes'
-								block={true}
-								options={[ 'encounter', 'montage', 'negotiation', 'map' ].map(t => ({ value: t, label: Format.capitalize(t) }))}
-								value={c.type}
-								onChange={type => setContentType(c, type as 'encounter' | 'montage' | 'negotiation' | 'map')}
-							/>
-							<HeaderText>Content</HeaderText>
-							<Select
-								style={{ width: '100%' }}
-								allowClear={true}
-								placeholder='Select'
-								options={getContentOptions(c.type).map(o => ({ value: o.id, label: o.name || 'Unnamed Content', desc: o.description }))}
-								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-								showSearch={true}
-								filterOption={(input, option) => {
-									const strings = option ?
-										[
-											option.label,
-											option.desc
-										]
-										: [];
-									return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-								}}
-								value={c.contentID}
-								onChange={id => setContentID(c, id)}
-							/>
-						</Expander>
-					))
+					plot.content.map(c => {
+						let element: Element |undefined = undefined;
+						switch (c.type) {
+							case 'encounter':
+								element = props.playbook.encounters.find(e => e.id === c.contentID);
+								break;
+							case 'montage':
+								element = props.playbook.montages.find(m => m.id === c.contentID);
+								break;
+							case 'negotiation':
+								element = props.playbook.negotiations.find(n => n.id === c.contentID);
+								break;
+							case 'map':
+								element = props.playbook.tacticalMaps.find(tm => tm.id === c.contentID);
+								break;
+						}
+						return element ?
+							<Expander
+								key={c.id}
+								title={element.name}
+								extra={[
+									<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveContent(c, 'up'); }} />,
+									<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveContent(c, 'down'); }} />,
+									<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteContent(c); }} />
+								]}
+							>
+								{
+									c.type === 'encounter' ?
+										<EncounterPanel encounter={element as Encounter} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
+										: null
+								}
+								{
+									c.type === 'montage' ?
+										<MontagePanel montage={element as Montage} />
+										: null
+								}
+								{
+									c.type === 'negotiation' ?
+										<NegotiationPanel negotiation={element as Negotiation} />
+										: null
+								}
+								{
+									c.type === 'map' ?
+										<TacticalMapPanel map={element as TacticalMap} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
+										: null
+								}
+							</Expander>
+							: null;
+					})
 				}
 				{
 					plot.content.length === 0 ?
 						<Empty text='No content' />
 						: null
 				}
-				<Button block={true} onClick={addContent}>
+				<Button block={true} onClick={() => setAddingContent(true)}>
 					<PlusOutlined />
 					Add a new piece of content
 				</Button>
@@ -322,6 +310,83 @@ export const PlotEditPanel = (props: Props) => {
 						]}
 					/>
 				</div>
+				<Drawer open={addingContent} onClose={() => setAddingContent(false)} closeIcon={null} width='500px'>
+					<Modal
+						content={
+							<div style={{ padding: '0 20px' }}>
+								<Tabs
+									items={[
+										{
+											key: '1',
+											label: 'Encounters',
+											children: (
+												<Space direction='vertical' style={{ width: '100%' }}>
+													{
+														props.playbook.encounters.map(e =>
+															<SelectablePanel key={e.id} onSelect={() => addContent('encounter', e.id)}>
+																<EncounterPanel encounter={e} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
+															</SelectablePanel>
+														)
+													}
+													{props.playbook.encounters.length === 0 ? <Empty /> : null}
+												</Space>
+											)
+										},
+										{
+											key: '2',
+											label: 'Montages',
+											children: (
+												<Space direction='vertical' style={{ width: '100%' }}>
+													{
+														props.playbook.montages.map(m =>
+															<SelectablePanel key={m.id} onSelect={() => addContent('montage', m.id)}>
+																<MontagePanel montage={m} />
+															</SelectablePanel>
+														)
+													}
+													{props.playbook.montages.length === 0 ? <Empty /> : null}
+												</Space>
+											)
+										},
+										{
+											key: '3',
+											label: 'Negotiations',
+											children: (
+												<Space direction='vertical' style={{ width: '100%' }}>
+													{
+														props.playbook.negotiations.map(n =>
+															<SelectablePanel key={n.id} onSelect={() => addContent('negotiation', n.id)}>
+																<NegotiationPanel negotiation={n} />
+															</SelectablePanel>
+														)
+													}
+													{props.playbook.negotiations.length === 0 ? <Empty /> : null}
+												</Space>
+											)
+										},
+										{
+											key: '4',
+											label: 'Tactical Maps',
+											children: (
+												<Space direction='vertical' style={{ width: '100%' }}>
+													{
+														props.playbook.tacticalMaps.map(tm =>
+															<SelectablePanel key={tm.id} onSelect={() => addContent('map', tm.id)}>
+																<TacticalMapPanel map={tm} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
+															</SelectablePanel>
+														)
+													}
+													{props.playbook.tacticalMaps.length === 0 ? <Empty /> : null}
+												</Space>
+											)
+										}
+									]}
+								/>
+							</div>
+						}
+						onClose={() => setAddingContent(false)}
+					/>
+				</Drawer>
 			</ErrorBoundary>
 		);
 	} catch (ex) {

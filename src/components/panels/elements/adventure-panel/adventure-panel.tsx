@@ -431,6 +431,8 @@ export const AdventurePanel = (props: Props) => {
 				adventure={adventure}
 				playbook={props.playbook}
 				sourcebooks={props.sourcebooks}
+				heroes={props.heroes}
+				options={props.options}
 				onChange={changePlotPoint}
 			/>
 		);

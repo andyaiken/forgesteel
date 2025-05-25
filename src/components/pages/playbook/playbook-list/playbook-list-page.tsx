@@ -25,6 +25,7 @@ import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/neg
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
 import { OptionsPanel } from '../../../panels/options/options-panel';
+import { PlaybookLogic } from '../../../../logic/playbook-logic';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { TacticalMap } from '../../../../models/tactical-map';
@@ -113,7 +114,13 @@ export const PlaybookListPage = (props: Props) => {
 	};
 
 	const getEncounters = () => {
+		const adventureContentIDs = props.playbook.adventures
+			.flatMap(a => PlaybookLogic.getAllPlotPoints(a.plot))
+			.flatMap(p => p.content)
+			.map(c => c.contentID);
+
 		return props.playbook.encounters
+			.filter(item => !adventureContentIDs.includes(item.id))
 			.filter(item => Utils.textMatches([
 				item.name,
 				item.description
@@ -121,7 +128,13 @@ export const PlaybookListPage = (props: Props) => {
 	};
 
 	const getMontages = () => {
+		const adventureContentIDs = props.playbook.adventures
+			.flatMap(a => PlaybookLogic.getAllPlotPoints(a.plot))
+			.flatMap(p => p.content)
+			.map(c => c.contentID);
+
 		return props.playbook.montages
+			.filter(item => !adventureContentIDs.includes(item.id))
 			.filter(item => Utils.textMatches([
 				item.name,
 				item.description
@@ -129,7 +142,13 @@ export const PlaybookListPage = (props: Props) => {
 	};
 
 	const getNegotiations = () => {
+		const adventureContentIDs = props.playbook.adventures
+			.flatMap(a => PlaybookLogic.getAllPlotPoints(a.plot))
+			.flatMap(p => p.content)
+			.map(c => c.contentID);
+
 		return props.playbook.negotiations
+			.filter(item => !adventureContentIDs.includes(item.id))
 			.filter(item => Utils.textMatches([
 				item.name,
 				item.description
@@ -137,7 +156,13 @@ export const PlaybookListPage = (props: Props) => {
 	};
 
 	const getTacticalMaps = () => {
+		const adventureContentIDs = props.playbook.adventures
+			.flatMap(a => PlaybookLogic.getAllPlotPoints(a.plot))
+			.flatMap(p => p.content)
+			.map(c => c.contentID);
+
 		return props.playbook.tacticalMaps
+			.filter(item => !adventureContentIDs.includes(item.id))
 			.filter(item => Utils.textMatches([
 				item.name,
 				item.description

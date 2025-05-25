@@ -1,5 +1,5 @@
 import { Alert, Button, Drawer, Flex, Progress, Space, Tabs } from 'antd';
-import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
+import { DoubleLeftOutlined, DoubleRightOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterSlot } from '../../../../models/encounter';
 import { EncounterGroupHero, EncounterGroupMonster, EncounterGroupTerrain } from '../../encounter-group/encounter-group-panel';
 import { FeatureAbility, FeatureMalice } from '../../../../models/feature';
@@ -471,7 +471,16 @@ export const EncounterRunPanel = (props: Props) => {
 			.flatMap(s => s.monsters)
 			.filter(m => !m.state.defeated)
 			.map(m => (
-				<MonsterPanel key={m.id} monster={m} options={props.options} mode={PanelMode.Full} style={{ padding: 0 }} />
+				<MonsterPanel
+					key={m.id}
+					monster={m}
+					options={props.options}
+					mode={PanelMode.Full}
+					style={{ padding: 0 }}
+					extra={[
+						<Button type='text' icon={<InfoCircleOutlined />} onClick={() => setSelectedMonster(m)} />
+					]}
+				/>
 			));
 	};
 

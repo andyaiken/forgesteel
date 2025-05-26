@@ -211,7 +211,7 @@ export const PlaybookEditPage = (props: Props) => {
 				return (
 					<div key={slot.id} className='slot-row'>
 						<div className='content'>
-							<MonsterPanel monster={monster} monsterGroup={monsterGroup} options={props.options} extra={<Button type='text' icon={<InfoCircleOutlined />} onClick={() => props.showMonster(monster, monsterGroup)} />} />
+							<MonsterPanel monster={monster} monsterGroup={monsterGroup} options={props.options} extra={<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showMonster(monster, monsterGroup)} />} />
 							{
 								monsterGroup.addOns.length > 0 ?
 									<Expander title='Customize'>

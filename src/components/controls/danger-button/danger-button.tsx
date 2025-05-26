@@ -7,7 +7,7 @@ import './danger-button.scss';
 interface Props {
 	mode?: 'default' | 'block' | 'clear' | 'icon';
 	disabled?: boolean;
-	label?: ReactNode;
+	label?: string;
 	message?: ReactNode;
 	onConfirm: (e: MouseEvent) => void;
 }
@@ -28,11 +28,11 @@ export const DangerButton = (props: Props) => {
 					);
 				case 'clear':
 					return (
-						<Button type='text' icon={<DeleteOutlined />} disabled={disabled} danger={true} />
+						<Button type='text' title={props.label || 'Delete'} icon={<DeleteOutlined />} disabled={disabled} danger={true} />
 					);
 				case 'icon':
 					return (
-						<Button icon={<DeleteOutlined />} disabled={disabled} danger={true} />
+						<Button title={props.label || 'Delete'} icon={<DeleteOutlined />} disabled={disabled} danger={true} />
 					);
 				default:
 					return (

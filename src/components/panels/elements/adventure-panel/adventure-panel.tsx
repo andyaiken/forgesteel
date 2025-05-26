@@ -133,8 +133,8 @@ export const AdventurePanel = (props: Props) => {
 				if (encounter) {
 					return (
 						<Flex vertical={true} gap={5}>
-							{props.onStart ? <Button icon={<PlayCircleOutlined />} onClick={() => props.onStart!('encounter', encounter, '')} /> : null}
-							<Button icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('encounter', encounter.id)} />
+							{props.onStart ? <Button title='Run' icon={<PlayCircleOutlined />} onClick={() => props.onStart!('encounter', encounter, '')} /> : null}
+							<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('encounter', encounter.id)} />
 						</Flex>
 					);
 				}
@@ -145,8 +145,8 @@ export const AdventurePanel = (props: Props) => {
 				if (montage) {
 					return (
 						<Flex vertical={true} gap={5}>
-							{props.onStart ? <Button icon={<PlayCircleOutlined />} onClick={() => props.onStart!('montage', montage, '')} /> : null}
-							<Button icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('montage', montage.id)} />
+							{props.onStart ? <Button title='Run' icon={<PlayCircleOutlined />} onClick={() => props.onStart!('montage', montage, '')} /> : null}
+							<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('montage', montage.id)} />
 						</Flex>
 					);
 				}
@@ -157,8 +157,8 @@ export const AdventurePanel = (props: Props) => {
 				if (negotiation) {
 					return (
 						<Flex vertical={true} gap={5}>
-							{props.onStart ? <Button icon={<PlayCircleOutlined />} onClick={() => props.onStart!('negotiation', negotiation, '')} /> : null}
-							<Button icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('negotiation', negotiation.id)} />
+							{props.onStart ? <Button title='Run' icon={<PlayCircleOutlined />} onClick={() => props.onStart!('negotiation', negotiation, '')} /> : null}
+							<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('negotiation', negotiation.id)} />
 						</Flex>
 					);
 				}
@@ -169,8 +169,8 @@ export const AdventurePanel = (props: Props) => {
 				if (map) {
 					return (
 						<Flex vertical={true} gap={5}>
-							{props.onStart ? <Button icon={<PlayCircleOutlined />} onClick={() => props.onStart!('tactical-map', map, '')} /> : null}
-							<Button icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('tactical-map', map.id)} />
+							{props.onStart ? <Button title='Run' icon={<PlayCircleOutlined />} onClick={() => props.onStart!('tactical-map', map, '')} /> : null}
+							<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('tactical-map', map.id)} />
 						</Flex>
 					);
 				}

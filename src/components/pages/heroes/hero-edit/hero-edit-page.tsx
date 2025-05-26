@@ -1111,6 +1111,7 @@ const ClassSection = (props: ClassSectionProps) => {
 										<Button
 											style={{ flex: '0 0 auto' }}
 											type='text'
+											title='Select'
 											icon={<InfoCircleOutlined />}
 											onClick={() => setSelectedSubClass(sc)}
 										/>

@@ -167,6 +167,15 @@ export const DieRollPanel = (props: Props) => {
 							/>
 							: null
 					}
+					{
+						(props.type === 'Saving Throw') && (total > 0) ?
+							<Alert
+								type='info'
+								showIcon={true}
+								message={`This roll would usually indicate a ${total > 5 ? 'success' : 'failure'}.`}
+							/>
+							: null
+					}
 				</div>
 			</ErrorBoundary>
 		);

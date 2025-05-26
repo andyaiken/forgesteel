@@ -110,6 +110,7 @@ export const ItemSelectModal = (props: Props) => {
 											<Button
 												key='select'
 												type='text'
+												title='Select'
 												icon={<PlusOutlined />}
 												onClick={() => {
 													if (props.selectOriginal) {

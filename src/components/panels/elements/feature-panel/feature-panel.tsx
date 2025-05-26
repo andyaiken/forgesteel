@@ -130,6 +130,7 @@ export const FeaturePanel = (props: Props) => {
 							<Button
 								style={{ flex: '0 0 auto' }}
 								type='text'
+								title='Show details'
 								icon={<InfoCircleOutlined />}
 								onClick={() => setSelectedAncestry(data.selected)}
 							/>
@@ -379,12 +380,14 @@ export const FeaturePanel = (props: Props) => {
 									<Button
 										style={{ flex: '0 0 auto' }}
 										type='text'
+										title='Show details'
 										icon={<InfoCircleOutlined />}
 										onClick={() => setSelectedAbility(ability)}
 									/>
 									<Button
 										style={{ flex: '0 0 auto' }}
 										type='text'
+										title='Delete'
 										icon={<DeleteOutlined />}
 										onClick={() => {
 											const dataCopy = Utils.copy(data);
@@ -494,6 +497,7 @@ export const FeaturePanel = (props: Props) => {
 							<Button
 								style={{ flex: '0 0 auto' }}
 								type='text'
+								title='Show details'
 								icon={<InfoCircleOutlined />}
 								onClick={() => setSelectedMonster(data.selected)}
 							/>
@@ -597,6 +601,7 @@ export const FeaturePanel = (props: Props) => {
 							<Button
 								style={{ flex: '0 0 auto' }}
 								type='text'
+								title='Show details'
 								icon={<InfoCircleOutlined />}
 								onClick={() => setSelectedDomain(domain)}
 							/>
@@ -759,6 +764,7 @@ export const FeaturePanel = (props: Props) => {
 							<Button
 								style={{ flex: '0 0 auto' }}
 								type='text'
+								title='Show details'
 								icon={<InfoCircleOutlined />}
 								onClick={() => setSelectedItem(item)}
 							/>
@@ -835,12 +841,14 @@ export const FeaturePanel = (props: Props) => {
 								<Button
 									style={{ flex: '0 0 auto' }}
 									type='text'
+									title='Show details'
 									icon={<InfoCircleOutlined />}
 									onClick={() => setSelectedKit(kit)}
 								/>
 								<Button
 									style={{ flex: '0 0 auto' }}
 									type='text'
+									title='Delete'
 									icon={<DeleteOutlined />}
 									onClick={() => {
 										const dataCopy = Utils.copy(data);
@@ -984,12 +992,14 @@ export const FeaturePanel = (props: Props) => {
 								<Button
 									style={{ flex: '0 0 auto' }}
 									type='text'
+									title='Show details'
 									icon={<InfoCircleOutlined />}
 									onClick={() => setSelectedPerk(perk)}
 								/>
 								<Button
 									style={{ flex: '0 0 auto' }}
 									type='text'
+									title='Delete'
 									icon={<DeleteOutlined />}
 									onClick={() => {
 										const dataCopy = Utils.copy(data);
@@ -1307,6 +1317,7 @@ export const FeaturePanel = (props: Props) => {
 								<Button
 									style={{ flex: '0 0 auto' }}
 									type='text'
+									title='Show details'
 									icon={<InfoCircleOutlined />}
 									onClick={() => setSelectedTitleFeature(feature)}
 								/>

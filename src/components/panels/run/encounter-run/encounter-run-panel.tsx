@@ -478,7 +478,7 @@ export const EncounterRunPanel = (props: Props) => {
 					mode={PanelMode.Full}
 					style={{ padding: 0 }}
 					extra={[
-						<Button type='text' icon={<InfoCircleOutlined />} onClick={() => setSelectedMonster(m)} />
+						<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => setSelectedMonster(m)} />
 					]}
 				/>
 			));

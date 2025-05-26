@@ -880,7 +880,21 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 						FactoryLogic.feature.create({
 							id: 'elementalist-sub-2-2-1',
 							name: 'Disciple of Fire',
-							description: 'Your connection to fire allows you to protect yourself from it, even as you rip away the protections of others. You have fire immunity equal to 5 plus your level in this class. Any fire damage you deal ignores a target’s fire immunity.'
+							description: `
+Your connection to fire allows you to protect yourself from it, even as you rip away the protections of others. Any fire damage you deal ignores a target’s fire immunity.
+
+At the start of a combat encounter, you gain surges equal to your Victories. Whenever you deal damage with a surge, you can make that damage fire damage.`
+						}),
+						FactoryLogic.feature.createDamageModifier({
+							id: 'elementalist-sub-2-2-2',
+							modifiers: [
+								FactoryLogic.damageModifier.createValuePlusPerLevel({
+									damageType: DamageType.Fire,
+									modifierType: DamageModifierType.Immunity,
+									value: 5,
+									perLevel: 1
+								})
+							]
 						})
 					]
 				},
@@ -923,7 +937,7 @@ Additionally, whenever you touch a living plant that is not a Plant Creature, yo
 								id: 'elementalist-sub-3-1-3',
 								name: 'The Breath of Dawn Remembered',
 								description: 'The power you channel grants the ability to get back in the fight.',
-								type: FactoryLogic.type.createTrigger('The target starts their turn.'),
+								type: FactoryLogic.type.createTrigger('The target starts their turn or takes damage.'),
 								keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Self or 1 ally',

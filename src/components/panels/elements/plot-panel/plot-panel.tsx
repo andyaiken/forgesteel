@@ -1,4 +1,7 @@
+import { Adventure } from '../../../../models/adventure';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
+import { HeaderText } from '../../../controls/header-text/header-text';
+import { PlaybookLogic } from '../../../../logic/playbook-logic';
 import { Plot } from '../../../../models/plot';
 import { ReactNode } from 'react';
 
@@ -6,11 +9,15 @@ import './plot-panel.scss';
 
 interface Props {
 	plot: Plot;
+	adventure: Adventure;
 	selectedPlot?: Plot;
 	onSelect?: (plot: Plot | null) => void;
+	onCreate?: () => void;
 }
 
 export const PlotPanel = (props: Props) => {
+	const parentPlot = PlaybookLogic.getPlotPointParent(props.adventure.plot, props.plot.id) as Plot;
+
 	const selectPlotPoint = (plot: Plot | null) => {
 		if (props.onSelect) {
 			props.onSelect(plot);
@@ -50,7 +57,7 @@ export const PlotPanel = (props: Props) => {
 			);
 		};
 
-		const rowHeight = 60;
+		const rowHeight = 80;
 
 		const rows = getRows();
 		const rowCount = rows.length === 0 ? 1 : (rows.length * 2) - 1;
@@ -93,7 +100,11 @@ export const PlotPanel = (props: Props) => {
 					width={position.width + '%'}
 					height={position.height}
 				>
-					<div className={className} onClick={e => { e.stopPropagation(); selectPlotPoint(plot); }}>
+					<div
+						className={className}
+						onClick={e => { e.stopPropagation(); selectPlotPoint(plot); }}
+						onDoubleClick={e => e.stopPropagation()}
+					>
 						{plot.name || 'Unnamed Plot Point'}
 					</div>
 				</foreignObject>
@@ -143,7 +154,14 @@ export const PlotPanel = (props: Props) => {
 
 		return (
 			<ErrorBoundary>
-				<div className='plot-panel' onClick={() => selectPlotPoint(null)}>
+				<div className='plot-panel' onClick={() => selectPlotPoint(null)} onDoubleClick={props.onCreate}>
+					{
+						!!props.plot.name && !!parentPlot && (props.plot.name !== parentPlot.name) ?
+							<HeaderText level={1} style={{ margin: '-5px 20px 20px 20px' }}>
+								{props.plot.name}
+							</HeaderText>
+							: null
+					}
 					<svg className='plot-container' style={{ height: totalHeight }}>
 						{links}
 						{linkLabels}

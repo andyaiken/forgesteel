@@ -51,6 +51,45 @@ export const AdventurePanel = (props: Props) => {
 	const [ adventure, setAdventure ] = useState<Adventure>(Utils.copy(props.adventure));
 	const [ selectedPlot, setSelectedPlot ] = useState<Plot | null>(null);
 
+	const addPlotPoint = (previousID?: string) => {
+		const copy = Utils.copy(adventure);
+
+		const plot = FactoryLogic.createAdventurePlot();
+		copy.plot.plots.push(plot);
+
+		if (previousID) {
+			const previous = copy.plot.plots.find(p => p.id === previousID);
+			if (previous) {
+				previous.links.push({
+					id: Utils.guid(),
+					plotID: plot.id,
+					label: ''
+				});
+			}
+		}
+
+		setAdventure(copy);
+		setSelectedPlot(plot);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
+	};
+
+	const deletePlotPoint = (id: string) => {
+		const copy = Utils.copy(adventure);
+		copy.plot.plots = copy.plot.plots.filter(p => p.id !== id);
+		copy.plot.plots.forEach(p => {
+			p.links = p.links.filter(l => l.plotID !== id);
+		});
+		setAdventure(copy);
+		if (selectedPlot && (selectedPlot.id === id)) {
+			setSelectedPlot(null);
+		}
+		if (props.onChange) {
+			props.onChange(copy);
+		}
+	};
+
 	const getContent = (content: PlotContent) => {
 		if (!content.contentID) {
 			return null;
@@ -185,6 +224,7 @@ export const AdventurePanel = (props: Props) => {
 		const setName = (value: string) => {
 			const copy = Utils.copy(adventure);
 			copy.name = value;
+			copy.plot.name = value;
 			setAdventure(copy);
 			if (props.onChange) {
 				props.onChange(copy);
@@ -265,27 +305,9 @@ export const AdventurePanel = (props: Props) => {
 			}
 		};
 
-		const addPlotPoint = () => {
-			const copy = Utils.copy(adventure);
-			copy.plot.plots.push(FactoryLogic.createAdventurePlot());
-			setAdventure(copy);
-			if (props.onChange) {
-				props.onChange(copy);
-			}
-		};
-
 		const movePlotPoint = (index: number, direction: 'up' | 'down') => {
 			const copy = Utils.copy(adventure);
 			copy.plot.plots = Collections.move(copy.plot.plots, index, direction);
-			setAdventure(copy);
-			if (props.onChange) {
-				props.onChange(copy);
-			}
-		};
-
-		const deletePlotPoint = (id: string) => {
-			const copy = Utils.copy(adventure);
-			copy.plot.plots = copy.plot.plots.filter(p => p.id !== id);
 			setAdventure(copy);
 			if (props.onChange) {
 				props.onChange(copy);
@@ -392,7 +414,7 @@ export const AdventurePanel = (props: Props) => {
 										<Empty />
 										: null
 								}
-								<Button block={true} onClick={addPlotPoint}>
+								<Button block={true} onClick={() => addPlotPoint()}>
 									<PlusOutlined />
 									Add a plot point
 								</Button>
@@ -434,6 +456,8 @@ export const AdventurePanel = (props: Props) => {
 				heroes={props.heroes}
 				options={props.options}
 				onChange={changePlotPoint}
+				onAddAfter={addPlotPoint}
+				onDelete={deletePlotPoint}
 			/>
 		);
 	};
@@ -526,8 +550,10 @@ export const AdventurePanel = (props: Props) => {
 								<div className='plot-workspace'>
 									<PlotPanel
 										plot={adventure.plot}
+										adventure={adventure}
 										selectedPlot={selectedPlot || undefined}
 										onSelect={props.allowSelection ? setSelectedPlot : undefined}
+										onCreate={props.onChange ? addPlotPoint : undefined}
 									/>
 								</div>
 								{

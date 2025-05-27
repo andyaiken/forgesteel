@@ -1,6 +1,9 @@
 .plot-panel {
+	max-height: 100%;
+	overflow-y: auto;
 	padding: 20px 0;
 	background: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
+	border: 1px solid rgba(5, 5, 5, 0.06);
 	border-radius: 10px;
 
 	&.compact {
@@ -10,20 +13,23 @@
 
 	.plot-container {
 		width: 100%;
+		overflow: visible;
 
 		.plot-box-container {
+			border-radius: 5px;
+			box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+
 			.plot-box {
 				width: 100%;
 				height: 100%;
 				border: 1px solid rgba(5, 5, 5, 0.06);
 				border-radius: 5px;
-				background: linear-gradient(rgb(250, 230, 200), rgb(245, 225, 200));
+				background: linear-gradient(rgb(230, 230, 230), rgb(220, 220, 220));
 				padding: 10px;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				text-align: center;
-				font-size: 15px;
 				font-weight: 600;
 				text-transform: uppercase;
 				letter-spacing: 1px;
@@ -37,15 +43,15 @@
 				}
 
 				&.selected {
-					background-color: rgb(180, 220, 255);
-					color: rgb(22, 119, 255);
+					background: rgb(180, 220, 255);
+					border-color: rgb(22, 119, 255);
 				}
 			}
 		}
 
 		.plot-link {
 			stroke: rgb(200, 200, 200);
-			stroke-width: 2px;
+			stroke-width: 3px;
 		}
 
 		.link-label-container {
@@ -64,6 +70,7 @@
 @media (prefers-color-scheme: dark) {
 	.plot-panel {
 		background: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
+		border-color: rgba(250, 250, 250, 0.6);
 
 		.plot-container {
 			.plot-box-container {

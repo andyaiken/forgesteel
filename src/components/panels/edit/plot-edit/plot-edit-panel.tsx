@@ -1,4 +1,4 @@
-import { Button, Drawer, Input, Select, Space, Tabs } from 'antd';
+import { Button, Drawer, Flex, Input, Popover, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Plot, PlotContent, PlotLink } from '../../../../models/plot';
 import { Adventure } from '../../../../models/adventure';
@@ -10,8 +10,6 @@ import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../elements/encounter-panel/encounter-panel';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
-import { Field } from '../../../controls/field/field';
-import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Modal } from '../../../modals/modal/modal';
@@ -41,11 +39,17 @@ interface Props {
 	heroes: Hero[];
 	options: Options;
 	onChange: (plot: Plot) => void;
+	onAddAfter: (plotPointID: string) => void;
+	onDelete: (plotPointID: string) => void;
 }
 
 export const PlotEditPanel = (props: Props) => {
 	const [ plot, setPlot ] = useState<Plot>(props.plot);
 	const [ addingContent, setAddingContent ] = useState<boolean>(false);
+
+	const parentPlot = PlaybookLogic.getPlotPointParent(props.adventure.plot, plot.id) as Plot;
+	const upstreamIDs = PlaybookLogic.getUpstreamPlotPoints(parentPlot, plot.id).map(p => p.id);
+	const linkTargets = parentPlot.plots.filter(p => !plot.links.map(x => x.plotID).includes(p.id) && !upstreamIDs.includes(p.id));
 
 	const addContent = (type: 'encounter' | 'montage' | 'negotiation' | 'map', id: string) => {
 		const copy = Utils.copy(plot);
@@ -56,6 +60,17 @@ export const PlotEditPanel = (props: Props) => {
 		});
 		setPlot(copy);
 		setAddingContent(false);
+		props.onChange(copy);
+	};
+
+	const addLink = (target: Plot) => {
+		const copy = Utils.copy(plot);
+		copy.links.push({
+			id: Utils.guid(),
+			plotID: target.id,
+			label: ''
+		});
+		setPlot(copy);
 		props.onChange(copy);
 	};
 
@@ -173,27 +188,6 @@ export const PlotEditPanel = (props: Props) => {
 	};
 
 	const getLinksSection = () => {
-		const addLink = () => {
-			const copy = Utils.copy(plot);
-			copy.links.push({
-				id: Utils.guid(),
-				plotID: '',
-				label: ''
-			});
-			setPlot(copy);
-			props.onChange(copy);
-		};
-
-		const setLinkPlotID = (link: PlotLink, value: string) => {
-			const copy = Utils.copy(plot);
-			const index = copy.links.findIndex(l => l.id === link.id);
-			if (index !== -1) {
-				copy.links[index].plotID = value;
-			}
-			setPlot(copy);
-			props.onChange(copy);
-		};
-
 		const setLinkLabel = (link: PlotLink, value: string) => {
 			const copy = Utils.copy(plot);
 			const index = copy.links.findIndex(l => l.id === link.id);
@@ -219,50 +213,19 @@ export const PlotEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const parentPlot = PlaybookLogic.getPlotPointParent(props.adventure.plot, plot.id);
-
-		const getLinkTargets = (link: PlotLink) => {
-			if (parentPlot) {
-				const upstreamIDs = PlaybookLogic.getUpstreamPlotPoints(parentPlot, plot.id).map(p => p.id);
-				return parentPlot.plots.filter(p => (link.plotID === p.id) || !upstreamIDs.includes(p.id));
-			}
-
-			return [];
-		};
-
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
 					plot.links.map(l => (
 						<Expander
 							key={l.id}
-							title={FormatLogic.getPlotLinkTitle(l, parentPlot!)}
+							title={parentPlot.plots.find(p => p.id === l.plotID)?.name || 'Unknown Plot Point'}
 							extra={[
 								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveLink(l, 'up'); }} />,
 								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveLink(l, 'down'); }} />,
 								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteLink(l); }} />
 							]}
 						>
-							<HeaderText>Link To</HeaderText>
-							<Select
-								style={{ width: '100%' }}
-								allowClear={true}
-								placeholder='Select'
-								options={getLinkTargets(l).map(o => ({ value: o.id, label: o.name, desc: o.description }))}
-								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-								showSearch={true}
-								filterOption={(input, option) => {
-									const strings = option ?
-										[
-											option.label,
-											option.desc
-										]
-										: [];
-									return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-								}}
-								value={l.plotID}
-								onChange={id => setLinkPlotID(l, id)}
-							/>
 							<HeaderText>Label</HeaderText>
 							<Input
 								placeholder='Label'
@@ -278,10 +241,34 @@ export const PlotEditPanel = (props: Props) => {
 						<Empty text='No links' />
 						: null
 				}
-				<Button block={true} onClick={addLink}>
-					<PlusOutlined />
-					Add a new link
-				</Button>
+				{
+					linkTargets.length > 0 ?
+						<Popover
+							trigger='click'
+							content={
+								<Space direction='vertical' style={{ width: '100%' }}>
+									{
+										linkTargets.map(p => (
+											<Button
+												key={p.id}
+												type='text'
+												block={true}
+												onClick={() => addLink(p)}
+											>
+												{p.name || 'Unnamed Plot Point'}
+											</Button>
+										))
+									}
+								</Space>
+							}
+						>
+							<Button block={true}>
+								<PlusOutlined />
+								Add a new link
+							</Button>
+						</Popover>
+						: null
+				}
 			</Space>
 		);
 	};
@@ -308,6 +295,12 @@ export const PlotEditPanel = (props: Props) => {
 								children: getLinksSection()
 							}
 						]}
+						tabBarExtraContent={
+							<Flex gap={5}>
+								<Button icon={<PlusOutlined />} onClick={() => props.onAddAfter(plot.id)}>Add Point After</Button>
+								<DangerButton onConfirm={() => props.onDelete(plot.id)} />
+							</Flex>
+						}
 					/>
 				</div>
 				<Drawer open={addingContent} onClose={() => setAddingContent(false)} closeIcon={null} width='500px'>

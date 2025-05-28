@@ -2201,7 +2201,9 @@ export class HeroData {
 			notes: '',
 			encounterState: 'ready',
 			hidden: false,
-			defeated: false
+			defeated: false,
+			activeMeleeKitBonusId: '',
+			activeRangedKitBonusId: ''
 		},
 		abilityCustomizations: []
 	} as Hero;
@@ -4273,7 +4275,9 @@ export class HeroData {
 			notes: '',
 			encounterState: 'ready',
 			hidden: false,
-			defeated: false
+			defeated: false,
+			activeMeleeKitBonusId: '',
+			activeRangedKitBonusId: ''
 		},
 		abilityCustomizations: []
 	} as Hero;
@@ -6546,7 +6550,9 @@ export class HeroData {
 			notes: '',
 			encounterState: 'ready',
 			hidden: false,
-			defeated: false
+			defeated: false,
+			activeMeleeKitBonusId: '',
+			activeRangedKitBonusId: ''
 		},
 		abilityCustomizations: []
 	} as Hero;
@@ -9020,7 +9026,9 @@ export class HeroData {
 			notes: '',
 			encounterState: 'ready',
 			hidden: false,
-			defeated: false
+			defeated: false,
+			activeMeleeKitBonusId: '',
+			activeRangedKitBonusId: ''
 		},
 		abilityCustomizations: []
 	} as Hero;
@@ -11831,7 +11839,9 @@ export class HeroData {
 			notes: '',
 			encounterState: 'ready',
 			hidden: false,
-			defeated: false
+			defeated: false,
+			activeMeleeKitBonusId: '',
+			activeRangedKitBonusId: ''
 		},
 		abilityCustomizations: []
 	} as Hero;
@@ -14079,7 +14089,9 @@ export class HeroData {
 			notes: '',
 			encounterState: 'ready',
 			hidden: false,
-			defeated: false
+			defeated: false,
+			activeMeleeKitBonusId: '',
+			activeRangedKitBonusId: ''
 		},
 		abilityCustomizations: []
 	} as Hero;
@@ -17077,7 +17089,9 @@ export class HeroData {
 			notes: '',
 			encounterState: 'ready',
 			hidden: false,
-			defeated: false
+			defeated: false,
+			activeMeleeKitBonusId: '',
+			activeRangedKitBonusId: ''
 		},
 		abilityCustomizations: []
 	} as Hero;
@@ -19497,7 +19511,9 @@ export class HeroData {
 			notes: '',
 			encounterState: 'ready',
 			hidden: false,
-			defeated: false
+			defeated: false,
+			activeMeleeKitBonusId: '',
+			activeRangedKitBonusId: ''
 		},
 		abilityCustomizations: []
 	} as Hero;
@@ -22213,7 +22229,9 @@ export class HeroData {
 			notes: '',
 			encounterState: 'ready',
 			hidden: false,
-			defeated: false
+			defeated: false,
+			activeMeleeKitBonusId: '',
+			activeRangedKitBonusId: ''
 		},
 		abilityCustomizations: []
 	} as Hero;

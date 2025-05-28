@@ -27,6 +27,8 @@ export interface HeroState {
 	hidden: boolean;
 	encounterState: 'ready' | 'current' | 'finished';
 	defeated: boolean;
+	activeMeleeKitBonusId: string;
+	activeRangedKitBonusId: string;
 }
 
 export interface AbilityCustomization {

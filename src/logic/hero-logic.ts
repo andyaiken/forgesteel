@@ -1,5 +1,6 @@
 import { Ability, AbilityDistance } from '../models/ability';
 import { Feature, FeatureAbility, FeatureClassAbility } from '../models/feature';
+import { Kit, KitDamageBonus } from '../models/kit';
 import { AbilityData } from '../data/ability-data';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
@@ -16,7 +17,6 @@ import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
-import { Kit } from '../models/kit';
 import { Language } from '../models/language';
 import { Modifier } from '../models/damage-modifier';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
@@ -102,6 +102,38 @@ export class HeroLogic {
 			});
 
 		return kits;
+	};
+
+	static getMeleeKitBonusUsed = (hero: Hero) => {
+		return hero.state.activeMeleeKitBonusId ?? null;
+	};
+
+	static getRangedKitBonusUsed = (hero: Hero) => {
+		return hero.state.activeRangedKitBonusId ?? undefined;
+	};
+
+	// Will return the best kit damage in the array or -1 if there is any ambiguity (e.g. 2/2/2 and 0/0/4)
+	static findKitHighestBonusIndex = (kitsDamages: KitDamageBonus[]) => {
+		if (kitsDamages.length < 2)
+			return 0;
+
+		let highestIdx = 0;
+		let highestKit = kitsDamages[highestIdx];
+		for (let i = 1; i < kitsDamages.length; ++i) {
+			const currentKit = kitsDamages[i];
+			if (currentKit.tier1 > highestKit.tier1 && currentKit.tier2 > highestKit.tier2 && currentKit.tier3 > highestKit.tier3) {
+				//current kit bonus are the new highest in all tiers
+				highestIdx = i;
+				highestKit = currentKit;
+			} else if (currentKit.tier1 <= highestKit.tier1 && currentKit.tier2 <= highestKit.tier2 && currentKit.tier3 <= highestKit.tier3) {
+				//current kit is lowest in all tier to current highest, ignore
+			} else {
+				//there are ambiguity in some bonus (some higher some lower)
+				return -1;
+			}
+		}
+
+		return highestIdx;
 	};
 
 	static getTitles = (hero: Hero) => {
@@ -607,52 +639,90 @@ export class HeroLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
-	static getMeleeDamageBonus = (hero: Hero, ability: Ability) => {
-		let value1 = 0;
-		let value2 = 0;
-		let value3 = 0;
-
+	// Return ALL damage bonus (character will multiple kit will return all their bonus if there is ambiguity)
+	static getAllMeleeDamageBonus = (hero: Hero, ability: Ability) => {
 		if (ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon)) {
-			// Add maximum from kits
+
+			// gather a list of all damage bonus in all kits, as some class can have multiple kits
 			const kits = this.getKits(hero);
-			value1 += Collections.max(kits.map(kit => kit.meleeDamage?.tier1 || 0), value => value) || 0;
-			value2 += Collections.max(kits.map(kit => kit.meleeDamage?.tier2 || 0), value => value) || 0;
-			value3 += Collections.max(kits.map(kit => kit.meleeDamage?.tier3 || 0), value => value) || 0;
+
+			//we also append the name and id to each bonus, so we can find back which kit it come from
+			const returnKitsBonus = kits.filter(kit => kit.meleeDamage !== null).map(kit => {
+				const dmgBonus = {
+					tier1: kit.meleeDamage!.tier1,
+					tier2: kit.meleeDamage!.tier2,
+					tier3: kit.meleeDamage!.tier3,
+					kitName: kit.name,
+					kitId: kit.id
+				};
+
+				return dmgBonus;
+			});
+
+			const bestKitIdx = this.findKitHighestBonusIndex(returnKitsBonus as KitDamageBonus[]);
+
+			if (bestKitIdx != -1)
+				return [ returnKitsBonus[bestKitIdx] ]; //return as array so calling code always deals with array
+
+			if (returnKitsBonus.length > 0)
+				return returnKitsBonus;
 		}
 
-		if ((value1 === 0) && (value2 === 0) && (value3 === 0)) {
+		return null;
+	};
+
+	//Only return the currently used (as per the active bonus) melee bonus, or null if not melee damage
+	static getMeleeDamageBonus = (hero: Hero, ability: Ability) => {
+
+		const dmg = this.getAllMeleeDamageBonus(hero, ability);
+
+		if (!dmg)
 			return null;
+
+		const usedKit = this.getMeleeKitBonusUsed(hero);
+
+		return dmg.find(bonus => bonus.kitId == usedKit) ?? dmg[0];
+	};
+
+	static getAllRangedDamageBonus = (hero: Hero, ability: Ability) => {
+		if (ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon)) {
+			// gather a list of all damage bonus in all kits, as some class can have multiple kits
+			const kits = this.getKits(hero);
+			const returnKitsBonus = kits.filter(kit => kit.rangedDamage !== null).map(kit => {
+				//we add the kit name after the bonus, this is used by UI to show where the bonus come from
+				const dmgBonus = {
+					tier1: kit.rangedDamage!.tier1,
+					tier2: kit.rangedDamage!.tier2,
+					tier3: kit.rangedDamage!.tier3,
+					kitName: kit.name,
+					kitId: kit.id
+				};
+
+				return dmgBonus;
+			});
+
+			const bestKitIdx = this.findKitHighestBonusIndex(returnKitsBonus as KitDamageBonus[]);
+
+			if (bestKitIdx != -1)
+				return [ returnKitsBonus[bestKitIdx] ]; //return as array so calling code always deals with array
+
+			if (returnKitsBonus.length > 0)
+				return returnKitsBonus;
 		}
 
-		return {
-			tier1: value1,
-			tier2: value2,
-			tier3: value3
-		};
+		return null;
 	};
 
 	static getRangedDamageBonus = (hero: Hero, ability: Ability) => {
-		let value1 = 0;
-		let value2 = 0;
-		let value3 = 0;
 
-		if (ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon)) {
-			// Add maximum from kits
-			const kits = this.getKits(hero);
-			value1 += Collections.max(kits.map(kit => kit.rangedDamage?.tier1 || 0), value => value) || 0;
-			value2 += Collections.max(kits.map(kit => kit.rangedDamage?.tier2 || 0), value => value) || 0;
-			value3 += Collections.max(kits.map(kit => kit.rangedDamage?.tier3 || 0), value => value) || 0;
-		}
+		const dmg = this.getAllRangedDamageBonus(hero, ability);
 
-		if ((value1 === 0) && (value2 === 0) && (value3 === 0)) {
+		if (!dmg)
 			return null;
-		}
 
-		return {
-			tier1: value1,
-			tier2: value2,
-			tier3: value3
-		};
+		const usedKit = this.getRangedKitBonusUsed(hero);
+
+		return dmg.find(bonus => bonus.kitId == usedKit) ?? dmg[0];
 	};
 
 	static getFeatureDamageBonus = (hero: Hero, ability: Ability) => {

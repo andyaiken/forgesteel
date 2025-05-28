@@ -96,7 +96,9 @@ export class FactoryLogic {
 				notes: '',
 				encounterState: 'ready',
 				hidden: false,
-				defeated: false
+				defeated: false,
+				activeMeleeKitBonusId: '',
+				activeRangedKitBonusId: ''
 			},
 			abilityCustomizations: []
 		};
@@ -856,7 +858,7 @@ export class FactoryLogic {
 				qualifier: data.qualifier ?? ''
 			};
 		},
-		createSelf: (qualifier=''): AbilityDistance => {
+		createSelf: (qualifier = ''): AbilityDistance => {
 			return {
 				type: AbilityDistanceType.Self,
 				value: 0,
@@ -1062,7 +1064,7 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createCompanion: (data: {id: string, name?: string, description?: string, type: 'companion' | 'mount' | 'retainer' }): FeatureCompanion => {
+		createCompanion: (data: { id: string, name?: string, description?: string, type: 'companion' | 'mount' | 'retainer' }): FeatureCompanion => {
 			return {
 				id: data.id,
 				name: data.name || Format.capitalize(data.type),
@@ -1273,12 +1275,12 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createSoloMonster: (data: { id: string, name: string, gender?: 'm' | 'f' | 'n' , endEfect?: number }): FeatureText => {
+		createSoloMonster: (data: { id: string, name: string, gender?: 'm' | 'f' | 'n', endEfect?: number }): FeatureText => {
 			const capitalizedName = data.name.split(' ').map((n, i) => i === 0 ? Format.capitalize(n) : n).join(' ');
 			const genderWithDefault = data.gender ?? 'n';
-			const heSheThey = ({ m: 'he', f: 'she', n: 'they' } as const)[ genderWithDefault ];
-			const hisHerTheir = ({ m: 'his', f: 'her', n: 'their' } as const)[ genderWithDefault ];
-			const himHerThem = ({ m: 'him', f: 'her', n: 'them' } as const)[ genderWithDefault ];
+			const heSheThey = ({ m: 'he', f: 'she', n: 'they' } as const)[genderWithDefault];
+			const hisHerTheir = ({ m: 'his', f: 'her', n: 'their' } as const)[genderWithDefault];
+			const himHerThem = ({ m: 'him', f: 'her', n: 'them' } as const)[genderWithDefault];
 			return {
 				id: data.id,
 				name: 'Solo Monster',

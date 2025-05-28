@@ -109,11 +109,14 @@ export class HeroLogic {
 	};
 
 	static getRangedKitBonusUsed = (hero: Hero) => {
-		return hero.state.activeRangedKitBonusId ?? undefined;
+		return hero.state.activeRangedKitBonusId ?? null;
 	};
 
 	// Will return the best kit damage in the array or -1 if there is any ambiguity (e.g. 2/2/2 and 0/0/4)
 	static findKitHighestBonusIndex = (kitsDamages: KitDamageBonus[]) => {
+		if (kitsDamages.length == 0)
+			return -1;
+
 		if (kitsDamages.length < 2)
 			return 0;
 
@@ -688,6 +691,8 @@ export class HeroLogic {
 		if (ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon)) {
 			// gather a list of all damage bonus in all kits, as some class can have multiple kits
 			const kits = this.getKits(hero);
+
+			//we also append the name and id to each bonus, so we can find back which kit it come from
 			const returnKitsBonus = kits.filter(kit => kit.rangedDamage !== null).map(kit => {
 				//we add the kit name after the bonus, this is used by UI to show where the bonus come from
 				const dmgBonus = {

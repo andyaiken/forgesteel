@@ -33,6 +33,7 @@ interface Props {
 	options?: Options;
 	mode?: PanelMode;
 	tags?: string[];
+	updateHero?: (hero: Hero) => void;
 }
 
 export const AbilityPanel = (props: Props) => {
@@ -262,6 +263,7 @@ export const AbilityPanel = (props: Props) => {
 											ability={props.ability}
 											hero={props.hero}
 											autoCalc={autoCalc}
+											updateHero={props.updateHero}
 										/>
 										: null
 								}

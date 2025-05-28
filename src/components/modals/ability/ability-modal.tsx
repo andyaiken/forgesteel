@@ -110,13 +110,20 @@ export const AbilityModal = (props: Props) => {
 		}
 	};
 
+	const abilityChangedHero = (hero: Hero) => {
+		setHero(hero);
+		if (props.updateHero) {
+			props.updateHero(hero);
+		}
+	};
+
 	const getContent = () => {
 		switch (page) {
 			case 'Ability Card':
 				return (
 					<div className='ability-section'>
 						<SelectablePanel>
-							<AbilityPanel ability={props.ability} hero={hero} monster={props.monster} mode={PanelMode.Full} />
+							<AbilityPanel ability={props.ability} hero={hero} monster={props.monster} mode={PanelMode.Full} updateHero={abilityChangedHero} />
 						</SelectablePanel>
 						{
 							props.ability.powerRoll ?

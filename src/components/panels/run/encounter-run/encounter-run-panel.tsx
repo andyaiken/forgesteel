@@ -19,7 +19,6 @@ import { Hero } from '../../../../models/hero';
 import { HeroSelectModal } from '../../../modals/select/hero-select/hero-select-modal';
 import { HeroStateModal } from '../../../modals/hero-state/hero-state-modal';
 import { HeroStatePage } from '../../../../enums/hero-state-page';
-import { HeroicResourceBadge } from '../../../controls/badge/badge';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { MinionGroupHealthPanel } from '../../health/health-panel';
 import { Modal } from '../../../modals/modal/modal';
@@ -33,6 +32,7 @@ import { MonsterSelectModal } from '../../../modals/select/monster-select/monste
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { ResourcePill } from '../../../controls/pill/pill';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -399,7 +399,7 @@ export const EncounterRunPanel = (props: Props) => {
 								onClick={() => setMalice(Math.max(encounter.malice - cost, 0))}
 							>
 								Use
-								<HeroicResourceBadge value={cost} />
+								<ResourcePill value={cost} />
 							</Button>
 							:
 							<div className='malice-progress'>

@@ -1,8 +1,8 @@
 import { Alert, Button, Drawer, Flex, Input, Select, Space } from 'antd';
-import { Badge, HeroicResourceBadge } from '../../../controls/badge/badge';
 import { CSSProperties, useState } from 'react';
 import { DeleteOutlined, InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Pill, ResourcePill } from '../../../controls/pill/pill';
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityModal } from '../../../modals/ability/ability-modal';
@@ -283,7 +283,7 @@ export const FeaturePanel = (props: Props) => {
 							label={(
 								<div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
 									<span>{option.data.label}</span>
-									{showCosts ? <HeroicResourceBadge value={option.data.cost} /> : null}
+									{showCosts ? <ResourcePill value={option.data.cost} /> : null}
 								</div>
 							)}
 							value={option.data.desc}
@@ -1899,10 +1899,10 @@ export const FeaturePanel = (props: Props) => {
 					<HeaderText
 						ribbon={
 							props.cost === 'signature' ?
-								<Badge>Signature</Badge>
+								<Pill>Signature</Pill>
 								:
 								props.cost ?
-									<HeroicResourceBadge value={props.cost} repeatable={props.repeatable} />
+									<ResourcePill value={props.cost} repeatable={props.repeatable} />
 									: null
 						}
 						tags={tags}
@@ -1910,7 +1910,7 @@ export const FeaturePanel = (props: Props) => {
 							autoCalcAvailable() ?
 								<Button
 									type='text'
-									title='Auto-calculate damage, potancy, etc'
+									title='Auto-calculate damage, potency, etc'
 									icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
 									onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
 								/>

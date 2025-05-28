@@ -140,7 +140,6 @@ export const HeroViewPage = (props: Props) => {
 									{
 										content === 'hero' ?
 											<>
-												<Button onClick={() => exportHero('image')}>Export As Image</Button>
 												<Button onClick={() => exportHero('pdf-portrait')}>Export As PDF (portrait)</Button>
 												<Button onClick={() => exportHero('pdf-landscape')}>Export As PDF (landscape)</Button>
 												<Button onClick={() => exportHero('json')}>Export As Data</Button>

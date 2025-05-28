@@ -1,11 +1,11 @@
 import { Montage, MontageChallenge, MontageSection } from '../../../../models/montage';
-import { Badge } from '../../../controls/badge/badge';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Field } from '../../../controls/field/field';
 import { Flex } from 'antd';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { Pill } from '../../../controls/pill/pill';
 
 import './montage-panel.scss';
 
@@ -19,7 +19,7 @@ export const MontagePanel = (props: Props) => {
 		return (
 			<div key={challenge.id} className='montage-challenge'>
 				<Flex align='center' justify='space-between' gap={10}>
-					{challenge.uses > 1 ? <Badge>x{challenge.uses}</Badge> : null}
+					{challenge.uses > 1 ? <Pill>x{challenge.uses}</Pill> : null}
 					<Field
 						style={{ flex: '1 1 0', opacity: (challenge.successes + challenge.failures)>= challenge.uses ? 0.3 : 1 }}
 						label={challenge.name}

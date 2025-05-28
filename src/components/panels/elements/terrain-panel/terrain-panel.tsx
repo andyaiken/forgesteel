@@ -1,7 +1,6 @@
 import { Divider, Flex, Tag } from 'antd';
 import { Terrain, TerrainSection } from '../../../../models/terrain';
 import { AbilityPanel } from '../ability-panel/ability-panel';
-import { Badge } from '../../../controls/badge/badge';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeatureType } from '../../../../enums/feature-type';
@@ -10,6 +9,7 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { Pill } from '../../../controls/pill/pill';
 import { TerrainLabel } from '../../monster-label/monster-label';
 import { TerrainLogic } from '../../../../logic/terrain-logic';
 import { Utils } from '../../../../utils/utils';
@@ -140,8 +140,9 @@ export const TerrainPanel = (props: Props) => {
 											<div key={upgrade.id}>
 												{
 													upgrade.cost >= 0 ?
-														<HeaderText ribbon={<Badge>+{upgrade.cost} EV</Badge>}>{upgrade.label}</HeaderText>
-														: <HeaderText ribbon={<Badge>{upgrade.cost} EV</Badge>}>{upgrade.label}</HeaderText>
+														<HeaderText ribbon={<Pill>+{upgrade.cost} EV</Pill>}>{upgrade.label}</HeaderText>
+														:
+														<HeaderText ribbon={<Pill>{upgrade.cost} EV</Pill>}>{upgrade.label}</HeaderText>
 												}
 
 												{upgrade.text ? <div className='ds-text'>{upgrade.text}</div> : null}

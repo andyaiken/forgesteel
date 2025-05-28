@@ -1,4 +1,3 @@
-import { Badge } from '../../../controls/badge/badge';
 import { Empty } from '../../../controls/empty/empty';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterDifficultyPanel } from '../../encounter-difficulty/encounter-difficulty-panel';
@@ -16,6 +15,7 @@ import { MonsterPanel } from '../monster-panel/monster-panel';
 import { MonsterToken } from '../../../controls/token/token';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { Pill } from '../../../controls/pill/pill';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -73,7 +73,7 @@ export const EncounterPanel = (props: Props) => {
 												<MonsterToken monster={monster} monsterGroup={monsterGroup} />
 												<div className='ds-text'>{name}</div>
 											</div>
-											{count > 1 ? <Badge>x{count}</Badge> : null}
+											{count > 1 ? <Pill>x{count}</Pill> : null}
 										</div>
 									);
 								})
@@ -98,7 +98,7 @@ export const EncounterPanel = (props: Props) => {
 											<div className='terrain-slot-name'>
 												<div className='ds-text'>{terrain ? terrain.name : 'Unnamed Terrain'}</div>
 											</div>
-											{slot.count > 1 ? <Badge>x{slot.count}</Badge> : null}
+											{slot.count > 1 ? <Pill>x{slot.count}</Pill> : null}
 										</div>
 									);
 								})

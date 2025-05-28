@@ -20,28 +20,20 @@
 		flex-direction: row;
 		gap: 10px;
 
-		.hero-left-column,
-		.hero-right-column {
-			flex: 0 0 200px;
-			display: flex;
-			flex-direction: column;
-			overflow-y: auto;
-
-			&.full-width {
-				flex: 1 1 0;
+		.hero-sidebar {
+			&.column {
+				flex: 0 0 250px;
+				overflow-y: auto;
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
 			}
 
-			.overview-tile {
-				padding: 0 10px 10px 10px;
-				border-radius: 10px;
-
-				&.clickable {
-					cursor: pointer;
-
-					&:hover {
-						background-color: rgb(180, 220, 255);
-					}
-				}
+			&.grid {
+				flex: 1 1 0;
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+				gap: 10px;
 			}
 
 			.damage-modifier {
@@ -62,109 +54,129 @@
 
 			.center-content {
 				flex: 1 1 0;
-				padding: 10px;
 				overflow-y: auto;
 			}
 
-			.stats-box {
-				border: 1px solid rgb(200, 200, 200);
-				border-radius: 20px;
-				background-color: rgb(255, 255, 255);
-				padding: 10px;
-				box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+			.stats-section {
+				padding: 0 5px;
 
-				&.clickable {
-					cursor: pointer;
+				.stats-box {
+					border: 1px solid rgb(200, 200, 200);
+					border-radius: 20px;
+					background-color: rgb(255, 255, 255);
+					padding: 10px;
+					box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
 
-					&:hover {
-						background-color: rgb(180, 220, 255);
+					&.clickable {
+						cursor: pointer;
 
-						.ant-statistic {
-							.ant-statistic-title,
-							.ant-statistic-content {
-								color: rgba(0, 0, 0, 0.88);
+						&:hover {
+							background-color: rgb(180, 220, 255);
+
+							.ant-statistic {
+								.ant-statistic-title,
+								.ant-statistic-content {
+									color: rgba(0, 0, 0, 0.88);
+								}
 							}
 						}
 					}
-				}
 
-				.stats {
-					display: flex;
-					align-items: flex-start;
-					justify-content: space-evenly;
-					gap: 5px;
+					.stats {
+						display: flex;
+						align-items: flex-start;
+						justify-content: space-evenly;
+						gap: 5px;
 
-					.stat {
-						flex: 1 1 0;
-						border-radius: 10px;
-						padding: 5px 0;
+						.stat {
+							flex: 1 1 0;
+							border-radius: 10px;
+							padding: 5px 0;
 
-						&.clickable {
-							cursor: pointer;
+							&.clickable {
+								cursor: pointer;
 
-							&:hover {
-								background-color: rgb(180, 220, 255);
+								&:hover {
+									background-color: rgb(180, 220, 255);
 
-								.ant-statistic {
-									.ant-statistic-title,
-									.ant-statistic-content {
-										color: rgba(0, 0, 0, 0.88);
+									.ant-statistic {
+										.ant-statistic-title,
+										.ant-statistic-content {
+											color: rgba(0, 0, 0, 0.88);
+										}
 									}
 								}
 							}
 						}
 					}
-				}
 
-				.stats-box-caption {
-					margin-top: 5px;
-					border-top: 1px solid rgba(0, 0, 0, 0.1);
-					padding-top: 10px;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					font-size: 10px;
-					font-weight: 600;
-					text-transform: uppercase;
-					letter-spacing: 2px;
-					opacity: 0.5;
-				}
-			}
-
-			.conditions-grid {
-				display: flex;
-				flex-direction: column;
-				gap: 10px;
-
-				.condition-tile {
-					border: 1px solid rgb(200, 200, 200);
-					border-radius: 20px;
-					background-color: rgb(255, 255, 255);
-					padding: 5px 20px 10px 20px;
-					box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
-					cursor: pointer;
-
-					&:hover {
-						background-color: rgb(180, 220, 255);
+					.stats-box-caption {
+						margin-top: 5px;
+						border-top: 1px solid rgba(0, 0, 0, 0.1);
+						padding-top: 10px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						font-size: 10px;
+						font-weight: 600;
+						text-transform: uppercase;
+						letter-spacing: 2px;
+						opacity: 0.5;
 					}
 				}
 			}
 
-			.abilities-grid {
+			.choices-section {
+				margin: 10px 0;
 				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 				gap: 10px;
+			}
 
-				&.narrow {
-					grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+			.abilities-section {
+				padding: 5px;
+
+				.abilities-grid {
+					display: grid;
+					gap: 10px;
+
+					&.narrow {
+						grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+					}
+					&.medium {
+						grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+					}
+					&.wide {
+						grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+					}
+					&.extra-wide {
+						grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+					}
 				}
-				&.medium {
-					grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-				}
-				&.wide {
-					grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-				}
-				&.extra-wide {
-					grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+			}
+		}
+
+		.overview-tile {
+			padding: 0 10px 10px 10px;
+			border: 1px solid transparent;
+			border-radius: 10px;
+
+			&.danger {
+				border-color: red;
+				background-color: rgba(255, 0, 0, 0.2);
+			}
+
+			&.warning {
+				border-color: orange;
+				background-color: rgba(255, 166, 0, 0.2);
+			}
+
+			&.clickable {
+				cursor: pointer;
+
+				&:hover {
+					border-color: rgb(22, 119, 255);
+					background-color: rgb(180, 220, 255);
 				}
 			}
 		}
@@ -187,6 +199,10 @@
 									color: rgba(0, 0, 0, 0.88);
 								}
 							}
+
+							.stats-box-caption {
+								color: rgba(0, 0, 0, 0.88);
+							}
 						}
 					}
 	
@@ -205,22 +221,18 @@
 						}
 					}
 				}
+			}
 
-				.conditions-grid {
-					.condition-tile {
-						border-color: rgb(200, 200, 200);
-						background-color: rgb(0, 0, 0);
-	
-						&:hover {
-							.header-text-panel {
-								.header-text {
-									color: rgba(0, 0, 0, 0.88);
-								}
-							}
-
-							.ds-text {
-								color: rgba(0, 0, 0, 0.88);
-							}
+			.overview-tile {
+				&.clickable {
+					&:hover {
+						.header-text-panel.level-2 .header-text-content .header-text,
+						p,
+						.ds-text,
+						.field .field-label,
+						.field .field-value,
+						.combatant-button-content .combatant-button-details {
+							color: rgba(0, 0, 0, 0.88) !important;
 						}
 					}
 				}

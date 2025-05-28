@@ -1,12 +1,12 @@
 import { Button, Flex, Space } from 'antd';
 import { CheckCircleFilled, CheckOutlined, CloseCircleFilled, CloseOutlined, EllipsisOutlined, SyncOutlined } from '@ant-design/icons';
 import { Montage, MontageChallenge, MontageSection } from '../../../../models/montage';
-import { Badge } from '../../../controls/badge/badge';
 import { Collections } from '../../../../utils/collections';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
+import { Pill } from '../../../controls/pill/pill';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -79,7 +79,7 @@ export const MontageRunPanel = (props: Props) => {
 					<div className='status'>
 						{getIcons()}
 					</div>
-					{challenge.uses > 1 ? <Badge>x{challenge.uses}</Badge> : null}
+					{challenge.uses > 1 ? <Pill>x{challenge.uses}</Pill> : null}
 					<Field
 						style={{ flex: '1 1 0', opacity: (challenge.successes + challenge.failures)>= challenge.uses ? 0.3 : 1 }}
 						label={challenge.name}

@@ -1,6 +1,6 @@
 import { AbilityCustomization, Hero } from '../../../../models/hero';
 import { Alert, Button, Space, Tag } from 'antd';
-import { Badge, HeroicResourceBadge } from '../../../controls/badge/badge';
+import { Pill, ResourcePill } from '../../../controls/pill/pill';
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
 import { Ability } from '../../../../models/ability';
@@ -65,8 +65,8 @@ export const AbilityPanel = (props: Props) => {
 
 	const headerRibbon = useMemo(
 		() => cost === 'signature'
-			? (<Badge>Signature</Badge>)
-			: cost > 0 ? (<HeroicResourceBadge value={cost} repeatable={repeatable} />) : null,
+			? (<Pill>Signature</Pill>)
+			: cost > 0 ? (<ResourcePill value={cost} repeatable={repeatable} />) : null,
 		[ cost, repeatable ]
 	);
 
@@ -229,7 +229,7 @@ export const AbilityPanel = (props: Props) => {
 							autoCalcAvailable() ?
 								<Button
 									type='text'
-									title='Auto-calculate damage, potancy, etc'
+									title='Auto-calculate damage, potency, etc'
 									icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
 									onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
 								/>
@@ -249,28 +249,10 @@ export const AbilityPanel = (props: Props) => {
 										</div>
 										: null
 								}
-								<Field label='Type' value={FormatLogic.getAbilityType(props.ability.type)} />
-								{
-									props.ability.type.trigger ?
-										<Field label='Trigger' value={props.ability.type.trigger} />
-										: null
-								}
-								{
-									props.ability.distance.length > 0 ?
-										<Field label='Distance' value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.hero, props.ability)).join(' or ')} />
-										: null
-								}
-								{
-									props.ability.target ?
-										<Field label='Target' value={props.ability.target} />
-										: null
-								}
+								<AbilityInfo ability={props.ability} hero={props.hero} />
 								{
 									props.ability.preEffect ?
-										<Field
-											label='Effect'
-											value={<Markdown text={parseText(props.ability.preEffect)} useSpan={true} />}
-										/>
+										<Markdown text={parseText(props.ability.preEffect)} />
 										: null
 								}
 								{
@@ -293,10 +275,7 @@ export const AbilityPanel = (props: Props) => {
 								}
 								{
 									props.ability.effect ?
-										<Field
-											label='Effect'
-											value={<Markdown text={parseText(props.ability.effect)} useSpan={true} />}
-										/>
+										<Markdown text={parseText(props.ability.effect)} />
 										: null
 								}
 								{
@@ -325,7 +304,7 @@ export const AbilityPanel = (props: Props) => {
 											label={(
 												<div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
 													<span>{ spend.name || 'Spend' }</span>
-													{spend.value ? <HeroicResourceBadge value={spend.value} repeatable={spend.repeatable} /> : null}
+													{spend.value ? <ResourcePill value={spend.value} repeatable={spend.repeatable} /> : null}
 												</div>
 											)}
 											value={<Markdown text={parseText(spend.effect)} useSpan={true} />}
@@ -339,7 +318,7 @@ export const AbilityPanel = (props: Props) => {
 											label={(
 												<div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
 													<span>Persist</span>
-													{persist.value ? <HeroicResourceBadge value={persist.value} /> : null}
+													{persist.value ? <ResourcePill value={persist.value} /> : null}
 												</div>
 											)}
 											value={<Markdown text={parseText(persist.effect)} useSpan={true} />}
@@ -377,6 +356,62 @@ export const AbilityPanel = (props: Props) => {
 					}
 				</div>
 			</ErrorBoundary>
+		);
+	} catch (ex) {
+		console.error(ex);
+		return null;
+	}
+};
+
+interface AbilityInfoProps {
+	ability: Ability;
+	hero?: Hero;
+}
+
+const AbilityInfo = (props: AbilityInfoProps) => {
+	try {
+		let monogram = '';
+		switch (props.ability.type.usage) {
+			case AbilityUsage.Action:
+				monogram = 'action';
+				break;
+			case AbilityUsage.Maneuver:
+				monogram = 'maneuver';
+				break;
+			case AbilityUsage.Trigger:
+				monogram = 'trigger';
+				break;
+			case AbilityUsage.Move:
+				monogram = 'move';
+				break;
+			case AbilityUsage.VillainAction:
+				monogram = 'villain';
+				break;
+		}
+		if (props.ability.type.free) {
+			monogram = 'free';
+		}
+
+		return (
+			<div className='ability-info-panel'>
+				{monogram ? <div className={`sash ${monogram}`}>{monogram}</div> : null}
+				<Field compact={true} label='Type' value={FormatLogic.getAbilityType(props.ability.type)} />
+				{
+					props.ability.type.trigger ?
+						<Field compact={true} label='Trigger' value={props.ability.type.trigger} />
+						: null
+				}
+				{
+					props.ability.distance.length > 0 ?
+						<Field compact={true} label='Distance' value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.hero, props.ability)).join(' or ')} />
+						: null
+				}
+				{
+					props.ability.target ?
+						<Field compact={true} label='Target' value={props.ability.target} />
+						: null
+				}
+			</div>
 		);
 	} catch (ex) {
 		console.error(ex);

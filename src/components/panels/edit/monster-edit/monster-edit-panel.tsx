@@ -1,7 +1,6 @@
 import { Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, ImportOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
-import { Badge } from '../../../controls/badge/badge';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
@@ -26,6 +25,7 @@ import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { Pill } from '../../../controls/pill/pill';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
@@ -654,7 +654,7 @@ export const MonsterEditPanel = (props: Props) => {
 								{
 									options.map((opt, n) => (
 										<Button key={n} block={true} onClick={() => setWithCaptain(opt.text)}>
-											{opt.text} {opt.count > 1 ? <Badge>x{opt.count}</Badge> : null}
+											{opt.text} {opt.count > 1 ? <Pill>x{opt.count}</Pill> : null}
 										</Button>
 									))
 								}

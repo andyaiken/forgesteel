@@ -41,6 +41,7 @@ export const ReferenceModal = (props: Props) => {
 		const getRulesSection = () => {
 			const rules = [
 				RulesData.abilityDistance,
+				RulesData.assist,
 				RulesData.burrowing,
 				RulesData.climbingAndSwimming,
 				RulesData.concealment,

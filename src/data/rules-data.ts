@@ -35,6 +35,20 @@ An area ability might use any of the following areas of effect:
 **Self**: If an ability has a distance of “Self,” that ability originates from or affects only you. The ability’s description specifies how it works.`
 	};
 
+	static assist: RulesItem = {
+		label: 'Assist a Test',
+		content: `
+You can attempt to assist another creature with a test they make, provided you have a skill that applies to the test, the other creature isn’t using that same skill on the test, and you can describe how your character helps to the Director’s satisfaction. In other words, your attempt to help has to make sense, and you have to bring some useful expertise to the table. Helping another creature sneak by shouting encouragement at them isn’t going to make them stealthier.
+
+When you attempt to assist another creature, make an test using the skill you choose, and with a characteristic chosen by the Director based on the action you take to help. The outcome of that test determines the bonus applied to the test you’re assisting:
+
+* **11 or lower**: You get in the way or make things worse. The creature takes a bane on their test.
+* **12–16**: Your help grants the other creature an edge on their test.
+* **17+**: Your help gives the other creature a double edge on their test.
+
+For example, if you want to use the Flirt skill to help another hero pick a jailor’s pocket, the Director might ask you to make a Presence test using Flirt. The outcome of that test determines the bonus you provide to the other hero’s Agility test to pick the pocket.`
+	};
+
 	static burrowing: RulesItem = {
 		label: 'Burrowing',
 		content: `

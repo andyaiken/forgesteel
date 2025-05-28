@@ -1,4 +1,4 @@
-.badge {
+.pill {
 	border: 1px solid rgb(22, 119, 255);
 	border-radius: 10px;
 	background-color: rgba(22, 119, 255, 0.3);
@@ -12,7 +12,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-	.badge {
+	.pill {
 		background-color: rgb(180, 220, 255);
 		color: rgba(0, 0, 0, 0.88);
 	}

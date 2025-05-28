@@ -11,6 +11,7 @@ interface Props {
 	disabled?: boolean;
 	danger?: boolean;
 	highlight?: boolean;
+	compact?: boolean;
 };
 
 export const Field = (props: Props) => {
@@ -27,6 +28,9 @@ export const Field = (props: Props) => {
 		}
 		if (props.highlight) {
 			className += ' highlight';
+		}
+		if (props.compact) {
+			className += ' compact';
 		}
 
 		return (

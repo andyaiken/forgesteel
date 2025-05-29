@@ -107,64 +107,50 @@ export class AbilityLogic {
 	};
 
 	static getTierEffect = (value: string, tier: number, ability: Ability, hero: Hero) => {
-		const dmgMelee = HeroLogic.getMeleeDamageBonus(hero, ability);
-		const dmgRanged = HeroLogic.getRangedDamageBonus(hero, ability);
-		const dmgBonus = HeroLogic.getFeatureDamageBonus(hero, ability);
-
 		return value
 			.split(';')
 			.map(section => section.trim())
 			.map((section, n) => {
 				if ((n === 0) && section.toLowerCase().endsWith('damage') || section.toLowerCase().endsWith('dmg')){
-					// Modify section to calculate characteristic bonuses
 					let value = 0;
 					let sign = '+';
 					const dice: string[] = [];
 					const characteristics: Characteristic[] = [];
 					const types: string[] = [];
 
-					const hasMeleeAndRanged = ability.distance.some(d => d.type === AbilityDistanceType.Melee) && ability.distance.some(d => d.type === AbilityDistanceType.Ranged);
-					if (dmgMelee && !dmgRanged && !hasMeleeAndRanged) {
+					const hasMelee = ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon);
+					const hasRanged = ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon);
+
+					const dmgKits = HeroLogic
+						.getKitDamageBonuses(hero)
+						.filter(dmg => {
+							switch (dmg.type) {
+								case 'melee':
+									return hasMelee;
+								case 'ranged':
+									return hasRanged;
+							}
+						});
+
+					const hasMeleeXorRanged = (hasMelee && !hasRanged) || (!hasMelee && hasRanged);
+					if ((dmgKits.length === 1) && hasMeleeXorRanged) {
+						// There's only one applicable kit bonus, and the ability can only be used in one mode
+						const dmg = dmgKits[0];
 						switch (tier) {
 							case 1:
-								value += dmgMelee.tier1;
+								value += dmg.tier1;
 								break;
 							case 2:
-								value += dmgMelee.tier2;
+								value += dmg.tier2;
 								break;
 							case 3:
-								value += dmgMelee.tier3;
-								break;
-						}
-					}
-					if (!dmgMelee && dmgRanged && !hasMeleeAndRanged) {
-						switch (tier) {
-							case 1:
-								value += dmgRanged.tier1;
-								break;
-							case 2:
-								value += dmgRanged.tier2;
-								break;
-							case 3:
-								value += dmgRanged.tier3;
-								break;
-						}
-					}
-					if (dmgMelee && dmgRanged && (dmgMelee.tier1 === dmgRanged.tier1) && (dmgMelee.tier2 === dmgRanged.tier2) && (dmgMelee.tier3 === dmgRanged.tier3)) {
-						switch (tier) {
-							case 1:
-								value += dmgMelee.tier1;
-								break;
-							case 2:
-								value += dmgMelee.tier2;
-								break;
-							case 3:
-								value += dmgMelee.tier3;
+								value += dmg.tier3;
 								break;
 						}
 					}
 
-					value += dmgBonus;
+					const dmgFeatures = HeroLogic.getFeatureDamageBonuses(hero, ability);
+					value += Collections.sum(dmgFeatures, x => x.value);
 
 					section.toLowerCase().split(' ').forEach(token => {
 						if ((token === 'damage') || (token === 'dmg')) {

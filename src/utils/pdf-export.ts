@@ -3,6 +3,7 @@ import { PDFCheckBox, PDFDocument, PDFTextField, StandardFonts } from 'pdf-lib';
 import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
+import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
 import { ClassData } from '../data/class-data';
@@ -340,11 +341,29 @@ export class PDFExport {
 							hero
 						);
 
-						const dmgMelee = HeroLogic.getMeleeDamageBonus(hero, a);
-						const dmgRanged = HeroLogic.getRangedDamageBonus(hero, a);
-						if (dmgMelee && dmgRanged && ((dmgMelee.tier1 !== dmgRanged.tier1) || (dmgMelee.tier2 !== dmgRanged.tier2) || (dmgMelee.tier3 !== dmgRanged.tier3))) {
-							powerRollText = powerRollText + '\n   Bonus Melee Damage: ' + AddSign(dmgMelee.tier1) + ' / ' + AddSign(dmgMelee.tier2) + ' / ' + AddSign(dmgMelee.tier3);
-							powerRollText = powerRollText + '\n   Bonus Ranged Damage: ' + AddSign(dmgRanged.tier1) + ' / ' + AddSign(dmgRanged.tier2) + ' / ' + AddSign(dmgRanged.tier3);
+						const hasMelee = a.keywords.includes(AbilityKeyword.Melee) && a.keywords.includes(AbilityKeyword.Weapon);
+						const hasRanged = a.keywords.includes(AbilityKeyword.Ranged) && a.keywords.includes(AbilityKeyword.Weapon);
+
+						const dmgKits = HeroLogic
+							.getKitDamageBonuses(hero)
+							.filter(dmg => {
+								switch (dmg.type) {
+									case 'melee':
+										return hasMelee;
+									case 'ranged':
+										return hasRanged;
+								}
+							});
+
+						// Show bonuses from kits if:
+						// * we have more than 1 bonus
+						// * the ability has melee and ranged distances
+						// ... because otherwise it should have already been applied
+						const showKitBonuses = (dmgKits.length > 1) || (hasMelee && hasRanged);
+						if (showKitBonuses) {
+							dmgKits.forEach(bonus => {
+								powerRollText = powerRollText + '\n   ' + bonus.kit + ': ' + AddSign(bonus.tier1) + ' / ' + AddSign(bonus.tier2) + ' / ' + AddSign(bonus.tier3) + ' ' + bonus.type + ' damage';
+							});
 						}
 
 						details.push(powerRollText);

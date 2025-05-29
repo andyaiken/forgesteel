@@ -8,6 +8,7 @@ import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
+import { DamageType } from '../enums/damage-type';
 import { Domain } from '../models/domain';
 import { FactoryLogic } from './factory-logic';
 import { FeatureField } from '../enums/feature-field';
@@ -607,95 +608,36 @@ export class HeroLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
-	static getMeleeDamageBonus = (hero: Hero, ability: Ability) => {
-		/*
-		const array: { kit: string, tier1: number, tier2: number, tier3: number }[] = [];
+	static getKitDamageBonuses = (hero: Hero) => {
+		const array: { kit: string, type: 'melee' | 'ranged', tier1: number, tier2: number, tier3: number }[] = [];
 
-		if (ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon)) {
-			this.getKits(hero)
-				.filter(kit => !!kit.meleeDamage)
-				.forEach(kit => {
+		this.getKits(hero)
+			.forEach(kit => {
+				if (kit.meleeDamage) {
 					array.push({
 						kit: kit.name,
-						tier1: kit.meleeDamage!.tier1,
-						tier2: kit.meleeDamage!.tier2,
-						tier3: kit.meleeDamage!.tier3
+						type: 'melee',
+						tier1: kit.meleeDamage.tier1,
+						tier2: kit.meleeDamage.tier2,
+						tier3: kit.meleeDamage.tier3
 					});
-				});
-		}
-
-		return array;
-		*/
-
-		let value1 = 0;
-		let value2 = 0;
-		let value3 = 0;
-
-		if (ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon)) {
-			// Add maximum from kits
-			const kits = this.getKits(hero);
-			value1 += Collections.max(kits.map(kit => kit.meleeDamage?.tier1 || 0), value => value) || 0;
-			value2 += Collections.max(kits.map(kit => kit.meleeDamage?.tier2 || 0), value => value) || 0;
-			value3 += Collections.max(kits.map(kit => kit.meleeDamage?.tier3 || 0), value => value) || 0;
-		}
-
-		if ((value1 === 0) && (value2 === 0) && (value3 === 0)) {
-			return null;
-		}
-
-		return {
-			tier1: value1,
-			tier2: value2,
-			tier3: value3
-		};
-	};
-
-	static getRangedDamageBonus = (hero: Hero, ability: Ability) => {
-		/*
-		const array: { kit: string, tier1: number, tier2: number, tier3: number }[] = [];
-
-		if (ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon)) {
-			this.getKits(hero)
-				.filter(kit => !!kit.rangedDamage)
-				.forEach(kit => {
+				}
+				if (kit.rangedDamage) {
 					array.push({
 						kit: kit.name,
-						tier1: kit.rangedDamage!.tier1,
-						tier2: kit.rangedDamage!.tier2,
-						tier3: kit.rangedDamage!.tier3
+						type: 'ranged',
+						tier1: kit.rangedDamage.tier1,
+						tier2: kit.rangedDamage.tier2,
+						tier3: kit.rangedDamage.tier3
 					});
-				});
-		}
+				}
+			});
 
 		return array;
-		*/
-
-		let value1 = 0;
-		let value2 = 0;
-		let value3 = 0;
-
-		if (ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon)) {
-			// Add maximum from kits
-			const kits = this.getKits(hero);
-			value1 += Collections.max(kits.map(kit => kit.rangedDamage?.tier1 || 0), value => value) || 0;
-			value2 += Collections.max(kits.map(kit => kit.rangedDamage?.tier2 || 0), value => value) || 0;
-			value3 += Collections.max(kits.map(kit => kit.rangedDamage?.tier3 || 0), value => value) || 0;
-		}
-
-		if ((value1 === 0) && (value2 === 0) && (value3 === 0)) {
-			return null;
-		}
-
-		return {
-			tier1: value1,
-			tier2: value2,
-			tier3: value3
-		};
 	};
 
-	static getFeatureDamageBonus = (hero: Hero, ability: Ability) => {
-		/*
-		const array: { feature: string, value: number }[] = [];
+	static getFeatureDamageBonuses = (hero: Hero, ability: Ability) => {
+		const array: { feature: string, value: number, type: DamageType }[] = [];
 
 		HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
@@ -705,25 +647,12 @@ export class HeroLogic {
 				const mod = HeroLogic.calculateModifierValue(hero, f.data);
 				array.push({
 					feature: f.name,
-					value: mod
+					value: mod,
+					type: f.data.damageType
 				});
 			});
 
 		return array;
-		*/
-
-		let value = 0;
-
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.AbilityDamage)
-			.filter(f => f.data.keywords.every(kw => ability.keywords.includes(kw)))
-			.forEach(f => {
-				const mod = HeroLogic.calculateModifierValue(hero, f.data);
-				value += mod;
-			});
-
-		return value;
 	};
 
 	static getDistanceBonus = (hero: Hero, ability: Ability, distance: AbilityDistance) => {

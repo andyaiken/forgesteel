@@ -1,14 +1,12 @@
 import { Ability } from '../../../models/ability';
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
+import { AbilityKeyword } from '../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../logic/ability-logic';
 import { Collections } from '../../../utils/collections';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
-import { FormatLogic } from '../../../logic/format-logic';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
-import type { PowerRoll } from '../../../models/power-roll';
+import { PowerRoll } from '../../../models/power-roll';
 
 import './power-roll-panel.scss';
 
@@ -21,10 +19,6 @@ interface Props {
 }
 
 export const PowerRollPanel = (props: Props) => {
-	const dmgMelee = props.ability && props.hero ? HeroLogic.getMeleeDamageBonus(props.hero, props.ability) : null;
-	const dmgRanged = props.ability && props.hero ? HeroLogic.getRangedDamageBonus(props.hero, props.ability) : null;
-	const usesPotency = AbilityLogic.usesPotency(props.powerRoll);
-
 	const getHeader = () => {
 		if (props.test) {
 			if (props.powerRoll.characteristic.length === 0) {
@@ -62,50 +56,69 @@ export const PowerRollPanel = (props: Props) => {
 			return null;
 		}
 
-		if (props.hero) {
+		if (props.hero && props.ability) {
 			const sections = [];
-			if (props.autoCalc) {
-				// Show melee and ranged damage only if:
-				// * we have both, and they're different
-				// * we have only one, but the ability has melee and ranged distances
-				let showBonuses = false;
-				if (dmgMelee && dmgRanged) {
-					showBonuses = ((dmgMelee.tier1 !== dmgRanged.tier1) || (dmgMelee.tier2 !== dmgRanged.tier2) || (dmgMelee.tier3 !== dmgRanged.tier3));
-				}
-				if (dmgMelee || dmgRanged) {
-					showBonuses = !!props.ability && props.ability.distance.some(d => d.type === AbilityDistanceType.Melee) && props.ability.distance.some(d => d.type === AbilityDistanceType.Ranged);
-				}
-				if (showBonuses) {
-					if (dmgMelee) {
-						sections.push(<Field key='melee' label='Bonus melee damage' value={`+${dmgMelee.tier1} / +${dmgMelee.tier2} / +${dmgMelee.tier3}`} />);
-					}
-					if (dmgRanged) {
-						sections.push(<Field key='ranged' label='Bonus ranged damage' value={`+${dmgRanged.tier1} / +${dmgRanged.tier2} / +${dmgRanged.tier3}`} />);
-					}
-				}
-			} else {
-				if (dmgMelee) {
-					sections.push(<Field key='melee' label='Bonus melee damage' value={`+${dmgMelee.tier1} / +${dmgMelee.tier2} / +${dmgMelee.tier3}`} />);
-				}
 
-				if (dmgRanged) {
-					sections.push(<Field key='ranged' label='Bonus ranged damage' value={`+${dmgRanged.tier1} / +${dmgRanged.tier2} / +${dmgRanged.tier3}`} />);
-				}
+			//#region Kits
 
+			const hasMelee = props.ability.keywords.includes(AbilityKeyword.Melee) && props.ability.keywords.includes(AbilityKeyword.Weapon);
+			const hasRanged = props.ability.keywords.includes(AbilityKeyword.Ranged) && props.ability.keywords.includes(AbilityKeyword.Weapon);
+
+			const dmgKits = HeroLogic
+				.getKitDamageBonuses(props.hero)
+				.filter(dmg => {
+					switch (dmg.type) {
+						case 'melee':
+							return hasMelee;
+						case 'ranged':
+							return hasRanged;
+					}
+				});
+
+			// Show bonuses from kits if:
+			// * AutoCalc is off
+			// * we have more than 1 bonus
+			// * the ability has melee and ranged distances
+			// ... because otherwise it should have already been applied
+			const showKitBonuses = !props.autoCalc || (dmgKits.length > 1) || (hasMelee && hasRanged);
+			if (showKitBonuses) {
+				dmgKits.forEach((bonus, n) => {
+					sections.push(
+						<Field
+							key={`kit-${n}`}
+							label={`${bonus.kit}`}
+							value={`+${bonus.tier1} / +${bonus.tier2} / +${bonus.tier3} ${bonus.type} damage`}
+						/>
+					);
+				});
+			}
+
+			//#endregion
+
+			//#region Damage bonuses
+
+			if (!props.autoCalc) {
+				HeroLogic
+					.getFeatureDamageBonuses(props.hero, props.ability)
+					.forEach((bonus, n) => {
+						const value = `${bonus.value} ${bonus.type}`;
+						sections.push(<Field key={`feature-${n}`} label={bonus.feature} value={value} />);
+					});
+			}
+
+			//#endregion
+
+			//#region Potency
+
+			if (!props.autoCalc) {
+				const usesPotency = AbilityLogic.usesPotency(props.powerRoll);
 				if (usesPotency) {
 					const potency = `weak ${HeroLogic.calculatePotency(props.hero, 'weak')}, average ${HeroLogic.calculatePotency(props.hero, 'average')}, strong ${HeroLogic.calculatePotency(props.hero, 'strong')}`;
 					sections.push(<Field key='potency' label='Potency' value={potency} />);
 				}
-
-				HeroLogic.getFeatures(props.hero)
-					.map(f => f.feature)
-					.filter(f => f.type === FeatureType.AbilityDamage)
-					.filter(f => f.data.keywords.every(kw => props.ability?.keywords.includes(kw)))
-					.forEach(f => {
-						const value = `${FormatLogic.getModifier(f.data)} ${f.data.damageType}`;
-						sections.push(<Field key={f.id} label={f.name || 'Damage'} value={value} />);
-					});
 			}
+
+			//#endregion
 
 			if (sections.length > 0) {
 				return (

@@ -210,7 +210,9 @@ export const FeatureEditPanel = (props: Props) => {
 				break;
 			case FeatureType.Malice:
 				data = {
-					cost: 3
+					cost: 3,
+					repeatable: false,
+					sections: [ '' ]
 				} as FeatureMaliceData;
 				break;
 			case FeatureType.Multiple:
@@ -367,6 +369,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setCost = (value: number) => {
 			const copy = Utils.copy(feature.data) as FeatureAddOnData | FeatureMaliceData;
 			copy.cost = value;
+			setData(copy);
+		};
+
+		const setRepeatable = (value: boolean) => {
+			const copy = Utils.copy(feature.data) as FeatureMaliceData;
+			copy.repeatable = value;
 			setData(copy);
 		};
 
@@ -1276,6 +1284,7 @@ export const FeatureEditPanel = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Cost</HeaderText>
 						<NumberSpin min={1} value={data.cost} onChange={setCost} />
+						<Toggle label='Allow extra' value={data.repeatable === true} onChange={setRepeatable} />
 						<HeaderText>Sections</HeaderText>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							{

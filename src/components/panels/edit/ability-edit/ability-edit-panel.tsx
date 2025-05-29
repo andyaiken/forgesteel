@@ -1,4 +1,4 @@
-import { Button, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
@@ -223,6 +223,15 @@ export const AbilityEditPanel = (props: Props) => {
 		const copy = Utils.copy(ability);
 		if (copy.powerRoll) {
 			copy.powerRoll.characteristic = value;
+		}
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const setPowerRollBonus = (value: number) => {
+		const copy = Utils.copy(ability);
+		if (copy.powerRoll) {
+			copy.powerRoll.bonus = value;
 		}
 		setAbility(copy);
 		props.onChange(copy);
@@ -609,7 +618,8 @@ export const AbilityEditPanel = (props: Props) => {
 												ability.powerRoll ?
 													<Select
 														style={{ width: '100%' }}
-														status={ability.powerRoll.characteristic.length === 0 ? 'warning' : ''}
+														disabled={ability.powerRoll.bonus > 0}
+														status={(ability.powerRoll.characteristic.length === 0) && (ability.powerRoll.bonus === 0) ? 'warning' : ''}
 														placeholder='Characteristics'
 														mode='multiple'
 														options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
@@ -625,6 +635,20 @@ export const AbilityEditPanel = (props: Props) => {
 														}}
 														value={ability.powerRoll.characteristic}
 														onChange={setPowerRollCharacteristics}
+													/>
+													: null
+											}
+											{
+												ability.powerRoll ?
+													<NumberSpin disabled={ability.powerRoll.characteristic.length > 0} label='Bonus' min={0} value={ability.powerRoll.bonus} onChange={setPowerRollBonus} />
+													: null
+											}
+											{
+												ability.powerRoll && (ability.powerRoll.characteristic.length === 0) && (ability.powerRoll.bonus === 0) ?
+													<Alert
+														type='warning'
+														showIcon={true}
+														message='A power roll must have either (a) at least one characteristic or (b) a set bonus.'
 													/>
 													: null
 											}

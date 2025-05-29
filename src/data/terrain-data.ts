@@ -673,7 +673,7 @@ export class TerrainData {
 				id: 'sticky',
 				label: 'Sticky',
 				cost: 3,
-				text: 'A sticky slime or webbing has been applied to the stakes and the ground between them. A creature who enders a square triggers Sticky Stakes in addtion to normal archer\'s stakes effects.',
+				text: 'A sticky slime or webbing has been applied to the stakes and the ground between them. A creature who enters a square triggers Sticky Stakes in addtion to normal archer\'s stakes effects.',
 				sections: [
 					{
 						id: 'sticky',

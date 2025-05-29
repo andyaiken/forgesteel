@@ -23,6 +23,7 @@
 * Adventure Builder:
   * Allow subplots
 * Encounter Builder:
+  * Encounters should pull in monsters, rather than storing monster / group IDs
   * Set number of squares for per-square terrain
   * Use encounter templates
   * Auto-create encounters
@@ -35,11 +36,10 @@
 ### Session
 
 * Encounter
-  * Retainers:
-    * For each hero, select a retainer to add to the encounter
+  * Ability to set 'used reaction' flag on heroes / monsters / minions
+  * Retainers / mounts / companions:
     * Retainers should have 6 recoveries
   * Monsters:
-    * Ability to set 'used reaction' flag on heroes / monsters / minions
     * Ability to duplicate / delete monsters in a slot
   * Terrain:
     * Show number of squares on terrain encounter row
@@ -49,11 +49,6 @@
   * Minis should not be allowed to walk through walls
   * Add terrain minis / overlays
   * Show distance between selected mini and hovered square
-
-### Player View
-
-* Add a way to check if data has changed; if it has, update the screen
-  * Currently it updates every 5 seconds
 
 ### Ideas
 

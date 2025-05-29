@@ -227,11 +227,11 @@ export const EncounterRunPanel = (props: Props) => {
 					group={group}
 					index={index}
 					encounter={encounter}
-					onSelectMonster={monster => setSelectedMonster(monster)}
-					onSelectMinionSlot={slot => setSelectedMinionSlot(slot)}
+					onSelectMonster={setSelectedMonster}
+					onSelectMinionSlot={setSelectedMinionSlot}
 					onSetState={(_group, state) => setEncounterState(state)}
-					onDuplicate={() => duplicateGroup()}
-					onDelete={() => deleteGroup()}
+					onDuplicate={duplicateGroup}
+					onDelete={deleteGroup}
 				/>
 			);
 		};
@@ -257,9 +257,10 @@ export const EncounterRunPanel = (props: Props) => {
 				<EncounterGroupHero
 					key={hero.id}
 					hero={hero}
-					onSelect={hero => setSelectedHero(hero)}
+					onSelect={setSelectedHero}
+					onSelectMonster={setSelectedMonster}
 					onSetState={(_hero, state) => setEncounterState(state)}
-					onDelete={() => deleteHero()}
+					onDelete={deleteHero}
 				/>
 			);
 		};

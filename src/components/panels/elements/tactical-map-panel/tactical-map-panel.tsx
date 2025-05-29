@@ -1101,14 +1101,23 @@ export const TacticalMapPanel = (props: Props) => {
 				.map(c => c.id);
 
 			const heroes: Hero[] = [];
+			const monsters: Monster[] = [];
 			const encounterHeroes: { hero: Hero, encounter: Encounter }[] = [];
 			const encounterMonsters: { monster: Monster, encounter: Encounter }[] = [];
 
 			if (props.heroes) {
 				props.heroes
 					.filter(h => h.folder === miniSource)
-					.filter(h => !onMap.includes(h.id))
-					.forEach(h => heroes.push(h));
+					.forEach(h => {
+						if (!onMap.includes(h.id)) {
+							heroes.push(h);
+						}
+						HeroLogic.getCompanions(h).forEach(m => {
+							if (!onMap.includes(m.id)) {
+								monsters.push(m);
+							}
+						});
+					});
 			}
 			if (props.encounters) {
 				props.encounters
@@ -1116,7 +1125,16 @@ export const TacticalMapPanel = (props: Props) => {
 					.forEach(enc => {
 						enc.heroes
 							.filter(h => !onMap.includes(h.id))
-							.forEach(h => encounterHeroes.push({ hero: h, encounter: enc }));
+							.forEach(h => {
+								if (!onMap.includes(h.id)) {
+									encounterHeroes.push({ hero: h, encounter: enc });
+								}
+								HeroLogic.getCompanions(h).forEach(m => {
+									if (!onMap.includes(m.id)) {
+										encounterMonsters.push({ monster: m, encounter: enc });
+									}
+								});
+							});
 						enc.groups.forEach(g => {
 							g.slots.forEach(s => {
 								s.monsters
@@ -1132,6 +1150,7 @@ export const TacticalMapPanel = (props: Props) => {
 
 				const tokens: { type: 'hero' | 'monster', encounterID: string, id: string, size: number }[] = [];
 				heroes.forEach(h => tokens.push({ type: 'hero', encounterID: '', id: h.id, size: HeroLogic.getSize(h).value }));
+				monsters.forEach(m => tokens.push({ type: 'monster', encounterID: '', id: m.id, size: m.size.value }));
 				encounterHeroes.forEach(h => tokens.push({ type: 'hero', encounterID: h.encounter.id, id: h.hero.id, size: HeroLogic.getSize(h.hero).value }));
 				encounterMonsters.forEach(m => tokens.push({ type: 'monster', encounterID: m.encounter.id, id: m.monster.id, size: m.monster.size.value }));
 				TacticalMapLogic.scatterCombatants(copy, tokens);
@@ -1149,6 +1168,14 @@ export const TacticalMapPanel = (props: Props) => {
 						hero={h}
 						size={30}
 						onClick={() => setSelectedMini({ type: 'hero', encounterID: '', id: h.id })}
+					/>
+				)),
+				...monsters.map(m => (
+					<MonsterToken
+						key={m.id}
+						monster={m}
+						size={30}
+						onClick={() => setSelectedMini({ type: 'monster', encounterID: '', id: m.id })}
 					/>
 				)),
 				...encounterHeroes.map(h => (

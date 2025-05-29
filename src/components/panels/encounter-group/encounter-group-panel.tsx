@@ -19,6 +19,7 @@ import './encounter-group-panel.scss';
 interface EncounterGroupHeroProps {
 	hero: Hero;
 	onSelect: (hero: Hero) => void;
+	onSelectMonster: (monster: Monster) => void;
 	onSetState?: (hero: Hero, state: 'ready' | 'current' | 'finished') => void;
 	onDelete?: (hero: Hero) => void;
 }
@@ -102,6 +103,26 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 							</div>
 						</div>
 					</div>
+					{
+						HeroLogic.getCompanions(props.hero).map(m => (
+							<div key={m.id} className='encounter-slot'>
+								<div className='encounter-slot-row' onClick={() => props.onSelectMonster(m)}>
+									<div className='name-column'>
+										<MonsterInfo monster={m} />
+									</div>
+									<div className='stamina-column'>
+										{MonsterLogic.getStaminaDescription(m)}
+										<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+									</div>
+									<div className='conditions-column'>
+										{[ 'healthy', 'injured' ].includes(HeroLogic.getCombatState(props.hero)) ? null : <Tag>{Format.capitalize(MonsterLogic.getCombatState(m))}</Tag>}
+										{m.state.hidden ? <Tag>Hidden</Tag> : null}
+										{m.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+									</div>
+								</div>
+							</div>
+						))
+					}
 				</div>
 			</div>
 		);

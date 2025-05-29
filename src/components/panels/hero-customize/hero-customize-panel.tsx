@@ -481,7 +481,7 @@ export const HeroCustomizePanel = (props: Props) => {
 					}
 					{props.hero.features.filter(f => f.id !== 'default-language').length > 0 ? <Divider /> : null}
 					<DropdownButton
-						label='Add a new feature'
+						label='Add'
 						items={[
 							{ key: 'ancestry', label: <div className='ds-text centered-text'>Ancestry Feature</div> },
 							{ key: 'characteristic-bonus', label: <div className='ds-text centered-text'>Characteristic Bonus</div> },

@@ -83,6 +83,7 @@ export const ReferenceModal = (props: Props) => {
 			return (
 				<>
 					<Input
+						style={{ marginTop: '20px' }}
 						name='search'
 						placeholder='Search'
 						allowClear={true}
@@ -121,7 +122,7 @@ export const ReferenceModal = (props: Props) => {
 
 		const getConditionsSection = () => {
 			return (
-				<div>
+				<div style={{ paddingBottom: '20px' }}>
 					{
 						[
 							ConditionType.Bleeding,
@@ -161,7 +162,7 @@ export const ReferenceModal = (props: Props) => {
 						].map((sl, n1) => (
 							<div key={n1}>
 								<HeaderText>{sl}</HeaderText>
-								<Space direction='vertical' style={{ width: '100%' }}>
+								<Space direction='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
 									{
 										allSkills
 											.filter(s => s.list === sl)
@@ -181,7 +182,7 @@ export const ReferenceModal = (props: Props) => {
 			const languageNames = props.hero ? HeroLogic.getLanguages(props.hero, sourcebooks).map(l => l.name) : [];
 
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space direction='vertical' style={{ padding: '20px 0', width: '100%' }}>
 					{
 						Collections
 							.sort(allLanguages, l => l.name)
@@ -199,7 +200,7 @@ export const ReferenceModal = (props: Props) => {
 							key: 'actions',
 							label: 'Actions',
 							children:
-								<Space direction='vertical' style={{ width: '100%' }}>
+								<Space direction='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
 									{
 										[
 											AbilityData.charge,
@@ -216,7 +217,7 @@ export const ReferenceModal = (props: Props) => {
 							key: 'maneuvers',
 							label: 'Maneuvers',
 							children:
-								<Space direction='vertical' style={{ width: '100%' }}>
+								<Space direction='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
 									{
 										[
 											AbilityData.aidAttack,
@@ -239,7 +240,7 @@ export const ReferenceModal = (props: Props) => {
 							key: 'moves',
 							label: 'Move Actions',
 							children:
-								<Space direction='vertical' style={{ width: '100%' }}>
+								<Space direction='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
 									{
 										[
 											AbilityData.advance,
@@ -255,7 +256,7 @@ export const ReferenceModal = (props: Props) => {
 							key: 'free',
 							label: 'Free Strikes',
 							children:
-								<Space direction='vertical' style={{ width: '100%' }}>
+								<Space direction='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
 									{
 										[
 											AbilityData.freeStrikeMelee,

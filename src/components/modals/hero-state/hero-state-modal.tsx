@@ -130,7 +130,7 @@ export const HeroStateModal = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space direction='vertical' style={{ paddingTop: '20px', width: '100%' }}>
 				<Flex gap={20}>
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<NumberSpin

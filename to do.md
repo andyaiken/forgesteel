@@ -17,6 +17,7 @@
   * Rivals
 * Monster Builder:
   * Auto-create monsters
+  * Allow monsters to have images for their tokens
 
 ### Playbook
 

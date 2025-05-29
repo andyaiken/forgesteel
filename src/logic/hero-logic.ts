@@ -608,6 +608,25 @@ export class HeroLogic {
 	///////////////////////////////////////////////////////////////////////////
 
 	static getMeleeDamageBonus = (hero: Hero, ability: Ability) => {
+		/*
+		const array: { kit: string, tier1: number, tier2: number, tier3: number }[] = [];
+
+		if (ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon)) {
+			this.getKits(hero)
+				.filter(kit => !!kit.meleeDamage)
+				.forEach(kit => {
+					array.push({
+						kit: kit.name,
+						tier1: kit.meleeDamage!.tier1,
+						tier2: kit.meleeDamage!.tier2,
+						tier3: kit.meleeDamage!.tier3
+					});
+				});
+		}
+
+		return array;
+		*/
+
 		let value1 = 0;
 		let value2 = 0;
 		let value3 = 0;
@@ -632,6 +651,25 @@ export class HeroLogic {
 	};
 
 	static getRangedDamageBonus = (hero: Hero, ability: Ability) => {
+		/*
+		const array: { kit: string, tier1: number, tier2: number, tier3: number }[] = [];
+
+		if (ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon)) {
+			this.getKits(hero)
+				.filter(kit => !!kit.rangedDamage)
+				.forEach(kit => {
+					array.push({
+						kit: kit.name,
+						tier1: kit.rangedDamage!.tier1,
+						tier2: kit.rangedDamage!.tier2,
+						tier3: kit.rangedDamage!.tier3
+					});
+				});
+		}
+
+		return array;
+		*/
+
 		let value1 = 0;
 		let value2 = 0;
 		let value3 = 0;
@@ -656,6 +694,24 @@ export class HeroLogic {
 	};
 
 	static getFeatureDamageBonus = (hero: Hero, ability: Ability) => {
+		/*
+		const array: { feature: string, value: number }[] = [];
+
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.AbilityDamage)
+			.filter(f => f.data.keywords.every(kw => ability.keywords.includes(kw)))
+			.forEach(f => {
+				const mod = HeroLogic.calculateModifierValue(hero, f.data);
+				array.push({
+					feature: f.name,
+					value: mod
+				});
+			});
+
+		return array;
+		*/
+
 		let value = 0;
 
 		HeroLogic.getFeatures(hero)

@@ -190,35 +190,20 @@
 				.stats-box {
 					border-color: rgb(200, 200, 200);
 					background-color: rgb(0, 0, 0);
-
-					&.clickable {
-						&:hover {
+	
+					.stats {
+						.stat {
 							.ant-statistic {
 								.ant-statistic-title,
 								.ant-statistic-content {
 									color: rgba(0, 0, 0, 0.88);
 								}
 							}
-
-							.stats-box-caption {
-								color: rgba(0, 0, 0, 0.88);
-							}
 						}
 					}
-	
-					.stats {
-						.stat {
-							&.clickable {
-								&:hover {
-									.ant-statistic {
-										.ant-statistic-title,
-										.ant-statistic-content {
-											color: rgba(0, 0, 0, 0.88);
-										}
-									}
-								}
-							}
-						}
+
+					.stats-box-caption {
+						color: rgba(0, 0, 0, 0.88);
 					}
 				}
 			}

@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "9.102.0",
+	"version": "9.103.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -28,7 +28,7 @@
 		"showdown": "^2.1.0"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.27.0",
+		"@eslint/js": "^9.28.0",
 		"@types/react": "^19.1.6",
 		"@types/react-dom": "^19.1.5",
 		"@vitejs/plugin-react": "^4.5.0",

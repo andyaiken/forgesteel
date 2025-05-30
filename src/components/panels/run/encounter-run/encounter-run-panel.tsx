@@ -405,6 +405,7 @@ export const EncounterRunPanel = (props: Props) => {
 							:
 							<div className='malice-progress'>
 								<Progress percent={100 * encounter.malice / cost} steps={cost} showInfo={false} />
+								<ResourcePill value={`${encounter.malice} of ${cost}`} />
 							</div>
 					}
 				</SelectablePanel>

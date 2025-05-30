@@ -1,3 +1,4 @@
+import { MonsterInfo, TerrainInfo } from '../../../controls/token/token';
 import { Empty } from '../../../controls/empty/empty';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterDifficultyPanel } from '../../encounter-difficulty/encounter-difficulty-panel';
@@ -12,7 +13,6 @@ import { Hero } from '../../../../models/hero';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../monster-panel/monster-panel';
-import { MonsterToken } from '../../../controls/token/token';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Pill } from '../../../controls/pill/pill';
@@ -48,62 +48,62 @@ export const EncounterPanel = (props: Props) => {
 			<div className='encounter-groups'>
 				{
 					props.encounter.groups.filter(g => g.slots.length > 0).map((group, n) => (
-						<div key={group.id} className='encounter-group-info'>
+						<SelectablePanel key={group.id} /*className='encounter-group-info'*/>
 							{
 								props.encounter.groups.filter(g => g.slots.length > 0).length > 1 ?
 									<HeaderText>Group {(n + 1).toString()}</HeaderText>
 									:
 									<HeaderText>Monsters</HeaderText>
 							}
-							{
-								group.slots.map(slot => {
-									const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
-									const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
+							<Space direction='vertical'>
+								{
+									group.slots.map(slot => {
+										const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
+										if (!monster) {
+											return null;
+										}
 
-									if (!monster || !monsterGroup) {
-										return null;
-									}
+										const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options);
 
-									const name = MonsterLogic.getMonsterName(monster, monsterGroup);
-									const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options);
-
-									return (
-										<div key={slot.id} className='encounter-slot'>
-											<div className='encounter-slot-name'>
-												<MonsterToken monster={monster} monsterGroup={monsterGroup} />
-												<div className='ds-text'>{name}</div>
+										return (
+											<div key={slot.id} className='encounter-slot'>
+												<MonsterInfo monster={monster} />
+												{count > 1 ? <Pill>x{count}</Pill> : null}
 											</div>
-											{count > 1 ? <Pill>x{count}</Pill> : null}
-										</div>
-									);
-								})
-							}
-							{
-								group.slots.length === 0 ?
-									<Empty />
-									: null
-							}
-						</div>
+										);
+									})
+								}
+								{
+									group.slots.length === 0 ?
+										<Empty />
+										: null
+								}
+							</Space>
+						</SelectablePanel>
 					))
 				}
 				{
 					props.encounter.terrain.length > 0 ?
-						<div key='terrain' className='terrain-group-info'>
+						<SelectablePanel key='terrain' /*className='terrain-group-info'*/>
 							<HeaderText>Terrain</HeaderText>
-							{
-								props.encounter.terrain.map(slot => {
-									const terrain = SourcebookLogic.getTerrains(props.sourcebooks).find(t => t.id === slot.terrainID);
-									return (
-										<div key={slot.id} className='terrain-slot'>
-											<div className='terrain-slot-name'>
-												<div className='ds-text'>{terrain ? terrain.name : 'Unnamed Terrain'}</div>
+							<Space direction='vertical'>
+								{
+									props.encounter.terrain.map(slot => {
+										const terrain = SourcebookLogic.getTerrains(props.sourcebooks).find(t => t.id === slot.terrainID);
+										if (!terrain) {
+											return null;
+										}
+
+										return (
+											<div key={slot.id} className='terrain-slot'>
+												<TerrainInfo terrain={terrain} />
+												{slot.count > 1 ? <Pill>x{slot.count}</Pill> : null}
 											</div>
-											{slot.count > 1 ? <Pill>x{slot.count}</Pill> : null}
-										</div>
-									);
-								})
-							}
-						</div>
+										);
+									})
+								}
+							</Space>
+						</SelectablePanel>
 						: null
 				}
 			</div>

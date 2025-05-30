@@ -19605,7 +19605,7 @@ export class HeroData {
 												}
 											],
 											target: '1 creature',
-											cost: 0,
+											cost: 'signature',
 											repeatable: false,
 											minLevel: 1,
 											preEffect: '',

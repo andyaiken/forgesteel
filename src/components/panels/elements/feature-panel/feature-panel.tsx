@@ -1428,7 +1428,7 @@ export const FeaturePanel = (props: Props) => {
 		if (data.selected.length > 0) {
 			return (
 				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
-					{data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} />)}
+					{data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={PanelMode.Full} />)}
 				</Space>
 			);
 		}
@@ -1449,7 +1449,7 @@ export const FeaturePanel = (props: Props) => {
 					}
 				</div>
 				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
-					{data.options.map(o => <FeaturePanel key={o.feature.id} feature={o.feature} options={props.options} cost={showCosts ? o.value : undefined} />)}
+					{data.options.map(o => <FeaturePanel key={o.feature.id} feature={o.feature} options={props.options} cost={showCosts ? o.value : undefined} mode={PanelMode.Full} />)}
 				</Space>
 			</div>
 		);
@@ -1464,7 +1464,7 @@ export const FeaturePanel = (props: Props) => {
 						data.selectedIDs.map(id => {
 							const ability = abilities.find(a => a.id === id) as Ability;
 							return (
-								<AbilityPanel key={ability.id} ability={ability} />
+								<AbilityPanel key={ability.id} ability={ability} mode={PanelMode.Full} />
 							);
 						})
 					}

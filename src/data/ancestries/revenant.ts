@@ -96,6 +96,7 @@ You can have an active number of sigils equal to your level. You can remove a si
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
 									target: '1 creature with your sigil',
+									cost: 'signature',
 									powerRoll: FactoryLogic.createPowerRoll({
 										characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 										tier1: '3 + R, I, or P damage; slide 1',

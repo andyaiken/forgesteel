@@ -24,6 +24,7 @@ export class EncounterData {
 						state: {
 							staminaDamage: 0,
 							staminaTemp: 0,
+							recoveriesUsed: 0,
 							conditions: [],
 							reactionUsed: false,
 							hidden: false,
@@ -49,6 +50,7 @@ export class EncounterData {
 						state: {
 							staminaDamage: 0,
 							staminaTemp: 0,
+							recoveriesUsed: 0,
 							conditions: [],
 							reactionUsed: false,
 							hidden: false,
@@ -74,6 +76,7 @@ export class EncounterData {
 						state: {
 							staminaDamage: 0,
 							staminaTemp: 0,
+							recoveriesUsed: 0,
 							conditions: [],
 							reactionUsed: false,
 							hidden: false,
@@ -99,6 +102,7 @@ export class EncounterData {
 						state: {
 							staminaDamage: 0,
 							staminaTemp: 0,
+							recoveriesUsed: 0,
 							conditions: [],
 							reactionUsed: false,
 							hidden: false,
@@ -154,6 +158,7 @@ export class EncounterData {
 						state: {
 							staminaDamage: 0,
 							staminaTemp: 0,
+							recoveriesUsed: 0,
 							conditions: [],
 							reactionUsed: false,
 							hidden: false,

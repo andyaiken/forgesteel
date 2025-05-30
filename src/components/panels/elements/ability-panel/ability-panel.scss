@@ -37,6 +37,7 @@
 		font-size: 8px;
 		font-weight: 600;
 		text-transform: uppercase;
+		box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
 
 		&.action {
 			background-color: rgba(128, 0, 128, 0.5);
@@ -65,6 +66,12 @@
 		&.villain {
 			background-color: rgba(255, 165, 0, 0.5);
 			border-color: rgba(255, 165, 0, 0.5);
+			color: rgba(0, 0, 0, 0.88);
+		}
+
+		&.routine {
+			background-color: rgba(255, 255, 0, 0.5);
+			border-color: rgba(255, 255, 0, 0.5);
 			color: rgba(0, 0, 0, 0.88);
 		}
 	}

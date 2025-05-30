@@ -181,6 +181,7 @@ As a maneuver, you can recite the following oath. If you do, you succeed on savi
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 							target: 'All enemies',
+							cost: 'signature',
 							powerRoll: FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Presence ],
 								tier1: '2 damage',
@@ -201,6 +202,7 @@ As a maneuver, you can recite the following oath. If you do, you succeed on savi
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 							target: 'All enemies',
+							cost: 'signature',
 							powerRoll: FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Presence ],
 								tier1: '2 damage',

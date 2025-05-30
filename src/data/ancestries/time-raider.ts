@@ -79,6 +79,7 @@ export const timeRaider: Ancestry = {
 							name: 'Concussive Slam',
 							description: 'You slam an invisible force down upon the target.',
 							type: FactoryLogic.type.createAction(),
+							cost: 'signature',
 							keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: '1 creature or object',
@@ -102,6 +103,7 @@ export const timeRaider: Ancestry = {
 							keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: '1 creature or object',
+							cost: 'signature',
 							powerRoll: FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 								tier1: '2 + R, I, or P psychic damage; slide 1',

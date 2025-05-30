@@ -59,6 +59,7 @@ export const wodeElf: Ancestry = {
 							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: '1 creature',
+							cost: 'signature',
 							powerRoll: FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility ],
 								tier1: '2 + M or A damage; A < [weak] slowed (save ends)',

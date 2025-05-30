@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Flex, Popover, Segmented, Tag } from 'antd';
+import { Alert, Button, Flex, Popover, Segmented, Tag } from 'antd';
 import { EllipsisOutlined, HeartFilled } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterSlot } from '../../../models/encounter';
 import { HeroInfo, MonsterInfo, TerrainInfo } from '../../controls/token/token';
@@ -230,9 +230,6 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 					}
 					{
 						isMinionSlot ? getMinionCountMessage() : null
-					}
-					{
-						isMinionSlot ? <Divider /> : null
 					}
 					{
 						slot.monsters.map(monster => (

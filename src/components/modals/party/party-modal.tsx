@@ -125,6 +125,21 @@ export const PartyModal = (props: Props) => {
 								</tr>
 							</tbody>
 						</table>
+						<HeaderText>Complication</HeaderText>
+						<table>
+							<thead>
+								<tr>
+									<th>Complication</th>
+									{props.heroes.map(h => <th key={h.id}>{h.name}</th>)}
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td className='row-label'>Might</td>
+									{props.heroes.map(h => <td key={h.id} className='row-cell'>{h.complication ? h.complication.name : '(none)'}</td>)}
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				}
 				onClose={props.onClose}

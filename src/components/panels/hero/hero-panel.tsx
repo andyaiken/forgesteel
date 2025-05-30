@@ -694,20 +694,14 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		if (props.mode !== PanelMode.Full) {
-			const subclasses = props.hero.class?.subclasses.filter(sc => sc.selected);
-			const domains = HeroLogic.getDomains(props.hero);
-			const kits = HeroLogic.getKits(props.hero);
-
 			return (
 				<div className='hero-panel compact'>
 					<HeaderText level={1} tags={props.hero.folder ? [ props.hero.folder ] : []}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
-					<Field label='Ancestry' value={props.hero.ancestry?.name || 'No ancestry'} />
-					<Field label='Career' value={props.hero.career?.name || 'No career'} />
-					<Field label='Class' value={props.hero.class?.name || 'No class'} />
-					{subclasses ? <Field label={props.hero.class?.subclassName || 'Subclass'} value={subclasses.map(sc => sc.name).join(', ')} /> : null}
-					{props.hero.class ? <Field label='Level' value={props.hero.class.level} /> : null}
-					{domains.length > 0 ? <Field label='Domain' value={domains.map(d => d.name).join(', ')} /> : null}
-					{kits.length > 0 ? <Field label='Kit' value={kits.map(k => k.name).join(', ')} /> : null}
+					<Flex align='flex-start' justify='space-evenly'>
+						<Field orientation='vertical' label='Ancestry' value={props.hero.ancestry?.name || 'No ancestry'} />
+						<Field orientation='vertical' label='Career' value={props.hero.career?.name || 'No career'} />
+						<Field orientation='vertical' label='Class' value={props.hero.class ? `${props.hero.class.name} (${props.hero.class.level})` : 'No class'} />
+					</Flex>
 				</div>
 			);
 		}

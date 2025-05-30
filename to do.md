@@ -37,8 +37,6 @@
 
 * Encounter
   * Ability to set 'used reaction' flag on heroes / monsters / minions
-  * Retainers / mounts / companions:
-    * Retainers should have 6 recoveries
   * Monsters:
     * Ability to duplicate / delete monsters in a slot
   * Terrain:

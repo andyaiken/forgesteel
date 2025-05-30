@@ -362,6 +362,7 @@ export class SourcebookLogic {
 					monster.state = {
 						staminaDamage: 0,
 						staminaTemp: 0,
+						recoveriesUsed: 0,
 						conditions: [],
 						reactionUsed: false,
 						hidden: false,

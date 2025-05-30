@@ -1230,7 +1230,7 @@ const ClassSection = (props: ClassSectionProps) => {
 					props.hero.class ?
 						<div className='hero-edit-content-column selected' id='class-selected'>
 							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectClass(null) }}>
-								<ClassPanel heroClass={props.hero.class} options={props.options} mode={PanelMode.Full} />
+								<ClassPanel heroClass={props.hero.class} hero={props.hero} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
 						: null

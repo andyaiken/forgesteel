@@ -14,6 +14,7 @@ export interface MonsterRole {
 export interface MonsterState {
 	staminaDamage: number;
 	staminaTemp: number;
+	recoveriesUsed: number;
 	conditions: Condition[];
 	reactionUsed: boolean;
 	hidden: boolean;

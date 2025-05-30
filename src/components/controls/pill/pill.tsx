@@ -13,7 +13,7 @@ export const Pill = (props: Props) => (
 );
 
 interface ResourcePillProps {
-	value: number;
+	value: ReactNode;
 	repeatable?: boolean;
 	units?: string;
 }

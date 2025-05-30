@@ -342,15 +342,6 @@ export const AbilityPanel = (props: Props) => {
 										/>
 										: null
 								}
-								{
-									props.ability.keywords.includes(AbilityKeyword.Routine) ?
-										<Alert
-											type='info'
-											showIcon={true}
-											message='This ability is a Routine.'
-										/>
-										: null
-								}
 							</div>
 							: null
 					}
@@ -390,6 +381,9 @@ const AbilityInfo = (props: AbilityInfoProps) => {
 		}
 		if (props.ability.type.free) {
 			monogram = 'free';
+		}
+		if (props.ability.keywords.includes(AbilityKeyword.Routine)) {
+			monogram = 'routine';
 		}
 
 		return (

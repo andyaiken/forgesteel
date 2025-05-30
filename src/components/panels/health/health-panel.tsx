@@ -95,9 +95,11 @@ export const HeroHealthPanel = (props: HeroProps) => {
 	};
 
 	const spendRecovery = () => {
+		const recoveryValue = HeroLogic.getRecoveryValue(hero);
+
 		const copy = Utils.copy(hero);
 		copy.state.recoveriesUsed += 1;
-		copy.state.staminaDamage = Math.max(copy.state.staminaDamage - HeroLogic.getRecoveryValue(hero), 0);
+		copy.state.staminaDamage = Math.max(copy.state.staminaDamage - recoveryValue, 0);
 		setHero(copy);
 		if (props.onChange) {
 			props.onChange(copy);
@@ -260,6 +262,30 @@ export const MonsterHealthPanel = (props: MonsterProps) => {
 		}
 	};
 
+	const setRecoveriesUsed = (value: number) => {
+		const copy = Utils.copy(monster);
+		copy.state.recoveriesUsed = value;
+		setMonster(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
+	};
+
+	const spendRecovery = () => {
+		const recoveryValue = Math.floor(MonsterLogic.getStamina(monster) / 3);
+
+		const copy = Utils.copy(monster);
+		if (copy.state.recoveriesUsed === undefined) {
+			copy.state.recoveriesUsed = 0;
+		}
+		copy.state.recoveriesUsed += 1;
+		copy.state.staminaDamage = Math.max(copy.state.staminaDamage - recoveryValue, 0);
+		setMonster(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
+	};
+
 	const setHidden = (value: boolean) => {
 		const copy = Utils.copy(monster);
 		copy.state.hidden = value;
@@ -333,6 +359,17 @@ export const MonsterHealthPanel = (props: MonsterProps) => {
 							staminaTemp: monster.state.staminaTemp,
 							setValue: setStaminaTemp,
 							addTemp: addTemp
+						}
+						: undefined
+				}
+				recoveries={
+					monster.role.organization === MonsterOrganizationType.Retainer ?
+						{
+							recoveriesMax: 6,
+							recoveriesUsed: monster.state.recoveriesUsed || 0,
+							recoveryValue: Math.floor(MonsterLogic.getStamina(monster) / 3),
+							setValue: setRecoveriesUsed,
+							spendRecovery: spendRecovery
 						}
 						: undefined
 				}

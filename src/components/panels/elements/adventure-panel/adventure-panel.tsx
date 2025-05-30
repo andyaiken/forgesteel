@@ -1,5 +1,5 @@
-import { Button, Flex, Input, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlayCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Drawer, Flex, Input, Select, Space, Tabs } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, EditOutlined, InfoCircleOutlined, PlayCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { Plot, PlotContent } from '../../../../models/plot';
 import { Adventure } from '../../../../models/adventure';
@@ -7,6 +7,7 @@ import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Element } from '../../../../models/element';
 import { Empty } from '../../../controls/empty/empty';
+import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../encounter-panel/encounter-panel';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
@@ -15,8 +16,11 @@ import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Markdown } from '../../../controls/markdown/markdown';
+import { Modal } from '../../../modals/modal/modal';
+import { Montage } from '../../../../models/montage';
 import { MontagePanel } from '../montage-panel/montage-panel';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
+import { Negotiation } from '../../../../models/negotiation';
 import { NegotiationPanel } from '../negotiation-panel/negotiation-panel';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
@@ -50,6 +54,9 @@ export const AdventurePanel = (props: Props) => {
 	const navigation = useNavigation();
 	const [ adventure, setAdventure ] = useState<Adventure>(Utils.copy(props.adventure));
 	const [ selectedPlot, setSelectedPlot ] = useState<Plot | null>(null);
+	const [ selectedEncounter, setSelectedEncounter ] = useState<Encounter | null>(null);
+	const [ selectedMontage, setSelectedMontage ] = useState<Montage | null>(null);
+	const [ selectedNegotiation, setSelectedNegotiation ] = useState<Negotiation | null>(null);
 
 	const addPlotPoint = (previousID?: string) => {
 		const copy = Utils.copy(adventure);
@@ -172,6 +179,7 @@ export const AdventurePanel = (props: Props) => {
 				if (encounter) {
 					return (
 						<Flex vertical={true} gap={5}>
+							<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedEncounter(encounter)} />
 							{props.onStart ? <Button title='Run' icon={<PlayCircleOutlined />} onClick={() => props.onStart!('encounter', encounter, '')} /> : null}
 							<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('encounter', encounter.id)} />
 						</Flex>
@@ -184,6 +192,7 @@ export const AdventurePanel = (props: Props) => {
 				if (montage) {
 					return (
 						<Flex vertical={true} gap={5}>
+							<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedMontage(montage)} />
 							{props.onStart ? <Button title='Run' icon={<PlayCircleOutlined />} onClick={() => props.onStart!('montage', montage, '')} /> : null}
 							<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('montage', montage.id)} />
 						</Flex>
@@ -196,6 +205,7 @@ export const AdventurePanel = (props: Props) => {
 				if (negotiation) {
 					return (
 						<Flex vertical={true} gap={5}>
+							<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedNegotiation(negotiation)} />
 							{props.onStart ? <Button title='Run' icon={<PlayCircleOutlined />} onClick={() => props.onStart!('negotiation', negotiation, '')} /> : null}
 							<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('negotiation', negotiation.id)} />
 						</Flex>
@@ -587,6 +597,48 @@ export const AdventurePanel = (props: Props) => {
 							: null
 					}
 				</div>
+				<Drawer open={!!selectedEncounter} onClose={() => setSelectedEncounter(null)} closeIcon={null} width='500px'>
+					<Modal
+						content={
+							selectedEncounter ?
+								<EncounterPanel
+									encounter={selectedEncounter}
+									sourcebooks={props.sourcebooks}
+									heroes={props.heroes}
+									options={props.options}
+									mode={PanelMode.Full}
+								/>
+								: null
+						}
+						onClose={() => setSelectedEncounter(null)}
+					/>
+				</Drawer>
+				<Drawer open={!!selectedMontage} onClose={() => setSelectedMontage(null)} closeIcon={null} width='500px'>
+					<Modal
+						content={
+							selectedMontage ?
+								<MontagePanel
+									montage={selectedMontage}
+									mode={PanelMode.Full}
+								/>
+								: null
+						}
+						onClose={() => setSelectedMontage(null)}
+					/>
+				</Drawer>
+				<Drawer open={!!selectedNegotiation} onClose={() => setSelectedNegotiation(null)} closeIcon={null} width='500px'>
+					<Modal
+						content={
+							selectedNegotiation ?
+								<NegotiationPanel
+									negotiation={selectedNegotiation}
+									mode={PanelMode.Full}
+								/>
+								: null
+						}
+						onClose={() => setSelectedNegotiation(null)}
+					/>
+				</Drawer>
 			</ErrorBoundary>
 		);
 	} catch (ex) {

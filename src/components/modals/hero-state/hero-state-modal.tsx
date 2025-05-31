@@ -547,9 +547,10 @@ export const HeroStateModal = (props: Props) => {
 		};
 
 		return (
-			<div style={{ height: '100%' }}>
+			<div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+				<HeaderText>Notes</HeaderText>
 				<MultiLine
-					style={{ height: '100%' }}
+					style={{ flex: '1 1 0' }}
 					label='Notes'
 					value={hero.state.notes}
 					showMarkdownPrompt={false}

@@ -1151,6 +1151,7 @@ export const Main = (props: Props) => {
 			<PartyModal
 				heroes={heroes.filter(h => h.folder === folder)}
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				options={options}
 				onClose={() => setDrawer(null)}
 			/>
 		);

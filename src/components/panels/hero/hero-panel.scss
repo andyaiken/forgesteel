@@ -187,23 +187,43 @@
 	.hero-panel {
 		.hero-main-section {
 			.hero-center-column {
+
 				.stats-box {
 					border-color: rgb(200, 200, 200);
-					background-color: rgb(0, 0, 0);
-	
-					.stats {
-						.stat {
+					background-color: rgb(0, 0, 0) !important;
+
+					&.clickable {
+						&:hover {
+							background-color: rgb(180, 220, 255) !important;
+
 							.ant-statistic {
 								.ant-statistic-title,
 								.ant-statistic-content {
 									color: rgba(0, 0, 0, 0.88);
 								}
 							}
+
+							.stats-box-caption {
+								color: rgba(0, 0, 0, 0.88);
+							}
 						}
 					}
+	
+					.stats {
+						.stat {
+							&.clickable {
+								&:hover {
+									background-color: rgb(180, 220, 255);
 
-					.stats-box-caption {
-						color: rgba(0, 0, 0, 0.88);
+									.ant-statistic {
+										.ant-statistic-title,
+										.ant-statistic-content {
+											color: rgba(0, 0, 0, 0.88);
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			}

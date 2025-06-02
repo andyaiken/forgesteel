@@ -2,7 +2,6 @@ import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { Characteristic } from '../../../../enums/characteristic';
@@ -71,7 +70,7 @@ export const AbilityEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setKeywords = (value: AbilityKeyword[]) => {
+	const setKeywords = (value: string[]) => {
 		const copy = Utils.copy(ability);
 		copy.keywords = value;
 		setAbility(copy);
@@ -456,7 +455,7 @@ export const AbilityEditPanel = (props: Props) => {
 										<Select
 											style={{ width: '100%' }}
 											placeholder='Keywords'
-											mode='multiple'
+											mode='tags'
 											allowClear={true}
 											options={AbilityLogic.getKeywords().map(option => ({ value: option }))}
 											optionRender={option => <div className='ds-text'>{option.data.value}</div>}

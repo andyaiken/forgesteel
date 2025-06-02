@@ -1,5 +1,4 @@
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
-import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Element } from './element';
 import { PowerRoll } from './power-roll';
@@ -23,7 +22,7 @@ export interface AbilityDistance {
 
 export interface Ability extends Element {
 	type: AbilityType;
-	keywords: AbilityKeyword[];
+	keywords: string[];
 	distance: AbilityDistance[];
 	target: string; // Creature, Object, Enemy, Ally, Self, All
 	cost: number | 'signature';

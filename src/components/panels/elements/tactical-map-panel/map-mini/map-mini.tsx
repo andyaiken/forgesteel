@@ -1,15 +1,13 @@
 import { HeroHealthPanel, MonsterHealthPanel } from '../../../health/health-panel';
-import { HeroToken, MonsterToken } from '../../../../controls/token/token';
+import { HeroInfo, HeroToken, MonsterInfo, MonsterToken } from '../../../../controls/token/token';
 import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
 import { FactoryLogic } from '../../../../../logic/factory-logic';
-import { HeaderText } from '../../../../controls/header-text/header-text';
 import { Hero } from '../../../../../models/hero';
 import { HeroLogic } from '../../../../../logic/hero-logic';
 import { MapItemStyle } from '../tactical-map-panel';
 import { MapMini } from '../../../../../models/tactical-map';
 import { Markdown } from '../../../../controls/markdown/markdown';
 import { Monster } from '../../../../../models/monster';
-import { MonsterLabel } from '../../../monster-label/monster-label';
 import { Popover } from 'antd';
 import { TacticalMapDisplayType } from '../../../../../enums/tactical-map-display-type';
 
@@ -69,13 +67,11 @@ export const MapMiniPanel = (props: Props) => {
 		const content = [];
 
 		if (props.mini.content && props.content) {
-			content.push(
-				<HeaderText key='name'>
-					{props.content.name}
-				</HeaderText>
-			);
-
 			if (props.mini.content.type === 'hero') {
+				content.push(
+					<HeroInfo key='info' hero={props.content as Hero} />
+				);
+
 				content.push(
 					<HeroHealthPanel
 						key='hero-health'
@@ -87,11 +83,9 @@ export const MapMiniPanel = (props: Props) => {
 
 			if (props.mini.content.type === 'monster') {
 				content.push(
-					<MonsterLabel
-						key='monster-label'
-						monster={props.content as Monster}
-					/>
+					<MonsterInfo key='info' monster={props.content as Monster} />
 				);
+
 				content.push(
 					<MonsterHealthPanel
 						key='monster-health'

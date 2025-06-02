@@ -177,17 +177,14 @@ export const HeroStateModal = (props: Props) => {
 					hero.state.surges > 0 ?
 						<Alert
 							type='info'
-							showIcon={true}
-							message={`Spend 1 - 3 surges to add ${hero.class ? Math.max(...hero.class.characteristics.map(ch => ch.value)) : 0} damage per surge to one target.`}
-						/>
-						: null
-				}
-				{
-					hero.state.surges >= 2 ?
-						<Alert
-							type='info'
-							showIcon={true}
-							message='Spend 2 surges to increase an ability’s potency by 1 for a single target.'
+							message={
+								<>
+									<div>
+										Spend <b>1 - 3 surges</b> to add {hero.class ? Math.max(...hero.class.characteristics.map(ch => ch.value)) : 0} damage per surge to one target.
+									</div>
+									{hero.state.surges >= 2 ? <div>Spend <b>2 surges</b> to increase an ability’s potency by 1 for a single target.</div> : null}
+								</>
+							}
 						/>
 						: null
 				}
@@ -198,56 +195,6 @@ export const HeroStateModal = (props: Props) => {
 							showIcon={true}
 							message='You have enough XP to level up.'
 							action={props.onLevelUp ? <Button type='text' title='Level Up' icon={<ArrowUpOutlined />} onClick={props.onLevelUp} /> : null}
-						/>
-						: null
-				}
-				<Divider />
-				<NumberSpin
-					label='Hero Tokens'
-					value={hero.state.heroTokens}
-					min={0}
-					onChange={setHeroTokens}
-				/>
-				<Alert
-					type='info'
-					showIcon={true}
-					message='Hero tokens are a resource shared by your party; they typically refresh at the beginning of each game session.'
-				/>
-				{
-					hero.state.heroTokens > 0 ?
-						<Alert
-							type='info'
-							showIcon={true}
-							message={'Spend a hero token to gain two surges.'}
-							action={<Button onClick={gainSurges}>+2 Surges</Button>}
-						/>
-						: null
-				}
-				{
-					hero.state.heroTokens > 0 ?
-						<Alert
-							type='info'
-							showIcon={true}
-							message={'Spend a hero token when you: (a) fail a saving throw to succeed on it instead; (b) fail a test or succeed on a test with a consequence to turn the failure into a success and to lose any consequence suffered.'}
-						/>
-						: null
-				}
-				{
-					hero.state.heroTokens >= 2 ?
-						<Alert
-							type='info'
-							showIcon={true}
-							message={'Spend 2 hero tokens on your turn or whenever you take damage (no action required) to regain Stamina equal to your Recovery value without spending a Recovery.'}
-							action={
-								<div style={{ margin: '10px 0' }}>
-									<Field
-										orientation='vertical'
-										label='Stamina'
-										value={`${HeroLogic.getStamina(hero) - hero.state.staminaDamage} / ${HeroLogic.getStamina(hero)}`}
-									/>
-									<Button disabled={hero.state.staminaDamage === 0} onClick={gainStamina}>+{HeroLogic.getRecoveryValue(hero)} Stamina</Button>
-								</div>
-							}
 						/>
 						: null
 				}
@@ -280,6 +227,60 @@ export const HeroStateModal = (props: Props) => {
 						</div>
 					</Button>
 				</Flex>
+				<Divider />
+				<NumberSpin
+					label='Hero Tokens'
+					value={hero.state.heroTokens}
+					min={0}
+					onChange={setHeroTokens}
+				/>
+				<Alert
+					type='info'
+					message={
+						<Space direction='vertical'>
+							<div>
+								Hero tokens are a resource shared by your party; they typically refresh at the beginning of each game session.
+							</div>
+							{
+								hero.state.heroTokens > 0 ?
+									<Flex align='center' justify='space-between' gap={10}>
+										<div>Spend a hero token to gain two surges.</div>
+										<Button onClick={gainSurges}>+2 Surges</Button>
+									</Flex>
+									: null
+							}
+							{
+								hero.state.heroTokens > 0 ?
+									<div>
+										Spend a hero token when you fail a saving throw to succeed on it instead.
+									</div>
+									: null
+							}
+							{
+								hero.state.heroTokens > 0 ?
+									<div>
+										Spend a hero token when you fail a test (or succeed on a test with a consequence) to turn the failure into a success and to lose any consequence suffered.
+									</div>
+									: null
+							}
+							{
+								hero.state.heroTokens >= 2 ?
+									<Flex align='center' justify='space-between' gap={10}>
+										<div>Spend 2 hero tokens on your turn or whenever you take damage (no action required) to regain Stamina equal to your Recovery value without spending a Recovery.</div>
+										<div>
+											<Field
+												orientation='vertical'
+												label='Stamina'
+												value={`${HeroLogic.getStamina(hero) - hero.state.staminaDamage} / ${HeroLogic.getStamina(hero)}`}
+											/>
+											<Button disabled={hero.state.staminaDamage === 0} onClick={gainStamina}>+{HeroLogic.getRecoveryValue(hero)} Stamina</Button>
+										</div>
+									</Flex>
+									: null
+							}
+						</Space>
+					}
+				/>
 			</Space>
 		);
 	};

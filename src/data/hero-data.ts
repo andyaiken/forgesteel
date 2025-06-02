@@ -4783,13 +4783,13 @@ export class HeroData {
 						{
 							id: 'censor-1-4',
 							name: 'Judgment',
-							description: 'You utter a pray that outlines your foe in holy energy.',
+							description: 'You utter a prayer that outlines your foe in holy energy.',
 							type: 'Ability',
 							data: {
 								ability: {
 									id: 'censor-1-4',
 									name: 'Judgment',
-									description: 'You utter a pray that outlines your foe in holy energy.',
+									description: 'You utter a prayer that outlines your foe in holy energy.',
 									type: {
 										usage: 'Maneuver',
 										free: false,

@@ -1,4 +1,4 @@
-import { BarsOutlined, CloseOutlined, DownloadOutlined, DragOutlined, FileTextOutlined, IdcardOutlined, LinkOutlined, RotateRightOutlined } from '@ant-design/icons';
+import { BarsOutlined, CloseOutlined, DownloadOutlined, DragOutlined, FileTextOutlined, InfoCircleOutlined, LinkOutlined, RotateRightOutlined } from '@ant-design/icons';
 import { Button, ColorPicker, Divider, Drawer, Input, Popover, Segmented, Select, Space, Upload } from 'antd';
 import { HeroToken, MonsterToken } from '../../../controls/token/token';
 import { MapBoundaries, MapItem, MapMini, MapPosition, MapTile, MapWall, MapZone, TacticalMap } from '../../../../models/tactical-map';
@@ -1048,7 +1048,7 @@ export const TacticalMapPanel = (props: Props) => {
 									<Field label='Size' value={item.dimensions.width} />
 								</NumberSpin>
 								<Button onClick={showMiniInfo}>
-									<IdcardOutlined />
+									<InfoCircleOutlined />
  								</Button>
 							</>
 							: null

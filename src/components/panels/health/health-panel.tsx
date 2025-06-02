@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Drawer, Flex, InputNumber, Popover, Progress, Segmented, Space } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, InputNumber, Popover, Progress, Segmented, Space, Tag } from 'antd';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import { Encounter, EncounterSlot } from '../../../models/encounter';
@@ -761,44 +761,44 @@ const HealthPanel = (props: Props) => {
 	};
 
 	if (props.mode === PanelMode.Compact) {
+		const tags: string[] = [];
+		if (props.defeated && props.defeated.value) {
+			tags.push('Defeated');
+		} else {
+			if (props.stamina && ![ 'healthy', 'injured' ].includes(props.stamina.state)) {
+				tags.push(Format.capitalize(props.stamina.state));
+			}
+			if (props.hidden && props.hidden.value) {
+				tags.push('Hidden');
+			}
+			if (props.captain && props.captain.captainID) {
+				const captain = props.captain.candidates.find(m => m.id === props.captain!.captainID);
+				if (captain) {
+					tags.push(captain.name);
+				}
+			}
+			props.conditions.current.forEach(c => {
+				tags.push(c.type === ConditionType.Quick ? c.text : c.type);
+			});
+		}
+
 		return (
 			<div className='health-panel compact'>
 				{
 					props.stamina ?
 						<Field
-							orientation='vertical'
 							label='Stamina'
 							value={props.stamina.staminaDamage ? `${props.stamina!.staminaMax - props.stamina!.staminaDamage} / ${props.stamina!.staminaMax}` : props.stamina!.staminaMax}
 						/>
 						: null
 				}
-				<div>
-					{
-						props.stamina && ![ 'healthy', 'injured' ].includes(props.stamina.state) ?
-							<div className='ds-text'>{Format.capitalize(props.stamina.state)}</div>
-							: null
-					}
-					{
-						props.hidden && props.hidden.value ?
-							<div className='ds-text'>Hidden</div>
-							: null
-					}
-					{
-						props.defeated && props.defeated.value ?
-							<div className='ds-text'>Defeated</div>
-							: null
-					}
-					{
-						props.captain && props.captain.captainID ?
-							<div className='ds-text'>{props.captain.candidates.find(m => m.id === props.captain!.captainID)?.name}</div>
-							: null
-					}
-					{
-						<div className='ds-text'>
-							{props.conditions.current.map(c => c.type).join(', ') || 'Not affected by any conditions'}
+				{
+					tags.length > 0 ?
+						<div>
+							{tags.map((tag, n) => <Tag key={n}>{tag}</Tag>)}
 						</div>
-					}
-				</div>
+						: null
+				}
 			</div>
 		);
 	}

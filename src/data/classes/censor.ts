@@ -56,7 +56,7 @@ Additionally, the first time each round that a creature judged by you (see Judgm
 					ability: FactoryLogic.createAbility({
 						id: 'censor-1-4',
 						name: 'Judgment',
-						description: 'You utter a pray that outlines your foe in holy energy.',
+						description: 'You utter a prayer that outlines your foe in holy energy.',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],

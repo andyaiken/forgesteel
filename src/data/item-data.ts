@@ -1389,7 +1389,17 @@ export class LeveledImplementData {
 					FactoryLogic.feature.create({
 						id: 'item-foesense-lenses-1',
 						name: '',
-						description: 'While you wield this implement, your damage-dealing supernatural abilities gain a +1 rolled damage bonus. Additionally, whenever you deal damage to a creature with a supernatural ability, you can use that creature\'s senses until the end of your next turn, allowing you to experience all they observe and use your abilities as if you were in their space. You also benefit from your own senses at the same time'
+						description: 'While you wield this implement, whenever you deal damage to a creature with a supernatural ability, you can use that creature\'s senses until the end of your next turn, allowing you to experience all they observe and use your abilities as if you were in their space. You also benefit from your own senses at the same time'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-foesense-lenses-1a',
+						keywords: [ AbilityKeyword.Magic ],
+						modifier: 1
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-foesense-lenses-1b',
+						keywords: [ AbilityKeyword.Psionic ],
+						modifier: 1
 					})
 				]
 			},
@@ -1399,7 +1409,17 @@ export class LeveledImplementData {
 					FactoryLogic.feature.create({
 						id: 'item-foesense-lenses-5',
 						name: '',
-						description: 'The implement\'s damage bonus increases to +2. Additionally, whenever you deal damage to a creature with a supernatural ability, you can also cause intense pain in one creature whose senses you are using. That creature takes a bane on power rolls until the start of your next turn.'
+						description: 'Whenever you deal damage to a creature with a supernatural ability, you can also cause intense pain in one creature whose senses you are using. That creature takes a bane on power rolls until the start of your next turn.'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-foesense-lenses-5a',
+						keywords: [ AbilityKeyword.Magic ],
+						modifier: 1
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-foesense-lenses-5b',
+						keywords: [ AbilityKeyword.Psionic ],
+						modifier: 1
 					})
 				]
 			},
@@ -1409,7 +1429,17 @@ export class LeveledImplementData {
 					FactoryLogic.feature.create({
 						id: 'item-foesense-lenses-9',
 						name: '',
-						description: 'The implement\'s damage bonus increases to +3. Additionally, any creature you have damaged with an ability using this implement in the last minute is dazed while you are using their senses.'
+						description: 'Any creature you have damaged with an ability using this implement in the last minute is dazed while you are using their senses.'
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-foesense-lenses-9a',
+						keywords: [ AbilityKeyword.Magic ],
+						modifier: 1
+					}),
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-foesense-lenses-9b',
+						keywords: [ AbilityKeyword.Psionic ],
+						modifier: 1
 					})
 				]
 			}

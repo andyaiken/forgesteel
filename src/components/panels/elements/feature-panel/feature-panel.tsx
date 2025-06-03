@@ -193,8 +193,8 @@ export const FeaturePanel = (props: Props) => {
 					style={{ width: '100%' }}
 					status={!data.selected ? 'warning' : ''}
 					allowClear={true}
-					placeholder='Select an ability from an ancestry'
-					options={sortedFeatures.map(a => ({ label: a.name, value: a.id, desc: a.description, disabled: currentFeatureIDs.includes(a.id) }))}
+					placeholder='Select a feature from an ancestry'
+					options={sortedFeatures.map(f => ({ label: f.name, value: f.id, desc: f.description || f.type, disabled: currentFeatureIDs.includes(f.id) }))}
 					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
 					showSearch={true}
 					filterOption={(input, option) => {
@@ -276,7 +276,7 @@ export const FeaturePanel = (props: Props) => {
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder={data.count === 1 ? 'Select an option' : 'Select options'}
-					options={sortedOptions.map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description, disabled: unavailableIDs.includes(o.feature.id), cost: o.value }))}
+					options={sortedOptions.map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description || o.feature.type, disabled: unavailableIDs.includes(o.feature.id), cost: o.value }))}
 					optionRender={option => (
 						<Field
 							disabled={option.data.disabled}
@@ -1159,8 +1159,8 @@ export const FeaturePanel = (props: Props) => {
 							mode={data.count === 1 ? undefined : 'multiple'}
 							maxCount={data.count === 1 ? undefined : data.count}
 							allowClear={true}
-							placeholder={data.count === 1 ? 'Select a title' : 'Select titles'}
-							options={sortedFeatures.map(a => ({ label: a.name, value: a.id, desc: a.description, disabled: currentTaggedFeatureIDs.includes(a.id) }))}
+							placeholder={data.count === 1 ? 'Select a feature' : 'Select features'}
+							options={sortedFeatures.map(f => ({ label: f.name, value: f.id, desc: f.description || f.type, disabled: currentTaggedFeatureIDs.includes(f.id) }))}
 							optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
 							showSearch={true}
 							filterOption={(input, option) => {
@@ -1649,7 +1649,7 @@ export const FeaturePanel = (props: Props) => {
 		return (
 			<div>
 				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
-					{data.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} />)}
+					{data.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={props.mode} />)}
 				</Space>
 			</div>
 		);

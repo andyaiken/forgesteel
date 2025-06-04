@@ -150,7 +150,7 @@ Choose one of the following effects:
 								name: 'Enchantment of Destruction',
 								description: 'You harness the destructive power of flame inside your mind, allowing you to focus your magic on destroying your enemies.',
 								keywords: [ AbilityKeyword.Magic ],
-								modifier: 1
+								value: 1
 							}),
 							value: 1
 						},
@@ -160,7 +160,7 @@ Choose one of the following effects:
 								name: 'Enchantment of Distance',
 								description: 'You reach into the mysteries of the void and mix that element with all of your abilities.',
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-								modifier: 2
+								value: 2
 							}),
 							value: 1
 						},
@@ -840,7 +840,7 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 							id: 'elementalist-sub-2-1-1',
 							name: 'Acolyte of Fire',
 							keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic ],
-							modifier: 1
+							value: 1
 						}),
 						FactoryLogic.feature.createAbility({
 							ability: FactoryLogic.createAbility({
@@ -1010,7 +1010,7 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 							id: 'elementalist-sub-4-1-1',
 							name: 'Acolyte of the Void',
 							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
-							modifier: 2
+							value: 2
 						}),
 						FactoryLogic.feature.create({
 							id: 'elementalist-sub-4-1-2',

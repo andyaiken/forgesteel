@@ -6,6 +6,7 @@ import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Field } from '../../controls/field/field';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
+import { Markdown } from '../../controls/markdown/markdown';
 import { PowerRoll } from '../../../models/power-roll';
 
 import './power-roll-panel.scss';
@@ -133,7 +134,7 @@ export const PowerRollPanel = (props: Props) => {
 	};
 
 	const getTier = (tier: number, value: string) => {
-		if (props.autoCalc && props.ability && props.hero) {
+		if (props.autoCalc && props.ability) {
 			return AbilityLogic.getTierEffect(value, tier, props.ability, props.hero);
 		}
 
@@ -150,15 +151,15 @@ export const PowerRollPanel = (props: Props) => {
 					{header ? <div className='power-roll-row power-roll-header'>{header}</div> : null}
 					<div className='power-roll-row'>
 						<div className='tier'>11 -</div>
-						<div className='effect'>{getTier(1, props.powerRoll.tier1)}</div>
+						<div className='effect'><Markdown text={getTier(1, props.powerRoll.tier1)} /></div>
 					</div>
 					<div className='power-roll-row'>
 						<div className='tier'>12 - 16</div>
-						<div className='effect'>{getTier(2, props.powerRoll.tier2)}</div>
+						<div className='effect'><Markdown text={getTier(2, props.powerRoll.tier2)} /></div>
 					</div>
 					<div className='power-roll-row'>
 						<div className='tier'>17 +</div>
-						<div className='effect'>{getTier(3, props.powerRoll.tier3)}</div>
+						<div className='effect'><Markdown text={getTier(3, props.powerRoll.tier3)} /></div>
 					</div>
 					{footer ? <div className='power-roll-row power-roll-footer'>{footer}</div> : null}
 				</div>

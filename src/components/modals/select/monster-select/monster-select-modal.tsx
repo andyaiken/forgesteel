@@ -1,4 +1,4 @@
-import { Input, Space } from 'antd';
+import { Input, Segmented, Space } from 'antd';
 import { Collections } from '../../../../utils/collections';
 import { Empty } from '../../../controls/empty/empty';
 import { Modal } from '../../modal/modal';
@@ -28,13 +28,14 @@ interface Props {
 
 export const MonsterSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
+	const [ type, setType ] = useState<'companion' | 'mount' | 'retainer'>(props.type);
 
 	try {
 		const monsters = SourcebookLogic
 			.getMonsterGroups(props.sourcebooks)
 			.flatMap(g => g.monsters)
 			.filter(m => {
-				switch (props.type) {
+				switch (type) {
 					case 'mount':
 						return m.role.type === MonsterRoleType.Mount;
 					case 'retainer':
@@ -66,6 +67,16 @@ export const MonsterSelectModal = (props: Props) => {
 				content={
 					<div className='monster-select-modal'>
 						<Space direction='vertical' style={{ width: '100%' }}>
+							<Segmented
+								block={true}
+								options={[
+									{ value: 'companion', label: 'Monster' },
+									{ value: 'mount', label: 'Mount' },
+									{ value: 'retainer', label: 'Retainer' }
+								]}
+								value={type}
+								onChange={value => setType(value as 'companion' | 'mount' | 'retainer')}
+							/>
 							{
 								sortedMonsters.map(m => (
 									<SelectablePanel

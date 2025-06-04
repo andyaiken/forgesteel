@@ -118,7 +118,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 								id: 'talent-1-5b',
 								name: 'Distance Augmentation',
 								keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
-								modifier: 2
+								value: 2
 							}),
 							value: 1
 						},
@@ -146,7 +146,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 								id: 'talent-1-5d',
 								name: 'Force Augmentation',
 								keywords: [ AbilityKeyword.Psionic ],
-								modifier: 1
+								value: 1
 							}),
 							value: 1
 						},

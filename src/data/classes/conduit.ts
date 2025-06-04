@@ -162,7 +162,7 @@ For each piety spent, you can choose one of the following enhancements:
 								name: 'Prayer of Destruction',
 								description: 'Your god infuses wrath within your being.',
 								keywords: [ AbilityKeyword.Magic ],
-								modifier: 1
+								value: 1
 							}),
 							value: 1
 						},
@@ -172,7 +172,7 @@ For each piety spent, you can choose one of the following enhancements:
 								name: 'Prayer of Distance',
 								description: 'Your god blesses you with the ability to stretch your divine magic further.',
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-								modifier: 2
+								value: 2
 							}),
 							value: 1
 						},

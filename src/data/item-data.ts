@@ -1394,12 +1394,12 @@ export class LeveledImplementData {
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-foesense-lenses-1a',
 						keywords: [ AbilityKeyword.Magic ],
-						modifier: 1
+						value: 1
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-foesense-lenses-1b',
 						keywords: [ AbilityKeyword.Psionic ],
-						modifier: 1
+						value: 1
 					})
 				]
 			},
@@ -1414,12 +1414,12 @@ export class LeveledImplementData {
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-foesense-lenses-5a',
 						keywords: [ AbilityKeyword.Magic ],
-						modifier: 1
+						value: 1
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-foesense-lenses-5b',
 						keywords: [ AbilityKeyword.Psionic ],
-						modifier: 1
+						value: 1
 					})
 				]
 			},
@@ -1434,12 +1434,12 @@ export class LeveledImplementData {
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-foesense-lenses-9a',
 						keywords: [ AbilityKeyword.Magic ],
-						modifier: 1
+						value: 1
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-foesense-lenses-9b',
 						keywords: [ AbilityKeyword.Psionic ],
-						modifier: 1
+						value: 1
 					})
 				]
 			}
@@ -1517,13 +1517,13 @@ export class LeveledImplementData {
 						id: 'item-words-become-wonders-1a',
 						name: '',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						modifier: 3
+						value: 3
 					}),
 					FactoryLogic.feature.createAbilityDistance({
 						id: 'item-words-become-wonders-1b',
 						name: '',
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
-						modifier: 3
+						value: 3
 					})
 				]
 			},
@@ -1577,7 +1577,7 @@ export class LeveledWeaponData {
 						id: 'item-authoritys-end-1a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						modifier: 1
+						value: 1
 					})
 				]
 			},
@@ -1593,7 +1593,7 @@ export class LeveledWeaponData {
 						id: 'item-authoritys-end-5a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						modifier: 1
+						value: 1
 					})
 				]
 			},
@@ -1609,7 +1609,7 @@ export class LeveledWeaponData {
 						id: 'item-authoritys-end-9a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						modifier: 1
+						value: 1
 					})
 				]
 			}
@@ -1641,7 +1641,7 @@ export class LeveledWeaponData {
 						id: 'item-blade-of-quintessence-1a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						modifier: 1
+						value: 1
 					})
 				]
 			},
@@ -1657,13 +1657,13 @@ export class LeveledWeaponData {
 						id: 'item-blade-of-quintessence-5a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Ranged ],
-						modifier: 1
+						value: 1
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-blade-of-quintessence-5b',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon ],
-						modifier: 1
+						value: 1
 					})
 				]
 			},
@@ -1674,7 +1674,7 @@ export class LeveledWeaponData {
 						id: 'item-blade-of-quintessence-9a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon ],
-						modifier: 1
+						value: 1
 					}),
 					FactoryLogic.feature.createDamageModifier({
 						id: 'item-blade-of-quintessence-9b',
@@ -1731,7 +1731,7 @@ export class LeveledWeaponData {
 						id: 'item-blade-of-the-luxurious-fop-1a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						modifier: 1
+						value: 1
 					})
 				]
 			},
@@ -1747,7 +1747,7 @@ export class LeveledWeaponData {
 						id: 'item-blade-of-the-luxurious-fop-5a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						modifier: 1
+						value: 1
 					})
 				]
 			},
@@ -1763,7 +1763,7 @@ export class LeveledWeaponData {
 						id: 'item-blade-of-the-luxurious-fop-9a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						modifier: 1
+						value: 1
 					})
 				]
 			}
@@ -2369,7 +2369,7 @@ export class LeveledOtherData {
 						id: 'item-bloody-hand-wraps-1a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						modifier: 1
+						value: 1
 					})
 				]
 			},
@@ -2385,7 +2385,7 @@ export class LeveledOtherData {
 						id: 'item-bloody-hand-wraps-5a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						modifier: 1
+						value: 1
 					})
 				]
 			},
@@ -2401,7 +2401,7 @@ export class LeveledOtherData {
 						id: 'item-bloody-hand-wraps-9a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						modifier: 1
+						value: 1
 					})
 				]
 			}
@@ -2428,7 +2428,7 @@ export class LeveledOtherData {
 						id: 'item-lightning-treads-1a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						modifier: 1,
+						value: 1,
 						damageType: DamageType.Lightning
 					}),
 					FactoryLogic.feature.createBonus({
@@ -2451,7 +2451,7 @@ export class LeveledOtherData {
 						id: 'item-lightning-treads-5a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						modifier: 1,
+						value: 1,
 						damageType: DamageType.Lightning
 					})
 				]
@@ -2468,7 +2468,7 @@ export class LeveledOtherData {
 						id: 'item-lightning-treads-9a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						modifier: 1,
+						value: 1,
 						damageType: DamageType.Lightning
 					})
 				]
@@ -2614,7 +2614,7 @@ Though its size and make are often debated, the sword is consistently described 
 						id: 'item-blade-of-a-thousand-years-1a',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
-						modifier: 5
+						value: 5
 					}),
 					FactoryLogic.feature.create({
 						id: 'item-blade-of-a-thousand-years-2',

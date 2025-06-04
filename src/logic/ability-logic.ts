@@ -106,12 +106,12 @@ export class AbilityLogic {
 		return [ powerRoll.tier1, powerRoll.tier2, powerRoll.tier3 ].some(tier => match(tier));
 	};
 
-	static getTierEffect = (value: string, tier: number, ability: Ability, hero: Hero) => {
+	static getTierEffect = (value: string, tier: number, ability: Ability, hero: Hero | undefined) => {
 		return value
 			.split(';')
 			.map(section => section.trim())
 			.map((section, n) => {
-				if ((n === 0) && section.toLowerCase().endsWith('damage') || section.toLowerCase().endsWith('dmg')){
+				if (hero && (n === 0) && [ 'damage', 'dmg' ].some(s => section.toLowerCase().endsWith(s))) {
 					let value = 0;
 					let sign = '+';
 					const dice: string[] = [];
@@ -193,63 +193,80 @@ export class AbilityLogic {
 			.join('; ');
 	};
 
-	static getTextEffect = (text: string, hero: Hero) => {
-		// Modify text to remove weak / average / strong
-		text = text
-			.replace(/<\s*[[({]?weak[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'weak')}`)
-			.replace(/<\s*[[({]?average[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'average')}`)
-			.replace(/<\s*[[({]?avg[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'average')}`)
-			.replace(/<\s*[[({]?strong[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'strong')}`);
+	static getTextEffect = (text: string, hero: Hero | undefined) => {
+		// Potency: [weak | average | strong]
+		if (hero) {
+			text = text
+				.replace(/<\s*[[({]?weak[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'weak')}`)
+				.replace(/<\s*[[({]?average[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'average')}`)
+				.replace(/<\s*[[({]?avg[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'average')}`)
+				.replace(/<\s*[[({]?strong[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'strong')}`);
+		}
 
 		// Equal to [N times] your [Characteristic(s)] score
-		const charRegex = /equal to[^,.;:]*your[^,.;:]*score/gi;
-		[ ...text.matchAll(charRegex) ].map(r => r[0]).forEach(str => {
-			const options: number[] = [];
-			[
-				Characteristic.Might,
-				Characteristic.Agility,
-				Characteristic.Reason,
-				Characteristic.Intuition,
-				Characteristic.Presence
-			].forEach(ch => {
-				if (str.toLowerCase().includes('highest characteristic') || str.toLowerCase().includes(ch.toLowerCase())) {
-					options.push(HeroLogic.getCharacteristic(hero, ch));
-				}
-			});
-			const value = Math.max(...options);
+		if (hero) {
+			const charRegex = /equal to[^,.;:]*your[^,.;:]*score/gi;
+			[ ...text.matchAll(charRegex) ].map(r => r[0]).forEach(str => {
+				const options: number[] = [];
+				[
+					Characteristic.Might,
+					Characteristic.Agility,
+					Characteristic.Reason,
+					Characteristic.Intuition,
+					Characteristic.Presence
+				].forEach(ch => {
+					if (str.toLowerCase().includes('highest characteristic') || str.toLowerCase().includes(ch.toLowerCase())) {
+						options.push(HeroLogic.getCharacteristic(hero, ch));
+					}
+				});
+				const value = Math.max(...options);
 
-			const constant = AbilityLogic.getConstant(str);
-			const multiplier = AbilityLogic.getMultiplier(str);
-			text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
-		});
+				const constant = AbilityLogic.getConstant(str);
+				const multiplier = AbilityLogic.getMultiplier(str);
+				text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
+			});
+		}
 
 		// Equal to [N times] your level
-		const lvlRegex = /equal to[^,.;:]your level/gi;
-		[ ...text.matchAll(lvlRegex) ].map(r => r[0]).forEach(str => {
-			const constant = AbilityLogic.getConstant(str);
-			const value = hero.class ? hero.class.level : 1;
-			const multiplier = AbilityLogic.getMultiplier(str);
-			text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
-		});
+		if (hero) {
+			const lvlRegex = /equal to[^,.;:]your level/gi;
+			[ ...text.matchAll(lvlRegex) ].map(r => r[0]).forEach(str => {
+				const constant = AbilityLogic.getConstant(str);
+				const value = hero.class ? hero.class.level : 1;
+				const multiplier = AbilityLogic.getMultiplier(str);
+				text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
+			});
+		}
 
 		// Equal to [N times] your recovery value
-		const recRegex = /equal to[^,.;:]your recovery value/gi;
-		[ ...text.matchAll(recRegex) ].map(r => r[0]).forEach(str => {
-			const constant = AbilityLogic.getConstant(str);
-			const value = HeroLogic.getRecoveryValue(hero);
-			const multiplier = AbilityLogic.getMultiplier(str);
-			text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
-		});
+		if (hero) {
+			const recRegex = /equal to[^,.;:]your recovery value/gi;
+			[ ...text.matchAll(recRegex) ].map(r => r[0]).forEach(str => {
+				const constant = AbilityLogic.getConstant(str);
+				const value = HeroLogic.getRecoveryValue(hero);
+				const multiplier = AbilityLogic.getMultiplier(str);
+				text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
+			});
+		}
 
 		// Up to [N times] your speed
-		text = text.replace('a number of squares equal to your speed', 'up to your speed');
-		text = text.replace('a number of squares up to your speed', 'up to your speed');
-		const speedRegex = /up to[^,.;:]your speed/gi;
-		[ ...text.matchAll(speedRegex) ].map(r => r[0]).forEach(str => {
-			const constant = AbilityLogic.getConstant(str);
-			const value = HeroLogic.getSpeed(hero);
-			const multiplier = AbilityLogic.getMultiplier(str);
-			text = text.replace(str, `up to ${constant + (Math.floor(value * multiplier))} squares`);
+		if (hero) {
+			text = text.replace('a number of squares equal to your speed', 'up to your speed');
+			text = text.replace('a number of squares up to your speed', 'up to your speed');
+			const speedRegex = /up to[^,.;:]your speed/gi;
+			[ ...text.matchAll(speedRegex) ].map(r => r[0]).forEach(str => {
+				const constant = AbilityLogic.getConstant(str);
+				const value = HeroLogic.getSpeed(hero);
+				const multiplier = AbilityLogic.getMultiplier(str);
+				text = text.replace(str, `up to ${constant + (Math.floor(value * multiplier))} squares`);
+			});
+		}
+
+		// Potencies
+		const potencyRegex = /[MARIP]\s*<\s*\[?(\d+|weak|average|avg|strong)\]?,?/gi;
+		[ ...text.matchAll(potencyRegex) ].map(r => r[0]).forEach(str => {
+			const x = str.endsWith(',') ? str.substring(0, str.length - 1) : str;
+			text = text.replace(str, `\`${x}\``);
 		});
 
 		return text;

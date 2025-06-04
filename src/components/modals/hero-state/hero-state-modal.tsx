@@ -1,5 +1,6 @@
 import { Alert, Button, Divider, Drawer, Flex, Segmented, Space } from 'antd';
 import { ArrowUpOutlined, CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
+import { Feature, FeatureData } from '../../../models/feature';
 import { Collections } from '../../../utils/collections';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Empty } from '../../controls/empty/empty';
@@ -8,6 +9,7 @@ import { FactoryLogic } from '../../../logic/factory-logic';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
+import { HeroCustomizePanel } from '../../panels/hero-customize/hero-customize-panel';
 import { HeroHealthPanel } from '../../panels/health/health-panel';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { HeroStatePage } from '../../../enums/hero-state-page';
@@ -402,7 +404,7 @@ export const HeroStateModal = (props: Props) => {
 		}
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space direction='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
 				<HeaderText>Inventory</HeaderText>
 				{warning}
 				{
@@ -494,7 +496,7 @@ export const HeroStateModal = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space direction='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
 				<HeaderText>Projects</HeaderText>
 				<NumberSpin
 					label='Project Points'
@@ -539,6 +541,58 @@ export const HeroStateModal = (props: Props) => {
 		);
 	};
 
+	const getCustomizeSection = () => {
+		const addFeature = (feature: Feature) => {
+			const heroCopy = Utils.copy(hero);
+			heroCopy.features.push(feature);
+			setHero(heroCopy);
+			props.onChange(heroCopy);
+		};
+
+		const deleteFeature = (feature: Feature) => {
+			const heroCopy = Utils.copy(hero);
+			heroCopy.features = heroCopy.features.filter(f => f.id !== feature.id);
+			setHero(heroCopy);
+			props.onChange(heroCopy);
+		};
+
+		const setFeature = (featureID: string, feature: Feature) => {
+			const heroCopy = Utils.copy(hero);
+			const index = heroCopy.features.findIndex(f => f.id === featureID);
+			if (index !== -1) {
+				heroCopy.features[index] = feature;
+			}
+			setHero(heroCopy);
+			props.onChange(heroCopy);
+		};
+
+		const setFeatureData = (featureID: string, data: FeatureData) => {
+			const heroCopy = Utils.copy(hero);
+			const feature = HeroLogic.getFeatures(heroCopy)
+				.map(f => f.feature)
+				.find(f => f.id === featureID);
+			if (feature) {
+				feature.data = data;
+			}
+			setHero(heroCopy);
+			props.onChange(heroCopy);
+		};
+
+		return (
+			<div style={{ padding: '20px 0' }}>
+				<HeroCustomizePanel
+					hero={hero}
+					sourcebooks={props.sourcebooks}
+					options={props.options}
+					addFeature={addFeature}
+					setFeature={setFeature}
+					setFeatureData={setFeatureData}
+					deleteFeature={deleteFeature}
+				/>
+			</div>
+		);
+	};
+
 	const getNotesSection = () => {
 		const setNotes = (value: string) => {
 			const copy = Utils.copy(hero);
@@ -573,6 +627,8 @@ export const HeroStateModal = (props: Props) => {
 				return getInventorySection();
 			case HeroStatePage.Projects:
 				return getProjectsSection();
+			case HeroStatePage.Customize:
+				return getCustomizeSection();
 			case HeroStatePage.Notes:
 				return getNotesSection();
 		}
@@ -587,6 +643,7 @@ export const HeroStateModal = (props: Props) => {
 				HeroStatePage.Respite,
 				HeroStatePage.Inventory,
 				HeroStatePage.Projects,
+				HeroStatePage.Customize,
 				HeroStatePage.Notes
 			];
 		} else {

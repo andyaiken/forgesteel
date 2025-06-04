@@ -399,6 +399,7 @@ export const HeroPanel = (props: Props) => {
 							</div>
 							:
 							<div className='overview-tile'>
+								<HeaderText>Ancestry</HeaderText>
 								<div className='ds-text dimmed-text'>No ancestry chosen</div>
 							</div>
 					}
@@ -413,6 +414,7 @@ export const HeroPanel = (props: Props) => {
 							</div>
 							:
 							<div className='overview-tile'>
+								<HeaderText>Culture</HeaderText>
 								<div className='ds-text dimmed-text'>No culture chosen</div>
 							</div>
 					}
@@ -425,6 +427,7 @@ export const HeroPanel = (props: Props) => {
 							</div>
 							:
 							<div className='overview-tile'>
+								<HeaderText>Career</HeaderText>
 								<div className='ds-text dimmed-text'>No career chosen</div>
 							</div>
 					}
@@ -442,6 +445,7 @@ export const HeroPanel = (props: Props) => {
 							</div>
 							:
 							<div className='overview-tile'>
+								<HeaderText>Class</HeaderText>
 								<div className='ds-text dimmed-text'>No class chosen</div>
 							</div>
 					}

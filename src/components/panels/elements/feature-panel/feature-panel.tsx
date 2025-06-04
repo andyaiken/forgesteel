@@ -471,20 +471,9 @@ export const FeaturePanel = (props: Props) => {
 							))
 						: null
 				}
-				<Button block={true} onClick={() => setMonsterSelectorOpen(true)}>{data.selected ? 'Change' : 'Select'}</Button>
 				{
-					data.selected ?
-						<Expander title='Customize'>
-							<HeaderText>Customize</HeaderText>
-							<Input
-								status={data.selected.name === '' ? 'warning' : ''}
-								placeholder='Name'
-								allowClear={true}
-								addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-								value={data.selected.name}
-								onChange={e => setName(e.target.value)}
-							/>
-						</Expander>
+					!data.selected ?
+						<Button block={true} onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
 						: null
 				}
 				{
@@ -494,14 +483,42 @@ export const FeaturePanel = (props: Props) => {
 								style={{ flex: '1 1 0' }}
 								monster={data.selected}
 							/>
-							<Button
-								style={{ flex: '0 0 auto' }}
-								type='text'
-								title='Show details'
-								icon={<InfoCircleOutlined />}
-								onClick={() => setSelectedMonster(data.selected)}
-							/>
+							<div style={{ flex: '0 0 auto' }}>
+								<Button
+									type='text'
+									title='Show details'
+									icon={<InfoCircleOutlined />}
+									onClick={() => setSelectedMonster(data.selected)}
+								/>
+								<Button
+									type='text'
+									title='Remove'
+									icon={<DeleteOutlined />}
+									onClick={() => {
+										const dataCopy = Utils.copy(data);
+										dataCopy.selected = null;
+										if (props.setData) {
+											props.setData(props.feature.id, dataCopy);
+										}
+									}}
+								/>
+							</div>
 						</Flex>
+						: null
+				}
+				{
+					data.selected ?
+						<Expander title='Customize'>
+							<HeaderText>Name</HeaderText>
+							<Input
+								status={data.selected.name === '' ? 'warning' : ''}
+								placeholder='Name'
+								allowClear={true}
+								addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
+								value={data.selected.name}
+								onChange={e => setName(e.target.value)}
+							/>
+						</Expander>
 						: null
 				}
 				<Drawer open={monsterSelectorOpen} onClose={() => setMonsterSelectorOpen(false)} closeIcon={null} width='500px'>

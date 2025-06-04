@@ -182,7 +182,7 @@ export class FeatureLogic {
 						feature: FactoryLogic.feature.createAbilityDamage({
 							id: item.name + '-bonus-1a',
 							keywords: [ AbilityKeyword.Magic ],
-							modifier: 1
+							value: 1
 						}),
 						source: item.name
 					});
@@ -190,7 +190,7 @@ export class FeatureLogic {
 						feature: FactoryLogic.feature.createAbilityDamage({
 							id: item.name + '-bonus-1b',
 							keywords: [ AbilityKeyword.Psionic ],
-							modifier: 1
+							value: 1
 						}),
 						source: item.name
 					});
@@ -200,7 +200,7 @@ export class FeatureLogic {
 						feature: FactoryLogic.feature.createAbilityDamage({
 							id: item.name + '-bonus-5a',
 							keywords: [ AbilityKeyword.Magic ],
-							modifier: 1
+							value: 1
 						}),
 						source: item.name
 					});
@@ -208,7 +208,7 @@ export class FeatureLogic {
 						feature: FactoryLogic.feature.createAbilityDamage({
 							id: item.name + '-bonus-5b',
 							keywords: [ AbilityKeyword.Psionic ],
-							modifier: 1
+							value: 1
 						}),
 						source: item.name
 					});
@@ -218,7 +218,7 @@ export class FeatureLogic {
 						feature: FactoryLogic.feature.createAbilityDamage({
 							id: item.name + '-bonus-9a',
 							keywords: [ AbilityKeyword.Magic ],
-							modifier: 1
+							value: 1
 						}),
 						source: item.name
 					});
@@ -226,7 +226,7 @@ export class FeatureLogic {
 						feature: FactoryLogic.feature.createAbilityDamage({
 							id: item.name + '-bonus-9b',
 							keywords: [ AbilityKeyword.Psionic ],
-							modifier: 1
+							value: 1
 						}), source: item.name
 					});
 				}
@@ -238,7 +238,7 @@ export class FeatureLogic {
 						feature: FactoryLogic.feature.createAbilityDamage({
 							id: item.name + '-bonus-1',
 							keywords: [ AbilityKeyword.Weapon ],
-							modifier: 1
+							value: 1
 						}),
 						source: item.name
 					});
@@ -248,7 +248,7 @@ export class FeatureLogic {
 						feature: FactoryLogic.feature.createAbilityDamage({
 							id: item.name + '-bonus-5',
 							keywords: [ AbilityKeyword.Weapon ],
-							modifier: 1
+							value: 1
 						}),
 						source: item.name
 					});
@@ -258,7 +258,7 @@ export class FeatureLogic {
 						feature: FactoryLogic.feature.createAbilityDamage({
 							id: item.name + '-bonus-9',
 							keywords: [ AbilityKeyword.Weapon ],
-							modifier: 1
+							value: 1
 						}),
 						source: item.name
 					});

@@ -945,7 +945,7 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createAbilityDamage: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number, damageType?: DamageType }): FeatureAbilityDamage => {
+		createAbilityDamage: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], value?: number, valueCharacteristics?: Characteristic[], valueCharacteristicMultiplier?: number, valuePerLevel?: number, valuePerEchelon?: number, damageType?: DamageType }): FeatureAbilityDamage => {
 			return {
 				id: data.id,
 				name: data.name || 'Ability damage modifier',
@@ -953,16 +953,16 @@ export class FactoryLogic {
 				type: FeatureType.AbilityDamage,
 				data: {
 					keywords: data.keywords,
-					value: data.modifier,
-					valueCharacteristics: [],
-					valueCharacteristicMultiplier: 0,
-					valuePerLevel: 0,
-					valuePerEchelon: 0,
+					value: data.value || 0,
+					valueCharacteristics: data.valueCharacteristics || [],
+					valueCharacteristicMultiplier: data.valueCharacteristicMultiplier || 0,
+					valuePerLevel: data.valuePerLevel || 0,
+					valuePerEchelon: data.valuePerEchelon || 0,
 					damageType: data.damageType || DamageType.Damage
 				}
 			};
 		},
-		createAbilityDistance: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number }): FeatureAbilityDistance => {
+		createAbilityDistance: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], value?: number, valueCharacteristics?: Characteristic[], valueCharacteristicMultiplier?: number, valuePerLevel?: number, valuePerEchelon?: number }): FeatureAbilityDistance => {
 			return {
 				id: data.id,
 				name: data.name || 'Ability distance modifier',
@@ -970,11 +970,11 @@ export class FactoryLogic {
 				type: FeatureType.AbilityDistance,
 				data: {
 					keywords: data.keywords,
-					value: data.modifier,
-					valueCharacteristics: [],
-					valueCharacteristicMultiplier: 0,
-					valuePerLevel: 0,
-					valuePerEchelon: 0
+					value: data.value || 0,
+					valueCharacteristics: data.valueCharacteristics || [],
+					valueCharacteristicMultiplier: data.valueCharacteristicMultiplier || 0,
+					valuePerLevel: data.valuePerLevel || 0,
+					valuePerEchelon: data.valuePerEchelon || 0
 				}
 			};
 		},

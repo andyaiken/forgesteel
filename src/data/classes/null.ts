@@ -140,7 +140,7 @@ This ability stays active even after encounters end. It ends if you are dying or
 								id: 'null-1-7b',
 								name: 'Force Augmentation',
 								keywords: [ AbilityKeyword.Psionic ],
-								modifier: 1
+								value: 1
 							}),
 							value: 1
 						},

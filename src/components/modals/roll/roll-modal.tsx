@@ -1,7 +1,8 @@
-import { Alert, Segmented, Statistic } from 'antd';
+import { Alert, Flex, Segmented, Statistic } from 'antd';
 import { Characteristic } from '../../../enums/characteristic';
 import { ConditionType } from '../../../enums/condition-type';
 import { DieRollPanel } from '../../panels/die-roll/die-roll-panel';
+import { Expander } from '../../controls/expander/expander';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
@@ -59,50 +60,54 @@ export const RollModal = (props: Props) => {
 									/>
 								))
 							}
-							{
-								props.characteristics && props.hero ?
-									<Statistic title={props.characteristics.join(', ')} value={bonus} />
-									: null
-							}
-							<NumberSpin label='Modifier' value={modifier} onChange={setModifier} />
-							<HeaderText>Test Results</HeaderText>
-							<table>
-								<thead>
-									<tr>
-										<th className='row-header'>Roll</th>
-										<th>Easy</th>
-										<th>Medium</th>
-										<th>Hard</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td className='row-header'>11 -</td>
-										<td>Success with consequence</td>
-										<td>Failure</td>
-										<td>Failure with consequence</td>
-									</tr>
-									<tr>
-										<td className='row-header'>12 - 16</td>
-										<td>Success</td>
-										<td>Success with consequence</td>
-										<td>Failure</td>
-									</tr>
-									<tr>
-										<td className='row-header'>17 +</td>
-										<td>Success with reward</td>
-										<td>Success</td>
-										<td>Success</td>
-									</tr>
-									<tr>
-										<td className='row-header'>Nat 19 / 20</td>
-										<td>Success with reward</td>
-										<td>Success with reward</td>
-										<td>Success with reward</td>
-									</tr>
-								</tbody>
-							</table>
+							<Flex align='center' justify='space-evenly'>
+								{
+									props.characteristics && props.hero ?
+										<Statistic title={props.characteristics.join(', ')} value={bonus} />
+										: null
+								}
+								<NumberSpin style={{ width: '150px' }} label='Modifier' value={modifier} onChange={setModifier} />
+							</Flex>
 							<DieRollPanel type='Power Roll' modifiers={[ bonus, modifier ]} />
+							<Expander title='Rules'>
+								<HeaderText>Test Results</HeaderText>
+								<table>
+									<thead>
+										<tr>
+											<th className='row-header'>Roll</th>
+											<th>Easy</th>
+											<th>Medium</th>
+											<th>Hard</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td className='row-header'>11 -</td>
+											<td>Success with consequence</td>
+											<td>Failure</td>
+											<td>Failure with consequence</td>
+										</tr>
+										<tr>
+											<td className='row-header'>12 - 16</td>
+											<td>Success</td>
+											<td>Success with consequence</td>
+											<td>Failure</td>
+										</tr>
+										<tr>
+											<td className='row-header'>17 +</td>
+											<td>Success with reward</td>
+											<td>Success</td>
+											<td>Success</td>
+										</tr>
+										<tr>
+											<td className='row-header'>Nat 19 / 20</td>
+											<td>Success with reward</td>
+											<td>Success with reward</td>
+											<td>Success with reward</td>
+										</tr>
+									</tbody>
+								</table>
+							</Expander>
 						</>
 					);
 				case 'Saving Throw':

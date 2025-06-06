@@ -26,7 +26,6 @@ import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
-import { HeroCustomizePanel } from '../../../panels/hero-customize/hero-customize-panel';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { Modal } from '../../../modals/modal/modal';
 import { NameGenerator } from '../../../../utils/name-generator';
@@ -362,16 +361,6 @@ export const HeroEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const setFeature = (featureID: string, feature: Feature) => {
-			const heroCopy = Utils.copy(hero);
-			const index = heroCopy.features.findIndex(f => f.id === featureID);
-			if (index !== -1) {
-				heroCopy.features[index] = feature;
-			}
-			setHero(heroCopy);
-			setDirty(true);
-		};
-
 		const setFeatureData = (featureID: string, data: FeatureData) => {
 			const heroCopy = Utils.copy(hero);
 			const feature = HeroLogic.getFeatures(heroCopy)
@@ -401,20 +390,6 @@ export const HeroEditPage = (props: Props) => {
 		const setSettingIDs = (settingIDs: string[]) => {
 			const heroCopy = Utils.copy(hero);
 			heroCopy.settingIDs = settingIDs;
-			setHero(heroCopy);
-			setDirty(true);
-		};
-
-		const addFeature = (feature: Feature) => {
-			const heroCopy = Utils.copy(hero);
-			heroCopy.features.push(feature);
-			setHero(heroCopy);
-			setDirty(true);
-		};
-
-		const deleteFeature = (feature: Feature) => {
-			const heroCopy = Utils.copy(hero);
-			heroCopy.features = heroCopy.features.filter(f => f.id !== feature.id);
 			setHero(heroCopy);
 			setDirty(true);
 		};
@@ -528,9 +503,6 @@ export const HeroEditPage = (props: Props) => {
 							options={props.options}
 							setName={setName}
 							setFolder={setFolder}
-							addFeature={addFeature}
-							deleteFeature={deleteFeature}
-							setFeature={setFeature}
 							setFeatureData={setFeatureData}
 						/>
 					);
@@ -653,8 +625,8 @@ interface StartSectionProps {
 const StartSection = (props: StartSectionProps) => {
 	try {
 		return (
-			<div className='hero-edit-content centered'>
-				<div className='hero-edit-content-column start choices'>
+			<div className='hero-edit-content'>
+				<div className='hero-edit-content-column single-column choices'>
 					<HeaderText>Creating a Hero</HeaderText>
 					<div className='ds-text'>
 						Creating a hero in <b>FORGE STEEL</b> is simple.
@@ -691,7 +663,7 @@ const StartSection = (props: StartSectionProps) => {
 								<Divider style={{ margin: '8px 0' }} />
 								<Upload
 									style={{ width: '100%' }}
-									accept='.drawsteel-sourcebook'
+									accept='.drawsteel-sourcebook,.ds-sourcebook'
 									showUploadList={false}
 									beforeUpload={file => {
 										file
@@ -753,11 +725,16 @@ const AncestrySection = (props: AncestrySectionProps) => {
 				));
 		}
 
+		let columnClassName = 'hero-edit-content-column selected';
+		if (choices.length === 0) {
+			columnClassName += ' single-column';
+		}
+
 		return (
 			<div className='hero-edit-content'>
 				{
 					props.hero.ancestry ?
-						<div className='hero-edit-content-column selected' id='ancestry-selected'>
+						<div className={columnClassName} id='ancestry-selected'>
 							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectAncestry(null) }}>
 								<AncestryPanel ancestry={props.hero.ancestry} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
@@ -894,11 +871,16 @@ const CultureSection = (props: CultureSectionProps) => {
 			);
 		}
 
+		let columnClassName = 'hero-edit-content-column selected';
+		if (choices.length === 0) {
+			columnClassName += ' single-column';
+		}
+
 		return (
 			<div className='hero-edit-content'>
 				{
 					props.hero.culture ?
-						<div className='hero-edit-content-column selected' id='culture-selected'>
+						<div className={columnClassName} id='culture-selected'>
 							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectCulture(null) }}>
 								<CulturePanel culture={props.hero.culture} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
@@ -986,11 +968,16 @@ const CareerSection = (props: CareerSectionProps) => {
 			);
 		}
 
+		let columnClassName = 'hero-edit-content-column selected';
+		if (choices.length === 0) {
+			columnClassName += ' single-column';
+		}
+
 		return (
 			<div className='hero-edit-content'>
 				{
 					props.hero.career ?
-						<div className='hero-edit-content-column selected' id='career-selected'>
+						<div className={columnClassName} id='career-selected'>
 							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectCareer(null) }}>
 								<CareerPanel career={props.hero.career} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
@@ -1224,11 +1211,16 @@ const ClassSection = (props: ClassSectionProps) => {
 			//#endregion
 		}
 
+		let columnClassName = 'hero-edit-content-column selected';
+		if (choices.length === 0) {
+			columnClassName += ' single-column';
+		}
+
 		return (
 			<div className='hero-edit-content'>
 				{
 					props.hero.class ?
-						<div className='hero-edit-content-column selected' id='class-selected'>
+						<div className={columnClassName} id='class-selected'>
 							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectClass(null) }}>
 								<ClassPanel heroClass={props.hero.class} hero={props.hero} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
@@ -1301,11 +1293,16 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 				));
 		}
 
+		let columnClassName = 'hero-edit-content-column selected';
+		if (choices.length === 0) {
+			columnClassName += ' single-column';
+		}
+
 		return (
 			<div className='hero-edit-content'>
 				{
 					props.hero.complication ?
-						<div className='hero-edit-content-column selected' id='complication-selected'>
+						<div className={columnClassName} id='complication-selected'>
 							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectComplication(null) }}>
 								<ComplicationPanel complication={props.hero.complication} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
@@ -1349,9 +1346,6 @@ interface DetailsSectionProps {
 	options: Options;
 	setName: (value: string) => void;
 	setFolder: (value: string) => void;
-	addFeature: (feature: Feature) => void;
-	deleteFeature: (feature: Feature) => void;
-	setFeature: (featureID: string, feature: Feature) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
@@ -1364,7 +1358,7 @@ const DetailsSection = (props: DetailsSectionProps) => {
 	try {
 		return (
 			<div className='hero-edit-content'>
-				<div className='hero-edit-content-column choices' id='details-main'>
+				<div className='hero-edit-content-column single-column choices' id='details-main'>
 					<HeaderText>Name</HeaderText>
 					<Input
 						status={props.hero.name === '' ? 'warning' : ''}
@@ -1402,18 +1396,6 @@ const DetailsSection = (props: DetailsSectionProps) => {
 							/>
 						))
 					}
-				</div>
-				<div className='hero-edit-content-column choices' id='details-features'>
-					<HeaderText>Customize</HeaderText>
-					<HeroCustomizePanel
-						hero={props.hero}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						addFeature={props.addFeature}
-						setFeature={props.setFeature}
-						setFeatureData={props.setFeatureData}
-						deleteFeature={props.deleteFeature}
-					/>
 				</div>
 			</div>
 		);

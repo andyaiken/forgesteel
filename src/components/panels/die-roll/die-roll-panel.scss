@@ -3,6 +3,18 @@
 	flex-direction: column;
 	gap: 20px;
 
+	.roll-state-selector {
+		.ant-segmented-item-label {
+			width: 75px;
+			height: 50px;
+			line-height: 20px;
+			white-space: normal;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+
 	.result-row {
 		display: flex;
 		align-items: center;

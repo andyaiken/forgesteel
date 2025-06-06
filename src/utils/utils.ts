@@ -107,7 +107,7 @@ export class Utils {
 		const blob = new Blob([ json ], { type: 'application/json' });
 
 		const a = document.createElement('a');
-		a.download = `${name}.drawsteel-${type}`;
+		a.download = `${name}.ds-${type}`;
 		a.href = window.URL.createObjectURL(blob);
 		a.click();
 	};

@@ -1,10 +1,22 @@
-import { Alert, Button, Flex, Segmented, Slider, Statistic } from 'antd';
+import { Alert, Button, Drawer, Flex, Segmented, Slider, Statistic } from 'antd';
 import { ReactNode, useState } from 'react';
+import { BarChartOutlined } from '@ant-design/icons';
 import { Collections } from '../../../utils/collections';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
+import { HeaderText } from '../../controls/header-text/header-text';
+import { HistogramPanel } from '../histogram/histogram-panel';
+import { Modal } from '../../modals/modal/modal';
 import { Random } from '../../../utils/random';
 
 import './die-roll-panel.scss';
+
+enum RollState {
+	DoubleEdge = 'Double Edge',
+	Edge = 'Edge',
+	Standard = 'Standard Roll',
+	Bane = 'Bane',
+	DoubleBane = 'Double Bane'
+}
 
 interface Props {
 	type: 'Power Roll' | 'Saving Throw';
@@ -12,8 +24,8 @@ interface Props {
 }
 
 export const DieRollPanel = (props: Props) => {
-	const [ edges, setEdges ] = useState<number>(0);
-	const [ banes, setBanes ] = useState<number>(0);
+	const [ rollState, setRollState ] = useState<RollState>(RollState.Standard);
+	const [ showOdds, setShowOdds ] = useState<boolean>(false);
 	const [ results, setResults ] = useState<number[]>([]);
 
 	const roll = () => {
@@ -27,42 +39,81 @@ export const DieRollPanel = (props: Props) => {
 		}
 	};
 
-	try {
-		let bonus = 0;
-		let tierMessage = null;
-
-		switch (edges) {
-			case 0:
-				switch (banes) {
-					case 1:
-						bonus = -2;
-						break;
-					case 2:
-						tierMessage = 'Move the result down one tier.';
-						break;
-				}
-				break;
-			case 1:
-				switch (banes) {
-					case 0:
-						bonus = 2;
-						break;
-					case 2:
-						bonus = -2;
-						break;
-				}
-				break;
-			case 2:
-				switch (banes) {
-					case 0:
-						tierMessage = 'Move the result up one tier.';
-						break;
-					case 1:
-						bonus = 2;
-						break;
-				}
-				break;
+	const getBonus = () => {
+		switch (rollState) {
+			case RollState.Edge:
+				return 2;
+			case RollState.Bane:
+				return -2;
 		}
+
+		return 0;
+	};
+
+	const getTierMessage = () => {
+		switch (rollState) {
+			case RollState.DoubleEdge:
+				return 'Move the result up one tier.';
+			case RollState.DoubleBane:
+				return 'Move the result down one tier.';
+		}
+
+		return null;
+	};
+
+	const getOdds = () => {
+		const results = [];
+
+		for (let a = 1; a <= 10; ++a) {
+			for (let b = 1; b <= 10; ++b) {
+				if (a + b >= 19) {
+					results.push(4);
+				} else {
+					const total = Collections.sum([ a, b, ...props.modifiers, getBonus() ], r => r);
+					if (total >= 17) {
+						// Tier 3
+						switch (rollState) {
+							case RollState.DoubleBane:
+								results.push(2);
+								break;
+							default:
+								results.push(3);
+								break;
+						}
+					} else if (total >= 12) {
+						// Tier 2
+						switch (rollState) {
+							case RollState.DoubleBane:
+								results.push(1);
+								break;
+							case RollState.DoubleEdge:
+								results.push(3);
+								break;
+							default:
+								results.push(2);
+								break;
+						}
+					} else {
+						// Tier 1
+						switch (rollState) {
+							case RollState.DoubleEdge:
+								results.push(2);
+								break;
+							default:
+								results.push(1);
+								break;
+						}
+					}
+				}
+			}
+		}
+
+		return results;
+	};
+
+	try {
+		const bonus = getBonus();
+		const tierMessage = getTierMessage();
 
 		const total = Collections.sum([ ...results, ...props.modifiers, bonus ], r => r);
 
@@ -89,39 +140,26 @@ export const DieRollPanel = (props: Props) => {
 				<div className='die-roll-panel'>
 					{
 						props.type === 'Power Roll' ?
-							<Flex align='center' gap={20}>
-								<Flex vertical={true} align='center' style={{ flex: '1 1 0' }}>
-									<div className='ds-text bold-text'>
-										Edges
-									</div>
-									<Segmented
-										options={[
-											{ value: 0, label: '0' },
-											{ value: 1, label: '1' },
-											{ value: 2, label: '2+' }
-										]}
-										value={edges}
-										onChange={setEdges}
-									/>
-								</Flex>
-								<Flex vertical={true} align='center' style={{ flex: '1 1 0' }}>
-									<div className='ds-text bold-text'>
-										Banes
-									</div>
-									<Segmented
-										options={[
-											{ value: 0, label: '0' },
-											{ value: 1, label: '1' },
-											{ value: 2, label: '2+' }
-										]}
-										value={banes}
-										onChange={setBanes}
-									/>
-								</Flex>
+							<Flex align='center' justify='space-evenly'>
+								<Segmented
+									className='roll-state-selector'
+									options={[
+										RollState.DoubleBane,
+										RollState.Bane,
+										RollState.Standard,
+										RollState.Edge,
+										RollState.DoubleEdge
+									]}
+									value={rollState}
+									onChange={setRollState}
+								/>
+								<Button title='Odds' icon={<BarChartOutlined />} onClick={() => setShowOdds(true)} />
 							</Flex>
 							: null
 					}
-					<Button type='primary' block={true} onClick={roll}>Roll</Button>
+					<Button type='primary' block={true} onClick={roll}>
+						{(props.type === 'Power Roll') ? 'Roll 2d10' : 'Roll 1d10' }
+					</Button>
 					{
 						results.length > 0 ?
 							<div className='result-row'>
@@ -177,6 +215,40 @@ export const DieRollPanel = (props: Props) => {
 							: null
 					}
 				</div>
+				<Drawer open={showOdds} onClose={() => setShowOdds(false)} closeIcon={null} width='500px'>
+					<Modal
+						content={
+							<div style={{ padding: '0 20px 20px 20px' }}>
+								<HeaderText>Odds</HeaderText>
+								<div className='ds-text'>
+									{
+										[
+											'2d10',
+											rollState.toLowerCase(),
+											...props.modifiers
+												.filter(mod => mod !== 0)
+												.map(mod => `${mod >= 0 ? '+' : ''}${mod}`)
+										].join(', ')
+									}
+								</div>
+								<HistogramPanel
+									min={1}
+									values={getOdds()}
+									showPercentages={true}
+									getLabel={x => {
+										switch(x) {
+											case 4:
+												return 'Crit';
+											default:
+												return `Tier ${x}`;
+										}
+									}}
+								/>
+							</div>
+						}
+						onClose={() => setShowOdds(false)}
+					/>
+				</Drawer>
 			</ErrorBoundary>
 		);
 	} catch (ex) {

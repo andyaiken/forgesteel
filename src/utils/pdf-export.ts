@@ -326,18 +326,21 @@ export class PDFExport {
 							a.powerRoll.tier1,
 							1,
 							a,
+							undefined,
 							hero
 						);
 						powerRollText = powerRollText + '\n   • 12 - 16\t\t' + AbilityLogic.getTierEffect(
 							a.powerRoll.tier2,
 							2,
 							a,
+							undefined,
 							hero
 						);
 						powerRollText = powerRollText + '\n   • 17 +\t\t\t' + AbilityLogic.getTierEffect(
 							a.powerRoll.tier3,
 							3,
 							a,
+							undefined,
 							hero
 						);
 

@@ -392,17 +392,29 @@ const AbilityInfo = (props: AbilityInfoProps) => {
 				<Field compact={true} label='Type' value={FormatLogic.getAbilityType(props.ability.type)} />
 				{
 					props.ability.type.trigger ?
-						<Field compact={true} label='Trigger' value={props.ability.type.trigger} />
+						<Field
+							compact={true}
+							label='Trigger'
+							value={props.ability.type.trigger}
+						/>
 						: null
 				}
 				{
 					props.ability.distance.length > 0 ?
-						<Field compact={true} label='Distance' value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.hero, props.ability)).join(' or ')} />
+						<Field
+							compact={true}
+							label='Distance'
+							value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.hero, props.ability)).join(' or ')}
+						/>
 						: null
 				}
 				{
 					props.ability.target ?
-						<Field compact={true} label='Target' value={props.ability.target} />
+						<Field
+							compact={true}
+							label='Target'
+							value={props.ability.target}
+						/>
 						: null
 				}
 			</div>

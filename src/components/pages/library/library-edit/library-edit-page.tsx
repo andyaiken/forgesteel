@@ -1018,6 +1018,11 @@ export const LibraryEditPage = (props: Props) => {
 					value={kit.type}
 					onChange={e => setType(e.target.value)}
 				/>
+				<Alert
+					type='info'
+					showIcon={true}
+					message='If your kit has a Type, it can only be selected from a kit feature that specifies this value.'
+				/>
 				<HeaderText>Armor</HeaderText>
 				<Select
 					style={{ width: '100%' }}
@@ -2377,7 +2382,7 @@ export const LibraryEditPage = (props: Props) => {
 					</Button>
 					<Upload
 						style={{ width: '100%' }}
-						accept='.drawsteel-monster'
+						accept='.drawsteel-monster,.ds-monster'
 						showUploadList={false}
 						beforeUpload={file => {
 							file

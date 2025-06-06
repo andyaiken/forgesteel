@@ -1,4 +1,5 @@
 import { Ability } from '../../../models/ability';
+import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../logic/ability-logic';
 import { Collections } from '../../../utils/collections';
@@ -8,6 +9,8 @@ import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { Markdown } from '../../controls/markdown/markdown';
 import { PowerRoll } from '../../../models/power-roll';
+import { Segmented } from 'antd';
+import { useState } from 'react';
 
 import './power-roll-panel.scss';
 
@@ -20,6 +23,8 @@ interface Props {
 }
 
 export const PowerRollPanel = (props: Props) => {
+	const [ distance, setDistance ] = useState<AbilityDistanceType | undefined>(props.ability && props.ability.distance.length > 1 ? props.ability.distance[0].type : undefined);
+
 	const getHeader = () => {
 		if (props.test) {
 			if (props.powerRoll.characteristic.length === 0) {
@@ -62,26 +67,30 @@ export const PowerRollPanel = (props: Props) => {
 
 			//#region Kits
 
-			const hasMelee = props.ability.keywords.includes(AbilityKeyword.Melee) && props.ability.keywords.includes(AbilityKeyword.Weapon);
-			const hasRanged = props.ability.keywords.includes(AbilityKeyword.Ranged) && props.ability.keywords.includes(AbilityKeyword.Weapon);
+			let isMelee = props.ability.keywords.includes(AbilityKeyword.Melee) && props.ability.keywords.includes(AbilityKeyword.Weapon);
+			let isRanged = props.ability.keywords.includes(AbilityKeyword.Ranged) && props.ability.keywords.includes(AbilityKeyword.Weapon);
+			if (props.autoCalc && distance) {
+				isMelee = distance === AbilityDistanceType.Melee;
+				isRanged = distance === AbilityDistanceType.Ranged;
+			}
 
 			const dmgKits = HeroLogic
 				.getKitDamageBonuses(props.hero)
 				.filter(dmg => {
 					switch (dmg.type) {
 						case 'melee':
-							return hasMelee;
+							return isMelee;
 						case 'ranged':
-							return hasRanged;
+							return isRanged;
 					}
 				});
 
 			// Show bonuses from kits if:
 			// * AutoCalc is off
 			// * we have more than 1 bonus
-			// * the ability has melee and ranged distances
+			// * the ability can be used as melee and ranged
 			// ... because otherwise it should have already been applied
-			const showKitBonuses = !props.autoCalc || (dmgKits.length > 1) || (hasMelee && hasRanged);
+			const showKitBonuses = !props.autoCalc || (dmgKits.length > 1) || (isMelee && isRanged);
 			if (showKitBonuses) {
 				dmgKits.forEach((bonus, n) => {
 					sections.push(
@@ -135,20 +144,32 @@ export const PowerRollPanel = (props: Props) => {
 
 	const getTier = (tier: number, value: string) => {
 		if (props.autoCalc && props.ability) {
-			return AbilityLogic.getTierEffect(value, tier, props.ability, props.hero);
+			return AbilityLogic.getTierEffect(value, tier, props.ability, distance, props.hero);
 		}
 
 		return value;
 	};
 
 	try {
-		const header = getHeader();
 		const footer = getFooter();
 
 		return (
 			<ErrorBoundary>
 				<div className='power-roll-panel'>
-					{header ? <div className='power-roll-row power-roll-header'>{header}</div> : null}
+					<div className='power-roll-row power-roll-header'>
+						{getHeader()}
+						{
+							props.autoCalc && props.ability && (props.ability.distance.length > 1) ?
+								<div onClick={e => e.stopPropagation()}>
+									<Segmented
+										options={props.ability.distance.map(d => d.type)}
+										value={distance}
+										onChange={setDistance}
+									/>
+								</div>
+								: null
+						}
+					</div>
 					<div className='power-roll-row'>
 						<div className='tier'>11 -</div>
 						<div className='effect'><Markdown text={getTier(1, props.powerRoll.tier1)} /></div>

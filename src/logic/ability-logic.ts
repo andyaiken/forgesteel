@@ -106,7 +106,7 @@ export class AbilityLogic {
 		return [ powerRoll.tier1, powerRoll.tier2, powerRoll.tier3 ].some(tier => match(tier));
 	};
 
-	static getTierEffect = (value: string, tier: number, ability: Ability, hero: Hero | undefined) => {
+	static getTierEffect = (value: string, tier: number, ability: Ability, distance: AbilityDistanceType | undefined, hero: Hero | undefined) => {
 		return value
 			.split(';')
 			.map(section => section.trim())
@@ -118,21 +118,25 @@ export class AbilityLogic {
 					const characteristics: Characteristic[] = [];
 					const types: string[] = [];
 
-					const hasMelee = ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon);
-					const hasRanged = ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon);
+					let isMelee = ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon);
+					let isRanged = ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon);
+					if (distance) {
+						isMelee = distance === AbilityDistanceType.Melee;
+						isRanged = distance === AbilityDistanceType.Ranged;
+					}
 
 					const dmgKits = HeroLogic
 						.getKitDamageBonuses(hero)
 						.filter(dmg => {
 							switch (dmg.type) {
 								case 'melee':
-									return hasMelee;
+									return isMelee;
 								case 'ranged':
-									return hasRanged;
+									return isRanged;
 							}
 						});
 
-					const hasMeleeXorRanged = (hasMelee && !hasRanged) || (!hasMelee && hasRanged);
+					const hasMeleeXorRanged = (isMelee && !isRanged) || (!isMelee && isRanged);
 					if ((dmgKits.length === 1) && hasMeleeXorRanged) {
 						// There's only one applicable kit bonus, and the ability can only be used in one mode
 						const dmg = dmgKits[0];

@@ -92,7 +92,7 @@ export const SourcebooksModal = (props: Props) => {
 							<Button block={true} onClick={createSourcebook}>Create a new sourcebook</Button>
 							<Upload
 								style={{ width: '100%' }}
-								accept='.drawsteel-sourcebook'
+								accept='.drawsteel-sourcebook,.ds-sourcebook'
 								showUploadList={false}
 								beforeUpload={file => {
 									file

@@ -7,6 +7,8 @@ interface HistogramPanelProps {
 	min?: number;
 	max?: number;
 	values: number[];
+	showPercentages?: boolean;
+	getLabel?: (x: number) => string;
 	selected?: number;
 	onSelect?: (value: number) => void;
 }
@@ -38,7 +40,14 @@ export const HistogramPanel = (props: HistogramPanelProps) => {
 							<div key={v.x} className={v.x === props.selected ? 'bar-section selected' : 'bar-section'} onClick={() => onSelect(v.x)}>
 								<div style={{ height: `${height * (mode - v.value)}px` }} />
 								{v.value > 0 ? <div className='bar' style={{ height: `${height * v.value}px` }} /> : null}
-								<div className='label'>{v.x}</div>
+								<div className='label'>{props.getLabel ? props.getLabel(v.x) : v.x}</div>
+								{
+									props.showPercentages && (props.values.length > 0) ?
+										<div className='percentage'>
+											{Math.round(100 * v.value / props.values.length)}%
+										</div>
+										: null
+								}
 							</div>
 						))
 					}

@@ -335,7 +335,7 @@ export const PlaybookListPage = (props: Props) => {
 										<div className='ds-text'>or</div>
 										<Upload
 											style={{ width: '100%' }}
-											accept={`.drawsteel-${currentTab.toLowerCase()}`}
+											accept={`.drawsteel-${currentTab.toLowerCase()},.ds-${currentTab.toLowerCase()}`}
 											showUploadList={false}
 											beforeUpload={file => {
 												file

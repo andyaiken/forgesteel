@@ -124,7 +124,7 @@ export const HeroListPage = (props: Props) => {
 										</Button>
 										<Upload
 											style={{ width: '100%' }}
-											accept='.drawsteel-hero'
+											accept='.drawsteel-hero,.ds-hero'
 											showUploadList={false}
 											beforeUpload={file => {
 												file

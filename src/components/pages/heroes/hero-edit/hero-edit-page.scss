@@ -65,17 +65,14 @@
 			gap: 20px;
 			overflow: hidden;
 
-			&.centered {
-				justify-content: center;
-			}
-
 			.hero-edit-content-column {
 				flex: 1 1 0;
 				overflow-x: hidden;
 				overflow-y: auto;
 
-				&.start {
+				&.single-column {
 					max-width: 600px;
+					margin: 0 auto;
 				}
 
 				&.grid {

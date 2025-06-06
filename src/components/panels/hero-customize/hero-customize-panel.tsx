@@ -568,7 +568,7 @@ export const HeroCustomizePanel = (props: Props) => {
 										}));
 									}}
 								>
-									Immunity / Weakness
+									Damage Immunity / Weakness
 								</Button>
 								<Button
 									block={true}

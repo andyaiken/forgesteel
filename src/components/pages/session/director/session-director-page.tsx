@@ -34,10 +34,10 @@ import { useState } from 'react';
 import './session-director-page.scss';
 
 interface Props {
-	session: Playbook;
-	playbook: Playbook;
-	sourcebooks: Sourcebook[];
 	heroes: Hero[];
+	sourcebooks: Sourcebook[];
+	playbook: Playbook;
+	session: Playbook;
 	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
@@ -515,7 +515,7 @@ export const SessionDirectorPage = (props: Props) => {
 						{getSelector()}
 						{getSelectedContent()}
 					</div>
-					<AppFooter page='session' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='session' heroes={props.heroes} session={props.session} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

@@ -67,7 +67,7 @@ export const PartyModal = (props: Props) => {
 												<td key={h.id} className='row-cell'>
 													{
 														h.ancestry ?
-															<Button onClick={() => setSelectedAncestry(h.ancestry)}>{h.ancestry.name || 'Unnamed Ancestry'}</Button>
+															<Button block={true} type='text' onClick={() => setSelectedAncestry(h.ancestry)}>{h.ancestry.name || 'Unnamed Ancestry'}</Button>
 															: '(none)'
 													}
 												</td>
@@ -81,7 +81,7 @@ export const PartyModal = (props: Props) => {
 												<td key={h.id} className='row-cell'>
 													{
 														h.career ?
-															<Button onClick={() => setSelectedCareer(h.career)}>{h.career.name || 'Unnamed Career'}</Button>
+															<Button block={true} type='text' onClick={() => setSelectedCareer(h.career)}>{h.career.name || 'Unnamed Career'}</Button>
 															: '(none)'
 													}
 												</td>
@@ -95,7 +95,7 @@ export const PartyModal = (props: Props) => {
 												<td key={h.id} className='row-cell'>
 													{
 														h.class ?
-															<Button onClick={() => setSelectedClass(h.class)}>{h.class.name || 'Unnamed Class'}</Button>
+															<Button block={true} type='text' onClick={() => setSelectedClass(h.class)}>{h.class.name || 'Unnamed Class'}</Button>
 															: '(none)'
 													}
 												</td>
@@ -109,7 +109,7 @@ export const PartyModal = (props: Props) => {
 												<td key={h.id} className='row-cell'>
 													{
 														h.complication ?
-															<Button onClick={() => setSelectedComplication(h.complication)}>{h.complication.name || 'Unnamed Complication'}</Button>
+															<Button block={true} type='text' onClick={() => setSelectedComplication(h.complication)}>{h.complication.name || 'Unnamed Complication'}</Button>
 															: '(none)'
 													}
 												</td>

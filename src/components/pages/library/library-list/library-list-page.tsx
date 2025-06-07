@@ -38,6 +38,7 @@ import { Options } from '../../../../models/options';
 import { OptionsPanel } from '../../../panels/options/options-panel';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
+import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Terrain } from '../../../../models/terrain';
@@ -52,8 +53,9 @@ import { useState } from 'react';
 import './library-list-page.scss';
 
 interface Props {
-	sourcebooks: Sourcebook[];
 	heroes: Hero[];
+	sourcebooks: Sourcebook[];
+	session: Playbook;
 	options: Options;
 	hiddenSourcebookIDs: string[];
 	showDirectory: () => void;
@@ -1043,7 +1045,7 @@ export const LibraryListPage = (props: Props) => {
 							onChange={k => navigation.goToLibraryList(k as SourcebookElementKind)}
 						/>
 					</div>
-					<AppFooter page='library' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='library' heroes={props.heroes} session={props.session} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

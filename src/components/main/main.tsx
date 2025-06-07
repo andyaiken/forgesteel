@@ -1226,6 +1226,8 @@ export const Main = (props: Props) => {
 							index={true}
 							element={
 								<WelcomePage
+									heroes={heroes}
+									session={session}
 									showDirectory={showDirectoryPane}
 									showAbout={showAbout}
 									showRoll={showRoll}
@@ -1241,6 +1243,7 @@ export const Main = (props: Props) => {
 									<HeroListPage
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										session={session}
 										options={props.options}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
@@ -1258,6 +1261,7 @@ export const Main = (props: Props) => {
 									<HeroViewPage
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										session={session}
 										options={options}
 										setOptions={persistOptions}
 										showDirectory={showDirectoryPane}
@@ -1293,6 +1297,7 @@ export const Main = (props: Props) => {
 									<HeroEditPage
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										session={session}
 										options={options}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
@@ -1321,8 +1326,9 @@ export const Main = (props: Props) => {
 								path=':kind'
 								element={
 									<LibraryListPage
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										heroes={heroes}
+										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										session={session}
 										options={options}
 										hiddenSourcebookIDs={hiddenSourcebookIDs}
 										showDirectory={showDirectoryPane}
@@ -1340,8 +1346,10 @@ export const Main = (props: Props) => {
 								path='view/:kind/:elementID/:subElementID?'
 								element={
 									<LibraryViewPage
+										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										playbook={playbook}
+										session={session}
 										options={options}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
@@ -1359,8 +1367,9 @@ export const Main = (props: Props) => {
 								path='edit/:kind/:sourcebookID/:elementID/:subElementID?'
 								element={
 									<LibraryEditPage
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										heroes={heroes}
+										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										session={session}
 										options={options}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
@@ -1382,9 +1391,10 @@ export const Main = (props: Props) => {
 								path=':kind'
 								element={
 									<PlaybookListPage
-										playbook={playbook}
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										heroes={heroes}
+										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										playbook={playbook}
+										session={session}
 										options={options}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
@@ -1401,9 +1411,10 @@ export const Main = (props: Props) => {
 								path='view/:kind/:elementID'
 								element={
 									<PlaybookViewPage
-										playbook={playbook}
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										heroes={heroes}
+										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										playbook={playbook}
+										session={session}
 										options={options}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
@@ -1422,9 +1433,10 @@ export const Main = (props: Props) => {
 								path='edit/:kind/:elementID'
 								element={
 									<PlaybookEditPage
-										playbook={playbook}
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										heroes={heroes}
+										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										playbook={playbook}
+										session={session}
 										options={options}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
@@ -1447,10 +1459,10 @@ export const Main = (props: Props) => {
 								path='director'
 								element={
 									<SessionDirectorPage
-										session={session}
-										playbook={playbook}
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										heroes={heroes}
+										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										playbook={playbook}
+										session={session}
 										options={options}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
@@ -1467,10 +1479,10 @@ export const Main = (props: Props) => {
 								path='player'
 								element={
 									<SessionPlayerPage
-										session={session}
-										playbook={playbook}
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										heroes={heroes}
+										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										playbook={playbook}
+										session={session}
 										options={options}
 										showAbout={showAbout}
 										showRoll={showRoll}

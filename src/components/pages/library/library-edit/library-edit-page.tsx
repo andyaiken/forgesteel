@@ -63,6 +63,7 @@ import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
+import { Playbook } from '../../../../models/playbook';
 import { ProjectPanel } from '../../../panels/elements/project-panel/project-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -83,8 +84,9 @@ import { useState } from 'react';
 import './library-edit-page.scss';
 
 interface Props {
-	sourcebooks: Sourcebook[];
 	heroes: Hero[];
+	sourcebooks: Sourcebook[];
+	session: Playbook;
 	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
@@ -3194,7 +3196,7 @@ export const LibraryEditPage = (props: Props) => {
 							{getPreview()}
 						</div>
 					</div>
-					<AppFooter page='library' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='library' heroes={props.heroes} session={props.session} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

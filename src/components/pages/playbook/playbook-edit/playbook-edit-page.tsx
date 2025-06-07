@@ -63,9 +63,10 @@ import { useParams } from 'react-router';
 import './playbook-edit-page.scss';
 
 interface Props {
-	playbook: Playbook;
-	sourcebooks: Sourcebook[];
 	heroes: Hero[];
+	sourcebooks: Sourcebook[];
+	playbook: Playbook;
+	session: Playbook;
 	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
@@ -1791,7 +1792,7 @@ export const PlaybookEditPage = (props: Props) => {
 								: null
 						}
 					</div>
-					<AppFooter page='playbook' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='playbook' heroes={props.heroes} session={props.session} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

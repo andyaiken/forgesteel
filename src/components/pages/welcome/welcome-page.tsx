@@ -4,12 +4,16 @@ import { AppFooter } from '../../panels/app-footer/app-footer';
 import { AppHeader } from '../../panels/app-header/app-header';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { HeaderText } from '../../controls/header-text/header-text';
+import { Hero } from '../../../models/hero';
+import { Playbook } from '../../../models/playbook';
 import { useNavigation } from '../../../hooks/use-navigation';
 import { useState } from 'react';
 
 import './welcome-page.scss';
 
 interface Props {
+	heroes: Hero[];
+	session: Playbook;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -223,7 +227,7 @@ export const WelcomePage = (props: Props) => {
 							{getContent(page)}
 						</div>
 					</div>
-					<AppFooter page='welcome' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='welcome' heroes={props.heroes} session={props.session} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

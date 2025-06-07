@@ -20,10 +20,10 @@ import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/ta
 import './session-player-page.scss';
 
 interface Props {
-	session: Playbook;
-	playbook: Playbook;
-	sourcebooks: Sourcebook[];
 	heroes: Hero[];
+	sourcebooks: Sourcebook[];
+	playbook: Playbook;
+	session: Playbook;
 	options: Options;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -113,7 +113,7 @@ export const SessionPlayerPage = (props: Props) => {
 					<div className='session-page-content'>
 						{getContent()}
 					</div>
-					<AppFooter showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='player-view' heroes={props.heroes} session={props.session} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

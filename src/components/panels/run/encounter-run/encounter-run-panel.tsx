@@ -422,6 +422,9 @@ export const EncounterRunPanel = (props: Props) => {
 					monsterGroups.filter(group => group.malice.length > 0).map(group => (
 						<div key={group.id}>
 							<HeaderText>{group.name} Malice</HeaderText>
+							<div className='ds-text'>
+								At the start of any {group.name}'s turn, you can spend malice to activate one of the following features.
+							</div>
 							<div className='malice'>
 								{group.malice.map(getMaliceItem)}
 							</div>

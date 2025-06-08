@@ -58,7 +58,7 @@ export const AppFooter = (props: Props) => {
 					}
 					<Popover
 						content={
-							<Space direction='vertical'>
+							<Space direction='vertical' style={{ width: '250px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
 								<Button type='text' block={true} onClick={() => navigation.goToLibraryList('ancestry')}>Ancestries</Button>
 								<Button type='text' block={true} onClick={() => navigation.goToLibraryList('career')}>Careers</Button>
 								<Button type='text' block={true} onClick={() => navigation.goToLibraryList('class')}>Classes</Button>

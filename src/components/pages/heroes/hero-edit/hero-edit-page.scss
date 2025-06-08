@@ -20,15 +20,19 @@
 			}
 		}
 
-		.page-selector {
+		.page-controls {
 			flex: 0 0 auto;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 20px;
 
 			.page-button {
-				margin: 5px 0;
+				margin: 10px 0;
 
 				.page-button-title,
 				.page-button-subtitle {
-					line-height: 20px;
+					line-height: 22px;
 				}
 
 				.page-button-title {
@@ -53,6 +57,7 @@
 		}
 
 		.search-bar {
+			flex: 0 0 auto;
 			margin-bottom: -10px;
 			display: flex;
 			align-items: center;

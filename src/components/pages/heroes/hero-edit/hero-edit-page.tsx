@@ -421,6 +421,104 @@ export const HeroEditPage = (props: Props) => {
 			}
 		};
 
+		const getControls = () => {
+			let allowRandom = false;
+			let unselect = undefined;
+			switch (page) {
+				case 'ancestry':
+					allowRandom = !hero.ancestry;
+					unselect = hero.ancestry ? () => setAncestry(null) : undefined;
+					break;
+				case 'culture':
+					allowRandom = !hero.culture;
+					unselect = hero.culture ? () => setCulture(null) : undefined;
+					break;
+				case 'career':
+					allowRandom = !hero.career;
+					unselect = hero.career ? () => setCareer(null) : undefined;
+					break;
+				case 'class':
+					allowRandom = !hero.class;
+					unselect = hero.class ? () => setClass(null) : undefined;
+					break;
+				case 'complication':
+					allowRandom = !hero.complication;
+					unselect = hero.complication ? () => setComplication(null) : undefined;
+					break;
+			}
+
+			return (
+				<div className='page-controls'>
+					{
+						isSmall ?
+							<Select
+								style={{ width: '100%' }}
+								options={([
+									'start',
+									'ancestry',
+									'culture',
+									'career',
+									'class',
+									'complication',
+									'details'
+								] as const).map(tab => ({
+									value: tab,
+									label: <div className='ds-text'>{Format.capitalize(tab, '-')}</div>
+								}))}
+								value={page}
+								onChange={value => navigation.goToHeroEdit(heroID!, value)}
+							/>
+							:
+							<Segmented
+								name='sections'
+								style={{ flex: '1 1 0' }}
+								options={([
+									'start',
+									'ancestry',
+									'culture',
+									'career',
+									'class',
+									'complication',
+									'details'
+								] as const).map(tab => ({
+									value: tab,
+									label: (
+										<div className={`page-button ${getPageState(tab).toLowerCase().replace(' ', '-')}`}>
+											<div className='page-button-title'>{Format.capitalize(tab, '-')}</div>
+											<div className='page-button-subtitle'>{getPageState(tab)}</div>
+										</div>
+									)
+								}))}
+								block={true}
+								value={page}
+								onChange={value => navigation.goToHeroEdit(heroID!, value)}
+							/>
+					}
+					<Space direction='vertical' size={4}>
+						{!isSmall ? <Button disabled={!allowRandom || !!searchTerm} icon={<ThunderboltOutlined />} onClick={selectRandom}>Random</Button> : null}
+						<Button disabled={!unselect} icon={<CloseOutlined />} onClick={unselect}>Unselect</Button>
+					</Space>
+				</div>
+			);
+		};
+
+		const allowSearch = () => {
+			switch (page) {
+				case 'ancestry':
+					return !hero.ancestry;
+				case 'culture':
+					return !hero.culture;
+				case 'career':
+					return !hero.career;
+				case 'class':
+					return !hero.class;
+				case 'complication':
+					return !hero.complication;
+			}
+
+			return false;
+		};
+
 		const getContent = () => {
 			switch (page) {
 				case 'start':
@@ -511,31 +609,20 @@ export const HeroEditPage = (props: Props) => {
 			}
 		};
 
-		let showSearchBar = false;
-		if (!isSmall) {
-			switch (page) {
-				case 'ancestry':
-					showSearchBar = !hero.ancestry;
-					break;
-				case 'culture':
-					showSearchBar = !hero.culture;
-					break;
-				case 'career':
-					showSearchBar = !hero.career;
-					break;
-				case 'class':
-					showSearchBar = !hero.class;
-					break;
-				case 'complication':
-					showSearchBar = !hero.complication;
-					break;
-			}
-		}
-
 		return (
 			<ErrorBoundary>
 				<div className='hero-edit-page'>
 					<AppHeader subheader='Hero Builder' showDirectory={props.showDirectory}>
+						<Input
+							name='search'
+							placeholder='Search'
+							disabled={!allowSearch()}
+							allowClear={true}
+							value={searchTerm}
+							suffix={<SearchOutlined />}
+							onChange={e => setSearchTerm(e.target.value)}
+						/>
+						<div className='divider' />
 						<Button icon={<SaveOutlined />} type='primary' disabled={!dirty} onClick={saveChanges}>
 							Save Changes
 						</Button>
@@ -544,67 +631,7 @@ export const HeroEditPage = (props: Props) => {
 						</Button>
 					</AppHeader>
 					<div className={isSmall ? 'hero-edit-page-content small' : 'hero-edit-page-content'}>
-						<div className='page-selector'>
-							{
-								isSmall ?
-									<Select
-										style={{ width: '100%' }}
-										options={([
-											'start',
-											'ancestry',
-											'culture',
-											'career',
-											'class',
-											'complication',
-											'details'
-										] as const).map(tab => ({
-											value: tab,
-											label: <div className='ds-text'>{Format.capitalize(tab, '-')}</div>
-										}))}
-										value={page}
-										onChange={value => navigation.goToHeroEdit(heroID!, value)}
-									/>
-									:
-									<Segmented
-										name='sections'
-										options={([
-											'start',
-											'ancestry',
-											'culture',
-											'career',
-											'class',
-											'complication',
-											'details'
-										] as const).map(tab => ({
-											value: tab,
-											label: (
-												<div className={`page-button ${getPageState(tab).toLowerCase().replace(' ', '-')}`}>
-													<div className='page-button-title'>{Format.capitalize(tab, '-')}</div>
-													<div className='page-button-subtitle'>{getPageState(tab)}</div>
-												</div>
-											)
-										}))}
-										block={true}
-										value={page}
-										onChange={value => navigation.goToHeroEdit(heroID!, value)}
-									/>
-							}
-						</div>
-						{
-							showSearchBar ?
-								<div className='search-bar'>
-									<Input
-										name='search'
-										placeholder='Search'
-										allowClear={true}
-										value={searchTerm}
-										suffix={!searchTerm ? <SearchOutlined /> : null}
-										onChange={e => setSearchTerm(e.target.value)}
-									/>
-									<Button disabled={!!searchTerm} icon={<ThunderboltOutlined />} onClick={selectRandom}>Random</Button>
-								</div>
-								: null
-						}
+						{getControls()}
 						{getContent()}
 					</div>
 					<AppFooter page='heroes' heroes={props.heroes} session={props.session} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
@@ -702,11 +729,13 @@ interface AncestrySectionProps {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	searchTerm: string;
-	selectAncestry: (ancestry: Ancestry | null) => void;
+	selectAncestry: (ancestry: Ancestry) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const AncestrySection = (props: AncestrySectionProps) => {
+	const isSmall = useMediaQuery('(max-width: 1000px)');
+
 	try {
 		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks).filter(a => matchElement(a, props.searchTerm));
 		const options = ancestries.map(a => (
@@ -735,9 +764,9 @@ const AncestrySection = (props: AncestrySectionProps) => {
 		return (
 			<div className='hero-edit-content'>
 				{
-					props.hero.ancestry ?
+					props.hero.ancestry && (!isSmall || (choices.length === 0)) ?
 						<div className={columnClassName} id='ancestry-selected'>
-							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectAncestry(null) }}>
+							<SelectablePanel showShadow={false}>
 								<AncestryPanel ancestry={props.hero.ancestry} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
@@ -778,7 +807,7 @@ interface CultureSectionProps {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	searchTerm: string;
-	selectCulture: (culture: Culture | null) => void;
+	selectCulture: (culture: Culture) => void;
 	selectLanguages: (languages: string[]) => void;
 	selectEnvironment: (id: string | null) => void;
 	selectOrganization: (id: string | null) => void;
@@ -787,6 +816,8 @@ interface CultureSectionProps {
 }
 
 const CultureSection = (props: CultureSectionProps) => {
+	const isSmall = useMediaQuery('(max-width: 1000px)');
+
 	try {
 		const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks) ].filter(c => matchElement(c, props.searchTerm));
 		const options = cultures.map(c => (
@@ -881,9 +912,9 @@ const CultureSection = (props: CultureSectionProps) => {
 		return (
 			<div className='hero-edit-content'>
 				{
-					props.hero.culture ?
+					props.hero.culture && (!isSmall || (choices.length === 0)) ?
 						<div className={columnClassName} id='culture-selected'>
-							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectCulture(null) }}>
+							<SelectablePanel showShadow={false}>
 								<CulturePanel culture={props.hero.culture} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
@@ -924,12 +955,14 @@ interface CareerSectionProps {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	searchTerm: string;
-	selectCareer: (career: Career | null) => void;
+	selectCareer: (career: Career) => void;
 	selectIncitingIncident: (id: string | null) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const CareerSection = (props: CareerSectionProps) => {
+	const isSmall = useMediaQuery('(max-width: 1000px)');
+
 	try {
 		const careers = SourcebookLogic.getCareers(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
 		const options = careers.map(c => (
@@ -978,9 +1011,9 @@ const CareerSection = (props: CareerSectionProps) => {
 		return (
 			<div className='hero-edit-content'>
 				{
-					props.hero.career ?
+					props.hero.career && (!isSmall || (choices.length === 0)) ?
 						<div className={columnClassName} id='career-selected'>
-							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectCareer(null) }}>
+							<SelectablePanel showShadow={false}>
 								<CareerPanel career={props.hero.career} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
@@ -1021,7 +1054,7 @@ interface ClassSectionProps {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	searchTerm: string;
-	selectClass: (heroClass: HeroClass | null) => void;
+	selectClass: (heroClass: HeroClass) => void;
 	setLevel: (level: number) => void;
 	selectPrimaryCharacteristics: (characteristics: Characteristic[]) => void;
 	selectCharacteristics: (array: { characteristic: Characteristic, value: number }[]) => void;
@@ -1030,6 +1063,8 @@ interface ClassSectionProps {
 }
 
 const ClassSection = (props: ClassSectionProps) => {
+	const isSmall = useMediaQuery('(max-width: 1000px)');
+
 	const [ array, setArray ] = useState<number[] | null>(() => {
 		let currentArray = null;
 
@@ -1221,9 +1256,9 @@ const ClassSection = (props: ClassSectionProps) => {
 		return (
 			<div className='hero-edit-content'>
 				{
-					props.hero.class ?
+					props.hero.class && (!isSmall || (choices.length === 0)) ?
 						<div className={columnClassName} id='class-selected'>
-							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectClass(null) }}>
+							<SelectablePanel showShadow={false}>
 								<ClassPanel heroClass={props.hero.class} hero={props.hero} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
@@ -1270,11 +1305,13 @@ interface ComplicationSectionProps {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	searchTerm: string;
-	selectComplication: (complication: Complication | null) => void;
+	selectComplication: (complication: Complication) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 const ComplicationSection = (props: ComplicationSectionProps) => {
+	const isSmall = useMediaQuery('(max-width: 1000px)');
+
 	try {
 		const complications = SourcebookLogic.getComplications(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
 		const options = complications.map(c => (
@@ -1303,9 +1340,9 @@ const ComplicationSection = (props: ComplicationSectionProps) => {
 		return (
 			<div className='hero-edit-content'>
 				{
-					props.hero.complication ?
+					props.hero.complication && (!isSmall || (choices.length === 0)) ?
 						<div className={columnClassName} id='complication-selected'>
-							<SelectablePanel showShadow={false} action={{ label: 'Unselect', onClick: () => props.selectComplication(null) }}>
+							<SelectablePanel showShadow={false}>
 								<ComplicationPanel complication={props.hero.complication} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>

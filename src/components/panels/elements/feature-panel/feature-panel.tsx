@@ -1,6 +1,6 @@
 import { Alert, Button, Drawer, Flex, Input, Select, Space } from 'antd';
 import { CSSProperties, useState } from 'react';
-import { DeleteOutlined, InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
+import { CloseOutlined, InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Pill, ResourcePill } from '../../../controls/pill/pill';
 import { Ability } from '../../../../models/ability';
@@ -387,8 +387,8 @@ export const FeaturePanel = (props: Props) => {
 									<Button
 										style={{ flex: '0 0 auto' }}
 										type='text'
-										title='Delete'
-										icon={<DeleteOutlined />}
+										title='Remove'
+										icon={<CloseOutlined />}
 										onClick={() => {
 											const dataCopy = Utils.copy(data);
 											dataCopy.selectedIDs = dataCopy.selectedIDs.filter(id => id !== ability.id);
@@ -493,7 +493,7 @@ export const FeaturePanel = (props: Props) => {
 								<Button
 									type='text'
 									title='Remove'
-									icon={<DeleteOutlined />}
+									icon={<CloseOutlined />}
 									onClick={() => {
 										const dataCopy = Utils.copy(data);
 										dataCopy.selected = null;
@@ -865,8 +865,8 @@ export const FeaturePanel = (props: Props) => {
 								<Button
 									style={{ flex: '0 0 auto' }}
 									type='text'
-									title='Delete'
-									icon={<DeleteOutlined />}
+									title='Remove'
+									icon={<CloseOutlined />}
 									onClick={() => {
 										const dataCopy = Utils.copy(data);
 										dataCopy.selected = dataCopy.selected.filter(k => k.id !== kit.id);
@@ -1016,8 +1016,8 @@ export const FeaturePanel = (props: Props) => {
 								<Button
 									style={{ flex: '0 0 auto' }}
 									type='text'
-									title='Delete'
-									icon={<DeleteOutlined />}
+									title='Remove'
+									icon={<CloseOutlined />}
 									onClick={() => {
 										const dataCopy = Utils.copy(data);
 										dataCopy.selected = dataCopy.selected.filter(p => p.id !== perk.id);

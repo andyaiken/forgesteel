@@ -63,7 +63,7 @@ interface Props {
 
 export const HeroPanel = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
-	const [ tab, setTab ] = useState<string>(isSmall ? 'Overview' : 'Hero');
+	const [ tab, setTab ] = useState<string>('Hero');
 
 	try {
 		const getNameSection = () => {

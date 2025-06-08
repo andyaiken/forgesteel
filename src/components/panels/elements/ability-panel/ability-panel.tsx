@@ -33,6 +33,7 @@ interface Props {
 	options?: Options;
 	mode?: PanelMode;
 	tags?: string[];
+	highlightTier?: number;
 }
 
 export const AbilityPanel = (props: Props) => {
@@ -262,6 +263,7 @@ export const AbilityPanel = (props: Props) => {
 											ability={props.ability}
 											hero={props.hero}
 											autoCalc={autoCalc}
+											highlightTier={props.highlightTier}
 										/>
 										: null
 								}

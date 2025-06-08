@@ -21,6 +21,7 @@ enum RollState {
 interface Props {
 	type: 'Power Roll' | 'Saving Throw';
 	modifiers: number[];
+	onRoll?: (tier: number) => void;
 }
 
 export const DieRollPanel = (props: Props) => {
@@ -29,18 +30,49 @@ export const DieRollPanel = (props: Props) => {
 	const [ results, setResults ] = useState<number[]>([]);
 
 	const roll = () => {
+		const rolls: number[] = [];
+
 		switch (props.type) {
 			case 'Power Roll':
-				setResults([ Random.die(10), Random.die(10) ]);
+				rolls.push(Random.die(10), Random.die(10));
 				break;
 			case 'Saving Throw':
-				setResults([ Random.die(10) ]);
+				rolls.push(Random.die(10));
 				break;
+		}
+
+		setTierResult(rolls, rollState);
+		setResults(rolls);
+	};
+
+	const setTierResult = (rolls: number[], state: RollState) => {
+		if (props.onRoll) {
+			let tier = 1;
+
+			const total = Collections.sum([ ...rolls, ...props.modifiers, getBonus(state) ], r => r);
+			if (total <= 11) {
+				tier = 1;
+			} else if (total <= 16) {
+				tier = 2;
+			} else {
+				tier = 3;
+			}
+
+			switch (state) {
+				case RollState.DoubleBane:
+					tier = Math.max(1, tier - 1);
+					break;
+				case RollState.DoubleEdge:
+					tier = Math.min(3, tier + 1);
+					break;
+			}
+
+			props.onRoll(tier);
 		}
 	};
 
-	const getBonus = () => {
-		switch (rollState) {
+	const getBonus = (state: RollState) => {
+		switch (state) {
 			case RollState.Edge:
 				return 2;
 			case RollState.Bane:
@@ -69,7 +101,7 @@ export const DieRollPanel = (props: Props) => {
 				if (a + b >= 19) {
 					results.push(4);
 				} else {
-					const total = Collections.sum([ a, b, ...props.modifiers, getBonus() ], r => r);
+					const total = Collections.sum([ a, b, ...props.modifiers, getBonus(rollState) ], r => r);
 					if (total >= 17) {
 						// Tier 3
 						switch (rollState) {
@@ -112,7 +144,7 @@ export const DieRollPanel = (props: Props) => {
 	};
 
 	try {
-		const bonus = getBonus();
+		const bonus = getBonus(rollState);
 		const tierMessage = getTierMessage();
 
 		const total = Collections.sum([ ...results, ...props.modifiers, bonus ], r => r);
@@ -151,7 +183,10 @@ export const DieRollPanel = (props: Props) => {
 										RollState.DoubleEdge
 									]}
 									value={rollState}
-									onChange={setRollState}
+									onChange={rs => {
+										setTierResult(results, rs);
+										setRollState(rs);
+									}}
 								/>
 								<Button title='Odds' icon={<BarChartOutlined />} onClick={() => setShowOdds(true)} />
 							</Flex>

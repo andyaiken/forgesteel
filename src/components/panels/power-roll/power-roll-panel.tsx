@@ -20,6 +20,7 @@ interface Props {
 	hero?: Hero;
 	test?: boolean;
 	autoCalc?: boolean;
+	highlightTier?: number;
 }
 
 export const PowerRollPanel = (props: Props) => {
@@ -170,15 +171,15 @@ export const PowerRollPanel = (props: Props) => {
 								: null
 						}
 					</div>
-					<div className='power-roll-row'>
+					<div className={props.highlightTier === 1 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
 						<div className='tier'>11 -</div>
 						<div className='effect'><Markdown text={getTier(1, props.powerRoll.tier1)} /></div>
 					</div>
-					<div className='power-roll-row'>
+					<div className={props.highlightTier === 2 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
 						<div className='tier'>12 - 16</div>
 						<div className='effect'><Markdown text={getTier(2, props.powerRoll.tier2)} /></div>
 					</div>
-					<div className='power-roll-row'>
+					<div className={props.highlightTier === 3 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
 						<div className='tier'>17 +</div>
 						<div className='effect'><Markdown text={getTier(3, props.powerRoll.tier3)} /></div>
 					</div>

@@ -29,6 +29,7 @@ interface Props {
 export const AbilityModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero | undefined>(props.hero ? Utils.copy(props.hero) : undefined);
 	const [ page, setPage ] = useState<string>('Ability Card');
+	const [ tier, setTier ] = useState<number | null>(null);
 
 	const customization = hero ? hero.abilityCustomizations.find(ac => ac.abilityID === props.ability.id) : undefined;
 
@@ -116,7 +117,7 @@ export const AbilityModal = (props: Props) => {
 				return (
 					<div className='ability-section'>
 						<SelectablePanel>
-							<AbilityPanel ability={props.ability} hero={hero} monster={props.monster} mode={PanelMode.Full} />
+							<AbilityPanel ability={props.ability} hero={hero} monster={props.monster} highlightTier={tier || undefined} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
 							props.ability.powerRoll ?
@@ -127,6 +128,7 @@ export const AbilityModal = (props: Props) => {
 											Math.max(...props.ability.powerRoll.characteristic.map(getCharacteristic))
 											: props.ability.powerRoll.bonus
 									]}
+									onRoll={setTier}
 								/>
 								: null
 						}

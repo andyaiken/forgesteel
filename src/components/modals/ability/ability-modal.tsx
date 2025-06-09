@@ -2,6 +2,7 @@ import { Input, Segmented } from 'antd';
 import { Ability } from '../../../models/ability';
 import { AbilityPanel } from '../../panels/elements/ability-panel/ability-panel';
 import { Characteristic } from '../../../enums/characteristic';
+import { Collections } from '../../../utils/collections';
 import { DieRollPanel } from '../../panels/die-roll/die-roll-panel';
 import { Expander } from '../../controls/expander/expander';
 import { HeaderText } from '../../controls/header-text/header-text';
@@ -12,6 +13,8 @@ import { Monster } from '../../../models/monster';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { MultiLine } from '../../controls/multi-line/multi-line';
 import { PanelMode } from '../../../enums/panel-mode';
+import { RollLogic } from '../../../logic/roll-logic';
+import { RollState } from '../../../enums/roll-state';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
@@ -29,6 +32,7 @@ interface Props {
 export const AbilityModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero | undefined>(props.hero ? Utils.copy(props.hero) : undefined);
 	const [ page, setPage ] = useState<string>('Ability Card');
+	const [ rollState, setRollState ] = useState<RollState>(RollState.Standard);
 	const [ tier, setTier ] = useState<number | null>(null);
 
 	const customization = hero ? hero.abilityCustomizations.find(ac => ac.abilityID === props.ability.id) : undefined;
@@ -113,11 +117,24 @@ export const AbilityModal = (props: Props) => {
 
 	const getContent = () => {
 		switch (page) {
-			case 'Ability Card':
+			case 'Ability Card': {
+				let odds: number[] | undefined = undefined;
+				if (hero && props.ability.powerRoll) {
+					const values = props.ability.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(hero!, ch));
+					const bonus = Collections.max(values, v => v) || 0;
+					odds = RollLogic.getOdds([ bonus ], rollState);
+				}
 				return (
 					<div className='ability-section'>
 						<SelectablePanel>
-							<AbilityPanel ability={props.ability} hero={hero} monster={props.monster} highlightTier={tier || undefined} mode={PanelMode.Full} />
+							<AbilityPanel
+								ability={props.ability}
+								hero={hero}
+								monster={props.monster}
+								highlightTier={tier || undefined}
+								odds={odds}
+								mode={PanelMode.Full}
+							/>
 						</SelectablePanel>
 						{
 							props.ability.powerRoll ?
@@ -128,12 +145,15 @@ export const AbilityModal = (props: Props) => {
 											Math.max(...props.ability.powerRoll.characteristic.map(getCharacteristic))
 											: props.ability.powerRoll.bonus
 									]}
+									rollState={rollState}
+									onRollStateChange={setRollState}
 									onRoll={setTier}
 								/>
 								: null
 						}
 					</div>
 				);
+			}
 			case 'Customize':
 				return (
 					<div className='customize-section'>

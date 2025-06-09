@@ -1,7 +1,9 @@
+import { Button, Segmented, Space } from 'antd';
 import { Ability } from '../../../models/ability';
 import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../logic/ability-logic';
+import { BarChartOutlined } from '@ant-design/icons';
 import { Collections } from '../../../utils/collections';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Field } from '../../controls/field/field';
@@ -9,7 +11,6 @@ import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { Markdown } from '../../controls/markdown/markdown';
 import { PowerRoll } from '../../../models/power-roll';
-import { Segmented } from 'antd';
 import { useState } from 'react';
 
 import './power-roll-panel.scss';
@@ -21,10 +22,12 @@ interface Props {
 	test?: boolean;
 	autoCalc?: boolean;
 	highlightTier?: number;
+	odds?: number[];
 }
 
 export const PowerRollPanel = (props: Props) => {
 	const [ distance, setDistance ] = useState<AbilityDistanceType | undefined>(props.ability && props.ability.distance.length > 1 ? props.ability.distance[0].type : undefined);
+	const [ showOdds, setShowOdds ] = useState<boolean>(false);
 
 	const getHeader = () => {
 		if (props.test) {
@@ -159,29 +162,42 @@ export const PowerRollPanel = (props: Props) => {
 				<div className='power-roll-panel'>
 					<div className='power-roll-row power-roll-header'>
 						{getHeader()}
-						{
-							props.autoCalc && props.ability && (props.ability.distance.length > 1) ?
-								<div onClick={e => e.stopPropagation()}>
+						<Space onClick={e => e.stopPropagation()}>
+							{
+								props.autoCalc && props.ability && (props.ability.distance.length > 1) ?
 									<Segmented
 										options={props.ability.distance.map(d => d.type)}
 										value={distance}
 										onChange={setDistance}
 									/>
-								</div>
-								: null
-						}
+									: null
+							}
+							{
+								props.odds ?
+									<Button
+										type='text'
+										title='Odds'
+										icon={<BarChartOutlined style={showOdds ? { color: 'rgb(22, 119, 255)' } : undefined} />}
+										onClick={() => setShowOdds(!showOdds)}
+									/>
+									: null
+							}
+						</Space>
 					</div>
 					<div className={props.highlightTier === 1 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
 						<div className='tier'>11 -</div>
 						<div className='effect'><Markdown text={getTier(1, props.powerRoll.tier1)} /></div>
+						{showOdds && props.odds ? <div className='odds'>{props.odds.filter(n => n === 1).length}%</div> : null}
 					</div>
 					<div className={props.highlightTier === 2 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
 						<div className='tier'>12 - 16</div>
 						<div className='effect'><Markdown text={getTier(2, props.powerRoll.tier2)} /></div>
+						{showOdds && props.odds ? <div className='odds'>{props.odds.filter(n => n === 2).length}%</div> : null}
 					</div>
 					<div className={props.highlightTier === 3 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
 						<div className='tier'>17 +</div>
 						<div className='effect'><Markdown text={getTier(3, props.powerRoll.tier3)} /></div>
+						{showOdds && props.odds ? <div className='odds'>{props.odds.filter(n => n >= 3).length}%</div> : null}
 					</div>
 					{footer ? <div className='power-roll-row power-roll-footer'>{footer}</div> : null}
 				</div>

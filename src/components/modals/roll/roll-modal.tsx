@@ -8,6 +8,7 @@ import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { Modal } from '../modal/modal';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
+import { RollState } from '../../../enums/roll-state';
 import { useState } from 'react';
 
 import './roll-modal.scss';
@@ -21,6 +22,7 @@ interface Props {
 export const RollModal = (props: Props) => {
 	const [ modifier, setModifier ] = useState<number>(0);
 	const [ type, setType ] = useState<'Power Roll' | 'Saving Throw'>('Power Roll');
+	const [ rollState, setRollState ] = useState<RollState>(RollState.Standard);
 
 	try {
 		const warnings: { label: string, text: string }[] = [];
@@ -68,7 +70,7 @@ export const RollModal = (props: Props) => {
 								}
 								<NumberSpin style={{ width: '150px' }} label='Modifier' value={modifier} onChange={setModifier} />
 							</Flex>
-							<DieRollPanel type='Power Roll' modifiers={[ bonus, modifier ]} />
+							<DieRollPanel type='Power Roll' modifiers={[ bonus, modifier ]} rollState={rollState} onRollStateChange={setRollState} />
 							<Expander title='Rules'>
 								<HeaderText>Test Results</HeaderText>
 								<table>
@@ -113,7 +115,7 @@ export const RollModal = (props: Props) => {
 				case 'Saving Throw':
 					return (
 						<>
-							<DieRollPanel type='Saving Throw' modifiers={[ modifier ]} />
+							<DieRollPanel type='Saving Throw' modifiers={[ modifier ]} rollState={rollState} onRollStateChange={setRollState} />
 						</>
 					);
 			}

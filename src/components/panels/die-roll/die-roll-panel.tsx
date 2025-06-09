@@ -7,25 +7,20 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { HistogramPanel } from '../histogram/histogram-panel';
 import { Modal } from '../../modals/modal/modal';
 import { Random } from '../../../utils/random';
+import { RollLogic } from '../../../logic/roll-logic';
+import { RollState } from '../../../enums/roll-state';
 
 import './die-roll-panel.scss';
-
-enum RollState {
-	DoubleEdge = 'Double Edge',
-	Edge = 'Edge',
-	Standard = 'Standard Roll',
-	Bane = 'Bane',
-	DoubleBane = 'Double Bane'
-}
 
 interface Props {
 	type: 'Power Roll' | 'Saving Throw';
 	modifiers: number[];
+	rollState: RollState;
+	onRollStateChange: (value: RollState) => void;
 	onRoll?: (tier: number) => void;
 }
 
 export const DieRollPanel = (props: Props) => {
-	const [ rollState, setRollState ] = useState<RollState>(RollState.Standard);
 	const [ showOdds, setShowOdds ] = useState<boolean>(false);
 	const [ results, setResults ] = useState<number[]>([]);
 
@@ -41,15 +36,15 @@ export const DieRollPanel = (props: Props) => {
 				break;
 		}
 
-		setTierResult(rolls, rollState);
+		setTierResult(rolls, props.rollState);
 		setResults(rolls);
 	};
 
-	const setTierResult = (rolls: number[], state: RollState) => {
+	const setTierResult = (rolls: number[], rollState: RollState) => {
 		if (props.onRoll) {
 			let tier = 1;
 
-			const total = Collections.sum([ ...rolls, ...props.modifiers, getBonus(state) ], r => r);
+			const total = Collections.sum([ ...rolls, ...props.modifiers, RollLogic.getBonus(rollState) ], r => r);
 			if (total <= 11) {
 				tier = 1;
 			} else if (total <= 16) {
@@ -58,7 +53,7 @@ export const DieRollPanel = (props: Props) => {
 				tier = 3;
 			}
 
-			switch (state) {
+			switch (rollState) {
 				case RollState.DoubleBane:
 					tier = Math.max(1, tier - 1);
 					break;
@@ -71,18 +66,7 @@ export const DieRollPanel = (props: Props) => {
 		}
 	};
 
-	const getBonus = (state: RollState) => {
-		switch (state) {
-			case RollState.Edge:
-				return 2;
-			case RollState.Bane:
-				return -2;
-		}
-
-		return 0;
-	};
-
-	const getTierMessage = () => {
+	const getTierMessage = (rollState: RollState) => {
 		switch (rollState) {
 			case RollState.DoubleEdge:
 				return 'Move the result up one tier.';
@@ -93,59 +77,9 @@ export const DieRollPanel = (props: Props) => {
 		return null;
 	};
 
-	const getOdds = () => {
-		const results = [];
-
-		for (let a = 1; a <= 10; ++a) {
-			for (let b = 1; b <= 10; ++b) {
-				if (a + b >= 19) {
-					results.push(4);
-				} else {
-					const total = Collections.sum([ a, b, ...props.modifiers, getBonus(rollState) ], r => r);
-					if (total >= 17) {
-						// Tier 3
-						switch (rollState) {
-							case RollState.DoubleBane:
-								results.push(2);
-								break;
-							default:
-								results.push(3);
-								break;
-						}
-					} else if (total >= 12) {
-						// Tier 2
-						switch (rollState) {
-							case RollState.DoubleBane:
-								results.push(1);
-								break;
-							case RollState.DoubleEdge:
-								results.push(3);
-								break;
-							default:
-								results.push(2);
-								break;
-						}
-					} else {
-						// Tier 1
-						switch (rollState) {
-							case RollState.DoubleEdge:
-								results.push(2);
-								break;
-							default:
-								results.push(1);
-								break;
-						}
-					}
-				}
-			}
-		}
-
-		return results;
-	};
-
 	try {
-		const bonus = getBonus(rollState);
-		const tierMessage = getTierMessage();
+		const bonus = RollLogic.getBonus(props.rollState);
+		const tierMessage = getTierMessage(props.rollState);
 
 		const total = Collections.sum([ ...results, ...props.modifiers, bonus ], r => r);
 
@@ -182,10 +116,12 @@ export const DieRollPanel = (props: Props) => {
 										RollState.Edge,
 										RollState.DoubleEdge
 									]}
-									value={rollState}
+									value={props.rollState}
 									onChange={rs => {
-										setTierResult(results, rs);
-										setRollState(rs);
+										if (results.length > 0) {
+											setTierResult(results, rs);
+										}
+										props.onRollStateChange(rs);
 									}}
 								/>
 								<Button title='Odds' icon={<BarChartOutlined />} onClick={() => setShowOdds(true)} />
@@ -259,7 +195,7 @@ export const DieRollPanel = (props: Props) => {
 									{
 										[
 											'2d10',
-											rollState.toLowerCase(),
+											props.rollState.toLowerCase(),
 											...props.modifiers
 												.filter(mod => mod !== 0)
 												.map(mod => `${mod >= 0 ? '+' : ''}${mod}`)
@@ -268,7 +204,7 @@ export const DieRollPanel = (props: Props) => {
 								</div>
 								<HistogramPanel
 									min={1}
-									values={getOdds()}
+									values={RollLogic.getOdds(props.modifiers, props.rollState)}
 									showPercentages={true}
 									getLabel={x => {
 										switch(x) {

@@ -31,9 +31,10 @@ interface Props {
 	cost?: number | 'signature';
 	repeatable?: boolean;
 	options?: Options;
-	mode?: PanelMode;
 	tags?: string[];
 	highlightTier?: number;
+	odds?: number[];
+	mode?: PanelMode;
 }
 
 export const AbilityPanel = (props: Props) => {
@@ -264,6 +265,7 @@ export const AbilityPanel = (props: Props) => {
 											hero={props.hero}
 											autoCalc={autoCalc}
 											highlightTier={props.highlightTier}
+											odds={props.odds}
 										/>
 										: null
 								}

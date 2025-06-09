@@ -15,9 +15,7 @@ export class TerrainLogic {
 			.filter(dm => dm.type === type)
 			.forEach(dm => {
 				let value = dm.value;
-				// value += (Collections.max(dm.valueCharacteristics.map(ch => MonsterLogic.getCharacteristic(monster, ch)), v => v) || 0) * dm.valueCharacteristicMultiplier;
 				value += dm.valuePerLevel * (terrain.level - 1);
-				// value += dm.valuePerEchelon * MonsterLogic.getEchelon(monster);
 
 				const existing = modifiers.find(x => x.damageType === dm.damageType);
 				if (existing) {

@@ -340,7 +340,11 @@ export class HeroLogic {
 	static calculateModifierValue = (hero: Hero, mod: Modifier) => {
 		let value = mod.value;
 
-		value += (Collections.max(mod.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0) * mod.valueCharacteristicMultiplier;
+		if (mod.valueCharacteristics.length > 0) {
+			const characteristicValue = Collections.max(mod.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
+			const multiplier = mod.valueCharacteristicMultiplier || 1;
+			value += characteristicValue * multiplier;
+		}
 
 		if (hero.class) {
 			value += mod.valuePerLevel * (hero.class.level - 1);
@@ -367,14 +371,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Stamina)
-			.forEach(data => {
-				value += data.value;
-				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
-				if (hero.class) {
-					value += data.valuePerLevel * (hero.class.level - 1);
-					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
-				}
-			});
+			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
 
 		return value;
 	};
@@ -387,14 +384,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.RecoveryValue)
-			.forEach(data => {
-				value += data.value;
-				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
-				if (hero.class) {
-					value += data.valuePerLevel * (hero.class.level - 1);
-					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
-				}
-			});
+			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
 
 		return value;
 	};
@@ -407,14 +397,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Recoveries)
-			.forEach(data => {
-				value += data.value;
-				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
-				if (hero.class) {
-					value += data.valuePerLevel * (hero.class.level - 1);
-					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
-				}
-			});
+			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
 
 		return value;
 	};
@@ -471,14 +454,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Speed)
-			.forEach(data => {
-				value += data.value;
-				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
-				if (hero.class) {
-					value += data.valuePerLevel * (hero.class.level - 1);
-					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
-				}
-			});
+			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
 
 		if (hero.state.conditions.some(c => [ ConditionType.Grabbed, ConditionType.Restrained ].includes(c.type))) {
 			value = 0;
@@ -510,14 +486,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Stability)
-			.forEach(data => {
-				value += data.value;
-				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
-				if (hero.class) {
-					value += data.valuePerLevel * (hero.class.level - 1);
-					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
-				}
-			});
+			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
 
 		return value;
 	};
@@ -534,14 +503,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Disengage)
-			.forEach(data => {
-				value += data.value;
-				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
-				if (hero.class) {
-					value += data.valuePerLevel * (hero.class.level - 1);
-					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
-				}
-			});
+			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
 
 		return value;
 	};
@@ -554,14 +516,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Renown)
-			.forEach(data => {
-				value += data.value;
-				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
-				if (hero.class) {
-					value += data.valuePerLevel * (hero.class.level - 1);
-					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
-				}
-			});
+			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
 
 		return value;
 	};
@@ -574,14 +529,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.ProjectPoints)
-			.forEach(data => {
-				value += data.value;
-				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
-				if (hero.class) {
-					value += data.valuePerLevel * (hero.class.level - 1);
-					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
-				}
-			});
+			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
 
 		return value;
 	};
@@ -594,14 +542,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Wealth)
-			.forEach(data => {
-				value += data.value;
-				value += Collections.max(data.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
-				if (hero.class) {
-					value += data.valuePerLevel * (hero.class.level - 1);
-					value += data.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
-				}
-			});
+			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
 
 		return value;
 	};

@@ -898,7 +898,11 @@ export class MonsterLogic {
 					.filter(dm => dm.type === type)
 					.forEach(dm => {
 						let value = dm.value;
-						value += (Collections.max(dm.valueCharacteristics.map(ch => MonsterLogic.getCharacteristic(monster, ch)), v => v) || 0) * dm.valueCharacteristicMultiplier;
+						if (dm.valueCharacteristics.length > 0) {
+							const characteristicValue = Collections.max(dm.valueCharacteristics.map(ch => MonsterLogic.getCharacteristic(monster, ch)), v => v) || 0;
+							const multiplier = dm.valueCharacteristicMultiplier || 1;
+							value += characteristicValue * multiplier;
+						}
 						value += dm.valuePerLevel * (monster.level - 1);
 						value += dm.valuePerEchelon * MonsterLogic.getEchelon(monster);
 

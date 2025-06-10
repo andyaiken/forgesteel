@@ -414,7 +414,7 @@ export class PDFExport {
 					}
 				});
 			};
-			const abilities = HeroLogic.getAbilities(hero, false).map(a => a.ability);
+			const abilities = HeroLogic.getAbilities(hero, sourcebooks, false).map(a => a.ability);
 			abilities.push(AbilityData.freeStrikeMelee);
 			abilities.push(AbilityData.freeStrikeRanged);
 			texts['RegularActions'] = abilities.filter(a => a.type.usage === AbilityUsage.Action).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');

@@ -405,7 +405,13 @@ export const HeroStateModal = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
-				<HeaderText>Inventory</HeaderText>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={() => setShopVisible(true)} />
+					}
+				>
+					Inventory
+				</HeaderText>
 				{warning}
 				{
 					hero.state.inventory.map(item => (
@@ -434,10 +440,6 @@ export const HeroStateModal = (props: Props) => {
 						<Empty text='Your inventory is empty.' />
 						: null
 				}
-				<Button block={true} onClick={() => setShopVisible(true)}>
-					<PlusOutlined />
-					Add a new item
-				</Button>
 				<Drawer open={shopVisible} onClose={() => setShopVisible(false)} closeIcon={null} width='500px'>
 					<ItemSelectModal
 						types={[ ItemType.Artifact, ItemType.Consumable, ItemType.ImbuedArmor, ItemType.ImbuedImplement, ItemType.ImbuedWeapon, ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Trinket ]}
@@ -497,7 +499,13 @@ export const HeroStateModal = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
-				<HeaderText>Projects</HeaderText>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={() => setProjectsVisible(true)} />
+					}
+				>
+					Projects
+				</HeaderText>
 				<NumberSpin
 					label='Project Points'
 					value={hero.state.projectPoints}
@@ -530,10 +538,6 @@ export const HeroStateModal = (props: Props) => {
 						<Empty text='You have no projects underway.' />
 						: null
 				}
-				<Button block={true} onClick={() => setProjectsVisible(true)}>
-					<PlusOutlined />
-					Add a new project
-				</Button>
 				<Drawer open={projectsVisible} onClose={() => setProjectsVisible(false)} closeIcon={null} width='500px'>
 					<ProjectSelectModal sourcebooks={props.sourcebooks} onSelect={addProject} onClose={() => setProjectsVisible(false)} />
 				</Drawer>
@@ -579,7 +583,7 @@ export const HeroStateModal = (props: Props) => {
 		};
 
 		return (
-			<div style={{ padding: '20px 0' }}>
+			<div style={{ paddingBottom: '20px' }}>
 				<HeroCustomizePanel
 					hero={hero}
 					sourcebooks={props.sourcebooks}

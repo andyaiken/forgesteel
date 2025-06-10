@@ -1,11 +1,11 @@
-import { Button, Divider, Popover, Segmented, Select, Space } from 'antd';
+import { Button, Popover, Segmented, Select, Space } from 'antd';
 import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeaturePerk, FeatureSkillChoice, FeatureTitleChoice } from '../../../models/feature';
 import { Characteristic } from '../../../enums/characteristic';
 import { ConditionType } from '../../../enums/condition-type';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { DamageType } from '../../../enums/damage-type';
 import { DangerButton } from '../../controls/danger-button/danger-button';
-import { DownOutlined } from '@ant-design/icons';
+import { Empty } from '../../controls/empty/empty';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Expander } from '../../controls/expander/expander';
 import { FactoryLogic } from '../../../logic/factory-logic';
@@ -20,6 +20,7 @@ import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { PerkList } from '../../../enums/perk-list';
+import { PlusOutlined } from '@ant-design/icons';
 import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
@@ -454,6 +455,184 @@ export const HeroCustomizePanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='hero-customize-panel'>
+					<HeaderText
+						extra={
+							<Popover
+								trigger='click'
+								content={
+									<Space direction='vertical'>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createAncestryFeature({
+													id: Utils.guid(),
+													value: 1,
+													current: true,
+													former: true,
+													customID: ''
+												}));
+											}}
+										>
+											Ancestry Feature
+										</Button>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createCharacteristicBonus({
+													id: Utils.guid(),
+													name: `${Characteristic.Might} + 1`,
+													characteristic: Characteristic.Might,
+													value: 1
+												}));
+											}}
+										>
+											Characteristic Bonus
+										</Button>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createClassAbilityChoice({
+													id: Utils.guid(),
+													cost: 'signature'
+												}));
+											}}
+										>
+											Class Ability
+										</Button>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createCompanion({
+													id: Utils.guid(),
+													type: 'companion'
+												}));
+											}}
+										>
+											Companion
+										</Button>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createConditionImmunity({
+													id: Utils.guid(),
+													conditions: []
+												}));
+											}}
+										>
+											Condition Immunity
+										</Button>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createDamageModifier({
+													id: Utils.guid(),
+													modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 2 }) ]
+												}));
+											}}
+										>
+											Damage Immunity / Weakness
+										</Button>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createKitChoice({
+													id: Utils.guid()
+												}));
+											}}
+										>
+											Kit
+										</Button>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createLanguageChoice({
+													id: Utils.guid()
+												}));
+											}}
+										>
+											Language
+										</Button>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createPerk({
+													id: Utils.guid(),
+													lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ]
+												}));
+											}}
+										>
+											Perk
+										</Button>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createSkillChoice({
+													id: Utils.guid(),
+													listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+												}));
+											}}
+										>
+											Skill
+										</Button>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createBonus({
+													id: Utils.guid(),
+													name: `${FeatureField.Stamina} + 6`,
+													field: FeatureField.Stamina,
+													value: 6
+												}));
+											}}
+										>
+											Stat Bonus
+										</Button>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createTitleChoice({
+													id: Utils.guid(),
+													echelon: 1
+												}));
+											}}
+										>
+											Title
+										</Button>
+									</Space>
+								}
+								open={menuOpen}
+								onOpenChange={setMenuOpen}
+							>
+								<Button icon={<PlusOutlined />} />
+							</Popover>
+						}
+					>
+						Customize
+					</HeaderText>
 					{
 						props.hero.features
 							.filter(f => f.id !== 'default-language')
@@ -482,182 +661,11 @@ export const HeroCustomizePanel = (props: Props) => {
 								</Expander>
 							))
 					}
-					{props.hero.features.filter(f => f.id !== 'default-language').length > 0 ? <Divider /> : null}
-					<Popover
-						trigger='click'
-						content={
-							<Space direction='vertical'>
-								<Button
-									block={true}
-									type='text'
-									onClick={() => {
-										setMenuOpen(false);
-										props.addFeature(FactoryLogic.feature.createAncestryFeature({
-											id: Utils.guid(),
-											value: 1,
-											current: true,
-											former: true,
-											customID: ''
-										}));
-									}}
-								>
-									Ancestry Feature
-								</Button>
-								<Button
-									block={true}
-									type='text'
-									onClick={() => {
-										setMenuOpen(false);
-										props.addFeature(FactoryLogic.feature.createCharacteristicBonus({
-											id: Utils.guid(),
-											name: `${Characteristic.Might} + 1`,
-											characteristic: Characteristic.Might,
-											value: 1
-										}));
-									}}
-								>
-									Characteristic Bonus
-								</Button>
-								<Button
-									block={true}
-									type='text'
-									onClick={() => {
-										setMenuOpen(false);
-										props.addFeature(FactoryLogic.feature.createClassAbilityChoice({
-											id: Utils.guid(),
-											cost: 'signature'
-										}));
-									}}
-								>
-									Class Ability
-								</Button>
-								<Button
-									block={true}
-									type='text'
-									onClick={() => {
-										setMenuOpen(false);
-										props.addFeature(FactoryLogic.feature.createCompanion({
-											id: Utils.guid(),
-											type: 'companion'
-										}));
-									}}
-								>
-									Companion
-								</Button>
-								<Button
-									block={true}
-									type='text'
-									onClick={() => {
-										setMenuOpen(false);
-										props.addFeature(FactoryLogic.feature.createConditionImmunity({
-											id: Utils.guid(),
-											conditions: []
-										}));
-									}}
-								>
-									Condition Immunity
-								</Button>
-								<Button
-									block={true}
-									type='text'
-									onClick={() => {
-										setMenuOpen(false);
-										props.addFeature(FactoryLogic.feature.createDamageModifier({
-											id: Utils.guid(),
-											modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 2 }) ]
-										}));
-									}}
-								>
-									Damage Immunity / Weakness
-								</Button>
-								<Button
-									block={true}
-									type='text'
-									onClick={() => {
-										setMenuOpen(false);
-										props.addFeature(FactoryLogic.feature.createKitChoice({
-											id: Utils.guid()
-										}));
-									}}
-								>
-									Kit
-								</Button>
-								<Button
-									block={true}
-									type='text'
-									onClick={() => {
-										setMenuOpen(false);
-										props.addFeature(FactoryLogic.feature.createLanguageChoice({
-											id: Utils.guid()
-										}));
-									}}
-								>
-									Language
-								</Button>
-								<Button
-									block={true}
-									type='text'
-									onClick={() => {
-										setMenuOpen(false);
-										props.addFeature(FactoryLogic.feature.createPerk({
-											id: Utils.guid(),
-											lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ]
-										}));
-									}}
-								>
-									Perk
-								</Button>
-								<Button
-									block={true}
-									type='text'
-									onClick={() => {
-										setMenuOpen(false);
-										props.addFeature(FactoryLogic.feature.createSkillChoice({
-											id: Utils.guid(),
-											listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
-										}));
-									}}
-								>
-									Skill
-								</Button>
-								<Button
-									block={true}
-									type='text'
-									onClick={() => {
-										setMenuOpen(false);
-										props.addFeature(FactoryLogic.feature.createBonus({
-											id: Utils.guid(),
-											name: `${FeatureField.Stamina} + 6`,
-											field: FeatureField.Stamina,
-											value: 6
-										}));
-									}}
-								>
-									Stat Bonus
-								</Button>
-								<Button
-									block={true}
-									type='text'
-									onClick={() => {
-										setMenuOpen(false);
-										props.addFeature(FactoryLogic.feature.createTitleChoice({
-											id: Utils.guid(),
-											echelon: 1
-										}));
-									}}
-								>
-									Title
-								</Button>
-							</Space>
-						}
-						open={menuOpen}
-						onOpenChange={setMenuOpen}
-					>
-						<Button>
-							Add
-							<DownOutlined />
-						</Button>
-					</Popover>
+					{
+						props.hero.features.filter(f => f.id !== 'default-language').length === 0 ?
+							<Empty text='You have no customizations.' />
+							: null
+					}
 				</div>
 			</ErrorBoundary>
 		);

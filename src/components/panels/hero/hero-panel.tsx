@@ -627,7 +627,7 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		const getTabs = () => {
-			const abilities = HeroLogic.getAbilities(props.hero, props.options.showStandardAbilities);
+			const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.showStandardAbilities);
 			const actions = abilities.filter(a => a.ability.type.usage === AbilityUsage.Action);
 			const maneuvers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Maneuver);
 			const moves = abilities.filter(a => a.ability.type.usage === AbilityUsage.Move);
@@ -658,7 +658,7 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		const getContent = (tab: string) => {
-			const abilities = HeroLogic.getAbilities(props.hero, props.options.showStandardAbilities);
+			const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.showStandardAbilities);
 			const actions = abilities.filter(a => a.ability.type.usage === AbilityUsage.Action);
 			const maneuvers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Maneuver);
 			const moves = abilities.filter(a => a.ability.type.usage === AbilityUsage.Move);

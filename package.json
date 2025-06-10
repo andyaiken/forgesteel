@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "9.116.0",
+	"version": "9.117.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -15,7 +15,7 @@
 	"dependencies": {
 		"@ant-design/icons": "^6.0.0",
 		"@types/showdown": "^2.0.6",
-		"antd": "^5.25.4",
+		"antd": "^5.26.0",
 		"gh-pages": "^6.3.0",
 		"html2canvas": "^1.4.1",
 		"jspdf": "^3.0.1",
@@ -31,7 +31,7 @@
 		"@eslint/js": "^9.28.0",
 		"@types/react": "^19.1.7",
 		"@types/react-dom": "^19.1.6",
-		"@vitejs/plugin-react": "^4.5.1",
+		"@vitejs/plugin-react": "^4.5.2",
 		"eslint": "^9.28.0",
 		"eslint-plugin-react-hooks": "^5.2.0",
 		"globals": "^16.2.0",

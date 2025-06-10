@@ -133,7 +133,7 @@ export class HeroLogic {
 		return domains;
 	};
 
-	static getAbilities = (hero: Hero, includeStandard: boolean) => {
+	static getAbilities = (hero: Hero, sourcebooks: Sourcebook[], includeStandard: boolean) => {
 		const choices: { ability: Ability, source: string }[] = [];
 
 		this.getFeatures(hero)
@@ -145,8 +145,14 @@ export class HeroLogic {
 		this.getFeatures(hero)
 			.filter(f => f.feature.type === FeatureType.ClassAbility)
 			.forEach(f => {
-				(f.feature as FeatureClassAbility).data.selectedIDs.forEach(abilityID => {
-					const ability = hero.class?.abilities.find(a => a.id === abilityID);
+				const feature = f.feature as FeatureClassAbility;
+				let heroClass = hero.class;
+				if (feature.data.classID) {
+					heroClass = SourcebookLogic.getClasses(sourcebooks)
+						.find(c => c.id === feature.data.classID) || null;
+				}
+				feature.data.selectedIDs.forEach(abilityID => {
+					const ability = heroClass?.abilities.find(a => a.id === abilityID);
 					if (ability) {
 						choices.push({ ability: ability, source: f.source });
 					}

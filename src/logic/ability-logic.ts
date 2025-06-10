@@ -79,21 +79,28 @@ export class AbilityLogic {
 		}
 
 		const bonus = (hero && ability) ? HeroLogic.getDistanceBonus(hero, ability, distance) : 0;
-		const mainBonus = distance.within ? 0 : bonus;
-		const withinBonus = distance.within ? bonus : 0;
 
-		const result = [
-			distance.type === AbilityDistanceType.Line ?
-				`Line ${distance.value + mainBonus}x${distance.value2 + mainBonus}`
-				:
-				`${distance.type} ${distance.value + mainBonus}`,
-			distance.within ?
-				`within ${distance.within + withinBonus}`
-				: undefined,
-			distance.qualifier ?
-				`(${distance.qualifier})`
-				: undefined
-		].filter(x => x).join(' ');
+		const result = (distance.within === 0) ?
+			[
+				distance.type === AbilityDistanceType.Line ?
+					`Line ${Math.max(distance.value, distance.value2) + bonus}x${Math.min(distance.value, distance.value2)}`
+					:
+					`${distance.type} ${distance.value + bonus}`,
+				distance.qualifier ?
+					`(${distance.qualifier})`
+					: undefined
+			].filter(x => x).join(' ')
+			:
+			[
+				distance.type === AbilityDistanceType.Line ?
+					`Line ${Math.max(distance.value, distance.value2)}x${Math.min(distance.value, distance.value2)}`
+					:
+					`${distance.type} ${distance.value}`,
+				`within ${distance.within + bonus}`,
+				distance.qualifier ?
+					`(${distance.qualifier})`
+					: undefined
+			].filter(x => x).join(' ');
 
 		return result;
 	};

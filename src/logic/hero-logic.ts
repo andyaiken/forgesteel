@@ -556,12 +556,12 @@ export class HeroLogic {
 	///////////////////////////////////////////////////////////////////////////
 
 	static getKitDamageBonuses = (hero: Hero) => {
-		const array: { kit: string, type: 'melee' | 'ranged', tier1: number, tier2: number, tier3: number }[] = [];
+		const kits: { kit: string, type: 'melee' | 'ranged', tier1: number, tier2: number, tier3: number }[] = [];
 
 		this.getKits(hero)
 			.forEach(kit => {
 				if (kit.meleeDamage) {
-					array.push({
+					kits.push({
 						kit: kit.name,
 						type: 'melee',
 						tier1: kit.meleeDamage.tier1,
@@ -570,7 +570,7 @@ export class HeroLogic {
 					});
 				}
 				if (kit.rangedDamage) {
-					array.push({
+					kits.push({
 						kit: kit.name,
 						type: 'ranged',
 						tier1: kit.rangedDamage.tier1,
@@ -580,7 +580,38 @@ export class HeroLogic {
 				}
 			});
 
-		return array;
+		const kitToString = (info: { kit: string, type: 'melee' | 'ranged', tier1: number, tier2: number, tier3: number }) => {
+			return `${info.type} ${info.tier1} ${info.tier2} ${info.tier3}`;
+		};
+
+		// Collate functionally identical kits together
+		const uniqueKits = Collections
+			.distinct(kits.map(kitToString), x => x)
+			.map(str => {
+				const toCombine = kits.filter(k => kitToString(k) === str);
+				return {
+					kit: toCombine.map(k => k.kit).join(' / '),
+					type: toCombine[0].type,
+					tier1: toCombine[0].tier1,
+					tier2: toCombine[0].tier2,
+					tier3: toCombine[0].tier3
+				};
+			});
+
+		// Remove any kit that's strictly worse than another
+		const worse: string[] = [];
+		uniqueKits.forEach(k => {
+			const isWorse = uniqueKits
+				.filter(k2 => k.kit !== k2.kit)
+				.filter(k2 => k.type === k2.type)
+				.some(k2 => (k.tier1 < k2.tier1) && (k.tier2 < k2.tier2) && (k.tier3 < k2.tier3));
+			if (isWorse) {
+				worse.push(k.kit);
+			}
+		});
+		const reducedKits = uniqueKits.filter(k => !worse.includes(k.kit));
+
+		return reducedKits;
 	};
 
 	static getFeatureDamageBonuses = (hero: Hero, ability: Ability) => {

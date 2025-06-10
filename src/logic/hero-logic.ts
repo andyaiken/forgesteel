@@ -1,7 +1,6 @@
-import { Ability, AbilityDistance } from '../models/ability';
 import { Feature, FeatureAbility, FeatureClassAbility } from '../models/feature';
+import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
-import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from '../models/ancestry';
 import { Characteristic } from '../enums/characteristic';
@@ -633,23 +632,19 @@ export class HeroLogic {
 		return array;
 	};
 
-	static getDistanceBonus = (hero: Hero, ability: Ability, distance: AbilityDistance) => {
+	static getDistanceBonus = (hero: Hero, ability: Ability) => {
 		let value = 0;
 
-		switch (distance.type) {
-			case AbilityDistanceType.Melee:
-				if (ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon)) {
-					// Add maximum melee distance bonus from kits
-					value += Collections.max(this.getKits(hero).map(kit => kit.meleeDistance), value => value) || 0;
-				}
-				break;
-			case AbilityDistanceType.Ranged:
-				if (ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon)) {
-					// Add maximum ranged distance bonus from kits
-					value += Collections.max(this.getKits(hero).map(kit => kit.rangedDistance), value => value) || 0;
-				}
-				break;
+		const kitBonuses: number[] = [];
+		if (ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon)) {
+			// Add melee distance bonus from kits
+			kitBonuses.push(...this.getKits(hero).map(kit => kit.meleeDistance));
 		}
+		if (ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon)) {
+			// Add ranged distance bonus from kits
+			kitBonuses.push(...this.getKits(hero).map(kit => kit.rangedDistance));
+		}
+		value += Collections.max(kitBonuses, x => x) || 0;
 
 		HeroLogic.getFeatures(hero)
 			.map(f => f.feature)

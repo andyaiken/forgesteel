@@ -408,7 +408,7 @@ const AbilityInfo = (props: AbilityInfoProps) => {
 						<Field
 							compact={true}
 							label='Distance'
-							value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.hero, props.ability)).join(' or ')}
+							value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.ability, props.hero)).join(' or ')}
 						/>
 						: null
 				}

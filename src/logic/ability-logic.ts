@@ -8,6 +8,7 @@ import { HeroLogic } from './hero-logic';
 import { KitArmor } from '../enums/kit-armor';
 import { KitWeapon } from '../enums/kit-weapon';
 import { PowerRoll } from '../models/power-roll';
+import { Utils } from '../utils/utils';
 
 export class AbilityLogic {
 	static getKeywords = () => {
@@ -65,7 +66,7 @@ export class AbilityLogic {
 		].sort();
 	};
 
-	static getDistance = (distance: AbilityDistance, hero?: Hero, ability?: Ability) => {
+	static getDistance = (distance: AbilityDistance, ability?: Ability, hero?: Hero) => {
 		if (distance.type === AbilityDistanceType.Self) {
 			if (distance.qualifier) {
 				return `Self (${distance.qualifier})`;
@@ -78,7 +79,23 @@ export class AbilityLogic {
 			return distance.special || 'Special';
 		}
 
-		const bonus = (hero && ability) ? HeroLogic.getDistanceBonus(hero, ability, distance) : 0;
+		let bonus = 0;
+		if (hero && ability) {
+			const abilityCopy = Utils.copy(ability);
+			switch (distance.type) {
+				case AbilityDistanceType.Melee:
+					// The ability if being used as Melee
+					// Make sure the ability does not also have the Ranged keyword
+					abilityCopy.keywords = abilityCopy.keywords.filter(kw => kw !== AbilityKeyword.Ranged);
+					break;
+				case AbilityDistanceType.Ranged:
+					// The ability if being used as Ranged
+					// Make sure the ability does not also have the Melee keyword
+					abilityCopy.keywords = abilityCopy.keywords.filter(kw => kw !== AbilityKeyword.Melee);
+					break;
+			}
+			bonus = HeroLogic.getDistanceBonus(hero, abilityCopy);
+		}
 
 		const result = (distance.within === 0) ?
 			[

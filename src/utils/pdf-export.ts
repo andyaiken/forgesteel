@@ -299,11 +299,11 @@ export class PDFExport {
 					texts[prefix + 'Name' + i] = a.name;
 					texts[prefix + 'Target' + i] = a.target;
 					if ((a.distance.length > 1) && (a.distance[0].type === AbilityDistanceType.Melee) && (a.distance[1].type === AbilityDistanceType.Ranged)) {
-						const melee = AbilityLogic.getDistance(a.distance[0], hero, a).replace('Melee', 'M');
-						const ranged = AbilityLogic.getDistance(a.distance[1], hero, a).replace('Ranged', 'R');
+						const melee = AbilityLogic.getDistance(a.distance[0], a, hero).replace('Melee', 'M');
+						const ranged = AbilityLogic.getDistance(a.distance[1], a, hero).replace('Ranged', 'R');
 						texts[prefix + 'Distance' + i] = `${melee} or ${ranged}`;
 					} else if (a.distance.length > 0) {
-						texts[prefix + 'Distance' + i] = AbilityLogic.getDistance(a.distance[0], hero, a);
+						texts[prefix + 'Distance' + i] = AbilityLogic.getDistance(a.distance[0], a, hero);
 					}
 					texts[prefix + 'Keywords' + i] = a.keywords.join(', ');
 					texts[prefix + 'Type' + i] = a.type.free ? `Free ${a.type.usage}` : a.type.usage;

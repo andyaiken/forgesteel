@@ -84,6 +84,10 @@ p,
 		letter-spacing: 0.5px;
 	}
 
+	&.compact-text {
+		margin: 3px 0;
+	}
+
 	&.dimmed-text {
 		opacity: 0.3;
 	}

@@ -5,6 +5,7 @@ import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
 import { Ability } from '../../../../models/ability';
 import { AbilityData } from '../../../../data/ability-data';
+import { AbilityInfoPanel } from '../../ability-info-panel/ability-info-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityUsage } from '../../../../enums/ability-usage';
@@ -12,7 +13,6 @@ import { ConditionType } from '../../../../enums/condition-type';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
-import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { Markdown } from '../../../controls/markdown/markdown';
@@ -251,7 +251,7 @@ export const AbilityPanel = (props: Props) => {
 										</div>
 										: null
 								}
-								<AbilityInfo ability={props.ability} hero={props.hero} />
+								<AbilityInfoPanel ability={props.ability} hero={props.hero} showAbilityType={true} />
 								{
 									props.ability.preEffect ?
 										<Markdown text={parseText(props.ability.preEffect)} />
@@ -351,77 +351,6 @@ export const AbilityPanel = (props: Props) => {
 					}
 				</div>
 			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
-};
-
-interface AbilityInfoProps {
-	ability: Ability;
-	hero?: Hero;
-}
-
-const AbilityInfo = (props: AbilityInfoProps) => {
-	try {
-		let monogram = '';
-		switch (props.ability.type.usage) {
-			case AbilityUsage.Action:
-				monogram = 'action';
-				break;
-			case AbilityUsage.Maneuver:
-				monogram = 'maneuver';
-				break;
-			case AbilityUsage.Trigger:
-				monogram = 'trigger';
-				break;
-			case AbilityUsage.Move:
-				monogram = 'move';
-				break;
-			case AbilityUsage.VillainAction:
-				monogram = 'villain';
-				break;
-		}
-		if (props.ability.type.free) {
-			monogram = 'free';
-		}
-		if (props.ability.keywords.includes(AbilityKeyword.Routine)) {
-			monogram = 'routine';
-		}
-
-		return (
-			<div className='ability-info-panel'>
-				{monogram ? <div className={`sash ${monogram}`}>{monogram}</div> : null}
-				<Field compact={true} label='Type' value={FormatLogic.getAbilityType(props.ability.type)} />
-				{
-					props.ability.type.trigger ?
-						<Field
-							compact={true}
-							label='Trigger'
-							value={props.ability.type.trigger}
-						/>
-						: null
-				}
-				{
-					props.ability.distance.length > 0 ?
-						<Field
-							compact={true}
-							label='Distance'
-							value={props.ability.distance.map(d => AbilityLogic.getDistance(d, props.ability, props.hero)).join(' or ')}
-						/>
-						: null
-				}
-				{
-					props.ability.target ?
-						<Field
-							compact={true}
-							label='Target'
-							value={props.ability.target}
-						/>
-						: null
-				}
-			</div>
 		);
 	} catch (ex) {
 		console.error(ex);

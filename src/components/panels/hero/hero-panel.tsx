@@ -2,6 +2,7 @@ import { Col, Divider, Flex, Row, Segmented, Select, Statistic, Tag } from 'antd
 import { Monster, MonsterGroup } from '../../../models/monster';
 import { Ability } from '../../../models/ability';
 import { AbilityData } from '../../../data/ability-data';
+import { AbilityInfoPanel } from '../ability-info-panel/ability-info-panel';
 import { AbilityPanel } from '../elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
 import { Ancestry } from '../../../models/ancestry';
@@ -107,7 +108,9 @@ export const HeroPanel = (props: Props) => {
 			const damageImmunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
 			const damageWeaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
-			const sourcebooks = props.sourcebooks.filter(cs => props.hero.settingIDs.includes(cs.id));
+			const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.showStandardAbilities);
+			const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
+			const languages = HeroLogic.getLanguages(props.hero, props.sourcebooks);
 
 			const getSkills = (label: string, skills: Skill[]) => {
 				return skills.length > 0 ?
@@ -175,11 +178,19 @@ export const HeroPanel = (props: Props) => {
 							</div>
 							: null
 					}
+					{
+						triggers.length > 0 ?
+							<div className='overview-tile'>
+								<HeaderText>Triggered Actions</HeaderText>
+								{triggers.map(t => <AbilityInfoPanel key={t.ability.id} ability={t.ability} hero={props.hero} showAbilityName={true} />)}
+							</div>
+							: null
+					}
 					<div className='overview-tile clickable' onClick={onShowLanguages}>
 						<HeaderText>Languages</HeaderText>
 						{
-							HeroLogic.getLanguages(props.hero, sourcebooks).length > 0 ?
-								HeroLogic.getLanguages(props.hero, sourcebooks).map(l => <div key={l.name} className='ds-text'>{l.name}</div>)
+							languages.length > 0 ?
+								languages.map(l => <div key={l.name} className='ds-text'>{l.name}</div>)
 								:
 								<div className='ds-text dimmed-text'>None</div>
 						}
@@ -187,9 +198,9 @@ export const HeroPanel = (props: Props) => {
 					{
 						(props.options.showSkillsInGroups || false) ?
 							[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
-								.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, sourcebooks).filter(s => s.list === list)))
+								.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, props.sourcebooks).filter(s => s.list === list)))
 							:
-							getSkills('Skills', HeroLogic.getSkills(props.hero, sourcebooks))
+							getSkills('Skills', HeroLogic.getSkills(props.hero, props.sourcebooks))
 					}
 				</div>
 			);

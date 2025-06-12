@@ -77,16 +77,20 @@ export class TerrainLogic {
 			}
 		}
 
-		const minLevel = Math.min(...filter.level);
-		const maxLevel = Math.max(...filter.level);
-		if ((terrain.level < minLevel) || (terrain.level > maxLevel)) {
-			return false;
+		if (filter.level.length > 0) {
+			const minLevel = Math.min(...filter.level);
+			const maxLevel = Math.max(...filter.level);
+			if ((terrain.level < minLevel) || (terrain.level > maxLevel)) {
+				return false;
+			}
 		}
 
-		const minEV = Math.min(...filter.ev);
-		const maxEV = Math.max(...filter.ev);
-		if ((terrain.encounterValue < minEV) || (terrain.encounterValue > maxEV)) {
-			return false;
+		if (filter.ev.length > 0) {
+			const minEV = Math.min(...filter.ev);
+			const maxEV = Math.max(...filter.ev);
+			if ((terrain.encounterValue < minEV) || (terrain.encounterValue > maxEV)) {
+				return false;
+			}
 		}
 
 		return true;

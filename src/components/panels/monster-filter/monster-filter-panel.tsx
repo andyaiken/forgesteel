@@ -1,4 +1,4 @@
-import { Input, Select, Slider, Space } from 'antd';
+import { Flex, Input, Select, Slider, Space } from 'antd';
 import { Collections } from '../../../utils/collections';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Field } from '../../controls/field/field';
@@ -6,6 +6,7 @@ import { Monster } from '../../../models/monster';
 import { MonsterFilter } from '../../../models/filter';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
+import { Toggle } from '../../controls/toggle/toggle';
 import { Utils } from '../../../utils/utils';
 
 import './monster-filter-panel.scss';
@@ -61,6 +62,9 @@ export const MonsterFilterPanel = (props: Props) => {
 	};
 
 	const keywords = Collections.distinct(props.monsters.flatMap(m => m.keywords), k => k).sort();
+	const maxSize = Collections.max(props.monsters.map(m => m.size.value), x => x) || 1;
+	const maxLevel = Collections.max(props.monsters.map(m => m.level), x => x) || 1;
+	const maxEV = Collections.max(props.monsters.map(m => m.encounterValue), x => x) || 0;
 
 	return (
 		<ErrorBoundary>
@@ -133,36 +137,59 @@ export const MonsterFilterPanel = (props: Props) => {
 						value={props.monsterFilter.organizations}
 						onChange={setFilterOrganizations}
 					/>
-					<div>
-						<Slider
-							range={{ draggableTrack: true }}
-							min={1}
-							max={10}
-							value={props.monsterFilter.size}
-							onChange={setFilterSize}
-						/>
-						<Field label='Size' value={`${Math.min(...props.monsterFilter.size)} to ${Math.max(...props.monsterFilter.size)}`} />
-					</div>
-					<div>
-						<Slider
-							range={{ draggableTrack: true }}
-							min={1}
-							max={10}
-							value={props.monsterFilter.level}
-							onChange={setFilterLevel}
-						/>
-						<Field label='Level' value={`${Math.min(...props.monsterFilter.level)} to ${Math.max(...props.monsterFilter.level)}`} />
-					</div>
-					<div>
-						<Slider
-							range={{ draggableTrack: true }}
-							min={0}
-							max={120}
-							value={props.monsterFilter.ev}
-							onChange={setFilterEV}
-						/>
-						<Field label='EV' value={`${Math.min(...props.monsterFilter.ev)} to ${Math.max(...props.monsterFilter.ev)}`} />
-					</div>
+					<Flex gap={10}>
+						<div style={{ flex: '1 1 0' }}>
+							<Toggle label='Filter on size' value={props.monsterFilter.size.length > 0} onChange={value => setFilterSize(value ? [ 1, 2 ] : [])} />
+							{
+								props.monsterFilter.size.length > 0 ?
+									<>
+										<Slider
+											range={{ draggableTrack: true }}
+											min={1}
+											max={maxSize}
+											value={props.monsterFilter.size}
+											onChange={setFilterSize}
+										/>
+										<Field label='Size' value={`${Math.min(...props.monsterFilter.size)} to ${Math.max(...props.monsterFilter.size)}`} />
+									</>
+									: null
+							}
+						</div>
+						<div style={{ flex: '1 1 0' }}>
+							<Toggle label='Filter on level' value={props.monsterFilter.level.length > 0} onChange={value => setFilterLevel(value ? [ 1, 2 ] : [])} />
+							{
+								props.monsterFilter.level.length > 0 ?
+									<>
+										<Slider
+											range={{ draggableTrack: true }}
+											min={1}
+											max={maxLevel}
+											value={props.monsterFilter.level}
+											onChange={setFilterLevel}
+										/>
+										<Field label='Level' value={`${Math.min(...props.monsterFilter.level)} to ${Math.max(...props.monsterFilter.level)}`} />
+									</>
+									: null
+							}
+						</div>
+						<div style={{ flex: '1 1 0' }}>
+							<Toggle label='Filter on EV' value={props.monsterFilter.ev.length > 0} onChange={value => setFilterEV(value ? [ 1, 10 ] : [])} />
+							{
+								props.monsterFilter.ev.length > 0 ?
+									<>
+										<Slider
+											range={{ draggableTrack: true }}
+											min={0}
+											max={maxEV}
+											value={props.monsterFilter.ev}
+											onChange={setFilterEV}
+										/>
+										<Field label='EV' value={`${Math.min(...props.monsterFilter.ev)} to ${Math.max(...props.monsterFilter.ev)}`} />
+									</>
+									: null
+							}
+						</div>
+					</Flex>
 				</Space>
 			</div>
 		</ErrorBoundary>

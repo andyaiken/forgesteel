@@ -486,25 +486,25 @@ export class FactoryLogic {
 		};
 	};
 
-	static createMonsterFilter = (minLevel: number, maxLevel: number): MonsterFilter => {
+	static createMonsterFilter = (): MonsterFilter => {
 		return {
 			name: '',
 			keywords: [],
 			roles: [],
 			organizations: [],
-			level: [ minLevel, maxLevel ],
-			size: [ 1, 3 ],
-			ev: [ 0, 120 ]
+			level: [ 1, 2 ],
+			size: [ 1, 2 ],
+			ev: [ 1, 10 ]
 		};
 	};
 
-	static createTerrainFilter = (minLevel: number, maxLevel: number): TerrainFilter => {
+	static createTerrainFilter = (): TerrainFilter => {
 		return {
 			name: '',
 			roles: [],
 			terrainRoles: [],
-			level: [ minLevel, maxLevel ],
-			ev: [ 0, 120 ]
+			level: [ 1, 2 ],
+			ev: [ 1, 10 ]
 		};
 	};
 

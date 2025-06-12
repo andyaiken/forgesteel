@@ -1,10 +1,9 @@
-import { Alert, Divider, Segmented, Select } from 'antd';
+import { Divider, Segmented, Select } from 'antd';
 import { Collections } from '../../../utils/collections';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Hero } from '../../../models/hero';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Options } from '../../../models/options';
-import { OptionsLogic } from '../../../logic/options-logic';
 import { PanelWidth } from '../../../enums/panel-width';
 import { Toggle } from '../../controls/toggle/toggle';
 import { Utils } from '../../../utils/utils';
@@ -168,7 +167,9 @@ export const OptionsPanel = (props: Props) => {
 			return (
 				<>
 					{initialDivider ? <Divider /> : null}
-					<div>Start encounters with these heroes:</div>
+					<div>
+						Start encounters with these heroes:
+					</div>
 					<Select
 						style={{ width: '100%' }}
 						placeholder='Select a party'
@@ -238,7 +239,9 @@ export const OptionsPanel = (props: Props) => {
 						<NumberSpin label='Minions per group' min={1} value={props.options.minionCount} onChange={setMinionCount} />
 						{getPartySection(true)}
 						<Divider />
-						<Alert type='info' showIcon={true} message={`Calculate encounter difficulty based on ${OptionsLogic.getPartyDescription(props.options)}.`} />
+						<div>
+							Calculate encounter difficulty based on these heroes:
+						</div>
 						<Select
 							style={{ width: '100%' }}
 							placeholder='Select a party'

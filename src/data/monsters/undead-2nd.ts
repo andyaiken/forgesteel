@@ -241,7 +241,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 							tier2: '7 damage',
 							tier3: '9 damage'
 						}),
-						effect: 'The target can\'t shift away from the mounling until the end of their next turn.',
+						effect: 'The target can\'t shift away from the moundling until the end of their next turn.',
 						spend: [
 							{ value: 1, effect: 'The mournling targets an additional creature.' }
 						]

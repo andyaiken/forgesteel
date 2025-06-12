@@ -103,8 +103,8 @@ export const PlaybookEditPage = (props: Props) => {
 		return Utils.copy(original);
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
-	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter(1, 3));
-	const [ terrainFilter, setTerrainFilter ] = useState<TerrainFilter>(FactoryLogic.createTerrainFilter(1, 3));
+	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
+	const [ terrainFilter, setTerrainFilter ] = useState<TerrainFilter>(FactoryLogic.createTerrainFilter());
 
 	//#region Edit
 
@@ -1636,7 +1636,8 @@ export const PlaybookEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const terrains = Collections.sort(SourcebookLogic.getTerrains(props.sourcebooks).filter(m => TerrainLogic.matches(m, terrainFilter)), t => t.name);
+		const allTerrains = SourcebookLogic.getTerrains(props.sourcebooks);
+		const terrains = Collections.sort(allTerrains.filter(m => TerrainLogic.matches(m, terrainFilter)), t => t.name);
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -1647,7 +1648,12 @@ export const PlaybookEditPage = (props: Props) => {
 					onChange={e => setTerrainFilterName(e.target.value)}
 				/>
 				<Expander title='Filter'>
-					<TerrainFilterPanel terrainFilter={terrainFilter} includeNameFilter={false} onChange={setTerrainFilter} />
+					<TerrainFilterPanel
+						terrainFilter={terrainFilter}
+						terrain={allTerrains}
+						includeNameFilter={false}
+						onChange={setTerrainFilter}
+					/>
 				</Expander>
 				{
 					terrains.map(t => {

@@ -251,7 +251,7 @@ export const AbilityPanel = (props: Props) => {
 										</div>
 										: null
 								}
-								<AbilityInfoPanel ability={props.ability} hero={props.hero} showAbilityType={true} />
+								<AbilityInfoPanel ability={props.ability} hero={props.hero} />
 								{
 									props.ability.preEffect ?
 										<Markdown text={parseText(props.ability.preEffect)} />

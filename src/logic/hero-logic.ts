@@ -150,12 +150,15 @@ export class HeroLogic {
 					heroClass = SourcebookLogic.getClasses(sourcebooks)
 						.find(c => c.id === feature.data.classID) || null;
 				}
-				feature.data.selectedIDs.forEach(abilityID => {
-					const ability = heroClass?.abilities.find(a => a.id === abilityID);
-					if (ability) {
-						choices.push({ ability: ability, source: f.source });
-					}
-				});
+				if (heroClass) {
+					const abilities = SourcebookLogic.getAllClassAbilities(heroClass);
+					feature.data.selectedIDs.forEach(abilityID => {
+						const ability = abilities.find(a => a.id === abilityID);
+						if (ability) {
+							choices.push({ ability: ability, source: f.source });
+						}
+					});
+				}
 			});
 
 		const abilities: { ability: Ability, source: string }[] = [];

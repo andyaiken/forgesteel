@@ -982,6 +982,7 @@ export const FeatureEditPanel = (props: Props) => {
 						<HeaderText>Class</HeaderText>
 						<Select
 							style={{ width: '100%' }}
+							allowClear={!!data.classID}
 							placeholder='Select class'
 							options={[ { id: '', name: 'Your Class', description: 'An ability from your own class.' }, ...SourcebookLogic.getClasses(props.sourcebooks) ].map(o => ({ value: o.id, label: o.name, description: o.description }))}
 							optionRender={option => <Field label={option.data.label} value={option.data.description} />}
@@ -998,15 +999,21 @@ export const FeatureEditPanel = (props: Props) => {
 							onChange={setAbilityClassID}
 						/>
 						<HeaderText>Signature</HeaderText>
-						<Toggle label='Signature' value={data.cost === 'signature'} onChange={value => setAbilityCost(value ? 'signature' : 0)} />
-						{
-							data.cost !== 'signature' ?
-								<>
-									<HeaderText>Cost</HeaderText>
-									<NumberSpin min={1} value={data.cost} onChange={setAbilityCost} />
-								</>
-								: null
-						}
+						<Flex align='center' justify='center'>
+							<Segmented<'signature' | number>
+								options={[
+									{ value: 'signature', label: 'Signature' },
+									{ value: 3, label: '3pts' },
+									{ value: 5, label: '5pts' },
+									{ value: 7, label: '7pts' },
+									{ value: 9, label: '9pts' },
+									{ value: 11, label: '11pts' },
+									{ value: 0, label: 'Other' }
+								]}
+								value={feature.data.cost}
+								onChange={setAbilityCost}
+							/>
+						</Flex>
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
 						<HeaderText>Minimum Level</HeaderText>

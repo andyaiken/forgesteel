@@ -90,7 +90,7 @@ interface HeroInfoProps {
 export const HeroInfo = (props: HeroInfoProps) => {
 	return (
 		<div className='combatant-button-content' style={props.style}>
-			<HeroToken hero={props.hero} />
+			<HeroToken hero={props.hero} size={30} />
 			<div className='combatant-button-details'>
 				<div className='combatant-name'>{props.hero.name}</div>
 				<div className='combatant-info'>{HeroLogic.getHeroDescription(props.hero)}</div>
@@ -127,7 +127,7 @@ interface MonsterInfoProps {
 export const MonsterInfo = (props: MonsterInfoProps) => {
 	return (
 		<div className='combatant-button-content' style={props.style}>
-			<MonsterToken monster={props.monster} />
+			<MonsterToken monster={props.monster} size={30} />
 			<div className='combatant-button-details'>
 				<div className='combatant-name'>{props.monster.name}</div>
 				<div className='combatant-info'>{MonsterLogic.getMonsterDescription(props.monster)}</div>

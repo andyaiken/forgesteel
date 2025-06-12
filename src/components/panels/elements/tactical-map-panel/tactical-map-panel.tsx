@@ -1075,12 +1075,13 @@ export const TacticalMapPanel = (props: Props) => {
 			if (selectedMini) {
 				return (
 					<div className='tactical-map-toolbar bottom-toolbar'>
-						<Button onClick={() => setSelectedMini(null)}>
-							<CloseOutlined />
-						</Button>
 						<div>
 							Select a square to place this mini
 						</div>
+						<Divider type='vertical' />
+						<Button icon={<CloseOutlined />} onClick={() => setSelectedMini(null)}>
+							Cancel
+						</Button>
 					</div>
 				);
 			}

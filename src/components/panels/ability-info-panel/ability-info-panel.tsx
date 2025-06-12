@@ -11,8 +11,6 @@ import './ability-info-panel.scss';
 interface Props {
 	ability: Ability;
 	hero?: Hero;
-	showAbilityName?: boolean;
-	showAbilityType?: boolean;
 }
 
 export const AbilityInfoPanel = (props: Props) => {
@@ -55,16 +53,7 @@ export const AbilityInfoPanel = (props: Props) => {
 
 		return (
 			<div className='ability-info-panel'>
-				{
-					props.showAbilityName && props.ability.name ?
-						<div className='ds-text compact-text bold-text'>{props.ability.name}</div>
-						: null
-				}
-				{
-					props.showAbilityType ?
-						<div className='ds-text compact-text bold-text'>{type}</div>
-						: null
-				}
+				<div className='ds-text compact-text bold-text'>{type}</div>
 				{
 					props.ability.type.trigger ?
 						<Field

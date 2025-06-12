@@ -1,9 +1,11 @@
+import { Ability } from '../models/ability';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
 import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { Domain } from '../models/domain';
+import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
@@ -249,6 +251,38 @@ export class SourcebookLogic {
 		});
 
 		return Collections.sort(list, item => item.name);
+	};
+
+	///////////////////////////////////////////////////////////////////////////
+
+	static getAllClassAbilities = (heroClass: HeroClass) => {
+		const abilities: Ability[] = [];
+
+		abilities.push(...heroClass.abilities);
+
+		const addFeature = (feature: Feature) => {
+			switch (feature.type) {
+				case FeatureType.Ability:
+					abilities.push(feature.data.ability);
+					break;
+				case FeatureType.Choice:
+					feature.data.options.map(o => o.feature).forEach(addFeature);
+					break;
+				case FeatureType.Multiple:
+					feature.data.features.forEach(addFeature);
+					break;
+			}
+		};
+
+		const levels = [
+			...heroClass.featuresByLevel,
+			...heroClass.subclasses.flatMap(sc => sc.featuresByLevel)
+		];
+		levels.forEach(lvl => {
+			lvl.features.forEach(addFeature);
+		});
+
+		return abilities;
 	};
 
 	///////////////////////////////////////////////////////////////////////////

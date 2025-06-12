@@ -348,9 +348,13 @@ export const FeaturePanel = (props: Props) => {
 			heroClass = SourcebookLogic.getClasses(props.sourcebooks || []).find(c => c.id === data.classID) || null;
 		}
 
-		const abilities = heroClass?.abilities
-			.filter(a => a.cost === data.cost)
-			.filter(a => a.minLevel <= data.minLevel) || [];
+		const abilities: Ability[] = [];
+		if (heroClass) {
+			SourcebookLogic.getAllClassAbilities(heroClass)
+				.filter(a => a.cost === data.cost)
+				.filter(a => a.minLevel <= data.minLevel)
+				.forEach(a => abilities.push(a));
+		}
 
 		const distinctAbilities = Collections.distinct(abilities, a => a.name);
 		const sortedAbilities = Collections.sort(distinctAbilities, a => a.name);

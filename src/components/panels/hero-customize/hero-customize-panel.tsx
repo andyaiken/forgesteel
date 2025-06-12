@@ -1,4 +1,4 @@
-import { Button, Popover, Segmented, Select, Space } from 'antd';
+import { Button, Flex, Popover, Segmented, Select, Space } from 'antd';
 import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeaturePerk, FeatureSkillChoice, FeatureTitleChoice } from '../../../models/feature';
 import { Characteristic } from '../../../enums/characteristic';
 import { ConditionType } from '../../../enums/condition-type';
@@ -24,7 +24,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
-import { Toggle } from '../../controls/toggle/toggle';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
@@ -292,6 +291,7 @@ export const HeroCustomizePanel = (props: Props) => {
 						<HeaderText>Class</HeaderText>
 						<Select
 							style={{ width: '100%' }}
+							allowClear={!!feature.data.classID}
 							placeholder='Select class'
 							options={[ { id: '', name: 'Your Class', description: 'An ability from your own class.' }, ...SourcebookLogic.getClasses(props.sourcebooks) ].map(o => ({ value: o.id, label: o.name, description: o.description }))}
 							optionRender={option => <Field label={option.data.label} value={option.data.description} />}
@@ -308,8 +308,21 @@ export const HeroCustomizePanel = (props: Props) => {
 							onChange={id => setClassID(feature, id)}
 						/>
 						<HeaderText>Ability Cost</HeaderText>
-						<Toggle label='Signature' value={feature.data.cost === 'signature'} onChange={value => setCost(feature, value ? 'signature' : 3)} />
-						{feature.data.cost !== 'signature' ? <NumberSpin min={3} max={7} steps={[ 2 ]} value={feature.data.cost} onChange={value => setCost(feature, value)} /> : null}
+						<Flex align='center' justify='center'>
+							<Segmented<'signature' | number>
+								options={[
+									{ value: 'signature', label: 'Signature' },
+									{ value: 3, label: '3pts' },
+									{ value: 5, label: '5pts' },
+									{ value: 7, label: '7pts' },
+									{ value: 9, label: '9pts' },
+									{ value: 11, label: '11pts' },
+									{ value: 0, label: 'Other' }
+								]}
+								value={feature.data.cost}
+								onChange={value => setCost(feature, value)}
+							/>
+						</Flex>
 					</div>
 				);
 			case FeatureType.ConditionImmunity:

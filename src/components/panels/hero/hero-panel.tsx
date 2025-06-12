@@ -1,8 +1,8 @@
-import { Col, Divider, Flex, Row, Segmented, Select, Statistic, Tag } from 'antd';
+import { Col, Divider, Flex, Row, Segmented, Select, Space, Statistic, Tag } from 'antd';
 import { Monster, MonsterGroup } from '../../../models/monster';
 import { Ability } from '../../../models/ability';
 import { AbilityData } from '../../../data/ability-data';
-import { AbilityInfoPanel } from '../ability-info-panel/ability-info-panel';
+import { AbilityLogic } from '../../../logic/ability-logic';
 import { AbilityPanel } from '../elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
 import { Ancestry } from '../../../models/ancestry';
@@ -112,6 +112,43 @@ export const HeroPanel = (props: Props) => {
 			const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
 			const languages = HeroLogic.getLanguages(props.hero, props.sourcebooks);
 
+			const getTrigger = (ability: Ability) => {
+				const showTarget = ability.type.trigger.toLowerCase().includes('the target');
+				const distance = ability.distance.map(d => AbilityLogic.getDistance(d, ability, props.hero)).join(' or ');
+
+				return (
+					<div key={ability.id}>
+						{
+							ability.type.trigger ?
+								<Field
+									compact={true}
+									label={ability.name || 'Unnamed Ability'}
+									value={ability.type.trigger}
+								/>
+								: null
+						}
+						{
+							showTarget && distance ?
+								<Field
+									compact={true}
+									label={ability.target !== distance ? 'Distance' : 'Distance / Target'}
+									value={distance}
+								/>
+								: null
+						}
+						{
+							showTarget && ability.target && (ability.target !== distance) ?
+								<Field
+									compact={true}
+									label='Target'
+									value={ability.target}
+								/>
+								: null
+						}
+					</div>
+				);
+			};
+
 			const getSkills = (label: string, skills: Skill[]) => {
 				return skills.length > 0 ?
 					<div key={label} className='overview-tile clickable' onClick={onShowSkills}>
@@ -179,10 +216,12 @@ export const HeroPanel = (props: Props) => {
 							: null
 					}
 					{
-						triggers.length > 0 ?
-							<div className='overview-tile'>
+						triggers.length > 0 && !props.options.singlePage ?
+							<div className='overview-tile clickable' onClick={() => setTab('Triggers')}>
 								<HeaderText>Triggered Actions</HeaderText>
-								{triggers.map(t => <AbilityInfoPanel key={t.ability.id} ability={t.ability} hero={props.hero} showAbilityName={true} />)}
+								<Space direction='vertical'>
+									{triggers.map(t => getTrigger(t.ability))}
+								</Space>
 							</div>
 							: null
 					}

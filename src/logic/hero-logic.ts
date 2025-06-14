@@ -831,13 +831,17 @@ export class HeroLogic {
 		hero.state.staminaTemp = 0;
 		hero.state.recoveriesUsed = 0;
 		hero.state.surges = 0;
-		hero.state.heroicResource = 0;
 		hero.state.xp += hero.state.victories;
 		hero.state.victories = 0;
 		hero.state.conditions = [];
 		hero.state.hidden = false;
 		hero.state.encounterState = 'ready';
 		hero.state.defeated = false;
+
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.HeroicResource)
+			.forEach(f => f.data.value = 0);
 	};
 
 	///////////////////////////////////////////////////////////////////////////
@@ -1052,7 +1056,7 @@ export class HeroLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
-	static updateHero = (hero: Hero) => {
+	static updateHero = (hero: Hero, sourcebooks: Sourcebook[]) => {
 		if (hero.folder === undefined) {
 			hero.folder = '';
 		}
@@ -1195,6 +1199,29 @@ export class HeroLogic {
 				}
 			});
 		});
+
+		const x = hero.state as unknown as { heroicResource: number | undefined };
+		if (x.heroicResource) {
+			this.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource).forEach(f => {
+				f.data.value = x.heroicResource || 0;
+			});
+			delete x.heroicResource;
+		}
+		// If this hero has no heroic resource, get it from the (possibly updated) class
+		if (this.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource).length === 0) {
+			const currentClass = hero.class;
+			const updatedClass = SourcebookLogic.getClasses(sourcebooks).find(c => c.id === currentClass?.id);
+			if (currentClass && updatedClass) {
+				const heroicResources = updatedClass.featuresByLevel
+					.filter(lvl => lvl.level === 1)
+					.flatMap(lvl => lvl.features)
+					.filter(f => f.type === FeatureType.HeroicResource);
+				const heroicResourceIDs = heroicResources.map(f => f.id);
+				const heroicResourceNames = heroicResources.map(f => f.name);
+				currentClass.featuresByLevel[0].features = currentClass.featuresByLevel[0].features.filter(f => !heroicResourceIDs.includes(f.id) && !heroicResourceNames.includes(f.name));
+				heroicResources.forEach(f => currentClass.featuresByLevel[0].features.push(f));
+			}
+		}
 
 		this.getKits(hero).forEach(k => {
 			if (k.type === 'Standard') {

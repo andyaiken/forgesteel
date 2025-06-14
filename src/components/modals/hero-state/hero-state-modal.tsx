@@ -6,6 +6,7 @@ import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Empty } from '../../controls/empty/empty';
 import { Expander } from '../../controls/expander/expander';
 import { FactoryLogic } from '../../../logic/factory-logic';
+import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
@@ -27,7 +28,6 @@ import { ProjectPanel } from '../../panels/elements/project-panel/project-panel'
 import { ProjectSelectModal } from '../select/project-select/project-select-modal';
 import { Sourcebook } from '../../../models/sourcebook';
 import { Utils } from '../../../utils/utils';
-import { talent } from '../../../data/classes/talent';
 import { useState } from 'react';
 
 import './hero-state-modal.scss';
@@ -50,9 +50,13 @@ export const HeroStateModal = (props: Props) => {
 	const [ projectsVisible, setProjectsVisible ] = useState<boolean>(false);
 
 	const getHeroSection = () => {
-		const setHeroicResource = (value: number) => {
+		const setHeroicResource = (featureID: string, value: number) => {
 			const copy = Utils.copy(hero);
-			copy.state.heroicResource = value;
+			HeroLogic.getFeatures(copy)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.HeroicResource)
+				.filter(f => f.id === featureID)
+				.forEach(f => f.data.value = value);
 			setHero(copy);
 			props.onChange(copy);
 		};
@@ -115,32 +119,23 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const startEncounter = () => {
-			const copy = Utils.copy(hero);
-			copy.state.heroicResource = copy.state.victories;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		const endEncounter = () => {
-			const copy = Utils.copy(hero);
-			copy.state.heroicResource = 0;
-			copy.state.victories += 1;
-			copy.state.surges = 0;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
 		return (
 			<Space direction='vertical' style={{ paddingTop: '20px', width: '100%' }}>
 				<Flex gap={20}>
 					<Space direction='vertical' style={{ width: '100%' }}>
-						<NumberSpin
-							label={hero.class ? hero.class.heroicResource : 'Heroic Resource'}
-							value={hero.state.heroicResource}
-							min={hero.class && (hero.class.id === talent.id) ? undefined : 0}
-							onChange={setHeroicResource}
-						/>
+						{
+							HeroLogic.getFeatures(hero)
+								.map(f => f.feature)
+								.filter(f => f.type === FeatureType.HeroicResource)
+								.map(f => (
+									<NumberSpin
+										label={f.name}
+										value={f.data.value}
+										min={f.data.canBeNegative ? undefined : 0}
+										onChange={value => setHeroicResource(f.id, value)}
+									/>
+								))
+						}
 						<NumberSpin
 							label='Victories'
 							value={hero.state.victories}
@@ -200,35 +195,6 @@ export const HeroStateModal = (props: Props) => {
 						/>
 						: null
 				}
-				<Divider />
-				<Flex align='center' justify='space-evenly' gap={10}>
-					<Button
-						key='start-encounter'
-						style={{ flex: '1 1 0' }}
-						className='tall-button'
-						onClick={startEncounter}
-					>
-						<div>
-							<div>Start Encounter</div>
-							<div className='subtext'>
-								Victories to {hero.class ? hero.class.heroicResource : 'Heroic Resource'}
-							</div>
-						</div>
-					</Button>
-					<Button
-						key='end-encounter'
-						style={{ flex: '1 1 0' }}
-						className='tall-button'
-						onClick={endEncounter}
-					>
-						<div>
-							<div>End Encounter</div>
-							<div className='subtext'>
-								+1 Victory
-							</div>
-						</div>
-					</Button>
-				</Flex>
 				<Divider />
 				<NumberSpin
 					label='Hero Tokens'

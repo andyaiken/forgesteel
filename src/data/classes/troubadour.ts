@@ -13,7 +13,6 @@ export const troubadour: HeroClass = {
 The whole world's a stage and everyone on it, an actor. No one knows this better than the troubadour. You find energy in the drama of everyday life and know how to draw spectacle forth from even the most mundane of situations. You accent highs and deepen lows in service to whomever would witness your performance.
 
 And beyond the mundane, there are insurmountable dangers that cause many a hero to cower. But the troubadour must chase that drama. The troubadour takes the world stage not to die, but to find out if they are truly alive.`,
-	heroicResource: 'Drama',
 	subclassName: 'Class Act',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -35,6 +34,33 @@ And beyond the mundane, there are insurmountable dangers that cause many a hero 
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
+				FactoryLogic.feature.createHeroicResource({
+					id: 'troubadour-resource',
+					name: 'Drama',
+					description: 'You still gain drama during combat if you are dead as long as your body is intact. During the encounter in which you died, if you have 30 drama, you can come back to life with 1 Stamina and 0 drama (no action required). You can’t gain drama in future encounters while you remain dead.',
+					gains: [
+						{
+							trigger: 'Start of your turn',
+							value: '1d3'
+						},
+						{
+							trigger: 'Three or more heroes use an ability on the same turn for the first time',
+							value: '2'
+						},
+						{
+							trigger: 'A hero becomes winded for the first time (only once per encounter and not once per hero)',
+							value: '2'
+						},
+						{
+							trigger: 'A creature within your line of effect rolls a natural 19 or 20',
+							value: '3'
+						},
+						{
+							trigger: 'A hero, including you, dies',
+							value: '10'
+						}
+					]
+				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'troubadour-1-1',
 					listOptions: [ SkillList.Interpersonal ],
@@ -48,21 +74,6 @@ And beyond the mundane, there are insurmountable dangers that cause many a hero 
 				FactoryLogic.feature.createSkillChoice({
 					id: 'troubadour-1-3',
 					listOptions: [ SkillList.Intrigue, SkillList.Lore ]
-				}),
-				FactoryLogic.feature.create({
-					id: 'troubadour-1-4',
-					name: 'Drama',
-					description: `
-At the start of each of your turns during combat, you gain 1d3 drama.
-
-Additionally, you gain drama when certain events occur during battle:
-
-* **2 Drama**: Three or more heroes use an ability on the same turn for the first time.
-* **2 Drama**: A hero becomes winded for the first time (only once per encounter and not once per hero).
-* **3 Drama**: A creature within your line of effect rolls a natural 19 or 20.
-* **10 Drama**: A hero, including you, dies.
-
-You still gain drama during combat if you are dead as long as your body is intact. During the encounter in which you died, if you have 30 drama, you can come back to life with 1 Stamina and 0 drama (no action required). You can’t gain drama in future encounters while you remain dead.`
 				}),
 				FactoryLogic.feature.create({
 					id: 'troubadour-1-5',

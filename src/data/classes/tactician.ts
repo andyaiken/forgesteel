@@ -14,7 +14,6 @@ export const tactician: HeroClass = {
 Strategist. Defender. Leader. With sword in hand, you lead allies into the maw of battle, barking out commands that inspire your fellow heroes to move faster and strike more precisely. All the while, you stand between your compatriots and death, taunting the followers of evil to best you if they can.
 
 As a tactician, you have abilities that heal your allies and grant them increased damage, movement, and attacks.`,
-	heroicResource: 'Focus',
 	subclassName: 'Tactical Doctrine',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -36,6 +35,24 @@ As a tactician, you have abilities that heal your allies and grant them increase
 					field: FeatureField.Recoveries,
 					value: 10
 				}),
+				FactoryLogic.feature.createHeroicResource({
+					id: 'tactician-resource',
+					name: 'Focus',
+					gains: [
+						{
+							trigger: 'Start of your turn',
+							value: '2'
+						},
+						{
+							trigger: 'The first time each round that you or an ally damages a target you have marked',
+							value: '1'
+						},
+						{
+							trigger: 'The first time in a round that an ally within 10 squares of you uses a heroic ability',
+							value: '1'
+						}
+					]
+				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'tactician-1-1',
 					listOptions: [ SkillList.Interpersonal ],
@@ -46,11 +63,6 @@ As a tactician, you have abilities that heal your allies and grant them increase
 					options: [ 'Alertness', 'Architecture', 'Blacksmithing', 'Brag', 'Culture', 'Empathize', 'Fletching', 'Mechanics', 'Monsters', 'Search', 'Strategy' ],
 					listOptions: [ SkillList.Exploration ],
 					count: 2
-				}),
-				FactoryLogic.feature.create({
-					id: 'tactician-1-3',
-					name: 'Focus',
-					description: 'At the start of each of your turns during combat, you gain 2 focus. The first time each round that you or an ally damages a target you have marked, you gain 1 focus. The first time in a round that an ally within 10 squares of you uses a heroic ability, you gain 1 focus.'
 				}),
 				FactoryLogic.feature.createKitChoice({
 					id: 'tactician-1-4',

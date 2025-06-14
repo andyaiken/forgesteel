@@ -450,13 +450,6 @@ export const LibraryEditPage = (props: Props) => {
 	const getClassEditSection = () => {
 		const heroClass = element as HeroClass;
 
-		const setHeroicResource = (value: string) => {
-			const elementCopy = Utils.copy(element) as HeroClass;
-			elementCopy.heroicResource = value;
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
 		const setSubclassName = (value: string) => {
 			const elementCopy = Utils.copy(element) as HeroClass;
 			elementCopy.subclassName = value;
@@ -505,14 +498,6 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<HeaderText>Heroic Resource</HeaderText>
-				<Input
-					status={heroClass.heroicResource === '' ? 'warning' : ''}
-					placeholder='Heroic resource'
-					allowClear={true}
-					value={heroClass.heroicResource}
-					onChange={e => setHeroicResource(e.target.value)}
-				/>
 				<HeaderText>Subclass Name</HeaderText>
 				<Input
 					status={heroClass.subclassName === '' ? 'warning' : ''}

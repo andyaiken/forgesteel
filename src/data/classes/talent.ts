@@ -14,7 +14,6 @@ export const talent: HeroClass = {
 The talent is a master of psionics - a source of incredible power created through sheer force of will. A talent can move and change matter, time, gravity, the laws of physics, or another creature’s mind. In rare occurrences, people are born with the potential to harness psionic power, but only those who experience an awakening, an event that activates a talent’s abilities, can actually tap into the mind’s full strength.
 
 A talent is limited only by the strength of their mind. Powerful psionic heroes can have multiple active powers at once and change reality at will. But with this limitless potential comes a gamble. Every manifestation has a chance of harming the talent, and those who use too many too quickly die from the exertion.`,
-	heroicResource: 'Clarity',
 	subclassName: 'Tradition',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -36,6 +35,25 @@ A talent is limited only by the strength of their mind. Powerful psionic heroes 
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
+				FactoryLogic.feature.createHeroicResource({
+					id: 'talent-resource',
+					name: 'Clarity',
+					gains: [
+						{
+							trigger: 'Start of your turn',
+							value: '1d3'
+						},
+						{
+							trigger: 'The first time each round that a creature is force moved',
+							value: '1'
+						}
+					],
+					details: `
+You can spend clarity you do not have, pushing that Heroic Resource into negative numbers, to a maximum negative value equal to 1 + your Reason score. At the end of each of your turns, you take 1 damage for each negative point of clarity.
+
+Whenever you have clarity below 0, you are strained. Some psionic abilities have additional effects if you are already strained or become strained when you use them. Strained effects can still impact you even after you are no longer strained.`,
+					canBeNegative: true
+				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-skill-a',
 					listOptions: [ SkillList.Lore ],
@@ -50,16 +68,6 @@ A talent is limited only by the strength of their mind. Powerful psionic heroes 
 					id: 'talent-skill-c',
 					listOptions: [ SkillList.Interpersonal, SkillList.Lore ],
 					count: 2
-				}),
-				FactoryLogic.feature.create({
-					id: 'talent-1-1',
-					name: 'Clarity and Strain',
-					description: `
-At the start of each of your turns during combat, you gain 1d3 clarity. You gain 1 clarity the first time each round that a creature is force moved.
-
-You can spend clarity you do not have, pushing that Heroic Resource into negative numbers, to a maximum negative value equal to 1 + your Reason score. At the end of each of your turns, you take 1 damage for each negative point of clarity.
-
-Whenever you have clarity below 0, you are strained. Some psionic abilities have additional effects if you are already strained or become strained when you use them. Strained effects can still impact you even after you are no longer strained.`
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

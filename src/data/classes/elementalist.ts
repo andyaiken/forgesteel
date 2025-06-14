@@ -16,7 +16,6 @@ export const elementalist: HeroClass = {
 Air for movement. Earth for permanence. Fire for destruction. Water for change. Green for growth. Rot for death. Void for the mystery. Years of study and practice and poring over tomes brought you the revelations that allow you to manipulate these building blocks of reality. Now you use your mastery of the seven elements to destroy, create, and warp the world with magic.
 
 As an elementalist, you can unleash your wrath across a field of foes, put an enemy exactly where you want them, debilitate foes with harmful effects, ward yourself and allies against danger, manipulate terrain, warp space, and more. Your choice of elemental specialization determines which of these things you do best.`,
-	heroicResource: 'Essence',
 	subclassName: 'Elemental Specialization',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -38,6 +37,20 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
+				FactoryLogic.feature.createHeroicResource({
+					id: 'elementalist-resource',
+					name: 'Essence',
+					gains: [
+						{
+							trigger: 'Start of your turn',
+							value: '1d3'
+						},
+						{
+							trigger: 'The first time in a round that you or a creature within 10 of you takes damage that isn’t untyped or holy',
+							value: '1'
+						}
+					]
+				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'elementalist-1-1',
 					listOptions: [ SkillList.Lore ],
@@ -47,11 +60,6 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 					id: 'elementalist-1-2',
 					listOptions: [ SkillList.Crafting, SkillList.Lore ],
 					count: 3
-				}),
-				FactoryLogic.feature.create({
-					id: 'elementalist-1-3',
-					name: 'Essence',
-					description: 'At the start of each of your turns during combat, you gain 2 essence. You also gain 1 essence the first time in a round that you or a creature within 10 of you takes damage that isn’t untyped or holy.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

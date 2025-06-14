@@ -1,6 +1,6 @@
-import { Button, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { Button, Divider, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -181,6 +181,13 @@ export const FeatureEditPanel = (props: Props) => {
 					count: 1,
 					selected: []
 				} as FeatureDomainFeatureData;
+				break;
+			case FeatureType.HeroicResource:
+				data = {
+					gains: [],
+					details: '',
+					canBeNegative: false
+				};
 				break;
 			case FeatureType.ItemChoice:
 				data = {
@@ -510,6 +517,18 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
+		const setCanBeNegative = (value: boolean) => {
+			const copy = Utils.copy(feature.data) as FeatureHeroicResourceData;
+			copy.canBeNegative = value;
+			setData(copy);
+		};
+
+		const setDetails = (value: string) => {
+			const copy = Utils.copy(feature.data) as FeatureHeroicResourceData;
+			copy.details = value;
+			setData(copy);
+		};
+
 		const addChoice = (data: FeatureChoiceData) => {
 			const copy = Utils.copy(data);
 			copy.options.push({
@@ -592,6 +611,39 @@ export const FeatureEditPanel = (props: Props) => {
 		const setDamageModifierValuePerEchelon = (data: FeatureDamageModifierData, index: number, value: number) => {
 			const copy = Utils.copy(data);
 			copy.modifiers[index].valuePerEchelon = value;
+			setData(copy);
+		};
+
+		const addResourceGain = (data: FeatureHeroicResourceData) => {
+			const copy = Utils.copy(data);
+			copy.gains.push({
+				trigger: '',
+				value: '1'
+			});
+			setData(copy);
+		};
+
+		const moveResourceGain = (data: FeatureHeroicResourceData, index: number, direction: 'up' | 'down') => {
+			const copy = Utils.copy(data);
+			copy.gains = Collections.move(copy.gains, index, direction);
+			setData(copy);
+		};
+
+		const deleteResourceGain = (data: FeatureHeroicResourceData, index: number) => {
+			const copy = Utils.copy(data);
+			copy.gains.splice(index, 1);
+			setData(copy);
+		};
+
+		const setResourceGainTrigger = (data: FeatureHeroicResourceData, index: number, value: string) => {
+			const copy = Utils.copy(data);
+			copy.gains[index].trigger = value;
+			setData(copy);
+		};
+
+		const setResourceGainValue = (data: FeatureHeroicResourceData, index: number, value: string) => {
+			const copy = Utils.copy(data);
+			copy.gains[index].value = value;
 			setData(copy);
 		};
 
@@ -1145,6 +1197,15 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
+			case FeatureType.Domain: {
+				const data = feature.data as FeatureDomainData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Count</HeaderText>
+						<NumberSpin min={1} value={data.count} onChange={setCount} />
+					</Space>
+				);
+			}
 			case FeatureType.DomainFeature: {
 				const data = feature.data as FeatureDomainFeatureData;
 				return (
@@ -1156,12 +1217,56 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
-			case FeatureType.Domain: {
-				const data = feature.data as FeatureDomainData;
+			case FeatureType.HeroicResource: {
+				const data = feature.data as FeatureHeroicResourceData;
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Count</HeaderText>
-						<NumberSpin min={1} value={data.count} onChange={setCount} />
+					<Space direction='vertical' style={{ width:'100%' }}>
+						<HeaderText>Gaining The Resource</HeaderText>
+						{
+							data.gains.map((gain, n) => (
+								<Expander
+									key={n}
+									title='Gain'
+									extra={[
+										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveResourceGain(data, n, 'up'); }} />,
+										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveResourceGain(data, n, 'down');}} />,
+										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteResourceGain(data, n); }} />
+									]}
+								>
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<HeaderText>Trigger</HeaderText>
+										<Input
+											status={gain.value === '' ? 'warning' : ''}
+											placeholder='Trigger'
+											allowClear={true}
+											value={gain.trigger}
+											onChange={e => setResourceGainTrigger(data, n, e.target.value)}
+										/>
+										<HeaderText>Value</HeaderText>
+										<Input
+											status={gain.value === '' ? 'warning' : ''}
+											placeholder='Value'
+											allowClear={true}
+											value={gain.value}
+											onChange={e => setResourceGainValue(data, n, e.target.value)}
+										/>
+									</Space>
+								</Expander>
+							))
+						}
+						{
+							data.gains.length === 0 ?
+								<Empty />
+								: null
+						}
+						<Button block={true} onClick={() => addResourceGain(data)}>
+							<PlusOutlined />
+							Add a gain
+						</Button>
+						<Divider />
+						<Toggle label='Can be negative' value={data.canBeNegative} onChange={setCanBeNegative} />
+						<HeaderText>Details</HeaderText>
+						<MultiLine label='Details' value={data.details} onChange={setDetails} />
 					</Space>
 				);
 			}
@@ -1625,6 +1730,8 @@ export const FeatureEditPanel = (props: Props) => {
 			FeatureType.DamageModifier,
 			FeatureType.Domain,
 			FeatureType.DomainFeature,
+			FeatureType.HeroicResource,
+			FeatureType.ItemChoice,
 			FeatureType.Kit,
 			FeatureType.Language,
 			FeatureType.LanguageChoice,

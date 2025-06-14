@@ -132,6 +132,14 @@ export interface FeatureDomainFeatureData extends _FeatureData {
 };
 export type FeatureDomainFeature = FeatureOf<FeatureType.DomainFeature, FeatureDomainFeatureData>;
 
+export interface FeatureHeroicResourceData extends _FeatureData {
+	gains: { trigger: string, value: string }[];
+	details: string;
+	canBeNegative: boolean;
+	value: number;
+};
+export type FeatureHeroicResource = FeatureOf<FeatureType.HeroicResource, FeatureHeroicResourceData>;
+
 export interface FeatureItemChoiceData extends _FeatureData {
 	types: ItemType[];
 	count: number;
@@ -243,6 +251,7 @@ export type Feature =
 	| FeatureDamageModifier
 	| FeatureDomain
 	| FeatureDomainFeature
+	| FeatureHeroicResource
 	| FeatureItemChoice
 	| FeatureKit
 	| FeatureLanguage

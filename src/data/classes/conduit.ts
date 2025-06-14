@@ -14,7 +14,6 @@ export const conduit: HeroClass = {
 The power of the gods flows through you! As a vessel for divine magic, you don’t just keep your allies in the fight. You make those allies more effective, even as you rain divine energy down upon your foes. While the deity or saint you serve might have other faithful and clergy, you are special among worshippers, receiving your abilities from the highest source.
 
 As a conduit, you heal and buff your allies, and debuff your foes while smiting them with divine magic. The spark of divinity within you shines, aweing your enemies and granting you increased empathy.`,
-	heroicResource: 'Piety',
 	subclassName: '',
 	subclassCount: 0,
 	primaryCharacteristicsOptions: [
@@ -36,6 +35,16 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
+				FactoryLogic.feature.createHeroicResource({
+					id: 'conduit-resource',
+					name: 'Piety',
+					gains: [
+						{
+							trigger: 'Start of your turn',
+							value: '1d3'
+						}
+					]
+				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'conduit-1-1',
 					listOptions: [ SkillList.Interpersonal, SkillList.Lore ],
@@ -46,12 +55,12 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 					count: 2
 				}),
 				FactoryLogic.feature.createPackage({
-					id: 'conduit-1-3',
-					name: 'Piety',
+					id: 'conduit-1-3b',
+					name: 'Prayer',
 					description: `
-At the start of each of your turns during combat, you gain 1d3 piety.
+You can gain more piety by praying to the gods - but beware! Doing so can easily draw their ire, as the gods hate to be annoyed.
 
-Additionally, you can gain more piety by praying to the gods - but beware! Doing so can easily draw their ire, as the gods hate to be annoyed. When you roll to gain 1d3 piety at the start of your turn, you can pray to gain the following additional effects (no action required):
+When you roll to gain piety at the start of your turn, you can pray to gain the following additional effects (no action required):
 
 * If the roll is a 1, you gain 1 additional piety but anger the gods! You take psychic damage equal to 1d6 + your level, which can’t be reduced in any way.
 * If the roll is a 2, you gain 1 additional piety.

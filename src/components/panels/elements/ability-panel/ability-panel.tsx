@@ -72,13 +72,29 @@ export const AbilityPanel = (props: Props) => {
 		[ cost, repeatable ]
 	);
 
+	const heroicResource = useMemo(
+		() => {
+			if (props.hero) {
+				const resources = HeroLogic.getFeatures(props.hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource);
+				if (resources.length > 0) {
+					return resources[0].data.value;
+				}
+			}
+
+			return 0;
+		},
+		[ props.hero ]
+	);
+
 	const disabled = useMemo(
-		() => (props.options?.dimUnavailableAbilities ?? false)
-			&& props.hero
-			&& cost !== 'signature'
-			&& cost > 0
-			&& cost > props.hero.state.heroicResource,
-		[ props.hero, props.options, cost ]
+		() => {
+			return props.options
+				&& props.options.dimUnavailableAbilities
+				&& cost !== 'signature'
+				&& cost > 0
+				&& cost > heroicResource;
+		},
+		[ cost, heroicResource, props.options ]
 	);
 
 	const parseText = (text: string) => {
@@ -285,7 +301,7 @@ export const AbilityPanel = (props: Props) => {
 								{
 									props.ability.strained ?
 										<Field
-											danger={props.hero && (props.hero.state.heroicResource < 0)}
+											danger={props.hero && (heroicResource < 0)}
 											label='Strained'
 											value={<Markdown text={parseText(props.ability.strained)} useSpan={true} />}
 										/>
@@ -304,7 +320,7 @@ export const AbilityPanel = (props: Props) => {
 									props.ability.spend.map((spend, n) => (
 										<Field
 											key={n}
-											disabled={props.hero && (props.options?.dimUnavailableAbilities || false) && (spend.value > props.hero.state.heroicResource)}
+											disabled={props.hero && (props.options?.dimUnavailableAbilities || false) && (spend.value > heroicResource)}
 											label={(
 												<div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
 													<span>{ spend.name || 'Spend' }</span>

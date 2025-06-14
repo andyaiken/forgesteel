@@ -5,7 +5,6 @@ import { Feature } from './feature';
 import { SubClass } from './subclass';
 
 export interface HeroClass extends Element {
-	heroicResource: string;
 	subclassName: string;
 	subclassCount: number;
 

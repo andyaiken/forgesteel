@@ -33,11 +33,6 @@ export const ClassPanel = (props: Props) => {
 					<HeaderText level={1}>{props.heroClass.name || 'Unnamed Class'}</HeaderText>
 					<Markdown text={props.heroClass.description} />
 					{
-						props.mode === PanelMode.Full ?
-							<Field label='Heroic Resource' value={props.heroClass.heroicResource} />
-							: null
-					}
-					{
 						(props.mode === PanelMode.Full) && (props.heroClass.subclasses.length > 0) ?
 							<Field label={`${props.heroClass.subclassName}s`} value={props.heroClass.subclasses.map(c => c.name).join(', ')} />
 							: null

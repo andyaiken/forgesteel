@@ -15,7 +15,6 @@ export interface HeroState {
 	surges: number;
 	victories: number;
 	xp: number;
-	heroicResource: number;
 	heroTokens: number;
 	renown: number;
 	wealth: number;

@@ -27,19 +27,6 @@ const promises = [
 ];
 
 Promise.all(promises).then(results => {
-	//#region Heroes
-
-	let heroes = results[0] as Hero[] | null;
-	if (!heroes) {
-		heroes = [];
-	}
-
-	heroes.forEach(hero => {
-		HeroLogic.updateHero(hero);
-	});
-
-	//#endregion
-
 	//#region Homebrew sourcebooks
 
 	let sourcebooks = results[1] as Sourcebook[] | null;
@@ -59,6 +46,19 @@ Promise.all(promises).then(results => {
 				item.crafting.description = `Craft ${Format.startsWithVowel(item.name) ? 'an' : 'a'} ${item.name}`;
 			}
 		});
+	});
+
+	//#endregion
+
+	//#region Heroes
+
+	let heroes = results[0] as Hero[] | null;
+	if (!heroes) {
+		heroes = [];
+	}
+
+	heroes.forEach(hero => {
+		HeroLogic.updateHero(hero, [ SourcebookData.core, SourcebookData.orden, ...sourcebooks ]);
 	});
 
 	//#endregion

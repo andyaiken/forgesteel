@@ -186,7 +186,7 @@ export const Main = (props: Props) => {
 			hero.id = Utils.guid();
 		}
 		hero.folder = folder;
-		HeroLogic.updateHero(hero);
+		HeroLogic.updateHero(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]);
 
 		setDrawer(null);
 		persistHero(hero).then(() => navigation.goToHeroView(hero.id));

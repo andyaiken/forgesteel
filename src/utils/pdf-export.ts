@@ -49,6 +49,7 @@ export class PDFExport {
 				.replace(/č/g, 'c');
 		};
 
+		const heroicResources = HeroLogic.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource);
 		const texts: { [key: string]: string | number | null } = {
 			CharacterName: hero.name,
 			AncestryTop: hero.ancestry && hero.ancestry.name,
@@ -68,7 +69,7 @@ export class PDFExport {
 			RecoveryValue: HeroLogic.getRecoveryValue(hero),
 			MaxRecoveries: HeroLogic.getRecoveries(hero),
 			Recoveries: HeroLogic.getRecoveries(hero) - hero.state.recoveriesUsed,
-			HeroicResource: hero.state.heroicResource,
+			HeroicResource: heroicResources.length > 0 ? heroicResources[0].data.value : 0,
 			Surges: hero.state.surges,
 			Victories: hero.state.victories,
 			AncestryFull: hero.ancestry && hero.ancestry.description,
@@ -154,7 +155,7 @@ export class PDFExport {
 		};
 
 		{
-			const resource = hero.class && hero.class.heroicResource.toLowerCase() || 'XXX';
+			const resource = heroicResources.length > 0 ? heroicResources[0].name.toLowerCase() : 'XXX';
 			const startup = new RegExp(String.raw`\s*At the start of each of your turns during combat, you gain (.+?) ${resource}\.\s*`);
 			const heroicResourceFeature = features.find(f => f.description.match(startup));
 			if (heroicResourceFeature) {

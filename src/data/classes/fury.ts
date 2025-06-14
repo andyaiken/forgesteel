@@ -14,7 +14,6 @@ export const fury: HeroClass = {
 You do not temper the heat of battle within you - you unleash it! Like a raptor, a panther, a wolf, your experience in the wild taught you the secret of channeling unfettered anger into martial prowess. Primordial chaos is your ally. Leave it to others to use finesse to clean up the pieces you leave behind.
 
 As a fury, you have abilities that deal a lot of damage, move you around the battlefield, and grow in strength as your rage increases. Nature has no concept of fairness - and neither do you.`,
-	heroicResource: 'Rage',
 	subclassName: 'Primordial Aspect',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -36,6 +35,24 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 					field: FeatureField.Recoveries,
 					value: 10
 				}),
+				FactoryLogic.feature.createHeroicResource({
+					id: 'fury-resource',
+					name: 'Rage',
+					gains: [
+						{
+							trigger: 'Start of your turn',
+							value: '1d3'
+						},
+						{
+							trigger: 'The first time each round that you take damage',
+							value: '1'
+						},
+						{
+							trigger: 'The first time in an encounter that you become winded or dying',
+							value: '1d3'
+						}
+					]
+				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'fury-1-1',
 					listOptions: [ SkillList.Lore ],
@@ -45,11 +62,6 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 					id: 'fury-1-2',
 					listOptions: [ SkillList.Exploration, SkillList.Intrigue ],
 					count: 2
-				}),
-				FactoryLogic.feature.create({
-					id: 'fury-1-3',
-					name: 'Rage',
-					description: 'At the start of each of your turns during combat, you gain 1d3 rage. Additionally, the first time each round that you take damage, you gain 1 rage. The first time in an encounter that you become winded or dying, you gain 1d3 rage.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'fury-1-4',

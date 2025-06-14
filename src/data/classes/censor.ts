@@ -14,7 +14,6 @@ export const censor: HeroClass = {
 Demons and devils fear you. Criminals run from the sight of your shadow in the alley. Agents of chaos, blasphemers, and heretics tremble at the sound of your voice. You carry the power of the gods, armed with Wraths and sent out into the world first to seek, then censor those whose actions - or even existence - are anathema to your church.
 
 You’re at your best against the strongest foes. Your judgments terrify heretics, stop enemies in their tracks, even hurl them across the battlefield.`,
-	heroicResource: 'Wrath',
 	subclassName: 'Order',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -36,6 +35,24 @@ You’re at your best against the strongest foes. Your judgments terrify heretic
 					field: FeatureField.Recoveries,
 					value: 12
 				}),
+				FactoryLogic.feature.createHeroicResource({
+					id: 'censor-resource',
+					name: 'Wrath',
+					gains: [
+						{
+							trigger: 'Start of your turn',
+							value: '2'
+						},
+						{
+							trigger: 'The first time each round that a creature judged by you deals damage to you',
+							value: '1'
+						},
+						{
+							trigger: 'The first time each round that you deal damage to a creature judged by you',
+							value: '1'
+						}
+					]
+				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'censor-1-1',
 					listOptions: [ SkillList.Interpersonal, SkillList.Lore ],
@@ -43,14 +60,6 @@ You’re at your best against the strongest foes. Your judgments terrify heretic
 				}),
 				FactoryLogic.feature.createDomainChoice({
 					id: 'censor-1-2'
-				}),
-				FactoryLogic.feature.create({
-					id: 'censor-1-3',
-					name: 'Wrath',
-					description: `
-At the start of each of your turns during combat, you gain 2 wrath.
-
-Additionally, the first time each round that a creature judged by you (see Judgment) deals damage to you, you gain 1 wrath. You also gain 1 wrath the first time each round that you deal damage to a creature judged by you.`
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

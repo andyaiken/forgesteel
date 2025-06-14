@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { MapFog, MapMini, MapTile, MapWall, MapZone, TacticalMap } from '../models/tactical-map';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
@@ -85,7 +85,6 @@ export class FactoryLogic {
 				surges: 0,
 				victories: 0,
 				xp: 0,
-				heroicResource: 0,
 				heroTokens: 0,
 				renown: 0,
 				wealth: 1,
@@ -185,11 +184,10 @@ export class FactoryLogic {
 	};
 
 	static createClass = (): HeroClass => {
-		return {
+		const hc: HeroClass = {
 			id: Utils.guid(),
 			name: '',
 			description: '',
-			heroicResource: '',
 			subclassName: '',
 			subclassCount: 1,
 			primaryCharacteristicsOptions: [],
@@ -200,6 +198,34 @@ export class FactoryLogic {
 			level: 1,
 			characteristics: []
 		};
+
+		hc.featuresByLevel
+			.filter(lvl => lvl.level === 1)
+			.forEach(lvl => {
+				lvl.features.push(FactoryLogic.feature.createBonus({
+					id: Utils.guid(),
+					field: FeatureField.Stamina,
+					value: 18,
+					valuePerLevel: 9
+				}));
+				lvl.features.push(FactoryLogic.feature.createBonus({
+					id: Utils.guid(),
+					field: FeatureField.Recoveries,
+					value: 8
+				}));
+				lvl.features.push(FactoryLogic.feature.createHeroicResource({
+					id: Utils.guid(),
+					name: 'Heroic Resource',
+					gains: [
+						{
+							trigger: 'Start of your turn',
+							value: '2'
+						}
+					]
+				}));
+			});
+
+		return hc;
 	};
 
 	static createSubclass = (): SubClass => {
@@ -1134,6 +1160,20 @@ export class FactoryLogic {
 					level: data.level,
 					count: count,
 					selected: []
+				}
+			};
+		},
+		createHeroicResource: (data: { id: string, name: string, description?: string, gains: { trigger: string, value: string }[], details?: string, canBeNegative?: boolean }): FeatureHeroicResource => {
+			return {
+				id: data.id,
+				name: data.name,
+				description: data.description || '',
+				type: FeatureType.HeroicResource,
+				data: {
+					gains: data.gains,
+					details: data.details || '',
+					canBeNegative: data.canBeNegative ?? false,
+					value: 0
 				}
 			};
 		},

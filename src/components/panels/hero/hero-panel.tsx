@@ -33,6 +33,7 @@ import { Markdown } from '../../controls/markdown/markdown';
 import { MonsterInfo } from '../../controls/token/token';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
+import { Pill } from '../../controls/pill/pill';
 import { RulesPage } from '../../../enums/rules-page';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Skill } from '../../../models/skill';
@@ -109,6 +110,7 @@ export const HeroPanel = (props: Props) => {
 			const damageWeaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
 			const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.showStandardAbilities);
+			const heroicResources = HeroLogic.getFeatures(props.hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource);
 			const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
 			const languages = HeroLogic.getLanguages(props.hero, props.sourcebooks);
 
@@ -192,6 +194,27 @@ export const HeroPanel = (props: Props) => {
 						))
 					}
 					{
+						(heroicResources.length > 0) && !props.options.singlePage ?
+							<>
+								{
+									heroicResources.map(f => (
+										<div key={f.id} className='overview-tile clickable' onClick={() => setTab('Features')}>
+											<HeaderText>{f.name}</HeaderText>
+											{
+												f.data.gains.map((g, n) => (
+													<Flex key={n} align='center' justify='space-between' gap={10}>
+														<div className='ds-text compact-text'>{g.trigger}</div>
+														<Pill>+{g.value}</Pill>
+													</Flex>
+												))
+											}
+										</div>
+									))
+								}
+							</>
+							: null
+					}
+					{
 						conditionImmunities.length > 0 ?
 							<div className='overview-tile clickable' onClick={onShowConditions}>
 								<HeaderText>Cannot Be</HeaderText>
@@ -216,7 +239,7 @@ export const HeroPanel = (props: Props) => {
 							: null
 					}
 					{
-						triggers.length > 0 && !props.options.singlePage ?
+						(triggers.length > 0) && !props.options.singlePage ?
 							<div className='overview-tile clickable' onClick={() => setTab('Triggers')}>
 								<HeaderText>Triggered Actions</HeaderText>
 								<Space direction='vertical'>
@@ -323,9 +346,13 @@ export const HeroPanel = (props: Props) => {
 					<Col span={24}>
 						<div className='stats-box clickable' onClick={onShowHero}>
 							<div className='stats'>
-								<div className='stat'>
-									<Statistic title={props.hero.class ? props.hero.class.heroicResource : 'Resource'} value={props.hero.state.heroicResource} />
-								</div>
+								{
+									HeroLogic.getFeatures(props.hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource).map(f => (
+										<div key={f.id} className='stat'>
+											<Statistic title={f.name} value={f.data.value} />
+										</div>
+									))
+								}
 								<div className='stat'>
 									<Statistic title='Surges' value={props.hero.state.surges} />
 								</div>
@@ -548,7 +575,7 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		const getFeaturesSection = () => {
-			const featureTypes = [ FeatureType.Text, FeatureType.Package ];
+			const featureTypes = [ FeatureType.Text, FeatureType.HeroicResource, FeatureType.Package ];
 
 			const features = HeroLogic.getFeatures(props.hero)
 				.filter(f => featureTypes.includes(f.feature.type));

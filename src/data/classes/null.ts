@@ -18,7 +18,6 @@ The mind is not separate from the body. Perfection of one requires perfection of
 As you strive for perfect order, you become an enemy of that ultimate expression of chaos: magic. Those who employ sorcery or psionics to break the laws of nature should fear you.
 
 The null is an unarmed psionic warrior who dampens and absorbs the effects of magic and psionics. You need no weapon because you are the weapon. Play a null if you want to resist the supernatural forces of the universe with expert calm and confidence.`,
-	heroicResource: 'Discipline',
 	subclassName: 'Tradition',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -40,6 +39,24 @@ The null is an unarmed psionic warrior who dampens and absorbs the effects of ma
 					field: FeatureField.Recoveries,
 					value: 8
 				}),
+				FactoryLogic.feature.createHeroicResource({
+					id: 'null-resource',
+					name: 'Discipline',
+					gains: [
+						{
+							trigger: 'Start of your turn',
+							value: '2'
+						},
+						{
+							trigger: 'The first time in a round an enemy in your null field takes an action',
+							value: '1'
+						},
+						{
+							trigger: 'The first time in a round that an enemy uses Malice',
+							value: '1'
+						}
+					]
+				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'null-1-1',
 					listOptions: [ SkillList.Lore ],
@@ -49,11 +66,6 @@ The null is an unarmed psionic warrior who dampens and absorbs the effects of ma
 					id: 'null-1-2',
 					listOptions: [ SkillList.Interpersonal, SkillList.Lore ],
 					count: 2
-				}),
-				FactoryLogic.feature.create({
-					id: 'null-1-3',
-					name: 'Discipline',
-					description: 'At the start of each of your turns during combat, you gain 2 discipline. Additionally, you gain 1 discipline the first time in a round an enemy in your null field takes an action. You gain 1 discipline the first time in a round that an enemy uses Malice.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

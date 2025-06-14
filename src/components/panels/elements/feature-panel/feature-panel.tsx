@@ -1,7 +1,7 @@
 import { Alert, Button, Drawer, Flex, Input, Select, Space } from 'antd';
 import { CSSProperties, useState } from 'react';
 import { CloseOutlined, InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Pill, ResourcePill } from '../../../controls/pill/pill';
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
@@ -1572,6 +1572,26 @@ export const FeaturePanel = (props: Props) => {
 		return null;
 	};
 
+	const getInformationHeroicResourceFeature = (data: FeatureHeroicResourceData) => {
+		return (
+			<>
+				<ul>
+					{
+						data.gains.map((g, n) => (
+							<li key={n}>
+								<Flex align='center' justify='space-between' gap={10}>
+									<div className='ds-text compact-text'>{g.trigger}</div>
+									<Pill>+{g.value}</Pill>
+								</Flex>
+							</li>
+						))
+					}
+				</ul>
+				<Markdown text={data.details} />
+			</>
+		);
+	};
+
 	const getInformationItemChoice = (data: FeatureItemChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
@@ -1841,6 +1861,8 @@ export const FeaturePanel = (props: Props) => {
 				return getInformationDomain(props.feature.data);
 			case FeatureType.DomainFeature:
 				return getInformationDomainFeature(props.feature.data);
+			case FeatureType.HeroicResource:
+				return getInformationHeroicResourceFeature(props.feature.data);
 			case FeatureType.ItemChoice:
 				return getInformationItemChoice(props.feature.data);
 			case FeatureType.Kit:
@@ -1895,6 +1917,9 @@ export const FeaturePanel = (props: Props) => {
 		}
 		if (props.feature.type === FeatureType.AddOn) {
 			tags.push(props.feature.data.category);
+		}
+		if (props.feature.type === FeatureType.HeroicResource) {
+			tags.push('Heroic Resource');
 		}
 		if (props.feature.type === FeatureType.TaggedFeature) {
 			tags.push(props.feature.data.tag);

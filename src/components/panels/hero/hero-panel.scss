@@ -72,6 +72,7 @@
 						cursor: pointer;
 
 						&:hover {
+							border-color: rgb(22, 119, 255);
 							background-color: rgb(230, 244, 255);
 
 							.ant-statistic {
@@ -91,6 +92,7 @@
 
 						.stat {
 							flex: 1 1 0;
+							border: 1px solid transparent;
 							border-radius: 10px;
 							padding: 5px 0;
 
@@ -98,6 +100,7 @@
 								cursor: pointer;
 
 								&:hover {
+									border-color: rgb(22, 119, 255);
 									background-color: rgb(230, 244, 255);
 
 									.ant-statistic {

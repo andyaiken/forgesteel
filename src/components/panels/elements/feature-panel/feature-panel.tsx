@@ -1919,7 +1919,14 @@ export const FeaturePanel = (props: Props) => {
 			tags.push(props.feature.data.category);
 		}
 		if (props.feature.type === FeatureType.HeroicResource) {
-			tags.push('Heroic Resource');
+			switch (props.feature.data.type) {
+				case 'heroic':
+					tags.push('Heroic Resource');
+					break;
+				case 'epic':
+					tags.push('Epic Resource');
+					break;
+			}
 		}
 		if (props.feature.type === FeatureType.TaggedFeature) {
 			tags.push(props.feature.data.tag);

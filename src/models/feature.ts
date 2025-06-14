@@ -133,6 +133,7 @@ export interface FeatureDomainFeatureData extends _FeatureData {
 export type FeatureDomainFeature = FeatureOf<FeatureType.DomainFeature, FeatureDomainFeatureData>;
 
 export interface FeatureHeroicResourceData extends _FeatureData {
+	type: 'heroic' | 'epic';
 	gains: { trigger: string, value: string }[];
 	details: string;
 	canBeNegative: boolean;

@@ -120,6 +120,34 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const startEncounter = () => {
+			const copy = Utils.copy(hero);
+
+			HeroLogic.getFeatures(copy)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.HeroicResource)
+				.filter(f => f.data.type === 'heroic')
+				.forEach(f => f.data.value = copy.state.victories);
+
+			setHero(copy);
+			props.onChange(copy);
+		};
+
+		const endEncounter = () => {
+			const copy = Utils.copy(hero);
+
+			HeroLogic.getFeatures(copy)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.HeroicResource)
+				.filter(f => f.data.type === 'heroic')
+				.forEach(f => f.data.value = 0);
+
+			copy.state.victories += 1;
+			copy.state.surges = 0;
+			setHero(copy);
+			props.onChange(copy);
+		};
+
 		const gainResource = (featureID: string, value: number) => {
 			const copy = Utils.copy(hero);
 			HeroLogic.getFeatures(copy)
@@ -136,7 +164,7 @@ export const HeroStateModal = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ padding: '20px 0', width: '100%' }}>
 				<Flex gap={20}>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space direction='vertical' style={{ flex: '1 1 0' }}>
 						<NumberSpin
 							label='Surges'
 							value={hero.state.surges}
@@ -156,7 +184,7 @@ export const HeroStateModal = (props: Props) => {
 							onChange={setXP}
 						/>
 					</Space>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space direction='vertical' style={{ flex: '1 1 0' }}>
 						<NumberSpin
 							label='Renown'
 							value={hero.state.renown}
@@ -170,6 +198,34 @@ export const HeroStateModal = (props: Props) => {
 							onChange={setWealth}
 						/>
 					</Space>
+				</Flex>
+				<Flex align='center' justify='space-evenly' gap={10}>
+					<Button
+						key='start-encounter'
+						style={{ flex: '1 1 0' }}
+						className='tall-button'
+						onClick={startEncounter}
+					>
+						<div>
+							<div>Start Encounter</div>
+							<div className='subtext'>
+								Victories to {HeroLogic.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource).filter(f => f.data.type === 'heroic').map(f => f.name).join(' / ') || 'Heroic Resource'}
+							</div>
+						</div>
+					</Button>
+					<Button
+						key='end-encounter'
+						style={{ flex: '1 1 0' }}
+						className='tall-button'
+						onClick={endEncounter}
+					>
+						<div>
+							<div>End Encounter</div>
+							<div className='subtext'>
+								+1 Victory
+							</div>
+						</div>
+					</Button>
 				</Flex>
 				{
 					hero.state.surges > 0 ?

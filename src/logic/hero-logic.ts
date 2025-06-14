@@ -841,6 +841,7 @@ export class HeroLogic {
 		HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.HeroicResource)
+			.filter(f => f.data.type === 'heroic')
 			.forEach(f => f.data.value = 0);
 	};
 
@@ -1222,6 +1223,12 @@ export class HeroLogic {
 				heroicResources.forEach(f => currentClass.featuresByLevel[0].features.push(f));
 			}
 		}
+
+		this.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource).forEach(f => {
+			if (f.data.type === undefined) {
+				f.data.type = 'heroic';
+			}
+		});
 
 		this.getKits(hero).forEach(k => {
 			if (k.type === 'Standard') {

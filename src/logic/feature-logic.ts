@@ -409,7 +409,7 @@ export class FeatureLogic {
 			case FeatureType.DomainFeature:
 				return 'This feature allows you to choose a feature from your domain.';
 			case FeatureType.HeroicResource:
-				return 'This feature grants you a heroic resource.';
+				return 'This feature grants you a heroic (or epic) resource.';
 			case FeatureType.ItemChoice:
 				return 'This feature allows you to choose an item.';
 			case FeatureType.Kit:

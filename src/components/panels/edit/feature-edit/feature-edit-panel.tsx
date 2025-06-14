@@ -184,6 +184,7 @@ export const FeatureEditPanel = (props: Props) => {
 				break;
 			case FeatureType.HeroicResource:
 				data = {
+					type: 'heroic',
 					gains: [],
 					details: '',
 					canBeNegative: false
@@ -514,6 +515,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setTaggedFeature = (value: Feature) => {
 			const copy = Utils.copy(feature.data) as FeatureTaggedFeatureData;
 			copy.feature = value;
+			setData(copy);
+		};
+
+		const setResourceType = (value: 'heroic' | 'epic') => {
+			const copy = Utils.copy(feature.data) as FeatureHeroicResourceData;
+			copy.type = value;
 			setData(copy);
 		};
 
@@ -1221,6 +1228,14 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureHeroicResourceData;
 				return (
 					<Space direction='vertical' style={{ width:'100%' }}>
+						<HeaderText>Type</HeaderText>
+						<Segmented
+							name='resourcetypes'
+							block={true}
+							options={[ 'heroic', 'epic' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
+							value={data.type}
+							onChange={s => setResourceType(s as 'heroic' | 'epic')}
+						/>
 						<HeaderText>Gaining The Resource</HeaderText>
 						{
 							data.gains.map((gain, n) => (

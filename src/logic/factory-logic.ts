@@ -1163,13 +1163,14 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createHeroicResource: (data: { id: string, name: string, description?: string, gains: { trigger: string, value: string }[], details?: string, canBeNegative?: boolean }): FeatureHeroicResource => {
+		createHeroicResource: (data: { id: string, name: string, description?: string, type?: 'heroic' | 'epic', gains: { trigger: string, value: string }[], details?: string, canBeNegative?: boolean }): FeatureHeroicResource => {
 			return {
 				id: data.id,
 				name: data.name,
 				description: data.description || '',
 				type: FeatureType.HeroicResource,
 				data: {
+					type: data.type || 'heroic',
 					gains: data.gains,
 					details: data.details || '',
 					canBeNegative: data.canBeNegative ?? false,

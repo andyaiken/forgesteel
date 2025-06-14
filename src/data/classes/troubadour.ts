@@ -37,7 +37,6 @@ And beyond the mundane, there are insurmountable dangers that cause many a hero 
 				FactoryLogic.feature.createHeroicResource({
 					id: 'troubadour-resource',
 					name: 'Drama',
-					description: 'You still gain drama during combat if you are dead as long as your body is intact. During the encounter in which you died, if you have 30 drama, you can come back to life with 1 Stamina and 0 drama (no action required). You can’t gain drama in future encounters while you remain dead.',
 					gains: [
 						{
 							trigger: 'Start of your turn',
@@ -59,7 +58,8 @@ And beyond the mundane, there are insurmountable dangers that cause many a hero 
 							trigger: 'A hero, including you, dies',
 							value: '10'
 						}
-					]
+					],
+					details: 'You still gain drama during combat if you are dead as long as your body is intact. During the encounter in which you died, if you have 30 drama, you can come back to life with 1 Stamina and 0 drama (no action required). You can’t gain drama in future encounters while you remain dead.'
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'troubadour-1-1',

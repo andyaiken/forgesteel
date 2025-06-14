@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Drawer, Flex, Segmented, Space } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, Segmented, Space, notification } from 'antd';
 import { ArrowUpOutlined, CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Feature, FeatureData } from '../../../models/feature';
 import { Collections } from '../../../utils/collections';
@@ -44,6 +44,7 @@ interface Props {
 }
 
 export const HeroStateModal = (props: Props) => {
+	const [ notify, notifyContext ] = notification.useNotification();
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ page, setPage ] = useState<HeroStatePage>(props.startPage);
 	const [ shopVisible, setShopVisible ] = useState<boolean>(false);
@@ -119,36 +120,22 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const gainResource = (featureID: string, value: number) => {
+			const copy = Utils.copy(hero);
+			HeroLogic.getFeatures(copy)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.HeroicResource)
+				.filter(f => f.id === featureID)
+				.forEach(f => {
+					f.data.value += value;
+				});
+			setHero(copy);
+			props.onChange(copy);
+		};
+
 		return (
-			<Space direction='vertical' style={{ paddingTop: '20px', width: '100%' }}>
+			<Space direction='vertical' style={{ padding: '20px 0', width: '100%' }}>
 				<Flex gap={20}>
-					<Space direction='vertical' style={{ width: '100%' }}>
-						{
-							HeroLogic.getFeatures(hero)
-								.map(f => f.feature)
-								.filter(f => f.type === FeatureType.HeroicResource)
-								.map(f => (
-									<NumberSpin
-										label={f.name}
-										value={f.data.value}
-										min={f.data.canBeNegative ? undefined : 0}
-										onChange={value => setHeroicResource(f.id, value)}
-									/>
-								))
-						}
-						<NumberSpin
-							label='Victories'
-							value={hero.state.victories}
-							min={0}
-							onChange={setVictories}
-						/>
-						<NumberSpin
-							label='Renown'
-							value={hero.state.renown}
-							format={() => HeroLogic.getRenown(hero).toString()}
-							onChange={setRenown}
-						/>
-					</Space>
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<NumberSpin
 							label='Surges'
@@ -157,10 +144,24 @@ export const HeroStateModal = (props: Props) => {
 							onChange={setSurges}
 						/>
 						<NumberSpin
+							label='Victories'
+							value={hero.state.victories}
+							min={0}
+							onChange={setVictories}
+						/>
+						<NumberSpin
 							label='XP'
 							value={hero.state.xp}
 							min={0}
 							onChange={setXP}
+						/>
+					</Space>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<NumberSpin
+							label='Renown'
+							value={hero.state.renown}
+							format={() => HeroLogic.getRenown(hero).toString()}
+							onChange={setRenown}
 						/>
 						<NumberSpin
 							label='Wealth'
@@ -195,9 +196,50 @@ export const HeroStateModal = (props: Props) => {
 						/>
 						: null
 				}
-				<Divider />
+				{
+					HeroLogic.getFeatures(hero)
+						.map(f => f.feature)
+						.filter(f => f.type === FeatureType.HeroicResource)
+						.map(f => (
+							<>
+								<HeaderText>Heroic Resource: {f.name}</HeaderText>
+								<NumberSpin
+									value={f.data.value}
+									min={f.data.canBeNegative ? undefined : 0}
+									onChange={value => setHeroicResource(f.id, value)}
+								/>
+								{
+									f.data.gains.length > 0 ?
+										<Space direction='vertical' style={{ width: '100%' }}>
+											{
+												f.data.gains.map((g, n) => {
+													let btn = (
+														<div style={{ padding: '0 8px' }}>+{g.value}</div>
+													);
+													const digits = /^\s*[+-]?\s*\d+\s*$/;
+													if (digits.test(g.value)) {
+														const v = parseInt(g.value);
+														btn = (
+															<Button onClick={() => gainResource(f.id, v)}>+{v}</Button>
+														);
+													}
+
+													return (
+														<Flex key={n} align='center' justify='space-between' gap={10}>
+															<div className='ds-text compact-text'>{g.trigger}</div>
+															{btn}
+														</Flex>
+													);
+												})
+											}
+										</Space>
+										: null
+								}
+							</>
+						))
+				}
+				<HeaderText>Hero Tokens</HeaderText>
 				<NumberSpin
-					label='Hero Tokens'
 					value={hero.state.heroTokens}
 					min={0}
 					onChange={setHeroTokens}
@@ -274,6 +316,12 @@ export const HeroStateModal = (props: Props) => {
 			HeroLogic.takeRespite(copy);
 			setHero(copy);
 			props.onChange(copy);
+
+			notify.info({
+				message: 'Respite',
+				description: 'You\'ve taken a respite. Your hero\'s stats have been reset.',
+				placement: 'top'
+			});
 		};
 
 		return (
@@ -638,6 +686,7 @@ export const HeroStateModal = (props: Props) => {
 				content={
 					<div className='hero-state-modal'>
 						{getContent()}
+						{notifyContext}
 					</div>
 				}
 				onClose={props.onClose}

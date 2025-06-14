@@ -3,6 +3,7 @@ import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
+import { FormatLogic } from './format-logic';
 import { Hero } from '../models/hero';
 import { HeroLogic } from './hero-logic';
 import { KitArmor } from '../enums/kit-armor';
@@ -249,8 +250,8 @@ export class AbilityLogic {
 				});
 				const value = Math.max(...options);
 
-				const constant = AbilityLogic.getConstant(str);
-				const multiplier = AbilityLogic.getMultiplier(str);
+				const constant = FormatLogic.getConstant(str);
+				const multiplier = FormatLogic.getMultiplier(str);
 				text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
 			});
 		}
@@ -259,9 +260,9 @@ export class AbilityLogic {
 		if (hero) {
 			const lvlRegex = /equal to[^,.;:]your level/gi;
 			[ ...text.matchAll(lvlRegex) ].map(r => r[0]).forEach(str => {
-				const constant = AbilityLogic.getConstant(str);
+				const constant = FormatLogic.getConstant(str);
 				const value = hero.class ? hero.class.level : 1;
-				const multiplier = AbilityLogic.getMultiplier(str);
+				const multiplier = FormatLogic.getMultiplier(str);
 				text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
 			});
 		}
@@ -270,9 +271,9 @@ export class AbilityLogic {
 		if (hero) {
 			const recRegex = /equal to[^,.;:]your recovery value/gi;
 			[ ...text.matchAll(recRegex) ].map(r => r[0]).forEach(str => {
-				const constant = AbilityLogic.getConstant(str);
+				const constant = FormatLogic.getConstant(str);
 				const value = HeroLogic.getRecoveryValue(hero);
-				const multiplier = AbilityLogic.getMultiplier(str);
+				const multiplier = FormatLogic.getMultiplier(str);
 				text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
 			});
 		}
@@ -283,9 +284,9 @@ export class AbilityLogic {
 			text = text.replace('a number of squares up to your speed', 'up to your speed');
 			const speedRegex = /up to[^,.;:]your speed/gi;
 			[ ...text.matchAll(speedRegex) ].map(r => r[0]).forEach(str => {
-				const constant = AbilityLogic.getConstant(str);
+				const constant = FormatLogic.getConstant(str);
 				const value = HeroLogic.getSpeed(hero);
-				const multiplier = AbilityLogic.getMultiplier(str);
+				const multiplier = FormatLogic.getMultiplier(str);
 				text = text.replace(str, `up to ${constant + (Math.floor(value * multiplier))} squares`);
 			});
 		}
@@ -298,127 +299,5 @@ export class AbilityLogic {
 		});
 
 		return text;
-	};
-
-	static getConstant = (text: string) => {
-		let constant = 0;
-
-		const constantMatch = text.match(/(?<c>\d+)\s*(\+|plus)/);
-		if (constantMatch && constantMatch.groups) {
-			constant = parseInt(constantMatch.groups['c']);
-		}
-
-		return constant;
-	};
-
-	static getMultiplier = (text: string) => {
-		let multiplier = 1;
-		const x: { n: number, words: string[] }[] = [
-			{
-				n: 0.5,
-				words: [
-					'half'
-				]
-			},
-			{
-				n: 2,
-				words: [
-					'twice',
-					'two times',
-					'2x',
-					'2 x',
-					'2×',
-					'2 ×'
-				]
-			},
-			{
-				n: 3,
-				words: [
-					'thrice',
-					'three times',
-					'3x',
-					'3 x',
-					'3×',
-					'3 ×'
-				]
-			},
-			{
-				n: 4,
-				words: [
-					'four times',
-					'4x',
-					'4 x',
-					'4×',
-					'4 ×'
-				]
-			},
-			{
-				n: 5,
-				words: [
-					'five times',
-					'5x',
-					'5 x',
-					'5×',
-					'5 ×'
-				]
-			},
-			{
-				n: 6,
-				words: [
-					'six times',
-					'6x',
-					'6 x',
-					'6×',
-					'6 ×'
-				]
-			},
-			{
-				n: 7,
-				words: [
-					'seven times',
-					'7x',
-					'7 x',
-					'7×',
-					'7 ×'
-				]
-			},
-			{
-				n: 8,
-				words: [
-					'eight times',
-					'8x',
-					'8 x',
-					'8×',
-					'8 ×'
-				]
-			},
-			{
-				n: 9,
-				words: [
-					'nine times',
-					'9x',
-					'9 x',
-					'9×',
-					'9 ×'
-				]
-			},
-			{
-				n: 10,
-				words: [
-					'ten times',
-					'10x',
-					'10 x',
-					'10×',
-					'10 ×'
-				]
-			}
-		];
-		x.forEach(set => {
-			if (set.words.some(w => text.toLowerCase().includes(w))) {
-				multiplier = set.n;
-			}
-		});
-
-		return multiplier;
 	};
 }

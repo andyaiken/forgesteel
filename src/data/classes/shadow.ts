@@ -38,10 +38,6 @@ As a shadow, you have abilities that deal a lot of damage, let you move swiftly 
 				FactoryLogic.feature.createHeroicResource({
 					id: 'shadow-resource',
 					name: 'Insight',
-					description: `
-When you use a heroic ability that has a power roll, that ability costs 1 less insight if you have an edge or double edge on it.
-
-If the ability has multiple targets, the cost is reduced even if the ability has an edge or double edge against only one target.`,
 					gains: [
 						{
 							trigger: 'Start of your turn',
@@ -51,7 +47,11 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 							trigger: 'The first time each round that you deal damage with at least one surge',
 							value: '1'
 						}
-					]
+					],
+					details: `
+When you use a heroic ability that has a power roll, that ability costs 1 less insight if you have an edge or double edge on it.
+
+If the ability has multiple targets, the cost is reduced even if the ability has an edge or double edge against only one target.`
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'shadow-1-1',

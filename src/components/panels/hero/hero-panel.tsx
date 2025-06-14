@@ -81,6 +81,12 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		const getSidebarSection = () => {
+			const onShowStats = () => {
+				if (props.onShowState) {
+					props.onShowState(HeroStatePage.Hero);
+				}
+			};
+
 			const onShowVitals = () => {
 				if (props.onShowState) {
 					props.onShowState(HeroStatePage.Vitals);
@@ -198,7 +204,7 @@ export const HeroPanel = (props: Props) => {
 							<>
 								{
 									heroicResources.map(f => (
-										<div key={f.id} className='overview-tile clickable' onClick={() => setTab('Features')}>
+										<div key={f.id} className='overview-tile clickable' onClick={onShowStats}>
 											<HeaderText>{f.name}</HeaderText>
 											{
 												f.data.gains.map((g, n) => (

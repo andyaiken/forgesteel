@@ -70,4 +70,126 @@ export class FormatLogic {
 
 		return link.label ? `${link.label}: ${plotPointName}` : plotPointName;
 	};
+
+	static getConstant = (text: string) => {
+		let constant = 0;
+
+		const constantMatch = text.match(/(?<c>\d+)\s*(\+|plus)/);
+		if (constantMatch && constantMatch.groups) {
+			constant = parseInt(constantMatch.groups['c']);
+		}
+
+		return constant;
+	};
+
+	static getMultiplier = (text: string) => {
+		let multiplier = 1;
+		const x: { n: number, words: string[] }[] = [
+			{
+				n: 0.5,
+				words: [
+					'half'
+				]
+			},
+			{
+				n: 2,
+				words: [
+					'twice',
+					'two times',
+					'2x',
+					'2 x',
+					'2×',
+					'2 ×'
+				]
+			},
+			{
+				n: 3,
+				words: [
+					'thrice',
+					'three times',
+					'3x',
+					'3 x',
+					'3×',
+					'3 ×'
+				]
+			},
+			{
+				n: 4,
+				words: [
+					'four times',
+					'4x',
+					'4 x',
+					'4×',
+					'4 ×'
+				]
+			},
+			{
+				n: 5,
+				words: [
+					'five times',
+					'5x',
+					'5 x',
+					'5×',
+					'5 ×'
+				]
+			},
+			{
+				n: 6,
+				words: [
+					'six times',
+					'6x',
+					'6 x',
+					'6×',
+					'6 ×'
+				]
+			},
+			{
+				n: 7,
+				words: [
+					'seven times',
+					'7x',
+					'7 x',
+					'7×',
+					'7 ×'
+				]
+			},
+			{
+				n: 8,
+				words: [
+					'eight times',
+					'8x',
+					'8 x',
+					'8×',
+					'8 ×'
+				]
+			},
+			{
+				n: 9,
+				words: [
+					'nine times',
+					'9x',
+					'9 x',
+					'9×',
+					'9 ×'
+				]
+			},
+			{
+				n: 10,
+				words: [
+					'ten times',
+					'10x',
+					'10 x',
+					'10×',
+					'10 ×'
+				]
+			}
+		];
+		x.forEach(set => {
+			if (set.words.some(w => text.toLowerCase().includes(w))) {
+				multiplier = set.n;
+			}
+		});
+
+		return multiplier;
+	};
 }

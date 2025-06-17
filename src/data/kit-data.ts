@@ -755,9 +755,9 @@ export class KitData {
 					cost: 'signature',
 					powerRoll: FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-						tier1: '3 + M or A damage',
-						tier2: '6 + M or A damage',
-						tier3: '9 + M or A damage'
+						tier1: '2 + M, R, I, or P holy damage',
+						tier2: '4 + M, R, I, or P holy damage',
+						tier3: '7 + M, R, I, or P holy damage'
 					}),
 					effect: 'The target has damage weakness equal to the characteristic score you used on this ability’s power roll (EoT).'
 				})

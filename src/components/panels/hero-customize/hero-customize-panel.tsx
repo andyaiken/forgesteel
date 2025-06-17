@@ -512,7 +512,8 @@ export const HeroCustomizePanel = (props: Props) => {
 												setMenuOpen(false);
 												props.addFeature(FactoryLogic.feature.createClassAbilityChoice({
 													id: Utils.guid(),
-													cost: 'signature'
+													cost: 'signature',
+													allowAnySource: true
 												}));
 											}}
 										>

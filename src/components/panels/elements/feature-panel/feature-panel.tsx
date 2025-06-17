@@ -350,7 +350,7 @@ export const FeaturePanel = (props: Props) => {
 
 		const abilities: Ability[] = [];
 		if (heroClass) {
-			SourcebookLogic.getAllClassAbilities(heroClass)
+			(data.allowAnySource ? SourcebookLogic.getAllClassAbilities(heroClass) : heroClass.abilities)
 				.filter(a => a.cost === data.cost)
 				.filter(a => a.minLevel <= data.minLevel)
 				.forEach(a => abilities.push(a));

@@ -1086,7 +1086,7 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createClassAbilityChoice: (data: { id: string, name?: string, description?: string, cost: number | 'signature', minLevel?: number, count?: number }): FeatureClassAbility => {
+		createClassAbilityChoice: (data: { id: string, name?: string, description?: string, cost: number | 'signature', allowAnySource?: boolean, minLevel?: number, count?: number }): FeatureClassAbility => {
 			const count = data.count || 1;
 			return {
 				id: data.id,
@@ -1096,6 +1096,7 @@ export class FactoryLogic {
 				data: {
 					classID: undefined,
 					cost: data.cost,
+					allowAnySource: data.allowAnySource ?? false,
 					minLevel: data.minLevel || 1,
 					count: count,
 					selectedIDs: []

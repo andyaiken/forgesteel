@@ -155,6 +155,7 @@ export const FeatureEditPanel = (props: Props) => {
 					classID: undefined,
 					cost: 1,
 					count: 1,
+					allowAnySource: false,
 					minLevel: 1,
 					selectedIDs: []
 				} as FeatureClassAbilityData;

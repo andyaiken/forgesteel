@@ -155,20 +155,39 @@ export class PDFExport {
 		};
 
 		{
-			const resource = heroicResources.length > 0 ? heroicResources[0].name.toLowerCase() : 'XXX';
-			const startup = new RegExp(String.raw`\s*At the start of each of your turns during combat, you gain (.+?) ${resource}\.\s*`);
-			const heroicResourceFeature = features.find(f => f.description.match(startup));
-			if (heroicResourceFeature) {
-				const startupAmount = heroicResourceFeature.description.match(startup);
-				if (startupAmount) {
-					texts['HeroicResourcesPerTurn'] = startupAmount[1];
+			if (heroicResources.length > 0) {
+				const heroicResourceFeature = heroicResources[0];
+				if (heroicResourceFeature) {
+					texts['HeroicResourcesPerTurn'] = heroicResourceFeature.data.gains[0].value;
+					ignoredFeatures[heroicResourceFeature.id] = true;
+					let resourceGainText = 'Your resource is ' + heroicResourceFeature.name.toLowerCase() + '.\n\n';
+					heroicResourceFeature.data.gains.forEach(g => {
+						resourceGainText += g.trigger + ': +' + g.value + '\n';
+					});
+					if (heroicResourceFeature.data.details) {
+						resourceGainText += '\n\n' + heroicResourceFeature.data.details;
+					}
+					if (hero.class && (hero.class.id === ClassData.conduit.id) && domains) {
+						resourceGainText = resourceGainText + '\n' + domains.map(d => d.piety).join('');
+					}
+					texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
 				}
-				ignoredFeatures[heroicResourceFeature.id] = true;
-				let resourceGainText = 'Your resource is ' + resource + '.\n\n' + heroicResourceFeature.description.replace(startup, '');
-				if (hero.class && (hero.class.id === ClassData.conduit.id) && domains) {
-					resourceGainText = resourceGainText + '\n' + domains.map(d => d.piety).join('');
+			} else {
+				const resource = heroicResources.length > 0 ? heroicResources[0].name.toLowerCase() : 'XXX';
+				const startup = new RegExp(String.raw`\s*At the start of each of your turns during combat, you gain (.+?) ${resource}\.\s*`);
+				const heroicResourceFeature = features.find(f => f.description.match(startup));
+				if (heroicResourceFeature) {
+					const startupAmount = heroicResourceFeature.description.match(startup);
+					if (startupAmount) {
+						texts['HeroicResourcesPerTurn'] = startupAmount[1];
+					}
+					ignoredFeatures[heroicResourceFeature.id] = true;
+					let resourceGainText = 'Your resource is ' + resource + '.\n\n' + heroicResourceFeature.description.replace(startup, '');
+					if (hero.class && (hero.class.id === ClassData.conduit.id) && domains) {
+						resourceGainText = resourceGainText + '\n' + domains.map(d => d.piety).join('');
+					}
+					texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
 				}
-				texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
 			}
 		}
 

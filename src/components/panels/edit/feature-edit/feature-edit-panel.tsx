@@ -998,7 +998,13 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureChoiceData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Options</HeaderText>
+						<HeaderText
+							extra={
+								<Button icon={<PlusOutlined />} onClick={() => addChoice(data)} />
+							}
+						>
+							Options
+						</HeaderText>
 						{
 							data.options.map((option, n) => (
 								<Expander
@@ -1026,10 +1032,6 @@ export const FeatureEditPanel = (props: Props) => {
 								<Empty />
 								: null
 						}
-						<Button block={true} onClick={() => addChoice(data)}>
-							<PlusOutlined />
-							Add an option
-						</Button>
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
 					</Space>
@@ -1127,7 +1129,13 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureDamageModifierData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Modifiers</HeaderText>
+						<HeaderText
+							extra={
+								<Button icon={<PlusOutlined />} onClick={() => addDamageModifier(data)} />
+							}
+						>
+							Modifiers
+						</HeaderText>
 						{
 							data.modifiers.map((mod, n) => (
 								<Expander key={n} title='Damage Modifier'>
@@ -1198,10 +1206,6 @@ export const FeatureEditPanel = (props: Props) => {
 								<Empty />
 								: null
 						}
-						<Button block={true} onClick={() => addDamageModifier(data)}>
-							<PlusOutlined />
-							Add a modifier
-						</Button>
 					</Space>
 				);
 			}
@@ -1237,7 +1241,13 @@ export const FeatureEditPanel = (props: Props) => {
 							value={data.type}
 							onChange={s => setResourceType(s as 'heroic' | 'epic')}
 						/>
-						<HeaderText>Gaining The Resource</HeaderText>
+						<HeaderText
+							extra={
+								<Button icon={<PlusOutlined />} onClick={() => addResourceGain(data)} />
+							}
+						>
+							Gaining The Resource
+						</HeaderText>
 						{
 							data.gains.map((gain, n) => (
 								<Expander
@@ -1275,10 +1285,6 @@ export const FeatureEditPanel = (props: Props) => {
 								<Empty />
 								: null
 						}
-						<Button block={true} onClick={() => addResourceGain(data)}>
-							<PlusOutlined />
-							Add a gain
-						</Button>
 						<Divider />
 						<Toggle label='Can be negative' value={data.canBeNegative} onChange={setCanBeNegative} />
 						<HeaderText>Details</HeaderText>

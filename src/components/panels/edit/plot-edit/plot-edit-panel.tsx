@@ -123,6 +123,13 @@ export const PlotEditPanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={() => setAddingContent(true)} />
+					}
+				>
+					Content
+				</HeaderText>
 				{
 					plot.content.map(c => {
 						let element: Element |undefined = undefined;
@@ -179,10 +186,6 @@ export const PlotEditPanel = (props: Props) => {
 						<Empty text='No content' />
 						: null
 				}
-				<Button block={true} onClick={() => setAddingContent(true)}>
-					<PlusOutlined />
-					Add a new piece of content
-				</Button>
 			</Space>
 		);
 	};
@@ -215,6 +218,35 @@ export const PlotEditPanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						linkTargets.length > 0 ?
+							<Popover
+								trigger='click'
+								content={
+									<Space direction='vertical' style={{ width: '100%' }}>
+										{
+											linkTargets.map(p => (
+												<Button
+													key={p.id}
+													type='text'
+													block={true}
+													onClick={() => addLink(p)}
+												>
+													{p.name || 'Unnamed Plot Point'}
+												</Button>
+											))
+										}
+									</Space>
+								}
+							>
+								<Button icon={<PlusOutlined />} />
+							</Popover>
+							: null
+					}
+				>
+					Links
+				</HeaderText>
 				{
 					plot.links.map(l => (
 						<Expander
@@ -239,34 +271,6 @@ export const PlotEditPanel = (props: Props) => {
 				{
 					plot.links.length === 0 ?
 						<Empty text='No links' />
-						: null
-				}
-				{
-					linkTargets.length > 0 ?
-						<Popover
-							trigger='click'
-							content={
-								<Space direction='vertical' style={{ width: '100%' }}>
-									{
-										linkTargets.map(p => (
-											<Button
-												key={p.id}
-												type='text'
-												block={true}
-												onClick={() => addLink(p)}
-											>
-												{p.name || 'Unnamed Plot Point'}
-											</Button>
-										))
-									}
-								</Space>
-							}
-						>
-							<Button block={true}>
-								<PlusOutlined />
-								Add a new link
-							</Button>
-						</Popover>
 						: null
 				}
 			</Space>

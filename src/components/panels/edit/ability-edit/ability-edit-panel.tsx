@@ -471,7 +471,13 @@ export const AbilityEditPanel = (props: Props) => {
 											value={ability.keywords}
 											onChange={setKeywords}
 										/>
-										<HeaderText>Distance</HeaderText>
+										<HeaderText
+											extra={
+												<Button icon={<PlusOutlined />} onClick={addDistance} />
+											}
+										>
+											Distance
+										</HeaderText>
 										<Space direction='vertical' style={{ width: '100%' }}>
 											{
 												ability.distance.map((distance, n) => (
@@ -575,10 +581,6 @@ export const AbilityEditPanel = (props: Props) => {
 													<Empty />
 													: null
 											}
-											<Button block={true} onClick={addDistance}>
-												<PlusOutlined />
-												Add a new distance
-											</Button>
 										</Space>
 										<HeaderText>Target</HeaderText>
 										<Input
@@ -695,7 +697,13 @@ export const AbilityEditPanel = (props: Props) => {
 								label: 'Extra',
 								children: (
 									<div>
-										<HeaderText>Alternate Effects</HeaderText>
+										<HeaderText
+											extra={
+												<Button icon={<PlusOutlined />} onClick={addAlternateEffect} />
+											}
+										>
+											Alternate Effects
+										</HeaderText>
 										<Space direction='vertical' style={{ width: '100%' }}>
 											{
 												ability.alternateEffects.map((effect, n) => (
@@ -723,12 +731,14 @@ export const AbilityEditPanel = (props: Props) => {
 													<Empty />
 													: null
 											}
-											<Button block={true} onClick={addAlternateEffect}>
-												<PlusOutlined />
-												Add an alternate effect
-											</Button>
 										</Space>
-										<HeaderText>Spend</HeaderText>
+										<HeaderText
+											extra={
+												<Button icon={<PlusOutlined />} onClick={addSpend} />
+											}
+										>
+											Spend
+										</HeaderText>
 										<Space direction='vertical' style={{ width: '100%' }}>
 											{
 												ability.spend.map((spend, n) => (
@@ -759,12 +769,14 @@ export const AbilityEditPanel = (props: Props) => {
 													<Empty />
 													: null
 											}
-											<Button block={true} onClick={addSpend}>
-												<PlusOutlined />
-												Add a spend effect
-											</Button>
 										</Space>
-										<HeaderText>Persistence</HeaderText>
+										<HeaderText
+											extra={
+												<Button icon={<PlusOutlined />} onClick={addPersistence} />
+											}
+										>
+											Persistence
+										</HeaderText>
 										<Space direction='vertical' style={{ width: '100%' }}>
 											{
 												ability.persistence.map((persist, n) => (
@@ -795,10 +807,6 @@ export const AbilityEditPanel = (props: Props) => {
 													<Empty />
 													: null
 											}
-											<Button block={true} onClick={addPersistence}>
-												<PlusOutlined />
-												Add a persistence effect
-											</Button>
 											<HeaderText>Strained</HeaderText>
 											<MultiLine label='Strained' value={ability.strained} onChange={setStrained} />
 										</Space>

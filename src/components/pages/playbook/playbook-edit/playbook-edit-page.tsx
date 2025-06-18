@@ -602,6 +602,13 @@ export const PlaybookEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addNote} />
+					}
+				>
+					Notes
+				</HeaderText>
 				{
 					encounter.notes.map(i => (
 						<Expander
@@ -625,10 +632,6 @@ export const PlaybookEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addNote}>
-					<PlusOutlined />
-					Add a new note
-				</Button>
 			</Space>
 		);
 	};
@@ -865,6 +868,13 @@ export const PlaybookEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addSection} />
+					}
+				>
+					Sections
+				</HeaderText>
 				{
 					montage.sections.map((s, sectionIndex) => (
 						<Expander
@@ -895,6 +905,13 @@ export const PlaybookEditPage = (props: Props) => {
 										label: 'Challenges',
 										children: (
 											<Space direction='vertical' style={{ width: '100%' }}>
+												<HeaderText
+													extra={
+														<Button icon={<PlusOutlined />} onClick={() => addChallenge(sectionIndex)} />
+													}
+												>
+													Challenges
+												</HeaderText>
 												{
 													s.challenges.map((c, challengeIndex) => (
 														<Expander
@@ -962,10 +979,6 @@ export const PlaybookEditPage = (props: Props) => {
 														<Empty />
 														: null
 												}
-												<Button block={true} onClick={() => addChallenge(sectionIndex)}>
-													<PlusOutlined />
-													Add a challenge
-												</Button>
 											</Space>
 										)
 									},
@@ -974,7 +987,13 @@ export const PlaybookEditPage = (props: Props) => {
 										label: 'Twists',
 										children: (
 											<Space direction='vertical' style={{ width: '100%' }}>
-												<HeaderText>Twists</HeaderText>
+												<HeaderText
+													extra={
+														<Button icon={<PlusOutlined />} onClick={() => addTwist(sectionIndex)} />
+													}
+												>
+													Twists
+												</HeaderText>
 												<MultiLine label='Twists' value={s.twistInfo} onChange={value => setSectionTwistInfo(sectionIndex, value)} />
 												{
 													s.twists.map((t, twistIndex) => (
@@ -1043,10 +1062,6 @@ export const PlaybookEditPage = (props: Props) => {
 														<Empty />
 														: null
 												}
-												<Button block={true} onClick={() => addTwist(sectionIndex)}>
-													<PlusOutlined />
-													Add a twist
-												</Button>
 											</Space>
 										)
 									}
@@ -1060,10 +1075,6 @@ export const PlaybookEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addSection}>
-					<PlusOutlined />
-					Add a section
-				</Button>
 			</Space>
 		);
 	};
@@ -1182,6 +1193,13 @@ export const PlaybookEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addMotivation} />
+					}
+				>
+					Motivations
+				</HeaderText>
 				{
 					negotiation.motivations.map((m, n) => (
 						<Expander
@@ -1223,10 +1241,6 @@ export const PlaybookEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addMotivation}>
-					<PlusOutlined />
-					Add a motivation
-				</Button>
 			</Space>
 		);
 	};
@@ -1276,6 +1290,13 @@ export const PlaybookEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addPitfall} />
+					}
+				>
+					Pitfalls
+				</HeaderText>
 				{
 					negotiation.pitfalls.map((p, n) => (
 						<Expander
@@ -1317,10 +1338,6 @@ export const PlaybookEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addPitfall}>
-					<PlusOutlined />
-					Add a pitfall
-				</Button>
 			</Space>
 		);
 	};

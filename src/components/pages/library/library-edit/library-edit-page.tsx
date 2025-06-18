@@ -224,6 +224,13 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addFeature} />
+					}
+				>
+					Features
+				</HeaderText>
 				{
 					el.features.map(f => (
 						<Expander
@@ -249,10 +256,6 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addFeature}>
-					<PlusOutlined />
-					Add a new feature
-				</Button>
 			</Space>
 		);
 	};
@@ -298,6 +301,13 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addIncident} />
+					}
+				>
+					Inciting Incidents
+				</HeaderText>
 				{
 					career.incitingIncidents.options.map(o => (
 						<Expander
@@ -321,10 +331,6 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addIncident}>
-					<PlusOutlined />
-					Add a new inciting incident
-				</Button>
 			</Space>
 		);
 	};
@@ -512,7 +518,13 @@ export const LibraryEditPage = (props: Props) => {
 					value={heroClass.subclassCount}
 					onChange={setSubclassCount}
 				/>
-				<HeaderText>Primary Characteristics</HeaderText>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addCharacteristicSet} />
+					}
+				>
+					Primary Characteristics
+				</HeaderText>
 				{
 					heroClass.primaryCharacteristicsOptions.map((o, n) => (
 						<Expander
@@ -552,10 +564,6 @@ export const LibraryEditPage = (props: Props) => {
 						/>
 						: null
 				}
-				<Button block={true} onClick={addCharacteristicSet}>
-					<PlusOutlined />
-					Add a new primary characteristic option
-				</Button>
 			</Space>
 		);
 	};
@@ -620,7 +628,13 @@ export const LibraryEditPage = (props: Props) => {
 				{
 					heroClass.featuresByLevel.map(lvl => (
 						<div key={lvl.level}>
-							<HeaderText>Level {lvl.level.toString()}</HeaderText>
+							<HeaderText
+								extra={
+									<Button icon={<PlusOutlined />} onClick={() => addFeature(lvl.level)} />
+								}
+							>
+								Level {lvl.level.toString()}
+							</HeaderText>
 							<Space direction='vertical' style={{ width: '100%' }}>
 								{
 									lvl.features.map(f => (
@@ -647,10 +661,6 @@ export const LibraryEditPage = (props: Props) => {
 										<Empty />
 										: null
 								}
-								<Button block={true} onClick={() => addFeature(lvl.level)}>
-									<PlusOutlined />
-									Add a new level {lvl.level} feature
-								</Button>
 							</Space>
 						</div>
 					))
@@ -704,6 +714,13 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addAbility} />
+					}
+				>
+					Abilities
+				</HeaderText>
 				{
 					heroClass.abilities.map(a => (
 						<Expander
@@ -728,10 +745,6 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addAbility}>
-					<PlusOutlined />
-					Add a new ability
-				</Button>
 			</Space>
 		);
 	};
@@ -763,6 +776,13 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addSubclass} />
+					}
+				>
+					Subclasses
+				</HeaderText>
 				{
 					heroClass.subclasses.map(sc => (
 						<Expander
@@ -784,10 +804,6 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addSubclass}>
-					<PlusOutlined />
-					Add a new subclass
-				</Button>
 			</Space>
 		);
 	};
@@ -889,7 +905,13 @@ export const LibraryEditPage = (props: Props) => {
 		const getSubclassLevels = (subclass: SubClass) => {
 			return subclass.featuresByLevel.map(lvl => (
 				<Space key={lvl.level} direction='vertical' style={{ width: '100%' }}>
-					<HeaderText>Level {lvl.level.toString()}</HeaderText>
+					<HeaderText
+						extra={
+							<Button icon={<PlusOutlined />} onClick={() => addFeature(subclass, lvl.level)} />
+						}
+					>
+						Level {lvl.level.toString()}
+					</HeaderText>
 					{
 						lvl.features.map(f => (
 							<Expander
@@ -915,10 +937,6 @@ export const LibraryEditPage = (props: Props) => {
 							<Empty />
 							: null
 					}
-					<Button block={true} onClick={() => addFeature(subclass, lvl.level)}>
-						<PlusOutlined />
-						Add a new level {lvl.level} feature
-					</Button>
 				</Space>
 			));
 		};
@@ -1396,7 +1414,13 @@ export const LibraryEditPage = (props: Props) => {
 				{
 					item.customizationsByLevel.map(lvl => (
 						<div key={lvl.level}>
-							<HeaderText>Level {lvl.level.toString()}</HeaderText>
+							<HeaderText
+								extra={
+									<Button icon={<PlusOutlined />} onClick={() => addFeature(lvl.level)} />
+								}
+							>
+								Level {lvl.level.toString()}
+							</HeaderText>
 							<Space direction='vertical' style={{ width: '100%' }}>
 								{
 									lvl.features.map(f => (
@@ -1423,10 +1447,6 @@ export const LibraryEditPage = (props: Props) => {
 										<Empty />
 										: null
 								}
-								<Button block={true} onClick={() => addFeature(lvl.level)}>
-									<PlusOutlined />
-									Add a new level {lvl.level} feature
-								</Button>
 							</Space>
 						</div>
 					))
@@ -1739,6 +1759,13 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addDamageMod} />
+					}
+				>
+					Damage Modifiers
+				</HeaderText>
 				{
 					terrain.damageMods.map((dm, n) => (
 						<Expander
@@ -1786,10 +1813,6 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addDamageMod}>
-					<PlusOutlined />
-					Add a new damage modifier
-				</Button>
 			</Space>
 		);
 	};
@@ -1863,6 +1886,13 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addSection} />
+					}
+				>
+					Sections
+				</HeaderText>
 				{
 					terrain.sections.map((section, sectionIndex) => (
 						<Expander
@@ -1900,10 +1930,7 @@ export const LibraryEditPage = (props: Props) => {
 										<Empty />
 										: null
 								}
-								<Button block={true} onClick={() => addSectionContent(sectionIndex)}>
-									<PlusOutlined />
-									Add a new content item
-								</Button>
+								<Button icon={<PlusOutlined />} onClick={() => addSectionContent(sectionIndex)} />
 							</Space>
 						</Expander>
 					))
@@ -1913,10 +1940,6 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addSection}>
-					<PlusOutlined />
-					Add a new section
-				</Button>
 			</Space>
 		);
 	};
@@ -2038,6 +2061,13 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addUpgrade} />
+					}
+				>
+					Customizations
+				</HeaderText>
 				{
 					terrain.upgrades.map((upgrade, upgradeIndex) => (
 						<Expander
@@ -2062,7 +2092,13 @@ export const LibraryEditPage = (props: Props) => {
 								<MultiLine label='Text' value={upgrade.text} onChange={value => setUpgradeText(upgradeIndex, value)} />
 								<HeaderText>Cost</HeaderText>
 								<NumberSpin min={1} value={upgrade.cost} onChange={value => setUpgradeCost(upgradeIndex, value)} />
-								<HeaderText>Sections</HeaderText>
+								<HeaderText
+									extra={
+										<Button icon={<PlusOutlined />} onClick={() => addUpgradeSection(upgradeIndex)} />
+									}
+								>
+									Sections
+								</HeaderText>
 								{
 									upgrade.sections.map((section, sectionIndex) => (
 										<Expander
@@ -2075,6 +2111,13 @@ export const LibraryEditPage = (props: Props) => {
 											]}
 										>
 											<Space direction='vertical' style={{ width: '100%' }}>
+												<HeaderText
+													extra={
+														<Button icon={<PlusOutlined />} onClick={() => addUpgradeSectionContent(upgradeIndex, sectionIndex)} />
+													}
+												>
+													Content
+												</HeaderText>
 												{
 													section.content.map((feature, contentIndex) => (
 														<Expander
@@ -2100,10 +2143,6 @@ export const LibraryEditPage = (props: Props) => {
 														<Empty />
 														: null
 												}
-												<Button block={true} onClick={() => addUpgradeSectionContent(upgradeIndex, sectionIndex)}>
-													<PlusOutlined />
-													Add a new content item
-												</Button>
 											</Space>
 										</Expander>
 									))
@@ -2113,10 +2152,6 @@ export const LibraryEditPage = (props: Props) => {
 										<Empty />
 										: null
 								}
-								<Button block={true} onClick={() => addUpgradeSection(upgradeIndex)}>
-									<PlusOutlined />
-									Add a new section
-								</Button>
 							</Space>
 						</Expander>
 					))
@@ -2126,10 +2161,6 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addUpgrade}>
-					<PlusOutlined />
-					Add a new customization
-				</Button>
 			</Space>
 		);
 	};
@@ -2175,6 +2206,13 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addInformation} />
+					}
+				>
+					Information
+				</HeaderText>
 				{
 					monsterGroup.information.map(i => (
 						<Expander
@@ -2198,10 +2236,6 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addInformation}>
-					<PlusOutlined />
-					Add a new information piece
-				</Button>
 			</Space>
 		);
 	};
@@ -2250,6 +2284,13 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addMaliceFeature} />
+					}
+				>
+					Malice
+				</HeaderText>
 				{
 					monsterGroup.malice.map(f => (
 						<Expander
@@ -2275,10 +2316,6 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addMaliceFeature}>
-					<PlusOutlined />
-					Add a new malice feature
-				</Button>
 			</Space>
 		);
 	};
@@ -2363,8 +2400,7 @@ export const LibraryEditPage = (props: Props) => {
 						: null
 				}
 				<Flex gap={10}>
-					<Button block={true} onClick={addMonster}>
-						<PlusOutlined />
+					<Button icon={<PlusOutlined />} onClick={addMonster}>
 						Add a new monster
 					</Button>
 					<Upload
@@ -2450,6 +2486,13 @@ export const LibraryEditPage = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addAddOn} />
+					}
+				>
+					Customizations
+				</HeaderText>
 				{
 					monsterGroup.addOns.map(i => (
 						<Expander
@@ -2475,10 +2518,6 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addAddOn}>
-					<PlusOutlined />
-					Add a new customization
-				</Button>
 			</Space>
 		);
 	};

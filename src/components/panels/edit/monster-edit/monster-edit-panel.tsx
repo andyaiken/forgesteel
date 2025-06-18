@@ -552,6 +552,13 @@ export const MonsterEditPanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button icon={<PlusOutlined />} onClick={addFeature} />
+					}
+				>
+					Features
+				</HeaderText>
 				{
 					monster.features.map(f => (
 						<Expander
@@ -578,10 +585,6 @@ export const MonsterEditPanel = (props: Props) => {
 						<Empty />
 						: null
 				}
-				<Button block={true} onClick={addFeature}>
-					<PlusOutlined />
-					Add a new feature
-				</Button>
 				{props.similarMonsters.length > 0 ? <Divider /> : null}
 				{
 					props.similarMonsters.length > 0 ?

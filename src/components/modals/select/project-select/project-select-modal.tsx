@@ -1,5 +1,6 @@
 import { Input, Space } from 'antd';
 import { Empty } from '../../../controls/empty/empty';
+import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Modal } from '../../modal/modal';
 import { Project } from '../../../../models/project';
 import { ProjectPanel } from '../../../panels/elements/project-panel/project-panel';
@@ -23,8 +24,13 @@ export const ProjectSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
 	try {
-		const projects = SourcebookLogic
-			.getProjects(props.sourcebooks)
+		const projects = [
+			FactoryLogic.createProject({
+				name: 'Custom Project',
+				isCustom: true
+			}),
+			...SourcebookLogic.getProjects(props.sourcebooks)
+		]
 			.filter(item => Utils.textMatches([
 				item.name,
 				item.description

@@ -401,7 +401,8 @@ export class FactoryLogic {
 		source?: string,
 		characteristic?: Characteristic[],
 		goal?: number,
-		effect?: string
+		effect?: string,
+		isCustom?: boolean
 	}): Project => {
 		return {
 			id: data.id || Utils.guid(),
@@ -412,6 +413,7 @@ export class FactoryLogic {
 			characteristic: data.characteristic || [ Characteristic.Reason ],
 			goal: data.goal || 0,
 			effect: data.effect || '',
+			isCustom: data.isCustom ?? false,
 			progress: null
 		};
 	};

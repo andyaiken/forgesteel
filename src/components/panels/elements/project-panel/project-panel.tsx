@@ -1,11 +1,13 @@
+import { Button, Progress } from 'antd';
+import { CheckCircleOutlined, EditOutlined } from '@ant-design/icons';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Progress } from 'antd';
 import { Project } from '../../../../models/project';
+import { ProjectEditPanel } from '../../edit/project-edit/project-edit';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
@@ -20,6 +22,7 @@ interface Props {
 
 export const ProjectPanel = (props: Props) => {
 	const [ project, setProject ] = useState<Project>(Utils.copy(props.project));
+	const [ editing, setEditing ] = useState<boolean>(false);
 
 	const setPrerequisites = (value: boolean) => {
 		const copy = Utils.copy(project);
@@ -48,6 +51,14 @@ export const ProjectPanel = (props: Props) => {
 		}
 	};
 
+	const onChange = (value: Project) => {
+		const copy = Utils.copy(value);
+		setProject(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
+	};
+
 	try {
 		let itemOK = true;
 		if (project.itemPrerequisites && project.progress && !project.progress.prerequisites) {
@@ -61,10 +72,19 @@ export const ProjectPanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className={props.mode === PanelMode.Full ? 'project-panel' : 'project-panel compact'} id={props.mode === PanelMode.Full ? props.project.id : undefined}>
-					<HeaderText level={1}>{props.project.name || 'Unnamed Project'}</HeaderText>
+					<HeaderText
+						level={1}
+						extra={
+							project.isCustom && (props.mode === PanelMode.Full) ?
+								<Button type='text' icon={editing ? <CheckCircleOutlined /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
+								: null
+						}
+					>
+						{props.project.name || 'Unnamed Project'}
+					</HeaderText>
 					<Markdown text={props.project.description} />
 					{
-						props.mode === PanelMode.Full ?
+						(props.mode === PanelMode.Full) && !editing ?
 							<>
 								{project.itemPrerequisites ? <Field label='Item Prerequisites' value={props.project.itemPrerequisites} /> : null}
 								{project.itemPrerequisites && project.progress ? <Toggle label='Obtained Items' value={project.progress.prerequisites} onChange={setPrerequisites} /> : null}
@@ -80,6 +100,7 @@ export const ProjectPanel = (props: Props) => {
 											max={project.goal || undefined}
 											steps={[ 1, 10 ]}
 											value={project.progress.points}
+											suffix={props.project.goal ? `/ ${props.project.goal}` : undefined}
 											onChange={setPoints}
 										/>
 										: null
@@ -96,6 +117,15 @@ export const ProjectPanel = (props: Props) => {
 								}
 								<Markdown text={props.project.effect} />
 							</>
+							: null
+					}
+					{
+						(props.mode === PanelMode.Full) && editing ?
+							<ProjectEditPanel
+								project={project}
+								includeNameAndDescription={true}
+								onChange={onChange}
+							/>
 							: null
 					}
 				</div>

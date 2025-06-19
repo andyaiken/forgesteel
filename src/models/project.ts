@@ -13,5 +13,6 @@ export interface Project extends Element {
 	characteristic: Characteristic[];
 	goal: number;
 	effect: string;
+	isCustom: boolean;
 	progress: ProjectProgress | null;
 }

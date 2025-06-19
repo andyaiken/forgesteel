@@ -64,6 +64,8 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { Playbook } from '../../../../models/playbook';
+import { Project } from '../../../../models/project';
+import { ProjectEditPanel } from '../../../panels/edit/project-edit/project-edit';
 import { ProjectPanel } from '../../../panels/elements/project-panel/project-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -1460,52 +1462,16 @@ export const LibraryEditPage = (props: Props) => {
 
 		const setCraftable = (value: boolean) => {
 			const elementCopy = Utils.copy(element) as Item;
-			elementCopy.crafting = value ? FactoryLogic.createProject({ id: `${item.id}-crafting`, name: `Craft ${item.name}`, description: item.name }) : null;
+			elementCopy.crafting = value ?
+				FactoryLogic.createProject({ id: `${item.id}-crafting`, name: `Craft ${item.name}`, description: item.name })
+				: null;
 			setElement(elementCopy);
 			setDirty(true);
 		};
 
-		const setPrerequisites = (value: string) => {
+		const setCrafting = (value: Project) => {
 			const elementCopy = Utils.copy(element) as Item;
-			if (elementCopy.crafting) {
-				elementCopy.crafting.itemPrerequisites = value;
-			}
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
-		const setSource = (value: string) => {
-			const elementCopy = Utils.copy(element) as Item;
-			if (elementCopy.crafting) {
-				elementCopy.crafting.source = value;
-			}
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
-		const setCharacteristic = (value: Characteristic[]) => {
-			const elementCopy = Utils.copy(element) as Item;
-			if (elementCopy.crafting) {
-				elementCopy.crafting.characteristic = value;
-			}
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
-		const setGoal = (value: number) => {
-			const elementCopy = Utils.copy(element) as Item;
-			if (elementCopy.crafting) {
-				elementCopy.crafting.goal = value;
-			}
-			setElement(elementCopy);
-			setDirty(true);
-		};
-
-		const setEffect = (value: string) => {
-			const elementCopy = Utils.copy(element) as Item;
-			if (elementCopy.crafting) {
-				elementCopy.crafting.effect = value;
-			}
+			elementCopy.crafting = Utils.copy(value);
 			setElement(elementCopy);
 			setDirty(true);
 		};
@@ -1515,45 +1481,11 @@ export const LibraryEditPage = (props: Props) => {
 				<Toggle label='Can be crafted' value={!!item.crafting} onChange={setCraftable} />
 				{
 					item.crafting ?
-						<>
-							<HeaderText>Item Prerequisites</HeaderText>
-							<Input
-								placeholder='Prerequisites'
-								allowClear={true}
-								value={item.crafting.itemPrerequisites}
-								onChange={e => setPrerequisites(e.target.value)}
-							/>
-							<HeaderText>Source</HeaderText>
-							<Input
-								placeholder='Source'
-								allowClear={true}
-								value={item.crafting.source}
-								onChange={e => setSource(e.target.value)}
-							/>
-							<HeaderText>Characteristic</HeaderText>
-							<Select
-								style={{ width: '100%' }}
-								placeholder='Characteristic'
-								mode='multiple'
-								options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
-								optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-								showSearch={true}
-								filterOption={(input, option) => {
-									const strings = option ?
-										[
-											option.value
-										]
-										: [];
-									return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-								}}
-								value={item.crafting.characteristic}
-								onChange={setCharacteristic}
-							/>
-							<HeaderText>Goal</HeaderText>
-							<NumberSpin min={0} max={500} steps={[ 5 ]} value={item.crafting.goal} onChange={setGoal} />
-							<HeaderText>Effect</HeaderText>
-							<MultiLine label='Effect' value={item.crafting.effect} onChange={setEffect} />
-						</>
+						<ProjectEditPanel
+							project={item.crafting}
+							includeNameAndDescription={false}
+							onChange={setCrafting}
+						/>
 						: null
 				}
 			</Space>

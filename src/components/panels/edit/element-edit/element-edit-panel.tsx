@@ -33,7 +33,7 @@ export const ElementEditPanel = (props: Props) => {
 	try {
 		return (
 			<ErrorBoundary>
-				<div className='monster-edit-panel'>
+				<div className='element-edit-panel'>
 					<HeaderText>Name</HeaderText>
 					<Input
 						status={element.name === '' ? 'warning' : ''}

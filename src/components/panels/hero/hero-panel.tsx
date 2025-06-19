@@ -93,6 +93,12 @@ export const HeroPanel = (props: Props) => {
 				}
 			};
 
+			const onShowProjects = () => {
+				if (props.onShowState) {
+					props.onShowState(HeroStatePage.Projects);
+				}
+			};
+
 			const onShowConditions = () => {
 				if (props.onshowReference) {
 					props.onshowReference(RulesPage.Conditions);
@@ -269,6 +275,27 @@ export const HeroPanel = (props: Props) => {
 								.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, props.sourcebooks).filter(s => s.list === list)))
 							:
 							getSkills('Skills', HeroLogic.getSkills(props.hero, props.sourcebooks))
+					}
+					{
+						props.hero.state.projects.length > 0 ?
+							<div key='projects' className='overview-tile clickable' onClick={onShowProjects}>
+								<HeaderText>Projects</HeaderText>
+								{
+									props.hero.state.projects.map(p => (
+										<Flex key={p.id} align='center' justify='space-between' gap={10}>
+											<div className='ds-text compact-text'>{p.name}</div>
+											{
+												p.progress ?
+													<div className='ds-text compact-text'>
+														{p.goal > 0 ? `${Math.round(100 * p.progress.points / p.goal)}%` : `${p.goal}`}
+													</div>
+													: null
+											}
+										</Flex>
+									))
+								}
+							</div>
+							: null
 					}
 				</div>
 			);

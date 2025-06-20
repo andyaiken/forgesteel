@@ -146,8 +146,8 @@ export class AbilityLogic {
 					let isMelee = ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon);
 					let isRanged = ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon);
 					if (distance) {
-						isMelee = distance === AbilityDistanceType.Melee;
-						isRanged = distance === AbilityDistanceType.Ranged;
+						isMelee = (distance === AbilityDistanceType.Melee) && ability.keywords.includes(AbilityKeyword.Weapon);
+						isRanged = (distance === AbilityDistanceType.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon);
 					}
 
 					const dmgKits = HeroLogic

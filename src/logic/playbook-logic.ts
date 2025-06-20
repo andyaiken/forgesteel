@@ -33,12 +33,14 @@ export class PlaybookLogic {
 			.filter(id => id !== null);
 	};
 
-	static getAllPlotPoints = (plot: Plot) => {
+	static getAllPlotPoints = (plot: Plot | undefined) => {
 		const list: Plot[] = [];
 
-		const addPoints = (plot: Plot) => {
-			list.push(plot);
-			plot.plots.forEach(addPoints);
+		const addPoints = (plot: Plot | undefined) => {
+			if (plot) {
+				list.push(plot);
+				plot.plots.forEach(addPoints);
+			}
 		};
 
 		addPoints(plot);

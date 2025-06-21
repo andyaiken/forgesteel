@@ -921,7 +921,8 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
-		const sortedLanguages = Collections.sort(languages, l => l.name);
+		const distinctLanguages = Collections.distinct(languages, l => l.name);
+		const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
 
 		if (sortedLanguages.length === 0) {
 			return (
@@ -1094,7 +1095,8 @@ export const FeaturePanel = (props: Props) => {
 
 		const skills = SourcebookLogic.getSkills(props.sourcebooks as Sourcebook[])
 			.filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
-		const sortedSkills = Collections.sort(skills, s => s.name);
+		const distinctSkills = Collections.distinct(skills, s => s.name);
+		const sortedSkills = Collections.sort(distinctSkills, s => s.name);
 
 		if (sortedSkills.length === 0) {
 			return (

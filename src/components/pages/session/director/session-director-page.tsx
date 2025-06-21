@@ -43,6 +43,7 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
+	showSourcebooks: () => void;
 	showPlayerView: () => void;
 	updateHero: (hero: Hero) => void;
 	updateSession: (session: Playbook) => void;
@@ -515,7 +516,7 @@ export const SessionDirectorPage = (props: Props) => {
 						{getSelector()}
 						{getSelectedContent()}
 					</div>
-					<AppFooter page='session' heroes={props.heroes} session={props.session} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='session' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
 				</div>
 			</ErrorBoundary>
 		);

@@ -63,7 +63,6 @@ import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
-import { Playbook } from '../../../../models/playbook';
 import { Project } from '../../../../models/project';
 import { ProjectEditPanel } from '../../../panels/edit/project-edit/project-edit';
 import { ProjectPanel } from '../../../panels/elements/project-panel/project-panel';
@@ -88,12 +87,12 @@ import './library-edit-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	session: Playbook;
 	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
+	showSourcebooks: () => void;
  	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	saveChanges: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 	setOptions: (options: Options) => void;
@@ -3152,7 +3151,7 @@ export const LibraryEditPage = (props: Props) => {
 							{getPreview()}
 						</div>
 					</div>
-					<AppFooter page='library' heroes={props.heroes} session={props.session} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='library' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
 				</div>
 			</ErrorBoundary>
 		);

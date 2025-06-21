@@ -219,7 +219,8 @@ export class SourcebookLogic {
 			list.push(...sourcebook.skills);
 		});
 
-		return Collections.sort(list, item => item.name);
+		const distinct = Collections.distinct(list, item => item.name);
+		return Collections.sort(distinct, item => item.name);
 	};
 
 	static getLanguages = (sourcebooks: Sourcebook[]) => {
@@ -229,7 +230,8 @@ export class SourcebookLogic {
 			list.push(...sourcebook.languages);
 		});
 
-		return Collections.sort(list, item => item.name);
+		const distinct = Collections.distinct(list, item => item.name);
+		return Collections.sort(distinct, item => item.name);
 	};
 
 	static getProjects = (sourcebooks: Sourcebook[]) => {

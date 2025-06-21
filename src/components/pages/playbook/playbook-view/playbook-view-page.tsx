@@ -35,12 +35,12 @@ interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	playbook: Playbook;
-	session: Playbook;
 	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
+	showSourcebooks: () => void;
 	showEncounterTools: (encounter: Encounter) => void;
 	export: (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	start: (kind: PlaybookElementKind, element: Element) => void;
@@ -212,7 +212,7 @@ export const PlaybookViewPage = (props: Props) => {
 					<div className='playbook-view-page-content'>
 						{panel}
 					</div>
-					<AppFooter page='playbook' heroes={props.heroes} session={props.session} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='playbook' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
 				</div>
 			</ErrorBoundary>
 		);

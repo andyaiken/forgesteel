@@ -1,9 +1,8 @@
 import { BookOutlined, PlayCircleOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
-import { Button, Popover, Space } from 'antd';
+import { Button, Divider, Popover, Space } from 'antd';
 import { Collections } from '../../../utils/collections';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Hero } from '../../../models/hero';
-import { Playbook } from '../../../models/playbook';
 import { useMediaQuery } from '../../../hooks/use-media-query';
 import { useNavigation } from '../../../hooks/use-navigation';
 
@@ -14,7 +13,7 @@ import shield from './../../../assets/shield.png';
 interface Props {
 	page: 'welcome' | 'heroes' | 'library' | 'playbook' | 'session' | 'player-view';
 	heroes: Hero[];
-	session: Playbook;
+	showSourcebooks: () => void;
 	showReference: () => void;
 	showRoll: () => void;
 	showAbout: () => void;
@@ -58,20 +57,24 @@ export const AppFooter = (props: Props) => {
 					}
 					<Popover
 						content={
-							<Space direction='vertical' style={{ width: '250px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
-								<Button type='text' block={true} onClick={() => navigation.goToLibraryList('ancestry')}>Ancestries</Button>
-								<Button type='text' block={true} onClick={() => navigation.goToLibraryList('career')}>Careers</Button>
-								<Button type='text' block={true} onClick={() => navigation.goToLibraryList('class')}>Classes</Button>
-								<Button type='text' block={true} onClick={() => navigation.goToLibraryList('complication')}>Complications</Button>
-								<Button type='text' block={true} onClick={() => navigation.goToLibraryList('culture')}>Cultures</Button>
-								<Button type='text' block={true} onClick={() => navigation.goToLibraryList('domain')}>Domains</Button>
-								<Button type='text' block={true} onClick={() => navigation.goToLibraryList('item')}>Items</Button>
-								<Button type='text' block={true} onClick={() => navigation.goToLibraryList('kit')}>Kits</Button>
-								<Button type='text' block={true} onClick={() => navigation.goToLibraryList('monster-group')}>Monsters</Button>
-								<Button type='text' block={true} onClick={() => navigation.goToLibraryList('perk')}>Perks</Button>
-								<Button type='text' block={true} onClick={() => navigation.goToLibraryList('terrain')}>Terrain</Button>
-								<Button type='text' block={true} onClick={() => navigation.goToLibraryList('title')}>Titles</Button>
-							</Space>
+							<div>
+								<Space direction='vertical' style={{ width: '350px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
+									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('ancestry')}>Ancestries</Button>
+									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('career')}>Careers</Button>
+									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('class')}>Classes</Button>
+									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('complication')}>Complications</Button>
+									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('culture')}>Cultures</Button>
+									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('domain')}>Domains</Button>
+									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('item')}>Items</Button>
+									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('kit')}>Kits</Button>
+									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('monster-group')}>Monsters</Button>
+									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('perk')}>Perks</Button>
+									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('terrain')}>Terrain</Button>
+									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('title')}>Titles</Button>
+								</Space>
+								<Divider />
+								<Button type='text' block={true} onClick={() => props.showSourcebooks()}>Sourcebooks</Button>
+							</div>
 						}
 					>
 						<Button icon={<BookOutlined />}>

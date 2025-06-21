@@ -21,7 +21,6 @@ import { Kit } from '../../../../models/kit';
 import { Options } from '../../../../models/options';
 import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Playbook } from '../../../../models/playbook';
 import { RulesPage } from '../../../../enums/rules-page';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { StandardAbilitiesPanel } from '../../../panels/standard-abilities/standard-abilities-panel';
@@ -33,12 +32,12 @@ import './hero-view-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	session: Playbook;
 	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: (hero: Hero, page?: RulesPage) => void;
+	showSourcebooks: () => void;
 	setOptions: (options: Options) => void;
 	exportHero: (hero: Hero, format: 'image' | 'pdf' | 'json') => void;
 	exportHeroPDF: (hero: Hero, format: 'portrait' | 'landscape') => void;
@@ -188,7 +187,7 @@ export const HeroViewPage = (props: Props) => {
 					<div className='hero-view-page-content'>
 						{getContent()}
 					</div>
-					<AppFooter page='heroes' heroes={props.heroes} session={props.session} showAbout={props.showAbout} showRoll={props.showRoll} showReference={() => props.showReference(hero)} />
+					<AppFooter page='heroes' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={() => props.showReference(hero)} showSourcebooks={props.showSourcebooks} />
 				</div>
 			</ErrorBoundary>
 		);

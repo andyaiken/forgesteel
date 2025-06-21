@@ -11,7 +11,6 @@ import { HeroInfo } from '../../../controls/token/token';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroPanel } from '../../../panels/hero/hero-panel';
 import { Options } from '../../../../models/options';
-import { Playbook } from '../../../../models/playbook';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Utils } from '../../../../utils/utils';
@@ -24,12 +23,12 @@ import './hero-list-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	session: Playbook;
 	options: Options;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
+	showSourcebooks: () => void;
 	addHero: (folder: string) => void;
 	importHero: (hero: Hero, folder: string) => void;
 	showParty: (folder: string) => void;
@@ -188,7 +187,7 @@ export const HeroListPage = (props: Props) => {
 							onChange={navigation.goToHeroList}
 						/>
 					</div>
-					<AppFooter page='heroes' heroes={props.heroes} session={props.session} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='heroes' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
 				</div>
 			</ErrorBoundary>
 		);

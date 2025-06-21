@@ -28,6 +28,7 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
+	showSourcebooks: () => void;
 	setOptions: (options: Options) => void;
 }
 
@@ -113,7 +114,7 @@ export const SessionPlayerPage = (props: Props) => {
 					<div className='session-page-content'>
 						{getContent()}
 					</div>
-					<AppFooter page='player-view' heroes={props.heroes} session={props.session} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='player-view' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
 				</div>
 			</ErrorBoundary>
 		);

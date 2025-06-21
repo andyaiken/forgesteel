@@ -1227,11 +1227,11 @@ export const Main = (props: Props) => {
 							element={
 								<WelcomePage
 									heroes={heroes}
-									session={session}
 									showDirectory={showDirectoryPane}
 									showAbout={showAbout}
 									showRoll={showRoll}
 									showReference={showReference}
+									showSourcebooks={showSourcebooks}
 								/>
 							}
 						/>
@@ -1243,12 +1243,12 @@ export const Main = (props: Props) => {
 									<HeroListPage
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										session={session}
 										options={props.options}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
+										showSourcebooks={showSourcebooks}
 										addHero={createHero}
 										importHero={importHero}
 										showParty={onShowParty}
@@ -1261,7 +1261,6 @@ export const Main = (props: Props) => {
 									<HeroViewPage
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										session={session}
 										options={options}
 										setOptions={persistOptions}
 										showDirectory={showDirectoryPane}
@@ -1284,6 +1283,7 @@ export const Main = (props: Props) => {
 										showAbility={onSelectAbility}
 										showHeroState={onShowHeroState}
 										showReference={onshowReference}
+										showSourcebooks={showSourcebooks}
 									/>
 								}
 							/>
@@ -1297,12 +1297,12 @@ export const Main = (props: Props) => {
 									<HeroEditPage
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										session={session}
 										options={options}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
+										showSourcebooks={showSourcebooks}
 										saveChanges={saveHero}
 										importSourcebook={sourcebook => {
 											const copy = Utils.copy(homebrewSourcebooks);
@@ -1328,15 +1328,14 @@ export const Main = (props: Props) => {
 									<LibraryListPage
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										session={session}
 										options={options}
 										hiddenSourcebookIDs={hiddenSourcebookIDs}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										setOptions={persistOptions}
 										showSourcebooks={showSourcebooks}
+										setOptions={persistOptions}
 										createElement={(kind, sourcebookID) => createLibraryElement(kind, sourcebookID, null)}
 										importElement={importLibraryElement}
 									/>
@@ -1349,12 +1348,12 @@ export const Main = (props: Props) => {
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										playbook={playbook}
-										session={session}
 										options={options}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
+										showSourcebooks={showSourcebooks}
 										createElement={createLibraryElement}
 										export={exportLibraryElement}
 										copy={copyLibraryElement}
@@ -1369,12 +1368,12 @@ export const Main = (props: Props) => {
 									<LibraryEditPage
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										session={session}
 										options={options}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
+										showSourcebooks={showSourcebooks}
 										showMonster={onSelectMonster}
 										saveChanges={saveLibraryElement}
 										setOptions={persistOptions}
@@ -1394,12 +1393,12 @@ export const Main = (props: Props) => {
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										playbook={playbook}
-										session={session}
 										options={options}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
+										showSourcebooks={showSourcebooks}
 										createElement={createPlaybookElement}
 										importElement={importPlaybookElement}
 										importAdventurePackage={importAdventurePackage}
@@ -1414,12 +1413,12 @@ export const Main = (props: Props) => {
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										playbook={playbook}
-										session={session}
 										options={options}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
+										showSourcebooks={showSourcebooks}
 										showEncounterTools={showEncounterTools}
 										export={exportPlaybookElement}
 										start={startPlaybookElement}
@@ -1436,12 +1435,12 @@ export const Main = (props: Props) => {
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										playbook={playbook}
-										session={session}
 										options={options}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
+										showSourcebooks={showSourcebooks}
 										showMonster={onSelectMonster}
 										showTerrain={onSelectTerrain}
 										saveChanges={savePlaybookElement}
@@ -1468,6 +1467,7 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
+										showSourcebooks={showSourcebooks}
 										showPlayerView={showPlayerView}
 										updateHero={persistHero}
 										updateSession={persistSession}
@@ -1487,6 +1487,7 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
+										showSourcebooks={showSourcebooks}
 										setOptions={persistOptions}
 									/>
 								}

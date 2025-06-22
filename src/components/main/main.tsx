@@ -66,6 +66,7 @@ import { Title } from '../../models/title';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
+import { notification } from 'antd';
 import { useNavigation } from '../../hooks/use-navigation';
 
 import './main.scss';
@@ -81,6 +82,7 @@ interface Props {
 
 export const Main = (props: Props) => {
 	const navigation = useNavigation();
+	const [ notify, notifyContext ] = notification.useNotification();
 	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
 	const [ playbook, setPlaybook ] = useState<Playbook>(props.playbook);
 	const [ session, setSession ] = useState<Playbook>(props.session);
@@ -96,7 +98,17 @@ export const Main = (props: Props) => {
 	const persistHeroes = (heroes: Hero[]) => {
 		return localforage
 			.setItem<Hero[]>('forgesteel-heroes', Collections.sort(heroes, h => h.name))
-			.then(setHeroes);
+			.then(
+				setHeroes,
+				err => {
+					console.error(err);
+					notify.error({
+						message: 'Error saving heroes',
+						description: err,
+						placement: 'top'
+					});
+				}
+			);
 	};
 
 	const persistHero = (hero: Hero) => {
@@ -118,13 +130,33 @@ export const Main = (props: Props) => {
 	const persistPlaybook = (playbook: Playbook) => {
 		return localforage
 			.setItem<Playbook>('forgesteel-playbook', playbook)
-			.then(setPlaybook);
+			.then(
+				setPlaybook,
+				err => {
+					console.error(err);
+					notify.error({
+						message: 'Error saving playbook',
+						description: err,
+						placement: 'top'
+					});
+				}
+			);
 	};
 
 	const persistSession = (session: Playbook) => {
 		return localforage
 			.setItem<Playbook>('forgesteel-session', session)
-			.then(setSession)
+			.then(
+				setSession,
+				err => {
+					console.error(err);
+					notify.error({
+						message: 'Error saving session',
+						description: err,
+						placement: 'top'
+					});
+				}
+			)
 			.then(() => {
 				if (playerView) {
 					playerView.location.reload();
@@ -135,19 +167,49 @@ export const Main = (props: Props) => {
 	const persistHomebrewSourcebooks = (homebrew: Sourcebook[]) => {
 		return localforage
 			.setItem<Sourcebook[]>('forgesteel-homebrew-settings', homebrew)
-			.then(setHomebrewSourcebooks);
+			.then(
+				setHomebrewSourcebooks,
+				err => {
+					console.error(err);
+					notify.error({
+						message: 'Error saving sourcebooks',
+						description: err,
+						placement: 'top'
+					});
+				}
+			);
 	};
 
 	const persistHiddenSourcebookIDs = (ids: string[]) => {
 		return localforage
 			.setItem<string[]>('forgesteel-hidden-setting-ids', ids)
-			.then(setHiddenSourcebookIDs);
+			.then(
+				setHiddenSourcebookIDs,
+				err => {
+					console.error(err);
+					notify.error({
+						message: 'Error saving hidden sourcebooks',
+						description: err,
+						placement: 'top'
+					});
+				}
+			);
 	};
 
 	const persistOptions = (options: Options) => {
 		return localforage
 			.setItem<Options>('forgesteel-options', options)
-			.then(setOptions);
+			.then(
+				setOptions,
+				err => {
+					console.error(err);
+					notify.error({
+						message: 'Error saving options',
+						description: err,
+						placement: 'top'
+					});
+				}
+			);
 	};
 
 	//#endregion
@@ -1495,6 +1557,7 @@ export const Main = (props: Props) => {
 						</Route>
 					</Route>
 				</Routes>
+				{notifyContext}
 			</ErrorBoundary>
 		);
 	} catch (ex) {

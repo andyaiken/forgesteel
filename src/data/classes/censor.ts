@@ -417,7 +417,7 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 						FactoryLogic.feature.create({
 							id: 'censor-sub-1-1-2',
 							name: 'Judgment Order Benefit',
-							description: 'You can teleport up to a number of squares equal to twice your Presence score. This movement must take you closer to the judged creature. You do not need line of effect to your destination.'
+							description: 'When you use your Judgment ability to judge another creature, you can teleport up to a number of squares equal to twice your Presence score. This movement must take you closer to the judged creature. You do not need line of effect to your destination.'
 						})
 					]
 				},
@@ -502,7 +502,7 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 						FactoryLogic.feature.create({
 							id: 'censor-sub-2-1-2',
 							name: 'Judgment Order Benefit',
-							description: 'You deal holy damage equal to twice your Presence score to the target.'
+							description: 'When you use your Judgment ability to judge another creature, you deal holy damage equal to twice your Presence score to the target.'
 						})
 					]
 				},
@@ -581,7 +581,7 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 						FactoryLogic.feature.create({
 							id: 'censor-sub-3-1-2',
 							name: 'Judgment Order Benefit',
-							description: 'You vertically pull the target up to a number of squares equal to twice your Presence score.'
+							description: 'YWhen you use your Judgment ability to judge another creature, you vertically pull the target up to a number of squares equal to twice your Presence score.'
 						})
 					]
 				},

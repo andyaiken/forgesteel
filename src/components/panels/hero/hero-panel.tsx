@@ -211,7 +211,11 @@ export const HeroPanel = (props: Props) => {
 								{
 									heroicResources.map(f => (
 										<div key={f.id} className='overview-tile clickable' onClick={onShowStats}>
-											<HeaderText>{f.name}</HeaderText>
+											<HeaderText
+												extra={<div style={{ fontSize: '16px', fontWeight: '600' }}>{f.data.value}</div>}
+											>
+												{f.name}
+											</HeaderText>
 											{
 												f.data.gains.map((g, n) => (
 													<Flex key={n} align='center' justify='space-between' gap={10}>
@@ -224,6 +228,16 @@ export const HeroPanel = (props: Props) => {
 									))
 								}
 							</>
+							: null
+					}
+					{
+						(triggers.length > 0) && !props.options.singlePage ?
+							<div className='overview-tile clickable' onClick={() => setTab('Triggers')}>
+								<HeaderText>Triggered Actions</HeaderText>
+								<Space direction='vertical'>
+									{triggers.map(t => getTrigger(t.ability))}
+								</Space>
+							</div>
 							: null
 					}
 					{
@@ -247,16 +261,6 @@ export const HeroPanel = (props: Props) => {
 							<div className='overview-tile'>
 								<HeaderText>Weaknesses</HeaderText>
 								{damageWeaknesses.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{dm.damageType}</span><span>{dm.value}</span></div>)}
-							</div>
-							: null
-					}
-					{
-						(triggers.length > 0) && !props.options.singlePage ?
-							<div className='overview-tile clickable' onClick={() => setTab('Triggers')}>
-								<HeaderText>Triggered Actions</HeaderText>
-								<Space direction='vertical'>
-									{triggers.map(t => getTrigger(t.ability))}
-								</Space>
 							</div>
 							: null
 					}

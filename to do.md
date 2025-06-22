@@ -1,5 +1,8 @@
 # Development Plans
 
+Ability to add custom titles
+Ability to add custom followers
+
 ### Heroes
 
 * Automatic update of library resources when there is a newer version

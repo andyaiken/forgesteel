@@ -43,7 +43,7 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 					gains: [
 						{
 							trigger: 'Start of your turn',
-							value: '1d3'
+							value: '2'
 						},
 						{
 							trigger: 'The first time in a round that you or a creature within 10 of you takes damage that isn’t untyped or holy',

@@ -120,26 +120,26 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const startEncounter = () => {
+		const startEncounter = (featureID: string) => {
 			const copy = Utils.copy(hero);
 
 			HeroLogic.getFeatures(copy)
 				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.HeroicResource)
-				.filter(f => f.data.type === 'heroic')
+				.filter(f => f.id === featureID)
 				.forEach(f => f.data.value = copy.state.victories);
 
 			setHero(copy);
 			props.onChange(copy);
 		};
 
-		const endEncounter = () => {
+		const endEncounter = (featureID: string) => {
 			const copy = Utils.copy(hero);
 
 			HeroLogic.getFeatures(copy)
 				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.HeroicResource)
-				.filter(f => f.data.type === 'heroic')
+				.filter(f => f.id === featureID)
 				.forEach(f => f.data.value = 0);
 
 			copy.state.victories += 1;
@@ -198,34 +198,6 @@ export const HeroStateModal = (props: Props) => {
 							onChange={setWealth}
 						/>
 					</Space>
-				</Flex>
-				<Flex align='center' justify='space-evenly' gap={10}>
-					<Button
-						key='start-encounter'
-						style={{ flex: '1 1 0' }}
-						className='tall-button'
-						onClick={startEncounter}
-					>
-						<div>
-							<div>Start Encounter</div>
-							<div className='subtext'>
-								Victories to {HeroLogic.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource).filter(f => f.data.type === 'heroic').map(f => f.name).join(' / ') || 'Heroic Resource'}
-							</div>
-						</div>
-					</Button>
-					<Button
-						key='end-encounter'
-						style={{ flex: '1 1 0' }}
-						className='tall-button'
-						onClick={endEncounter}
-					>
-						<div>
-							<div>End Encounter</div>
-							<div className='subtext'>
-								+1 Victory
-							</div>
-						</div>
-					</Button>
 				</Flex>
 				{
 					hero.state.surges > 0 ?
@@ -288,6 +260,34 @@ export const HeroStateModal = (props: Props) => {
 													);
 												})
 											}
+											<Flex align='center' justify='space-evenly' gap={10}>
+												<Button
+													key='start-encounter'
+													style={{ flex: '1 1 0' }}
+													className='tall-button'
+													onClick={() => startEncounter(f.id)}
+												>
+													<div>
+														<div>Start Encounter</div>
+														<div className='subtext'>
+															Victories to {f.name || 'Heroic Resource'}
+														</div>
+													</div>
+												</Button>
+												<Button
+													key='end-encounter'
+													style={{ flex: '1 1 0' }}
+													className='tall-button'
+													onClick={() => endEncounter(f.id)}
+												>
+													<div>
+														<div>End Encounter</div>
+														<div className='subtext'>
+															+1 Victory
+														</div>
+													</div>
+												</Button>
+											</Flex>
 										</Space>
 										: null
 								}

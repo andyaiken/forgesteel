@@ -257,10 +257,12 @@ export const FeaturePanel = (props: Props) => {
 				.map(opt => opt.feature.id);
 		}
 
-		const availableOptions = allOptions.filter(f => !unavailableIDs.includes(f.feature.id) && !selectedIDs.includes(f.feature.id));
+		const availableOptions = allOptions
+			.filter(f => !unavailableIDs.includes(f.feature.id))
+			.filter(f => !selectedIDs.includes(f.feature.id));
 		const sortedOptions = Collections.sort(availableOptions, opt => opt.feature.name);
 
-		if (sortedOptions.length === 0) {
+		if (sortedOptions.length + selectedIDs.length === 0) {
 			return (
 				<Empty text='There are no options to choose for this feature.' />
 			);
@@ -273,7 +275,7 @@ export const FeaturePanel = (props: Props) => {
 				<div className='ds-text'>
 					{
 						showCosts ?
-							`You have ${pointsLeft} point(s) to spend.`
+							(pointsLeft > 0) ? `You have ${pointsLeft} point(s) to spend.` : null
 							:
 							`Choose ${data.count} option(s).`
 					}

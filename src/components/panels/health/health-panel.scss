@@ -37,4 +37,28 @@
 			font-size: 13px;
 		}
 	}
+
+	.toggle-button {
+		flex: 1 1 0;
+		height: 65px;
+		border: 1px solid rgba(5, 5, 5, 0.06);
+		border-radius: 5px;
+		background-color: rgb(255, 255, 255);
+		padding: 5px;
+
+		.toggle-button-label {
+			text-align: center;
+			font-weight: 600;
+			padding-bottom: 3px;
+		}
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.health-panel {
+		.toggle-button {
+			background-color: rgb(0, 0, 0);
+			border-color: rgba(250, 250, 250, 0.6);
+		}
+	}
 }

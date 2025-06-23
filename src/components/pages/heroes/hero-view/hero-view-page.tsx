@@ -24,6 +24,7 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { RulesPage } from '../../../../enums/rules-page';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { StandardAbilitiesPanel } from '../../../panels/standard-abilities/standard-abilities-panel';
+import { Title } from '../../../../models/title';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
@@ -51,6 +52,7 @@ interface Props {
 	showComplication: (complication: Complication) => void;
 	showDomain: (domain: Domain) => void;
 	showKit: (kit: Kit) => void;
+	showTitle: (title: Title) => void;
 	showCompanion: (monster: Monster, monsterGroup?: MonsterGroup) => void;
 	showCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
@@ -97,6 +99,7 @@ export const HeroViewPage = (props: Props) => {
 							onSelectComplication={props.showComplication}
 							onSelectDomain={props.showDomain}
 							onSelectKit={props.showKit}
+							onSelectTitle={props.showTitle}
 							onSelectCompanion={props.showCompanion}
 							onSelectCharacteristic={characteristic => props.showCharacteristic(characteristic, hero)}
 							onSelectAbility={ability => props.showAbility(ability, hero)}

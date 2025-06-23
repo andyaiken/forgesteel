@@ -16,7 +16,9 @@ import { DomainPanel } from '../domain-panel/domain-panel';
 import { Empty } from '../../../controls/empty/empty';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
+import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeatureLogic } from '../../../../logic/feature-logic';
+import { FeatureSelectModal } from '../../../modals/select/feature-select/feature-select-modal';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
@@ -46,7 +48,9 @@ import { PerkSelectModal } from '../../../modals/select/perk-select/perk-select-
 import { PowerRollPanel } from '../../power-roll/power-roll-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { Title } from '../../../../models/title';
 import { TitlePanel } from '../title-panel/title-panel';
+import { TitleSelectModal } from '../../../modals/select/title-select/title-select-modal';
 import { Utils } from '../../../../utils/utils';
 
 import './feature-panel.scss';
@@ -67,17 +71,20 @@ interface Props {
 export const FeaturePanel = (props: Props) => {
 	const [ autoCalc, setAutoCalc ] = useState<boolean>(true);
 	const [ abilitySelectorOpen, setAbilitySelectorOpen ] = useState<boolean>(false);
+	const [ choiceSelectorOpen, setChoiceSelectorOpen ] = useState<boolean>(false);
 	const [ kitSelectorOpen, setKitSelectorOpen ] = useState<boolean>(false);
 	const [ monsterSelectorOpen, setMonsterSelectorOpen ] = useState<boolean>(false);
 	const [ perkSelectorOpen, setPerkSelectorOpen ] = useState<boolean>(false);
+	const [ titleSelectorOpen, setTitleSelectorOpen ] = useState<boolean>(false);
 	const [ selectedAbility, setSelectedAbility ] = useState<Ability | null>(null);
 	const [ selectedAncestry, setSelectedAncestry ] = useState<Ancestry | null>(null);
 	const [ selectedDomain, setSelectedDomain ] = useState<Domain | null>(null);
+	const [ selectedFeature, setSelectedFeature ] = useState<Feature | null>(null);
 	const [ selectedItem, setSelectedItem ] = useState<Item | null>(null);
 	const [ selectedKit, setSelectedKit ] = useState<Kit | null>(null);
 	const [ selectedMonster, setSelectedMonster ] = useState<Monster | null>(null);
 	const [ selectedPerk, setSelectedPerk ] = useState<Perk | null>(null);
-	const [ selectedTitleFeature, setSelectedTitleFeature ] = useState<Feature | null>(null);
+	const [ selectedTitle, setSelectedTitle ] = useState<Title | null>(null);
 
 	// #region Selection
 
@@ -225,36 +232,38 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getSelectionChoice = (data: FeatureChoiceData) => {
-		let availableOptions = [ ...data.options ];
-		if (availableOptions.some(opt => opt.feature.type === FeatureType.AncestryFeatureChoice)) {
-			availableOptions = availableOptions.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
+		let allOptions = [ ...data.options ];
+		if (allOptions.some(opt => opt.feature.type === FeatureType.AncestryFeatureChoice)) {
+			allOptions = allOptions.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
 			const additionalOptions = HeroLogic.getFormerAncestries(props.hero!)
 				.flatMap(a => a.features)
 				.filter(f => f.type === FeatureType.Choice)
 				.flatMap(f => f.data.options)
 				.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
-			availableOptions.push(...additionalOptions);
-		}
-		const sortedOptions = Collections.sort(availableOptions, opt => opt.feature.name);
-
-		if (sortedOptions.length === 0) {
-			return (
-				<Empty text='There are no options to choose for this feature.' />
-			);
+			allOptions.push(...additionalOptions);
 		}
 
 		const selectedIDs = data.selected.map(f => f.id);
 		const pointsUsed = Collections.sum(selectedIDs, id => {
-			const original = availableOptions.find(o => o.feature.id === id);
+			const original = allOptions.find(o => o.feature.id === id);
 			return original ? original.value : 0;
 		});
 		const pointsLeft = data.count - pointsUsed;
 
 		let unavailableIDs: string[] = [];
 		if (data.options.some(opt => opt.value > 1)) {
-			unavailableIDs = availableOptions
+			unavailableIDs = allOptions
 				.filter(opt => !selectedIDs.includes(opt.feature.id) && (opt.value > pointsLeft))
 				.map(opt => opt.feature.id);
+		}
+
+		const availableOptions = allOptions.filter(f => !unavailableIDs.includes(f.feature.id) && !selectedIDs.includes(f.feature.id));
+		const sortedOptions = Collections.sort(availableOptions, opt => opt.feature.name);
+
+		if (sortedOptions.length === 0) {
+			return (
+				<Empty text='There are no options to choose for this feature.' />
+			);
 		}
 
 		const showCosts = data.options.some(opt => opt.value > 1);
@@ -264,69 +273,74 @@ export const FeaturePanel = (props: Props) => {
 				<div className='ds-text'>
 					{
 						showCosts ?
-							`You have ${data.count} points to spend on the following options:`
+							`You have ${pointsLeft} point(s) to spend.`
 							:
-							`Choose ${data.count} of the following options:`
+							`Choose ${data.count} option(s).`
 					}
 				</div>
-				<Select
-					style={{ width: '100%' }}
-					status={pointsLeft > 0 ? 'warning' : ''}
-					mode={data.count === 1 ? undefined : 'multiple'}
-					maxCount={data.count === 1 ? undefined : data.count}
-					allowClear={true}
-					placeholder={data.count === 1 ? 'Select an option' : 'Select options'}
-					options={sortedOptions.map(o => ({ label: o.feature.name, value: o.feature.id, desc: o.feature.description || o.feature.type, disabled: unavailableIDs.includes(o.feature.id), cost: o.value }))}
-					optionRender={option => (
-						<Field
-							disabled={option.data.disabled}
-							label={(
-								<div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-									<span>{option.data.label}</span>
-									{showCosts ? <ResourcePill value={option.data.cost} /> : null}
-								</div>
-							)}
-							value={option.data.desc}
-						/>
-					)}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
-					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(f => f.id)}
-					onChange={value => {
-						let ids: string[] = [];
-						if (data.count === 1) {
-							ids = value !== undefined ? [ value as string ] : [];
-						} else {
-							ids = value as string[];
-						}
-						const features: Feature[] = [];
-						ids.forEach(id => {
-							const option = availableOptions.find(o => o.feature.id === id);
-							if (option) {
-								const featureCopy = Utils.copy(option.feature) as Feature;
-								features.push(featureCopy);
-							}
-						});
-						const dataCopy = Utils.copy(data);
-						dataCopy.selected = features;
-						if (props.setData) {
-							props.setData(props.feature.id, dataCopy);
-						}
-					}}
-				/>
 				{
 					data.selected.map(f => (
-						<FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+						<Flex key={f.id} className='selection-box' align='center' gap={10}>
+							<Field
+								style={{ flex: '1 1 0' }}
+								label={f.name}
+								value={<Markdown text={f.description} useSpan={true} />}
+							/>
+							<Flex vertical={true}>
+								<Button
+									style={{ flex: '0 0 auto' }}
+									type='text'
+									title='Show details'
+									icon={<InfoCircleOutlined />}
+									onClick={() => setSelectedFeature(f)}
+								/>
+								<Button
+									style={{ flex: '0 0 auto' }}
+									type='text'
+									title='Remove'
+									icon={<CloseOutlined />}
+									onClick={() => {
+										const dataCopy = Utils.copy(data);
+										dataCopy.selected = dataCopy.selected.filter(x => x.id !== f.id);
+										if (props.setData) {
+											props.setData(props.feature.id, dataCopy);
+										}
+									}}
+								/>
+							</Flex>
+						</Flex>
 					))
 				}
+				{
+					pointsLeft > 0 ?
+						<Button className='status-warning' block={true} onClick={() => setChoiceSelectorOpen(true)}>
+							Choose an option
+						</Button>
+						: null
+				}
+				<Drawer open={choiceSelectorOpen} onClose={() => setChoiceSelectorOpen(false)} closeIcon={null} width='500px'>
+					<FeatureSelectModal
+						features={sortedOptions}
+						hero={props.hero}
+						options={props.options}
+						onSelect={feature => {
+							setChoiceSelectorOpen(false);
+
+							const dataCopy = Utils.copy(data);
+							dataCopy.selected.push(feature);
+							if (props.setData) {
+								props.setData(props.feature.id, dataCopy);
+							}
+						}}
+						onClose={() => setChoiceSelectorOpen(false)}
+					/>
+				</Drawer>
+				<Drawer open={!!selectedFeature} onClose={() => setSelectedFeature(null)} closeIcon={null} width='500px'>
+					<Modal
+						content={selectedFeature ? <FeaturePanel style={{ padding: '0 20px 20px 20px' }} feature={selectedFeature} options={props.options} mode={PanelMode.Full} /> : null}
+						onClose={() => setSelectedFeature(null)}
+					/>
+				</Drawer>
 			</Space>
 		);
 	};
@@ -1243,115 +1257,106 @@ export const FeaturePanel = (props: Props) => {
 			.map(p => p.id);
 
 		const titles = SourcebookLogic.getTitles(props.sourcebooks as Sourcebook[]).filter(t => t.echelon === data.echelon);
-		const sortedTitles = Collections.sort(titles, t => t.name);
+		const availableTitles = titles.filter(t => !currentTitleIDs.includes(t.id));
+		const sortedTitles = Collections.sort(availableTitles, t => t.name);
+
+		const customTitle = FactoryLogic.createTitle();
+		customTitle.name = 'Custom Title';
+		customTitle.features.push(FactoryLogic.feature.create({ id: Utils.guid(), name: 'Custom Benefit', description: 'Details' }));
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
-					sortedTitles.length > 0 ?
-						<Select
-							style={{ width: '100%' }}
-							status={data.selected.length < data.count ? 'warning' : ''}
-							mode={data.count === 1 ? undefined : 'multiple'}
-							maxCount={data.count === 1 ? undefined : data.count}
-							allowClear={true}
-							placeholder={data.count === 1 ? 'Select a title' : 'Select titles'}
-							options={sortedTitles.map(a => ({ label: a.name, value: a.id, desc: a.description, disabled: currentTitleIDs.includes(a.id) }))}
-							optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.label,
-										option.desc
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
-							value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
-							onChange={value => {
-								let ids: string[] = [];
-								if (data.count === 1) {
-									ids = value !== undefined ? [ value as string ] : [];
-								} else {
-									ids = value as string[];
-								}
-								const dataCopy = Utils.copy(data);
-								dataCopy.selected = [];
-								ids.forEach(id => {
-									const title = titles.find(t => t.id === id);
-									if (title) {
-										dataCopy.selected.push(title);
-									}
-								});
-								if (props.setData) {
-									props.setData(props.feature.id, dataCopy);
-								}
-							}}
-						/>
-						:
-						<Empty text='There are no options to choose for this feature.' />
-				}
-				{
-					data.selected.map((title, n) => (
-						<Select
-							key={title.id}
-							style={{ width: '100%' }}
-							status={title.selectedFeatureID === '' ? 'warning' : ''}
-							allowClear={true}
-							placeholder='Select a title feature'
-							options={title.features.map(f => ({ label: f.name, value: f.id, desc: f.description }))}
-							optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.label,
-										option.desc
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
-							value={title.selectedFeatureID || null}
-							onChange={value => {
-								const dataCopy = Utils.copy(data);
-								dataCopy.selected[n].selectedFeatureID = value;
-								if (props.setData) {
-									props.setData(props.feature.id, dataCopy);
-								}
-							}}
-						/>
-					))
-				}
-				{
-					data.selected.map(title => {
-						const feature = title.features.find(ft => ft.id === title.selectedFeatureID);
+					data.selected.map(t => {
+						const feature = t.features.find(f => f.id === t.selectedFeatureID);
 						if (!feature) {
 							return null;
 						}
 						return (
-							<Flex key={feature.id} className='selection-box' align='center' gap={10}>
-								<Field
-									style={{ flex: '1 1 0' }}
-									label={feature.name}
-									value={<Markdown text={feature.description} useSpan={true} />}
-								/>
-								<Button
-									style={{ flex: '0 0 auto' }}
-									type='text'
-									title='Show details'
-									icon={<InfoCircleOutlined />}
-									onClick={() => setSelectedTitleFeature(feature)}
-								/>
+							<Flex key={t.id} className='selection-box' align='center' gap={10}>
+								<Flex vertical={true} style={{ flex: '1 1 0' }}>
+									<Field
+										label={t.name}
+										value={<Markdown text={t.description} useSpan={true} />}
+									/>
+									<Field
+										label={feature.name}
+										value={<Markdown text={feature.description} useSpan={true} />}
+									/>
+								</Flex>
+								<Flex vertical={true}>
+									<Button
+										style={{ flex: '0 0 auto' }}
+										type='text'
+										title='Show details'
+										icon={<InfoCircleOutlined />}
+										onClick={() => setSelectedTitle(t)}
+									/>
+									<Button
+										style={{ flex: '0 0 auto' }}
+										type='text'
+										title='Remove'
+										icon={<CloseOutlined />}
+										onClick={() => {
+											const dataCopy = Utils.copy(data);
+											dataCopy.selected = dataCopy.selected.filter(x => x.id !== t.id);
+											if (props.setData) {
+												props.setData(props.feature.id, dataCopy);
+											}
+										}}
+									/>
+								</Flex>
 							</Flex>
 						);
 					})
 				}
-				<Drawer open={!!selectedTitleFeature} onClose={() => setSelectedTitleFeature(null)} closeIcon={null} width='500px'>
+				{
+					data.selected.length < data.count ?
+						<Button className='status-warning' block={true} onClick={() => setTitleSelectorOpen(true)}>
+							Choose a title
+						</Button>
+						: null
+				}
+				<Drawer open={titleSelectorOpen} onClose={() => setTitleSelectorOpen(false)} closeIcon={null} width='500px'>
+					<TitleSelectModal
+						titles={[ customTitle, ...sortedTitles ]}
+						hero={props.hero}
+						options={props.options}
+						onSelect={title => {
+							setTitleSelectorOpen(false);
+
+							const dataCopy = Utils.copy(data);
+							dataCopy.selected.push(title);
+							if (props.setData) {
+								props.setData(props.feature.id, dataCopy);
+							}
+						}}
+						onClose={() => setTitleSelectorOpen(false)}
+					/>
+				</Drawer>
+				<Drawer open={!!selectedTitle} onClose={() => setSelectedTitle(null)} closeIcon={null} width='500px'>
 					<Modal
-						content={selectedTitleFeature ? <FeaturePanel style={{ padding: '0 20px 20px 20px' }} feature={selectedTitleFeature} options={props.options} mode={PanelMode.Full} /> : null}
-						onClose={() => setSelectedTitleFeature(null)}
+						content={
+							selectedTitle ?
+								<TitlePanel
+									title={selectedTitle}
+									options={props.options}
+									mode={PanelMode.Full}
+									onChange={title => {
+										const dataCopy = Utils.copy(data);
+										const index = dataCopy.selected.findIndex(t => t.id === title.id);
+										if (index !== -1) {
+											dataCopy.selected[index] = title;
+											if (props.setData) {
+												props.setData(props.feature.id, dataCopy);
+											}
+										}
+									}}
+								/>
+								: null
+						}
+						onClose={() => setSelectedTitle(null)}
 					/>
 				</Drawer>
 			</Space>

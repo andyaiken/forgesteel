@@ -1340,6 +1340,7 @@ export const Main = (props: Props) => {
 										showComplication={complication => onSelectLibraryElement(complication, 'complication')}
 										showDomain={domain => onSelectLibraryElement(domain, 'domain')}
 										showKit={kit => onSelectLibraryElement(kit, 'kit')}
+										showTitle={title => onSelectLibraryElement(title, 'title')}
 										showCompanion={onSelectMonster}
 										showCharacteristic={onSelectCharacteristic}
 										showAbility={onSelectAbility}

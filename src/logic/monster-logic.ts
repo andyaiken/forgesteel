@@ -1017,10 +1017,11 @@ export class MonsterLogic {
 	};
 
 	static getStaminaDescription = (monster: Monster) => {
-		let str = `${monster.stamina}`;
+		const max = MonsterLogic.getStamina(monster);
+		let str = `${max}`;
 
 		if (monster.state.staminaDamage > 0) {
-			str = `${Math.max(monster.stamina - monster.state.staminaDamage, 0)} / ${monster.stamina}`;
+			str = `${Math.max(max - monster.state.staminaDamage, 0)} / ${max}`;
 		}
 		if (monster.state.staminaTemp > 0) {
 			str += ` +${monster.state.staminaTemp}`;

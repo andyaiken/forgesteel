@@ -493,6 +493,7 @@ export const EncounterRunPanel = (props: Props) => {
 		const monsters = encounter.groups
 			.flatMap(g => g.slots)
 			.flatMap(s => s.monsters)
+			.filter(m => !m.state.defeated)
 			.filter(m => {
 				return MonsterLogic.getFeatures(m)
 					.filter(f => f.type === FeatureType.Ability)

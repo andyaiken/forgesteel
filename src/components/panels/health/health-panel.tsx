@@ -857,41 +857,34 @@ Your allies can help you spend Recoveries in combat, and you can spend Recoverie
 							<Flex align='center' justify='space-evenly' gap={10} style={{ margin: '10px 0' }}>
 								{
 									props.hidden ?
-										<Button
-											key='hidden'
-											style={{ flex: '1 1 0' }}
-											className='tall-button'
-											onClick={() => props.hidden!.setValue(!props.hidden!.value)}
-										>
-											<div>
-												<div>
-													{props.hidden.value ? 'Hidden' : 'Not Hidden'}
-												</div>
-												<div className='subtext'>
-													You are {props.hidden.value ? 'hidden' : 'not hidden'}
-												</div>
-											</div>
-										</Button>
+										<div className='toggle-button'>
+											<div className='toggle-button-label'>Hiding</div>
+											<Segmented
+												block={true}
+												options={[
+													{ value: true, label: 'Hiding' },
+													{ value: false, label: 'Visible' }
+												]}
+												value={props.hidden.value}
+												onChange={props.hidden.setValue}
+											/>
+										</div>
 										: null
 								}
 								{
 									props.defeated ?
-										<Button
-											key='defeated'
-											style={{ flex: '1 1 0' }}
-											type={!props.defeated.value && props.stamina && (props.stamina.staminaDamage >= props.stamina.staminaMax) ? 'primary' : 'default'}
-											className='tall-button'
-											onClick={() => props.defeated!.setValue(!props.defeated!.value)}
-										>
-											<div>
-												<div>
-													{props.defeated.value ? 'Defeated' : 'Active'}
-												</div>
-												<div className='subtext'>
-													You are {props.defeated.value ? 'defeated' : 'not defeated'}
-												</div>
-											</div>
-										</Button>
+										<div className='toggle-button'>
+											<div className='toggle-button-label'>State</div>
+											<Segmented
+												block={true}
+												options={[
+													{ value: true, label: 'Defeated' },
+													{ value: false, label: 'Active' }
+												]}
+												value={props.defeated.value}
+												onChange={props.defeated.setValue}
+											/>
+										</div>
 										: null
 								}
 								{

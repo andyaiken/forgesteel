@@ -23,7 +23,9 @@ export const Token = (props: Props) => {
 		const size = props.size ?? 22;
 
 		const initials = props.name
+			.toLowerCase()
 			.split(' ')
+			.filter(token => ![ 'a', 'an', 'the', 'in', 'on', 'of' ].includes(token))
 			.map(token => token[0])
 			.join('')
 			.substring(0, 3)

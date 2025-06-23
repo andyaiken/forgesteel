@@ -1,7 +1,7 @@
 # Development Plans
 
 Ability to add custom titles
-Ability to add custom followers
+Ability to add custom followers (artisan or sage)
 
 ### Heroes
 

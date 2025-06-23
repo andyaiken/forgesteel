@@ -169,7 +169,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 
 				const staminaRemaining = Collections.sum(slot.monsters, m => MonsterLogic.getStamina(m)) - slot.state.staminaDamage;
 				const staminaPerMinion = Collections.mean(slot.monsters, m => MonsterLogic.getStamina(m));
-				const minionsExpected = Math.ceil(staminaRemaining / staminaPerMinion);
+				const minionsExpected = Math.max(Math.ceil(staminaRemaining / staminaPerMinion), 0);
 				const minionsAlive = slot.monsters.filter(m => !m.state.defeated).length;
 
 				if (minionsAlive !== minionsExpected) {
@@ -177,7 +177,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 						<Alert
 							type='warning'
 							showIcon={true}
-							message={`There should be ${Math.max(minionsExpected, 0)} active minions, not ${minionsAlive}.`}
+							message={`There should be ${minionsExpected} active minions, not ${minionsAlive}.`}
 						/>
 					);
 				}

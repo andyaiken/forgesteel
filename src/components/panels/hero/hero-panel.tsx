@@ -39,6 +39,7 @@ import { SelectablePanel } from '../../controls/selectable-panel/selectable-pane
 import { Skill } from '../../../models/skill';
 import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
+import { Title } from '../../../models/title';
 import { useMediaQuery } from '../../../hooks/use-media-query';
 import { useState } from 'react';
 
@@ -56,6 +57,7 @@ interface Props {
  	onSelectComplication?: (complication: Complication) => void;
  	onSelectDomain?: (domain: Domain) => void;
  	onSelectKit?: (kit: Kit) => void;
+	onSelectTitle?: (title: Title) => void;
  	onSelectCompanion?: (monster: Monster, monsterGroup?: MonsterGroup) => void;
  	onSelectCharacteristic?: (characteristic: Characteristic) => void;
  	onSelectAbility?: (ability: Ability) => void;
@@ -491,6 +493,12 @@ export const HeroPanel = (props: Props) => {
 				}
 			};
 
+			const onSelectTitle = (title: Title) => {
+				if (props.onSelectTitle) {
+					props.onSelectTitle(title);
+				}
+			};
+
 			const onSelectCompanion = (monster: Monster) => {
 				if (props.onSelectCompanion) {
 					props.onSelectCompanion(monster);
@@ -582,6 +590,17 @@ export const HeroPanel = (props: Props) => {
 									<Field label='Kit' value={kit.name} />
 									{kit.armor.length > 0 ? <Field label='Armor' value={kit.armor.join(', ')} /> : null}
 									{kit.weapon.length > 0 ? <Field label='Weapons' value={kit.weapon.join(', ')} /> : null}
+								</div>
+							))
+							:
+							null
+					}
+					{
+						HeroLogic.getTitles(props.hero).length > 0 ?
+							HeroLogic.getTitles(props.hero).map(title => (
+								<div key={title.id} className='overview-tile clickable' onClick={() => onSelectTitle(title)}>
+									<HeaderText>Title</HeaderText>
+									<Field label='Title' value={title.name} />
 								</div>
 							))
 							:

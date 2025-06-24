@@ -554,7 +554,7 @@ export const MonsterEditPanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addFeature} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addFeature} />
 					}
 				>
 					Features

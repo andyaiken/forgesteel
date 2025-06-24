@@ -227,7 +227,7 @@ export const LibraryEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addFeature} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addFeature} />
 					}
 				>
 					Features
@@ -304,7 +304,7 @@ export const LibraryEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addIncident} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addIncident} />
 					}
 				>
 					Inciting Incidents
@@ -521,7 +521,7 @@ export const LibraryEditPage = (props: Props) => {
 				/>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addCharacteristicSet} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addCharacteristicSet} />
 					}
 				>
 					Primary Characteristics
@@ -631,7 +631,7 @@ export const LibraryEditPage = (props: Props) => {
 						<div key={lvl.level}>
 							<HeaderText
 								extra={
-									<Button icon={<PlusOutlined />} onClick={() => addFeature(lvl.level)} />
+									<Button type='text' icon={<PlusOutlined />} onClick={() => addFeature(lvl.level)} />
 								}
 							>
 								Level {lvl.level.toString()}
@@ -717,7 +717,7 @@ export const LibraryEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addAbility} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addAbility} />
 					}
 				>
 					Abilities
@@ -779,7 +779,7 @@ export const LibraryEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addSubclass} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addSubclass} />
 					}
 				>
 					Subclasses
@@ -908,7 +908,7 @@ export const LibraryEditPage = (props: Props) => {
 				<Space key={lvl.level} direction='vertical' style={{ width: '100%' }}>
 					<HeaderText
 						extra={
-							<Button icon={<PlusOutlined />} onClick={() => addFeature(subclass, lvl.level)} />
+							<Button type='text' icon={<PlusOutlined />} onClick={() => addFeature(subclass, lvl.level)} />
 						}
 					>
 						Level {lvl.level.toString()}
@@ -1417,7 +1417,7 @@ export const LibraryEditPage = (props: Props) => {
 						<div key={lvl.level}>
 							<HeaderText
 								extra={
-									<Button icon={<PlusOutlined />} onClick={() => addFeature(lvl.level)} />
+									<Button type='text' icon={<PlusOutlined />} onClick={() => addFeature(lvl.level)} />
 								}
 							>
 								Level {lvl.level.toString()}
@@ -1692,7 +1692,7 @@ export const LibraryEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addDamageMod} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addDamageMod} />
 					}
 				>
 					Damage Modifiers
@@ -1819,7 +1819,7 @@ export const LibraryEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addSection} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addSection} />
 					}
 				>
 					Sections
@@ -1994,7 +1994,7 @@ export const LibraryEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addUpgrade} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addUpgrade} />
 					}
 				>
 					Customizations
@@ -2025,7 +2025,7 @@ export const LibraryEditPage = (props: Props) => {
 								<NumberSpin min={1} value={upgrade.cost} onChange={value => setUpgradeCost(upgradeIndex, value)} />
 								<HeaderText
 									extra={
-										<Button icon={<PlusOutlined />} onClick={() => addUpgradeSection(upgradeIndex)} />
+										<Button type='text' icon={<PlusOutlined />} onClick={() => addUpgradeSection(upgradeIndex)} />
 									}
 								>
 									Sections
@@ -2044,7 +2044,7 @@ export const LibraryEditPage = (props: Props) => {
 											<Space direction='vertical' style={{ width: '100%' }}>
 												<HeaderText
 													extra={
-														<Button icon={<PlusOutlined />} onClick={() => addUpgradeSectionContent(upgradeIndex, sectionIndex)} />
+														<Button type='text' icon={<PlusOutlined />} onClick={() => addUpgradeSectionContent(upgradeIndex, sectionIndex)} />
 													}
 												>
 													Content
@@ -2139,7 +2139,7 @@ export const LibraryEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addInformation} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addInformation} />
 					}
 				>
 					Information
@@ -2217,7 +2217,7 @@ export const LibraryEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addMaliceFeature} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addMaliceFeature} />
 					}
 				>
 					Malice
@@ -2419,7 +2419,7 @@ export const LibraryEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addAddOn} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addAddOn} />
 					}
 				>
 					Customizations

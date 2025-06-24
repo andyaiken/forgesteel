@@ -1012,7 +1012,7 @@ export const FeatureEditPanel = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText
 							extra={
-								<Button icon={<PlusOutlined />} onClick={() => addChoice(data)} />
+								<Button type='text' icon={<PlusOutlined />} onClick={() => addChoice(data)} />
 							}
 						>
 							Options
@@ -1143,7 +1143,7 @@ export const FeatureEditPanel = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText
 							extra={
-								<Button icon={<PlusOutlined />} onClick={() => addDamageModifier(data)} />
+								<Button type='text' icon={<PlusOutlined />} onClick={() => addDamageModifier(data)} />
 							}
 						>
 							Modifiers
@@ -1255,7 +1255,7 @@ export const FeatureEditPanel = (props: Props) => {
 						/>
 						<HeaderText
 							extra={
-								<Button icon={<PlusOutlined />} onClick={() => addResourceGain(data)} />
+								<Button type='text' icon={<PlusOutlined />} onClick={() => addResourceGain(data)} />
 							}
 						>
 							Gaining The Resource

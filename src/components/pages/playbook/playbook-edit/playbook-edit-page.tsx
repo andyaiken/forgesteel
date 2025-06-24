@@ -604,7 +604,7 @@ export const PlaybookEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addNote} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addNote} />
 					}
 				>
 					Notes
@@ -870,7 +870,7 @@ export const PlaybookEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addSection} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addSection} />
 					}
 				>
 					Sections
@@ -907,7 +907,7 @@ export const PlaybookEditPage = (props: Props) => {
 											<Space direction='vertical' style={{ width: '100%' }}>
 												<HeaderText
 													extra={
-														<Button icon={<PlusOutlined />} onClick={() => addChallenge(sectionIndex)} />
+														<Button type='text' icon={<PlusOutlined />} onClick={() => addChallenge(sectionIndex)} />
 													}
 												>
 													Challenges
@@ -989,7 +989,7 @@ export const PlaybookEditPage = (props: Props) => {
 											<Space direction='vertical' style={{ width: '100%' }}>
 												<HeaderText
 													extra={
-														<Button icon={<PlusOutlined />} onClick={() => addTwist(sectionIndex)} />
+														<Button type='text' icon={<PlusOutlined />} onClick={() => addTwist(sectionIndex)} />
 													}
 												>
 													Twists
@@ -1195,7 +1195,7 @@ export const PlaybookEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addMotivation} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addMotivation} />
 					}
 				>
 					Motivations
@@ -1292,7 +1292,7 @@ export const PlaybookEditPage = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={addPitfall} />
+						<Button type='text' icon={<PlusOutlined />} onClick={addPitfall} />
 					}
 				>
 					Pitfalls

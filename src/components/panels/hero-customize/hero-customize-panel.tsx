@@ -783,7 +783,7 @@ export const HeroCustomizePanel = (props: Props) => {
 								open={menuOpen}
 								onOpenChange={setMenuOpen}
 							>
-								<Button icon={<PlusOutlined />} />
+								<Button type='text' icon={<PlusOutlined />} />
 							</Popover>
 						}
 					>

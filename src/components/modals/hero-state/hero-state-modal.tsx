@@ -477,7 +477,7 @@ export const HeroStateModal = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={() => setShopVisible(true)} />
+						<Button type='text' icon={<PlusOutlined />} onClick={() => setShopVisible(true)} />
 					}
 				>
 					Inventory
@@ -571,7 +571,7 @@ export const HeroStateModal = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={() => setProjectsVisible(true)} />
+						<Button type='text' icon={<PlusOutlined />} onClick={() => setProjectsVisible(true)} />
 					}
 				>
 					Projects

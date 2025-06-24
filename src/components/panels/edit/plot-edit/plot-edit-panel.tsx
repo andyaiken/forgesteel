@@ -125,7 +125,7 @@ export const PlotEditPanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button icon={<PlusOutlined />} onClick={() => setAddingContent(true)} />
+						<Button type='text' icon={<PlusOutlined />} onClick={() => setAddingContent(true)} />
 					}
 				>
 					Content
@@ -240,7 +240,7 @@ export const PlotEditPanel = (props: Props) => {
 									</Space>
 								}
 							>
-								<Button icon={<PlusOutlined />} />
+								<Button type='text' icon={<PlusOutlined />} />
 							</Popover>
 							: null
 					}

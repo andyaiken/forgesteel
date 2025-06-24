@@ -473,7 +473,7 @@ export const AbilityEditPanel = (props: Props) => {
 										/>
 										<HeaderText
 											extra={
-												<Button icon={<PlusOutlined />} onClick={addDistance} />
+												<Button type='text' icon={<PlusOutlined />} onClick={addDistance} />
 											}
 										>
 											Distance
@@ -699,7 +699,7 @@ export const AbilityEditPanel = (props: Props) => {
 									<div>
 										<HeaderText
 											extra={
-												<Button icon={<PlusOutlined />} onClick={addAlternateEffect} />
+												<Button type='text' icon={<PlusOutlined />} onClick={addAlternateEffect} />
 											}
 										>
 											Alternate Effects
@@ -734,7 +734,7 @@ export const AbilityEditPanel = (props: Props) => {
 										</Space>
 										<HeaderText
 											extra={
-												<Button icon={<PlusOutlined />} onClick={addSpend} />
+												<Button type='text' icon={<PlusOutlined />} onClick={addSpend} />
 											}
 										>
 											Spend
@@ -772,7 +772,7 @@ export const AbilityEditPanel = (props: Props) => {
 										</Space>
 										<HeaderText
 											extra={
-												<Button icon={<PlusOutlined />} onClick={addPersistence} />
+												<Button type='text' icon={<PlusOutlined />} onClick={addPersistence} />
 											}
 										>
 											Persistence

@@ -9,6 +9,7 @@ import { Domain } from './domain';
 import { Element } from './element';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
+import { Follower } from './follower';
 import { Item } from './item';
 import { ItemType } from '../enums/item-type';
 import { Kit } from './kit';
@@ -133,6 +134,11 @@ export interface FeatureDomainFeatureData extends _FeatureData {
 };
 export type FeatureDomainFeature = FeatureOf<FeatureType.DomainFeature, FeatureDomainFeatureData>;
 
+export interface FeatureFollowerData extends _FeatureData {
+	follower: Follower;
+};
+export type FeatureFollower = FeatureOf<FeatureType.Follower, FeatureFollowerData>;
+
 export interface FeatureHeroicResourceData extends _FeatureData {
 	type: 'heroic' | 'epic';
 	gains: { trigger: string, value: string }[];
@@ -253,6 +259,7 @@ export type Feature =
 	| FeatureDamageModifier
 	| FeatureDomain
 	| FeatureDomainFeature
+	| FeatureFollower
 	| FeatureHeroicResource
 	| FeatureItemChoice
 	| FeatureKit

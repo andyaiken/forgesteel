@@ -183,6 +183,18 @@ export const FeatureEditPanel = (props: Props) => {
 					selected: []
 				} as FeatureDomainFeatureData;
 				break;
+			case FeatureType.Companion: {
+				data = {
+					type: 'companion',
+					selected: null
+				};
+				break;
+			}
+			case FeatureType.Follower:
+				data = {
+					follower: FactoryLogic.createFollower()
+				};
+				break;
 			case FeatureType.HeroicResource:
 				data = {
 					type: 'heroic',
@@ -1752,6 +1764,7 @@ export const FeatureEditPanel = (props: Props) => {
 			FeatureType.DamageModifier,
 			FeatureType.Domain,
 			FeatureType.DomainFeature,
+			FeatureType.Follower,
 			FeatureType.HeroicResource,
 			FeatureType.ItemChoice,
 			FeatureType.Kit,

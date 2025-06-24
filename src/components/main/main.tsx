@@ -21,6 +21,8 @@ import { Encounter } from '../../models/encounter';
 import { EncounterToolsModal } from '../modals/encounter-tools/encounter-tools-modal';
 import { ErrorBoundary } from '../controls/error-boundary/error-boundary';
 import { FactoryLogic } from '../../logic/factory-logic';
+import { Follower } from '../../models/follower';
+import { FollowerModal } from '../modals/follower/follower-modal';
 import { Format } from '../../utils/format';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
@@ -1166,6 +1168,15 @@ export const Main = (props: Props) => {
 		);
 	};
 
+	const onSelectFollower = (follower: Follower) => {
+		setDrawer(
+			<FollowerModal
+				follower={follower}
+				onClose={() => setDrawer(null)}
+			/>
+		);
+	};
+
 	const onSelectCharacteristic = (characteristic: Characteristic, hero: Hero) => {
 		setDrawer(
 			<RollModal
@@ -1342,6 +1353,7 @@ export const Main = (props: Props) => {
 										showKit={kit => onSelectLibraryElement(kit, 'kit')}
 										showTitle={title => onSelectLibraryElement(title, 'title')}
 										showCompanion={onSelectMonster}
+										showFollower={onSelectFollower}
 										showCharacteristic={onSelectCharacteristic}
 										showAbility={onSelectAbility}
 										showHeroState={onShowHeroState}

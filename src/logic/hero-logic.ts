@@ -217,6 +217,14 @@ export class HeroLogic {
 			.filter(a => !!a);
 	};
 
+	static getFollowers = (hero: Hero) => {
+		return this.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Follower)
+			.map(f => f.data.follower)
+			.filter(a => !!a);
+	};
+
 	static getCharacteristic = (hero: Hero, characteristic: Characteristic) => {
 		let value = 0;
 

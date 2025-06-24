@@ -1,5 +1,6 @@
-import { Button, Flex, Popover, Segmented, Select, Space } from 'antd';
-import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeaturePerk, FeatureSkillChoice, FeatureTitleChoice } from '../../../models/feature';
+import { Button, Flex, Input, Popover, Segmented, Select, Space } from 'antd';
+import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeaturePerk, FeatureSkillChoice, FeatureTitleChoice } from '../../../models/feature';
+import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Characteristic } from '../../../enums/characteristic';
 import { ConditionType } from '../../../enums/condition-type';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
@@ -13,14 +14,16 @@ import { FeatureField } from '../../../enums/feature-field';
 import { FeaturePanel } from '../elements/feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
+import { FollowerLogic } from '../../../logic/follower-logic';
+import { FollowerType } from '../../../enums/follower-type';
 import { FormatLogic } from '../../../logic/format-logic';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
+import { NameGenerator } from '../../../utils/name-generator';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { PerkList } from '../../../enums/perk-list';
-import { PlusOutlined } from '@ant-design/icons';
 import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
@@ -43,146 +46,193 @@ export const HeroCustomizePanel = (props: Props) => {
 	const [ menuOpen, setMenuOpen ] = useState<boolean>(false);
 
 	const getEditSection = (feature: Feature) => {
-		const setValue = (feature: Feature, value: number) => {
+		const setValue = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureAncestryFeatureChoice;
 			copy.data.value = value;
 			copy.data.selected = null;
 			props.setFeature(feature.id, copy);
 		};
 
-		const setCharacteristic = (feature: Feature, value: Characteristic) => {
+		const setCharacteristic = (value: Characteristic) => {
 			const copy = Utils.copy(feature) as FeatureCharacteristicBonus;
 			copy.data.characteristic = value;
 			copy.name = `${copy.data.characteristic} + ${copy.data.value}`;
 			props.setFeature(feature.id, copy);
 		};
 
-		const setCharacteristicBonus = (feature: Feature, value: number) => {
+		const setCharacteristicBonus = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureCharacteristicBonus;
 			copy.data.value = value;
 			copy.name = `${copy.data.characteristic} + ${copy.data.value}`;
 			props.setFeature(feature.id, copy);
 		};
 
-		const setValueField = (feature: Feature, value: FeatureField) => {
+		const setValueField = (value: FeatureField) => {
 			const copy = Utils.copy(feature) as FeatureBonus;
 			copy.data.field = value;
 			copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
 			props.setFeature(feature.id, copy);
 		};
 
-		const setValueBonus = (feature: Feature, value: number) => {
+		const setValueBonus = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureBonus;
 			copy.data.value = value;
 			copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
 			props.setFeature(feature.id, copy);
 		};
 
-		const setValuePerLevel = (feature: Feature, value: number) => {
+		const setValuePerLevel = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureBonus;
 			copy.data.valuePerLevel = value;
 			copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
 			props.setFeature(feature.id, copy);
 		};
 
-		const setValuePerEchelon = (feature: Feature, value: number) => {
+		const setValuePerEchelon = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureBonus;
 			copy.data.valuePerEchelon = value;
 			copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
 			props.setFeature(feature.id, copy);
 		};
 
-		const setValueCharacteristics = (feature: Feature, value: Characteristic[]) => {
+		const setValueCharacteristics = (value: Characteristic[]) => {
 			const copy = Utils.copy(feature) as FeatureBonus;
 			copy.data.valueCharacteristics = value;
 			copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
 			props.setFeature(feature.id, copy);
 		};
 
-		const setDamageModifierDamageType = (feature: Feature, value: DamageType) => {
+		const setDamageModifierDamageType = (value: DamageType) => {
 			const copy = Utils.copy(feature) as FeatureDamageModifier;
 			copy.data.modifiers[0].damageType = value;
 			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
 			props.setFeature(feature.id, copy);
 		};
 
-		const setDamageModifierType = (feature: Feature, value: DamageModifierType) => {
+		const setDamageModifierType = (value: DamageModifierType) => {
 			const copy = Utils.copy(feature) as FeatureDamageModifier;
 			copy.data.modifiers[0].type = value;
 			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
 			props.setFeature(feature.id, copy);
 		};
 
-		const setDamageModifierBonus = (feature: Feature, value: number) => {
+		const setDamageModifierBonus = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureDamageModifier;
 			copy.data.modifiers[0].value = value;
 			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
 			props.setFeature(feature.id, copy);
 		};
 
-		const setDamageModifierValuePerLevel = (feature: Feature, value: number) => {
+		const setDamageModifierValuePerLevel = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureDamageModifier;
 			copy.data.modifiers[0].valuePerLevel = value;
 			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
 			props.setFeature(feature.id, copy);
 		};
 
-		const setDamageModifierValuePerEchelon = (feature: Feature, value: number) => {
+		const setDamageModifierValuePerEchelon = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureDamageModifier;
 			copy.data.modifiers[0].valuePerEchelon = value;
 			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
 			props.setFeature(feature.id, copy);
 		};
 
-		const setDamageModifierCharacteristics = (feature: Feature, value: Characteristic[]) => {
+		const setDamageModifierCharacteristics = (value: Characteristic[]) => {
 			const copy = Utils.copy(feature) as FeatureDamageModifier;
 			copy.data.modifiers[0].valueCharacteristics = value;
 			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
 			props.setFeature(feature.id, copy);
 		};
 
-		const setClassID = (feature: Feature, value: string) => {
+		const setClassID = (value: string) => {
 			const copy = Utils.copy(feature) as FeatureClassAbility;
 			copy.data.classID = value === '' ? undefined : value;
 			copy.data.selectedIDs = [];
 			props.setFeature(feature.id, copy);
 		};
 
-		const setCost = (feature: Feature, value: number | 'signature') => {
+		const setCost = (value: number | 'signature') => {
 			const copy = Utils.copy(feature) as FeatureClassAbility;
 			copy.data.cost = value;
 			copy.data.selectedIDs = [];
 			props.setFeature(feature.id, copy);
 		};
 
-		const setConditionTypes = (feature: Feature, value: ConditionType[]) => {
+		const setConditionTypes = (value: ConditionType[]) => {
 			const copy = Utils.copy(feature) as FeatureConditionImmunity;
 			copy.data.conditions = value;
 			props.setFeature(feature.id, copy);
 		};
 
-		const setPerkLists = (feature: Feature, value: PerkList[]) => {
+		const setFollowerName = (value: string) => {
+			const copy = Utils.copy(feature) as FeatureFollower;
+			copy.data.follower.name = value;
+			props.setFeature(feature.id, copy);
+		};
+
+		const setFollowerType = (value: FollowerType) => {
+			const copy = Utils.copy(feature) as FeatureFollower;
+			copy.data.follower.type = value;
+			copy.data.follower.characteristics.forEach(ch => {
+				switch (ch.characteristic) {
+					case Characteristic.Might:
+						ch.value = value === FollowerType.Artisan ? 1 : 0;
+						break;
+					case Characteristic.Reason:
+						ch.value = 1;
+						break;
+					case Characteristic.Intuition:
+						ch.value = value === FollowerType.Sage ? 1 : 0;
+						break;
+					default:
+						ch.value = 0;
+						break;
+				}
+			});
+			copy.data.follower.skills = [];
+			props.setFeature(feature.id, copy);
+		};
+
+		const setFollowerCharacteristics = (value: { characteristic: Characteristic, value: number }[]) => {
+			const copy = Utils.copy(feature) as FeatureFollower;
+			copy.data.follower.characteristics = value;
+			props.setFeature(feature.id, copy);
+		};
+
+		const setFollowerSkills = (value: string[]) => {
+			const copy = Utils.copy(feature) as FeatureFollower;
+			copy.data.follower.skills = value;
+			props.setFeature(feature.id, copy);
+		};
+
+		const setFollowerLanguages = (value: string[]) => {
+			const copy = Utils.copy(feature) as FeatureFollower;
+			copy.data.follower.languages = value;
+			props.setFeature(feature.id, copy);
+		};
+
+		const setPerkLists = (value: PerkList[]) => {
 			const copy = Utils.copy(feature) as FeaturePerk;
 			copy.data.lists = value;
 			copy.data.selected = [];
 			props.setFeature(feature.id, copy);
 		};
 
-		const setSkillLists = (feature: Feature, value: SkillList[]) => {
+		const setSkillLists = (value: SkillList[]) => {
 			const copy = Utils.copy(feature) as FeatureSkillChoice;
 			copy.data.listOptions = value;
 			copy.data.selected = [];
 			props.setFeature(feature.id, copy);
 		};
 
-		const setEchelon = (feature: Feature, value: number) => {
+		const setEchelon = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureTitleChoice;
 			copy.data.echelon = value;
 			copy.data.selected = [];
 			props.setFeature(feature.id, copy);
 		};
 
-		const setCustomAncestryID = (feature: Feature, value: string) => {
+		const setCustomAncestryID = (value: string) => {
 			const copy = Utils.copy(feature) as FeatureAncestryFeatureChoice;
 			copy.data.source.customID = value;
 			copy.data.selected = null;
@@ -209,10 +259,10 @@ export const HeroCustomizePanel = (props: Props) => {
 								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
 							}}
 							value={feature.data.source.customID}
-							onChange={id => setCustomAncestryID(feature, id)}
+							onChange={setCustomAncestryID}
 						/>
 						<HeaderText>Point Cost</HeaderText>
-						<NumberSpin min={1} max={2} value={feature.data.value} onChange={value => setValue(feature, value)} />
+						<NumberSpin min={1} max={2} value={feature.data.value} onChange={setValue} />
 					</div>
 				);
 			case FeatureType.Bonus:
@@ -234,12 +284,12 @@ export const HeroCustomizePanel = (props: Props) => {
 								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
 							}}
 							value={feature.data.field}
-							onChange={field => setValueField(feature, field)}
+							onChange={setValueField}
 						/>
 						<HeaderText>Value</HeaderText>
-						<NumberSpin label='Value' min={0} value={feature.data.value} onChange={value => setValueBonus(feature, value)} />
-						<NumberSpin label='Per Level After 1st' min={0} value={feature.data.valuePerLevel} onChange={value => setValuePerLevel(feature, value)} />
-						<NumberSpin label='Per Echelon' min={0} value={feature.data.valuePerEchelon} onChange={value => setValuePerEchelon(feature, value)} />
+						<NumberSpin label='Value' min={0} value={feature.data.value} onChange={setValueBonus} />
+						<NumberSpin label='Per Level After 1st' min={0} value={feature.data.valuePerLevel} onChange={setValuePerLevel} />
+						<NumberSpin label='Per Echelon' min={0} value={feature.data.valuePerEchelon} onChange={setValuePerEchelon} />
 						<Select
 							style={{ width: '100%' }}
 							placeholder='Characteristics'
@@ -256,7 +306,7 @@ export const HeroCustomizePanel = (props: Props) => {
 								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
 							}}
 							value={feature.data.valueCharacteristics}
-							onChange={value => setValueCharacteristics(feature, value)}
+							onChange={setValueCharacteristics}
 						/>
 					</Space>
 				);
@@ -279,10 +329,10 @@ export const HeroCustomizePanel = (props: Props) => {
 								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
 							}}
 							value={feature.data.characteristic}
-							onChange={ch => setCharacteristic(feature, ch)}
+							onChange={setCharacteristic}
 						/>
 						<HeaderText>Value</HeaderText>
-						<NumberSpin label='Value' min={0} value={feature.data.value} onChange={value => setCharacteristicBonus(feature, value)} />
+						<NumberSpin label='Value' min={0} value={feature.data.value} onChange={setCharacteristicBonus} />
 					</div>
 				);
 			case FeatureType.ClassAbility:
@@ -305,7 +355,7 @@ export const HeroCustomizePanel = (props: Props) => {
 								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
 							}}
 							value={feature.data.classID || ''}
-							onChange={id => setClassID(feature, id)}
+							onChange={setClassID}
 						/>
 						<HeaderText>Ability Cost</HeaderText>
 						<Flex align='center' justify='center'>
@@ -320,7 +370,7 @@ export const HeroCustomizePanel = (props: Props) => {
 									{ value: 0, label: 'Other' }
 								]}
 								value={feature.data.cost}
-								onChange={value => setCost(feature, value)}
+								onChange={setCost}
 							/>
 						</Flex>
 					</div>
@@ -343,7 +393,7 @@ export const HeroCustomizePanel = (props: Props) => {
 							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
 						}}
 						value={feature.data.conditions}
-						onChange={value => setConditionTypes(feature, value)}
+						onChange={setConditionTypes}
 					/>
 				);
 			case FeatureType.DamageModifier:
@@ -365,18 +415,18 @@ export const HeroCustomizePanel = (props: Props) => {
 								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
 							}}
 							value={feature.data.modifiers[0].damageType}
-							onChange={value => setDamageModifierDamageType(feature, value)}
+							onChange={setDamageModifierDamageType}
 						/>
 						<Segmented
 							block={true}
 							options={[ DamageModifierType.Immunity, DamageModifierType.Weakness ].map(o => ({ label: o, value: o }))}
 							value={feature.data.modifiers[0].type}
-							onChange={value => setDamageModifierType(feature, value)}
+							onChange={setDamageModifierType}
 						/>
 						<HeaderText>Value</HeaderText>
-						<NumberSpin label='Value' min={0} value={feature.data.modifiers[0].value} onChange={value => setDamageModifierBonus(feature, value)} />
-						<NumberSpin label='Per Level After 1st' min={0} value={feature.data.modifiers[0].valuePerLevel} onChange={value => setDamageModifierValuePerLevel(feature, value)} />
-						<NumberSpin label='Per Echelon' min={0} value={feature.data.modifiers[0].valuePerEchelon} onChange={value => setDamageModifierValuePerEchelon(feature, value)} />
+						<NumberSpin label='Value' min={0} value={feature.data.modifiers[0].value} onChange={setDamageModifierBonus} />
+						<NumberSpin label='Per Level After 1st' min={0} value={feature.data.modifiers[0].valuePerLevel} onChange={setDamageModifierValuePerLevel} />
+						<NumberSpin label='Per Echelon' min={0} value={feature.data.modifiers[0].valuePerEchelon} onChange={setDamageModifierValuePerEchelon} />
 						<Select
 							style={{ width: '100%' }}
 							placeholder='Characteristics'
@@ -393,9 +443,89 @@ export const HeroCustomizePanel = (props: Props) => {
 								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
 							}}
 							value={feature.data.modifiers[0].valueCharacteristics}
-							onChange={value => setDamageModifierCharacteristics(feature, value)}
+							onChange={setDamageModifierCharacteristics}
 						/>
 					</Space>
+				);
+			case FeatureType.Follower:
+				return (
+					<div style={{ paddingTop: '20px' }}>
+						<Expander title='Customize'>
+							<HeaderText>Name</HeaderText>
+							<Input
+								status={feature.data.follower.name === '' ? 'warning' : ''}
+								placeholder='Name'
+								allowClear={true}
+								addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setFollowerName(NameGenerator.generateName())} />}
+								value={feature.data.follower.name}
+								onChange={e => setFollowerName(e.target.value)}
+							/>
+							<HeaderText>Type</HeaderText>
+							<Segmented
+								block={true}
+								options={[ FollowerType.Artisan, FollowerType.Sage ].map(o => ({ value: o, label: o }))}
+								value={feature.data.follower.type}
+								onChange={setFollowerType}
+							/>
+							<HeaderText>Characteristics</HeaderText>
+							<Select
+								style={{ width: '100%' }}
+								allowClear={true}
+								placeholder='Characteristics'
+								options={FollowerLogic.getCharacteristicArrays(feature.data.follower.type).map(o => ({ value: o.filter(ch => ch.value !== 0).map(ch => `${ch.characteristic} ${ch.value}`).join(', '), array: o }))}
+								optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+								value={feature.data.follower.characteristics.filter(ch => ch.value !== 0).map(ch => `${ch.characteristic} ${ch.value}`).join(', ')}
+								onChange={(_text, option) => {
+									const data = option as unknown as { value: string, array: { characteristic: Characteristic, value: number }[] };
+									setFollowerCharacteristics(data.array);
+								}}
+							/>
+							<HeaderText>Skills</HeaderText>
+							<Select
+								style={{ width: '100%' }}
+								mode='multiple'
+								maxCount={4}
+								allowClear={true}
+								placeholder='Skills'
+								options={FollowerLogic.getSkillOptions(feature.data.follower.type, props.sourcebooks).map(s => ({ value: s.name, label: s.name, desc: s.description }))}
+								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+								showSearch={true}
+								filterOption={(input, option) => {
+									const strings = option ?
+										[
+											option.label,
+											option.desc
+										]
+										: [];
+									return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+								}}
+								value={feature.data.follower.skills}
+								onChange={setFollowerSkills}
+							/>
+							<HeaderText>Languages</HeaderText>
+							<Select
+								style={{ width: '100%' }}
+								mode='multiple'
+								maxCount={2}
+								allowClear={true}
+								placeholder='Languages'
+								options={FollowerLogic.getLanguageOptions(props.sourcebooks).map(s => ({ value: s.name, label: s.name, desc: s.description }))}
+								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+								showSearch={true}
+								filterOption={(input, option) => {
+									const strings = option ?
+										[
+											option.label,
+											option.desc
+										]
+										: [];
+									return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+								}}
+								value={feature.data.follower.languages}
+								onChange={setFollowerLanguages}
+							/>
+						</Expander>
+					</div>
 				);
 			case FeatureType.Perk:
 				return (
@@ -418,7 +548,7 @@ export const HeroCustomizePanel = (props: Props) => {
 								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
 							}}
 							value={feature.data.lists}
-							onChange={lists => setPerkLists(feature, lists)}
+							onChange={setPerkLists}
 						/>
 					</div>
 				);
@@ -443,7 +573,7 @@ export const HeroCustomizePanel = (props: Props) => {
 								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
 							}}
 							value={feature.data.listOptions}
-							onChange={lists => setSkillLists(feature, lists)}
+							onChange={setSkillLists}
 						/>
 					</div>
 				);
@@ -455,7 +585,7 @@ export const HeroCustomizePanel = (props: Props) => {
 							min={1}
 							max={4}
 							value={feature.data.echelon}
-							onChange={value => setEchelon(feature, value)}
+							onChange={setEchelon}
 						/>
 					</div>
 				);
@@ -557,6 +687,18 @@ export const HeroCustomizePanel = (props: Props) => {
 											}}
 										>
 											Damage Immunity / Weakness
+										</Button>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createFollower({
+													id: Utils.guid()
+												}));
+											}}
+										>
+											Follower
 										</Button>
 										<Button
 											block={true}

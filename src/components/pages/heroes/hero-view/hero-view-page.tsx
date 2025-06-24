@@ -13,6 +13,7 @@ import { Culture } from '../../../../models/culture';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
+import { Follower } from '../../../../models/follower';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroPanel } from '../../../panels/hero/hero-panel';
@@ -54,6 +55,7 @@ interface Props {
 	showKit: (kit: Kit) => void;
 	showTitle: (title: Title) => void;
 	showCompanion: (monster: Monster, monsterGroup?: MonsterGroup) => void;
+	showFollower: (follower: Follower) => void;
 	showCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
 	showHeroState: (hero: Hero, page: HeroStatePage) => void;
@@ -101,6 +103,7 @@ export const HeroViewPage = (props: Props) => {
 							onSelectKit={props.showKit}
 							onSelectTitle={props.showTitle}
 							onSelectCompanion={props.showCompanion}
+							onSelectFollower={props.showFollower}
 							onSelectCharacteristic={characteristic => props.showCharacteristic(characteristic, hero)}
 							onSelectAbility={ability => props.showAbility(ability, hero)}
 							onShowState={page => props.showHeroState(hero, page)}

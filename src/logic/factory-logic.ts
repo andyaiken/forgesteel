@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { MapFog, MapMini, MapTile, MapWall, MapZone, TacticalMap } from '../models/tactical-map';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
@@ -25,6 +25,8 @@ import { Domain } from '../models/domain';
 import { Element } from '../models/element';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
+import { Follower } from '../models/follower';
+import { FollowerType } from '../enums/follower-type';
 import { Format } from '../utils/format';
 import { FormatLogic } from './format-logic';
 import { Hero } from '../models/hero';
@@ -423,6 +425,24 @@ export class FactoryLogic {
 			prerequisites: false,
 			source: false,
 			points: 0
+		};
+	};
+
+	static createFollower = (): Follower => {
+		return {
+			id: Utils.guid(),
+			name: '',
+			description: '',
+			type: FollowerType.Artisan,
+			characteristics: [
+				{ characteristic: Characteristic.Might, value: 1 },
+				{ characteristic: Characteristic.Agility, value: 0 },
+				{ characteristic: Characteristic.Reason, value: 1 },
+				{ characteristic: Characteristic.Intuition, value: 0 },
+				{ characteristic: Characteristic.Presence, value: 0 }
+			],
+			skills: [],
+			languages: []
 		};
 	};
 
@@ -1163,6 +1183,17 @@ export class FactoryLogic {
 					level: data.level,
 					count: count,
 					selected: []
+				}
+			};
+		},
+		createFollower: (data: { id: string, name?: string, description?: string }): FeatureFollower => {
+			return {
+				id: data.id,
+				name: data.name || 'Follower',
+				description: data.description || '',
+				type: FeatureType.Follower,
+				data: {
+					follower: FactoryLogic.createFollower()
 				}
 			};
 		},

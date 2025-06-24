@@ -23,6 +23,7 @@ import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { FeaturePanel } from '../elements/feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
+import { Follower } from '../../../models/follower';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroClass } from '../../../models/class';
@@ -59,6 +60,7 @@ interface Props {
  	onSelectKit?: (kit: Kit) => void;
 	onSelectTitle?: (title: Title) => void;
  	onSelectCompanion?: (monster: Monster, monsterGroup?: MonsterGroup) => void;
+ 	onSelectFollower?: (follower: Follower) => void;
  	onSelectCharacteristic?: (characteristic: Characteristic) => void;
  	onSelectAbility?: (ability: Ability) => void;
  	onShowState?: (page: HeroStatePage) => void;
@@ -505,6 +507,12 @@ export const HeroPanel = (props: Props) => {
 				}
 			};
 
+			const onSelectFollower = (follower: Follower) => {
+				if (props.onSelectFollower) {
+					props.onSelectFollower(follower);
+				}
+			};
+
 			let incitingIncident: Element | null = null;
 			if (props.hero.career && props.hero.career.incitingIncidents.selectedID) {
 				incitingIncident = props.hero.career.incitingIncidents.options.find(o => o.id === props.hero.career?.incitingIncidents.selectedID) || null;
@@ -621,6 +629,18 @@ export const HeroPanel = (props: Props) => {
 								<div key={monster.id} className='overview-tile clickable' onClick={() => onSelectCompanion(monster)}>
 									<HeaderText>Companion</HeaderText>
 									<MonsterInfo monster={monster} style={{ marginBottom: '10px' }} />
+								</div>
+							))
+							:
+							null
+					}
+					{
+						HeroLogic.getFollowers(props.hero).length > 0 ?
+							HeroLogic.getFollowers(props.hero).map(follower => (
+								<div key={follower.id} className='overview-tile clickable' onClick={() => onSelectFollower(follower)}>
+									<HeaderText>Follower</HeaderText>
+									<Field label='Name' value={follower.name || 'Follower'} />
+									<Field label='Type' value={follower.type} />
 								</div>
 							))
 							:

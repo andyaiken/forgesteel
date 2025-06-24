@@ -21,6 +21,7 @@ import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureSelectModal } from '../../../modals/select/feature-select/feature-select-modal';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
+import { FollowerPanel } from '../follower-panel/follower-panel';
 import { Format } from '../../../../utils/format';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -1953,6 +1954,12 @@ export const FeaturePanel = (props: Props) => {
 					<FeaturePanel feature={props.feature.data.selected} options={props.options} style={props.style} />
 				);
 			}
+		}
+
+		if (props.feature.type === FeatureType.Follower) {
+			return (
+				<FollowerPanel follower={props.feature.data.follower} mode={PanelMode.Full} />
+			);
 		}
 
 		return (

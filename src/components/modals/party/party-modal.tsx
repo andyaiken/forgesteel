@@ -56,7 +56,7 @@ export const PartyModal = (props: Props) => {
 								<thead>
 									<tr>
 										<th></th>
-										{props.heroes.map(h => <th key={h.id} className='hero-column-header'>{h.name}</th>)}
+										{props.heroes.map(h => <th key={h.id} className='hero-column-header'>{h.name || 'Unnamed Hero'}</th>)}
 									</tr>
 								</thead>
 								<tbody>

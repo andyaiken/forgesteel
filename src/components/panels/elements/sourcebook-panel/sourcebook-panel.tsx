@@ -1,12 +1,14 @@
-import { Button, Input, Select, Space } from 'antd';
+import { Button, Input, Segmented, Select, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
+import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
+import { LanguageType } from '../../../../enums/language-type';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
@@ -20,6 +22,7 @@ import './sourcebook-panel.scss';
 
 interface Props {
 	sourcebook: Sourcebook;
+	sourcebooks: Sourcebook[];
 	heroes: Hero[];
 	visible: boolean;
 	onSetVisible: (sourcebook: Sourcebook, visible: boolean) => void;
@@ -59,7 +62,7 @@ export const SourcebookPanel = (props: Props) => {
 
 	const addLanguage = () => {
 		const copy = Utils.copy(sourcebook);
-		copy.languages.push({ name: '', description: '' });
+		copy.languages.push({ name: '', description: '', type: LanguageType.Cultural, related: [] });
 		setSourcebook(copy);
 		props.onChange(copy);
 	};
@@ -88,6 +91,20 @@ export const SourcebookPanel = (props: Props) => {
 	const setLanguageDescription = (index: number, value: string) => {
 		const copy = Utils.copy(sourcebook);
 		copy.languages[index].description = value;
+		setSourcebook(copy);
+		props.onChange(copy);
+	};
+
+	const setLanguageType = (index: number, value: LanguageType) => {
+		const copy = Utils.copy(sourcebook);
+		copy.languages[index].type = value;
+		setSourcebook(copy);
+		props.onChange(copy);
+	};
+
+	const setLanguageRelated = (index: number, value: string[]) => {
+		const copy = Utils.copy(sourcebook);
+		copy.languages[index].related = value;
 		setSourcebook(copy);
 		props.onChange(copy);
 	};
@@ -139,6 +156,10 @@ export const SourcebookPanel = (props: Props) => {
 		let buttons = null;
 
 		if (isEditing) {
+			const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
+			const distinctLanguages = Collections.distinct(languages, l => l.name);
+			const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
+
 			content = (
 				<Space direction='vertical' style={{ width: '100%', paddingBottom: '5px' }}>
 					<Input
@@ -177,6 +198,32 @@ export const SourcebookPanel = (props: Props) => {
 												onChange={e => setLanguageName(n, e.target.value)}
 											/>
 											<MultiLine label='Description' value={lang.description} onChange={value => setLanguageDescription(n, value)} />
+											<Segmented
+												block={true}
+												options={[ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ]}
+												value={lang.type}
+												onChange={value => setLanguageType(n, value)}
+											/>
+											<Select
+												style={{ width: '100%' }}
+												mode='multiple'
+												allowClear={true}
+												placeholder='Select related languages'
+												options={sortedLanguages.filter(l => l.name !== lang.name).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
+												optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+												showSearch={true}
+												filterOption={(input, option) => {
+													const strings = option ?
+														[
+															option.label,
+															option.desc
+														]
+														: [];
+													return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+												}}
+												value={lang.related}
+												onChange={value => setLanguageRelated(n, value)}
+											/>
 										</Space>
 									</Expander>
 								))

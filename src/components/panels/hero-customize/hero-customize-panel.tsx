@@ -1,5 +1,5 @@
 import { Button, Flex, Input, Popover, Segmented, Select, Space } from 'antd';
-import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeaturePerk, FeatureSkillChoice, FeatureTitleChoice } from '../../../models/feature';
+import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeaturePerk, FeatureTitleChoice } from '../../../models/feature';
 import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Characteristic } from '../../../enums/characteristic';
 import { ConditionType } from '../../../enums/condition-type';
@@ -214,13 +214,6 @@ export const HeroCustomizePanel = (props: Props) => {
 		const setPerkLists = (value: PerkList[]) => {
 			const copy = Utils.copy(feature) as FeaturePerk;
 			copy.data.lists = value;
-			copy.data.selected = [];
-			props.setFeature(feature.id, copy);
-		};
-
-		const setSkillLists = (value: SkillList[]) => {
-			const copy = Utils.copy(feature) as FeatureSkillChoice;
-			copy.data.listOptions = value;
 			copy.data.selected = [];
 			props.setFeature(feature.id, copy);
 		};
@@ -552,31 +545,6 @@ export const HeroCustomizePanel = (props: Props) => {
 						/>
 					</div>
 				);
-			case FeatureType.SkillChoice:
-				return (
-					<div>
-						<HeaderText>Skill List</HeaderText>
-						<Select
-							style={{ width: '100%' }}
-							mode='multiple'
-							allowClear={true}
-							placeholder='List'
-							options={[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map(pl => ({ label: pl, value: pl }))}
-							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.label
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
-							value={feature.data.listOptions}
-							onChange={setSkillLists}
-						/>
-					</div>
-				);
 			case FeatureType.TitleChoice:
 				return (
 					<div>
@@ -718,11 +686,12 @@ export const HeroCustomizePanel = (props: Props) => {
 											onClick={() => {
 												setMenuOpen(false);
 												props.addFeature(FactoryLogic.feature.createLanguageChoice({
-													id: Utils.guid()
+													id: Utils.guid(),
+													count: -1
 												}));
 											}}
 										>
-											Language
+											Languages
 										</Button>
 										<Button
 											block={true}
@@ -744,11 +713,12 @@ export const HeroCustomizePanel = (props: Props) => {
 												setMenuOpen(false);
 												props.addFeature(FactoryLogic.feature.createSkillChoice({
 													id: Utils.guid(),
-													listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+													listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ],
+													count: -1
 												}));
 											}}
 										>
-											Skill
+											Skills
 										</Button>
 										<Button
 											block={true}

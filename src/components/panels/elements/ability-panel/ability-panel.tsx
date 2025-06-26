@@ -321,12 +321,8 @@ export const AbilityPanel = (props: Props) => {
 										<Field
 											key={n}
 											disabled={props.hero && (props.options?.dimUnavailableAbilities || false) && (spend.value > heroicResource)}
-											label={(
-												<div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-													<span>{ spend.name || 'Spend' }</span>
-													{spend.value ? <ResourcePill value={spend.value} repeatable={spend.repeatable} /> : null}
-												</div>
-											)}
+											label={spend.name || 'Spend'}
+											labelTag={spend.value ? <ResourcePill value={spend.value} repeatable={spend.repeatable} /> : null}
 											value={<Markdown text={parseText(spend.effect)} useSpan={true} />}
 										/>
 									))
@@ -335,12 +331,8 @@ export const AbilityPanel = (props: Props) => {
 									props.ability.persistence.map((persist, n) => (
 										<Field
 											key={n}
-											label={(
-												<div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-													<span>Persist</span>
-													{persist.value ? <ResourcePill value={persist.value} /> : null}
-												</div>
-											)}
+											label='Persist'
+											labelTag={persist.value ? <ResourcePill value={persist.value} /> : null}
 											value={<Markdown text={parseText(persist.effect)} useSpan={true} />}
 										/>
 									))

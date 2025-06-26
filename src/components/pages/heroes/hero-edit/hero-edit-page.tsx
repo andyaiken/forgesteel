@@ -27,6 +27,7 @@ import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
+import { LanguageType } from '../../../../enums/language-type';
 import { Modal } from '../../../modals/modal/modal';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
@@ -846,7 +847,7 @@ const CultureSection = (props: CultureSectionProps) => {
 								style={{ width: '100%' }}
 								status={props.hero.culture.environment === null ? 'warning' : ''}
 								allowClear={true}
-								placeholder='Select'
+								placeholder='Environment'
 								options={EnvironmentData.getEnvironments().map(s => ({ value: s.id, label: s.name, desc: s.description }))}
 								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 								showSearch={true}
@@ -858,7 +859,7 @@ const CultureSection = (props: CultureSectionProps) => {
 								style={{ width: '100%' }}
 								status={props.hero.culture.organization === null ? 'warning' : ''}
 								allowClear={true}
-								placeholder='Select'
+								placeholder='Organization'
 								options={OrganizationData.getOrganizations().map(s => ({ value: s.id, label: s.name, desc: s.description }))}
 								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 								showSearch={true}
@@ -870,7 +871,7 @@ const CultureSection = (props: CultureSectionProps) => {
 								style={{ width: '100%' }}
 								status={props.hero.culture.upbringing === null ? 'warning' : ''}
 								allowClear={true}
-								placeholder='Select'
+								placeholder='Upbringing'
 								options={UpbringingData.getUpbringings().map(s => ({ value: s.id, label: s.name, desc: s.description }))}
 								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 								showSearch={true}
@@ -883,6 +884,10 @@ const CultureSection = (props: CultureSectionProps) => {
 				);
 			}
 
+			const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
+			const distinctLanguages = Collections.distinct(languages, l => l.name);
+			const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
+
 			choices.unshift(
 				<SelectablePanel key='language'>
 					<HeaderText>Language</HeaderText>
@@ -892,10 +897,33 @@ const CultureSection = (props: CultureSectionProps) => {
 						status={props.hero.culture.languages.length === 0 ? 'warning' : ''}
 						allowClear={true}
 						placeholder='Select'
-						options={SourcebookLogic.getLanguages(props.sourcebooks).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
-						optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+						options={
+							[ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ]
+								.filter(type => sortedLanguages.some(l => l.type === type))
+								.map(type => ({
+									label: <HeaderText>{type} Languages</HeaderText>,
+									value: type,
+									desc: type,
+									options: sortedLanguages
+										.filter(l => l.type === type)
+										.map(l => ({
+											label: <Field label={l.name} value={l.description} />,
+											value: l.name,
+											desc: l.description
+										}))
+								}))
+						}
+						labelRender={x => x.value}
 						showSearch={true}
-						filterOption={(input, option) => { return (option?.label || '').toLowerCase().includes(input.toLowerCase()); }}
+						filterOption={(input, option) => {
+							const strings = option ?
+								[
+									option.value,
+									option.desc
+								]
+								: [];
+							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+						}}
 						value={props.hero.culture.languages.length > 0 ? props.hero.culture.languages[0] : null}
 						onChange={value => props.selectLanguages(value ? [ value ] : [])}
 					/>

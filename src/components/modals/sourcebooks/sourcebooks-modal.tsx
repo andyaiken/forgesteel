@@ -79,6 +79,7 @@ export const SourcebooksModal = (props: Props) => {
 								<SourcebookPanel
 									key={s.id}
 									sourcebook={s}
+									sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
 									visible={!hiddenSourcebookIDs.includes(s.id)}
 									heroes={props.heroes}
 									onSetVisible={setVisibility}

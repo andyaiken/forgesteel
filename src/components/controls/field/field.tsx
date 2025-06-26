@@ -6,7 +6,9 @@ interface Props {
 	className?: string;
 	style?: CSSProperties;
 	label: ReactNode;
+	labelTag?: ReactNode;
 	value: ReactNode;
+	valueTag?: ReactNode;
 	orientation?: 'horizontal' | 'vertical';
 	disabled?: boolean;
 	danger?: boolean;
@@ -35,8 +37,27 @@ export const Field = (props: Props) => {
 
 		return (
 			<div className={className} style={props.style}>
-				<span className='field-label'>{props.label}</span>
-				<span className='field-value'>{props.value}</span>
+				<span className='field-label'>
+					{
+						props.labelTag ?
+							<div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+								{props.label}
+								{props.labelTag}
+							</div>
+							:
+							props.label
+					}
+				</span>
+				<span className='field-value'>
+					{props.value}
+				</span>
+				{
+					props.valueTag ?
+						<span className='field-tag'>
+							{props.valueTag}
+						</span>
+						: null
+				}
 			</div>
 		);
 	} catch (ex) {

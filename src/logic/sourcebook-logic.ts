@@ -11,6 +11,7 @@ import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 import { Kit } from '../models/kit';
 import { Language } from '../models/language';
+import { LanguageType } from '../enums/language-type';
 import { MonsterGroup } from '../models/monster';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { Perk } from '../models/perk';
@@ -453,6 +454,15 @@ export class SourcebookLogic {
 					squares: 1,
 					staminaDamage: 0
 				};
+			}
+		});
+
+		sourcebook.languages.forEach(language => {
+			if (language.type === undefined) {
+				language.type = LanguageType.Cultural;
+			}
+			if (language.related === undefined) {
+				language.related = [];
 			}
 		});
 	};

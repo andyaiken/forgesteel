@@ -33,6 +33,7 @@ import { ItemPanel } from '../item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../kit-panel/kit-panel';
 import { KitSelectModal } from '../../../modals/select/kit-select/kit-select-modal';
+import { LanguageType } from '../../../../enums/language-type';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { Modal } from '../../../modals/modal/modal';
 import { Monster } from '../../../../models/monster';
@@ -47,6 +48,7 @@ import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../perk-panel/perk-panel';
 import { PerkSelectModal } from '../../../modals/select/perk-select/perk-select-modal';
 import { PowerRollPanel } from '../../power-roll/power-roll-panel';
+import { SkillList } from '../../../../enums/skill-list';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Title } from '../../../../models/title';
@@ -953,17 +955,33 @@ export const FeaturePanel = (props: Props) => {
 				<Select
 					style={{ width: '100%' }}
 					status={data.selected.length < data.count ? 'warning' : ''}
-					mode={data.count == 1 ? undefined : 'multiple'}
-					maxCount={data.count === 1 ? undefined : data.count}
+					mode={data.count === 1 ? undefined : 'multiple'}
+					maxCount={(data.count === 1) || (data.count === -1) ? undefined : data.count}
 					allowClear={true}
 					placeholder={data.count === 1 ? 'Select a language' : 'Select languages'}
-					options={sortedLanguages.map(l => ({ label: l.name, value: l.name, desc: l.description, disabled: currentLanguages.includes(l.name) }))}
-					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
+					options={
+						[ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ]
+							.filter(type => sortedLanguages.some(l => l.type === type))
+							.map(type => ({
+								label: <HeaderText>{type} Languages</HeaderText>,
+								value: type,
+								desc: type,
+								options: sortedLanguages
+									.filter(l => l.type === type)
+									.map(l => ({
+										label: <Field disabled={currentLanguages.includes(l.name)} label={l.name} value={l.description} />,
+										value: l.name,
+										desc: l.description,
+										disabled: currentLanguages.includes(l.name)
+									}))
+							}))
+					}
+					labelRender={x => x.value}
 					showSearch={true}
 					filterOption={(input, option) => {
 						const strings = option ?
 							[
-								option.label,
+								option.value,
 								option.desc
 							]
 							: [];
@@ -1128,16 +1146,32 @@ export const FeaturePanel = (props: Props) => {
 					style={{ width: '100%' }}
 					status={data.selected.length < data.count ? 'warning' : ''}
 					mode={data.count === 1 ? undefined : 'multiple'}
-					maxCount={data.count === 1 ? undefined : data.count}
+					maxCount={(data.count === 1) || (data.count === -1) ? undefined : data.count}
 					allowClear={true}
 					placeholder={data.count === 1 ? 'Select a skill' : 'Select skills'}
-					options={sortedSkills.map(s => ({ label: s.name, value: s.name, desc: s.description, disabled: currentSkills.includes(s.name) }))}
-					optionRender={option => <Field disabled={option.data.disabled} label={option.data.label} value={option.data.desc} />}
+					options={
+						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+							.filter(list => sortedSkills.some(s => s.list === list))
+							.map(list => ({
+								label: <HeaderText>{list} Skills</HeaderText>,
+								value: list,
+								desc: list,
+								options: sortedSkills
+									.filter(s => s.list === list)
+									.map(s => ({
+										label: <Field disabled={currentSkills.includes(s.name)} label={s.name} value={s.description} />,
+										value: s.name,
+										desc: s.description,
+										disabled: currentSkills.includes(s.name)
+									}))
+							}))
+					}
+					labelRender={x => x.value}
 					showSearch={true}
 					filterOption={(input, option) => {
 						const strings = option ?
 							[
-								option.label,
+								option.value,
 								option.desc
 							]
 							: [];

@@ -2,7 +2,6 @@ import { Button, Flex, Input, Segmented, Space, Tabs } from 'antd';
 import { AbilityData } from '../../../data/ability-data';
 import { AbilityPanel } from '../../panels/elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
-import { Collections } from '../../../utils/collections';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { ConditionType } from '../../../enums/condition-type';
 import { Empty } from '../../controls/empty/empty';
@@ -10,6 +9,7 @@ import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
+import { LanguageType } from '../../../enums/language-type';
 import { Markdown } from '../../controls/markdown/markdown';
 import { Modal } from '../modal/modal';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -166,7 +166,14 @@ export const ReferenceModal = (props: Props) => {
 									{
 										allSkills
 											.filter(s => s.list === sl)
-											.map((s, n2) => <Field key={n2} highlight={skillNames.includes(s.name)} label={s.name} value={s.description} />)
+											.map((s, n2) => (
+												<Field
+													key={n2}
+													highlight={skillNames.includes(s.name)}
+													label={s.name}
+													value={s.description}
+												/>
+											))
 									}
 								</Space>
 							</div>
@@ -182,13 +189,43 @@ export const ReferenceModal = (props: Props) => {
 			const languageNames = props.hero ? HeroLogic.getLanguages(props.hero, sourcebooks).map(l => l.name) : [];
 
 			return (
-				<Space direction='vertical' style={{ padding: '20px 0', width: '100%' }}>
+				<div>
 					{
-						Collections
-							.sort(allLanguages, l => l.name)
-							.map((l, n) => <Field key={n} highlight={languageNames.includes(l.name)} label={l.name} value={l.description} />)
+						[
+							LanguageType.Common,
+							LanguageType.Regional,
+							LanguageType.Cultural,
+							LanguageType.Dead
+						].map((type, n1) => (
+							<div key={n1}>
+								<HeaderText>{type} Languages</HeaderText>
+								<Space direction='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
+									{
+										allLanguages
+											.filter(l => l.type === type)
+											.map((l, n2) => (
+												<div>
+													<Field
+														key={n2}
+														highlight={languageNames.includes(l.name)}
+														label={l.name}
+														value={l.description}
+													/>
+													{
+														l.related.length > 0 ?
+															<div style={{ marginTop: '-5px', paddingLeft: '10px' }}>
+																Related to: {l.related.join(', ')}
+															</div>
+															: null
+													}
+												</div>
+											))
+									}
+								</Space>
+							</div>
+						))
 					}
-				</Space>
+				</div>
 			);
 		};
 

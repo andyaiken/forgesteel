@@ -1256,7 +1256,7 @@ export class FactoryLogic {
 			const count = data.count || 1;
 			return {
 				id: data.id,
-				name: data.name || 'Language',
+				name: data.name || (count === 1 ? 'Language' : 'Languages'),
 				description: data.description || '',
 				type: FeatureType.LanguageChoice,
 				data: {
@@ -1351,7 +1351,7 @@ export class FactoryLogic {
 
 			return {
 				id: data.id,
-				name: data.name || (count > 1 ? `${prefix}Skills` : `${prefix}Skill`),
+				name: data.name || (count === 1 ? `${prefix}Skill` : `${prefix}Skills`),
 				description: data.description || '',
 				type: FeatureType.SkillChoice,
 				data: {

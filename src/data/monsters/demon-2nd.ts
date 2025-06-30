@@ -225,8 +225,12 @@ categories 4-6:
 							tier3: '9 psychic damage'
 						}),
 						effect: 'The target has corruption weakness 5 (EoT).',
-						spend: [
-							{ value: 2, effect: 'The target has I<2 corruption weakness 5 (save ends).' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The target has I<2 corruption weakness 5 (save ends).'
+							})
 						]
 					})
 				}),
@@ -552,8 +556,12 @@ categories 4-6:
 							tier2: '16 corruption damage; A<3 restrained (save ends)',
 							tier3: '19 corruption damage; A<4 restrained (save ends)'
 						}),
-						spend: [
-							{ value: 2, effect: 'An **ensnarer**(s) survives the launch, appearing adjacent to one of the targets. Two ensnarers appear on a tier-3 result.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'An **ensnarer**(s) survives the launch, appearing adjacent to one of the targets. Two ensnarers appear on a tier-3 result.'
+							})
 						]
 					})
 				}),
@@ -567,8 +575,12 @@ categories 4-6:
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Special',
 						effect: 'Four level 1 demon minions (**ensnarer**, **frenzied**, **pitling**) burst forth from the egress and appear in unoccupied squares.',
-						spend: [
-							{ value: 2, effect: 'A level 4 demon minion (**orflig**, **wobalas**, **grulqin**) also bursts forth and appears in an unoccupied square.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'A level 4 demon minion (**orflig**, **wobalas**, **grulqin**) also bursts forth and appears in an unoccupied square.'
+							})
 						]
 					})
 				}),

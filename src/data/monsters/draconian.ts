@@ -146,8 +146,13 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier3: '12 lightning damage; A<2 bleeding (save ends)'
 						}),
 						effect: 'The first time in an encounter that Lydixavus rolls a result with this ability, she can choose that result instead of rolling whenever she uses this ability for the rest of the encounter.',
-						spend: [
-							{ value: 2, repeatable: true, effect: 'Aeolyxria targets an additional creature or object for every 2 malice spent.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								repeatable: true,
+								effect: 'Aeolyxria targets an additional creature or object for every 2 malice spent.'
+							})
 						]
 					})
 				}),
@@ -161,8 +166,13 @@ The draconians presented in this section aren’t a band, but five individual dr
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 1, within: 5 }) ],
 						target: 'Special',
 						effect: 'The ground is elevated by 5 squares, creating a pillar of dirt. Each creature in the affected area is lifted along with it.',
-						spend: [
-							{ value: 1, repeatable: true, effect: 'Aeolyxria create an additional pillar for each malice spent.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 1,
+								repeatable: true,
+								effect: 'Aeolyxria create an additional pillar for each malice spent.'
+							})
 						]
 					})
 				}),
@@ -395,8 +405,12 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier2: '15 damage; M<2 weakened (save ends)',
 							tier3: '18 corruption damage; M<3 weakened (save ends)'
 						}),
-						spend: [
-							{ value: 2, effect: 'Myxovidan regains Stamina equal to half the damage dealt.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'Myxovidan regains Stamina equal to half the damage dealt.'
+							})
 						]
 					})
 				}),
@@ -573,8 +587,12 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier2: '16 damage; M<3 prone',
 							tier3: '19 damage; M<4 prone'
 						}),
-						spend: [
-							{ value: 2, effect: 'M<4 bleeding (save ends).' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'M<4 bleeding (save ends).'
+							})
 						]
 					})
 				}),
@@ -634,7 +652,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies in the burst',
 						preEffect: 'Dorzinuuth lets loose a powerful roar. Each target must make a **Reason test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Reason,
 							tier1: 'frightened (save ends)',
 							tier2: 'frightened (EoT)',

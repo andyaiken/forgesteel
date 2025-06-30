@@ -120,11 +120,12 @@ export const manticore: MonsterGroup = {
 							tier2: '15 damage; M<3 7 poison damage, weakened (save ends)',
 							tier3: '19 damage; M<4 10 poison damage, weakened (save ends)'
 						}),
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 1,
 								effect: 'A target weakened from this ability takes 1d6 poison damage at the start of each of their turns until the condition ends.'
-							}
+							})
 						]
 					})
 				}),

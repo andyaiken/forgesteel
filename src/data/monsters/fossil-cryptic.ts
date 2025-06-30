@@ -155,8 +155,12 @@ export const fossilCryptic: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object on the ground',
 						effect: 'Slide 3.',
-						spend: [
-							{ value: 2, effect: 'The distance of the ability becomes Ranged 10 and the slide increases to slide 6.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The distance of the ability becomes Ranged 10 and the slide increases to slide 6.'
+							})
 						]
 					})
 				}),
@@ -181,7 +185,7 @@ export const fossilCryptic: MonsterGroup = {
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy on the ground in the burst',
 						preEffect: 'Each target makes a **Might test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Might,
 							tier1: 'The target is prone and can\'t stand.',
 							tier2: 'Prone',
@@ -199,7 +203,7 @@ export const fossilCryptic: MonsterGroup = {
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy on the ground in the burst',
 						preEffect: 'Each target makes a **Agility test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Agility,
 							tier1: '9 damage; prone',
 							tier2: '5 damage',

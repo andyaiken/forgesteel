@@ -242,8 +242,12 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 							tier3: '9 damage'
 						}),
 						effect: 'The target can\'t shift away from the moundling until the end of their next turn.',
-						spend: [
-							{ value: 1, effect: 'The mournling targets an additional creature.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 1,
+								effect: 'The mournling targets an additional creature.'
+							})
 						]
 					})
 				}),
@@ -446,8 +450,12 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 							tier3: '9 corruption damage; M<3 bleeding (save ends)'
 						}),
 						effect: 'The vampire spawn regains Stamina equal to the corruption damage they deal.',
-						spend: [
-							{ value: 1, effect: 'The target takes an additional 3 corruption damage.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 1,
+								effect: 'The target takes an additional 3 corruption damage.'
+							})
 						]
 					})
 				}),
@@ -594,8 +602,13 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 							tier3: '16 corruption damage; I<4 frightened (save ends)'
 						}),
 						effect: 'A target frightened by this ability takes 4 psychic damage whenever they use a move action until the condition ends.',
-						spend: [
-							{ value: 2, repeatable: true, effect: 'The mummy lord targets an addtional creature for every 2 malice spent.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								repeatable: true,
+								effect: 'The mummy lord targets an addtional creature for every 2 malice spent.'
+							})
 						]
 					})
 				}),
@@ -619,8 +632,12 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						target: '',
 						type: FactoryLogic.type.createNoAction(),
 						effect: 'At the end of their turn, the mummy lord can take 10 damage to end one save ends effect affecting them. This damage can\'t be reduced in any way.',
-						spend: [
-							{ value: 5, effect: 'The effect is transferred to a creature within 10.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 5,
+								effect: 'The effect is transferred to a creature within 10.'
+							})
 						]
 					})
 				}),
@@ -650,7 +667,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						preEffect: 'The mummy lord’s speed increases by 2 and adds the burrow keyword to their movement. The mummy lord burrows up to their speed. Each enemy within 2 squares of the mummy lord’s movement must make an **Agility test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Agility,
 							tier1: 'Prone, can\'t stand (EoT)',
 							tier2: 'Prone',

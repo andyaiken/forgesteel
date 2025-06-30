@@ -110,7 +110,7 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 						target: 'All enemies',
 						cost: 'signature',
 						preEffect: 'Each target makes a **Might test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Might,
 							tier1: '12 poison damage; P<4 dragonsealed (save ends)',
 							tier2: '9 poison damage; P<3 dragonsealed (save ends)',
@@ -133,11 +133,12 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 							tier2: '12 damage; push 4',
 							tier3: '17 damage; push 8'
 						}),
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 3,
 								effect: 'Each target is A<3 bleeing (save ends).'
-							}
+							})
 						]
 					})
 				}),

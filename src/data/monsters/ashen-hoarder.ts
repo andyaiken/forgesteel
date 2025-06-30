@@ -119,15 +119,17 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 							tier2: '8 damage; A<3 weakened (save ends)',
 							tier3: '11 damage; A<4 weakened (save ends)'
 						}),
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 3,
 								effect: 'The ashen hoarder targets a second 4 cube within distance.'
-							},
-							{
+							}),
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 2,
 								effect: 'An enemy weakened by a Corpse Bomb is also slowed (save ends).'
-							}
+							})
 						]
 					})
 				}),
@@ -147,11 +149,12 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 							tier3: '14 corruption damage; M<4 impaled (save ends)'
 						}),
 						effect: 'An impaled creature is restrained and bleeding until the condition ends. Each impaled creature moves whenever the ashen hoarder moves. The ashen hoarder can have no more than 3 creatures impaled with this ability at a time.',
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 2,
 								effect: 'A creature impaled by this ability can be used with the Armor of Corpses ability instead of paying Malice.'
-							}
+							})
 						]
 					})
 				}),

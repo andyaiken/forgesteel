@@ -588,11 +588,12 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							tier2: '9 damage',
 							tier3: '12 damage; I<2 weakened (save ends)'
 						}),
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 2,
 								effect: 'The death cultist regains Stamina equal to half the damage dealt by this ability.'
-							}
+							})
 						]
 					})
 				}),
@@ -723,11 +724,12 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							tier2: '10 lightning damage',
 							tier3: '13 lightning damage'
 						}),
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 5,
 								effect: 'The ability takes the Area keyword and becomes a 10 × 1 line that targets each enemy and object in the area.'
-							}
+							})
 						]
 					})
 				}),
@@ -806,11 +808,12 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							tier3: '12 damage'
 						}),
 						effect: 'The trickshot ignores cover and concealment.',
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 3,
 								effect: 'The trickshot targets an additional creature or object.'
-							}
+							})
 						]
 					})
 				}),
@@ -865,8 +868,12 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							tier3: '8 damage; M<3 slowed (save ends)'
 						}),
 						effect: 'An ally within 10 of the blackguard can make a free strike.',
-						spend: [
-							{ value: 1, effect: 'The ally can use their signature action instead.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 1,
+								effect: 'The ally can use their signature action instead.'
+							})
 						]
 					})
 				}),
@@ -984,8 +991,12 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							tier3: '15 damage; pull 3'
 						}),
 						effect: 'A target who is adjacent to the bandit chief after the ability resolves takes 5 corruption damage.',
-						spend: [
-							{ value: 2, effect: 'The bandit chief targets an additional enemy or object.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The bandit chief targets an additional enemy or object.'
+							})
 						]
 					})
 				}),
@@ -1003,8 +1014,12 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							tier2: 'Push 2; M<2 prone',
 							tier3: 'Push 3; M<3 prone'
 						}),
-						spend: [
-							{ value: 2, effect: 'This ability targets each enemy adjacent to the bandit chief.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'This ability targets each enemy adjacent to the bandit chief.'
+							})
 						]
 					})
 				}),

@@ -126,10 +126,13 @@ Rumor has it that a cyclops can emit a mile long energy ray from their eye. Howe
 							tier3: '14 damage; grabbed'
 						}),
 						effect: 'The goon can only have one target grabbed at a time.',
-						spend: [ {
-							value: 1,
-							effect: 'The target has a bane on escaping the grab while the goon crushes the target in their hand.'
-						} ]
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 1,
+								effect: 'The target has a bane on escaping the grab while the goon crushes the target in their hand.'
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -200,11 +203,12 @@ The goon hurls what’s in their hand down the line and rolls power. The hurled 
 							tier2: '10 damage; A<1 vertical push 3',
 							tier3: '13 damage; A<2 vertical slide 5'
 						}),
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 1,
 								effect: 'Each target is M<1 bleeding (save ends).'
-							}
+							})
 						]
 					})
 				}),

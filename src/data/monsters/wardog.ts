@@ -78,7 +78,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 				target: 'Each creature in the cube',
 				preEffect: 'Each target makes an Agility test.',
-				test: FactoryLogic.createPowerRoll({
+				powerRoll: FactoryLogic.createPowerRoll({
 					tier1: '5 fire damage; slowed or weakened (save ends)',
 					tier2: '5 fire damage; slowed or weakened (EoT)',
 					tier3: '5 fire damage'
@@ -302,10 +302,13 @@ Most war dogs speak Caelian and one Vaslorian human language.
 							tier3: '6 damage; A<2 grabbed'
 						}),
 						effect: 'The amalgamite can have up to four targets grabbed.',
-						spend: [ {
-							value: 3,
-							effect: 'The amalgamite deals an additional 3 damage to each creature they have grabbed and regains Stamina equal to the damage dealt.'
-						} ]
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The amalgamite deals an additional 3 damage to each creature they have grabbed and regains Stamina equal to the damage dealt.'
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -416,10 +419,13 @@ Most war dogs speak Caelian and one Vaslorian human language.
 							tier3: '5 fire damage'
 						}),
 						effect: 'The area is covered in sticky fire until the start of the crucibite’s next turn. Whenever a creature enters the area for the first time in a round or starts their turn there, they take 2 fire damage.',
-						spend: [ {
-							value: 3,
-							effect: 'The area increases to a 10 × 1 line, and if any ally of the crucibite is in the area when it is created, the crucibite deals an additional 2 damage to each target.'
-						} ]
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The area increases to a 10 × 1 line, and if any ally of the crucibite is in the area when it is created, the crucibite deals an additional 2 damage to each target.'
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -600,10 +606,13 @@ Most war dogs speak Caelian and one Vaslorian human language.
 							tier3: '7 damage; slide 3'
 						}),
 						effect: 'The portalite has an edge on this ability if an ally is adjacent to the target.',
-						spend: [ {
-							value: 1,
-							effect: 'The portalite teleports the target 3 squares before sliding them.'
-						} ]
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 1,
+								effect: 'The portalite teleports the target 3 squares before sliding them.'
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -785,10 +794,13 @@ Most war dogs speak Caelian and one Vaslorian human language.
 							tier3: '8 damage; M<3 slowed (save ends)'
 						}),
 						effect: 'One ally within 10 squares of the commander can make a free strike.',
-						spend: [ {
-							value: 1,
-							effect: 'A target who is adjacent to the ground commander after this ability is resolved is I<2 grabbed (save ends). This grab can’t be escaped using the Escape Grab maneuver. The ground commander can grab up to two creatures at a time.'
-						} ]
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 1,
+								effect: 'A target who is adjacent to the ground commander after this ability is resolved is I<2 grabbed (save ends). This grab can’t be escaped using the Escape Grab maneuver. The ground commander can grab up to two creatures at a time.'
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

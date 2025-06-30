@@ -146,8 +146,12 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self or one elemental',
 						effect: 'The target receives fire immunity 5 until the start of the crux’s next turn if they don’t already have it.',
-						spend: [
-							{ value: 3, effect: 'The ground within 3 of the target is wreathed in fire until the end of the encounter. Whenever an enemy first enters the affected area on a turn or starts their turn within it, they take 3 fire damage.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The ground within 3 of the target is wreathed in fire until the end of the encounter. Whenever an enemy first enters the affected area on a turn or starts their turn within it, they take 3 fire damage.'
+							})
 						]
 					})
 				}),
@@ -219,8 +223,12 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self or one elemental',
 						effect: 'The target receives lightning immunity 5 until the start of the essence’s next turn if they don’t already have it.',
-						spend: [
-							{ value: 3, effect: 'The target emits a 3 aura vortex until the end of the encounter. The aura is considered difficult terrain for enemies. At the end of each of the target’s turns, the target can select 1 creature within the aura to push 5.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The target emits a 3 aura vortex until the end of the encounter. The aura is considered difficult terrain for enemies. At the end of each of the target’s turns, the target can select 1 creature within the aura to push 5.'
+							})
 						]
 					})
 				}),
@@ -295,8 +303,12 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self or one elemental',
 						effect: ' The target receives cold immunity 5 until the start of the essence’s next turn if they don’t already have it.',
-						spend: [
-							{ value: 3, effect: 'The target emits a 1 aura pool of water until the end of the encounter. The area beneath the aura becomes a river that trails behind the target as they move and is considered difficult terrain. An enemy that ends their turn standing in the river is M<2 slowed (save ends).' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The target emits a 1 aura pool of water until the end of the encounter. The area beneath the aura becomes a river that trails behind the target as they move and is considered difficult terrain. An enemy that ends their turn standing in the river is M<2 slowed (save ends).'
+							})
 						]
 					})
 				}),
@@ -373,8 +385,12 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self or one elemental',
 						effect: 'The target gains 15 temporary Stamina that lasts until the start of the field’s next turn.',
-						spend: [
-							{ value: 3, effect: 'The ground within 1 of the target is overgrown with thicket and vines until the end of the encounter. Whenever an enemy attacks the target while within line of effect of the affected area, they are pulled 5 towards the affected area. Whenever an enemy enters the affected area on a turn or starts their turn within it, they are knocked prone.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The ground within 1 of the target is overgrown with thicket and vines until the end of the encounter. Whenever an enemy attacks the target while within line of effect of the affected area, they are pulled 5 towards the affected area. Whenever an enemy enters the affected area on a turn or starts their turn within it, they are knocked prone.'
+							})
 						]
 					})
 				}),
@@ -451,8 +467,12 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self or one elemental',
 						effect: 'The target imposes a bane on melee strikes made against them until the start of the force’s next turn if they don’t already have it.',
-						spend: [
-							{ value: 3, effect: 'The target grows a carapace of stone, increasing their stability by 3 and granting them 15 temporary Stamina until the end of the encounter.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The target grows a carapace of stone, increasing their stability by 3 and granting them 15 temporary Stamina until the end of the encounter.'
+							})
 						]
 					})
 				}),

@@ -137,11 +137,12 @@ export const olothec: MonsterGroup = {
 							tier3: '13 acid damage; A<4 push (special), prone'
 						}),
 						effect: 'A creature pushed by this ability is pushed to the squares within the line that are furthest from the olothec.',
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 1,
 								effect: 'The affected area becomes difficult terrain. A creature that enters an affected square for the first time during a turn is A<3 knocked prone.'
-							}
+							})
 						]
 					})
 				}),

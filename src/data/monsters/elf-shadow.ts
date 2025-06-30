@@ -275,8 +275,12 @@ In many shadow elf societies, all people are given at least basic combat trainin
 							tier3: '18 damage'
 						}),
 						effect: 'The next ability made against the target has a double edge.',
-						spend: [
-							{ value: 5, effect: 'Each ally within 5 of the target makes a free strike against them.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 5,
+								effect: 'Each ally within 5 of the target makes a free strike against them.'
+							})
 						]
 					})
 				}),
@@ -393,8 +397,12 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 3 }) ],
 						target: 'Special',
 						effect: 'The affected area is covered in darkness and is considered concealment until the start of the duskcaller’s next turn.',
-						spend: [
-							{ value: 2, effect: 'The area of the cube increases by 3' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The area of the cube increases by 3.'
+							})
 						]
 					})
 				}),
@@ -591,8 +599,12 @@ In many shadow elf societies, all people are given at least basic combat trainin
 							tier3: '17 damage'
 						}),
 						effect: 'The target has a bane on their next strike.',
-						spend: [
-							{ value: 3, effect: 'The target has a double bane on the next signature action they use.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The target has a double bane on the next signature action they use.'
+							})
 						]
 					})
 				}),
@@ -706,8 +718,12 @@ In many shadow elf societies, all people are given at least basic combat trainin
 							tier2: '16 damage; I<3 bleeding (save ends)',
 							tier3: '19 damage; I<4 bleeding (save ends)'
 						}),
-						spend: [
-							{ value: 2, effect: 'The potency of this ability increases by 1.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The potency of this ability increases by 1.'
+							})
 						]
 					})
 				}),

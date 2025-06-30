@@ -387,8 +387,12 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier2: '10 damage',
 							tier3: '13 damage; R<1 bleeding (save ends); I<1 frightened (save ends); P<1 restrained (save ends)'
 						}),
-						spend: [
-							{ value: 5, effect: 'The ability replaces Strike with the Area keyword, the distance becomes 3 cube within 10, and it targets all creatures in the cube.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 5,
+								effect: 'The ability replaces Strike with the Area keyword, the distance becomes 3 cube within 10, and it targets all creatures in the cube.'
+							})
 						]
 					})
 				}),
@@ -493,8 +497,12 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier2: '7 psychic damage; I<1 weakened (save ends)',
 							tier3: '9 psychic damage; I<2 weakened (save ends)'
 						}),
-						spend: [
-							{ value: 2, effect: 'The potency of this ability increases by 1. If the target is still weakened by this ability at the end of the encounter they cannot take a respite activity during their next respite.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The potency of this ability increases by 1. If the target is still weakened by this ability at the end of the encounter they cannot take a respite activity during their next respite.'
+							})
 						]
 					})
 				}),
@@ -734,7 +742,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 						target: 'All enemies in the cube',
 						preEffect: 'Each target makes a **Presence test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Presence,
 							tier1: '12 corruption damage; pull 5 towards the center of the cube',
 							tier2: '9 corruption damage; pull 3 towards the center of the cube',

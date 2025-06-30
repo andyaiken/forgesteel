@@ -121,7 +121,7 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 						target: 'All creatures and objects',
 						cost: 'signature',
 						preEffect: 'Each target makes a **Agility test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Agility,
 							tier1: '13 fire damage; A<4 slagged (save ends)',
 							tier2: '10 fire damage; A<3 slagged (save ends)',
@@ -145,11 +145,12 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 							tier3: '20 damage; M<2 prone'
 						}),
 						effect: 'The dragon makes a free strike against each slagged target knocked prone by this ability.',
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 1,
 								effect: 'The hammerhead freezes, dealing 1d6 cold damage.'
-							}
+							})
 						]
 					})
 				}),
@@ -245,7 +246,7 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 6 }) ],
 						target: 'All creatures and objects in the burst',
 						preEffect: 'The dragon charges their wyrmscale aura, whipping metal into a magnetized frenzy. Each target makes an **Agility test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Agility,
 							tier1: '16 damage, pull 10 or push 10',
 							tier2: '13 damage, pull 8 or push 8',

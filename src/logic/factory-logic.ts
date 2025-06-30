@@ -716,15 +716,10 @@ export class FactoryLogic {
 		cost?: number | 'signature',
 		repeatable?: boolean,
 		minLevel?: number,
-		sections?: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll)[],
 		preEffect?: string,
 		powerRoll?: PowerRoll,
-		test?: PowerRoll,
 		effect?: string,
-		strained?: string,
-		alternateEffects?: string[],
-		spend?: { name?: string, value: number, repeatable?: boolean, effect: string }[],
-		persistence?: { value: number, effect: string }[]
+		sections?: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll)[]
 	}): Ability => {
 		const sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll)[] = [];
 		if (data.preEffect) {
@@ -733,44 +728,8 @@ export class FactoryLogic {
 		if (data.powerRoll) {
 			sections.push(FactoryLogic.createAbilitySectionRoll(data.powerRoll));
 		}
-		if (data.test) {
-			sections.push(FactoryLogic.createAbilitySectionRoll(data.test));
-		}
 		if (data.effect) {
 			sections.push(FactoryLogic.createAbilitySectionText(data.effect));
-		}
-		if (data.strained) {
-			sections.push(FactoryLogic.createAbilitySectionField({
-				name: 'Strained',
-				effect: data.strained
-			}));
-		}
-		if (data.alternateEffects) {
-			data.alternateEffects.forEach(ae => {
-				sections.push(FactoryLogic.createAbilitySectionField({
-					name: 'Alternate Effect',
-					effect: ae
-				}));
-			});
-		}
-		if (data.spend) {
-			data.spend.forEach(spend => {
-				sections.push(FactoryLogic.createAbilitySectionField({
-					name: spend.name || 'Spend',
-					effect: spend.effect,
-					value: spend.value,
-					repeatable: spend.repeatable
-				}));
-			});
-		}
-		if (data.persistence) {
-			data.persistence.forEach(persist => {
-				sections.push(FactoryLogic.createAbilitySectionField({
-					name: 'Persist',
-					effect: persist.effect,
-					value: persist.value
-				}));
-			});
 		}
 		if (data.sections) {
 			sections.push(...data.sections);

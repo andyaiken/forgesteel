@@ -387,11 +387,12 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier3: '8 damage; 7 corruption damage'
 						}),
 						effect: 'The next strike made against the target has a double edge.',
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 3,
 								effect: '1 ally adjacent to the target uses their signature action.'
-							}
+							})
 						]
 					})
 				}),
@@ -454,11 +455,12 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier2: '14 damage',
 							tier3: '17 damage; prone'
 						}),
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 3,
 								effect: 'Each ally adjacent to a target that is knocked prone can make a free strike.'
-							}
+							})
 						]
 					})
 				}),
@@ -1020,11 +1022,12 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier2: '16 corruption damage; P<3 bleeding (save ends)',
 							tier3: '19 corruption damage; P<4 bleeding (save ends)'
 						}),
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 2,
 								effect: 'Each target is marked until they die or the end of the encounter. Allies have an edge on strikes against marked targets. The bloodlord can only have up to 3 targets marked this way, removing the oldest mark first.'
-							}
+							})
 						]
 					})
 				}),

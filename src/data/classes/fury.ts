@@ -295,11 +295,12 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 				tier2: '11 + M damage',
 				tier3: '16 + M damage'
 			}),
-			spend: [
-				{
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Spend',
 					value: 1,
 					effect: 'If you are winded, this ability deals 1d6 bonus damage for each rage spent. If you are dying, it deals 1d10 bonus damage for each rage spent. In either case, you then lose 1d6 Stamina after making this strike.'
-				}
+				})
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -386,11 +387,12 @@ As your rage grows, your primordial strength intensifies. Benefits are cumulativ
 								distance: [ FactoryLogic.distance.createMelee() ],
 								target: 'Self or 1 creature',
 								effect: 'You can select a new target of the same size or smaller within distance to be force moved instead, and you can turn that forced movement into a push instead. You become the source of the forced movement and decide where the new target’s destination. Additionally, the forced movement distance gains a bonus equal to your Might score.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										effect: 'The forced movement distance instead gains a bonus equal to twice your Might score.'
-									}
+									})
 								]
 							})
 						})
@@ -507,11 +509,12 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You take half damage from the attack and can shift up to a number of squares equal to your Agility score.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										effect: 'You reduce the potency of any effect associated with the damage for you by 1.'
-									}
+									})
 								]
 							})
 						})
@@ -631,11 +634,12 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'After the triggering effect is resolved, you can use a free triggered action to enter your animal form or hybrid form. You gain temporary Stamina equal to your Might score.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										effect: 'If you are not dying, you can spend a Recovery.'
-									}
+									})
 								]
 							})
 						}),
@@ -652,11 +656,12 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 You can shapeshift into the animal defined by your stormwight kit, a hybrid form, or back into your true form.
 
 While in animal form or hybrid form, you can speak normally and can speak to animals who share your form. If you are in a negotiation with an animal, you treat your Renown as 2 higher than usual while in animal form.`,
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										effect: 'As a free maneuver on your turn, you can shapeshift a second time, either into another animal form, into your hybrid form, or back into your true form.'
-									}
+									})
 								]
 							})
 						})

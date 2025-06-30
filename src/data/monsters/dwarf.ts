@@ -91,7 +91,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 10, within: 10 }) ],
 				target: 'All enemies in the line',
 				preEffect: 'Each target makes an **Agility test**.',
-				test: FactoryLogic.createPowerRoll({
+				powerRoll: FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Agility,
 					tier1: '8 damage; restrained (EoT)',
 					tier2: '6 damage; slowed (EoT)',
@@ -297,8 +297,12 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier3: '12 damage; push 5'
 						}),
 						effect: 'If the target is adjacent to a wall or object after the power roll is resolved, they are restrained (EoT). A target restrained by a dwarf can be pushed by this ability.',
-						spend: [
-							{ value: 5, effect: 'If the target is pushed into another creature, both the target and the creature are restrained (EoT).' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 5,
+								effect: 'If the target is pushed into another creature, both the target and the creature are restrained (EoT).'
+							})
 						]
 					})
 				}),
@@ -402,8 +406,12 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier3: '13 damage; slide 1'
 						}),
 						effect: 'The shieldwall can shift 1 to remain adjacent to the target. A target restrained by a dwarf can be slid by this ability.',
-						spend: [
-							{ value: 3, effect: 'The shieldwall targets an additional creature or object.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The shieldwall targets an additional creature or object.'
+							})
 						]
 					})
 				}),
@@ -526,7 +534,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
 						target: 'All enemies in the cube',
 						preEffect: 'Each target makes a **Might test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Might,
 							tier1: '7 damage; restrained (EoT)',
 							tier2: '5 damage; slowed (EoT)',
@@ -627,8 +635,12 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier3: '15 damage; slide 5'
 						}),
 						effect: 'A target restrained by a dwarf can be slid by this ability.',
-						spend: [
-							{ value: 3, effect: 'A target that is force moved adjacent to an ally with this ability is restrained (EoT).' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'A target that is force moved adjacent to an ally with this ability is restrained (EoT).'
+							})
 						]
 					})
 				}),
@@ -641,8 +653,12 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object',
 						effect: 'Vertical slide 5. A target restrained by a dwarf can be slid by this ability.',
-						spend: [
-							{ value: 5, effect: 'This ability gains the Area keyword, its distance becomes 10 burst, and it now targets restrained creatures.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 5,
+								effect: 'This ability gains the Area keyword, its distance becomes 10 burst, and it now targets restrained creatures.'
+							})
 						]
 					})
 				}),

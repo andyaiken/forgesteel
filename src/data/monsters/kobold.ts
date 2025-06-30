@@ -344,8 +344,12 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One trap or terrain object',
 						effect: 'The trap or terrain object instantly triggers.',
-						spend: [
-							{ value: 3, effect: 'The artifex can place a new trap in the encounter and instantly trigger it.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The artifex can place a new trap in the encounter and instantly trigger it.'
+							})
 						]
 					})
 				}),
@@ -387,8 +391,12 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier3: '5 damage'
 						}),
 						effect: 'Taunted (EoT).',
-						spend: [
-							{ value: 3, effect: 'The legionary and their squad can shift 2 before this ability is used.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The legionary and their squad can shift 2 before this ability is used.'
+							})
 						]
 					})
 				}),
@@ -446,8 +454,13 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier3: '5 damage'
 						}),
 						effect: 'An ally within 10 can shift their speed, so long as they end their movement adjacent to an ally.',
-						spend: [
-							{ value: 2, repeatable: true, effect: 'One additional ally can shift for every 2 malice spent.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								repeatable: true,
+								effect: 'One additional ally can shift for every 2 malice spent.'
+							})
 						]
 					})
 				}),
@@ -505,8 +518,12 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier2: '6 damage; M<1 restrained (save ends)',
 							tier3: '7 damage; M<2 restrained (save ends)'
 						}),
-						spend: [
-							{ name: 'Then We Light the Net on Fire!', value: 3, effect: 'Each creature and object restrained by this ability takes 2 fire damage at the start of each of their turns until the condition ends.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Then We Light the Net on Fire!',
+								value: 3,
+								effect: 'Each creature and object restrained by this ability takes 2 fire damage at the start of each of their turns until the condition ends.'
+							})
 						]
 					})
 				}),
@@ -626,8 +643,12 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier3: '14 acid damage; A<2 restrained (save ends)'
 						}),
 						effect: 'A size 2 or smaller creature restrained by this ability is pulled into one of the cube’s squares and moves with the cube. The creature takes 4 acid damage at the start of each of their turn while restrained. When restrained ends, the creature moves to the nearest unoccupied square adjacent to the cube.',
-						spend: [
-							{ value: 2, effect: 'The cube targets one additional creature or object.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The cube targets one additional creature or object.'
+							})
 						]
 					})
 				}),
@@ -682,8 +703,12 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier3: '13 damage; M<3 weakened (save ends)'
 						}),
 						effect: 'Each ally adjacent to a target of this ability can make a free strike.',
-						spend: [
-							{ value: 3, effect: 'Each target weakened by this ability is now restrained while they are weakened.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'Each target weakened by this ability is now restrained while they are weakened.'
+							})
 						]
 					})
 				}),
@@ -695,8 +720,13 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One enemy',
 						effect: 'The target is marked until the start of the centurion’s next turn. The centurion and each of their allies have an edge on power rolls made against targets marked by the centurion.',
-						spend: [
-							{ value: 3, repeatable: true, effect: 'The centurion targets 1 additional enemy for every 3 malice spent.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								repeatable: true,
+								effect: 'The centurion targets 1 additional enemy for every 3 malice spent.'
+							})
 						]
 					})
 				}),

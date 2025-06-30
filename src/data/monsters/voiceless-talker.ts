@@ -217,8 +217,12 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 							tier2: '10 damage; A<2 grabbed',
 							tier3: '11 damage; A<3 grabbed'
 						}),
-						spend: [
-							{ value: 2, effect: 'The potency of this ability increases by 1.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The potency of this ability increases by 1.'
+							})
 						]
 					})
 				}),
@@ -260,8 +264,12 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self',
 						effect: 'The hulking brain shifts to a square adjacent to the ally and takes the damage instead.',
-						spend: [
-							{ value: 2, effect: 'The enemy that dealt damage is knocked prone.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The enemy that dealt damage is knocked prone.'
+							})
 						]
 					})
 				}),
@@ -345,8 +353,12 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'One grabbed creature',
 						effect: 'The mindkiller halves the incoming damage. The target takes the other half of the damage.',
-						spend: [
-							{ value: 3, effect: 'The target takes the full damage in place of the mindkiller.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The target takes the full damage in place of the mindkiller.'
+							})
 						]
 					})
 				}),
@@ -396,8 +408,12 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 							tier3: '22 damage; spread 2'
 						}),
 						effect: 'The blast hits nearby targets, dealing 3 damage to each enemy within a number of squares of the target equal to the result’s spread value.',
-						spend: [
-							{ value: 2, effect: ' The attack deals an additional 3 damage to each enemy within the spread distance' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The attack deals an additional 3 damage to each enemy within the spread distance.'
+							})
 						]
 					})
 				}),
@@ -502,8 +518,12 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 							tier2: '10 psychic damage, R<2 push 3',
 							tier3: '12 psychic damage, R<3 push 4 and prone'
 						}),
-						spend: [
-							{ value: 2, effect: 'The area of the burst increases to 5.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The area of the burst increases to 5.'
+							})
 						]
 					})
 				}),
@@ -624,7 +644,7 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies',
 						preEffect: 'Each target must make a **Intuition test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Intuition,
 							tier1: 'Target uses a Signature action against the nearest enemy within distance.',
 							tier2: 'Target makes a Free Strike against the nearest enemy within distance.',

@@ -208,8 +208,12 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 							tier2: '10 damage',
 							tier3: '13 damage; R<2 weakened (save ends)'
 						}),
-						spend: [
-							{ value: 2, effect: 'A creature is bleeding while weakened from this ability.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'A creature is bleeding while weakened from this ability.'
+							})
 						]
 					})
 				}),
@@ -343,8 +347,12 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 4, value2: 2, within: 10 }) ],
 						target: 'Special',
 						effect: 'The area becomes a psionically charged treadmill that pushes creatures and objects at high speed in one direction of the helix’s choice. Any creature that moves into the area or starts their turn there immediately slides 3 squares toward the square at the end of the area in the chosen direction. Each enemy in the area when it first appears takes 3 damage before they are moved.',
-						spend: [
-							{ value: 3, effect: 'The helix creates a second kinetic lane' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The helix creates a second kinetic lane.'
+							})
 						]
 					})
 				}),
@@ -656,8 +664,12 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
 						effect: 'The strike has a bane. After the strike resolves, the tyrannis makes a free strike against the target.',
-						spend: [
-							{ value: 2, effect: 'The strike has a double bane instead.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The strike has a double bane instead.'
+							})
 						]
 					})
 				}),

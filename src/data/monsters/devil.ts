@@ -242,8 +242,13 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 							tier3: '18 fire damage; A<3 burning (save ends)'
 						}),
 						effect: 'A burning creature or object takes 1d6 fire damage at the start of each of their turns until the condition ends.',
-						spend: [
-							{ value: 1, repeatable: true, effect: 'The jurist can target one additional creature or object for each malice spent.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 1,
+								repeatable: true,
+								effect: 'The jurist can target one additional creature or object for each malice spent.'
+							})
 						]
 					})
 				}),
@@ -285,7 +290,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
 						preEffect: 'The target makes a **Presence test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Presence,
 							tier1: 'The jurist chooses a new target for the strike',
 							tier2: 'The jurist halves the incoming damage',
@@ -379,7 +384,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
 						preEffect: 'The target makes a **Presence test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Presence,
 							tier1: 'The legate chooses a new target for the strike',
 							tier2: 'The legate halves the incoming damage',
@@ -444,7 +449,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
 						preEffect: 'The target makes a **Presence test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Presence,
 							tier1: 'Slowed, bane on power rolls, can\'t regain Stamina (save ends)',
 							tier2: 'Slowed, bane on power rolls (save ends)',
@@ -473,7 +478,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
 						preEffect: 'The target makes a **Presence test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Presence,
 							tier1: 'The adjudicator chooses a new target for the strike',
 							tier2: 'The adjudicator halves the incoming damage',
@@ -567,7 +572,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
 						preEffect: 'The target makes a **Presence test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Presence,
 							tier1: 'The magistrate chooses a new target for the strike',
 							tier2: 'The magistrate halves the incoming damage',
@@ -620,8 +625,12 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 							tier2: '15 damage; R<3 the target can\'t hide (save ends)',
 							tier3: '19 damage; R<4 the target can\'t hide(save ends)'
 						}),
-						spend: [
-							{ value: 2, effect: 'Each devil has an edge to strike a target that can\'t hide.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'Each devil has an edge to strike a target that can\'t hide.'
+							})
 						]
 					})
 				}),
@@ -652,7 +661,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
 						preEffect: 'The target makes a **Presence test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Presence,
 							tier1: 'Charmed (save ends) (see Compel the Jury)',
 							tier2: 'The magistrate chooses a new target for the strike',
@@ -683,7 +692,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
 						preEffect: 'Each target makes a **Presence test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Presence,
 							tier1: '15 psychic damage; charmed (save ends)',
 							tier2: '12 psychic damage; charmed (save ends)',

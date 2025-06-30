@@ -383,8 +383,13 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier2: '2 poison damage; slide 2',
 							tier3: '3 poison damage; slide 3'
 						}),
-						spend: [
-							{ value: 1, repeatable: true, effect: 'Increase the slide for one target by 2 squares for each malice spent.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 1,
+								repeatable: true,
+								effect: 'Increase the slide for one target by 2 squares for each malice spent.'
+							})
 						]
 					})
 				}),
@@ -447,8 +452,12 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All allies in the burst',
 						effect: 'Until the start of the underboss’s next turn, each target has an edge on strikes, and strikes made against them have an edge.',
-						spend: [
-							{ value: 2, effect: 'Strikes don’t have an edge against a target.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'Strikes don’t have an edge against a target.'
+							})
 						]
 					})
 				}),
@@ -642,8 +651,12 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier2: '11 poison damage',
 							tier3: '14 poison damage; M<2 weakened (save ends)'
 						}),
-						spend: [
-							{ value: 2, effect: 'M<3 weakened (save ends)' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'M<3 weakened (save ends).'
+							})
 						]
 					})
 				}),

@@ -88,7 +88,7 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 				target: 'All enemies in the cube',
 				preEffect: 'A giant unearths a massive structure, hazard, or chunk of the encounter map and launches it. Each target makes an Agility test.',
-				test: FactoryLogic.createPowerRoll({
+				powerRoll: FactoryLogic.createPowerRoll({
 					tier1: '18 damage; prone can’t stand (save ends)',
 					tier2: '14 damage; prone',
 					tier3: '9 damage'
@@ -576,15 +576,12 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 						],
 						target: '1 creature or object',
 						preEffect: 'The target makes a Might test. A target with a fire immunity automatically gets a tier 3 result.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							tier1: 'Weakened and slowed (save ends)',
 							tier2: 'Weakened (EoT)',
 							tier3: 'No effect'
 						})
-
-
 					})
-
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -659,7 +656,7 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 						],
 						target: 'Special',
 						preEffect: 'The storm hurler throws three size 1L javelins into unoccupied squares within distance. A javelin has 30 Stamina and fire weakness 5. At the start of the storm hurler’s next turn, each javelin with 1 or more Stamina explodes in a shower of icicles. Each enemy and object within 3 squares of an exploding javelin makes an Agility test.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							tier1: '14 cold damage; push 4; bleeding (save ends)',
 							tier2: '11 cold damage; push 2; slowed (save ends)',
 							tier3: '7 cold damage'
@@ -949,7 +946,7 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
 						preEffect: 'Each target makes either a Might or Agility test.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							tier1: '6 damage; vertical push 4; prone',
 							tier2: '2 damage; vertical push 4',
 							tier3: 'Push 2'
@@ -968,15 +965,18 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 						],
 						target: '1 creature',
 						preEffect: 'The target makes an Agility test.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							tier1: 'Grabbed, target has a bane on escaping the grab',
 							tier2: 'Grabbed',
 							tier3: 'No effect'
 						}),
-						spend: [ {
-							value: 2,
-							effect: 'A grabbed target is released and either slammed on the ground for 5 damage and prone can’t stand (EoT) or is vertically pushed 5.'
-						} ]
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'A grabbed target is released and either slammed on the ground for 5 damage and prone can’t stand (EoT) or is vertically pushed 5.'
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -1114,7 +1114,7 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 						],
 						target: 'All enemies and objects',
 						preEffect: 'Each target makes either an Agility or Intuition test.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							tier1: '18 fire damage; burning (save ends)',
 							tier2: '14 fire damage; burning (EoT)',
 							tier3: '9 fire damage'
@@ -1209,7 +1209,7 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 						],
 						target: 'Self and all fire giant allies',
 						preEffect: 'Each target unleashes a fire wave. Each enemy within 2 squares of a target makes an Agility test:',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							tier1: '18 fire damage',
 							tier2: '14 fire damage',
 							tier3: '9 fire damage'

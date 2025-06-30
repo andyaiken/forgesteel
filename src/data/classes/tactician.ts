@@ -102,11 +102,12 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 ally',
 						effect: 'The target can make a signature attack as a free triggered action.',
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 5,
 								effect: 'You target two allies instead of one.'
-							}
+							})
 						]
 					})
 				}),
@@ -353,11 +354,12 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Any creature',
 								effect: 'The target gains two surges, which they can use on the triggering damage.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										effect: 'If any effect of the damage has a potency effect, you increase the potency by 1.'
-									}
+									})
 								]
 							})
 						})
@@ -474,11 +476,12 @@ You can only make this test once for each encounter and negotiation.`
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: '1 enemy',
 								effect: 'At any point during the target’s movement, one ally can make a free strike against them.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										effect: 'If the target has R < [average], they are also slowed (EoT).'
-									}
+									})
 								]
 							})
 						})
@@ -581,11 +584,12 @@ Each target is marked by you. You gain two surges.
 								distance: [ FactoryLogic.distance.createMelee() ],
 								target: 'Self or 1 ally',
 								effect: 'The damage is halved. If any effect of the damage has a potency effect, you decrease the potency by 1.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										effect: 'The target can shift a number of squares equal to your Reason score.'
-									}
+									})
 								]
 							})
 						})

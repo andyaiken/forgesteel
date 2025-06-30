@@ -84,7 +84,12 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 							tier2: '4 + R psychic damage',
 							tier3: '6 + R psychic damage'
 						}),
-						strained: 'The strike deals an extra 2 psychic damage to the target and to you. The damage you take can’t be reduced in any way.'
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Strained',
+								effect: 'The strike deals an extra 2 psychic damage to the target and to you. The damage you take can’t be reduced in any way.'
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createLanguage({
@@ -281,7 +286,12 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 				tier3: '5 + P corruption damage; P < [strong], slowed (save ends)'
 			}),
 			effect: 'The target takes 1 extra corruption damage for each additional time they are targeted by this ability in the encounter.',
-			strained: 'You gain 1 clarity on a tier 2 or tier 3 result.'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'You gain 1 clarity on a tier 2 or tier 3 result.'
+				})
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-2',
@@ -299,7 +309,12 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 				tier3: '6 fire damage'
 			}),
 			effect: 'A column of fire lingers in the area until the start of your next turn. Each enemy who enters the area for the first time in a round or starts their turn there takes 2 fire damage.',
-			strained: 'The size of the cube increases by 2, but the fire disappears at the end of your turn.'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'The size of the cube increases by 2, but the fire disappears at the end of your turn.'
+				})
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-3',
@@ -316,7 +331,12 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 				tier2: '4 + R cold damage; M < [average], slowed (EoT)',
 				tier3: '6 + R cold damage; M < [strong], slowed (EoT)'
 			}),
-			strained: 'A target slowed by this ability is restrained instead, and you are slowed until the end of your next turn.'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'A target slowed by this ability is restrained instead, and you are slowed until the end of your next turn.'
+				})
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-4',
@@ -334,7 +354,12 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 				tier3: 'Push 7; prone'
 			}),
 			effect: 'You can slide the target up to 2 squares before making the power roll.',
-			strained: 'You can’t use this ability’s effect, but you can vertical push the target.'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'You can’t use this ability’s effect, but you can vertical push the target.'
+				})
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-5',
@@ -351,7 +376,12 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 				tier2: '5 psychic damage; push 1',
 				tier3: '7 psychic damage; push 2'
 			}),
-			strained: 'The size of the burst increases by 2, and you are bleeding until the start of your next turn.'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'The size of the burst increases by 2, and you are bleeding until the start of your next turn.'
+				})
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-6',
@@ -369,7 +399,12 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 				tier3: '8 + R damage'
 			}),
 			effect: 'A size 1M object drops onto the target and then rolls into an adjacent, unoccupied space of your choice. The object is made of wood, stone, or metal (your choice).',
-			strained: 'The object is explodes on impact, dealing damage equal to your Reason score to each creature adjacent to the target. You also take damage equal to your Reason score, which can’t be reduced in any way.'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'The object explodes on impact, dealing damage equal to your Reason score to each creature adjacent to the target. You also take damage equal to your Reason score, which can’t be reduced in any way.'
+				})
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-7',
@@ -387,7 +422,12 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 				tier3: '6 + R damage; M < [strong], prone'
 			}),
 			effect: 'When targeting an object with a solid reflective surface or a creature carrying or wearing such an object (a mirror, an unpainted metal shield, shiny metal plate armor, and so forth), you can choose an additional target within 3 squares of the first target.',
-			strained: 'You gain a surge, which you can use immediately, and take damage equal to your Reason score, which can’t be reduced in any way.'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'You gain a surge, which you can use immediately, and take damage equal to your Reason score, which can’t be reduced in any way.'
+				})
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-8',
@@ -405,7 +445,12 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 				tier3: '9 + P damage'
 			}),
 			effect: 'You gain a surge.',
-			strained: 'The attack deals an extra 3 damage to the target and to you. The damage you take can’t be reduced in any way.'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'The attack deals an extra 3 damage to the target and to you. The damage you take can’t be reduced in any way.'
+				})
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-9',
@@ -479,7 +524,12 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			target: 'Self or one ally',
 			cost: 5,
 			effect: 'The target immediately uses an ability they’ve previously used this round without spending any heroic resources.',
-			strained: 'You take 1d6 damage and are slowed (save ends).'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'You take 1d6 damage and are slowed (save ends).'
+				})
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-14',
@@ -491,7 +541,12 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			target: 'Self or one ally',
 			cost: 5,
 			effect: 'The target ignores difficult terrain and takes no damage from forced movement until the start of your next turn. Whenever the target moves into a square while under this effect, they can push one adjacent creature up to 2 squares. If pushing an ally, the target can ignore that ally’s stability.',
-			strained: 'You are weakened and your stability decreases by 5 (save ends). If your stability becomes a negative value, it adds to the distance you are force moved.'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'You are weakened and your stability decreases by 5 (save ends). If your stability becomes a negative value, it adds to the distance you are force moved.'
+				})
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-15',
@@ -503,7 +558,12 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			target: 'Self or one ally',
 			cost: 5,
 			effect: 'The target’s stability increases by 5 and they gain 10 temporary stamina and two surges.',
-			strained: 'You can’t use maneuvers (save ends).'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'You can’t use maneuvers (save ends).'
+				})
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-16',
@@ -515,7 +575,12 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			target: 'Self or one ally',
 			cost: 5,
 			effect: 'Until the start of your next turn, the target gains a +3 bonus to speed, and they have a double edge on the next power roll they make. If the target gets a tier 3 result on that roll, you gain 1 clarity.',
-			strained: 'You take 1d6 damage, and you can’t use triggered actions (save ends).'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'You take 1d6 damage, and you can’t use triggered actions (save ends).'
+				})
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-17',
@@ -533,7 +598,12 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 				tier3: '8 + P corruption damage; the target is flung through time; P < [strong], weakened (save ends)'
 			}),
 			effect: 'A target who is flung through time is removed from the encounter until the end of their next turn, reappearing in their original space or the nearest available space.',
-			strained: 'You take 2d6 damage and grow visibly older (the equivalent of 10 years for a human). On a tier 3 result, you gain 2 clarity.'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'You take 2d6 damage and grow visibly older (the equivalent of 10 years for a human). On a tier 3 result, you gain 2 clarity.'
+				})
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-18',
@@ -554,7 +624,12 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 				tier2: '3 damage',
 				tier3: '5 damage'
 			}),
-			strained: 'You create five orbs. You are weakened while you have any orbs active.'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'You create five orbs. You are weakened while you have any orbs active.'
+				})
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-19',
@@ -566,7 +641,12 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 			target: 'Special',
 			cost: 7,
 			effect: 'The aura lasts until the start of your next turn. Whenever an enemy targets an ally in the aura with a ranged ability, the ability is negated on the ally and reflected back at the enemy. The ability deals half the damage to the enemy that it would have dealt to the ally, and loses any additional effects.',
-			strained: 'The size of the aura increases by 1. Each ability your aura reflects causes you to take 2d6 damage and makes you forget a memory, as determined in consultation with the Director.'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'The size of the aura increases by 1. Each ability your aura reflects causes you to take 2d6 damage and makes you forget a memory, as determined in consultation with the Director.'
+				})
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-20',
@@ -584,7 +664,12 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 				tier3: '14 + P damage; P < [strong], dazed (save ends)'
 			}),
 			effect: 'The target takes a bane on Presence tests until the end of the encounter.',
-			strained: 'The potency of this ability increases by 1. You take 2d6 damage, and gain 3 surges.'
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Strained',
+					effect: 'The potency of this ability increases by 1. You take 2d6 damage, and gain 3 surges.'
+				})
+			]
 		})
 	],
 	subclasses: [
@@ -606,11 +691,12 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Self or one creature',
 								effect: 'The target immediately shifts up to a number of squares equal to your Reason score.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 2,
 										effect: 'The target can also use a maneuver.'
-									}
+									})
 								]
 							})
 						}),
@@ -657,7 +743,12 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 												tier3: 'Target four creatures, one of which can be you'
 											}),
 											effect: 'Until the start of your next turn, each target gains a +5 bonus to speed, can’t be dazed, and they can use an additional maneuver on their turn. If a target is dazed, the condition ends for them.',
-											strained: 'Your speed is halved until the end of the encounter.'
+											sections: [
+												FactoryLogic.createAbilitySectionField({
+													name: 'Strained',
+													effect: 'Your speed is halved until the end of the encounter.'
+												})
+											]
 										})
 									}),
 									value: 1
@@ -680,7 +771,12 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 												tier3: 'The target is slowed (save ends), or if P < [strong], the target’s speed is 0 (save ends).'
 											}),
 											effect: 'A target can’t use triggered actions while their speed is reduced by this ability.',
-											strained: 'The potency of this ability increases by 1 and you take 1d6 damage. At the start of each round while any target is affected by this ability, you take 1d6 damage. You can immediately end the effects on all affected targets (no action required).'
+											sections: [
+												FactoryLogic.createAbilitySectionField({
+													name: 'Strained',
+													effect: 'The potency of this ability increases by 1 and you take 1d6 damage. At the start of each round while any target is affected by this ability, you take 1d6 damage. You can immediately end the effects on all affected targets (no action required).'
+												})
+											]
 										})
 									}),
 									value: 1
@@ -714,16 +810,18 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Self, or a size 1 creature or object',
 								effect: 'You slide the target up to a number of squares equal to your Reason score.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 2,
 										repeatable: true,
 										effect: 'The size of the creature or object you can target increases by 1 for every 2 clarity you spend.'
-									},
-									{
+									}),
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 3,
 										effect: 'You can vertical slide the target.'
-									}
+									})
 								]
 							})
 						}),
@@ -775,7 +873,12 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 												tier2: '6 damage; vertical push 4',
 												tier3: '9 damage; vertical push 6'
 											}),
-											strained: 'The size of the burst increases by 1 and you are weakened until the end of your turn.'
+											sections: [
+												FactoryLogic.createAbilitySectionField({
+													name: 'Strained',
+													effect: 'The size of the burst increases by 1 and you are weakened until the end of your turn.'
+												})
+											]
 										})
 									}),
 									value: 1
@@ -798,7 +901,12 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 												tier3: '14 + R damage; M < [strong], prone and can’t stand (save ends)'
 											}),
 											effect: 'A target made prone by this ability is lifted 2 squares into the air before falling immediately to the ground, taking damage as usual.',
-											strained: 'You take half the damage the target takes, including any damage from falling.'
+											sections: [
+												FactoryLogic.createAbilitySectionField({
+													name: 'Strained',
+													effect: 'You take half the damage the target takes, including any damage from falling.'
+												})
+											]
 										})
 									}),
 									value: 1
@@ -844,11 +952,12 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: '1 creature or object',
 								effect: 'The next ability power roll an ally makes against the target before the start of your next turn gains an edge.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										effect: 'You target one additional creature or object.'
-									}
+									})
 								]
 							})
 						})
@@ -882,7 +991,12 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 												tier2: '10 + R psychic damage; I < [average], weakened (save ends)',
 												tier3: '14 + R psychic damage; I < [strong], dazed (save ends)'
 											}),
-											strained: 'You start crying. You can’t take triggered actions or take free strikes until the end of the target’s next turn.'
+											sections: [
+												FactoryLogic.createAbilitySectionField({
+													name: 'Strained',
+													effect: 'You start crying. You can’t take triggered actions or take free strikes until the end of the target’s next turn.'
+												})
+											]
 										})
 									}),
 									value: 1
@@ -905,7 +1019,12 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 												tier3: 'The target moves up to their speed and uses their signature ability against any enemies of your choice.'
 											}),
 											effect: 'You control the target’s movement. The target can’t be moved in a way that would harm them (such as over a cliff), leave them dying, or result in them suffering a condition or other negative effect. However, you can',
-											strained: 'You take 1d6 damage and are weakened until the end of your turn.'
+											sections: [
+												FactoryLogic.createAbilitySectionField({
+													name: 'Strained',
+													effect: 'You take 1d6 damage and are weakened until the end of your turn.'
+												})
+											]
 										})
 									}),
 									value: 1

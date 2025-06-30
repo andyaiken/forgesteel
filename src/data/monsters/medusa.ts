@@ -158,11 +158,12 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 							tier2: '16 damage; push 5',
 							tier3: '19 damage; push 7'
 						}),
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 3,
 								effect: 'The medusa targets two additional creatures or objects.'
-							}
+							})
 						]
 					})
 				}),
@@ -176,7 +177,7 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 						target: 'Each enemy in the burst',
 						cost: 5,
 						preEffect: 'The medusa turns dozens of eerie snake eyes on their foes. Each target must make a Might test. A target with cover has an edge on the test.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Might,
 							tier1: 'Slowed (save ends) or M<4 restrained (save ends)',
 							tier2: 'M<3 restrained (save ends)',

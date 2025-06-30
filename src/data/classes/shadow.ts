@@ -426,12 +426,13 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You teleport up to 5 squares. If you have concealment or cover at your destination, you can use the Hide maneuver even if you are observed. If you hide using this maneuver, you gain a surge.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										repeatable: true,
 										effect: 'You teleport 1 additional square for each insight spent.'
-									}
+									})
 								]
 							})
 						}),
@@ -445,12 +446,13 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You halve the damage, then can teleport up to 4 squares after the triggering effect resolves.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										repeatable: true,
 										effect: 'You teleport 1 additional square for each insight spent.'
-									}
+									})
 								]
 							})
 						})
@@ -540,12 +542,13 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You gain two surges. Whenever you use a surge before the end of the encounter, you can choose to have its damage be poison damage.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										repeatable: true,
 										effect: 'For each insight you spend, you gain an additional surge.'
-									}
+									})
 								]
 							})
 						}),
@@ -563,13 +566,13 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You halve the damage against the triggering damage, then can shift up to 2 squares after the triggering effect resolves. If you end this shift with concealment or cover, you can use the Hide maneuver even if you are observed.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										effect: 'You reduce the potency of any effect associated with the damage for you by 1.'
-									}
+									})
 								]
-
 							})
 						})
 					]
@@ -666,11 +669,12 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 When you use this ability, you cover yourself in an illusion that causes you to appear nonthreatening and harmless to your enemies. You might take on the appearance of a harmless animal of your size, such as a sheep or capybara, or you might appear as a less heroic, unarmed, and capable version of yourself. While this illusion lasts, your strikes made against other creatures gain an edge. If you use this ability in combat, you gain a surge when you use it.
 
 The illusion ends when you harm another creature, when you and any creature physically interact, when you use this ability again, or when you end the illusion (no action required).`,
-								spend: [
-									{
-										effect: 'Choose a creature whose size is no more than 1 greater than yours, and who is within 10 squares of you. This ability’s illusion makes you appear to be that creature. This illusion covers your entire body, including clothing and armor, and changes your voice to sound like the creature. You gain an edge on tests made to convince the creature’s allies that you are the creature.',
-										value: 1
-									}
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
+										value: 1,
+										effect: 'Choose a creature whose size is no more than 1 greater than yours, and who is within 10 squares of you. This ability’s illusion makes you appear to be that creature. This illusion covers your entire body, including clothing and armor, and changes your voice to sound like the creature. You gain an edge on tests made to convince the creature’s allies that you are the creature.'
+									})
 								]
 							})
 						}),

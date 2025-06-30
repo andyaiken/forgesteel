@@ -114,8 +114,12 @@ However, any hero who has at least one psionic ability can use their maneuver to
 							tier2: '17 damage; A<2 grabbed',
 							tier3: '20 damage; A<2 grabbed'
 						}),
-						spend: [
-							{ value: 2, effect: 'The distance of this ability increases to Melee 10. Each target grabbed by Lord Syuul is immediately pulled 10.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The distance of this ability increases to Melee 10. Each target grabbed by Lord Syuul is immediately pulled 10.'
+							})
 						]
 					})
 				}),
@@ -188,7 +192,7 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All enemies',
 						preEffect: 'Each target makes an **Intuition Test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Intuition,
 							tier1: '16 psychic damage; can’t establish line of effect to creatures besides Lord Syuul, and strikes targeting Lord Syuul have a bane (save ends)',
 							tier2: '13 psychic damage; can’t establish line of effect to creatures besides Lord Syuul (save ends)',

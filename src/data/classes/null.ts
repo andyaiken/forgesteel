@@ -97,12 +97,13 @@ This ability stays active even after encounters end. It ends if you are dying or
 						keywords: [ AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'You halve the damage.',
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionText('You halve the damage.'),
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 1,
 								effect: 'You decrease the potency of one effect associated with the damage for you by 1.'
-							}
+							})
 						]
 					})
 				}),

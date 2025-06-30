@@ -326,8 +326,12 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 							tier3: '13 damage (enemy only); Push X'
 						}),
 						effect: 'Push X is equal to the number of squares the bloodrunner moved on their turn before using this ability.',
-						spend: [
-							{ value: 2, effect: 'An ally pushed by this ability can make a free strike on a creature.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'An ally pushed by this ability can make a free strike on a creature.'
+							})
 						]
 					})
 				}),
@@ -575,8 +579,12 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One ally',
 						effect: 'The target moves up to their speed and uses an action.',
-						spend: [
-							{ value: 3, effect: 'The godcaller targets a second ally.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The godcaller targets a second ally.'
+							})
 						]
 					})
 				}),
@@ -801,9 +809,17 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One ally',
 						effect: 'The target moves up to their speed and uses an action.',
-						spend: [
-							{ value: 1, effect: 'The warleader targets a second ally.' },
-							{ value: 3, effect: 'The warleader targets a squad instead of a second ally.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 1,
+								effect: 'The warleader targets a second ally.'
+							}),
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The warleader targets a squad instead of a second ally.'
+							})
 						]
 					})
 				}),
@@ -862,7 +878,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All allies',
 						effect: 'Each target moves up to their speed. Each enemy within 1 of a target makes an **Intuition test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Intuition,
 							tier1: 'Frightened of the warleader (save ends)',
 							tier2: 'Frightened of the warleader (EoT)',
@@ -968,7 +984,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Special',
 						effect: 'The scyza kicks up a sandstorm concealing themselves and each ally in the affected area until the end of the scyza\'s next turn. Each enemy in the burst makes an **Intuition test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Intuition,
 							tier1: '10 damage; prone; slowed (EoT)',
 							tier2: '7 damage; slowed (EoT)',

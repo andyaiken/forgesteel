@@ -371,8 +371,12 @@ The following demons have been identified across categories 1-3:
 							tier2: '6 damage; the remasch teleports 3 squares',
 							tier3: '8 damage; the remasch teleports 5 squares'
 						}),
-						spend: [
-							{ value: 5, effect: 'The remasch takes an adjacent creature with them when they teleport. The creature appears in an unoccupied space adjacent to the remasch’s destination.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 5,
+								effect: 'The remasch takes an adjacent creature with them when they teleport. The creature appears in an unoccupied space adjacent to the remasch’s destination.'
+							})
 						]
 					})
 				}),

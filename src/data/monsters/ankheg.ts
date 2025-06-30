@@ -113,11 +113,12 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 							tier2: '11 damage; A<2 grabbed',
 							tier3: '14 damage; A<3 grabbed'
 						}),
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 2,
 								effect: 'The ankheg can vertical slide each target up to 5 squares.'
-							}
+							})
 						]
 					})
 				}),

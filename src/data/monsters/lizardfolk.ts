@@ -50,7 +50,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 				target: 'Special',
 				cost: 3,
 				preEffect: 'A lizardfolk acting this turn drops a net trap on a square during their movement. The first time an enemy steps into an affected square, they make an **Agility test**. If the creature was unaware of the net, they make the roll with a bane.',
-				test: FactoryLogic.createPowerRoll({
+				powerRoll: FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Agility ],
 					tier1: 'Restrained (save ends)',
 					tier2: 'Restrained (EoT)',
@@ -399,11 +399,12 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 							tier2: '10 damage; pull 1; A<2 bleeding (save ends)',
 							tier3: '13 damage; pull 2; A<3 bleeding (save ends)'
 						}),
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 1,
 								effect: 'One target that is adjacent to the deathrex is grabbed by the deathrex’s mouth.'
-							}
+							})
 						]
 					})
 				}),

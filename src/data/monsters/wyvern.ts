@@ -100,8 +100,12 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 							tier2: '14 damage; M<2 bleeding (save ends)',
 							tier3: '17 damage; M<3 bleeding (save ends)'
 						}),
-						spend: [
-							{ value: 1, effect: 'The lurker deals an additional 6 acid damage to one target if they were hidden from them.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 1,
+								effect: 'The lurker deals an additional 6 acid damage to one target if they were hidden from them.'
+							})
 						]
 					})
 				}),
@@ -207,8 +211,12 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 							tier2: '11 damage; A<2 3 acid damage',
 							tier3: '14 damage; A<3 3 acid damage'
 						}),
-						spend: [
-							{ value: 5, effect: 'The predator uses this ability a second time. They can target a new line or the same one.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 5,
+								effect: 'The predator uses this ability a second time. They can target a new line or the same one.'
+							})
 						]
 					})
 				}),

@@ -105,10 +105,13 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 							tier2: '4 damage; A<2 bleeding (save ends)',
 							tier3: '5 damage; A<3 bleeding (save ends)'
 						}),
-						spend: [
-							{ value: 3, effect: 'The bredbeddle shifts up to 2 squares and can target addtional enemies who come within distance of this ability during the move.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The bredbeddle shifts up to 2 squares and can target addtional enemies who come within distance of this ability during the move.'
+							})
 						]
-
 					})
 				}),
 				FactoryLogic.feature.createAbility({

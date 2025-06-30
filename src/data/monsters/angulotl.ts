@@ -289,8 +289,12 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 							tier2: '6 poison damage',
 							tier3: '7 poison damage'
 						}),
-						spend: [
-							{ value: 2, effect: 'M<2 weakened (save ends). The target takes 2 poison damage at the start of each of their turns while they are weakened by this ability.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'M<2 weakened (save ends). The target takes 2 poison damage at the start of each of their turns while they are weakened by this ability.'
+							})
 						]
 					})
 				}),
@@ -418,7 +422,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10, qualifier: 'unoccupied space' }) ],
 						target: 'Special',
 						preEffect: 'A bubble of toxic gas fills the area that lasts until the end of the encounter. If a creature or object touches the bubble, it bursts and each enemy within 3 makes a **Might test**.',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Might,
 							tier1: '5 poison damage; wet and weakened (save ends)',
 							tier2: '4 poison damage; wet (EoT)',
@@ -467,8 +471,12 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 							tier3: '13 acid damage; A<3 dazed (save ends)'
 						}),
 						effect: 'The next time the target strikes the daybringer, they immediately take 4 acid damage.',
-						spend: [
-							{ value: 1, effect: 'The daybringer jumps 3 squares before or after using this ability.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 1,
+								effect: 'The daybringer jumps 3 squares before or after using this ability.'
+							})
 						]
 					})
 				}),
@@ -490,8 +498,12 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						distance: [ FactoryLogic.distance.createMelee(5) ],
 						target: 'One creature',
 						effect: 'The daybringer reduces the power roll result by 1 tier.',
-						spend: [
-							{ value: 2, effect: 'Pull 4.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'Pull 4.'
+							})
 						]
 					})
 				}),

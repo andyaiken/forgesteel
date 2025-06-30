@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "10.17.0",
+	"version": "10.18.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -15,7 +15,7 @@
 	"dependencies": {
 		"@ant-design/icons": "^6.0.0",
 		"@types/showdown": "^2.0.6",
-		"antd": "^5.26.2",
+		"antd": "^5.26.3",
 		"gh-pages": "^6.3.0",
 		"html2canvas": "^1.4.1",
 		"jspdf": "^3.0.1",
@@ -23,7 +23,7 @@
 		"pdf-lib": "^1.17.1",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
-		"react-router": "^7.6.2",
+		"react-router": "^7.6.3",
 		"sass": "^1.89.2",
 		"showdown": "^2.1.0"
 	},

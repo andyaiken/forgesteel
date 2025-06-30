@@ -285,8 +285,12 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'All enemies in the cube',
 						effect: 'A creature slowed by this ability can’t search for hidden creatures until the condition ends.',
-						spend: [
-							{ value: 3, effect: 'The area of the cube and the potency of the effect both increase by 1.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The area of the cube and the potency of the effect both increase by 1.'
+							})
 						]
 					})
 				}),
@@ -409,8 +413,12 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier3: '9 damage'
 						}),
 						effect: 'Taunted (EoT). The greenskeeper can shift 3 after making the attack.',
-						spend: [
-							{ value: 2, effect: 'The distance increases to Melee 5.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The distance increases to Melee 5.'
+							})
 						]
 					})
 				}),
@@ -462,8 +470,12 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier3: '9 damage; marked (save ends)'
 						}),
 						effect: 'Each ally has an edge on strikes and abilities against marked targets until the condition ends.',
-						spend: [
-							{ value: 3, effect: 'The sentry targets two additional creatures or objects.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The sentry targets two additional creatures or objects.'
+							})
 						]
 					})
 				}),
@@ -519,8 +531,12 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier3: '12 damage; push 5'
 						}),
 						effect: 'The tree chirugeon can make a ranged free strike before using this ability.',
-						spend: [
-							{ value: 5, effect: 'The tree chirugeon uses this ability again.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 5,
+								effect: 'The tree chirugeon uses this ability again.'
+							})
 						]
 					})
 				}),
@@ -578,8 +594,12 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier3: '14 damage; M<2 bleeding (save ends)'
 						}),
 						effect: 'The tree guerilla can teleport 3 after using this ability.',
-						spend: [
-							{ value: 3, effect: 'The tree guerilla targets an additional creature or object. The tree guerilla deals an additional 3 damage if both targets are adjacent to each other.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The tree guerilla targets an additional creature or object. The tree guerilla deals an additional 3 damage if both targets are adjacent to each other.'
+							})
 						]
 					})
 				}),
@@ -633,8 +653,12 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier3: '14 damage; A<2 restrained (save ends)'
 						}),
 						effect: 'The tree gweiadur can shift 3 after using this ability.',
-						spend: [
-							{ value: 3, effect: 'If this ability restrains the target, an enemy within 1 of the target is also restrained (save ends).' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'If this ability restrains the target, an enemy within 1 of the target is also restrained (save ends).'
+							})
 						]
 					})
 				}),
@@ -693,8 +717,12 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier3: '15 damage; M<3 restrained (save ends)'
 						}),
 						effect: 'The warleader strikes each target one at a time and can teleport 3 squares between each strike.',
-						spend: [
-							{ value: 2, effect: 'A target restrained by this ability takes an additional 3 damage.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'A target restrained by this ability takes an additional 3 damage.'
+							})
 						]
 					})
 				}),

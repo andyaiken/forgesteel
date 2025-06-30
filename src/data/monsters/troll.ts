@@ -181,8 +181,12 @@ export const troll: MonsterGroup = {
 							tier2: '14 damage; M<2 bleeding (save ends)',
 							tier3: '17 damage; M<3 bleeding (save ends)'
 						}),
-						spend: [
-							{ value: 1, effect: 'The butcher regains Stamina equal to the damage.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 1,
+								effect: 'The butcher regains Stamina equal to the damage.'
+							})
 						]
 					})
 				}),
@@ -274,8 +278,12 @@ export const troll: MonsterGroup = {
 							tier2: '15 damage',
 							tier3: '18 damage'
 						}),
-						spend: [
-							{ value: 1, effect: 'The glutton regains Stamina equal to the damage.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 1,
+								effect: 'The glutton regains Stamina equal to the damage.'
+							})
 						]
 					})
 				}),

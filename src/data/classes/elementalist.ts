@@ -458,11 +458,12 @@ Choose one of the following effects:
 				tier2: '4 psychic damage',
 				tier3: '6 psychic damage'
 			}),
-			persistence: [
-				{
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
 					value: 1,
 					effect: 'At the start of your turn, you can use a maneuver to use this ability again without spending essence.'
-				}
+				})
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -480,11 +481,12 @@ Choose one of the following effects:
 				tier2: '8 + R fire damage',
 				tier3: '11 + R fire damage'
 			}),
-			persistence: [
-				{
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
 					value: 1,
 					effect: 'If the target is within distance at the start of your turn, make a power roll for this ability again.'
-				}
+				})
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -536,11 +538,12 @@ Choose one of the following effects:
 				tier2: '6 fire damage',
 				tier3: '10 fire damage'
 			}),
-			persistence: [
-				{
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
 					value: 2,
 					effect: 'At the start of your turn, you can use a maneuver to use this ability again without spending essence.'
-				}
+				})
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -559,11 +562,12 @@ Choose one of the following effects:
 				tier2: 'The target falls into the hole.',
 				tier3: 'The target falls into the hole and can’t reduce the height of the fall.'
 			}),
-			persistence: [
-				{
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
 					value: 1,
 					effect: 'At the start of your turn, you open another hole, rolling power against any creature that could fall into the hole when it opens.'
-				}
+				})
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -576,11 +580,12 @@ Choose one of the following effects:
 			target: 'Self or one ally',
 			cost: 5,
 			effect: 'Until the start of your next turn, the target can move through solid matter, ignores difficult terrain, and their movement can’t provoke opportunity attacks. If the target ends their turn inside solid matter, they are shunted out into the space where they entered it and this effect ends.',
-			persistence: [
-				{
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
 					value: 1,
 					effect: 'The effect lasts until the start of your next turn.'
-				}
+				})
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -616,11 +621,12 @@ Until the start of your next turn, the area gains the following effects:
 * You and each ally in the area can spend any number of Recoveries at the start of your turn once as a free maneuver.
 * The area is difficult terrain for enemies.
 * Any enemy who enters the area for the first time in a round or starts their turn there takes damage equal to your Reason score.`,
-			persistence: [
-				{
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
 					value: 1,
 					effect: 'The area remains until the start of your next turn. You can move the area up to 5 squares as a maneuver. This ability ends if you lose line of effect to its area.'
-				}
+				})
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -727,11 +733,12 @@ Until the start of your next turn, the area gains the following effects:
 				tier3: '9 damage'
 			}),
 			effect: 'Until the end of your next turn, each ally in your aura has their characteristic scores increased by 1 for the purpose of resisting potencies and has a +1 bonus on saving throws.',
-			persistence: [
-				{
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
 					value: 1,
 					effect: 'You make the power roll again to target each enemy in the aura, and the effect lasts until the start of your next turn.'
-				}
+				})
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -744,11 +751,12 @@ Until the start of your next turn, the area gains the following effects:
 			target: 'Special',
 			cost: 7,
 			effect: 'The wall lasts until the start of your next turn, and can be placed in occupied squares. Creatures can enter and pass through the wall. When an enemy enters or starts their turn in a square of the wall, they take fire damage equal to your Reason score.',
-			persistence: [
-				{
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
 					value: 1,
 					effect: 'The effect lasts until the start of your next turn, and you can add a number of squares to the wall equal to your Reason score.'
-				}
+				})
 			]
 		})
 	],
@@ -793,11 +801,12 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Self or 1 ally',
 								effect: 'The damage is halved.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										effect: 'If the damage has any potency effect associate with it, the potency is reduced by 1.'
-									}
+									})
 								]
 							})
 						})
@@ -872,11 +881,12 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Self or 1 ally',
 								effect: 'The forced movement distance gains a bonus equal to your Reason score.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										effect: 'The forced movement distance gains a bonus equal to twice your Reason score instead.'
-									}
+									})
 								]
 							})
 						})
@@ -950,12 +960,13 @@ Additionally, whenever you touch a living plant that is not a Plant Creature, yo
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Self or 1 ally',
 								effect: 'The target can spend a Recovery.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										repeatable: true,
 										effect: 'The target can spend an additional Recovery for each essence spent.'
-									}
+									})
 								]
 							})
 						})
@@ -1047,11 +1058,12 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Self or 1 ally',
 								effect: 'You teleport the target up to a number of squares equal to your Reason score. If the target moves to trigger this ability, you can teleport them at any point during the move.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										effect: 'You teleport the target up to a number of squares equal to twice your Reason score instead.'
-									}
+									})
 								]
 							})
 						})

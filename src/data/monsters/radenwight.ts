@@ -379,7 +379,13 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						target: 'Each ally in the burst',
 						cost: 3,
 						effect: 'Each target who has used their Ready Rodent ability since their last turn regains the use of their triggered action.',
-						spend: [ { value: 2, effect: 'The area increases to 6 burst.' } ]
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The area increases to 6 burst.'
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -508,11 +514,12 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier2: 'P<2 Slowed (save ends)',
 							tier3: 'P<3 Slowed (save ends)'
 						}),
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 3,
 								effect: 'Each ally within 3 of a target has their speed increased by 2 until the end of their next turn.'
-							}
+							})
 						]
 					})
 				}),

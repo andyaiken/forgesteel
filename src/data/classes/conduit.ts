@@ -80,10 +80,10 @@ When you roll to gain piety at the start of your turn, you can pray to gain the 
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Self or 1 ally',
 						effect: 'The target can spend a Recovery.',
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 1,
-								repeatable: true,
 								effect: `
 For each piety spent, you can choose one of the following enhancements:
 
@@ -91,7 +91,7 @@ For each piety spent, you can choose one of the following enhancements:
 * You can end one effect on a target that is ended by a saving throw or that ends at the end of their turn.
 * A prone target can stand up.
 * A target can spend 1 additional Recovery.`
-							}
+							})
 						]
 					})
 				}),
@@ -128,11 +128,12 @@ For each piety spent, you can choose one of the following enhancements:
 									distance: [ FactoryLogic.distance.createRanged(10) ],
 									target: '1 ally',
 									effect: 'The power roll gains an edge.',
-									spend: [
-										{
+									sections: [
+										FactoryLogic.createAbilitySectionField({
+											name: 'Spend',
 											value: 1,
 											effect: 'The power roll gains a double edge.'
-										}
+										})
 									]
 								})
 							}),
@@ -149,11 +150,12 @@ For each piety spent, you can choose one of the following enhancements:
 									distance: [ FactoryLogic.distance.createRanged(10) ],
 									target: '1 ally',
 									effect: 'The power roll gains a bane against the target.',
-									spend: [
-										{
+									sections: [
+										FactoryLogic.createAbilitySectionField({
+											name: 'Spend',
 											value: 1,
 											effect: 'The power roll gains a double bane against the target.'
-										}
+										})
 									]
 								})
 							}),

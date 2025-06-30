@@ -200,11 +200,12 @@ A target that ends two consecutive turns restrained by this ability is petrified
 							tier3: '14 acid damage; pull 3'
 						}),
 						effect: 'This ability can pull targets restrained by Petrifying Eye Beams, ignoring stability.',
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 3,
 								effect: 'The toungesnapper targets two additional creatures or objects.'
-							}
+							})
 						]
 					})
 				}),

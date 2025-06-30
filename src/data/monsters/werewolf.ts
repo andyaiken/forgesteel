@@ -108,10 +108,14 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 							tier2: '13 damage; 4 ferocity',
 							tier3: '16 damage; 5 ferocity'
 						}),
-						spend: [
-							{ value: 2, effect: 'The target has P<0 lycanthropy. The potency of this attack increases by 1 each time the werewolf forces the same target to resist it.' }
-						],
-						effect: 'A creature afflicted with lycanthropy accumulates 2 ferocity at the end of each of their turns whenever they’re in combat. Their ferocity does not disappear after completing a respite; they must complete the Find a Cure project to end this condition.'
+						effect: 'A creature afflicted with lycanthropy accumulates 2 ferocity at the end of each of their turns whenever they’re in combat. Their ferocity does not disappear after completing a respite; they must complete the Find a Cure project to end this condition.',
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The target has P<0 lycanthropy. The potency of this attack increases by 1 each time the werewolf forces the same target to resist it.'
+							})
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -175,7 +179,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies in the burst',
-						test: FactoryLogic.createPowerRoll({
+						powerRoll: FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Intuition,
 							tier1: 'Target moves up to their speed away from the werewolf; frightened (save ends)',
 							tier2: 'Frightened (EoT)',

@@ -109,9 +109,17 @@ One must also be wary of the area around a shambling mound—their vines reach o
 							tier2: '16 damage; A<4 grabbed',
 							tier3: '19 damage; grabbed'
 						}),
-						spend: [
-							{ value: 2, effect: 'The shambling mound can slide one or both targets up to 6 squares.' },
-							{ value: 3, effect: 'Each target takes 7 poison damage.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The shambling mound can slide one or both targets up to 6 squares.'
+							}),
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'Each target takes 7 poison damage.'
+							})
 						]
 					})
 				}),
@@ -141,12 +149,13 @@ One must also be wary of the area around a shambling mound—their vines reach o
 						target: 'One creature or object',
 						cost: 2,
 						effect: 'The shambling mound reaches out with writhing vines and A<3 engulfs an enemy size 1L or smaller into their sack. The potency increases by 1 if the target is grabbed by the shambling mound. An engulfed creature is restrained, takes 3 poison damage at the start of each turn of combat, and can’t take damage from abilities used from outside the sack. When the shambling mound moves, the engulfed creature moves with them. If the mound dies or their engulfing sack is destroyed, each engulfed creature is freed and shunted to an unoccupied square within 2 squares.',
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 2,
 								repeatable: true,
 								effect: 'The shambling mound can engulf 1 additional enemy for every 2 malice spent.'
-							}
+							})
 						]
 					})
 				}),

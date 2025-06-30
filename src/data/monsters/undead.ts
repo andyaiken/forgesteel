@@ -440,8 +440,12 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier2: '4 corruption damage; P<1 weakened (save ends)',
 							tier3: '5 corruption damage; P<2 weakened (save ends)'
 						}),
-						spend: [
-							{ value: 2, effect: 'The potency of this ability increases by 1. A living creature killed by this ability becomes a **specter** who appears in the target\'s space under the Director\'s control.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The potency of this ability increases by 1. A living creature killed by this ability becomes a **specter** who appears in the target\'s space under the Director\'s control.'
+							})
 						]
 					})
 				}),
@@ -707,8 +711,12 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: 'Self or one incorporeal ally',
 						effect: 'The target shifts up to their speed.',
-						spend: [
-							{ value: 2, effect: 'The ghost chooses one additional target.' }
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The ghost chooses one additional target.'
+							})
 						]
 					})
 				}),

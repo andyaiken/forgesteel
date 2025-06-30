@@ -216,12 +216,13 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 				tier3: '7 damage'
 			}),
 			effect: 'You can shift up to 3 squares.',
-			spend: [
-				{
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Spend',
 					value: 2,
 					repeatable: true,
 					effect: 'You can target one additional creature or object within distance for every 2 drama you spend.'
-				}
+				})
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -276,11 +277,12 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 				tier3: '7 + P psychic damage'
 			}),
 			effect: 'One ally within 10 squares can end one effect on them that is ended by a saving throw or that ends at the end of their turn.',
-			spend: [
-				{
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Spend',
 					value: 1,
 					effect: 'The chosen ally can also spend a Recovery.'
-				}
+				})
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -319,12 +321,13 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 				tier2: 'Slide 1; I < [average], dazed (save ends)',
 				tier3: 'Slide 2; I < [strong], dazed (save ends)'
 			}),
-			spend: [
-				{
+			sections: [
+				FactoryLogic.createAbilitySectionField({
+					name: 'Spend',
 					value: 2,
 					repeatable: true,
 					effect: 'The size of the burst is increased by 1 for every 2 drama you spend.'
-				}
+				})
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -521,11 +524,12 @@ Additionally, on each of your turns, you can use a free maneuver to communicate 
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								effect: 'You gain a +2 bonus to speed until the end of your turn. Additionally, the next power roll you make this turn can’t have a result lower than tier 2.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 2,
 										effect: 'You gain a +4 bonus to speed instead.'
-									}
+									})
 								]
 							})
 						}),
@@ -644,11 +648,12 @@ Choose one of the following effects:
 * You orate a rousing tale of victory. One ally within distance gains an edge on the next power roll they make before the start of your next turn.
 * You weave a tale of high stakes heroics. One ally within distance gains a surge.
 * You insult a foe where they’re most vulnerable. That foe takes a bane on the next power roll they make before the end of their next turn.`,
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 1,
 										effect: 'You can choose two targets for any of these effects.'
-									}
+									})
 								]
 							})
 						}),
@@ -662,11 +667,12 @@ Choose one of the following effects:
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: '1 creature',
 								effect: 'One of the edges becomes a bane or vice versa.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 3,
 										effect: 'One of the edges becomes a double bane, or one of the attack’s banes becomes a double edge.'
-									}
+									})
 								]
 							})
 						})
@@ -798,11 +804,12 @@ Choose one of the following effects:
 								target: '1 ally',
 								cost: 3,
 								effect: 'The target chooses an additional target for the triggering ability within distance of that ability. They use the original power roll for all additional targets. Any damage dealt to an additional target is sonic damage.',
-								spend: [
-									{
+								sections: [
+									FactoryLogic.createAbilitySectionField({
+										name: 'Spend',
 										value: 2,
 										effect: 'The target chooses two additional targets instead of one.'
-									}
+									})
 								]
 							})
 						})

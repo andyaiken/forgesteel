@@ -97,11 +97,12 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Self or one ally',
 						effect: 'You spend a Recovery and the target regains Stamina equal to your Recovery value.',
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 1,
 								effect: 'You can end one effect on the target that is ended by a saving throw or that ends at the end of their turn, or a prone target can stand up.'
-							}
+							})
 						]
 					})
 				}),

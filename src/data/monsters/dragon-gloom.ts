@@ -145,11 +145,12 @@ When such an understanding is not reached, gloom dragons are feared for their co
 							tier2: '15 psychic damage; pull 4',
 							tier3: '18 psychic damage; pull 6'
 						}),
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 2,
 								effect: 'The pull becomes a vertical slide.'
-							}
+							})
 						]
 					})
 				}),

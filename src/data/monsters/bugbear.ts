@@ -293,11 +293,12 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: '11 damage; one target is grabbed; one target is pushed 2',
 							tier3: '14 damage; one target is grabbed; one target is vertically pushed 3'
 						}),
-						spend: [
-							{
+						sections: [
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
 								value: 5,
 								effect: 'The distance becomes 1 Burst, the Strike keyword is replaced with Area, and the roughneck targets all enemies instead.'
-							}
+							})
 						]
 					})
 				}),

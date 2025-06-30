@@ -1075,7 +1075,13 @@ export class HeroLogic {
 			hero.settingIDs = [ SourcebookData.core.id, SourcebookData.orden.id ];
 		}
 
+		if (hero.ancestry) {
+			hero.ancestry.features.forEach(FeatureLogic.updateFeature);
+		}
+
 		if (hero.career) {
+			hero.career.features.forEach(FeatureLogic.updateFeature);
+
 			if (hero.career.incitingIncidents === undefined) {
 				hero.career.incitingIncidents = {
 					options: [],
@@ -1089,11 +1095,23 @@ export class HeroLogic {
 				hero.class.primaryCharacteristicsOptions = [];
 			}
 
+			hero.class.featuresByLevel
+				.flatMap(lvl => lvl.features)
+				.forEach(FeatureLogic.updateFeature);
+			hero.class.subclasses
+				.flatMap(sc => sc.featuresByLevel)
+				.flatMap(lvl => lvl.features)
+				.forEach(FeatureLogic.updateFeature);
+
 			hero.class.abilities.forEach(a => {
 				if (a.sections === undefined) {
 					a.sections = [];
 				}
 			});
+		}
+
+		if (hero.complication) {
+			hero.complication.features.forEach(FeatureLogic.updateFeature);
 		}
 
 		if (hero.features === undefined) {
@@ -1164,6 +1182,10 @@ export class HeroLogic {
 		if (hero.abilityCustomizations === undefined) {
 			hero.abilityCustomizations = [];
 		}
+
+		HeroLogic.getFormerAncestries(hero).flatMap(t => t.features).forEach(FeatureLogic.updateFeature);
+		HeroLogic.getDomains(hero).flatMap(d => d.featuresByLevel).flatMap(lvl => lvl.features).forEach(FeatureLogic.updateFeature);
+		HeroLogic.getTitles(hero).flatMap(t => t.features).forEach(FeatureLogic.updateFeature);
 
 		this.getFeatures(hero).map(f => f.feature).forEach(FeatureLogic.updateFeature);
 		this.getAbilities(hero, sourcebooks, false).map(a => a.ability).forEach(AbilityLogic.updateAbility);

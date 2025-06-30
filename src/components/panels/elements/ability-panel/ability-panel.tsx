@@ -136,7 +136,7 @@ export const AbilityPanel = (props: Props) => {
 
 		const warnings: { label: string, text: string }[] = [];
 
-		const hasRoll = (props.ability.sections || []).some(s => s.type === 'roll');
+		const hasRoll = props.ability.sections.some(s => s.type === 'roll');
 
 		if ((conditions.includes(ConditionType.Bleeding) || ((state === 'dying') && (props.ability.id !== AbilityData.catchBreath.id))) && ([ AbilityUsage.Action, AbilityUsage.Maneuver, AbilityUsage.Trigger ].includes(props.ability.type.usage) || props.ability.keywords.includes(AbilityKeyword.Strike))) {
 			warnings.push({
@@ -303,7 +303,7 @@ export const AbilityPanel = (props: Props) => {
 										: null
 								}
 								<AbilityInfoPanel ability={props.ability} hero={props.hero} />
-								{(props.ability.sections || []).map(getSection)}
+								{props.ability.sections.map(getSection)}
 								{
 									customization && customization.notes ?
 										<Field

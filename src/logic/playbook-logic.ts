@@ -1,8 +1,11 @@
+import { AbilityLogic } from './ability-logic';
 import { Adventure } from '../models/adventure';
 import { Counter } from '../models/counter';
 import { Encounter } from '../models/encounter';
 import { EncounterLogic } from './encounter-logic';
 import { EncounterObjectiveData } from '../data/encounter-objective-data';
+import { FeatureLogic } from './feature-logic';
+import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 import { Monster } from '../models/monster';
 import { MonsterLogic } from './monster-logic';
@@ -252,6 +255,15 @@ export class PlaybookLogic {
 							captainID: undefined
 						};
 					}
+
+					s.monsters
+						.flatMap(m => m.features)
+						.forEach(FeatureLogic.updateFeature);
+					s.monsters
+						.flatMap(m => m.features)
+						.filter(f => f.type === FeatureType.Ability)
+						.map(f => f.data.ability)
+						.forEach(AbilityLogic.updateAbility);
 				});
 
 				if (e.heroes === undefined) {

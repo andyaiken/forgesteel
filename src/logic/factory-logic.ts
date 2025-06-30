@@ -1,4 +1,4 @@
-import { Ability, AbilityDistance, AbilityType } from '../models/ability';
+import { Ability, AbilityDistance, AbilitySectionField, AbilitySectionRoll, AbilitySectionText, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot } from '../models/encounter';
 import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
@@ -716,6 +716,7 @@ export class FactoryLogic {
 		cost?: number | 'signature',
 		repeatable?: boolean,
 		minLevel?: number,
+		sections?: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll)[],
 		preEffect?: string,
 		powerRoll?: PowerRoll,
 		test?: PowerRoll,
@@ -725,6 +726,56 @@ export class FactoryLogic {
 		spend?: { name?: string, value: number, repeatable?: boolean, effect: string }[],
 		persistence?: { value: number, effect: string }[]
 	}): Ability => {
+		const sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll)[] = [];
+		if (data.preEffect) {
+			sections.push(FactoryLogic.createAbilitySectionText(data.preEffect));
+		}
+		if (data.powerRoll) {
+			sections.push(FactoryLogic.createAbilitySectionRoll(data.powerRoll));
+		}
+		if (data.test) {
+			sections.push(FactoryLogic.createAbilitySectionRoll(data.test));
+		}
+		if (data.effect) {
+			sections.push(FactoryLogic.createAbilitySectionText(data.effect));
+		}
+		if (data.strained) {
+			sections.push(FactoryLogic.createAbilitySectionField({
+				name: 'Strained',
+				effect: data.strained
+			}));
+		}
+		if (data.alternateEffects) {
+			data.alternateEffects.forEach(ae => {
+				sections.push(FactoryLogic.createAbilitySectionField({
+					name: 'Alternate Effect',
+					effect: ae
+				}));
+			});
+		}
+		if (data.spend) {
+			data.spend.forEach(spend => {
+				sections.push(FactoryLogic.createAbilitySectionField({
+					name: spend.name || 'Spend',
+					effect: spend.effect,
+					value: spend.value,
+					repeatable: spend.repeatable
+				}));
+			});
+		}
+		if (data.persistence) {
+			data.persistence.forEach(persist => {
+				sections.push(FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
+					effect: persist.effect,
+					value: persist.value
+				}));
+			});
+		}
+		if (data.sections) {
+			sections.push(...data.sections);
+		}
+
 		return {
 			id: data.id,
 			name: data.name,
@@ -736,14 +787,45 @@ export class FactoryLogic {
 			cost: data.cost || 0,
 			repeatable: data.repeatable ?? false,
 			minLevel: data.minLevel || 1,
-			preEffect: data.preEffect || '',
-			powerRoll: data.powerRoll || null,
-			test: data.test ?? null,
-			effect: data.effect || '',
-			strained: data.strained || '',
-			alternateEffects: data.alternateEffects || [],
-			spend: (data.spend ?? []).map(s => ({ ...s, name: s.name ?? '', repeatable: s.repeatable ?? false })),
-			persistence: (data.persistence ?? []).map(p => ({ ...p }))
+			sections: sections,
+
+			preEffect: '',
+			powerRoll: null,
+			test: null,
+			effect: '',
+			strained: '',
+			alternateEffects: [],
+			spend: [],
+			persistence: []
+		};
+	};
+
+	static createAbilitySectionText = (text: string): AbilitySectionText => {
+		return {
+			type: 'text',
+			text: text
+		};
+	};
+
+	static createAbilitySectionField = (data: {
+		name: string,
+		effect: string,
+		value?: number,
+		repeatable?: boolean
+	}): AbilitySectionField => {
+		return {
+			type: 'field',
+			name: data.name,
+			value: data.value || 0,
+			repeatable: data.repeatable || false,
+			effect: data.effect
+		};
+	};
+
+	static createAbilitySectionRoll = (roll: PowerRoll): AbilitySectionRoll => {
+		return {
+			type: 'roll',
+			roll: roll
 		};
 	};
 

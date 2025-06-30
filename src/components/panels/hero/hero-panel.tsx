@@ -718,14 +718,11 @@ export const HeroPanel = (props: Props) => {
 
 			const getPanelWidth = (ability: Ability) => {
 				const descLength = Math.round(ability.description.split(' ').length / 10);
-				const preEffectLength = Math.round(ability.preEffect.split(' ').length / 10);
-				const powerRollLength = ability.powerRoll ? 6 : 0;
-				const effectLength = Math.round(ability.effect.split(' ').length / 10);
-				const alternateLength = Collections.sum(ability.alternateEffects, e => Math.round(e.split(' ').length / 10));
-				const spendLength = Collections.sum(ability.spend, e => Math.round(e.effect.split(' ').length / 10));
-				const persistLength = Collections.sum(ability.persistence, e => Math.round(e.effect.split(' ').length / 10));
+				const textLength = Collections.sum(ability.sections.filter(s => s.type === 'text'), s => Math.round(s.text.split(' ').length / 10));
+				const fieldLength = Collections.sum(ability.sections.filter(s => s.type === 'field'), s => Math.round(s.effect.split(' ').length / 10));
+				const rollLength = ability.sections.filter(s => s.type === 'roll').length * 6;
 
-				const length = descLength + preEffectLength + powerRollLength + effectLength + alternateLength + spendLength + persistLength;
+				const length = descLength + textLength + fieldLength + rollLength;
 				return Math.max(1, Math.round(length / 12));
 			};
 

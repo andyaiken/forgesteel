@@ -1,4 +1,5 @@
 import { Ability } from '../models/ability';
+import { AbilityLogic } from './ability-logic';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
 import { Collections } from '../utils/collections';
@@ -6,6 +7,7 @@ import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { Domain } from '../models/domain';
 import { Feature } from '../models/feature';
+import { FeatureLogic } from './feature-logic';
 import { FeatureType } from '../enums/feature-type';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
@@ -351,38 +353,24 @@ export class SourcebookLogic {
 			}
 
 			c.featuresByLevel.forEach(lvl => {
+				lvl.features.forEach(FeatureLogic.updateFeature);
 				lvl.features
-					.filter(f => f.type === FeatureType.ClassAbility)
-					.forEach(f => {
-						f.data.minLevel = 1;
-					});
-				lvl.features
-					.filter(f => f.type === FeatureType.Kit)
-					.forEach(f => {
-						if (f.data.types.includes('Standard')) {
-							f.data.types = f.data.types.filter(t => t !== 'Standard');
-							f.data.types.push('');
-						}
-					});
+					.filter(f => f.type === FeatureType.Ability)
+					.map(f => f.data.ability)
+					.forEach(AbilityLogic.updateAbility);
 			});
 
 			c.subclasses.forEach(sc => {
 				sc.featuresByLevel.forEach(lvl => {
+					lvl.features.forEach(FeatureLogic.updateFeature);
 					lvl.features
-						.filter(f => f.type === FeatureType.ClassAbility)
-						.forEach(f => {
-							f.data.minLevel = 1;
-						});
-					lvl.features
-						.filter(f => f.type === FeatureType.Kit)
-						.forEach(f => {
-							if (f.data.types.includes('Standard')) {
-								f.data.types = f.data.types.filter(t => t !== 'Standard');
-								f.data.types.push('');
-							}
-						});
+						.filter(f => f.type === FeatureType.Ability)
+						.map(f => f.data.ability)
+						.forEach(AbilityLogic.updateAbility);
 				});
 			});
+
+			c.abilities.forEach(AbilityLogic.updateAbility);
 		});
 
 		sourcebook.monsterGroups.forEach(group => {
@@ -408,22 +396,46 @@ export class SourcebookLogic {
 					};
 				}
 
+				monster.features.forEach(FeatureLogic.updateFeature);
 				monster.features
-					.filter(f => f.type === FeatureType.DamageModifier)
-					.forEach(f => {
-						f.data.modifiers.forEach(dm => {
-							if (dm.valueCharacteristics === undefined) {
-								dm.valueCharacteristics = [];
-							}
-							if (dm.valueCharacteristicMultiplier === undefined) {
-								dm.valueCharacteristicMultiplier = 1;
-							}
-						});
-					});
+					.filter(f => f.type === FeatureType.Ability)
+					.map(f => f.data.ability)
+					.forEach(AbilityLogic.updateAbility);
 			});
 		});
 
+		sourcebook.domains.forEach(domain => {
+			domain.featuresByLevel.forEach(lvl => {
+				lvl.features.forEach(FeatureLogic.updateFeature);
+				lvl.features
+					.filter(f => f.type === FeatureType.Ability)
+					.map(f => f.data.ability)
+					.forEach(AbilityLogic.updateAbility);
+			});
+		});
+
+		sourcebook.perks.forEach(FeatureLogic.updateFeature);
+		sourcebook.perks
+			.filter(f => f.type === FeatureType.Ability)
+			.map(f => f.data.ability)
+			.forEach(AbilityLogic.updateAbility);
+
+		sourcebook.titles.forEach(title => {
+			title.features.forEach(FeatureLogic.updateFeature);
+			title.features
+				.filter(f => f.type === FeatureType.Ability)
+				.map(f => f.data.ability)
+				.forEach(AbilityLogic.updateAbility);
+		});
+
 		sourcebook.items.forEach(item => {
+			item.featuresByLevel.forEach(lvl => {
+				lvl.features.forEach(FeatureLogic.updateFeature);
+				lvl.features
+					.filter(f => f.type === FeatureType.Ability)
+					.map(f => f.data.ability)
+					.forEach(AbilityLogic.updateAbility);
+			});
 			if (item.customizationsByLevel === undefined) {
 				item.customizationsByLevel = [
 					{
@@ -446,6 +458,11 @@ export class SourcebookLogic {
 			if (kit.type === 'Standard') {
 				kit.type = '';
 			}
+			kit.features.forEach(FeatureLogic.updateFeature);
+			kit.features
+				.filter(f => f.type === FeatureType.Ability)
+				.map(f => f.data.ability)
+				.forEach(AbilityLogic.updateAbility);
 		});
 
 		sourcebook.terrain.forEach(terrain => {

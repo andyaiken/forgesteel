@@ -2,6 +2,7 @@ import { Feature, FeatureAbility, FeatureClassAbility } from '../models/feature'
 import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityKeyword } from '../enums/ability-keyword';
+import { AbilityLogic } from './ability-logic';
 import { Ancestry } from '../models/ancestry';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
@@ -1087,6 +1088,12 @@ export class HeroLogic {
 			if (hero.class.primaryCharacteristicsOptions === undefined) {
 				hero.class.primaryCharacteristicsOptions = [];
 			}
+
+			hero.class.abilities.forEach(a => {
+				if (a.sections === undefined) {
+					a.sections = [];
+				}
+			});
 		}
 
 		if (hero.features === undefined) {
@@ -1158,56 +1165,8 @@ export class HeroLogic {
 			hero.abilityCustomizations = [];
 		}
 
-		this.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.Bonus).forEach(f => {
-			if (f.data.valueCharacteristics === undefined) {
-				f.data.valueCharacteristics = [];
-			}
-			if (f.data.valuePerEchelon === undefined) {
-				f.data.valuePerEchelon = 0;
-			}
-		});
-
-		this.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.DamageModifier).forEach(f => {
-			f.data.modifiers.forEach(dm => {
-				if (dm.valueCharacteristics === undefined) {
-					dm.valueCharacteristics = [];
-				}
-				if (dm.valueCharacteristicMultiplier === undefined) {
-					dm.valueCharacteristicMultiplier = 1;
-				}
-				if (dm.valuePerEchelon === undefined) {
-					dm.valuePerEchelon = 0;
-				}
-			});
-		});
-
-		this.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.Kit).forEach(f => {
-			if (f.data.types.includes('Standard')) {
-				f.data.types = f.data.types.filter(t => t !== 'Standard');
-				f.data.types.push('');
-			}
-		});
-
-		this.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.ItemChoice).forEach(f => {
-			f.data.selected.forEach(item => {
-				if (item.customizationsByLevel === undefined) {
-					item.customizationsByLevel = [
-						{
-							level: 1,
-							features: []
-						},
-						{
-							level: 5,
-							features: []
-						},
-						{
-							level: 9,
-							features: []
-						}
-					];
-				}
-			});
-		});
+		this.getFeatures(hero).map(f => f.feature).forEach(FeatureLogic.updateFeature);
+		this.getAbilities(hero, sourcebooks, false).map(a => a.ability).forEach(AbilityLogic.updateAbility);
 
 		const x = hero.state as unknown as { heroicResource: number | undefined };
 		if (x.heroicResource) {
@@ -1231,12 +1190,6 @@ export class HeroLogic {
 				heroicResources.forEach(f => currentClass.featuresByLevel[0].features.push(f));
 			}
 		}
-
-		this.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource).forEach(f => {
-			if (f.data.type === undefined) {
-				f.data.type = 'heroic';
-			}
-		});
 
 		this.getKits(hero).forEach(k => {
 			if (k.type === 'Standard') {

@@ -298,7 +298,7 @@ You can find an agent who can provide you with three pieces of information about
 			FactoryLogic.feature.create({
 				id: 'title-marshal-3',
 				name: 'Silver Shield',
-				description: 'You have a badge granted to you by your organization. While you are wearing it, you gain the Divine Interdiction feature from the My Life for Yours class. When you use this feature in this way, you can’t spend wrath unless you have the Wrath class feature.'
+				description: 'You have a badge granted to you by your organization. While you are wearing it, you gain the My Life for Yours feature from the Censor class. When you use this feature in this way, you can’t spend wrath unless you have the Wrath class feature.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-marshal-4',

@@ -1,9 +1,9 @@
+import { Ability, AbilitySectionField, AbilitySectionRoll, AbilitySectionText } from '../../../../models/ability';
 import { AbilityCustomization, Hero } from '../../../../models/hero';
 import { Alert, Button, Space, Tag } from 'antd';
 import { Pill, ResourcePill } from '../../../controls/pill/pill';
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
-import { Ability } from '../../../../models/ability';
 import { AbilityData } from '../../../../data/ability-data';
 import { AbilityInfoPanel } from '../../ability-info-panel/ability-info-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -106,19 +106,20 @@ export const AbilityPanel = (props: Props) => {
 	};
 
 	const autoCalcAvailable = () => {
+		if (!props.hero) {
+			return false;
+		}
+
+		if (props.ability.sections.some(s => s.type === 'roll')) {
+			return true;
+		}
+
 		const texts = [
-			props.ability.preEffect,
-			props.ability.effect,
-			props.ability.strained,
-			...props.ability.alternateEffects,
-			...props.ability.spend.map(s => s.effect),
-			...props.ability.persistence.map(p => p.effect)
+			...props.ability.sections.filter(s => s.type === 'text').map(s => s.text),
+			...props.ability.sections.filter(s => s.type === 'field').map(s => s.effect)
 		];
 
-		return props.hero
-			&& (
-				props.ability.powerRoll || props.ability.test || texts.some(text => AbilityLogic.getTextEffect(text, props.hero!) !== text)
-			);
+		return texts.some(text => AbilityLogic.getTextEffect(text, props.hero!) !== text);
 	};
 
 	const getWarnings = () => {
@@ -134,6 +135,8 @@ export const AbilityPanel = (props: Props) => {
 		}
 
 		const warnings: { label: string, text: string }[] = [];
+
+		const hasRoll = props.ability.sections.some(s => s.type === 'roll');
 
 		if ((conditions.includes(ConditionType.Bleeding) || ((state === 'dying') && (props.ability.id !== AbilityData.catchBreath.id))) && ([ AbilityUsage.Action, AbilityUsage.Maneuver, AbilityUsage.Trigger ].includes(props.ability.type.usage) || props.ability.keywords.includes(AbilityKeyword.Strike))) {
 			warnings.push({
@@ -153,13 +156,13 @@ export const AbilityPanel = (props: Props) => {
 				text: 'You can’t use this ability.'
 			});
 		}
-		if (conditions.includes(ConditionType.Frightened) && (props.ability.powerRoll || props.ability.test)) {
+		if (conditions.includes(ConditionType.Frightened) && hasRoll) {
 			warnings.push({
 				label: ConditionType.Frightened,
 				text: 'This ability takes a bane if it targets the source of your fear.'
 			});
 		}
-		if (conditions.includes(ConditionType.Grabbed) && (props.ability.powerRoll || props.ability.test)) {
+		if (conditions.includes(ConditionType.Grabbed) && hasRoll) {
 			warnings.push({
 				label: ConditionType.Grabbed,
 				text: 'This ability takes a bane if it doesn’t target the creature grabbing you.'
@@ -177,7 +180,7 @@ export const AbilityPanel = (props: Props) => {
 				text: 'This ability takes a bane.'
 			});
 		}
-		if (conditions.includes(ConditionType.Restrained) && (props.ability.powerRoll || props.ability.test)) {
+		if (conditions.includes(ConditionType.Restrained) && hasRoll) {
 			warnings.push({
 				label: ConditionType.Restrained,
 				text: 'This ability takes a bane.'
@@ -189,13 +192,13 @@ export const AbilityPanel = (props: Props) => {
 				text: 'You can’t use this ability.'
 			});
 		}
-		if (conditions.includes(ConditionType.Taunted) && (props.ability.powerRoll || props.ability.test)) {
+		if (conditions.includes(ConditionType.Taunted) && hasRoll) {
 			warnings.push({
 				label: ConditionType.Taunted,
 				text: 'This ability takes a bane if it doesn’t target the creature who taunted you, and you have line of effect to that creature.'
 			});
 		}
-		if (conditions.includes(ConditionType.Weakened) && (props.ability.powerRoll || props.ability.test)) {
+		if (conditions.includes(ConditionType.Weakened) && hasRoll) {
 			warnings.push({
 				label: ConditionType.Weakened,
 				text: 'This ability takes a bane.'
@@ -209,6 +212,37 @@ export const AbilityPanel = (props: Props) => {
 		}
 
 		return warnings;
+	};
+
+	const getSection = (section: AbilitySectionText | AbilitySectionField | AbilitySectionRoll, index: number) => {
+		switch (section.type) {
+			case 'text':
+				return (
+					<Markdown key={index} text={parseText(section.text)} />
+				);
+			case 'field':
+				return (
+					<Field
+						key={index}
+						disabled={props.hero && (props.options?.dimUnavailableAbilities || false) && (section.value > 0) && (section.value > heroicResource)}
+						label={section.name}
+						labelTag={section.value ? <ResourcePill value={section.value} repeatable={section.repeatable} /> : null}
+						value={<Markdown text={parseText(section.effect)} useSpan={true} />}
+					/>
+				);
+			case 'roll':
+				return (
+					<PowerRollPanel
+						key={index}
+						powerRoll={section.roll}
+						ability={props.ability}
+						hero={props.hero}
+						autoCalc={autoCalc}
+						highlightTier={props.highlightTier}
+						odds={props.odds}
+					/>
+				);
+		}
 	};
 
 	try {
@@ -268,75 +302,7 @@ export const AbilityPanel = (props: Props) => {
 										: null
 								}
 								<AbilityInfoPanel ability={props.ability} hero={props.hero} />
-								{
-									props.ability.preEffect ?
-										<Markdown text={parseText(props.ability.preEffect)} />
-										: null
-								}
-								{
-									props.ability.powerRoll ?
-										<PowerRollPanel
-											powerRoll={props.ability.powerRoll}
-											ability={props.ability}
-											hero={props.hero}
-											autoCalc={autoCalc}
-											highlightTier={props.highlightTier}
-											odds={props.odds}
-										/>
-										: null
-								}
-								{
-									props.ability.test ?
-										<PowerRollPanel
-											powerRoll={props.ability.test}
-											test={true}
-										/>
-										: null
-								}
-								{
-									props.ability.effect ?
-										<Markdown text={parseText(props.ability.effect)} />
-										: null
-								}
-								{
-									props.ability.strained ?
-										<Field
-											danger={props.hero && (heroicResource < 0)}
-											label='Strained'
-											value={<Markdown text={parseText(props.ability.strained)} useSpan={true} />}
-										/>
-										: null
-								}
-								{
-									props.ability.alternateEffects.map((effect, n) => (
-										<Field
-											key={n}
-											label='Alternate Effect'
-											value={<Markdown text={parseText(effect)} useSpan={true} />}
-										/>
-									))
-								}
-								{
-									props.ability.spend.map((spend, n) => (
-										<Field
-											key={n}
-											disabled={props.hero && (props.options?.dimUnavailableAbilities || false) && (spend.value > heroicResource)}
-											label={spend.name || 'Spend'}
-											labelTag={spend.value ? <ResourcePill value={spend.value} repeatable={spend.repeatable} /> : null}
-											value={<Markdown text={parseText(spend.effect)} useSpan={true} />}
-										/>
-									))
-								}
-								{
-									props.ability.persistence.map((persist, n) => (
-										<Field
-											key={n}
-											label='Persist'
-											labelTag={persist.value ? <ResourcePill value={persist.value} /> : null}
-											value={<Markdown text={parseText(persist.effect)} useSpan={true} />}
-										/>
-									))
-								}
+								{props.ability.sections.map(getSection)}
 								{
 									customization && customization.notes ?
 										<Field

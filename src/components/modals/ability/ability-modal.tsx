@@ -118,12 +118,15 @@ export const AbilityModal = (props: Props) => {
 	const getContent = () => {
 		switch (page) {
 			case 'Ability Card': {
+				const rollSection = props.ability.sections.find(s => s.type === 'roll');
+
 				let odds: number[] | undefined = undefined;
-				if (hero && props.ability.powerRoll) {
-					const values = props.ability.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(hero!, ch));
+				if (hero && rollSection) {
+					const values = rollSection.roll.characteristic.map(ch => HeroLogic.getCharacteristic(hero!, ch));
 					const bonus = Collections.max(values, v => v) || 0;
 					odds = RollLogic.getOdds([ bonus ], rollState);
 				}
+
 				return (
 					<div className='ability-section'>
 						<SelectablePanel>
@@ -137,13 +140,13 @@ export const AbilityModal = (props: Props) => {
 							/>
 						</SelectablePanel>
 						{
-							props.ability.powerRoll ?
+							rollSection ?
 								<DieRollPanel
 									type='Power Roll'
 									modifiers={[
-										(props.ability.powerRoll.characteristic.length > 0) ?
-											Math.max(...props.ability.powerRoll.characteristic.map(getCharacteristic))
-											: props.ability.powerRoll.bonus
+										(rollSection.roll.characteristic.length > 0) ?
+											Math.max(...rollSection.roll.characteristic.map(getCharacteristic))
+											: rollSection.roll.bonus
 									]}
 									rollState={rollState}
 									onRollStateChange={setRollState}

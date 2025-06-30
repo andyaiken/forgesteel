@@ -20,20 +20,71 @@ export interface AbilityDistance {
 	qualifier: string;
 }
 
+export interface AbilitySectionText {
+	type: 'text';
+	text: string;
+}
+
+export interface AbilitySectionField {
+	type: 'field';
+	name: string;
+	value: number;
+	repeatable: boolean;
+	effect: string;
+}
+
+export interface AbilitySectionRoll {
+	type: 'roll'
+	roll: PowerRoll;
+}
+
 export interface Ability extends Element {
 	type: AbilityType;
 	keywords: string[];
 	distance: AbilityDistance[];
-	target: string; // Creature, Object, Enemy, Ally, Self, All
+	target: string;
 	cost: number | 'signature';
 	repeatable: boolean;
 	minLevel: number;
+	sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll)[];
+
+	/**
+	 * @deprecated This field has been subsumed into the sections field.
+	 */
 	preEffect: string;
+
+	/**
+	 * @deprecated This field has been subsumed into the sections field.
+	 */
 	powerRoll: PowerRoll | null,
+
+	/**
+	 * @deprecated This field has been subsumed into the sections field.
+	 */
 	test: PowerRoll | null,
+
+	/**
+	 * @deprecated This field has been subsumed into the sections field.
+	 */
 	effect: string;
+
+	/**
+	 * @deprecated This field has been subsumed into the sections field.
+	 */
 	strained: string;
+
+	/**
+	 * @deprecated This field has been subsumed into the sections field.
+	 */
 	alternateEffects: string[];
+
+	/**
+	 * @deprecated This field has been subsumed into the sections field.
+	 */
 	spend: { name: string, value: number, repeatable: boolean, effect: string }[];
+
+	/**
+	 * @deprecated This field has been subsumed into the sections field.
+	 */
 	persistence: { value: number, effect: string }[];
 }

@@ -1,6 +1,6 @@
-import { Alert, Button, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { Ability, AbilitySectionField, AbilitySectionRoll, AbilitySectionText } from '../../../../models/ability';
+import { Alert, Button, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
-import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityUsage } from '../../../../enums/ability-usage';
@@ -204,175 +204,126 @@ export const AbilityEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setPreEffect = (value: string) => {
+	const addSection = (type: 'text' | 'field' | 'roll') => {
 		const copy = Utils.copy(ability);
-		copy.preEffect = value;
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const setPowerRoll = (value: boolean) => {
-		const copy = Utils.copy(ability);
-		copy.powerRoll = value ? FactoryLogic.createPowerRoll({ characteristic: [], tier1: '', tier2: '', tier3: '' }) : null;
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const setPowerRollCharacteristics = (value: Characteristic[]) => {
-		const copy = Utils.copy(ability);
-		if (copy.powerRoll) {
-			copy.powerRoll.characteristic = value;
+		switch (type) {
+			case 'text':
+				copy.sections.push(FactoryLogic.createAbilitySectionText(''));
+				break;
+			case 'field':
+				copy.sections.push(FactoryLogic.createAbilitySectionField({
+					name: '',
+					effect: ''
+				}));
+				break;
+			case 'roll':
+				copy.sections.push(FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '',
+						tier2: '',
+						tier3: ''
+					})
+				));
+				break;
 		}
 		setAbility(copy);
 		props.onChange(copy);
 	};
 
-	const setPowerRollBonus = (value: number) => {
+	const moveSection = (index: number, direction: 'up' | 'down') => {
 		const copy = Utils.copy(ability);
-		if (copy.powerRoll) {
-			copy.powerRoll.bonus = value;
+		copy.sections = Collections.move(copy.sections, index, direction);
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const deleteSection = (index: number) => {
+		const copy = Utils.copy(ability);
+		copy.sections.splice(index, 1);
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const setTextSectionText = (index: number, value: string) => {
+		const copy = Utils.copy(ability);
+		(copy.sections[index] as AbilitySectionText).text = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const setFieldSectionName = (index: number, value: string) => {
+		const copy = Utils.copy(ability);
+		(copy.sections[index] as AbilitySectionField).name = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const setFieldSectionEffect = (index: number, value: string) => {
+		const copy = Utils.copy(ability);
+		(copy.sections[index] as AbilitySectionField).effect = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const setFieldSectionValue = (index: number, value: number) => {
+		const copy = Utils.copy(ability);
+		(copy.sections[index] as AbilitySectionField).value = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const setFieldSectionRepeatable = (index: number, value: boolean) => {
+		const copy = Utils.copy(ability);
+		(copy.sections[index] as AbilitySectionField).repeatable = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const setRollSectionCharacteristics = (index: number, value: Characteristic[]) => {
+		const copy = Utils.copy(ability);
+		(copy.sections[index] as AbilitySectionRoll).roll.characteristic = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const setRollSectionBonus = (index: number, value: number) => {
+		const copy = Utils.copy(ability);
+		(copy.sections[index] as AbilitySectionRoll).roll.bonus = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const setRollSectionTier1 = (index: number, value: string) => {
+		const copy = Utils.copy(ability);
+		(copy.sections[index] as AbilitySectionRoll).roll.tier1 = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const setRollSectionTier2 = (index: number, value: string) => {
+		const copy = Utils.copy(ability);
+		(copy.sections[index] as AbilitySectionRoll).roll.tier2 = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const setRollSectionTier3 = (index: number, value: string) => {
+		const copy = Utils.copy(ability);
+		(copy.sections[index] as AbilitySectionRoll).roll.tier3 = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const getSectionTitle = (section: AbilitySectionText | AbilitySectionField | AbilitySectionRoll) => {
+		switch (section.type) {
+			case 'text':
+				return 'Text';
+			case 'field':
+				return section.name || 'Field';
+			case 'roll':
+				return 'Roll';
 		}
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const setPowerRoll1 = (value: string) => {
-		const copy = Utils.copy(ability);
-		if (copy.powerRoll) {
-			copy.powerRoll.tier1 = value;
-		}
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const setPowerRoll2 = (value: string) => {
-		const copy = Utils.copy(ability);
-		if (copy.powerRoll) {
-			copy.powerRoll.tier2 = value;
-		}
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const setPowerRoll3 = (value: string) => {
-		const copy = Utils.copy(ability);
-		if (copy.powerRoll) {
-			copy.powerRoll.tier3 = value;
-		}
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const setEffect = (value: string) => {
-		const copy = Utils.copy(ability);
-		copy.effect = value;
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const addAlternateEffect = () => {
-		const copy = Utils.copy(ability);
-		copy.alternateEffects.push('');
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const setAlternateEffect = (index: number, value: string) => {
-		const copy = Utils.copy(ability);
-		copy.alternateEffects[index] = value;
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const moveAlternateEffect = (index: number, direction: 'up' | 'down') => {
-		const copy = Utils.copy(ability);
-		copy.alternateEffects = Collections.move(copy.alternateEffects, index, direction);
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const deleteAlternateEffect = (index: number) => {
-		const copy = Utils.copy(ability);
-		copy.alternateEffects.splice(index, 1);
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const addSpend = () => {
-		const copy = Utils.copy(ability);
-		copy.spend.push({ name: '', effect: '', value: 1, repeatable: false });
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const setSpendValue = (index: number, value: number) => {
-		const copy = Utils.copy(ability);
-		copy.spend[index].value = value;
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const setSpendEffect = (index: number, value: string) => {
-		const copy = Utils.copy(ability);
-		copy.spend[index].effect = value;
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const moveSpend = (index: number, direction: 'up' | 'down') => {
-		const copy = Utils.copy(ability);
-		copy.spend = Collections.move(copy.spend, index, direction);
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const deleteSpend = (index: number) => {
-		const copy = Utils.copy(ability);
-		copy.spend.splice(index, 1);
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const addPersistence = () => {
-		const copy = Utils.copy(ability);
-		copy.persistence.push({ effect: '', value: 1 });
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const setPersistenceValue = (index: number, value: number) => {
-		const copy = Utils.copy(ability);
-		copy.persistence[index].value = value;
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const setPersistenceEffect = (index: number, value: string) => {
-		const copy = Utils.copy(ability);
-		copy.persistence[index].effect = value;
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const movePersistence = (index: number, direction: 'up' | 'down') => {
-		const copy = Utils.copy(ability);
-		copy.persistence = Collections.move(copy.persistence, index, direction);
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const deletePersistence = (index: number) => {
-		const copy = Utils.copy(ability);
-		copy.persistence.splice(index, 1);
-		setAbility(copy);
-		props.onChange(copy);
-	};
-
-	const setStrained = (value: string) => {
-		const copy = Utils.copy(ability);
-		copy.strained = value;
-		setAbility(copy);
-		props.onChange(copy);
 	};
 
 	try {
@@ -607,209 +558,134 @@ export const AbilityEditPanel = (props: Props) => {
 							},
 							{
 								key: '3',
-								label: 'Information',
-								children: (
-									<div>
-										<HeaderText>Pre-Roll Effect</HeaderText>
-										<MultiLine label='Effect' value={ability.preEffect} onChange={setPreEffect} />
-										<HeaderText>Power Roll</HeaderText>
-										<Space direction='vertical' style={{ width: '100%' }}>
-											<Toggle label='Has Power Roll' value={!!ability.powerRoll} onChange={setPowerRoll} />
-											{
-												ability.powerRoll ?
-													<Select
-														style={{ width: '100%' }}
-														disabled={ability.powerRoll.bonus > 0}
-														status={(ability.powerRoll.characteristic.length === 0) && (ability.powerRoll.bonus === 0) ? 'warning' : ''}
-														placeholder='Characteristics'
-														mode='multiple'
-														options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
-														optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-														showSearch={true}
-														filterOption={(input, option) => {
-															const strings = option ?
-																[
-																	option.value
-																]
-																: [];
-															return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-														}}
-														value={ability.powerRoll.characteristic}
-														onChange={setPowerRollCharacteristics}
-													/>
-													: null
-											}
-											{
-												ability.powerRoll ?
-													<NumberSpin disabled={ability.powerRoll.characteristic.length > 0} label='Bonus' min={0} value={ability.powerRoll.bonus} onChange={setPowerRollBonus} />
-													: null
-											}
-											{
-												ability.powerRoll && (ability.powerRoll.characteristic.length === 0) && (ability.powerRoll.bonus === 0) ?
-													<Alert
-														type='warning'
-														showIcon={true}
-														message='A power roll must have either (a) at least one characteristic or (b) a set bonus.'
-													/>
-													: null
-											}
-											{
-												ability.powerRoll ?
-													<Input
-														status={ability.powerRoll.tier1 === '' ? 'warning' : ''}
-														placeholder='Tier 1'
-														allowClear={true}
-														value={ability.powerRoll.tier1}
-														onChange={e => setPowerRoll1(e.target.value)}
-													/>
-													: null
-											}
-											{
-												ability.powerRoll ?
-													<Input
-														status={ability.powerRoll.tier2 === '' ? 'warning' : ''}
-														placeholder='Tier 2'
-														allowClear={true}
-														value={ability.powerRoll.tier2}
-														onChange={e => setPowerRoll2(e.target.value)}
-													/>
-													: null
-											}
-											{
-												ability.powerRoll ?
-													<Input
-														status={ability.powerRoll.tier3 === '' ? 'warning' : ''}
-														placeholder='Tier 3'
-														allowClear={true}
-														value={ability.powerRoll.tier3}
-														onChange={e => setPowerRoll3(e.target.value)}
-													/>
-													: null
-											}
-										</Space>
-										<HeaderText>Effect</HeaderText>
-										<MultiLine label='Effect' value={ability.effect} onChange={setEffect} />
-									</div>
-								)
-							},
-							{
-								key: '4',
-								label: 'Extra',
+								label: 'Content',
 								children: (
 									<div>
 										<HeaderText
 											extra={
-												<Button type='text' icon={<PlusOutlined />} onClick={addAlternateEffect} />
+												<Popover
+													trigger='click'
+													content={
+														<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+															<Button type='text' onClick={() => addSection('text')}>Add Text</Button>
+															<Button type='text' onClick={() => addSection('field')}>Add a Field</Button>
+															<Button type='text' onClick={() => addSection('roll')}>Add a Roll</Button>
+														</div>
+													}
+												>
+													<Button type='text' icon={<PlusOutlined />} />
+												</Popover>
 											}
 										>
-											Alternate Effects
+											Sections
 										</HeaderText>
 										<Space direction='vertical' style={{ width: '100%' }}>
 											{
-												ability.alternateEffects.map((effect, n) => (
+												ability.sections.map((section, n) => (
 													<Expander
 														key={n}
-														title='Alternate Effect'
+														title={getSectionTitle(section)}
 														extra={[
-															<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveAlternateEffect(n, 'up'); }} />,
-															<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveAlternateEffect(n, 'down'); }} />,
-															<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteAlternateEffect(n); }} />
+															<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSection(n, 'up'); }} />,
+															<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSection(n, 'down'); }} />,
+															<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSection(n); }} />
 														]}
 													>
-														<Input
-															status={effect === '' ? 'warning' : ''}
-															placeholder='Alternate Effect'
-															allowClear={true}
-															value={effect}
-															onChange={e => setAlternateEffect(n, e.target.value)}
-														/>
+														{
+															section.type === 'text' ?
+																<Space direction='vertical' style={{ width: '100%' }}>
+																	<HeaderText>Text</HeaderText>
+																	<MultiLine label='Strained' value={section.text} onChange={value => setTextSectionText(n, value)} />
+																</Space>
+																: null
+														}
+														{
+															section.type === 'field' ?
+																<Space direction='vertical' style={{ width: '100%' }}>
+																	<HeaderText>Name</HeaderText>
+																	<Input
+																		status={section.name === '' ? 'warning' : ''}
+																		placeholder='Name'
+																		allowClear={true}
+																		value={section.name}
+																		onChange={e => setFieldSectionName(n, e.target.value)}
+																	/>
+																	<HeaderText>Effect</HeaderText>
+																	<MultiLine label='Effect' value={section.effect} onChange={value => setFieldSectionEffect(n, value)} />
+																	<HeaderText>Cost</HeaderText>
+																	<NumberSpin min={0} value={section.value} onChange={value => setFieldSectionValue(n, value)} />
+																	<Toggle label='Repeatable' value={section.repeatable} onChange={value => setFieldSectionRepeatable(n, value)} />
+																</Space>
+																: null
+														}
+														{
+															section.type === 'roll' ?
+																<Space direction='vertical' style={{ width: '100%' }}>
+																	<HeaderText>Characteristics / Bonus</HeaderText>
+																	<Select
+																		style={{ width: '100%' }}
+																		disabled={section.roll.bonus > 0}
+																		status={(section.roll.characteristic.length === 0) && (section.roll.bonus === 0) ? 'warning' : ''}
+																		placeholder='Characteristics'
+																		mode='multiple'
+																		options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
+																		optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+																		showSearch={true}
+																		filterOption={(input, option) => {
+																			const strings = option ?
+																				[
+																					option.value
+																				]
+																				: [];
+																			return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+																		}}
+																		value={section.roll.characteristic}
+																		onChange={value => setRollSectionCharacteristics(n, value)}
+																	/>
+																	<NumberSpin disabled={section.roll.characteristic.length > 0} label='Bonus' min={0} value={section.roll.bonus} onChange={value => setRollSectionBonus(n, value)} />
+																	{
+																		(section.roll.characteristic.length === 0) && (section.roll.bonus === 0) ?
+																			<Alert
+																				type='warning'
+																				showIcon={true}
+																				message='A roll must have either (a) at least one characteristic or (b) a set bonus.'
+																			/>
+																			: null
+																	}
+																	<HeaderText>Tiers</HeaderText>
+																	<Input
+																		status={section.roll.tier1 === '' ? 'warning' : ''}
+																		placeholder='Tier 1'
+																		allowClear={true}
+																		value={section.roll.tier1}
+																		onChange={e => setRollSectionTier1(n, e.target.value)}
+																	/>
+																	<Input
+																		status={section.roll.tier2 === '' ? 'warning' : ''}
+																		placeholder='Tier 2'
+																		allowClear={true}
+																		value={section.roll.tier2}
+																		onChange={e => setRollSectionTier2(n, e.target.value)}
+																	/>
+																	<Input
+																		status={section.roll.tier3 === '' ? 'warning' : ''}
+																		placeholder='Tier 3'
+																		allowClear={true}
+																		value={section.roll.tier3}
+																		onChange={e => setRollSectionTier3(n, e.target.value)}
+																	/>
+																</Space>
+																: null
+														}
 													</Expander>
 												))
 											}
-											{
-												ability.alternateEffects.length === 0 ?
-													<Empty />
-													: null
-											}
 										</Space>
-										<HeaderText
-											extra={
-												<Button type='text' icon={<PlusOutlined />} onClick={addSpend} />
-											}
-										>
-											Spend
-										</HeaderText>
-										<Space direction='vertical' style={{ width: '100%' }}>
-											{
-												ability.spend.map((spend, n) => (
-													<Expander
-														key={n}
-														title='Spend Effect'
-														extra={[
-															<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSpend(n, 'up'); }} />,
-															<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSpend(n, 'down'); }} />,
-															<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSpend(n); }} />
-														]}
-													>
-														<Space direction='vertical' style={{ width: '100%' }}>
-															<Input
-																status={spend.effect === '' ? 'warning' : ''}
-																placeholder='Spend effect'
-																allowClear={true}
-																value={spend.effect}
-																onChange={e => setSpendEffect(n, e.target.value)}
-															/>
-															<NumberSpin min={0} value={spend.value} onChange={value => setSpendValue(n, value)} />
-														</Space>
-													</Expander>
-												))
-											}
-											{
-												ability.spend.length === 0 ?
-													<Empty />
-													: null
-											}
-										</Space>
-										<HeaderText
-											extra={
-												<Button type='text' icon={<PlusOutlined />} onClick={addPersistence} />
-											}
-										>
-											Persistence
-										</HeaderText>
-										<Space direction='vertical' style={{ width: '100%' }}>
-											{
-												ability.persistence.map((persist, n) => (
-													<Expander
-														key={n}
-														title='Persistence Effect'
-														extra={[
-															<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); movePersistence(n, 'up'); }} />,
-															<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); movePersistence(n, 'down'); }} />,
-															<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deletePersistence(n); }} />
-														]}
-													>
-														<Space direction='vertical' style={{ width: '100%' }}>
-															<Input
-																status={persist.effect === '' ? 'warning' : ''}
-																placeholder='Persistence Effect'
-																allowClear={true}
-																value={persist.effect}
-																onChange={e => setPersistenceEffect(n, e.target.value)}
-															/>
-															<NumberSpin min={0} value={persist.value} onChange={value => setPersistenceValue(n, value)} />
-														</Space>
-													</Expander>
-												))
-											}
-											{
-												ability.persistence.length === 0 ?
-													<Empty />
-													: null
-											}
-											<HeaderText>Strained</HeaderText>
-											<MultiLine label='Strained' value={ability.strained} onChange={setStrained} />
-										</Space>
+										{
+											ability.sections.length === 0 ?
+												<Empty />
+												: null
+										}
 									</div>
 								)
 							}

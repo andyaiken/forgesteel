@@ -414,7 +414,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'fury-ability-2',
@@ -461,7 +461,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'fury-ability-3',
@@ -508,7 +508,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'fury-ability-4',
@@ -555,7 +555,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'fury-ability-5',
@@ -602,7 +602,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'fury-ability-6',
@@ -649,7 +649,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'fury-ability-7',
@@ -696,7 +696,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'fury-ability-8',
@@ -743,7 +743,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'fury-ability-9',
@@ -790,7 +790,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'fury-ability-10',
@@ -825,7 +825,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'fury-ability-11',
@@ -872,7 +872,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'fury-ability-12',
@@ -926,7 +926,7 @@ export class HeroData {
 							repeatable: false
 						}
 					],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'fury-ability-13',
@@ -963,7 +963,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'fury-ability-14',
@@ -1000,7 +1000,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'fury-ability-15',
@@ -1037,7 +1037,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'fury-ability-16',
@@ -1076,7 +1076,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				}
 			],
 			subclasses: [
@@ -1189,7 +1189,7 @@ export class HeroData {
 																strained: '',
 																alternateEffects: [],
 																spend: [],
-																persistence: []
+																persistence: [], sections: []
 															}
 														}
 													}
@@ -1254,7 +1254,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -1321,7 +1321,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -1378,7 +1378,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -1512,7 +1512,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -1613,7 +1613,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -1671,7 +1671,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -1789,7 +1789,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -1841,7 +1841,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -1917,7 +1917,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -1975,7 +1975,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -2567,7 +2567,7 @@ export class HeroData {
 														strained: '',
 														alternateEffects: [],
 														spend: [],
-														persistence: []
+														persistence: [], sections: []
 													}
 												}
 											}
@@ -2650,7 +2650,7 @@ export class HeroData {
 														strained: '',
 														alternateEffects: [],
 														spend: [],
-														persistence: []
+														persistence: [], sections: []
 													}
 												}
 											}
@@ -2700,7 +2700,7 @@ export class HeroData {
 									strained: '',
 									alternateEffects: [],
 									spend: [],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -2752,7 +2752,7 @@ export class HeroData {
 											repeatable: false
 										}
 									],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -2848,7 +2848,7 @@ export class HeroData {
 									strained: '',
 									alternateEffects: [],
 									spend: [],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -2911,7 +2911,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'tactician-ability-2',
@@ -2967,7 +2967,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'tactician-ability-3',
@@ -3023,7 +3023,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'tactician-ability-4',
@@ -3060,7 +3060,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'tactician-ability-5',
@@ -3116,7 +3116,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'tactician-ability-6',
@@ -3172,7 +3172,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'tactician-ability-7',
@@ -3210,7 +3210,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'tactician-ability-8',
@@ -3247,7 +3247,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'tactician-ability-9',
@@ -3282,7 +3282,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'tactician-ability-10',
@@ -3317,7 +3317,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'tactician-ability-11',
@@ -3352,7 +3352,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'tactician-ability-12',
@@ -3387,7 +3387,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				}
 			],
 			subclasses: [
@@ -3468,7 +3468,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -3533,7 +3533,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -3591,7 +3591,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -3688,7 +3688,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -3736,7 +3736,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -3799,7 +3799,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -3847,7 +3847,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -3947,7 +3947,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -4022,7 +4022,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -4070,7 +4070,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -4330,7 +4330,7 @@ export class HeroData {
 							strained: '',
 							alternateEffects: [],
 							spend: [],
-							persistence: []
+							persistence: [], sections: []
 						}
 					}
 				},
@@ -4401,7 +4401,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -4447,7 +4447,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -4512,7 +4512,7 @@ export class HeroData {
 										strained: '',
 										alternateEffects: [],
 										spend: [],
-										persistence: []
+										persistence: [], sections: []
 									}
 								}
 							},
@@ -4757,7 +4757,7 @@ export class HeroData {
 																strained: '',
 																alternateEffects: [],
 																spend: [],
-																persistence: []
+																persistence: [], sections: []
 															}
 														}
 													}
@@ -4822,7 +4822,7 @@ export class HeroData {
 									strained: '',
 									alternateEffects: [],
 									spend: [],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -4914,7 +4914,7 @@ export class HeroData {
 														strained: '',
 														alternateEffects: [],
 														spend: [],
-														persistence: []
+														persistence: [], sections: []
 													}
 												}
 											}
@@ -4972,7 +4972,7 @@ export class HeroData {
 											repeatable: false
 										}
 									],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -5156,7 +5156,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'censor-ability-2',
@@ -5203,7 +5203,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'censor-ability-3',
@@ -5250,7 +5250,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'censor-ability-4',
@@ -5297,7 +5297,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'censor-ability-5',
@@ -5344,7 +5344,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'censor-ability-6',
@@ -5391,7 +5391,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'censor-ability-7',
@@ -5438,7 +5438,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'censor-ability-8',
@@ -5485,7 +5485,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'censor-ability-9',
@@ -5533,7 +5533,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'censor-ability-10',
@@ -5590,7 +5590,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'censor-ability-11',
@@ -5637,7 +5637,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'censor-ability-12',
@@ -5694,7 +5694,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'censor-ability-13',
@@ -5732,7 +5732,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'censor-ability-14',
@@ -5770,7 +5770,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'censor-ability-15',
@@ -5808,7 +5808,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'censor-ability-16',
@@ -5846,7 +5846,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				}
 			],
 			subclasses: [
@@ -5959,7 +5959,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -6008,7 +6008,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -6128,7 +6128,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -6177,7 +6177,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -6297,7 +6297,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -6356,7 +6356,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -6603,7 +6603,7 @@ export class HeroData {
 							strained: '',
 							alternateEffects: [],
 							spend: [],
-							persistence: []
+							persistence: [], sections: []
 						}
 					}
 				},
@@ -6674,7 +6674,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -6720,7 +6720,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -6785,7 +6785,7 @@ export class HeroData {
 										strained: '',
 										alternateEffects: [],
 										spend: [],
-										persistence: []
+										persistence: [], sections: []
 									}
 								}
 							},
@@ -7000,7 +7000,7 @@ export class HeroData {
 									strained: '',
 									alternateEffects: [],
 									spend: [],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -7052,7 +7052,7 @@ export class HeroData {
 											repeatable: false
 										}
 									],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -7372,7 +7372,7 @@ export class HeroData {
 									strained: '',
 									alternateEffects: [],
 									spend: [],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -7438,7 +7438,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-2',
@@ -7486,7 +7486,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-3',
@@ -7534,7 +7534,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-4',
@@ -7582,7 +7582,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-5',
@@ -7630,7 +7630,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-6',
@@ -7678,7 +7678,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-7',
@@ -7726,7 +7726,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-8',
@@ -7774,7 +7774,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-9',
@@ -7822,7 +7822,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-10',
@@ -7860,7 +7860,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-11',
@@ -7908,7 +7908,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-12',
@@ -7956,7 +7956,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-13',
@@ -8004,7 +8004,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-14',
@@ -8052,7 +8052,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-15',
@@ -8100,7 +8100,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-16',
@@ -8148,7 +8148,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-17',
@@ -8185,7 +8185,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-18',
@@ -8222,7 +8222,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-19',
@@ -8259,7 +8259,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'null-ability-20',
@@ -8296,7 +8296,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				}
 			],
 			subclasses: [
@@ -8390,7 +8390,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -8449,7 +8449,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -8590,7 +8590,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -8638,7 +8638,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -8761,7 +8761,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -8817,7 +8817,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -9077,7 +9077,7 @@ export class HeroData {
 							strained: '',
 							alternateEffects: [],
 							spend: [],
-							persistence: []
+							persistence: [], sections: []
 						}
 					}
 				},
@@ -9148,7 +9148,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -9194,7 +9194,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -9259,7 +9259,7 @@ export class HeroData {
 										strained: '',
 										alternateEffects: [],
 										spend: [],
-										persistence: []
+										persistence: [], sections: []
 									}
 								}
 							},
@@ -9500,7 +9500,7 @@ export class HeroData {
 									strained: 'The strike deals an extra 2 psychic damage to the target and to you. The damage you take can’t be reduced in any way.',
 									alternateEffects: [],
 									spend: [],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -9763,7 +9763,7 @@ export class HeroData {
 													strained: '',
 													alternateEffects: [],
 													spend: [],
-													persistence: []
+													persistence: [], sections: []
 												}
 											}
 										},
@@ -9831,7 +9831,7 @@ export class HeroData {
 												strained: '',
 												alternateEffects: [],
 												spend: [],
-												persistence: []
+												persistence: [], sections: []
 											}
 										}
 									}
@@ -9975,7 +9975,7 @@ export class HeroData {
 					strained: 'You gain 1 clarity on a tier 2 or tier 3 result.',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-2',
@@ -10023,7 +10023,7 @@ export class HeroData {
 					strained: 'The size of the cube increases by 2, but the fire disappears at the end of your turn.',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-3',
@@ -10071,7 +10071,7 @@ export class HeroData {
 					strained: 'A target slowed by this ability is restrained instead, and you are slowed until the end of your next turn.',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-4',
@@ -10118,7 +10118,7 @@ export class HeroData {
 					strained: 'You can’t use this ability’s effect, but you can vertical push the target.',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-5',
@@ -10165,7 +10165,7 @@ export class HeroData {
 					strained: 'The size of the burst increases by 2, and you are bleeding until the start of your next turn.',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-6',
@@ -10213,7 +10213,7 @@ export class HeroData {
 					strained: 'The object is explodes on impact, dealing damage equal to your Reason score to each creature adjacent to the target. You also take damage equal to your Reason score, which can’t be reduced in any way.',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-7',
@@ -10261,7 +10261,7 @@ export class HeroData {
 					strained: 'You gain a surge, which you can use immediately, and take damage equal to your Reason score, which can’t be reduced in any way.',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-8',
@@ -10309,7 +10309,7 @@ export class HeroData {
 					strained: 'The attack deals an extra 3 damage to the target and to you. The damage you take can’t be reduced in any way.',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-9',
@@ -10357,7 +10357,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-10',
@@ -10405,7 +10405,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-11',
@@ -10444,7 +10444,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-12',
@@ -10492,7 +10492,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-13',
@@ -10531,7 +10531,7 @@ export class HeroData {
 					strained: 'You take 1d6 damage and are slowed (save ends).',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-14',
@@ -10570,7 +10570,7 @@ export class HeroData {
 					strained: 'You are weakened and your stability decreases by 5 (save ends). If your stability becomes a negative value, it adds to the distance you are force moved.',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-15',
@@ -10609,7 +10609,7 @@ export class HeroData {
 					strained: 'You can’t use maneuvers (save ends).',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-16',
@@ -10648,7 +10648,7 @@ export class HeroData {
 					strained: 'You take 1d6 damage, and you can’t use triggered actions (save ends).',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-17',
@@ -10696,7 +10696,7 @@ export class HeroData {
 					strained: 'You take 2d6 damage and grow visibly older (the equivalent of 10 years for a human). On a tier 3 result, you gain 2 clarity.',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-18',
@@ -10744,7 +10744,7 @@ export class HeroData {
 					strained: 'You create five orbs. You are weakened while you have any orbs active.',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-19',
@@ -10783,7 +10783,7 @@ export class HeroData {
 					strained: 'The size of the aura increases by 1. Each ability your aura reflects causes you to take 2d6 damage and makes you forget a memory, as determined in consultation with the Director.',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'talent-ability-20',
@@ -10831,7 +10831,7 @@ export class HeroData {
 					strained: 'The potency of this ability increases by 1. You take 2d6 damage, and gain 3 surges.',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				}
 			],
 			subclasses: [
@@ -10891,7 +10891,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -10937,7 +10937,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -11012,7 +11012,7 @@ export class HeroData {
 															strained: 'Your speed is halved until the end of the encounter.',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -11070,7 +11070,7 @@ export class HeroData {
 															strained: 'The potency of this ability increases by 1 and you take 1d6 damage. At the start of each round while any target is affected by this ability, you take 1d6 damage. You can immediately end the effects on all affected targets (no action required).',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -11153,7 +11153,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -11199,7 +11199,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -11247,7 +11247,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -11310,7 +11310,7 @@ export class HeroData {
 															strained: 'The size of the burst increases by 1 and you are weakened until the end of your turn.',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -11369,7 +11369,7 @@ export class HeroData {
 															strained: 'You take half the damage the target takes, including any damage from falling.',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -11439,7 +11439,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -11492,7 +11492,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -11568,7 +11568,7 @@ export class HeroData {
 															strained: 'You start crying. You can’t take triggered actions or take free strikes until the end of the target’s next turn.',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -11626,7 +11626,7 @@ export class HeroData {
 															strained: 'You take 1d6 damage and are weakened until the end of your turn.',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -12169,7 +12169,7 @@ export class HeroData {
 																strained: '',
 																alternateEffects: [],
 																spend: [],
-																persistence: []
+																persistence: [], sections: []
 															}
 														}
 													}
@@ -12276,7 +12276,7 @@ export class HeroData {
 																strained: '',
 																alternateEffects: [],
 																spend: [],
-																persistence: []
+																persistence: [], sections: []
 															}
 														}
 													}
@@ -12393,7 +12393,7 @@ export class HeroData {
 											name: ''
 										}
 									],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -12450,7 +12450,7 @@ export class HeroData {
 									strained: '',
 									alternateEffects: [],
 									spend: [],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -12511,7 +12511,7 @@ export class HeroData {
 															repeatable: false
 														}
 													],
-													persistence: []
+													persistence: [], sections: []
 												}
 											}
 										},
@@ -12567,7 +12567,7 @@ export class HeroData {
 															repeatable: false
 														}
 													],
-													persistence: []
+													persistence: [], sections: []
 												}
 											}
 										},
@@ -12625,7 +12625,7 @@ export class HeroData {
 														repeatable: false
 													}
 												],
-												persistence: []
+												persistence: [], sections: []
 											}
 										}
 									}
@@ -13043,7 +13043,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-2',
@@ -13090,7 +13090,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-3',
@@ -13137,7 +13137,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-4',
@@ -13183,7 +13183,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-5',
@@ -13230,7 +13230,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-6',
@@ -13277,7 +13277,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-7',
@@ -13324,7 +13324,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-8',
@@ -13371,7 +13371,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-9',
@@ -13418,7 +13418,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-10',
@@ -13456,7 +13456,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-11',
@@ -13503,7 +13503,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-12',
@@ -13550,7 +13550,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-13',
@@ -13597,7 +13597,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-14',
@@ -13644,7 +13644,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-15',
@@ -13690,7 +13690,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-16',
@@ -13728,7 +13728,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-17',
@@ -13775,7 +13775,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-18',
@@ -13813,7 +13813,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-19',
@@ -13860,7 +13860,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'conduit-ability-20',
@@ -13906,7 +13906,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				}
 			],
 			subclasses: [],
@@ -14138,7 +14138,7 @@ export class HeroData {
 							strained: '',
 							alternateEffects: [],
 							spend: [],
-							persistence: []
+							persistence: [], sections: []
 						}
 					}
 				},
@@ -14462,7 +14462,7 @@ export class HeroData {
 									strained: '',
 									alternateEffects: [],
 									spend: [],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -14515,7 +14515,7 @@ export class HeroData {
 									strained: '',
 									alternateEffects: [],
 									spend: [],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -14830,7 +14830,7 @@ export class HeroData {
 													strained: '',
 													alternateEffects: [],
 													spend: [],
-													persistence: []
+													persistence: [], sections: []
 												}
 											}
 										},
@@ -14876,7 +14876,7 @@ export class HeroData {
 													strained: '',
 													alternateEffects: [],
 													spend: [],
-													persistence: []
+													persistence: [], sections: []
 												}
 											}
 										},
@@ -15038,7 +15038,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-2',
@@ -15086,7 +15086,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-3',
@@ -15134,7 +15134,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-4',
@@ -15182,7 +15182,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-5',
@@ -15230,7 +15230,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-6',
@@ -15278,7 +15278,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-7',
@@ -15326,7 +15326,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-8',
@@ -15374,7 +15374,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-9',
@@ -15528,7 +15528,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-12',
@@ -15575,7 +15575,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-13',
@@ -15772,7 +15772,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-17',
@@ -15867,7 +15867,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-19',
@@ -15915,7 +15915,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-20',
@@ -15964,7 +15964,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-21',
@@ -16012,7 +16012,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-22',
@@ -16060,7 +16060,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'elementalist-ability-23',
@@ -16219,7 +16219,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -16273,7 +16273,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -16343,7 +16343,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -16421,7 +16421,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -16475,7 +16475,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -16580,7 +16580,7 @@ export class HeroData {
 													name: ''
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -16644,7 +16644,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -16729,7 +16729,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -16783,7 +16783,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -16835,7 +16835,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -16998,7 +16998,7 @@ export class HeroData {
 										strained: '',
 										alternateEffects: [],
 										spend: [],
-										persistence: []
+										persistence: [], sections: []
 									}
 								},
 								list: 'Supernatural'
@@ -17136,7 +17136,7 @@ export class HeroData {
 							strained: '',
 							alternateEffects: [],
 							spend: [],
-							persistence: []
+							persistence: [], sections: []
 						}
 					}
 				},
@@ -17457,7 +17457,7 @@ export class HeroData {
 									strained: '',
 									alternateEffects: [],
 									spend: [],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -17561,7 +17561,7 @@ export class HeroData {
 														strained: '',
 														alternateEffects: [],
 														spend: [],
-														persistence: []
+														persistence: [], sections: []
 													}
 												}
 											}
@@ -17676,7 +17676,7 @@ export class HeroData {
 									strained: '',
 									alternateEffects: [],
 									spend: [],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -17741,7 +17741,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'shadow-ability-2',
@@ -17797,7 +17797,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'shadow-ability-3',
@@ -17853,7 +17853,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'shadow-ability-4',
@@ -17900,7 +17900,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'shadow-ability-5',
@@ -17947,7 +17947,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'shadow-ability-6',
@@ -18003,7 +18003,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'shadow-ability-7',
@@ -18050,7 +18050,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'shadow-ability-8',
@@ -18106,7 +18106,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'shadow-ability-9',
@@ -18162,7 +18162,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'shadow-ability-10',
@@ -18209,7 +18209,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'shadow-ability-11',
@@ -18256,7 +18256,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'shadow-ability-12',
@@ -18295,7 +18295,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'shadow-ability-13',
@@ -18330,7 +18330,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'shadow-ability-14',
@@ -18386,7 +18386,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'shadow-ability-15',
@@ -18433,7 +18433,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'shadow-ability-16',
@@ -18489,7 +18489,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				}
 			],
 			subclasses: [
@@ -18565,7 +18565,7 @@ export class HeroData {
 													name: ''
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -18617,7 +18617,7 @@ export class HeroData {
 													name: ''
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -18695,7 +18695,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -18746,7 +18746,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -18843,7 +18843,7 @@ export class HeroData {
 													name: ''
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -18900,7 +18900,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -18966,7 +18966,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -19023,7 +19023,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -19122,7 +19122,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -19167,7 +19167,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -19235,7 +19235,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -19287,7 +19287,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -19624,7 +19624,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -19878,7 +19878,7 @@ export class HeroData {
 									strained: '',
 									alternateEffects: [],
 									spend: [],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -19925,7 +19925,7 @@ export class HeroData {
 									strained: '',
 									alternateEffects: [],
 									spend: [],
-									persistence: []
+									persistence: [], sections: []
 								}
 							}
 						},
@@ -20016,7 +20016,7 @@ export class HeroData {
 														strained: '',
 														alternateEffects: [],
 														spend: [],
-														persistence: []
+														persistence: [], sections: []
 													}
 												}
 											}
@@ -20126,7 +20126,7 @@ export class HeroData {
 													strained: '',
 													alternateEffects: [],
 													spend: [],
-													persistence: []
+													persistence: [], sections: []
 												}
 											}
 										},
@@ -20248,7 +20248,7 @@ export class HeroData {
 							name: ''
 						}
 					],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'troubadour-ability-2',
@@ -20296,7 +20296,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'troubadour-ability-3',
@@ -20343,7 +20343,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'troubadour-ability-4',
@@ -20406,7 +20406,7 @@ export class HeroData {
 							repeatable: false
 						}
 					],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'troubadour-ability-5',
@@ -20462,7 +20462,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'troubadour-ability-6',
@@ -20515,7 +20515,7 @@ export class HeroData {
 							name: ''
 						}
 					],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'troubadour-ability-7',
@@ -20562,7 +20562,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'troubadour-ability-8',
@@ -20610,7 +20610,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'troubadour-ability-9',
@@ -20656,7 +20656,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'troubadour-ability-10',
@@ -20693,7 +20693,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'troubadour-ability-11',
@@ -20731,7 +20731,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'troubadour-ability-12',
@@ -20778,7 +20778,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'troubadour-ability-13',
@@ -20825,7 +20825,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'troubadour-ability-14',
@@ -20872,7 +20872,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'troubadour-ability-15',
@@ -20929,7 +20929,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				},
 				{
 					id: 'troubadour-ability-16',
@@ -20967,7 +20967,7 @@ export class HeroData {
 					strained: '',
 					alternateEffects: [],
 					spend: [],
-					persistence: []
+					persistence: [], sections: []
 				}
 			],
 			subclasses: [
@@ -21038,7 +21038,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -21088,7 +21088,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -21131,7 +21131,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -21191,7 +21191,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -21249,7 +21249,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -21344,7 +21344,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -21397,7 +21397,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -21447,7 +21447,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -21506,7 +21506,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -21555,7 +21555,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -21657,7 +21657,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -21713,7 +21713,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -21760,7 +21760,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -21810,7 +21810,7 @@ export class HeroData {
 													repeatable: false
 												}
 											],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}
@@ -21869,7 +21869,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -21927,7 +21927,7 @@ export class HeroData {
 															strained: '',
 															alternateEffects: [],
 															spend: [],
-															persistence: []
+															persistence: [], sections: []
 														}
 													}
 												},
@@ -21986,7 +21986,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								},
@@ -22033,7 +22033,7 @@ export class HeroData {
 											strained: '',
 											alternateEffects: [],
 											spend: [],
-											persistence: []
+											persistence: [], sections: []
 										}
 									}
 								}

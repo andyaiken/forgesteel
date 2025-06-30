@@ -42,7 +42,7 @@ export class ConditionLogic {
 			case ConditionEndType.SaveEnds:
 				return `${type} (${condition.ends})`;
 			case ConditionEndType.UntilRemoved:
-				return `${type}`;
+				return type;
 		}
 	};
 }

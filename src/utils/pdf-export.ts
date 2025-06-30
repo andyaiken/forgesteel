@@ -327,96 +327,85 @@ export class PDFExport {
 					}
 					texts[prefix + 'Keywords' + i] = a.keywords.join(', ');
 					texts[prefix + 'Type' + i] = a.type.free ? `Free ${a.type.usage}` : a.type.usage;
+
 					const details = [ ...a.type.qualifiers || [] ];
-
-					if (a.preEffect) {
-						details.push(CleanupOutput(a.preEffect.replace(/^\s+/, '')));
-					}
-					if (a.powerRoll) {
-						let powerRollText = '';
-						powerRollText = powerRollText + 'Power Roll: 2d10 + ' + Math.max(...a.powerRoll.characteristic
-							.map(
-								c =>
-									hero.class &&
-									hero.class.characteristics.find(d => d.characteristic === c)
-							)
-							.map(c => (c && c.value) || 0)
-						);
-						powerRollText = powerRollText + '\n   • 11 or less\t' + AbilityLogic.getTierEffect(
-							a.powerRoll.tier1,
-							1,
-							a,
-							undefined,
-							hero
-						);
-						powerRollText = powerRollText + '\n   • 12 - 16\t\t' + AbilityLogic.getTierEffect(
-							a.powerRoll.tier2,
-							2,
-							a,
-							undefined,
-							hero
-						);
-						powerRollText = powerRollText + '\n   • 17 +\t\t\t' + AbilityLogic.getTierEffect(
-							a.powerRoll.tier3,
-							3,
-							a,
-							undefined,
-							hero
-						);
-
-						const hasMelee = a.keywords.includes(AbilityKeyword.Melee) && a.keywords.includes(AbilityKeyword.Weapon);
-						const hasRanged = a.keywords.includes(AbilityKeyword.Ranged) && a.keywords.includes(AbilityKeyword.Weapon);
-
-						const dmgKits = HeroLogic
-							.getKitDamageBonuses(hero)
-							.filter(dmg => {
-								switch (dmg.type) {
-									case 'melee':
-										return hasMelee;
-									case 'ranged':
-										return hasRanged;
-								}
-							});
-
-						// Show bonuses from kits if:
-						// * we have more than 1 bonus
-						// * the ability has melee and ranged distances
-						// ... because otherwise it should have already been applied
-						const showKitBonuses = (dmgKits.length > 1) || (hasMelee && hasRanged);
-						if (showKitBonuses) {
-							dmgKits.forEach(bonus => {
-								powerRollText = powerRollText + '\n   ' + bonus.kit + ': ' + AddSign(bonus.tier1) + ' / ' + AddSign(bonus.tier2) + ' / ' + AddSign(bonus.tier3) + ' ' + bonus.type + ' damage';
-							});
-						}
-
-						details.push(powerRollText);
-					}
 					if (a.type.trigger !== '') {
 						details.push('Trigger:\n' + CleanupOutput(a.type.trigger));
 					}
-					if (a.effect && details.length === 0)
-						details.push(CleanupOutput(a.effect.replace(/^\s+/, '')));
-					else if (a.effect) {
-						details.push('Effect:\n' + CleanupOutput(a.effect.replace(/^\s+/, '')));
-					}
-					if (a.alternateEffects.length > 0) {
-						details.push(
-							...a.alternateEffects.map(e => 'Alternate Effect:\n' + CleanupOutput(e))
-						);
-					}
-					if (a.spend.length > 0) {
-						details.push(
-							...a.spend.map(s => 'Spend ' + s.value + ':\n' + CleanupOutput(s.effect))
-						);
-					}
-					if (a.persistence.length > 0) {
-						details.push(
-							...a.persistence.map(p => 'Persistent ' + p.value + ':\n' + CleanupOutput(p.effect))
-						);
-					}
-					if (a.strained !== '') {
-						details.push('Strained:\n' + CleanupOutput(a.strained));
-					}
+					a.sections.forEach(section => {
+						switch (section.type) {
+							case 'text':
+								details.push(CleanupOutput(section.text.replace(/^\s+/, '')));
+								break;
+							case 'field':
+								if (section.value !== 0) {
+									details.push(section.name + ' ' + section.value + (section.repeatable ? '+' : '') + ':\n' + CleanupOutput(section.effect));
+								} else {
+									details.push(section.name + ':\n' + CleanupOutput(section.effect));
+								}
+								break;
+							case 'roll': {
+								let powerRollText = '';
+								powerRollText = powerRollText + 'Power Roll: 2d10 + ' + Math.max(...section.roll.characteristic
+									.map(
+										c =>
+											hero.class &&
+											hero.class.characteristics.find(d => d.characteristic === c)
+									)
+									.map(c => (c && c.value) || 0)
+								);
+								powerRollText = powerRollText + '\n   • 11 or less\t' + AbilityLogic.getTierEffect(
+									section.roll.tier1,
+									1,
+									a,
+									undefined,
+									hero
+								);
+								powerRollText = powerRollText + '\n   • 12 - 16\t\t' + AbilityLogic.getTierEffect(
+									section.roll.tier2,
+									2,
+									a,
+									undefined,
+									hero
+								);
+								powerRollText = powerRollText + '\n   • 17 +\t\t\t' + AbilityLogic.getTierEffect(
+									section.roll.tier3,
+									3,
+									a,
+									undefined,
+									hero
+								);
+
+								const hasMelee = a.keywords.includes(AbilityKeyword.Melee) && a.keywords.includes(AbilityKeyword.Weapon);
+								const hasRanged = a.keywords.includes(AbilityKeyword.Ranged) && a.keywords.includes(AbilityKeyword.Weapon);
+
+								const dmgKits = HeroLogic
+									.getKitDamageBonuses(hero)
+									.filter(dmg => {
+										switch (dmg.type) {
+											case 'melee':
+												return hasMelee;
+											case 'ranged':
+												return hasRanged;
+										}
+									});
+
+								// Show bonuses from kits if:
+								// * we have more than 1 bonus
+								// * the ability has melee and ranged distances
+								// ... because otherwise it should have already been applied
+								const showKitBonuses = (dmgKits.length > 1) || (hasMelee && hasRanged);
+								if (showKitBonuses) {
+									dmgKits.forEach(bonus => {
+										powerRollText = powerRollText + '\n   ' + bonus.kit + ': ' + AddSign(bonus.tier1) + ' / ' + AddSign(bonus.tier2) + ' / ' + AddSign(bonus.tier3) + ' ' + bonus.type + ' damage';
+									});
+								}
+
+								details.push(powerRollText);
+								break;
+							}
+						}
+					});
 					texts[prefix + 'Text' + i] = details.join('\n\n');
 
 					if (typeof a.cost === 'number' && a.cost > 0) {

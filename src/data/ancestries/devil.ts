@@ -53,7 +53,9 @@ export const devil: Ancestry = {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
-							effect: 'You curse your attacker for daring to do you harm. The creature takes 1d10 + your level psychic damage.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('You curse your attacker for daring to do you harm. The creature takes 1d10 + your level psychic damage.')
+							]
 						})
 					}),
 					value: 1

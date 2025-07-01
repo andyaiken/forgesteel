@@ -314,7 +314,6 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 3,
-			preEffect: '',
 			powerRoll: FactoryLogic.createPowerRoll({
 				characteristic: [ Characteristic.Presence ],
 				tier1: 'Slide 1; I < [weak], dazed (save ends)',
@@ -322,6 +321,7 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 				tier3: 'Slide 2; I < [strong], dazed (save ends)'
 			}),
 			sections: [
+				FactoryLogic.createAbilitySectionText(''),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Spend',
 					value: 2,
@@ -356,13 +356,17 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 3,
-			preEffect: 'You shift up to your speed. You make one power roll that targets each enemy who becomes adjacent to you during the shift.',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility, Characteristic.Presence ],
-				tier1: 'Taunted (EoT); A < [weak], prone',
-				tier2: 'Taunted (EoT); A < [average], prone',
-				tier3: 'Taunted (EoT); A < [strong], prone and can’t stand (EoT)'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionText('You shift up to your speed. You make one power roll that targets each enemy who becomes adjacent to you during the shift.'),
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility, Characteristic.Presence ],
+						tier1: 'Taunted (EoT); A < [weak], prone',
+						tier2: 'Taunted (EoT); A < [average], prone',
+						tier3: 'Taunted (EoT); A < [strong], prone and can’t stand (EoT)'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'troubadour-ability-9',
@@ -772,13 +776,17 @@ Choose one of the following effects:
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Routine, AbilityKeyword.Strike ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: '1 creature',
-								preEffect: 'At the end of each round while this routine is active, make a power roll that ignores cover. You can’t target the same creature twice with this effect.',
-								powerRoll: FactoryLogic.createPowerRoll({
-									characteristic: [ Characteristic.Presence ],
-									tier1: 'Lightning damage equal to your level',
-									tier2: 'Lightning damage equal to 5 + your level',
-									tier3: 'Lightning damage equal to 10 + your level'
-								})
+								sections: [
+									FactoryLogic.createAbilitySectionText('At the end of each round while this routine is active, make a power roll that ignores cover. You can’t target the same creature twice with this effect'),
+									FactoryLogic.createAbilitySectionRoll(
+										FactoryLogic.createPowerRoll({
+											characteristic: [ Characteristic.Presence ],
+											tier1: 'Lightning damage equal to your level',
+											tier2: 'Lightning damage equal to 5 + your level',
+											tier3: 'Lightning damage equal to 10 + your level'
+										})
+									)
+								]
 							})
 						}),
 						FactoryLogic.feature.createAbility({
@@ -848,13 +856,17 @@ Choose one of the following effects:
 											distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 											target: 'Special',
 											cost: 5,
-											preEffect: 'The affected area becomes haunted by a swirling horde of phantoms until the end of the encounter. Any ally can enter any square of the area without spending movement. At the end of each of your turns, you can make a power roll against each enemy in the area.',
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Presence ],
-												tier1: '5 corruption damage; M < [weak], pull 1 toward the center of the area',
-												tier2: '9 corruption damage; M < [average], pull 2 toward the center of the area',
-												tier3: '12 corruption damage; M < [strong], pull 3 toward the center of the area'
-											})
+											sections: [
+												FactoryLogic.createAbilitySectionText('The affected area becomes haunted by a swirling horde of phantoms until the end of the encounter. Any ally can enter any square of the area without spending movement. At the end of each of your turns, you can make a power roll against each enemy in the area.'),
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														characteristic: [ Characteristic.Presence ],
+														tier1: '5 corruption damage; M < [weak], pull 1 toward the center of the area',
+														tier2: '9 corruption damage; M < [average], pull 2 toward the center of the area',
+														tier3: '12 corruption damage; M < [strong], pull 3 toward the center of the area'
+													})
+												)
+											]
 										})
 									}),
 									value: 1

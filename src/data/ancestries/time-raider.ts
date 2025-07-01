@@ -30,7 +30,9 @@ export const timeRaider: Ancestry = {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
-							effect: 'You can see through mundane obstructions that are 1 square thick or less. While your vision is adjusted this way, you can’t see and don’t have line of effect to any creatures or objects within 1 square of you. You can return your vision to normal as a maneuver.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('You can see through mundane obstructions that are 1 square thick or less. While your vision is adjusted this way, you can’t see and don’t have line of effect to any creatures or objects within 1 square of you. You can return your vision to normal as a maneuver.')
+							]
 						})
 					}),
 					value: 1
@@ -55,7 +57,9 @@ export const timeRaider: Ancestry = {
 									keywords: [],
 									distance: [ FactoryLogic.distance.createSelf() ],
 									target: 'Self',
-									effect: 'You impose a bane on the power roll.'
+									sections: [
+										FactoryLogic.createAbilitySectionText('You impose a bane on the power roll.')
+									]
 								})
 							})
 						]
@@ -83,12 +87,16 @@ export const timeRaider: Ancestry = {
 							keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: '1 creature or object',
-							powerRoll: FactoryLogic.createPowerRoll({
-								characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: '2 + R, I, or P damage',
-								tier2: '5 + R, I, or P damage; push 1',
-								tier3: '7 + R, I, or P damage; push 2; M < [strong] prone'
-							})
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+										tier1: '2 + R, I, or P damage',
+										tier2: '5 + R, I, or P damage; push 1',
+										tier3: '7 + R, I, or P damage; push 2; M < [strong] prone'
+									})
+								)
+							]
 						})
 					}),
 					value: 2
@@ -104,12 +112,16 @@ export const timeRaider: Ancestry = {
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: '1 creature or object',
 							cost: 'signature',
-							powerRoll: FactoryLogic.createPowerRoll({
-								characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: '2 + R, I, or P psychic damage; slide 1',
-								tier2: '5 + R, I, or P psychic damage; slide 2',
-								tier3: '7 + R, I, or P psychic damage; slide 3'
-							})
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+										tier1: '2 + R, I, or P psychic damage; slide 1',
+										tier2: '5 + R, I, or P psychic damage; slide 2',
+										tier3: '7 + R, I, or P psychic damage; slide 3'
+									})
+								)
+							]
 						})
 					}),
 					value: 2
@@ -127,7 +139,9 @@ export const timeRaider: Ancestry = {
 								FactoryLogic.distance.createMelee()
 							],
 							target: 'Self or 1 ally',
-							effect: 'The target’s speed increases by an amount equal to your Reason, Intuition, or Presence score (your choice) until the start of your next turn.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('The target’s speed increases by an amount equal to your Reason, Intuition, or Presence score (your choice) until the start of your next turn.')
+							]
 						})
 					}),
 					value: 2

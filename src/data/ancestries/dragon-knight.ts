@@ -86,7 +86,9 @@ export const dragonKnight: Ancestry = {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
-							effect: 'You reduce the damage from the strike by an amount equal to your level.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('You reduce the damage from the strike by an amount equal to your level.')
+							]
 						})
 					}),
 					value: 1
@@ -182,12 +184,16 @@ As a maneuver, you can recite the following oath. If you do, you succeed on savi
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 							target: 'All enemies',
 							cost: 'signature',
-							powerRoll: FactoryLogic.createPowerRoll({
-								characteristic: [ Characteristic.Might, Characteristic.Presence ],
-								tier1: '2 damage',
-								tier2: '5 damage; push 1',
-								tier3: '7 damage; push 2'
-							})
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										characteristic: [ Characteristic.Might, Characteristic.Presence ],
+										tier1: '2 damage',
+										tier2: '5 damage; push 1',
+										tier3: '7 damage; push 2'
+									})
+								)
+							]
 						})
 					}),
 					value: 2
@@ -203,13 +209,17 @@ As a maneuver, you can recite the following oath. If you do, you succeed on savi
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 							target: 'All enemies',
 							cost: 'signature',
-							powerRoll: FactoryLogic.createPowerRoll({
-								characteristic: [ Characteristic.Might, Characteristic.Presence ],
-								tier1: '2 damage',
-								tier2: '4 damage',
-								tier3: '6 damage'
-							}),
-							effect: 'You choose the ability’s damage type from acid, cold, corruption, fire, lightning, or poison.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										characteristic: [ Characteristic.Might, Characteristic.Presence ],
+										tier1: '2 damage',
+										tier2: '4 damage',
+										tier3: '6 damage'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('You choose the ability’s damage type from acid, cold, corruption, fire, lightning, or poison.')
+							]
 						})
 					}),
 					value: 2

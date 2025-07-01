@@ -63,7 +63,9 @@ export const memonek: Ancestry = {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
-							effect: 'You can remove an edge or a bane on the roll. You can only use this benefit once per round.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('You can remove an edge or a bane on the roll. You can only use this benefit once per round.')
+							]
 						})
 					}),
 					value: 2

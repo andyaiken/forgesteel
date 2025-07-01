@@ -300,13 +300,17 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 5,
-			preEffect: 'You shift up to your speed. You make one power roll that targets up to three enemies, each of who became adjacent to you during the move.',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '3 damage',
-				tier2: '6 damage',
-				tier3: '9 + A damage'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionText('You shift up to your speed. You make one power roll that targets up to three enemies, each of who became adjacent to you during the move.'),
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '3 damage',
+						tier2: '6 damage',
+						tier3: '9 + A damage'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-11',
@@ -594,13 +598,17 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 											distance: [ FactoryLogic.distance.createRanged(10) ],
 											target: '1 creature',
 											cost: 5,
-											preEffect: 'You attach a small bomb to a creature. If you are hidden from the creature, they don’t notice the bomb and you remain hidden. The creature otherwise notices the bomb and can remove it as an action, disarming the bomb. At the end of your next turn, the bomb detonates. You can also detonate it earlier (no action required). When the bomb detonates, you make a power roll targeting each enemy within 3 squares of it.',
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Agility ],
-												tier1: '4 + A fire damage',
-												tier2: '7 + A fire damage',
-												tier3: '11 + A fire damage'
-											})
+											sections: [
+												FactoryLogic.createAbilitySectionText('You attach a small bomb to a creature. If you are hidden from the creature, they don’t notice the bomb and you remain hidden. The creature otherwise notices the bomb and can remove it as an action, disarming the bomb. At the end of your next turn, the bomb detonates. You can also detonate it earlier (no action required). When the bomb detonates, you make a power roll targeting each enemy within 3 squares of it.'),
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														characteristic: [ Characteristic.Agility ],
+														tier1: '4 + A fire damage',
+														tier2: '7 + A fire damage',
+														tier3: '11 + A fire damage'
+													})
+												)
+											]
 										})
 									}),
 									value: 1

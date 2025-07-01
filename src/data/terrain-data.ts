@@ -203,13 +203,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Area ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 							target: 'All creatures and objects',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '3 fire damage; M<1 burning (save ends)',
-								tier2: '6 fire damage; M<2 burning (save ends)',
-								tier3: '9 fire damage; M<3 burning (save ends)'
-							}),
-							effect: 'A burning creature or object takes 1D6 fire damage at the start of each of their turns until the effect ends. Creatures or objects on a pool square are also targeted with a double edge. Creatures or objects with acid weakness take extra damage from this attack and burning effect as if it was acid.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: '3 fire damage; M<1 burning (save ends)',
+										tier2: '6 fire damage; M<2 burning (save ends)',
+										tier3: '9 fire damage; M<3 burning (save ends)'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('A burning creature or object takes 1D6 fire damage at the start of each of their turns until the effect ends. Creatures or objects on a pool square are also targeted with a double edge. Creatures or objects with acid weakness take extra damage from this attack and burning effect as if it was acid.')
+							]
 						})
 					})
 				]
@@ -291,13 +295,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Strike ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 creature or object',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: 'push 1 the direction target was moving',
-								tier2: 'push 2 the direction target was moving; A<1 slowed (save ends)',
-								tier3: 'push 3 the direction the target was moving; A<2 prone (save ends)'
-							}),
-							effect: 'If the target triggered this ability by being force moved, this ability has an edge and adds the remaining force movement distance to the push value. Forced movement from this ability does not retrigger Frozen Pond.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: 'push 1 the direction target was moving',
+										tier2: 'push 2 the direction target was moving; A<1 slowed (save ends)',
+										tier3: 'push 3 the direction the target was moving; A<2 prone (save ends)'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('If the target triggered this ability by being force moved, this ability has an edge and adds the remaining force movement distance to the push value. Forced movement from this ability does not retrigger Frozen Pond.')
+							]
 						})
 					})
 				]
@@ -336,12 +344,16 @@ export class TerrainData {
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike ],
 									distance: [ FactoryLogic.distance.createMelee() ],
 									target: '1 creature or object',
-									powerRoll: FactoryLogic.createPowerRoll({
-										bonus: 2,
-										tier1: 'slide 1',
-										tier2: '1 cold damage; slowed (EoT)',
-										tier3: '3 cold damage; restrained (save ends)'
-									})
+									sections: [
+										FactoryLogic.createAbilitySectionRoll(
+											FactoryLogic.createPowerRoll({
+												bonus: 2,
+												tier1: 'slide 1',
+												tier2: '1 cold damage; slowed (EoT)',
+												tier3: '3 cold damage; restrained (save ends)'
+											})
+										)
+									]
 								})
 							})
 						]
@@ -414,13 +426,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Strike ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 creature or object',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '5 fire damage; M<1 burning (save ends)',
-								tier2: '9 fire damage; M<2 burning (save ends)',
-								tier3: '12 fire damage; M<3 burning (save ends)'
-							}),
-							effect: 'A burning creature or object takes 1D6 fire damage at the start of each of their turns until the effect ends. This ability has a bane if the target is adjacent to a square of lava and not in or moving through lava.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: '5 fire damage; M<1 burning (save ends)',
+										tier2: '9 fire damage; M<2 burning (save ends)',
+										tier3: '12 fire damage; M<3 burning (save ends)'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('A burning creature or object takes 1D6 fire damage at the start of each of their turns until the effect ends. This ability has a bane if the target is adjacent to a square of lava and not in or moving through lava.')
+							]
 						})
 					})
 				]
@@ -490,13 +506,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Strike ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 creature or object',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: 'M<0 slowed (save ends)',
-								tier2: 'M<1 restrained (save ends)',
-								tier3: 'M<2 restrained (save ends)'
-							}),
-							effect: 'This ability has a bane if the target triggered it by shifting into a square of quicksand. A character who started their turn restrained in a quicksand square begins to suffocate. You can hold your breath for a number of rounds equal to your Might score (minimum 1 round). At the end of each round after that, you take 1d6 damage while holding your breath.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: 'M<0 slowed (save ends)',
+										tier2: 'M<1 restrained (save ends)',
+										tier3: 'M<2 restrained (save ends)'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('This ability has a bane if the target triggered it by shifting into a square of quicksand. A character who started their turn restrained in a quicksand square begins to suffocate. You can hold your breath for a number of rounds equal to your Might score (minimum 1 round). At the end of each round after that, you take 1d6 damage while holding your breath.')
+							]
 						})
 					})
 				]
@@ -568,13 +588,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 creature',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: 'M<0 dazed (save ends)',
-								tier2: 'M<1 dazed (save ends)',
-								tier3: 'M<2 dazed (save ends)'
-							}),
-							effect: 'The spores begin to put the target into a deep slumber. A target who starts their turn dazed in a toxic plants square gets sluggish and drowsier and becomes prone while dazed and cannot stand until the dazed effect ends.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: 'M<0 dazed (save ends)',
+										tier2: 'M<1 dazed (save ends)',
+										tier3: 'M<2 dazed (save ends)'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('The spores begin to put the target into a deep slumber. A target who starts their turn dazed in a toxic plants square gets sluggish and drowsier and becomes prone while dazed and cannot stand until the dazed effect ends.')
+							]
 						})
 					})
 				]
@@ -686,12 +710,16 @@ export class TerrainData {
 									keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike ],
 									distance: [ FactoryLogic.distance.createMelee() ],
 									target: '1 creature or object',
-									powerRoll: FactoryLogic.createPowerRoll({
-										bonus: 2,
-										tier1: 'no effect',
-										tier2: 'A<1 slowed (EoT)',
-										tier3: 'A<2 restrained (EoT)'
-									})
+									sections: [
+										FactoryLogic.createAbilitySectionRoll(
+											FactoryLogic.createPowerRoll({
+												bonus: 2,
+												tier1: 'no effect',
+												tier2: 'A<1 slowed (EoT)',
+												tier3: 'A<2 restrained (EoT)'
+											})
+										)
+									]
 								})
 							})
 						]
@@ -755,12 +783,16 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 creature or object',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: 'shift 1 to closest non trap square',
-								tier2: '3 damage; A<1 slowed (save ends)',
-								tier3: '5 damage; A<2 slowed (save ends)'
-							})
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: 'shift 1 to closest non trap square',
+										tier2: '3 damage; A<1 slowed (save ends)',
+										tier3: '5 damage; A<2 slowed (save ends)'
+									})
+								)
+							]
 						})
 					})
 				]
@@ -1023,13 +1055,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 creature or object',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: 'shift 1 to closest non trap square',
-								tier2: '1 damage; A<1 restrained (save ends)',
-								tier3: '3 damage; A<2 restrained (save ends)'
-							}),
-							effect: 'A creature restrained by this ability is vertically pulled 2 and suspended in the air by the snare line until they save. When they save they will fall.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: 'shift 1 to closest non trap square',
+										tier2: '1 damage; A<1 restrained (save ends)',
+										tier3: '3 damage; A<2 restrained (save ends)'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('A creature restrained by this ability is vertically pulled 2 and suspended in the air by the snare line until they save. When they save they will fall.')
+							]
 						})
 					})
 				]
@@ -1115,13 +1151,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Area ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 creature or object',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '2 damage; shift 1 to closest non trap square',
-								tier2: '5 damage; A<0 prone',
-								tier3: '8 damage; A<1 rpone, restrained (EoT)'
-							}),
-							effect: 'Once the trap has been triggered, any creature that moves into a trap square ends their movement and triggers the Spike Trap ability. The open pit is 2 square deep.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: '2 damage; shift 1 to closest non trap square',
+										tier2: '5 damage; A<0 prone',
+										tier3: '8 damage; A<1 rpone, restrained (EoT)'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('Once the trap has been triggered, any creature that moves into a trap square ends their movement and triggers the Spike Trap ability. The open pit is 2 square deep.')
+							]
 						})
 					})
 				]
@@ -1198,12 +1238,16 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 creature or object',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '4 damage',
-								tier2: '6 damage; M<2 bleeding (save ends)',
-								tier3: '9 damage; M<3 bleeding (save ends)'
-							})
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: '4 damage',
+										tier2: '6 damage; M<2 bleeding (save ends)',
+										tier3: '9 damage; M<3 bleeding (save ends)'
+									})
+								)
+							]
 						})
 					})
 				]
@@ -1258,12 +1302,16 @@ export class TerrainData {
 									keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike ],
 									distance: [ FactoryLogic.distance.createMelee() ],
 									target: '1 creature or object',
-									powerRoll: FactoryLogic.createPowerRoll({
-										bonus: 2,
-										tier1: '5 damage',
-										tier2: '8 damage; M<2 dazed (save ends)',
-										tier3: '11 damage; M<3 dazed (save ends)'
-									})
+									sections: [
+										FactoryLogic.createAbilitySectionRoll(
+											FactoryLogic.createPowerRoll({
+												bonus: 2,
+												tier1: '5 damage',
+												tier2: '8 damage; M<2 dazed (save ends)',
+												tier3: '11 damage; M<3 dazed (save ends)'
+											})
+										)
+									]
 								})
 							})
 						]
@@ -1327,12 +1375,16 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike ],
 							distance: [ FactoryLogic.distance.createRanged(5) ],
 							target: '1 creature or object',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '1 damage',
-								tier2: '2 damage',
-								tier3: '3 damage'
-							})
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: '1 damage',
+										tier2: '2 damage',
+										tier3: '3 damage'
+									})
+								)
+							]
 						})
 					})
 				]
@@ -1427,13 +1479,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Area ],
 							distance: [ FactoryLogic.distance.createSpecial('Squares under the mechanism') ],
 							target: 'All creatures and objects',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '3 damage; slide 1 (ignores stability)',
-								tier2: '7 damage; restrained (EoT)',
-								tier3: '10 damage; restrained (save ends)'
-							}),
-							effect: 'The portcullis blocks movement through its squares. There is a 50% chance that a slid target winds up on either side of the portcullis. When the restrained condition ends for a creature, the creature shifts 1 out of the hidden portcullis squares.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: '3 damage; slide 1 (ignores stability)',
+										tier2: '7 damage; restrained (EoT)',
+										tier3: '10 damage; restrained (save ends)'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('The portcullis blocks movement through its squares. There is a 50% chance that a slid target winds up on either side of the portcullis. When the restrained condition ends for a creature, the creature shifts 1 out of the hidden portcullis squares.')
+							]
 						})
 					})
 				]
@@ -1496,13 +1552,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Area ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 4, value2: 1, within: 1 }) ],
 							target: 'All creatures and objects',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '4 damage',
-								tier2: '6 damage; M<1 restrained (EoT)',
-								tier3: '9 damage; M<2 restrained (save ends)'
-							}),
-							effect: 'The squares affected become difficult terrain.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: '4 damage',
+										tier2: '6 damage; M<1 restrained (EoT)',
+										tier3: '9 damage; M<2 restrained (save ends)'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('The squares affected become difficult terrain.')
+							]
 						})
 					})
 				]
@@ -1715,13 +1775,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Area ],
 							distance: [ FactoryLogic.distance.createSpecial('Squares the ram moves into') ],
 							target: 'All creatures and objects',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '3 damage; slide 1 (ignores stability)',
-								tier2: '6 damage; push 3',
-								tier3: '9 damage; push 5'
-							}),
-							effect: 'There is a 50% chance that a slid target winds up on either side of the ram.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: '3 damage; slide 1 (ignores stability)',
+										tier2: '6 damage; push 3',
+										tier3: '9 damage; push 5'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('There is a 50% chance that a slid target winds up on either side of the ram.')
+							]
 						})
 					})
 				]
@@ -1884,13 +1948,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 20 }) ],
 							target: 'All creatures or objects',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 0,
-								tier1: '5 damage',
-								tier2: '8 damage',
-								tier3: '11 damage'
-							}),
-							effect: 'Arrow Storm cannot be used again until the object is reloaded.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 0,
+										tier1: '5 damage',
+										tier2: '8 damage',
+										tier3: '11 damage'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('Arrow Storm cannot be used again until the object is reloaded.')
+							]
 						})
 					})
 				]
@@ -1906,7 +1974,9 @@ export class TerrainData {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'This object',
-							effect: 'The object is reloaded, allowing Arrow Storm to be used again.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('The object is reloaded, allowing Arrow Storm to be used again.')
+							]
 						})
 					})
 				]
@@ -1922,7 +1992,9 @@ export class TerrainData {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'This object',
-							effect: 'The next use of Arrow Storm has an edge and +10 range.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('The next use of Arrow Storm has an edge and +10 range.')
+							]
 						})
 					})
 				]
@@ -1938,7 +2010,9 @@ export class TerrainData {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'This object',
-							effect: 'This object moves 3 and the adjacent creature using their action moves 3 as long as they end their move adjacent ot this object.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('This object moves 3 and the adjacent creature using their action moves 3 as long as they end their move adjacent ot this object.')
+							]
 						})
 					})
 				]
@@ -1969,13 +2043,17 @@ export class TerrainData {
 									keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Area ],
 									distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 20 }) ],
 									target: 'All creatures and objects',
-									powerRoll: FactoryLogic.createPowerRoll({
-										bonus: 0,
-										tier1: '5 damage; R<0 dazed (save ends)',
-										tier2: '8 damage; R<1 dazed (save ends)',
-										tier3: '11 damage; R<1 frightened (save ends)'
-									}),
-									effect: 'Screamers cannot be uses again until the object is reloaded.'
+									sections: [
+										FactoryLogic.createAbilitySectionRoll(
+											FactoryLogic.createPowerRoll({
+												bonus: 0,
+												tier1: '5 damage; R<0 dazed (save ends)',
+												tier2: '8 damage; R<1 dazed (save ends)',
+												tier3: '11 damage; R<1 frightened (save ends)'
+											})
+										),
+										FactoryLogic.createAbilitySectionText('Screamers cannot be uses again until the object is reloaded.')
+									]
 								})
 							})
 						]
@@ -2029,13 +2107,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 							target: 'All creatures and objects',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '5 fire damage; M<1 burning (save ends)',
-								tier2: '9 fire damage; M<2 burning (save ends)',
-								tier3: '12 fire damage; M<3 burning (save ends)'
-							}),
-							effect: 'A burning creature or object takes 1d6 fire damage at the start of each of their turns until the effect ends. Boiling Oil cannot be used again until the object is reloaded.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: '5 fire damage; M<1 burning (save ends)',
+										tier2: '9 fire damage; M<2 burning (save ends)',
+										tier3: '12 fire damage; M<3 burning (save ends)'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('A burning creature or object takes 1d6 fire damage at the start of each of their turns until the effect ends. Boiling Oil cannot be used again until the object is reloaded.')
+							]
 						})
 					})
 				]
@@ -2051,7 +2133,9 @@ export class TerrainData {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'This object',
-							effect: 'The object is reloaded, allowing Boiling Oil to be used again.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('The object is reloaded, allowing Boiling Oil to be used again.')
+							]
 						})
 					})
 				]
@@ -2104,13 +2188,16 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 20 }) ],
 							target: 'All creatures and objects',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '5 damage',
-								tier2: '9 damage; A<0 push 1',
-								tier3: '12 damage; A<1 push 2'
-							}),
-							effect: ''
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: '5 damage',
+										tier2: '9 damage; A<0 push 1',
+										tier3: '12 damage; A<1 push 2'
+									})
+								)
+							]
 						})
 					})
 				]
@@ -2126,7 +2213,9 @@ export class TerrainData {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'This object',
-							effect: 'The object is reloaded, allowing Arcing Shot to be used again.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('The object is reloaded, allowing Arcing Shot to be used again.')
+							]
 						})
 					})
 				]
@@ -2142,7 +2231,9 @@ export class TerrainData {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'This object',
-							effect: 'The next use of Arcing Shot has an edge and +10 range.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('The next use of Arcing Shot has an edge and +10 range.')
+							]
 						})
 					})
 				]
@@ -2158,7 +2249,9 @@ export class TerrainData {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'This object',
-							effect: 'This object moves 2 and the adjacent creature using their action moves 2 as long as they end their move adjacent ot this object.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('This object moves 2 and the adjacent creature using their action moves 2 as long as they end their move adjacent ot this object.')
+							]
 						})
 					})
 				]
@@ -2226,7 +2319,9 @@ export class TerrainData {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'This object',
-							effect: 'The exploding mill wheel begins to roll. It immediately moves 2 in a straight line, using the Crushing Wheel ability on any creature or object it moves through. At the beginning of every creature’s turn the exploding mill wheel continues to move in a straight line, using the Crushing Wheel ability on any creature of object it moves through. Creatures and objects of size 2 or smaller do not stop the wheel’s movement.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('The exploding mill wheel begins to roll. It immediately moves 2 in a straight line, using the Crushing Wheel ability on any creature or object it moves through. At the beginning of every creature’s turn the exploding mill wheel continues to move in a straight line, using the Crushing Wheel ability on any creature of object it moves through. Creatures and objects of size 2 or smaller do not stop the wheel’s movement.')
+							]
 						})
 					})
 				]
@@ -2242,13 +2337,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Area ],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'All creature and objects',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '5 damage; push 1',
-								tier2: '9 damage; push 2',
-								tier3: '12 damage; push 3'
-							}),
-							effect: 'Make one power roll against every square the exploding mill wheel enters.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: '5 damage; push 1',
+										tier2: '9 damage; push 2',
+										tier3: '12 damage; push 3'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('Make one power roll against every square the exploding mill wheel enters.')
+							]
 						})
 					})
 				]
@@ -2264,13 +2363,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Area ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 							target: 'All creature and objects',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '5 damage; push 1; M<0 burning (save ends)',
-								tier2: '9 damage; push 2; M<1 burning (save ends)',
-								tier3: '12 damage; push 3; M<2 burning (save ends)'
-							}),
-							effect: 'The exploding mill wheel is destroyed.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: '5 damage; push 1; M<0 burning (save ends)',
+										tier2: '9 damage; push 2; M<1 burning (save ends)',
+										tier3: '12 damage; push 3; M<2 burning (save ends)'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('The exploding mill wheel is destroyed.')
+							]
 						})
 					})
 				]
@@ -2331,13 +2434,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike, AbilityKeyword.Ranged ],
 							distance: [ FactoryLogic.distance.createRanged(20) ],
 							target: '1 creature or object',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '5 damage',
-								tier2: '8 damage; M<1 push 1',
-								tier3: '11 damage; M<2 push 2'
-							}),
-							effect: 'Release Bolt cannot be used again until the object is reloaded.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: '5 damage',
+										tier2: '8 damage; M<1 push 1',
+										tier3: '11 damage; M<2 push 2'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('Release Bolt cannot be used again until the object is reloaded.')
+							]
 						})
 					})
 				]
@@ -2353,7 +2460,9 @@ export class TerrainData {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'This object',
-							effect: 'The object is reloaded, allowing Release Bolt or Chain Bolt to be used again.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('The object is reloaded, allowing Release Bolt or Chain Bolt to be used again.')
+							]
 						})
 					})
 				]
@@ -2369,7 +2478,9 @@ export class TerrainData {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'This object',
-							effect: 'The next use of Release Bolt or Chain Bolt has an edge and +10 range.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('The next use of Release Bolt or Chain Bolt has an edge and +10 range.')
+							]
 						})
 					})
 				]
@@ -2385,7 +2496,9 @@ export class TerrainData {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'This object',
-							effect: 'This object moves 3 and the adjacent creature using their action moves 3 as long as they end their move adjacent ot this object.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('This object moves 3 and the adjacent creature using their action moves 3 as long as they end their move adjacent ot this object.')
+							]
 						})
 					})
 				]
@@ -2416,13 +2529,17 @@ export class TerrainData {
 									keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike, AbilityKeyword.Ranged ],
 									distance: [ FactoryLogic.distance.createRanged(20) ],
 									target: '1 creature or object',
-									powerRoll: FactoryLogic.createPowerRoll({
-										bonus: 2,
-										tier1: '4 damage',
-										tier2: '7 damage; M<1 slowed (save ends)',
-										tier3: '10 damage; M<2 slowed (save ends)'
-									}),
-									effect: 'Chain Bolt cannot be used again until the object is reloaded.'
+									sections: [
+										FactoryLogic.createAbilitySectionRoll(
+											FactoryLogic.createPowerRoll({
+												bonus: 2,
+												tier1: '4 damage',
+												tier2: '7 damage; M<1 slowed (save ends)',
+												tier3: '10 damage; M<2 slowed (save ends)'
+											})
+										),
+										FactoryLogic.createAbilitySectionText('Chain Bolt cannot be used again until the object is reloaded.')
+									]
 								})
 							}),
 							FactoryLogic.feature.createAbility({
@@ -2433,13 +2550,17 @@ export class TerrainData {
 									keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike, AbilityKeyword.Ranged ],
 									distance: [ FactoryLogic.distance.createRanged(20) ],
 									target: '1 creature slowed by the field ballista',
-									powerRoll: FactoryLogic.createPowerRoll({
-										bonus: 2,
-										tier1: 'pull 1',
-										tier2: 'pull 3',
-										tier3: 'pull 5'
-									}),
-									effect: 'This forced movement will trigger opportunity attacks.'
+									sections: [
+										FactoryLogic.createAbilitySectionRoll(
+											FactoryLogic.createPowerRoll({
+												bonus: 2,
+												tier1: 'pull 1',
+												tier2: 'pull 3',
+												tier3: 'pull 5'
+											})
+										),
+										FactoryLogic.createAbilitySectionText('This forced movement will trigger opportunity attacks.')
+									]
 								})
 							})
 						]
@@ -2493,13 +2614,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 8, value2: 2, within: 1 }) ],
 							target: 'All creatures and objects',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '6 damage; A<0 burning (save ends)',
-								tier2: '10 damage; A<1 burning (save ends)',
-								tier3: '13 damage; A<2 burning (save ends)'
-							}),
-							effect: 'A burning creature or object takes 1D6 fire damage at the start of each of their turns until the effect ends. Gout of Flame cannot be used until the object is reloaded.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: '6 damage; A<0 burning (save ends)',
+										tier2: '10 damage; A<1 burning (save ends)',
+										tier3: '13 damage; A<2 burning (save ends)'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('A burning creature or object takes 1D6 fire damage at the start of each of their turns until the effect ends. Gout of Flame cannot be used until the object is reloaded.')
+							]
 						})
 					})
 				]
@@ -2515,7 +2640,9 @@ export class TerrainData {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'This object',
-							effect: 'The object is reloaded, allowing Gout of Flame to be used again.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('The object is reloaded, allowing Gout of Flame to be used again.')
+							]
 						})
 					})
 				]
@@ -2531,7 +2658,9 @@ export class TerrainData {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'This object',
-							effect: 'The next use of Gout of Flame has an edge and +10 range.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('The next use of Gout of Flame has an edge and +10 range.')
+							]
 						})
 					})
 				]
@@ -2547,7 +2676,9 @@ export class TerrainData {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'This object',
-							effect: 'This object moves 2 and the adjacent creature using their action moves 2 as long as they end their move adjacent ot this object.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('This object moves 2 and the adjacent creature using their action moves 2 as long as they end their move adjacent ot this object.')
+							]
 						})
 					})
 				]
@@ -2697,13 +2828,17 @@ export class TerrainData {
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Object ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 							target: 'All enemies',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: 'P<1 slowed (EoT)',
-								tier2: 'P<2 slowed (EoT), weakened (EoT)',
-								tier3: 'P<3 slowed (EoT), weakened (EoT), frightened (EoT)'
-							}),
-							effect: 'The target is pushed 2.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: 'P<1 slowed (EoT)',
+										tier2: 'P<2 slowed (EoT), weakened (EoT)',
+										tier3: 'P<3 slowed (EoT), weakened (EoT), frightened (EoT)'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('The target is pushed 2.')
+							]
 						})
 					})
 				]
@@ -2847,13 +2982,17 @@ A creature seated in the throne becomes the Hierophant of A’An and gains the f
 							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 							distance: [ FactoryLogic.distance.createRanged(20) ],
 							target: 'One creature or object',
-							powerRoll: FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '6 fire damage',
-								tier2: '11 fire damage',
-								tier3: '14 fire damage'
-							}),
-							effect: 'The target gains fire weakness 10 until the beginning of the Hierophant’s next turn.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										bonus: 2,
+										tier1: '6 fire damage',
+										tier2: '11 fire damage',
+										tier3: '14 fire damage'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('The target gains fire weakness 10 until the beginning of the Hierophant’s next turn.')
+							]
 						})
 					})
 				]
@@ -2869,7 +3008,9 @@ A creature seated in the throne becomes the Hierophant of A’An and gains the f
 							keywords: [ AbilityKeyword.Magic ],
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'One creature or object',
-							effect: 'If the Hierophant is a hero, they gain 3 heroic resources. If Hierophant is a villain, the Director gains 3 malice. '
+							sections: [
+								FactoryLogic.createAbilitySectionText('If the Hierophant is a hero, they gain 3 heroic resources. If Hierophant is a villain, the Director gains 3 malice.')
+							]
 						})
 					})
 				]
@@ -2885,7 +3026,9 @@ A creature seated in the throne becomes the Hierophant of A’An and gains the f
 							keywords: [ AbilityKeyword.Magic ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 							target: 'All creatures and objects',
-							effect: 'Targets take 14 fire damage. The Hierophant gains the Incubator of A’An complication. If there is no Hierophant, a creature within 10 squares of the Throne, and chosen by the Director, gains the Incubator of A’An complication.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('Targets take 14 fire damage. The Hierophant gains the Incubator of A’An complication. If there is no Hierophant, a creature within 10 squares of the Throne, and chosen by the Director, gains the Incubator of A’An complication.')
+							]
 						})
 					})
 				]

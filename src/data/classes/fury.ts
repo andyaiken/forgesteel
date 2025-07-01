@@ -210,14 +210,18 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 3,
-			preEffect: 'You move up to your speed in a straight line, and you don’t treat enemy squares as difficult terrain for this move. You can end this move in a creature’s space and then move them to an adjacent unoccupied space. You make one power roll that targets each enemy whose space you move through.',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '2 damage',
-				tier2: '3 damage',
-				tier3: '5 damage'
-			}),
-			effect: 'The last target you damage takes extra damage equal to your Might score for every free strike you triggered during your move.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('You move up to your speed in a straight line, and you don’t treat enemy squares as difficult terrain for this move. You can end this move in a creature’s space and then move them to an adjacent unoccupied space. You make one power roll that targets each enemy whose space you move through.'),
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '2 damage',
+						tier2: '3 damage',
+						tier3: '5 damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('The last target you damage takes extra damage equal to your Might score for every free strike you triggered during your move.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'fury-ability-8',
@@ -436,16 +440,20 @@ As your rage grows, your primordial strength intensifies. Benefits are cumulativ
 											distance: [ FactoryLogic.distance.createSelf() ],
 											target: 'Self',
 											cost: 5,
-											preEffect: `
+											sections: [
+												FactoryLogic.createAbilitySectionText(`
 You move up to your speed in a straight line. During this movement, you can move through mundane structures, including walls, which are difficult terrain for you. You automatically destroy each square of structure you move through and leave behind a square of difficult terrain.
 
-Additionally, you make one power roll that targets each enemy you come adjacent to during the move.`,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Might ],
-												tier1: 'Push 1',
-												tier2: 'Push 2',
-												tier3: 'Push 3'
-											})
+Additionally, you make one power roll that targets each enemy you come adjacent to during the move.`),
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														characteristic: [ Characteristic.Might ],
+														tier1: 'Push 1',
+														tier2: 'Push 2',
+														tier3: 'Push 3'
+													})
+												)
+											]
 										})
 									}),
 									value: 1
@@ -553,13 +561,17 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 											distance: [ FactoryLogic.distance.createSelf() ],
 											target: 'Self',
 											cost: 5,
-											preEffect: 'You shift up to your speed. You make one power roll that targets up to three enemies you come adjacent to during the shift.',
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Might ],
-												tier1: '2 damage; A < [weak], dazed (save ends)',
-												tier2: '4 damage; A < [average], dazed (save ends)',
-												tier3: '6 damage; A < [strong], dazed (save ends)'
-											})
+											sections: [
+												FactoryLogic.createAbilitySectionText('You shift up to your speed. You make one power roll that targets up to three enemies you come adjacent to during the shift.'),
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														characteristic: [ Characteristic.Might ],
+														tier1: '2 damage; A < [weak], dazed (save ends)',
+														tier2: '4 damage; A < [average], dazed (save ends)',
+														tier3: '6 damage; A < [strong], dazed (save ends)'
+													})
+												)
+											]
 										})
 									}),
 									value: 1

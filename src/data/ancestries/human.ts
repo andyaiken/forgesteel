@@ -15,7 +15,9 @@ export const human: Ancestry = {
 				type: FactoryLogic.type.createManeuver(),
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
-				effect: 'Until the end of your next turn, you know the location of any supernatural object, undead, construct, or creature from another plane of existence within 5 squares of you, even if you don’t have line of effect to them. You know if you’re detecting an item or a creature, and you know if a creature is undead, a construct, or from another plane of existence.'
+				sections: [
+					FactoryLogic.createAbilitySectionText('Until the end of your next turn, you know the location of any supernatural object, undead, construct, or creature from another plane of existence within 5 squares of you, even if you don’t have line of effect to them. You know if you’re detecting an item or a creature, and you know if a creature is undead, a construct, or from another plane of existence.')
+				]
 			})
 		}),
 		FactoryLogic.feature.createChoice({
@@ -48,7 +50,9 @@ export const human: Ancestry = {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
-							effect: 'You halve the damage.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('You halve the damage.')
+							]
 						})
 					}),
 					value: 1
@@ -63,7 +67,9 @@ export const human: Ancestry = {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
-							effect: 'You can end the frightened, slowed, or weakened condition on yourself.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('You can end the frightened, slowed, or weakened condition on yourself.')
+							]
 						})
 					}),
 					value: 2

@@ -555,14 +555,16 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Special',
 			cost: 5,
-			preEffect: 'You open up two holes with 1-square openings that are 4 squares deep, and which can be placed on any mundane surface within distance. You can place these holes next to each other to create fewer holes with wider openings. When the holes open, make a separate power roll for each creature on the ground above a hole and small enough to fall in. (You can’t get a critical hit with this power because it uses a maneuver.)',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: 'The target can shift 1 square from the edge of the hole to the nearest unoccupied space of their choice.',
-				tier2: 'The target falls into the hole.',
-				tier3: 'The target falls into the hole and can’t reduce the height of the fall.'
-			}),
 			sections: [
+				FactoryLogic.createAbilitySectionText('You open up two holes with 1-square openings that are 4 squares deep, and which can be placed on any mundane surface within distance. You can place these holes next to each other to create fewer holes with wider openings. When the holes open, make a separate power roll for each creature on the ground above a hole and small enough to fall in. (You can’t get a critical hit with this power because it uses a maneuver.)'),
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: 'The target can shift 1 square from the edge of the hole to the nearest unoccupied space of their choice.',
+						tier2: 'The target falls into the hole.',
+						tier3: 'The target falls into the hole and can’t reduce the height of the fall.'
+					})
+				),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Persist',
 					value: 1,
@@ -639,13 +641,17 @@ Until the start of your next turn, the area gains the following effects:
 			target: '1 creature',
 			cost: 5,
 			minLevel: 2,
-			preEffect: 'The target uses their signature ability against a target of your choice. You then make a power roll against the target of this ability.',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '5 + R poison damage',
-				tier2: '9 + R poison damage',
-				tier3: '12 + R poison damage'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionText('The target uses their signature ability against a target of your choice. You then make a power roll against the target of this ability.'),
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '5 + R poison damage',
+						tier2: '9 + R poison damage',
+						tier3: '12 + R poison damage'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-19',
@@ -657,13 +663,17 @@ Until the start of your next turn, the area gains the following effects:
 			target: 'Self or one ally',
 			cost: 5,
 			minLevel: 2,
-			preEffect: 'The target is teleported to another space within distance. Make a power roll that targets each enemy adjacent to the target’s new space.',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '3 fire damage',
-				tier2: '5 fire damage',
-				tier3: '8 fire damage'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionText('The target is teleported to another space within distance. Make a power roll that targets each enemy adjacent to the target’s new space.'),
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '3 fire damage',
+						tier2: '5 fire damage',
+						tier3: '8 fire damage'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-20',
@@ -691,14 +701,18 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Special',
 			cost: 7,
-			preEffect: 'The number of creatures you target with this ability is determined by your power roll.',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: 'One creature',
-				tier2: 'Two creatures',
-				tier3: 'Three creatures'
-			}),
-			effect: 'Each target begins to fade from existence (save ends). While fading from existence, a target initially takes a bane on power rolls. At the end of their first turn, they have a double bane on power rolls. At the end of their second turn, they fade from existence for 1 hour, reappearing in their original space or the nearest available space.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('The number of creatures you target with this ability is determined by your power roll.'),
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: 'One creature',
+						tier2: 'Two creatures',
+						tier3: 'Three creatures'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('Each target begins to fade from existence (save ends). While fading from existence, a target initially takes a bane on power rolls. At the end of their first turn, they have a double bane on power rolls. At the end of their second turn, they fade from existence for 1 hour, reappearing in their original space or the nearest available space.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-22',

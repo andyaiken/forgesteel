@@ -250,14 +250,18 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			],
 			target: 'One creature or object',
 			cost: 5,
-			preEffect: 'You mark the target.',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '4 + M damage; R < [weak], weakened (save ends)',
-				tier2: '6 + M damage; R < [average], weakened (save ends)',
-				tier3: '10 + M damage; R < [strong], weakened (save ends)'
-			}),
-			effect: 'The first time any ally deals damage any target you’ve marked before the start of your next turn, that ally can spend a Recovery.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('You mark the target.'),
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '4 + M damage; R < [weak], weakened (save ends)',
+						tier2: '6 + M damage; R < [average], weakened (save ends)',
+						tier3: '10 + M damage; R < [strong], weakened (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('The first time any ally deals damage any target you’ve marked before the start of your next turn, that ally can spend a Recovery.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'tactician-ability-7',
@@ -406,13 +410,17 @@ Each target is marked by you. You immediately force each targeted creature to ma
 											distance: [ FactoryLogic.distance.createMelee() ],
 											target: '1 creature',
 											cost: 5,
-											preEffect: 'You shift your speed directly toward an ally adjacent to the target, then swap locations with the ally as long as you can each fit into the other’s space. The ally can spend a Recovery, and you make a power roll against the target.',
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Reason ],
-												tier1: '2 + R damage; R < [weak], frightened (save ends)',
-												tier2: '3 + R damage; R < [average], frightened (save ends)',
-												tier3: '4 + R damage; R < [strong], frightened (save ends)'
-											})
+											sections: [
+												FactoryLogic.createAbilitySectionText('You shift your speed directly toward an ally adjacent to the target, then swap locations with the ally as long as you can each fit into the other’s space. The ally can spend a Recovery, and you make a power roll against the target.'),
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														characteristic: [ Characteristic.Reason ],
+														tier1: '2 + R damage; R < [weak], frightened (save ends)',
+														tier2: '3 + R damage; R < [average], frightened (save ends)',
+														tier3: '4 + R damage; R < [strong], frightened (save ends)'
+													})
+												)
+											]
 										})
 									}),
 									value: 1
@@ -620,13 +628,17 @@ After constant drills you have improved your ability to anticipate an enemy’s 
 											distance: [ FactoryLogic.distance.createRanged(5) ],
 											target: '1 enemy',
 											cost: 5,
-											preEffect: 'You move up to your speed toward the target, ending your move in the nearest square adjacent to them if you can. The triggering ally can spend a Recovery, and gains 5 Temporary Stamina for each enemy you move past while moving to the target. You then make a power roll against the target.',
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Might ],
-												tier1: 'R < [weak], frightened of the triggering ally (save ends)',
-												tier2: ' R < [average], frightened of the triggering ally (save ends)',
-												tier3: 'R < [strong], frightened of the triggering ally (save ends)'
-											})
+											sections: [
+												FactoryLogic.createAbilitySectionText('You move up to your speed toward the target, ending your move in the nearest square adjacent to them if you can. The triggering ally can spend a Recovery, and gains 5 Temporary Stamina for each enemy you move past while moving to the target. You then make a power roll against the target.'),
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														characteristic: [ Characteristic.Might ],
+														tier1: 'R < [weak], frightened of the triggering ally (save ends)',
+														tier2: ' R < [average], frightened of the triggering ally (save ends)',
+														tier3: 'R < [strong], frightened of the triggering ally (save ends)'
+													})
+												)
+											]
 										})
 									}),
 									value: 1

@@ -26,7 +26,9 @@ export class DomainData {
 									keywords: [ AbilityKeyword.Magic ],
 									distance: [ FactoryLogic.distance.createSelf() ],
 									target: 'Self',
-									effect: 'You create a mundane object no larger than size 1S. You can maintain a number of objects created this way equal to your Intuition score. You can destroy an object created this way with a thought, no matter how far you are from it (no action required).'
+									sections: [
+										FactoryLogic.createAbilitySectionText('You create a mundane object no larger than size 1S. You can maintain a number of objects created this way equal to your Intuition score. You can destroy an object created this way with a thought, no matter how far you are from it (no action required).')
+									]
 								})
 							}),
 							FactoryLogic.feature.createSkillChoice({
@@ -50,7 +52,9 @@ export class DomainData {
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'Special',
 							cost: 5,
-							effect: 'A size 2 statue rises out of the ground in an unoccupied space within distance and lasts until the end of the encounter. While within 3 squares of the statue, you and your allies each gains a surge at the start of their turns. The statue is destroyed if it takes 20 or more damage. It is immune to poison and psychic damage.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('A size 2 statue rises out of the ground in an unoccupied space within distance and lasts until the end of the encounter. While within 3 squares of the statue, you and your allies each gains a surge at the start of their turns. The statue is destroyed if it takes 20 or more damage. It is immune to poison and psychic damage.')
+							]
 						})
 					})
 				]
@@ -85,7 +89,9 @@ export class DomainData {
 									keywords: [ AbilityKeyword.Magic ],
 									distance: [ FactoryLogic.distance.createMelee() ],
 									target: 'One dead creature',
-									effect: 'You can speak to the target corpse (including just the head) of a creature who has died within the last 24 hours and who can speak a language you know. The target regards you as they would have in life, and you might need to make tests to influence them and convince them to speak with you. The trauma of dying can make a creature’s memory of that event hazy, but the target otherwise knows all they knew in life. After 1 minute, the effect ends. You can’t use this ability on the same creature twice.'
+									sections: [
+										FactoryLogic.createAbilitySectionText('You can speak to the target corpse (including just the head) of a creature who has died within the last 24 hours and who can speak a language you know. The target regards you as they would have in life, and you might need to make tests to influence them and convince them to speak with you. The trauma of dying can make a creature’s memory of that event hazy, but the target otherwise knows all they knew in life. After 1 minute, the effect ends. You can’t use this ability on the same creature twice.')
+									]
 								})
 							}),
 							FactoryLogic.feature.createSkillChoice({
@@ -109,7 +115,9 @@ export class DomainData {
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'Each ally',
 							cost: 5,
-							effect: 'Until the start of your next turn, each time a target kills an enemy, they regain Stamina equal to 5 + your Intuition score.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('Until the start of your next turn, each time a target kills an enemy, they regain Stamina equal to 5 + your Intuition score.')
+							]
 						})
 					})
 				]
@@ -161,11 +169,13 @@ export class DomainData {
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'Three creatures, including self',
 							cost: 5,
-							effect: `
+							sections: [
+								FactoryLogic.createAbilitySectionText(`
 Choose one of the following effects, which lasts until the end of the encounter or until you are dying:
 
 * Whenever a target makes a power roll, they can roll three dice and choose which two to use.
-* Whenever a target makes a power roll, they must roll three dice and use the lowest two.`
+* Whenever a target makes a power roll, they must roll three dice and use the lowest two.`)
+							]
 						})
 					})
 				]
@@ -217,12 +227,16 @@ Choose one of the following effects, which lasts until the end of the encounter 
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: '1 creature',
 							cost: 5,
-							powerRoll: FactoryLogic.createPowerRoll({
-								characteristic: [ Characteristic.Intuition ],
-								tier1: '4 + I holy damage; P < [weak], before taking damage, the target makes a free strike against a target you choose',
-								tier2: '7 + I holy damage; P < [average], before taking damage, the target uses an ability of your choice and you choose any targets for that ability',
-								tier3: '11 + I holy damage; P < [strong], before taking damage, the target shifts up to their speed, uses an ability of your choice, and you choose any targets for that ability'
-							})
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										characteristic: [ Characteristic.Intuition ],
+										tier1: '4 + I holy damage; P < [weak], before taking damage, the target makes a free strike against a target you choose',
+										tier2: '7 + I holy damage; P < [average], before taking damage, the target uses an ability of your choice and you choose any targets for that ability',
+										tier3: '11 + I holy damage; P < [strong], before taking damage, the target shifts up to their speed, uses an ability of your choice, and you choose any targets for that ability'
+									})
+								)
+							]
 						})
 					})
 				]
@@ -274,7 +288,9 @@ Choose one of the following effects, which lasts until the end of the encounter 
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 3 }) ],
 							target: 'Each ally in the area',
 							cost: 5,
-							effect: 'Until the end of the encounter or you are dying, whenever a target starts their turn in the aura, they can spend a Recovery.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, whenever a target starts their turn in the aura, they can spend a Recovery.')
+							]
 						})
 					})
 				]
@@ -328,7 +344,9 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'Self and one ally',
 							cost: 5,
-							effect: 'Until the end of the encounter or the target is dying, whenever the target starts their turn, they gain a bonus to speed and damage equal to the number of allies within 10 squares of them. This bonus lasts until the start of their next turn.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('Until the end of the encounter or the target is dying, whenever the target starts their turn, they gain a bonus to speed and damage equal to the number of allies within 10 squares of them. This bonus lasts until the start of their next turn.')
+							]
 						})
 					})
 				]
@@ -363,7 +381,9 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 									keywords: [ AbilityKeyword.Magic ],
 									distance: [ FactoryLogic.distance.createSelf() ],
 									target: 'Self',
-									effect: 'You conjure a spirit that takes the form of any animal you have seen. The incorporeal animal can’t physically interact with the world, but they have a speed of 5 and can fly. While you are within 10 squares of the spirit, you can sense everything an animal of their type would sense, in addition to sensing your own surroundings. You can dismiss the spirit at any time (no action required). If the spirit takes any damage, it is dismissed and you take 1d10 psychic damage, which can’t be reduced in any way.'
+									sections: [
+										FactoryLogic.createAbilitySectionText('You conjure a spirit that takes the form of any animal you have seen. The incorporeal animal can’t physically interact with the world, but they have a speed of 5 and can fly. While you are within 10 squares of the spirit, you can sense everything an animal of their type would sense, in addition to sensing your own surroundings. You can dismiss the spirit at any time (no action required). If the spirit takes any damage, it is dismissed and you take 1d10 psychic damage, which can’t be reduced in any way.')
+									]
 								})
 							}),
 							FactoryLogic.feature.createSkillChoice({
@@ -387,12 +407,16 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 							target: 'Each enemy in the area',
 							cost: 5,
-							powerRoll: FactoryLogic.createPowerRoll({
-								characteristic: [ Characteristic.Intuition ],
-								tier1: '2 damage; A < [weak], restrained (save ends)',
-								tier2: '3 damage; A < [average], restrained (save ends)',
-								tier3: '7 damage; A < [strong], restrained (save ends)'
-							})
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										characteristic: [ Characteristic.Intuition ],
+										tier1: '2 damage; A < [weak], restrained (save ends)',
+										tier2: '3 damage; A < [average], restrained (save ends)',
+										tier3: '7 damage; A < [strong], restrained (save ends)'
+									})
+								)
+							]
 						})
 					})
 				]
@@ -444,10 +468,12 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'Self and one ally',
 							cost: 5,
-							effect: `
+							sections: [
+								FactoryLogic.createAbilitySectionText(`
 Until the end of the encounter, whenever one target takes damage, the other target can use a free triggered action to take the damage instead. The original target suffers any effects associated with the damage.
 
-Additionally, whenever one target spends a Recovery, the other target can use a free triggered action to spend a Recovery.`
+Additionally, whenever one target spends a Recovery, the other target can use a free triggered action to spend a Recovery.`)
+							]
 						})
 					})
 				]
@@ -507,12 +533,16 @@ Choose one of the following types of weather, each of which grants a benefit to 
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 							target: 'Each enemy in the area',
 							cost: 5,
-							powerRoll: FactoryLogic.createPowerRoll({
-								characteristic: [ Characteristic.Intuition ],
-								tier1: '2 lightning damage; vertical slide 1',
-								tier2: '5 lightning damage; vertical slide 2',
-								tier3: '7 lightning damage; vertical slide 3'
-							})
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										characteristic: [ Characteristic.Intuition ],
+										tier1: '2 lightning damage; vertical slide 1',
+										tier2: '5 lightning damage; vertical slide 2',
+										tier3: '7 lightning damage; vertical slide 3'
+									})
+								)
+							]
 						})
 					})
 				]
@@ -564,13 +594,17 @@ Choose one of the following types of weather, each of which grants a benefit to 
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 							target: 'Each enemy in the area',
 							cost: 5,
-							powerRoll: FactoryLogic.createPowerRoll({
-								characteristic: [ Characteristic.Intuition ],
-								tier1: '4 fire damage',
-								tier2: '6 fire damage',
-								tier3: '10 fire damage'
-							}),
-							effect: 'Each ally in the area deals fire damage equal to your Intuition score with their next strike made before the end of their next turn.'
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										characteristic: [ Characteristic.Intuition ],
+										tier1: '4 fire damage',
+										tier2: '6 fire damage',
+										tier3: '10 fire damage'
+									})
+								),
+								FactoryLogic.createAbilitySectionText('Each ally in the area deals fire damage equal to your Intuition score with their next strike made before the end of their next turn.')
+							]
 						})
 					})
 				]
@@ -622,7 +656,9 @@ Choose one of the following types of weather, each of which grants a benefit to 
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 							target: 'Each ally in the area',
 							cost: 5,
-							effect: 'Each target can choose another creature within 5 squares of them, then swap places with that creature. The creature they choose must be able to fit into the space they leave and vice versa.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('Each target can choose another creature within 5 squares of them, then swap places with that creature. The creature they choose must be able to fit into the space they leave and vice versa.')
+							]
 						})
 					})
 				]
@@ -674,7 +710,9 @@ Choose one of the following types of weather, each of which grants a benefit to 
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'Self and each ally in the area',
 							cost: 5,
-							effect: 'Until the end of the encounter or until you are dying, each target gains a surge at the end of each of your turns.'
+							sections: [
+								FactoryLogic.createAbilitySectionText('Until the end of the encounter or until you are dying, each target gains a surge at the end of each of your turns.')
+							]
 						})
 					})
 				]

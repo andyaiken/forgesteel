@@ -109,7 +109,9 @@ export class PerkData {
 				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
-				effect: 'You grab a willing, adjacent ally or object of your size or smaller and hurl them a number of squares equal to twice your Might score in any direction. If they fall as a result of this movement, their fall distance is reduced by a number equal to twice your Might score. You can\'t use this perk again until you gain at least 1 Victory.'
+				sections: [
+					FactoryLogic.createAbilitySectionText('You grab a willing, adjacent ally or object of your size or smaller and hurl them a number of squares equal to twice your Might score in any direction. If they fall as a result of this movement, their fall distance is reduced by a number equal to twice your Might score. You can\'t use this perk again until you gain at least 1 Victory.')
+				]
 			})
 		},
 		list: PerkList.Exploration
@@ -129,7 +131,9 @@ export class PerkData {
 				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
-				effect: 'You catch your ally. Neither of you takes damage from the fall.'
+				sections: [
+					FactoryLogic.createAbilitySectionText('You catch your ally. Neither of you takes damage from the fall.')
+				]
 			})
 		},
 		list: PerkList.Exploration
@@ -345,7 +349,9 @@ For you, music is a universal language.
 				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
-				effect: 'You can move up to 3 squares toward the trap. If you’re adjacent to any of the trap’s mechanisms after this movement, you jam the trap, preventing it from activating. So long as you stay adjacent to the mechanism, the trap can’t go off. If an attempt to disarm the trap you are stall fails, it goes off.'
+				sections: [
+					FactoryLogic.createAbilitySectionText('You can move up to 3 squares toward the trap. If you’re adjacent to any of the trap’s mechanisms after this movement, you jam the trap, preventing it from activating. So long as you stay adjacent to the mechanism, the trap can’t go off. If an attempt to disarm the trap you are stall fails, it goes off.')
+				]
 			})
 		},
 		list: PerkList.Intrigue
@@ -483,7 +489,8 @@ If the Director does not have an answer to the question you ask, you can instead
 				keywords: [ AbilityKeyword.Magic ],
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
-				effect: `
+				sections: [
+					FactoryLogic.createAbilitySectionText(`
 Choose one of the following effects:
 
 * You teleport an unattended size 1T or 1S object within 1 square of you to an unoccupied space within 1 square of you.
@@ -492,7 +499,8 @@ Choose one of the following effects:
 * You make up to 1 pound of edible food you can touch taste delicious or disgusting.
 * Until the start of your next turn, you make your body exude a particular odor you’ve smelled before. This smell can be sensed by creatures within 5 squares of you, but can’t impose any condition or other drawback on creatures.
 * You place a small magical inscription on the surface of a mundane object you can touch, or remove an inscription that was made by you or by another creature using Arcane Trick.
-* You cover a size 1T object that you touch with an illusion that makes it look like another object. A creature who handles the object can see through the illusion. The illusion ends when you stop touching the object.`
+* You cover a size 1T object that you touch with an illusion that makes it look like another object. A creature who handles the object can see through the illusion. The illusion ends when you stop touching the object.`)
+				]
 			})
 		},
 		list: PerkList.Supernatural
@@ -512,7 +520,9 @@ Choose one of the following effects:
 				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
-				effect: 'You magically learn the keywords a creature of lower level within 10 squares of you has in their stat block (e.g. “Demon,” “Humanoid,” or “Undead”).'
+				sections: [
+					FactoryLogic.createAbilitySectionText('You magically learn the keywords a creature of lower level within 10 squares of you has in their stat block (e.g. “Demon,” “Humanoid,” or “Undead”).')
+				]
 			})
 		},
 		list: PerkList.Supernatural
@@ -549,7 +559,9 @@ If the familiar is destroyed, you can restore them as a respite activity or by s
 				keywords: [ AbilityKeyword.Psionic ],
 				distance: [ FactoryLogic.distance.createRanged(10) ],
 				target: '1 size 1T unattended object',
-				effect: 'You can grab or manipulate the target with your mind. You can move the object up to a number of squares equal to your Reason, Intuition, or Presence score (your choice). You can use this ability to turn doorknobs, pull levers, and manipulate other smaller, movable pieces of a larger object as long as the piece you\'re manipulating is unattended and size 1T (though you can’t use this ability to break smaller piece off of a larger object).'
+				sections: [
+					FactoryLogic.createAbilitySectionText('You can grab or manipulate the target with your mind. You can move the object up to a number of squares equal to your Reason, Intuition, or Presence score (your choice). You can use this ability to turn doorknobs, pull levers, and manipulate other smaller, movable pieces of a larger object as long as the piece you\'re manipulating is unattended and size 1T (though you can’t use this ability to break smaller piece off of a larger object).')
+				]
 			})
 		},
 		list: PerkList.Supernatural
@@ -569,7 +581,9 @@ If the familiar is destroyed, you can restore them as a respite activity or by s
 				keywords: [ AbilityKeyword.Psionic ],
 				distance: [ FactoryLogic.distance.createRanged(10) ],
 				target: '1 ally who understands at least one language',
-				effect: 'You send a telepathic message to the target that takes 10 seconds or less to speak.'
+				sections: [
+					FactoryLogic.createAbilitySectionText('You send a telepathic message to the target that takes 10 seconds or less to speak.')
+				]
 			})
 		},
 		list: PerkList.Supernatural

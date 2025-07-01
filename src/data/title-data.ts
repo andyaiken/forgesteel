@@ -400,7 +400,9 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 					distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 					target: 'All enemies hidden from you',
 					cost: 1,
-					effect: 'Each target is P < [average] taunted (EoT). You know the locations of creatures taunted in this way.'
+					sections: [
+						FactoryLogic.createAbilitySectionText('Each target is P < [average] taunted (EoT). You know the locations of creatures taunted in this way.')
+					]
 				})
 			})
 		],
@@ -553,7 +555,9 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 					distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 					target: 'All enemies',
 					cost: 3,
-					effect: 'Each undead creature in the area takes holy damage equal to your Reason, Intuition, or Presence score (your choice) and is P < [strong] frightened (save ends).'
+					sections: [
+						FactoryLogic.createAbilitySectionText('Each undead creature in the area takes holy damage equal to your Reason, Intuition, or Presence score (your choice) and is P < [strong] frightened (save ends).')
+					]
 				})
 			})
 		],

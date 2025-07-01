@@ -97,13 +97,17 @@ You can have an active number of sigils equal to your level. You can remove a si
 									distance: [ FactoryLogic.distance.createRanged(10) ],
 									target: '1 creature with your sigil',
 									cost: 'signature',
-									powerRoll: FactoryLogic.createPowerRoll({
-										characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-										tier1: '3 + R, I, or P damage; slide 1',
-										tier2: '3 + R, I, or P damage; slide 2',
-										tier3: '8 + R, I, or P damage; slide 3'
-									}),
-									effect: 'The sigil disappears from the creature.'
+									sections: [
+										FactoryLogic.createAbilitySectionRoll(
+											FactoryLogic.createPowerRoll({
+												characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+												tier1: '3 + R, I, or P damage; slide 1',
+												tier2: '3 + R, I, or P damage; slide 2',
+												tier3: '8 + R, I, or P damage; slide 3'
+											})
+										),
+										FactoryLogic.createAbilitySectionText('The sigil disappears from the creature.')
+									]
 								})
 							})
 						]

@@ -33,13 +33,17 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createRanged(5) ],
 					target: '1 creature or object',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-						tier1: '3 + A, R, I, or P fire damage',
-						tier2: '5 + A, R, I, or P fire damage',
-						tier3: '8 + A, R, I, or P fire damage'
-					}),
-					effect: 'A creature or object within 2 squares of your target takes fire damage equal to the characteristic score you added to this ability’s power roll.'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '3 + A, R, I, or P fire damage',
+								tier2: '5 + A, R, I, or P fire damage',
+								tier3: '8 + A, R, I, or P fire damage'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('A creature or object within 2 squares of your target takes fire damage equal to the characteristic score you added to this ability’s power roll.')
+					]
 				})
 			})
 		]
@@ -71,12 +75,16 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-						tier1: '3 + M, R, I, or P damage; stability reduced by 2 (EoT)',
-						tier2: '6 + M, R, I, or P damage; stability reduced by 3 (EoT)',
-						tier3: '9 + M, R, I, or P damage; stability reduced by 4 (EoT)'
-					})
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '3 + M, R, I, or P damage; stability reduced by 2 (EoT)',
+								tier2: '6 + M, R, I, or P damage; stability reduced by 3 (EoT)',
+								tier3: '9 + M, R, I, or P damage; stability reduced by 4 (EoT)'
+							})
+						)
+					]
 				})
 			})
 		]
@@ -111,12 +119,16 @@ export class KitData {
 					],
 					target: '1 creature',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '2 + M or A damage; you shift 1 square',
-						tier2: '5 + M or A damage; you shift up to 2 squares',
-						tier3: '7 + M or A damage; you shift up to 3 squares'
-					})
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '2 + M or A damage; you shift 1 square',
+								tier2: '5 + M or A damage; you shift up to 2 squares',
+								tier3: '7 + M or A damage; you shift up to 3 squares'
+							})
+						)
+					]
 				})
 			})
 		]
@@ -148,13 +160,17 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '2 creatures or objects',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '2 damage',
-						tier2: '4 damage',
-						tier3: '6 damage'
-					}),
-					effect: 'If you use this ability on your turn, you can target one creature or object with it then use your maneuver and move action for that turn before targeting a second creature or object. You still use the same power roll for both targets.'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '2 damage',
+								tier2: '4 damage',
+								tier3: '6 damage'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('If you use this ability on your turn, you can target one creature or object with it then use your maneuver and move action for that turn before targeting a second creature or object. You still use the same power roll for both targets.')
+					]
 				})
 			})
 		]
@@ -186,12 +202,16 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '2 creatures or objects',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '2 damage',
-						tier2: '5 damage',
-						tier3: '7 damage'
-					})
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '2 damage',
+								tier2: '5 damage',
+								tier3: '7 damage'
+							})
+						)
+					]
 				})
 			})
 		]
@@ -223,13 +243,17 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 + M or A damage',
-						tier2: '6 + M or A damage; you swap places with the target',
-						tier3: '9 + M or A damage; you swap places with the target'
-					}),
-					effect: 'If you roll a 12 or better and can’t swap places with the target because one or both of you is too big to fit into the swapped space, you both remain in your original spaces and the target takes 2 extra damage.'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '3 + M or A damage',
+								tier2: '6 + M or A damage; you swap places with the target',
+								tier3: '9 + M or A damage; you swap places with the target'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('If you roll a 12 or better and can’t swap places with the target because one or both of you is too big to fit into the swapped space, you both remain in your original spaces and the target takes 2 extra damage.')
+					]
 				})
 			})
 		]
@@ -261,13 +285,17 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 damage + M or A damage',
-						tier2: '5 damage + M or A damage',
-						tier3: '9 damage + M or A damage'
-					}),
-					effect: 'If the target dealt damage to you since the end of your last turn, this strike deals additional damage equal to your Might or Agility score (your choice).'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '3 damage + M or A damage',
+								tier2: '5 damage + M or A damage',
+								tier3: '9 damage + M or A damage'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('If the target dealt damage to you since the end of your last turn, this strike deals additional damage equal to your Might or Agility score (your choice).')
+					]
 				})
 			})
 		]
@@ -299,13 +327,17 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature or object',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 + M or A damage',
-						tier2: '6 + M or A damage',
-						tier3: '9 + M or A damage'
-					}),
-					effect: 'You can move up to 3 squares straight toward the target before this attack. You deal extra damage equal to the distance moved this way.'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '3 + M or A damage',
+								tier2: '6 + M or A damage',
+								tier3: '9 + M or A damage'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('You can move up to 3 squares straight toward the target before this attack. You deal extra damage equal to the distance moved this way.')
+					]
 				})
 			})
 		]
@@ -337,13 +369,17 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '2 + M or A damage',
-						tier2: '5 + M or A damage; slide 1',
-						tier3: '7 + M or A damage; slide 2'
-					}),
-					effect: 'You can shift into any square your target leaves after you slide them.'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '2 + M or A damage',
+								tier2: '5 + M or A damage; slide 1',
+								tier3: '7 + M or A damage; slide 2'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('You can shift into any square your target leaves after you slide them.')
+					]
 				})
 			})
 		]
@@ -378,13 +414,17 @@ export class KitData {
 					],
 					target: '1 creature',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '2 + M or A damage',
-						tier2: '5 + M or A damage',
-						tier3: '7 + M or A damage'
-					}),
-					effect: 'The target has a bane on their next power roll made before the end of their next turn.'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '2 + M or A damage',
+								tier2: '5 + M or A damage',
+								tier3: '7 + M or A damage'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('The target has a bane on their next power roll made before the end of their next turn.')
+					]
 				})
 			})
 		]
@@ -416,12 +456,16 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createRanged(5) ],
 					target: '1 creature',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '2 + M or A damage; A < [weak] slowed (save ends)',
-						tier2: '4 + M or A damage; A < [average] slowed (save ends)',
-						tier3: '6 + M or A damage; A < [strong] slowed (save ends)'
-					})
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '2 + M or A damage; A < [weak] slowed (save ends)',
+								tier2: '4 + M or A damage; A < [average] slowed (save ends)',
+								tier3: '6 + M or A damage; A < [strong] slowed (save ends)'
+							})
+						)
+					]
 				})
 			})
 		]
@@ -453,12 +497,16 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createRanged(5) ],
 					target: '2 creatures or objects',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '2 damage',
-						tier2: '4 damage',
-						tier3: '6 damage'
-					})
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '2 damage',
+								tier2: '4 damage',
+								tier3: '6 damage'
+							})
+						)
+					]
 				})
 			})
 		]
@@ -490,12 +538,16 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '2 + M or A damage; A < [weak] slowed (EoT)',
-						tier2: '4 + M or A damage; A < [average] slowed (EoT)',
-						tier3: '6 + M or A damage; A < [strong] restrained (EoT)'
-					})
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '2 + M or A damage; A < [weak] slowed (EoT)',
+								tier2: '4 + M or A damage; A < [average] slowed (EoT)',
+								tier3: '6 + M or A damage; A < [strong] restrained (EoT)'
+							})
+						)
+					]
 				})
 			})
 		]
@@ -527,13 +579,17 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 + M or A damage',
-						tier2: '6 + M or A damage',
-						tier3: '9 + M or A damage'
-					}),
-					effect: 'The target is taunted (EoT).'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '3 + M or A damage',
+								tier2: '6 + M or A damage',
+								tier3: '9 + M or A damage'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('The target is taunted (EoT).')
+					]
 				})
 			})
 		]
@@ -565,13 +621,17 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createRanged(5) ],
 					target: '1 creature',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 + M or A damage',
-						tier2: '6 + M or A damage',
-						tier3: '9 + M or A damage'
-					}),
-					effect: 'If you don’t take a move action this turn, this strike deals extra damage equal to your Might or Agility score (your choice).'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '3 + M or A damage',
+								tier2: '6 + M or A damage',
+								tier3: '9 + M or A damage'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('If you don’t take a move action this turn, this strike deals extra damage equal to your Might or Agility score (your choice).')
+					]
 				})
 			})
 		]
@@ -603,13 +663,17 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature or object',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-						tier1: '3 + M, R, I or P lightning damage',
-						tier2: '6 + M, R, I or P lightning damage',
-						tier3: '9 + M, R, I or P lightning damage'
-					}),
-					effect: 'A creature or object within 2 squares of your target takes lightning damage equal to the characteristic you used for this ability’s power roll.'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '3 + M, R, I or P lightning damage',
+								tier2: '6 + M, R, I or P lightning damage',
+								tier3: '9 + M, R, I or P lightning damage'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('A creature or object within 2 squares of your target takes lightning damage equal to the characteristic you used for this ability’s power roll.')
+					]
 				})
 			})
 		]
@@ -641,12 +705,16 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 + M or A damage',
-						tier2: '6 + M or A damage; slide 1',
-						tier3: '9 + M or A damage; slide 3'
-					})
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '3 + M or A damage',
+								tier2: '6 + M or A damage; slide 1',
+								tier3: '9 + M or A damage; slide 3'
+							})
+						)
+					]
 				})
 			})
 		]
@@ -678,13 +746,17 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 + M or A damage',
-						tier2: '5 + M or A damage; push 1',
-						tier3: '8 + M or A damage; push 2'
-					}),
-					effect: 'You can shift into any square your target leaves after you force move them with this ability.'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '3 + M or A damage',
+								tier2: '5 + M or A damage; push 1',
+								tier3: '8 + M or A damage; push 2'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('You can shift into any square your target leaves after you force move them with this ability.')
+					]
 				})
 			})
 		]
@@ -716,12 +788,16 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '2 + M or A damage; push 1',
-						tier2: '5 + M or A damage; push 2',
-						tier3: '7 + M or A damage; push 3; M < [strong] prone'
-					})
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '2 + M or A damage; push 1',
+								tier2: '5 + M or A damage; push 2',
+								tier3: '7 + M or A damage; push 3; M < [strong] prone'
+							})
+						)
+					]
 				})
 			})
 		]
@@ -753,13 +829,17 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature or object',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-						tier1: '2 + M, R, I, or P holy damage',
-						tier2: '4 + M, R, I, or P holy damage',
-						tier3: '7 + M, R, I, or P holy damage'
-					}),
-					effect: 'The target has damage weakness equal to the characteristic score you used on this ability’s power roll (EoT).'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '2 + M, R, I, or P holy damage',
+								tier2: '4 + M, R, I, or P holy damage',
+								tier3: '7 + M, R, I, or P holy damage'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('The target has damage weakness equal to the characteristic score you used on this ability’s power roll (EoT).')
+					]
 				})
 			})
 		]
@@ -791,12 +871,16 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee(2) ],
 					target: '1 creature',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility ],
-						tier1: '3 + M or A damage; vertical pull 1',
-						tier2: '6 + M or A damage; vertical pull 2',
-						tier3: '9 + M or A damage; vertical pull 3'
-					})
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility ],
+								tier1: '3 + M or A damage; vertical pull 1',
+								tier2: '6 + M or A damage; vertical pull 2',
+								tier3: '9 + M or A damage; vertical pull 3'
+							})
+						)
+					]
 				})
 			})
 		]
@@ -830,12 +914,16 @@ export class KitData {
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature or object',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might ],
-						tier1: '2 + M damage; M < [weak], grabbed',
-						tier2: '5 + M damage; M < [average], grabbed',
-						tier3: '7 + M damage; M < [strong], grabbed'
-					})
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might ],
+								tier1: '2 + M damage; M < [weak], grabbed',
+								tier2: '5 + M damage; M < [average], grabbed',
+								tier3: '7 + M damage; M < [strong], grabbed'
+							})
+						)
+					]
 				})
 			}),
 			FactoryLogic.feature.create({
@@ -898,13 +986,17 @@ Once you reach 4th level, the first time you take hybrid form in an encounter yo
 					distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 					target: 'Each enemy in the area',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Agility ],
-						tier1: '2 damage',
-						tier2: '4 damage',
-						tier3: '6 damage'
-					}),
-					effect: 'You can shift up to 2 squares before or after making the power roll.'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Agility ],
+								tier1: '2 damage',
+								tier2: '4 damage',
+								tier3: '6 damage'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('You can shift up to 2 squares before or after making the power roll.')
+					]
 				})
 			}),
 			FactoryLogic.feature.create({
@@ -967,13 +1059,17 @@ Once you reach 4th level, your speed gains the Fly keyword.`
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '2 creatures or objects',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Agility ],
-						tier1: '2 + A damage',
-						tier2: '5 + A damage; push 1',
-						tier3: '7 + A damage; push 2'
-					}),
-					effect: 'You can shift up to the same number of squares that you pushed the target.'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Agility ],
+								tier1: '2 + A damage',
+								tier2: '5 + A damage; push 1',
+								tier3: '7 + A damage; push 2'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('You can shift up to the same number of squares that you pushed the target.')
+					]
 				})
 			}),
 			FactoryLogic.feature.create({
@@ -1036,12 +1132,16 @@ Once you reach 4th level, your speed gains the Climb keyword in hybrid form.`
 					distance: [ FactoryLogic.distance.createMelee() ],
 					target: '1 creature or object',
 					cost: 'signature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might ],
-						tier1: '2 + M damage; A < [weak], prone',
-						tier2: '5 + M damage; A < [average], prone',
-						tier3: '7 + M damage; A < [strong], prone'
-					})
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might ],
+								tier1: '2 + M damage; A < [weak], prone',
+								tier2: '5 + M damage; A < [average], prone',
+								tier3: '7 + M damage; A < [strong], prone'
+							})
+						)
+					]
 				})
 			}),
 			FactoryLogic.feature.create({

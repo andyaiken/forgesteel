@@ -461,13 +461,17 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'One ally or enemy',
 			cost: 3,
-			preEffect: 'Any ally targeted by this ability gains temporary Stamina equal to twice your Presence score, and can end one effect on them that is ended by a saving throw or that ends at the end of their turn. If you target an enemy, you make a power roll.',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '3 + P psychic damage; I < [weak], frightened (save ends)',
-				tier2: '6 + P psychic damage; I < [average], frightened (save ends)',
-				tier3: '9 + P psychic damage; I < [strong], frightened (save ends)'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionText('Any ally targeted by this ability gains temporary Stamina equal to twice your Presence score, and can end one effect on them that is ended by a saving throw or that ends at the end of their turn. If you target an enemy, you make a power roll.'),
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '3 + P psychic damage; I < [weak], frightened (save ends)',
+						tier2: '6 + P psychic damage; I < [average], frightened (save ends)',
+						tier3: '9 + P psychic damage; I < [strong], frightened (save ends)'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-10',
@@ -506,13 +510,17 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature',
 			cost: 3,
-			preEffect: 'The target takes damage before this ability imposes any weakness effect. The damage type and the weakness for this ability must be chosen from one of the following: acid, corruption, or fire.',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '3 + R damage; R < [weak], the target has weakness 5 (save ends)',
-				tier2: '6 + R damage; R < [average], the target has weakness 5 (save ends)',
-				tier3: '9 + R damage; R < [strong], the target has weakness equal to 5 + your Reason score (save ends)'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionText('The target takes damage before this ability imposes any weakness effect. The damage type and the weakness for this ability must be chosen from one of the following: acid, corruption, or fire.'),
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '3 + R damage; R < [weak], the target has weakness 5 (save ends)',
+						tier2: '6 + R damage; R < [average], the target has weakness 5 (save ends)',
+						tier3: '9 + R damage; R < [strong], the target has weakness equal to 5 + your Reason score (save ends)'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-13',
@@ -614,17 +622,19 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
-			preEffect: `
+			sections: [
+				FactoryLogic.createAbilitySectionText(`
 You create three size 1T orbs that orbit your body. Each orb you provides you with cumulative damage immunity 1. Whenever you take damage, you lose 1 orb.
 
-Once on each of your turns, you can use a free maneuver to fire an orb at a creature or object within 5 squares as a ranged strike, losing the orb after the strike.`,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '2 damage',
-				tier2: '3 damage',
-				tier3: '5 damage'
-			}),
-			sections: [
+Once on each of your turns, you can use a free maneuver to fire an orb at a creature or object within 5 squares as a ranged strike, losing the orb after the strike.`),
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '2 damage',
+						tier2: '3 damage',
+						tier3: '5 damage'
+					})
+				),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'You create five orbs. You are weakened while you have any orbs active.'

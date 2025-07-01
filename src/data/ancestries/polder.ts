@@ -20,7 +20,9 @@ export const polder: Ancestry = {
 				keywords: [ AbilityKeyword.Magic ],
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
-				effect: 'You flatten yourself into a shadow against a wall or floor you are touching, and become hidden from any creature you have cover or concealment from or who isn’t observing you. While in shadow form, you have full awareness of your surroundings, attacks against you and tests made to find you take a bane, and you can’t move or take actions or maneuvers except to exit this form. Any ability or effect that targets more than 1 square affects you in this form only if it explicitly affects the surface you are flattened against. You can exit this form as a maneuver.'
+				sections: [
+					FactoryLogic.createAbilitySectionText('You flatten yourself into a shadow against a wall or floor you are touching, and become hidden from any creature you have cover or concealment from or who isn’t observing you. While in shadow form, you have full awareness of your surroundings, attacks against you and tests made to find you take a bane, and you can’t move or take actions or maneuvers except to exit this form. Any ability or effect that targets more than 1 square affects you in this form only if it explicitly affects the surface you are flattened against. You can exit this form as a maneuver.')
+				]
 			})
 		}),
 		FactoryLogic.feature.createSize({

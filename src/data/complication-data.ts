@@ -237,7 +237,9 @@ Your knowledge of your chosen field increases. When you finish this project, the
 					keywords: [ AbilityKeyword.Magic ],
 					distance: [ FactoryLogic.distance.createSelf() ],
 					target: 'Self',
-					effect: 'Until the end of your turn, when you use a heroic ability against a single target, you can weaken the target’s life force, dealing extra corruption damage equal to your highest characteristic score.'
+					sections: [
+						FactoryLogic.createAbilitySectionText('Until the end of your turn, when you use a heroic ability against a single target, you can weaken the target’s life force, dealing extra corruption damage equal to your highest characteristic score.')
+					]
 				})
 			}),
 			FactoryLogic.feature.create({
@@ -1005,7 +1007,9 @@ You can’t take this complication if you can’t be dazed.`,
 					keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 					distance: [ FactoryLogic.distance.createRanged(10) ],
 					target: 'One willing creature',
-					effect: 'You can see, hear, and smell as if you were in the creature’s space. Additionally, you can borrow their mouth to speak when you wish to do so. You speak in a different voice than theirs. This effect ends when you use Share Head on a different target, when the creature moves more than 10 away from you, or when the creature is no longer willing to share their head with you.'
+					sections: [
+						FactoryLogic.createAbilitySectionText('You can see, hear, and smell as if you were in the creature’s space. Additionally, you can borrow their mouth to speak when you wish to do so. You speak in a different voice than theirs. This effect ends when you use Share Head on a different target, when the creature moves more than 10 away from you, or when the creature is no longer willing to share their head with you.')
+					]
 				})
 			}),
 			FactoryLogic.feature.create({
@@ -1087,12 +1091,16 @@ You can’t take this complication if you can’t be dazed.`,
 					keywords: [ AbilityKeyword.Magic ],
 					distance: [ FactoryLogic.distance.createSelf() ],
 					target: 'Self',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Intuition, Characteristic.Presence ],
-						tier1: 'You take corruption damage equal to 5 + your level.',
-						tier2: 'A spirit speaks to you. You learn how it died, and you can ask it one question, which it can answer truthfully or untruthfully. It knows anything it knew in life, and it is aware of the events that took place in this location since its death. You can’t use this ability again until you have earned 1 Victory.',
-						tier3: 'As 12-16, but you can ask 3 questions.'
-					})
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Intuition, Characteristic.Presence ],
+								tier1: 'You take corruption damage equal to 5 + your level.',
+								tier2: 'A spirit speaks to you. You learn how it died, and you can ask it one question, which it can answer truthfully or untruthfully. It knows anything it knew in life, and it is aware of the events that took place in this location since its death. You can’t use this ability again until you have earned 1 Victory.',
+								tier3: 'As 12-16, but you can ask 3 questions.'
+							})
+						)
+					]
 				})
 			}),
 			FactoryLogic.feature.create({
@@ -1117,13 +1125,17 @@ You can’t take this complication if you can’t be dazed.`,
 					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 					distance: [ FactoryLogic.distance.createRanged(10) ],
 					target: '1 creature',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Presence ],
-						tier1: '2 damage; M < [weak] slowed (save ends)',
-						tier2: '4 damage; M < [average] slowed (save ends)',
-						tier3: '6 damage; M < [strong] slowed (save ends)'
-					}),
-					effect: 'This ability has no effect on a creature that can’t see you or purposely avoids looking at your eyes. If a creature is reduced to 0 Stamina by this ability, they turn to inanimate stone.'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Presence ],
+								tier1: '2 damage; M < [weak] slowed (save ends)',
+								tier2: '4 damage; M < [average] slowed (save ends)',
+								tier3: '6 damage; M < [strong] slowed (save ends)'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('This ability has no effect on a creature that can’t see you or purposely avoids looking at your eyes. If a creature is reduced to 0 Stamina by this ability, they turn to inanimate stone.')
+					]
 				})
 			}),
 			FactoryLogic.feature.create({
@@ -1297,14 +1309,18 @@ You can’t take this complication if you can’t be dazed.`,
 					keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 					distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 					target: 'All creatures',
-					preEffect: 'Note: this ability costs all your heroic resources to use.',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-						tier1: '1 psychic damage for each heroic resources you spend, to a maximum of your level',
-						tier2: '1 psychic damage for each heroic resource you spend, to a maximum of your level + your highest characteristic',
-						tier3: '1 psychic damage for each heroic resource you spend'
-					}),
-					effect: 'If you are a talent and you are strained, the ability deals an additional 5 psychic damage to you and all creatures in the area.'
+					sections: [
+						FactoryLogic.createAbilitySectionText('Note: this ability costs all your heroic resources to use.'),
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '1 psychic damage for each heroic resources you spend, to a maximum of your level',
+								tier2: '1 psychic damage for each heroic resource you spend, to a maximum of your level + your highest characteristic',
+								tier3: '1 psychic damage for each heroic resource you spend'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('If you are a talent and you are strained, the ability deals an additional 5 psychic damage to you and all creatures in the area.')
+					]
 				})
 			}),
 			FactoryLogic.feature.create({
@@ -1407,13 +1423,17 @@ You can’t take this complication if you can’t be dazed.`,
 					keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 					distance: [ FactoryLogic.distance.createRanged(10) ],
 					target: '1 creature or object',
-					preEffect: 'Note: you can use this ability as a ranged free strike.',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Intuition, Characteristic.Presence ],
-						tier1: 'push or pull 1',
-						tier2: 'push or pull 2',
-						tier3: 'push or pull 3'
-					})
+					sections: [
+						FactoryLogic.createAbilitySectionText('Note: you can use this ability as a ranged free strike.'),
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: 'push or pull 1',
+								tier2: 'push or pull 2',
+								tier3: 'push or pull 3'
+							})
+						)
+					]
 				})
 			}),
 			FactoryLogic.feature.createDamageModifier({
@@ -1758,10 +1778,12 @@ Note: Stormwight furies can’t take this complication.`,
 					keywords: [ AbilityKeyword.Ranged ],
 					distance: [ FactoryLogic.distance.createRanged(10) ],
 					target: '1 ally',
-					effect: `
+					sections: [
+						FactoryLogic.createAbilitySectionText(`
 The target can use its triggered action to take an action, a move action, or a maneuver.
 
-Note: If you have the Strike Now tactician ability, the target can use a free triggered action instead of a triggered action to use this ability.`
+Note: If you have the Strike Now tactician ability, the target can use a free triggered action instead of a triggered action to use this ability.`)
+					]
 				})
 			}),
 			FactoryLogic.feature.create({
@@ -1883,7 +1905,9 @@ Whenever you take a respite, make a Reason power roll.
 					keywords: [ AbilityKeyword.Magic ],
 					distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 					target: 'All enemies',
-					effect: 'Your loyalty collar detonates, dealing fire damage equal to 5 plus your level to each target. Once you have used this ability, you can’t use it again until you spend 1 minute out of combat resetting the collar.'
+					sections: [
+						FactoryLogic.createAbilitySectionText('Your loyalty collar detonates, dealing fire damage equal to 5 plus your level to each target. Once you have used this ability, you can’t use it again until you spend 1 minute out of combat resetting the collar')
+					]
 				})
 			}),
 			FactoryLogic.feature.create({
@@ -1949,13 +1973,17 @@ Whenever you take a respite, make a Reason power roll.
 					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 					distance: [ FactoryLogic.distance.createRanged(10) ],
 					target: '1 creature or object',
-					powerRoll: FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-						tier1: '2 damage; push or pull 1',
-						tier2: '5 damage; push or pull 2',
-						tier3: '7 damage; push or pull 3'
-					}),
-					effect: 'You can forgo dealing damage with this ability.'
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '2 damage; push or pull 1',
+								tier2: '5 damage; push or pull 2',
+								tier3: '7 damage; push or pull 3'
+							})
+						),
+						FactoryLogic.createAbilitySectionText('You can forgo dealing damage with this ability.')
+					]
 				})
 			}),
 			FactoryLogic.feature.create({

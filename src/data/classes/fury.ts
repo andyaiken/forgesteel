@@ -111,12 +111,16 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '3 + M damage; push 1',
-				tier2: '6 + M damage; push 2',
-				tier3: '9 + M damage; push 4'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '3 + M damage; push 1',
+						tier2: '6 + M damage; push 2',
+						tier3: '9 + M damage; push 4'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'fury-ability-2',
@@ -127,13 +131,17 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '2 + M damage',
-				tier2: '5 + M damage',
-				tier3: '7 + M damage; A < [strong], slowed (save ends)'
-			}),
-			effect: 'You can shift 1 square.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '2 + M damage',
+						tier2: '5 + M damage',
+						tier3: '7 + M damage; A < [strong], slowed (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can shift 1 square.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'fury-ability-3',
@@ -144,12 +152,16 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature of your size or smaller',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '2 + M damage; M < [weak], grabbed',
-				tier2: '5 + M damage; M < [average], grabbed',
-				tier3: '7 + M damage; M < [strong], grabbed'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '2 + M damage; M < [weak], grabbed',
+						tier2: '5 + M damage; M < [average], grabbed',
+						tier3: '7 + M damage; M < [strong], grabbed'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'fury-ability-4',
@@ -160,13 +172,17 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '3 + M damage',
-				tier2: '6 + M damage',
-				tier3: '9 + M damage'
-			}),
-			effect: 'You gain two surges. The enemy can make an opportunity attack against you as a free triggered action.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '3 + M damage',
+						tier2: '6 + M damage',
+						tier3: '9 + M damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You gain two surges. The enemy can make an opportunity attack against you as a free triggered action.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'fury-ability-5',
@@ -177,12 +193,16 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 			target: 'Each enemy in the area',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '5 damage',
-				tier2: '8 damage; push 1',
-				tier3: '11 damage; push 3'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '5 damage',
+						tier2: '8 damage; push 1',
+						tier3: '11 damage; push 3'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'fury-ability-6',
@@ -193,13 +213,17 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '3 + M damage; slide 2',
-				tier2: '5 + M damage; slide 3',
-				tier3: '8 + M damage; slide 5'
-			}),
-			effect: 'When you slide the target, you can move into any square they leave. If you take damage from an opportunity attack by moving this way, the target takes the same amount and type of damage.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '3 + M damage; slide 2',
+						tier2: '5 + M damage; slide 3',
+						tier3: '8 + M damage; slide 5'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('When you slide the target, you can move into any square they leave. If you take damage from an opportunity attack by moving this way, the target takes the same amount and type of damage.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'fury-ability-7',
@@ -232,13 +256,17 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '3 + M damage; M < [weak], bleeding (save ends)',
-				tier2: '5 + M damage; M < [average], bleeding (save ends)',
-				tier3: '8 + M damage; M < [strong], bleeding (save ends)'
-			}),
-			effect: 'While bleeding, the target takes damage equal to your Might score at the end of your turns.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '3 + M damage; M < [weak], bleeding (save ends)',
+						tier2: '5 + M damage; M < [average], bleeding (save ends)',
+						tier3: '8 + M damage; M < [strong], bleeding (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('While bleeding, the target takes damage equal to your Might score at the end of your turns.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'fury-ability-9',
@@ -249,13 +277,17 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or obeject',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '4 + M damage; M < [weak], bleeding and weakened (save ends)',
-				tier2: '6 + M damage; M < [average], bleeding and weakened (save ends)',
-				tier3: '10 + M damage; M < [strong], bleeding and weakened (save ends)'
-			}),
-			effect: 'You can deal 1d6 damage to yourself to deal 1d6 bonus damage to the target.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '4 + M damage; M < [weak], bleeding and weakened (save ends)',
+						tier2: '6 + M damage; M < [average], bleeding and weakened (save ends)',
+						tier3: '10 + M damage; M < [strong], bleeding and weakened (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can deal 1d6 damage to yourself to deal 1d6 bonus damage to the target.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'fury-ability-10',
@@ -265,7 +297,9 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 5,
-			effect: 'The next ability roll you make this turn automatically achieves a tier 3 result. You gain one surge.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('The next ability roll you make this turn automatically achieves a tier 3 result. You gain one surge.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'fury-ability-11',
@@ -276,13 +310,17 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 1, within: 1 }) ],
 			target: 'Each enemy in the area',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '6 damage; push 2',
-				tier2: '9 damage; push 4',
-				tier3: '13 damage; push 6'
-			}),
-			effect: 'The targets are pushed one at a time, starting with the target closest to you.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '6 damage; push 2',
+						tier2: '9 damage; push 4',
+						tier3: '13 damage; push 6'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('The targets are pushed one at a time, starting with the target closest to you.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'fury-ability-12',
@@ -293,13 +331,15 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '7 + M damage',
-				tier2: '11 + M damage',
-				tier3: '16 + M damage'
-			}),
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '7 + M damage',
+						tier2: '11 + M damage',
+						tier3: '16 + M damage'
+					})
+				),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Spend',
 					value: 1,
@@ -316,7 +356,9 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
-			effect: 'Until the end of the encounter or until you are dying, each enemy who starts their turn adjacent to you and has P < strong is frightened until the end of their turn.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or until you are dying, each enemy who starts their turn adjacent to you and has P < strong is frightened until the end of their turn.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'fury-ability-14',
@@ -327,7 +369,9 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
-			effect: 'Until the end of the encounter or until you are dying, each creature you make a melee strike against who has P < average is taunted until the end of their next turn. Additionally, against any enemy taunted by you, your abilities deal additional damage equal to twice your Might score and gain a +1 bonus to potency.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or until you are dying, each creature you make a melee strike against who has P < average is taunted until the end of their next turn. Additionally, against any enemy taunted by you, your abilities deal additional damage equal to twice your Might score and gain a +1 bonus to potency.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'fury-ability-15',
@@ -338,7 +382,9 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
-			effect: 'You gain 20 Temporary Stamina.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('You gain 20 Temporary Stamina.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'fury-ability-16',
@@ -349,7 +395,9 @@ As a fury, you have abilities that deal a lot of damage, move you around the bat
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 7,
-			effect: 'If the target is not a leader or solo creature, they die at the end of their next turn. If the target is a leader or solo creature, you gain three surges and can make a melee free strike against them.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('If the target is not a leader or solo creature, they die at the end of their next turn. If the target is a leader or solo creature, you gain three surges and can make a melee free strike against them.')
+			]
 		})
 	],
 	subclasses: [

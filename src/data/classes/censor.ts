@@ -158,12 +158,16 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 1 }) ],
 			target: 'Each enemy in the area',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Presence ],
-				tier1: '2 holy damage; push 1',
-				tier2: '4 holy damage; push 2',
-				tier3: '6 holy damage; push 3'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Presence ],
+						tier1: '2 holy damage; push 1',
+						tier2: '4 holy damage; push 2',
+						tier3: '6 holy damage; push 3'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-2',
@@ -174,13 +178,17 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Presence ],
-				tier1: '5 + P psychic damage',
-				tier2: '7 + P psychic damage',
-				tier3: '10 + P psychic damage'
-			}),
-			effect: 'Each time the target willingly moves before the end of your next turn, they take 1 psychic damage for each square they move.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Presence ],
+						tier1: '5 + P psychic damage',
+						tier2: '7 + P psychic damage',
+						tier3: '10 + P psychic damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('Each time the target willingly moves before the end of your next turn, they take 1 psychic damage for each square they move.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-3',
@@ -191,12 +199,16 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '2 + M holy damage; P < [weak], slowed (save ends)',
-				tier2: '5 + M holy damage; P < [average], slowed (save ends)',
-				tier3: '7 + M holy damage; P < [strong], slowed (save ends)'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '2 + M holy damage; P < [weak], slowed (save ends)',
+						tier2: '5 + M holy damage; P < [average], slowed (save ends)',
+						tier3: '7 + M holy damage; P < [strong], slowed (save ends)'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-4',
@@ -207,13 +219,17 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '3 + M holy damage',
-				tier2: '5 + M holy damage',
-				tier3: '8 + M holy damage'
-			}),
-			effect: 'Each enemy adjacent to the target is pushed away from the target up to a number of squares equal to your Presence score.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '3 + M holy damage',
+						tier2: '5 + M holy damage',
+						tier3: '8 + M holy damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('Each enemy adjacent to the target is pushed away from the target up to a number of squares equal to your Presence score.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-5',
@@ -224,13 +240,17 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '3 + M holy damage',
-				tier2: '6 + M holy damage',
-				tier3: '9 + M holy damage'
-			}),
-			effect: 'Until the start of your next turn, enemies have a bane on ability power rolls made against you and each ally adjacent to you.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '3 + M holy damage',
+						tier2: '6 + M holy damage',
+						tier3: '9 + M holy damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('Until the start of your next turn, enemies have a bane on ability power rolls made against you and each ally adjacent to you.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-6',
@@ -241,13 +261,17 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '3 + M damage; push 1',
-				tier2: '6 + M damage; push 3',
-				tier3: '9 + M damage; push 5'
-			}),
-			effect: 'You can shift up to your speed and must end that shift within distance of the target.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '3 + M damage; push 1',
+						tier2: '6 + M damage; push 3',
+						tier3: '9 + M damage; push 5'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can shift up to your speed and must end that shift within distance of the target.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-7',
@@ -258,13 +282,17 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '5 + M holy damage',
-				tier2: '8 + M holy damage',
-				tier3: '11 + M holy damage'
-			}),
-			effect: 'You can spend a Recovery to allow yourself or one ally within 10 squares of you to regain Stamina equal to your Recovery value.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '5 + M holy damage',
+						tier2: '8 + M holy damage',
+						tier3: '11 + M holy damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can spend a Recovery to allow yourself or one ally within 10 squares of you to regain Stamina equal to your Recovery value.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-8',
@@ -275,12 +303,16 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Presence ],
-				tier1: '5 + P holy damage; I < [weak], dazed (save ends)',
-				tier2: '8 + P holy damage; I < [average], dazed (save ends)',
-				tier3: '11 + P holy damage; I < [strong], dazed (save ends)'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Presence ],
+						tier1: '5 + P holy damage; I < [weak], dazed (save ends)',
+						tier2: '8 + P holy damage; I < [average], dazed (save ends)',
+						tier3: '11 + P holy damage; I < [strong], dazed (save ends)'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-9',
@@ -291,13 +323,17 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '6 + M holy damage; grabbed',
-				tier2: '9 + M holy damage; grabbed',
-				tier3: '13 + M holy damage; grabbed'
-			}),
-			effect: 'If the target makes a strike against a creature while grabbed by you, you can then spend 3 wrath to deal holy damage to them equal to your Presence score and change the target of the strike to another target within the strike’s distance.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '6 + M holy damage; grabbed',
+						tier2: '9 + M holy damage; grabbed',
+						tier3: '13 + M holy damage; grabbed'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('If the target makes a strike against a creature while grabbed by you, you can then spend 3 wrath to deal holy damage to them equal to your Presence score and change the target of the strike to another target within the strike’s distance.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-10',
@@ -311,13 +347,17 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '3 + M holy damage; if the target has P < [weak], each enemy within 2 squares of them is frightened of you (save ends)',
-				tier2: '5 + M holy damage; if the target has P < [average], each enemy within 2 squares of them is frightened of you (save ends)',
-				tier3: '8 + M holy damage; if the target has P < [strong], each enemy within 2 squares of them is frightened of you (save ends)'
-			}),
-			effect: 'Each enemy frightened by this ability is pushed 2 squares away from the target and takes psychic damage equal to your Presence score.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '3 + M holy damage; if the target has P < [weak], each enemy within 2 squares of them is frightened of you (save ends)',
+						tier2: '5 + M holy damage; if the target has P < [average], each enemy within 2 squares of them is frightened of you (save ends)',
+						tier3: '8 + M holy damage; if the target has P < [strong], each enemy within 2 squares of them is frightened of you (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('Each enemy frightened by this ability is pushed 2 squares away from the target and takes psychic damage equal to your Presence score.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-11',
@@ -328,13 +368,17 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '2 + M holy damage',
-				tier2: '3 + M holy damage',
-				tier3: '5 + M holy damage'
-			}),
-			effect: 'If a target who is not a leader or a solo creature is winded after the damage is resolved, they die.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '2 + M holy damage',
+						tier2: '3 + M holy damage',
+						tier3: '5 + M holy damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('If a target who is not a leader or a solo creature is winded after the damage is resolved, they die.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-12',
@@ -348,13 +392,17 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '5 + M holy damage; M < [weak], the target has fire weakness 3 (save ends)',
-				tier2: '9 + M holy damage; M < [average], the target has fire weakness 5 (save ends)',
-				tier3: '12 + M holy damage; M < [strong], the target has fire weakness 7 (save ends)'
-			}),
-			effect: 'While the target has fire weakness from this ability, you can choose to have your abilities deal fire damage to the target instead of holy damage.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '5 + M holy damage; M < [weak], the target has fire weakness 3 (save ends)',
+						tier2: '9 + M holy damage; M < [average], the target has fire weakness 5 (save ends)',
+						tier3: '12 + M holy damage; M < [strong], the target has fire weakness 7 (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('While the target has fire weakness from this ability, you can choose to have your abilities deal fire damage to the target instead of holy damage.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-13',
@@ -365,7 +413,9 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
-			effect: 'Until the end of the encounter or you are dying, at the end of each of your turns, each target takes holy damage equal to your Presence score. Any target adjacent to one or more enemies takes an extra 2d6 holy damage if they are judged by you or adjacent to one of your enemies.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, at the end of each of your turns, each target takes holy damage equal to your Presence score. Any target adjacent to one or more enemies takes an extra 2d6 holy damage if they are judged by you or adjacent to one of your enemies.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-14',
@@ -376,7 +426,9 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
-			effect: 'Until the end of the encounter or you are dying, whenever a target uses an ability that requires Malice, they take holy damage equal to three times your Presence score. A target judged by you takes an additional 2d6 holy damage.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, whenever a target uses an ability that requires Malice, they take holy damage equal to three times your Presence score. A target judged by you takes an additional 2d6 holy damage.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-15',
@@ -387,7 +439,9 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
-			effect: 'Until the end of the encounter or you are dying, whenever a target makes a strike, they take holy damage equal to twice your Presence score. A target judged by you takes an extra 2d6 holy damage.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, whenever a target makes a strike, they take holy damage equal to twice your Presence score. A target judged by you takes an extra 2d6 holy damage.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-16',
@@ -398,7 +452,9 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
-			effect: 'Until the end of the encounter or you are dying, whenever a target is force moved or moves willingly out of the aura, they take holy damage equal to twice your Presence score. A target judged by you who moves willingly takes an extra 2d6 holy damage.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, whenever a target is force moved or moves willingly out of the aura, they take holy damage equal to twice your Presence score. A target judged by you who moves willingly takes an extra 2d6 holy damage.')
+			]
 		})
 	],
 	subclasses: [

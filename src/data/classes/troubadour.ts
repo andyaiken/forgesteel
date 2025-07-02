@@ -209,14 +209,16 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: 'Two creatures or objects',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '2 damage',
-				tier2: '5 damage',
-				tier3: '7 damage'
-			}),
-			effect: 'You can shift up to 3 squares.',
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '2 damage',
+						tier2: '5 damage',
+						tier3: '7 damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can shift up to 3 squares.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Spend',
 					value: 2,
@@ -234,12 +236,16 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'One creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Presence ],
-				tier1: '2 + P psychic damage; P < [weak], bleeding (save ends)',
-				tier2: '5 + P psychic damage; P < [average], bleeding (save ends)',
-				tier3: '7 + P psychic damage; P < [strong], bleeding (save ends)'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Presence ],
+						tier1: '2 + P psychic damage; P < [weak], bleeding (save ends)',
+						tier2: '5 + P psychic damage; P < [average], bleeding (save ends)',
+						tier3: '7 + P psychic damage; P < [strong], bleeding (save ends)'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'troubadour-ability-3',
@@ -250,13 +256,17 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Presence ],
-				tier1: '3 + P damage',
-				tier2: '6 + P damage',
-				tier3: '9 + P damage'
-			}),
-			effect: 'The target is taunted by you or a willing ally adjacent to you until the end of the target’s next turn.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Presence ],
+						tier1: '3 + P damage',
+						tier2: '6 + P damage',
+						tier3: '9 + P damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('The target is taunted by you or a willing ally adjacent to you until the end of the target’s next turn.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'troubadour-ability-4',
@@ -270,14 +280,16 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			],
 			target: '1 creature',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Presence ],
-				tier1: '4 + P psychic damage',
-				tier2: '5 + P psychic damage',
-				tier3: '7 + P psychic damage'
-			}),
-			effect: 'One ally within 10 squares can end one effect on them that is ended by a saving throw or that ends at the end of their turn.',
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Presence ],
+						tier1: '4 + P psychic damage',
+						tier2: '5 + P psychic damage',
+						tier3: '7 + P psychic damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('One ally within 10 squares can end one effect on them that is ended by a saving throw or that ends at the end of their turn.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Spend',
 					value: 1,

@@ -223,7 +223,9 @@ This ability stays active even after encounters end. It ends if you are dying or
 						type: FactoryLogic.type.createTrigger('You start your turn.', { free: true }),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'You can end one effect on you or another creature in the area of your Null Field ability.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('You can end one effect on you or another creature in the area of your Null Field ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
@@ -243,13 +245,17 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 			target: 'Each enemy in the area',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '4 damage',
-				tier2: '5 damage',
-				tier3: '7 damage'
-			}),
-			effect: 'You can slide one adjacent enemy up to a number of squares equal to your Intuition score.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '4 damage',
+						tier2: '5 damage',
+						tier3: '7 damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can slide one adjacent enemy up to a number of squares equal to your Intuition score.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-2',
@@ -260,13 +266,17 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: 'Two creatures or objects',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '4 damage',
-				tier2: '5 damage',
-				tier3: '7 damage'
-			}),
-			effect: 'You can deal damage equal to your Agility score to an adjacent creature or object.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '4 damage',
+						tier2: '5 damage',
+						tier3: '7 damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can deal damage equal to your Agility score to an adjacent creature or object.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-3',
@@ -277,13 +287,17 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '5 + A damage',
-				tier2: '7 + A damage',
-				tier3: '10 + A damage'
-			}),
-			effect: 'You can shift up to half your speed before or after you make the strike.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '5 + A damage',
+						tier2: '7 + A damage',
+						tier3: '10 + A damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can shift up to half your speed before or after you make the strike.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-4',
@@ -342,13 +356,17 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '4 + A damage; push 2',
-				tier2: '6 + A damage; push 4',
-				tier3: '8 + A damage; push 6'
-			}),
-			effect: 'Before the push is resolved, teleport the target to a square adjacent to you opposite the one they started in. If the target cannot be teleported, then they ignore the push.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '4 + A damage; push 2',
+						tier2: '6 + A damage; push 4',
+						tier3: '8 + A damage; push 6'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('Before the push is resolved, teleport the target to a square adjacent to you opposite the one they started in. If the target cannot be teleported, then they ignore the push.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-8',
@@ -375,13 +393,17 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '7 + A damage',
-				tier2: '10 + A damage',
-				tier3: '13 + A damage'
-			}),
-			effect: 'You can shift up to half your speed before or after you make the strike. Additionally, whenever an effect lets you use a free strike or a signature ability, you can use this ability instead, paying its discipline cost as usual.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '7 + A damage',
+						tier2: '10 + A damage',
+						tier3: '13 + A damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can shift up to half your speed before or after you make the strike. Additionally, whenever an effect lets you use a free strike or a signature ability, you can use this ability instead, paying its discipline cost as usual.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-10',
@@ -392,7 +414,9 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 3,
-			effect: 'Each target takes psychic damage equal to twice your Intuition score. Until the start of your next turn, the area of your Null Field ability increases by 1. When you end your turn, each enemy in that area takes psychic damage equal to your Intuition score.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Each target takes psychic damage equal to twice your Intuition score. Until the start of your next turn, the area of your Null Field ability increases by 1. When you end your turn, each enemy in that area takes psychic damage equal to your Intuition score.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-11',
@@ -403,13 +427,17 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '6 + A damage',
-				tier2: '8 + A damage',
-				tier3: '12 + A damage'
-			}),
-			effect: 'Until the start of your next turn, when the target moves, you can use a free triggered action to shift up to your speed. You must end this shift adjacent to the target.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '6 + A damage',
+						tier2: '8 + A damage',
+						tier3: '12 + A damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('Until the start of your next turn, when the target moves, you can use a free triggered action to shift up to your speed. You must end this shift adjacent to the target.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-12',
@@ -436,13 +464,17 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '8 + A psychic damage; M < [weak], weakened (save ends)',
-				tier2: '12 + A psychic damage; M < [average], weakened (save ends)',
-				tier3: '16 + A psychic damage; M < [strong], weakened (save ends)'
-			}),
-			effect: 'While weakened this way, the target takes damage equal to your Intuition score when they use a supernatural or ability that costs Malice.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '8 + A psychic damage; M < [weak], weakened (save ends)',
+						tier2: '12 + A psychic damage; M < [average], weakened (save ends)',
+						tier3: '16 + A psychic damage; M < [strong], weakened (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('While weakened this way, the target takes damage equal to your Intuition score when they use a supernatural or ability that costs Malice.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-14',
@@ -453,13 +485,17 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: 'Push 3',
-				tier2: 'Push 5',
-				tier3: 'Push 7'
-			}),
-			effect: 'You gain an edge on this ability. For each square you push the target, they take 1 psychic damage.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: 'Push 3',
+						tier2: 'Push 5',
+						tier3: 'Push 7'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You gain an edge on this ability. For each square you push the target, they take 1 psychic damage.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-15',
@@ -470,13 +506,17 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '3 + A psychic damage; I < [weak], the target goes out of phase, then is slowed (save ends)',
-				tier2: '4 + A psychic damage; I < [average], the target goes out of phase, then is slowed (save ends)',
-				tier3: '6 + A psychic damage; I < [strong], the target goes out of phase, then is slowed (save ends)'
-			}),
-			effect: 'A target who goes out of phase is removed from the encounter until the end of their next turn, reappearing in their original space or the nearest available space.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '3 + A psychic damage; I < [weak], the target goes out of phase, then is slowed (save ends)',
+						tier2: '4 + A psychic damage; I < [average], the target goes out of phase, then is slowed (save ends)',
+						tier3: '6 + A psychic damage; I < [strong], the target goes out of phase, then is slowed (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('A target who goes out of phase is removed from the encounter until the end of their next turn, reappearing in their original space or the nearest available space.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-16',
@@ -487,13 +527,17 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '6 damage',
-				tier2: '9 damage',
-				tier3: '13 damage'
-			}),
-			effect: 'You can take the Disengage move action as a free maneuver before or after you make this ability.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '6 damage',
+						tier2: '9 damage',
+						tier3: '13 damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can take the Disengage move action as a free maneuver before or after you make this ability.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-17',
@@ -504,7 +548,9 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
-			effect: 'Until the end of the encounter, the area of your Null Field ability increases by 1. While the area is enlarged this way, each enemy in the area takes a bane on ability power rolls.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter, the area of your Null Field ability increases by 1. While the area is enlarged this way, each enemy in the area takes a bane on ability power rolls.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-18',
@@ -515,7 +561,9 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
-			effect: 'Until the end of the encounter, the area of your Null Field ability increases by 1. While the area is enlarged this way, each enemy who has I < average and enters the area for the first time in a round or starts their turn there is bleeding (save ends). The first time any ally enters the area or starts their turn there, they gain temporary Stamina equal to your Intuition score.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter, the area of your Null Field ability increases by 1. While the area is enlarged this way, each enemy who has I < average and enters the area for the first time in a round or starts their turn there is bleeding (save ends). The first time any ally enters the area or starts their turn there, they gain temporary Stamina equal to your Intuition score.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-19',
@@ -526,7 +574,9 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
-			effect: 'Until the end of the encounter, the area of your Null Field ability increases by 1. While the area is enlarged this way, you and any ally in the area ignore difficult terrain, reduce the potency of enemy effects targeting them by 1, and can use a free triggered action at the start of each of their turns to end one condition or effect that is affecting them.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter, the area of your Null Field ability increases by 1. While the area is enlarged this way, you and any ally in the area ignore difficult terrain, reduce the potency of enemy effects targeting them by 1, and can use a free triggered action at the start of each of their turns to end one condition or effect that is affecting them.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-20',
@@ -537,7 +587,9 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
-			effect: 'Until the end of the encounter, the area of your Null Field ability increases by 1. While the area is enlarged this way, enemies who take damage in the area taken additional psychic damage equal to twice your Intuition score.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter, the area of your Null Field ability increases by 1. While the area is enlarged this way, enemies who take damage in the area taken additional psychic damage equal to twice your Intuition score.')
+			]
 		})
 	],
 	subclasses: [

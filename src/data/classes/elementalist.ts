@@ -320,13 +320,17 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '2 + R corruption damage',
-				tier2: '4 + R corruption damage',
-				tier3: '6 + R corruption damage'
-			}),
-			effect: 'You or one ally within distance can end one effect that is ended by a saving throw or that ends at the end of that creature’s turn.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '2 + R corruption damage',
+						tier2: '4 + R corruption damage',
+						tier3: '6 + R corruption damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You or one ally within distance can end one effect that is ended by a saving throw or that ends at the end of that creature’s turn.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-2',
@@ -337,12 +341,16 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '2 creatures or objects',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '2 fire damage',
-				tier2: '4 fire damage',
-				tier3: '6 fire damage'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '2 fire damage',
+						tier2: '4 fire damage',
+						tier3: '6 fire damage'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-3',
@@ -353,13 +361,17 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '3 + R corruption damage',
-				tier2: '6 + R corruption damage',
-				tier3: '9 + R corruption damage'
-			}),
-			effect: 'You can teleport up to a number of squares equal to your Reason score.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '3 + R corruption damage',
+						tier2: '6 + R corruption damage',
+						tier3: '9 + R corruption damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can teleport up to a number of squares equal to your Reason score.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-4',
@@ -370,13 +382,17 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '2 + R damage',
-				tier2: '5 + R damage',
-				tier3: '7 + R damage'
-			}),
-			effect: 'You slide one creature within 10 squares of the target up to 2 squares.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '2 + R damage',
+						tier2: '5 + R damage',
+						tier3: '7 + R damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You slide one creature within 10 squares of the target up to 2 squares.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-5',
@@ -387,12 +403,16 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '3 + R damage; push 2',
-				tier2: '5 + R damage; push 3',
-				tier3: '8 + R damage; push 4'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '3 + R damage; push 2',
+						tier2: '5 + R damage; push 3',
+						tier3: '8 + R damage; push 4'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-6',
@@ -403,12 +423,16 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '2 + R corruption damage; R < [weak], slowed (save ends)',
-				tier2: '4 + R corruption damage; R < [average], slowed (save ends)',
-				tier3: '6 + R corruption damage; R < [strong], slowed (save ends)'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '2 + R corruption damage; R < [weak], slowed (save ends)',
+						tier2: '4 + R corruption damage; R < [average], slowed (save ends)',
+						tier3: '6 + R corruption damage; R < [strong], slowed (save ends)'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-7',
@@ -419,13 +443,17 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 10 }) ],
 			target: 'Each enemy in the area',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '2 damage',
-				tier2: '5 damage',
-				tier3: '7 damage'
-			}),
-			effect: 'The ground beneath the area becomes difficult terrain for enemies.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '2 damage',
+						tier2: '5 damage',
+						tier3: '7 damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('The ground beneath the area becomes difficult terrain for enemies.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-8',
@@ -436,12 +464,16 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '2 + R fire damage; push 2',
-				tier2: '5 + R fire damage; push 3',
-				tier3: '7 + R fire damage; push 4'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '2 + R fire damage; push 2',
+						tier2: '5 + R fire damage; push 3',
+						tier3: '7 + R fire damage; push 4'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-9',
@@ -452,13 +484,15 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 			target: 'Each enemy in the area',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '2 psychic damage',
-				tier2: '4 psychic damage',
-				tier3: '6 psychic damage'
-			}),
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '2 psychic damage',
+						tier2: '4 psychic damage',
+						tier3: '6 psychic damage'
+					})
+				),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Persist',
 					value: 1,
@@ -475,13 +509,15 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '5 + R fire damage',
-				tier2: '8 + R fire damage',
-				tier3: '11 + R fire damage'
-			}),
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '5 + R fire damage',
+						tier2: '8 + R fire damage',
+						tier3: '11 + R fire damage'
+					})
+				),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Persist',
 					value: 1,

@@ -162,12 +162,16 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Three allies',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: 'the target gains one surge',
-				tier2: 'the target gains two surges',
-				tier3: 'the target gains three surges'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: 'the target gains one surge',
+						tier2: 'the target gains two surges',
+						tier3: 'the target gains three surges'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'tactician-ability-2',
@@ -181,12 +185,16 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '3 + M damage; M < [weak], dazed (save ends)',
-				tier2: '5 + M damage; M < [average], dazed (save ends)',
-				tier3: '8 + M damage; M < [strong], dazed (save ends)'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '3 + M damage; M < [weak], dazed (save ends)',
+						tier2: '5 + M damage; M < [average], dazed (save ends)',
+						tier3: '8 + M damage; M < [strong], dazed (save ends)'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'tactician-ability-3',
@@ -200,12 +208,16 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '3 + M damage; you or one ally within 10 squares can spend a Recovery',
-				tier2: '5 + M damage; you or one ally within 10 squares can spend a Recovery',
-				tier3: '8 + M damage; you or one ally within 10 squares can spend a Recovery, and each of you gains an edge on the next ability power roll they make in the encounter'
-			})
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '3 + M damage; you or one ally within 10 squares can spend a Recovery',
+						tier2: '5 + M damage; you or one ally within 10 squares can spend a Recovery',
+						tier3: '8 + M damage; you or one ally within 10 squares can spend a Recovery, and each of you gains an edge on the next ability power roll they make in the encounter'
+					})
+				)
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'tactician-ability-4',
@@ -216,7 +228,9 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Self and two allies',
 			cost: 3,
-			effect: 'Each target can move their speed.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Each target can move their speed.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'tactician-ability-5',
@@ -230,13 +244,17 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			],
 			target: '1 creature or object',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Might ],
-				tier1: '5 + M damage; one ally within 10 squares can make a signature strike against the target as a free triggered action',
-				tier2: '9 + M damage; one ally within 10 squares can make a signature strike that gains an edge against the target as a free triggered action',
-				tier3: '12 + M damage; two allies within 10 squares can each make a signature strike that gains an edge against the target as free triggered actions'
-			}),
-			effect: 'If the target is reduced to 0 Stamina and a strike granted by this ability hasn’t been made, the striker can pick a different target.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '5 + M damage; one ally within 10 squares can make a signature strike against the target as a free triggered action',
+						tier2: '9 + M damage; one ally within 10 squares can make a signature strike that gains an edge against the target as a free triggered action',
+						tier3: '12 + M damage; two allies within 10 squares can each make a signature strike that gains an edge against the target as free triggered actions'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('If the target is reduced to 0 Stamina and a strike granted by this ability hasn’t been made, the striker can pick a different target.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'tactician-ability-6',
@@ -272,7 +290,9 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createRanged(5) ],
 			target: 'Three allies',
 			cost: 5,
-			effect: 'Each target can make a free strike.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Each target can make a free strike.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'tactician-ability-8',
@@ -283,7 +303,9 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '2 allies',
 			cost: 5,
-			effect: 'Each target who hasn’t acted yet this round can take their turn in any order immediately after yours.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Each target who hasn’t acted yet this round can take their turn in any order immediately after yours.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'tactician-ability-9',
@@ -294,7 +316,9 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
-			effect: 'Until the end of the encounter or you are dying, whenever you or any ally deals damage to a target marked by you, they gain two surges, which they can use immediately.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, whenever you or any ally deals damage to a target marked by you, they gain two surges, which they can use immediately.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'tactician-ability-10',
@@ -305,7 +329,9 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
-			effect: 'Until the end of the encounter or you are dying, whenever you or any ally deals damage a target marked by you, the damage dealer can push the target up to 2 squares, then shift up to 2 squares. Additionally, any ally using the Charge action to attack a target marked by you can use a signature or heroic ability in place of a melee free strike.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, whenever you or any ally deals damage a target marked by you, the damage dealer can push the target up to 2 squares, then shift up to 2 squares. Additionally, any ally using the Charge action to attack a target marked by you can use a signature or heroic ability in place of a melee free strike.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'tactician-ability-11',
@@ -316,7 +342,9 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
-			effect: 'Until the end of the encounter or you are dying, whenever you or any ally deals damage to a target marked by you, if that target has R < [average], they are frightened of the damage dealer (save ends).'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, whenever you or any ally deals damage to a target marked by you, if that target has R < [average], they are frightened of the damage dealer (save ends).')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'tactician-ability-12',
@@ -327,7 +355,9 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
-			effect: 'Until the end of the encounter or you are dying, whenever you or any ally deals damage to a target marked by you, the damage dealer can spend a Recovery.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, whenever you or any ally deals damage to a target marked by you, the damage dealer can spend a Recovery.')
+			]
 		})
 	],
 	subclasses: [
@@ -524,13 +554,17 @@ You can only make this test once for each encounter and negotiation.`
 											distance: [ FactoryLogic.distance.createRanged(5) ],
 											target: '1 creature',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Reason ],
-												tier1: '2 + R damage; R < [weak], the target is frightened of an ally of your choice within range (save ends)',
-												tier2: '3 + R damage; R < [average], the target is frightened of an ally of your choice within range (save ends)',
-												tier3: '5 + R damage; R < [strong], the target is frightened of an ally of your choice within range (save ends)'
-											}),
-											effect: 'One ally adjacent to the target can spend a Recovery.'
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														characteristic: [ Characteristic.Reason ],
+														tier1: '2 + R damage; R < [weak], the target is frightened of an ally of your choice within range (save ends)',
+														tier2: '3 + R damage; R < [average], the target is frightened of an ally of your choice within range (save ends)',
+														tier3: '5 + R damage; R < [strong], the target is frightened of an ally of your choice within range (save ends)'
+													})
+												),
+												FactoryLogic.createAbilitySectionText('One ally adjacent to the target can spend a Recovery.')
+											]
 										})
 									}),
 									value: 1

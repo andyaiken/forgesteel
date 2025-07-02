@@ -135,13 +135,17 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '3 + A damage',
-				tier2: '5 + A damage',
-				tier3: '8 + A damage; I < [strong], prone'
-			}),
-			effect: 'An ally of your choice within 5 squares of the target gains a surge.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '3 + A damage',
+						tier2: '5 + A damage',
+						tier3: '8 + A damage; I < [strong], prone'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('An ally of your choice within 5 squares of the target gains a surge.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-2',
@@ -155,13 +159,17 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			],
 			target: '1 creature',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '3 + A damage',
-				tier2: '6 + A damage',
-				tier3: '9 + A damage'
-			}),
-			effect: 'If the target has no allies adjacent to them, this strike deals extra damage equal to your Agility score.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '3 + A damage',
+						tier2: '6 + A damage',
+						tier3: '9 + A damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('If the target has no allies adjacent to them, this strike deals extra damage equal to your Agility score.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-3',
@@ -175,13 +183,17 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '3 + A damage',
-				tier2: '6 + A damage',
-				tier3: '9 + A damage'
-			}),
-			effect: 'If an ally is adjacent to the target, the target takes extra damage equal to your Agility score.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '3 + A damage',
+						tier2: '6 + A damage',
+						tier3: '9 + A damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('If an ally is adjacent to the target, the target takes extra damage equal to your Agility score.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-4',
@@ -192,13 +204,17 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '3 + A damage',
-				tier2: '5 + A damage',
-				tier3: '8 + A damage'
-			}),
-			effect: 'As long as you have at least one ally within 5 squares of the target, you gain a surge. If you are flanking the target when you use this ability, choose one ally who is flanking with you. That ally also gain a surge.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '3 + A damage',
+						tier2: '5 + A damage',
+						tier3: '8 + A damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('As long as you have at least one ally within 5 squares of the target, you gain a surge. If you are flanking the target when you use this ability, choose one ally who is flanking with you. That ally also gain a surge.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-5',
@@ -209,13 +225,17 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '4 + A damage; slide 2',
-				tier2: '6 + A damage; slide 3',
-				tier3: '10 + A damage; slide 5'
-			}),
-			effect: 'You can shift into any square the target leaves when you slide them.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '4 + A damage; slide 2',
+						tier2: '6 + A damage; slide 3',
+						tier3: '10 + A damage; slide 5'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can shift into any square the target leaves when you slide them.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-6',
@@ -245,13 +265,17 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '5 + A damage',
-				tier2: '8 + A damage',
-				tier3: '11 + A damage'
-			}),
-			effect: 'You can shift up to your speed, dividing that movement before or after your strike as desired.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '5 + A damage',
+						tier2: '8 + A damage',
+						tier3: '11 + A damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can shift up to your speed, dividing that movement before or after your strike as desired.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-8',
@@ -362,13 +386,17 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			],
 			target: '1 creature',
 			cost: 7,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '9 + A damage',
-				tier2: '13 + A damage',
-				tier3: '18 + A damage'
-			}),
-			effect: 'The target is taunted by a willing ally within 5 squares of you until the end of the target’s next turn.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
+						tier1: '9 + A damage',
+						tier2: '13 + A damage',
+						tier3: '18 + A damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('The target is taunted by a willing ally within 5 squares of you until the end of the target’s next turn.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-15',

@@ -279,14 +279,16 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'One creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '2 + P corruption damage; P < [weak], slowed (save ends)',
-				tier2: '3 + P corruption damage; P < [average], slowed (save ends)',
-				tier3: '5 + P corruption damage; P < [strong], slowed (save ends)'
-			}),
-			effect: 'The target takes 1 extra corruption damage for each additional time they are targeted by this ability in the encounter.',
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '2 + P corruption damage; P < [weak], slowed (save ends)',
+						tier2: '3 + P corruption damage; P < [average], slowed (save ends)',
+						tier3: '5 + P corruption damage; P < [strong], slowed (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('The target takes 1 extra corruption damage for each additional time they are targeted by this ability in the encounter.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'You gain 1 clarity on a tier 2 or tier 3 result.'
@@ -302,14 +304,16 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 			target: 'Each enemy in the area',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '2 fire damage',
-				tier2: '4 fire damage',
-				tier3: '6 fire damage'
-			}),
-			effect: 'A column of fire lingers in the area until the start of your next turn. Each enemy who enters the area for the first time in a round or starts their turn there takes 2 fire damage.',
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '2 fire damage',
+						tier2: '4 fire damage',
+						tier3: '6 fire damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('A column of fire lingers in the area until the start of your next turn. Each enemy who enters the area for the first time in a round or starts their turn there takes 2 fire damage.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'The size of the cube increases by 2, but the fire disappears at the end of your turn.'
@@ -325,13 +329,15 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '2 + R cold damage; M < [weak], slowed (EoT)',
-				tier2: '4 + R cold damage; M < [average], slowed (EoT)',
-				tier3: '6 + R cold damage; M < [strong], slowed (EoT)'
-			}),
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '2 + R cold damage; M < [weak], slowed (EoT)',
+						tier2: '4 + R cold damage; M < [average], slowed (EoT)',
+						tier3: '6 + R cold damage; M < [strong], slowed (EoT)'
+					})
+				),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'A target slowed by this ability is restrained instead, and you are slowed until the end of your next turn.'
@@ -347,14 +353,16 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createMelee(3) ],
 			target: 'One size 1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: 'Push 3',
-				tier2: 'Push 5',
-				tier3: 'Push 7; prone'
-			}),
-			effect: 'You can slide the target up to 2 squares before making the power roll.',
 			sections: [
+				FactoryLogic.createAbilitySectionText('You can slide the target up to 2 squares before making the power roll.'),
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: 'Push 3',
+						tier2: 'Push 5',
+						tier3: 'Push 7; prone'
+					})
+				),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'You can’t use this ability’s effect, but you can vertical push the target.'
@@ -370,13 +378,15 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 			target: 'Each enemy in the area',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '2 psychic damage',
-				tier2: '5 psychic damage; push 1',
-				tier3: '7 psychic damage; push 2'
-			}),
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '2 psychic damage',
+						tier2: '5 psychic damage; push 1',
+						tier3: '7 psychic damage; push 2'
+					})
+				),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'The size of the burst increases by 2, and you are bleeding until the start of your next turn.'
@@ -392,14 +402,16 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'One creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '3 + R damage',
-				tier2: '5 + R damage',
-				tier3: '8 + R damage'
-			}),
-			effect: 'A size 1M object drops onto the target and then rolls into an adjacent, unoccupied space of your choice. The object is made of wood, stone, or metal (your choice).',
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '3 + R damage',
+						tier2: '5 + R damage',
+						tier3: '8 + R damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('A size 1M object drops onto the target and then rolls into an adjacent, unoccupied space of your choice. The object is made of wood, stone, or metal (your choice).'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'The object explodes on impact, dealing damage equal to your Reason score to each creature adjacent to the target. You also take damage equal to your Reason score, which can’t be reduced in any way.'
@@ -415,14 +427,16 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'One creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '2 + R damage; M < [weak], prone',
-				tier2: '4 + R damage; M < [average], prone',
-				tier3: '6 + R damage; M < [strong], prone'
-			}),
-			effect: 'When targeting an object with a solid reflective surface or a creature carrying or wearing such an object (a mirror, an unpainted metal shield, shiny metal plate armor, and so forth), you can choose an additional target within 3 squares of the first target.',
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '2 + R damage; M < [weak], prone',
+						tier2: '4 + R damage; M < [average], prone',
+						tier3: '6 + R damage; M < [strong], prone'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('When targeting an object with a solid reflective surface or a creature carrying or wearing such an object (a mirror, an unpainted metal shield, shiny metal plate armor, and so forth), you can choose an additional target within 3 squares of the first target.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'You gain a surge, which you can use immediately, and take damage equal to your Reason score, which can’t be reduced in any way.'
@@ -438,14 +452,16 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createMelee(2) ],
 			target: 'One creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '3 + P damage',
-				tier2: '6 + P damage',
-				tier3: '9 + P damage'
-			}),
-			effect: 'You gain a surge.',
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '3 + P damage',
+						tier2: '6 + P damage',
+						tier3: '9 + P damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You gain a surge.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'The attack deals an extra 3 damage to the target and to you. The damage you take can’t be reduced in any way.'
@@ -482,13 +498,17 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '3 + R damage; M < [weak], slowed (save ends)',
-				tier2: '5 + R damage; M < [average], slowed (save ends)',
-				tier3: '8 + R damage; M < [strong], restrained (save ends)'
-			}),
-			effect: 'You can vertical pull the target up to 2 squares. You can pull a target restrained by this ability, ignoring their stability.'
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Reason ],
+						tier1: '3 + R damage; M < [weak], slowed (save ends)',
+						tier2: '5 + R damage; M < [average], slowed (save ends)',
+						tier3: '8 + R damage; M < [strong], restrained (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can vertical pull the target up to 2 squares. You can pull a target restrained by this ability, ignoring their stability.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-11',
@@ -499,7 +519,9 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createMelee(2) ],
 			target: 'Self or one ally',
 			cost: 3,
-			effect: 'Ability power rolls against the target have a bane until the start of your next turn. Whenever the target takes damage while under this effect, they can use a triggered action to make a free strike against the source of the damage.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Ability power rolls against the target have a bane until the start of your next turn. Whenever the target takes damage while under this effect, they can use a triggered action to make a free strike against the source of the damage.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'talent-ability-12',
@@ -531,8 +553,8 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Self or one ally',
 			cost: 5,
-			effect: 'The target immediately uses an ability they’ve previously used this round without spending any heroic resources.',
 			sections: [
+				FactoryLogic.createAbilitySectionText('The target immediately uses an ability they’ve previously used this round without spending any heroic resources.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'You take 1d6 damage and are slowed (save ends).'
@@ -548,8 +570,8 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Self or one ally',
 			cost: 5,
-			effect: 'The target ignores difficult terrain and takes no damage from forced movement until the start of your next turn. Whenever the target moves into a square while under this effect, they can push one adjacent creature up to 2 squares. If pushing an ally, the target can ignore that ally’s stability.',
 			sections: [
+				FactoryLogic.createAbilitySectionText('The target ignores difficult terrain and takes no damage from forced movement until the start of your next turn. Whenever the target moves into a square while under this effect, they can push one adjacent creature up to 2 squares. If pushing an ally, the target can ignore that ally’s stability.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'You are weakened and your stability decreases by 5 (save ends). If your stability becomes a negative value, it adds to the distance you are force moved.'
@@ -565,8 +587,8 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Self or one ally',
 			cost: 5,
-			effect: 'The target’s stability increases by 5 and they gain 10 temporary stamina and two surges.',
 			sections: [
+				FactoryLogic.createAbilitySectionText('The target’s stability increases by 5 and they gain 10 temporary stamina and two surges.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'You can’t use maneuvers (save ends).'
@@ -582,8 +604,8 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Self or one ally',
 			cost: 5,
-			effect: 'Until the start of your next turn, the target gains a +3 bonus to speed, and they have a double edge on the next power roll they make. If the target gets a tier 3 result on that roll, you gain 1 clarity.',
 			sections: [
+				FactoryLogic.createAbilitySectionText('Until the start of your next turn, the target gains a +3 bonus to speed, and they have a double edge on the next power roll they make. If the target gets a tier 3 result on that roll, you gain 1 clarity.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'You take 1d6 damage, and you can’t use triggered actions (save ends).'
@@ -599,14 +621,16 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'One creature or object',
 			cost: 7,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Presence ],
-				tier1: '3 + P corruption damage; P < [weak], weakened (save ends)',
-				tier2: '5 + P corruption damage; the target is flung through time; P < [average], weakened (save ends)',
-				tier3: '8 + P corruption damage; the target is flung through time; P < [strong], weakened (save ends)'
-			}),
-			effect: 'A target who is flung through time is removed from the encounter until the end of their next turn, reappearing in their original space or the nearest available space.',
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Presence ],
+						tier1: '3 + P corruption damage; P < [weak], weakened (save ends)',
+						tier2: '5 + P corruption damage; the target is flung through time; P < [average], weakened (save ends)',
+						tier3: '8 + P corruption damage; the target is flung through time; P < [strong], weakened (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('A target who is flung through time is removed from the encounter until the end of their next turn, reappearing in their original space or the nearest available space.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'You take 2d6 damage and grow visibly older (the equivalent of 10 years for a human). On a tier 3 result, you gain 2 clarity.'
@@ -667,14 +691,16 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature',
 			cost: 7,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Presence ],
-				tier1: '6 + P damage; P < [weak], dazed (save ends)',
-				tier2: '10 + P damage; P < [average], dazed (save ends)',
-				tier3: '14 + P damage; P < [strong], dazed (save ends)'
-			}),
-			effect: 'The target takes a bane on Presence tests until the end of the encounter.',
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Presence ],
+						tier1: '6 + P damage; P < [weak], dazed (save ends)',
+						tier2: '10 + P damage; P < [average], dazed (save ends)',
+						tier3: '14 + P damage; P < [strong], dazed (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('The target takes a bane on Presence tests until the end of the encounter.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'The potency of this ability increases by 1. You take 2d6 damage, and gain 3 surges.'

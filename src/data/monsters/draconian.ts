@@ -604,13 +604,15 @@ The draconians presented in this section aren’t a band, but five individual dr
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 1, within: 1 }) ],
 						target: 'All enemies in the line',
-						preEffect: 'Dorzinuuth shifts up to an unoccupied space adjacent to the end of the line and then rolls power.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '7 damage',
-							tier2: '12 damage; M<3 prone',
-							tier3: '15 damage; M<4 prone'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('Dorzinuuth shifts up to an unoccupied space adjacent to the end of the line and then rolls power.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '7 damage',
+								tier2: '12 damage; M<3 prone',
+								tier3: '15 damage; M<4 prone'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -651,14 +653,16 @@ The draconians presented in this section aren’t a band, but five individual dr
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies in the burst',
-						preEffect: 'Dorzinuuth lets loose a powerful roar. Each target must make a **Reason test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Reason,
-							tier1: 'frightened (save ends)',
-							tier2: 'frightened (EoT)',
-							tier3: 'no effect'
-						}),
-						effect: 'Each ally within distance has an edge on their next attack.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Dorzinuuth lets loose a powerful roar. Each target must make a **Reason test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Reason,
+								tier1: 'frightened (save ends)',
+								tier2: 'frightened (EoT)',
+								tier3: 'no effect'
+							})),
+							FactoryLogic.createAbilitySectionText('Each ally within distance has an edge on their next attack.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

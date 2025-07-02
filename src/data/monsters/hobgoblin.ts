@@ -731,13 +731,15 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
 						cost: 3,
-						preEffect: 'Each target makes a **Might test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '11 damage; target has a double bane on their next power roll',
-							tier2: '9 damage; target has a bane on their next power roll',
-							tier3: '5 damage'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target makes a **Might test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '11 damage; target has a double bane on their next power roll',
+								tier2: '9 damage; target has a bane on their next power roll',
+								tier3: '5 damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({

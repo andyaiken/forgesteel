@@ -102,13 +102,17 @@ Rumor has it that a cyclops can emit a mile long energy ray from their eye. Howe
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage; push 2',
-							tier2: '11 damage; push 4',
-							tier3: '14 damage; push 6; prone'
-						}),
-						effect: 'This attack deals an additional 4 damage to each creature and object that takes damage from any force movement it causes.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '7 damage; push 2',
+									tier2: '11 damage; push 4',
+									tier3: '14 damage; push 6; prone'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('This attack deals an additional 4 damage to each creature and object that takes damage from any force movement it causes.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -119,14 +123,16 @@ Rumor has it that a cyclops can emit a mile long energy ray from their eye. Howe
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage',
-							tier2: '11 damage; grabbed',
-							tier3: '14 damage; grabbed'
-						}),
-						effect: 'The goon can only have one target grabbed at a time.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '7 damage',
+									tier2: '11 damage; grabbed',
+									tier3: '14 damage; grabbed'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The goon can only have one target grabbed at a time.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -144,16 +150,20 @@ Rumor has it that a cyclops can emit a mile long energy ray from their eye. Howe
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 6, value2: 1, within: 1 }) ],
 						target: 'All creatures and objects',
 						cost: 3,
-						preEffect: `
+						sections: [
+							FactoryLogic.createAbilitySectionText(`
 The goon must be grabbing a size-1 creature or object to use this maneuver.
 
-The goon hurls what’s in their hand down the line and rolls power. The hurled creature or object counts as a target and lands in the last square of the line (or nearest unoccupied square of the goon’s choice).`,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '5 damage',
-							tier2: '9 damage',
-							tier3: '12 damage; prone'
-						})
+The goon hurls whats in their hand down the line and rolls power. The hurled creature or object counts as a target and lands in the last square of the line (or nearest unoccupied square of the goons choice).`),
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '5 damage',
+									tier2: '9 damage',
+									tier3: '12 damage; prone'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -197,13 +207,15 @@ The goon hurls what’s in their hand down the line and rolls power. The hurled 
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage',
-							tier2: '10 damage; A<1 vertical push 3',
-							tier3: '13 damage; A<2 vertical slide 5'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '7 damage',
+									tier2: '10 damage; A<1 vertical push 3',
+									tier3: '13 damage; A<2 vertical slide 5'
+								})
+							),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -220,13 +232,17 @@ The goon hurls what’s in their hand down the line and rolls power. The hurled 
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All creatures in the burst',
-						preEffect: 'The juggernaut jumps up to 6 squares before using this ability.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 damage',
-							tier2: '6 damage; push 2; M<1 prone',
-							tier3: '9 damage; push 4; M<2 prone'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The juggernaut jumps up to 6 squares before using this ability.'),
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '4 damage',
+									tier2: '6 damage; push 2; M<1 prone',
+									tier3: '9 damage; push 4; M<2 prone'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -238,13 +254,17 @@ The goon hurls what’s in their hand down the line and rolls power. The hurled 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
 						cost: 2,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: 'I<0 frightened (save ends)',
-							tier2: 'I<1 frightened (save ends)',
-							tier3: 'I<2 frightened (save ends)'
-						}),
-						effect: 'All ogres have an edge on strikes against creatures frightened by this ability.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: 'I<0 frightened (save ends)',
+									tier2: 'I<1 frightened (save ends)',
+									tier3: 'I<2 frightened (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('All ogres have an edge on strikes against creatures frightened by this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -289,13 +309,17 @@ The goon hurls what’s in their hand down the line and rolls power. The hurled 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies and objects in the burst',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 5,
-							tier1: '3 damage; A<3 3 damage',
-							tier2: '6 damage; push 3; A<4 4 damage',
-							tier3: '7 damage; prone; A<5 5 damage, restrained (save ends)'
-						}),
-						effect: 'The cyclops automatically has a 17 on the power roll. They can still roll to see if they get a crit.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 5,
+									tier1: '3 damage; A<3 3 damage',
+									tier2: '6 damage; push 3; A<4 4 damage',
+									tier3: '7 damage; prone; A<5 5 damage, restrained (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The cyclops automatically has a 17 on the power roll. They can still roll to see if they get a crit.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -329,13 +353,17 @@ The goon hurls what’s in their hand down the line and rolls power. The hurled 
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object per minion',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '4 damage',
-							tier2: '7 damage; M<3 prone',
-							tier3: '8 damage; prone'
-						}),
-						effect: 'An already prone target takes an additional 4 damage.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 4,
+									tier1: '4 damage',
+									tier2: '7 damage; M<3 prone',
+									tier3: '8 damage; prone'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('An already prone target takes an additional 4 damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -374,13 +402,17 @@ The goon hurls what’s in their hand down the line and rolls power. The hurled 
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: 'One creature or object per minion',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '4 damage',
-							tier2: '7 damage; push 2',
-							tier3: '8 damage; push 4'
-						}),
-						effect: 'The tantrum unearths a rock or a hunk of terrain and tosses it. The tantrum can A<3 grab an adjacent size-1 or smaller creature or object to use as the projectile for this ability.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 4,
+									tier1: '4 damage',
+									tier2: '7 damage; push 2',
+									tier3: '8 damage; push 4'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The tantrum unearths a rock or a hunk of terrain and tosses it. The tantrum can A<3 grab an adjacent size-1 or smaller creature or object to use as the projectile for this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({

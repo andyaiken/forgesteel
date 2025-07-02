@@ -41,7 +41,9 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
-				effect: 'The griﬀon ﬂies up to their speed. The griﬃn makes a free strike against each creature that makes an opportunity attack against the griﬀon.'
+				sections: [
+					FactoryLogic.createAbilitySectionText('The griﬀon ﬂies up to their speed. The griﬃn makes a free strike against each creature that makes an opportunity attack against the griﬀon.')
+				]
 			})
 		}),
 		FactoryLogic.feature.createMalice({
@@ -91,13 +93,17 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage; shift 1',
-							tier2: '11 damage; shift 2',
-							tier3: '14 damage; shift 3'
-						}),
-						effect: 'If this ability is used while charging, the griffon grapples one of the targets.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '7 damage; shift 1',
+									tier2: '11 damage; shift 2',
+									tier3: '14 damage; shift 3'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('If this ability is used while charging, the griffon grapples one of the targets.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -108,16 +114,17 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 8, qualifier: 'while flying' }) ],
 						target: 'All enemies',
-						preEffect: `
-**Special** The griffon must be grabbing a creature or object to use this maneuver.
-
-The griffon flies up to half their speed towards the ground and then sends the creature or object they've grappled hurtling towards the affected area.`,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 damage',
-							tier2: '6 damage; A<1 push 3',
-							tier3: '9 damage; A<2 push 4 and prone'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('**Special** The griffon must be grabbing a creature or object to use this maneuver.\n\nThe griffon flies up to half their speed towards the ground and then sends the creature or object they\'ve grappled hurtling towards the affected area.'),
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '4 damage',
+									tier2: '6 damage; A<1 push 3',
+									tier3: '9 damage; A<2 push 4 and prone'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -129,12 +136,16 @@ The griffon flies up to half their speed towards the ground and then sends the c
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 4, value2: 2, within: 1 }) ],
 						target: 'All creatures and objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: 'Push 3; A<0 forced movement is vertical',
-							tier2: 'Push 4; A<1 forced movement is vertical',
-							tier3: 'Push 5; A<2 forced movement is vertical'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: 'Push 3; A<0 forced movement is vertical',
+									tier2: 'Push 4; A<1 forced movement is vertical',
+									tier3: 'Push 5; A<2 forced movement is vertical'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -145,7 +156,9 @@ The griffon flies up to half their speed towards the ground and then sends the c
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The griffon halves the damage, doesn\'t suffer any effect associated with it, and shifts 2 squares.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The griffon halves the damage, doesn\'t suffer any effect associated with it, and shifts 2 squares.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -183,12 +196,16 @@ The griffon flies up to half their speed towards the ground and then sends the c
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage; push 1',
-							tier2: '11 damage; one target is pushed 2; the other target is vertically pushed 2',
-							tier3: '14 damage; one target is pushed 2; the other target is vertically pushed 3'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '7 damage; push 1',
+									tier2: '11 damage; one target is pushed 2; the other target is vertically pushed 2',
+									tier3: '14 damage; one target is pushed 2; the other target is vertically pushed 3'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -199,7 +216,9 @@ The griffon flies up to half their speed towards the ground and then sends the c
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf('while grounded') ],
 						target: 'Self',
-						effect: 'The griffon shifts up to their speed in a straight line. Each enemy who comes within 1 of the griffon during the move can choose to either take 5 damage or be knocked prone.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The griffon shifts up to their speed in a straight line. Each enemy who comes within 1 of the griffon during the move can choose to either take 5 damage or be knocked prone.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -211,12 +230,16 @@ The griffon flies up to half their speed towards the ground and then sends the c
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 3, within: 1 }) ],
 						target: 'All creatures and objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: 'Push 2; M<0 forced movement is vertical',
-							tier2: 'Push 4; M<1 forced movement is vertical',
-							tier3: 'Push 6; M<2 forced movement is vertical'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: 'Push 2; M<0 forced movement is vertical',
+									tier2: 'Push 4; M<1 forced movement is vertical',
+									tier3: 'Push 6; M<2 forced movement is vertical'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -227,7 +250,9 @@ The griffon flies up to half their speed towards the ground and then sends the c
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Triggering creature',
-						effect: 'The griffon falls down upon the target, taking no damage from falling. The target takes 3 damage for each square the griffon fell and is A<2 prone or grabbed.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The griffon falls down upon the target, taking no damage from falling. The target takes 3 damage for each square the griffon fell and is A<2 prone or grabbed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({

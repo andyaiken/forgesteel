@@ -35,18 +35,17 @@ Humanoid scholars usually assume all giants are related, though giants don’t v
 			description: `
 Hailing from sweltering deserts and deep caverns of roiling magma alike, fire giants embody the passion and ruthlessness of their namesake. Though their reputation is one of violent growth and expansion, their lesser-known side is a deeply spiritual one, guided by introspection and understanding.
 
-Fire giants rarely wear armor, as their bodies heat up to extreme temperatures while they fight, causing straps to melt and metal to deform. They instead hone their own bodies into the perfect weapons of war.
-                    `
+Fire giants rarely wear armor, as their bodies heat up to extreme temperatures while they fight, causing straps to melt and metal to deform. They instead hone their own bodies into the perfect weapons of war.`
 		},
 
 		{
 			id: 'giant-info-4',
 			name: 'Frost Giants',
 			description: `
-        Born of soaring peaks in frigid mountains, frost giants master their environments to rule mountain ranges and build fortresses of unyielding ice. When frost giants march, a blizzard grows overhead, which they carry like a war banner. To frost giants, battle is a way of life, camaraderie, and glory.
-        
-        
-        Where frost giants make their home, a unique form of ice sprouts into flowering crystalline structures. Frost giants harvest this ice, known as issenblau in their tongue, and fashion it into weapons as hard and sharp as steel, which can be used in any environment without melting.            `
+Born of soaring peaks in frigid mountains, frost giants master their environments to rule mountain ranges and build fortresses of unyielding ice. When frost giants march, a blizzard grows overhead, which they carry like a war banner. To frost giants, battle is a way of life, camaraderie, and glory.
+
+
+Where frost giants make their home, a unique form of ice sprouts into flowering crystalline structures. Frost giants harvest this ice, known as issenblau in their tongue, and fashion it into weapons as hard and sharp as steel, which can be used in any environment without melting.            `
 		},
 
 		{
@@ -54,27 +53,23 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 			name: 'Hill Giants',
 			description: `
    Of all the giant cultures, hill giants are the most likely to interact with humanoids. Hill giants and smallfolk both love to live in places with rolling, fertile fields, and both appreciate the beauty of nature. However, these commonalities can be quickly forgotten if evil hill giants band together to claim the land solely for themselves, or if the smallfolk let fear of the large get the best of them and attempt to drive off their bigger neighbors. Most hill giants want to be left in peace, but when one is pressed, they can demolish a small village in minutes. 
-        
-   Most hill giants spend so much time in quiet peace that sudden flashy sights and loud noises can draw their attention. In battle, such distractions can draw the hill giant’s ire, making them switch from one target to another.     
-        `
+
+Most hill giants spend so much time in quiet peace that sudden flashy sights and loud noises can draw their attention. In battle, such distractions can draw the hill giant’s ire, making them switch from one target to another.`
 		},
 
 		{
 			id: 'giant-info-6',
 			name: 'Stone Giants',
 			description: `
-   Fascinated by the act of creation, stone giants carve cities out of ancient caverns, mine precious metals and gems, and craft relics worthy of glory. To many a stone giant, artisanship is the highest calling, and all their creations are crafted with an eye to beauty and longevity.
-  
-   Stone giants are made of the same kinds of rocks that form their home—marble, granite, or even basalt. Their stone bodies not only protect them from attack, but also provide them with an additional outlet for self-expression. They often carve runes into their skin, which serve a wide variety of artistic and cultural purposes.        
-        `
+Fascinated by the act of creation, stone giants carve cities out of ancient caverns, mine precious metals and gems, and craft relics worthy of glory. To many a stone giant, artisanship is the highest calling, and all their creations are crafted with an eye to beauty and longevity.
+
+Stone giants are made of the same kinds of rocks that form their home—marble, granite, or even basalt. Their stone bodies not only protect them from attack, but also provide them with an additional outlet for self-expression. They often carve runes into their skin, which serve a wide variety of artistic and cultural purposes.`
 		},
 
 		{
 			id: 'giant-info-6',
 			name: 'Giant Languages',
-			description: `
-   Most giants speak their kind’s dialect of High Kuric. Many hill giants also know Caelian.
-                   `
+			description: 'Most giants speak their kind’s dialect of High Kuric. Many hill giants also know Caelian.'
 		}
 	],
 	malice: [
@@ -87,12 +82,14 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 				target: 'All enemies in the cube',
-				preEffect: 'A giant unearths a massive structure, hazard, or chunk of the encounter map and launches it. Each target makes an Agility test.',
-				powerRoll: FactoryLogic.createPowerRoll({
-					tier1: '18 damage; prone can’t stand (save ends)',
-					tier2: '14 damage; prone',
-					tier3: '9 damage'
-				})
+				sections: [
+					FactoryLogic.createAbilitySectionText('A giant unearths a massive structure, hazard, or chunk of the encounter map and launches it. Each target makes an Agility test.'),
+					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+						tier1: '18 damage; prone can’t stand (save ends)',
+						tier2: '14 damage; prone',
+						tier3: '9 damage'
+					}))
+				]
 			})
 		}),
 		FactoryLogic.feature.createMalice({
@@ -575,12 +572,14 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 							FactoryLogic.distance.createMelee(3)
 						],
 						target: '1 creature or object',
-						preEffect: 'The target makes a Might test. A target with a fire immunity automatically gets a tier 3 result.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							tier1: 'Weakened and slowed (save ends)',
-							tier2: 'Weakened (EoT)',
-							tier3: 'No effect'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target makes a Might test. A target with a fire immunity automatically gets a tier 3 result.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								tier1: 'Weakened and slowed (save ends)',
+								tier2: 'Weakened (EoT)',
+								tier3: 'No effect'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -655,12 +654,14 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 							FactoryLogic.distance.createRanged(15)
 						],
 						target: 'Special',
-						preEffect: 'The storm hurler throws three size 1L javelins into unoccupied squares within distance. A javelin has 30 Stamina and fire weakness 5. At the start of the storm hurler’s next turn, each javelin with 1 or more Stamina explodes in a shower of icicles. Each enemy and object within 3 squares of an exploding javelin makes an Agility test.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							tier1: '14 cold damage; push 4; bleeding (save ends)',
-							tier2: '11 cold damage; push 2; slowed (save ends)',
-							tier3: '7 cold damage'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The storm hurler throws three size 1L javelins into unoccupied squares within distance. A javelin has 30 Stamina and fire weakness 5. At the start of the storm hurler’s next turn, each javelin with 1 or more Stamina explodes in a shower of icicles. Each enemy and object within 3 squares of an exploding javelin makes an Agility test.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								tier1: '14 cold damage; push 4; bleeding (save ends)',
+								tier2: '11 cold damage; push 2; slowed (save ends)',
+								tier3: '7 cold damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -945,13 +946,15 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
-						preEffect: 'Each target makes either a Might or Agility test.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							tier1: '6 damage; vertical push 4; prone',
-							tier2: '2 damage; vertical push 4',
-							tier3: 'Push 2'
-						}),
-						effect: 'The clobberer can choose to fall prone, doubling the push distance.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target makes either a Might or Agility test.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								tier1: '6 damage; vertical push 4; prone',
+								tier2: '2 damage; vertical push 4',
+								tier3: 'Push 2'
+							})),
+							FactoryLogic.createAbilitySectionText('The clobberer can choose to fall prone, doubling the push distance.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -964,13 +967,13 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 							FactoryLogic.distance.createMelee(3)
 						],
 						target: '1 creature',
-						preEffect: 'The target makes an Agility test.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							tier1: 'Grabbed, target has a bane on escaping the grab',
-							tier2: 'Grabbed',
-							tier3: 'No effect'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionText('The target makes an Agility test.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								tier1: 'Grabbed, target has a bane on escaping the grab',
+								tier2: 'Grabbed',
+								tier3: 'No effect'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -1113,13 +1116,15 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 4 })
 						],
 						target: 'All enemies and objects',
-						preEffect: 'Each target makes either an Agility or Intuition test.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							tier1: '18 fire damage; burning (save ends)',
-							tier2: '14 fire damage; burning (EoT)',
-							tier3: '9 fire damage'
-						}),
-						effect: 'A burning target takes 1d6 fire damage at the start of each of their turns until the condition ends.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target makes either an Agility or Intuition test.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								tier1: '18 fire damage; burning (save ends)',
+								tier2: '14 fire damage; burning (EoT)',
+								tier3: '9 fire damage'
+							})),
+							FactoryLogic.createAbilitySectionText('A burning target takes 1d6 fire damage at the start of each of their turns until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1208,12 +1213,14 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 })
 						],
 						target: 'Self and all fire giant allies',
-						preEffect: 'Each target unleashes a fire wave. Each enemy within 2 squares of a target makes an Agility test:',
-						powerRoll: FactoryLogic.createPowerRoll({
-							tier1: '18 fire damage',
-							tier2: '14 fire damage',
-							tier3: '9 fire damage'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target unleashes a fire wave. Each enemy within 2 squares of a target makes an Agility test:'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								tier1: '18 fire damage',
+								tier2: '14 fire damage',
+								tier3: '9 fire damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({

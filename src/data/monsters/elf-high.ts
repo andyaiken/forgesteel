@@ -85,13 +85,15 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 1, within: 1 }) ],
 				target: 'All enemies',
-				powerRoll: FactoryLogic.createPowerRoll({
-					characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-					tier1: '5 damage; R<1 condition (save ends)',
-					tier2: '9 damage; R<2 condition (save ends)',
-					tier3: '12 damage; R<3 condition (save ends)'
-				}),
-				effect: 'The high elf chooses damage type and condition afflicted from one of the following pairs: cold and slowed, poison and weakened, or corruption and frightened of the high elf.'
+				sections: [
+					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+						tier1: '5 damage; R<1 condition (save ends)',
+						tier2: '9 damage; R<2 condition (save ends)',
+						tier3: '12 damage; R<3 condition (save ends)'
+					})),
+					FactoryLogic.createAbilitySectionText('The high elf chooses damage type and condition afflicted from one of the following pairs: cold and slowed, poison and weakened, or corruption and frightened of the high elf.')
+				]
 			})
 		}),
 		FactoryLogic.feature.createMalice({
@@ -167,13 +169,15 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '1 holy damage',
-							tier2: '2 holy damage',
-							tier3: '3 holy damage'
-						}),
-						effect: 'The target can’t hide until the start of the dawn mage’s next turn.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '1 holy damage',
+								tier2: '2 holy damage',
+								tier3: '3 holy damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The target can’t hide until the start of the dawn mage’s next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -741,14 +745,16 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 						target: 'All enemies in the cube',
-						preEffect: 'Each target makes a **Presence test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Presence,
-							tier1: '12 corruption damage; pull 5 towards the center of the cube',
-							tier2: '9 corruption damage; pull 3 towards the center of the cube',
-							tier3: 'pull 1 towards the center of the cube'
-						}),
-						effect: 'The affected area becomes darkened and its space warps violently in every direction.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target makes a **Presence test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Presence,
+								tier1: '12 corruption damage; pull 5 towards the center of the cube',
+								tier2: '9 corruption damage; pull 3 towards the center of the cube',
+								tier3: 'pull 1 towards the center of the cube'
+							})),
+							FactoryLogic.createAbilitySectionText('The affected area becomes darkened and its space warps violently in every direction.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -790,12 +796,14 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage',
-							tier2: '7 fire damage',
-							tier3: '9 lightning damage; M<2 prone'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage',
+								tier2: '7 fire damage',
+								tier3: '9 lightning damage; M<2 prone'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

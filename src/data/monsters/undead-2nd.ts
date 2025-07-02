@@ -91,13 +91,17 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 damage',
-							tier2: '5 damage',
-							tier3: '7 damage'
-						}),
-						effect: 'The target is bleeding (save ends) if the shambler has an edge on this ability.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '3 damage',
+									tier2: '5 damage',
+									tier3: '7 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The target is bleeding (save ends) if the shambler has an edge on this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -138,13 +142,17 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '2 damage',
-							tier2: '4 damage',
-							tier3: '6 damage'
-						}),
-						effect: 'The ghoul craver has a double edge on this ability when targeting bleeding creatures.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '2 damage',
+									tier2: '4 damage',
+									tier3: '6 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The ghoul craver has a double edge on this ability when targeting bleeding creatures.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -190,12 +198,16 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 damage',
-							tier2: '5 damage',
-							tier3: '7 damage; M<3 bleeding (save ends)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '3 damage',
+									tier2: '5 damage',
+									tier3: '7 damage; M<3 bleeding (save ends)'
+								})
+							)
+					   ]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -235,14 +247,16 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '5 damage',
-							tier2: '7 damage',
-							tier3: '9 damage'
-						}),
-						effect: 'The target can\'t shift away from the moundling until the end of their next turn.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '5 damage',
+									tier2: '7 damage',
+									tier3: '9 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The target can\'t shift away from the moundling until the end of their next turn.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -259,13 +273,17 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '2 psychic damage',
-							tier2: '3 psychic damage; I<2 frightened (save ends)',
-							tier3: '4 psychic damage; I<3 frightened (save ends)'
-						}),
-						effect: 'If a target is still frightened by this ability at the end of the encounter, they cannot take a respite activity during their next respite.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '2 psychic damage',
+									tier2: '3 psychic damage; I<2 frightened (save ends)',
+									tier3: '4 psychic damage; I<3 frightened (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('If a target is still frightened by this ability at the end of the encounter, they cannot take a respite activity during their next respite.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -310,12 +328,16 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 damage',
-							tier2: '14 damage; A<2 grabbed',
-							tier3: '17 damage; M<3 grabbed'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '9 damage',
+									tier2: '14 damage; A<2 grabbed',
+									tier3: '17 damage; M<3 grabbed'
+								})
+							)
+					   ]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -326,7 +348,9 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Two creatures or objects',
-						effect: 'The giant zombie smashes the targets together, using their Rotten Smash against both targets with a double edge.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The giant zombie smashes the targets together, using their Rotten Smash against both targets with a double edge.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -372,13 +396,17 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '6 corruption damage; pull 1',
-							tier2: '8 corruption damage; pull 2',
-							tier3: '10 corruption damage; pull 2; M<3 restrained (save ends)'
-						}),
-						effect: 'The potency of the mummy\'s next ability used against the target increases by 1.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '6 corruption damage; pull 1',
+									tier2: '8 corruption damage; pull 2',
+									tier3: '10 corruption damage; pull 2; M<3 restrained (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The potency of the mummy\'s next ability used against the target increases by 1.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -390,13 +418,17 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 corruption damage; I<1 cursed (save ends)',
-							tier2: '5 corruption damage; I<2 cursed (save ends)',
-							tier3: '7 corruption damage; I<3 cursed (save ends)'
-						}),
-						effect: 'A cursed target is bleeding and weakened, and allies have an edge on strikes made against them.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '3 corruption damage; I<1 cursed (save ends)',
+									tier2: '5 corruption damage; I<2 cursed (save ends)',
+									tier3: '7 corruption damage; I<3 cursed (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('A cursed target is bleeding and weakened, and allies have an edge on strikes made against them.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -408,7 +440,9 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: '1 restrained target',
-						effect: '8 poison damage.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('8 poison damage.')
+						]
 					})
 				})
 			]
@@ -443,14 +477,16 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '5 damage',
-							tier2: '7 corruption damage; M<2 bleeding (save ends)',
-							tier3: '9 corruption damage; M<3 bleeding (save ends)'
-						}),
-						effect: 'The vampire spawn regains Stamina equal to the corruption damage they deal.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '5 damage',
+									tier2: '7 corruption damage; M<2 bleeding (save ends)',
+									tier3: '9 corruption damage; M<3 bleeding (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The vampire spawn regains Stamina equal to the corruption damage they deal.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -467,7 +503,9 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The vampire spawn shifts 1 and then moves up to their speed. The next ability the vampire uses before the start of their next turn has an edge.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The vampire spawn shifts 1 and then moves up to their speed. The next ability the vampire uses before the start of their next turn has an edge.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -507,13 +545,17 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '5 cold damage; P<1 slowed (save ends)',
-							tier2: '7 cold damage; P<2 slowed (save ends)',
-							tier3: '9 cold damage; P<3 slowed (save ends)'
-						}),
-						effect: 'Living creatures killed by this ability return as a ghoul craver the next round, under the Director\'s control.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '5 cold damage; P<1 slowed (save ends)',
+									tier2: '7 cold damage; P<2 slowed (save ends)',
+									tier3: '9 cold damage; P<3 slowed (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('Living creatures killed by this ability return as a ghoul craver the next round, under the Director\'s control.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -524,7 +566,9 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The wraith truns invisible, moves up to their speed, and becomes visible again.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The wraith turns invisible, moves up to their speed, and becomes visible again.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -536,7 +580,9 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One enemy',
 						cost: 1,
-						effect: 'The target only regains half the Stamina they would normally. The wraith regains the remaining Stamina.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target only regains half the Stamina they would normally. The wraith regains the remaining Stamina.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -577,13 +623,17 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '10 corruption damage; I<2 bleeding (save ends)',
-							tier2: '14 corruption damage; I<3 bleeding (save ends)',
-							tier3: '17 corruption damage; I<4 bleeding (save ends)'
-						}),
-						effect: 'The potency of ability used against a target bleeding from this ability increase by 1.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 4,
+									tier1: '10 corruption damage; I<2 bleeding (save ends)',
+									tier2: '14 corruption damage; I<3 bleeding (save ends)',
+									tier3: '17 corruption damage; I<4 bleeding (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The potency of ability used against a target bleeding from this ability increase by 1.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -595,14 +645,16 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						cost: 1,
 						target: 'One creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '7 corruption damage; I<2 frightened (save ends)',
-							tier2: '12 corruption damage; I<3 frightened (save ends)',
-							tier3: '16 corruption damage; I<4 frightened (save ends)'
-						}),
-						effect: 'A target frightened by this ability takes 4 psychic damage whenever they use a move action until the condition ends.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 4,
+									tier1: '7 corruption damage; I<2 frightened (save ends)',
+									tier2: '12 corruption damage; I<3 frightened (save ends)',
+									tier3: '16 corruption damage; I<4 frightened (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('A target frightened by this ability takes 4 psychic damage whenever they use a move action until the condition ends.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -649,13 +701,17 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '5 poison damage',
-							tier2: '8 poison damage',
-							tier3: '10 poison damage'
-						}),
-						effect: 'Each target has a bane on their next strike.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 4,
+									tier1: '5 poison damage',
+									tier2: '8 poison damage',
+									tier3: '10 poison damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('Each target has a bane on their next strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -666,13 +722,17 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						preEffect: 'The mummy lord’s speed increases by 2 and adds the burrow keyword to their movement. The mummy lord burrows up to their speed. Each enemy within 2 squares of the mummy lord’s movement must make an **Agility test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Agility,
-							tier1: 'Prone, can\'t stand (EoT)',
-							tier2: 'Prone',
-							tier3: 'no effect'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The mummy lord’s speed increases by 2 and adds the burrow keyword to their movement. The mummy lord burrows up to their speed. Each enemy within 2 squares of the mummy lord’s movement must make an **Agility test**.'),
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: Characteristic.Agility,
+									tier1: 'Prone, can\'t stand (EoT)',
+									tier2: 'Prone',
+									tier3: 'no effect'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -683,12 +743,16 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '5 corruption damage; I<2 frightened (save ends)',
-							tier2: '8 corruption damage; I<3 frightened (save ends)',
-							tier3: '10 corruption damage; I<4 frightened and restrained (save ends)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 4,
+									tier1: '5 corruption damage; I<2 frightened (save ends)',
+									tier2: '8 corruption damage; I<3 frightened (save ends)',
+									tier3: '10 corruption damage; I<4 frightened and restrained (save ends)'
+								})
+							)
+						]
 					})
 				})
 			]

@@ -155,13 +155,15 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 creature',
-						preEffect: 'The chimera shifts 5. If they end this movement adjacent to the target, roll power.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '6 damage; M<1 slowed (save ends)',
-							tier2: '8 damage; prone; M<2 slowed (save ends)',
-							tier3: '10 damage; prone; M<3 slowed (save ends)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The chimera shifts 5. If they end this movement adjacent to the target, roll power.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '6 damage; M<1 slowed (save ends)',
+								tier2: '8 damage; prone; M<2 slowed (save ends)',
+								tier3: '10 damage; prone; M<3 slowed (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

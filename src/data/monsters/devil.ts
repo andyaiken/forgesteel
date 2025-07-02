@@ -289,13 +289,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
-						preEffect: 'The target makes a **Presence test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Presence,
-							tier1: 'The jurist chooses a new target for the strike',
-							tier2: 'The jurist halves the incoming damage',
-							tier3: 'The target is dazed (EoT)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target makes a **Presence test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Presence,
+								tier1: 'The jurist chooses a new target for the strike',
+								tier2: 'The jurist halves the incoming damage',
+								tier3: 'The target is dazed (EoT)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -383,13 +385,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
-						preEffect: 'The target makes a **Presence test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Presence,
-							tier1: 'The legate chooses a new target for the strike',
-							tier2: 'The legate halves the incoming damage',
-							tier3: 'The target is dazed (EoT)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target makes a **Presence test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Presence,
+								tier1: 'The legate chooses a new target for the strike',
+								tier2: 'The legate halves the incoming damage',
+								tier3: 'The target is dazed (EoT)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -448,13 +452,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
-						preEffect: 'The target makes a **Presence test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Presence,
-							tier1: 'Slowed, bane on power rolls, can\'t regain Stamina (save ends)',
-							tier2: 'Slowed, bane on power rolls (save ends)',
-							tier3: 'Slowed (save ends)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target makes a **Presence test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Presence,
+								tier1: 'Slowed, bane on power rolls, can\'t regain Stamina (save ends)',
+								tier2: 'Slowed, bane on power rolls (save ends)',
+								tier3: 'Slowed (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -477,13 +483,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
-						preEffect: 'The target makes a **Presence test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Presence,
-							tier1: 'The adjudicator chooses a new target for the strike',
-							tier2: 'The adjudicator halves the incoming damage',
-							tier3: 'The target is dazed (EoT)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target makes a **Presence test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Presence,
+								tier1: 'The adjudicator chooses a new target for the strike',
+								tier2: 'The adjudicator halves the incoming damage',
+								tier3: 'The target is dazed (EoT)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -571,13 +579,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
-						preEffect: 'The target makes a **Presence test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Presence,
-							tier1: 'The magistrate chooses a new target for the strike',
-							tier2: 'The magistrate halves the incoming damage',
-							tier3: 'The target is dazed (EoT)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target makes a **Presence test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Presence,
+								tier1: 'The magistrate chooses a new target for the strike',
+								tier2: 'The magistrate halves the incoming damage',
+								tier3: 'The target is dazed (EoT)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -660,13 +670,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
-						preEffect: 'The target makes a **Presence test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Presence,
-							tier1: 'Charmed (save ends) (see Compel the Jury)',
-							tier2: 'The magistrate chooses a new target for the strike',
-							tier3: 'The magistrate halves the incoming damage'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target makes a **Presence test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Presence,
+								tier1: 'Charmed (save ends) (see Compel the Jury)',
+								tier2: 'The magistrate chooses a new target for the strike',
+								tier3: 'The magistrate halves the incoming damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -691,13 +703,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
-						preEffect: 'Each target makes a **Presence test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Presence,
-							tier1: '15 psychic damage; charmed (save ends)',
-							tier2: '12 psychic damage; charmed (save ends)',
-							tier3: '7 psychic damage'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target makes a **Presence test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Presence,
+								tier1: '15 psychic damage; charmed (save ends)',
+								tier2: '12 psychic damage; charmed (save ends)',
+								tier3: '7 psychic damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

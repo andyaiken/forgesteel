@@ -106,13 +106,17 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage',
-							tier2: '4 damage',
-							tier3: '5 damage; grabbed'
-						}),
-						effect: 'A grabbed target takes 2 lightning damage at the start of each of their turns.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '2 damage',
+									tier2: '4 damage',
+									tier3: '5 damage; grabbed'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('A grabbed target takes 2 lightning damage at the start of each of their turns.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -153,13 +157,17 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage',
-							tier2: '4 damage',
-							tier3: '5 damage'
-						}),
-						effect: 'The cleaver jumps 4 squares before or after attacking.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '2 damage',
+									tier2: '4 damage',
+									tier3: '5 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The cleaver jumps 4 squares before or after attacking.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -197,13 +205,17 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage',
-							tier2: '4 poison damage',
-							tier3: '5 poison damage'
-						}),
-						effect: 'This ability has an edge on targets that don\'t have full Stamina.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '2 damage',
+									tier2: '4 poison damage',
+									tier3: '5 poison damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('This ability has an edge on targets that don\'t have full Stamina.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -241,12 +253,16 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '1 damage',
-							tier2: '2 poison damage; shift 1',
-							tier3: '3 poison damage; shift 3'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '1 damage',
+									tier2: '2 poison damage; shift 1',
+									tier3: '3 poison damage; shift 3'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -344,13 +360,17 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(6) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 damage; pull 2',
-							tier2: '6 damage; pull 4',
-							tier3: '7 damage; pull 6'
-						}),
-						effect: 'The target is wet (save ends) (see Wet). Allies targeted by this ability take no damage and are pulled 6, ignoring stability.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '4 damage; pull 2',
+									tier2: '6 damage; pull 4',
+									tier3: '7 damage; pull 6'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The target is wet (save ends) (see Wet). Allies targeted by this ability take no damage and are pulled 6, ignoring stability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -403,13 +423,17 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '3 holy damage',
-							tier2: '4 holy damage; R<1 illuminated (save ends)',
-							tier3: '5 holy damage; R<2 illuminated (save ends)'
-						}),
-						effect: 'Illuminated creatures and objects can’t Hide or turn invisible, and strikes made against them have an edge until the condition ends.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '3 holy damage',
+									tier2: '4 holy damage; R<1 illuminated (save ends)',
+									tier3: '5 holy damage; R<2 illuminated (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('Illuminated creatures and objects can’t Hide or turn invisible, and strikes made against them have an edge until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -421,13 +445,17 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10, qualifier: 'unoccupied space' }) ],
 						target: 'Special',
-						preEffect: 'A bubble of toxic gas fills the area that lasts until the end of the encounter. If a creature or object touches the bubble, it bursts and each enemy within 3 makes a **Might test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Might,
-							tier1: '5 poison damage; wet and weakened (save ends)',
-							tier2: '4 poison damage; wet (EoT)',
-							tier3: 'Wet (EoT)(see Wet)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('A bubble of toxic gas fills the area that lasts until the end of the encounter. If a creature or object touches the bubble, it bursts and each enemy within 3 makes a **Might test**.'),
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: Characteristic.Might,
+									tier1: '5 poison damage; wet and weakened (save ends)',
+									tier2: '4 poison damage; wet (EoT)',
+									tier3: 'Wet (EoT)(see Wet)'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -464,14 +492,16 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '7 acid damage; A<1 dazed (save ends)',
-							tier2: '10 acid damage; A<2 dazed (save ends)',
-							tier3: '13 acid damage; A<3 dazed (save ends)'
-						}),
-						effect: 'The next time the target strikes the daybringer, they immediately take 4 acid damage.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '7 acid damage; A<1 dazed (save ends)',
+									tier2: '10 acid damage; A<2 dazed (save ends)',
+									tier3: '13 acid damage; A<3 dazed (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The next time the target strikes the daybringer, they immediately take 4 acid damage.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -582,13 +612,17 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '3 damage',
-							tier2: '5 damage',
-							tier3: '7 damage'
-						}),
-						effect: 'Before or after attacking, the hopper jumps two squares, or four squares if they jump over their mentor\'s space.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: '3 damage',
+									tier2: '5 damage',
+									tier3: '7 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('Before or after attacking, the hopper jumps two squares, or four squares if they jump over their mentor\'s space.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -610,13 +644,17 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '5 damage; M (weak) prone',
-							tier2: '9 damage; M (average) prone',
-							tier3: '12 damage; M (strong) prone'
-						}),
-						effect: 'The hopper can jump in a straight line up to their speed before the attack without provoking opportunity attacks. If they jump at least 2 squares this way, they gain a surge.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: '5 damage; M (weak) prone',
+									tier2: '9 damage; M (average) prone',
+									tier3: '12 damage; M (strong) prone'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The hopper can jump in a straight line up to their speed before the attack without provoking opportunity attacks. If they jump at least 2 squares this way, they gain a surge.')
+						]
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
@@ -627,12 +665,16 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '5 damage; M (weak) weakened (save ends)',
-							tier2: '9 damage; M (average) slowed and weakened (save ends)',
-							tier3: '12 damage; M (strong) dazed, slowed, and weakened (save ends)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: '5 damage; M (weak) weakened (save ends)',
+									tier2: '9 damage; M (average) slowed and weakened (save ends)',
+									tier3: '12 damage; M (strong) dazed, slowed, and weakened (save ends)'
+								})
+							)
+						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -643,7 +685,9 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature',
-						effect: 'The target is M (medium) prone. If they are knocked prone, their movement ends and until they stand up the next attack on them gains 2 surges.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target is M (medium) prone. If they are knocked prone, their movement ends and until they stand up the next attack on them gains 2 surges.')
+						]
 					})
 				})
 			}

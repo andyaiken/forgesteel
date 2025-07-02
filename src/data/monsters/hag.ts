@@ -57,13 +57,15 @@ Adding insult to injury, those who deal with hags almost always discover the pro
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],
 				target: 'All enemies in the line',
-				powerRoll: FactoryLogic.createPowerRoll({
-					bonus: 3,
-					tier1: '5 fire damage; R<1 frightened (save ends)',
-					tier2: '8 fire damage; R<2 frightened (save ends)',
-					tier3: '11 fire damage; R<3 frightened (save ends)'
-				}),
-				effect: 'After rolling power, the hag can choose to replace the damage type and eﬀect of the attack with lightning and dazed or cold and slowed.'
+				sections: [
+					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+						bonus: 3,
+						tier1: '5 fire damage; R<1 frightened (save ends)',
+						tier2: '8 fire damage; R<2 frightened (save ends)',
+						tier3: '11 fire damage; R<3 frightened (save ends)'
+					})),
+					FactoryLogic.createAbilitySectionText('After rolling power, the hag can choose to replace the damage type and effect of the attack with lightning and dazed or cold and slowed.')
+				]
 			})
 		}),
 		FactoryLogic.feature.createAbility({
@@ -79,12 +81,14 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 2 }) ],
 				target: 'All enemies in the line',
-				powerRoll: FactoryLogic.createPowerRoll({
-					bonus: 3,
-					tier1: '6 damage; push 3; M<1 prone',
-					tier2: '10 damage; push 4; M<2 prone',
-					tier3: '13 damage; push 5; M<3 prone'
-				})
+				sections: [
+					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+						bonus: 3,
+						tier1: '6 damage; push 3; M<1 prone',
+						tier2: '10 damage; push 4; M<2 prone',
+						tier3: '13 damage; push 5; M<3 prone'
+					}))
+				]
 			})
 		})
 	],
@@ -198,13 +202,16 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All creatures',
 						preEffect: 'The hag A<2 attaches an ornate explosive pastry to each target. Roll power at the end of the round, targeting each creature with a pastry attached to them.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '6 poison damage',
-							tier2: '10 poison damage',
-							tier3: '13 poison damage'
-						}),
-						effect: '**Special** A creature wearing a pastry or adjacent to a creature wearing a pastry can attempt a hard Agility test to remove the pastry as a maneuver. On success, the pastry is destroyed without exploding. On failure, the hag rolls power for all pastries immediately.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The hag A<2 attaches an ornate explosive pastry to each target. Roll power at the end of the round, targeting each creature with a pastry attached to them.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '6 poison damage',
+								tier2: '10 poison damage',
+								tier3: '13 poison damage'
+							})),
+							FactoryLogic.createAbilitySectionText('**Special** A creature wearing a pastry or adjacent to a creature wearing a pastry can attempt a hard Agility test to remove the pastry as a maneuver. On success, the pastry is destroyed without exploding. On failure, the hag rolls power for all pastries immediately.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -226,13 +233,15 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 1 }) ],
 						target: 'All creatures in the cube',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '6 fire damage; A<1 weakened (save ends)',
-							tier2: '10 fire damage; A<2 weakened (save ends)',
-							tier3: '13 fire damage; A<3 weakened (save ends)'
-						}),
-						effect: 'The hag turns the affected area into a roiling oven. The hag deals an additional 5 damage on abilities that target creatures in the affected area.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '6 fire damage; A<1 weakened (save ends)',
+								tier2: '10 fire damage; A<2 weakened (save ends)',
+								tier3: '13 fire damage; A<3 weakened (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The hag turns the affected area into a roiling oven. The hag deals an additional 5 damage on abilities that target creatures in the affected area.')
+						]
 					})
 				})
 			]

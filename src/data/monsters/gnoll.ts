@@ -56,14 +56,18 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 1, within: 3 }) ],
 				target: 'Special',
-				preEffect: 'A gnoll acting this turn drops an iron jawed snare into the affected area. The first time an enemy steps into an affected square, they make an **Agility test**. If they were unaware of the snare, they make the roll with a bane.',
-				powerRoll: FactoryLogic.createPowerRoll({
-					characteristic: Characteristic.Agility,
-					tier1: '6 damage; bleeding (save ends)',
-					tier2: '4 damage; bleeding (EoT)',
-					tier3: 'no effect'
-				}),
-				effect: 'While an enemy is bleeding from the snare, each gnoll has an edge on strikes against the creature.'
+				sections: [
+					FactoryLogic.createAbilitySectionText('A gnoll acting this turn drops an iron jawed snare into the affected area. The first time an enemy steps into an affected square, they make an **Agility test**. If they were unaware of the snare, they make the roll with a bane.'),
+					FactoryLogic.createAbilitySectionRoll(
+						FactoryLogic.createPowerRoll({
+							characteristic: Characteristic.Agility,
+							tier1: '6 damage; bleeding (save ends)',
+							tier2: '4 damage; bleeding (EoT)',
+							tier3: 'no effect'
+						})
+					),
+					FactoryLogic.createAbilitySectionText('While an enemy is bleeding from the snare, each gnoll has an edge on strikes against the creature.')
+				]
 			})
 		}),
 		FactoryLogic.feature.createMalice({
@@ -457,14 +461,18 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All creatures',
-						preEffect: 'Each enemy target makes an **Intuition test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Intuition,
-							tier1: 'Frightened (save ends)',
-							tier2: 'Frightened (EoT)',
-							tier3: 'No effect'
-						}),
-						effect: 'Targets who haven\'t used a cackletongue maneuver on this turn use it immediately at no cost.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each enemy target makes an **Intuition test**.'),
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: Characteristic.Intuition,
+									tier1: 'Frightened (save ends)',
+									tier2: 'Frightened (EoT)',
+									tier3: 'No effect'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('Targets who haven\'t used a cackletongue maneuver on this turn use it immediately at no cost.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -679,14 +687,18 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each winded enemy in the blast',
-						preEffect: 'The carnage\'s eyes and all explosed blood within distance starts to glow bright red. Each target makes a **Presence test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Presence,
-							tier1: 'The target can\'t regain stamina until the end of the encounter',
-							tier2: 'The target can\'t regain stamina (save ends)',
-							tier3: 'No effect'
-						}),
-						effect: 'Until the end of the encounter, each gnoll has a double edge on power rolls that target a winded enemy.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The carnage\'s eyes and all explosed blood within distance starts to glow bright red. Each target makes a **Presence test**.'),
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: Characteristic.Presence,
+									tier1: 'The target can\'t regain stamina until the end of the encounter',
+									tier2: 'The target can\'t regain stamina (save ends)',
+									tier3: 'No effect'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('Until the end of the encounter, each gnoll has a double edge on power rolls that target a winded enemy.')
+						]
 					})
 				})
 			]

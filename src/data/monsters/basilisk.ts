@@ -60,13 +60,17 @@ On a success with a consequence, you produce 1 dose of salve but cannot extract 
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 				target: 'All enemies in the cube',
-				powerRoll: FactoryLogic.createPowerRoll({
-					bonus: 2,
-					tier1: '4 damage',
-					tier2: '4 damage; A<1 2 damage, prone',
-					tier3: '4 damage; A<2 5 damage, prone can\'t stand (save ends)'
-				}),
-				effect: 'A basilisk acting this turn spits out a chuck of a past petrified victim.'
+				sections: [
+					FactoryLogic.createAbilitySectionRoll(
+						FactoryLogic.createPowerRoll({
+							bonus: 2,
+							tier1: '4 damage',
+							tier2: '4 damage; A<1 2 damage, prone',
+							tier3: '4 damage; A<2 5 damage, prone can\'t stand (save ends)'
+						})
+					),
+					FactoryLogic.createAbilitySectionText('A basilisk acting this turn spits out a chuck of a past petrified victim.')
+				]
 			})
 		}),
 		FactoryLogic.feature.createMalice({
@@ -102,13 +106,17 @@ On a success with a consequence, you produce 1 dose of salve but cannot extract 
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 poison damage',
-							tier2: '10 poison damage',
-							tier3: '13 poison damage'
-						}),
-						effect: 'This ability has an edge against targets that the basilisk has previously dealt poison damage to.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '7 poison damage',
+									tier2: '10 poison damage',
+									tier3: '13 poison damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('This ability has an edge against targets that the basilisk has previously dealt poison damage to.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -119,16 +127,20 @@ On a success with a consequence, you produce 1 dose of salve but cannot extract 
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 2, within: 1 }) ],
 						target: 'Special',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: 'M<0 Restrained (save ends)',
-							tier2: 'M<1 Restrained (save ends)',
-							tier3: 'Slowed (save ends) or M<2 Restrained (save ends)'
-						}),
-						effect: `
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: 'M<0 Restrained (save ends)',
+									tier2: 'M<1 Restrained (save ends)',
+									tier3: 'Slowed (save ends) or M<2 Restrained (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText(`
 The basilisk targets the first unobstructed creature in each column of the area. An already slowed target has -1 to resisting the potency. Each target magically begins to turn to stone. A creature restrained by this ability or a creature adjacent to them can use an action to cut the encroaching stone from their body, taking 8 damage which can’t be reduced in any way and ending the effect.
 
-A target that ends two consecutive turns restrained by this ability is petrified until they are cured (see Alchemical Ingredients).`
+A target that ends two consecutive turns restrained by this ability is petrified until they are cured (see Alchemical Ingredients).`)
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -140,12 +152,16 @@ A target that ends two consecutive turns restrained by this ability is petrified
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 						target: 'All creatures in the cube',
 						cost: 5,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 poison damage; M<0 weakened (save ends)',
-							tier2: '6 poison damage; M<1 weakened and slowed (save ends)',
-							tier3: '9 poison damage; M<2 weakened and slowed (save ends)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '4 poison damage; M<0 weakened (save ends)',
+									tier2: '6 poison damage; M<1 weakened and slowed (save ends)',
+									tier3: '9 poison damage; M<2 weakened and slowed (save ends)'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -156,7 +172,9 @@ A target that ends two consecutive turns restrained by this ability is petrified
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies in the burst',
-						effect: 'Each target takes 5 damage and is A<2 bleeding (save ends).'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target takes 5 damage and is A<2 bleeding (save ends).')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -193,14 +211,16 @@ A target that ends two consecutive turns restrained by this ability is petrified
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'One creature or object',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '8 acid damage; pull 1',
-							tier2: '10 acid damage; pull 2',
-							tier3: '14 acid damage; pull 3'
-						}),
-						effect: 'This ability can pull targets restrained by Petrifying Eye Beams, ignoring stability.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '8 acid damage; pull 1',
+									tier2: '10 acid damage; pull 2',
+									tier3: '14 acid damage; pull 3'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('This ability can pull targets restrained by Petrifying Eye Beams, ignoring stability.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -217,16 +237,20 @@ A target that ends two consecutive turns restrained by this ability is petrified
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 2, within: 1 }) ],
 						target: 'Special',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: 'M<0 Restrained (save ends)',
-							tier2: 'M<1 Restrained (save ends)',
-							tier3: 'Slowed (save ends) or M<2 Restrained (save ends)'
-						}),
-						effect: `
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: 'M<0 Restrained (save ends)',
+									tier2: 'M<1 Restrained (save ends)',
+									tier3: 'Slowed (save ends) or M<2 Restrained (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText(`
 The tonguesnapper targets the first unobstructed creature in each column of the area. An already slowed target has -1 to resisting the potency. Each target magically begins to turn to stone. A creature restrained by this ability or a creature adjacent to them can use an action to cut the encroaching stone from their body, taking 8 damage which can’t be reduced in any way and ending the effect.
 
-A target that ends two consecutive turns restrained by this ability is petrified until they are cured (see Alchemical Ingredients).`
+A target that ends two consecutive turns restrained by this ability is petrified until they are cured (see Alchemical Ingredients).`)
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -241,13 +265,17 @@ A target that ends two consecutive turns restrained by this ability is petrified
 						],
 						target: 'One creature',
 						cost: 2,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '8 corruption damage; R<0 dazed (save ends)',
-							tier2: '10 corruption damage; R<1 dazed (save ends)',
-							tier3: '14 corruption damage; R<2 dazed (save ends)'
-						}),
-						effect: 'A creature dazed by this ability can’t benefit from edges or surges until the condition ends.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '8 corruption damage; R<0 dazed (save ends)',
+									tier2: '10 corruption damage; R<1 dazed (save ends)',
+									tier3: '14 corruption damage; R<2 dazed (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('A creature dazed by this ability can’t benefit from edges or surges until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -258,7 +286,9 @@ A target that ends two consecutive turns restrained by this ability is petrified
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies in the burst',
-						effect: 'Each target takes 4 acid damage and is A<2 bleeding (save ends).'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target takes 4 acid damage and is A<2 bleeding (save ends).')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({

@@ -112,23 +112,26 @@ When such an understanding is not reached, gloom dragons are feared for their co
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 						target: 'All enemies',
 						cost: 'signature',
-						preEffect: 'Each target makes an **Agility test**.',
-						// based on other dragons, this is probably supposed to be a test, instead of a power roll, which would have the tiers reversed. Leaving as written for now.
-						/*
-						test: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Agility,
-							tier1: '14 cold damage; P<5 dragonsealed (save ends)',
-							tier2: '11 cold damage; P<4 dragonsealed (save ends)',
-							tier3: '6 cold damage; P<3 dragonsealed (save ends)'
-						}),
-						*/
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '6 cold damage; P<3 dragonsealed (save ends)',
-							tier2: '11 cold damage; P<4 dragonsealed (save ends)',
-							tier3: '14 cold damage; P<5 dragonsealed (save ends)'
-						}),
-						effect: 'The affected area becomes an area of magical darkness. The dragon ignores concealment granted by the darkness. A creature dragonsealed by the dragon has psychic weakness 3 and cold weakness 3 until the condition ends.'
+
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target makes an **Agility test**.'),
+							// based on other dragons, this is probably supposed to be a test, instead of a power roll, which would have the tiers reversed. Leaving as written for now.
+							/*
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Agility,
+								tier1: '14 cold damage; P<5 dragonsealed (save ends)',
+								tier2: '11 cold damage; P<4 dragonsealed (save ends)',
+								tier3: '6 cold damage; P<3 dragonsealed (save ends)'
+							})),
+							*/
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '6 cold damage; P<3 dragonsealed (save ends)',
+								tier2: '11 cold damage; P<4 dragonsealed (save ends)',
+								tier3: '14 cold damage; P<5 dragonsealed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The affected area becomes an area of magical darkness. The dragon ignores concealment granted by the darkness. A creature dragonsealed by the dragon has psychic weakness 3 and cold weakness 3 until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

@@ -81,12 +81,14 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 				keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 				distance: [ FactoryLogic.distance.createRanged(5) ],
 				target: 'One creature',
-				powerRoll: FactoryLogic.createPowerRoll({
-					bonus: 3,
-					tier1: '6 psychic damage; R<1 target cannot identify allies as allies (save ends)',
-					tier2: '10 psychic damage; R<2 target identifies allies as enemies (save ends)',
-					tier3: '13 psychic damage; R<3 target identifies allies as enemies (save ends)'
-				})
+				sections: [
+					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+						bonus: 3,
+						tier1: '6 psychic damage; R<1 target cannot identify allies as allies (save ends)',
+						tier2: '10 psychic damage; R<2 target identifies allies as enemies (save ends)',
+						tier3: '13 psychic damage; R<3 target identifies allies as enemies (save ends)'
+					}))
+				]
 			})
 		}),
 		FactoryLogic.feature.createMalice({
@@ -123,12 +125,14 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 psychic damage',
-							tier2: '5 psychic damage; slide 2',
-							tier3: '7 psychic damage; slide 4'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 psychic damage',
+								tier2: '5 psychic damage; slide 2',
+								tier3: '7 psychic damage; slide 4'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -162,12 +166,14 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 damage',
-							tier2: '5 damage; target has a bane on their next strike',
-							tier3: '7 damage; target has a bane on their next strike'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 damage',
+								tier2: '5 damage; target has a bane on their next strike',
+								tier3: '7 damage; target has a bane on their next strike'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -178,7 +184,9 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						keywords: [ AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The whelp transforms into a **mindkiller**. They have Stamina equal to their squad\'s Stmina pool before transforming.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The whelp transforms into a **mindkiller**. They have Stamina equal to their squad\'s Stmina pool before transforming.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -643,13 +651,15 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies',
-						preEffect: 'Each target must make a **Intuition test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Intuition,
-							tier1: 'Target uses a Signature action against the nearest enemy within distance.',
-							tier2: 'Target makes a Free Strike against the nearest enemy within distance.',
-							tier3: 'Frightened (save ends)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target must make a **Intuition test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Intuition,
+								tier1: 'Target uses a Signature action against the nearest enemy within distance.',
+								tier2: 'Target makes a Free Strike against the nearest enemy within distance.',
+								tier3: 'Frightened (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -660,7 +670,9 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Special',
-						effect: 'The evolutionist teleports 3 minions of level 4 or lower into unoccupied squares within distance. All three minions can be from any monster type but must share the same name.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The evolutionist teleports 3 minions of level 4 or lower into unoccupied squares within distance. All three minions can be from any monster type but must share the same name.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -671,13 +683,15 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '7 lightning damage',
-							tier2: '12 lightning damage',
-							tier3: '15 lightning damage'
-						}),
-						effect: 'The evolutionist is surrounded by a psionic electrical storm until the end of the encounter. The area within 5 of them is considered difficult terrain for enemies. An enemy who enters an affected square for the first time on their turn or starts their turn in it takes 8 lightning damage.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '7 lightning damage',
+								tier2: '12 lightning damage',
+								tier3: '15 lightning damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The evolutionist is surrounded by a psionic electrical storm until the end of the encounter. The area within 5 of them is considered difficult terrain for enemies. An enemy who enters an affected square for the first time on their turn or starts their turn in it takes 8 lightning damage.')
+						]
 					})
 				})
 			]

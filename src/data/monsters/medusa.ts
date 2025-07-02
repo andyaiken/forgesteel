@@ -176,14 +176,18 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Each enemy in the burst',
 						cost: 5,
-						preEffect: 'The medusa turns dozens of eerie snake eyes on their foes. Each target must make a Might test. A target with cover has an edge on the test.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Might,
-							tier1: 'Slowed (save ends) or M<4 restrained (save ends)',
-							tier2: 'M<3 restrained (save ends)',
-							tier3: 'M<2 restrained (save ends)'
-						}),
-						effect: 'An already slowed target has -1 to resist the potency. A target restrained by this ability magically begins to turn to stone. A target that ends two consecutive turns restrained by this ability is petrified (see Petrification)'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The medusa turns dozens of eerie snake eyes on their foes. Each target must make a Might test. A target with cover has an edge on the test.'),
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: Characteristic.Might,
+									tier1: 'Slowed (save ends) or M<4 restrained (save ends)',
+									tier2: 'M<3 restrained (save ends)',
+									tier3: 'M<2 restrained (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('An already slowed target has -1 to resist the potency. A target restrained by this ability magically begins to turn to stone. A target that ends two consecutive turns restrained by this ability is petrified (see Petrification)')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

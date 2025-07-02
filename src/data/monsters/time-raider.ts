@@ -66,7 +66,9 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 3 }) ],
 				target: 'Special',
-				effect: 'A time raider acting this turn activates a gravity well in the affected area. The gravity well sits in the center of the cube and lasts until the end of the encounter or until a creature who can reach the well uses a maneuver to disable it. The affected area is considered difficult terrain for enemies. Whenever an enemy ends their turn in an affected square, they are pulled 4 towards the well.'
+				sections: [
+					FactoryLogic.createAbilitySectionText('A time raider acting this turn activates a gravity well in the affected area. The gravity well sits in the center of the cube and lasts until the end of the encounter or until a creature who can reach the well uses a maneuver to disable it. The affected area is considered difficult terrain for enemies. Whenever an enemy ends their turn in an affected square, they are pulled 4 towards the well.')
+				]
 			})
 		}),
 		FactoryLogic.feature.createMalice({
@@ -117,12 +119,16 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage',
-							tier2: '4 damage',
-							tier3: '5 damage; an ally can make a free strike against the target'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '2 damage',
+									tier2: '4 damage',
+									tier3: '5 damage; an ally can make a free strike against the target'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -160,12 +166,16 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '3 damage; slide 1',
-							tier2: '5 damage; slide 2',
-							tier3: '6 damage; slide 3; prone'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '3 damage; slide 1',
+									tier2: '5 damage; slide 2',
+									tier3: '6 damage; slide 3; prone'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -202,13 +212,15 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage',
-							tier2: '10 damage',
-							tier3: '13 damage; R<2 weakened (save ends)'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '7 damage',
+									tier2: '10 damage',
+									tier3: '13 damage; R<2 weakened (save ends)'
+								})
+							),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -225,12 +237,16 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						target: 'Triggering creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 psychic damage; R<0 5 poison damage',
-							tier2: '6 psychic damage; R<1 5 poison damage',
-							tier3: '9 psychic damage; R<2 5 poison damage'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '4 psychic damage; R<0 5 poison damage',
+									tier2: '6 psychic damage; R<1 5 poison damage',
+									tier3: '9 psychic damage; R<2 5 poison damage'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -272,13 +288,17 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'All enemies in the cube',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 sonic damage',
-							tier2: '7 sonic damage',
-							tier3: '10 sonic damage; prone; M<2 slowed (save ends)'
-						}),
-						effect: 'A layer of ground of floor beneath the area that is 1 square deep is destroyed.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '4 sonic damage',
+									tier2: '7 sonic damage',
+									tier3: '10 sonic damage; prone; M<2 slowed (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('A layer of ground of floor beneath the area that is 1 square deep is destroyed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -330,12 +350,16 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Three creatures',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 corruption damage; push 2',
-							tier2: '8 corruption damage; push 4',
-							tier3: '11 corruption damage; push 6; prone'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '6 corruption damage; push 2',
+									tier2: '8 corruption damage; push 4',
+									tier3: '11 corruption damage; push 6; prone'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -346,8 +370,8 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 4, value2: 2, within: 10 }) ],
 						target: 'Special',
-						effect: 'The area becomes a psionically charged treadmill that pushes creatures and objects at high speed in one direction of the helix’s choice. Any creature that moves into the area or starts their turn there immediately slides 3 squares toward the square at the end of the area in the chosen direction. Each enemy in the area when it first appears takes 3 damage before they are moved.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The area becomes a psionically charged treadmill that pushes creatures and objects at high speed in one direction of the helix’s choice. Any creature that moves into the area or starts their turn there immediately slides 3 squares toward the square at the end of the area in the chosen direction. Each enemy in the area when it first appears takes 3 damage before they are moved.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -390,13 +414,17 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage',
-							tier2: '11 damage',
-							tier3: '14 damage; A<2 bleeding (save ends)'
-						}),
-						effect: 'The hijack is hidden from creatures bleeding form this ability until the condition ends.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '7 damage',
+									tier2: '11 damage',
+									tier3: '14 damage; A<2 bleeding (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The hijack is hidden from creatures bleeding form this ability until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -444,13 +472,17 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures adjacent ot each other',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage',
-							tier2: '8 damage; M<1 dazed (save ends)',
-							tier3: '11 damage; M<2 dazed (save ends)'
-						}),
-						effect: 'A target who ends their next turn adjacent to the other target falls prone.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '6 damage',
+									tier2: '8 damage; M<1 dazed (save ends)',
+									tier3: '11 damage; M<2 dazed (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('A target who ends their next turn adjacent to the other target falls prone.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -462,12 +494,16 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 psychic damage; R<0 prone',
-							tier2: '6 psychic damage; push 1; R<1 prone can\'t stand (save ends)',
-							tier3: '9 psychic damage; push 2; R<2 prone can\'t stand (save ends)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '4 psychic damage; R<0 prone',
+									tier2: '6 psychic damage; push 1; R<1 prone can\'t stand (save ends)',
+									tier3: '9 psychic damage; push 2; R<2 prone can\'t stand (save ends)'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -504,13 +540,17 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage; pull 1',
-							tier2: '10 damage; pull 2',
-							tier3: '13 damage; pull 3; A<2 restrained (save ends)'
-						}),
-						effect: 'This ability can affect creatures on parallel planes of existence and pull them onto the nemesis\'s plane.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '7 damage; pull 1',
+									tier2: '10 damage; pull 2',
+									tier3: '13 damage; pull 3; A<2 restrained (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('This ability can affect creatures on parallel planes of existence and pull them onto the nemesis\'s plane.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -522,13 +562,17 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 psychic damage; M<0 slowed (save ends)',
-							tier2: '10 psychic damage; M<1 slowed (save ends)',
-							tier3: '13 psychic damage; M<2 slowed (save ends)'
-						}),
-						effect: 'A creature slowed by this ability takes 2 damage whenever they move into or are force moved into a square until the condition ends.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '7 psychic damage; M<0 slowed (save ends)',
+									tier2: '10 psychic damage; M<1 slowed (save ends)',
+									tier3: '13 psychic damage; M<2 slowed (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('A creature slowed by this ability takes 2 damage whenever they move into or are force moved into a square until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -571,7 +615,9 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 							tier2: '7 damage; 3 psychic damage',
 							tier3: '9 damage; 4 psychic damage'
 						}),
-						effect: 'Power rolls made against the target have an edge until the start of the vertex\'s next turn.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Power rolls made against the target have an edge until the start of the vertex\'s next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -583,7 +629,9 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 10 }) ],
 						target: 'Special',
-						effect: 'A portal fills the area, leading to a location the vertex has experienced (in person or otherwise) on any plane of existence. Each creature who touches the portal is instantly teleported to the nearest unoccupied square at the chosen location. The portal lasts until the vertex dies, uses this ability again, dismisses the portal (no action required), or is transported by the portal.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('A portal fills the area, leading to a location the vertex has experienced (in person or otherwise) on any plane of existence. Each creature who touches the portal is instantly teleported to the nearest unoccupied square at the chosen location. The portal lasts until the vertex dies, uses this ability again, dismisses the portal (no action required), or is transported by the portal.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -594,7 +642,9 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 4 }) ],
 						target: 'All allies in the burst',
-						effect: 'Each target shifts up to half their speed.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target shifts up to half their speed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -634,13 +684,17 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: '2 creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '8 corruption damage',
-							tier2: '12 corruption damage',
-							tier3: '15 corruption damage'
-						}),
-						effect: 'Each target\'s speed is reduced by 2 until the start of the tyrannis\' next turn.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '8 corruption damage',
+									tier2: '12 corruption damage',
+									tier3: '15 corruption damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('Each target\'s speed is reduced by 2 until the start of the tyrannis\' next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -652,7 +706,9 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Three time raiders',
-						effect: 'Each target is psionically lifted into the air, flies up to their speed and makes a free strike. If a target doesn\'t land in an unoccupied space, they fall.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target is psionically lifted into the air, flies up to their speed and makes a free strike. If a target doesn\'t land in an unoccupied space, they fall.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -663,8 +719,8 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
-						effect: 'The strike has a bane. After the strike resolves, the tyrannis makes a free strike against the target.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The strike has a bane. After the strike resolves, the tyrannis makes a free strike against the target.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -698,7 +754,9 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'Self and three allies',
-						effect: 'Each target gains 15 temporary Stamina and has their speed doubled until the end of their turn.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target gains 15 temporary Stamina and has their speed doubled until the end of their turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -712,7 +770,9 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 })
 						],
 						target: 'Self and all allies in the burst',
-						effect: 'Each target can end one effect or condition affecting them or can move up to their speed.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target can end one effect or condition affecting them or can move up to their speed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -723,7 +783,9 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Special',
-						effect: 'The tyrannis fires a sensor mine into each unoccupied square in the burst and a gravity well (see Gravity Well) into one of their own squares. Whenever an enemy moves into a square with a sensor mine in it, the mine explodes, dealing 3 damage to the enemy.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The tyrannis fires a sensor mine into each unoccupied square in the burst and a gravity well (see Gravity Well) into one of their own squares. Whenever an enemy moves into a square with a sensor mine in it, the mine explodes, dealing 3 damage to the enemy.')
+						]
 					})
 				})
 			]
@@ -751,13 +813,17 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '5 fire damage',
-							tier2: '8 fire damage',
-							tier3: '11 fire damage'
-						}),
-						effect: 'The healer can end on EoT or Save Ends effect on the target.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: '5 fire damage',
+									tier2: '8 fire damage',
+									tier3: '11 fire damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The healer can end on EoT or Save Ends effect on the target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -790,12 +856,16 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '8 psychic damage; R (weak) frightened (save ends)',
-							tier2: '13 psychic damage; R (average) frightened (save ends)',
-							tier3: '17 psychic damage; R (strong) frightened (save ends)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: '8 psychic damage; R (weak) frightened (save ends)',
+									tier2: '13 psychic damage; R (average) frightened (save ends)',
+									tier3: '17 psychic damage; R (strong) frightened (save ends)'
+								})
+							)
+						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -806,13 +876,17 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '11 psychic damage',
-							tier2: '16 psychic damage',
-							tier3: '21 psychic damage'
-						}),
-						effect: ' If the healer is dazed, frightened, or taunted, they can end that condition and inflict it on one enemy in the area. Additionally, if the healer’s mentor is in the area and is dazed, frightened, or taunted, the healer can end that condition and inflict it on one enemy in the area.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: '11 psychic damage',
+									tier2: '16 psychic damage',
+									tier3: '21 psychic damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('If the healer is dazed, frightened, or taunted, they can end that condition and inflict it on one enemy in the area. Additionally, if the healer’s mentor is in the area and is dazed, frightened, or taunted, the healer can end that condition and inflict it on one enemy in the area.')
+					   ]
 					})
 				})
 			}

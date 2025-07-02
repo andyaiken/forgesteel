@@ -109,14 +109,16 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],
 						target: 'All enemies',
 						cost: 'signature',
-						preEffect: 'Each target makes a **Might test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Might,
-							tier1: '12 poison damage; P<4 dragonsealed (save ends)',
-							tier2: '9 poison damage; P<3 dragonsealed (save ends)',
-							tier3: '5 poison damage; P<2 dragonsealed (save ends)'
-						}),
-						effect: 'Until the condition ends, a creature dragonsealed by the dragon has their wounds overtaken by nettles and thorns, and they take an additional die of damage from conditions that deal damage, the dragon’s Wyrmscale Aura, and the dragon’s Malign Thicket Villain Action.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target makes a **Might test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Might,
+								tier1: '12 poison damage; P<4 dragonsealed (save ends)',
+								tier2: '9 poison damage; P<3 dragonsealed (save ends)',
+								tier3: '5 poison damage; P<2 dragonsealed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('Until the condition ends, a creature dragonsealed by the dragon has their wounds overtaken by nettles and thorns, and they take an additional die of damage from conditions that deal damage, the dragon’s Wyrmscale Aura, and the dragon’s Malign Thicket Villain Action.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

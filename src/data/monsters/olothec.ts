@@ -211,13 +211,17 @@ Each time a creature is transformed, the Director chooses one of the following t
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createSpecial('') ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '10 psychic damage; P<2 frightened (save ends)',
-							tier2: '14 psychic damage; P<3 frightened (save ends)',
-							tier3: '17 psychic damage; P<4 frightened (save ends)'
-						}),
-						effect: 'This ability targets each enemy the olothec has line of effect to. A frightened enemy can’t save against any other effect until they are no longer frightened.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 4,
+									tier1: '10 psychic damage; P<2 frightened (save ends)',
+									tier2: '14 psychic damage; P<3 frightened (save ends)',
+									tier3: '17 psychic damage; P<4 frightened (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('This ability targets each enemy the olothec has line of effect to. A frightened enemy can’t save against any other effect until they are no longer frightened.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -239,13 +243,17 @@ Each time a creature is transformed, the Director chooses one of the following t
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All creatures',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '7 psychic damage; R<2 devolved (save ends)',
-							tier2: '13 psychic damage; R<3 devolved (save ends)',
-							tier3: '16 psychic damage; R<4 devolved (save ends)'
-						}),
-						effect: 'A devolved creature has a -1 modifier to all their characteristic scores other than Reason until the condition ends.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 4,
+									tier1: '7 psychic damage; R<2 devolved (save ends)',
+									tier2: '13 psychic damage; R<3 devolved (save ends)',
+									tier3: '16 psychic damage; R<4 devolved (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('A devolved creature has a -1 modifier to all their characteristic scores other than Reason until the condition ends.')
+						]
 					})
 				})
 			]

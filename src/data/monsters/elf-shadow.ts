@@ -189,13 +189,17 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 damage',
-							tier2: '5 damage',
-							tier3: '7 damage'
-						}),
-						effect: 'The nightstrike leaps over the target, shifting into an unoccupied square adjacent to the target opposite from their starting position.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '3 damage',
+									tier2: '5 damage',
+									tier3: '7 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The nightstrike leaps over the target, shifting into an unoccupied square adjacent to the target opposite from their starting position.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -229,13 +233,17 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(7) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 damage',
-							tier2: '5 damage',
-							tier3: '7 damage'
-						}),
-						effect: 'The next strike made against the target has an edge.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '3 damage',
+									tier2: '5 damage',
+									tier3: '7 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The next strike made against the target has an edge.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -268,14 +276,16 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '10 damage',
-							tier2: '15 damage',
-							tier3: '18 damage'
-						}),
-						effect: 'The next ability made against the target has a double edge.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '10 damage',
+									tier2: '15 damage',
+									tier3: '18 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The next ability made against the target has a double edge.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
@@ -293,13 +303,17 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 4, within: 10 }) ],
 						target: 'All enemies in the line',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '5 damage; I<1 bleeding (save ends)',
-							tier2: '10 damage; I<2 bleeding (save ends)',
-							tier3: '12 damage; I<3 bleeding (save ends)'
-						}),
-						effect: 'Push 4.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '5 damage; I<1 bleeding (save ends)',
+									tier2: '10 damage; I<2 bleeding (save ends)',
+									tier3: '12 damage; I<3 bleeding (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('Push 4.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -380,13 +394,17 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 damage',
-							tier2: '13 damage',
-							tier3: '16 damage'
-						}),
-						effect: 'The duskcaller can target an additional creature or object while concealed.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '9 damage',
+									tier2: '13 damage',
+									tier3: '16 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The duskcaller can target an additional creature or object while concealed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -436,13 +454,17 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '8 lightning damage',
-							tier2: '12 lightning damage',
-							tier3: '15 lightning damage'
-						}),
-						effect: 'The next strike against the target deals an additional 5 damage.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '8 lightning damage',
+									tier2: '12 lightning damage',
+									tier3: '15 lightning damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The next strike against the target deals an additional 5 damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -454,13 +476,17 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All allies in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: 'The target regains 2 Stamina',
-							tier2: 'The target regains 3 Stamina',
-							tier3: 'The target regains 5 Stamina; The Director gains 3 Malice'
-						}),
-						effect: 'Each target has an edge on their next strike.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: 'The target regains 2 Stamina',
+									tier2: 'The target regains 3 Stamina',
+									tier3: 'The target regains 5 Stamina; The Director gains 3 Malice'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('Each target has an edge on their next strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -493,13 +519,17 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 damage',
-							tier2: '13 damage',
-							tier3: '16 damage'
-						}),
-						effect: 'The moondancer ignores opportunity attacks from the target until the end of their turn.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '9 damage',
+									tier2: '13 damage',
+									tier3: '16 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The moondancer ignores opportunity attacks from the target until the end of their turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -510,7 +540,9 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Special',
-						effect: 'The moondancer teleports to a square in concealment granted by darkness within 10.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The moondancer teleports to a square in concealment granted by darkness within 10.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -543,13 +575,17 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '10 damage',
-							tier2: '15 damage',
-							tier3: '18 damage'
-						}),
-						effect: 'The mournblade is invisible to the target until the start of their next turn.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '10 damage',
+									tier2: '15 damage',
+									tier3: '18 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The mournblade is invisible to the target until the start of their next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -559,7 +595,9 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Special',
-						effect: 'If the mournblade is concealed, they can teleport to another square in concealment granted by darkness within 10. '
+						sections: [
+							FactoryLogic.createAbilitySectionText('If the mournblade is concealed, they can teleport to another square in concealment granted by darkness within 10.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -592,14 +630,16 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 damage',
-							tier2: '14 damage',
-							tier3: '17 damage'
-						}),
-						effect: 'The target has a bane on their next strike.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '9 damage',
+									tier2: '14 damage',
+									tier3: '17 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The target has a bane on their next strike.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -617,12 +657,16 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '8 damage; R<1 the target makes a free strike against an enemy of the noctis mage\'s choice',
-							tier2: '10 damage; R<2 the target makes a free strike against an enemy of the noctis mage\'s choice',
-							tier3: '13 damage; R<3 the target makes a signature action against an enemy of the noctis mage\'s choice'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '8 damage; R<1 the target makes a free strike against an enemy of the noctis mage\'s choice',
+									tier2: '10 damage; R<2 the target makes a free strike against an enemy of the noctis mage\'s choice',
+									tier3: '13 damage; R<3 the target makes a signature action against an enemy of the noctis mage\'s choice'
+								})
+							)
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -655,13 +699,17 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 damage',
-							tier2: '13 damage',
-							tier3: '16 damage; I<3 bleeding (save ends)'
-						}),
-						effect: 'The panther makes a free strike against a creature or object adjacent to the target.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '9 damage',
+									tier2: '13 damage',
+									tier3: '16 damage; I<3 bleeding (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The panther makes a free strike against a creature or object adjacent to the target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -673,13 +721,17 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies in burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '5 corruption damage',
-							tier2: '8 corruption damage; I<2 dazed (save ends)',
-							tier3: '10 damage; I<3 dazed (save ends)'
-						}),
-						effect: 'The panther has a double edge on strikes against targets dazed by this ability.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '5 corruption damage',
+									tier2: '8 corruption damage; I<2 dazed (save ends)',
+									tier3: '10 damage; I<3 dazed (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The panther has a double edge on strikes against targets dazed by this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -886,13 +938,17 @@ In many shadow elf societies, all people are given at least basic combat trainin
 							FactoryLogic.distance.createRanged(3)
 						],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '6 damage',
-							tier2: '10 damage',
-							tier3: '13 damage'
-						}),
-						effect: 'When the shade starts their turn concealed from the target gain a surge.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: '6 damage',
+									tier2: '10 damage',
+									tier3: '13 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('When the shade starts their turn concealed from the target gain a surge.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -903,7 +959,9 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 						target: '-',
-						effect: 'Until the end of the next turn, the area is filled with darkness. The shade\'s mentor ignores concealment granted by the darkness.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Until the end of the next turn, the area is filled with darkness. The shade\'s mentor ignores concealment granted by the darkness.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -921,13 +979,17 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: 'at the start of the target’s next turn, 8 poison damage and weakened (save ends)',
-							tier2: 'at the start of the target’s next turn, 12 poison damage and weakened (save ends)',
-							tier3: 'at the start of the target’s next turn, 16 poison damage and weakened (save ends)'
-						}),
-						effect: 'The slow-poison needle is initially painless. When using this ability, the shade can remain hidden if they are already hidden.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: 'at the start of the target’s next turn, 8 poison damage and weakened (save ends)',
+									tier2: 'at the start of the target’s next turn, 12 poison damage and weakened (save ends)',
+									tier3: 'at the start of the target’s next turn, 16 poison damage and weakened (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The slow-poison needle is initially painless. When using this ability, the shade can remain hidden if they are already hidden.')
+						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -938,13 +1000,17 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '12 poison damage; shadowed vision (save ends)',
-							tier2: '17 poison damage; shadowed vision (save ends)',
-							tier3: '23 poison damage; shadowed vision (save ends)'
-						}),
-						effect: 'While a creature has shadowed vision, every creature has concealment from them.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: '12 poison damage; shadowed vision (save ends)',
+									tier2: '17 poison damage; shadowed vision (save ends)',
+									tier3: '23 poison damage; shadowed vision (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('While a creature has shadowed vision, every creature has concealment from them.')
+						]
 					})
 				})
 			}

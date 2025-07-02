@@ -147,12 +147,14 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 4 }) ],
 						target: 'Each enemy in the burst',
-						preEffect: 'The ankheg burrows up to their speed then creates the burst when they breach the surface.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							tier1: '4 damage',
-							tier2: '6 damage',
-							tier3: '7 damage; push 2'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The ankheg burrows up to their speed then creates the burst when they breach the surface.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								tier1: '4 damage',
+								tier2: '6 damage',
+								tier3: '7 damage; push 2'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

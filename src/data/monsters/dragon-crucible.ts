@@ -120,14 +120,18 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 2, within: 1 }) ],
 						target: 'All creatures and objects',
 						cost: 'signature',
-						preEffect: 'Each target makes a **Agility test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Agility,
-							tier1: '13 fire damage; A<4 slagged (save ends)',
-							tier2: '10 fire damage; A<3 slagged (save ends)',
-							tier3: '6 fire damage; A<2 slagged (save ends)'
-						}),
-						effect: 'Until the condition ends, a slagged target is coated in molten metal, takes 2d6 fire damage at the start of each of their turns, and is M<3 restrained (save ends) whenever they take cold damage.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target makes a **Agility test**.'),
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: Characteristic.Agility,
+									tier1: '13 fire damage; A<4 slagged (save ends)',
+									tier2: '10 fire damage; A<3 slagged (save ends)',
+									tier3: '6 fire damage; A<2 slagged (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('Until the condition ends, a slagged target is coated in molten metal, takes 2d6 fire damage at the start of each of their turns, and is M<3 restrained (save ends) whenever they take cold damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -245,13 +249,17 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 6 }) ],
 						target: 'All creatures and objects in the burst',
-						preEffect: 'The dragon charges their wyrmscale aura, whipping metal into a magnetized frenzy. Each target makes an **Agility test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Agility,
-							tier1: '16 damage, pull 10 or push 10',
-							tier2: '13 damage, pull 8 or push 8',
-							tier3: '7 damage, pull 5 or push 5'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The dragon charges their wyrmscale aura, whipping metal into a magnetized frenzy. Each target makes an **Agility test**.'),
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: Characteristic.Agility,
+									tier1: '16 damage, pull 10 or push 10',
+									tier2: '13 damage, pull 8 or push 8',
+									tier3: '7 damage, pull 5 or push 5'
+								})
+							)
+						]
 					})
 				})
 			]

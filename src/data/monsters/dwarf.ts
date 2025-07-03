@@ -90,14 +90,16 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 10, within: 10 }) ],
 				target: 'All enemies in the line',
-				preEffect: 'Each target makes an **Agility test**.',
-				powerRoll: FactoryLogic.createPowerRoll({
-					characteristic: Characteristic.Agility,
-					tier1: '8 damage; restrained (EoT)',
-					tier2: '6 damage; slowed (EoT)',
-					tier3: 'No effect'
-				}),
-				effect: 'The snaring line remains until the end of the encounter. An enemy that moves into an affected square for the first time on their turn must make the test.'
+				sections: [
+					FactoryLogic.createAbilitySectionText('Each target makes an **Agility test**.'),
+					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Agility,
+						tier1: '8 damage; restrained (EoT)',
+						tier2: '6 damage; slowed (EoT)',
+						tier3: 'No effect'
+					})),
+					FactoryLogic.createAbilitySectionText('The snaring line remains until the end of the encounter. An enemy that moves into an affected square for the first time on their turn must make the test.')
+				]
 			})
 		})
 	],
@@ -533,14 +535,16 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
 						target: 'All enemies in the cube',
-						preEffect: 'Each target makes a **Might test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Might,
-							tier1: '7 damage; restrained (EoT)',
-							tier2: '5 damage; slowed (EoT)',
-							tier3: 'No effect'
-						}),
-						effect: 'The snare remains until the end of the encounter. An enemy that moves into an affected square for the first time on their turn must make the test.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target makes a **Might test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Might,
+								tier1: '7 damage; restrained (EoT)',
+								tier2: '5 damage; slowed (EoT)',
+								tier3: 'No effect'
+							})),
+							FactoryLogic.createAbilitySectionText('The snare remains until the end of the encounter. An enemy that moves into an affected square for the first time on their turn must make the test.')
+						]
 					})
 				})
 			]
@@ -824,13 +828,15 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createSpecial('See below') ],
 						target: 'All enemies',
-						preEffect: 'The mortar fires a shell up to 2 squares vertically. The shell hovers in the air, shedding light in a 3 burst. Enemies illuminated by this light can’t Hide or turn invisible and can’t benefit from shields. At the start of the mortar’s next turn, the shell explodes, damaging enemies in the area.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '5 fire damage',
-							tier2: '8 fire damage',
-							tier3: '11 fire damage'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The mortar fires a shell up to 2 squares vertically. The shell hovers in the air, shedding light in a 3 burst. Enemies illuminated by this light can’t Hide or turn invisible and can’t benefit from shields. At the start of the mortar’s next turn, the shell explodes, damaging enemies in the area.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '5 fire damage',
+								tier2: '8 fire damage',
+								tier3: '11 fire damage'
+							}))
+						]
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({

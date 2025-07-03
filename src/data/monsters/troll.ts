@@ -97,13 +97,15 @@ export const troll: MonsterGroup = {
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 damage; A<2 prone',
-							tier2: '5 damage; A<3 prone',
-							tier3: '6 damage; prone'
-						}),
-						effect: 'If the target is already prone, they are grabbed instead.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 damage; A<2 prone',
+								tier2: '5 damage; A<3 prone',
+								tier3: '6 damage; prone'
+							})),
+							FactoryLogic.createAbilitySectionText('If the target is already prone, they are grabbed instead.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -198,13 +200,15 @@ export const troll: MonsterGroup = {
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'Each enemy in the cube',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '5 poison damage; M<1 weakened (save ends)',
-							tier2: '9 poison damage; M<2 weakened (save ends)',
-							tier3: '11 poison damage; M<3 weakened (save ends)'
-						}),
-						effect: 'Each troll in the cube regains 3 Stamina.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '5 poison damage; M<1 weakened (save ends)',
+								tier2: '9 poison damage; M<2 weakened (save ends)',
+								tier3: '11 poison damage; M<3 weakened (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('Each troll in the cube regains 3 Stamina.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -363,13 +367,15 @@ export const troll: MonsterGroup = {
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '6 damage',
-							tier2: '11 damage',
-							tier3: '14 damage'
-						}),
-						effect: 'The mercenary regains Stamina equal to half the damage dealt.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '6 damage',
+								tier2: '11 damage',
+								tier3: '14 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The mercenary regains Stamina equal to half the damage dealt.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

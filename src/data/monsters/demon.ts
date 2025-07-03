@@ -111,13 +111,15 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage; pull 1',
-							tier2: '4 damage; pull 2',
-							tier3: '5 damage; pull 3'
-						}),
-						effect: 'If the target is pulled adjacent ot the ensarer, the ensnarer makes a free strike against them.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 damage; pull 1',
+								tier2: '4 damage; pull 2',
+								tier3: '5 damage; pull 3'
+							})),
+							FactoryLogic.createAbilitySectionText('If the target is pulled adjacent ot the ensarer, the ensnarer makes a free strike against them.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -245,13 +247,15 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 psychic damage',
-							tier2: '5 psychic damage; P<1 weakened (save ends)',
-							tier3: '7 psychic damage; P<2 weakened (save ends)'
-						}),
-						effect: 'If the target makes a strike while weakened this way, the bendrak can choose a second target within distance for the strike, then evenly divides any damage from the strike between the two targets.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '4 psychic damage',
+								tier2: '5 psychic damage; P<1 weakened (save ends)',
+								tier3: '7 psychic damage; P<2 weakened (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('If the target makes a strike while weakened this way, the bendrak can choose a second target within distance for the strike, then evenly divides any damage from the strike between the two targets.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -305,13 +309,15 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage; pull 2',
-							tier2: '7 damage; pull 3',
-							tier3: '8 damage; pull 4'
-						}),
-						effect: 'If the target is pulled adjacent to the muceron, the muceron either makes a free strike against them or grabs them.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage; pull 2',
+								tier2: '7 damage; pull 3',
+								tier3: '8 damage; pull 4'
+							})),
+							FactoryLogic.createAbilitySectionText('If the target is pulled adjacent to the muceron, the muceron either makes a free strike against them or grabs them.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -431,12 +437,14 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '3 damage',
-							tier2: '4 damage',
-							tier3: '5 damage; M<2 bleeding (save ends)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '3 damage',
+								tier2: '4 damage',
+								tier3: '5 damage; M<2 bleeding (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -448,12 +456,14 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Three creatures without Full Stamina',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '1 corruption damage',
-							tier2: '2 corruption damage',
-							tier3: '3 corruption damage'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '1 corruption damage',
+								tier2: '2 corruption damage',
+								tier3: '3 corruption damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -495,13 +505,15 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'Each enemy in cube',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: 'Slide 3',
-							tier2: 'Slide 4',
-							tier3: 'Slide 5'
-						}),
-						effect: 'The area turns into a morass of spongy flesh before the targets are force moved. Until the start of the torlas’s next turn, the area is difficult terrain, and each creature who moves within the area takes 1 damage for each square moved.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: 'Slide 3',
+								tier2: 'Slide 4',
+								tier3: 'Slide 5'
+							})),
+							FactoryLogic.createAbilitySectionText('The area turns into a morass of spongy flesh before the targets are force moved. Until the start of the torlas’s next turn, the area is difficult terrain, and each creature who moves within the area takes 1 damage for each square moved.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -512,7 +524,9 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Three creatures',
-						effect: 'The torlas pulls each target 3 squares.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The torlas pulls each target 3 squares.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -560,7 +574,9 @@ The following demons have been identified across categories 1-3:
 							tier2: '7 psychic damage; I<2 slowed (save ends)',
 							tier3: '10 psychic damage; I<3 slowed (save ends)'
 						}),
-						effect: 'An ally within 10 squares of the chorogaunt can shift up to their speed.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('An ally within 10 squares of the chorogaunt can shift up to their speed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -571,7 +587,9 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each enemy in the burst',
-						effect: 'Each target slides 3, ignoring their stability.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target slides 3, ignoring their stability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -583,7 +601,9 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Any damage from the attack is halved, and the chorogaunt deals an additional 3 damage with their abilities until the end of their next turn.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Any damage from the attack is halved, and the chorogaunt deals an additional 3 damage with their abilities until the end of their next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -613,7 +633,9 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Three enemies',
-						effect: 'The chorogaunt allows each target to choose between taking 5 psychic damage or being frightened (save ends).'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The chorogaunt allows each target to choose between taking 5 psychic damage or being frightened (save ends).')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -624,7 +646,9 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One ally',
-						effect: 'The chorogaunt kills the target, and each other ally deals an additional 3 damage on attacks until the end of the round. The Director gains malice equal to the number of heroes.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The chorogaunt kills the target, and each other ally deals an additional 3 damage on attacks until the end of the round. The Director gains malice equal to the number of heroes.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -635,7 +659,9 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The chorogaunt shifts up to their speed, uses their Agonizing Harmony, shifts up to their speed, and then uses their Agonizing Harmony again.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The chorogaunt shifts up to their speed, uses their Agonizing Harmony, shifts up to their speed, and then uses their Agonizing Harmony again.')
+						]
 					})
 				})
 			]

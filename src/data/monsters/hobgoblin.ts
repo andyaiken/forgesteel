@@ -122,13 +122,15 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object per minion',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 damage',
-							tier2: '5 damage',
-							tier3: '7 damage; shift 2'
-						}),
-						effect: 'The grilp moves up to their speed and hides after attacking.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 damage',
+								tier2: '5 damage',
+								tier3: '7 damage; shift 2'
+							})),
+							FactoryLogic.createAbilitySectionText('The grilp moves up to their speed and hides after attacking.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -226,13 +228,15 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						],
 						target: '1 creature or object per minion',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '2 corruption damage',
-							tier2: '4 corruption damage; push 1',
-							tier3: '6 corruption damage; push 2'
-						}),
-						effect: 'The lancer deals an additional 2 damage if they strike the target from 1 or more squares above.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '2 corruption damage',
+								tier2: '4 corruption damage; push 1',
+								tier3: '6 corruption damage; push 2'
+							})),
+							FactoryLogic.createAbilitySectionText('The lancer deals an additional 2 damage if they strike the target from 1 or more squares above.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -341,7 +345,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						],
 						target: '3 creatures',
 						cost: 1,
-						effect: 'Teleport 5. Each creature within 1 of a target where they appear takes 3 fire damage.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Teleport 5. Each creature within 1 of a target where they appear takes 3 fire damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -380,14 +386,14 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '8 damage',
-							tier2: '8 damage; 4 corruption damage',
-							tier3: '8 damage; 7 corruption damage'
-						}),
-						effect: 'The next strike made against the target has a double edge.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '8 damage',
+								tier2: '8 damage; 4 corruption damage',
+								tier3: '8 damage; 7 corruption damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The next strike made against the target has a double edge.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -405,7 +411,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 ally',
 						cost: 0,
-						effect: 'The target moves up to their speed and makes a free strike.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target moves up to their speed and makes a free strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -473,13 +481,15 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 2, within: 1 }) ],
 						target: 'All enemies or objects',
 						cost: 3,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '6 damage',
-							tier2: '11 damage',
-							tier3: '14 damage'
-						}),
-						effect: 'Push 10. The grandguard shifts into every 2 squares left behind by targets.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '6 damage',
+								tier2: '11 damage',
+								tier3: '14 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('Push 10. The grandguard shifts into every 2 squares left behind by targets.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -540,7 +550,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						cost: 0,
-						effect: 'The firerunner moves up to their speed and creates a 8 wall of fire. Each segment must include one of the squares the firerunner touched. Creatures can enter and pass through the wall. Any enemy who enters the wall for the first time in a round or starts their turn there takes 5 fire damage.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The firerunner moves up to their speed and creates a 8 wall of fire. Each segment must include one of the squares the firerunner touched. Creatures can enter and pass through the wall. Any enemy who enters the wall for the first time in a round or starts their turn there takes 5 fire damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -584,13 +596,15 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature or object',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 fire damage',
-							tier2: '14 fire damage',
-							tier3: '17 fire damage; A<3 burning (save ends)'
-						}),
-						effect: 'A burning target takes 1d6 fire damage at the start of each of their turns until the condition ends.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '9 fire damage',
+								tier2: '14 fire damage',
+								tier3: '17 fire damage; A<3 burning (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A burning target takes 1d6 fire damage at the start of each of their turns until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -668,13 +682,15 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature',
 						cost: 5,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '10 corruption damage',
-							tier2: '10 corruption damage or P<2 Target is judged',
-							tier3: 'Target is judged'
-						}),
-						effect: 'A judged target takes 10 corruption damage for each turn they’ve taken during the encounter. The target then regains 5 Stamina for each recovery they enabled a creature to spend during the encounter.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '10 corruption damage',
+								tier2: '10 corruption damage or P<2 Target is judged',
+								tier3: 'Target is judged'
+							})),
+							FactoryLogic.createAbilitySectionText('A judged target takes 10 corruption damage for each turn they’ve taken during the encounter. The target then regains 5 Stamina for each recovery they enabled a creature to spend during the encounter.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -713,13 +729,15 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.createRanged(4) ],
 						target: '1 creature or object',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 fire damage',
-							tier2: '14 fire damage',
-							tier3: '17 fire damage; R<3 slowed (save ends)'
-						}),
-						effect: 'If the smokebinder had an edge on the power roll, the target cannot communicate with anyone until the end of their next turn.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '9 fire damage',
+								tier2: '14 fire damage',
+								tier3: '17 fire damage; R<3 slowed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('If the smokebinder had an edge on the power roll, the target cannot communicate with anyone until the end of their next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -789,7 +807,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier2: '10 fire damage',
 							tier3: '13 fire damage'
 						}),
-						effect: 'The soldier doesn’t provoke opportunity attacks from each target until the end of the trooper’s turn.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The soldier doesn’t provoke opportunity attacks from each target until the end of the trooper’s turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -801,7 +821,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 creature',
 						cost: 0,
-						effect: 'The target is P<2 taunted (EoT). While taunted by this ability, a creature takes 1d6 fire damage whenever they use an ability or attack that doesn’t target the soldier.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target is P<2 taunted (EoT). While taunted by this ability, a creature takes 1d6 fire damage whenever they use an ability or attack that doesn’t target the soldier.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -846,7 +868,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier2: '9 fire damage; M<2 weakened (save ends)',
 							tier3: '11 fire damage; M<3 weakened (save ends)'
 						}),
-						effect: 'The war mage can teleport a creature within 10 up to 2 squares before using this ability.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The war mage can teleport a creature within 10 up to 2 squares before using this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -858,7 +882,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '2 allies',
 						cost: 0,
-						effect: 'Each target gains 10 temporary Stamina and has a double edge on their next power roll. The war mage can spend any amount of their Stamina to increase the temporary Stamina each target gains by an equivalent amount.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target gains 10 temporary Stamina and has a double edge on their next power roll. The war mage can spend any amount of their Stamina to increase the temporary Stamina each target gains by an equivalent amount.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -870,7 +896,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 						target: 'Special',
 						cost: 3,
-						effect: 'The war mage consecrates the affected area and causes it to smolder. Until the end of the encounter, the affected area is considered difficult terrain and enemies have fire weakness 10 while occupying an affected square.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The war mage consecrates the affected area and causes it to smolder. Until the end of the encounter, the affected area is considered difficult terrain and enemies have fire weakness 10 while occupying an affected square.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -882,7 +910,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Triggering creature',
 						cost: 'signature',
-						effect: 'Any damage dealt or Stamina regained by the attack or ability is halved. The war mage regains Stamina equal to the remainder.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Any damage dealt or Stamina regained by the attack or ability is halved. The war mage regains Stamina equal to the remainder.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -932,7 +962,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier2: '14 damage; A<2 bleeding (save ends)',
 							tier3: '17 damage; A<3 bleeding and restrained (save ends)'
 						}),
-						effect: 'A creature restrained by this attack moves along with the slaughter demon until the condition ends. The slaughter demon can have up to 6 creatures or objects restrained on their weapons.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('A creature restrained by this attack moves along with the slaughter demon until the condition ends. The slaughter demon can have up to 6 creatures or objects restrained on their weapons.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -950,7 +982,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier2: '16 poison damage; M<2 weakened (save ends)',
 							tier3: '20 poison damage; M<3 weakened (save ends)'
 						}),
-						effect: 'A target weakened by this ability has damage weakness 3 until the condition ends.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('A target weakened by this ability has damage weakness 3 until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -962,7 +996,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: '1 creature or object',
 						cost: 0,
-						effect: 'The slaughter demon makes a free strike against the target and burrows up to their speed. The target is pulled the same number of squares the slaughter demon burrows into, including vertically.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The slaughter demon makes a free strike against the target and burrows up to their speed. The target is pulled the same number of squares the slaughter demon burrows into, including vertically.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -974,7 +1010,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Triggering creature',
 						cost: 0,
-						effect: 'The target can’t be brought back to life. The slaughter demon gains an edge on all power rolls for the rest of the encounter.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target can’t be brought back to life. The slaughter demon gains an edge on all power rolls for the rest of the encounter.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -1042,7 +1080,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 ally',
 						cost: 0,
-						effect: 'The target moves up to their speed and uses a signature action.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target moves up to their speed and uses a signature action.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1054,7 +1094,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 non-minion hobgoblin',
 						cost: 3,
-						effect: '3 hobgoblin recruits crawl out of the target’s blood and appear in unoccupied spaces adjacent to the target.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('3 hobgoblin recruits crawl out of the target’s blood and appear in unoccupied spaces adjacent to the target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -1079,7 +1121,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						],
 						target: 'Self and all allies',
 						cost: 0,
-						effect: 'Each target gains 10 temporary Stamina, moves up to their speed, and makes a free strike.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target gains 10 temporary Stamina, moves up to their speed, and makes a free strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1091,7 +1135,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 3 }) ],
 						target: 'Self',
 						cost: 0,
-						effect: 'The bloodlord surrounds themselves with a storm of flying skulls until the end of the encounter. An enemy that first enters the aura or starts their turn there takes 8 corruption damage and has a bane on their next power roll until the start of their next turn.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The bloodlord surrounds themselves with a storm of flying skulls until the end of the encounter. An enemy that first enters the aura or starts their turn there takes 8 corruption damage and has a bane on their next power roll until the start of their next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1109,7 +1155,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier2: '5 fire damage; P<3 7 fire damage; push 3, prone',
 							tier3: '5 fire damage; P<4 10 fire damage; push 5, prone'
 						}),
-						effect: 'The bloodlord is wreathed in black flames until the end of the encounter. When an adjacent enemy touches or uses a melee ability against the bloodlord, they take 5 corruption damage.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The bloodlord is wreathed in black flames until the end of the encounter. When an adjacent enemy touches or uses a melee ability against the bloodlord, they take 5 corruption damage.')
+						]
 					})
 				})
 			]
@@ -1149,7 +1197,9 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier2: '9 fire damage',
 							tier3: '12 fire damage; A (strong) burning (save ends)'
 						}),
-						effect: 'A burning target takes 1d6 fire damage at the start of each of their turns until the condition ends.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('A burning target takes 1d6 fire damage at the start of each of their turns until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

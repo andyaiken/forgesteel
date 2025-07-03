@@ -137,13 +137,15 @@ export const fossilCryptic: MonsterGroup = {
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 4 }) ],
 						target: 'Each enemy in the burst',
 						cost: 5,
-						preEffect: 'The cryptic burrows up to half their speed, then creates the burst when they breach the surface.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '5 damage; push 2',
-							tier2: '7 damage; push 3; prone',
-							tier3: '10 damage; push 4; prone'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The cryptic burrows up to half their speed, then creates the burst when they breach the surface.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '5 damage; push 2',
+								tier2: '7 damage; push 3; prone',
+								tier3: '10 damage; push 4; prone'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -184,14 +186,16 @@ export const fossilCryptic: MonsterGroup = {
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy on the ground in the burst',
-						preEffect: 'Each target makes a **Might test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Might,
-							tier1: 'The target is prone and can\'t stand.',
-							tier2: 'Prone',
-							tier3: 'No effect'
-						}),
-						effect: 'The affected area becomes difficult terrain. '
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target makes a **Might test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Might,
+								tier1: 'The target is prone and can\'t stand.',
+								tier2: 'Prone',
+								tier3: 'No effect'
+							})),
+							FactoryLogic.createAbilitySectionText('The affected area becomes difficult terrain.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -202,14 +206,16 @@ export const fossilCryptic: MonsterGroup = {
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy on the ground in the burst',
-						preEffect: 'Each target makes a **Agility test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Agility,
-							tier1: '9 damage; prone',
-							tier2: '5 damage',
-							tier3: 'The target moves up to the nearest unoccupied space outside the area.'
-						}),
-						effect: 'The area drops 2 squares. Each enemy in the area falls, while allies of the fossil cryptic drop safely. The affect area then becomes difficult terrain.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target makes a **Agility test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Agility,
+								tier1: '9 damage; prone',
+								tier2: '5 damage',
+								tier3: 'The target moves up to the nearest unoccupied space outside the area.'
+							})),
+							FactoryLogic.createAbilitySectionText('The area drops 2 squares. Each enemy in the area falls, while allies of the fossil cryptic drop safely. The affect area then becomes difficult terrain.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -220,13 +226,15 @@ export const fossilCryptic: MonsterGroup = {
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Two creatures or objects',
-						preEffect: 'The cryptic makes an initial power roll that calls down stone pillars from the ceiling',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '5 damage; prone; M<1 restrained (save ends)',
-							tier2: '9 damage; prone; M<2 restrained (save ends)',
-							tier3: '12 damage; prone; M<3 restrained (save ends)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The cryptic makes an initial power roll that calls down stone pillars from the ceiling'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '5 damage; prone; M<1 restrained (save ends)',
+								tier2: '9 damage; prone; M<2 restrained (save ends)',
+								tier3: '12 damage; prone; M<3 restrained (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -237,13 +245,15 @@ export const fossilCryptic: MonsterGroup = {
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Two creatures or objects',
-						preEffect: 'The cryptic makes a final power roll that raises stone pillars from the floor',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '2 damage; vertical slide 2',
-							tier2: '3 damage; vertical slide 4',
-							tier3: '4 damage; vertical slide 8 or the target is restrained against the ceiling (save ends)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The cryptic makes a final power roll that raises stone pillars from the floor'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '2 damage; vertical slide 2',
+								tier2: '3 damage; vertical slide 4',
+								tier3: '4 damage; vertical slide 8 or the target is restrained against the ceiling (save ends)'
+							}))
+						]
 					})
 				})
 			]

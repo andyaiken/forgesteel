@@ -83,13 +83,15 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 damage',
-							tier2: '5 damage',
-							tier3: '7 damage'
-						}),
-						effect: 'The grulqin has an edge on this ability if they moved at least 3 squares in a line during their turn.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 damage',
+								tier2: '5 damage',
+								tier3: '7 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The grulqin has an edge on this ability if they moved at least 3 squares in a line during their turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -127,12 +129,14 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '2 corruption damage; slide 2',
-							tier2: '4 corruption damage; vertical slide 2',
-							tier3: '6 corruption damage; vertical slide 4'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '2 corruption damage; slide 2',
+								tier2: '4 corruption damage; vertical slide 2',
+								tier3: '6 corruption damage; vertical slide 4'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -175,13 +179,15 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 psychic damage',
-							tier2: '5 psychic damage',
-							tier3: '7 psychic damage'
-						}),
-						effect: 'The target has a bane on their next attack. If the target is winded, they have a double bane on their next attack instead.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 psychic damage',
+								tier2: '5 psychic damage',
+								tier3: '7 psychic damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The target has a bane on their next attack. If the target is winded, they have a double bane on their next attack instead.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -218,14 +224,14 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '6 psychic damage',
-							tier2: '8 psychic damage',
-							tier3: '9 psychic damage'
-						}),
-						effect: 'The target has corruption weakness 5 (EoT).',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '6 psychic damage',
+								tier2: '8 psychic damage',
+								tier3: '9 psychic damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The target has corruption weakness 5 (EoT).'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -243,13 +249,15 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 5, qualifier: 'beneath Bale Eye' }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 psychic damage, A<1 warped (save ends)',
-							tier2: '5 psychic damage, A<2 warped (save ends)',
-							tier3: '6 psychic damage, A<3 warped (save ends)'
-						}),
-						effect: 'A warped creature has all of their characteristic scores reversed. A score of +1 becomes -1, -2 becomes +2, etc.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 psychic damage, A<1 warped (save ends)',
+								tier2: '5 psychic damage, A<2 warped (save ends)',
+								tier3: '6 psychic damage, A<3 warped (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A warped creature has all of their characteristic scores reversed. A score of +1 becomes -1, -2 becomes +2, etc.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -291,13 +299,15 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '5 damage',
-							tier2: '7 damage',
-							tier3: '9 damage'
-						}),
-						effect: 'Each enemy adjacent to the fangling takes 2 damage.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '5 damage',
+								tier2: '7 damage',
+								tier3: '9 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('Each enemy adjacent to the fangling takes 2 damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -364,13 +374,15 @@ categories 4-6:
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 })
 						],
 						target: 'One creature or object in the area',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '5 acid damage; M<1 slowed (save ends)',
-							tier2: '7 acid damage; M<2 slowed (save ends)',
-							tier3: '9 acid damage; M<3 restrained (save ends)'
-						}),
-						effect: 'The affected area pools with slime. The slime is difficult terrain for enemies, and an enemy is bleeding while occupying an affected square.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '5 acid damage; M<1 slowed (save ends)',
+								tier2: '7 acid damage; M<2 slowed (save ends)',
+								tier3: '9 acid damage; M<3 restrained (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The affected area pools with slime. The slime is difficult terrain for enemies, and an enemy is bleeding while occupying an affected square.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -424,13 +436,15 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 corruption damage',
-							tier2: '6 corruption damage',
-							tier3: '7 corruption damage; I<3 dazed (save ends)'
-						}),
-						effect: 'The niktin violently changes shape. The niktin deals an additional 6 damage to each target they were hidden from with their Aggressive Mimicry ability.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 corruption damage',
+								tier2: '6 corruption damage',
+								tier3: '7 corruption damage; I<3 dazed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The niktin violently changes shape. The niktin deals an additional 6 damage to each target they were hidden from with their Aggressive Mimicry ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -484,13 +498,15 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '7 damage',
-							tier2: '9 damage',
-							tier3: '11 damage; grabbed, the target has a bane on escaping the grab'
-						}),
-						effect: 'While the target is grabbed by this ability, they take 4 psychic damage at the start of each of the tormenauk\'s turns.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '7 damage',
+								tier2: '9 damage',
+								tier3: '11 damage; grabbed, the target has a bane on escaping the grab'
+							})),
+							FactoryLogic.createAbilitySectionText('While the target is grabbed by this ability, they take 4 psychic damage at the start of each of the tormenauk\'s turns.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

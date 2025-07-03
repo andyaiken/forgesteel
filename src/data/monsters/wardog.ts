@@ -30,8 +30,7 @@ export const warDog: MonsterGroup = {
 			description: `
 From the moment they are reborn, every war dog is part of Ajax’s war machine. Fresh recruits undergo inspections and tests to ensure their viability and assess their capabilities, and those who are found lacking are immediately recycled.
 
-Those who meet the minimum requirements are sent to a brief but intense training camp, where they are drilled in basic combat, personal fitness, and unswerving loyalty. It is here that they are indoctrinated with Ajax’s ideals, and any who question them are again, immediately recycled. Those who survive this training camp are fitted with “Loyalty Collars” – unremovable neck pieces fitted with explosive fuse-iron charges – and sent on to join a Legion.        
-        `
+Those who meet the minimum requirements are sent to a brief but intense training camp, where they are drilled in basic combat, personal fitness, and unswerving loyalty. It is here that they are indoctrinated with Ajax’s ideals, and any who question them are again, immediately recycled. Those who survive this training camp are fitted with “Loyalty Collars” – unremovable neck pieces fitted with explosive fuse-iron charges – and sent on to join a Legion.`
 		},
 		{
 			id: 'wardog-info-4',
@@ -39,8 +38,7 @@ Those who meet the minimum requirements are sent to a brief but intense training
 			description: `
 Ajax leaves the management and tactical goals of individual legions to his hand-picked Strategoi. Each Strategos is an exceptionally talented war dog, often a veteran with dozens of upgrades and refinements, and is usually selected for their ability to think and plan. The Strategos in turn appoints the most powerful and skilled war dogs in the Legion to their Inner Council.
 
-Below the Inner Council are the hundreds of officers and thousands of soldiers. A single deviation from an order, no matter how rational or well-considered, can get a lowly soldier sent back to the Body Banks. Therefore, lower-ranking war dogs rarely alter tactics or show initiative. Without an officer, war dogs turn into an unwieldy and stagnant force capable of only following their final orders.
-                    `
+Below the Inner Council are the hundreds of officers and thousands of soldiers. A single deviation from an order, no matter how rational or well-considered, can get a lowly soldier sent back to the Body Banks. Therefore, lower-ranking war dogs rarely alter tactics or show initiative. Without an officer, war dogs turn into an unwieldy and stagnant force capable of only following their final orders.`
 		},
 		{
 			id: 'wardog-info-5',
@@ -48,15 +46,13 @@ Below the Inner Council are the hundreds of officers and thousands of soldiers. 
 			description: `
 War dogs have a heavy focus on minion frontlines backed by captains with powerful control or support abilities. Their tactics reflect the replaceability of their low-ranking troops, throwing them into the mix without caution. Once a squad of minions is reduced to a few stragglers, captains will order them into position for maximum effect and manually detonate their loyalty collars.
 
-The captains are intelligent, well-trained, and capable of prioritizing threats to their mission. Defensive and support units focus on tying up and slowing down high-Stamina threats while offensive units try their best to bully low-Stamina backline heroes. Unless ordered, retreat is not an option.
-                    `
+The captains are intelligent, well-trained, and capable of prioritizing threats to their mission. Defensive and support units focus on tying up and slowing down high-Stamina threats while offensive units try their best to bully low-Stamina backline heroes. Unless ordered, retreat is not an option.`
 		},
 		{
 			id: 'wardog-info-6',
 			name: 'War Dog Languages',
 			description: `
-Most war dogs speak Caelian and one Vaslorian human language.                    
-                    `
+Most war dogs speak Caelian and one Vaslorian human language.`
 		}
 	],
 	malice: [
@@ -77,12 +73,14 @@ Most war dogs speak Caelian and one Vaslorian human language.
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 				target: 'Each creature in the cube',
-				preEffect: 'Each target makes an Agility test.',
-				powerRoll: FactoryLogic.createPowerRoll({
-					tier1: '5 fire damage; slowed or weakened (save ends)',
-					tier2: '5 fire damage; slowed or weakened (EoT)',
-					tier3: '5 fire damage'
-				})
+				sections: [
+					FactoryLogic.createAbilitySectionText('Each target makes an Agility test.'),
+					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+						tier1: '5 fire damage; slowed or weakened (save ends)',
+						tier2: '5 fire damage; slowed or weakened (EoT)',
+						tier3: '5 fire damage'
+					}))
+				]
 			})
 		}),
 
@@ -676,14 +674,16 @@ Most war dogs speak Caelian and one Vaslorian human language.
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'One creature or object',
-						preEffect: 'A detonator attaches to the target. At the end of each round, roll a die. On an odd result, the detonator explodes, triggering the power roll.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 acid damage; M<0 bleeding (save ends)',
-							tier2: '6 acid damage; M<1 bleeding (save ends)',
-							tier3: '10 acid damage; M<2 bleeding (save ends)'
-						}),
-						effect: 'An adjacent creature can attempt an easy Agility test to remove the detonator as a maneuver. A failure does nothing, a success disarms and destroys the detonator, and a success with a reward allows the disarming creature to throw the detonator onto another target within 5 squares.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('A detonator attaches to the target. At the end of each round, roll a die. On an odd result, the detonator explodes, triggering the power roll.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '4 acid damage; M<0 bleeding (save ends)',
+								tier2: '6 acid damage; M<1 bleeding (save ends)',
+								tier3: '10 acid damage; M<2 bleeding (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('An adjacent creature can attempt an easy Agility test to remove the detonator as a maneuver. A failure does nothing, a success disarms and destroys the detonator, and a success with a reward allows the disarming creature to throw the detonator onto another target within 5 squares.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

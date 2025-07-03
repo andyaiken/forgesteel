@@ -147,13 +147,15 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 })
 						],
 						target: 'All enemies and objects in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '2 fire damage',
-							tier2: '5 fire damage; push 1',
-							tier3: '6 fire damage; push 2'
-						}),
-						effect: 'The fireball can jump 4 squares before using this ability.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '2 fire damage',
+								tier2: '5 fire damage; push 1',
+								tier3: '6 fire damage; push 2'
+							})),
+							FactoryLogic.createAbilitySectionText('The fireball can jump 4 squares before using this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -189,12 +191,14 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createMelee(3)
 						],
 						target: '1 creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '3 damage; slide 2',
-							tier2: '6 damage; slide 3; A>3 restrained (save ends)',
-							tier3: '8 damage; slide 4; A>4 restrained (save ends)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '3 damage; slide 2',
+								tier2: '6 damage; slide 3; A>3 restrained (save ends)',
+								tier3: '8 damage; slide 4; A>4 restrained (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -241,12 +245,14 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createRanged(12)
 						],
 						target: '1 creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '4 cold damage',
-							tier2: '7 cold damage',
-							tier3: '9 cold damage; prone'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '4 cold damage',
+								tier2: '7 cold damage',
+								tier3: '9 cold damage; prone'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -288,13 +294,15 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createMelee(3)
 						],
 						target: '1 creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '4 damage',
-							tier2: '7 damage',
-							tier3: '8 cold damage; grabbed'
-						}),
-						effect: 'The mosstooth can swing a grabbed creature or object as a part of this ability, dealing an additional 5 damage and releasing them prone adjacent to the target.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '4 damage',
+								tier2: '7 damage',
+								tier3: '8 cold damage; grabbed'
+							})),
+							FactoryLogic.createAbilitySectionText('The mosstooth can swing a grabbed creature or object as a part of this ability, dealing an additional 5 damage and releasing them prone adjacent to the target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -329,13 +337,15 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createMelee(3)
 						],
 						target: '2 creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '12 damage; M<2 slowed (save ends)',
-							tier2: '17 damage; M<3 slowed (save ends)',
-							tier3: '21 damage; M<4 slowed (save ends)'
-						}),
-						effect: 'This ability reduces a target’s speed to 0 (EoT) if they were already slowed.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '12 damage; M<2 slowed (save ends)',
+								tier2: '17 damage; M<3 slowed (save ends)',
+								tier3: '21 damage; M<4 slowed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('This ability reduces a target’s speed to 0 (EoT) if they were already slowed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -350,13 +360,15 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createRanged(12)
 						],
 						target: '1 creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '10 damage; A<2 restrained by knife (save ends)',
-							tier2: '16 damage; A<3 restrained by knife (save ends)',
-							tier3: '20 damage; prone; A<4 restrained by knife (save ends)'
-						}),
-						effect: 'The knife lands in the target’s square. The knife has 30 Stamina and damage immunity 5. Whenever the knife takes damage, the knife vibrates and deals 4 sonic damage to each enemy within 3 squares.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '10 damage; A<2 restrained by knife (save ends)',
+								tier2: '16 damage; A<3 restrained by knife (save ends)',
+								tier3: '20 damage; prone; A<4 restrained by knife (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The knife lands in the target’s square. The knife has 30 Stamina and damage immunity 5. Whenever the knife takes damage, the knife vibrates and deals 4 sonic damage to each enemy within 3 squares.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -367,7 +379,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The basalt stone giant moves up to their speed. Each square that they leave during this movement is considered difficult terrain for enemies. Giants can move through 2 affected squares for the normal cost of 1 speed.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The basalt stone giant moves up to their speed. Each square that they leave during this movement is considered difficult terrain for enemies. Giants can move through 2 affected squares for the normal cost of 1 speed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -380,7 +394,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
 						],
 						target: 'All enemies in the burst',
-						effect: 'Push 3 or A<3 push 6 and knocked prone.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Push 3 or A<3 push 6 and knocked prone.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -426,12 +442,14 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createMelee(6)
 						],
 						target: '2 creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '13 fire damage; slide 2',
-							tier2: '17 fire damage; slide 4',
-							tier3: '22 fire damage; slide 6'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '13 fire damage; slide 2',
+								tier2: '17 fire damage; slide 4',
+								tier3: '22 fire damage; slide 6'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -445,13 +463,15 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createRanged(6)
 						],
 						target: '1 creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '15 fire damage',
-							tier2: '21 fire damage',
-							tier3: '26 fire damage'
-						}),
-						effect: 'The blaze ricochets, targeting 1 additional target within 4 of the original target with a bane, or 2 additional targets within 2 of the original target with a double bane. The lightbearer makes one power roll against all targets.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '15 fire damage',
+								tier2: '21 fire damage',
+								tier3: '26 fire damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The blaze ricochets, targeting 1 additional target within 4 of the original target with a bane, or 2 additional targets within 2 of the original target with a double bane. The lightbearer makes one power roll against all targets.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -465,7 +485,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: '2 creatures or objects',
-						effect: 'Each target takes 1d6 fire damage and teleports in a plume of smoke, swapping places with the other target. The targets must be able to fit into the space they enter.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target takes 1d6 fire damage and teleports in a plume of smoke, swapping places with the other target. The targets must be able to fit into the space they enter.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -478,7 +500,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createSelf()
 						],
 						target: 'Self',
-						effect: 'The lightbearer emits a beacon of light until the start of their next turn. Each fire giant that has line of effect to the lightbearer’s beacon has a double edge on their abilities.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The lightbearer emits a beacon of light until the start of their next turn. Each fire giant that has line of effect to the lightbearer’s beacon has a double edge on their abilities.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -524,13 +548,15 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createMelee(3)
 						],
 						target: '2 creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '14 fire damage; push 2',
-							tier2: '19 fire damage; push 4; A<3 burning (save ends)',
-							tier3: '23 fire damage; push 6; A<4 burning (save ends)'
-						}),
-						effect: 'A burning target takes 1d6 fire damage at the start of each of their turns until the condition ends.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '14 fire damage; push 2',
+								tier2: '19 fire damage; push 4; A<3 burning (save ends)',
+								tier3: '23 fire damage; push 6; A<4 burning (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A burning target takes 1d6 fire damage at the start of each of their turns until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -542,13 +568,15 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createSpecial('Special') ],
 						target: 'All enemies and objects in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: 'Distance is 2 burst; 8 fire damage; M<2 pull 2',
-							tier2: 'Distance is 3 burst; 12 fire damage; M<3 pull 4',
-							tier3: 'Distance is 4 burst; 15 fire damage; M<4 pull 6'
-						}),
-						effect: 'The outermost squares of the affected area become walls of dirt and stone. The rest of the affected area is set on fire. A creature takes 3 fire damage whenever they enter or start their turn in an enflamed square.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: 'Distance is 2 burst; 8 fire damage; M<2 pull 2',
+								tier2: 'Distance is 3 burst; 12 fire damage; M<3 pull 4',
+								tier3: 'Distance is 4 burst; 15 fire damage; M<4 pull 6'
+							})),
+							FactoryLogic.createAbilitySectionText('The outermost squares of the affected area become walls of dirt and stone. The rest of the affected area is set on fire. A creature takes 3 fire damage whenever they enter or start their turn in an enflamed square.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -559,7 +587,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The red fist jumps 5 squares. Each creature within 1 of the red fist when they land takes 5 fire damage.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The red fist jumps 5 squares. Each creature within 1 of the red fist when they land takes 5 fire damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -634,13 +664,15 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createRanged(15)
 						],
 						target: '2 creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '13 cold damage',
-							tier2: '18 cold damage; M<3 bleeding (save ends)',
-							tier3: '22 cold damage; M<4 bleeding (save ends)'
-						}),
-						effect: 'Each time a creature bleeding from this ability takes damage due to bleeding, their speed decreases by 1 (to a minimum of 0) until the condition ends.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '13 cold damage',
+								tier2: '18 cold damage; M<3 bleeding (save ends)',
+								tier3: '22 cold damage; M<4 bleeding (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('Each time a creature bleeding from this ability takes damage due to bleeding, their speed decreases by 1 (to a minimum of 0) until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -672,7 +704,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: '1 giant ally',
-						effect: 'Both giants shift 6, staying adjacent to each other. The storm hurler allows the target to jump 5 and make a free strike.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Both giants shift 6, staying adjacent to each other. The storm hurler allows the target to jump 5 and make a free strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -685,7 +719,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createSelf()
 						],
 						target: 'Self',
-						effect: 'The storm hurler imposes a double bane on the strike. If the result is tier 1, the storm hurler uses their Ice Javelins ability against the striker.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The storm hurler imposes a double bane on the strike. If the result is tier 1, the storm hurler uses their Ice Javelins ability against the striker.')
+						]
 
 					})
 				}),
@@ -727,13 +763,15 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createMelee(3)
 						],
 						target: '2 creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '12 damagee',
-							tier2: '17 damage; A<3 bleeding (save ends)',
-							tier3: '21 damage; A<4 bleeding (save ends)'
-						}),
-						effect: 'This ability deals an additional 1d6 cold damage if the target is already bleeding.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '12 damagee',
+								tier2: '17 damage; A<3 bleeding (save ends)',
+								tier3: '21 damage; A<4 bleeding (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('This ability deals an additional 1d6 cold damage if the target is already bleeding.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -747,7 +785,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createSelf()
 						],
 						target: 'Self',
-						effect: 'The wind sprinter shifts up to their speed and uses their Cold Axe against each enemy who comes within 2 squares of them during the move. The wind sprinter makes one power roll against all targets.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The wind sprinter shifts up to their speed and uses their Cold Axe against each enemy who comes within 2 squares of them during the move. The wind sprinter makes one power roll against all targets.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -758,7 +798,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: '1 giant ally',
-						effect: 'Both giants shift 6, staying adjacent to each other. The wind sprinter allows the target to jump 5 and make a free strike.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Both giants shift 6, staying adjacent to each other. The wind sprinter allows the target to jump 5 and make a free strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -771,7 +813,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createSelf()
 						],
 						target: 'Self',
-						effect: 'The wind sprinter moves up to their speed and uses their Cold Axe on a single target.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The wind sprinter moves up to their speed and uses their Cold Axe on a single target.')
+						]
 
 					})
 				}),
@@ -812,13 +856,15 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createMelee(3)
 						],
 						target: '2 creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '12 damage',
-							tier2: '17 damage; R<3 weakened (save ends)',
-							tier3: '21 damage; R<4 weakened (save ends)'
-						}),
-						effect: 'This attack inflicts bleeding (save ends) if the target is already weakened.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '12 damage',
+								tier2: '17 damage; R<3 weakened (save ends)',
+								tier3: '21 damage; R<4 weakened (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('This attack inflicts bleeding (save ends) if the target is already weakened.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -832,13 +878,15 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
 						],
 						target: 'All enemies and objects in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '6 damage; push 2',
-							tier2: '10 damage; push 4',
-							tier3: '14 damage; vertical push 4'
-						}),
-						effect: 'The affected area becomes difficult terrain. A creature takes 3 damage whenever they enter an affected square.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '6 damage; push 2',
+								tier2: '10 damage; push 4',
+								tier3: '14 damage; vertical push 4'
+							})),
+							FactoryLogic.createAbilitySectionText('The affected area becomes difficult terrain. A creature takes 3 damage whenever they enter an affected square.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -849,7 +897,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The granite stone giant moves up to their speed and creates a 14 wall of stone. Each segment must include one of the squares the granite stone giant touched.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The granite stone giant moves up to their speed and creates a 14 wall of stone. Each segment must include one of the squares the granite stone giant touched.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -862,7 +912,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createMelee(3)
 						],
 						target: '1 creature or object',
-						effect: 'A 1 square wide pillar of stone juts 5 squares out of the ground beneath the target, raising them and then vertically pushing them 5. The forced movement is entirely straight up.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('A 1 square wide pillar of stone juts 5 squares out of the ground beneath the target, raising them and then vertically pushing them 5. The forced movement is entirely straight up.')
+						]
 
 					})
 				}),
@@ -909,13 +961,15 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createMelee(3)
 						],
 						target: '2 creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '12 damage',
-							tier2: '17 damage; prone',
-							tier3: '21 damage; prone'
-						}),
-						effect: 'This ability deals an additional 12 damage against already prone targets.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '12 damage',
+								tier2: '17 damage; prone',
+								tier3: '21 damage; prone'
+							})),
+							FactoryLogic.createAbilitySectionText('This ability deals an additional 12 damage against already prone targets.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -929,13 +983,15 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createMelee(1)
 						],
 						target: '1 creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '14 damage; prone',
-							tier2: '20 damage; prone M<3 and can’t stand (save ends)',
-							tier3: '25 damage; prone M<4 and can’t stand (save ends)'
-						}),
-						effect: 'The target becomes entrenched in a 2 square deep hole in the ground.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '14 damage; prone',
+								tier2: '20 damage; prone M<3 and can’t stand (save ends)',
+								tier3: '25 damage; prone M<4 and can’t stand (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The target becomes entrenched in a 2 square deep hole in the ground.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1019,13 +1075,15 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 })
 						],
 						target: 'All enemies and objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '6 damage; I<2 dazed (save ends)',
-							tier2: '10 damage; I<3 dazed (save ends)',
-							tier3: '14 damage; I<4 dazed (save ends)'
-						}),
-						effect: 'This ability knocks the target prone if they are already affected by an EoT or a Save Ends effect.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '6 damage; I<2 dazed (save ends)',
+								tier2: '10 damage; I<3 dazed (save ends)',
+								tier3: '14 damage; I<4 dazed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('This ability knocks the target prone if they are already affected by an EoT or a Save Ends effect.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1039,13 +1097,15 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createMelee(1)
 						],
 						target: '1 creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: 'Vertical push 10',
-							tier2: 'Vertical push 12',
-							tier3: 'Vertical push 15'
-						}),
-						effect: 'The target is catapulted sky high. This ability has a double edge against prone or grabbed targets.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: 'Vertical push 10',
+								tier2: 'Vertical push 12',
+								tier3: 'Vertical push 15'
+							})),
+							FactoryLogic.createAbilitySectionText('The target is catapulted sky high. This ability has a double edge against prone or grabbed targets.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1056,7 +1116,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 2, within: 1 }) ],
 						target: 'Special',
-						effect: 'The affected area becomes slick and glossy. Non-giants that start or end their turn on the ground in the affected area are knocked prone and slide 2.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The affected area becomes slick and glossy. Non-giants that start or end their turn on the ground in the affected area are knocked prone and slide 2.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1070,7 +1132,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createSelf()
 						],
 						target: 'Self',
-						effect: 'The marble stone giant halves the damage, gains damage weakness 3, and increases their speed by 3. The damage weakness increases by 3 each time the marble stone giant uses this ability in an encounter.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The marble stone giant halves the damage, gains damage weakness 3, and increases their speed by 3. The damage weakness increases by 3 each time the marble stone giant uses this ability in an encounter.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -1137,12 +1201,14 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createMelee(4)
 						],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 5,
-							tier1: '14 damage; push 5 A<3 9 fire damage',
-							tier2: '19 damage; push 10 A<4 9 fire damage',
-							tier3: '23 damage; push 15 A<5 9 fire damage'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 5,
+								tier1: '14 damage; push 5 A<3 9 fire damage',
+								tier2: '19 damage; push 10 A<4 9 fire damage',
+								tier3: '23 damage; push 15 A<5 9 fire damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1154,12 +1220,14 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'All enemies and objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 5,
-							tier1: '7 fire damage; M<3 vertical push 3 and prone',
-							tier2: '11 fire damage; M<4 vertical push 5 and prone',
-							tier3: '14 fire damage; M<5 vertical push 10 and prone'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 5,
+								tier1: '7 fire damage; M<3 vertical push 3 and prone',
+								tier2: '11 fire damage; M<4 vertical push 5 and prone',
+								tier3: '14 fire damage; M<5 vertical push 10 and prone'
+							}))
+						]
 					})
 				}),
 
@@ -1174,7 +1242,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createRanged(12)
 						],
 						target: '1 fire giant ally',
-						effect: 'The strike gains a double edge and deals 10 fire damage.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The strike gains a double edge and deals 10 fire damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1188,7 +1258,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 })
 						],
 						target: 'Self and all allies',
-						effect: 'Each target shifts up to their speed and makes a free strike. An enemy that takes damage from a fire giant during this action is A<4 burning (save ends) (see Roiling Fist)'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target shifts up to their speed and makes a free strike. An enemy that takes damage from a fire giant during this action is A<4 burning (save ends) (see Roiling Fist)')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1199,7 +1271,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'Special',
-						effect: 'Shift 10. 5 fire giant troopers appear in unoccupied spaces.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Shift 10. 5 fire giant troopers appear in unoccupied spaces.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

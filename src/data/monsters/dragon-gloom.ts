@@ -166,7 +166,8 @@ When such an understanding is not reached, gloom dragons are feared for their co
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All dragonsealed enemies',
 						cost: 5,
-						effect: 'Each target takes 3 psychic damage and is I<3 compelled to immediately make a free strike against one of their allies within range as they hallucinate a threat.'
+						effect: 'Each target takes 3 psychic damage and is I<3 compelled to immediately make a free strike against one of their allies within range as they hallucinate a threat.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -177,7 +178,8 @@ When such an understanding is not reached, gloom dragons are feared for their co
 						keywords: [],
 						distance: [],
 						target: '',
-						effect: 'Once per turn, the dragon shifts up to their speed and leaves behind a 4 cube area of magical darkness. The dragon ignores concealment granted by the darkness. An enemy that ends their turn in the aﬀected area is I<3 frightened of the dragon.'
+						effect: 'Once per turn, the dragon shifts up to their speed and leaves behind a 4 cube area of magical darkness. The dragon ignores concealment granted by the darkness. An enemy that ends their turn in the aﬀected area is I<3 frightened of the dragon.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -189,7 +191,8 @@ When such an understanding is not reached, gloom dragons are feared for their co
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Triggering creature',
-						effect: 'The dragon reduces the damage by 2 for each enemy in their aura.'
+						effect: 'The dragon reduces the damage by 2 for each enemy in their aura.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -200,7 +203,8 @@ When such an understanding is not reached, gloom dragons are feared for their co
 						cost: 1,
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
-						effect: 'The dragon moves two cubes of magical darkness up to 10.'
+						effect: 'The dragon moves two cubes of magical darkness up to 10.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -221,7 +225,8 @@ When such an understanding is not reached, gloom dragons are feared for their co
 							tier1: 'Pull 2; I<3 frightened (save ends)',
 							tier2: 'Pull 4; I<4 frightened (save ends)',
 							tier3: 'Pull 6; I<5 frightened (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -238,7 +243,8 @@ When such an understanding is not reached, gloom dragons are feared for their co
 							tier2: '11 psychic damage',
 							tier3: '14 psychic damage'
 						}),
-						effect: 'The targets are I<4 dazed as they are assaulted by their hallucinations.'
+						effect: 'The targets are I<4 dazed as they are assaulted by their hallucinations.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -249,7 +255,8 @@ When such an understanding is not reached, gloom dragons are feared for their co
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Special',
-						effect: 'The dragon disappears, then reappears anywhere on the encounter map, as do three hallucinatory versions of it at other points on the encounter map (the director determines which one is real). The dragon and each hallucinatory version of it immediately uses Breath of Brume. A creature who deals damage to a hallucination of the dragon causes it to immediately dissipate.'
+						effect: 'The dragon disappears, then reappears anywhere on the encounter map, as do three hallucinatory versions of it at other points on the encounter map (the director determines which one is real). The dragon and each hallucinatory version of it immediately uses Breath of Brume. A creature who deals damage to a hallucination of the dragon causes it to immediately dissipate.',
+						sections: []
 					})
 				})
 			]

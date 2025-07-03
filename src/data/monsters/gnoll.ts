@@ -117,7 +117,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							tier1: '3 damage',
 							tier2: '4 damage',
 							tier3: '6 damage; grabbed'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -156,7 +157,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							tier1: '3 damage',
 							tier2: '4 damage; push 1',
 							tier3: '6 damage; push 3'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -196,7 +198,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							tier2: '3 cold damage',
 							tier3: '5 lightning damage; target can\'t use magic abilities (EoT)'
 						}),
-						effect: 'The target has a bane on their next power roll.'
+						effect: 'The target has a bane on their next power roll.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -234,7 +237,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							tier1: '2 damage',
 							tier2: '3 damage',
 							tier3: '5 damage; wildling makes a free strike on a creature adjacent to the target'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -273,7 +277,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							tier2: '6 corruption damage',
 							tier3: '8 corruption damage; M<2 slowed (save ends)'
 						}),
-						effect: 'This ability has an edge against creatures not at full Stamina.'
+						effect: 'This ability has an edge against creatures not at full Stamina.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -288,7 +293,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
 						],
 						target: 'Self and all allies',
-						effect: 'Each target has an edge on their next strike before the end of their next turn. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.'
+						effect: 'Each target has an edge on their next strike before the end of their next turn. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -332,7 +338,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							tier2: '5 fire damage',
 							tier3: '7 fire damage; I<2 burning (save ends)'
 						}),
-						effect: 'A burning target takes 1d6 fire damage at the start of each of their turns until the condition ends.'
+						effect: 'A burning target takes 1d6 fire damage at the start of each of their turns until the condition ends.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -344,7 +351,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Special',
 						cost: 3,
-						effect: '2 **abyssal hyenas** claw out of the ground into unoccupied squares.'
+						effect: '2 **abyssal hyenas** claw out of the ground into unoccupied squares.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -356,7 +364,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All allies',
-						effect: '1 abyssal hyena target turns into a **gnoll maurader**, keeping their Stamina. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.'
+						effect: '1 abyssal hyena target turns into a **gnoll maurader**, keeping their Stamina. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -395,7 +404,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							tier2: '6 damage; push 2',
 							tier3: '8 damage; grabbed M<2 target has a bane on escaping the grab'
 						}),
-						effect: 'The bone splitter can\'t use three-tail flail on another target while the current target is grabbed.'
+						effect: 'The bone splitter can\'t use three-tail flail on another target while the current target is grabbed.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -410,7 +420,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
 						],
 						target: 'Self and all allies',
-						effect: 'Each target makes a free strike. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.'
+						effect: 'Each target makes a free strike. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -449,7 +460,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							tier2: '5 psychic damage; I<1 target makes a free strike against a creature of the cackler\'s choice',
 							tier3: '7 psychic damage; I<2 target makes a free strike against a creature of the cackler\'s choice'
 						}),
-						effect: 'An ally target by this ability makes a free strike instead of taking damage.'
+						effect: 'An ally target by this ability makes a free strike instead of taking damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -533,7 +545,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
 						],
 						target: 'Self and all allies',
-						effect: 'Each target shifts up to their speed. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.'
+						effect: 'Each target shifts up to their speed. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -572,7 +585,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							tier2: '6 damage; push 2',
 							tier3: '8 damage; push 3; prone'
 						}),
-						effect: 'This ability deals an additional 4 damage while charging.'
+						effect: 'This ability deals an additional 4 damage while charging.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -583,7 +597,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(7) ],
 						target: 'Triggering enemy',
-						effect: 'The tusker demon charges the target using Gore.'
+						effect: 'The tusker demon charges the target using Gore.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -626,7 +641,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							tier1: '8 damage; A<1 bleeding (save ends)',
 							tier2: '11 damage; A<2 bleeding (save ends)',
 							tier3: '14 damage; A<3 bleeding (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -641,7 +657,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 })
 						],
 						target: 'Self and all allies',
-						effect: 'Each target deals an additional 3 damage with their strikes until the start of the carnage\'s next turn. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.'
+						effect: 'Each target deals an additional 3 damage with their strikes until the start of the carnage\'s next turn. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -662,7 +679,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
-						effect: 'The carnage summons 5 **gnoll wildlings** and 5 **abyssal hyenas** into unoccupied spaces.'
+						effect: 'The carnage summons 5 **gnoll wildlings** and 5 **abyssal hyenas** into unoccupied spaces.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -676,7 +694,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 })
 						],
 						target: 'Self and all allies',
-						effect: 'Each target moves up to their speed and makes a free strike. A creature that takes damage from this villain action is also knocked prone.'
+						effect: 'Each target moves up to their speed and makes a free strike. A creature that takes damage from this villain action is also knocked prone.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -731,7 +750,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							tier1: '4 damage',
 							tier2: '7 damage',
 							tier3: '10 damage; M (strong) bleeding (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -749,7 +769,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One enemy',
-						effect: 'The gnasher moves up to their speed and makes a Signature Attack.'
+						effect: 'The gnasher moves up to their speed and makes a Signature Attack.',
+						sections: []
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
@@ -765,7 +786,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							tier1: '7 damage',
 							tier2: '11 damage',
 							tier3: '16 damage; M (strong) bleeding (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -776,7 +798,8 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self',
-						effect: 'The gnasher consumes part of the target\'s body. The gnasher can spend a Recovery. Each enemy within range is I (medium) frightened (save ends).'
+						effect: 'The gnasher consumes part of the target\'s body. The gnasher can spend a Recovery. Each enemy within range is I (medium) frightened (save ends).',
+						sections: []
 					})
 				})
 			}

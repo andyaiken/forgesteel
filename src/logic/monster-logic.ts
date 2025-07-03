@@ -331,7 +331,8 @@ export class MonsterLogic {
 								tier2: '9 damage; M (average) bleeding (save ends)',
 								tier3: '12 damage; M (strong) bleeding (save ends)'
 							}),
-							effect: 'If the target is grabbed or the retainer had an edge on the power roll, the retainer gains two surges.'
+							effect: 'If the target is grabbed or the retainer had an edge on the power roll, the retainer gains two surges.',
+							sections: []
 						})
 					}),
 					level7: FactoryLogic.feature.createAbility({
@@ -351,7 +352,8 @@ export class MonsterLogic {
 								tier2: '10 damage; M (average) slowed (save ends)',
 								tier3: '15 damage; M (strong) slowed and target can’t use triggered actions (save ends)'
 							}),
-							effect: 'The retainer and their mentor can move up to their speed.'
+							effect: 'The retainer and their mentor can move up to their speed.',
+							sections: []
 						})
 					}),
 					level10: FactoryLogic.feature.createAbility({
@@ -371,7 +373,8 @@ export class MonsterLogic {
 								tier2: '16 damage; if the target is size 1 or smaller, they are M (average) grabbed',
 								tier3: '21 damage; if the target is size 1 or smaller, they are M (strong) grabbed'
 							}),
-							effect: 'The retainer gains two surges when a creature attacks the grabbed target.'
+							effect: 'The retainer gains two surges when a creature attacks the grabbed target.',
+							sections: []
 						})
 					})
 				};
@@ -385,7 +388,8 @@ export class MonsterLogic {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createRanged(5) ],
 							target: '1 creature',
-							effect: 'The retainer makes a ranged free strike against the target.'
+							effect: 'The retainer makes a ranged free strike against the target.',
+							sections: []
 						})
 					}),
 					level7: FactoryLogic.feature.createAbility({
@@ -401,7 +405,8 @@ export class MonsterLogic {
 								tier1: '7 damage; M (weak) prone',
 								tier2: '11 damage; M (average) prone',
 								tier3: '16 damage; M (strong) prone'
-							})
+							}),
+							sections: []
 						})
 					}),
 					level10: FactoryLogic.feature.createAbility({
@@ -418,7 +423,8 @@ export class MonsterLogic {
 								tier2: '14 damage',
 								tier3: '19 damage'
 							}),
-							effect: 'The retainer can also target a second creature or object within 5 squares of the target and with line of effect to the target. The retainer doesn’t need line of effect to the second target but must be aware of their location.'
+							effect: 'The retainer can also target a second creature or object within 5 squares of the target and with line of effect to the target. The retainer doesn’t need line of effect to the second target but must be aware of their location.',
+							sections: []
 						})
 					})
 				};
@@ -432,7 +438,8 @@ export class MonsterLogic {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
-							effect: 'Until the next turn, attacks against the retainer gain an edge. At the beginning of the retainer’s next turn, they gain two surges, and their forced movement abilities used that turn move a creature 2 extra squares.'
+							effect: 'Until the next turn, attacks against the retainer gain an edge. At the beginning of the retainer’s next turn, they gain two surges, and their forced movement abilities used that turn move a creature 2 extra squares.',
+							sections: []
 						})
 					}),
 					level7: FactoryLogic.feature.createAbility({
@@ -449,7 +456,8 @@ export class MonsterLogic {
 								tier2: '13 damage; push 2',
 								tier3: '16 damage; push 3; M (strong) prone'
 							}),
-							effect: 'If a target ends their forced movement in a square adjacent to the retainer’s mentor, the mentor can make a melee free strike against the target.'
+							effect: 'If a target ends their forced movement in a square adjacent to the retainer’s mentor, the mentor can make a melee free strike against the target.',
+							sections: []
 						})
 					}),
 					level10: FactoryLogic.feature.createAbility({
@@ -466,7 +474,8 @@ export class MonsterLogic {
 								tier2: '14 damage; push 2',
 								tier3: '20 damage; push 4'
 							}),
-							effect: 'The retainer is dazed until the end of their next turn.'
+							effect: 'The retainer is dazed until the end of their next turn.',
+							sections: []
 						})
 					})
 				};
@@ -486,7 +495,8 @@ export class MonsterLogic {
 								tier2: '6 damage; push 3',
 								tier3: '10 damage; push 5'
 							}),
-							effect: 'When the retainer chooses this ability, they can choose one of the following damage types: acid, cold, lightning, poison, sonic, weapon. The ability deals this damage instead.'
+							effect: 'When the retainer chooses this ability, they can choose one of the following damage types: acid, cold, lightning, poison, sonic, weapon. The ability deals this damage instead.',
+							sections: []
 						})
 					}),
 					level7: FactoryLogic.feature.createAbility({
@@ -503,7 +513,8 @@ export class MonsterLogic {
 								tier2: '8 poison damage; M (average) prone',
 								tier3: '11 poison damage; M (strong) prone'
 							}),
-							effect: 'The area becomes difficult terrain for every creature except the retainer’s mentor. While in the area, a creature gains fire vulnerability 5, and if a creature ends their turn with 0 speed remaining while in the area they fall prone.'
+							effect: 'The area becomes difficult terrain for every creature except the retainer’s mentor. While in the area, a creature gains fire vulnerability 5, and if a creature ends their turn with 0 speed remaining while in the area they fall prone.',
+							sections: []
 						})
 					}),
 					level10: FactoryLogic.feature.createAbility({
@@ -520,7 +531,8 @@ export class MonsterLogic {
 								tier2: '11 damage',
 								tier3: '16 damage'
 							}),
-							effect: 'The area within 2 squares of the object becomes difficult terrain. Each enemy in the area takes the same damage that the object took.'
+							effect: 'The area within 2 squares of the object becomes difficult terrain. Each enemy in the area takes the same damage that the object took.',
+							sections: []
 						})
 					})
 				};
@@ -534,7 +546,8 @@ export class MonsterLogic {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 creature',
-							effect: 'The retainer pushes the attacker or the mentor up to 2 squares. If the push moves the mentor out of range of the attack, the attack has no effect.'
+							effect: 'The retainer pushes the attacker or the mentor up to 2 squares. If the push moves the mentor out of range of the attack, the attack has no effect.',
+							sections: []
 						})
 					}),
 					level7: FactoryLogic.feature.createAbility({
@@ -550,7 +563,8 @@ export class MonsterLogic {
 								tier1: '7 damage; taunted (EoT)',
 								tier2: '11 damage; taunted (save ends)',
 								tier3: '16 damage; taunted (save ends)'
-							})
+							}),
+							sections: []
 						})
 					}),
 					level10: FactoryLogic.feature.createAbility({
@@ -567,7 +581,8 @@ export class MonsterLogic {
 								tier2: '13 damage',
 								tier3: '17 damage'
 							}),
-							effect: 'The retainer and their mentor each gain 10 Temporary Stamina. Each winded ally within 2 of the retainer can spend a Recovery.'
+							effect: 'The retainer and their mentor each gain 10 Temporary Stamina. Each winded ally within 2 of the retainer can spend a Recovery.',
+							sections: []
 						})
 					})
 				};
@@ -586,7 +601,8 @@ export class MonsterLogic {
 								tier1: '5 damage; push 1',
 								tier2: '9 damage; push 2',
 								tier3: '12 damage; push 4'
-							})
+							}),
+							sections: []
 						})
 					}),
 					level7: FactoryLogic.feature.createAbility({
@@ -603,7 +619,8 @@ export class MonsterLogic {
 								tier2: '10 damage',
 								tier3: '15 damage'
 							}),
-							effect: 'Before or after the attack, the retainer and their mentor can shift up to their speed.'
+							effect: 'Before or after the attack, the retainer and their mentor can shift up to their speed.',
+							sections: []
 						})
 					}),
 					level10: FactoryLogic.feature.createAbility({
@@ -620,7 +637,8 @@ export class MonsterLogic {
 								tier2: '16 damage; M (average) grabbed',
 								tier3: '21 damage; M (strong) grabbed'
 							}),
-							effect: 'After the attack, the retainer can shift 2 while carrying a grabbed creature their size or smaller.'
+							effect: 'After the attack, the retainer can shift 2 while carrying a grabbed creature their size or smaller.',
+							sections: []
 						})
 					})
 				};
@@ -640,7 +658,8 @@ export class MonsterLogic {
 								tier2: '5 corruption damage; cursed (EoT)',
 								tier3: '7 corruption damage; cursed (EoT)'
 							}),
-							effect: 'While cursed, when the target makes an attack that targets one creature, the retainer can use a free triggered action to choose a second target within the attack’s range.'
+							effect: 'While cursed, when the target makes an attack that targets one creature, the retainer can use a free triggered action to choose a second target within the attack’s range.',
+							sections: []
 						})
 					}),
 					level7: FactoryLogic.feature.createAbility({
@@ -657,7 +676,8 @@ export class MonsterLogic {
 								tier2: '9 damage; M (average) slowed (save ends)',
 								tier3: '12 damage; M (strong) slowed (save ends)'
 							}),
-							effect: 'While slowed, if a target ends their turn without moving on that turn, they are restrained (save ends) instead of slowed (save ends).'
+							effect: 'While slowed, if a target ends their turn without moving on that turn, they are restrained (save ends) instead of slowed (save ends).',
+							sections: []
 						})
 					}),
 					level10: FactoryLogic.feature.createAbility({
@@ -674,7 +694,8 @@ export class MonsterLogic {
 								tier2: '11 damage; M (average) mazed',
 								tier3: '16 damage; M (strong) mazed'
 							}),
-							effect: 'While mazed, the target is dazed. Also, at the end of the target’s turn, the retainer can cause the target to move up to their speed in a straight line in a direction of the retainer’s choice. This movement ends before the target enters damaging or difficult terrain. This is not forced movement.'
+							effect: 'While mazed, the target is dazed. Also, at the end of the target’s turn, the retainer can cause the target to move up to their speed in a straight line in a direction of the retainer’s choice. This movement ends before the target enters damaging or difficult terrain. This is not forced movement.',
+							sections: []
 						})
 					})
 				};
@@ -694,7 +715,8 @@ export class MonsterLogic {
 								tier2: '8 damage',
 								tier3: '11 damage'
 							}),
-							effect: 'If this ability is used as part of the Charge action, the mount’s rider can make a melee free strike as a free triggered action.'
+							effect: 'If this ability is used as part of the Charge action, the mount’s rider can make a melee free strike as a free triggered action.',
+							sections: []
 						})
 					}),
 					level7: FactoryLogic.feature.createAbility({
@@ -705,7 +727,8 @@ export class MonsterLogic {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
-							effect: 'The mount shifts twice their speed. They can jump as part of this movement.'
+							effect: 'The mount shifts twice their speed. They can jump as part of this movement.',
+							sections: []
 						})
 					}),
 					level10: FactoryLogic.feature.createAbility({
@@ -722,7 +745,8 @@ export class MonsterLogic {
 								tier2: '15 damage; M (average) prone',
 								tier3: '21 damage; M (strong) prone'
 							}),
-							effect: 'If a creature is knocked prone by the ability or is already prone, the attack deals 5 damage.'
+							effect: 'If a creature is knocked prone by the ability or is already prone, the attack deals 5 damage.',
+							sections: []
 						})
 					})
 				};
@@ -736,7 +760,8 @@ export class MonsterLogic {
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'Self or ally',
-							effect: 'The target spends a Recovery and gains a shield until the start of the retainer’s next turn.'
+							effect: 'The target spends a Recovery and gains a shield until the start of the retainer’s next turn.',
+							sections: []
 						})
 					}),
 					level7: FactoryLogic.feature.createAbility({
@@ -753,7 +778,8 @@ export class MonsterLogic {
 								tier2: '13 damage',
 								tier3: '18 damage'
 							}),
-							effect: 'Give an ally within range 2 surges.'
+							effect: 'Give an ally within range 2 surges.',
+							sections: []
 						})
 					}),
 					level10: FactoryLogic.feature.createAbility({
@@ -764,7 +790,8 @@ export class MonsterLogic {
 							keywords: [ AbilityKeyword.Melee ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 ally',
-							effect: 'If a target has 0 or less Stamina or has died due to Stamina loss since the end of the retainer’s last turn, the target is alive with 1 Stamina and can spend a Recovery.'
+							effect: 'If a target has 0 or less Stamina or has died due to Stamina loss since the end of the retainer’s last turn, the target is alive with 1 Stamina and can spend a Recovery.',
+							sections: []
 						})
 					})
 				};

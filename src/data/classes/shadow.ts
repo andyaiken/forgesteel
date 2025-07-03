@@ -74,7 +74,9 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						cost: 1,
-						effect: 'You take your turn after the triggering hero.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('You take your turn after the triggering hero.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createKitChoice({
@@ -115,7 +117,9 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSpecial('20 squares') ],
 						target: '1 creature',
-						effect: 'As long as you remain within distance of the target, maintain line of effect to them, and strike no other creature first, you gain a surge and an edge on the next strike you make against the assessed creature.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('As long as you remain within distance of the target, maintain line of effect to them, and strike no other creature first, you gain a surge and an edge on the next strike you make against the assessed creature.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
@@ -254,7 +258,8 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 				tier1: '4 + A damage; A < [weak], bleeding (save ends)',
 				tier2: '6 + A damage; A < [average], bleeding (save ends)',
 				tier3: '10 + A damage; A < [strong], bleeding (save ends)'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-7',
@@ -294,7 +299,8 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 				tier1: '4 damage',
 				tier2: '6 damage',
 				tier3: '10 damage'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-9',
@@ -313,7 +319,8 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 				tier1: '1d6 + 7 + A damage',
 				tier2: '1d6 + 11 + A damage',
 				tier3: '1d6 + 16 + A damage'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-10',
@@ -350,7 +357,8 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 				tier1: '6 + A damage; R < [weak], the target has damage weakness 5 (save ends)',
 				tier2: '9 + A damage; R < [average], the target has damage weakness 5 (save ends)',
 				tier3: '13 + A damage; R < [strong], the target has damage weakness 5 (save ends)'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-12',
@@ -361,7 +369,9 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 5,
-			effect: 'You make two signature strikes.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('You make two signature strikes.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-13',
@@ -372,7 +382,9 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
-			effect: 'Until the end of the encounter, whenever an enemy moves adjacent to you or damages you, you can take the Disengage move action as a free triggered action.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter, whenever an enemy moves adjacent to you or damages you, you can take the Disengage move action as a free triggered action.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-14',
@@ -412,7 +424,8 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 				tier1: '8 + A damage; A < [weak], restrained (save ends)',
 				tier2: '12 + A damage; A < [average], restrained (save ends)',
 				tier3: '16 + A damage; A < [strong], restrained (save ends)'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-16',
@@ -431,7 +444,8 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 				tier1: '7 + A damage; M < [weak], slowed (save ends)',
 				tier2: '11 + A damage; M < [average], prone and can’t stand (save ends)',
 				tier3: '16 + A damage; M < [strong], prone and can’t stand (save ends)'
-			})
+			}),
+			sections: []
 		})
 	],
 	subclasses: [
@@ -457,8 +471,8 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 								keywords: [ AbilityKeyword.Magic ],
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
-								effect: 'You teleport up to 5 squares. If you have concealment or cover at your destination, you can use the Hide maneuver even if you are observed. If you hide using this maneuver, you gain a surge.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('You teleport up to 5 squares. If you have concealment or cover at your destination, you can use the Hide maneuver even if you are observed. If you hide using this maneuver, you gain a surge.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -477,8 +491,8 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 								keywords: [ AbilityKeyword.Magic ],
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
-								effect: 'You halve the damage, then can teleport up to 4 squares after the triggering effect resolves.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('You halve the damage, then can teleport up to 4 squares after the triggering effect resolves.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -515,7 +529,8 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 												tier1: '6 + A damage; you can teleport the target 1 square',
 												tier2: '10 + A damage; you can teleport the target up to 3 squares',
 												tier3: '14 + A damage; you can teleport the target up to 5 squares'
-											})
+											}),
+											sections: []
 										})
 									}),
 									value: 1
@@ -531,7 +546,9 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 											distance: [ FactoryLogic.distance.createSelf() ],
 											target: 'Self',
 											cost: 5,
-											effect: 'You avoid any effects associated with the damage that triggered your In All This Confusion ability. Before you teleport, you can make a free strike against a creature who damaged you to trigger In All This Confusion. After you teleport, you can spend a Recovery.'
+											sections: [
+												FactoryLogic.createAbilitySectionText('You avoid any effects associated with the damage that triggered your In All This Confusion ability. Before you teleport, you can make a free strike against a creature who damaged you to trigger In All This Confusion. After you teleport, you can spend a Recovery.')
+											]
 										})
 									}),
 									value: 1
@@ -573,8 +590,8 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 								type: FactoryLogic.type.createManeuver(),
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
-								effect: 'You gain two surges. Whenever you use a surge before the end of the encounter, you can choose to have its damage be poison damage.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('You gain two surges. Whenever you use a surge before the end of the encounter, you can choose to have its damage be poison damage.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -597,8 +614,8 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 								type: FactoryLogic.type.createTrigger('Another creature damages you.'),
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
-								effect: 'You halve the damage against the triggering damage, then can shift up to 2 squares after the triggering effect resolves. If you end this shift with concealment or cover, you can use the Hide maneuver even if you are observed.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('You halve the damage against the triggering damage, then can shift up to 2 squares after the triggering effect resolves. If you end this shift with concealment or cover, you can use the Hide maneuver even if you are observed.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -658,7 +675,8 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 												tier2: '5 poison damage',
 												tier3: '7 poison damage'
 											}),
-											effect: 'The gas remains in the area until the end of the encounter. Any creature who has M < average and starts their turn in the area is weakened (save ends).'
+											effect: 'The gas remains in the area until the end of the encounter. Any creature who has M < average and starts their turn in the area is weakened (save ends).',
+											sections: []
 										})
 									}),
 									value: 1
@@ -701,11 +719,11 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 								keywords: [ AbilityKeyword.Magic ],
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
-								effect: `
+								sections: [
+									FactoryLogic.createAbilitySectionText(`
 When you use this ability, you cover yourself in an illusion that causes you to appear nonthreatening and harmless to your enemies. You might take on the appearance of a harmless animal of your size, such as a sheep or capybara, or you might appear as a less heroic, unarmed, and capable version of yourself. While this illusion lasts, your strikes made against other creatures gain an edge. If you use this ability in combat, you gain a surge when you use it.
 
-The illusion ends when you harm another creature, when you and any creature physically interact, when you use this ability again, or when you end the illusion (no action required).`,
-								sections: [
+The illusion ends when you harm another creature, when you and any creature physically interact, when you use this ability again, or when you end the illusion (no action required).`),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -724,7 +742,9 @@ The illusion ends when you harm another creature, when you and any creature phys
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								cost: 1,
-								effect: 'Choose an enemy within distance of the triggering strike, including the enemy who targeted you. The strike targets that enemy instead.'
+								sections: [
+									FactoryLogic.createAbilitySectionText('Choose an enemy within distance of the triggering strike, including the enemy who targeted you. The strike targets that enemy instead.')
+								]
 							})
 						})
 					]
@@ -752,7 +772,8 @@ The illusion ends when you harm another creature, when you and any creature phys
 												tier2: 'Slide 5',
 												tier3: 'Slide 7'
 											}),
-											effect: 'This forced movement ignores stability. Instead, the forced movement is reduced by a number equal to the target’s Intuition score.'
+											effect: 'This forced movement ignores stability. Instead, the forced movement is reduced by a number equal to the target’s Intuition score.',
+											sections: []
 										})
 									}),
 									value: 1
@@ -768,7 +789,9 @@ The illusion ends when you harm another creature, when you and any creature phys
 											distance: [ FactoryLogic.distance.createSelf() ],
 											target: 'Self',
 											cost: 5,
-											effect: 'You use your Clever Trick ability with no insight cost, causing the creature who made the triggering strike to target an illusory image of you. You appear in an unoccupied space within 3 squares of that creature and can make a free strike against them. You can then spend a Recovery.'
+											sections: [
+												FactoryLogic.createAbilitySectionText('You use your Clever Trick ability with no insight cost, causing the creature who made the triggering strike to target an illusory image of you. You appear in an unoccupied space within 3 squares of that creature and can make a free strike against them. You can then spend a Recovery.')
+											]
 										})
 									}),
 									value: 1

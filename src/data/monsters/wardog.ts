@@ -30,7 +30,8 @@ export const warDog: MonsterGroup = {
 			description: `
 From the moment they are reborn, every war dog is part of Ajax’s war machine. Fresh recruits undergo inspections and tests to ensure their viability and assess their capabilities, and those who are found lacking are immediately recycled.
 
-Those who meet the minimum requirements are sent to a brief but intense training camp, where they are drilled in basic combat, personal fitness, and unswerving loyalty. It is here that they are indoctrinated with Ajax’s ideals, and any who question them are again, immediately recycled. Those who survive this training camp are fitted with “Loyalty Collars” – unremovable neck pieces fitted with explosive fuse-iron charges – and sent on to join a Legion.`
+Those who meet the minimum requirements are sent to a brief but intense training camp, where they are drilled in basic combat, personal fitness, and unswerving loyalty. It is here that they are indoctrinated with Ajax’s ideals, and any who question them are again, immediately recycled. Those who survive this training camp are fitted with “Loyalty Collars” – unremovable neck pieces fitted with explosive fuse-iron charges – and sent on to join a Legion.        
+        `
 		},
 		{
 			id: 'wardog-info-4',
@@ -38,7 +39,8 @@ Those who meet the minimum requirements are sent to a brief but intense training
 			description: `
 Ajax leaves the management and tactical goals of individual legions to his hand-picked Strategoi. Each Strategos is an exceptionally talented war dog, often a veteran with dozens of upgrades and refinements, and is usually selected for their ability to think and plan. The Strategos in turn appoints the most powerful and skilled war dogs in the Legion to their Inner Council.
 
-Below the Inner Council are the hundreds of officers and thousands of soldiers. A single deviation from an order, no matter how rational or well-considered, can get a lowly soldier sent back to the Body Banks. Therefore, lower-ranking war dogs rarely alter tactics or show initiative. Without an officer, war dogs turn into an unwieldy and stagnant force capable of only following their final orders.`
+Below the Inner Council are the hundreds of officers and thousands of soldiers. A single deviation from an order, no matter how rational or well-considered, can get a lowly soldier sent back to the Body Banks. Therefore, lower-ranking war dogs rarely alter tactics or show initiative. Without an officer, war dogs turn into an unwieldy and stagnant force capable of only following their final orders.
+                    `
 		},
 		{
 			id: 'wardog-info-5',
@@ -46,13 +48,15 @@ Below the Inner Council are the hundreds of officers and thousands of soldiers. 
 			description: `
 War dogs have a heavy focus on minion frontlines backed by captains with powerful control or support abilities. Their tactics reflect the replaceability of their low-ranking troops, throwing them into the mix without caution. Once a squad of minions is reduced to a few stragglers, captains will order them into position for maximum effect and manually detonate their loyalty collars.
 
-The captains are intelligent, well-trained, and capable of prioritizing threats to their mission. Defensive and support units focus on tying up and slowing down high-Stamina threats while offensive units try their best to bully low-Stamina backline heroes. Unless ordered, retreat is not an option.`
+The captains are intelligent, well-trained, and capable of prioritizing threats to their mission. Defensive and support units focus on tying up and slowing down high-Stamina threats while offensive units try their best to bully low-Stamina backline heroes. Unless ordered, retreat is not an option.
+                    `
 		},
 		{
 			id: 'wardog-info-6',
 			name: 'War Dog Languages',
 			description: `
-Most war dogs speak Caelian and one Vaslorian human language.`
+Most war dogs speak Caelian and one Vaslorian human language.                    
+                    `
 		}
 	],
 	malice: [
@@ -73,13 +77,13 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 				target: 'Each creature in the cube',
+				powerRoll: FactoryLogic.createPowerRoll({
+					tier1: '5 fire damage; slowed or weakened (save ends)',
+					tier2: '5 fire damage; slowed or weakened (EoT)',
+					tier3: '5 fire damage'
+				}),
 				sections: [
-					FactoryLogic.createAbilitySectionText('Each target makes an Agility test.'),
-					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-						tier1: '5 fire damage; slowed or weakened (save ends)',
-						tier2: '5 fire damage; slowed or weakened (EoT)',
-						tier3: '5 fire damage'
-					}))
+					FactoryLogic.createAbilitySectionText('Each target makes an Agility test.')
 				]
 			})
 		}),
@@ -127,7 +131,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 							tier2: '4 damage',
 							tier3: '5 damage'
 						}),
-						effect: 'The commando can use the Hide maneuver, even if observed.'
+						effect: 'The commando can use the Hide maneuver, even if observed.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -168,7 +173,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 							tier1: '2 damage',
 							tier2: '4 damage',
 							tier3: '5 damage'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -216,7 +222,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 							tier2: '2 damage',
 							tier3: '3 damage'
 						}),
-						effect: 'This ability has an edge if it’s used while charging.'
+						effect: 'This ability has an edge if it’s used while charging.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -258,7 +265,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 							tier2: '4 damage',
 							tier3: '5 damage'
 						}),
-						effect: 'This ability ignores cover and concealment.'
+						effect: 'This ability ignores cover and concealment.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -317,7 +325,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog with a loyalty collar',
-						effect: 'The target’s loyalty collar detonates, killing them instantly.'
+						effect: 'The target’s loyalty collar detonates, killing them instantly.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -358,7 +367,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 							tier2: '4 damage; pull 1',
 							tier3: '5 damage; pull 2'
 						}),
-						effect: 'The eviscerite can grab a target pulled adjacent to them by this ability.'
+						effect: 'The eviscerite can grab a target pulled adjacent to them by this ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -369,7 +379,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog with a loyalty collar',
-						effect: 'The target’s loyalty collar detonates, killing them instantly.'
+						effect: 'The target’s loyalty collar detonates, killing them instantly.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -434,7 +445,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog with a loyalty collar',
-						effect: 'The target’s loyalty collar detonates, killing them instantly.'
+						effect: 'The target’s loyalty collar detonates, killing them instantly.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -480,7 +492,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 							tier1: '1 psychic damage; vertical slide 1',
 							tier2: '2 psychic damage; vertical slide 2',
 							tier3: '3 psychic damage; vertical slide 3'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -491,7 +504,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog with a loyalty collar',
-						effect: 'The target’s loyalty collar detonates, killing them instantly.'
+						effect: 'The target’s loyalty collar detonates, killing them instantly.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -503,7 +517,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy in the burst',
-						effect: 'The neuronite chooses an ally within 10 squares, then chooses whether each target is taunted by the ally or the ally has damage immunity 3 whenever they’re attacked by a target until the start of the neuronite’s next turn.'
+						effect: 'The neuronite chooses an ally within 10 squares, then chooses whether each target is taunted by the ally or the ally has damage immunity 3 whenever they’re attacked by a target until the start of the neuronite’s next turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -550,7 +565,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 							tier2: '4 poison damage; I<1 frightened (save ends)',
 							tier3: '5 poison damage; I<2 frightened (save ends)'
 						}),
-						effect: 'The area is covered in a cloud of pestilence that lasts until the start of the pestilite’s next turn. Any creature who enters the area for the first time in a round or starts their turn there takes 2 poison damage.'
+						effect: 'The area is covered in a cloud of pestilence that lasts until the start of the pestilite’s next turn. Any creature who enters the area for the first time in a round or starts their turn there takes 2 poison damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -561,7 +577,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog with a loyalty collar',
-						effect: 'The target’s loyalty collar detonates, killing them instantly.'
+						effect: 'The target’s loyalty collar detonates, killing them instantly.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -621,7 +638,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog with a loyalty collar',
-						effect: 'The target’s loyalty collar detonates, killing them instantly.'
+						effect: 'The target’s loyalty collar detonates, killing them instantly.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -633,7 +651,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The portalite teleports up to 5 squares and has an edge on strikes until the end of their turn.'
+						effect: 'The portalite teleports up to 5 squares and has an edge on strikes until the end of their turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -674,15 +693,15 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'One creature or object',
+						powerRoll: FactoryLogic.createPowerRoll({
+							bonus: 2,
+							tier1: '4 acid damage; M<0 bleeding (save ends)',
+							tier2: '6 acid damage; M<1 bleeding (save ends)',
+							tier3: '10 acid damage; M<2 bleeding (save ends)'
+						}),
+						effect: 'An adjacent creature can attempt an easy Agility test to remove the detonator as a maneuver. A failure does nothing, a success disarms and destroys the detonator, and a success with a reward allows the disarming creature to throw the detonator onto another target within 5 squares.',
 						sections: [
-							FactoryLogic.createAbilitySectionText('A detonator attaches to the target. At the end of each round, roll a die. On an odd result, the detonator explodes, triggering the power roll.'),
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '4 acid damage; M<0 bleeding (save ends)',
-								tier2: '6 acid damage; M<1 bleeding (save ends)',
-								tier3: '10 acid damage; M<2 bleeding (save ends)'
-							})),
-							FactoryLogic.createAbilitySectionText('An adjacent creature can attempt an easy Agility test to remove the detonator as a maneuver. A failure does nothing, a success disarms and destroys the detonator, and a success with a reward allows the disarming creature to throw the detonator onto another target within 5 squares.')
+							FactoryLogic.createAbilitySectionText('A detonator attaches to the target. At the end of each round, roll a die. On an odd result, the detonator explodes, triggering the power roll.')
 						]
 					})
 				}),
@@ -694,7 +713,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog with a loyalty collar',
-						effect: 'The target’s loyalty collar detonates, killing them instantly.'
+						effect: 'The target’s loyalty collar detonates, killing them instantly.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -735,7 +755,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 							tier2: '5 damage',
 							tier3: '7 damage'
 						}),
-						effect: 'An ally within 5 squares of the subcommander can make a free strike against the target.'
+						effect: 'An ally within 5 squares of the subcommander can make a free strike against the target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -746,7 +767,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog with a loyalty collar',
-						effect: 'The target’s loyalty collar detonates, killing them instantly.'
+						effect: 'The target’s loyalty collar detonates, killing them instantly.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -813,7 +835,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 })
 						],
 						target: 'Each war dog with a loyalty collar',
-						effect: 'The ground commander selects any number of targets’ loyalty collars and detonates them, killing the target instantly.'
+						effect: 'The ground commander selects any number of targets’ loyalty collars and detonates them, killing the target instantly.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -826,7 +849,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'One ally',
-						effect: 'The target can move up to their speed and make a free strike before the triggering effect happens.'
+						effect: 'The target can move up to their speed and make a free strike before the triggering effect happens.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -847,7 +871,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each ally',
-						effect: 'Each target can make a ranged free strike, then immediately use the Charge action.'
+						effect: 'Each target can make a ranged free strike, then immediately use the Charge action.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -858,7 +883,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One enemy',
-						effect: 'Each ally within 5 squares of the target can move up to their speed and make a free strike against the target. The target is then I<2 frightened of the ground commander (save ends).'
+						effect: 'Each ally within 5 squares of the target can move up to their speed and make a free strike against the target. The target is then I<2 frightened of the ground commander (save ends).',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -869,7 +895,8 @@ Most war dogs speak Caelian and one Vaslorian human language.`
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each ally',
-						effect: 'Each target can shift 2 and use the Grab maneuver. For the rest of the encounter, each enemy has a bane on escaping grabs.'
+						effect: 'Each target can shift 2 and use the Grab maneuver. For the rest of the encounter, each enemy has a bane on escaping grabs.',
+						sections: []
 					})
 				})
 			]

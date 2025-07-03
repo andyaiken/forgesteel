@@ -438,8 +438,8 @@ As your rage grows, your primordial strength intensifies. Benefits are cumulativ
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee ],
 								distance: [ FactoryLogic.distance.createMelee() ],
 								target: 'Self or 1 creature',
-								effect: 'You can select a new target of the same size or smaller within distance to be force moved instead, and you can turn that forced movement into a push instead. You become the source of the forced movement and decide where the new target’s destination. Additionally, the forced movement distance gains a bonus equal to your Might score.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('You can select a new target of the same size or smaller within distance to be force moved instead, and you can turn that forced movement into a push instead. You become the source of the forced movement and decide where the new target’s destination. Additionally, the forced movement distance gains a bonus equal to your Might score.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -472,7 +472,9 @@ As your rage grows, your primordial strength intensifies. Benefits are cumulativ
 											distance: [ FactoryLogic.distance.createMelee() ],
 											target: 'One willing ally',
 											cost: 5,
-											effect: 'You vertically push the target up to 4 squares. This forced movement ignores the target’s stability, and the target takes no damage from the move. At the end of this movement, the target can make a free strike that deals additional damage equal to your Might score.'
+											sections: [
+												FactoryLogic.createAbilitySectionText('You vertically push the target up to 4 squares. This forced movement ignores the target’s stability, and the target takes no damage from the move. At the end of this movement, the target can make a free strike that deals additional damage equal to your Might score.')
+											]
 										})
 									}),
 									value: 1
@@ -564,8 +566,8 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 								type: FactoryLogic.type.createTrigger('You take damage.'),
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
-								effect: 'You take half damage from the attack and can shift up to a number of squares equal to your Agility score.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('You take half damage from the attack and can shift up to a number of squares equal to your Agility score.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -635,12 +637,14 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 											distance: [ FactoryLogic.distance.createMelee() ],
 											target: '1 creature',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Might ],
-												tier1: '3 + M damage; P < [weak], dazed and frightened (save ends)',
-												tier2: '5 + M damage; P < [average], dazed and frightened (save ends)',
-												tier3: '8 + M damage; P < [strong], dazed and frightened (save ends)'
-											})
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Might ],
+													tier1: '3 + M damage; P < [weak], dazed and frightened (save ends)',
+													tier2: '5 + M damage; P < [average], dazed and frightened (save ends)',
+													tier3: '8 + M damage; P < [strong], dazed and frightened (save ends)'
+												}))
+											]
 										})
 									}),
 									value: 1
@@ -693,8 +697,8 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 								type: FactoryLogic.type.createTrigger('You lose Stamina and are not dying.'),
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
-								effect: 'After the triggering effect is resolved, you can use a free triggered action to enter your animal form or hybrid form. You gain temporary Stamina equal to your Might score.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('After the triggering effect is resolved, you can use a free triggered action to enter your animal form or hybrid form. You gain temporary Stamina equal to your Might score.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -712,11 +716,11 @@ As your rage grows, your primordial cunning intensifies. Benefits are cumulative
 								type: FactoryLogic.type.createManeuver(),
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
-								effect: `
+								sections: [
+									FactoryLogic.createAbilitySectionText(`
 You can shapeshift into the animal defined by your stormwight kit, a hybrid form, or back into your true form.
 
-While in animal form or hybrid form, you can speak normally and can speak to animals who share your form. If you are in a negotiation with an animal, you treat your Renown as 2 higher than usual while in animal form.`,
-								sections: [
+While in animal form or hybrid form, you can speak normally and can speak to animals who share your form. If you are in a negotiation with an animal, you treat your Renown as 2 higher than usual while in animal form.`),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -749,13 +753,15 @@ While in animal form or hybrid form, you can speak normally and can speak to ani
 											distance: [ FactoryLogic.distance.createMelee() ],
 											target: '1 creature',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Might ],
-												tier1: '4 + M damage; I < [weak], slowed (save ends)',
-												tier2: '6 + M damage; I < [average], slowed (save ends)',
-												tier3: '10 + M damage; I < [strong], slowed (save ends)'
-											}),
-											effect: 'The target can’t be hidden from you for 24 hours. For the rest of the encounter, whenever the target moves, you can use a free triggered action to move.'
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Might ],
+													tier1: '4 + M damage; I < [weak], slowed (save ends)',
+													tier2: '6 + M damage; I < [average], slowed (save ends)',
+													tier3: '10 + M damage; I < [strong], slowed (save ends)'
+												})),
+												FactoryLogic.createAbilitySectionText('The target can’t be hidden from you for 24 hours. For the rest of the encounter, whenever the target moves, you can use a free triggered action to move.')
+											]
 										})
 									}),
 									value: 1
@@ -771,13 +777,15 @@ While in animal form or hybrid form, you can speak normally and can speak to ani
 											distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 											target: 'Each enemy in the area',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Might ],
-												tier1: '2 damage; push 1; M < [weak], dazed (save ends)',
-												tier2: '5 damage; push 2; M < [average], dazed (save ends)',
-												tier3: '7 damage; push 3; M < [strong], dazed (save ends)'
-											}),
-											effect: 'This ability deals damage of your primordial storm type.'
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Might ],
+													tier1: '2 damage; push 1; M < [weak], dazed (save ends)',
+													tier2: '5 damage; push 2; M < [average], dazed (save ends)',
+													tier3: '7 damage; push 3; M < [strong], dazed (save ends)'
+												})),
+												FactoryLogic.createAbilitySectionText('This ability deals damage of your primordial storm type.')
+											]
 										})
 									}),
 									value: 1

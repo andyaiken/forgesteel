@@ -324,7 +324,8 @@ categories 4-6:
 							tier1: '2 damage; pull 1; A<1 bleeding (save ends)',
 							tier2: '3 damage; pull 2; A<2 bleeding (save ends)',
 							tier3: '4 damage; pull 3; A<3 bleeding (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -394,7 +395,8 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The gunge vomits and shifts up to their speed, ignoring any additional effects from the strike. Each square they started in is covered in slime. The slime is difficult terrain for enemies, and an enemy is bleeding while occupying an affected square.'
+						effect: 'The gunge vomits and shifts up to their speed, ignoring any additional effects from the strike. Each square they started in is covered in slime. The slime is difficult terrain for enemies, and an enemy is bleeding while occupying an affected square.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -456,7 +458,8 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The nitkin can become a mundane object the same size or smaller and is hidden. They can change back as a free action.'
+						effect: 'The nitkin can become a mundane object the same size or smaller and is hidden. They can change back as a free action.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -524,7 +527,8 @@ categories 4-6:
 							tier2: '6 psychic damage; I<3 dazed (save ends)',
 							tier3: '8 psychic damage; I<4 dazed (save ends)'
 						}),
-						effect: 'The potency increases by 1 if the target is grabbed by the tormenauk.'
+						effect: 'The potency increases by 1 if the target is grabbed by the tormenauk.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -609,7 +613,8 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Special',
-						effect: 'A **muceron** and 2 **ensnarers** appear anywhere in range.'
+						effect: 'A **muceron** and 2 **ensnarers** appear anywhere in range.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -639,7 +644,8 @@ categories 4-6:
 							tier1: '7 corruption damage',
 							tier2: '12 corruption damage',
 							tier3: '15 corruption damage; a frenzied appears in an unoccupied square adjacent to the target.'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -650,7 +656,8 @@ categories 4-6:
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						target: 'Self',
-						effect: 'The egress folds into their own portal and teleports to an unoccupied space within distance. Four level 1 demon minions (**ensnarer**, **frenzied**, **pitling*) appear in the space the egress leaves behind.'
+						effect: 'The egress folds into their own portal and teleports to an unoccupied space within distance. Four level 1 demon minions (**ensnarer**, **frenzied**, **pitling*) appear in the space the egress leaves behind.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -667,7 +674,8 @@ categories 4-6:
 							tier2: '10 corruption damage; R<3 weakened (save ends)',
 							tier3: '13 corruption damage; R<4 weakened (save ends)'
 						}),
-						effect: 'The egress recalls and instantly destroys any ally minions on the encounter map. A torrent of churned up minion bodies and blood erupts from the egress, dealing an additional 2 damage for each minion destroyed this way.'
+						effect: 'The egress recalls and instantly destroys any ally minions on the encounter map. A torrent of churned up minion bodies and blood erupts from the egress, dealing an additional 2 damage for each minion destroyed this way.',
+						sections: []
 					})
 				})
 			]

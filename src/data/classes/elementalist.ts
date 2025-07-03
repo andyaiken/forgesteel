@@ -76,7 +76,8 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 							tier2: '4 + R damage',
 							tier3: '6 + R damage'
 						}),
-						effect: 'When you make this strike, choose the damage type from one of the following options: acid, cold, corruption, fire, lightning, poison, or sonic.'
+						effect: 'When you make this strike, choose the damage type from one of the following options: acid, cold, corruption, fire, lightning, poison, or sonic.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -100,12 +101,14 @@ If you take damage equal to or greater than 5 × your Reason score in one turn, 
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: `
+						sections: [
+							FactoryLogic.createAbilitySectionText(`
 Choose one of the following effects:
 
 * You use the Knockback maneuver, but its distance becomes the range of your Hurl Element ability, and you use Reason instead of Might for the power roll.
 * You choose a creature within the distance of your Hurl Element ability and deal damage equal to your Reason score to them. The damage type can be acid, cold, corruption, fire, lightning, poison, or sonic.
-* You teleport up to a number of squares equal to your Reason score.`
+* You teleport up to a number of squares equal to your Reason score.`)
+						]
 					})
 				}),
 				FactoryLogic.feature.createChoice({
@@ -250,7 +253,9 @@ Choose one of the following effects:
 									type: FactoryLogic.type.createTrigger('A creature within a number of squares equal to your Reason score deals damage to you,', { free: true }),
 									distance: [ FactoryLogic.distance.createSelf() ],
 									target: 'Self',
-									effect: 'You slide the attacking creature up to a number of squares equal to your Reason score.'
+									sections: [
+										FactoryLogic.createAbilitySectionText('You slide the attacking creature up to a number of squares equal to your Reason score.')
+									]
 								})
 							}),
 							value: 1
@@ -264,7 +269,9 @@ Choose one of the following effects:
 									type: FactoryLogic.type.createTrigger('An adjacent creature deals damage to you.', { free: true }),
 									distance: [ FactoryLogic.distance.createSelf() ],
 									target: 'Self',
-									effect: 'You push that creature a number of squares equal to twice your Reason score.'
+									sections: [
+										FactoryLogic.createAbilitySectionText('You push that creature a number of squares equal to twice your Reason score.')
+									]
 								})
 							}),
 							value: 1
@@ -540,7 +547,8 @@ Choose one of the following effects:
 				tier2: '7 + R poison damage',
 				tier3: '11 + R poison damage'
 			}),
-			effect: 'Mushrooms cover the target’s body, and can be removed by the target or by an adjacent creature as an action. While the mushrooms are on the target, you and each of your allies adjacent to the target gains a surge whenever the target takes damage.'
+			effect: 'Mushrooms cover the target’s body, and can be removed by the target or by an adjacent creature as an action. While the mushrooms are on the target, you and each of your allies adjacent to the target gains a surge whenever the target takes damage.',
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-12',
@@ -557,7 +565,8 @@ Choose one of the following effects:
 				tier2: '5 damage',
 				tier3: '8 damage; M < [strong], prone'
 			}),
-			effect: 'You must be touching the ground to use this ability. Choose a square of ground in the area that is unoccupied or occupied by your or an ally. A pillar of earth that is 1 square wide and long and is up to as many squares tall as your Reason score rises out of the ground. The pillar can’t collide with any creatures or objects nor can it force any creatures being raised by it to collide with other creatures or objects.'
+			effect: 'You must be touching the ground to use this ability. Choose a square of ground in the area that is unoccupied or occupied by your or an ally. A pillar of earth that is 1 square wide and long and is up to as many squares tall as your Reason score rises out of the ground. The pillar can’t collide with any creatures or objects nor can it force any creatures being raised by it to collide with other creatures or objects.',
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-13',
@@ -617,8 +626,8 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Self or one ally',
 			cost: 5,
-			effect: 'Until the start of your next turn, the target can move through solid matter, ignores difficult terrain, and their movement can’t provoke opportunity attacks. If the target ends their turn inside solid matter, they are shunted out into the space where they entered it and this effect ends.',
 			sections: [
+				FactoryLogic.createAbilitySectionText('Until the start of your next turn, the target can move through solid matter, ignores difficult terrain, and their movement can’t provoke opportunity attacks. If the target ends their turn inside solid matter, they are shunted out into the space where they entered it and this effect ends.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Persist',
 					value: 1,
@@ -641,7 +650,8 @@ Choose one of the following effects:
 				tier2: '6 acid damage',
 				tier3: '10 acid damage'
 			}),
-			effect: 'You and each ally within the area can end one effect that is ended by a saving throw or that ends at the end of that creature’s turn.'
+			effect: 'You and each ally within the area can end one effect that is ended by a saving throw or that ends at the end of that creature’s turn.',
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-17',
@@ -653,13 +663,13 @@ Choose one of the following effects:
 			target: 'Special',
 			cost: 5,
 			minLevel: 2,
-			effect: `
+			sections: [
+				FactoryLogic.createAbilitySectionText(`
 Until the start of your next turn, the area gains the following effects:
 
 * You and each ally in the area can spend any number of Recoveries at the start of your turn once as a free maneuver.
 * The area is difficult terrain for enemies.
-* Any enemy who enters the area for the first time in a round or starts their turn there takes damage equal to your Reason score.`,
-			sections: [
+* Any enemy who enters the area for the first time in a round or starts their turn there takes damage equal to your Reason score.`),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Persist',
 					value: 1,
@@ -726,7 +736,8 @@ Until the start of your next turn, the area gains the following effects:
 				tier1: '5 + R fire damage; A < [weak], restrained (save ends)',
 				tier2: '9 + R fire damage; A < [average], restrained (save ends)',
 				tier3: '12 + R fire damage; A < [strong], restrained (save ends)'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-21',
@@ -765,7 +776,8 @@ Until the start of your next turn, the area gains the following effects:
 				tier2: '9 damage',
 				tier3: '12 damage'
 			}),
-			effect: 'The ground in or directly beneath the area drops, lowering 3 squares.'
+			effect: 'The ground in or directly beneath the area drops, lowering 3 squares.',
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-23',
@@ -800,8 +812,8 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 10, within: 10 }) ],
 			target: 'Special',
 			cost: 7,
-			effect: 'The wall lasts until the start of your next turn, and can be placed in occupied squares. Creatures can enter and pass through the wall. When an enemy enters or starts their turn in a square of the wall, they take fire damage equal to your Reason score.',
 			sections: [
+				FactoryLogic.createAbilitySectionText('The wall lasts until the start of your next turn, and can be placed in occupied squares. Creatures can enter and pass through the wall. When an enemy enters or starts their turn in a square of the wall, they take fire damage equal to your Reason score.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Persist',
 					value: 1,
@@ -833,12 +845,14 @@ Until the start of your next turn, the area gains the following effects:
 								keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 								distance: [ FactoryLogic.distance.createMelee() ],
 								target: 'Special',
-								effect: `
+								sections: [
+									FactoryLogic.createAbilitySectionText(`
 You touch a square containing mundane dirt, stone, or metal and create a 5 wall of the same material, which rises up out of the ground and must include the square you touched.
 
 Alternatively, you touch a structure made of mundane dirt, stone, or metal that takes up at least 2 squares. You can open a 1-square opening in the structure where you touched it.
 
-You can instead touch a doorway or other opening in a mundane dirt, stone, or metal surface that is no larger than 1 square. The opening is sealed by the same material that makes up the surface.`
+You can instead touch a doorway or other opening in a mundane dirt, stone, or metal surface that is no larger than 1 square. The opening is sealed by the same material that makes up the surface.`)
+								]
 							})
 						}),
 						FactoryLogic.feature.createAbility({
@@ -850,8 +864,8 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 								keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Self or 1 ally',
-								effect: 'The damage is halved.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('The damage is halved.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -887,7 +901,9 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 								keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic ],
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
-								effect: 'You step into a mundane dirt, metal, or stone object (including a wall) that is as large as you or larger. You can remain inside the object for as long as you like. While inside the object, you can observe events and speak to creatures outside of it, but you don’t have line of effect to anything outside the object and vice versa. You can travel through the object freely until you exit it. If the object you meld with is destroyed, you take 10 damage and exit the object.'
+								sections: [
+									FactoryLogic.createAbilitySectionText('You step into a mundane dirt, metal, or stone object (including a wall) that is as large as you or larger. You can remain inside the object for as long as you like. While inside the object, you can observe events and speak to creatures outside of it, but you don’t have line of effect to anything outside the object and vice versa. You can travel through the object freely until you exit it. If the object you meld with is destroyed, you take 10 damage and exit the object.')
+								]
 							})
 						})
 					]
@@ -918,7 +934,9 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 								keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 								distance: [ FactoryLogic.distance.createMelee() ],
 								target: '1 mundane object',
-								effect: 'You heat the target and cause it to combust and melt, destroying it. If the object is larger than 1 square, then only the square of the object that you touch is destroyed.'
+								sections: [
+									FactoryLogic.createAbilitySectionText('You heat the target and cause it to combust and melt, destroying it. If the object is larger than 1 square, then only the square of the object that you touch is destroyed.')
+								]
 							})
 						}),
 						FactoryLogic.feature.createAbility({
@@ -930,8 +948,8 @@ You can instead touch a doorway or other opening in a mundane dirt, stone, or me
 								keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Self or 1 ally',
-								effect: 'The forced movement distance gains a bonus equal to your Reason score.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('The forced movement distance gains a bonus equal to your Reason score.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -1009,8 +1027,8 @@ Additionally, whenever you touch a living plant that is not a Plant Creature, yo
 								keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Self or 1 ally',
-								effect: 'The target can spend a Recovery.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('The target can spend a Recovery.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -1059,7 +1077,9 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 								keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 								distance: [ FactoryLogic.distance.createMelee() ],
 								target: 'One mundane wooden object',
-								effect: 'You see and hear any events that have occurred within 10 squares of the object within the last 12 hours, perceiving those events from the object’s location as if you were there.'
+								sections: [
+									FactoryLogic.createAbilitySectionText('You see and hear any events that have occurred within 10 squares of the object within the last 12 hours, perceiving those events from the object’s location as if you were there.')
+								]
 							})
 						})
 					]
@@ -1095,7 +1115,9 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Special',
-								effect: 'For each Victory you have, you can target one creature. That creature gains the benefit of your A Beyonding of Vision feature until the end of your next turn, but doesn’t gain the use of Shared Void Sense.'
+								sections: [
+									FactoryLogic.createAbilitySectionText('For each Victory you have, you can target one creature. That creature gains the benefit of your A Beyonding of Vision feature until the end of your next turn, but doesn’t gain the use of Shared Void Sense.')
+								]
 							})
 						}),
 						FactoryLogic.feature.createAbility({
@@ -1107,8 +1129,8 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Self or 1 ally',
-								effect: 'You teleport the target up to a number of squares equal to your Reason score. If the target moves to trigger this ability, you can teleport them at any point during the move.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('You teleport the target up to a number of squares equal to your Reason score. If the target moves to trigger this ability, you can teleport them at any point during the move.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -1131,10 +1153,12 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Special',
-								effect: `
+								sections: [
+									FactoryLogic.createAbilitySectionText(`
 You open two size 1 portals in unoccupied spaces in range, which last until you move beyond distance from any portal, end the effect as a maneuver, or are dying. Each portal must be placed at a height of no more than 1 square above the ground. When you or any ally touch a portal, that creature can choose to be instantly teleported to an unoccupied space of their choice within 1 square of the other portal. If an enemy is force moved into a portal, their forced movement ends and they emerge from the other portal in an unoccupied space chosen by the creature who force moved them.
 
-At the start of each of your turns while the portals are active, you can open a new portal connected to the others. If three or more portals are present, you and your allies choose which portal you emerge from when you enter a portal, and a creature who force moves an enemy into a portal chooses that enemy’s destination portal.`
+At the start of each of your turns while the portals are active, you can open a new portal connected to the others. If three or more portals are present, you and your allies choose which portal you emerge from when you enter a portal, and a creature who force moves an enemy into a portal chooses that enemy’s destination portal.`)
+								]
 							})
 						})
 					]

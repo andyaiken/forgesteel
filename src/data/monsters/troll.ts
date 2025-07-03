@@ -144,7 +144,8 @@ export const troll: MonsterGroup = {
 							tier1: '3 damage',
 							tier2: '6 damage; slide 1',
 							tier3: '7 damage; slide 2; M<2 bleeding (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -220,7 +221,8 @@ export const troll: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The butcher enhances their next Savoring Bite ability, changing the damage type and inflicted condition to one of the following combinations: corruption and dazed, acid and restrained, or lightning and frightened.'
+						effect: 'The butcher enhances their next Savoring Bite ability, changing the damage type and inflicted condition to one of the following combinations: corruption and dazed, acid and restrained, or lightning and frightened.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -231,7 +233,8 @@ export const troll: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Triggering creature',
-						effect: 'The butcher makes a free strike against the target. The butcher has an edge on power rolls and deals an additional 3 damage on strikes until the end of their next turn.'
+						effect: 'The butcher makes a free strike against the target. The butcher has an edge on power rolls and deals an additional 3 damage on strikes until the end of their next turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -300,7 +303,8 @@ export const troll: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The glutton shifts up to their speed in a straight line, ignoring difficult terrain. A creature can choose to fall prone or take 10 damage the first time the glutton passes through their space during the movement. If the glutton moves into a creature or object larger than them and the glutton doesn’t knock the creature prone or destroy the object, the glutton’s movement stops early and they become dazed until the end of their next turn.'
+						effect: 'The glutton shifts up to their speed in a straight line, ignoring difficult terrain. A creature can choose to fall prone or take 10 damage the first time the glutton passes through their space during the movement. If the glutton moves into a creature or object larger than them and the glutton doesn’t knock the creature prone or destroy the object, the glutton’s movement stops early and they become dazed until the end of their next turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -311,7 +315,8 @@ export const troll: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The glutton has a double edge on strikes and strikes have an edge against them, until the start of their next turn.'
+						effect: 'The glutton has a double edge on strikes and strikes have an edge against them, until the start of their next turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -322,7 +327,8 @@ export const troll: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Self',
-						effect: 'The glutton uses their Voracious Mastication ability against an adjacent creature.'
+						effect: 'The glutton uses their Voracious Mastication ability against an adjacent creature.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -391,7 +397,8 @@ export const troll: MonsterGroup = {
 							tier1: 'P (weak) frightened (save ends)',
 							tier2: 'P (average) frightened (save ends)',
 							tier3: 'P (strong) frightened (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -416,7 +423,8 @@ export const troll: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '3 creatures',
-						effect: 'While winded, the mercenary uses Big Bite against each target.'
+						effect: 'While winded, the mercenary uses Big Bite against each target.',
+						sections: []
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -427,7 +435,8 @@ export const troll: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The mercenary moves their speed. If this movement takes them out of range or area of the ability that damaged them, the ability doesn\'t affect them.'
+						effect: 'The mercenary moves their speed. If this movement takes them out of range or area of the ability that damaged them, the ability doesn\'t affect them.',
+						sections: []
 					})
 				})
 			}

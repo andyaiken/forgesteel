@@ -207,7 +207,9 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 									keywords: [],
 									distance: [ FactoryLogic.distance.createSelf() ],
 									target: 'Self',
-									effect: 'You can push your attacker up to a number of squares equal to your Reason score.'
+									sections: [
+										FactoryLogic.createAbilitySectionText('You can push your attacker up to a number of squares equal to your Reason score.')
+									]
 								})
 							}),
 							value: 1
@@ -674,8 +676,8 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 3 }) ],
 			target: 'Special',
 			cost: 7,
-			effect: 'The aura lasts until the start of your next turn. Whenever an enemy targets an ally in the aura with a ranged ability, the ability is negated on the ally and reflected back at the enemy. The ability deals half the damage to the enemy that it would have dealt to the ally, and loses any additional effects.',
 			sections: [
+				FactoryLogic.createAbilitySectionText('The aura lasts until the start of your next turn. Whenever an enemy targets an ally in the aura with a ranged ability, the ability is negated on the ally and reflected back at the enemy. The ability deals half the damage to the enemy that it would have dealt to the ally, and loses any additional effects.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'The size of the aura increases by 1. Each ability your aura reflects causes you to take 2d6 damage and makes you forget a memory, as determined in consultation with the Director.'
@@ -726,8 +728,8 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								keywords: [ AbilityKeyword.Psionic ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Self or one creature',
-								effect: 'The target immediately shifts up to a number of squares equal to your Reason score.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('The target immediately shifts up to a number of squares equal to your Reason score.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 2,
@@ -745,7 +747,9 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Self or one creature',
-								effect: 'You can use this ability after seeing the power roll for the triggering roll. You force the target to reroll the power roll and use the new result.'
+								sections: [
+									FactoryLogic.createAbilitySectionText('You can use this ability after seeing the power roll for the triggering roll. You force the target to reroll the power roll and use the new result.')
+								]
 							})
 						})
 					]
@@ -845,8 +849,8 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Self, or a size 1 creature or object',
-								effect: 'You slide the target up to a number of squares equal to your Reason score.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('You slide the target up to a number of squares equal to your Reason score.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 2,
@@ -870,7 +874,9 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Self or one ally',
-								effect: 'The triggering damage is halved or distance of the triggering forced movement is reduced by a number of squares equal to your Reason score. If the target was damaged and force moved, you choose the effect. If the triggering forced movement is reduced to 0 squares, the target pushes the source of the forced movement a number of squares equal to your Reason score.'
+								sections: [
+									FactoryLogic.createAbilitySectionText('The triggering damage is halved or distance of the triggering forced movement is reduced by a number of squares equal to your Reason score. If the target was damaged and force moved, you choose the effect. If the triggering forced movement is reduced to 0 squares, the target pushes the source of the forced movement a number of squares equal to your Reason score.')
+								]
 							})
 						})
 					]
@@ -886,7 +892,9 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								type: FactoryLogic.type.createTrigger('You land after a fall, or any falling creature lands within 2 squares of you.', { free: true }),
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
-								effect: 'You can reduce the falling damage by an amount equal to 2 + your Reason score.'
+								sections: [
+									FactoryLogic.createAbilitySectionText('You can reduce the falling damage by an amount equal to 2 + your Reason score.')
+								]
 							})
 						}),
 						FactoryLogic.feature.createChoice({
@@ -975,7 +983,9 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: '1 creature',
-								effect: 'The target takes psychic damage equal to half the triggering damage.'
+								sections: [
+									FactoryLogic.createAbilitySectionText('The target takes psychic damage equal to half the triggering damage.')
+								]
 							})
 						}),
 						FactoryLogic.feature.createAbility({
@@ -987,8 +997,8 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 								keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: '1 creature or object',
-								effect: 'The next ability power roll an ally makes against the target before the start of your next turn gains an edge.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('The next ability power roll an ally makes against the target before the start of your next turn gains an edge.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,

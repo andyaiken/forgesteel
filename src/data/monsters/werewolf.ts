@@ -102,14 +102,14 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 damage; 2 ferocity',
-							tier2: '13 damage; 4 ferocity',
-							tier3: '16 damage; 5 ferocity'
-						}),
 						effect: 'A creature afflicted with lycanthropy accumulates 2 ferocity at the end of each of their turns whenever they’re in combat. Their ferocity does not disappear after completing a respite; they must complete the Find a Cure project to end this condition.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '9 damage; 2 ferocity',
+								tier2: '13 damage; 4 ferocity',
+								tier3: '16 damage; 5 ferocity'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -126,12 +126,14 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '8 damage',
-							tier2: '11 damage; 1 ferocity; M<2 push 3',
-							tier3: '14 damage; 3 ferocity; M<3 vertical slide 3'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '8 damage',
+								tier2: '11 damage; 1 ferocity; M<2 push 3',
+								tier3: '14 damage; 3 ferocity; M<3 vertical slide 3'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -142,7 +144,8 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						cost: 5,
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The werewolf shifts up to their speed and uses Claws against each creature who comes within 1 of the werewolf during the move. The werewolf makes one power roll against all targets.'
+						effect: 'The werewolf shifts up to their speed and uses Claws against each creature who comes within 1 of the werewolf during the move. The werewolf makes one power roll against all targets.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -152,7 +155,8 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The werewolf jumps 4 squares. If they end this movement at a wall, the werewolf jumps off the wall 4 squares and makes a melee free strike.'
+						effect: 'The werewolf jumps 4 squares. If they end this movement at a wall, the werewolf jumps off the wall 4 squares and makes a melee free strike.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -163,7 +167,8 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						cost: 2,
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
-						effect: 'The target is knocked prone and takes 5 damage before executing the ability.'
+						effect: 'The target is knocked prone and takes 5 damage before executing the ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -179,13 +184,15 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Intuition,
-							tier1: 'Target moves up to their speed away from the werewolf; frightened (save ends)',
-							tier2: 'Frightened (EoT)',
-							tier3: 'no effect'
-						}),
-						effect: 'Enemies that have 1 or more ferocity gain 4 ferocity and howl along with the werewolf.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Intuition,
+								tier1: 'Target moves up to their speed away from the werewolf; frightened (save ends)',
+								tier2: 'Frightened (EoT)',
+								tier3: 'no effect'
+							})),
+							FactoryLogic.createAbilitySectionText('Enemies that have 1 or more ferocity gain 4 ferocity and howl along with the werewolf.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -195,7 +202,8 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						type: FactoryLogic.type.createVillainAction(),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The werewolf changes into a massive wolf, pushing adjacent creatures out of their way and moving into a square that can accommodate their new size. Until they die or the end of the encounter, their Speed is 10, their Size is 3, and their Stability is 2. Each of the werewolf’s strikes deal an additional 3 damage and inflict an additional 1 ferocity. The potency of the werewolf’s Accursed Bite increases by 1.'
+						effect: 'The werewolf changes into a massive wolf, pushing adjacent creatures out of their way and moving into a square that can accommodate their new size. Until they die or the end of the encounter, their Speed is 10, their Size is 3, and their Stability is 2. Each of the werewolf’s strikes deal an additional 3 damage and inflict an additional 1 ferocity. The potency of the werewolf’s Accursed Bite increases by 1.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -206,13 +214,15 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All creatures in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '8 damage; 2 ferocity',
-							tier2: '11 damage; 4 ferocity',
-							tier3: '14 damage; 8 ferocity; prone'
-						}),
-						effect: 'The werewolf shifts up to twice their speed either before or after using this ability.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '8 damage; 2 ferocity',
+								tier2: '11 damage; 4 ferocity',
+								tier3: '14 damage; 8 ferocity; prone'
+							})),
+							FactoryLogic.createAbilitySectionText('The werewolf shifts up to twice their speed either before or after using this ability.')
+						]
 					})
 				})
 			]

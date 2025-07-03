@@ -95,7 +95,8 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 							tier2: '13 damage; grabbed',
 							tier3: '16 damage; grabbed'
 						}),
-						effect: 'A size 1 target grabbed this way takes 3 acid damage at the start of each of their turns.'
+						effect: 'A size 1 target grabbed this way takes 3 acid damage at the start of each of their turns.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -136,7 +137,8 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 							tier2: '8 acid damage',
 							tier3: '11 acid damage'
 						}),
-						effect: 'The affected area is covered in burning acid. An enemy who enters an affected square for the first time on their turn or starts their turn there takes 2 acid damage.'
+						effect: 'The affected area is covered in burning acid. An enemy who enters an affected square for the first time on their turn or starts their turn there takes 2 acid damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -165,7 +167,8 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'Special',
-						effect: 'The ankheg kicks up dust into the affected area that blocks line of effect for enemies. The ankheg then shifts or burrows up to their speed.'
+						effect: 'The ankheg kicks up dust into the affected area that blocks line of effect for enemies. The ankheg then shifts or burrows up to their speed.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -175,7 +178,8 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 						type: FactoryLogic.type.createTrigger('A creature damages the ankheg'),
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Self, value: 0 }) ],
 						target: 'Self',
-						effect: 'The ankheg shifts up to 3 squares.'
+						effect: 'The ankheg shifts up to 3 squares.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -201,7 +205,8 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 							tier2: '8 acid damage',
 							tier3: '11 acid damage'
 						}),
-						effect: 'The ground within the affected area is covered in burning acid. An enemy who enters an affected square for the first time on their turn or starts their turn there takes 2 acid damage.'
+						effect: 'The ground within the affected area is covered in burning acid. An enemy who enters an affected square for the first time on their turn or starts their turn there takes 2 acid damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -211,7 +216,8 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 						type: FactoryLogic.type.createVillainAction(),
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Self, value: 0 }) ],
 						target: 'Self',
-						effect: 'The ankheg shifts up to their speed by burrowing. If the ankheg ends this move underground and within 2 squares of a creature on the surface, the ankheg uses Bite against the creature.'
+						effect: 'The ankheg shifts up to their speed by burrowing. If the ankheg ends this move underground and within 2 squares of a creature on the surface, the ankheg uses Bite against the creature.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -226,7 +232,8 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 							tier1: '5 acid damage, M<1 bleeding (save ends)',
 							tier2: '8 acid damage, M<2 bleeding (save ends)',
 							tier3: '11 acid damage, M<3 bleeding (save ends)'
-						})
+						}),
+						sections: []
 					})
 				})
 			]

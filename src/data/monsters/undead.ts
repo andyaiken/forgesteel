@@ -129,7 +129,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier2: '2 damage',
 							tier3: '3 damage'
 						}),
-						effect: 'The crawling claw shifts a number of squares equal to the damage dealt.'
+						effect: 'The crawling claw shifts a number of squares equal to the damage dealt.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -176,7 +177,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier2: '4 damage',
 							tier3: '5 damage'
 						}),
-						effect: 'The decrepit skeleton chooses one other target within distance to take 1 damage.'
+						effect: 'The decrepit skeleton chooses one other target within distance to take 1 damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -222,7 +224,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier1: '2 damage',
 							tier2: '4 damage',
 							tier3: '5 damage; M<2 prone if size 1, slowed (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -268,7 +271,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier1: '2 corruption damage',
 							tier2: '4 corruption damage',
 							tier3: '5 corruption damage; the target moves up to their speed away from all shades'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -313,7 +317,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier1: '3 damage',
 							tier2: '4 damage',
 							tier3: '5 damage; M<2 bleeding (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -324,7 +329,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The ghoul jumps 3 squares. If they land on a size 1 enemy, that enemy is knocked prone and the ghoul makes a free strike against them.'
+						effect: 'The ghoul jumps 3 squares. If they land on a size 1 enemy, that enemy is knocked prone and the ghoul makes a free strike against them.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -377,7 +383,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier1: '4 damage',
 							tier2: '6 damage',
 							tier3: '7 damage'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -394,7 +401,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier1: '1 damage; M<0 bleeding (save ends)',
 							tier2: '2 damage; M<1 bleeding (save ends)',
 							tier3: '3 damage; M<2 bleeding (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -457,7 +465,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The specter turns invisible, moves up to their speed, and becomes visible again.'
+						effect: 'The specter turns invisible, moves up to their speed, and becomes visible again.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -503,7 +512,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier2: '6 cold damage',
 							tier3: '7 cold damage'
 						}),
-						effect: 'The umbral stalker shifts 2 before or after using this ability.'
+						effect: 'The umbral stalker shifts 2 before or after using this ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -521,7 +531,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier2: '3 cold damage',
 							tier3: '4 cold damage'
 						}),
-						effect: 'Until the end of the umbral stalker’s next turn, the area is concealed and blocks line of effect for all enemies.'
+						effect: 'Until the end of the umbral stalker’s next turn, the area is concealed and blocks line of effect for all enemies.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -533,7 +544,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 						distance: [],
 						target: '',
 						cost: 1,
-						effect: 'The umbral stalker teleports to an unoccupied space in concealment within 10 squares. '
+						effect: 'The umbral stalker teleports to an unoccupied space in concealment within 10 squares.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -579,7 +591,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier2: '4 corruption damage; M<1 slowed (save ends)',
 							tier3: '5 corruption damage; M<2 slowed and weakened (save ends)'
 						}),
-						effect: 'The target appears to rapidly age each time they take damage from this ability. The target regains their former appearance when the wight is destroyed.'
+						effect: 'The target appears to rapidly age each time they take damage from this ability. The target regains their former appearance when the wight is destroyed.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -591,7 +604,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One dead ally',
-						effect: 'The target revives with half their Stamina. The wight can\'t use this maneuver again until they attack a creature with their lifestealer longsword.'
+						effect: 'The target revives with half their Stamina. The wight can\'t use this maneuver again until they attack a creature with their lifestealer longsword.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -637,7 +651,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier2: '6 damage',
 							tier3: '7 damage; grabbed'
 						}),
-						effect: 'A target who starts their turn grabbed by the zombie takes 2 corruption damage. If a creature takes 5 or more corruption damage this way, they become insatiably hungry for flesh. The target must complete the Find a Cure project to end this effect.'
+						effect: 'A target who starts their turn grabbed by the zombie takes 2 corruption damage. If a creature takes 5 or more corruption damage this way, they become insatiably hungry for flesh. The target must complete the Find a Cure project to end this effect.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -654,7 +669,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier1: '2 corruption damage',
 							tier2: '3 corruption damage; M<1 weakened (save ends)',
 							tier3: '4 corruption damage; M<2 dazed (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -700,7 +716,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier2: '10 cold damage; P<2 slowed (save ends)',
 							tier3: '13 cold damage; P<3 slowed (save ends)'
 						}),
-						effect: 'The next strike made against the target has an edge.'
+						effect: 'The next strike made against the target has an edge.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -727,7 +744,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 						type: FactoryLogic.type.createTrigger('A creature within distance targets the ghost with a strike.'),
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'The triggering creature',
-						effect: 'The ghost halves the incoming damage and the target takes 2 sonic damage.'
+						effect: 'The ghost halves the incoming damage and the target takes 2 sonic damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -748,7 +766,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each size 1S or larger object in the burst',
-						effect: 'Each target floats 1 square into the air and is pulled 5 squares toward the nearest enemy within 3 squares of them.'
+						effect: 'Each target floats 1 square into the air and is pulled 5 squares toward the nearest enemy within 3 squares of them.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -765,7 +784,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier2: 'P<2 levitated (EoT)',
 							tier3: 'P<3 levitated for the rest of the encounter'
 						}),
-						effect: 'A levitated target floats 1 square off the ground when they are first affected, then rises 1 square at the end of each of their turns. If a levitated target can’t already fly, they can fly but are slowed and weakened while flying in this way.'
+						effect: 'A levitated target floats 1 square off the ground when they are first affected, then rises 1 square at the end of each of their turns. If a levitated target can’t already fly, they can fly but are slowed and weakened while flying in this way.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -782,7 +802,8 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 							tier2: '5 sonic damage',
 							tier3: '8 sonic damage'
 						}),
-						effect: 'P<2 the target is reduced to 1 Stamina if they have 2 or more Stamina after taking damage.'
+						effect: 'P<2 the target is reduced to 1 Stamina if they have 2 or more Stamina after taking damage.',
+						sections: []
 					})
 				})
 			]

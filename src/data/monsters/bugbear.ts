@@ -106,7 +106,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: '10 damage; pull 3',
 							tier3: '13 damage; pull 4'
 						}),
-						effect: 'Each square that a target is pulled through becomes difficult terrain for enemies.'
+						effect: 'Each square that a target is pulled through becomes difficult terrain for enemies.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -123,7 +124,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: '3 damage; M<1 bleeding (save ends)',
 							tier3: '4 damage; M<2 bleeding (save ends)'
 						}),
-						effect: 'The channeler chooses one of the following damage types for the damage: acid, cold, corruption, fire, or poison.'
+						effect: 'The channeler chooses one of the following damage types for the damage: acid, cold, corruption, fire, or poison.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -141,7 +143,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: '8 corruption damage; P<1 shapechanged (save ends)',
 							tier3: '11 corruption damage; P<2 shapechanged (save ends)'
 						}),
-						effect: 'A shapechanged creature has their limbs violently stretched and their skin becomes paper thin. They are slowed and have fire weakness 10 while they have this effect.'
+						effect: 'A shapechanged creature has their limbs violently stretched and their skin becomes paper thin. They are slowed and have fire weakness 10 while they have this effect.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -152,7 +155,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object grabbed by the channeler',
-						effect: 'Vertical push 3. An ally target doesn’t take damage from being force moved.'
+						effect: 'Vertical push 3. An ally target doesn’t take damage from being force moved.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -163,7 +167,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 size 1 creature or object',
-						effect: 'The target is grabbed by the channeler.'
+						effect: 'The target is grabbed by the channeler.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -175,7 +180,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 ally',
 						cost: 1,
-						effect: 'The channeler collapses the target into their shadow and halves the damage. The target can’t be targeted by strikes until they reform from the shadows at the start of their next turn.'
+						effect: 'The channeler collapses the target into their shadow and halves the damage. The target can’t be targeted by strikes until they reform from the shadows at the start of their next turn.',
+						sections: []
 					})
 				})
 			]
@@ -209,7 +215,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: '10 damage',
 							tier3: '13 damage; one target is grabbed'
 						}),
-						effect: '1 ally within 5 of the commander has an edge on their next attack until the start of the commander’s next turn.'
+						effect: '1 ally within 5 of the commander has an edge on their next attack until the start of the commander’s next turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -220,7 +227,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: '1 ally',
-						effect: 'The target moves up to their speed and uses a signature action.'
+						effect: 'The target moves up to their speed and uses a signature action.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -232,7 +240,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Self and all allies',
 						cost: 5,
-						effect: 'Each target shifts up to their speed. Each target can use the Throw maneuver if they are grabbing a creature or object.'
+						effect: 'Each target shifts up to their speed. Each target can use the Throw maneuver if they are grabbing a creature or object.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -243,7 +252,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object grabbed by the commander',
-						effect: 'Vertical push 4. An ally target doesn’t take damage from being force moved.'
+						effect: 'Vertical push 4. An ally target doesn’t take damage from being force moved.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -254,7 +264,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 size 1 creature or object',
-						effect: 'The target is grabbed by the commander.'
+						effect: 'The target is grabbed by the commander.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -316,7 +327,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: '13 damage; M<2 prone',
 							tier3: '16 damage; M<3 prone'
 						}),
-						effect: 'The roughneck leaps 5 to an unoccupied space adjacent to the target before making the attack.'
+						effect: 'The roughneck leaps 5 to an unoccupied space adjacent to the target before making the attack.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -328,7 +340,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object grabbed by the roughneck',
 						cost: 3,
-						effect: 'The roughneck moves up to their speed, dragging the target across the ground. The target takes 2 damage for each square they were dragged through before being released prone. Each square the target was dragged through becomes difficult terrain for enemies.'
+						effect: 'The roughneck moves up to their speed, dragging the target across the ground. The target takes 2 damage for each square they were dragged through before being released prone. Each square the target was dragged through becomes difficult terrain for enemies.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -339,7 +352,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object grabbed by the roughneck',
-						effect: 'Vertical push 5. An ally target doesn’t take damage from being force moved.'
+						effect: 'Vertical push 5. An ally target doesn’t take damage from being force moved.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -350,7 +364,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 size 1 creature or object',
-						effect: 'The target is grabbed by the roughneck.'
+						effect: 'The target is grabbed by the roughneck.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -361,7 +376,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The roughneck uses their Haymaker ability against a creature or object at the end of the movement.'
+						effect: 'The roughneck uses their Haymaker ability against a creature or object at the end of the movement.',
+						sections: []
 					})
 				})
 			]
@@ -395,7 +411,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: '13 damage; A<2 grabbed',
 							tier3: '16 damage; grabbed'
 						}),
-						effect: 'The target can’t use triggered actions until the start of the next round. This ability deals an additional 4 damage if the sneak started their turn hidden from the target.'
+						effect: 'The target can’t use triggered actions until the start of the next round. This ability deals an additional 4 damage if the sneak started their turn hidden from the target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -413,7 +430,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: '3 damage; I<1 sneak is concealed from the target (save ends)',
 							tier3: '4 damage; I<2 sneak is concealed from the target (save ends)'
 						}),
-						effect: 'The sneak shifts up to their speed and hides after using this ability.'
+						effect: 'The sneak shifts up to their speed and hides after using this ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -430,7 +448,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: '11 damage; M<1 bleeding (save ends)',
 							tier3: '14 damage; M<2 bleeding (save ends)'
 						}),
-						effect: 'The target can’t hide from the sneak or their allies while bleeding from this ability.'
+						effect: 'The target can’t hide from the sneak or their allies while bleeding from this ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -441,7 +460,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object grabbed by the sneak',
-						effect: 'Vertical push 4. An ally target doesn’t take damage from being force moved.'
+						effect: 'Vertical push 4. An ally target doesn’t take damage from being force moved.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -452,7 +472,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 size 1 creature or object',
-						effect: 'The target is grabbed by the sneak.'
+						effect: 'The target is grabbed by the sneak.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -464,7 +485,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 enemy',
 						cost: 1,
-						effect: 'The sneak chooses an enemy within distance of the attack. The attack targets that enemy instead.'
+						effect: 'The sneak chooses an enemy within distance of the attack. The attack targets that enemy instead.',
+						sections: []
 					})
 				})
 			]
@@ -499,7 +521,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: '6 corruption damage; P<3 bleeding (save ends)',
 							tier3: '8 corruption damage; grabbed; P<4 bleeding (save ends)'
 						}),
-						effect: 'A target grabbed by the knightmare can be immediately vertically pushed 5.'
+						effect: 'A target grabbed by the knightmare can be immediately vertically pushed 5.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -544,7 +567,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: '6 damage; pull 3',
 							tier3: '7 damage; pull 4; grabbed'
 						}),
-						effect: 'The target can be pulled into the mob without inflicting damage.'
+						effect: 'The target can be pulled into the mob without inflicting damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -584,7 +608,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: '6 damage',
 							tier3: '7 damage; A<3 slowed (save ends)'
 						}),
-						effect: 'The target is grabbed if the snare started their turn hidden from them. A target grabbed by the snare can be immediately vertically pushed 4.'
+						effect: 'The target is grabbed if the snare started their turn hidden from them. A target grabbed by the snare can be immediately vertically pushed 4.',
+						sections: []
 					})
 				})
 			]
@@ -618,7 +643,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: '8 damage',
 							tier3: '11 damage'
 						}),
-						effect: 'Gain a surge if the commando started their turn concealed or hidden from the target.'
+						effect: 'Gain a surge if the commando started their turn concealed or hidden from the target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -629,7 +655,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object grabbed by the commando',
-						effect: 'Vertical push 5. An ally target doesn’t take damage from being force moved.'
+						effect: 'Vertical push 5. An ally target doesn’t take damage from being force moved.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -640,7 +667,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 size 1 creature or object',
-						effect: 'The target is grabbed by the commando.'
+						effect: 'The target is grabbed by the commando.',
+						sections: []
 					})
 				})
 			],
@@ -659,7 +687,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: '9 damage; M (average) grabbed',
 							tier3: '13 damage; M (strong) grabbed'
 						}),
-						effect: 'While the target is grabbed by this ability, they can’t speak and every creature and object has concealment from them.'
+						effect: 'While the target is grabbed by this ability, they can’t speak and every creature and object has concealment from them.',
+						sections: []
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
@@ -676,7 +705,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: 'pulled 10',
 							tier3: 'pulled 12'
 						}),
-						effect: 'The target takes 1 damage for each square they are pulled.'
+						effect: 'The target takes 1 damage for each square they are pulled.',
+						sections: []
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -693,7 +723,8 @@ When bugbears are compelled to take action, they take to the high ground and use
 							tier2: '18 damage',
 							tier3: '24 damage'
 						}),
-						effect: 'The target takes 15 damage, the grab ends, and the target falls prone.'
+						effect: 'The target takes 15 damage, the grab ends, and the target falls prone.',
+						sections: []
 					})
 				})
 			}

@@ -78,7 +78,8 @@ As a tactician, you have abilities that heal your allies and grant them increase
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature',
-						effect: `
+						sections: [
+							FactoryLogic.createAbilitySectionText(`
 The target is marked by you until the end of the encounter, you die, you use this ability again, or you willingly end this effect (no action required). If another tactician marks the target, then your mark on the target ends. You can have one target marked this way, but other tactician abilities can allow you to have multiple marked creatures.
 
 While the target is marked and within your line of effect, you and allies within your line of effect have an edge on power rolls made against the target.
@@ -89,7 +90,8 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 
 * The ability deals additional damage equal to twice your Reason score.
 * The damage dealer can spend a Recovery.
-* The damage dealer can shift up to a number of squares equal to your Reason score.`
+* The damage dealer can shift up to a number of squares equal to your Reason score.`)
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -101,8 +103,8 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 ally',
-						effect: 'The target can make a signature attack as a free triggered action.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The target can make a signature attack as a free triggered action.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
@@ -142,7 +144,9 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'You use your Mark ability against an enemy you have line of effect to, even if you are surprised. You can then immediately slide the marked target up to 3 squares, ignoring their stability. The target can’t be moved in a way that would harm them (such as over a cliff), leave them dying, or result in them suffering a condition or other negative effect.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('You use your Mark ability against an enemy you have line of effect to, even if you are surprised. You can then immediately slide the marked target up to 3 squares, ignoring their stability. The target can’t be moved in a way that would harm them (such as over a cliff), leave them dying, or result in them suffering a condition or other negative effect.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
@@ -387,8 +391,8 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 								keywords: [ AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: 'Any creature',
-								effect: 'The target gains two surges, which they can use on the triggering damage.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('The target gains two surges, which they can use on the triggering damage.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -421,10 +425,12 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 											distance: [ FactoryLogic.distance.createRanged(10) ],
 											target: '2 creatures',
 											cost: 5,
-											effect: `
+											sections: [
+												FactoryLogic.createAbilitySectionText(`
 Each target is marked by you. You immediately force each targeted creature to make a free strike against a creature of your choice within 5 squares of the targeted creature.
 
-**Mark Benefit**: For the rest of the encounter whenever you or an ally attacks a marked target, you can spend 2 focus to make the marked target free strike a creature of your choice within 5 squares of the marked target.`
+**Mark Benefit**: For the rest of the encounter whenever you or an ally attacks a marked target, you can spend 2 focus to make the marked target free strike a creature of your choice within 5 squares of the marked target.`)
+											]
 										})
 									}),
 									value: 1
@@ -513,8 +519,8 @@ You can only make this test once for each encounter and negotiation.`
 								keywords: [ AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged(10) ],
 								target: '1 enemy',
-								effect: 'At any point during the target’s movement, one ally can make a free strike against them.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('At any point during the target’s movement, one ally can make a free strike against them.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -537,7 +543,9 @@ You can only make this test once for each encounter and negotiation.`
 								keywords: [],
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
-								effect: 'You retarget the attack to you or another one of your allies or yourself. The new target must be a valid option for the strike.'
+								sections: [
+									FactoryLogic.createAbilitySectionText('You retarget the attack to you or another one of your allies or yourself. The new target must be a valid option for the strike.')
+								]
 							})
 						}),
 						FactoryLogic.feature.createChoice({
@@ -580,10 +588,12 @@ You can only make this test once for each encounter and negotiation.`
 											distance: [ FactoryLogic.distance.createRanged(5) ],
 											target: '2 creatures',
 											cost: 5,
-											effect: `
+											sections: [
+												FactoryLogic.createAbilitySectionText(`
 Each target is marked by you. You gain two surges.
 
-**Mark Benefit**: For the rest of the encounter whenever you or an ally attacks a marked target with a strike, you can spend 2 focus to add one additional target to the strike within the attack’s range.`
+**Mark Benefit**: For the rest of the encounter whenever you or an ally attacks a marked target with a strike, you can spend 2 focus to add one additional target to the strike within the attack’s range.`)
+											]
 										})
 									}),
 									value: 1
@@ -625,8 +635,8 @@ Each target is marked by you. You gain two surges.
 								keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 								distance: [ FactoryLogic.distance.createMelee() ],
 								target: 'Self or 1 ally',
-								effect: 'The damage is halved. If any effect of the damage has a potency effect, you decrease the potency by 1.',
 								sections: [
+									FactoryLogic.createAbilitySectionText('The damage is halved. If any effect of the damage has a potency effect, you decrease the potency by 1.'),
 									FactoryLogic.createAbilitySectionField({
 										name: 'Spend',
 										value: 1,
@@ -688,7 +698,9 @@ After constant drills you have improved your ability to anticipate an enemy’s 
 											distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 											target: 'Self and each ally in the area',
 											cost: 5,
-											effect: 'Until the start of your next turn, each target gains a bonus to their Stability equal to your Might score. Additionally, each target gains two surges.'
+											sections: [
+												FactoryLogic.createAbilitySectionText('Until the start of your next turn, each target gains a bonus to their Stability equal to your Might score. Additionally, each target gains two surges.')
+											]
 										})
 									}),
 									value: 1

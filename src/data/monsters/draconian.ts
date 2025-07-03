@@ -77,7 +77,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 					tier2: '10 damage',
 					tier3: '13 damage'
 				}),
-				effect: 'The damage type changes to match a damage type that the draconian has immunity to.'
+				effect: 'The damage type changes to match a damage type that the draconian has immunity to.',
+				sections: []
 			})
 		}),
 		FactoryLogic.feature.createAbility({
@@ -95,7 +96,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 					tier2: '13 damage',
 					tier3: '16 damage'
 				}),
-				effect: 'The draconian\'s scales shatter from battle damage. The draconian has damage weakness 5, but the draconian can now take two turns per round.'
+				effect: 'The draconian\'s scales shatter from battle damage. The draconian has damage weakness 5, but the draconian can now take two turns per round.',
+				sections: []
 			})
 		})
 	],
@@ -128,7 +130,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier1: '10 poison damage; M<1 slowed (save ends)',
 							tier2: '15 poison damage; M<2 slowed (save ends)',
 							tier3: '18 poison damage; M<3 slowed (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -189,7 +192,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier1: '7 poison damage; A<2 bleeding (save ends)',
 							tier2: '12 poison damage; A<3 bleeding (save ends)',
 							tier3: '15 poison damage; bleeding (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -232,7 +236,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier2: '15 damage; M<1 slowed (save ends)',
 							tier3: '18 damage; M<2 slowed (save ends)'
 						}),
-						effect: 'Lokratix deals 6 damage to each creature or object in a line up to two squares behind the target.'
+						effect: 'Lokratix deals 6 damage to each creature or object in a line up to two squares behind the target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -250,7 +255,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier2: '12 acid damage; M<2 dazed (save ends)',
 							tier3: '15 acid damage; M<3 dazed (save ends)'
 						}),
-						effect: 'Lokratix deals an additional 6 damage on abilities targeting enemies dazed by this ability.'
+						effect: 'Lokratix deals an additional 6 damage on abilities targeting enemies dazed by this ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -261,7 +267,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Lokratix lifts off from the ground and flies up to her speed. All creatures adjacent to the square she took off from are A<2 knocked prone.'
+						effect: 'Lokratix lifts off from the ground and flies up to her speed. All creatures adjacent to the square she took off from are A<2 knocked prone.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -277,7 +284,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier1: '7 acid damage; A<1 speed is 0 (EoT)',
 							tier2: '12 acid damage; A<2 speed is 0 (EoT)',
 							tier3: '15 acid damage; A<3 speed is 0 (EoT)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -324,7 +332,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier1: '10 cold damage',
 							tier2: '15 cold damage; the target has a bane on their next strike.',
 							tier3: '19 cold damage; the target has a double bane on their next strike'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -340,7 +349,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier1: '7 cold damage; M<1 dazed (save ends)',
 							tier2: '13 cold damage; M<2 dazed (save ends)',
 							tier3: '16 cold damage; M<3 dazed (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -351,7 +361,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Lydixavus flies up to their speed, leaving a size 1S ice mine in the square they took off from. The ice mine explodes when an enemy enters a square containing it. Lydixavus rolls power for an exploding ice mine as if they used their Ice Lob ability, targeting the triggering creature and each creature and object within 1 of the ice mine.'
+						effect: 'Lydixavus flies up to their speed, leaving a size 1S ice mine in the square they took off from. The ice mine explodes when an enemy enters a square containing it. Lydixavus rolls power for an exploding ice mine as if they used their Ice Lob ability, targeting the triggering creature and each creature and object within 1 of the ice mine.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -362,7 +373,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Lydixavus uses an additional signature action targeting a creature within 5 of the original target.'
+						effect: 'Lydixavus uses an additional signature action targeting a creature within 5 of the original target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -428,7 +440,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier2: '12 courruption damage; M<2 condemned (save ends)',
 							tier3: '15 courruption damage; M<3 condemned (save ends)'
 						}),
-						effect: 'A condemned creature has corruption weakness 3 until the condition ends.'
+						effect: 'A condemned creature has corruption weakness 3 until the condition ends.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -439,7 +452,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One ally',
-						effect: 'Myxovidan and the target shift and swap places.'
+						effect: 'Myxovidan and the target shift and swap places.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -451,7 +465,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Myxovidan perfectly recreates the damaging move. If the move requires a Power Roll, Myxovidan rolls power using his stats. If Myxovidan gets a higher tier on this roll than the triggering creature, the Director gains 2 Malice.'
+						effect: 'Myxovidan perfectly recreates the damaging move. If the move requires a Power Roll, Myxovidan rolls power using his stats. If Myxovidan gets a higher tier on this roll than the triggering creature, the Director gains 2 Malice.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -493,7 +508,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier1: '10 damage',
 							tier2: '16 damage; M<1 bleeding (save ends)',
 							tier3: '19 damage; M<2 3 damage, bleeding (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -510,7 +526,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier1: '7 fire damage',
 							tier2: '13 fire damage',
 							tier3: '16 fire damage'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -521,7 +538,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Phrrygalax flies up to his speed and lands in an unoccupied space on the ground. Each creature adjacent to where he lands is A<2 knocked prone.'
+						effect: 'Phrrygalax flies up to his speed and lands in an unoccupied space on the ground. Each creature adjacent to where he lands is A<2 knocked prone.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -533,7 +551,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Phrrygalax absorbs the damage instead, recovering Stamina equal to the damage dealt. Phrrygalax swaps his current immunity with the triggering damage type.'
+						effect: 'Phrrygalax absorbs the damage instead, recovering Stamina equal to the damage dealt. Phrrygalax swaps his current immunity with the triggering damage type.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -544,7 +563,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Phrrygalax shifts up to his speed and uses Baneful Blade against the enemy, dealing an additional 7 damage.'
+						effect: 'Phrrygalax shifts up to his speed and uses Baneful Blade against the enemy, dealing an additional 7 damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -623,7 +643,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One ally',
-						effect: 'Dorzinuuth shields his ally with his wings, halving the damage.'
+						effect: 'Dorzinuuth shields his ally with his wings, halving the damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -676,7 +697,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 })
 						],
 						target: 'Self and all allies in the burst',
-						effect: 'Each target shifts or flies up to their speed and regains 10 Stamina.'
+						effect: 'Each target shifts or flies up to their speed and regains 10 Stamina.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -687,7 +709,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All allies in the burst',
-						effect: 'Dorzinuuth covers all allies in an electrifying mesh. Whenever a target takes damage from a melee strike or ability, the attacker takes 6 lightning damage.'
+						effect: 'Dorzinuuth covers all allies in an electrifying mesh. Whenever a target takes damage from a melee strike or ability, the attacker takes 6 lightning damage.',
+						sections: []
 					})
 				})
 			]
@@ -720,7 +743,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier1: '6 damage',
 							tier2: '11 damage',
 							tier3: '14 damage; push 2'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -731,7 +755,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'The Nameless\'s mentor',
-						effect: 'The Nameless’s mentor enters their square and rides on their back. The Nameless or the mentor can move the mentor to an adjacent square as a free maneuver. While in the Nameless’s square, the mentor moves with them, can’t take their own move action, and gains 1 shield.'
+						effect: 'The Nameless’s mentor enters their square and rides on their back. The Nameless or the mentor can move the mentor to an adjacent square as a free maneuver. While in the Nameless’s square, the mentor moves with them, can’t take their own move action, and gains 1 shield.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -759,7 +784,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier2: '9 corruption damage; I (average) weakened (save ends)',
 							tier3: '12 corruption damage; I (strong) weakened (save ends)'
 						}),
-						effect: 'If the Nameless\'s menter is in the area, they gain 2 shields until the start of their next turn.'
+						effect: 'If the Nameless\'s menter is in the area, they gain 2 shields until the start of their next turn.',
+						sections: []
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -776,7 +802,8 @@ The draconians presented in this section aren’t a band, but five individual dr
 							tier2: '16 corruption damage',
 							tier3: '21 corruption damage'
 						}),
-						effect: 'The Nameless must be winded to use this ability. Any living minions reduced to 0 Stamina by this ability regain all their Stamina and become corporeal undead under the Nameless’s control until the end of the Nameless’s next turn, after which time they are destroyed.'
+						effect: 'The Nameless must be winded to use this ability. Any living minions reduced to 0 Stamina by this ability regain all their Stamina and become corporeal undead under the Nameless’s control until the end of the Nameless’s next turn, after which time they are destroyed.',
+						sections: []
 					})
 				})
 			}

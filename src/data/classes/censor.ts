@@ -70,8 +70,8 @@ You’re at your best against the strongest foes. Your judgments terrify heretic
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 enemy',
-						effect: `
-The target is judged by you until the end of the encounter, you die, you use this ability again, or you willingly end this effect (no action required). If another censor judges the target, then your judgment on the target ends.
+						sections: [
+							FactoryLogic.createAbilitySectionText(`The target is judged by you until the end of the encounter, you die, you use this ability again, or you willingly end this effect (no action required). If another censor judges the target, then your judgment on the target ends.
 
 If a judged creature uses an action and you have line of effect to them, you can use a free triggered action to deal holy damage equal to twice your Presence score to them.
 
@@ -81,7 +81,8 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 
 * When an adjacent judged target shifts, you can make a melee free strike against them. The target doesn't shift and their speed becomes 0 until the end of this turn.
 * When a judged target makes a power roll, you can add a bane to the roll.
-* When a judged target within distance uses an ability with a potency against another creature, you reduce the potency of the ability by 1 for that creature (to a minimum of 0).`
+* When a judged target within distance uses an ability with a potency against another creature, you reduce the potency of the ability by 1 for that creature (to a minimum of 0).`)
+						]
 					})
 				}),
 				FactoryLogic.feature.createKitChoice({
@@ -96,8 +97,8 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Self or one ally',
-						effect: 'You spend a Recovery and the target regains Stamina equal to your Recovery value.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('You spend a Recovery and the target regains Stamina equal to your Recovery value.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -505,13 +506,15 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 											distance: [ FactoryLogic.distance.createRanged(10) ],
 											target: '1 creature',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Presence ],
-												tier1: '8 + M holy damage; P < [weak], frightened (save ends)',
-												tier2: '12 + M holy damage; P < [average], frightened (save ends)',
-												tier3: '15 + M holy damage; P < [strong], frightened (save ends)'
-											}),
-											effect: 'If the target is already frightened of you or another creature when you use this ability and it would frighten them again, they take psychic damage equal to twice your Presence score instead.'
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Presence ],
+													tier1: '8 + M holy damage; P < [weak], frightened (save ends)',
+													tier2: '12 + M holy damage; P < [average], frightened (save ends)',
+													tier3: '15 + M holy damage; P < [strong], frightened (save ends)'
+												})),
+												FactoryLogic.createAbilitySectionText('If the target is already frightened of you or another creature when you use this ability and it would frighten them again, they take psychic damage equal to twice your Presence score instead.')
+											]
 										})
 									}),
 									value: 1
@@ -527,7 +530,9 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 											distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 											target: 'Each enemy in the area',
 											cost: 5,
-											effect: 'Each target takes twice your Presence in holy damage. Any hidden enemies are automatically revealed and can’t become hidden again until the start of your next turn. You can use Judgment on one of the targets as a free triggered action.'
+											sections: [
+												FactoryLogic.createAbilitySectionText('Each target takes twice your Presence in holy damage. Any hidden enemies are automatically revealed and can’t become hidden again until the start of your next turn. You can use Judgment on one of the targets as a free triggered action.')
+											]
 										})
 									}),
 									value: 1
@@ -590,7 +595,9 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 											distance: [ FactoryLogic.distance.createRanged(10) ],
 											target: 'Self or one ally',
 											cost: 5,
-											effect: 'You can spend a Recovery to allow the target to regain Stamina equal to your Recovery value. The target can then take their turn immediately before the triggering enemy.'
+											sections: [
+												FactoryLogic.createAbilitySectionText('You can spend a Recovery to allow the target to regain Stamina equal to your Recovery value. The target can then take their turn immediately before the triggering enemy.')
+											]
 										})
 									}),
 									value: 1
@@ -606,7 +613,9 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 											distance: [ FactoryLogic.distance.createRanged(10) ],
 											target: 'Self or one ally',
 											cost: 5,
-											effect: 'When you use this ability, the target can use a free triggered action to make a signature strike or a heroic ability that is a strike, and has a double edge on the power roll.'
+											sections: [
+												FactoryLogic.createAbilitySectionText('When you use this ability, the target can use a free triggered action to make a signature strike or a heroic ability that is a strike, and has a double edge on the power roll.')
+											]
 										})
 									}),
 									value: 1
@@ -669,7 +678,9 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 											distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 3 }) ],
 											target: 'Self and each ally in the area',
 											cost: 5,
-											effect: 'Until the end of the encounter or you are dying, each target in the aura gains a surge at the end of each of your turns.'
+											sections: [
+												FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, each target in the aura gains a surge at the end of each of your turns.')
+											]
 										})
 									}),
 									value: 1
@@ -685,13 +696,15 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 											distance: [ FactoryLogic.distance.createMelee() ],
 											target: '1 creature',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Presence ],
-												tier1: '5 + P damage; P < [weak], restrained (save ends)',
-												tier2: '9 + P damage; P < [average], restrained (save ends)',
-												tier3: '12 + P damage; P < [strong], restrained (save ends)'
-											}),
-											effect: 'Any of your abilities that impose forced movement can move the target while they are restrained this way.'
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Presence ],
+													tier1: '5 + P damage; P < [weak], restrained (save ends)',
+													tier2: '9 + P damage; P < [average], restrained (save ends)',
+													tier3: '12 + P damage; P < [strong], restrained (save ends)'
+												})),
+												FactoryLogic.createAbilitySectionText('Any of your abilities that impose forced movement can move the target while they are restrained this way.')
+											]
 										})
 									}),
 									value: 1

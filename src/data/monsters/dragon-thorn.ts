@@ -153,7 +153,8 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All dragonsealed enemies',
 						cost: 5,
-						effect: 'Each target is pulled 5 toward the dragon. For each creature pulled, the dragon gains 5 temporary Stamina.'
+						effect: 'Each target is pulled 5 toward the dragon. For each creature pulled, the dragon gains 5 temporary Stamina.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -164,7 +165,8 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 						keywords: [],
 						distance: [],
 						target: '',
-						effect: 'Once per turn, the dragon shifts 5 and can move through enemies at normal speed. The ﬁrst time the dragon passes through a creature’s space during this movement, the creature takes 3 damage.'
+						effect: 'Once per turn, the dragon shifts 5 and can move through enemies at normal speed. The ﬁrst time the dragon passes through a creature’s space during this movement, the creature takes 3 damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -175,7 +177,8 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Triggering creature',
-						effect: 'The target is pulled 5 towards the dragon is restrained (EoT).'
+						effect: 'The target is pulled 5 towards the dragon is restrained (EoT).',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -186,7 +189,8 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 						cost: 1,
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Triggering creature',
-						effect: 'The dragon makes a free strike against the target. The target is M<2 bleeding (EoT).'
+						effect: 'The dragon makes a free strike against the target. The target is M<2 bleeding (EoT).',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -207,7 +211,8 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 							tier1: '5 damage, A<2 restrained (save ends)',
 							tier2: '9 damage, A<3 restrained (save ends)',
 							tier3: '12 damage, A<4 restrained (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -217,7 +222,8 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 						type: FactoryLogic.type.createVillainAction(),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The dragon grows longer, sharper thorns upon their scales. A creature who targets the dragon with a melee strike takes 3 damage.'
+						effect: 'The dragon grows longer, sharper thorns upon their scales. A creature who targets the dragon with a melee strike takes 3 damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -227,7 +233,8 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 						type: FactoryLogic.type.createVillainAction(),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The dragon’s domain becomes imbued with deadly poison. A creature who takes damage from the dragon’s domain or from striking the dragon takes an additional 1d6 poison damage.'
+						effect: 'The dragon’s domain becomes imbued with deadly poison. A creature who takes damage from the dragon’s domain or from striking the dragon takes an additional 1d6 poison damage.',
+						sections: []
 					})
 				})
 			]

@@ -248,7 +248,8 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 							tier2: '10 damage; M<2 3 damage',
 							tier3: '13 damage; M<3 6 damage'
 						}),
-						effect: 'Each target is no longer grabbed.'
+						effect: 'Each target is no longer grabbed.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -259,7 +260,8 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Shift 4. This movement ignores difficult terrain.'
+						effect: 'Shift 4. This movement ignores difficult terrain.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -321,7 +323,8 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 							tier1: '11 damage',
 							tier2: '17 damage; A<2 grabbed',
 							tier3: '21 damage; A<3 grabbed'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -338,7 +341,8 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 							tier1: '10 damage; R<1 the mindkiller is invisible to the target (save ends)',
 							tier2: '15 damage; R<2 the mindkiller is invisible to the target (save ends)',
 							tier3: '18 damage; R<3 the mindkiller is invisible to the target (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -349,7 +353,8 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One grabbed creature',
-						effect: 'R<2 The mindkiller drains one point from the target’s Reason, Intuition, or Presence score (Director’s choice) and adds it to their own score until the end of the encounter.'
+						effect: 'R<2 The mindkiller drains one point from the target’s Reason, Intuition, or Presence score (Director’s choice) and adds it to their own score until the end of the encounter.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -438,7 +443,8 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 							tier1: '6 lightning damage',
 							tier2: '10 lightning damage; I<2 slowed (save ends)',
 							tier3: '13 lightning damage; I<3 slowed (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -449,7 +455,8 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
-						effect: 'The next power roll with the psionic keyword made against the target will automatically be a 17 until the start of the artillerist’s next turn.'
+						effect: 'The next power roll with the psionic keyword made against the target will automatically be a 17 until the start of the artillerist’s next turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -461,7 +468,8 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: ' The artillerist teleports 5 and doesn’t suffer any additional effects associated with the damage.'
+						effect: ' The artillerist teleports 5 and doesn’t suffer any additional effects associated with the damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -508,7 +516,8 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 							tier1: '10 damage',
 							tier2: '15 damage; M<2 grabbed',
 							tier3: '18 damage; M<3 grabbed'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -548,7 +557,8 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 							tier1: '6 damage; vertical slide 2',
 							tier2: '10 damage; vertical slide 3',
 							tier3: '12 damage; vertical slide 5'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -559,7 +569,8 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						keywords: [ AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature grabbed by the invader',
-						effect: 'The potency of the effect increases by 2.'
+						effect: 'The potency of the effect increases by 2.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -604,7 +615,8 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 							tier1: '11 psychic damage; R<2 slowed (save ends)',
 							tier2: '16 psychic damage; R<3 slowed (save ends)',
 							tier3: '19 psychic damage; R<4 slowed (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -615,7 +627,8 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The evolutionist teleports, swapping places with one creature within 5.'
+						effect: 'The evolutionist teleports, swapping places with one creature within 5.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -626,7 +639,8 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The evolutionist gains immunity 5 to the triggering type of damage until the start of their next turn.'
+						effect: 'The evolutionist gains immunity 5 to the triggering type of damage until the start of their next turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({

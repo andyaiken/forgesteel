@@ -167,7 +167,8 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies in burst',
 						cost: 1,
-						effect: 'The dragon expels blistering steam straight down, dealing 7 fire damage to each target. The dragon then shifts up to their speed vertically and adds the fly keyword to their movement until the end of the round.'
+						effect: 'The dragon expels blistering steam straight down, dealing 7 fire damage to each target. The dragon then shifts up to their speed vertically and adds the fly keyword to their movement until the end of the round.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -178,7 +179,8 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 						keywords: [],
 						distance: [],
 						target: 'Self (while flying)',
-						effect: 'The dragon can use this ability once per round. They continue to give oﬀ steam to extend the duration of their ﬂight for an additional round. Each creature under the dragon when they use this ability takes 7 ﬁre damage.'
+						effect: 'The dragon can use this ability once per round. They continue to give oﬀ steam to extend the duration of their ﬂight for an additional round. Each creature under the dragon when they use this ability takes 7 ﬁre damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -194,7 +196,8 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 							tier1: 'push 5',
 							tier2: 'push 7',
 							tier3: 'push 10 (ignores stability)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -205,7 +208,8 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 						cost: 1,
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The dragon plumets to the ground and uses Forge Hammer Tail. They deal an additional 4 damage for each square they fell.'
+						effect: 'The dragon plumets to the ground and uses Forge Hammer Tail. They deal an additional 4 damage for each square they fell.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -227,7 +231,8 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 							tier2: '6 fire damage, I<3 frightened (save ends)',
 							tier3: '8 fire damage, I<4 frightened (save ends)'
 						}),
-						effect: 'The dragon roars, venting scorching air in every direction.'
+						effect: 'The dragon roars, venting scorching air in every direction.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -238,7 +243,8 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Shields embedded under their scales emerge, giving the dragon damage immunity 6 at the start of each round for the rest of the encounter. The dragon loses this immunity for the rest of the round if they take any damage.'
+						effect: 'Shields embedded under their scales emerge, giving the dragon damage immunity 6 at the start of each round for the rest of the encounter. The dragon loses this immunity for the rest of the round if they take any damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({

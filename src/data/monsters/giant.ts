@@ -622,8 +622,9 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createMelee(3)
 						],
 						target: 'Self',
-						effect: 'The red fist becomes the target of the ability. The red fist makes a free strike against the enemy after the ability resolves.'
-
+						sections: [
+							FactoryLogic.createAbilitySectionText('The red fist becomes the target of the ability. The red fist makes a free strike against the enemy after the ability resolves.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({

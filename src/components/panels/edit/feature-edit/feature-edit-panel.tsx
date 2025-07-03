@@ -74,7 +74,8 @@ export const FeatureEditPanel = (props: Props) => {
 						type: FactoryLogic.type.createAction(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: ''
+						target: '',
+						sections: []
 					})
 				} as FeatureAbilityData;
 				break;

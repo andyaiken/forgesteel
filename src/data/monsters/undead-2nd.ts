@@ -672,7 +672,8 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						type: FactoryLogic.type.createTrigger('The Mummy Lord becomes winded for the first time.'),
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
-						effect: 'Two **mummies** and 4 **ghoul carvers** appear within distance.'
+						effect: 'Two **mummies** and 4 **ghoul carvers** appear within distance.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({

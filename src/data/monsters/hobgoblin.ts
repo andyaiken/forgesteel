@@ -180,7 +180,8 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier1: '2 fire damage',
 							tier2: '4 fire damage; M<2 fire weakness 5 (save ends)',
 							tier3: '6 fire damage; M<3 fire weakness 5 (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -281,7 +282,8 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier1: '3 damage',
 							tier2: '5 damage',
 							tier3: '7 damage; grabbed or prone'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -330,7 +332,8 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier1: '8 fire or corruption damage; P<1 weakened (save ends)',
 							tier2: '12 fire or corruption damage; P<2 weakened (save ends)',
 							tier3: '15 fire or corruption damage; P<3 weakened (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -538,7 +541,8 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier1: '9 fire damage',
 							tier2: '13 fire damage',
 							tier3: '16 fire damage; A<3 dazed (EoT)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -621,7 +625,8 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier1: '5 fire damage; A<1 burning (save ends)',
 							tier2: '9 fire damage; A<2 burning (save ends)',
 							tier3: '11 fire damage; prone; A<3 burning (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -670,7 +675,8 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier1: '9 corruption damage; P<1 slowed (save ends)',
 							tier2: '14 corruption damage; P<2 restrained (save ends)',
 							tier3: '17 corruption damage; P<3 restrained (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1210,7 +1216,8 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature',
-						effect: 'The target gains fire weakness 10 until the end of the flameslinger’s next turn. If the target is the flameslinger’s mentor, they instead gain fire immunity 10.'
+						effect: 'The target gains fire weakness 10 until the end of the flameslinger’s next turn. If the target is the flameslinger’s mentor, they instead gain fire immunity 10.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -1234,7 +1241,8 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier2: '12 damage; pull 2',
 							tier3: '16 damage; pull 4'
 						}),
-						effect: 'A creature pulled adjacent to the flameslinger is P (medium) prone.'
+						effect: 'A creature pulled adjacent to the flameslinger is P (medium) prone.',
+						sections: []
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -1251,7 +1259,8 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							tier2: '12 fire damage; push 3',
 							tier3: '16 fire damage; push 5'
 						}),
-						effect: 'If the fireslinger’s mentor is within 10, the mentor can be the source of the burst instead of the fireslinger.'
+						effect: 'If the fireslinger’s mentor is within 10, the mentor can be the source of the burst instead of the fireslinger.',
+						sections: []
 					})
 				})
 			}

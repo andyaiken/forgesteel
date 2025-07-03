@@ -131,7 +131,8 @@ export const MonsterEditPanel = (props: Props) => {
 						name: 'Level 4',
 						type: FactoryLogic.type.createAction(),
 						distance: [],
-						target: ''
+						target: '',
+						sections: []
 					})
 				});
 
@@ -141,7 +142,8 @@ export const MonsterEditPanel = (props: Props) => {
 						name: 'Level 7',
 						type: FactoryLogic.type.createAction(),
 						distance: [],
-						target: ''
+						target: '',
+						sections: []
 					})
 				});
 
@@ -151,7 +153,8 @@ export const MonsterEditPanel = (props: Props) => {
 						name: 'Level 10',
 						type: FactoryLogic.type.createAction(),
 						distance: [],
-						target: ''
+						target: '',
+						sections: []
 					})
 				});
 

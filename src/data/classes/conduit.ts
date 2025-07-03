@@ -110,7 +110,8 @@ For each piety spent, you can choose one of the following enhancements:
 							tier2: '4 + I damage',
 							tier3: '6 + I damage'
 						}),
-						effect: 'You can have this ability deal holy damage.'
+						effect: 'You can have this ability deal holy damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createChoice({
@@ -399,7 +400,8 @@ A creature with a willing soul returns to life at the end of the respite with fu
 				tier1: '3 + I holy damage; vertical pull 2',
 				tier2: '5 + I holy damage; vertical pull 3',
 				tier3: '8 + I holy damage; vertical pull 4'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-4',
@@ -457,7 +459,8 @@ A creature with a willing soul returns to life at the end of the respite with fu
 				tier1: '3 + I holy damage; slide 1',
 				tier2: '5 + I holy damage; slide 2',
 				tier3: '8 + I holy damage; slide 3'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-7',
@@ -494,7 +497,8 @@ A creature with a willing soul returns to life at the end of the respite with fu
 				tier1: '3 + I corruption damage; P < [weak], the target takes a bane on their next power roll',
 				tier2: '5 + I corruption damage; P < [average], the target takes a bane on their next power roll',
 				tier3: '8 + I corruption damage; P < [strong], the target takes a bane on their next power roll'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-9',
@@ -526,7 +530,9 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Special',
 			cost: 3,
-			effect: 'You summon a spirit of size 2 who can’t be harmed, and who appears in an unoccupied space within distance. The spirit lasts until the end of your next turn. You and your allies can move through the spirit’s space, but enemies can’t. An enemy who moves within 2 squares of the spirit for the first time in a round or starts their turn there takes holy damage equal to your Intuition score.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('You summon a spirit of size 2 who can’t be harmed, and who appears in an unoccupied space within distance. The spirit lasts until the end of your next turn. You and your allies can move through the spirit’s space, but enemies can’t. An enemy who moves within 2 squares of the spirit for the first time in a round or starts their turn there takes holy damage equal to your Intuition score.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-11',
@@ -542,7 +548,8 @@ A creature with a willing soul returns to life at the end of the respite with fu
 				tier1: '3 + I holy damage; A < [weak], prone',
 				tier2: '6 + I holy damage; A < [average], prone',
 				tier3: '9 + I holy damage; A < [strong], prone and can’t stand (save ends)'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-12',
@@ -579,7 +586,8 @@ A creature with a willing soul returns to life at the end of the respite with fu
 				tier1: '3 + I corruption damage; M < [weak], damage weakness 5 (save ends)',
 				tier2: '6 + I corruption damage; M < [average], damage weakness 5 (save ends)',
 				tier3: '9 + I corruption damage; M < [strong], damage weakness 5 (save ends)'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-14',
@@ -595,7 +603,8 @@ A creature with a willing soul returns to life at the end of the respite with fu
 				tier1: '6 + I holy damage; I < [weak], frightened (save ends)',
 				tier2: '9 + I holy damage; I < [average], frightened (save ends)',
 				tier3: '13 + I holy damage; I < [strong], frightened (save ends)'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-15',
@@ -611,7 +620,8 @@ A creature with a willing soul returns to life at the end of the respite with fu
 				tier1: 'The target gains 5 temporary Stamina',
 				tier2: 'The target gains 10 temporary Stamina',
 				tier3: 'The target gains 15 temporary Stamina'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-16',
@@ -641,7 +651,8 @@ A creature with a willing soul returns to life at the end of the respite with fu
 				tier2: '9 psychic damage; I < [average], frightened (save ends)',
 				tier3: '13 psychic damage; I < [strong], frightened (save ends)'
 			}),
-			effect: 'The targets are frightened of you or a creature you choose within 10 squares.'
+			effect: 'The targets are frightened of you or a creature you choose within 10 squares.',
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-18',
@@ -652,7 +663,9 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 ally',
 			cost: 7,
-			effect: 'The target gains 20 Temporary Stamina and three surges.'
+			sections: [
+				FactoryLogic.createAbilitySectionText('The target gains 20 Temporary Stamina and three surges.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-19',
@@ -669,7 +682,8 @@ A creature with a willing soul returns to life at the end of the respite with fu
 				tier2: '10 + I corruption damage',
 				tier3: '15 + I corruption damage'
 			}),
-			effect: 'One ally within distance can spend any number of Recoveries (no action required).'
+			effect: 'One ally within distance can spend any number of Recoveries (no action required).',
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-20',

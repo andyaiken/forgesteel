@@ -135,7 +135,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier1: '1 damage',
 							tier2: '2 damage; R<1 Magic weakness 3 (save ends)',
 							tier3: '3 damage; R<2 Magic weakness 3 (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -217,7 +218,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier2: '4 damage',
 							tier3: '5 damage'
 						}),
-						effect: 'Each ally adjacent to the target can shift 2.'
+						effect: 'Each ally adjacent to the target can shift 2.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -257,7 +259,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier2: '2 damage',
 							tier3: '3 damage; taunted (EoT)'
 						}),
-						effect: 'The soot crow ignores opportunity attacks from the target until the end of its turn.'
+						effect: 'The soot crow ignores opportunity attacks from the target until the end of its turn.',
+						sections: []
 					})
 				})
 			]
@@ -285,7 +288,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The brambleguard’s speed becomes 0 and they extend themself into a 5 wall until the start of their next turn. Each ally adjacent to the brambleguard at the start of their turn regains 5 Stamina and can apply the Magic keyword to their weapon abilities until the end of their turn.'
+						effect: 'The brambleguard’s speed becomes 0 and they extend themself into a 5 wall until the start of their next turn. Each ally adjacent to the brambleguard at the start of their turn regains 5 Stamina and can apply the Magic keyword to their weapon abilities until the end of their turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -301,7 +305,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier1: '4 damage',
 							tier2: '7 damage; push 3',
 							tier3: '10 damage; push 3; A<2 bleeding (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -340,7 +345,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier2: '9 damage',
 							tier3: '12 damage; R<2 bleeding (save ends)'
 						}),
-						effect: 'The bloodletter and each ally has a double edge on abilities targeting a creature or object bleeding from this ability.'
+						effect: 'The bloodletter and each ally has a double edge on abilities targeting a creature or object bleeding from this ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -352,7 +358,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Special',
-						effect: 'The bloodletter creates a cloud of blood vapor in the area until the end of the next round. The cloud blocks line of effect for enemies, and an enemy has Magic weakness 3 occupying an affected square. The bloodletter then shifts up to their speed, hiding if they end their movement under concealment.'
+						effect: 'The bloodletter creates a cloud of blood vapor in the area until the end of the next round. The cloud blocks line of effect for enemies, and an enemy has Magic weakness 3 occupying an affected square. The bloodletter then shifts up to their speed, hiding if they end their movement under concealment.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -407,7 +414,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 ally',
-						effect: 'The target’s speed increases by 5 and they cannot get results lower than tier 3 on their power rolls. The target immediately dies at the end of their next turn.'
+						effect: 'The target’s speed increases by 5 and they cannot get results lower than tier 3 on their power rolls. The target immediately dies at the end of their next turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -445,7 +453,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier1: '4 cold damage; M<0 slide 3',
 							tier2: '6 cold damage; M<1 slide 4 or prone',
 							tier3: '9 cold damage; M<2 slide 5 or prone'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -462,7 +471,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier2: '8 damage; R<1 slowed (save ends)',
 							tier3: '11 damage; R<2 restrained (save ends)'
 						}),
-						effect: 'Each enemy within 3 of a target suffers the same additional effects as the target unless they shift into an unoccupied square adjacent to them.'
+						effect: 'Each enemy within 3 of a target suffers the same additional effects as the target unless they shift into an unoccupied square adjacent to them.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -518,7 +528,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '2 allies',
-						effect: 'Each target is teleported to an unoccupied square adjacent to the palinode. Then, the palinode and each target gain 5 temporary Stamina.'
+						effect: 'Each target is teleported to an unoccupied square adjacent to the palinode. Then, the palinode and each target gain 5 temporary Stamina.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -561,7 +572,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier2: 'vertical push 5',
 							tier3: 'vertical push 6'
 						}),
-						effect: 'The area of the cube increases by 1 for each elemental mote adjacent to the wyrd.'
+						effect: 'The area of the cube increases by 1 for each elemental mote adjacent to the wyrd.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -573,7 +585,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Special',
-						effect: 'The wyrd summons 2 **elemental motes** or 2 **soot crows** into unoccupied squares within distance.'
+						effect: 'The wyrd summons 2 **elemental motes** or 2 **soot crows** into unoccupied squares within distance.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -585,7 +598,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 8, within: 8 }) ],
 						target: 'Special',
-						effect: 'The wyrd shapes the land as if it were loose clay. Each wall segment takes up the entire square. A segment can also be used to push a square of the terrain further into the ground. An enemy on top of an affected square moves with the elevation of the terrain.'
+						effect: 'The wyrd shapes the land as if it were loose clay. Each wall segment takes up the entire square. A segment can also be used to push a square of the terrain further into the ground. An enemy on top of an affected square moves with the elevation of the terrain.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -624,7 +638,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier2: '7 damage',
 							tier3: '9 damage; the zephyr makes a free strike on a creature adjacent to the target; both creatures are A<2 prone'
 						}),
-						effect: 'Shift 2.'
+						effect: 'Shift 2.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -635,7 +650,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The zephyr moves up to their speed through the air. They must end this movement on solid ground or immediately fall prone.'
+						effect: 'The zephyr moves up to their speed through the air. They must end this movement on solid ground or immediately fall prone.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -679,7 +695,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier2: '14 lightning damage; R<2 dazed (save ends)',
 							tier3: '17 lightning damage; R<3 dazed (save ends)'
 						}),
-						effect: 'High elves have an edge on abilities used against the target until the start of the ordinator’s next turn.'
+						effect: 'High elves have an edge on abilities used against the target until the start of the ordinator’s next turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -690,7 +707,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each elemental ally in the burst',
-						effect: 'Each target moves up to their speed or makes a free strike. An elemental mote target can use their Spark of Life trait.'
+						effect: 'Each target moves up to their speed or makes a free strike. An elemental mote target can use their Spark of Life trait.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -703,7 +721,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
-						effect: 'For every 3 malice spent, the ordinator summons 5 **elemental motes**, 3 **soot crows**, 1 **ceramic horse**, or 1 **brambleguard** into unoccupied squares within distance.'
+						effect: 'For every 3 malice spent, the ordinator summons 5 **elemental motes**, 3 **soot crows**, 1 **ceramic horse**, or 1 **brambleguard** into unoccupied squares within distance.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -713,7 +732,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						type: FactoryLogic.type.createTrigger('An enemy targets the ordinator or an ally within distance with an ability.'),
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Triggering enemy',
-						effect: 'The ordinator uses Lightning Rod against the target.'
+						effect: 'The ordinator uses Lightning Rod against the target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -734,7 +754,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All allies in the burst',
-						effect: 'Each target glows, ending one condition on themselves and then moving up to twice their speed.'
+						effect: 'Each target glows, ending one condition on themselves and then moving up to twice their speed.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -768,7 +789,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 })
 						],
 						target: 'Self and all allies in the burst',
-						effect: 'All elves radiate wisps of magic. Each target makes a free strike that has the Magic keyword and deals an additional 3 damage.'
+						effect: 'All elves radiate wisps of magic. Each target makes a free strike that has the Magic keyword and deals an additional 3 damage.',
+						sections: []
 					})
 				})
 			]
@@ -820,7 +842,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier2: '5 damage',
 							tier3: '7 damage'
 						}),
-						effect: 'This attack deals an additional 2 damage to prone targets.'
+						effect: 'This attack deals an additional 2 damage to prone targets.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -832,7 +855,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'The horse\'s rider',
-						effect: 'Vertical slide 3; The rider can use a ranged ability at any point during the movement and then fall without taking damage.'
+						effect: 'Vertical slide 3; The rider can use a ranged ability at any point during the movement and then fall without taking damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -871,7 +895,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier2: '5 fire damage',
 							tier3: '7 fire damage'
 						}),
-						effect: 'If the weatherwise targets their mentor, instead of taking damage the mentor gains the same amount of Temporary Stamina.'
+						effect: 'If the weatherwise targets their mentor, instead of taking damage the mentor gains the same amount of Temporary Stamina.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -895,7 +920,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier2: '5 cold damage; push 3',
 							tier3: '8 cold damage; push 5'
 						}),
-						effect: 'The weatherwise can teleport 5 before or after using this ability.'
+						effect: 'The weatherwise can teleport 5 before or after using this ability.',
+						sections: []
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
@@ -906,7 +932,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All allies',
-						effect: 'Each target can spend a recovery. Additionally, they can turn the duration of one Save Ends effect they suffer from into EoT or end one EoT effect.'
+						effect: 'Each target can spend a recovery. Additionally, they can turn the duration of one Save Ends effect they suffer from into EoT or end one EoT effect.',
+						sections: []
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -922,7 +949,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							tier1: '6 corruption damage; P (weak) prone and can\'t stand (save ends)',
 							tier2: '10 corruption damage; P (average) prone and can\'t stand (save ends)',
 							tier3: '14 corruption damage; P (strong) prone and can\'t stand (save ends)'
-						})
+						}),
+						sections: []
 					})
 				})
 			}

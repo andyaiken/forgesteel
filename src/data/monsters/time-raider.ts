@@ -313,7 +313,8 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 })
 						],
 						target: 'Self and all allies in the burst',
-						effect: 'The damage is reduced by half for the cannonfall and each target also affected by the triggering ability.'
+						effect: 'The damage is reduced by half for the cannonfall and each target also affected by the triggering ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -435,7 +436,8 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object',
-						effect: 'The hijack psychically latches their sickle onto the target and closes the distance between them. If the target is larger than the hijack, the hijack moves adjacent to the target. Otherwise, the target is pulled 4 squares toward the hijack.'
+						effect: 'The hijack psychically latches their sickle onto the target and closes the distance between them. If the target is larger than the hijack, the hijack moves adjacent to the target. Otherwise, the target is pulled 4 squares toward the hijack.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -609,13 +611,13 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage; 2 psychic damage',
-							tier2: '7 damage; 3 psychic damage',
-							tier3: '9 damage; 4 psychic damage'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage; 2 psychic damage',
+								tier2: '7 damage; 3 psychic damage',
+								tier3: '9 damage; 4 psychic damage'
+							})),
 							FactoryLogic.createAbilitySectionText('Power rolls made against the target have an edge until the start of the vertex\'s next turn.')
 						]
 					})
@@ -845,7 +847,8 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One creature',
-						effect: 'The target can spend 1 Recovery. Until the end of their next turn, their speed is doubled.'
+						effect: 'The target can spend 1 Recovery. Until the end of their next turn, their speed is doubled.',
+						sections: []
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({

@@ -99,13 +99,13 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'Each enemy in the burst',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '2 damage; A<1 bleeding (save ends)',
-							tier2: '4 damage; A<2 bleeding (save ends)',
-							tier3: '5 damage; A<3 bleeding (save ends)'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '2 damage; A<1 bleeding (save ends)',
+								tier2: '4 damage; A<2 bleeding (save ends)',
+								tier3: '5 damage; A<3 bleeding (save ends)'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -123,13 +123,15 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature',
 						cost: 3,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 damage; bleeding (save ends) or M<1 beheaded (see effect)',
-							tier2: '13 damage; bleeding (save ends) or M<2 beheaded (see effect)',
-							tier3: '16 damage; bleeding (save ends) or M<3 beheaded (see effect)'
-						}),
-						effect: 'A beheaded target has their head fall into an unoccupied square adjacent to the bredbeddle, but they remain alive. While beheaded, the target is bleeding and can’t establish line of effect beyond 1 square. The beheaded target can survive without their head for 24 hours, and can reattach their head with a maneuver by entering its square. A target who remains beheaded for 24 hours dies.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '9 damage; bleeding (save ends) or M<1 beheaded (see effect)',
+								tier2: '13 damage; bleeding (save ends) or M<2 beheaded (see effect)',
+								tier3: '16 damage; bleeding (save ends) or M<3 beheaded (see effect)'
+							})),
+							FactoryLogic.createAbilitySectionText('A beheaded target has their head fall into an unoccupied square adjacent to the bredbeddle, but they remain alive. While beheaded, the target is bleeding and can’t establish line of effect beyond 1 square. The beheaded target can survive without their head for 24 hours, and can reattach their head with a maneuver by entering its square. A target who remains beheaded for 24 hours dies.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -140,7 +142,9 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf('while headless') ],
 						target: 'Self',
-						effect: 'The bredbeddle shifts up to their speed, and can push each creature who comes within their reach during the movement 1 square. Each square the bredbeddle exits during the movement becomes difficult terrain.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The bredbeddle shifts up to their speed, and can push each creature who comes within their reach during the movement 1 square. Each square the bredbeddle exits during the movement becomes difficult terrain.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -152,13 +156,15 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						target: 'One creature or object',
 						cost: 5,
-						preEffect: 'The bredbeddle must have a head in their possession (attached to them or not), which they throw at the target. If the head was attached, the bredbeddle becomes headless.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 damage; M<1 dazed (save ends)',
-							tier2: '13 damage; prone; M<2 dazed (save ends)',
-							tier3: '16 damage; prone; M<3 dazed (save ends)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('The bredbeddle must have a head in their possession (attached to them or not), which they throw at the target. If the head was attached, the bredbeddle becomes headless.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '9 damage; M<1 dazed (save ends)',
+								tier2: '13 damage; prone; M<2 dazed (save ends)',
+								tier3: '16 damage; prone; M<3 dazed (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -170,7 +176,9 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The bredbeddle uses the same ability against the triggering creature, using that creature’s bonus to any power rolls they have to make.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The bredbeddle uses the same ability against the triggering creature, using that creature’s bonus to any power rolls they have to make.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -181,13 +189,15 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Each enemy in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: 'P<1 The target turns green (save ends)',
-							tier2: 'P<2 The target turns green (save ends)',
-							tier3: 'P<3 The target turns green until the end of the encounter'
-						}),
-						effect: 'Green shadows crawl out from under the bredbeddle’s feet and attempt to turn each target green. The bredbeddle has a double edge on attacks made against targets turned green until the condition ends.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: 'P<1 The target turns green (save ends)',
+								tier2: 'P<2 The target turns green (save ends)',
+								tier3: 'P<3 The target turns green until the end of the encounter'
+							})),
+							FactoryLogic.createAbilitySectionText('Green shadows crawl out from under the bredbeddle’s feet and attempt to turn each target green. The bredbeddle has a double edge on attacks made against targets turned green until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -198,10 +208,11 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One enemy',
-						effect: `
-The bredbeddle points at the target and issues them a challenge. If the target refuses, they turn green until the end of the encounter (see Turn Green).
+						sections: [
+							FactoryLogic.createAbilitySectionText(`The bredbeddle points at the target and issues them a challenge. If the target refuses, they turn green until the end of the encounter (see Turn Green).
 
-If the target accepts, the bredbeddle shifts to a space adjacent to the target, who must make a hard **Might test** with no additional modifiers. On success, the target can choose to deal 40 damage to the bredbeddle or remove the bredbeddle’s head. On failure, the target is beheaded (see Lop).`
+If the target accepts, the bredbeddle shifts to a space adjacent to the target, who must make a hard **Might test** with no additional modifiers. On success, the target can choose to deal 40 damage to the bredbeddle or remove the bredbeddle’s head. On failure, the target is beheaded (see Lop).`)
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -212,12 +223,14 @@ If the target accepts, the bredbeddle shifts to a space adjacent to the target, 
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Four creatures',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '6 damage; bleeding (save ends) or A<1 beheaded',
-							tier2: '7 damage; bleeding (save ends) or A<2 beheaded',
-							tier3: '8 damage; bleeding (save ends) or A<3 beheaded (see Lop)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '6 damage; bleeding (save ends) or A<1 beheaded',
+								tier2: '7 damage; bleeding (save ends) or A<2 beheaded',
+								tier3: '8 damage; bleeding (save ends) or A<3 beheaded (see Lop)'
+							}))
+						]
 					})
 				})
 			]

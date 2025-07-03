@@ -55,7 +55,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					tier2: '10 damage; push 3; taunted (EoT)',
 					tier3: '13 damage; push 5; taunted (EoT)'
 				}),
-				effect: 'If a target is wearing clothing covering the lower half of their body, they must use a maneuver to pull that clothing up before they can move.'
+				effect: 'If a target is wearing clothing covering the lower half of their body, they must use a maneuver to pull that clothing up before they can move.',
+				sections: []
 			})
 		}),
 		FactoryLogic.feature.createMalice({
@@ -115,7 +116,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier2: '4 damage',
 							tier3: '5 damage'
 						}),
-						effect: 'If the mischiever is hidden when they use this ability, they can target two creatures.'
+						effect: 'If the mischiever is hidden when they use this ability, they can target two creatures.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -126,7 +128,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
-						effect: 'The mischiever makes a free strike against the target.'
+						effect: 'The mischiever makes a free strike against the target.',
+						sections: []
 					})
 				})
 			]
@@ -160,7 +163,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier1: '1 damage',
 							tier2: '2 damage; taunted (EoT)',
 							tier3: '3 damage; taunted (EoT)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -171,7 +175,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
-						effect: 'The scrapper makes a free strike against the target.'
+						effect: 'The scrapper makes a free strike against the target.',
+						sections: []
 					})
 				})
 			]
@@ -205,7 +210,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier1: '1 damage; slide 1; shift 1',
 							tier2: '2 damage; slide 2; shift 2',
 							tier3: '3 damage; slide 3; shift 3'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -216,7 +222,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
-						effect: 'The swiftpaw makes a free strike against the target.'
+						effect: 'The swiftpaw makes a free strike against the target.',
+						sections: []
 					})
 				})
 			]
@@ -251,7 +258,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier2: '4 damage',
 							tier3: '5 damage'
 						}),
-						effect: 'An ally of the redeye within 2 squares of the target can shift up to 2 squares.'
+						effect: 'An ally of the redeye within 2 squares of the target can shift up to 2 squares.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -262,7 +270,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
-						effect: 'The redeye makes a free strike against the target.'
+						effect: 'The redeye makes a free strike against the target.',
+						sections: []
 					})
 				})
 			]
@@ -296,7 +305,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier2: '9 damage',
 							tier3: '12 damage; grabbed'
 						}),
-						effect: 'While the target is grabbed, they take 2 damage at the start of each of the bruxer’s turns.'
+						effect: 'While the target is grabbed, they take 2 damage at the start of each of the bruxer’s turns.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -313,7 +323,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier1: '3 damage; A<0 bleeding (save ends)',
 							tier2: '5 damage; A<1 bleeding (save ends)',
 							tier3: '8 damage; A<2 bleeding (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -324,7 +335,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
-						effect: 'The bruxer makes a free strike against the target.'
+						effect: 'The bruxer makes a free strike against the target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -366,7 +378,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier2: '7 sonic damage; push 3',
 							tier3: '9 sonic damage; push 4'
 						}),
-						effect: 'The piper or an ally within distance regains Stamina equal to half the damage dealt.'
+						effect: 'The piper or an ally within distance regains Stamina equal to half the damage dealt.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -396,7 +409,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
-						effect: 'The piper makes a free strike against the target.'
+						effect: 'The piper makes a free strike against the target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -435,7 +449,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier2: '6 damage',
 							tier3: '8 damage'
 						}),
-						effect: 'The ratcrobat can shift up to 2 squares after striking the first target, then can shift 1 square after striking the second target.'
+						effect: 'The ratcrobat can shift up to 2 squares after striking the first target, then can shift 1 square after striking the second target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -446,7 +461,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One enemy',
-						effect: 'Slide 3; the ratcrobat can then shift into the any of the squares the target left.'
+						effect: 'Slide 3; the ratcrobat can then shift into the any of the squares the target left.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -457,7 +473,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
-						effect: 'The ratcrobat makes a free strike against the target.'
+						effect: 'The ratcrobat makes a free strike against the target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -497,7 +514,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier2: '6 sonic damage; slide 3; shift 3',
 							tier3: '8 sonic damage; slide 5; shift 5'
 						}),
-						effect: 'Each all within distance can use Ready Roden as a free triggered action once before the end of the round.'
+						effect: 'Each all within distance can use Ready Roden as a free triggered action once before the end of the round.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -532,7 +550,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature',
-						effect: 'The maestro makes a free strike against the target.'
+						effect: 'The maestro makes a free strike against the target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -548,7 +567,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All allies in the burst',
-						effect: 'Each target shifts up to their speed or takes the Defend action.'
+						effect: 'Each target shifts up to their speed or takes the Defend action.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -559,7 +579,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'One creature',
-						effect: 'Until the end of their next turn, the target halves incoming damage, deals an additional 4 damage on strikes, and their speed is doubled.'
+						effect: 'Until the end of their next turn, the target halves incoming damage, deals an additional 4 damage on strikes, and their speed is doubled.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -570,7 +591,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All dead allies in the burst',
-						effect: 'Each target stands, makes a free strike, then collapses again. Allies of the targets can use Ready Rodent as a free triggered action once in conjunction with these free strikes.'
+						effect: 'Each target stands, makes a free strike, then collapses again. Allies of the targets can use Ready Rodent as a free triggered action once in conjunction with these free strikes.',
+						sections: []
 					})
 				})
 			]
@@ -606,7 +628,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier1: '3 damage',
 							tier2: '5 damage',
 							tier3: '7 damage'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -617,7 +640,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
-						effect: 'The sidekick makes a free strike against the target.'
+						effect: 'The sidekick makes a free strike against the target.',
+						sections: []
 					})
 				})
 			],
@@ -630,7 +654,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'If the sidekick’s mentor comes within 1 of the sidekick at any point during their turn, the mentor’s speed increases by 1 and the mentor’s movement gains the climb keyword until the end of the turn.'
+						effect: 'If the sidekick’s mentor comes within 1 of the sidekick at any point during their turn, the mentor’s speed increases by 1 and the mentor’s movement gains the climb keyword until the end of the turn.',
+						sections: []
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
@@ -646,7 +671,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							tier1: '6 poison damage; (weak) M weakened (save ends)',
 							tier2: '9 poison damage (average) M weakened (save ends)',
 							tier3: '13 poison damage; (strong) M weakened (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -657,7 +683,8 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The target can use a Recovery. The dazed, frightened, and weakened conditions end for the target. Allies within 3 can use Triumphant Squeak as a triggered action, targeting themselves.'
+						effect: 'The target can use a Recovery. The dazed, frightened, and weakened conditions end for the target. Allies within 3 can use Triumphant Squeak as a triggered action, targeting themselves.',
+						sections: []
 					})
 				})
 			}

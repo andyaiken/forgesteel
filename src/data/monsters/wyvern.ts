@@ -94,13 +94,13 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 damage',
-							tier2: '14 damage; M<2 bleeding (save ends)',
-							tier3: '17 damage; M<3 bleeding (save ends)'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '9 damage',
+								tier2: '14 damage; M<2 bleeding (save ends)',
+								tier3: '17 damage; M<3 bleeding (save ends)'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -118,13 +118,15 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '10 acid damage; M<1 weakened (save ends)',
-							tier2: '16 acid damage; M<2 weakened (save ends)',
-							tier3: '20 acid damage; M<3 weakened (save ends)'
-						}),
-						effect: 'A target weakened from this ability takes 1d4 acid damage at the start of each of their turns until the condition ends.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '10 acid damage; M<1 weakened (save ends)',
+								tier2: '16 acid damage; M<2 weakened (save ends)',
+								tier3: '20 acid damage; M<3 weakened (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A target weakened from this ability takes 1d4 acid damage at the start of each of their turns until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -135,7 +137,8 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The lurker flies up to their speed and hides. Each enemy that comes within 1 square of the lurker during this movement can choose to take 3 sonic damage or fall prone.'
+						effect: 'The lurker flies up to their speed and hides. Each enemy that comes within 1 square of the lurker during this movement can choose to take 3 sonic damage or fall prone.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -146,7 +149,8 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
-						effect: 'The lurker flies into a square adjacent to the target and makes a free strike against them.'
+						effect: 'The lurker flies into a square adjacent to the target and makes a free strike against them.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -188,13 +192,15 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 damage',
-							tier2: '14 damage; M<2 slowed (save ends)',
-							tier3: '17 damage; M<3 slowed (save ends)'
-						}),
-						effect: 'The target is restrained (save ends) if they are already slowed.'
+						effect: 'The target is restrained (save ends) if they are already slowed.',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '9 damage',
+								tier2: '14 damage; M<2 slowed (save ends)',
+								tier3: '17 damage; M<3 slowed (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -205,13 +211,13 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 3, value2: 6, within: 1 }) ],
 						target: 'All enemies and objects in the line',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '6 damage; A<1 3 acid damage',
-							tier2: '11 damage; A<2 3 acid damage',
-							tier3: '14 damage; A<3 3 acid damage'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '6 damage; A<1 3 acid damage',
+								tier2: '11 damage; A<2 3 acid damage',
+								tier3: '14 damage; A<3 3 acid damage'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
@@ -229,12 +235,14 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 damage; A<1 grabbed',
-							tier2: '14 damage; A<2 grabbed',
-							tier3: '17 damage; A<3 grabbed (bane to escape)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '9 damage; A<1 grabbed',
+								tier2: '14 damage; A<2 grabbed',
+								tier3: '17 damage; A<3 grabbed (bane to escape)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -246,7 +254,8 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Triggering creature',
-						effect: 'The predator uses their Sedating Stinger ability against the target and then shifts 3.'
+						effect: 'The predator uses their Sedating Stinger ability against the target and then shifts 3.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({

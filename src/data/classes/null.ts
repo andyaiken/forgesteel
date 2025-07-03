@@ -76,7 +76,8 @@ The null is an unarmed psionic warrior who dampens and absorbs the effects of ma
 						keywords: [ AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 1 }) ],
 						target: 'All enemies',
-						effect: `
+						sections: [
+							FactoryLogic.createAbilitySectionText(`
 Each target reduces their potencies by 1.
 
 Once as a free maneuver on your turn, you can spend 1 discipline and give your Null Field has one of the following additional effects until the start of your next turn:
@@ -85,7 +86,8 @@ Once as a free maneuver on your turn, you can spend 1 discipline and give your N
 * **Inertial Anchor**: Each target who starts their turn in the area cannot shift.
 * **Synaptic Break**: When a target is subjected to a potency, the potency is increased by 1.
 
-This ability stays active even after encounters end. It ends if you are dying or if you willingly end it (no action required).`
+This ability stays active even after encounters end. It ends if you are dying or if you willingly end it (no action required).`)
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -313,7 +315,8 @@ This ability stays active even after encounters end. It ends if you are dying or
 				tier1: '4 + A damage; A < [weak], grabbed',
 				tier2: '7 + A damage; A < [average], grabbed',
 				tier3: '9 + A damage; A < [strong], grabbed'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-5',
@@ -329,7 +332,8 @@ This ability stays active even after encounters end. It ends if you are dying or
 				tier1: '4 + A damage; taunted (EoT)',
 				tier2: '5 + A damage; taunted (EoT); slide 1',
 				tier3: '6 + A damage; taunted (EoT); slide 2'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-6',
@@ -345,7 +349,8 @@ This ability stays active even after encounters end. It ends if you are dying or
 				tier1: '5 + A psychic damage; vertical pull 1',
 				tier2: '8 + A psychic damage; vertical pull 2',
 				tier3: '11 + A psychic damage; vertical pull 3'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-7',
@@ -382,7 +387,8 @@ This ability stays active even after encounters end. It ends if you are dying or
 				tier1: '4 + A damage; A < [weak], weakened (save ends)',
 				tier2: '7 + A damage; A < [average], weakened (save ends)',
 				tier3: '9 + A damage; A < [strong], weakened (save ends)'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-9',
@@ -453,7 +459,8 @@ This ability stays active even after encounters end. It ends if you are dying or
 				tier1: '4 + A damage; I < [weak], dazed and slowed (save ends)',
 				tier2: '5 + A damage; I < [average], dazed and slowed (save ends)',
 				tier3: '7 + A damage; I < [strong], dazed and slowed (save ends)'
-			})
+			}),
+			sections: []
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-13',
@@ -644,7 +651,9 @@ As your discipline grows, your psionic mastery of your body intensifies.
 											distance: [ FactoryLogic.distance.createSelf() ],
 											target: 'Self',
 											cost: 5,
-											effect: 'You can use a signature or heroic ability as a free maneuver. You gain an edge on power rolls with this ability.'
+											sections: [
+												FactoryLogic.createAbilitySectionText('You can use a signature or heroic ability as a free maneuver. You gain an edge on power rolls with this ability.')
+											]
 										})
 									}),
 									value: 1
@@ -665,7 +674,8 @@ As your discipline grows, your psionic mastery of your body intensifies.
 												tier1: '8 + A damage; slide 1',
 												tier2: '12 + A damage; slide 3',
 												tier3: '16 + A damage; slide 5'
-											})
+											}),
+											sections: []
 										})
 									}),
 									value: 1
@@ -743,7 +753,8 @@ As your discipline grows, your psionic mastery of your body intensifies.
 												tier1: '6 cold damage; A < [weak], slowed (save ends)',
 												tier2: '9 cold damage; A < [average], slowed (save ends)',
 												tier3: '13 cold damage; A < [strong], slowed (save ends)'
-											})
+											}),
+											sections: []
 										})
 									}),
 									value: 1
@@ -759,7 +770,9 @@ As your discipline grows, your psionic mastery of your body intensifies.
 											distance: [ FactoryLogic.distance.createSelf() ],
 											target: 'Self',
 											cost: 5,
-											effect: 'Until the start of your next turn, the area of your Null Field ability increases by 1. While the area is enlarged this way, you and your allies benefit from concealment while in the area. When you end your turn, each enemy in the aura takes cold damage equal to your Intuition score.'
+											sections: [
+												FactoryLogic.createAbilitySectionText('Until the start of your next turn, the area of your Null Field ability increases by 1. While the area is enlarged this way, you and your allies benefit from concealment while in the area. When you end your turn, each enemy in the aura takes cold damage equal to your Intuition score.')
+											]
 										})
 									}),
 									value: 1
@@ -834,7 +847,8 @@ Additionally, you have forced movement damage immunity equal to your level and r
 												tier1: '8 + A psychic damage; vertical pull 3',
 												tier2: '12 + A psychic damage; vertical pull 5',
 												tier3: '16 + A psychic damage; vertical pull 7'
-											})
+											}),
+											sections: []
 										})
 									}),
 									value: 1
@@ -856,7 +870,8 @@ Additionally, you have forced movement damage immunity equal to your level and r
 												tier2: 'You gain 15 temporary Stamina',
 												tier3: 'You gain 20 temporary Stamina'
 											}),
-											effect: 'While you have this temporary Stamina, you can’t be made bleeding.'
+											effect: 'While you have this temporary Stamina, you can’t be made bleeding.',
+											sections: []
 										})
 									}),
 									value: 1

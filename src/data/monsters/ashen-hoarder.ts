@@ -102,7 +102,8 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 							tier2: '15 damage; one target M<3 bleeding (save ends); other target A<3 grabbed',
 							tier3: '18 damage; one target M<4 bleeding (save ends); other target A<4 grabbed'
 						}),
-						effect: 'The ashen hoarder can have up to two Size 1 creatures grabbed at the same time.'
+						effect: 'The ashen hoarder can have up to two Size 1 creatures grabbed at the same time.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -166,7 +167,8 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The ashen hoarder moves up to twice their speed in a straight line. Each creature and object in the ashen hoarder’s way is either moved into the nearest unoccupied square to the side or M<3 is pushed forward until the end of the ashen hoarder’s movement. A target that is force moved into an obstacle is dazed (save ends).'
+						effect: 'The ashen hoarder moves up to twice their speed in a straight line. Each creature and object in the ashen hoarder’s way is either moved into the nearest unoccupied square to the side or M<3 is pushed forward until the end of the ashen hoarder’s movement. A target that is force moved into an obstacle is dazed (save ends).',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -178,7 +180,8 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						cost: 2,
-						effect: 'The ashen hoarder halves the incoming damage. If an impaled creature was used in place of spending Malice on this ability, the impaled creature takes the other half of the damage.'
+						effect: 'The ashen hoarder halves the incoming damage. If an impaled creature was used in place of spending Malice on this ability, the impaled creature takes the other half of the damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -210,7 +213,8 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 							tier2: '11 damage, vertical push 3 staight upward',
 							tier3: '14 damage, vertical push 4 staight upward'
 						}),
-						effect: 'Each target that would normally fall prone is instead restrained (save ends). '
+						effect: 'Each target that would normally fall prone is instead restrained (save ends).',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -221,7 +225,8 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 10, within: 20 }) ],
 						target: 'Special',
-						effect: 'The Ashen Hoarder sprays out a rain of zombie mines brimming with necrotic energy. Six size 1M zombie mines appear in unoccupied squares within distance. An enemy that moves into a square adjacent to a zombie mine or starts their turn there causes the zombie mine to explode, dealing 4 corruption damage to each creature adjacent to the mine. A zombie explosion can trigger other zombie mines adjacent to it to also explode. At the start of each of the ashen hoarders’s turns, each zombie mine can be moved 2 squares.'
+						effect: 'The Ashen Hoarder sprays out a rain of zombie mines brimming with necrotic energy. Six size 1M zombie mines appear in unoccupied squares within distance. An enemy that moves into a square adjacent to a zombie mine or starts their turn there causes the zombie mine to explode, dealing 4 corruption damage to each creature adjacent to the mine. A zombie explosion can trigger other zombie mines adjacent to it to also explode. At the start of each of the ashen hoarders’s turns, each zombie mine can be moved 2 squares.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -232,7 +237,8 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The Ashen Hoarder moves up to their speed and makes a Claw and Blade attack with a double edge against a single target. On a tier-3 result, the ashen hoarder then uses Impale without spending malice.'
+						effect: 'The Ashen Hoarder moves up to their speed and makes a Claw and Blade attack with a double edge against a single target. On a tier-3 result, the ashen hoarder then uses Impale without spending malice.',
+						sections: []
 					})
 				})
 			]

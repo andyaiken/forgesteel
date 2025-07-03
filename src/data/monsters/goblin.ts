@@ -113,7 +113,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier1: '1 damage',
 							tier2: '2 damage',
 							tier3: '3 damage'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -153,7 +154,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier2: '4 damage',
 							tier3: '5 damage'
 						}),
-						effect: 'If the sniper doesn’t use a move action this turn, the ability has an edge.'
+						effect: 'If the sniper doesn’t use a move action this turn, the ability has an edge.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -193,7 +195,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier2: '4 damage; push 3',
 							tier3: '5 damage; push 4'
 						}),
-						effect: 'If the spinecleaver doesn’t use a move action this turn, the ability has an edge.'
+						effect: 'If the spinecleaver doesn’t use a move action this turn, the ability has an edge.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -233,7 +236,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier2: '2 poison damage',
 							tier3: '3 poison damage'
 						}),
-						effect: 'The target has a bane on their next strike.'
+						effect: 'The target has a bane on their next strike.',
+						sections: []
 					})
 				})
 			]
@@ -267,7 +271,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier2: '6 damage',
 							tier3: '7 damage'
 						}),
-						effect: 'This ability deals an additional 2 damage if the scoundrel has an edge on the power roll.'
+						effect: 'This ability deals an additional 2 damage if the scoundrel has an edge on the power roll.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -284,7 +289,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier1: '2 corruption damage; A<0 restrained (save ends)',
 							tier2: '4 corruption damage; A<1 restrained (save ends)',
 							tier3: '5 corruption damage; A<2 restrained (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -327,7 +333,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier1: '3 corruption damage; I<0 weakened (save ends)',
 							tier2: '4 corruption damage; I<1 weakened (save ends)',
 							tier3: '5 corruption damage; I<2 weakened (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -344,7 +351,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier1: 'I<0 prone',
 							tier2: 'I<1 prone can’t stand (EoT)',
 							tier3: 'prone I<2 and can’t stand (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -401,7 +409,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
-						effect: 'The area is filled with a green haze until the start of the stinker’s next turn or until the stinker is reduced to Stamina 0. The area is difficult terrain for non-goblin creatures, and each such creature who moves within the area takes 2 poison damage for each square moved. The haze can’t be dispersed by wind.'
+						effect: 'The area is filled with a green haze until the start of the stinker’s next turn or until the stinker is reduced to Stamina 0. The area is difficult terrain for non-goblin creatures, and each such creature who moves within the area takes 2 poison damage for each square moved. The haze can’t be dispersed by wind.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -440,7 +449,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier2: '4 damage',
 							tier3: '5 damage'
 						}),
-						effect: 'One ally adjacent to the target can make a free strike against them.'
+						effect: 'One ally adjacent to the target can make a free strike against them.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -496,7 +506,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier1: '3 damage',
 							tier2: '4 damage',
 							tier3: '5 damage'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -513,7 +524,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier1: '5 damage; M<0 bleeding (save ends)',
 							tier2: '6 damage; M<1 bleeding (save ends)',
 							tier3: '7 damage; M<2 bleeding (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -554,7 +566,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier1: '7 damage',
 							tier2: '10 damage',
 							tier3: '13 damage'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -565,7 +578,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						cost: 1,
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						target: 'Special',
-						effect: 'Two goblin runners appear in unoccupied spaces.'
+						effect: 'Two goblin runners appear in unoccupied spaces.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -575,7 +589,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						type: FactoryLogic.type.createTrigger('A creature targets the monarch with a strike.'),
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One ally',
-						effect: 'The ally becomes the target of othe triggering strike instead.'
+						effect: 'The ally becomes the target of othe triggering strike instead.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -596,7 +611,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each ally',
-						effect: 'Each target can move up to their speed or make a free strike.'
+						effect: 'Each target can move up to their speed or make a free strike.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -606,7 +622,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						type: FactoryLogic.type.createVillainAction(),
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One enemy',
-						effect: 'Each ally within 10 squares of the enemy can move up to their speed toward the enemy.'
+						effect: 'Each ally within 10 squares of the enemy can move up to their speed toward the enemy.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -617,7 +634,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All allies in the burst',
-						effect: 'Each target can make a free strike, dealing an additional 3 damage.'
+						effect: 'Each target can make a free strike, dealing an additional 3 damage.',
+						sections: []
 					})
 				})
 			]
@@ -673,7 +691,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier1: '6 damage',
 							tier2: '9 damage',
 							tier3: '12 damage'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -685,7 +704,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The spider shifts up to their speed and makes a Leg Blade strike against each creature who comes within 1 of the spider during the move. The spider makes one power roll against all targets.'
+						effect: 'The spider shifts up to their speed and makes a Leg Blade strike against each creature who comes within 1 of the spider during the move. The spider makes one power roll against all targets.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -701,7 +721,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier2: 'A<1 restrained (save ends)',
 							tier3: 'A<2 restrained (save ends)'
 						}),
-						effect: 'The affected area is considered difficult terrain for enemies'
+						effect: 'The affected area is considered difficult terrain for enemies',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -711,7 +732,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						type: FactoryLogic.type.createTrigger('The spider or an ally riding the spider is targeted by an ability.'),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The spider shifts 2. Any damage dealt by the triggering ability is halved.'
+						effect: 'The spider shifts 2. Any damage dealt by the triggering ability is halved.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -754,7 +776,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier1: '3 damage',
 							tier2: '4 damage',
 							tier3: '5 damage'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -765,7 +788,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						cost: 1,
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The warg moves up to their speed.'
+						effect: 'The warg moves up to their speed.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -809,7 +833,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier2: '5 damage',
 							tier3: '7 damage'
 						}),
-						effect: 'The target can’t make opportunity attacks until the end of the guide’s turn.'
+						effect: 'The target can’t make opportunity attacks until the end of the guide’s turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -833,7 +858,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier2: '9 damage',
 							tier3: '12 damage'
 						}),
-						effect: 'The guide can shift up to their speed before and after the attack.'
+						effect: 'The guide can shift up to their speed before and after the attack.',
+						sections: []
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
@@ -850,7 +876,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 							tier2: '12 damage; the guide and their mentor can move up to their speed',
 							tier3: '16 damage; the guide and their mentor can move up to their speed and use the Hide maneuver'
 						}),
-						effect: 'If the guide is hidden from the target, the attack has a double edge.'
+						effect: 'If the guide is hidden from the target, the attack has a double edge.',
+						sections: []
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -861,7 +888,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSpecial('Special') ],
 						target: 'Special',
-						effect: 'The guide applies poison to their weapon. The next time the guide gets a tier 2 or 3 result on an attack with the Weapon keyword, the attack deals an extra 10 poison damage and the target is M (average) weakened (save ends). If the guide is adjacent to their mentor when they use Poison Blade, the mentor’s weapon is poisoned in the same way.'
+						effect: 'The guide applies poison to their weapon. The next time the guide gets a tier 2 or 3 result on an attack with the Weapon keyword, the attack deals an extra 10 poison damage and the target is M (average) weakened (save ends). If the guide is adjacent to their mentor when they use Poison Blade, the mentor’s weapon is poisoned in the same way.',
+						sections: []
 					})
 				})
 			}

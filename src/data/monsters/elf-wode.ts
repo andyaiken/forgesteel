@@ -122,7 +122,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier1: '1 damage',
 							tier2: '2 damage',
 							tier3: '3 damage'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -170,7 +171,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier2: '2 damage',
 							tier3: '3 damage'
 						}),
-						effect: 'The runner can shift 2 before charging while using this ability.'
+						effect: 'The runner can shift 2 before charging while using this ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -212,7 +214,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier1: '2 damage',
 							tier2: '4 damage',
 							tier3: '5 damage'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -251,7 +254,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier1: '2 damage; push 1',
 							tier2: '4 damage; push 2',
 							tier3: '5 damage; push 3'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -306,7 +310,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'Self and three allies',
-						effect: 'Each target teleports to a square within 10 that has cover or concealment from all enemies.'
+						effect: 'Each target teleports to a square within 10 that has cover or concealment from all enemies.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -345,7 +350,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier2: '7 damage; I<1 restrained (save ends)',
 							tier3: '9 damage; I<2 restrained (save ends)'
 						}),
-						effect: 'A creature restrained by this ability can’t search for hidden creatures until the condition ends.'
+						effect: 'A creature restrained by this ability can’t search for hidden creatures until the condition ends.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -363,7 +369,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier2: '4 damage; P<1 target has a double bane on strikes (save ends)',
 							tier3: '6 damage; P<2 bleeding (save ends), target has a double bane on strikes (save ends)'
 						}),
-						effect: 'The green seer causes lichen to form and encroach upon each target.'
+						effect: 'The green seer causes lichen to form and encroach upon each target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -373,7 +380,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						type: FactoryLogic.type.createTrigger('A creature uses a triggered action targeting the green seer or an ally within distance.', { free: true }),
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
-						effect: 'The green seer makes a free strike against the target.'
+						effect: 'The green seer makes a free strike against the target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -430,7 +438,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						cost: 3,
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 3 }) ],
 						target: 'Special',
-						effect: 'The affected area is overgrown with heavy brush and bramble. It provides cover and concealment for the greenskeeper and all allies, and is considered difficult terrain for enemies. An enemy that starts their turn in an affected square takes 3 damage.'
+						effect: 'The affected area is overgrown with heavy brush and bramble. It provides cover and concealment for the greenskeeper and all allies, and is considered difficult terrain for enemies. An enemy that starts their turn in an affected square takes 3 damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -488,7 +497,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All marked enemies in the burst',
-						effect: '3 damage.'
+						effect: '3 damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -551,7 +561,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'Self and three allies',
-						effect: 'Each target teleports to a square within 10 that has cover or concealment from all enemies.'
+						effect: 'Each target teleports to a square within 10 that has cover or concealment from all enemies.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -613,7 +624,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							FactoryLogic.distance.createSpecial('Squad')
 						],
 						target: 'Self and Squad',
-						effect: 'The targets take their turn immediately. Each target has an edge on their abilities until the end of their turn.'
+						effect: 'The targets take their turn immediately. Each target has an edge on their abilities until the end of their turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -677,7 +689,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier2: '6 damage; R<1 slowed and marked (save ends)',
 							tier3: '9 damage; R<2 slowed and marked (save ends)'
 						}),
-						effect: 'Each ally has an edge on strikes and abilities against marked targets until the condition ends.'
+						effect: 'Each ally has an edge on strikes and abilities against marked targets until the condition ends.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -735,7 +748,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All allies the burst',
-						effect: 'Each target can makerr a free strike and then shifts 3. A target immediately hides at the end of the warleader’s turn while in cover or concealment.'
+						effect: 'Each target can makerr a free strike and then shifts 3. A target immediately hides at the end of the warleader’s turn while in cover or concealment.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -745,7 +759,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						type: FactoryLogic.type.createTrigger('An ally ends their turn.'),
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One enemy',
-						effect: 'The target must take their turn now, if they have not already taken it. P<2 the target is bleeding and has a bane on their strikes until the end of their turn.'
+						effect: 'The target must take their turn now, if they have not already taken it. P<2 the target is bleeding and has a bane on their strikes until the end of their turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -755,7 +770,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						type: FactoryLogic.type.createTrigger('An enemy targets the ordinator or an ally within distance with an ability.'),
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Triggering enemy',
-						effect: 'The ordinator uses Lightning Rod against the target.'
+						effect: 'The ordinator uses Lightning Rod against the target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -776,7 +792,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies in the burst',
-						effect: 'The warleader uses Wodeblade against each target with an edge.'
+						effect: 'The warleader uses Wodeblade against each target with an edge.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -787,7 +804,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All allies in the burst',
-						effect: 'The warleader uses Wodeblade against a single creature or object. Each target then makes a free strike.'
+						effect: 'The warleader uses Wodeblade against a single creature or object. Each target then makes a free strike.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -801,7 +819,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 })
 						],
 						target: 'Self and all allies in the burst',
-						effect: 'Eeach target becomes invisible until the start of the next round. The warleader then uses Wodeblade.'
+						effect: 'Eeach target becomes invisible until the start of the next round. The warleader then uses Wodeblade.',
+						sections: []
 					})
 				})
 			]
@@ -835,7 +854,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier2: '7 damage',
 							tier3: '9 damage'
 						}),
-						effect: 'The wodenelg’s rider can make a free strike at any point during the charge.'
+						effect: 'The wodenelg’s rider can make a free strike at any point during the charge.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -851,7 +871,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						cost: 3,
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The wodenelg and their rider become invisible until the start of their next turn.'
+						effect: 'The wodenelg and their rider become invisible until the start of their next turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -895,7 +916,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier2: '7 damage',
 							tier3: '10 damage'
 						}),
-						effect: 'The arrowswift can take a bane to increase the attack’s range by 5.'
+						effect: 'The arrowswift can take a bane to increase the attack’s range by 5.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -919,7 +941,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier2: '11 damage',
 							tier3: '16 damage'
 						}),
-						effect: 'If the arrowswift is hidden, gain 2 surges.'
+						effect: 'If the arrowswift is hidden, gain 2 surges.',
+						sections: []
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
@@ -930,7 +953,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Until the end of the encounter, ranged attacks made by the arrowswift have an edge and gain a surge. If the arrowswift’s mentor is within 1, they gain this benefit as well.'
+						effect: 'Until the end of the encounter, ranged attacks made by the arrowswift have an edge and gain a surge. If the arrowswift’s mentor is within 1, they gain this benefit as well.',
+						sections: []
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -946,7 +970,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							tier1: '12 damage',
 							tier2: '17 damage',
 							tier3: '23 damage'
-						})
+						}),
+						sections: []
 					})
 				})
 			}

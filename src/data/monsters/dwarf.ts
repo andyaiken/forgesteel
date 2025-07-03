@@ -137,7 +137,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier2: '2 damage',
 							tier3: '3 damage; an ally adjacent to the target can make a free strike'
 						}),
-						effect: 'The target can’t use triggered actions until the start of the next round.'
+						effect: 'The target can’t use triggered actions until the start of the next round.',
+						sections: []
 					})
 				})
 			]
@@ -172,7 +173,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier2: '4 damage',
 							tier3: '5 damage; grabbed or prone'
 						}),
-						effect: 'The catchpole deals an additional 2 damage to restrained targets.'
+						effect: 'The catchpole deals an additional 2 damage to restrained targets.',
+						sections: []
 					})
 				})
 			]
@@ -207,7 +209,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier2: '2 damage; push 2',
 							tier3: '3 damage; push 4'
 						}),
-						effect: 'A target restrained by a dwarf can be pulled by this ability.'
+						effect: 'A target restrained by a dwarf can be pulled by this ability.',
+						sections: []
 					})
 				})
 			]
@@ -241,7 +244,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier2: '6 damage; M<1 slowed (save ends)',
 							tier3: '8 damage; M<2 slowed (save ends)'
 						}),
-						effect: 'A target restrained by a dwarf can be pushed by this ability.'
+						effect: 'A target restrained by a dwarf can be pushed by this ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -259,7 +263,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier2: '6 poison damage; I<1 dazed (save ends)',
 							tier3: '8 poison damage; I<2 dazed (save ends)'
 						}),
-						effect: 'A creature dazed by this ability has -1 to all characteristics while resisting potent effects until the condition ends.'
+						effect: 'A creature dazed by this ability has -1 to all characteristics while resisting potent effects until the condition ends.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -317,7 +322,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One restained, slowed, or prone target',
-						effect: 'The gunner makes a free strike against the target. The target loses any restrained, slowed or prone conditions and gains restrained (save ends).'
+						effect: 'The gunner makes a free strike against the target. The target loses any restrained, slowed or prone conditions and gains restrained (save ends).',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -356,7 +362,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier2: '7 damage',
 							tier3: '9 damage; M<2 restrained (save ends)'
 						}),
-						effect: 'Pull 5. A target restrained by a dwarf, indlucing by this ability, can be pulled this way.'
+						effect: 'Pull 5. A target restrained by a dwarf, indlucing by this ability, can be pulled this way.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -368,7 +375,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Three creatures',
-						effect: 'Pull 8. A slowed or restrained target is pulled an additional 2. A target restrained by a dwarf can be pulled in this way.'
+						effect: 'Pull 8. A slowed or restrained target is pulled an additional 2. A target restrained by a dwarf can be pulled in this way.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -424,7 +432,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						type: FactoryLogic.type.createTrigger('A creature strikes an adjacent ally.'),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The shieldwall becomes the strike’s target and halves the damage.'
+						effect: 'The shieldwall becomes the strike’s target and halves the damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -463,7 +472,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier2: '8 damage; slide 3; M<1 slowed (save ends)',
 							tier3: '11 damage; slide 5; M<2 restrained (save ends)'
 						}),
-						effect: 'A target restrained by a dwarf can be slid by this ability.'
+						effect: 'A target restrained by a dwarf can be slid by this ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -481,7 +491,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier2: '6 damage; R<1 slowed (save ends)',
 							tier3: '9 damage; R<2 slowed (save ends)'
 						}),
-						effect: 'A target restrained by a dwarf can be pushed by this ability. The affected area is considered difficult terrain for enemies.'
+						effect: 'A target restrained by a dwarf can be pushed by this ability. The affected area is considered difficult terrain for enemies.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -523,7 +534,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier2: '7 damage; push 4',
 							tier3: '9 damage; push 6'
 						}),
-						effect: 'A target restrained by a dwarf can be pushed by this ability.'
+						effect: 'A target restrained by a dwarf can be pushed by this ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -578,7 +590,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier2: '10 damage; push 3',
 							tier3: '13 damage; push 5; M<2 restrained (save ends)'
 						}),
-						effect: 'A target restrained by a dwarf can be pushed by this ability.'
+						effect: 'A target restrained by a dwarf can be pushed by this ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -596,7 +609,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier2: '8 damage; push 4; A<1 slowed (save ends)',
 							tier3: '11 damage; push 6; A<2 dazed (save ends)'
 						}),
-						effect: 'A target restrained by a dwarf can be pushed by this ability.'
+						effect: 'A target restrained by a dwarf can be pushed by this ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -677,7 +691,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'Self or one ally',
-						effect: 'The target takes half damage from the attack. The attacker takes 4 damage.'
+						effect: 'The target takes half damage from the attack. The attacker takes 4 damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -693,7 +708,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 						target: 'All enemies in the cube',
-						effect: 'The marauder lord uses Levitating Axes against each target. The marauder lord makes one power roll against all targets.'
+						effect: 'The marauder lord uses Levitating Axes against each target. The marauder lord makes one power roll against all targets.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -704,7 +720,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All allies in the burst',
-						effect: 'Each target shift up to their speed. The marauder lord then uses Levitating Axes.'
+						effect: 'Each target shift up to their speed. The marauder lord then uses Levitating Axes.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -715,7 +732,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
-						effect: 'The marauder lord creates three 2-square metal objects in unoccupied squares within distance. When the marauder lord uses Magnetomancy, they can additionally target one of these objects.'
+						effect: 'The marauder lord creates three 2-square metal objects in unoccupied squares within distance. When the marauder lord uses Magnetomancy, they can additionally target one of these objects.',
+						sections: []
 					})
 				})
 			]
@@ -749,7 +767,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier2: '8 damage',
 							tier3: '12 damage; M<2 restrained (save ends)'
 						}),
-						effect: 'Restrained targets and targets restrained by this ability are pulled 3. A target restrained by a dwarf can be pulled by this ability.'
+						effect: 'Restrained targets and targets restrained by this ability are pulled 3. A target restrained by a dwarf can be pulled by this ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -766,7 +785,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier1: '3 lightning damage; A<0 slowed (save ends)',
 							tier2: '6 lightning damage; A<1 slowed (save ends)',
 							tier3: '8 lightning damage; A<2 slowed (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -810,7 +830,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier2: '5 damage',
 							tier3: '7 damage'
 						}),
-						effect: 'The attack ignores cover and Temporary Stamina.'
+						effect: 'The attack ignores cover and Temporary Stamina.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -853,7 +874,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier2: '9 damage; P (average) frightened',
 							tier3: '13 damage; P (strong) frightened'
 						}),
-						effect: 'Until the start of the mortar’s next turn, attacks against the mortar and allies within 1 suffer a bane.'
+						effect: 'Until the start of the mortar’s next turn, attacks against the mortar and allies within 1 suffer a bane.',
+						sections: []
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -869,7 +891,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							tier1: '8 damage; I (weak) dazed (save ends)',
 							tier2: '12 damage; I (average) dazed (save ends)',
 							tier3: '16 damage; I (strong) dazed (save ends), prone'
-						})
+						}),
+						sections: []
 					})
 				})
 			}

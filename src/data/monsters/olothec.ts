@@ -69,7 +69,8 @@ export const olothec: MonsterGroup = {
 					tier2: '17 psychic damage; A<3 grabbed',
 					tier3: '20 psychic damage; A<4 grabbed'
 				}),
-				effect: 'The olothec pulls a target grabbed as part of this ability adjacent to them. The olothec has a double edge on strikes against a creature grabbed this way, and a grabbed target can’t save against any other eﬀects until they are no longer grabbed.'
+				effect: 'The olothec pulls a target grabbed as part of this ability adjacent to them. The olothec has a double edge on strikes against a creature grabbed this way, and a grabbed target can’t save against any other eﬀects until they are no longer grabbed.',
+				sections: []
 			})
 		}),
 		FactoryLogic.feature.createMalice({
@@ -119,7 +120,8 @@ export const olothec: MonsterGroup = {
 							tier2: '17 damage; M<3 weakened or slimed',
 							tier3: '20 damage; M<4 weakened or slimed'
 						}),
-						effect: 'A slimed target takes 4 psychic damage whenever they roll power until the condition ends.'
+						effect: 'A slimed target takes 4 psychic damage whenever they roll power until the condition ends.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -168,7 +170,8 @@ Each time a creature is transformed, the Director chooses one of the following t
 
 **Legs** The creature’s legs become pillars of ooze. They are slowed while on land and add the swim keyword to their speed.
 
-**Torso** The creature’s arms become gelatinous. They can’t benefit from edges or surges.`
+**Torso** The creature’s arms become gelatinous. They can’t benefit from edges or surges.`,
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -179,7 +182,8 @@ Each time a creature is transformed, the Director chooses one of the following t
 						keywords: [ AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The olothec teleports to an unoccupied square within 10 or swaps places with a creature or object within 5.'
+						effect: 'The olothec teleports to an unoccupied square within 10 or swaps places with a creature or object within 5.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -190,7 +194,8 @@ Each time a creature is transformed, the Director chooses one of the following t
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One enemy',
-						effect: 'The target takes 8 psychic damage and gains psychic weakness 3 until the end of the olothec’s next turn.'
+						effect: 'The target takes 8 psychic damage and gains psychic weakness 3 until the end of the olothec’s next turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -232,7 +237,8 @@ Each time a creature is transformed, the Director chooses one of the following t
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All creatures',
-						effect: 'Each target takes 12 psychic damage, slides 5, and is M<3 weakened and slimed (save ends) (see devolving tentacles). The olothec has damage immunity 4 until the start of their next turn.'
+						effect: 'Each target takes 12 psychic damage, slides 5, and is M<3 weakened and slimed (save ends) (see devolving tentacles). The olothec has damage immunity 4 until the start of their next turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({

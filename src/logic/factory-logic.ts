@@ -716,15 +716,11 @@ export class FactoryLogic {
 		cost?: number | 'signature',
 		repeatable?: boolean,
 		minLevel?: number,
-		preEffect?: string,
 		powerRoll?: PowerRoll,
 		effect?: string,
-		sections?: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll)[]
+		sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll)[]
 	}): Ability => {
 		const sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll)[] = [];
-		if (data.preEffect) {
-			sections.push(FactoryLogic.createAbilitySectionText(data.preEffect));
-		}
 		if (data.powerRoll) {
 			sections.push(FactoryLogic.createAbilitySectionRoll(data.powerRoll));
 		}

@@ -65,7 +65,8 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 					tier1: '6 damage; weakened (EoT)',
 					tier2: '10 damage; weakened (EoT)',
 					tier3: '12 damage; weakened (save ends)'
-				})
+				}),
+				sections: []
 			})
 		}),
 		FactoryLogic.feature.createAbility({
@@ -83,7 +84,8 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 					tier2: 'I<3 charmed',
 					tier3: 'I<4 charmed'
 				}),
-				effect: 'A charmed creature moves up to their speed and makes a free strike against an enemy of medusa’s choice as a free triggered action, and then is no longer charmed.'
+				effect: 'A charmed creature moves up to their speed and makes a free strike against an enemy of medusa’s choice as a free triggered action, and then is no longer charmed.',
+				sections: []
 			})
 		}),
 		FactoryLogic.feature.createMalice({
@@ -141,7 +143,8 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 							tier1: '11 damage; M<2 slowed (save ends)',
 							tier2: '16 damage; M<3 slowed (save ends)',
 							tier3: '19 damage; M<4 slowed (save ends)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -198,7 +201,8 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The medusa shifts 3 and hides, even if observed.'
+						effect: 'The medusa shifts 3 and hides, even if observed.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -215,7 +219,8 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 							tier1: '13 acid damage',
 							tier2: '18 acid damage',
 							tier3: '22 acid damage'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -236,7 +241,8 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createSpecial('Line of effect') ],
 						target: 'All enemies',
-						effect: 'The medusa uses their Petrify ability against each target without spending Malice. Each target not behind cover has a bane on the test.'
+						effect: 'The medusa uses their Petrify ability against each target without spending Malice. Each target not behind cover has a bane on the test.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -247,7 +253,8 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The medusa manifests temporary wings and vertically shifts up to their speed. During or after this movement, they can use Snake Bite and Damning Gaze once each.'
+						effect: 'The medusa manifests temporary wings and vertically shifts up to their speed. During or after this movement, they can use Snake Bite and Damning Gaze once each.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -258,7 +265,8 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Special',
-						effect: 'Each stone statue and creature affected by Petrify within distance moves up to their speed and uses a signature action with an edge targeting an enemy of medusa’s choice as a free triggered action. A stone statue without its own stats has a speed of 5 and uses the Medusa’s free strike instead.'
+						effect: 'Each stone statue and creature affected by Petrify within distance moves up to their speed and uses a signature action with an edge targeting an enemy of medusa’s choice as a free triggered action. A stone statue without its own stats has a speed of 5 and uses the Medusa’s free strike instead.',
+						sections: []
 					})
 				})
 			]

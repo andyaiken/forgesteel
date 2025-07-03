@@ -125,12 +125,14 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 corruption damage; A<1 weakened (save ends)',
-							tier2: '13 corruption damage; A<2 weakened (save ends)',
-							tier3: '16 corruption damage; A<3 weakened (save ends)'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '9 corruption damage; A<1 weakened (save ends)',
+								tier2: '13 corruption damage; A<2 weakened (save ends)',
+								tier3: '16 corruption damage; A<3 weakened (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -141,14 +143,14 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 1 }) ],
 						target: 'All enemies in the cube',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '5 corruption damage; P<1 4 corruption damage',
-							tier2: '8 corruption damage; P<2 5 corruption damage',
-							tier3: '10 corruption damage; P<3 6 corruption damage'
-						}),
-						effect: 'This ability has an edge against creatures with a soul.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '5 corruption damage; P<1 4 corruption damage',
+								tier2: '8 corruption damage; P<2 5 corruption damage',
+								tier3: '10 corruption damage; P<3 6 corruption damage'
+							})),
+							FactoryLogic.createAbilitySectionText('This ability has an edge against creatures with a soul.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -165,8 +167,8 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The hag alters their body to become any Size-1 creature, such as a house cat. If the hag uses this ability while outside of an enemy’s line of eﬀect, the hag is considered hidden. The hag can return to their original form as a free maneuver.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The hag alters their body to become any Size-1 creature, such as a house cat. If the hag uses this ability while outside of an enemy’s line of eﬀect, the hag is considered hidden. The hag can return to their original form as a free maneuver.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
@@ -184,13 +186,15 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies in burst',
 						cost: 2,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: 'Slide 2; R<1 slide is vertical',
-							tier2: 'Slide 3; R<2 slide is vertical, restrained (EoT)',
-							tier3: 'Vertical slide 5; R<3 restrained (EoT)'
-						}),
-						effect: 'A creature restrained by this ability that is force moved vertically is suspended in midair until the condition ends.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: 'Slide 2; R<1 slide is vertical',
+								tier2: 'Slide 3; R<2 slide is vertical, restrained (EoT)',
+								tier3: 'Vertical slide 5; R<3 restrained (EoT)'
+							})),
+							FactoryLogic.createAbilitySectionText('A creature restrained by this ability that is force moved vertically is suspended in midair until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -201,7 +205,6 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All creatures',
-						preEffect: 'The hag A<2 attaches an ornate explosive pastry to each target. Roll power at the end of the round, targeting each creature with a pastry attached to them.',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The hag A<2 attaches an ornate explosive pastry to each target. Roll power at the end of the round, targeting each creature with a pastry attached to them.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -222,7 +225,9 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies in burst',
-						effect: 'The hag shifts up to their speed before using this action, uses Corrosive Claws against each target of this ability, pushes each target 2 squares, then shifts up to their speed again.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The hag shifts up to their speed before using this action, uses Corrosive Claws against each target of this ability, pushes each target 2 squares, then shifts up to their speed again.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

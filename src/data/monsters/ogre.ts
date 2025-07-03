@@ -154,7 +154,7 @@ Rumor has it that a cyclops can emit a mile long energy ray from their eye. Howe
 							FactoryLogic.createAbilitySectionText(`
 The goon must be grabbing a size-1 creature or object to use this maneuver.
 
-The goon hurls whats in their hand down the line and rolls power. The hurled creature or object counts as a target and lands in the last square of the line (or nearest unoccupied square of the goons choice).`),
+The goon hurls what's in their hand down the line and rolls power. The hurled creature or object counts as a target and lands in the last square of the line (or nearest unoccupied square of the goons choice).`),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 3,
@@ -174,7 +174,8 @@ The goon hurls whats in their hand down the line and rolls power. The hurled cr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 adjacent creature or object',
-						effect: 'Slide 5.'
+						effect: 'Slide 5.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -275,7 +276,8 @@ The goon hurls whats in their hand down the line and rolls power. The hurled cr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The juggernaut moves up to their speed and makes a free strike.'
+						effect: 'The juggernaut moves up to their speed and makes a free strike.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({

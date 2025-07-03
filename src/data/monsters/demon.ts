@@ -162,7 +162,8 @@ The following demons have been identified across categories 1-3:
 							tier1: '1 damage',
 							tier2: '2 damage',
 							tier3: '3 damage'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -205,7 +206,8 @@ The following demons have been identified across categories 1-3:
 							tier1: '2 poison damage',
 							tier2: '4 poison damage',
 							tier3: '5 poison damage'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -267,7 +269,8 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Self or one ally',
-						effect: 'The target immediately becomes hidden, regardless of whether they have cover or concealment.'
+						effect: 'The target immediately becomes hidden, regardless of whether they have cover or concealment.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -329,7 +332,8 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Three creatures',
-						effect: 'The muceron pulls each target 5 squares.'
+						effect: 'The muceron pulls each target 5 squares.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -395,7 +399,8 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The resmach teleports 2 squares and uses Abyssal Strike.'
+						effect: 'The resmach teleports 2 squares and uses Abyssal Strike.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({

@@ -682,7 +682,8 @@ export const LibraryEditPage = (props: Props) => {
 				type: FactoryLogic.type.createAction(),
 				keywords: [],
 				distance: [ FactoryLogic.distance.createMelee() ],
-				target: ''
+				target: '',
+				sections: []
 			}));
 			setElement(elementCopy);
 			setDirty(true);

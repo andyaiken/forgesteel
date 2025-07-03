@@ -109,7 +109,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier2: '2 damage',
 							tier3: '3 damage'
 						}),
-						effect: 'The princeps lunges with their spear. One ally within 3 can shift 2.'
+						effect: 'The princeps lunges with their spear. One ally within 3 can shift 2.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -150,7 +151,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier2: '4 damage',
 							tier3: '5 damage'
 						}),
-						effect: 'The sagittarius has an edge on this ability while adjacent to an ally.'
+						effect: 'The sagittarius has an edge on this ability while adjacent to an ally.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -191,7 +193,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier2: '2 damage; shift 1',
 							tier3: '3 damage; shift 2'
 						}),
-						effect: 'The tiro slices the target with their dagger. The target can’t shift until the start of the tiro’s next turn.'
+						effect: 'The tiro slices the target with their dagger. The target can’t shift until the start of the tiro’s next turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -235,7 +238,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier2: '2 damage',
 							tier3: '3 damage'
 						}),
-						effect: 'All kobolds ignore opportunity attacks from the target until the start of the vele’s next turn.'
+						effect: 'All kobolds ignore opportunity attacks from the target until the start of the vele’s next turn.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -275,7 +279,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier2: '6 lightning damage',
 							tier3: '7 lightning damage'
 						}),
-						effect: 'The adeptus has an edge on the ability if the target is adjacent to another enemy. All enemies adjacent to the target take 2 lighting damage.'
+						effect: 'The adeptus has an edge on the ability if the target is adjacent to another enemy. All enemies adjacent to the target take 2 lighting damage.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -293,7 +298,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier2: '5 damage',
 							tier3: '6 damage'
 						}),
-						effect: 'This attack ignores all banes and damage reduction.'
+						effect: 'This attack ignores all banes and damage reduction.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -333,7 +339,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier2: '4 damage; pull 2',
 							tier3: '5 damage; pull 3'
 						}),
-						effect: 'If the target’s forced movement triggers a trap, the trap has a double edge on its power roll.'
+						effect: 'If the target’s forced movement triggers a trap, the trap has a double edge on its power roll.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -413,7 +420,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier1: '2 damage; push 1; M<0 prone',
 							tier2: '3 damage; push 2; M<1 prone',
 							tier3: '4 damage; push 3; M<2 prone'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -473,7 +481,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All allies in the burst',
-						effect: 'Each target regains 5 stamina.'
+						effect: 'Each target regains 5 stamina.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -573,7 +582,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier1: '7 fire damage',
 							tier2: '10 fire damage',
 							tier3: '13 fire damage'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -584,7 +594,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						cost: 5,
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The drangolin shifts their speed and uses Fiery Claws against each creature who comes within 1 during the move. The drangolin makes one power roll against all targets.'
+						effect: 'The drangolin shifts their speed and uses Fiery Claws against each creature who comes within 1 during the move. The drangolin makes one power roll against all targets.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -602,7 +613,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier2: '8 damage; push 3; A<1 prone',
 							tier3: '11 damage; push 5; A<2 prone'
 						}),
-						effect: 'This attack deals an additional 2 fire damage against targets directly above the dragonlin.'
+						effect: 'This attack deals an additional 2 fire damage against targets directly above the dragonlin.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -659,7 +671,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						type: FactoryLogic.type.createTrigger('A creature moves or is force moved into the cube.', { free: true }),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The cube uses Engulf with a double edge'
+						effect: 'The cube uses Engulf with a double edge',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -737,7 +750,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						type: FactoryLogic.type.createTrigger('A creature uses an ability aginst the centurion or an ally.'),
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies in the burst',
-						effect: 'Each target shifts 2 before the damage is resolved. All kobolds with Shield? Shield! has damage immunity 2 against the triggering ability.'
+						effect: 'Each target shifts 2 before the damage is resolved. All kobolds with Shield? Shield! has damage immunity 2 against the triggering ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -748,7 +762,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],
 						target: 'All enemies in the line',
-						effect: 'The centurion uses Pilum against each target, dealing an additional 5 damage. Each weakened target takes 2 fire damage at the start of each of their turns until the condition ends.'
+						effect: 'The centurion uses Pilum against each target, dealing an additional 5 damage. Each weakened target takes 2 fire damage at the start of each of their turns until the condition ends.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -759,7 +774,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 						target: 'All enemies in the cube',
-						effect: 'The centurion uses Pilum against each target with a double edge. Each target is then pushed 3.'
+						effect: 'The centurion uses Pilum against each target with a double edge. Each target is then pushed 3.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -770,7 +786,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All enemies in the burst',
-						effect: 'Each target is P<2 taunted (save ends). For the rest of the encounter the centurion has damage immunity 2. All allies within 10 of the centurion can make a free strike.'
+						effect: 'Each target is P<2 taunted (save ends). For the rest of the encounter the centurion has damage immunity 2. All allies within 10 of the centurion can make a free strike.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -814,7 +831,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							tier1: '3 damage',
 							tier2: '5 damage',
 							tier3: '7 damage; taunted (EoT)'
-						})
+						}),
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -835,7 +853,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'The shieldbearer’s mentor',
-						effect: 'When the shieldbearer’s mentor takes damage from an attack, the shieldbearer can block the attack (if the shieldbearer is adjacent to the mentor) or throw their shield into the mentor’s space (if they are up to 5 away from the mentor). The triggering attack is reduced by half and any potency effects it has are reduced by 1. If the kobold threw their shield, it bounces back to their hand.'
+						effect: 'When the shieldbearer’s mentor takes damage from an attack, the shieldbearer can block the attack (if the shieldbearer is adjacent to the mentor) or throw their shield into the mentor’s space (if they are up to 5 away from the mentor). The triggering attack is reduced by half and any potency effects it has are reduced by 1. If the kobold threw their shield, it bounces back to their hand.',
+						sections: []
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
@@ -849,7 +868,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						effect: `
 The shieldbearer straps their shield on their back and then climbs onto their mentor’s back. While clinging to their mentor, the shieldbearer enters the mentor’s space and loses their Shield, Boss? trait. They move along with the mentor and can’t use actions, moves, or maneuvers, except to end the effect as a maneuver. The effect also ends if the shieldbearer is force moved away or knocked prone. When the effect ends, the shieldbearer moves into an adjacent square if they’re still in the mentor’s space.
 
-While the shieldbearer is clinging to their mentor, both the shieldbearer and the mentor gain 10 Temporary Stamina and cover.`
+While the shieldbearer is clinging to their mentor, both the shieldbearer and the mentor gain 10 Temporary Stamina and cover.`,
+						sections: []
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -866,7 +886,8 @@ While the shieldbearer is clinging to their mentor, both the shieldbearer and th
 							tier2: '10 damage; M (average) prone',
 							tier3: '14 damage; M (strong) prone'
 						}),
-						effect: 'If this ability is used as part of the Charge action, gain 2 surges.'
+						effect: 'If this ability is used as part of the Charge action, gain 2 surges.',
+						sections: []
 					})
 				})
 			}

@@ -108,13 +108,13 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '11 damage; A<2 grabbed',
-							tier2: '17 damage; A<2 grabbed',
-							tier3: '20 damage; A<2 grabbed'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '11 damage; A<2 grabbed',
+								tier2: '17 damage; A<2 grabbed',
+								tier3: '20 damage; A<2 grabbed'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -131,13 +131,15 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 5 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '6 damage; effect ends after 2 turns.',
-							tier2: '10 damage; effect ends after 1 round.',
-							tier3: '13 damage; effect ends with the encounter.'
-						}),
-						effect: 'All psionic or magical abilities within the affected area have a double bane. All tests against psionic or magical effects within this area have a double edge.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '6 damage; effect ends after 2 turns.',
+								tier2: '10 damage; effect ends after 1 round.',
+								tier3: '13 damage; effect ends with the encounter.'
+							})),
+							FactoryLogic.createAbilitySectionText('All psionic or magical abilities within the affected area have a double bane. All tests against psionic or magical effects within this area have a double edge.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -149,13 +151,15 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One grabbed enemy',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '12 damage',
-							tier2: '20 damage',
-							tier3: '24 damage'
-						}),
-						effect: 'If this affect reduces the target to 0 Stamina and they have a brain, their brain explodes, instantly killing them.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '12 damage',
+								tier2: '20 damage',
+								tier3: '24 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('If this affect reduces the target to 0 Stamina and they have a brain, their brain explodes, instantly killing them.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -165,7 +169,9 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Lord Syuul teleports 5 along with each creature and object he has grabbed. He can release them as part of this maneuver.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Lord Syuul teleports 5 along with each creature and object he has grabbed. He can release them as part of this maneuver.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -175,7 +181,9 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						type: FactoryLogic.type.createTrigger('Lord Syuul takes typed damage.'),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Lord Syuul gains immunity 5 to the triggering type of damage until the start of his next turn.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Lord Syuul gains immunity 5 to the triggering type of damage until the start of his next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -191,13 +199,15 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All enemies',
-						preEffect: 'Each target makes an **Intuition Test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Intuition,
-							tier1: '16 psychic damage; can’t establish line of effect to creatures besides Lord Syuul, and strikes targeting Lord Syuul have a bane (save ends)',
-							tier2: '13 psychic damage; can’t establish line of effect to creatures besides Lord Syuul (save ends)',
-							tier3: '7 psychic damage'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target makes an **Intuition Test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Intuition,
+								tier1: '16 psychic damage; can’t establish line of effect to creatures besides Lord Syuul, and strikes targeting Lord Syuul have a bane (save ends)',
+								tier2: '13 psychic damage; can’t establish line of effect to creatures besides Lord Syuul (save ends)',
+								tier3: '7 psychic damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -208,7 +218,9 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						keywords: [ AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Lord Syuul teleports up to 10 and projects an illusory double within 10. The double can’t move or act, but Lord Syuul can use psionic abilities as if he were in its space. When a creature touches or damages the double with a melee strike, they take 10 psionic damage. The double disappears when Lord Syuul takes damage.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('Lord Syuul teleports up to 10 and projects an illusory double within 10. The double can’t move or act, but Lord Syuul can use psionic abilities as if he were in its space. When a creature touches or damages the double with a melee strike, they take 10 psionic damage. The double disappears when Lord Syuul takes damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -219,13 +231,15 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All creatures',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '7 psychic damage',
-							tier2: '13 psychic damage',
-							tier3: '16 psychic damage'
-						}),
-						effect: 'Each target gains damage weakness 3 until the end of the encounter.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '7 psychic damage',
+								tier2: '13 psychic damage',
+								tier3: '16 psychic damage'
+							})),
+							FactoryLogic.createAbilitySectionText('Each target gains damage weakness 3 until the end of the encounter.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createDamageModifier({
@@ -265,13 +279,15 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature or object',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '7 psychic damage',
-							tier2: '12 psychic damage',
-							tier3: '15 psychic damage'
-						}),
-						effect: 'The exile is invisible to the target until the end of the target’s next turn.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '7 psychic damage',
+								tier2: '12 psychic damage',
+								tier3: '15 psychic damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The exile is invisible to the target until the end of the target’s next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -282,7 +298,9 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Self and mentor',
-						effect: 'The exile and their mentor turn invisible until the start of their next turn. While this invisibility lasts, the exile and their mentor take half damage from all attacks and their attacks do half damage to enemies.'
+						sections: [
+							FactoryLogic.createAbilitySectionText('The exile and their mentor turn invisible until the start of their next turn. While this invisibility lasts, the exile and their mentor take half damage from all attacks and their attacks do half damage to enemies.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -300,13 +318,15 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Psionic, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '6 damage; vertical slide 2',
-							tier2: '10 damage; vertical slide 3',
-							tier3: '14 damage; vertical slide 5'
-						}),
-						effect: 'The exile can forego dealing damage. If they do so, the slide distance is doubled.'
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '6 damage; vertical slide 2',
+								tier2: '10 damage; vertical slide 3',
+								tier3: '14 damage; vertical slide 5'
+							})),
+							FactoryLogic.createAbilitySectionText('The exile can forego dealing damage. If they do so, the slide distance is doubled.')
+						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -317,12 +337,14 @@ However, any hero who has at least one psionic ability can use their maneuver to
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '8 damage; R (weak) frightened (save ends) and prone',
-							tier2: '10 damage; R (average) frightened (save ends) and prone',
-							tier3: '14 damage; R (strong) frightened (save ends) and prone'
-						})
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '8 damage; R (weak) frightened (save ends) and prone',
+								tier2: '10 damage; R (average) frightened (save ends) and prone',
+								tier3: '14 damage; R (strong) frightened (save ends) and prone'
+							}))
+						]
 					})
 				})
 			}

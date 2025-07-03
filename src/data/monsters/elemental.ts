@@ -100,7 +100,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 					FactoryLogic.distance.createRanged(8)
 				],
 				target: 'Self or one elemental',
-				effect: 'Until the end of the encounter, the target’s speed increases by 5 and their strikes deal an additional 5 damage. Whenever an elemental within line of eﬀect uses another convocation ability, the target also gains the eﬀects.'
+				effect: 'Until the end of the encounter, the target’s speed increases by 5 and their strikes deal an additional 5 damage. Whenever an elemental within line of eﬀect uses another convocation ability, the target also gains the eﬀects.',
+				sections: []
 			})
 		})
 	],
@@ -134,7 +135,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 							tier2: '12 fire damage; A<1 burning (save ends)',
 							tier3: '15 fire damage; A<2 burning (save ends)'
 						}),
-						effect: 'A burning creature or object takes 1d6 fire damage at the start of each of their turns until the condition ends.'
+						effect: 'A burning creature or object takes 1d6 fire damage at the start of each of their turns until the condition ends.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -164,7 +166,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The crux ignores any effects associated with the damage and flies up to their speed. If the crux doesn’t end this movement on solid ground, they fall prone.'
+						effect: 'The crux ignores any effects associated with the damage and flies up to their speed. If the crux doesn’t end this movement on solid ground, they fall prone.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -211,7 +214,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 							tier2: '5 damage; 4 lightning damage; push 1',
 							tier3: '5 damage; 7 lightning damage; push 3'
 						}),
-						effect: 'The essence shifts 3 before or after using this ability.'
+						effect: 'The essence shifts 3 before or after using this ability.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -244,7 +248,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object',
-						effect: 'The essence deals 5 lightning damage to the target.'
+						effect: 'The essence deals 5 lightning damage to the target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -291,7 +296,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 							tier2: '11 damage; slide 2',
 							tier3: '14 damage; slide 3'
 						}),
-						effect: 'P<2 the target\'s stability is reduced to 0 and they move 2 additional squares whenver they are force moved (save ends).'
+						effect: 'P<2 the target\'s stability is reduced to 0 and they move 2 additional squares whenver they are force moved (save ends).',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -321,7 +327,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
-						effect: 'The essence makes a free strike against the target.'
+						effect: 'The essence makes a free strike against the target.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -373,7 +380,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 							tier2: '13 damage; R<1 prone and can\'t stand (save ends)',
 							tier3: '16 damage; prone; P<2 can\'t stand (save ends)'
 						}),
-						effect: 'This ability inflicts restrained (save ends) on targets that are already prone. When the restrained condition ends, any can’t stand effects also end.'
+						effect: 'This ability inflicts restrained (save ends) on targets that are already prone. When the restrained condition ends, any can’t stand effects also end.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -403,7 +411,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'One creature or object',
-						effect: 'The field deals 6 damage to the target and A<2 bleeding (save ends).'
+						effect: 'The field deals 6 damage to the target and A<2 bleeding (save ends).',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -455,7 +464,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 							tier2: '12 damage; M<1 restrained (save ends)',
 							tier3: '15 damage; M<2 restrained (save ends)'
 						}),
-						effect: 'The area beneath the target becomes difficult terrain.'
+						effect: 'The area beneath the target becomes difficult terrain.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -485,7 +495,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: ' The force halves the damage, gains damage weakness 3, and increases their speed by 3. The damage weakness increases by 3 each time the force uses this ability in an encounter.'
+						effect: ' The force halves the damage, gains damage weakness 3, and increases their speed by 3. The damage weakness increases by 3 each time the force uses this ability in an encounter.',
+						sections: []
 					})
 				}),
 				FactoryLogic.feature.create({

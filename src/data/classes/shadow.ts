@@ -253,13 +253,14 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			],
 			target: '1 creature',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '4 + A damage; A < [weak], bleeding (save ends)',
-				tier2: '6 + A damage; A < [average], bleeding (save ends)',
-				tier3: '10 + A damage; A < [strong], bleeding (save ends)'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Agility ],
+					tier1: '4 + A damage; A < [weak], bleeding (save ends)',
+					tier2: '6 + A damage; A < [average], bleeding (save ends)',
+					tier3: '10 + A damage; A < [strong], bleeding (save ends)'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-7',
@@ -294,13 +295,14 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			],
 			target: '2 creatures or objects',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '4 damage',
-				tier2: '6 damage',
-				tier3: '10 damage'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Agility ],
+					tier1: '4 damage',
+					tier2: '6 damage',
+					tier3: '10 damage'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-9',
@@ -314,13 +316,14 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '1d6 + 7 + A damage',
-				tier2: '1d6 + 11 + A damage',
-				tier3: '1d6 + 16 + A damage'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Agility ],
+					tier1: '1d6 + 7 + A damage',
+					tier2: '1d6 + 11 + A damage',
+					tier3: '1d6 + 16 + A damage'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-10',
@@ -352,13 +355,14 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			distance: [ FactoryLogic.distance.createRanged(5) ],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '6 + A damage; R < [weak], the target has damage weakness 5 (save ends)',
-				tier2: '9 + A damage; R < [average], the target has damage weakness 5 (save ends)',
-				tier3: '13 + A damage; R < [strong], the target has damage weakness 5 (save ends)'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Agility ],
+					tier1: '6 + A damage; R < [weak], the target has damage weakness 5 (save ends)',
+					tier2: '9 + A damage; R < [average], the target has damage weakness 5 (save ends)',
+					tier3: '13 + A damage; R < [strong], the target has damage weakness 5 (save ends)'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-12',
@@ -419,13 +423,14 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			distance: [ FactoryLogic.distance.createRanged(5) ],
 			target: '1 creature',
 			cost: 7,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '8 + A damage; A < [weak], restrained (save ends)',
-				tier2: '12 + A damage; A < [average], restrained (save ends)',
-				tier3: '16 + A damage; A < [strong], restrained (save ends)'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Agility ],
+					tier1: '8 + A damage; A < [weak], restrained (save ends)',
+					tier2: '12 + A damage; A < [average], restrained (save ends)',
+					tier3: '16 + A damage; A < [strong], restrained (save ends)'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'shadow-ability-16',
@@ -439,13 +444,14 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 			],
 			target: '1 creature',
 			cost: 7,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '7 + A damage; M < [weak], slowed (save ends)',
-				tier2: '11 + A damage; M < [average], prone and can’t stand (save ends)',
-				tier3: '16 + A damage; M < [strong], prone and can’t stand (save ends)'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Agility ],
+					tier1: '7 + A damage; M < [weak], slowed (save ends)',
+					tier2: '11 + A damage; M < [average], prone and can’t stand (save ends)',
+					tier3: '16 + A damage; M < [strong], prone and can’t stand (save ends)'
+				}))
+			]
 		})
 	],
 	subclasses: [
@@ -524,13 +530,14 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 											],
 											target: '1 creature',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Agility ],
-												tier1: '6 + A damage; you can teleport the target 1 square',
-												tier2: '10 + A damage; you can teleport the target up to 3 squares',
-												tier3: '14 + A damage; you can teleport the target up to 5 squares'
-											}),
-											sections: []
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Agility ],
+													tier1: '6 + A damage; you can teleport the target 1 square',
+													tier2: '10 + A damage; you can teleport the target up to 3 squares',
+													tier3: '14 + A damage; you can teleport the target up to 5 squares'
+												}))
+											]
 										})
 									}),
 									value: 1
@@ -669,14 +676,15 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 											distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 											target: 'Each creature in the area',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Agility ],
-												tier1: '2 poison damage',
-												tier2: '5 poison damage',
-												tier3: '7 poison damage'
-											}),
-											effect: 'The gas remains in the area until the end of the encounter. Any creature who has M < average and starts their turn in the area is weakened (save ends).',
-											sections: []
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Agility ],
+													tier1: '2 poison damage',
+													tier2: '5 poison damage',
+													tier3: '7 poison damage'
+												})),
+												FactoryLogic.createAbilitySectionText('The gas remains in the area until the end of the encounter. Any creature who has M < average and starts their turn in the area is weakened (save ends).')
+											]
 										})
 									}),
 									value: 1
@@ -766,14 +774,15 @@ The illusion ends when you harm another creature, when you and any creature phys
 											distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 											target: 'Each enemy in the area',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Agility ],
-												tier1: 'Slide 4',
-												tier2: 'Slide 5',
-												tier3: 'Slide 7'
-											}),
-											effect: 'This forced movement ignores stability. Instead, the forced movement is reduced by a number equal to the target’s Intuition score.',
-											sections: []
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Agility ],
+													tier1: 'Slide 4',
+													tier2: 'Slide 5',
+													tier3: 'Slide 7'
+												})),
+												FactoryLogic.createAbilitySectionText('This forced movement ignores stability. Instead, the forced movement is reduced by a number equal to the target’s Intuition score.')
+											]
 										})
 									}),
 									value: 1

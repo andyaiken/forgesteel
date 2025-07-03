@@ -310,13 +310,14 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '4 + A damage; A < [weak], grabbed',
-				tier2: '7 + A damage; A < [average], grabbed',
-				tier3: '9 + A damage; A < [strong], grabbed'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Agility ],
+					tier1: '4 + A damage; A < [weak], grabbed',
+					tier2: '7 + A damage; A < [average], grabbed',
+					tier3: '9 + A damage; A < [strong], grabbed'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-5',
@@ -327,13 +328,14 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '4 + A damage; taunted (EoT)',
-				tier2: '5 + A damage; taunted (EoT); slide 1',
-				tier3: '6 + A damage; taunted (EoT); slide 2'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Agility ],
+					tier1: '4 + A damage; taunted (EoT)',
+					tier2: '5 + A damage; taunted (EoT); slide 1',
+					tier3: '6 + A damage; taunted (EoT); slide 2'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-6',
@@ -344,13 +346,14 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createMelee(2) ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '5 + A psychic damage; vertical pull 1',
-				tier2: '8 + A psychic damage; vertical pull 2',
-				tier3: '11 + A psychic damage; vertical pull 3'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Agility ],
+					tier1: '5 + A psychic damage; vertical pull 1',
+					tier2: '8 + A psychic damage; vertical pull 2',
+					tier3: '11 + A psychic damage; vertical pull 3'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-7',
@@ -382,13 +385,14 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '4 + A damage; A < [weak], weakened (save ends)',
-				tier2: '7 + A damage; A < [average], weakened (save ends)',
-				tier3: '9 + A damage; A < [strong], weakened (save ends)'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Agility ],
+					tier1: '4 + A damage; A < [weak], weakened (save ends)',
+					tier2: '7 + A damage; A < [average], weakened (save ends)',
+					tier3: '9 + A damage; A < [strong], weakened (save ends)'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-9',
@@ -454,13 +458,14 @@ This ability stays active even after encounters end. It ends if you are dying or
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '4 + A damage; I < [weak], dazed and slowed (save ends)',
-				tier2: '5 + A damage; I < [average], dazed and slowed (save ends)',
-				tier3: '7 + A damage; I < [strong], dazed and slowed (save ends)'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Agility ],
+					tier1: '4 + A damage; I < [weak], dazed and slowed (save ends)',
+					tier2: '5 + A damage; I < [average], dazed and slowed (save ends)',
+					tier3: '7 + A damage; I < [strong], dazed and slowed (save ends)'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'null-ability-13',
@@ -669,13 +674,14 @@ As your discipline grows, your psionic mastery of your body intensifies.
 											distance: [ FactoryLogic.distance.createMelee(3) ],
 											target: '1 creature',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Agility ],
-												tier1: '8 + A damage; slide 1',
-												tier2: '12 + A damage; slide 3',
-												tier3: '16 + A damage; slide 5'
-											}),
-											sections: []
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Agility ],
+													tier1: '8 + A damage; slide 1',
+													tier2: '12 + A damage; slide 3',
+													tier3: '16 + A damage; slide 5'
+												}))
+											]
 										})
 									}),
 									value: 1
@@ -748,13 +754,14 @@ As your discipline grows, your psionic mastery of your body intensifies.
 											distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 											target: 'Each enemy in the area',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Agility ],
-												tier1: '6 cold damage; A < [weak], slowed (save ends)',
-												tier2: '9 cold damage; A < [average], slowed (save ends)',
-												tier3: '13 cold damage; A < [strong], slowed (save ends)'
-											}),
-											sections: []
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Agility ],
+													tier1: '6 cold damage; A < [weak], slowed (save ends)',
+													tier2: '9 cold damage; A < [average], slowed (save ends)',
+													tier3: '13 cold damage; A < [strong], slowed (save ends)'
+												}))
+											]
 										})
 									}),
 									value: 1
@@ -842,13 +849,14 @@ Additionally, you have forced movement damage immunity equal to your level and r
 											distance: [ FactoryLogic.distance.createMelee(3) ],
 											target: '1 creature',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Agility ],
-												tier1: '8 + A psychic damage; vertical pull 3',
-												tier2: '12 + A psychic damage; vertical pull 5',
-												tier3: '16 + A psychic damage; vertical pull 7'
-											}),
-											sections: []
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Agility ],
+													tier1: '8 + A psychic damage; vertical pull 3',
+													tier2: '12 + A psychic damage; vertical pull 5',
+													tier3: '16 + A psychic damage; vertical pull 7'
+												}))
+											]
 										})
 									}),
 									value: 1
@@ -864,14 +872,15 @@ Additionally, you have forced movement damage immunity equal to your level and r
 											distance: [ FactoryLogic.distance.createSelf() ],
 											target: 'Self',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Agility ],
-												tier1: 'You gain 10 temporary Stamina',
-												tier2: 'You gain 15 temporary Stamina',
-												tier3: 'You gain 20 temporary Stamina'
-											}),
-											effect: 'While you have this temporary Stamina, you can’t be made bleeding.',
-											sections: []
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Agility ],
+													tier1: 'You gain 10 temporary Stamina',
+													tier2: 'You gain 15 temporary Stamina',
+													tier3: 'You gain 20 temporary Stamina'
+												})),
+												FactoryLogic.createAbilitySectionText('While you have this temporary Stamina, you can’t be made bleeding.')
+											]
 										})
 									}),
 									value: 1

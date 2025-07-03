@@ -70,14 +70,15 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Reason ],
-							tier1: '2 + R damage',
-							tier2: '4 + R damage',
-							tier3: '6 + R damage'
-						}),
-						effect: 'When you make this strike, choose the damage type from one of the following options: acid, cold, corruption, fire, lightning, poison, or sonic.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Reason ],
+								tier1: '2 + R damage',
+								tier2: '4 + R damage',
+								tier3: '6 + R damage'
+							})),
+							FactoryLogic.createAbilitySectionText('When you make this strike, choose the damage type from one of the following options: acid, cold, corruption, fire, lightning, poison, or sonic.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -541,14 +542,15 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '4 + R poison damage',
-				tier2: '7 + R poison damage',
-				tier3: '11 + R poison damage'
-			}),
-			effect: 'Mushrooms cover the target’s body, and can be removed by the target or by an adjacent creature as an action. While the mushrooms are on the target, you and each of your allies adjacent to the target gains a surge whenever the target takes damage.',
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: '4 + R poison damage',
+					tier2: '7 + R poison damage',
+					tier3: '11 + R poison damage'
+				})),
+				FactoryLogic.createAbilitySectionText('Mushrooms cover the target’s body, and can be removed by the target or by an adjacent creature as an action. While the mushrooms are on the target, you and each of your allies adjacent to the target gains a surge whenever the target takes damage.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-12',
@@ -559,14 +561,15 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '3 damage',
-				tier2: '5 damage',
-				tier3: '8 damage; M < [strong], prone'
-			}),
-			effect: 'You must be touching the ground to use this ability. Choose a square of ground in the area that is unoccupied or occupied by your or an ally. A pillar of earth that is 1 square wide and long and is up to as many squares tall as your Reason score rises out of the ground. The pillar can’t collide with any creatures or objects nor can it force any creatures being raised by it to collide with other creatures or objects.',
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: '3 damage',
+					tier2: '5 damage',
+					tier3: '8 damage; M < [strong], prone'
+				})),
+				FactoryLogic.createAbilitySectionText('You must be touching the ground to use this ability. Choose a square of ground in the area that is unoccupied or occupied by your or an ally. A pillar of earth that is 1 square wide and long and is up to as many squares tall as your Reason score rises out of the ground. The pillar can’t collide with any creatures or objects nor can it force any creatures being raised by it to collide with other creatures or objects.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-13',
@@ -577,13 +580,13 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 			target: 'Each enemy in the area',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '4 fire damage',
-				tier2: '6 fire damage',
-				tier3: '10 fire damage'
-			}),
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: '4 fire damage',
+					tier2: '6 fire damage',
+					tier3: '10 fire damage'
+				})),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Persist',
 					value: 2,
@@ -644,14 +647,15 @@ Choose one of the following effects:
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 			target: 'Each enemy in the area',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '4 acid damage',
-				tier2: '6 acid damage',
-				tier3: '10 acid damage'
-			}),
-			effect: 'You and each ally within the area can end one effect that is ended by a saving throw or that ends at the end of that creature’s turn.',
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: '4 acid damage',
+					tier2: '6 acid damage',
+					tier3: '10 acid damage'
+				})),
+				FactoryLogic.createAbilitySectionText('You and each ally within the area can end one effect that is ended by a saving throw or that ends at the end of that creature’s turn.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-17',
@@ -731,13 +735,14 @@ Until the start of your next turn, the area gains the following effects:
 			target: '1 creature',
 			cost: 5,
 			minLevel: 2,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '5 + R fire damage; A < [weak], restrained (save ends)',
-				tier2: '9 + R fire damage; A < [average], restrained (save ends)',
-				tier3: '12 + R fire damage; A < [strong], restrained (save ends)'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: '5 + R fire damage; A < [weak], restrained (save ends)',
+					tier2: '9 + R fire damage; A < [average], restrained (save ends)',
+					tier3: '12 + R fire damage; A < [strong], restrained (save ends)'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-21',
@@ -770,14 +775,15 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 			target: '1 creature or object',
 			cost: 7,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '5 damage',
-				tier2: '9 damage',
-				tier3: '12 damage'
-			}),
-			effect: 'The ground in or directly beneath the area drops, lowering 3 squares.',
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: '5 damage',
+					tier2: '9 damage',
+					tier3: '12 damage'
+				})),
+				FactoryLogic.createAbilitySectionText('The ground in or directly beneath the area drops, lowering 3 squares.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-23',
@@ -788,14 +794,14 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 3 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Reason ],
-				tier1: '3 damage',
-				tier2: '6 damage',
-				tier3: '9 damage'
-			}),
-			effect: 'Until the end of your next turn, each ally in your aura has their characteristic scores increased by 1 for the purpose of resisting potencies and has a +1 bonus on saving throws.',
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: '3 damage',
+					tier2: '6 damage',
+					tier3: '9 damage'
+				})),
+				FactoryLogic.createAbilitySectionText('Until the end of your next turn, each ally in your aura has their characteristic scores increased by 1 for the purpose of resisting potencies and has a +1 bonus on saving throws.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Persist',
 					value: 1,

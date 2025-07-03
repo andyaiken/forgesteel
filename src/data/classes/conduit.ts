@@ -79,8 +79,8 @@ When you roll to gain piety at the start of your turn, you can pray to gain the 
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Self or 1 ally',
-						effect: 'The target can spend a Recovery.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The target can spend a Recovery.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -104,14 +104,15 @@ For each piety spent, you can choose one of the following enhancements:
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Intuition ],
-							tier1: '2 + I damage',
-							tier2: '4 + I damage',
-							tier3: '6 + I damage'
-						}),
-						effect: 'You can have this ability deal holy damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Intuition ],
+								tier1: '2 + I damage',
+								tier2: '4 + I damage',
+								tier3: '6 + I damage'
+							})),
+							FactoryLogic.createAbilitySectionText('You can have this ability deal holy damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createChoice({
@@ -128,8 +129,8 @@ For each piety spent, you can choose one of the following enhancements:
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
 									target: '1 ally',
-									effect: 'The power roll gains an edge.',
 									sections: [
+										FactoryLogic.createAbilitySectionText('The power roll gains an edge.'),
 										FactoryLogic.createAbilitySectionField({
 											name: 'Spend',
 											value: 1,
@@ -150,8 +151,8 @@ For each piety spent, you can choose one of the following enhancements:
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
 									target: '1 ally',
-									effect: 'The power roll gains a bane against the target.',
 									sections: [
+										FactoryLogic.createAbilitySectionText('The power roll gains a bane against the target.'),
 										FactoryLogic.createAbilitySectionField({
 											name: 'Spend',
 											value: 1,
@@ -395,13 +396,14 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Intuition ],
-				tier1: '3 + I holy damage; vertical pull 2',
-				tier2: '5 + I holy damage; vertical pull 3',
-				tier3: '8 + I holy damage; vertical pull 4'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Intuition ],
+					tier1: '3 + I holy damage; vertical pull 2',
+					tier2: '5 + I holy damage; vertical pull 3',
+					tier3: '8 + I holy damage; vertical pull 4'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-4',
@@ -454,13 +456,14 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Intuition ],
-				tier1: '3 + I holy damage; slide 1',
-				tier2: '5 + I holy damage; slide 2',
-				tier3: '8 + I holy damage; slide 3'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Intuition ],
+					tier1: '3 + I holy damage; slide 1',
+					tier2: '5 + I holy damage; slide 2',
+					tier3: '8 + I holy damage; slide 3'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-7',
@@ -492,13 +495,14 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature or object',
 			cost: 'signature',
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Intuition ],
-				tier1: '3 + I corruption damage; P < [weak], the target takes a bane on their next power roll',
-				tier2: '5 + I corruption damage; P < [average], the target takes a bane on their next power roll',
-				tier3: '8 + I corruption damage; P < [strong], the target takes a bane on their next power roll'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Intuition ],
+					tier1: '3 + I corruption damage; P < [weak], the target takes a bane on their next power roll',
+					tier2: '5 + I corruption damage; P < [average], the target takes a bane on their next power roll',
+					tier3: '8 + I corruption damage; P < [strong], the target takes a bane on their next power roll'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-9',
@@ -543,13 +547,14 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Intuition ],
-				tier1: '3 + I holy damage; A < [weak], prone',
-				tier2: '6 + I holy damage; A < [average], prone',
-				tier3: '9 + I holy damage; A < [strong], prone and can’t stand (save ends)'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Intuition ],
+					tier1: '3 + I holy damage; A < [weak], prone',
+					tier2: '6 + I holy damage; A < [average], prone',
+					tier3: '9 + I holy damage; A < [strong], prone and can’t stand (save ends)'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-12',
@@ -581,13 +586,14 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature or object',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Intuition ],
-				tier1: '3 + I corruption damage; M < [weak], damage weakness 5 (save ends)',
-				tier2: '6 + I corruption damage; M < [average], damage weakness 5 (save ends)',
-				tier3: '9 + I corruption damage; M < [strong], damage weakness 5 (save ends)'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Intuition ],
+					tier1: '3 + I corruption damage; M < [weak], damage weakness 5 (save ends)',
+					tier2: '6 + I corruption damage; M < [average], damage weakness 5 (save ends)',
+					tier3: '9 + I corruption damage; M < [strong], damage weakness 5 (save ends)'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-14',
@@ -598,13 +604,14 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Intuition ],
-				tier1: '6 + I holy damage; I < [weak], frightened (save ends)',
-				tier2: '9 + I holy damage; I < [average], frightened (save ends)',
-				tier3: '13 + I holy damage; I < [strong], frightened (save ends)'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Intuition ],
+					tier1: '6 + I holy damage; I < [weak], frightened (save ends)',
+					tier2: '9 + I holy damage; I < [average], frightened (save ends)',
+					tier3: '13 + I holy damage; I < [strong], frightened (save ends)'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-15',
@@ -615,13 +622,14 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Self and up to three allies',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Intuition ],
-				tier1: 'The target gains 5 temporary Stamina',
-				tier2: 'The target gains 10 temporary Stamina',
-				tier3: 'The target gains 15 temporary Stamina'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Intuition ],
+					tier1: 'The target gains 5 temporary Stamina',
+					tier2: 'The target gains 10 temporary Stamina',
+					tier3: 'The target gains 15 temporary Stamina'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-16',
@@ -645,14 +653,15 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Intuition ],
-				tier1: '6 psychic damage; I < [weak], frightened (save ends)',
-				tier2: '9 psychic damage; I < [average], frightened (save ends)',
-				tier3: '13 psychic damage; I < [strong], frightened (save ends)'
-			}),
-			effect: 'The targets are frightened of you or a creature you choose within 10 squares.',
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Intuition ],
+					tier1: '6 psychic damage; I < [weak], frightened (save ends)',
+					tier2: '9 psychic damage; I < [average], frightened (save ends)',
+					tier3: '13 psychic damage; I < [strong], frightened (save ends)'
+				})),
+				FactoryLogic.createAbilitySectionText('The targets are frightened of you or a creature you choose within 10 squares.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-18',
@@ -676,14 +685,15 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: '1 enemy',
 			cost: 7,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Intuition ],
-				tier1: '7 + I corruption damage',
-				tier2: '10 + I corruption damage',
-				tier3: '15 + I corruption damage'
-			}),
-			effect: 'One ally within distance can spend any number of Recoveries (no action required).',
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Intuition ],
+					tier1: '7 + I corruption damage',
+					tier2: '10 + I corruption damage',
+					tier3: '15 + I corruption damage'
+				})),
+				FactoryLogic.createAbilitySectionText('One ally within distance can spend any number of Recoveries (no action required).')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-20',

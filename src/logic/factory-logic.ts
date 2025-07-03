@@ -743,7 +743,7 @@ export class FactoryLogic {
 			cost: data.cost || 0,
 			repeatable: data.repeatable ?? false,
 			minLevel: data.minLevel || 1,
-			sections: data.sections,
+			sections: sections,
 
 			preEffect: '',
 			powerRoll: null,

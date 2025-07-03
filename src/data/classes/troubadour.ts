@@ -315,14 +315,15 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			],
 			target: '1 creature or object',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Presence ],
-				tier1: '7 + P sonic damage',
-				tier2: '10 + P sonic damage',
-				tier3: '13 + P sonic damage'
-			}),
-			effect: 'The first time the target uses an ability before the start of your next turn, any tier-related effects of that ability other than damage are suppressed, negating those effects for all targets. Ability effects that always happen regardless of the power roll work as usual.',
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Presence ],
+					tier1: '7 + P sonic damage',
+					tier2: '10 + P sonic damage',
+					tier3: '13 + P sonic damage'
+				})),
+				FactoryLogic.createAbilitySectionText('The first time the target uses an ability before the start of your next turn, any tier-related effects of that ability other than damage are suppressed, negating those effects for all targets. Ability effects that always happen regardless of the power roll work as usual.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'troubadour-ability-6',
@@ -333,14 +334,13 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Presence ],
-				tier1: 'Slide 1; I < [weak], dazed (save ends)',
-				tier2: 'Slide 1; I < [average], dazed (save ends)',
-				tier3: 'Slide 2; I < [strong], dazed (save ends)'
-			}),
 			sections: [
-				FactoryLogic.createAbilitySectionText(''),
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Presence ],
+					tier1: 'Slide 1; I < [weak], dazed (save ends)',
+					tier2: 'Slide 1; I < [average], dazed (save ends)',
+					tier3: 'Slide 2; I < [strong], dazed (save ends)'
+				})),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Spend',
 					value: 2,
@@ -358,14 +358,15 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 			target: 'Each enemy in the area',
 			cost: 3,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Presence ],
-				tier1: '4 damage; P < [weak], slowed (save ends)',
-				tier2: '5 damage; P < [average], slowed (save ends)',
-				tier3: '6 damage; P < [strong], restrained (save ends)'
-			}),
-			effect: 'The area becomes difficult terrain for enemies.',
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Presence ],
+					tier1: '4 damage; P < [weak], slowed (save ends)',
+					tier2: '5 damage; P < [average], slowed (save ends)',
+					tier3: '6 damage; P < [strong], restrained (save ends)'
+				})),
+				FactoryLogic.createAbilitySectionText('The area becomes difficult terrain for enemies.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'troubadour-ability-8',
@@ -397,13 +398,14 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 			target: 'Self and each ally in the area',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Presence ],
-				tier1: 'The target can shift 1 square and make a free strike.',
-				tier2: 'The target can shift up to 2 squares and make a free strike with an edge.',
-				tier3: 'The target can shift up to 3 squares and make a free strike with an edge, then can spend a Recovery.'
-			}),
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Presence ],
+					tier1: 'The target can shift 1 square and make a free strike.',
+					tier2: 'The target can shift up to 2 squares and make a free strike with an edge.',
+					tier3: 'The target can shift up to 3 squares and make a free strike with an edge, then can spend a Recovery.'
+				}))
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'troubadour-ability-10',
@@ -440,14 +442,15 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: '1 creature',
 			cost: 5,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Agility ],
-				tier1: '6 + A damage; P < [weak], weakened (save ends)',
-				tier2: '10 + A damage; P < [average], weakened (save ends)',
-				tier3: '14 + A damage; P < [strong], weakened (save ends)'
-			}),
-			effect: 'You can become bleeding (save ends) to deal an additional 5 corruption damage to the target.',
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Agility ],
+					tier1: '6 + A damage; P < [weak], weakened (save ends)',
+					tier2: '10 + A damage; P < [average], weakened (save ends)',
+					tier3: '14 + A damage; P < [strong], weakened (save ends)'
+				})),
+				FactoryLogic.createAbilitySectionText('You can become bleeding (save ends) to deal an additional 5 corruption damage to the target.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'troubadour-ability-13',
@@ -458,14 +461,15 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 4 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Presence ],
-				tier1: 'Slide 3; P < [weak], this slide ignores the target’s stability.',
-				tier2: 'Slide 5; P < [average], this slide ignores the target’s stability.',
-				tier3: 'Slide 7; P < [strong], this slide ignores the target’s stability.'
-			}),
-			effect: 'Instead of sliding a target, you can swap their location with another target as long as each can fit into the other’s space. You can’t slide targets into other creatures or objects using this ability.',
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Presence ],
+					tier1: 'Slide 3; P < [weak], this slide ignores the target’s stability.',
+					tier2: 'Slide 5; P < [average], this slide ignores the target’s stability.',
+					tier3: 'Slide 7; P < [strong], this slide ignores the target’s stability.'
+				})),
+				FactoryLogic.createAbilitySectionText('Instead of sliding a target, you can swap their location with another target as long as each can fit into the other’s space. You can’t slide targets into other creatures or objects using this ability.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'troubadour-ability-14',
@@ -476,14 +480,15 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Presence ],
-				tier1: '5 fire damage; A < [weak], weakened (save ends)',
-				tier2: '7 fire damage; A < [average], weakened (save ends)',
-				tier3: '10 fire damage; A < [strong], weakened (save ends)'
-			}),
-			effect: 'Each ally in the area can shift up to 2 squares.',
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Presence ],
+					tier1: '5 fire damage; A < [weak], weakened (save ends)',
+					tier2: '7 fire damage; A < [average], weakened (save ends)',
+					tier3: '10 fire damage; A < [strong], weakened (save ends)'
+				})),
+				FactoryLogic.createAbilitySectionText('Each ally in the area can shift up to 2 squares.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'troubadour-ability-15',
@@ -497,14 +502,15 @@ The Director can choose to award the heroes with 1 Hero Token to stop you from f
 			],
 			target: '1 creature or object',
 			cost: 7,
-			powerRoll: FactoryLogic.createPowerRoll({
-				characteristic: [ Characteristic.Presence ],
-				tier1: '5 + P damage',
-				tier2: '8 + P damage; push 3',
-				tier3: '11 + P damage; push 5'
-			}),
-			effect: 'You can choose to have this ability deal sonic damage. Additionally, you can use this ability on the same target for the next 2 rounds without spending drama.',
-			sections: []
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Presence ],
+					tier1: '5 + P damage',
+					tier2: '8 + P damage; push 3',
+					tier3: '11 + P damage; push 5'
+				})),
+				FactoryLogic.createAbilitySectionText('You can choose to have this ability deal sonic damage. Additionally, you can use this ability on the same target for the next 2 rounds without spending drama.')
+			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'troubadour-ability-16',
@@ -621,14 +627,15 @@ Additionally, on each of your turns, you can use a free maneuver to communicate 
 											distance: [ FactoryLogic.distance.createMelee() ],
 											target: '1 creature',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Agility ],
-												tier1: '6 + A damage; the target can shift up to 3 squares and make a free strike against you',
-												tier2: '9 + A damage; the target can shift up to 2 squares and make a free strike against you',
-												tier3: '13 + A damage; the target can shift 1 square'
-											}),
-											effect: 'If the target shifts or makes a free strike against you as a result of this ability, you can shift up to 3 squares and make a melee free strike against the target.',
-											sections: []
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Agility ],
+													tier1: '6 + A damage; the target can shift up to 3 squares and make a free strike against you',
+													tier2: '9 + A damage; the target can shift up to 2 squares and make a free strike against you',
+													tier3: '13 + A damage; the target can shift 1 square'
+												})),
+												FactoryLogic.createAbilitySectionText('If the target shifts or makes a free strike against you as a result of this ability, you can shift up to 3 squares and make a melee free strike against the target.')
+											]
 										})
 									}),
 									value: 1
@@ -803,13 +810,14 @@ Choose one of the following effects:
 								keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 								distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 								target: 'Each enemy in the area',
-								powerRoll: FactoryLogic.createPowerRoll({
-									characteristic: [ Characteristic.Presence ],
-									tier1: 'Push 1',
-									tier2: 'Push 2',
-									tier3: 'Push 3'
-								}),
-								sections: []
+								sections: [
+									FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+										characteristic: [ Characteristic.Presence ],
+										tier1: 'Push 1',
+										tier2: 'Push 2',
+										tier3: 'Push 3'
+									}))
+								]
 							})
 						}),
 						FactoryLogic.feature.createAbility({

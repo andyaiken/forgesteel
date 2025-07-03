@@ -78,13 +78,13 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Telepathy ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Reason ],
-							tier1: '2 + R psychic damage',
-							tier2: '4 + R psychic damage',
-							tier3: '6 + R psychic damage'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Reason ],
+								tier1: '2 + R psychic damage',
+								tier2: '4 + R psychic damage',
+								tier3: '6 + R psychic damage'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Strained',
 								effect: 'The strike deals an extra 2 psychic damage to the target and to you. The damage you take can’t be reduced in any way.'
@@ -776,14 +776,14 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 											distance: [ FactoryLogic.distance.createRanged(10) ],
 											target: 'Special',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Presence ],
-												tier1: 'Target two creatures, one of which can be you',
-												tier2: 'Target three creatures, one of which can be you',
-												tier3: 'Target four creatures, one of which can be you'
-											}),
-											effect: 'Until the start of your next turn, each target gains a +5 bonus to speed, can’t be dazed, and they can use an additional maneuver on their turn. If a target is dazed, the condition ends for them.',
 											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Presence ],
+													tier1: 'Target two creatures, one of which can be you',
+													tier2: 'Target three creatures, one of which can be you',
+													tier3: 'Target four creatures, one of which can be you'
+												})),
+												FactoryLogic.createAbilitySectionText('Until the start of your next turn, each target gains a +5 bonus to speed, can’t be dazed, and they can use an additional maneuver on their turn. If a target is dazed, the condition ends for them.'),
 												FactoryLogic.createAbilitySectionField({
 													name: 'Strained',
 													effect: 'Your speed is halved until the end of the encounter.'
@@ -804,14 +804,14 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 											distance: [ FactoryLogic.distance.createRanged(10) ],
 											target: 'Three creatures or objects',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Presence ],
-												tier1: 'The target’s speed is halved (save ends), or if P < [weak], the target is slowed (save ends).',
-												tier2: 'The target is slowed (save ends), or if P < [average], the target’s speed is 0 (save ends).',
-												tier3: 'The target is slowed (save ends), or if P < [strong], the target’s speed is 0 (save ends).'
-											}),
-											effect: 'A target can’t use triggered actions while their speed is reduced by this ability.',
 											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Presence ],
+													tier1: 'The target’s speed is halved (save ends), or if P < [weak], the target is slowed (save ends).',
+													tier2: 'The target is slowed (save ends), or if P < [average], the target’s speed is 0 (save ends).',
+													tier3: 'The target is slowed (save ends), or if P < [strong], the target’s speed is 0 (save ends).'
+												})),
+												FactoryLogic.createAbilitySectionText('A target can’t use triggered actions while their speed is reduced by this ability.'),
 												FactoryLogic.createAbilitySectionField({
 													name: 'Strained',
 													effect: 'The potency of this ability increases by 1 and you take 1d6 damage. At the start of each round while any target is affected by this ability, you take 1d6 damage. You can immediately end the effects on all affected targets (no action required).'
@@ -911,13 +911,13 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 											distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 											target: 'Each enemy in the area',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Reason ],
-												tier1: '3 damage; vertical push 2',
-												tier2: '6 damage; vertical push 4',
-												tier3: '9 damage; vertical push 6'
-											}),
 											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Reason ],
+													tier1: '3 damage; vertical push 2',
+													tier2: '6 damage; vertical push 4',
+													tier3: '9 damage; vertical push 6'
+												})),
 												FactoryLogic.createAbilitySectionField({
 													name: 'Strained',
 													effect: 'The size of the burst increases by 1 and you are weakened until the end of your turn.'
@@ -938,14 +938,14 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 											distance: [ FactoryLogic.distance.createRanged(10) ],
 											target: 'One creature or object',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Reason ],
-												tier1: '6 + R damage; M < [weak], prone',
-												tier2: '10 + R damage; M < [average], prone',
-												tier3: '14 + R damage; M < [strong], prone and can’t stand (save ends)'
-											}),
-											effect: 'A target made prone by this ability is lifted 2 squares into the air before falling immediately to the ground, taking damage as usual.',
 											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Reason ],
+													tier1: '6 + R damage; M < [weak], prone',
+													tier2: '10 + R damage; M < [average], prone',
+													tier3: '14 + R damage; M < [strong], prone and can’t stand (save ends)'
+												})),
+												FactoryLogic.createAbilitySectionText('A target made prone by this ability is lifted 2 squares into the air before falling immediately to the ground, taking damage as usual.'),
 												FactoryLogic.createAbilitySectionField({
 													name: 'Strained',
 													effect: 'You take half the damage the target takes, including any damage from falling.'
@@ -1031,13 +1031,13 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 											distance: [ FactoryLogic.distance.createRanged(10) ],
 											target: '1 creature',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Reason ],
-												tier1: '6 + R psychic damage; I < [weak], slowed (save ends)',
-												tier2: '10 + R psychic damage; I < [average], weakened (save ends)',
-												tier3: '14 + R psychic damage; I < [strong], dazed (save ends)'
-											}),
 											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Reason ],
+													tier1: '6 + R psychic damage; I < [weak], slowed (save ends)',
+													tier2: '10 + R psychic damage; I < [average], weakened (save ends)',
+													tier3: '14 + R psychic damage; I < [strong], dazed (save ends)'
+												})),
 												FactoryLogic.createAbilitySectionField({
 													name: 'Strained',
 													effect: 'You start crying. You can’t take triggered actions or take free strikes until the end of the target’s next turn.'
@@ -1058,14 +1058,14 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 											distance: [ FactoryLogic.distance.createRanged(10) ],
 											target: '1 enemy',
 											cost: 5,
-											powerRoll: FactoryLogic.createPowerRoll({
-												characteristic: [ Characteristic.Reason ],
-												tier1: 'The target makes a free strike against one enemy of your choice.',
-												tier2: 'The target shifts up to their speed and uses their signature ability against any enemies of your choice.',
-												tier3: 'The target moves up to their speed and uses their signature ability against any enemies of your choice.'
-											}),
-											effect: 'You control the target’s movement. The target can’t be moved in a way that would harm them (such as over a cliff), leave them dying, or result in them suffering a condition or other negative effect. However, you can',
 											sections: [
+												FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+													characteristic: [ Characteristic.Reason ],
+													tier1: 'The target makes a free strike against one enemy of your choice.',
+													tier2: 'The target shifts up to their speed and uses their signature ability against any enemies of your choice.',
+													tier3: 'The target moves up to their speed and uses their signature ability against any enemies of your choice.'
+												})),
+												FactoryLogic.createAbilitySectionText('You control the target’s movement. The target can’t be moved in a way that would harm them (such as over a cliff), leave them dying, or result in them suffering a condition or other negative effect. However, you can'),
 												FactoryLogic.createAbilitySectionField({
 													name: 'Strained',
 													effect: 'You take 1d6 damage and are weakened until the end of your turn.'

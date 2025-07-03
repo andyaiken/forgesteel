@@ -44,6 +44,7 @@ import { PerkList } from '../enums/perk-list';
 import { Playbook } from '../models/playbook';
 import { Plot } from '../models/plot';
 import { PowerRoll } from '../models/power-roll';
+import { RetainerData } from '../data/retainer-data';
 import { Size } from '../models/size';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
@@ -481,7 +482,7 @@ export class FactoryLogic {
 			level4: data.retainer.level4,
 			level7: data.retainer.level7,
 			level10: data.retainer.level10,
-			featuresByLevel: MonsterLogic.getRetainerAdvancementFeatures(data.level, data.role.type, data.retainer.level4, data.retainer.level7, data.retainer.level10)
+			featuresByLevel: RetainerData.getRetainerAdvancementFeatures(data.level, data.role.type, data.retainer.level4, data.retainer.level7, data.retainer.level10)
 		} : null;
 		return {
 			id: data.id || Utils.guid(),
@@ -742,7 +743,7 @@ export class FactoryLogic {
 			cost: data.cost || 0,
 			repeatable: data.repeatable ?? false,
 			minLevel: data.minLevel || 1,
-			sections: sections,
+			sections: data.sections,
 
 			preEffect: '',
 			powerRoll: null,

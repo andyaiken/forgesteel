@@ -133,14 +133,14 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 										<Space direction='vertical' style={{ width: '100%' }}>
 											{
 												HeroLogic.getCompanions(props.hero).map(m => (
-													<Button type='text' onClick={() => props.onAddSquad(props.hero, m, MonsterLogic.getRoleMultiplier(m.role.organization, props.options))}>
+													<Button type='text' onClick={() => props.onAddSquad(props.hero, m, 1)}>
 														{m.name}
 													</Button>
 												))
 											}
 											{
 												HeroLogic.getSummons(props.hero).map(m => (
-													<Button type='text' onClick={() => props.onAddSquad(props.hero, m, MonsterLogic.getRoleMultiplier(m.role.organization, props.options))}>
+													<Button type='text' onClick={() => props.onAddSquad(props.hero, m, 1)}>
 														Summon: {m.name}
 													</Button>
 												))

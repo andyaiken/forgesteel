@@ -1,7 +1,7 @@
 import { Alert, Button, Drawer, Flex, Input, Select, Space } from 'antd';
 import { CSSProperties, useState } from 'react';
 import { CloseOutlined, InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Pill, ResourcePill } from '../../../controls/pill/pill';
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
@@ -39,7 +39,9 @@ import { Modal } from '../../../modals/modal/modal';
 import { Monster } from '../../../../models/monster';
 import { MonsterInfo } from '../../../controls/token/token';
 import { MonsterModal } from '../../../modals/monster/monster-modal';
+import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterPanel } from '../monster-panel/monster-panel';
+import { MonsterRoleType } from '../../../../enums/monster-role-type';
 import { MonsterSelectModal } from '../../../modals/select/monster-select/monster-select-modal';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { Options } from '../../../../models/options';
@@ -546,8 +548,20 @@ export const FeaturePanel = (props: Props) => {
 				}
 				<Drawer open={monsterSelectorOpen} onClose={() => setMonsterSelectorOpen(false)} closeIcon={null} width='500px'>
 					<MonsterSelectModal
-						type={data.type}
-						sourcebooks={props.sourcebooks || []}
+						monsters={
+							SourcebookLogic
+								.getMonsterGroups(props.sourcebooks || [])
+								.flatMap(g => g.monsters)
+								.filter(m => {
+									switch (data.type) {
+										case 'mount':
+											return m.role.type === MonsterRoleType.Mount;
+										case 'retainer':
+											return m.role.organization === MonsterOrganizationType.Retainer;
+									}
+									return true;
+								})
+						}
 						options={props.options}
 						onSelect={monster => {
 							setMonsterSelectorOpen(false);
@@ -1203,6 +1217,79 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
+	const getSelectionSummon = (data: FeatureSummonData) => {
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					!data.selected ?
+						<Button block={true} onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
+						: null
+				}
+				{
+					data.selected.map(monster => (
+						<Flex className='selection-box' align='center' gap={10}>
+							<MonsterInfo
+								style={{ flex: '1 1 0' }}
+								monster={monster}
+							/>
+							<div style={{ flex: '0 0 auto' }}>
+								<Button
+									type='text'
+									title='Show details'
+									icon={<InfoCircleOutlined />}
+									onClick={() => setSelectedMonster(monster)}
+								/>
+								<Button
+									type='text'
+									title='Remove'
+									icon={<CloseOutlined />}
+									onClick={() => {
+										const dataCopy = Utils.copy(data);
+										dataCopy.selected = dataCopy.selected.filter(m => m.id !== monster.id);
+										if (props.setData) {
+											props.setData(props.feature.id, dataCopy);
+										}
+									}}
+								/>
+							</div>
+						</Flex>
+					))
+				}
+				{
+					data.selected.length < data.count ?
+						<Button className='status-warning' block={true} onClick={() => setMonsterSelectorOpen(true)}>
+							Choose a monster
+						</Button>
+						: null
+				}
+				<Drawer open={monsterSelectorOpen} onClose={() => setMonsterSelectorOpen(false)} closeIcon={null} width='500px'>
+					<MonsterSelectModal
+						monsters={
+							data.options.length > 0 ?
+								data.options
+								:
+								props.sourcebooks ? props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters) : []
+						}
+						options={props.options}
+						onSelect={monster => {
+							setMonsterSelectorOpen(false);
+
+							const dataCopy = Utils.copy(data);
+							dataCopy.selected.push(Utils.copy(monster));
+							if (props.setData) {
+								props.setData(props.feature.id, dataCopy);
+							}
+						}}
+						onClose={() => setMonsterSelectorOpen(false)}
+					/>
+				</Drawer>
+				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
+					{selectedMonster ? <MonsterModal monster={selectedMonster} options={props.options} onClose={() => setSelectedMonster(null)} /> : null}
+				</Drawer>
+			</Space>
+		);
+	};
+
 	const getSelectionTaggedFeatureChoice = (data: FeatureTaggedFeatureChoiceData) => {
 		if (!props.hero) {
 			return null;
@@ -1426,6 +1513,8 @@ export const FeaturePanel = (props: Props) => {
 				return getSelectionPerk(props.feature.data);
 			case FeatureType.SkillChoice:
 				return getSelectionSkillChoice(props.feature.data);
+			case FeatureType.Summon:
+				return getSelectionSummon(props.feature.data);
 			case FeatureType.TaggedFeatureChoice:
 				return getSelectionTaggedFeatureChoice(props.feature.data);
 			case FeatureType.TitleChoice:
@@ -1829,6 +1918,26 @@ export const FeaturePanel = (props: Props) => {
 		return null;
 	};
 
+	const getInformationSummon = (data: FeatureSummonData) => {
+		if (data.selected.length > 0) {
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					{
+						data.selected.map(m => <MonsterPanel key={m.id} monster={m} options={props.options} />)
+					}
+				</Space>
+			);
+		}
+
+		if (!props.feature.description) {
+			return (
+				<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'monsters' : 'monster'}.</div>
+			);
+		}
+
+		return null;
+	};
+
 	const getInformationTaggedFeature = (data: FeatureTaggedFeatureData) => {
 		return (
 			<FeaturePanel key={data.feature.id} feature={data.feature} options={props.options} />
@@ -1931,6 +2040,8 @@ export const FeaturePanel = (props: Props) => {
 				return getInformationSkillChoice(props.feature.data);
 			case FeatureType.Speed:
 				return getInformationSpeed(props.feature.data);
+			case FeatureType.Summon:
+				return getInformationSummon(props.feature.data);
 			case FeatureType.TaggedFeature:
 				return getInformationTaggedFeature(props.feature.data);
 			case FeatureType.TaggedFeatureChoice:

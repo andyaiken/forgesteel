@@ -247,6 +247,7 @@ export const LibraryEditPage = (props: Props) => {
 							<FeatureEditPanel
 								feature={f}
 								sourcebooks={props.sourcebooks}
+								options={props.options}
 								onChange={changeFeature}
 							/>
 						</Expander>
@@ -652,6 +653,7 @@ export const LibraryEditPage = (props: Props) => {
 											<FeatureEditPanel
 												feature={f}
 												sourcebooks={props.sourcebooks}
+												options={props.options}
 												onChange={feature => changeFeature(lvl.level, feature)}
 											/>
 										</Expander>
@@ -929,6 +931,7 @@ export const LibraryEditPage = (props: Props) => {
 								<FeatureEditPanel
 									feature={f}
 									sourcebooks={props.sourcebooks}
+									options={props.options}
 									onChange={feature => changeFeature(subclass, lvl.level, feature)}
 								/>
 							</Expander>
@@ -1439,6 +1442,7 @@ export const LibraryEditPage = (props: Props) => {
 											<FeatureEditPanel
 												feature={f.feature}
 												sourcebooks={props.sourcebooks}
+												options={props.options}
 												onChange={feature => changeFeature(lvl.level, feature)}
 											/>
 										</Expander>
@@ -1852,6 +1856,7 @@ export const LibraryEditPage = (props: Props) => {
 												feature={feature}
 												allowedTypes={[ FeatureType.Text, FeatureType.Ability ]}
 												sourcebooks={props.sourcebooks}
+												options={props.options}
 												onChange={f => setSectionContentFeature(sectionIndex, contentIndex, f as FeatureText | FeatureAbility)}
 											/>
 										</Expander>
@@ -2065,6 +2070,7 @@ export const LibraryEditPage = (props: Props) => {
 																feature={feature}
 																allowedTypes={[ FeatureType.Text, FeatureType.Ability ]}
 																sourcebooks={props.sourcebooks}
+																options={props.options}
 																onChange={f => setUpgradeSectionContentFeature(upgradeIndex, sectionIndex, contentIndex, f as FeatureText | FeatureAbility)}
 															/>
 														</Expander>
@@ -2238,6 +2244,7 @@ export const LibraryEditPage = (props: Props) => {
 								feature={f}
 								allowedTypes={[ FeatureType.Ability, FeatureType.Malice ]}
 								sourcebooks={props.sourcebooks}
+								options={props.options}
 								onChange={f => changeMaliceFeature(f as FeatureMalice | FeatureAbility)}
 							/>
 						</Expander>
@@ -2361,8 +2368,7 @@ export const LibraryEditPage = (props: Props) => {
 				</Flex>
 				<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} width='500px'>
 					<MonsterSelectModal
-						type='companion'
-						sourcebooks={props.sourcebooks}
+						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
 						options={props.options}
 						selectOriginal={false}
 						onSelect={monster => {
@@ -2440,6 +2446,7 @@ export const LibraryEditPage = (props: Props) => {
 								feature={i}
 								allowedTypes={[ FeatureType.AddOn ]}
 								sourcebooks={props.sourcebooks}
+								options={props.options}
 								onChange={f => changeAddOn(f as FeatureAddOn)}
 							/>
 						</Expander>
@@ -2551,8 +2558,7 @@ export const LibraryEditPage = (props: Props) => {
 				}
 				<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} width='500px'>
 					<MonsterSelectModal
-						type='companion'
-						sourcebooks={props.sourcebooks}
+						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
 						options={props.options}
 						selectOriginal={true}
 						onSelect={monster => {
@@ -2797,6 +2803,7 @@ export const LibraryEditPage = (props: Props) => {
 					<FeatureEditPanel
 						feature={element as Perk}
 						sourcebooks={props.sourcebooks}
+						options={props.options}
 						onChange={perk => {
 							const copy = Utils.copy(perk) as Perk;
 							setElement(copy);

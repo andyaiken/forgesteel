@@ -35,7 +35,7 @@ import './monster-edit-panel.scss';
 
 interface Props {
 	monster: Monster;
-	monsterGroup: MonsterGroup;
+	monsterGroup?: MonsterGroup;
 	sourcebooks: Sourcebook[];
 	options: Options;
 	similarMonsters: Monster[];
@@ -62,7 +62,7 @@ export const MonsterEditPanel = (props: Props) => {
 		};
 
 		const setRandomName = () => {
-			if (props.monsterGroup.name) {
+			if (props.monsterGroup && props.monsterGroup.name) {
 				setName(`${props.monsterGroup.name} ${NameGenerator.generateName()}`);
 			} else {
 				setName(NameGenerator.generateName());
@@ -579,6 +579,7 @@ export const MonsterEditPanel = (props: Props) => {
 								feature={f}
 								sourcebooks={props.sourcebooks}
 								allowedTypes={[ FeatureType.Text, FeatureType.Ability, FeatureType.ConditionImmunity, FeatureType.DamageModifier ]}
+								options={props.options}
 								onChange={changeFeature}
 							/>
 						</Expander>
@@ -704,6 +705,7 @@ export const MonsterEditPanel = (props: Props) => {
 								feature={monster.retainer.level4}
 								sourcebooks={props.sourcebooks}
 								allowedTypes={[ FeatureType.Ability ]}
+								options={props.options}
 								onChange={f => changeRetainerFeature(f, 4)}
 							/>
 						</Expander>
@@ -719,6 +721,7 @@ export const MonsterEditPanel = (props: Props) => {
 								feature={monster.retainer.level7}
 								sourcebooks={props.sourcebooks}
 								allowedTypes={[ FeatureType.Ability ]}
+								options={props.options}
 								onChange={f => changeRetainerFeature(f, 7)}
 							/>
 						</Expander>
@@ -734,6 +737,7 @@ export const MonsterEditPanel = (props: Props) => {
 								feature={monster.retainer.level10}
 								sourcebooks={props.sourcebooks}
 								allowedTypes={[ FeatureType.Ability ]}
+								options={props.options}
 								onChange={f => changeRetainerFeature(f, 10)}
 							/>
 						</Expander>

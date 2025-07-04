@@ -1,6 +1,6 @@
 import { Button, Divider, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -23,8 +23,13 @@ import { Format } from '../../../../utils/format';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { ItemType } from '../../../../enums/item-type';
+import { Monster } from '../../../../models/monster';
+import { MonsterEditPanel } from '../monster-edit/monster-edit-panel';
+import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
+import { MonsterRoleType } from '../../../../enums/monster-role-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
+import { Options } from '../../../../models/options';
 import { Perk } from '../../../../models/perk';
 import { PerkList } from '../../../../enums/perk-list';
 import { PowerRoll } from '../../../../models/power-roll';
@@ -41,6 +46,7 @@ interface Props {
 	feature: Feature | Perk;
 	allowedTypes?: FeatureType[];
 	sourcebooks: Sourcebook[];
+	options: Options;
 	onChange: (feature: Feature) => void;
 }
 
@@ -280,6 +286,13 @@ export const FeatureEditPanel = (props: Props) => {
 					speed: 5
 				} as FeatureSpeedData;
 				break;
+			case FeatureType.Summon:
+				data = {
+					options: [],
+					count: 1,
+					selected: []
+				} as FeatureSummonData;
+				break;
 			case FeatureType.TaggedFeature:
 				data = {
 					tag: '',
@@ -329,7 +342,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 	const getDataSection = () => {
 		const setCount = (value: number) => {
-			const copy = Utils.copy(feature.data) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureItemChoiceData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureTaggedFeatureChoiceData | FeatureTitleChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureItemChoiceData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureSummonData | FeatureTaggedFeatureChoiceData | FeatureTitleChoiceData;
 			copy.count = value;
 			setData(copy);
 		};
@@ -759,6 +772,51 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
+		const addSummon = (data: FeatureSummonData) => {
+			const copy = Utils.copy(data);
+			copy.options.push(FactoryLogic.createMonster({
+				id: Utils.guid(),
+				name: '',
+				description: '',
+				level: 1,
+				role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Band, MonsterRoleType.Ambusher),
+				keywords: [],
+				encounterValue: 0,
+				size: FactoryLogic.createSize(1),
+				speed: FactoryLogic.createSpeed(5),
+				stamina: 8,
+				stability: 0,
+				freeStrikeDamage: 1,
+				characteristics: [
+					{ characteristic: Characteristic.Might, value: 0 },
+					{ characteristic: Characteristic.Agility, value: 0 },
+					{ characteristic: Characteristic.Reason, value: 0 },
+					{ characteristic: Characteristic.Intuition, value: 0 },
+					{ characteristic: Characteristic.Presence, value: 0 }
+				],
+				features: []
+			}));
+			setData(copy);
+		};
+
+		const moveSummon = (data: FeatureSummonData, index: number, direction: 'up' | 'down') => {
+			const copy = Utils.copy(data);
+			copy.options = Collections.move(copy.options, index, direction);
+			setData(copy);
+		};
+
+		const deleteSummon = (data: FeatureSummonData, index: number) => {
+			const copy = Utils.copy(data);
+			copy.options.splice(index, 1);
+			setData(copy);
+		};
+
+		const setSummon = (data: FeatureSummonData, index: number, value: Monster) => {
+			const copy = Utils.copy(data);
+			copy.options[index] = value;
+			setData(copy);
+		};
+
 		switch (feature.type) {
 			case FeatureType.Ability: {
 				const data = feature.data as FeatureAbilityData;
@@ -1033,6 +1091,7 @@ export const FeatureEditPanel = (props: Props) => {
 										<FeatureEditPanel
 											feature={option.feature}
 											sourcebooks={props.sourcebooks}
+											options={props.options}
 											onChange={f => setChoiceFeature(data, n, f)}
 										/>
 										<NumberSpin min={1} value={option.value} onChange={value => setChoiceValue(data, n, value)} />
@@ -1522,7 +1581,13 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureMultipleData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Features</HeaderText>
+						<HeaderText
+							extra={
+								<Button type='text' icon={<PlusOutlined />} onClick={() => addMultipleFeature(data)} />
+							}
+						>
+							Features
+						</HeaderText>
 						{
 							data.features.map((feature, n) => (
 								<Expander
@@ -1537,6 +1602,7 @@ export const FeatureEditPanel = (props: Props) => {
 									<FeatureEditPanel
 										feature={feature}
 										sourcebooks={props.sourcebooks}
+										options={props.options}
 										onChange={f => setMultipleFeature(data, n, f)}
 									/>
 								</Expander>
@@ -1547,7 +1613,6 @@ export const FeatureEditPanel = (props: Props) => {
 								<Empty />
 								: null
 						}
-						<Button block={true} onClick={() => addMultipleFeature(data)}>Add a feature</Button>
 					</Space>
 				);
 			}
@@ -1694,6 +1759,48 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
+			case FeatureType.Summon: {
+				const data = feature.data as FeatureSummonData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText
+							extra={
+								<Button type='text' icon={<PlusOutlined />} onClick={() => addSummon(data)} />
+							}
+						>
+							Options
+						</HeaderText>
+						{
+							data.options.map((monster, n) => (
+								<Expander
+									key={monster.id}
+									title={monster.name || 'Unnamed Monster'}
+									extra={[
+										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSummon(data, n, 'up'); }} />,
+										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSummon(data, n, 'down');}} />,
+										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSummon(data, n); }} />
+									]}
+								>
+									<MonsterEditPanel
+										monster={monster}
+										sourcebooks={props.sourcebooks}
+										options={props.options}
+										similarMonsters={[]}
+										onChange={m => setSummon(data, n, m)}
+									/>
+								</Expander>
+							))
+						}
+						{
+							data.options.length === 0 ?
+								<Empty />
+								: null
+						}
+						<HeaderText>Count</HeaderText>
+						<NumberSpin min={1} value={data.count} onChange={setCount} />
+					</Space>
+				);
+			};
 			case FeatureType.TaggedFeature: {
 				const data = feature.data as FeatureTaggedFeatureData;
 				return (
@@ -1710,6 +1817,7 @@ export const FeatureEditPanel = (props: Props) => {
 							<FeatureEditPanel
 								feature={data.feature}
 								sourcebooks={props.sourcebooks}
+								options={props.options}
 								onChange={setTaggedFeature}
 							/>
 						</Expander>
@@ -1777,6 +1885,7 @@ export const FeatureEditPanel = (props: Props) => {
 			FeatureType.Skill,
 			FeatureType.SkillChoice,
 			FeatureType.Speed,
+			FeatureType.Summon,
 			FeatureType.TaggedFeature,
 			FeatureType.TaggedFeatureChoice,
 			FeatureType.TitleChoice

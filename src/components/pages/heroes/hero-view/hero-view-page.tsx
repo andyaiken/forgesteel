@@ -1,6 +1,5 @@
 import { Button, Divider, Popover, Segmented } from 'antd';
 import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, SettingOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
-import { Monster, MonsterGroup } from '../../../../models/monster';
 import { useMemo, useState } from 'react';
 import { Ability } from '../../../../models/ability';
 import { Ancestry } from '../../../../models/ancestry';
@@ -19,6 +18,7 @@ import { HeroClass } from '../../../../models/class';
 import { HeroPanel } from '../../../panels/hero/hero-panel';
 import { HeroStatePage } from '../../../../enums/hero-state-page';
 import { Kit } from '../../../../models/kit';
+import { Monster } from '../../../../models/monster';
 import { Options } from '../../../../models/options';
 import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
@@ -54,7 +54,7 @@ interface Props {
 	showDomain: (domain: Domain) => void;
 	showKit: (kit: Kit) => void;
 	showTitle: (title: Title) => void;
-	showCompanion: (monster: Monster, monsterGroup?: MonsterGroup) => void;
+	showMonster: (monster: Monster) => void;
 	showFollower: (follower: Follower) => void;
 	showCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
@@ -102,7 +102,7 @@ export const HeroViewPage = (props: Props) => {
 							onSelectDomain={props.showDomain}
 							onSelectKit={props.showKit}
 							onSelectTitle={props.showTitle}
-							onSelectCompanion={props.showCompanion}
+							onSelectMonster={props.showMonster}
 							onSelectFollower={props.showFollower}
 							onSelectCharacteristic={characteristic => props.showCharacteristic(characteristic, hero)}
 							onSelectAbility={ability => props.showAbility(ability, hero)}

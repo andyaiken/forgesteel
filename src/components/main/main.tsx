@@ -1352,7 +1352,7 @@ export const Main = (props: Props) => {
 										showDomain={domain => onSelectLibraryElement(domain, 'domain')}
 										showKit={kit => onSelectLibraryElement(kit, 'kit')}
 										showTitle={title => onSelectLibraryElement(title, 'title')}
-										showCompanion={onSelectMonster}
+										showMonster={onSelectMonster}
 										showFollower={onSelectFollower}
 										showCharacteristic={onSelectCharacteristic}
 										showAbility={onSelectAbility}

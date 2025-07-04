@@ -16,6 +16,7 @@ import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
+import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroSelectModal } from '../../../modals/select/hero-select/hero-select-modal';
 import { HeroStateModal } from '../../../modals/hero-state/hero-state-modal';
 import { HeroStatePage } from '../../../../enums/hero-state-page';
@@ -35,7 +36,6 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { ResourcePill } from '../../../controls/pill/pill';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
-import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Terrain } from '../../../../models/terrain';
 import { TerrainModal } from '../../../modals/terrain/terrain-modal';
 import { Utils } from '../../../../utils/utils';
@@ -59,6 +59,7 @@ export const EncounterRunPanel = (props: Props) => {
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
 	const [ addingHeroes, setAddingHeroes ] = useState<boolean>(false);
 	const [ addingMonsters, setAddingMonsters ] = useState<boolean>(false);
+	const [ addingSummons, setAddingSummons ] = useState<boolean>(false);
 	const [ selectingGroup, setSelectingGroup ] = useState<boolean>(false);
 	const [ selectedMonster, setSelectedMonster ] = useState<Monster | null>(null);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
@@ -91,26 +92,23 @@ export const EncounterRunPanel = (props: Props) => {
 	};
 
 	const addSlot = (monster: Monster) => {
-		const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, monster.id);
-		if (monsterGroup) {
-			const slot = FactoryLogic.createEncounterSlot(monster.id, monsterGroup.id);
-			slot.count = 1;
+		const slot = FactoryLogic.createEncounterSlot(monster.id);
+		slot.count = MonsterLogic.getRoleMultiplier(monster.role.organization, props.options);
 
-			while (slot.monsters.length < slot.count) {
-				const monsterCopy = Utils.copy(monster);
-				monsterCopy.id = Utils.guid();
-				slot.monsters.push(monsterCopy);
-			}
-
-			const group = FactoryLogic.createEncounterGroup();
-			group.slots.push(slot);
-
-			const copy = Utils.copy(encounter);
-			copy.groups.push(group);
-
-			setEncounter(copy);
-			props.onChange(copy);
+		while (slot.monsters.length < slot.count) {
+			const monsterCopy = Utils.copy(monster);
+			monsterCopy.id = Utils.guid();
+			slot.monsters.push(monsterCopy);
 		}
+
+		const group = FactoryLogic.createEncounterGroup();
+		group.slots.push(slot);
+
+		const copy = Utils.copy(encounter);
+		copy.groups.push(group);
+
+		setEncounter(copy);
+		props.onChange(copy);
 	};
 
 	const getControlSection = () => {
@@ -635,6 +633,11 @@ export const EncounterRunPanel = (props: Props) => {
 										<Flex gap={5}>
 											<Button type={encounter.heroes.length === 0 ? 'primary' : 'default'} onClick={() => setAddingHeroes(true)}>Add hero(es)</Button>
 											<Button onClick={() => setAddingMonsters(true)}>Add a monster</Button>
+											{
+												encounter.heroes.some(h => HeroLogic.getSummons(h).length > 0) ?
+													<Button onClick={() => setAddingSummons(true)}>Summon</Button>
+													: null
+											}
 										</Flex>
 										: null
 								}
@@ -663,13 +666,24 @@ export const EncounterRunPanel = (props: Props) => {
 				</Drawer>
 				<Drawer open={addingMonsters} onClose={() => setAddingMonsters(false)} closeIcon={null} width='500px'>
 					<MonsterSelectModal
-						type='companion'
-						sourcebooks={props.sourcebooks}
+						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
 						options={props.options}
 						selectOriginal={true}
 						onClose={() => setAddingMonsters(false)}
 						onSelect={m => {
 							setAddingMonsters(false);
+							addSlot(m);
+						}}
+					/>
+				</Drawer>
+				<Drawer open={addingSummons} onClose={() => setAddingSummons(false)} closeIcon={null} width='500px'>
+					<MonsterSelectModal
+						monsters={encounter.heroes.flatMap(h => HeroLogic.getSummons(h))}
+						options={props.options}
+						selectOriginal={true}
+						onClose={() => setAddingMonsters(false)}
+						onSelect={m => {
+							setAddingSummons(false);
 							addSlot(m);
 						}}
 					/>

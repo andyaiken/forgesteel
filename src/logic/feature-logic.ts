@@ -329,6 +329,7 @@ export class FeatureLogic {
 			case FeatureType.LanguageChoice:
 			case FeatureType.Perk:
 			case FeatureType.SkillChoice:
+			case FeatureType.Summon:
 			case FeatureType.TaggedFeatureChoice:
 			case FeatureType.TitleChoice:
 				return true;
@@ -436,6 +437,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose a skill.';
 			case FeatureType.Speed:
 				return 'This feature sets your base speed.';
+			case FeatureType.Summon:
+				return 'This feature allows you to choose monsters you can summon.';
 			case FeatureType.TaggedFeature:
 				return 'This feature describes a tagged feature.';
 			case FeatureType.TaggedFeatureChoice:

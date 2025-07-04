@@ -220,6 +220,13 @@ export interface FeatureSpeedData extends _FeatureData {
 };
 export type FeatureSpeed = FeatureOf<FeatureType.Speed, FeatureSpeedData>;
 
+export interface FeatureSummonData extends _FeatureData {
+	options: Monster[];
+	count: number;
+	selected: Monster[];
+};
+export type FeatureSummon = FeatureOf<FeatureType.Summon, FeatureSummonData>;
+
 export interface FeatureTaggedFeatureData extends _FeatureData {
 	tag: string;
 	feature: Feature;
@@ -273,6 +280,7 @@ export type Feature =
 	| FeatureSkill
 	| FeatureSkillChoice
 	| FeatureSpeed
+	| FeatureSummon
 	| FeatureText
 	| FeatureTaggedFeature
 	| FeatureTaggedFeatureChoice

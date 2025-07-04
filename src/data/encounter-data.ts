@@ -15,7 +15,6 @@ export class EncounterData {
 					{
 						id: 'group-1-slot-1',
 						monsterID: MonsterData.goblin.monsters.find(m => m.name === 'Goblin Assassin')!.id,
-						monsterGroupID: MonsterData.goblin.id,
 						count: 2,
 						customization: {
 							addOnIDs: []
@@ -41,7 +40,6 @@ export class EncounterData {
 					{
 						id: 'group-2-slot-1',
 						monsterID: MonsterData.goblin.monsters.find(m => m.name === 'Goblin Sniper')!.id,
-						monsterGroupID: MonsterData.goblin.id,
 						count: 1,
 						customization: {
 							addOnIDs: []
@@ -67,7 +65,6 @@ export class EncounterData {
 					{
 						id: 'group-3-slot-1',
 						monsterID: MonsterData.goblin.monsters.find(m => m.name === 'Goblin Spinecleaver')!.id,
-						monsterGroupID: MonsterData.goblin.id,
 						count: 1,
 						customization: {
 							addOnIDs: []
@@ -93,7 +90,6 @@ export class EncounterData {
 					{
 						id: 'group-4-slot-1',
 						monsterID: MonsterData.goblin.monsters.find(m => m.name === 'Goblin Underboss')!.id,
-						monsterGroupID: MonsterData.goblin.id,
 						count: 1,
 						customization: {
 							addOnIDs: []
@@ -149,7 +145,6 @@ export class EncounterData {
 					{
 						id: 'group-1-slot-1',
 						monsterID: MonsterData.dragonThorn.monsters[0].id,
-						monsterGroupID: MonsterData.dragonThorn.id,
 						count: 1,
 						customization: {
 							addOnIDs: []

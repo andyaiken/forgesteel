@@ -226,6 +226,13 @@ export class HeroLogic {
 			.filter(a => !!a);
 	};
 
+	static getSummons = (hero: Hero) => {
+		return this.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Summon)
+			.flatMap(f => f.data.selected);
+	};
+
 	static getCharacteristic = (hero: Hero, characteristic: Characteristic) => {
 		let value = 0;
 

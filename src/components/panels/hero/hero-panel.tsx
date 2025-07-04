@@ -1,5 +1,4 @@
 import { Col, Divider, Flex, Row, Segmented, Select, Space, Statistic, Tag } from 'antd';
-import { Monster, MonsterGroup } from '../../../models/monster';
 import { Ability } from '../../../models/ability';
 import { AbilityData } from '../../../data/ability-data';
 import { AbilityLogic } from '../../../logic/ability-logic';
@@ -31,6 +30,7 @@ import { HeroLogic } from '../../../logic/hero-logic';
 import { HeroStatePage } from '../../../enums/hero-state-page';
 import { Kit } from '../../../models/kit';
 import { Markdown } from '../../controls/markdown/markdown';
+import { Monster } from '../../../models/monster';
 import { MonsterInfo } from '../../controls/token/token';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -59,7 +59,7 @@ interface Props {
  	onSelectDomain?: (domain: Domain) => void;
  	onSelectKit?: (kit: Kit) => void;
 	onSelectTitle?: (title: Title) => void;
- 	onSelectCompanion?: (monster: Monster, monsterGroup?: MonsterGroup) => void;
+ 	onSelectMonster?: (monster: Monster) => void;
  	onSelectFollower?: (follower: Follower) => void;
  	onSelectCharacteristic?: (characteristic: Characteristic) => void;
  	onSelectAbility?: (ability: Ability) => void;
@@ -501,9 +501,9 @@ export const HeroPanel = (props: Props) => {
 				}
 			};
 
-			const onSelectCompanion = (monster: Monster) => {
-				if (props.onSelectCompanion) {
-					props.onSelectCompanion(monster);
+			const onSelectMonster = (monster: Monster) => {
+				if (props.onSelectMonster) {
+					props.onSelectMonster(monster);
 				}
 			};
 
@@ -626,7 +626,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						HeroLogic.getCompanions(props.hero).length > 0 ?
 							HeroLogic.getCompanions(props.hero).map(monster => (
-								<div key={monster.id} className='overview-tile clickable' onClick={() => onSelectCompanion(monster)}>
+								<div key={monster.id} className='overview-tile clickable' onClick={() => onSelectMonster(monster)}>
 									<HeaderText>Companion</HeaderText>
 									<MonsterInfo monster={monster} style={{ marginBottom: '10px' }} />
 								</div>
@@ -641,6 +641,17 @@ export const HeroPanel = (props: Props) => {
 									<HeaderText>Follower</HeaderText>
 									<Field label='Name' value={follower.name || 'Follower'} />
 									<Field label='Type' value={follower.type} />
+								</div>
+							))
+							:
+							null
+					}
+					{
+						HeroLogic.getSummons(props.hero).length > 0 ?
+							HeroLogic.getSummons(props.hero).map(monster => (
+								<div key={monster.id} className='overview-tile clickable' onClick={() => onSelectMonster(monster)}>
+									<HeaderText>Can Summon</HeaderText>
+									<MonsterInfo monster={monster} style={{ marginBottom: '10px' }} />
 								</div>
 							))
 							:

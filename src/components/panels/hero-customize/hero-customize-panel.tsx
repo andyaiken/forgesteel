@@ -740,6 +740,19 @@ export const HeroCustomizePanel = (props: Props) => {
 											type='text'
 											onClick={() => {
 												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createSummon({
+													id: Utils.guid(),
+													options: []
+												}));
+											}}
+										>
+											Summon
+										</Button>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
 												props.addFeature(FactoryLogic.feature.createTitleChoice({
 													id: Utils.guid(),
 													echelon: 1

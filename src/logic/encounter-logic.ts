@@ -169,18 +169,16 @@ export class EncounterLogic {
 		const list: {
 			key: string;
 			monsterID: string;
-			monsterGroupID: string;
 			addOnIDs: string[];
 		}[] = [];
 
 		encounter.groups.flatMap(g => g.slots).forEach(s => {
-			const key = s.monsterID + s.monsterGroupID + s.customization.addOnIDs.join('');
+			const key = s.monsterID + s.customization.addOnIDs.join('');
 			const item = list.find(i => i.key === key);
 			if (!item) {
 				list.push({
 					key: key,
 					monsterID: s.monsterID,
-					monsterGroupID: s.monsterGroupID,
 					addOnIDs: [ ... s.customization.addOnIDs ]
 				});
 			}
@@ -190,7 +188,9 @@ export class EncounterLogic {
 	};
 
 	static getMonsterGroups = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
-		const groups = this.getMonsterData(encounter).map(data => SourcebookLogic.getMonsterGroup(sourcebooks, data.monsterID)).filter(group => !!group);
+		const groups = this.getMonsterData(encounter)
+			.map(data => SourcebookLogic.getMonsterGroup(sourcebooks, data.monsterID))
+			.filter(group => !!group);
 		return Collections.distinct(groups, item => item.id);
 	};
 

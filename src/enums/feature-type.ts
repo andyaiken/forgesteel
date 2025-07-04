@@ -30,6 +30,7 @@ export enum FeatureType {
 	Skill = 'Skill',
 	SkillChoice = 'Skill Choice',
 	Speed = 'Speed',
+	Summon = 'Summon',
 	TaggedFeature = 'Tagged Feature',
 	TaggedFeatureChoice = 'Tagged Feature Choice',
 	TitleChoice = 'Title'

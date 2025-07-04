@@ -1538,8 +1538,6 @@ export const PlaybookEditPage = (props: Props) => {
 		const addMonster = (monster: Monster, encounterGroupID: string | null) => {
 			const copy = Utils.copy(element) as Encounter;
 
-			const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, monster.id);
-
 			if (encounterGroupID) {
 				const group = copy.groups.find(g => g.id === encounterGroupID);
 				if (group) {
@@ -1547,12 +1545,12 @@ export const PlaybookEditPage = (props: Props) => {
 					if (slot) {
 						slot.count += 1;
 					} else {
-						group.slots.push(FactoryLogic.createEncounterSlot(monster.id, monsterGroup!.id));
+						group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
 					}
 				};
 			} else {
 				const group = FactoryLogic.createEncounterGroup();
-				group.slots.push(FactoryLogic.createEncounterSlot(monster.id, monsterGroup!.id));
+				group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
 				copy.groups.push(group);
 			}
 

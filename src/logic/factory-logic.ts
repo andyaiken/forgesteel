@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilitySectionField, AbilitySectionRoll, AbilitySectionText, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { MapFog, MapMini, MapTile, MapWall, MapZone, TacticalMap } from '../models/tactical-map';
 import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
@@ -581,11 +581,10 @@ export class FactoryLogic {
 		};
 	};
 
-	static createEncounterSlot = (monsterID: string, monsterGroupID: string): EncounterSlot => {
+	static createEncounterSlot = (monsterID: string): EncounterSlot => {
 		return {
 			id: Utils.guid(),
 			monsterID: monsterID,
-			monsterGroupID: monsterGroupID,
 			count: 1,
 			customization: {
 				addOnIDs: []
@@ -1424,6 +1423,19 @@ export class FactoryLogic {
 				type: FeatureType.Speed,
 				data: {
 					speed: data.speed
+				}
+			};
+		},
+		createSummon: (data: { id: string, name?: string, description?: string, options: Monster[], count?: number }): FeatureSummon => {
+			return {
+				id: data.id,
+				name: data.name || 'Summon',
+				description: data.description || '',
+				type: FeatureType.Summon,
+				data: {
+					options: data.options,
+					count: data.count || 1,
+					selected: []
 				}
 			};
 		},

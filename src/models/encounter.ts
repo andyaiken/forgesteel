@@ -6,7 +6,6 @@ import { Terrain } from './terrain';
 export interface EncounterSlot {
 	id: string;
 	monsterID: string;
-	//monsterGroupID: string;
 	count: number;
 	customization: {
 		addOnIDs: string[];

@@ -16,7 +16,6 @@ import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
-import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroSelectModal } from '../../../modals/select/hero-select/hero-select-modal';
 import { HeroStateModal } from '../../../modals/hero-state/hero-state-modal';
 import { HeroStatePage } from '../../../../enums/hero-state-page';
@@ -59,7 +58,6 @@ export const EncounterRunPanel = (props: Props) => {
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
 	const [ addingHeroes, setAddingHeroes ] = useState<boolean>(false);
 	const [ addingMonsters, setAddingMonsters ] = useState<boolean>(false);
-	const [ addingSummons, setAddingSummons ] = useState<boolean>(false);
 	const [ selectingGroup, setSelectingGroup ] = useState<boolean>(false);
 	const [ selectedMonster, setSelectedMonster ] = useState<Monster | null>(null);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
@@ -633,11 +631,6 @@ export const EncounterRunPanel = (props: Props) => {
 										<Flex gap={5}>
 											<Button type={encounter.heroes.length === 0 ? 'primary' : 'default'} onClick={() => setAddingHeroes(true)}>Add hero(es)</Button>
 											<Button onClick={() => setAddingMonsters(true)}>Add a monster</Button>
-											{
-												encounter.heroes.some(h => HeroLogic.getSummons(h).length > 0) ?
-													<Button onClick={() => setAddingSummons(true)}>Summon</Button>
-													: null
-											}
 										</Flex>
 										: null
 								}
@@ -672,18 +665,6 @@ export const EncounterRunPanel = (props: Props) => {
 						onClose={() => setAddingMonsters(false)}
 						onSelect={m => {
 							setAddingMonsters(false);
-							addSlot(m);
-						}}
-					/>
-				</Drawer>
-				<Drawer open={addingSummons} onClose={() => setAddingSummons(false)} closeIcon={null} width='500px'>
-					<MonsterSelectModal
-						monsters={encounter.heroes.flatMap(h => HeroLogic.getSummons(h))}
-						options={props.options}
-						selectOriginal={true}
-						onClose={() => setAddingMonsters(false)}
-						onSelect={m => {
-							setAddingSummons(false);
 							addSlot(m);
 						}}
 					/>

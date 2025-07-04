@@ -1,9 +1,10 @@
 import { Ability, AbilityDistance, AbilitySectionField, AbilitySectionRoll, AbilitySectionText, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot } from '../models/encounter';
 import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Hero, HeroState } from '../models/hero';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { MapFog, MapMini, MapTile, MapWall, MapZone, TacticalMap } from '../models/tactical-map';
-import { Monster, MonsterGroup, MonsterRole } from '../models/monster';
+import { Monster, MonsterGroup, MonsterRole, MonsterState } from '../models/monster';
 import { MonsterFilter, TerrainFilter } from '../models/filter';
 import { Montage, MontageChallenge, MontageSection } from '../models/montage';
 import { Project, ProjectProgress } from '../models/project';
@@ -29,7 +30,6 @@ import { Follower } from '../models/follower';
 import { FollowerType } from '../enums/follower-type';
 import { Format } from '../utils/format';
 import { FormatLogic } from './format-logic';
-import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
@@ -81,26 +81,31 @@ export class FactoryLogic {
 					selected: [ 'Caelian' ]
 				})
 			],
-			state: {
-				staminaDamage: 0,
-				staminaTemp: 0,
-				recoveriesUsed: 0,
-				surges: 0,
-				victories: 0,
-				xp: 0,
-				heroTokens: 0,
-				renown: 0,
-				wealth: 1,
-				projectPoints: 0,
-				conditions: [],
-				inventory: [],
-				projects: [],
-				notes: '',
-				encounterState: 'ready',
-				hidden: false,
-				defeated: false
-			},
+			state: FactoryLogic.createHeroState(),
 			abilityCustomizations: []
+		};
+	};
+
+	static createHeroState = (): HeroState => {
+		return {
+			staminaDamage: 0,
+			staminaTemp: 0,
+			recoveriesUsed: 0,
+			surges: 0,
+			victories: 0,
+			xp: 0,
+			heroTokens: 0,
+			renown: 0,
+			wealth: 1,
+			projectPoints: 0,
+			conditions: [],
+			inventory: [],
+			projects: [],
+			controlledSlots: [],
+			notes: '',
+			encounterState: 'ready',
+			hidden: false,
+			defeated: false
 		};
 	};
 
@@ -501,16 +506,7 @@ export class FactoryLogic {
 			withCaptain: data.withCaptain || '',
 			features: data.features || [],
 			retainer: retainer,
-			state: {
-				staminaDamage: 0,
-				staminaTemp: 0,
-				recoveriesUsed: 0,
-				conditions: [],
-				reactionUsed: false,
-				hidden: false,
-				defeated: false,
-				captainID: undefined
-			}
+			state: FactoryLogic.createMonsterState()
 		};
 	};
 
@@ -532,6 +528,19 @@ export class FactoryLogic {
 		return {
 			value: value,
 			modes: modes || ''
+		};
+	};
+
+	static createMonsterState = (): MonsterState => {
+		return {
+			staminaDamage: 0,
+			staminaTemp: 0,
+			recoveriesUsed: 0,
+			conditions: [],
+			reactionUsed: false,
+			hidden: false,
+			defeated: false,
+			captainID: undefined
 		};
 	};
 
@@ -590,6 +599,31 @@ export class FactoryLogic {
 				addOnIDs: []
 			},
 			monsters: [],
+			state: {
+				staminaDamage: 0,
+				staminaTemp: 0,
+				recoveriesUsed: 0,
+				conditions: [],
+				reactionUsed: false,
+				hidden: false,
+				defeated: false,
+				captainID: undefined
+			}
+		};
+	};
+
+	static createEncounterSlotFromMonster = (monster: Monster): EncounterSlot => {
+		const m = Utils.copy(monster);
+		m.id = Utils.guid();
+
+		return {
+			id: Utils.guid(),
+			monsterID: monster.id,
+			count: 1,
+			customization: {
+				addOnIDs: []
+			},
+			monsters: [ m ],
 			state: {
 				staminaDamage: 0,
 				staminaTemp: 0,

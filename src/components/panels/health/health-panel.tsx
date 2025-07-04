@@ -862,7 +862,7 @@ Your allies can help you spend Recoveries in combat, and you can spend Recoverie
 											<Segmented
 												block={true}
 												options={[
-													{ value: true, label: 'Hiding' },
+													{ value: true, label: 'Hidden' },
 													{ value: false, label: 'Visible' }
 												]}
 												value={props.hidden.value}

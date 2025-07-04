@@ -1,5 +1,5 @@
-import { Alert, Button, Flex, Popover, Segmented, Tag } from 'antd';
-import { EllipsisOutlined, HeartFilled } from '@ant-design/icons';
+import { Alert, Button, Flex, Popover, Segmented, Space, Tag } from 'antd';
+import { DownOutlined, EllipsisOutlined, HeartFilled, PlusOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterSlot } from '../../../models/encounter';
 import { HeroInfo, MonsterInfo, TerrainInfo } from '../../controls/token/token';
 import { Collections } from '../../../utils/collections';
@@ -11,6 +11,7 @@ import { HeroLogic } from '../../../logic/hero-logic';
 import { Monster } from '../../../models/monster';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
+import { Options } from '../../../models/options';
 import { Terrain } from '../../../models/terrain';
 import { TerrainLogic } from '../../../logic/terrain-logic';
 
@@ -18,10 +19,16 @@ import './encounter-group-panel.scss';
 
 interface EncounterGroupHeroProps {
 	hero: Hero;
+	encounter: Encounter;
+	options: Options;
 	onSelect: (hero: Hero) => void;
 	onSelectMonster: (monster: Monster) => void;
-	onSetState?: (hero: Hero, state: 'ready' | 'current' | 'finished') => void;
-	onDelete?: (hero: Hero) => void;
+	onSelectMinionSlot: (slot: EncounterSlot) => void;
+	onSetState: (hero: Hero, state: 'ready' | 'current' | 'finished') => void;
+	onAddSquad: (hero: Hero, monster: Monster, count: number) => void;
+	onRemoveSquad: (hero: Hero, slotID: string) => void;
+	onAddMonsterToSquad: (hero: Hero, slotID: string) => void;
+	onDelete: (hero: Hero) => void;
 }
 
 export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
@@ -54,31 +61,27 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 						<div className='group-name'>
 							Hero
 						</div>
-						{
-							props.onSetState && props.onDelete ?
-								<Popover
-									trigger='click'
-									content={(
-										<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-											<Segmented
-												vertical={true}
-												disabled={props.hero.state.defeated}
-												options={[
-													{ value: 'ready', label: 'Ready To Act' },
-													{ value: 'current', label: 'Acting Now' },
-													{ value: 'finished', label: 'Finished' }
-												]}
-												value={props.hero.state.encounterState}
-												onChange={value => props.onSetState!(props.hero, value as 'ready' | 'current' | 'finished')}
-											/>
-											<DangerButton mode='block' onConfirm={() => props.onDelete!(props.hero)} />
-										</div>
-									)}
-								>
-									<Button type='text' icon={<EllipsisOutlined />} />
-								</Popover>
-								: null
-						}
+						<Popover
+							trigger='click'
+							content={(
+								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+									<Segmented
+										vertical={true}
+										disabled={props.hero.state.defeated}
+										options={[
+											{ value: 'ready', label: 'Ready To Act' },
+											{ value: 'current', label: 'Acting Now' },
+											{ value: 'finished', label: 'Finished' }
+										]}
+										value={props.hero.state.encounterState}
+										onChange={value => props.onSetState(props.hero, value as 'ready' | 'current' | 'finished')}
+									/>
+									<DangerButton mode='block' onConfirm={() => props.onDelete(props.hero)} />
+								</div>
+							)}
+						>
+							<Button type='text' icon={<EllipsisOutlined />} />
+						</Popover>
 					</Flex>
 				</div>
 				<div className='encounter-slots'>
@@ -104,24 +107,54 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 						</div>
 					</div>
 					{
-						HeroLogic.getCompanions(props.hero).map(m => (
-							<div key={m.id} className='encounter-slot'>
-								<div className='encounter-slot-row' onClick={() => props.onSelectMonster(m)}>
-									<div className='name-column'>
-										<MonsterInfo monster={m} />
-									</div>
-									<div className='stamina-column'>
-										{MonsterLogic.getStaminaDescription(m)}
-										<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
-									</div>
-									<div className='conditions-column'>
-										{[ 'healthy', 'injured' ].includes(HeroLogic.getCombatState(props.hero)) ? null : <Tag>{Format.capitalize(MonsterLogic.getCombatState(m))}</Tag>}
-										{m.state.hidden ? <Tag>Hidden</Tag> : null}
-										{m.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
-									</div>
-								</div>
-							</div>
-						))
+						(HeroLogic.getCompanions(props.hero).length + HeroLogic.getSummons(props.hero).length) > 0 ?
+							<>
+								{
+									props.hero.state.controlledSlots.map(slot => (
+										<div key={slot.id} className='encounter-slot controlled-slot'>
+											<Flex align='center' style={{ paddingLeft: '5px' }}>
+												<b style={{ flex: '1 1 0' }}>Controlling</b>
+												<Button type='text' icon={<PlusOutlined />} onClick={() => props.onAddMonsterToSquad(props.hero, slot.id)} />
+												<DangerButton mode='clear' onConfirm={() => props.onRemoveSquad(props.hero, slot.id)} />
+											</Flex>
+											<MonsterSlot
+												slot={slot}
+												encounter={props.encounter}
+												onSelectMonster={props.onSelectMonster}
+												onSelectMinionSlot={props.onSelectMinionSlot}
+											/>
+											{slot.monsters.length === 0 ? <div>Empty</div> : null}
+										</div>
+									))
+								}
+								<Popover
+									trigger='click'
+									content={
+										<Space direction='vertical' style={{ width: '100%' }}>
+											{
+												HeroLogic.getCompanions(props.hero).map(m => (
+													<Button type='text' onClick={() => props.onAddSquad(props.hero, m, MonsterLogic.getRoleMultiplier(m.role.organization, props.options))}>
+														{m.name}
+													</Button>
+												))
+											}
+											{
+												HeroLogic.getSummons(props.hero).map(m => (
+													<Button type='text' onClick={() => props.onAddSquad(props.hero, m, MonsterLogic.getRoleMultiplier(m.role.organization, props.options))}>
+														Summon: {m.name}
+													</Button>
+												))
+											}
+										</Space>
+									}
+								>
+									<Button block={true}>
+										Add a Controlled Monster
+										<DownOutlined />
+									</Button>
+								</Popover>
+							</>
+							: null
 					}
 				</div>
 			</div>
@@ -137,127 +170,14 @@ interface EncounterGroupMonsterProps {
 	index: number;
 	encounter: Encounter;
 	onSelectMonster: (monster: Monster) => void;
-	onSelectMinionSlot?: (slot: EncounterSlot) => void;
-	onSetState?: (group: EncounterGroup, state: 'ready' | 'current' | 'finished') => void;
-	onDuplicate?: (group: EncounterGroup) => void;
-	onDelete?: (group: EncounterGroup) => void;
+	onSelectMinionSlot: (slot: EncounterSlot) => void;
+	onSetState: (group: EncounterGroup, state: 'ready' | 'current' | 'finished') => void;
+	onDuplicate: (group: EncounterGroup) => void;
+	onDelete: (group: EncounterGroup) => void;
 }
 
 export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 	try {
-		const getSlot = (slot: EncounterSlot) => {
-			const isMinionSlot = slot.monsters.every(m => m.role.organization === MonsterOrganizationType.Minion);
-
-			const getStaminaDescription = () => {
-				const max = Collections.sum(slot.monsters, m => MonsterLogic.getStamina(m));
-
-				let str = `${max}`;
-				if (slot.state.staminaDamage > 0) {
-					str = `${Math.max(max - slot.state.staminaDamage, 0)} / ${max}`;
-				}
-				if (slot.state.staminaTemp > 0) {
-					str += ` +${slot.state.staminaTemp}`;
-				}
-
-				return str;
-			};
-
-			const getMinionCountMessage = () => {
-				if (!isMinionSlot) {
-					return null;
-				}
-
-				const staminaRemaining = Collections.sum(slot.monsters, m => MonsterLogic.getStamina(m)) - slot.state.staminaDamage;
-				const staminaPerMinion = Collections.mean(slot.monsters, m => MonsterLogic.getStamina(m));
-				const minionsExpected = Math.max(Math.ceil(staminaRemaining / staminaPerMinion), 0);
-				const minionsAlive = slot.monsters.filter(m => !m.state.defeated).length;
-
-				if (minionsAlive !== minionsExpected) {
-					return (
-						<Alert
-							type='warning'
-							showIcon={true}
-							message={`There should be ${minionsExpected} active minions, not ${minionsAlive}.`}
-						/>
-					);
-				}
-
-				return null;
-			};
-
-			const getMinionCaptainTag = () => {
-				if (!isMinionSlot) {
-					return null;
-				}
-
-				if (slot.state.captainID) {
-					const captain = props.encounter.groups
-						.flatMap(g => g.slots)
-						.flatMap(s => s.monsters)
-						.find(m => m.id === slot.state.captainID);
-					if (captain) {
-						return (
-							<Tag>
-								Captain: {captain.name}
-							</Tag>
-						);
-					}
-				}
-
-				return (
-					<Tag>No captain</Tag>
-				);
-			};
-
-			return (
-				<div key={slot.id} className='encounter-slot'>
-					{
-						isMinionSlot ?
-							<div key='minions' className={slot.state.defeated ? 'encounter-slot-row minion defeated' : 'encounter-slot-row minion'} onClick={() => props.onSelectMinionSlot!(slot)}>
-								<div className='name-column'>
-									<b>Minions</b>
-								</div>
-								<div className='stamina-column'>
-									{getStaminaDescription()}
-									<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
-								</div>
-								<div className='conditions-column'>
-									{getMinionCaptainTag()}
-									{slot.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
-								</div>
-							</div>
-							: null
-					}
-					{
-						isMinionSlot ? getMinionCountMessage() : null
-					}
-					{
-						slot.monsters.map(monster => (
-							<div key={monster.id} className={slot.state.defeated || monster.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'} onClick={() => props.onSelectMonster!(monster)}>
-								<div className='name-column'>
-									<MonsterInfo monster={monster} />
-								</div>
-								{
-									isMinionSlot ?
-										<div className='stamina-column' />
-										:
-										<div className='stamina-column'>
-											{MonsterLogic.getStaminaDescription(monster)}
-											<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
-										</div>
-								}
-								<div className='conditions-column'>
-									{[ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(monster)) ? null : <Tag>{Format.capitalize(MonsterLogic.getCombatState(monster))}</Tag>}
-									{monster.state.hidden ? <Tag>Hidden</Tag> : null}
-									{monster.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
-								</div>
-							</div>
-						))
-					}
-				</div>
-			);
-		};
-
 		const defeated = props.group.slots.every(s => s.state.defeated || s.monsters.every(m => m.state.defeated));
 		let className = 'encounter-group';
 		if (defeated) {
@@ -273,36 +193,42 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 						<div className='group-name'>
 							Group {(props.index + 1).toString()}
 						</div>
-						{
-							props.onSetState && props.onDuplicate && props.onDelete ?
-								<Popover
-									trigger='click'
-									content={(
-										<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-											<Segmented
-												vertical={true}
-												disabled={defeated}
-												options={[
-													{ value: 'ready', label: 'Ready To Act' },
-													{ value: 'current', label: 'Acting Now' },
-													{ value: 'finished', label: 'Finished' }
-												]}
-												value={props.group.encounterState}
-												onChange={value => props.onSetState!(props.group, value as 'ready' | 'current' | 'finished')}
-											/>
-											<Button block={true} onClick={() => props.onDuplicate!(props.group)}>Duplicate</Button>
-											<DangerButton mode='block' onConfirm={() => props.onDelete!(props.group)} />
-										</div>
-									)}
-								>
-									<Button type='text' icon={<EllipsisOutlined />} />
-								</Popover>
-								: null
-						}
+						<Popover
+							trigger='click'
+							content={(
+								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+									<Segmented
+										vertical={true}
+										disabled={defeated}
+										options={[
+											{ value: 'ready', label: 'Ready To Act' },
+											{ value: 'current', label: 'Acting Now' },
+											{ value: 'finished', label: 'Finished' }
+										]}
+										value={props.group.encounterState}
+										onChange={value => props.onSetState(props.group, value as 'ready' | 'current' | 'finished')}
+									/>
+									<Button block={true} onClick={() => props.onDuplicate(props.group)}>Duplicate</Button>
+									<DangerButton mode='block' onConfirm={() => props.onDelete(props.group)} />
+								</div>
+							)}
+						>
+							<Button type='text' icon={<EllipsisOutlined />} />
+						</Popover>
 					</Flex>
 				</div>
 				<div className='encounter-slots'>
-					{props.group.slots.map(getSlot)}
+					{
+						props.group.slots.map(slot => (
+							<MonsterSlot
+								key={slot.id}
+								slot={slot}
+								encounter={props.encounter}
+								onSelectMonster={props.onSelectMonster}
+								onSelectMinionSlot={props.onSelectMinionSlot}
+							/>
+						))
+					}
 				</div>
 			</div>
 		);
@@ -312,11 +238,131 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 	}
 };
 
+interface MonsterSlotProps {
+	slot: EncounterSlot;
+	encounter: Encounter;
+	onSelectMonster: (monster: Monster) => void;
+	onSelectMinionSlot: (slot: EncounterSlot) => void;
+}
+
+export const MonsterSlot = (props: MonsterSlotProps) => {
+	const isMinionSlot = props.slot.monsters.every(m => m.role.organization === MonsterOrganizationType.Minion);
+
+	const getStaminaDescription = () => {
+		const max = Collections.sum(props.slot.monsters, m => MonsterLogic.getStamina(m));
+
+		let str = `${max}`;
+		if (props.slot.state.staminaDamage > 0) {
+			str = `${Math.max(max - props.slot.state.staminaDamage, 0)} / ${max}`;
+		}
+		if (props.slot.state.staminaTemp > 0) {
+			str += ` +${props.slot.state.staminaTemp}`;
+		}
+
+		return str;
+	};
+
+	const getMinionCountMessage = () => {
+		if (!isMinionSlot) {
+			return null;
+		}
+
+		const staminaRemaining = Collections.sum(props.slot.monsters, m => MonsterLogic.getStamina(m)) - props.slot.state.staminaDamage;
+		const staminaPerMinion = Collections.mean(props.slot.monsters, m => MonsterLogic.getStamina(m));
+		const minionsExpected = Math.max(Math.ceil(staminaRemaining / staminaPerMinion), 0);
+		const minionsAlive = props.slot.monsters.filter(m => !m.state.defeated).length;
+
+		if (minionsAlive !== minionsExpected) {
+			return (
+				<Alert
+					type='warning'
+					showIcon={true}
+					message={`There should be ${minionsExpected} active minions, not ${minionsAlive}.`}
+				/>
+			);
+		}
+
+		return null;
+	};
+
+	const getMinionCaptainTag = () => {
+		if (!isMinionSlot) {
+			return null;
+		}
+
+		if (props.slot.state.captainID) {
+			const captain = props.encounter.groups
+				.flatMap(g => g.slots)
+				.flatMap(s => s.monsters)
+				.find(m => m.id === props.slot.state.captainID);
+			if (captain) {
+				return (
+					<Tag>
+						Captain: {captain.name}
+					</Tag>
+				);
+			}
+		}
+
+		return (
+			<Tag>No captain</Tag>
+		);
+	};
+
+	return (
+		<div key={props.slot.id} className='encounter-slot'>
+			{
+				isMinionSlot ?
+					<div key='minions' className={props.slot.state.defeated ? 'encounter-slot-row minion defeated' : 'encounter-slot-row minion'} onClick={() => props.onSelectMinionSlot(props.slot)}>
+						<div className='name-column'>
+							<b>Minions</b>
+						</div>
+						<div className='stamina-column'>
+							{getStaminaDescription()}
+							<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+						</div>
+						<div className='conditions-column'>
+							{getMinionCaptainTag()}
+							{props.slot.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+						</div>
+					</div>
+					: null
+			}
+			{
+				isMinionSlot ? getMinionCountMessage() : null
+			}
+			{
+				props.slot.monsters.map(monster => (
+					<div key={monster.id} className={props.slot.state.defeated || monster.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'} onClick={() => props.onSelectMonster(monster)}>
+						<div className='name-column'>
+							<MonsterInfo monster={monster} />
+						</div>
+						{
+							isMinionSlot ?
+								<div className='stamina-column' />
+								:
+								<div className='stamina-column'>
+									{MonsterLogic.getStaminaDescription(monster)}
+									<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+								</div>
+						}
+						<div className='conditions-column'>
+							{[ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(monster)) ? null : <Tag>{Format.capitalize(MonsterLogic.getCombatState(monster))}</Tag>}
+							{monster.state.hidden ? <Tag>Hidden</Tag> : null}
+							{monster.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+						</div>
+					</div>
+				))
+			}
+		</div>
+	);
+};
+
 interface EncounterGroupTerrainProps {
 	terrain: Terrain;
 	onSelect: (terrain: Terrain) => void;
-	onDuplicate?: (terrain: Terrain) => void;
-	onDelete?: (terrain: Terrain) => void;
+	onDuplicate: (terrain: Terrain) => void;
+	onDelete: (terrain: Terrain) => void;
 }
 
 export const EncounterGroupTerrain = (props: EncounterGroupTerrainProps) => {
@@ -328,21 +374,17 @@ export const EncounterGroupTerrain = (props: EncounterGroupTerrainProps) => {
 						<div className='group-name'>
 							Terrain
 						</div>
-						{
-							props.onDuplicate && props.onDelete ?
-								<Popover
-									trigger='click'
-									content={(
-										<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-											<Button block={true} onClick={() => props.onDuplicate!(props.terrain)}>Duplicate</Button>
-											<DangerButton onConfirm={() => props.onDelete!(props.terrain)} />
-										</div>
-									)}
-								>
-									<Button type='text' icon={<EllipsisOutlined />} />
-								</Popover>
-								: null
-						}
+						<Popover
+							trigger='click'
+							content={(
+								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+									<Button block={true} onClick={() => props.onDuplicate(props.terrain)}>Duplicate</Button>
+									<DangerButton onConfirm={() => props.onDelete(props.terrain)} />
+								</div>
+							)}
+						>
+							<Button type='text' icon={<EllipsisOutlined />} />
+						</Popover>
 					</Flex>
 				</div>
 				<div className='encounter-slots'>

@@ -1155,6 +1155,10 @@ export class HeroLogic {
 			hero.state.projects = [];
 		}
 
+		if (hero.state.controlledSlots === undefined) {
+			hero.state.controlledSlots = [];
+		}
+
 		if (hero.state.notes === undefined) {
 			hero.state.notes = '';
 		}

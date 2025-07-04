@@ -4,9 +4,11 @@ import { Counter } from '../models/counter';
 import { Encounter } from '../models/encounter';
 import { EncounterLogic } from './encounter-logic';
 import { EncounterObjectiveData } from '../data/encounter-objective-data';
+import { FactoryLogic } from './factory-logic';
 import { FeatureLogic } from './feature-logic';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
+import { HeroLogic } from './hero-logic';
 import { Monster } from '../models/monster';
 import { MonsterLogic } from './monster-logic';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
@@ -173,7 +175,14 @@ export class PlaybookLogic {
 			heroes
 				.filter(h => h.folder === options.party)
 				.map(h => Utils.copy(h))
-				.forEach(h => copy.heroes.push(h));
+				.forEach(h => {
+					HeroLogic.getCompanions(h).forEach(monster => {
+						if (!h.state.controlledSlots.some(slot => slot.monsters.some(m => m.name === monster.name))) {
+							h.state.controlledSlots.push(FactoryLogic.createEncounterSlotFromMonster(monster));
+						}
+					});
+					copy.heroes.push(h);
+				});
 		}
 
 		copy.terrain.forEach(slot => {
@@ -269,6 +278,12 @@ export class PlaybookLogic {
 				if (e.heroes === undefined) {
 					e.heroes = [];
 				}
+
+				e.heroes.forEach(h => {
+					if (h.state.controlledSlots === undefined) {
+						h.state.controlledSlots = [];
+					}
+				});
 			});
 
 			if (e.terrain === undefined) {

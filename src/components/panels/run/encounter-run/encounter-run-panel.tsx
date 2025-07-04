@@ -16,6 +16,7 @@ import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
+import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroSelectModal } from '../../../modals/select/hero-select/hero-select-modal';
 import { HeroStateModal } from '../../../modals/hero-state/hero-state-modal';
 import { HeroStatePage } from '../../../../enums/hero-state-page';
@@ -233,14 +234,14 @@ export const EncounterRunPanel = (props: Props) => {
 		};
 
 		const getHeroGroup = (hero: Hero) => {
-			const deleteHero = () => {
+			const deleteHero = (hero: Hero) => {
 				const copy = Utils.copy(encounter);
 				copy.heroes = copy.heroes.filter(h => h.id !== hero.id);
 				setEncounter(copy);
 				props.onChange(copy);
 			};
 
-			const setEncounterState = (value: 'ready' | 'current' | 'finished') => {
+			const setEncounterState = (hero: Hero, value: 'ready' | 'current' | 'finished') => {
 				const copy = Utils.copy(encounter);
 				copy.heroes
 					.filter(h => h.id === hero.id)
@@ -249,13 +250,67 @@ export const EncounterRunPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
+			const addSquad = (hero: Hero, monster: Monster, count: number) => {
+				const copy = Utils.copy(encounter);
+				copy.heroes
+					.filter(h => h.id === hero.id)
+					.forEach(h => {
+						const slot = FactoryLogic.createEncounterSlotFromMonster(monster);
+						while (slot.monsters.length < count) {
+							const m = Utils.copy(monster);
+							m.id = Utils.guid();
+							slot.monsters.push(m);
+						}
+						h.state.controlledSlots.push(slot);
+					});
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			const removeSquad = (hero: Hero, slotID: string) => {
+				const copy = Utils.copy(encounter);
+				copy.heroes
+					.filter(h => h.id === hero.id)
+					.forEach(h => h.state.controlledSlots = h.state.controlledSlots.filter(s => s.id !== slotID));
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			const addMonsterToSquad = (hero: Hero, slotID: string) => {
+				const monsters = [ ... HeroLogic.getCompanions(hero), ...HeroLogic.getSummons(hero) ];
+
+				const copy = Utils.copy(encounter);
+				copy.heroes
+					.filter(h => h.id === hero.id)
+					.forEach(h => {
+						h.state.controlledSlots
+							.filter(s => s.id === slotID)
+							.forEach(slot => {
+								const original = monsters.find(m => m.id === slot.monsterID);
+								if (original) {
+									const m = Utils.copy(original);
+									m.id = Utils.guid();
+									slot.monsters.push(m);
+								}
+							});
+					});
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
 			return (
 				<EncounterGroupHero
 					key={hero.id}
 					hero={hero}
+					encounter={encounter}
+					options={props.options}
 					onSelect={setSelectedHero}
 					onSelectMonster={setSelectedMonster}
-					onSetState={(_hero, state) => setEncounterState(state)}
+					onSelectMinionSlot={setSelectedMinionSlot}
+					onSetState={setEncounterState}
+					onAddSquad={addSquad}
+					onAddMonsterToSquad={addMonsterToSquad}
+					onRemoveSquad={removeSquad}
 					onDelete={deleteHero}
 				/>
 			);
@@ -692,13 +747,15 @@ export const EncounterRunPanel = (props: Props) => {
 								onClose={() => setSelectedMonster(null)}
 								updateMonster={monster => {
 									const copy = Utils.copy(encounter);
-									copy.groups.forEach(g => {
-										g.slots.forEach(s => {
-											const index = s.monsters.findIndex(m => m.id === monster.id);
-											if (index !== -1) {
-												s.monsters[index] = monster;
-											}
-										});
+
+									[
+										...copy.groups.flatMap(g => g.slots),
+										...copy.heroes.flatMap(h => h.state.controlledSlots)
+									].forEach(slot => {
+										const index = slot.monsters.findIndex(m => m.id === monster.id);
+										if (index !== -1) {
+											slot.monsters[index] = monster;
+										}
 									});
 
 									// Make sure no minion groups have a dead captain
@@ -779,12 +836,20 @@ export const EncounterRunPanel = (props: Props) => {
 											encounter={encounter}
 											onChange={slot => {
 												const copy = Utils.copy(encounter);
+
 												copy.groups.forEach(g => {
 													const index = g.slots.findIndex(s => s.id === slot.id);
 													if (index !== -1) {
 														g.slots[index] = slot;
 													}
 												});
+												copy.heroes.forEach(h => {
+													const index = h.state.controlledSlots.findIndex(s => s.id === slot.id);
+													if (index !== -1) {
+														h.state.controlledSlots[index] = slot;
+													}
+												});
+
 												setEncounter(copy);
 												props.onChange(copy);
 											}}
